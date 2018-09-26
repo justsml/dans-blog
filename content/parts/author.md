@@ -2,4 +2,5 @@
 title: author
 ---
 
-**Mr. Gatsby** Proin ornare ligula eu tellus tempus elementum. Aenean [bibendum](/) iaculis mi, nec blandit lacus interdum vitae. Vestibulum non nibh risus, a scelerisque purus. :hearts:
+[*Dan Levy*](https://github.com/justsml) is a Lead Instructor at Galvanize and contributor to multiple Open Source Software projects including NodeJS, Docker, Bluebird, Lodash, Rancher, Minio, Slate, IxJS.
+
