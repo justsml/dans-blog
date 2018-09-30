@@ -26,31 +26,36 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     if (category) categories.push(category);
     const filename = createFilePath({ node, getNode, basePath: `pages` });
     // get the date and title from the file name
-
-    const extracted = filename.match(/^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/);
-    const [, date, title] = extracted
-    // create a new slug concatenating everything
-    // const slug = `/${slugify(categories.concat([date]).join("-"), "/")}/${title}/`;
-    const slug = `/${slugify([].concat([date]).join("-"), "/")}/${title}/`;
-    debug(`createNodeField: ${title}: ${slug}`);
-    createNodeField({ node, name: `slug`, value: slug });
-    // save the date for later use
-    debug(`createNodeField: ${title}: ${date}`);
-    createNodeField({ node, name: `date`, value: date });
-
-    // const slug = createFilePath({ node, getNode, basePath: `pages` });
-    // const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
-    // const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
-    // createNodeField({
-    //   node,
-    //   name: `slug`,
-    //   value: `${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`
-    // });
-    // createNodeField({
-    //   node,
-    //   name: `prefix`,
-    //   value: separtorIndex ? slug.substring(1, separtorIndex) : ""
-    // });
+    if (/^\/([\d]{4}-[\d]{2}-[\d]{2})--(.+)\/$/.test(filename)) {
+      const extracted = filename.match(/^\/([\d]{4}-[\d]{2}-[\d]{2})--(.+)\/$/);
+      debug(`extracting ${filename}`);
+      const [, date, title] = extracted;
+      // create a new slug concatenating everything
+      // const slug = `/${slugify(categories.concat([date]).join("-"), "/")}/${title}/`;
+      const slug = `/${[date].join("/").replace(/-/g, "/")}/${title}/`;
+      debug(`createNodeField w/ date: ${title}: ${slug}`);
+      createNodeField({ node, name: `slug`, value: slug });
+      // save the date for later use
+      debug(`createNodeField w/ date: ${title}: ${date}`);
+      createNodeField({ node, name: `date`, value: date });
+    } else {
+      const slug = createFilePath({ node, getNode, basePath: `pages` });
+      const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
+      const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
+      debug(
+        `createNodeField: ${slug}: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`
+      );
+      createNodeField({
+        node,
+        name: `slug`,
+        value: `${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`
+      });
+      createNodeField({
+        node,
+        name: `prefix`,
+        value: separtorIndex ? slug.substring(1, separtorIndex) : ""
+      });
+    }
   }
 };
 

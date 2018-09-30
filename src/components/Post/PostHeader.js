@@ -42,6 +42,7 @@ const styles = theme => ({
 
 const PostHeader = props => {
   const { classes, title, subTitle, date } = props;
+  console.log('title', title, props);
 
   function myDate(dateString) {
     const dateObj = new Date(dateString).toUTCString();
@@ -58,6 +59,11 @@ const PostHeader = props => {
       <h1 className={classes.title}>{title}</h1>
       <h2 className={classes.subTitle}>{subTitle}</h2>
       <div className={classes.meta}>{myDate(date)}</div>
+      {props.modified ? (
+        <div className={classes.meta} style={{ float: "right" }} title="Modified date">
+          {props.modified}
+        </div>
+      ) : null}
     </header>
   );
 };
