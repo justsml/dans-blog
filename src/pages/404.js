@@ -14,8 +14,9 @@ const SearchPage = props => {
     <div style={{ width: "760px" }}>
       <Main>
         <Article>
-          <PageHeader title="Search by" algolia={true} />
-          <Search algolia={data.site.siteMetadata.algolia} />
+          {/* <PageHeader title="Search by" algolia={true} />
+          <Search algolia={data.site.siteMetadata.algolia} /> */}
+          <h1>Page not found</h1>
         </Article>
       </Main>
     </div>
