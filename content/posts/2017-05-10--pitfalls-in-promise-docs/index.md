@@ -2,8 +2,8 @@
 layout: post
 title:  "Pitfalls in Promise Docs"
 subTitle: Avoiding issues from popular docs
-date:       2017-05-10
-modified:   2018-09-24
+date: 2017-05-10
+modified: 2018-09-24
 category: programming
 tags: [programming, patterns, source code, functional river]
 cover: craig-whitehead-433328-unsplash.jpg

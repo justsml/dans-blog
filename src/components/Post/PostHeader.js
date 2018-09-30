@@ -42,7 +42,7 @@ const styles = theme => ({
 
 const PostHeader = props => {
   const { classes, title, subTitle, date } = props;
-  console.log('title', title, props);
+  console.log("title", title, props.date);
 
   function myDate(dateString) {
     const dateObj = new Date(dateString).toUTCString();

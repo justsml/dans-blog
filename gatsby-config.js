@@ -15,6 +15,8 @@ const query = `{
         frontmatter {
           title
           subTitle
+          date
+          modified
         }
       }
     }

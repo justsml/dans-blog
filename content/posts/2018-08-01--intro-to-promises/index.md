@@ -2,7 +2,7 @@
 layout: post
 title:  "Intro to Promises"
 subTitle: JavaScript Promises Are Fun!
-date:   2018-08-01
+date: 2018-08-01
 category: guides
 cover: joe-yates-480485-unsplash.jpg
 ---
