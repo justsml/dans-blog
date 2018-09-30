@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Avoiding Promise Pitfalls"
-subTitle: Navigating existing documentation
+title:  "Pitfalls in Promise Docs"
+subTitle: Avoiding issues from official docs
 date:       2017-05-10
 modified:   2018-09-24
 category: programming
@@ -9,14 +9,11 @@ tags: [programming, patterns, source code, functional river]
 cover: craig-whitehead-433328-unsplash.jpg
 ---
 
-## Spotting Promise Anti-Patterns
+# Spotting Promise Anti-Patterns
 
-> Please take a look at (& star plz) this article's companion Github project, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
-#### Project Goal: research & develop better functional language patterns in JavaScript.
+## In google search results, and popular libraries
 
-> The subjects I'm addressing have been explored by many - and rejected by others.
-I believe the reason for the divide is `Google Results Roulette` & developers blindly trusting results.
-Bad/outdated examples lead to broadly held suspicions of terms like: `modular JS`, `composable JS` or `functional JS`.
+![craig-whitehead-433328-unsplash.jpg](craig-whitehead-433328-unsplash.jpg)
 
 Let me start with a confession: I'm guilty of writing the same anti-patterns I criticize below, as I'm sure many JS developers are as well. Nothing I've laid out is meant to be personal or even directed at the original authors. I'm merely doing a code review on common patterns - I hope to pass along an understanding of my priorities & critical thinking processes.
 
@@ -60,7 +57,7 @@ Bottom line: the `deferred` pattern is a painful anti-pattern - it improves virt
 
 ![q xmlHTTP deferred anti-pattern](https://cloud.githubusercontent.com/assets/397632/25920616/c7d807fa-358f-11e7-98c7-d77781672656.png)
 
-----------------
 
+> Please take a look at (& please star) this article's companion Github project, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+#### Project Goal: research & develop better functional language patterns in JavaScript.
 
-One more thing, my work likely has bugs or quality issues - please [file an issue here](https://github.com/justsml/escape-from-callback-mountain/issues/new) - always appreciated!

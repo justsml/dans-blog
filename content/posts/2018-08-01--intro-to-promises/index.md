@@ -11,6 +11,28 @@ cover: joe-yates-480485-unsplash.jpg
 
 ![credit: joe-yates-480485-unsplash.jpg](joe-yates-480485-unsplash.jpg)
 
+## Promises. What's their deal?
+
+Whenever you execute any computer code, there are 2 possible outcomes: **success** or **failure**.
+
+If that code is async in nature, it can be harder to reliably depend on that result.
+
+**`Promises`** provide a handy way to deal with this.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> Side note: While Promises ought to resolve or reject, they might fail to do either. This causes apps to hang, and can be very hard to debug.
+
 
 ## Where do Promises come from?
 
@@ -58,33 +80,9 @@ new Promise(function(resolve, reject) {
 })
 ```
 
-
-
-### What's the deal with Promises?
-
-Whenever you execute any computer code, there are 2 possible outcomes: **success** or **failure**.
-
-If that code is async in nature, it can be harder to reliably depend on that result.
-
-**`Promises`** provice a handy way to deal with this.
-
-```
-        +---Promise--+
-        |            |
-        | <-either-> |
-        |            |
-<-------+            +-------->
-|Failure?             Success?|
-|                             |
-v                             v
-(Rejected)           (Resolved)
-```
-
-> Side note: While Promises ought to resolve or reject, they might fail to do either. This causes apps to hang, and can be very hard to debug.
-
 ## Promises API
 
-The core Promises API is actually a small number of methods.
+The Promises API is actually a small number of methods.
 
 2 instance functions, and 4 static/utility functions.
 
@@ -100,5 +98,3 @@ All Promises return either success (via `.then(fn)`) or failure (via `.catch(fn)
 * `Promise.reject(Error)` - Creates a failure Promise value, triggers subsequent `.catch()`
 * `Promise.all([...promises])` - Wait for an array of Promises to ALL complete
 * `Promise.race([...promises])` - Resolves as soon as the first promise resolves
-
-
