@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Pitfalls in Promise Docs"
-subTitle: Avoiding issues from official docs
+subTitle: Avoiding issues from popular docs
 date:       2017-05-10
 modified:   2018-09-24
 category: programming

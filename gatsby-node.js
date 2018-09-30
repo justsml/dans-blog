@@ -1,3 +1,4 @@
+const debug = require("debug")("GATSBY-NODE");
 const webpack = require("webpack");
 //const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const _ = require("lodash");
@@ -6,22 +7,50 @@ const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
 
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/-+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/g, "") // Trim - from start of text
+    .replace(/-+$/g, ""); // Trim - from end of text
+}
+
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
-    const slug = createFilePath({ node, getNode, basePath: `pages` });
-    const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
-    const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
-    createNodeField({
-      node,
-      name: `slug`,
-      value: `${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`
-    });
-    createNodeField({
-      node,
-      name: `prefix`,
-      value: separtorIndex ? slug.substring(1, separtorIndex) : ""
-    });
+    let { categories, category } = node.frontmatter;
+    categories = categories || [];
+    if (category) categories.push(category);
+    const filename = createFilePath({ node, getNode, basePath: `pages` });
+    // get the date and title from the file name
+
+    const extracted = filename.match(/^\/([\d]{4}-[\d]{2}-[\d]{2})-{1}(.+)\/$/);
+    const [, date, title] = extracted
+    // create a new slug concatenating everything
+    // const slug = `/${slugify(categories.concat([date]).join("-"), "/")}/${title}/`;
+    const slug = `/${slugify([].concat([date]).join("-"), "/")}/${title}/`;
+    debug(`createNodeField: ${title}: ${slug}`);
+    createNodeField({ node, name: `slug`, value: slug });
+    // save the date for later use
+    debug(`createNodeField: ${title}: ${date}`);
+    createNodeField({ node, name: `date`, value: date });
+
+    // const slug = createFilePath({ node, getNode, basePath: `pages` });
+    // const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
+    // const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
+    // createNodeField({
+    //   node,
+    //   name: `slug`,
+    //   value: `${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`
+    // });
+    // createNodeField({
+    //   node,
+    //   name: `prefix`,
+    //   value: separtorIndex ? slug.substring(1, separtorIndex) : ""
+    // });
   }
 };
 
