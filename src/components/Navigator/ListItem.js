@@ -167,6 +167,7 @@ class ListItem extends React.Component {
           <div className={classes.listItemText}>
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
+            {/* {post.node.frontmatter.date && <h3>{post.node.frontmatter.date}</h3>} */}
           </div>
         </Link>
       </li>

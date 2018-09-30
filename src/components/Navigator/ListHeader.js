@@ -10,6 +10,7 @@ const styles = theme => ({
   closed: {
     display: "none",
     ".is-aside.closed &, .moving-featured.closed &": {
+      cursor: "pointer",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
@@ -83,12 +84,11 @@ const ListHeader = props => {
   return (
     <header>
       {navigatorShape === "closed" && (
-        <div className={classes.closed}>
+        <div onClick={expandOnClick} className={classes.closed}>
           <h3>List of posts</h3>
           <IconButton
             aria-label="Expand the list"
             className={classes.expand}
-            onClick={expandOnClick}
             title="Expand the list"
           >
             <ExpandLessIcon />

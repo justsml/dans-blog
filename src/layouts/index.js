@@ -141,7 +141,10 @@ export const guery = graphql`
           frontmatter {
             title
             subTitle
+            tags
             category
+            date
+            modified
             cover {
               children {
                 ... on ImageSharp {
@@ -167,6 +170,7 @@ export const guery = graphql`
           }
           frontmatter {
             title
+            date
             menuTitle
           }
         }
