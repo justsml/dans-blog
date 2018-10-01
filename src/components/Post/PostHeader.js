@@ -1,10 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
+import format from "date-fns/format";
+import distanceInWords from "date-fns/distance_in_words";
 
 const styles = theme => ({
   header: {
-    margin: "0 0 3em"
+    margin: "0 0 3em",
+    "& h3": {
+      maxWidth: "375px",
+      fontSize: "0.8em",
+      "& label": {
+        fontWeight: 900,
+        marginRight: "4px"
+      },
+      "& small": {
+        fontWeight: 800,
+        marginLeft: "4px"
+      }
+    }
   },
   title: {
     color: theme.main.colors.title,
@@ -34,14 +48,27 @@ const styles = theme => ({
     }
   },
   meta: {
+    display: "flex",
+    justifyContent: "space-between",
     fontSize: `${theme.main.fonts.meta.size}em`,
     fontWeight: theme.main.fonts.meta.weight,
     color: theme.main.colors.meta
   }
 });
 
+const getDateLabel = (date, label) => {
+  if (!date) return <span date={date} />;
+
+  const aDate = new Date(date);
+  return (
+    <h3>
+      <label>{label} </label>
+      {format(aDate, "MMM Do YYYY")} <small>{distanceInWords(aDate, new Date())} ago</small>
+    </h3>
+  );
+};
 const PostHeader = props => {
-  const { classes, title, subTitle, date } = props;
+  const { classes, title, subTitle, date, modified } = props;
   // console.log("title", title, "post.props", props);
 
   function myDate(dateString) {
@@ -58,12 +85,10 @@ const PostHeader = props => {
     <header className={classes.header}>
       <h1 className={classes.title}>{title}</h1>
       <h2 className={classes.subTitle}>{subTitle}</h2>
-      <div className={classes.meta}>{myDate(date)}</div>
-      {props.modified ? (
-        <div className={classes.meta} style={{ float: "right" }} title="Modified date">
-          {props.modified}
-        </div>
-      ) : null}
+      <div className={classes.meta}>
+        {getDateLabel(date, "Published: ")}
+        {getDateLabel(modified, "Updated: ")}
+      </div>
     </header>
   );
 };
