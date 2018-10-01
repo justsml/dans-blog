@@ -65,6 +65,45 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   }
 };
 
+const createTagPages = (createPage, posts) => {
+  const tagPageTemplate = path.resolve(`src/templates/Tags.js`);
+  // const allTagsTemplate = path.resolve(`src/templates/AllTags.js`);
+
+  const postsByTags = {};
+
+  posts.forEach(({ node }) => {
+    if (node.frontmatter && node.frontmatter.tags) {
+      node.frontmatter.tags.forEach(tag => {
+        if (!postsByTags[tag]) {
+          postsByTags[tag] = [];
+        }
+        postsByTags[tag].push(node);
+      });
+    }
+  });
+  const tags = Object.keys(postsByTags);
+
+  // createPage({
+  //   path: `/tags`,
+  //   component: allTagsTemplate,
+  //   context: {
+  //     tags: tags.sort()
+  //   }
+  // });
+  tags.map(slugify).forEach(tagName => {
+    const posts = postsByTags[tagName];
+    console.log("Adding tag:", tagName);
+    createPage({
+      path: `/tags/${tagName}`,
+      component: tagPageTemplate,
+      context: {
+        posts,
+        tagName
+      }
+    });
+  });
+};
+
 exports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
@@ -83,6 +122,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     slug
                     prefix
                   }
+                  frontmatter {
+                    tags
+                    title
+                    date
+                    category
+                  }
                 }
               }
             }
@@ -94,8 +139,12 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           return reject(result.errors);
         }
 
+        const posts = result.data.allMarkdownRemark.edges;
+
+        createTagPages(createPage, posts);
+
         // Create posts and pages.
-        _.each(result.data.allMarkdownRemark.edges, edge => {
+        posts.forEach(edge => {
           const slug = edge.node.fields.slug;
           const isPost = /posts/.test(edge.node.id);
 

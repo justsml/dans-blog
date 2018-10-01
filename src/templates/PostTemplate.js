@@ -71,6 +71,7 @@ export const postQuery = graphql`
         title
         subTitle
         date
+        modified
         tags
         cover {
           childImageSharp {

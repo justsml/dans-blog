@@ -117,10 +117,10 @@ All changes were made with these general ideas in mind:
 [teamwork]: https://res.cloudinary.com/ddd/image/upload/teamwork__tumblr_n2df80cPZa1s373hwo1_400_ghv4xn.gif
 [fuck_this]: https://res.cloudinary.com/ddd/image/upload/panda-rampage__tumblr_nq7srwTXqr1stn6klo1_500_gm2som.gif
 [new_feature]: https://res.cloudinary.com/ddd/image/upload/simba-toss-error.gif
-[drinking]: http://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif
-[cat_outfit]: http://res.cloudinary.com/ddd/image/upload/v1441143858/cat-bee-fail.gif
-[cat_loops]: http://res.cloudinary.com/ddd/image/upload/v1441143869/cat-loops.gif
-[cat_bowl]: http://res.cloudinary.com/ddd/image/upload/v1441143883/kitten_bowl.gif
-[cat_wtf]: http://res.cloudinary.com/ddd/image/upload/v1441143878/cat-wtf.gif
-[endless_loop]: http://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif
+[drinking]: https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif
+[cat_outfit]: https://res.cloudinary.com/ddd/image/upload/v1441143858/cat-bee-fail.gif
+[cat_loops]: https://res.cloudinary.com/ddd/image/upload/v1441143869/cat-loops.gif
+[cat_bowl]: https://res.cloudinary.com/ddd/image/upload/v1441143883/kitten_bowl.gif
+[cat_wtf]: https://res.cloudinary.com/ddd/image/upload/v1441143878/cat-wtf.gif
+[endless_loop]: https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif
 

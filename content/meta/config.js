@@ -4,7 +4,7 @@ module.exports = {
   siteTitle: "Dan Levy's Collection of Articles & Learning Materials", // <title>
   shortSiteTitle: "Dan Levy's Blog", // <title> ending for posts and pages
   siteDescription: "Come for the JavaScript, stay for the cat memes.",
-  siteUrl: "https://www.danlevy.net/",
+  siteUrl: "https://www.danlevy.net",
   pathPrefix: "",
   // siteImage: "preview.jpg",
   siteLanguage: "en",
@@ -26,7 +26,7 @@ module.exports = {
   // social
   authorSocialLinks: [
     { name: "github", url: "https://github.com/justsml" },
-    { name: "twitter", url: "https://twitter.com/justsml" },
-    { name: "facebook", url: "http://facebook.com/justsml" }
+    { name: "twitter", url: "https://twitter.com/justsml" }
+    // { name: "facebook", url: "https://facebook.com/justsml" }
   ]
 };
