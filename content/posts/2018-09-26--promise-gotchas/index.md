@@ -3,7 +3,7 @@ layout: post
 title:  "Promise Gotchas"
 subTitle: Avoiding common mistakes
 date:   2018-09-26
-category: guides
+category: promises
 cover: michal-parzuchowski-224092-unsplash.jpg
 ---
 

@@ -46,6 +46,9 @@ const styles = theme => ({
           height: `calc(100% - 100px)`
         },
         "&.open": {
+          "h3, h4": {
+            display: "none"
+          },
           bottom: 0,
           height: `calc(100% - 100px)`
         },

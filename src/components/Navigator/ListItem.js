@@ -3,6 +3,8 @@ import Link from "gatsby-link";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import LazyLoad from "react-lazyload";
+import format from "date-fns/format";
+import distanceInWords from "date-fns/distance_in_words";
 
 const styles = theme => ({
   listItem: {
@@ -89,6 +91,21 @@ const styles = theme => ({
         }
       }
     },
+    "& h3, & h4": {
+      lineHeight: 1.2,
+      fontSize: "0.8em",
+      width: "30%",
+      display: "inline-block",
+      [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
+        fontSize: "0.85em"
+      },
+      [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+        fontSize: "0.85",
+        ".moving-featured &, .is-aside &": {
+          display: "none"
+        }
+      }
+    },
     "& h2": {
       lineHeight: 1.2,
       display: "block",
@@ -110,6 +127,11 @@ const styles = theme => ({
       ".moving-featured &, .is-aside &": {
         margin: "0 0 0 .5em"
       }
+    }
+  },
+  extraDetails: {
+    "> *": {
+      display: "flex"
     }
   }
 });
@@ -136,6 +158,16 @@ class ListItem extends React.Component {
 
   render() {
     const { classes, post, linkOnClick } = this.props;
+    let modified = null;
+    if (post.node.frontmatter.modified) {
+      const modDate = new Date(post.node.frontmatter.modified);
+      modified = (
+        <h3>
+          <label>Updated: </label>
+          {format(modDate, "MMM Do YYYY")} <small>{distanceInWords(modDate, new Date())} ago</small>
+        </h3>
+      );
+    }
 
     return (
       <li
@@ -167,7 +199,15 @@ class ListItem extends React.Component {
           <div className={classes.listItemText}>
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
-            {/* {post.node.frontmatter.date && <h3>{post.node.frontmatter.date}</h3>} */}
+            <div className={classes.extraDetails}>
+              {post.node.frontmatter.date && (
+                <h3>
+                  <label>Published: </label>
+                  {format(new Date(post.node.frontmatter.date), "MMM Do YYYY")}
+                </h3>
+              )}
+              {modified}
+            </div>
           </div>
         </Link>
       </li>
