@@ -44,15 +44,20 @@ const styles = theme => ({
       width: "100%",
       display: "flex",
       justifyContent: "space-between",
-      maxWidth: "30%",
+      maxWidth: "55%",
       fontSize: "11px",
       margin: "0 0 4px 0",
       "& label": {
+        width: "80px",
         fontSize: "11px",
         fontWeight: 700,
         marginRight: "4px"
       },
+      "& span.human-date": {
+        width: "80px"
+      },
       "& small": {
+        width: "100px",
         fontWeight: 700,
         marginLeft: "4px"
       }
@@ -76,7 +81,8 @@ const getDateLabel = (date, label) => {
   return (
     <h3>
       <label>{label} </label>
-      {format(aDate, "MMM Do YYYY")} <small>{distanceInWords(aDate, new Date())} ago</small>
+      <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
+      <small>{distanceInWords(aDate, new Date())} ago</small>
     </h3>
   );
 };

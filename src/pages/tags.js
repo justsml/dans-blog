@@ -6,6 +6,7 @@ import kebabCase from "lodash/kebabCase";
 
 // Components
 import Main from "../components/Main/";
+import Article from "../components/Main/Article";
 import Helmet from "react-helmet";
 import Link from "gatsby-link";
 
@@ -25,8 +26,8 @@ const TagsPage = ({
   return (
     <Main>
       <Helmet title={title} />
-      <div>
-        <h1>Tags</h1>
+      <Article>
+        <h1>Site Tags</h1>
         <ul>
           {group.map(tag => (
             <li key={tag.fieldValue}>
@@ -36,7 +37,7 @@ const TagsPage = ({
             </li>
           ))}
         </ul>
-      </div>
+      </Article>
     </Main>
   );
 };

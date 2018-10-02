@@ -3,19 +3,17 @@ layout: post
 title:  "Pitfalls in Promise Docs"
 subTitle: Avoiding issues from popular docs
 date: 2017-05-10
-modified: 2018-09-24
+modified: 2018-09-29
 category: promises
-tags: [programming, patterns, source code, functional river]
+tags: [programming, patterns, promises, functional river]
 cover: craig-whitehead-433328-unsplash.jpg
 ---
 
-# Spotting Promise Anti-Patterns
-
-## In google search results, and popular libraries
+> Spotting Promise Anti-Patterns in google search results, and popular libraries.
 
 ![craig-whitehead-433328-unsplash.jpg](craig-whitehead-433328-unsplash.jpg)
 
-Let me start with a confession: I'm guilty of writing the same anti-patterns I criticize below, as I'm sure many JS developers are as well. Nothing I've laid out is meant to be personal or even directed at the original authors. I'm merely doing a code review on common patterns - I hope to pass along an understanding of my priorities & critical thinking processes.
+Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I criticize below, as I'm sure many JS developers are as well. Nothing I've laid out is meant to be personal or even directed at the original authors. I'm merely doing a code review on common patterns - I hope to pass along an understanding of my priorities & critical thinking processes.
 
 > Hopefully you will be able to spot the warning signs of bad Promises after groking this project.
 

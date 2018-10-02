@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "gatsby-link";
 import Main from "../components/Main/";
+import Article from "../components/Main/Article";
 import "../styles/shared.css";
 import injectSheet from "react-jss";
 
@@ -16,19 +17,22 @@ const Tags = ({ pathContext }) => {
   if (posts) {
     return (
       <Main>
-        <h2>
-          Posts about <i>{tagName}</i>
-        </h2>
+        <Article>
+          <h2>
+            Posts about <i>{tagName}</i>
+          </h2>
 
-        <ul className="tag-page">
-          {posts.map(post => {
-            return (
-              <li key={post.id} {...post}>
-                <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
-              </li>
-            );
-          })}
-        </ul>
+          <ul className="tag-page">
+            {posts.map(post => {
+              // console.log('tagging', post)
+              return (
+                <li key={post.id} {...post}>
+                  <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+                </li>
+              );
+            })}
+          </ul>
+        </Article>
       </Main>
     );
   }

@@ -3,8 +3,10 @@ layout: post
 title:  "Visualizing Promises"
 subTitle: Break on through...
 date:   2018-09-30
+modified:   2018-10-02
 category: promises
 cover: junior-ferreira-735237-unsplash.jpg
+tags: [promises, async, visualizing, javascript, composition]
 ---
 
 ![credit: junior-ferreira-735237-unsplash.jpg](junior-ferreira-735237-unsplash.jpg)
