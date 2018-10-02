@@ -10,10 +10,12 @@ const getDateLabel = (date, label) => {
   if (!date) return <span date={date} />;
 
   const aDate = new Date(date);
+  const lblClass = label.replace(/[^\w]*/gi, "");
   return (
-    <h3>
+    <h3 className={"list-item " + lblClass}>
       <label>{label} </label>
-      {format(aDate, "MMM Do YYYY")} <small>{distanceInWords(aDate, new Date())} ago</small>
+      <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
+      <small>{distanceInWords(aDate, new Date())} ago</small>
     </h3>
   );
 };
@@ -103,12 +105,20 @@ const styles = theme => ({
         }
       }
     },
-    "& h3, & h4": {
+    "& h3, h4": {
       lineHeight: 1.2,
       fontSize: "0.8em",
       width: "30%",
       display: "inline-block",
+      "& small, label": {
+        fontWeight: 700
+      },
+      // [`@media (min-width: ${theme.mediaQueryTresholds.S}px)`]: {
+      //   width: "50%",
+      //   fontSize: "0.75em"
+      // },
       [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
+        width: "50%",
         fontSize: "0.85em"
       },
       [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
@@ -142,8 +152,56 @@ const styles = theme => ({
     }
   },
   extraDetails: {
-    "> *": {
-      display: "flex"
+    display: "flex",
+    [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      fontSize: `0.8em`
+    },
+    "& h3": {
+      minWidth: "40%",
+      display: "flex",
+      flexDirection: "column"
+    }
+  },
+  metaInfo: {
+    display: "flex",
+    justifyContent: "space-between",
+    flexFlow: "row wrap",
+    "& h3": {
+      flexFlow: "column",
+      width: "100px",
+      display: "flex",
+      justifyContent: "space-between",
+      maxWidth: "300px",
+      fontSize: "11px",
+      margin: "0 0 4px 0",
+      "& label": {
+        width: "80px",
+        fontSize: "11px",
+        fontWeight: 700,
+        marginRight: "4px"
+      },
+      "& span.human-date": {
+        width: "80px"
+      },
+      "& small": {
+        width: "100px",
+        fontWeight: 700,
+        marginLeft: "0px"
+      }
+    },
+    [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      "& .updated": {
+        display: "none"
+      }
+    },
+    [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+      display: "inherit",
+      "& label": {
+        display: "inherit"
+      },
+      "& small": {
+        display: "inherit"
+      }
     }
   }
 });
@@ -201,7 +259,7 @@ class ListItem extends React.Component {
           <div className={classes.listItemText}>
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
-            <div className={classes.extraDetails}>
+            <div className={classes.metaInfo}>
               {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "published: ")}
               {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "updated: ")}
             </div>

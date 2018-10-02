@@ -38,28 +38,31 @@ const styles = theme => ({
   },
   meta: {
     display: "flex",
-    justifyContent: "space-between",
-    flexFlow: "column wrap",
+    justifyContent: "flex-end",
+    flexFlow: "row",
+    lineHeight: "1.55",
+    width: "100%",
     "& h3": {
-      width: "100%",
+      flexFlow: "column",
+      width: "100px",
       display: "flex",
       justifyContent: "space-between",
-      maxWidth: "55%",
+      maxWidth: "300px",
       fontSize: "11px",
       margin: "0 0 4px 0",
       "& label": {
-        width: "80px",
+        width: "100px",
         fontSize: "11px",
         fontWeight: 700,
         marginRight: "4px"
       },
       "& span.human-date": {
-        width: "80px"
+        width: "100px"
       },
       "& small": {
         width: "100px",
-        fontWeight: 700,
-        marginLeft: "4px"
+        fontWeight: 700
+        // marginLeft: "4px"
       }
     },
     "& a": {
@@ -79,13 +82,14 @@ const getDateLabel = (date, label) => {
 
   const aDate = new Date(date);
   return (
-    <h3>
+    <h3 className="post-details">
       <label>{label} </label>
       <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
       <small>{distanceInWords(aDate, new Date())} ago</small>
     </h3>
   );
 };
+
 const PostHeader = props => {
   const { classes, title, subTitle, date, modified, tags } = props;
   // console.log("title", title, "post.props", props);
