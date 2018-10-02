@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "gatsby-link";
 import Main from "../components/Main/";
+import "../styles/shared.css";
 
 const Tags = ({ pathContext }) => {
   const { posts, tagName } = pathContext;
@@ -12,10 +13,10 @@ const Tags = ({ pathContext }) => {
           Posts about <i>{tagName}</i>
         </h2>
 
-        <ul>
+        <ul className="tag-page">
           {posts.map(post => {
             return (
-              <li key={post.id}>
+              <li key={post.id} {...post}>
                 <Link to={post.frontmatter.path}>{post.frontmatter.title}</Link>
               </li>
             );

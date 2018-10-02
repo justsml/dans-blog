@@ -3,22 +3,11 @@ import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import format from "date-fns/format";
 import distanceInWords from "date-fns/distance_in_words";
+import TagList from "../TagList";
 
 const styles = theme => ({
   header: {
-    margin: "0 0 3em",
-    "& h3": {
-      maxWidth: "375px",
-      fontSize: "0.8em",
-      "& label": {
-        fontWeight: 900,
-        marginRight: "4px"
-      },
-      "& small": {
-        fontWeight: 800,
-        marginLeft: "4px"
-      }
-    }
+    margin: "0 0 3em"
   },
   title: {
     color: theme.main.colors.title,
@@ -50,6 +39,24 @@ const styles = theme => ({
   meta: {
     display: "flex",
     justifyContent: "space-between",
+    "& h3": {
+      maxWidth: "375px",
+      fontSize: "0.8em",
+      "& label": {
+        fontWeight: 900,
+        marginRight: "4px"
+      },
+      "& small": {
+        fontWeight: 800,
+        marginLeft: "4px"
+      }
+    },
+    "& a": {
+      color: theme.base.colors.link,
+      "&:hover": {
+        color: theme.base.colors.linkHover
+      }
+    },
     fontSize: `${theme.main.fonts.meta.size}em`,
     fontWeight: theme.main.fonts.meta.weight,
     color: theme.main.colors.meta
@@ -68,7 +75,7 @@ const getDateLabel = (date, label) => {
   );
 };
 const PostHeader = props => {
-  const { classes, title, subTitle, date, modified } = props;
+  const { classes, title, subTitle, date, modified, tags } = props;
   // console.log("title", title, "post.props", props);
 
   function myDate(dateString) {
@@ -89,6 +96,7 @@ const PostHeader = props => {
         {getDateLabel(date, "Published: ")}
         {getDateLabel(modified, "Updated: ")}
       </div>
+      <TagList tags={tags} />
     </header>
   );
 };
@@ -97,6 +105,8 @@ PostHeader.propTypes = {
   classes: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string,
+  tags: PropTypes.array,
+  modified: PropTypes.string,
   date: PropTypes.string.isRequired
 };
 

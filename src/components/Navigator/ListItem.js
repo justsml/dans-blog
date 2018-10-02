@@ -6,6 +6,18 @@ import LazyLoad from "react-lazyload";
 import format from "date-fns/format";
 import distanceInWords from "date-fns/distance_in_words";
 
+const getDateLabel = (date, label) => {
+  if (!date) return <span date={date} />;
+
+  const aDate = new Date(date);
+  return (
+    <h3>
+      <label>{label} </label>
+      {format(aDate, "MMM Do YYYY")} <small>{distanceInWords(aDate, new Date())} ago</small>
+    </h3>
+  );
+};
+
 const styles = theme => ({
   listItem: {
     margin: "0 0 .7em 0",
@@ -158,16 +170,6 @@ class ListItem extends React.Component {
 
   render() {
     const { classes, post, linkOnClick } = this.props;
-    let modified = null;
-    if (post.node.frontmatter.modified) {
-      const modDate = new Date(post.node.frontmatter.modified);
-      modified = (
-        <h3>
-          <label>Updated: </label>
-          {format(modDate, "MMM Do YYYY")} <small>{distanceInWords(modDate, new Date())} ago</small>
-        </h3>
-      );
-    }
 
     return (
       <li
@@ -200,13 +202,8 @@ class ListItem extends React.Component {
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
             <div className={classes.extraDetails}>
-              {post.node.frontmatter.date && (
-                <h3>
-                  <label>Published: </label>
-                  {format(new Date(post.node.frontmatter.date), "MMM Do YYYY")}
-                </h3>
-              )}
-              {modified}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "Published: ")}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "Updated: ")}
             </div>
           </div>
         </Link>
