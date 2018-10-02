@@ -39,15 +39,21 @@ const styles = theme => ({
   meta: {
     display: "flex",
     justifyContent: "space-between",
+    flexFlow: "column wrap",
     "& h3": {
-      maxWidth: "375px",
-      fontSize: "0.8em",
+      width: "100%",
+      display: "flex",
+      justifyContent: "space-between",
+      maxWidth: "30%",
+      fontSize: "11px",
+      margin: "0 0 4px 0",
       "& label": {
-        fontWeight: 900,
+        fontSize: "11px",
+        fontWeight: 700,
         marginRight: "4px"
       },
       "& small": {
-        fontWeight: 800,
+        fontWeight: 700,
         marginLeft: "4px"
       }
     },
@@ -93,8 +99,8 @@ const PostHeader = props => {
       <h1 className={classes.title}>{title}</h1>
       <h2 className={classes.subTitle}>{subTitle}</h2>
       <div className={classes.meta}>
-        {getDateLabel(date, "Published: ")}
-        {getDateLabel(modified, "Updated: ")}
+        {getDateLabel(date, "published: ")}
+        {getDateLabel(modified, "updated: ")}
       </div>
       <TagList tags={tags} />
     </header>

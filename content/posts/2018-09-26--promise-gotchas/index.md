@@ -7,8 +7,6 @@ category: promises
 cover: michal-parzuchowski-224092-unsplash.jpg
 ---
 
-# Promise Gotchas
-
 ![credit: michal-parzuchowski-224092-unsplash.jpg](michal-parzuchowski-224092-unsplash.jpg)
 
 ## Promises don't work like other values
@@ -24,7 +22,9 @@ Promise.resolve(42)
   .then(value => console.log(value))
 ```
 
-## Promises don't check for functions
+## Promises don't warn you when making a mistake
+
+Well, a likely mistake.
 
 For a variety of reasons, it was decided by TC39 that `.then` and `.catch` may be passed null. For example, `.then(null, null)` is valid and the required behavior is to skip that 'step' in the chain.
 
@@ -46,11 +46,16 @@ Promise.resolve(42)
 // Option #3:
 Promise.resolve(42)
   .then(value => console.log(value))
+
+// Option #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log)
 ```
 
 #### The Answer
 
-The answer is #2 & #3.
+The answer is #2, #3 & #4.
 
 Why? Let's look at the **types** of what was passed to `.then()`:
 
@@ -62,5 +67,16 @@ var arg3 = value => console.log(value)
 typeof arg1 === "undefined"
 typeof arg2 === "function"
 typeof arg3 === "function"
+```
+
+Still wondering how that 4th Option works?
+
+It's effectively running like this:
+
+```js
+// Option #4 - effectively
+Promise.resolve(42)
+  .then(undefined) // this has no affect on the value, it will be handed to following `.then(fn)`
+  .then(console.log)
 ```
 

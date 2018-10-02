@@ -5,14 +5,13 @@ subTitle: JavaScript Promises Are Fun!
 date: 2018-08-01
 modified: 2018-09-26
 category: promises
+tags: [promises, async, javascript, composition]
 cover: joe-yates-480485-unsplash.jpg
 ---
 
-# Intro to Promises
-
 ![credit: joe-yates-480485-unsplash.jpg](joe-yates-480485-unsplash.jpg)
 
-## Promises. What's their deal?
+## Promises... What's their deal?
 
 Whenever you execute any computer code, there are 2 possible outcomes: **success** or **failure**.
 

@@ -202,8 +202,8 @@ class ListItem extends React.Component {
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
             <div className={classes.extraDetails}>
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "Published: ")}
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "Updated: ")}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "published: ")}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "updated: ")}
             </div>
           </div>
         </Link>

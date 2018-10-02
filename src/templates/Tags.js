@@ -2,6 +2,13 @@ import React from "react";
 import Link from "gatsby-link";
 import Main from "../components/Main/";
 import "../styles/shared.css";
+import injectSheet from "react-jss";
+
+const styles = theme => ({
+  tags: {
+    display: "none"
+  }
+});
 
 const Tags = ({ pathContext }) => {
   const { posts, tagName } = pathContext;
@@ -27,4 +34,4 @@ const Tags = ({ pathContext }) => {
   }
 };
 
-export default Tags;
+export default injectSheet(styles)(Tags);

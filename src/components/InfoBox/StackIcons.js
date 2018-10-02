@@ -22,7 +22,7 @@ const styles = theme => ({
       left: 0,
       bottom: 0,
       width: "100%",
-      padding: "1em 2em"
+      padding: "0.2em"
     }
   },
   box: {
@@ -40,10 +40,10 @@ const styles = theme => ({
   },
   header: {
     textAlign: "center",
-    fontSize: ".85em",
+    fontSize: ".65em",
     letterSpacing: ".3em",
     width: "100%",
-    margin: "0 0 .8em 0",
+    margin: "0",
     fontWeight: 300
   }
 });

@@ -38,7 +38,7 @@ const styles = theme => ({
       fontSize: `${theme.main.fonts.contentHeading.h3Size}em`
     },
     "& p": {
-      margin: "0 0 1.5em 0",
+      margin: "0 0 0.5em 0",
       fontWeight: 400
     },
     "& ul": {

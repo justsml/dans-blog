@@ -112,7 +112,7 @@ const InfoHeader = props => {
 
   return (
     <header className={classes.header}>
-      <Link className={classes.avatarLink} onClick={avatarOnClick} to="/" title="back to Home page">
+      <Link className={classes.avatarLink} to="/" title="back to Home page">
         <div className={classes.avatar}>
           <img src={avatar} alt="" />
         </div>

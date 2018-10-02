@@ -71,7 +71,7 @@ class InfoBox extends React.Component {
 
     return (
       <aside
-        className={`${classes.infoBox} ${navigatorPosition ? navigatorPosition : ""} 
+        className={`${classes.infoBox} ${navigatorPosition ? navigatorPosition : ""}
         ${navigatorShape ? navigatorShape : ""}`}
       >
         {info && (
@@ -83,9 +83,9 @@ class InfoBox extends React.Component {
         )}
         <div className={classes.wrapper}>
           {info && <InfoText info={info} />}
-          <SocialIcons />
           {pages && <InfoMenu pages={pages} linkOnClick={this.menulinkOnClick} />}
-          <StackIcons />
+          <SocialIcons />
+          {/* <StackIcons /> */}
         </div>
       </aside>
     );
