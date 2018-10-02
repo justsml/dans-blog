@@ -7,7 +7,7 @@ import kebabCase from "lodash/kebabCase";
 // Components
 import Main from "../components/Main/";
 import Article from "../components/Main/Article";
-import Helmet from "react-helmet";
+// import Helmet from "react-helmet";
 import Link from "gatsby-link";
 
 const sortByKey = (key, arr, reverse = false) => {
@@ -25,7 +25,7 @@ const TagsPage = ({
   group = sortByKey("totalCount", group);
   return (
     <Main>
-      <Helmet title={title} />
+      {/* <Helmet title={title} /> */}
       <Article>
         <h1>Site Tags</h1>
         <ul>

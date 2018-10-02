@@ -14,14 +14,15 @@ const styles = theme => ({
 const Tags = ({ pathContext }) => {
   const { posts, tagName } = pathContext;
 
-  if (posts) {
-    return (
-      <Main>
-        <Article>
-          <h2>
-            Posts about <i>{tagName}</i>
-          </h2>
+  // if (posts) {
+  return (
+    <Main>
+      <Article>
+        <h2>
+          Posts about <i>{tagName}</i>
+        </h2>
 
+        {posts && (
           <ul className="tag-page">
             {posts.map(post => {
               // console.log('tagging', post)
@@ -32,10 +33,11 @@ const Tags = ({ pathContext }) => {
               );
             })}
           </ul>
-        </Article>
-      </Main>
-    );
-  }
+        )}
+      </Article>
+    </Main>
+  );
+  // }
 };
 
 export default injectSheet(styles)(Tags);
