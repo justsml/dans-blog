@@ -3,6 +3,24 @@ title: Talks
 menuTitle: Talks
 ---
 
+## Upcoming
+
+* [**Oct. 30th @ the DenverScript Meetup**](https://www.meetup.com/DenverScript/events/ssgrlpyxnbnc/)
+
+
+<!-- ### "Stop trying to make `await` a thing"
+
+JavaScript's `async`/`await` is, in retrospect, a mistake.
+
+Despite being one of the most popular features recently added to EcmaScript, `async/await` comes at the cost of diverging from Functional Programming principles/values. (Immutability, Function building-blocks, State machines, Single purpose.)
+
+Join Dan & friends as we rediscover the magic of the "callback queue." :rainbow: :sparkles:
+
+After this talk, you'll be able to **identify key advantages of Promises** over other async patterns.
+
+**Speaker:** [*Dan Levy*](https://www.danlevy.net/) is a Lead Instructor at Galvanize and contributor to multiple Open Source Software projects including NodeJS, Docker, Bluebird, Lodash, Rancher, Minio, Slate, IxJS.
+ -->
+
 ## Selected Talks & Videos
 
 - Live Talks
