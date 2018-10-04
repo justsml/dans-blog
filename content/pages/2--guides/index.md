@@ -7,6 +7,8 @@ menuTitle: Guides
 
 **By:** [Dan Levy](https://www.danlevy.net/) follow me on twitter: [@justsml](https://twitter.com/justsml)
 
+![credit: n-120570-unsplash.jpg](n-120570-unsplash.jpg)
+
 ## Table of Contents
 
 * [**docker**](https://github.com/justsml/guides/tree/master/docker)

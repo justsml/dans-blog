@@ -15,8 +15,9 @@ export default class Post extends React.Component {
   };
 
   componentDidMount() {
-    // eslint-disable-next-line
-    twttr.widgets.load();
+    if (typeof window.twttr !== "undefined") {
+      window.twttr.widgets.load();
+    }
   }
 
   render() {

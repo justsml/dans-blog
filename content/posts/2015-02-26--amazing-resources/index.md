@@ -2,8 +2,8 @@
 layout: post
 title:  "Winning Design Resource"
 subTitle: Solutions to Common UI Challenges
-date:   2015-02-26 11:42:21
-modified:   2018-09-23 01:00:01
+date:   2015-02-26
+modified:   2018-09-23
 category: design
 tags: [development, design, resources, patterns]
 cover: carl-heyerdahl-181868-unsplash.jpg
