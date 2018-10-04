@@ -45,6 +45,8 @@ module.exports = class HTML extends React.Component {
           {this.props.preBodyComponents}
           <div key={`body`} id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
           {this.props.postBodyComponents}
+
+          <script src="https://platform.twitter.com/widgets.js" charSet="utf-8" />
         </body>
       </html>
     );

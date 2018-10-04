@@ -6,31 +6,36 @@ import PostHeader from "./PostHeader";
 import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
 
-const Post = props => {
-  const { post, author, slug, facebook } = props;
-  const frontmatter = (post || {}).frontmatter;
-  const title = ((post || {}).frontmatter || {}).title;
-  const subTitle = ((post || {}).frontmatter || {}).subTitle;
-  let date = ((post || {}).fields || {}).prefix;
-  const html = (post || {}).html;
-  const htmlAst = (post || {}).htmlAst;
+export default class Post extends React.Component {
+  static propTypes = {
+    post: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
+    slug: PropTypes.string.isRequired,
+    facebook: PropTypes.object.isRequired
+  };
 
-  //console.log(post);
+  componentDidMount() {
+    // eslint-disable-next-line
+    twttr.widgets.load();
+  }
 
-  return (
-    <Article>
-      <PostHeader title={title} subTitle={subTitle} date={date} {...frontmatter} />
-      <Content html={html} />
-      <PostFooter author={author} post={post} slug={slug} facebook={facebook} />
-    </Article>
-  );
-};
+  render() {
+    const { post, author, slug, facebook } = this.props;
+    const frontmatter = (post || {}).frontmatter;
+    const title = ((post || {}).frontmatter || {}).title;
+    const subTitle = ((post || {}).frontmatter || {}).subTitle;
+    let date = ((post || {}).fields || {}).prefix;
+    const html = (post || {}).html;
+    const htmlAst = (post || {}).htmlAst;
 
-Post.propTypes = {
-  post: PropTypes.object.isRequired,
-  author: PropTypes.object.isRequired,
-  slug: PropTypes.string.isRequired,
-  facebook: PropTypes.object.isRequired
-};
+    //console.log(post);
 
-export default Post;
+    return (
+      <Article>
+        <PostHeader title={title} subTitle={subTitle} date={date} {...frontmatter} />
+        <Content html={html} />
+        <PostFooter author={author} post={post} slug={slug} facebook={facebook} />
+      </Article>
+    );
+  }
+}
