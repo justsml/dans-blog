@@ -59,7 +59,8 @@ class ContactForm extends React.Component {
   };
 
   handleSubmit = e => {
-    fetch("/", {
+    e.preventDefault();
+    return fetch("/", {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: encode({ "form-name": "contact", ...this.state })
@@ -73,7 +74,6 @@ class ContactForm extends React.Component {
         this.handleNetworkError();
       });
 
-    e.preventDefault();
   };
 
   render() {

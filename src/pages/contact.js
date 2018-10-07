@@ -7,7 +7,7 @@ import Main from "../components/Main";
 import Article from "../components/Main/Article";
 import PageHeader from "../components/Page/PageHeader";
 import Content from "../components/Main/Content";
-// import Form from "../components/ContactForm";
+import ContactForm from "../components/ContactForm";
 import config from "../../content/meta/config";
 
 const styles = theme => ({});
@@ -20,7 +20,7 @@ const Contact = () => {
         <Content>
           Feel free to contact me by email: <Obfuscate email={config.contactEmail} />
         </Content>
-        {/* <Form /> */}
+        <ContactForm />
       </Article>
     </Main>
   );
