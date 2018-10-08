@@ -25,12 +25,12 @@ Wait, is this a fight? It must be right? We don't seem to talk about callbacks a
 
 No, it's not a fight. Ultimately it's another potential tool in your toolbox. However, because `async`/`await` doesn't replace all Promise functionality (specifically `Promise.all`, `.race`) **it's misleading presenting it as a replacement.**
 
-There's a lot of influential people promoting the misconception that `async`/`await` is the Promises [replacement](https://developers.google.com/web/fundamentals/primers/async-functions) [everyone's](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [been](https://twitter.com/umaar/status/1045655069478334464) [waiting](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [for](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba).
+There's a lot of influential people promoting this misconception `async`/`await` is the Promises [replacement](https://developers.google.com/web/fundamentals/primers/async-functions) [everyone's](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [been](https://twitter.com/umaar/status/1045655069478334464) [waiting](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [for](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba).
 
 > **Hint: No, nope, and not even a little.**
 
 
-A recent addition to VS Code seems to advance this bias. As [@umaar](https://twitter.com/umaar) tweeted:
+A recent addition to VS Code advances this bias. As [@umaar](https://twitter.com/umaar) tweeted:
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.twitter.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://twitter.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
@@ -44,7 +44,9 @@ I've been there. 🤗
 
 <br />
 
-I have completely flipped how I feel about Promises now. **They are amazing.** and my "top 2 rules" were critical in finding the `Promise` Land (#sorrynotsorry).
+I used to hate Promises. Today, I have come back around completely. **Promises are amazing.** They can enable/encourage you to **take advantage of function composition.**
+
+There were 2 key reasons I and my "top 2 rules" were critical in finding the `Promise` Land (#sorrynotsorry).
 
 #### Top 2 Rules
 

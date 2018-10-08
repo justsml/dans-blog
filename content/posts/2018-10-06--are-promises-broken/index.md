@@ -9,6 +9,15 @@ cover: lennart-heim-766366-unsplash.jpg
 
 ![credit: lennart-heim-766366-unsplash](lennart-heim-766366-unsplash.jpg)
 
+## The Original Sin
+
+One of the most common myths about Promises is about it's error shortcomings.
+
+This is largely due to numerous problems in early implementations (2009) and associated 3rd party libraries.
+
+It's almost 10 years later. **Things are better.** Error rules are the same for asynchronous and synchronous code.
+
+
 
 I used to run into 2 issues seemingly constantly: no visibility into errors and undefined data.
 
