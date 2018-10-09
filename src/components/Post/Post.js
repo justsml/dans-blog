@@ -11,7 +11,7 @@ export default class Post extends React.Component {
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
-    facebook: PropTypes.object.isRequired
+    // facebook: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -35,7 +35,7 @@ export default class Post extends React.Component {
       <Article>
         <PostHeader title={title} subTitle={subTitle} date={date} {...frontmatter} />
         <Content html={html} />
-        <PostFooter author={author} post={post} slug={slug} facebook={facebook} />
+        <PostFooter title={title} author={author} post={post} slug={slug} {...frontmatter} />
       </Article>
     );
   }
