@@ -10,7 +10,7 @@ export default class Post extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
-    slug: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired
     // facebook: PropTypes.object.isRequired
   };
 
@@ -21,13 +21,13 @@ export default class Post extends React.Component {
   }
 
   render() {
-    const { post, author, slug, facebook } = this.props;
+    const { post, author, slug } = this.props;
     const frontmatter = (post || {}).frontmatter;
     const title = ((post || {}).frontmatter || {}).title;
     const subTitle = ((post || {}).frontmatter || {}).subTitle;
     let date = ((post || {}).fields || {}).prefix;
     const html = (post || {}).html;
-    const htmlAst = (post || {}).htmlAst;
+    // const htmlAst = (post || {}).htmlAst;
 
     //console.log(post);
 

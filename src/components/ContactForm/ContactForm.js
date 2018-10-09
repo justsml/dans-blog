@@ -73,7 +73,6 @@ class ContactForm extends React.Component {
         console.error("Form submission error:", error);
         this.handleNetworkError();
       });
-
   };
 
   render() {

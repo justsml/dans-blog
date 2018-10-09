@@ -26,7 +26,7 @@ const PostShare = asyncComponent(() =>
     .catch(error => {})
 );
 
-const PostFooter = ({ classes, author, post, slug, facebook }) => {
+const PostFooter = ({ classes, author, post, slug }) => {
   return (
     <footer className={classes.footer}>
       <PostShare post={post} slug={slug} />
@@ -40,7 +40,7 @@ PostFooter.propTypes = {
   classes: PropTypes.object.isRequired,
   author: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
-  slug: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired
   // facebook: PropTypes.object.isRequired
 };
 

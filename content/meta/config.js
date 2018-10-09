@@ -6,7 +6,7 @@ module.exports = {
   siteDescription: "Come for the JavaScript, stay for the cat memes.",
   siteUrl: "https://www.danlevy.net",
   pathPrefix: "",
-  disqusShortName: "danlevy-1",
+  disqusShortname: "danlevy-1",
   // siteImage: "preview.jpg",
   siteLanguage: "en",
   // author

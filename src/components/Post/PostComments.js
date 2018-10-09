@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import FacebookProvider, { Comments } from "react-facebook";
-import { DiscussionEmbed, CommentCount } from 'disqus-react';
+import { DiscussionEmbed, CommentCount } from "disqus-react";
 
 require("core-js/fn/array/find");
 
@@ -26,12 +26,12 @@ const PostComments = props => {
   // const disqusShortname = config.disqusShortName
   const disqusConfig = {
     identifier: slug,
-    title: props.title,
+    title: post.fields.prefix,
     url
-  }
+  };
 
-  console.log('POST COMMENTS:', disqusConfig, config.disqusShortname, props)
-  console.log('POST COMMENTS PROPS:', props)
+  console.log("POST COMMENTS:", disqusConfig, config.disqusShortname, props);
+  console.log("POST COMMENTS PROPS:", props);
   return (
     <div id="post-comments" className={classes.postComments}>
       <DiscussionEmbed shortname={config.disqusShortName} config={disqusConfig} />
@@ -51,7 +51,7 @@ PostComments.propTypes = {
   classes: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
   slug: PropTypes.string.isRequired,
-  theme: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired
   // facebook: PropTypes.object.isRequired
 };
 
