@@ -10,6 +10,12 @@ const styles = {
     border: "1px solid #999",
     padding: "0em 1em 1em 1em"
   },
+  failed: {
+    border: "1px dashed red"
+  },
+  correct: {
+    border: "1px solid green"
+  },
   description: {},
   optionList: {
     // cursor: 'pointer',
@@ -127,7 +133,7 @@ class Challenge extends React.Component {
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
-      (this.isCorrect() ? classes.correct : classes.incorrect);
+      (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
     // this.isCorrect()
 
     return (
