@@ -5,6 +5,7 @@ import Article from "../Main/Article";
 import PostHeader from "./PostHeader";
 import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
+import AutoLoader from "../Challenge/AutoLoader";
 
 export default class Post extends React.Component {
   static propTypes = {
@@ -35,6 +36,7 @@ export default class Post extends React.Component {
       <Article>
         <PostHeader title={title} subTitle={subTitle} date={date} {...frontmatter} />
         <Content html={html} />
+        <AutoLoader post={post} frontmatter={frontmatter} />
         <PostFooter title={title} author={author} post={post} slug={slug} {...frontmatter} />
       </Article>
     );

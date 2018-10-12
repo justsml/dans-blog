@@ -117,3 +117,12 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 > * Inspiration for this article: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
 
+<div class="challenge" title="Question #1: Meaning of life:">
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">What is the meaning of life?</div>
+</div>

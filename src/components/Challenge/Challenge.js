@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import marked from "marked";
 
-const styles = theme => ({
+const styles = {
   outerBox: {
     width: "95%",
     margin: "1em auto",
@@ -12,16 +12,32 @@ const styles = theme => ({
   },
   description: {},
   optionList: {
-    cursor: "pointer",
+    // cursor: 'pointer',
     listStyle: "none",
     margin: "0",
     paddingLeft: "1em"
   },
   optionItem: {
+    cursor: "pointer",
     margin: "1.2em 0.25em",
-    cursor: "pointer"
+    padding: "0.5em",
+    border: "1px solid transparent",
+    "> *": {
+      cursor: "pointer"
+    },
+    "&:hover": {
+      border: "1px solid #333"
+    }
+  },
+  optionItemCompleted: {
+    margin: "1.2em 0.25em",
+    padding: "0.5em",
+    border: "1px solid transparent"
   }
-});
+};
+
+const isHtml = text => text.split(/<[^>]+>/).length > 1;
+const isMarkdown = text => text.split(/^#/).length >= 1;
 
 class Challenge extends React.Component {
   state = {
@@ -30,16 +46,13 @@ class Challenge extends React.Component {
   };
 
   static propTypes = {
-    title: PropTypes.string,
-    answer: PropTypes.string,
-    options: PropTypes.arrayOf(PropTypes.string),
-    classes: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
-    description: PropTypes.string
+    classes: PropTypes.object.isRequired
   };
-
-  isMarkdown = text => text.split(/^#/).length >= 1;
-  isHtml = text => text.split(/<[^>]+>/).length > 1;
 
   componentDidMount() {
     this.loadState();
@@ -75,50 +88,61 @@ class Challenge extends React.Component {
     setTimeout(this.saveState, 1);
   };
 
-  reset = () => {
-    this.setState(() => ({ attempts: 0, selection: "" }));
-    setTimeout(this.saveState, 1);
-  };
-
   getOption = option => {
     const { classes } = this.props;
-    let selectionIcon =
+    const selectionIcon =
       this.state.selection === option && option === this.props.answer ? "✅ " : "⬜ ";
 
     return (
-      <li key={option} onClick={() => this.tryAnswer(option)} style={classes.optionItem}>
+      <li
+        key={option}
+        onClick={() => this.tryAnswer(option)}
+        className={this.isCorrect() ? classes.optionItemCompleted : classes.optionItem}
+      >
         <span>{selectionIcon}</span>
         <label>{option}</label>
       </li>
     );
   };
 
+  reset = () => {
+    this.setState({ attempts: 0, selection: "" }, () => setTimeout(this.saveState, 1));
+  };
+
+  getMarkdownHtml = markdown => {
+    return {
+      __html: marked(markdown, {
+        gfm: true,
+        tables: true,
+        breaks: false,
+        sanitize: false,
+        smartLists: true,
+        smartypants: false
+      })
+    };
+  };
+
   render() {
     const { classes } = this.props;
-    const descHtml = this.isHtml(this.props.description)
-      ? this.props.description
-      : marked(this.props.description, {
-          gfm: true,
-          tables: true,
-          breaks: false,
-          sanitize: false,
-          smartLists: true,
-          smartypants: false
-        });
+    let challengeClasses =
+      classes.outerBox +
+      " challenge-block " +
+      (this.isCorrect() ? classes.correct : classes.incorrect);
+    // this.isCorrect()
 
     return (
-      <section
-        style={classes.outerBox}
-        className={"challenge-block " + this.isCorrect() ? "correct" : "incorrect"}
-      >
+      <section className={challengeClasses}>
         <h1>{this.props.title}</h1>
-        <div style={classes.description} dangerouslySetInnerHTML={{ __html: descHtml }} />
+        <div
+          className={classes.description}
+          dangerouslySetInnerHTML={this.getMarkdownHtml(this.props.description)}
+        />
         <blockquote>Please select from the following options:</blockquote>
-        {`Attempts: ${this.state.attempts}`}
-        {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ "}
-        <ul style={classes.optionList}>{this.props.options.map(this.getOption)}</ul>
+        <ul className={classes.optionList}>{this.props.options.map(this.getOption)}</ul>
         {this.state.attempts > 0 && (
           <div className={"status"}>
+            {`Attempts: ${this.state.attempts}`}
+            {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ "}
             <button onClick={this.reset}>Reset</button>
           </div>
         )}
