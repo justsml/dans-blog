@@ -2,7 +2,7 @@
 title: Are Promises Broken?
 subTitle: Promised errors. Broken promises?
 date: 2018-10-06
-modified: null
+modified: 2018-10-12
 tags: [promises, javascript, errors, catch]
 cover: lennart-heim-766366-unsplash.jpg
 ---
@@ -15,7 +15,11 @@ One of the most common myths about Promises is it's **alleged** error shortcomin
 
 **Years ago** Promises _were_ actually awful at reliable errors. Lots of work went into fixing it.
 
-> And **it got fixed**, even **widely deployed**. People rejoiced! Some people didn't notice.
+> And lo **it got fixed**, even **widely deployed**.
+
+#### People rejoiced! Though some people didn't notice...
+
+## Today
 
 However, the story persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and many other sources.
 

@@ -3,7 +3,7 @@ layout: post
 title: "Stop trying to make async/await happen"
 subTitle: Promises are so fetch right now
 date: 2018-10-03
-modified: null
+modified: 2018-10-12
 category: promises
 tags: [promises, async, await, async-await, javascript, composition]
 cover: matt-nelson-414464-unsplash.jpg

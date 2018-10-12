@@ -3,7 +3,7 @@ layout: post
 title:  "Visualizing Promises"
 subTitle: Break on through...
 date:   2018-09-30
-modified:   2018-10-02
+modified:   2018-10-09
 category: promises
 cover: junior-ferreira-735237-unsplash.jpg
 tags: [promises, async, visualizing, javascript, composition]
@@ -36,12 +36,14 @@ This shows how `console.log()`'s execution will be delayed by `delay(msec)`.
 delay(1000).then(() => console.log('done'))
 ```
 
-```
+![](1000ms-resized.gif)
+
+<!-- ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-```
+``` -->
 
 #### Example #2/4
 
@@ -54,12 +56,14 @@ _This shows a common mistage using `console.log`._ Generally the desired behavio
 delay(1000).then(console.log('done'))
 ```
 
-```
+![](1000msNullLog-resized.gif)
+
+<!-- ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-```
+``` -->
 
 
 #### Example #3/4
@@ -72,14 +76,16 @@ delay(2000).then(console.log)
 delay(3000).then(console.log)
 ```
 
-```
+![](3000ms-resized.gif)
+
+<!-- ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-```
+``` -->
 
 #### Example #4/4
 
@@ -90,15 +96,19 @@ Promise.all([delay(1000), delay(2000), delay(3000)])
   .then(console.log)
 ```
 
+![](PromiseAll-resized.gif)
+
+<!--
 ```
 delay(1000) ---| [resolved]------------------v
 delay(2000) ---|--------------| [resolved]---v
 delay(3000) ---|--------------|--------------v [resolved]
-Promise.all()  |--------------|--------------> console.log([1000, 2000, 3000])
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 |--------------|--------------|--------------|--------------------------------
 |              |              |              |
 0msec        1sec           2sec           3sec
 ```
+-->
 
 
 
