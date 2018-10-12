@@ -38,7 +38,7 @@ However, the story persists, I see it everywhere: [popular articles on medium](h
 
 ### #1 Promises need something to hold on
 
-As a best practice, always `return` from your functions.
+As a best practice, **always `return`** from your functions.
 
 Promise callback functions follow a certain pattern in `.then(callback)` and `.catch(callback)`.
 
