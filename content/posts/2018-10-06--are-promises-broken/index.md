@@ -1,34 +1,39 @@
 ---
-title: Are Promises Broken?
-subTitle: Promised errors. Broken promises?
+title: Broken Promises?
+subTitle: Dropping errors, losing results...
 date: 2018-10-06
 modified: 2018-10-12
 tags: [promises, javascript, errors, catch]
+category: promises
 cover: lennart-heim-766366-unsplash.jpg
 ---
 
+# Are JavaScript Promises broken?
+
 ![credit: lennart-heim-766366-unsplash](lennart-heim-766366-unsplash.jpg)
 
-## The Original Sin
+## In the Before times
 
 One of the most common myths about Promises is it's **alleged** error shortcomings.
 
-**Years ago** Promises _were_ actually awful at reliable errors. Lots of work went into fixing it.
+**Many years ago** Promises _were_ actually awful with errors. **Lots of work went into fixing it.**
 
-> And lo **it got fixed**, even **widely deployed**.
+> And lo, **it got fixed**, even **widely deployed**.
 
-#### People rejoiced! Though some people didn't notice...
+#### People rejoiced...
+
+However some people didn't notice.
 
 ## Today
 
-However, the story persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and many other sources.
+The myth persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and many other sources.
 
 [Flimsy examples](/promise-gotchas/) are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse.
 
 <!-- One such tip I've seen multiple times: is to never use `.catch`, and instead use an `"unhandledRejection"` global event. **NEVER** do this. unhandledRejection is designed for cleanup of global references, like database connections, before an impending shutdown.) -->
 
 
-## Rules to Stay Out of Trouble
+# Rules to Stay Out of Trouble
 
 1. Always `return` from your functions.
 1. Always use `new` with `Error`'s.

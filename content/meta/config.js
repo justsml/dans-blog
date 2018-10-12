@@ -4,7 +4,7 @@ module.exports = {
   siteTitle: "Dan Levy's Collection of Articles & Learning Materials", // <title>
   shortSiteTitle: "Dan Levy's Blog", // <title> ending for posts and pages
   siteDescription: "Come for the JavaScript, stay for the cat memes.",
-  siteUrl: "https://www.danlevy.net",
+  siteUrl: "https://danlevy.net",
   pathPrefix: "",
   disqusShortname: "danlevy-1",
   // siteImage: "preview.jpg",
