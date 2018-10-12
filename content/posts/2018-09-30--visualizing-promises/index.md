@@ -112,5 +112,8 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 
 
 
-> Credit: Inspiration for this article is largely due to: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+> Credits:
+> * Animated async diagrams by [Patrick Biffle](https://github.com/Piglacquer)
+> * Inspiration for this article: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
 

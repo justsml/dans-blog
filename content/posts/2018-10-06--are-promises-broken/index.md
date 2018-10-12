@@ -94,4 +94,19 @@ Promise.resolve(42)
 ```
 
 
- It isn't an event handler, and it's placement is important.
+`.catch()` is NOT an event handler. It's placement is important, as it can only 'catch' errors thrown above it.
+
+If you return a non-error value in `.catch()`, the Promise chain switches to running the `.then()` callbacks in sequence. (Effectively overriding the error state.)
+
+For example, after we catch the `totes fail` error below, we return an arbitrary value `99`:
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(console.log) // expected output: 99
+```
+
