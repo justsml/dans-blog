@@ -11,18 +11,83 @@ cover: lennart-heim-766366-unsplash.jpg
 
 ## The Original Sin
 
-One of the most common myths about Promises is about it's error shortcomings.
+One of the most common myths about Promises is it's **alleged** error shortcomings.
 
-This is largely due to numerous problems in early implementations (2009) and associated 3rd party libraries.
+**Years ago** Promises _were_ actually awful at reliable errors. Lots of work went into fixing it.
 
-It's almost 10 years later. **Things are better.** Error rules are the same for asynchronous and synchronous code.
+> And **it got fixed**, even **widely deployed**. People rejoiced! Some people didn't notice.
+
+However, the story persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and many other sources.
+
+[Flimsy examples](/promise-gotchas/) are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse.
+
+<!-- One such tip I've seen multiple times: is to never use `.catch`, and instead use an `"unhandledRejection"` global event. **NEVER** do this. unhandledRejection is designed for cleanup of global references, like database connections, before an impending shutdown.) -->
 
 
+## Rules to Stay Out of Trouble
 
-I used to run into 2 issues seemingly constantly: no visibility into errors and undefined data.
+1. Always `return` from your functions.
+1. Always use `new` with `Error`'s.
+1. Always use `.catch()`, at least once.
+1. Seriosuly, did you check #1 & #2?
 
-3 possible Fixes:
-* 80% of the time: Failed to return from function. ALWAYS return!!!
-* 15% it is a bug in calling using Promise.reject() or throw. Errors in all of JavaScript require a valid Error instance for stack traces to work. Always use `NEW` keyword when creating errors to throw/reject.
-* 5% of the time it's a complicated hierarchy - say +3 Promise chains deep. This will resemble callback hell. Don't do this. It's virtually never needed. Break apart the Promise chain depth by moving functions 'up' into sequential `.then`'s. Use named functions to add clarity.
 
+### #1 Promises need something to hold on
+
+As a best practice, always `return` from your functions.
+
+Promise callback functions follow a certain pattern in `.then(callback)` and `.catch(callback)`.
+
+Each value returned gets passed to the next `.then()`'s callback.
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)
+  .then(addTen) // 20
+  .then(addTen) // 30
+  .then(addTen) // 40
+  .then(console.log) // 40
+```
+
+> Bonus of "always returning": code is much easier to unit test.
+
+### #2 Errors work best using `new`
+
+JavaScript has an interesting behavior around errors (which applys to asynchronous and synchronous code.)
+
+In order to **get useful details about the line number** and call stack, you must use `new` (the constructor) to get this to work properly. That's it.
+
+Correct `new Error` examples:
+
+```js
+throw new Error('error message') // ✅
+Promise.reject(new Error('error message')) // ✅
+```
+
+The following are common anti-patterns:
+
+```js
+throw Error('error message') // ❌
+throw 'error message' // ❌
+Promise.reject(Error('error message')) // ❌
+Promise.reject('error message') // ❌
+```
+
+
+### #3 Handle errors where it makes sense
+
+Promises provide a slick way to handle errors, using `.catch()`. It is basically a special kind of `.then()` - where any errors from preceding `.then()`'s get handled. Let's look at an example.
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+
+ It isn't an event handler, and it's placement is important.
