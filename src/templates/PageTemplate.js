@@ -21,6 +21,7 @@ class PageTemplate extends React.Component {
   render() {
     const { data } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
+    // console.log("template.props", this.props);
 
     return (
       <Main>
