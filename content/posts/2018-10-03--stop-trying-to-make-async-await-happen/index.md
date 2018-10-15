@@ -46,22 +46,22 @@ I've been there. 🤗
 
 I used to hate Promises. Today, I have come back around completely. **Promises are amazing.** They can enable/encourage you to **take advantage of function composition.**
 
-There were 2 key reasons I and my "top 2 rules" were critical in finding the `Promise` Land (#sorrynotsorry).
-
-#### Top 2 Rules
+There are 2 areas I recommend focusing on first to advance your Promise technique.
 
 1. [Named functions (no anonymous)](#rule-1)
 1. [Single-purpose functions](#rule-2)
 
-<h2 id="rule-1">Rule #1: Named Functions!</h2>
+<h2 id="rule-1">#1: Named Functions!</h2>
 
-Kill your anonymous methods. Using named functions makes code read like a beat-poetry version of the requirements/steps.
+Kill your anonymous methods. Using **named functions** makes code read like poetry of your requirements.
 
 Let's look at a common example:
 
-Making an HTTP GET request using `fetch`: the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios).
+Making an HTTP GET request using `fetch`:
 
-Before we see the solution, look over a common "recommended" implementation:
+<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+
+<!-- Before we see the solution, look over a common "recommended" implementation: -->
 
 #### Anti-Pattern
 
@@ -98,11 +98,11 @@ function getText(response) {
 
 **Additional Resources:** Check out my **1 minute videos** of [basic logging](https://www.youtube.com/xR_MZE1SIkk) and [advanced debugging](https://www.youtube.com/P_tghqWj72M) using this technique.
 
-<h2 id="rule-2">Rule #2: Single Purpose (Functions)</h2>
+<h2 id="rule-2">#2: Single Purpose (Functions)</h2>
 
 It sounds _deceptively precise_: Single Purpose.
 
-Yet it's so subjective, arbitrary, and sometimes even meaningless.
+Yet it's so subjective, arbitrary, and sure, sometimes even meaningless.
 
 <!-- Instead of arguing if a given function is sufficiently focused.
 
@@ -130,9 +130,10 @@ Interestingly, most developers report they are _pretty dang good_ at **Single Pu
 
 <!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-Even the (incredibly talented) [Jake Archibald](https://twitter.com/jaffathecake) wrote up [an article on Google Developers site](https://developers.google.com/web/fundamentals/primers/async-functions) which has examples that could benefit from my **Rules**
+Let's look at an example the (incredibly talented) [Jake Archibald](https://twitter.com/jaffathecake) features in his [async/await article for the Google Developers site](https://developers.google.com/web/fundamentals/primers/async-functions).
 
-Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.")
+<!--
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -150,13 +151,26 @@ function logInOrder(urls) {
 }
 ```
 
-As Jake points out, the `.reduce` is too complex. It doesn't make sense to hand-write nuanced mechanisms all over your code. Put another way, we don't write DOM creation code with endless `document.createElement()`, `element.setAttribute()`, etc. Instead we choose the best tool out of many options: helper/utility functions, libraries or frameworks.
+#### Single Purpose?
 
-We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed.
+I'd say no. What's `logInOrder` doing?
+
+1. loop through a list of `urls`
+1. apply them to an inline HTTP GET:
+  1. HTTP `fetch`
+  1. return response text body
+1. append a `.then(text => console.log(text))` after each promise in `textPromise`
+  1. print results serially
+
+There are 5 anonymous methods defined in this single function. As Jake even points out, the `.reduce` is too complex. It doesn't make sense to hand-write nuanced mechanisms all over your code. Put another way, we don't write DOM creation code with endless `document.createElement()`, `element.setAttribute()`, etc. Instead we choose the best tool out of many options: helper/utility functions, libraries or frameworks.
+
+<!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
 
 <!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
 
 <!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
+
+My primar
 
 ### Solution: Single Purpose Functions
 
@@ -164,16 +178,14 @@ We need to isolate each 'step' that's going on: there's an HTTP request, a trans
 
 ![](async-refactor-google-extract-methods-resized-75.gif "Extracting methods")
 
-#### Continue by replacing the `.reduce()` and `logPromise()` with a `Promise.all` and a `.forEach()/.map()`...
+#### Continue by replacing the `.reduce()` and `logPromise()` with a `Promise.all` and a `..map()`...
 
 ![](async-refactor-google-chain-methods-resized-75.gif "Improving readability")
 
 
 ## Summary
 
-##### These 2 rules will improve your Promise code significantly.
-
-Try apply them to your own code! Then [tweet at me](https://twitter.com/justsml) & let me know how it went. Or if you have questions or comments, reach out as well!
+Try apply these techniques to your own code! Then [tweet at me](https://twitter.com/justsml) & let me know how it went. Or if you have questions or comments, reach out as well!
 
 Help spread the #PromiseTruth & share this article. ❤️
 
