@@ -2,7 +2,8 @@
 layout: post
 title:  "Security Notes: RegEx"
 subTitle: Even RegEx can be vulnerable
-date:   2015-02-24 05:42:21
+date: 2015-02-24
+modified: 2018-10-01
 category: security
 tags: [security]
 cover_credit: Photo by Markus Spiske on Unsplash
