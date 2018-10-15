@@ -170,7 +170,7 @@ There are 5 anonymous methods defined in this single function. As Jake even poin
 
 <!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
 
-My primar
+
 
 ### Solution: Single Purpose Functions
 
