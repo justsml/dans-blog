@@ -1,16 +1,16 @@
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import IconButton from '@material-ui/core/IconButton';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import classNames from 'classnames';
-import Link from 'gatsby-link';
-import PropTypes from 'prop-types';
-import React from 'react';
-import injectSheet from 'react-jss';
-import {Manager, Popper, Target} from 'react-popper';
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Grow from "@material-ui/core/Grow";
+import IconButton from "@material-ui/core/IconButton";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import Paper from "@material-ui/core/Paper";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import classNames from "classnames";
+import Link from "gatsby-link";
+import PropTypes from "prop-types";
+import React from "react";
+import injectSheet from "react-jss";
+import { Manager, Popper, Target } from "react-popper";
 
 const styles = theme => ({
   topMenu: {
@@ -89,7 +89,12 @@ class TopMenu extends React.Component {
                       const { fields, frontmatter } = page.node;
 
                       return (
-                        <Link key={fields.slug} to={fields.slug} style={{ display: "block" }}>
+                        <Link
+                          aria-label={frontmatter.title}
+                          key={fields.slug}
+                          to={fields.slug}
+                          style={{ display: "block" }}
+                        >
                           <MenuItem
                             onClick={e => {
                               this.props.pageLinkOnClick(e);
@@ -101,7 +106,7 @@ class TopMenu extends React.Component {
                         </Link>
                       );
                     })}
-                    <Link to="/contact/" style={{ display: "block" }}>
+                    <Link aria-label="Contact" to="/contact/" style={{ display: "block" }}>
                       <MenuItem
                         onClick={e => {
                           this.props.pageLinkOnClick(e);
