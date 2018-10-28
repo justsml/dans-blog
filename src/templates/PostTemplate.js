@@ -73,6 +73,7 @@ export const postQuery = graphql`
       frontmatter {
         title
         subTitle
+        category
         date
         modified
         tags
