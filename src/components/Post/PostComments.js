@@ -23,7 +23,7 @@ const styles = theme => ({
 const PostComments = props => {
   const { classes, slug, post } = props;
   const url = config.siteUrl + config.pathPrefix + slug;
-  // const disqusShortname = config.disqusShortName
+  // const disqusShortname = config.disqusShortname
   const disqusConfig = {
     identifier: slug,
     title: post.fields.prefix,
@@ -34,7 +34,7 @@ const PostComments = props => {
   console.log("POST COMMENTS PROPS:", props);
   return (
     <div id="post-comments" className={classes.postComments}>
-      <DiscussionEmbed shortname={config.disqusShortName} config={disqusConfig} />
+      <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />
 
       {/* <FacebookProvider appId={facebook}>
         <Comments
