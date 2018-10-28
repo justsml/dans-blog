@@ -6,15 +6,28 @@ export default class AutoLoader extends React.Component {
 
   getContent = (elem, selector) => {
     const el = elem && elem.querySelector && elem.querySelector(selector);
-    return el ? el.textContent : "";
+    return el ? el.innerHTML : "";
   };
 
   componentDidMount() {
     // check the DOM for static data to extract
-    setTimeout(this.loadChallenges, 750);
+    this.loadTimeout = setTimeout(this.loadChallenges, 750);
   }
 
-  loadChallenges = () => {
+  componentWillUnmount() {
+    clearTimeout(this.loadTimeout);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const challenges = this.getChallenges();
+    const getTitles = cs => cs.map(c => c.title);
+
+    if (getTitles(challenges).join(",") === getTitles(nextState.challenges).join(",")) return false;
+
+    return true;
+  }
+
+  getChallenges = () => {
     const challenges = Array.from(document.querySelectorAll(".challenge"));
     console.log("challenges", challenges);
 
@@ -33,8 +46,11 @@ export default class AutoLoader extends React.Component {
       // return <Challenge key={config.title} {...config} />
     });
 
-    this.setState({ challenges: challengeConfigs });
     return challengeConfigs;
+  };
+
+  loadChallenges = (challengeConfigs = this.getChallenges()) => {
+    this.setState({ challenges: challengeConfigs });
   };
 
   render() {

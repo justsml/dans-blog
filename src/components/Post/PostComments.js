@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
-import FacebookProvider, { Comments } from "react-facebook";
-import { DiscussionEmbed, CommentCount } from "disqus-react";
+// import FacebookProvider, { Comments } from "react-facebook";
+import { DiscussionEmbed } from "disqus-react";
 
 require("core-js/fn/array/find");
 
@@ -21,17 +21,19 @@ const styles = theme => ({
 // </Disqus.CommentCount> */}
 
 const PostComments = props => {
-  const { classes, slug, post } = props;
+  const { classes, slug, post } = props || {};
+  const title = post && post.frontmatter && post.frontmatter.title;
+  const category = post && post.frontmatter && post.frontmatter.category;
+
   const url = config.siteUrl + config.pathPrefix + slug;
-  // const disqusShortname = config.disqusShortname
   const disqusConfig = {
-    identifier: slug,
-    title: post.fields.prefix,
+    identifier: `${post && post.fields && post.fields.prefix}/${category}`,
+    title: title || slug,
     url
   };
 
-  console.log("POST COMMENTS:", disqusConfig, config.disqusShortname, props);
-  console.log("POST COMMENTS PROPS:", props);
+  console.log("POST COMMENTS:", JSON.stringify(disqusConfig));
+  // console.log("POST COMMENTS PROPS:", JSON.stringify(props, null, 2));
   return (
     <div id="post-comments" className={classes.postComments}>
       <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />

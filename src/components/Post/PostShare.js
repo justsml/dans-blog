@@ -48,8 +48,8 @@ const styles = theme => ({
 class PostShare extends React.Component {
   render() {
     const { post, classes, slug } = this.props;
-    const { excerpt, frontmatter } = post;
-    const { title } = frontmatter;
+    const { excerpt, frontmatter } = post || {};
+    const { title } = frontmatter || {};
     const url = config.siteUrl + config.pathPrefix + slug;
 
     const iconSize = 36;
