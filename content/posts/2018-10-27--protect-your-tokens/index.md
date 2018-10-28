@@ -18,7 +18,7 @@ cover: dayne-topkin-78982-unsplash.jpg
 
 It can seem difficult to determine if a particular token or key (Google Maps Credentials, AWS S3 Keys, Geocoding Service, etc.) must be hidden and kept out of your code (usually accessed with `process.env.API_KEY`).
 
-It is important to identify your API _use case_.
+First let's cover some definitions, then it's important to identify your API _use case_.
 
 * **Terms & primary divide:**
   * `Non-secret keys` describes keys which can be sent to the browser.
@@ -30,17 +30,19 @@ It is important to identify your API _use case_.
 
 **👍 Rule-of-thumb:** whenever a key must be sent to the browser in code or inline (e.g. via a `<script src="https://my-api/?apiKey=123-abc-456">` tag), **it's definitely `non-secret`**. Common examples include Google Maps & Geocoder (to convert addresses to map coordinates).
 
+<br />
 
-**_Use cases & features_**
+
+**_Use cases & features:_** `Non-secret`
 
 - Analytics IDs
 - Short-term access (user session IDs, JSON Web Tokens)
 - Limiting API access by app/developer (for auth, geocoding, etc)
 - Public part of public/private pair (RECAPTCHA, Stripe, Auth0)
 
-#### Handling Non-secrets:
+#### ✅ Handling Non-secrets:
 
-✅ **It is safe to hard-code public or non-secret keys!**
+> **It's safe to hard-code non-secret (public) keys!**
 
 **ProTip:** Make this easier to manage long term with a shared `config.js` for your app.
 
@@ -49,22 +51,27 @@ It is important to identify your API _use case_.
 
 **‼️⚠️️ Important:** `Secret` access keys/tokens **MUST** be hidden from Git _AND_ any browser code.
 
+<br />
+
 **👍 Rule-of-thumb:** servers which return `CORS errors` lack browser support. It strongly indicates you **MUST** proxy the service, treating it as though `secret`.
 
-**👍 Rule-of-thumb:** expensive or paid services should (almost) always be proxied+hidden.
+**👍 Rule-of-thumb:** costly services should (almost) always be proxied or hidden.
 
 **👍 Rule-of-thumb:** if you do a write operation (file upload, insert db row), you could be dealing with `secret keys`.
 
 
-**_Use cases & features_**
+<br />
+
+
+**_Use cases & features:_** `Secret`
 
 - Long-term authorization (credentials, access tokens, JSON Web Tokens)
 - Short-term authorization (OAuth tokens, session store)
 - Access paid/expensive services (for auth, geocoding, file storage, etc)
 - Private part of public/private pair (RECAPTCHA, Stripe, Auth0)
-- Data encryption & integrity checking.
+- Data encryption & integrity checking
 
-#### Handling Secrets Safely:
+#### ✅ Handling Secrets Safely:
 
 Complete the following steps to **eliminate secrets from your code:**
 
