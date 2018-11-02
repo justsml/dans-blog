@@ -32,7 +32,7 @@ The **i3** hardware series is the only type I would consider from a Price/perfor
 <iframe style="margin-left: -50%;" width="1257.9607023411372" height="777.8727573309395" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
 
 
-![image](https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png)
+![image](ec2-table-snapshot.png)
 
 Note the **i3.*xlarge** is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds "up to 10/Gb/s" struggled to get close to 1/Gb/s (60-80MB/s).
 
