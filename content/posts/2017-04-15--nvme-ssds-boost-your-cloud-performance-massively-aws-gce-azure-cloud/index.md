@@ -3,7 +3,7 @@ layout: post
 title:  "New AWS EC2 Instances Feature 70% I/O Boost"
 subTitle: "NVMe SSD Head-to-Head: AWS, DigitalOcean, Packet.net"
 date:   2017-04-15
-modified:   2017-05-05
+modified:   2018-10-29
 category: programming
 tags: [cloud, servers, architecture, scaling, digital-ocean, amazon-web-services, google-cloud-engine, azure, packet.net, online.net, ovh.net]
 cover: solaiman-hossen-553024-unsplash.jpg
