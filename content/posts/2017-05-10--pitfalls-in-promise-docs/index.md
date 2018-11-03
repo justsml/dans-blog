@@ -3,7 +3,7 @@ layout: post
 title:  "Pitfalls in Promise Docs"
 subTitle: Avoiding issues from popular docs
 date: 2017-05-10
-modified: 2018-09-29
+modified: 2018-11-01
 category: promises
 tags: [programming, patterns, promises, functional river]
 cover: craig-whitehead-433328-unsplash.jpg
@@ -25,12 +25,12 @@ Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I
 --------------------------
 ### CallbackHell.com
 > **CREDIT:** http://callbackhell.com/
-![image](https://cloud.githubusercontent.com/assets/397632/25830910/97f8394c-341d-11e7-8eb3-46a13a085b83.png)
+![CallbackHell.com](callbackhell.png)
 
 ----------------------
 ### StrongLoop
 > **CREDIT:** https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/
-![image](https://cloud.githubusercontent.com/assets/397632/25831443/5dbb15fc-3421-11e7-96d6-0e37bdaafc1c.png)
+![strong loop](strongloop.png)
 
 
 ----------------
@@ -38,7 +38,7 @@ Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I
 > **CREDIT:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
 This is a pretty solid article. I only have 1 concern:
 
-![image](https://cloud.githubusercontent.com/assets/397632/25830851/2eea5548-341d-11e7-946d-05f4cfc692d5.png)
+![Rising Stack](risingstack.png)
 
 ------------------------
 ### Q Library
@@ -51,11 +51,11 @@ It may resemble Promises, however I insist it ain't. It has far too large a surf
 
 Bottom line: the `deferred` pattern is a painful anti-pattern - it improves virtually nothing over the typical callback approach.
 
-![q first example](https://cloud.githubusercontent.com/assets/397632/25921328/3dd1bbf2-3592-11e7-91db-ec90f7044f9d.png)
+![q first example](qlibrary-1.png)
 
-![q xmlHTTP deferred anti-pattern](https://cloud.githubusercontent.com/assets/397632/25920616/c7d807fa-358f-11e7-98c7-d77781672656.png)
+![q xmlHTTP deferred anti-pattern](qlibrary-2.png)
 
 
-> Please take a look at (& please star) this article's companion Github project, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+> Please take a look at (& star) this article's companion Github project, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
 #### Project Goal: research & develop better functional language patterns in JavaScript.
 

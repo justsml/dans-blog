@@ -3,7 +3,7 @@ layout: post
 title:  "New AWS EC2 Instances Feature 70% I/O Boost"
 subTitle: "NVMe SSD Head-to-Head: AWS, DigitalOcean, Packet.net"
 date:   2017-04-15
-modified:   2017-05-05
+modified:   2018-10-29
 category: programming
 tags: [cloud, servers, architecture, scaling, digital-ocean, amazon-web-services, google-cloud-engine, azure, packet.net, online.net, ovh.net]
 cover: solaiman-hossen-553024-unsplash.jpg
@@ -29,10 +29,11 @@ The **i3** hardware series is the only type I would consider from a Price/perfor
 <br />
 <br />
 
-<iframe style="margin-left: -50%;" width="1257.9607023411372" height="777.8727573309395" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+\[[full-screen data view](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive)\]
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
 
 
-![image](https://cloud.githubusercontent.com/assets/397632/25599756/081d0572-2e9c-11e7-855b-12b695f1494b.png)
+![image](ec2-table-snapshot.png)
 
 Note the **i3.*xlarge** is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds "up to 10/Gb/s" struggled to get close to 1/Gb/s (60-80MB/s).
 
@@ -43,7 +44,8 @@ Network tests used up to 9 additional instances in the same availability zone. A
 
 ## Head to Head
 
-<iframe style="margin-left: -50%;" width="1004.51" height="620.9271970262294" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+\[[full-screen data view](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive)\]
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
 
 
 
