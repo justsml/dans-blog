@@ -23,7 +23,7 @@ const styles = theme => ({
       fontSize: "1.05em",
       "&:hover span": {
         backgroundColor: "#70942580",
-        borderRadius: "20%"
+        borderRadius: "10%"
       },
       "& span": {
         cursor: "pointer",
@@ -37,7 +37,7 @@ const styles = theme => ({
         textAlign: "right",
         fontWeight: 400,
         fontSize: "12.5px",
-        borderRadius: "15%",
+        borderRadius: "2%",
         padding: "0 8px 4px 8px"
       },
       "& a": {
@@ -99,12 +99,16 @@ const Tags = ({ pathContext, data, classes }) => {
             {nodes.map(node => {
               // console.log('tagging', post)
               const slugStr = node.slug.trim("/");
+              const createdAgo = distanceInWords(new Date(node.date), new Date());
+              const modifiedAgo = distanceInWords(new Date(node.modified), new Date());
               // slugify
               return (
                 <li key={node.slug}>
                   <Link to={`/${slugify(slugStr)}/`}>
-                    <label>{node.title}</label>
-                    <span>{distanceInWords(new Date(node.date), new Date())} ago</span>
+                    <label title={node.subTitle}>{node.title}</label>
+                    <span title={`Created ${createdAgo} ago\nLast Modified ${modifiedAgo} ago`}>
+                      {modifiedAgo} ago
+                    </span>
                   </Link>
                 </li>
               );
@@ -114,8 +118,8 @@ const Tags = ({ pathContext, data, classes }) => {
 
         <br />
         <br />
-        <h3>
-          <Link to="/tags">Back to All Tags</Link>
+        <h3 className={classes.headerLink}>
+          <Link to="/tags/">Back to All Tags</Link>
         </h3>
       </Article>
     </Main>
@@ -152,7 +156,7 @@ export const pageQuery = graphql`
   query TagPage($tagName: String) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { fields: [frontmatter___modified], order: DESC }
       filter: { frontmatter: { tags: { in: [$tagName] } } }
     ) {
       totalCount
