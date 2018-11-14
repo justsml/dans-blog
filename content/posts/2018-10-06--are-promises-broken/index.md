@@ -36,7 +36,7 @@ I'll admit, even "official" resources and documentation offer mostly [flimsy exa
 # Rules to Stay Out of Trouble
 
 1. **Always** `return` from your functions.
-1. **Always** use `new` with `Error`'s.
+1. **Always** use `Error` instances.
 1. **Always** use `.catch()`, at least once.
 1. __Prefer__ named functions.
 
@@ -71,17 +71,18 @@ In order to **get useful details about the line number** and call stack, you mus
 Correct `new Error` examples:
 
 ```js
-throw new Error('error message')           // ✅
-Promise.reject(new Error('error message')) // ✅
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
 ```
 
 The following are common anti-patterns:
 
 ```js
-throw Error('error message')           // ❌
-throw 'error message'                  // ❌
-Promise.reject(Error('error message')) // ❌
-Promise.reject('error message')        // ❌
+throw 'error message'            // ❌
+Promise.reject(-42)              // ❌
+Promise.reject('error message')  // ❌
 ```
 
 ### #3 Handle errors where it makes sense
