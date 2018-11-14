@@ -6,6 +6,21 @@ const Promise = require("bluebird");
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
+// query TagsQuery {
+//   allMarkdownRemark(
+//     limit: 2000
+//     filter: { frontmatter: { title: { ne: "" } } }
+//   ) {
+//     group(field: frontmatter___tags) {
+//       fieldValue
+//       totalCount
+//     }
+//   }
+// }
+
+// const {slugify} = require("./src/utils/helpers");
+
+// ahhhh - esm vs cjs!!!
 
 function slugify(text) {
   return text
@@ -18,11 +33,13 @@ function slugify(text) {
     .replace(/-+$/g, ""); // Trim - from end of text
 }
 
+
+
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
     if (!node.date && node.frontmatter && node.frontmatter.date) {
-      console.log("Invalid date: ", node.date, "frontmatter.date=", node.frontmatter.date);
+      // console.log("Invalid date: ", node.date, "frontmatter.date=", node.frontmatter.date);
       node.date = node.frontmatter.date ? new Date(node.frontmatter.date) : new Date();
     }
 
@@ -49,8 +66,8 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
     const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
     debug(`createNodeField: ${slug}: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
-    console.log(`slug: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
-    console.log(`prefix: ${separtorIndex ? slug.substring(1, separtorIndex) : ""}`);
+    // console.log(`slug: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
+    // console.log(`prefix: ${separtorIndex ? slug.substring(1, separtorIndex) : ""}`);
     createNodeField({
       node,
       name: `slug`,
@@ -61,47 +78,75 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
       name: `prefix`,
       value: separtorIndex ? slug.substring(1, separtorIndex) : ""
     });
+    // createNodeField({
+    //   node,
+    //   name: `tagsByCount`,
+    //   value: tagsByCount || ["uhhh"]
+    // });
+
     // }
   }
 };
 
 const createTagPages = (createPage, posts) => {
   const tagPageTemplate = path.resolve(`src/templates/Tags.js`);
-  // const allTagsTemplate = path.resolve(`src/templates/AllTags.js`);
+  const allTagsTemplate = path.resolve(`src/templates/AllTags.js`);
 
-  const postsByTags = {};
+  const tagsByCount = {};
+  const tagsByPost = {};
 
-  posts.forEach(({ node }) => {
+  const postsByTags = posts.reduce((obj, { node }) => {
     if (node.frontmatter && node.frontmatter.tags) {
       node.frontmatter.tags.forEach(tag => {
-        if (!postsByTags[tag]) {
-          postsByTags[tag] = [];
+        const tagSlug = slugify(tag);
+        const slug = node.fields && node.fields.slug;
+
+        if (!obj[tagSlug]) {
+          obj[tagSlug] = { tag, count: 0, posts: [] };
+          tagsByCount[tagSlug] = 0;
         }
-        postsByTags[tag].push(node);
+        obj[tagSlug].count++;
+        tagsByCount[tagSlug] += 1;
+
+        obj[tagSlug].posts.push({
+          title: node.frontmatter && node.frontmatter.title,
+          slug: slug
+        });
+
+        if (slug) {
+          if (!tagsByPost[slug]) tagsByPost[slug] = [];
+          tagsByPost[slug].push(tagSlug);
+        }
       });
     }
-  });
+    return obj;
+  }, {});
+
   const tags = Object.keys(postsByTags);
 
-  // createPage({
-  //   path: `/tags`,
-  //   component: allTagsTemplate,
-  //   context: {
-  //     tags: tags.sort()
-  //   }
-  // });
-  tags.map(slugify).forEach(tagName => {
-    const posts = postsByTags[tagName];
-    console.log("Adding tag:", tagName);
+  createPage({
+    path: `/tags`,
+    component: allTagsTemplate,
+    context: {
+      tags: tags.sort()
+    }
+  });
+  // console.log("Adding tags:", JSON.stringify(postsByTags, null, 2));
+  tags.forEach(tagName => {
+    const { posts } = postsByTags[tagName];
     createPage({
       path: `/tags/${tagName}`,
       component: tagPageTemplate,
       context: {
         posts,
-        tagName
+        tagName,
+        tagCount: tagsByCount[tagName]
+        // count: postsByTags[tagName].count
       }
     });
   });
+
+  return { tagsByCount, postsByTags, tagsByPost };
 };
 
 exports.createPages = ({ graphql, boundActionCreators }) => {
@@ -123,10 +168,10 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
                     prefix
                   }
                   frontmatter {
-                    tags
                     title
                     date
                     category
+                    tags
                   }
                 }
               }
@@ -141,7 +186,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         const posts = result.data.allMarkdownRemark.edges;
 
-        createTagPages(createPage, posts);
+        // { tagsByCount, postsByTags, tagsByPost } =
+
+        const tagData = createTagPages(createPage, posts);
 
         // Create posts and pages.
         posts.forEach(edge => {
@@ -153,6 +200,8 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
             component: isPost ? postTemplate : pageTemplate,
             context: {
               slug: slug
+              // postTags: tagsByPost[slug],
+              // tagsByCount
             }
           });
         });

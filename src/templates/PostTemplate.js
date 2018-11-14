@@ -66,6 +66,11 @@ export const postQuery = graphql`
       id
       html
       htmlAst
+      wordCount {
+        paragraphs
+        sentences
+        words
+      }
       fields {
         slug
         prefix
