@@ -3,7 +3,7 @@ title: "Protecting Your Tokens, API Keys and Secrets"
 subTitle: Public? Private? Wat?
 date: 2018-10-27
 modified: null
-tags: [tokens, api keys, secrets, json web tokens]
+tags: [tokens, api keys, secrets, security, nodejs, json web tokens]
 category: security
 cover: dayne-topkin-78982-unsplash.jpg
 ---
@@ -126,4 +126,5 @@ const src = `//maps.googleapis.com/maps/api/js?key=${key}`;
 -----------------------------------
 
 
-**Note:** There are other Use Cases for environment variables. One of the biggest I didn't cover is for runtime configuration/feature flags!
+**Note:** There are other _Use Cases_ for environment variables. Some I didn't cover: CI/CD/testing, feature flags, and runtime configuration for special environments!
+
