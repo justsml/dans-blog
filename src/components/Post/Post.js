@@ -7,6 +7,13 @@ import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
 import AutoLoader from "../Challenge/AutoLoader";
 
+let lastSlug = "";
+
+const focusOnPage = () => {
+  const page = document.querySelector("article");
+  if (page && page.focus) page.focus();
+};
+
 export default class Post extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
@@ -16,9 +23,22 @@ export default class Post extends React.Component {
   };
 
   componentDidMount() {
+    console.info("Post.CDM! Slug=", this.props.slug);
+    if (lastSlug !== this.props.slug) {
+      // loading new post - need to trigger :focus update (a11y)
+      lastSlug = this.props.slug;
+      setTimeout(focusOnPage, 750);
+      setTimeout(focusOnPage, 150);
+      setTimeout(focusOnPage, 300);
+    }
     if (typeof window.twttr !== "undefined") {
       window.twttr.widgets.load();
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("slug", this.props.slug, nextProps.slug);
+    return true;
   }
 
   render() {
@@ -30,7 +50,7 @@ export default class Post extends React.Component {
     const html = (post || {}).html;
     // const htmlAst = (post || {}).htmlAst;
 
-    //console.log(post);
+    // console.log(post);
 
     return (
       <Article>
