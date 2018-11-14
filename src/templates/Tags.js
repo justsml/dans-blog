@@ -76,7 +76,7 @@ const mergePostNode = ({ node }) => {
 
 const Tags = ({ pathContext, data, classes }) => {
   const { tagName } = pathContext;
-  const { edges, totalCount } = data.allMarkdownRemark;
+  const { edges, totalCount } = data.allMarkdownRemark || { edges: [], totalCount: -1 };
   const tagHeader = `${totalCount} post${totalCount === 1 ? "" : "s"} tagged with "${tagName}"`;
   const nodes = edges.map(mergePostNode); //pathContext.posts;
   console.log("nodes:", nodes);
