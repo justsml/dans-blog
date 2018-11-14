@@ -185,7 +185,49 @@ const square = x => x * x
 const format = x => x.toFixed(2)
 const log = x => console.log(x)
 
+```
+
+**BONUS:** ✅
+
+> Array Method Compatible!!!
+
+You can re-use your named functions with our friends from `Array.prototype.` Including `.map()`, `.filter()`, `.every()`, `.some()`, `.find()`! 
+
+Collection pipelines #FTW:
+
+```js
+// IT'S LIKE THE SAME THING :mindblown:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // expected 2 lines of output: "25.00", "100.00"
 
 ```
+
+And if you don't want to do this linear-style coding... Well you've got simple functions! 
+
+You could use them however you need:
+
+```js
+// Nesting patern
+// ❌ please don't do this, however
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// expected output: "25.00"
+```
+
+
+**Why is nesting functions an anti-pattern?**
+
+1. Not readable to as many people
+2. git diffs don't readily reveal who changed what
+3. hard to debug or log from middle of the nested functions
+
+
 
 
