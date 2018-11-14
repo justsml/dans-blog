@@ -29,6 +29,8 @@ export default class AutoLoader extends React.Component {
 
   getChallenges = () => {
     const challenges = Array.from(document.querySelectorAll(".challenge"));
+    if (challenges.length <= 0) return [];
+
     console.log("challenges", challenges);
 
     const challengeConfigs = challenges.map(c => {
@@ -41,11 +43,11 @@ export default class AutoLoader extends React.Component {
           ? []
           : Array.from(c.querySelectorAll(".options > *")).map(li => li.textContent)
       };
-      console.log("config", JSON.stringify(config));
       return config;
       // return <Challenge key={config.title} {...config} />
     });
 
+    console.log("config", JSON.stringify(challengeConfigs));
     return challengeConfigs;
   };
 

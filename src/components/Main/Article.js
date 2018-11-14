@@ -4,6 +4,7 @@ import injectSheet from "react-jss";
 
 const styles = theme => ({
   article: {
+    outline: "0px",
     background: theme.main.colors.background,
     maxWidth: theme.main.sizes.articleMaxWidth,
     margin: "0 auto",
@@ -32,7 +33,11 @@ const styles = theme => ({
 const Article = props => {
   const { children, classes } = props;
 
-  return <article className={classes.article}>{children}</article>;
+  return (
+    <article tabIndex="-1" className={classes.article}>
+      {children}
+    </article>
+  );
 };
 
 Article.propTypes = {
