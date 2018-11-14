@@ -2,7 +2,7 @@
 title: Broken Promises?
 subTitle: Dropping errors, losing results...
 date: 2018-10-06
-modified: 2018-10-12
+modified: 2018-11-15
 tags: [promises, javascript, errors, catch]
 category: promises
 cover: lennart-heim-766366-unsplash.jpg
@@ -28,19 +28,28 @@ And sadly, some didn't notice.
 
 The myth still persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and [many](https://medium.com/@avaq/broken-promises-2ae92780f33) other sources.
 
-I'll admit, even "official" resources and documentation offer mostly [flimsy examples and bad habits](/promise-gotchas/). These are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse.
+I'll admit, even "official" resources and documentation offer mostly [flimsy examples and bad habits](/promise-gotchas/). These are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse. (note: link removed)
 
 <!-- One such tip I've seen multiple times: is to never use `.catch`, and instead use an `"unhandledRejection"` global event. **NEVER** do this. unhandledRejection is designed for cleanup of global references, like database connections, before an impending shutdown.) -->
 
+<br />
+<br />
 
 # Rules to Stay Out of Trouble
 
-1. **Always** `return` from your functions.
-1. **Always** use `Error` instances.
-1. **Always** use `.catch()`, at least once.
-1. __Prefer__ named functions.
+1. [Promises need something to hang on to](#1-promises-need-something-to-hang-on-to)
+    * **Always** `return` from your functions.
+1. [Use real `Error` Instances](#2-use-real-error-instances)
+    * **Always** use `Error` instances.
+1. [Handle errors where it makes sense](#3-handle-errors-where-it-makes-sense)
+    * **Always** use `.catch()`, at least once.
+1. [Add clarity with named functions 🦄✨](#4-add-clarity-with-named-functions-)
+    * __Prefer__ named functions.
 
-### #1 Promises need something to hold on
+-------------------------------------------
+
+
+### #1 Promises need something to hang on to
 
 It is critical that you **always `return`** from your functions.
 
@@ -62,11 +71,15 @@ Promise.resolve(10)  // 10
 
 > Bonus of "always returning": code is much easier to unit test.
 
-### #2 Errors work best using `new`
+### #2 Use real `Error` Instances
 
-JavaScript has an interesting behavior around errors (which applys to asynchronous and synchronous code.)
+JavaScript has an interesting behavior around errors (which applys to asynchronous **and** synchronous code.)
 
-In order to **get useful details about the line number** and call stack, you must use `new` (the constructor) to get this to work properly. Throwing strings does not work like in Python or Ruby. Making things perhaps more confusing, JavaScript will **seem** to handle `throw "string"`, as you will see the string in any `catch`.
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>see example in repl.it: `throwing errors in javascript`</i>]</a>
+<img alt="throwing errors in javascript" src="throwing-errors-in-javascript.png" />
+
+
+In order to **get useful details about the line number** and call stack, you must Error instances. Throwing strings does not work like in Python or Ruby. Making things perhaps more confusing, JavaScript will **seem** to handle `throw "string"`, as you will see the string in any `catch`.
 
 Correct `new Error` examples:
 
@@ -80,10 +93,11 @@ Promise.reject(Error('message'))     // ✅
 The following are common anti-patterns:
 
 ```js
-throw 'error message'            // ❌
-Promise.reject(-42)              // ❌
-Promise.reject('error message')  // ❌
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
 ```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
 
 ### #3 Handle errors where it makes sense
 

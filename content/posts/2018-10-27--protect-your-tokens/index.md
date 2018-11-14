@@ -28,8 +28,8 @@ It is often made worse with the soup of related terms you'll encounter: _tokens_
 
 Let's re-frame this as between `secret` and `non-secret`.
 
-* `Secret keys` MUST use a custom server (e.g. Node/Express/Heroku) in order to hide (proxy) requests to 3rd party API services.
-* `Non-secret keys` describes keys which can be sent to the browser.
+* 🔒 `Secret keys` MUST use a custom server (e.g. Node/Express/Heroku) in order to hide (proxy) requests to 3rd party API services.
+* 🌍 `Non-secret keys` describes keys which can be sent to the browser.
 
 
 
@@ -38,9 +38,9 @@ Let's re-frame this as between `secret` and `non-secret`.
 ---------------------------------------------
 
 
-## `Secret keys`
+## 🔒 `Secret keys`
 
-**‼️ Important:** `Secret keys` **MUST** be ignored by Git _AND_ omitted by browser code.
+** ‼️ Important:** `Secret keys` **MUST** be ignored by Git _AND_ omitted in all browser code. [_How to use dotenv_](#-how-to-handle-secrets-safely)
 
 <br />
 
@@ -67,7 +67,12 @@ _How do you know when you're dealing with a `Secret key`?_
 - Service credentials (Email/SMTP, LDAP/Directory Services)
 - Data encryption & integrity checking
 
-#### ✅ Handling Secrets Safely:
+### Handle Secrets Safely
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Related Article: <a href="/securely-using-environment-variables-in-nodejs/">Using dotenv securely in NodeJS</a></h2></blockquote>
+
+#### Quick Overview
+
 
 Complete the following steps to **eliminate secrets from your code:**
 
@@ -78,10 +83,10 @@ Complete the following steps to **eliminate secrets from your code:**
 > **DON'T** create a `.env` file on deployed servers. Use your hosting services' (e.g. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) provided environment variable management tool: e.g. **dashboard or command line.**
 
 
----------------------------------------------
+-----------------------------------
 
 
-## `Non-secret keys`
+## 🌍 `Non-secret keys`
 
 **👍 Rule-of-thumb:** whenever a key must be sent to the browser in code or inline (e.g. via a `<script src="https://my-api/?apiKey=123-abc-456">` tag), **it's definitely a `non-secret`**. A common example is Google Maps.
 
