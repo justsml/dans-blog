@@ -1,79 +1,93 @@
-// import React from "react";
-// import Link from "gatsby-link";
-// import Main from "../components/Main/";
-// import Article from "../components/Main/Article";
-// import "../styles/shared.css";
-// import injectSheet from "react-jss";
-
-// const styles = theme => ({
-//   tags: {
-//     display: "none"
-//   }
-// });
-
-// const Tags = ({ data, pathContext }) => {
-//   const { posts, tagName } = pathContext;
-//   const { tag } = pathContext;
-//   const { edges, totalCount } = data.allMarkdownRemark;
-//   const tagHeader = `${totalCount} post${
-//     totalCount === 1 ? "" : "s"
-//   } tagged with "${tag}"`;
-
-//   // if (posts) {
-//   return (
-//     <Main>
-//       <Article>
-//         <h2>
-//           Posts about <i>{tagName}</i>
-//         </h2>
-
-//         {posts && (
-//           <ul className="tag-page">
-//             {posts.map(post => {
-//               // console.log('tagging', post)
-//               return (
-//                 <li key={post.id} {...post}>
-//                   <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
-//                 </li>
-//               );
-//             })}
-//           </ul>
-//         )}
-//       </Article>
-//     </Main>
-//   );
-//   // }
-// };
-
-// export default injectSheet(styles)(Tags);
-
 import React from "react";
 import PropTypes from "prop-types";
 import Main from "../components/Main/";
 import Article from "../components/Main/Article";
-import "../styles/shared.css";
+// import "../styles/shared.css";
 import injectSheet from "react-jss";
 import { slugify } from "./../utils/helpers.js";
+import distanceInWords from "date-fns/distance_in_words";
 
 // Components
 import Link from "gatsby-link";
 
 const styles = theme => ({
-  tags: {
-    display: "none"
+  tagsList: {
+    lineHeight: "1.5em",
+    width: "100%",
+    margin: "0 auto",
+    listStyleType: "decimal",
+    "& li": {
+      cursor: "pointer",
+      width: "90%",
+      lineHeight: "1.95em",
+      fontSize: "1.05em",
+      "&:hover span": {
+        backgroundColor: "#70942580",
+        borderRadius: "20%"
+      },
+      "& span": {
+        cursor: "pointer",
+        transition: "all 0.25s ease-in",
+        // textShadow: "1px 1px 1px #709425",
+        backgroundColor: "#70942511",
+        // theme.navigator.colors.postsListItemLinkHover,
+        color: "#709425",
+        height: "28px",
+        width: "132px",
+        textAlign: "right",
+        fontWeight: 400,
+        fontSize: "12.5px",
+        borderRadius: "15%",
+        padding: "0 8px 4px 8px"
+      },
+      "& a": {
+        transition: "all 0.25s ease-in",
+        cursor: "pointer",
+        color: theme.navigator.colors.postsListItemLink,
+        textDecoration: "underline",
+        height: "28px",
+        width: "100%",
+        display: "flex",
+        justifyContent: "space-between",
+        margin: "2px 0",
+        "&:hover": {
+          color: theme.navigator.colors.postsListItemLinkHover
+        }
+      }
+    }
+  },
+  headerLink: {
+    "& a": {
+      textDecoration: "none",
+      color: theme.navigator.colors.postsListItemLink,
+      "&:visited": {
+        color: theme.navigator.colors.postsListItemLink
+      },
+      "&:hover": {
+        color: theme.navigator.colors.postsListItemLinkHover
+      }
+    }
   }
 });
 
-const Tags = ({ pathContext, data }) => {
+const mergePostNode = ({ node }) => {
+  return { ...node.fields, ...node.frontmatter };
+};
+
+const Tags = ({ pathContext, data, classes }) => {
   const { tagName } = pathContext;
   const { edges, totalCount } = data.allMarkdownRemark;
   const tagHeader = `${totalCount} post${totalCount === 1 ? "" : "s"} tagged with "${tagName}"`;
-  const nodes = pathContext.posts;
-  console.log("pathContext", pathContext);
+  const nodes = edges.map(mergePostNode); //pathContext.posts;
+  console.log("nodes:", nodes);
 
   return (
     <Main>
       <Article>
+        <h1 className={classes.headerLink}>
+          <Link to="/tags">Browse Tags</Link>
+        </h1>
+        <br />
         <h2>
           Posts tagged with: <i>{tagName}</i>
         </h2>
@@ -81,20 +95,25 @@ const Tags = ({ pathContext, data }) => {
         <h4>{tagHeader}</h4>
 
         {nodes && (
-          <ul className="tag-page">
+          <ul className={classes.tagsList}>
             {nodes.map(node => {
               // console.log('tagging', post)
               const slugStr = node.slug.trim("/");
               // slugify
               return (
                 <li key={node.slug}>
-                  <Link to={`/${slugify(slugStr)}/`}>{node.title}</Link>
+                  <Link to={`/${slugify(slugStr)}/`}>
+                    <label>{node.title}</label>
+                    <span>{distanceInWords(new Date(node.date), new Date())} ago</span>
+                  </Link>
                 </li>
               );
             })}
           </ul>
         )}
 
+        <br />
+        <br />
         <h3>
           <Link to="/tags">Back to All Tags</Link>
         </h3>
@@ -104,6 +123,7 @@ const Tags = ({ pathContext, data }) => {
 };
 
 Tags.propTypes = {
+  classes: PropTypes.object.isRequired,
   pathContext: PropTypes.shape({
     tag: PropTypes.string.isRequired
   }),
@@ -129,11 +149,11 @@ export default injectSheet(styles)(Tags);
 
 //eslint-disable-next-line no-undef
 export const pageQuery = graphql`
-  query TagPage($tag: String) {
+  query TagPage($tagName: String) {
     allMarkdownRemark(
       limit: 2000
       sort: { fields: [frontmatter___date], order: DESC }
-      filter: { frontmatter: { tags: { in: [$tag] } } }
+      filter: { frontmatter: { tags: { in: [$tagName] } } }
     ) {
       totalCount
       edges {
@@ -144,6 +164,9 @@ export const pageQuery = graphql`
           frontmatter {
             title
             subTitle
+            date
+            modified
+            category
           }
         }
       }

@@ -12,39 +12,48 @@ const styles = theme => ({
     lineHeight: "1.5em",
     width: "100%",
     margin: "0 auto",
+    listStyleType: "none",
     "& li": {
       cursor: "pointer",
       width: "85%",
       lineHeight: "1.95em",
-      listStyle: "none",
       fontSize: "1.05em",
       "&:hover span": {
-        backgroundColor: "#70942580",
-        borderRadius: "20%"
+        backgroundColor: "rgba(112, 148, 37, 0.52)",
+        borderRadius: "100%",
+        color: "#333 !important"
       },
       "& span": {
-        transition: "all 0.25s ease-in",
-        textShadow: "1px 1px 1px #709425",
-        backgroundColor: "#70942540",
+        transition: "all 0.33s ease-in",
+        backgroundColor: "rgba(112, 148, 37, 0)",
         // theme.navigator.colors.postsListItemLinkHover,
-        color: "#ffffff",
+        color: "#dddddd",
         height: "28px",
         width: "28px",
         textAlign: "center",
         fontWeight: 900,
-        borderRadius: "100%"
+        borderRadius: "25%"
       },
       "& a": {
+        overflow: "hidden",
+        cursor: "pointer",
         color: theme.navigator.colors.postsListItemLink,
         textDecoration: "none",
+        height: "30px",
+        display: "flex",
+        justifyContent: "space-between",
+        margin: "2px 0",
         "&:hover": {
           color: theme.navigator.colors.postsListItemLinkHover
+        },
+        "& label": {
+          textShadow: "0.1px 0.1px 0.125px #00000080"
         }
       }
-    },
-    "& span": {
-      float: "right"
     }
+    // "& span": {
+    //   float: "right"
+    // }
   },
   sortButtons: {
     // maxWidth: "35%",
@@ -65,7 +74,7 @@ class AllTags extends React.Component {
   };
 
   state = {
-    sortBy: "fieldValue"
+    sortBy: "totalCount" //"fieldValue"
   };
 
   render() {
@@ -100,16 +109,25 @@ class AllTags extends React.Component {
                 return (
                   <li key={tag.fieldValue}>
                     <Link data-count={tag.totalCount} to={`/tags/${slugify(tag.fieldValue)}`}>
-                      {tag.fieldValue}
+                      <label>{tag.fieldValue}</label>
+                      <span
+                        title={`${tag.fieldValue}: ${tag.totalCount}`}
+                        style={{
+                          color: parseInt(tag.totalCount) >= 2 ? "#333" : "#999",
+                          fontSize:
+                            parseInt(tag.totalCount) >= 6
+                              ? "1.7em"
+                              : parseInt(tag.totalCount) >= 3
+                                ? "1.5em"
+                                : parseInt(tag.totalCount) >= 2
+                                  ? "1.3em"
+                                  : "1.1em",
+                          fontWeight: parseInt(tag.totalCount) >= 2 ? 700 : 400
+                        }}
+                      >
+                        {tag.totalCount}
+                      </span>
                     </Link>
-                    <span
-                      style={{
-                        color: parseInt(tag.totalCount) >= 2 ? "#555" : "#fff",
-                        fontSize: parseInt(tag.totalCount) >= 2 ? "1.4em" : "1.1em"
-                      }}
-                    >
-                      {tag.totalCount}
-                    </span>
                   </li>
                 );
               })}

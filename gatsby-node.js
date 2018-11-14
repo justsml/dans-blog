@@ -17,13 +17,29 @@ const { store } = require(`./node_modules/gatsby/dist/redux`);
 //     }
 //   }
 // }
-const slugify = require("./src/utils/helpers");
+
+// const {slugify} = require("./src/utils/helpers");
+
+// ahhhh - esm vs cjs!!!
+
+function slugify(text) {
+  return text
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, "-") // Replace spaces with -
+    .replace(/[^\w-]+/g, "") // Remove all non-word chars
+    .replace(/-+/g, "-") // Replace multiple - with single -
+    .replace(/^-+/g, "") // Trim - from start of text
+    .replace(/-+$/g, ""); // Trim - from end of text
+}
+
+
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
     if (!node.date && node.frontmatter && node.frontmatter.date) {
-      console.log("Invalid date: ", node.date, "frontmatter.date=", node.frontmatter.date);
+      // console.log("Invalid date: ", node.date, "frontmatter.date=", node.frontmatter.date);
       node.date = node.frontmatter.date ? new Date(node.frontmatter.date) : new Date();
     }
 
@@ -50,8 +66,8 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
     const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
     debug(`createNodeField: ${slug}: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
-    console.log(`slug: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
-    console.log(`prefix: ${separtorIndex ? slug.substring(1, separtorIndex) : ""}`);
+    // console.log(`slug: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
+    // console.log(`prefix: ${separtorIndex ? slug.substring(1, separtorIndex) : ""}`);
     createNodeField({
       node,
       name: `slug`,
@@ -115,7 +131,7 @@ const createTagPages = (createPage, posts) => {
       tags: tags.sort()
     }
   });
-  console.log("Adding tags:", JSON.stringify(postsByTags, null, 2));
+  // console.log("Adding tags:", JSON.stringify(postsByTags, null, 2));
   tags.forEach(tagName => {
     const { posts } = postsByTags[tagName];
     createPage({
@@ -123,7 +139,8 @@ const createTagPages = (createPage, posts) => {
       component: tagPageTemplate,
       context: {
         posts,
-        tagName
+        tagName,
+        tagCount: tagsByCount[tagName]
         // count: postsByTags[tagName].count
       }
     });
