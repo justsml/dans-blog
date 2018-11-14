@@ -17,17 +17,7 @@ const { store } = require(`./node_modules/gatsby/dist/redux`);
 //     }
 //   }
 // }
-
-function slugify(text) {
-  return text
-    .toString()
-    .toLowerCase()
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/[^\w-]+/g, "") // Remove all non-word chars
-    .replace(/-+/g, "-") // Replace multiple - with single -
-    .replace(/^-+/g, "") // Trim - from start of text
-    .replace(/-+$/g, ""); // Trim - from end of text
-}
+const slugify = require("./src/utils/helpers");
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
