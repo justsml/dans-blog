@@ -3,7 +3,7 @@ title: Broken Promises?
 subTitle: Dropping errors, losing results...
 date: 2018-10-06
 modified: 2018-11-15
-tags: [promises, javascript, errors, catch]
+tags: [promises, javascript, errors, programming]
 category: promises
 cover: lennart-heim-766366-unsplash.jpg
 ---
@@ -66,10 +66,14 @@ Promise.resolve(10)  // 10
   .then(addTen)      // 20
   .then(addTen)      // 30
   .then(addTen)      // 40
-  .then(console.log) // 40
+  .then(console.log) // logs "40"
 ```
 
 > Bonus of "always returning": code is much easier to unit test.
+
+**Question:** How many distinct Promise states (resolved & rejected) were created?
+
+**Question:** How many promises were created in the prior example?
 
 ### #2 Use real `Error` Instances
 
@@ -79,7 +83,9 @@ JavaScript has an interesting behavior around errors (which applys to asynchrono
 <img alt="throwing errors in javascript" src="throwing-errors-in-javascript.png" />
 
 
-In order to **get useful details about the line number** and call stack, you must Error instances. Throwing strings does not work like in Python or Ruby. Making things perhaps more confusing, JavaScript will **seem** to handle `throw "string"`, as you will see the string in any `catch`.
+In order to **get useful details about the line number** and call stack, you must use `Error` instances. Throwing strings does not work like in Python or Ruby. 
+
+While JavaScript **seems** to handle `throw "string"`, as you will see the string in your `catch` handler. However, the data is all you will see*. No prior [stack frames](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers) will be included.
 
 Correct `new Error` examples:
 
@@ -101,7 +107,7 @@ Promise.reject(-42)    // ❌
 
 ### #3 Handle errors where it makes sense
 
-Promises provide a slick way to handle errors, using `.catch()`. It is basically a special kind of `.then()` - where any errors from preceding `.then()`'s get handled. Let's look at an example.
+Promises provide a slick way to handle errors, using `.catch()`. It is basically a special kind of `.then()` - where any errors from preceding `.then()`'s get handled. Let's look at an example...
 
 ```js
 Promise.resolve(42)
@@ -113,9 +119,9 @@ Promise.resolve(42)
 
 While `.catch()` may seem like a DOM event handler (i.e. `click`, `keypress`). It's placement is important, as it can only 'catch' errors thrown **above it.**
 
-**Overriding errors is relatively trivial** Return a non-error value in your `.catch()` callback, the Promise chain switches to running the `.then()` callbacks in sequence. (Effectively .)
+**Overriding errors is relatively trivial** Return a non-error value in your `.catch()` callback, the Promise chain switches to running the `.then()` callbacks in sequence. (Effectively.)
 
-For example, after we catch the `totes fail` error below, we return an arbitrary value `99`:
+Try follow the sequence of the following example:
 
 ```js
 Promise.resolve(42)
@@ -124,8 +130,28 @@ Promise.resolve(42)
   .catch(() => {
     return 99
   })
-  .then(console.log) // expected output: 99
+  .then(num => num + 1)
+  .then(console.log) // expected output: 100
 ```
+
+**The sequence is what's important to understand.**
+
+While a silly example, it's designed to **illustrate how errors & data flow** in Promises. 
+
+Here's an outline of the sequence:
+
+1. 42 is the initial value. 
+1. `hello` is always returned by the next method.
+1. we ignore the prior value, and throw an error with `'totes fail'` message.
+1. `.catch()` intercepts error, instead returns `99` which will be handled by any subsequent `.then()`.
+1. increment the `num`, returning `100`
+1. the method `console.log` receives `100` and prints it! :tada:
+
+
+**Question:** What happens when 2 `.catch()` are in sequence? Can the 2nd ever run? Can you think of a use case?
+
+**Question:** How can `.catch()` ignore errors? How would you prevent errors from forcing an early exit of `Promise.all`?
+
 
 ### #4 Add clarity with named functions 🦄✨
 
@@ -158,6 +184,8 @@ const quarter = x => x / 4
 const square = x => x * x
 const format = x => x.toFixed(2)
 const log = x => console.log(x)
+
+
 ```
 
 
