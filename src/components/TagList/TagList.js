@@ -46,7 +46,9 @@ const TagList = ({ tags, classes }) => {
         {tags.map(tag => {
           return (
             <div key={tag}>
-              <Link to={`/tags/${tag}`}>{tag}</Link>
+              <Link data-count={1} to={`/tags/${tag}`}>
+                {tag}
+              </Link>
             </div>
           );
         })}
