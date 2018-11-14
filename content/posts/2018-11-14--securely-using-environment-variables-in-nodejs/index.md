@@ -3,7 +3,7 @@ title: "Securely Using Environment Variables in NodeJS"
 subTitle: Using `dotenv`
 date: 2018-11-13
 modified: 2018-11-15
-tags: [dotenv, api keys, secrets]
+tags: [dotenv, api keys, secrets, tokens, security, nodejs]
 category: security
 cover: john-salvino-417565-unsplash.jpg
 ---
@@ -33,11 +33,11 @@ To **safely access secrets in your NodeJS code:**
 
 1. Replace hard-coded keys with environment variables. e.g. `process.env.API_SECRET`
 1. Use a library like [`dotenv`](https://github.com/motdotla/dotenv) along with a `.env` file. Add your previously hard-coded secrets to the `.env` file.
-1. Add a `.env` line in your `.gitignore` file!
+1. Verify `.env` line in your `.gitignore` file!
 
 > **DON'T** create a `.env` file on deployed servers. Use your hosting services' (e.g. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) provided environment variable management tool: e.g. **dashboard or command line.**
 
-####️ Code Example:
+##️ Code Example:
 
 We're going to define a few files.
 
@@ -127,4 +127,13 @@ module.exports = {
 };
 ```
 
+#### Never commit your `.env` secrets to git!
+#### Don't share `.env` files on a team. *
 
+* Every new development laptop or desktop should **generate new access keys & tokens.**
+If it's not possible, use plenty of care sharing your `.env` (in cases where a service might invalidate all older keys, or you have a paid API's limited access token.)
+
+#### ⚠️ Important: if necessary, always use a secure messaging service (preferably with expiring message support.)
+
+
+Good luck and let me know if you have any questions! 🎉
