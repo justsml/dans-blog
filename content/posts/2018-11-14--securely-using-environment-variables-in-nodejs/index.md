@@ -130,7 +130,7 @@ module.exports = {
 #### Never commit your `.env` secrets to git!
 #### Don't share `.env` files on a team. *
 
-* Every new development laptop or desktop should **generate new access keys & tokens.**
+\* Every new development laptop or desktop should **generate new access keys & tokens.**
 If it's not possible, use plenty of care sharing your `.env` (in cases where a service might invalidate all older keys, or you have a paid API's limited access token.)
 
 #### ⚠️ Important: if necessary, always use a secure messaging service (preferably with expiring message support.)
