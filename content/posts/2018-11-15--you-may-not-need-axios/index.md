@@ -265,52 +265,9 @@ Finally, here's the last part of this recipe, our `progressHelper`:
 
 #### Source: Progress Helper
 
-```js
-function progressHelper(onProgress) {
-  return response => {
-    if (!response.body) return response
-    // ^ preventable failure: throw new Error('ReadableStream unsupported in your browser.');
-    const contentLength = response.headers.get('content-length')
+`gist:justsml/a8ffd810fc7e5a5295dfc898302ddbfc`
 
-    if (!contentLength) return response
-    // ^ preventable failure: throw new Error('Content-Length header missing')
-
-    const total = parseInt(contentLength, 10)
-    let loaded = 0
-
-    return new Response(
-      new ReadableStream({
-        start(controller) {
-          const reader = response.body.getReader()
-
-          return read()
-
-          function read() {
-            return reader
-              .read()
-              .then(({ done, value }) => {
-                if (done) {
-                  controller.close()
-                  return;
-                }
-                loaded += value.byteLength
-                onProgress({ loaded, total })
-                controller.enqueue(value)
-                return read()
-              })
-              .catch(error => {
-                console.error(error)
-                controller.error(error)
-              })
-          }
-        },
-      })
-    )
-  };
-}
-```
 _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC shown here](https://github.com/AnthumChris/fetch-progress-indicators)
-
 
 ## Compatibility
 
@@ -332,3 +289,4 @@ _After polyfill/node-fetch: 99.99% compatible_ ✅
 > Please Tweet at me if you have a Use Cases you'd like to see. ❤️
 
 ![End of Dan's fetch API Examples](jonas-vincent-2717-unsplash.jpg "End of Dan's fetch API Examples")
+
