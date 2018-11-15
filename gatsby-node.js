@@ -33,8 +33,6 @@ function slugify(text) {
     .replace(/-+$/g, ""); // Trim - from end of text
 }
 
-
-
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
