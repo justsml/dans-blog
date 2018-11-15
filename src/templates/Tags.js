@@ -12,20 +12,25 @@ import Link from "gatsby-link";
 
 const styles = theme => ({
   tagsList: {
-    lineHeight: "1.5em",
+    lineHeight: "1.25em",
     width: "100%",
     margin: "0 auto",
     listStyleType: "decimal",
     "& li": {
       cursor: "pointer",
       width: "90%",
-      lineHeight: "1.95em",
+      lineHeight: "1.75em",
       fontSize: "1.05em",
+      marginBottom: "6px",
       "&:hover span": {
+        cursor: "pointer",
         backgroundColor: "#70942580",
         borderRadius: "10%"
       },
       "& span": {
+        alignItems: "center",
+        display: "flex",
+        justifyContent: "center", // "flex-end", //"space-between",
         cursor: "pointer",
         transition: "all 0.25s ease-in",
         // textShadow: "1px 1px 1px #709425",
@@ -33,26 +38,38 @@ const styles = theme => ({
         // theme.navigator.colors.postsListItemLinkHover,
         color: "#709425",
         height: "28px",
-        width: "132px",
-        textAlign: "right",
+        minWidth: "132px",
+        // textAlign: "right",
         fontWeight: 400,
         fontSize: "12.5px",
         borderRadius: "2%",
-        padding: "0 8px 4px 8px"
+        margin: "6px",
+        padding: "0 6px"
+      },
+      "& label": {
+        lineHeight: "1.25em"
       },
       "& a": {
+        lineHeight: "1.2em",
         transition: "all 0.25s ease-in",
         cursor: "pointer",
         color: theme.navigator.colors.postsListItemLink,
         textDecoration: "underline",
-        height: "28px",
+        minHeight: "28px",
         width: "100%",
         display: "flex",
         justifyContent: "space-between",
         margin: "2px 0",
-        "&:hover": {
+        "& :hover": {
+          cursor: "pointer",
           color: theme.navigator.colors.postsListItemLinkHover
         }
+      },
+      [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
+        width: "100%"
+      },
+      [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+        width: "95%"
       }
     }
   },
@@ -64,7 +81,8 @@ const styles = theme => ({
         color: theme.navigator.colors.postsListItemLink
       },
       "&:hover": {
-        color: theme.navigator.colors.postsListItemLinkHover
+        color: theme.navigator.colors.postsListItemLinkHover,
+        textDecoration: "underline"
       }
     }
   }
@@ -79,7 +97,7 @@ const Tags = ({ pathContext, data, classes }) => {
   const { edges, totalCount } = data.allMarkdownRemark || { edges: [], totalCount: -1 };
   const tagHeader = `${totalCount} post${totalCount === 1 ? "" : "s"} tagged with "${tagName}"`;
   const nodes = edges.map(mergePostNode); //pathContext.posts;
-  console.log("nodes:", nodes);
+  // console.log("nodes:", nodes);
 
   return (
     <Main>
@@ -100,7 +118,7 @@ const Tags = ({ pathContext, data, classes }) => {
               // console.log('tagging', post)
               const slugStr = node.slug.trim("/");
               const createdAgo = distanceInWords(new Date(node.date), new Date());
-              const modifiedAgo = distanceInWords(new Date(node.modified), new Date());
+              const modifiedAgo = distanceInWords(new Date(node.modified || node.date), new Date());
               // slugify
               return (
                 <li key={node.slug}>
@@ -156,7 +174,7 @@ export const pageQuery = graphql`
   query TagPage($tagName: String) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___modified], order: DESC }
+      sort: { fields: [frontmatter___date, frontmatter___modified], order: DESC }
       filter: { frontmatter: { tags: { in: [$tagName] } } }
     ) {
       totalCount
