@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../components/Main/";
 import Article from "../components/Main/Article";
+import Header from "../components/Header";
 // import "../styles/shared.css";
 import injectSheet from "react-jss";
 import { slugify } from "./../utils/helpers.js";
@@ -21,7 +22,7 @@ const styles = theme => ({
       width: "90%",
       lineHeight: "1.75em",
       fontSize: "1.05em",
-      marginBottom: "6px",
+      marginBottom: "10px",
       "&:hover span": {
         cursor: "pointer",
         backgroundColor: "#70942580",
@@ -47,7 +48,7 @@ const styles = theme => ({
         padding: "0 6px"
       },
       "& label": {
-        lineHeight: "1.25em"
+        lineHeight: "1.28em"
       },
       "& a": {
         lineHeight: "1.2em",
@@ -74,8 +75,13 @@ const styles = theme => ({
     }
   },
   headerLink: {
+    width: "100%",
     "& a": {
-      textDecoration: "none",
+      width: "100%",
+      margin: "0 auto",
+      textAlign: "center",
+      display: "inline-block",
+      textDecoration: "underline",
       color: theme.navigator.colors.postsListItemLink,
       "&:visited": {
         color: theme.navigator.colors.postsListItemLink
@@ -102,15 +108,7 @@ const Tags = ({ pathContext, data, classes }) => {
   return (
     <Main>
       <Article>
-        <h1 className={classes.headerLink}>
-          <Link to="/tags">Browse Tags</Link>
-        </h1>
-        <br />
-        <h2>
-          Posts tagged with: <i>{tagName}</i>
-        </h2>
-
-        <h4>{tagHeader}</h4>
+        <Header title="Tags Browser" subTitle={`Tag: ${tagName}`} />
 
         {nodes && (
           <ul className={classes.tagsList}>
@@ -134,11 +132,11 @@ const Tags = ({ pathContext, data, classes }) => {
           </ul>
         )}
 
-        <br />
-        <br />
         <h3 className={classes.headerLink}>
-          <Link to="/tags/">Back to All Tags</Link>
+          <Link to="/tags/">Back / View All Tags</Link>
         </h3>
+        <br />
+        <br />
       </Article>
     </Main>
   );
