@@ -10,20 +10,48 @@ cover: william-bout-103533-unsplash.jpg
 
 # You may not need Axios
 
+> This **is not an attack** on [Axios](https://www.npmjs.com/package/axios). <br />
+> Rather, it's **advocacy for the `fetch` API which has become quite capable.** 🦄
+
 ![credit: william-bout-103533-unsplash.jpg](william-bout-103533-unsplash.jpg)
 
-> This **isn't** an attack on [Axios](https://www.npmjs.com/package/axios) **at all**. <br />
-> Rather, it's **advocacy for the `fetch` API which has become quite capable.** 🦄
 
 ## Overview
 
-I'll be the first to admit: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. #fail <br />
+I'll be the first to say: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. I didn't know I was using broken examples. #fail <br />
 
-The challenges posed by **incomplete documentation & examples are no longer** - at least anywhere near as bad as it once was.
 
-I have come to learn many early (_apparent_) limitations have been overcome  (e.g. no progress updates or cancellation.)
+When starting this article (late 2018) I assumed I'd have a mixed checklist table showing which special _Use Cases_ clearly justified [`Axios`](https://www.npmjs.com/package/axios). As I did my research on each of the many common uses, I found a lot of misinformation. Google led me straight to "answer" after "answer" on StackOverflow. (I don't want to link back for fear google might prioritize them more. ) One "answer" claimed you "can't upload files with \[any\] native browser" HTTP method," must "use jQuery." [_Lies!_](#uploading-files)
 
-Today I'm happy to report robust [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) support in the ecosystem (in all major browsers - well, _excluding_ Internet Explorer.) [See Compatibility below for polyfill support](#compatibility)
+After all, how would 3rd party libraries do anything they do?
+
+Are the native methods really that bad?
+
+No, `fetch` has been around for years and can reasonably do most things 3rd party http libraries offer. Though I admittedly the `XMLHttpRequest` (original AJAX) based patterns are so bad, 3rd party was the only way to go for about a decade.)
+
+Many moons ago, I used to use `jQuery.ajax()` all the time. It's selling point was simple: avoid the unsightly mess of [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest):
+
+```js
+// ❌ Anti-pattern: Ancient Ajax
+function reqListener () {
+  console.log(this.responseText);
+}
+
+var oReq = new XMLHttpRequest();
+oReq.addEventListener("load", reqListener);
+oReq.open("GET", "http://www.example.org/example.txt");
+oReq.send();
+```
+
+> _takes deep breath..._
+
+I have done file uploads before using only `fetch`. I understand why anyone might struggle to
+
+take very persistent searching I have come to learn many early (_apparent_) limitations have been overcome  (e.g. no progress updates or cancellation.)
+
+The [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) enjoys robust support in the ecosystem (in all major browsers - well, _excluding_ Internet Explorer.) [_See **Compatibility** section below for polyfill support_](#compatibility)
+
+
 
 
 ## Fetch Examples
@@ -281,7 +309,7 @@ NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https:/
 npm install node-fetch
 ```
 
-_After polyfill/node-fetch: 99.99% compatible_ ✅
+_After polyfill+node-fetch: 99.99% compatible_ ✅
 
 
 ## More coming soon.
