@@ -21,37 +21,30 @@ cover: william-bout-103533-unsplash.jpg
 I'll be the first to say: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. I didn't know I was using broken examples. #fail <br />
 
 
-When starting this article (late 2018) I assumed I'd have a mixed checklist table showing which special _Use Cases_ clearly justified [`Axios`](https://www.npmjs.com/package/axios). As I did my research on each of the many common uses, I found a lot of misinformation. Google led me straight to "answer" after "answer" on StackOverflow. (I don't want to link back for fear google might prioritize them more. ) One "answer" claimed you "can't upload files with \[any\] native browser" HTTP method," must "use jQuery." [_Lies!_](#uploading-files)
+When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], or similar?
 
-After all, how would 3rd party libraries do anything they do?
+As I did my research on the many common _use cases_, I found a lot of misinformation. Google led me to many bad or harmful "answer" after "answer" - often on StackOverflow. _(Not linking back for fear it'll help their google standing. )_ One "answer" claimed you "can't upload files with \[any\] native browser" HTTP method," must "use jQuery." [_Lies!_](#uploading-files).
 
-Are the native methods really that bad?
+To be honest, I didn't know [download progress](#download-progress-helper) or cancellation was possible until I wrote this. I'm happily surprised `fetch` can do a lot without much boilerplate.
 
-No, `fetch` has been around for years and can reasonably do most things 3rd party http libraries offer. Though I admittedly the `XMLHttpRequest` (original AJAX) based patterns are so bad, 3rd party was the only way to go for about a decade.)
+<!-- In fact most 3rd party ajax libraries still all use `XMLHttpRequest`. You might wonder why I don't suggest we use it.
 
-Many moons ago, I used to use `jQuery.ajax()` all the time. It's selling point was simple: avoid the unsightly mess of [XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest):
+Using `XMLHttpRequest` leads to... well, let's say, artisinal & esoteric code. It doesn't look comparable to other APIs we use today. This makes it more difficult-to-memorize, and a lot harder to debug. For these reasons, NEVER use `XMLHttpRequest`.
+ -->
 
-```js
-// ❌ Anti-pattern: Ancient Ajax
-function reqListener () {
-  console.log(this.responseText);
-}
+Several years ago, the `WHAT-WG` (browser standards Working Group) saw the need for a modern replacement to `XMLHttpRequest`. Not long afterwards `fetch` was born.
 
-var oReq = new XMLHttpRequest();
-oReq.addEventListener("load", reqListener);
-oReq.open("GET", "http://www.example.org/example.txt");
-oReq.send();
-```
+I used it sparingly, because I didn't know how to use it. I would search  `fetch` examples for hours, ultimately it was easier to conclude "it can't be done with fetch." Often I resorted to using `jQuery.ajax` or `axios`.
 
-> _takes deep breath..._
+Until writing this article I had misconceptions of `fetch`'s limits. Specifically regarding getting [progress updates](@download-progress-helper) or cancelling requests.
 
-I have done file uploads before using only `fetch`. I understand why anyone might struggle to
+The [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) enjoys robust support in the ecosystem (in all major browsers - well, _excluding_ Internet Explorer.)
 
-take very persistent searching I have come to learn many early (_apparent_) limitations have been overcome  (e.g. no progress updates or cancellation.)
+It's not a NodeJS API, and It makes sense when when you consider `fetch` replaced the browser-only `XMLHttpRequest`.
 
-The [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) enjoys robust support in the ecosystem (in all major browsers - well, _excluding_ Internet Explorer.) [_See **Compatibility** section below for polyfill support_](#compatibility)
+It's easy to get however via the `node-fetch` package. The only other NodeJS-native option is with the `http` (and `https`) module.
 
-
+[_See **Compatibility** section below for polyfill support_](#compatibility)
 
 
 ## Fetch Examples
