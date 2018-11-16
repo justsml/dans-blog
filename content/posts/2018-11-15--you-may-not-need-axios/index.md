@@ -68,29 +68,11 @@ Click the links below to go directly to the code snippet.
 
 ### Get JSON from a URL
 
-```js
-fetch('https://api.github.com/orgs/nodejs')
-.then(response => response.json())
-.then(data => {
-  console.log(data) // Prints result from `response.json()` in getRequest
-})
-.catch(error => console.error(error))
-```
+`gist;justsml/de941bd61cc86e30beedbb8a3a646f81`
 
 ### Custom headers
 
-```js
-fetch('https://api.github.com/orgs/nodejs', {
-  headers: new Headers({
-    'User-agent': 'Mozilla/4.0 Custom User Agent'
-  })
-})
-.then(response => response.json())
-.then(data => {
-  console.log(data)
-})
-.catch(error => console.error(error))
-```
+`gist:justsml/fca7cd72ec1ebc07d994eac13a665ddf`
 
 ### CORS example
 
@@ -98,56 +80,15 @@ CORS is primarily checked at the server - so make sure your configuration is cor
 
 The `credentials` option controls if your cookies are automatically included.
 
-```js
-fetch('https://api.github.com/orgs/nodejs', {
-  credentials: 'include', // Useful for including session ID (and, IIRC, authorization headers)
-})
-.then(response => response.json())
-.then(data => {
-  console.log(data) // Prints result from `response.json()`
-})
-.catch(error => console.error(error))
-```
+`gist:justsml/3ddd9ed8705f48cdf45d313d1e57aa2a`
 
 ### Posting JSON
 
-```js
-postRequest('http://example.com/api/v1/users', {user: 'Dan'})
-  .then(data => console.log(data)) // Result from the `response.json()` call
-
-function postRequest(url, data) {
-  return fetch(url, {
-    credentials: 'same-origin', // 'include', default: 'omit'
-    method: 'POST', // 'GET', 'PUT', 'DELETE', etc.
-    body: JSON.stringify(data), // Coordinate the body type with 'Content-Type'
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
-  })
-  .then(response => response.json())
-  .catch(error => console.error(error))
-}
-```
-
+`gist:justsml/13915347d6c8413c73f4bd7240c68e51`
 
 ### Posting an HTML `<form>`
 
-```js
-postForm('http://example.com/api/v1/users', 'form#userEdit')
-  .then(data => console.log(data))
-
-function postForm(url, formSelector) {
-  const formData = new FormData(document.querySelector(formSelector))
-
-  return fetch(url, {
-    method: 'POST', // 'GET', 'PUT', 'DELETE', etc.
-    body: formData  // a FormData will automatically set the 'Content-Type'
-  })
-  .then(response => response.json())
-  .catch(error => console.error(error))
-}
-```
-
+`gist:justsml/ef2e356bec0ef7c6e528d84a5f75ba7e`
 
 ### Form encoded data
 
@@ -155,45 +96,11 @@ To post data with a Content-Type of `application/x-www-form-urlencoded` we will 
 
 For example, `new URLSearchParams({a: 1, b: 2})` yields `a=1&b=2`.
 
-```js
-postFormData('http://example.com/api/v1/users', {user: 'Mary'})
-  .then(data => console.log(data))
-
-function postFormData(url, data) {
-  return fetch(url, {
-    method: 'POST', // 'GET', 'PUT', 'DELETE', etc.
-    body: new URLSearchParams(data),
-    headers: new Headers({
-      'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
-    })
-  })
-  .then(response => response.json())
-  .catch(error => console.error(error))
-}
-```
+`gist:justsml/716c4534ef4afb22f65d4fc4367c7136`
 
 ### Uploading files
 
-
-```js
-postFile('http://example.com/api/v1/users', 'input[type="file"].avatar')
-  .then(data => console.log(data))
-
-function postFile(url, fileSelector) {
-  const formData = new FormData()
-  const fileField = document.querySelector(fileSelector)
-
-  formData.append('username', 'abc123')
-  formData.append('avatar', fileField.files[0])
-
-  return fetch(url, {
-    method: 'POST', // 'GET', 'PUT', 'DELETE', etc.
-    body: formData  // Coordinate the body type with 'Content-Type'
-  })
-  .then(response => response.json())
-  .catch(error => console.error(error))
-}
-```
+`gist:justsml/301f22aa37df565ba3051bd5f95b4df1`
 
 
 ### Uploading multiple files
@@ -206,27 +113,7 @@ Setup a file upload element with the `multiple` attribute:
 
 Then use with something like:
 
-```js
-postFile('http://example.com/api/v1/users', 'input[type="file"].files')
-  .then(data => console.log(data))
-
-function postFile(url, fileSelector) {
-  const formData = new FormData()
-  const fileFields = document.querySelectorAll(fileSelector)
-
-  // Add all files to formData
-  Array.prototype.forEach.call(fileFields.files, f => formData.append('files', f))
-  // Alternatively for PHPeeps, use `files[]` for the name to support arrays
-  // Array.prototype.forEach.call(fileFields.files, f => formData.append('files[]', f))
-
-  return fetch(url, {
-    method: 'POST', // 'GET', 'PUT', 'DELETE', etc.
-    body: formData  // Coordinate the body type with 'Content-Type'
-  })
-  .then(response => response.json())
-  .catch(error => console.error(error))
-}
-```
+`gist:justsml/d17f50c36a5ddb70f584c0aa6de94237`
 
 ### Download Progress Helper
 
@@ -243,25 +130,17 @@ progressHelper(handler({ loaded = Kb, total = 0-100% })) // => returns a functio
 
 Let's look at a usage example:
 
-```js
-// The progressHelper could be inline w/ .then() below...
-const streamProcessor = progressHelper(console.log)
+`gist:justsml/9bec219590ff50688972c1caff67c14b`
 
-fetch('https://fetch-progress.anthum.com/20kbps/images/sunrise-progressive.jpg')
-  .then(streamProcessor) // note: NO parentheses because `.then` needs to get a function
-  .then(response => response.blob())
-  .then(blobData => {
-    // ... set as base64 on an <img src="base64...">
-  })
-```
-
-A reusable binary (image) downloader might look like `getBlob()`:
+A reusable image downloader might look like `getBlob()`:
 
 ```js
 const getBlob = url => fetch(url)
   .then(progressHelper(console.log)) // progressHelper used inside the .then()
   .then(response => response.blob())
 ```
+
+By the way, a `Blob` is a Binary Large Object.
 
 It's important to choose ONE of the 2 usage patterns below (they are functionally equivalant):
 
