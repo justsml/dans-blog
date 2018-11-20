@@ -86,7 +86,7 @@ Click the links below to go directly to the code snippet.
 
 ### Get JSON from a URL
 
-`gist;justsml/de941bd61cc86e30beedbb8a3a646f81`
+`gist:justsml/de941bd61cc86e30beedbb8a3a646f81`
 
 ### Custom headers
 
