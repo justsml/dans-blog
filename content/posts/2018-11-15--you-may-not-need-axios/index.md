@@ -125,9 +125,7 @@ For example, `new URLSearchParams({a: 1, b: 2})` yields `a=1&b=2`.
 
 Setup a file upload element with the `multiple` attribute:
 
-```html
-<input type='file' multiple class='files' name='files' />
-```
+`gist:justsml/37836357041d8ca4d1b32e12638cb0ba`
 
 Then use with something like:
 
@@ -139,12 +137,7 @@ The Progress Handler [technique shown below avoids wrapping](#source-progress-he
 
 `progressHelper` has the following interface (source available below)
 
-```js
-const progressHelper = require('./progressHelper.js')
-
-progressHelper(handler({ loaded = Kb, total = 0-100% })) // => returns a function for the response _stream_
-// use returned function on the `response` before doing `response.json()` etc.
-```
+`gist:justsml/db5ccc55ffb93c75e04e014d1f553cfb`
 
 Let's look at a usage example:
 
@@ -152,30 +145,13 @@ Let's look at a usage example:
 
 A reusable image downloader might look like `getBlob()`:
 
-```js
-const getBlob = url => fetch(url)
-  .then(progressHelper(console.log)) // progressHelper used inside the .then()
-  .then(response => response.blob())
-```
+`gist:justsml/bef2dd7e630eb7642beb3e2be29489b2`
 
 By the way, a `Blob` is a Binary Large Object.
 
 It's important to choose ONE of the 2 usage patterns below (they are functionally equivalant):
 
-```js
-// OPTION #1: no temp streamProcessor var
-// ....
-  .then(progressHelper(console.log))
-```
-
-⚠️ OR️ ️⚠️
-
-```js
-// OPTION #2: define a `streamProcessor` to hold our console logger
-const streamProcessor = progressHelper(console.log)
-// ....
-  .then(streamProcessor)
-```
+`gist:justsml/6ad9e37a96ad1f3a75ca509038510a5b`
 
 My preference is `Option #1`. However, your scope design may force you to use `Option #2`.
 
