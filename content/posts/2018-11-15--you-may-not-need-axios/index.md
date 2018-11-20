@@ -60,8 +60,8 @@ It's easy to get however via the `node-fetch` package. The only NodeJS-native op
 | Intercept request and response                  	| ✅     	| ✅     	| ✅       	|
 | Transform request and response data             	| ✅     	| ✅     	| ✅       	|
 | Cancel requests                                 	| ✅     	| ✅     	| ❌       	|
-| Automatic transforms for JSON data              	| ✅*    	| ✅     	| ✅       	|
-| Client side support for protecting against XSRF 	| 🦄*    	| ✅*    	| ✅       	|
+| Automatic transforms for JSON data              	| ✅    	| ✅     	| ✅       	|
+| Client side support for protecting against XSRF 	| 🦄    	| ✅    	| ✅       	|
 | Progress                                        	| ✅     	| ✅     	| ✅       	|
 | Streaming                                       	| ✅     	| ✅     	| ✅       	|
 
