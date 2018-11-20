@@ -167,7 +167,7 @@ _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC s
 
 "What about NodeJS and the poor IE people?!?"
 
-Fear not, the fractional % of IE9-10 users [can be polyfilled](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by some awesome GitHub devs). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your milage may vary_.
+Fear not, the fractional % of IE9-10 users [can be polyfilled](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by some awesome GitHub devs). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
 
 NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package:
 
