@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import format from "date-fns/format";
-import distanceInWords from "date-fns/distance_in_words";
-import TagList from "../TagList";
 import injectSheet from "react-jss";
-import Header from "../Header";
 
 const styles = theme => ({
   header: {
@@ -78,41 +74,27 @@ const styles = theme => ({
   }
 });
 
-const getDateLabel = (date, label) => {
-  if (!date) return <span date={date} />;
+class Header extends React.Component {
+  static propTypes = {
+    classes: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+    subTitle: PropTypes.string,
+    tags: PropTypes.array,
+    modified: PropTypes.string,
+    date: PropTypes.string.isRequired,
+    children: PropTypes.array
+  };
 
-  const aDate = new Date(date);
-  return (
-    <h3 className="post-details">
-      <label>{label} </label>
-      <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
-      <small>{distanceInWords(aDate, new Date())} ago</small>
-    </h3>
-  );
-};
+  render() {
+    const { classes, title, subTitle, date, modified, tags, children } = this.props;
+    return (
+      <header className={classes.header}>
+        <h1 className={classes.title}>{title}</h1>
+        <h2 className={classes.subTitle}>{subTitle}</h2>
+        {children}
+      </header>
+    );
+  }
+}
 
-const PostHeader = props => {
-  const { classes, title, subTitle, date, modified, tags } = props;
-  // console.log("title", title, "post.props", props);
-
-  return (
-    <Header {...props}>
-      <div className={classes.meta}>
-        {getDateLabel(date, "published: ")}
-        {getDateLabel(modified, "updated: ")}
-      </div>
-      <TagList tags={tags} />
-    </Header>
-  );
-};
-
-PostHeader.propTypes = {
-  classes: PropTypes.object.isRequired,
-  title: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
-  tags: PropTypes.array,
-  modified: PropTypes.string,
-  date: PropTypes.string.isRequired
-};
-
-export default injectSheet(styles)(PostHeader);
+export default injectSheet(styles)(Header);

@@ -6,6 +6,7 @@ import { slugify } from "./../utils/helpers.js";
 import "../styles/shared.css";
 import injectSheet from "react-jss";
 import Article from "../components/Main/Article";
+import Header from "../components/Header";
 
 const styles = theme => ({
   tagsList: {
@@ -91,18 +92,18 @@ class AllTags extends React.Component {
       return (
         <Main>
           <Article>
-            <h1>Browse Tags</h1>
-
-            <div className={classes.sortButtons}>
-              <button onClick={() => this.setState({ sortBy: "fieldValue" })}>
-                <b>Sort:</b> Name
-                {this.state.sortBy === "fieldValue" && " ✅"}
-              </button>
-              <button onClick={() => this.setState({ sortBy: "totalCount" })}>
-                <b>Sort:</b> Count
-                {this.state.sortBy === "totalCount" && " ✅"}
-              </button>
-            </div>
+            <Header title="Search Site Tags" subTitle="Articles organized by tags">
+              <div className={classes.sortButtons}>
+                <button onClick={() => this.setState({ sortBy: "fieldValue" })}>
+                  <b>Sort:</b> Name
+                  {this.state.sortBy === "fieldValue" && " ✅"}
+                </button>
+                <button onClick={() => this.setState({ sortBy: "totalCount" })}>
+                  <b>Sort:</b> Count
+                  {this.state.sortBy === "totalCount" && " ✅"}
+                </button>
+              </div>
+            </Header>
 
             <ul className={classes.tagsList}>
               {tagsList.map(tag => {
