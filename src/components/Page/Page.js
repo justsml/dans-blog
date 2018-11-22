@@ -8,10 +8,11 @@ import Content from "../Main/Content";
 const Page = props => {
   const { page } = props;
   const html = (page || {}).html;
+  const { frontmatter } = page || {};
 
   return (
     <Article>
-      <PageHeader {...page.frontmatter} />
+      <PageHeader {...frontmatter} />
       <Content html={html} />
     </Article>
   );

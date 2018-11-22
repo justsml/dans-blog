@@ -13,9 +13,10 @@ const getDateLabel = (date, label) => {
   const lblClass = label.replace(/[^\w]*/gi, "");
   return (
     <h3 className={"list-item " + lblClass}>
-      <label>{label} </label>
-      <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
-      <small>{distanceInWords(aDate, new Date())} ago</small>
+      <small>
+        {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
+      </small>
+      <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
     </h3>
   );
 };
@@ -41,12 +42,13 @@ const styles = theme => ({
     flexDirection: "row",
     padding: ".7em 1em .7em 1em",
     color: theme.navigator.colors.postsListItemLink,
+    transition: "all .35s",
     "@media (hover: hover)": {
       "&:hover": {
-        color: theme.navigator.colors.postsListItemLinkHover,
-        "& .pointer": {
-          borderRadius: "65% 75%"
-        }
+        color: theme.navigator.colors.postsListItemLinkHover
+        // "& .pointer": {
+        //   borderRadius: "65% 75%"
+        // }
       }
     }
   },
@@ -54,7 +56,7 @@ const styles = theme => ({
     position: "relative",
     flexShrink: 0,
     overflow: "hidden",
-    borderRadius: "75% 65%",
+    borderRadius: "75%",
     width: "60px",
     height: "60px",
     margin: "0",
@@ -73,7 +75,7 @@ const styles = theme => ({
       width: "90px",
       height: "90px",
       transition: "all .3s",
-      transitionTimingFunction: "ease",
+      transitionTimingFunction: "ease-in",
       ".moving-featured &, .is-aside &": {
         width: "30px",
         height: "30px"
@@ -132,7 +134,7 @@ const styles = theme => ({
       lineHeight: 1.2,
       display: "block",
       fontSize: `${theme.navigator.sizes.postsListItemH2Font}em`,
-      margin: ".3em 0 0 0",
+      margin: ".3em 0",
       [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
         fontSize: `${theme.navigator.sizes.postsListItemH2Font *
           theme.navigator.sizes.fontIncraseForM}em`
@@ -168,34 +170,50 @@ const styles = theme => ({
     flexFlow: "row wrap",
     "& h3": {
       flexFlow: "column",
-      width: "100px",
+      width: "250px",
       display: "flex",
       justifyContent: "space-between",
       maxWidth: "300px",
-      fontSize: "11px",
-      margin: "0 0 4px 0",
-      "& label": {
-        width: "80px",
-        fontSize: "11px",
-        fontWeight: 700,
-        marginRight: "4px"
-      },
+      fontSize: "1.2em",
+      margin: "0.25em 0",
+      // "& label": {
+      //   width: "250px",
+      //   fontSize: "1.2em",
+      //   fontWeight: 700,
+      //   marginRight: "4px"
+      // },
       "& span.human-date": {
-        width: "80px"
+        fontWeight: 300,
+        width: "250px"
       },
       "& small": {
-        width: "100px",
-        fontWeight: 700,
-        marginLeft: "0px"
+        fontWeight: 300,
+        fontSize: "0.75em",
+        width: "250px",
+        margin: "0 0 0.25em 0"
+      }
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      "& span.human-date": {
+        fontWeight: 300,
+        width: "250px",
+        fontSize: "0.45em"
       }
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
-      "& .updated": {
-        display: "none"
+      "& span.human-date": {
+        fontWeight: 300,
+        width: "250px",
+        fontSize: "0.45em"
       }
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
       display: "inherit",
+      "& span.human-date": {
+        fontWeight: 300,
+        width: "250px",
+        fontSize: "0.65em"
+      },
       "& label": {
         display: "inherit"
       },
@@ -260,8 +278,8 @@ class ListItem extends React.Component {
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
             <div className={classes.metaInfo}>
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "published: ")}
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "updated: ")}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "published")}
+              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "updated")}
             </div>
           </div>
         </Link>
