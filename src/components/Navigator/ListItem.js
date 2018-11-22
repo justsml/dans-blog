@@ -6,14 +6,14 @@ import LazyLoad from "react-lazyload";
 import format from "date-fns/format";
 import distanceInWords from "date-fns/distance_in_words";
 
-const getDateLabel = (date, label) => {
+const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
 
   const aDate = new Date(date);
   const lblClass = label.replace(/[^\w]*/gi, "");
   return (
-    <h3 className={"list-item " + lblClass}>
-      <small>
+    <h3 className={"list-item " + lblClass + " " + className}>
+      <small className={className}>
         {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
       </small>
       <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
@@ -168,10 +168,11 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "space-between",
     flexFlow: "row wrap",
+    margin: "0.33em 0",
     "& h3": {
       flexFlow: "column",
-      width: "250px",
-      display: "flex",
+      width: "50%",
+      display: "inline-flex",
       justifyContent: "space-between",
       maxWidth: "300px",
       fontSize: "1.2em",
@@ -184,20 +185,18 @@ const styles = theme => ({
       // },
       "& span.human-date": {
         fontWeight: 300,
-        width: "250px"
+        width: "100%"
       },
       "& small": {
         fontWeight: 300,
         fontSize: "0.75em",
-        width: "250px",
+        width: "100%",
         margin: "0 0 0.25em 0"
       }
     },
     [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
       "& span.human-date": {
-        fontWeight: 300,
-        width: "250px",
-        fontSize: "0.45em"
+        display: "none"
       }
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
@@ -246,6 +245,8 @@ class ListItem extends React.Component {
 
   render() {
     const { classes, post, linkOnClick } = this.props;
+    const date = post.node.frontmatter && post.node.frontmatter.date;
+    const modified = post.node.frontmatter && post.node.frontmatter.modified;
 
     return (
       <li
@@ -278,8 +279,8 @@ class ListItem extends React.Component {
             <h1>{post.node.frontmatter.title}</h1>
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
             <div className={classes.metaInfo}>
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.date, "published")}
-              {getDateLabel(post.node.frontmatter && post.node.frontmatter.modified, "updated")}
+              {getDateLabel(date, "published", "text-left")}
+              {getDateLabel(modified, "updated", "text-right")}
             </div>
           </div>
         </Link>
