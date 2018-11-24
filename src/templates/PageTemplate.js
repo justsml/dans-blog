@@ -36,11 +36,21 @@ class PageTemplate extends React.Component {
     const { locationUrl } = this.props;
     if (pathContext.slug !== locationUrl) this.props.setLocationUrl(pathContext.slug);
 
+    if (!data || !data.page) {
+      return (
+        <div className="alert-warning">
+          <h2>⚠️ Error</h2>
+          <label>The requested page is not available</label>
+          <div className="details">URL: {window.self.location.href}</div>
+        </div>
+      );
+    }
+
     return (
       <Main>
-        <Page page={data.page} />
-        <Footer footnote={data.footnote} />
-        <Seo data={data.post} facebook={facebook} />
+        <Page page={data && data.page} />
+        <Footer footnote={data && data.footnote} />
+        <Seo data={data && data.post} facebook={facebook} />
       </Main>
     );
   }
