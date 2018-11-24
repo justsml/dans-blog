@@ -90,6 +90,7 @@ class TopMenu extends React.Component {
 
                       return (
                         <Link
+                          activeClassName="active-page-link"
                           aria-label={frontmatter.title}
                           key={fields.slug}
                           to={fields.slug}

@@ -5,13 +5,23 @@ import { connect } from "react-redux";
 require("core-js/fn/array/find");
 require("prismjs/themes/prism-okaidia.css");
 
-import { setNavigatorPosition, setNavigatorShape } from "../state/store";
+import { setNavigatorPosition, setNavigatorShape, setLocationUrl } from "../state/store";
 import { moveNavigatorAside } from "../utils/shared";
 import Post from "../components/Post/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
 
 class PostTemplate extends React.Component {
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    pathContext: PropTypes.object.isRequired,
+    setNavigatorPosition: PropTypes.func.isRequired,
+    setLocationUrl: PropTypes.func.isRequired,
+    navigatorPosition: PropTypes.string.isRequired,
+    locationUrl: PropTypes.string.isRequired,
+    isWideScreen: PropTypes.bool.isRequired
+  };
+
   moveNavigatorAside = moveNavigatorAside.bind(this);
 
   componentDidMount() {
@@ -24,6 +34,9 @@ class PostTemplate extends React.Component {
     const { data, pathContext } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
 
+    const { locationUrl } = this.props;
+    if (pathContext.slug !== locationUrl) this.props.setLocationUrl(pathContext.slug)
+
     return (
       <Main>
         <Post post={data.post} slug={pathContext.slug} author={data.author} facebook={facebook} />
@@ -34,22 +47,17 @@ class PostTemplate extends React.Component {
   }
 }
 
-PostTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  pathContext: PropTypes.object.isRequired,
-  navigatorPosition: PropTypes.string.isRequired,
-  setNavigatorPosition: PropTypes.func.isRequired,
-  isWideScreen: PropTypes.bool.isRequired
-};
 
 const mapStateToProps = (state, ownProps) => {
   return {
+    locationUrl: state.locationUrl,
     navigatorPosition: state.navigatorPosition,
     isWideScreen: state.isWideScreen
   };
 };
 
 const mapDispatchToProps = {
+  setLocationUrl,
   setNavigatorPosition,
   setNavigatorShape
 };

@@ -19,6 +19,7 @@ const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
  */
 
 export function setLocationUrl(val) {
+  // console.log("setLocationUrl", val);
   return { type: SET_LOCATION_URL, val };
 }
 
@@ -121,4 +122,5 @@ const initialState = {
 
 const createStore = () =>
   reduxCreateStore(reducer, initialState, composeWithDevTools(applyMiddleware()));
+
 export default createStore;

@@ -9,7 +9,7 @@ import withRoot from "../withRoot";
 import theme from "../styles/theme";
 import globals from "../styles/globals";
 
-import { setFontSizeIncrease, setIsWideScreen } from "../state/store";
+import { setFontSizeIncrease, setIsWideScreen, setLocationUrl } from "../state/store";
 
 import asyncComponent from "../components/common/AsyncComponent/";
 import Loading from "../components/common/Loading/";
@@ -82,7 +82,13 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { children, data } = this.props;
+    const { children, data, locationUrl } = this.props;
+    const currentPathname = window.location.pathname;
+
+    if (currentPathname !== locationUrl) this.props.setLocationUrl(currentPathname);
+    // console.log("comparing location in layouts.main:", currentPathname, "!==", locationUrl);
+    // this.unlisten = this.props.history.listen(...);
+
 
     // TODO: dynamic management of tabindexes for keybord navigation
     return (
@@ -103,18 +109,22 @@ Layout.propTypes = {
   setIsWideScreen: PropTypes.func.isRequired,
   isWideScreen: PropTypes.bool.isRequired,
   fontSizeIncrease: PropTypes.number.isRequired,
-  setFontSizeIncrease: PropTypes.func.isRequired
+  setFontSizeIncrease: PropTypes.func.isRequired,
+  setLocationUrl: PropTypes.func.isRequired,
+  locationUrl: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
   return {
     pages: state.pages,
+    locationUrl: state.locationUrl,
     isWideScreen: state.isWideScreen,
     fontSizeIncrease: state.fontSizeIncrease
   };
 };
 
 const mapDispatchToProps = {
+  setLocationUrl,
   setIsWideScreen,
   setFontSizeIncrease
 };

@@ -37,7 +37,8 @@ export default class Post extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("slug", this.props.slug, nextProps.slug);
+    // // // console.log("locationUrl", this.props.locationUrl, nextProps.locationUrl);
+    // console.log("slug", this.props.slug, nextProps.slug);
     return true;
   }
 
