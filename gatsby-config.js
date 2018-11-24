@@ -91,9 +91,9 @@ module.exports = {
               maxWidth: 645,
               backgroundColor: "transparent",
               linkImagesToOriginal: false,
-              withWebp: false,
+              withWebp: { quality: 80 },
               // q default: 50
-              quality: 70,
+              quality: 80,
               sizeByPixelDensity: true,
               showCaptions: false
             }

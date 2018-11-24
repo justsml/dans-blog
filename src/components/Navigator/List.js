@@ -16,6 +16,7 @@ const styles = theme => ({
     width: "100%"
   },
   inner: {
+    maxWidth: "780px",
     padding: `calc(${theme.bars.sizes.infoBar}px + 1.3rem) 1.3rem calc(${
       theme.bars.sizes.actionsBar
     }px + 1.3rem) 1.3rem`,

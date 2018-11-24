@@ -32,45 +32,6 @@ const styles = theme => ({
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
       fontSize: `${theme.main.fonts.subTitle.sizeL}em`
     }
-  },
-  meta: {
-    display: "flex",
-    justifyContent: "flex-end",
-    flexFlow: "row",
-    lineHeight: "1.55",
-    width: "100%",
-    "& h3": {
-      flexFlow: "column",
-      width: "100px",
-      display: "flex",
-      justifyContent: "space-between",
-      maxWidth: "300px",
-      fontSize: "11px",
-      margin: "0 0 4px 0",
-      "& label": {
-        width: "100px",
-        fontSize: "11px",
-        fontWeight: 700,
-        marginRight: "4px"
-      },
-      "& span.human-date": {
-        width: "100px"
-      },
-      "& small": {
-        width: "100px",
-        fontWeight: 700
-        // marginLeft: "4px"
-      }
-    },
-    "& a": {
-      color: theme.base.colors.link,
-      "&:hover": {
-        color: theme.base.colors.linkHover
-      }
-    },
-    fontSize: `${theme.main.fonts.meta.size}em`,
-    fontWeight: theme.main.fonts.meta.weight,
-    color: theme.main.colors.meta
   }
 });
 
