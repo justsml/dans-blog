@@ -34,9 +34,26 @@ div.challenge {
   display: none;
 }
 
-/* .active-nav-link::before {
+.active-nav-list {
+  transition: 0.5s opacity cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
 
-} */
+.posts-menu-item:hover .active-nav-link::after {
+  opacity: 0.9;
+}
+
+.active-nav-link::after {
+  content: "";
+  filter: blur(0.25px);
+  opacity: 0.33;
+  position: absolute;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='#555555'><path d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") no-repeat;
+  height: 24px;
+  width: 30px;
+  left: 88%;
+  zoom: 1.55;
+}
+
 .active-nav-link {
   color: #709425;
 }
