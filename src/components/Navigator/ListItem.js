@@ -45,10 +45,10 @@ const styles = theme => ({
     transition: "all .35s",
     "@media (hover: hover)": {
       "&:hover": {
-        color: theme.navigator.colors.postsListItemLinkHover
-        // "& .pointer": {
-        //   borderRadius: "65% 75%"
-        // }
+        color: theme.navigator.colors.postsListItemLinkHover,
+        "& .pointer": {
+          borderRadius: "100%"
+        }
       }
     }
   },
@@ -56,7 +56,7 @@ const styles = theme => ({
     position: "relative",
     flexShrink: 0,
     overflow: "hidden",
-    borderRadius: "75%",
+    borderRadius: "100%",
     width: "60px",
     height: "60px",
     margin: "0",
@@ -280,7 +280,7 @@ class ListItem extends React.Component {
             {post.node.frontmatter.subTitle && <h2>{post.node.frontmatter.subTitle}</h2>}
             <div className={classes.metaInfo}>
               {getDateLabel(date, "published", "text-left")}
-              {getDateLabel(modified, "updated", "text-right")}
+              {getDateLabel(modified, "updated", "text-left")}
             </div>
           </div>
         </Link>
