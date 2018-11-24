@@ -39,29 +39,30 @@ const styles = theme => ({
   },
   meta: {
     display: "flex",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     flexFlow: "row",
     lineHeight: "1.55",
     width: "100%",
     "& h3": {
       flexFlow: "column",
-      width: "100px",
+      width: "50%",
       display: "flex",
       justifyContent: "space-between",
       maxWidth: "300px",
-      fontSize: "11px",
-      margin: "0 0 4px 0",
-      "& label": {
-        width: "100px",
-        fontSize: "11px",
-        fontWeight: 700,
-        marginRight: "4px"
-      },
+      fontSize: "0.85em",
+      margin: "0 4px 4px 0",
+      // "& label": {
+      //   width: "255px",
+      //   fontSize: "11px",
+      //   fontWeight: 700,
+      //   marginRight: "4px"
+      // },
       "& span.human-date": {
-        width: "100px"
+        width: "100%",
+        fontSize: "1.325em"
       },
       "& small": {
-        width: "100px",
+        width: "100%",
         fontWeight: 700
         // marginLeft: "4px"
       }
@@ -75,18 +76,23 @@ const styles = theme => ({
     fontSize: `${theme.main.fonts.meta.size}em`,
     fontWeight: theme.main.fonts.meta.weight,
     color: theme.main.colors.meta
+  },
+  tags: {
+    width: "100%",
+    margin: ".85em 0"
   }
 });
 
-const getDateLabel = (date, label) => {
+const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
 
   const aDate = new Date(date);
   return (
-    <h3 className="post-details">
-      <label>{label} </label>
-      <span className="human-date">{format(aDate, "MMM Do YYYY")}</span>
-      <small>{distanceInWords(aDate, new Date())} ago</small>
+    <h3 className={"post-details " + className}>
+      <small>
+        {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
+      </small>
+      <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
     </h3>
   );
 };
@@ -98,10 +104,12 @@ const PostHeader = props => {
   return (
     <Header {...props}>
       <div className={classes.meta}>
-        {getDateLabel(date, "published: ")}
-        {getDateLabel(modified, "updated: ")}
+        {getDateLabel(date, "published")}
+        {getDateLabel(modified, "updated", "text-right")}
       </div>
-      <TagList tags={tags} />
+      <div className={classes.tags}>
+        <TagList tags={tags} />
+      </div>
     </Header>
   );
 };
