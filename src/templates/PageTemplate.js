@@ -41,7 +41,9 @@ class PageTemplate extends React.Component {
         <div className="alert-warning">
           <h2>⚠️ Error</h2>
           <label>The requested page is not available</label>
-          <div className="details">URL: {window.self.location.href}</div>
+          <div className="details">
+            URL: {typeof window !== "undefined" && window.self.location.href}
+          </div>
         </div>
       );
     }

@@ -83,12 +83,12 @@ class Layout extends React.Component {
 
   render() {
     const { children, data, locationUrl } = this.props;
-    const currentPathname = window.location.pathname;
+    const currentPathname =
+      typeof window !== "undefined" ? window.location.pathname : location.pathname;
 
     if (currentPathname !== locationUrl) this.props.setLocationUrl(currentPathname);
     // console.log("comparing location in layouts.main:", currentPathname, "!==", locationUrl);
     // this.unlisten = this.props.history.listen(...);
-
 
     // TODO: dynamic management of tabindexes for keybord navigation
     return (
