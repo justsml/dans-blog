@@ -83,8 +83,7 @@ class Layout extends React.Component {
 
   render() {
     const { children, data, locationUrl } = this.props;
-    const currentPathname =
-      typeof window !== "undefined" ? window.location.pathname : location.pathname;
+    const currentPathname = typeof window !== "undefined" ? window.location.pathname : "/"; //location.pathname;
 
     if (currentPathname !== locationUrl) this.props.setLocationUrl(currentPathname);
     // console.log("comparing location in layouts.main:", currentPathname, "!==", locationUrl);
