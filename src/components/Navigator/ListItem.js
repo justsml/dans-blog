@@ -236,7 +236,7 @@ class ListItem extends React.Component {
         key={post.node.fields.slug}
       >
         <Link
-          activeClassName="active"
+          activeClassName="active-nav-link"
           className={classes.listLink}
           to={post.node.fields.slug}
           onClick={linkOnClick}
