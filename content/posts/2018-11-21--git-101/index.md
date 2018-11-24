@@ -37,9 +37,7 @@ We will use `git` to add _waypoints_ along our journey. (Anything like Feature B
 
 ## Required: Git Get Got Goin' (Setup)
 
-##### Definitions
-
-**Jargon Translation Cheat Sheet:**
+**Jargon Cheat Sheet:**
 
 |Jargon|Words|
 |:------|:-----|
