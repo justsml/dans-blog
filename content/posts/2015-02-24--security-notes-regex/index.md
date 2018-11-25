@@ -5,7 +5,7 @@ subTitle: Even RegEx can be vulnerable
 date: 2015-02-24
 modified: 2018-10-01
 category: security
-tags: [security]
+tags: [security, regex, dos, remote-exploit]
 cover_credit: Photo by Markus Spiske on Unsplash
 cover: markus-spiske-666905-unsplash.jpg
 ---

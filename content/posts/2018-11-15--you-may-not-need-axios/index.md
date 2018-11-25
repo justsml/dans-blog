@@ -2,7 +2,7 @@
 title: "You may not need Axios"
 subTitle: Fetch API to the rescue!
 date: 2018-11-14
-modified: 2018-11-15
+modified: 2018-11-24
 tags: [programming, patterns, source code, nodejs, javascript, promises]
 category: programming
 cover: william-bout-103533-unsplash.jpg
@@ -19,39 +19,17 @@ cover: william-bout-103533-unsplash.jpg
 ## Overview
 
 I'll be the first to say: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. I didn't know I was using broken examples. #fail <br />
+The good news is that a [large proportion of the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and corresponding examples have been improved, and I’ve included several [code snippets](#fetch-examples) with [common uses cases below](#feature-comparison).
+
+When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
+
+Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](@download-progress-helper) or cancelling requests.)
+
+I've collected up-to-date code examples for the patterns which "unlocked" [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for me.
+
+Check out the head-to-head [Feature Comparison](#feature-comparison); then browse my curated [Fetch Examples](#fetch-examples) I've accumulated over the past year.
 
 
-When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], or similar?
-
-<!--
-As I did my research on the many common _use cases_, I found a lot of misinformation. Google led me to many bad or harmful "answer" after "answer" - often on StackOverflow. _(Not linking back for fear it'll help their google standing. )_ One "answer" claimed you "can't upload files with \[any\] native browser" HTTP method," must "use jQuery." [_Lies!_](#uploading-files).
-
-To be honest, I didn't know [download progress](#download-progress-helper) or cancellation was possible until I wrote this. I'm happily surprised `fetch` can do a lot without much boilerplate.
--->
-
-<!--
-In fact most 3rd party ajax libraries still all use `XMLHttpRequest`. You might wonder why I don't suggest we use it.
-
-Using `XMLHttpRequest` leads to... well, let's say, artisinal & esoteric code. It doesn't look comparable to other APIs we use today. This makes it more difficult-to-memorize, and a lot harder to debug. For these reasons, NEVER use `XMLHttpRequest`.
- -->
-
-<!--
-Several years ago, the `WHAT-WG` (browser standards Working Group) saw the need for a modern replacement to `XMLHttpRequest`. Not long afterwards `fetch` was born.
-
-I used it sparingly, because I didn't know how to use it. I would search  `fetch` examples for hours, ultimately it was easier to conclude "it can't be done with fetch." Often I resorted to using `jQuery.ajax` or `axios`.
--->
-
-Until writing this article I had misconceptions of `fetch`'s limits. Specifically regarding [progress updates](@download-progress-helper) or cancelling requests.
-
-<!--
-The [`Fetch API`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) enjoys robust support in the ecosystem (in all major browsers - well, _excluding_ Internet Explorer.)
-
-It's not a NodeJS API, and It makes sense when when you consider `fetch` replaced the browser-only `XMLHttpRequest`.
-
-It's easy to get however via the `node-fetch` package. The only NodeJS-native option is with the [`http`](https://nodejs.org/api/http.html#http_http) (and [`https`](https://nodejs.org/api/https.html)) modules.
--->
-
-[_See **Compatibility** section below for browser & NodeJS support_](#compatibility)
 
 ## Feature Comparison
 
@@ -64,6 +42,8 @@ It's easy to get however via the `node-fetch` package. The only NodeJS-native op
 | Client side support for protecting against XSRF |✅        |✅         |✅       |
 | Progress                                        |✅        |✅         |✅       |
 | Streaming                                       |✅        |✅         |✅       |
+
+[_See **Compatibility** section below for browser & NodeJS support_](#compatibility)
 
 ## Fetch Examples
 
