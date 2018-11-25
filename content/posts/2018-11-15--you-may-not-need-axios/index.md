@@ -27,7 +27,7 @@ Check out the head-to-head [Feature Comparison](#feature-comparison); then brows
 
 
 
-## Feature Comparison
+# Feature Comparison
 
 |                                                 | fetch    | axios    | request |
 |-------------------------------------------------|:--------:|:--------:|:-------:|
@@ -39,15 +39,17 @@ Check out the head-to-head [Feature Comparison](#feature-comparison); then brows
 | Progress                                        |✅        |✅         |✅       |
 | Streaming                                       |✅        |✅         |✅       |
 
-[_See **Compatibility** section below for browser & NodeJS support_](#compatibility)
+<br /><br />
 
+When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
 
-When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
+Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](#download-progress-helper) or canceling requests.)
 
-Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](@download-progress-helper) or cancelling requests.)
+<br />
 
+-------------------------------------
 
-## Fetch Examples
+# Fetch Examples
 
 Click the links below to go directly to the code snippet.
 
@@ -57,7 +59,7 @@ Click the links below to go directly to the code snippet.
 1. [Posting JSON](#posting-json)
 1. [Posting an HTML `<form>`](#posting-an-html-form)
 1. [Form encoded data](#form-encoded-data)
-1. [Uploading Files](#uploading-files)
+1. [Uploading a File](#uploading-a-file)
 1. [Uploading Multiple Files](#uploading-multiple-files)
 1. [Show Download Progress Percent](#download-progress-helper)
 1. TODO: _Custom HTTP status error behavior_
@@ -65,6 +67,8 @@ Click the links below to go directly to the code snippet.
 1. TODO: _Recursive: Automated results paging_
 
 > Is your Use Case not listed? [Let me know ✉️](/contact/)
+
+<br />
 
 ### Get JSON from a URL
 
@@ -98,7 +102,7 @@ For example, `new URLSearchParams({a: 1, b: 2})` yields `a=1&b=2`.
 
 `gist:justsml/716c4534ef4afb22f65d4fc4367c7136`
 
-### Uploading files
+### Uploading a file
 
 `gist:justsml/301f22aa37df565ba3051bd5f95b4df1`
 
@@ -131,7 +135,7 @@ A reusable image downloader might look like `getBlob()`:
 
 By the way, a `Blob` is a Binary Large Object.
 
-It's important to choose ONE of the 2 usage patterns below (they are functionally equivalant):
+It's important to choose ONE of the 2 usage patterns below (they are functionally equivalent):
 
 `gist:justsml/6ad9e37a96ad1f3a75ca509038510a5b`
 
@@ -149,7 +153,7 @@ _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC s
 
 "What about NodeJS and the poor IE people?!?"
 
-Fear not, the fractional % of IE9-10 users [can be polyfilled](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by some awesome GitHub devs). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
+Fear not, the fractional % of IE9-10 users [can be polyfilled](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by some awesome team at GitHub). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
 
 NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package:
 
@@ -162,7 +166,7 @@ _After polyfill+node-fetch: 99.99% compatible_ ✅
 
 ## More coming soon.
 
-> Please Tweet at me if you have a Use Cases you'd like to see. ❤️
+> Please [Tweet at me](https://twitter.com/justsml) if you have other _Use Cases_ you'd like to see. ❤️
 
 ![End of Dan's fetch API Examples](jonas-vincent-2717-unsplash.jpg "End of Dan's fetch API Examples")
 
