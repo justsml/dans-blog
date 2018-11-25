@@ -21,10 +21,6 @@ cover: william-bout-103533-unsplash.jpg
 I'll be the first to say: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. I didn't know I was using broken examples. #fail <br />
 The good news is that a [large proportion of the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and corresponding examples have been improved, and I’ve included several [code snippets](#fetch-examples) with [common uses cases below](#feature-comparison).
 
-When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
-
-Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](@download-progress-helper) or cancelling requests.)
-
 I've collected up-to-date code examples for the patterns which "unlocked" [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for me.
 
 Check out the head-to-head [Feature Comparison](#feature-comparison); then browse my curated [Fetch Examples](#fetch-examples) I've accumulated over the past year.
@@ -44,6 +40,12 @@ Check out the head-to-head [Feature Comparison](#feature-comparison); then brows
 | Streaming                                       |✅        |✅         |✅       |
 
 [_See **Compatibility** section below for browser & NodeJS support_](#compatibility)
+
+
+When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`][https://www.npmjs.com/package/request], [`r2`][https://www.npmjs.com/package/r2], [`superagent`][https://www.npmjs.com/package/superagent], [`got`][https://www.npmjs.com/package/got], etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
+
+Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](@download-progress-helper) or cancelling requests.)
+
 
 ## Fetch Examples
 
