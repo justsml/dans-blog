@@ -8,6 +8,7 @@ category: workflow
 cover: john-moeses-bauan-713049-unsplash.jpg
 ---
 
+# MOAR MISSPELLLLINGS!!!!!
 
 This guide will help you learn the most important `git` commands. Whether you've only just started with `git`, or you've been living the struggle, this is for you.
 
