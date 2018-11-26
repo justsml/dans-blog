@@ -75,6 +75,9 @@ const styles = theme => ({
         bottom: "-5px"
       }
     },
+    "& table": {
+      width: "100%"
+    },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
       fontSize: `${theme.main.fonts.content.sizeM}em`
     },
