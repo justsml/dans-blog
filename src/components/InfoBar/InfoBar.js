@@ -66,7 +66,7 @@ class InfoBar extends React.Component {
     return (
       <aside className={classes.infoBar}>
         <Link to="/" className={classes.avatarLink} onClick={this.homeLinkOnClick}>
-          <img src="https://i.giphy.com/media/12HZukMBlutpoQ/giphy.webp" />
+          <Avatar alt={config.infoTitle} src={avatar} className={classes.avatar} />
         </Link>
         <h3 className={classes.title}>
           {config.infoTitle}
