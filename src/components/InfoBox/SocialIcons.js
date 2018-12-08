@@ -5,8 +5,9 @@ import injectSheet from "react-jss";
 import config from "../../../content/meta/config";
 
 import GithubIcon from "!svg-react-loader!../../images/svg-icons/github.svg?name=GithubIcon";
-import FacebookIcon from "!svg-react-loader!../../images/svg-icons/facebook.svg?name=FacebookIcon";
 import TwitterIcon from "!svg-react-loader!../../images/svg-icons/twitter.svg?name=TwitterIcon";
+
+import { FaYoutube } from "react-icons/fa";
 
 const styles = theme => ({
   social: {
@@ -21,6 +22,10 @@ const styles = theme => ({
       "& svg": {
         fill: theme.info.colors.socialIconsHover
       }
+    },
+    "& svg": {
+      width: "21px",
+      height: "20px"
     }
   },
   svg: {
@@ -35,9 +40,10 @@ const Socialcons = props => {
   const { classes } = props;
   const items = config.authorSocialLinks;
   const icons = {
+    // facebook: FacebookIcon,
     twitter: TwitterIcon,
-    facebook: FacebookIcon,
-    github: GithubIcon
+    github: GithubIcon,
+    youtube: FaYoutube
   };
 
   return (
@@ -51,6 +57,7 @@ const Socialcons = props => {
             className={classes.link}
             target="_blank"
             rel="noopener noreferrer"
+            ariaLabel={`view ${item.name} content`}
             title={item.name}
           >
             <Icon className={classes.svg} />
