@@ -27,7 +27,10 @@ module.exports = {
   // social
   authorSocialLinks: [
     { name: "github", url: "https://github.com/justsml" },
-    { name: "twitter", url: "https://twitter.com/justsml" }
-    // { name: "facebook", url: "https://facebook.com/justsml" }
+    { name: "twitter", url: "https://twitter.com/justsml" },
+    {
+      name: "youtube",
+      url: "https://www.youtube.com/user/justsml/videos?shelf_id=0&amp;sort=dd&amp;view=0"
+    }
   ]
 };
