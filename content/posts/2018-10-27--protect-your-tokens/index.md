@@ -2,7 +2,7 @@
 title: "Protecting Your Tokens, API Keys and Secrets"
 subTitle: Public? Private? Wat?
 date: 2018-10-27
-modified: null
+modified: 2018-12-07
 tags: [tokens, api keys, secrets, security, nodejs, json web tokens]
 category: security
 cover: dayne-topkin-78982-unsplash.jpg
@@ -28,8 +28,8 @@ It is often made worse with the soup of related terms you'll encounter: _tokens_
 
 Let's re-frame this as between `secret` and `non-secret`.
 
-* 🔒 `Secret keys` MUST use a custom server (e.g. Node/Express/Heroku) in order to hide (proxy) requests to 3rd party API services.
-* 🌍 `Non-secret keys` describes keys which can be sent to the browser.
+* 🔒 [`Secret keys`](#-secret-keys) MUST be kept hidden. Generally they should NEVER leave your private server (or service - like heroku, netlify or travis-ci).
+* 🌍 [`Non-secret keys`](#-non-secret-keys) describes strings which could be shared freely and included in browser requests.
 
 
 
@@ -67,21 +67,20 @@ _How do you know when you're dealing with a `Secret key`?_
 - Service credentials (Email/SMTP, LDAP/Directory Services)
 - Data encryption & integrity checking
 
-### Handle Secrets Safely
-
-<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Related Article: <a href="/securely-using-environment-variables-in-nodejs/">Using dotenv securely in NodeJS</a></h2></blockquote>
+### Checklist: Handling Secrets Safely
 
 #### Quick Overview
 
-
 Complete the following steps to **eliminate secrets from your code:**
 
-1. Replace hard-coded keys with environment variables. e.g. `process.env.API_SECRET`
-1. Use a library like [`dotenv`](https://github.com/motdotla/dotenv#dotenv) along with a `.env` file. Add your previously hard-coded secrets to the `.env` file.
-1. Add a `.env` line in your `.gitignore` file!
+- [ ] Replace hard-coded keys with environment variables. e.g. `process.env.API_SECRET`
+- [ ] Use a library like [`dotenv`](https://github.com/motdotla/dotenv#dotenv) along with a `.env` file. Add your previously hard-coded secrets to the `.env` file.
+- [ ] Add a `.env` line in your `.gitignore` file!
 
 > **DON'T** create a `.env` file on deployed servers. Use your hosting services' (e.g. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) provided environment variable management tool: e.g. **dashboard or command line.**
 
+
+<blockquote><h2 style="margin: 0.125em 0; text-align: center;">Related Article: <a href="/securely-using-environment-variables-in-nodejs/">Using dotenv securely in NodeJS</a></h2></blockquote>
 
 -----------------------------------
 
