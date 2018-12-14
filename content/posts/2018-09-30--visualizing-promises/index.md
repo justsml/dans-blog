@@ -25,7 +25,7 @@ This is a utility method which will resolve once the timeout has passed.
 
 The delay in milliseconds will be passed to `.then`'s callback.
 
-Let's look at 4 examples (w/ a corresponding timeline)...
+Let's look at 4 examples (with animated timelines).
 
 #### Example #1/4
 
@@ -46,10 +46,15 @@ delay(1000) --------|.then(fn)
 
 #### Example #2/4
 
-This shows what happens when you execute the function, rather than pass a reference to a function.
-For example: `console.log` vs. `console.log()`.
+_This shows a common mistake._
 
-_This shows a common mistage using `console.log`._ Generally the desired behavior is shown in Example #1.
+The `console.log` fires right when the `delay(1000)` **begins**. Not **after** the delay like you probably wanted.
+
+Because `console.log` returns `undefined` our `.then()` is silently ignored.
+
+Note the difference between `typeof console.log === 'function'` vs. `typeof console.log() === undefined`.
+
+Generally the desired usage for `console.log` is shown in Example #1. Make sure you pass functions into `.then` and `.catch`.
 
 ```js
 delay(1000).then(console.log('done'))
