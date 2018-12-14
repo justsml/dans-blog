@@ -3,14 +3,13 @@ layout: post
 title:  "Visualizing Promises"
 subTitle: Break on through...
 date:   2018-09-30
-modified:   2018-10-09
+modified:   2018-12-14
 category: promises
 cover: junior-ferreira-735237-unsplash.jpg
 tags: [promises, async, visualizing, javascript, composition]
 ---
 
 ![credit: junior-ferreira-735237-unsplash.jpg](junior-ferreira-735237-unsplash.jpg)
-
 
 In order to visualize how Promises execute, let's define a new method `delay(millisecs)`.
 
@@ -36,7 +35,7 @@ This shows how `console.log()`'s execution will be delayed by `delay(msec)`.
 delay(1000).then(() => console.log('done'))
 ```
 
-![](1000ms-resized.gif)
+![](N_1000ms_log.gif)
 
 <!-- ```
 delay(1000) --------|.then(fn)
@@ -56,7 +55,7 @@ _This shows a common mistage using `console.log`._ Generally the desired behavio
 delay(1000).then(console.log('done'))
 ```
 
-![](1000msNullLog-resized.gif)
+![](N_1000ms_!log.gif)
 
 <!-- ```
 delay(1000) --------|.then(null)
@@ -76,7 +75,7 @@ delay(2000).then(console.log)
 delay(3000).then(console.log)
 ```
 
-![](3000ms-resized.gif)
+![](N_3000ms.gif)
 
 <!-- ```
 delay(1000) ------|.then(console.log)
@@ -96,7 +95,7 @@ Promise.all([delay(1000), delay(2000), delay(3000)])
   .then(console.log)
 ```
 
-![](PromiseAll-resized.gif)
+![](N_3000ms_PromiseAll.gif)
 
 <!--
 ```
