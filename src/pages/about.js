@@ -15,6 +15,17 @@ import { Icons, getStargazers } from "../services/github.js";
 const NumFormatter = new Intl.NumberFormat();
 
 const styles = theme => ({
+  tableOfContents: {
+    "& li": {
+      margin: 0
+      // listStyleType: "none"
+    }
+  },
+  autobiography: {
+    "& p": {
+      textIndent: "2.5em"
+    }
+  },
   card: {
     borderBottom: "1px solid rgb(225, 228, 232)",
     padding: "1em 0.25em",
@@ -38,6 +49,10 @@ const styles = theme => ({
     "& .reference": {
       border: "5px dashed red"
     },
+    "& .octicon-repo": {
+      marginRight: "4px",
+      zoom: "1.3"
+    },
     "& .octicon": {
       color: "#959da5",
       opacity: "0.60",
@@ -57,13 +72,13 @@ const styles = theme => ({
     color: "#586069",
     margin: "0.3em 0",
     fontSize: "18px",
-    "& span": {
-      color: "#0366d6",
-      fontWeight: "400"
-    },
-    "& label": {
+    "& .repo-link": {
       color: "#0366d6",
       fontWeight: "600"
+    },
+    "& .user-link": {
+      color: "#0366d6",
+      fontWeight: "400"
     }
   },
   buttonBar: {
@@ -88,7 +103,7 @@ const styles = theme => ({
     display: "flex",
     justifyContent: "stretch",
     maxHeight: "28px",
-    "& span, .user-link": {
+    "& span": {
       backgroundColor: "#fff",
       border: "1px solid rgba(27,31,35,.2)",
       borderBottomRightRadius: "3px",
@@ -101,7 +116,7 @@ const styles = theme => ({
       padding: "3px 10px",
       verticalAlign: "middle"
     },
-    "& label, .repo-link": {
+    "& label": {
       /* borderRadius: ".25em", */
       backgroundColor: "#eff3f6",
       backgroundImage: "linear-gradient(-180deg,#fafbfc,#eff3f6 90%)",
@@ -137,7 +152,7 @@ class About extends React.Component {
       return FP.resolve(projects)
         .concurrency(2)
         .map(project => {
-          const targetId = `${project.user}-${project.repo}-star-count`;
+          const targetId = `${project.user}-${project.repo}`;
           const lookupProject = project.renamed ? project.renamed : project;
 
           return getStargazers({ ...lookupProject, targetId }).then(starCount => {
@@ -160,21 +175,35 @@ class About extends React.Component {
     );
   }
 
-  buildProjectList(projects) {
+  buildProjectList = projects => {
     const { classes } = this.props;
 
     if (projects) {
       return projects.map(project => {
-        const targetId = `${project.user}-${project.repo}-star-count`;
+        const targetId = `${project.user}-${project.repo}`;
 
         return (
-          <div className={["card", classes.card].join(" ")} key={targetId}>
+          <div className={["card", classes.card].join(" ")} key={targetId} id={targetId}>
             <div className={classes.buttonBar}>
               <i className="ico">{Icons.repo}</i>
 
               <div className={["path-title", classes.repoTitle].join(" ")}>
-                <span className="user-link">{project.user}</span>&#160;/&#160;<label className="repo-link">
-                  {project.repo}
+                <a
+                  target="_blank"
+                  className="user-link"
+                  href={`https://github.com/${project.user}`}
+                >
+                  {project.user}
+                </a>
+                &#160;/&#160;
+                <label className="repo-link">
+                  <a
+                    target="_blank"
+                    className="repo-link"
+                    href={`https://github.com/${project.user}/${project.repo}`}
+                  >
+                    {project.repo}
+                  </a>
                 </label>
               </div>
 
@@ -186,9 +215,12 @@ class About extends React.Component {
                 )}
               </div>
             </div>
-            <div className="description">{project.description}</div>
+            <div
+              className="description"
+              dangerouslySetInnerHTML={{ __html: project.description }}
+            />
             <div className="contributions">
-              <blockquote>{project.contribution}</blockquote>
+              <blockquote dangerouslySetInnerHTML={{ __html: project.contribution }} />
             </div>
           </div>
         );
@@ -196,14 +228,70 @@ class About extends React.Component {
     } else {
       return <h2 className="warning">WARNING: No projects configured!</h2>;
     }
-  }
+  };
+
+  getProjectToC = projects => {
+    if (!projects) return null;
+
+    const { classes } = this.props;
+    const linksList = projects.map(project => {
+      const targetId = `${project.user}-${project.repo}`;
+
+      return (
+        <li className={["path-title", classes.repoTitle].join(" ")} key={targetId}>
+          <a className="user-link" href={`#${targetId}`}>
+            {project.user}
+          </a>
+          &#160;/&#160;
+          <a className="repo-link" href={`#${targetId}`}>
+            {project.repo}
+          </a>
+        </li>
+      );
+    });
+
+    return <ol className={classes.tableOfContents}>{linksList}</ol>;
+  };
+
   render() {
     return (
       <Main>
         <Article>
-          <PageHeader title="About" />
+          <PageHeader title="About Dan" />
           <Content>
-            <div style={{ width: "600px" }}>{this.buildProjectList(ossContributions)}</div>
+            <div className={this.props.classes.autobiography}>
+              <p>
+                Dan is an accomplished programmer, teacher, mentor, and leader. He has over 15 years
+                of extensive professional software development experience. Including consulting,
+                Agile team building, architectural leadership, security audits, accessibility
+                reviews and UI/UX analysis. At both startups and big companies.
+              </p>
+              <p>
+                After years of study and research in software patterns and architecture, Dan has
+                become a highly sought-out subject matter expert. Additionally, Dan&apos;s talks
+                have earned him a reputation as an incisive, thought-provoking and motivating public
+                speaker.
+              </p>
+              <p>
+                As an active contributor to numerous Open Source projects, Dan has established
+                himself as a dynamic problem solver, constantly seeking personal growth and always
+                learning. Dan pulls from his deep bench of experience to gain a better understanding
+                of almost any challenge. He closely follows changes across a broad Technology
+                landscape: learning new languages, methodologies, patterns, and adapting to
+                different code styles.
+              </p>
+              <p>
+                <a href="DanLevy-Resume-2019.pdf">Download Dan&apos;s Resume</a>
+              </p>
+            </div>
+
+            <div style={{ width: "600px" }}>
+              <h2>Open Source Contributions</h2>
+              <h3 id="oss-toc">Index of Contributions</h3>
+              {this.getProjectToC(ossContributions)}
+              <h3>Contribution Details</h3>
+              {this.buildProjectList(ossContributions)}
+            </div>
           </Content>
         </Article>
       </Main>
@@ -222,7 +310,7 @@ const ossContributions = [
     user: "ReactTraining",
     repo: "react-router",
     description: `React Router is an extremely popular routing solution for React. It features a collection of navigational components that work flexibly with your application.`,
-    contribution: `Dan helped improve the docs & website; including high-profile work on the home page & navigation design. According to project co-creator Michael Jackson, "A lot of people are going to benefit from the improvements you're making."`
+    contribution: `Dan helped improve the official documentation website. Some notable work improved the home page, initial examples, and overall navigation design. "A lot of people are going to benefit from the improvements you're making." - project co-creator Michael Jackson.`
   },
   {
     user: "docker",
@@ -233,29 +321,29 @@ const ossContributions = [
     Dan was added as a "Docker Mentor" and can often be found helping at local meetups.`
   },
   {
+    user: "nodejs",
+    repo: "node",
+    description: `NodeJS is the wildly successful framework which helped JavaScript venture beyond the browser to become the most ubiquitous programming language.`,
+    contribution:
+      "Dan added helpful contextual links to parts of the official website. Dan also worked closely with relevant stakeholders at both TC39 and the NodeJS foundation to provide input & support on several signifigant features added to JavaScript. Notably these include ES6 Classes, Promises, Async/Await, and the URL parser."
+  },
+  {
     user: "mdn",
     repo: "interactive-examples",
-    description: `Mozilla Development Network is the de-facto official source for details on JavaScript, DOM, and other browser APIs.`,
+    description: `Mozilla Development Network is relied on by millions of developers. It has become the de-facto standard source for technical details on JavaScript, HTML, the DOM, and other browser features.`,
     contribution: `Added clarifications and examples across Promise, Fetch and Array documentation pages.`
   },
   {
     user: "lord",
     repo: "slate",
     description: `Slate is a tool to generate modern documentation for libraries, SDKs, and APIs.`,
-    contribution: `Fixed an issue around securely encoding HTML. Currently used to document Dan's Functional Promises library: <a href='https://fpromises.io' target='_blank'>fpromises.io</a>`
+    contribution: `Fixed an issue around securely encoding HTML. Currently slate is used to <a href='https://fpromises.io' target='_blank'>document Dan's Functional Promises library at https://fpromises.io</a>`
   },
   {
     user: "gatsbyjs",
     repo: "gatsby",
     description: `Gatsby is a modern Static Site Generator for blazing fast websites.`,
     contribution: `Fixed error handling in one of the built-in plugins. Dan's also a member of their GitHub team. 💖`
-  },
-  {
-    user: "nodejs",
-    repo: "node",
-    description: `NodeJS is the wildly successful framework which helped JavaScript venture beyond the browser to become the most ubiquitous programming language.`,
-    contribution:
-      "Dan has provided input on Classes, Promises, and the URL parser re-design & strategy. As a loyal member of the organization, he eagerly works with other team members as much as possible."
   },
   {
     user: "gruntjs",
@@ -274,7 +362,7 @@ const ossContributions = [
     user: "lodash",
     repo: "lodash",
     description:
-      "A modern JavaScript utility library delivering modularity, performance, & extras. Lodash is one of the most successful JavaScript libraries ever.",
+      "A modern JavaScript utility library delivering modularity, performance, & extras. Lodash is one of the most successful JavaScript libraries ever. It's enjoyed several years at #1 on the 'Top 10' most depended on libraries NPM ranking.",
     contribution: "Extended ArrayBuffer support, in collaboration with John David-Dalton."
   },
   {
@@ -286,8 +374,8 @@ const ossContributions = [
   {
     user: "petkaantonov",
     repo: "bluebird",
-    description: `Bluebird is one of the most widely used replacement for native Promises.`,
-    contribution: `Dan has submitted several PRs over the years, and is a vocal proponent of better Promise usage.`
+    description: `Bluebird is a very common Promise-enhancement library. It's also one of the 'Top 10' most depended on libraries.`,
+    contribution: `Dan has submitted several PRs over the years, and is a huge fan of this popular library. It was the inspiration behind <a href='https://fpromises.io' target='_blank'>functional-promises.</a>`
   },
   {
     user: "rancher",

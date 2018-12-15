@@ -2,4 +2,6 @@
 title: info
 ---
 
-Educator and pursuer of knowledge. JavaScript has my ❤️.
+<div class="text-center">
+  <!-- Educator and creator. 🚀 -->
+</div>
