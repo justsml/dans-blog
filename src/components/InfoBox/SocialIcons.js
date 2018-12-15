@@ -57,7 +57,7 @@ const Socialcons = props => {
             className={classes.link}
             target="_blank"
             rel="noopener noreferrer"
-            ariaLabel={`view ${item.name} content`}
+            aria-label={`view ${item.name} content`}
             title={item.name}
           >
             <Icon className={classes.svg} />

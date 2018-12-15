@@ -8,124 +8,193 @@ import Main from "../components/Main";
 import Article from "../components/Main/Article";
 import PageHeader from "../components/Page/PageHeader";
 import Content from "../components/Main/Content";
-import config from "../../content/meta/config";
+// import config from "../../content/meta/config";
 
-import { StatusButtons, Icons, getStargazers } from "../services/github.js";
+import { Icons, getStargazers } from "../services/github.js";
 
 const NumFormatter = new Intl.NumberFormat();
 
 const styles = theme => ({
-  .star-box {
-    max-height: 28px;
-    display: flex;
-    justify-content: stretch;
-    align-content: space-between;
+  card: {
+    borderBottom: "1px solid rgb(225, 228, 232)",
+    padding: "1em 0.25em",
+    "& .description": {
+      color: "rgba(0, 0, 0, 0.6)",
+      fontSize: "0.9em",
+      fontWeight: "400",
+      paddingTop: "0.5em"
+    },
+    "& .contributions": {
+      margin: "0.74em 0 0 0"
+    },
+    "& blockquote": {
+      color: "rgba(0, 0, 0, 0.6)",
+      fontSize: "0.9em",
+      fontStyle: "italic",
+      fontWeight: "300",
+      margin: "1.4em",
+      marginBottom: "0.7em"
+    },
+    "& .reference": {
+      border: "5px dashed red"
+    },
+    "& .octicon": {
+      color: "#959da5",
+      opacity: "0.60",
+      verticalAlign: "middle",
+      marginTop: "-1px",
+      display: "inline-block"
+    },
+    "& .ico": {
+      color: "#959da5",
+      opacity: "0.60",
+      verticalAlign: "middle",
+      marginTop: "-1px",
+      display: "inline-block"
+    }
+  },
+  repoTitle: {
+    color: "#586069",
+    margin: "0.3em 0",
+    fontSize: "18px",
+    "& span": {
+      color: "#0366d6",
+      fontWeight: "400"
+    },
+    "& label": {
+      color: "#0366d6",
+      fontWeight: "600"
+    }
+  },
+  buttonBar: {
+    display: "flex",
+    flexDirection: "row",
+    maxWidth: "690px",
+    "& i": {
+      flexGrow: "0",
+      minWidth: "18px",
+      alignSelf: "center"
+    },
+    "& .path-title": {
+      flexGrow: "1",
+      width: "235px"
+    },
+    "& .button-bar": {
+      alignSelf: "center"
+    }
+  },
+  starBox: {
+    alignContent: "space-between",
+    display: "flex",
+    justifyContent: "stretch",
+    maxHeight: "28px",
+    "& span, .user-link": {
+      backgroundColor: "#fff",
+      border: "1px solid rgba(27,31,35,.2)",
+      borderBottomRightRadius: "3px",
+      borderLeft: "0",
+      borderTopRightRadius: "3px",
+      color: "#24292e",
+      fontSize: "12px",
+      fontWeight: "600",
+      lineHeight: "21px",
+      padding: "3px 10px",
+      verticalAlign: "middle"
+    },
+    "& label, .repo-link": {
+      /* borderRadius: ".25em", */
+      backgroundColor: "#eff3f6",
+      backgroundImage: "linear-gradient(-180deg,#fafbfc,#eff3f6 90%)",
+      backgroundPosition: "-1px -1px",
+      backgroundRepeat: "repeat-x",
+      backgroundSize: "110% 110%",
+      border: "1px solid rgba(27,31,35,.2)",
+      borderBottomLeftRadius: ".25em",
+      borderTopLeftRadius: ".25em",
+      color: "#24292e",
+      display: "inline-block",
+      fontSize: "12px",
+      fontWeight: "600",
+      lineHeight: "14px",
+      padding: "6px 10px",
+      position: "relative",
+      userSelect: "none",
+      verticalAlign: "middle",
+      whiteSpace: "nowrap"
+    }
   }
-  .star-box span {
-    background-color: #fff;
-    border: 1px solid rgba(27,31,35,.2);
-    border-bottom-right-radius: 3px;
-    border-left: 0;
-    border-top-right-radius: 3px;
-    color: #24292e;
-    /* float: left; */
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 21px;
-    padding: 3px 10px;
-    vertical-align: middle;
-  }
-  .star-box label {
-    /* float: left; */
-
-    background-position: -1px -1px;
-    background-repeat: repeat-x;
-    background-size: 110% 110%;
-    border: 1px solid rgba(27,31,35,.2);
-    /* border-radius: .25em; */
-    border-top-left-radius: .25em;
-    border-bottom-left-radius: .25em;
-    /* cursor: pointer; */
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    line-height: 14px;
-    padding: 6px 10px;
-    position: relative;
-    user-select: none;
-    vertical-align: middle;
-    white-space: nowrap;
-    background-color: #eff3f6;
-    background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
-    color: #24292e;
-  }
-
-
 });
 
 class About extends React.Component {
   state = { projectStars: {} };
 
-  getStarButton(starCount) {
-    return (
-      <div className="star-box">
-        <label>
-          {Icons.star}
-          Star
-        </label>
-        <span>{NumFormatter.format(starCount)}</span>
-      </div>
-    );
+  componentDidMount() {
+    this.loadProjectData(ossContributions);
   }
-  loadProjectData(projects) {
+
+  loadProjectData = projects => {
     if (projects) {
       return FP.resolve(projects)
         .concurrency(2)
         .map(project => {
           const targetId = `${project.user}-${project.repo}-star-count`;
-          // const lookupProject = project.renamed ? project.renamed : project;
-          // const starButtons = this.state.projectStars[targetId];
+          const lookupProject = project.renamed ? project.renamed : project;
 
           return getStargazers({ ...lookupProject, targetId }).then(starCount => {
             this.setState({ [targetId]: starCount });
           });
+        })
+        .catch(err => {
+          console.error("Failed to get current Github Stats", err);
+          this.setState({ error: err.message });
         });
     }
+  };
+
+  getStarButton(starCount) {
+    return (
+      <div className={this.props.classes.starBox}>
+        <label>{Icons.star}&#160;Star</label>
+        <span>{NumFormatter.format(starCount)}</span>
+      </div>
+    );
   }
 
   buildProjectList(projects) {
+    const { classes } = this.props;
+
     if (projects) {
-      return FP.resolve(projects)
-        .concurrency(2)
-        .map(project => {
-          const targetId = `${project.user}-${project.repo}-star-count`;
+      return projects.map(project => {
+        const targetId = `${project.user}-${project.repo}-star-count`;
 
-          return (
-            <div className="card" key={targetId}>
-              <div className="flexy-time">
-                <i className="ico">{Icons.repo}</i>
+        return (
+          <div className={["card", classes.card].join(" ")} key={targetId}>
+            <div className={classes.buttonBar}>
+              <i className="ico">{Icons.repo}</i>
 
-                <div className="path-title">
-                  <span>{project.user}</span>&#160;/&#160;<label>{project.repo}</label>
-                </div>
-
-                <div className="button-bar" id={targetId}>
-                  {this.state[targetId] != undefined ? (
-                    this.getStarButton(this.state[targetId])
-                  ) : (
-                    <span className="loading">Loading...</span>
-                  )}
-                </div>
+              <div className={["path-title", classes.repoTitle].join(" ")}>
+                <span className="user-link">{project.user}</span>&#160;/&#160;<label className="repo-link">
+                  {project.repo}
+                </label>
               </div>
-              <div className="description">{project.description}</div>
-              <div className="contributions">
-                <blockquote>{project.contribution}</blockquote>
+
+              <div className="button-bar" id={targetId}>
+                {this.state[targetId] != undefined ? (
+                  this.getStarButton(this.state[targetId])
+                ) : (
+                  <span className="loading">Loading...</span>
+                )}
               </div>
             </div>
-          );
-        });
+            <div className="description">{project.description}</div>
+            <div className="contributions">
+              <blockquote>{project.contribution}</blockquote>
+            </div>
+          </div>
+        );
+      });
     } else {
-      return <h2 className="warning">WARNING: No projects in config</h2>;
+      return <h2 className="warning">WARNING: No projects configured!</h2>;
     }
   }
   render() {
@@ -133,7 +202,9 @@ class About extends React.Component {
       <Main>
         <Article>
           <PageHeader title="About" />
-          <Content />
+          <Content>
+            <div style={{ width: "600px" }}>{this.buildProjectList(ossContributions)}</div>
+          </Content>
         </Article>
       </Main>
     );
