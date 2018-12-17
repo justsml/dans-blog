@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
+import { withPrefix } from "gatsby-link";
 
-import FP from "functional-promises";
+import FP from "functional-promises/dist/umd";
 
 import Main from "../components/Main";
 import Article from "../components/Main/Article";
@@ -276,9 +277,9 @@ class About extends React.Component {
                 As an active contributor to numerous Open Source projects, Dan has established
                 himself as a dynamic problem solver, constantly seeking personal growth and always
                 learning. Dan pulls from his deep bench of experience to gain a better understanding
-                of almost any challenge. He closely follows changes across a broad Technology
-                landscape: learning new languages, methodologies, patterns, and adapting to
-                different code styles.
+                of any challenge. He closely follows changes across a broad Technology landscape:
+                learning new languages, methodologies, patterns, and adapting to different code
+                styles.
               </p>
               <p>
                 <a href="DanLevy-Resume-2019.pdf">Download Dan&apos;s Resume</a>

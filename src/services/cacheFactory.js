@@ -1,4 +1,8 @@
-export default function CacheFactory(store = sessionStorage) {
+export default function CacheFactory(store) {
+  if (!store) {
+    throw new Error(`CacheFactory requires a session/local storage provider.`);
+  }
+
   return {
     get(key) {
       return store.getItem(key) ? JSON.parse(store.getItem(key)) : false;

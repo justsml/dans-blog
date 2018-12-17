@@ -1,9 +1,11 @@
 import React from "react";
 import CacheFactory from "./cacheFactory.js";
 
-const cache = CacheFactory(sessionStorage);
+let cache = null;
+
 
 export function getRepoData({ repo, user }) {
+  cache = cache || CacheFactory(window && window.sessionStorage);
   const key = `${user}/${repo}`;
   if (cache.get(key)) return Promise.resolve(cache.get(key));
 
