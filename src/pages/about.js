@@ -227,7 +227,7 @@ class About extends React.Component {
         );
       });
     } else {
-      return <h2 className="warning">WARNING: No projects configured!</h2>;
+      return <h2 className="warning text-center">WARNING: No projects configured!</h2>;
     }
   };
 
@@ -281,9 +281,11 @@ class About extends React.Component {
                 learning new languages, methodologies, patterns, and adapting to different code
                 styles.
               </p>
-              <p>
-                <a href={withPrefix("DanLevy-Resume-2019.pdf")}>Download Dan&apos;s Resume</a>
-              </p>
+              <div className="text-center">
+                <a href={`/${withPrefix("DanLevy-Resume-2019.pdf")}`}>
+                  <b>Download Dan&apos;s Resume</b>
+                </a>
+              </div>
             </div>
 
             <div style={{ width: "600px" }}>
