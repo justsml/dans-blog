@@ -282,7 +282,7 @@ class About extends React.Component {
                 styles.
               </p>
               <p>
-                <a href="DanLevy-Resume-2019.pdf">Download Dan&apos;s Resume</a>
+                <a href={withPrefix("DanLevy-Resume-2019.pdf")}>Download Dan&apos;s Resume</a>
               </p>
             </div>
 
