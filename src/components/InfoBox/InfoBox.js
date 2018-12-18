@@ -82,7 +82,7 @@ class InfoBox extends React.Component {
           />
         )}
         <div className={classes.wrapper}>
-          {info && <InfoText info={info} />}
+          {/* {info && <InfoText info={info} />} */}
           {pages && <InfoMenu pages={pages} linkOnClick={this.menulinkOnClick} />}
           <SocialIcons />
           {/* <StackIcons /> */}
