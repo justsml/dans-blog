@@ -26,6 +26,8 @@ const styles = theme => ({
   }
 });
 
+const hasMenuTitle = ({ node }) => node.frontmatter && node.frontmatter.menuTitle;
+
 class TopMenu extends React.Component {
   state = {
     anchorEl: null,
@@ -51,8 +53,12 @@ class TopMenu extends React.Component {
   };
 
   render() {
-    const { classes, pages } = this.props;
+    let { classes, pages } = this.props;
     const { anchorEl, open } = this.state;
+
+    console.log("pages", pages);
+    pages = pages.filter(hasMenuTitle);
+    console.log("pages", pages);
 
     return (
       <nav className={classes.topMenu}>
@@ -106,7 +112,7 @@ class TopMenu extends React.Component {
                         </Link>
                       );
                     })}
-                    <Link aria-label="Contact" to="/contact/" style={{ display: "block" }}>
+                    {/* <Link aria-label="Contact" to="/contact/" style={{ display: "block" }}>
                       <MenuItem
                         onClick={e => {
                           this.props.pageLinkOnClick(e);
@@ -115,7 +121,7 @@ class TopMenu extends React.Component {
                       >
                         Contact
                       </MenuItem>
-                    </Link>
+                    </Link> */}
                   </MenuList>
                 </Paper>
               </Grow>

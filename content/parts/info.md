@@ -2,6 +2,6 @@
 title: info
 ---
 
-<div class="text-center">
-  <!-- Educator and creator. 🚀 -->
-</div>
+<!-- <div class="text-center">
+  Educator and creator. 🚀
+</div> -->

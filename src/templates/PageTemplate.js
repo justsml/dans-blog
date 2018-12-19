@@ -25,7 +25,7 @@ class PageTemplate extends React.Component {
 
     if (!data || !data.page) {
       return (
-        <div className="alert-warning">
+        <div className="alert-warning" style={{ width: "50%" }}>
           <h2>⚠️ Error</h2>
           <label>The requested page is not available</label>
           <div className="details">URL: {window.self.location.href}</div>

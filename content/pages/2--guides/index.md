@@ -1,13 +1,14 @@
 ---
 title: Guides
 menuTitle: Guides
+cover: barn-images-12223-unsplash.jpg
 ---
 
 # Guides, Cheat Sheets and Examples
 
 **By:** [Dan Levy](https://www.danlevy.net/) follow me on twitter: [@justsml](https://twitter.com/justsml)
 
-![credit: n-120570-unsplash.jpg](n-120570-unsplash.jpg)
+![credit: barn-images-12223-unsplash.jpg](barn-images-12223-unsplash.jpg)
 
 ## Table of Contents
 

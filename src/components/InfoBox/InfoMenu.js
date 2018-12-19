@@ -23,12 +23,14 @@ const styles = theme => ({
   }
 });
 
+const hasMenuTitle = ({ node }) => node.frontmatter && node.frontmatter.menuTitle;
+
 const InfoMenu = props => {
   const { classes, pages, linkOnClick } = props;
 
   return (
     <nav className={classes.infoMenu}>
-      {pages.map((page, i) => {
+      {pages.filter(hasMenuTitle).map((page, i) => {
         const { fields, frontmatter } = page.node;
         return (
           <Link
