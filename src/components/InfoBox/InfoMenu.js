@@ -13,7 +13,7 @@ const styles = theme => ({
     width: "100%"
   },
   link: {
-    width: "calc( 100% + 5px )",
+    // width: "calc( 100% + 5px )",
     textAlign: "center",
     padding: ".5em",
     fontWeight: 300,
@@ -22,10 +22,10 @@ const styles = theme => ({
     borderRight: `5px solid transparent`,
     marginLeft: "5px",
     zIndex: "1000",
-    transition: "all .3s ease-in",
+    // transition: "all .3s ease-in",
     "&:hover": {
-      color: theme.info.colors.menuLinkHover,
-      borderRight: `5px solid ${theme.info.colors.menuLinkHover}`
+      color: theme.info.colors.menuLinkHover
+      // borderRight: `5px solid ${theme.info.colors.menuLinkHover}`
     }
   }
 });
@@ -36,7 +36,7 @@ const InfoMenu = props => {
   const { classes, pages, linkOnClick } = props;
 
   return (
-    <nav className={classes.infoMenu}>
+    <nav className={`${classes.infoMenu} pages-side-menu cl-effect-1`}>
       {pages.filter(hasMenuTitle).map((page, i) => {
         const { fields, frontmatter } = page.node;
         return (
@@ -44,10 +44,10 @@ const InfoMenu = props => {
             key={fields.slug}
             to={fields.slug}
             onClick={linkOnClick}
-            className={classes.link}
+            className={`${classes.link}`}
             data-shape="closed"
           >
-            <span className="dotted-text">{frontmatter.menuTitle ? frontmatter.menuTitle : frontmatter.title}</span>
+            {frontmatter.menuTitle ? frontmatter.menuTitle : frontmatter.title}
           </Link>
         );
       })}

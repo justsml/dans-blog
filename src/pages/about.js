@@ -80,6 +80,16 @@ const styles = theme => ({
     "& .user-link": {
       color: "#0366d6",
       fontWeight: "400"
+    },
+
+    "& .toc-link": {
+      color: "#555555",
+      width: "100%",
+      display: "inline-block"
+    },
+    "& .toc-link::after": {
+      content: "  view details",
+      color: "#555555"
     }
   },
   buttonBar: {
@@ -156,13 +166,14 @@ class About extends React.Component {
           const targetId = `${project.user}-${project.repo}`;
           const lookupProject = project.renamed ? project.renamed : project;
 
-          return getStargazers({ ...lookupProject, targetId }).then(starCount => {
-            this.setState({ [targetId]: starCount });
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            throw error;
-          });
+          return getStargazers({ ...lookupProject, targetId })
+            .then(starCount => {
+              this.setState({ [targetId]: starCount });
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              throw error;
+            });
         })
         .catch(err => {
           console.error("Failed to get current Github Stats:", err);
@@ -244,12 +255,10 @@ class About extends React.Component {
 
       return (
         <li className={["path-title", classes.repoTitle].join(" ")} key={targetId}>
-          <a className="user-link" href={`#${targetId}`}>
-            {project.user}
-          </a>
-          &#160;/&#160;
-          <a className="repo-link" href={`#${targetId}`}>
-            {project.repo}
+          <a href={`#${targetId}`} className="toc-link">
+            <span className="user-link">{project.user}</span>
+            &#160;/&#160;
+            <span className="repo-link">{project.repo}</span>
           </a>
         </li>
       );
@@ -292,9 +301,9 @@ class About extends React.Component {
               </div>
             </div>
 
-            <div style={{ width: "600px" }}>
+            <div>
               <h2>Open Source Contributions</h2>
-              <h3 id="oss-toc">Index of Contributions</h3>
+              <h3 id="oss-toc">List of Contributions</h3>
               {this.getProjectToC(ossContributions)}
               <h3>Contribution Details</h3>
               {this.buildProjectList(ossContributions)}

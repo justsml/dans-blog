@@ -56,9 +56,7 @@ class TopMenu extends React.Component {
     let { classes, pages } = this.props;
     const { anchorEl, open } = this.state;
 
-    console.log("pages", pages);
     pages = pages.filter(hasMenuTitle);
-    console.log("pages", pages);
 
     return (
       <nav className={classes.topMenu}>

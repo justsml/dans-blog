@@ -1,5 +1,5 @@
 ---
-title: About Me
-menuTitle: About Me
+title: About
+menuTitle: About
 ---
 
