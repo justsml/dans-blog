@@ -43,7 +43,7 @@ const styles = theme => ({
     bottom: 0,
     left: 0,
     width: "100%",
-    padding: "0 40px 0",
+    // padding: "0 40px 0",
     willChange: "opacity, bottom",
     transition: "bottom .5s 0s",
     opacity: 1,
@@ -82,7 +82,7 @@ class InfoBox extends React.Component {
           />
         )}
         <div className={classes.wrapper}>
-          {info && <InfoText info={info} />}
+          {/* {info && <InfoText info={info} />} */}
           {pages && <InfoMenu pages={pages} linkOnClick={this.menulinkOnClick} />}
           <SocialIcons />
           {/* <StackIcons /> */}

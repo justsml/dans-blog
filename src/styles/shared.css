@@ -67,3 +67,152 @@ div.challenge {
   font-size: 1.5em;
   font-weight: 900;
 }
+
+.dotted-text {
+  /* #7ba329 */
+  background-image: linear-gradient(to right, #70942599 50%, transparent 50%);
+  background-position: 0 1.04em;
+  background-repeat: repeat-x;
+  background-size: 5px 2.25px;
+  transition: all 0.3s ease-in;
+}
+.dotted-text:hover {
+  /* #7ba329 */
+  background-image: linear-gradient(to right, #333333 50%, transparent 50%);
+  opacity: 95%;
+}
+
+
+
+
+
+/* credit: https://tympanus.net/Development/CreativeLinkEffects/ */
+.pages-side-menu a {
+  position: relative;
+  display: inline-block;
+  margin: 10px 25px;
+  outline: none;
+  color: #7ba329;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  text-shadow: 0 0 1px rgba(255,255,255,0.3);
+  font-size: 1.15em;
+}
+
+.pages-side-menu a:hover,
+.pages-side-menu a:focus {
+  outline: none;
+}
+
+
+/* Effect 1: Brackets */
+.cl-effect-1 a::before,
+.cl-effect-1 a::after {
+  color: #555555;
+  display: inline-block;
+  opacity: 0;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.2s;
+  -moz-transition: -moz-transform 0.3s, opacity 0.2s;
+  transition: transform 0.3s, opacity 0.2s;
+}
+
+.cl-effect-1 a::before {
+  color: #555555;
+  margin-right: 10px;
+  content: '[';
+  -webkit-transform: translateX(30px);
+  -moz-transform: translateX(30px);
+  transform: translateX(30px);
+}
+
+.cl-effect-1 a::after {
+  color: #555555;
+  margin-left: 10px;
+  content: ']';
+  -webkit-transform: translateX(-30px);
+  -moz-transform: translateX(-30px);
+  transform: translateX(-30px);
+}
+
+.cl-effect-1 a:hover::before,
+.cl-effect-1 a:hover::after,
+.cl-effect-1 a:focus::before,
+.cl-effect-1 a:focus::after {
+  color: #555555;
+  opacity: 1;
+  -webkit-transform: translateX(0px);
+  -moz-transform: translateX(0px);
+  transform: translateX(0px);
+}
+
+/* Effect 4: bottom border enlarge */
+.cl-effect-4 a {
+  padding: 0 0 10px;
+}
+
+.cl-effect-4 a::after {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #7ba329;
+  content: '';
+  opacity: 0;
+  -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
+  -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
+  transition: height 0.3s, opacity 0.3s, transform 0.3s;
+  -webkit-transform: translateY(-10px);
+  -moz-transform: translateY(-10px);
+  transform: translateY(-10px);
+}
+
+.cl-effect-4 a:hover::after,
+.cl-effect-4 a:focus::after {
+  height: 5px;
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+  -moz-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+
+/* Effect 13: three circles */
+.cl-effect-13 a {
+  -webkit-transition: color 0.3s;
+  -moz-transition: color 0.3s;
+  transition: color 0.3s;
+}
+
+.cl-effect-13 a::before {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  color: transparent;
+  content: '•';
+  text-shadow: 0 0 transparent;
+  font-size: 1.2em;
+  -webkit-transition: text-shadow 0.3s, color 0.3s;
+  -moz-transition: text-shadow 0.3s, color 0.3s;
+  transition: text-shadow 0.3s, color 0.3s;
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.cl-effect-13 a:hover::before,
+.cl-effect-13 a:focus::before {
+  color: #fff;
+  text-shadow: 10px 0 #fff, -10px 0 #fff;
+}
+
+.cl-effect-13 a:hover,
+.cl-effect-13 a:focus {
+  color: #ba7700;
+}
+
+
+

@@ -52,7 +52,7 @@ const styles = theme => ({
       margin: "0 0 .5em 0"
     },
     "& blockquote": {
-      border: `5px solid ${theme.main.colors.blockquoteFrame}`,
+      border: `2.5px solid ${theme.main.colors.blockquoteFrame}`,
       fontStyle: "italic",
       margin: "2.5em 0",
       padding: "1em 1.1em 1em 1.3em",

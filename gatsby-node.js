@@ -190,7 +190,9 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
         // Create posts and pages.
         posts.forEach(edge => {
-          const slug = edge.node.fields.slug;
+          const slug = edge.node && edge.node.fields && edge.node.fields.slug;
+          if (!slug) console.trace("WARNING: NO SLUG FOUND FOR ", edge.node);
+
           const isPost = /posts/.test(edge.node.id);
 
           createPage({
