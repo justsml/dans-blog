@@ -55,6 +55,7 @@ Click the links below to go directly to the code snippet.
 
 1. [GET: JSON from a URL](#get-json-from-a-url)
 1. [Custom headers](#custom-headers)
+1. [Error handling w/ HTTP status codes](#http-error-handling)
 1. [CORS example](#cors-example)
 1. [Posting JSON](#posting-json)
 1. [Posting an HTML `<form>`](#posting-an-html-form)
@@ -62,7 +63,6 @@ Click the links below to go directly to the code snippet.
 1. [Uploading a File](#uploading-a-file)
 1. [Uploading Multiple Files](#uploading-multiple-files)
 1. [Show Download Progress Percent](#download-progress-helper)
-1. TODO: _Custom HTTP status error behavior_
 1. TODO: _Recursive: Retry on Failure_
 1. TODO: _Recursive: Automated results paging_
 
@@ -77,6 +77,10 @@ Click the links below to go directly to the code snippet.
 ### Custom headers
 
 `gist:justsml/fca7cd72ec1ebc07d994eac13a665ddf`
+
+### HTTP Error Handling
+
+`https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2`
 
 ### CORS example
 
@@ -118,6 +122,9 @@ Then use with something like:
 `gist:justsml/d17f50c36a5ddb70f584c0aa6de94237`
 
 ### Download Progress Helper
+
+> This is included for completeness. You may still want to use a 3rd party library here. Browser streaming interfaces may lack browser compatibility (as of late 2018).
+Upload Progress is currently a bit buggy outside of Chrome.
 
 The Progress Handler [technique shown below avoids wrapping](#source-progress-helper) the `fetch` call in a closure. 👍
 
