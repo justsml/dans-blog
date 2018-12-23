@@ -3,6 +3,12 @@ import CacheFactory from "./cacheFactory.js";
 
 let cache = null;
 
+const checkAjaxError = response => {
+  if (!response.ok || response.status < 250) {
+    return Promise.reject(new Promise("Invalid Response from Service!"));
+  }
+  return response;
+}
 
 export function getRepoData({ repo, user }) {
   cache = cache || CacheFactory(window && window.sessionStorage);
@@ -10,6 +16,7 @@ export function getRepoData({ repo, user }) {
   if (cache.get(key)) return Promise.resolve(cache.get(key));
 
   return fetch(`https://api.github.com/repos/${user}/${repo}`)
+    .then(checkAjaxError)
     .then(res => res.json())
     .then(cache.getCacheSetter(key));
 }

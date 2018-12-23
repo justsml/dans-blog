@@ -158,10 +158,14 @@ class About extends React.Component {
 
           return getStargazers({ ...lookupProject, targetId }).then(starCount => {
             this.setState({ [targetId]: starCount });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            throw error;
           });
         })
         .catch(err => {
-          console.error("Failed to get current Github Stats", err);
+          console.error("Failed to get current Github Stats:", err);
           this.setState({ error: err.message });
         });
     }
