@@ -4,6 +4,7 @@ import injectSheet from "react-jss";
 
 const styles = theme => ({
   container: {
+    textAlign: "center",
     fontSize: `${theme.footer.fonts.footnote.size}em`,
     lineHeight: theme.footer.fonts.footnote.lineHeight,
     color: theme.footer.colors.text,

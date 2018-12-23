@@ -13,12 +13,19 @@ const styles = theme => ({
     width: "100%"
   },
   link: {
+    width: "calc( 100% + 5px )",
+    textAlign: "center",
     padding: ".5em",
     fontWeight: 300,
     textTransform: "lowercase",
     color: theme.info.colors.menuLink,
+    borderRight: `5px solid transparent`,
+    marginLeft: "5px",
+    zIndex: "1000",
+    transition: "all .3s ease-in",
     "&:hover": {
-      color: theme.info.colors.menuLinkHover
+      color: theme.info.colors.menuLinkHover,
+      borderRight: `5px solid ${theme.info.colors.menuLinkHover}`
     }
   }
 });
@@ -40,7 +47,7 @@ const InfoMenu = props => {
             className={classes.link}
             data-shape="closed"
           >
-            {frontmatter.menuTitle ? frontmatter.menuTitle : frontmatter.title}
+            <span className="dotted-text">{frontmatter.menuTitle ? frontmatter.menuTitle : frontmatter.title}</span>
           </Link>
         );
       })}

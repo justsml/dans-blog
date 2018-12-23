@@ -4,7 +4,7 @@ import CacheFactory from "./cacheFactory.js";
 let cache = null;
 
 const checkAjaxError = response => {
-  if (!response.ok || response.status < 250) {
+  if (!response.ok || response.status > 250) {
     return Promise.reject(new Promise("Invalid Response from Service!"));
   }
   return response;
