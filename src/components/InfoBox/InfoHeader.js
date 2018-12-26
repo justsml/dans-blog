@@ -14,6 +14,17 @@ const styles = theme => ({
     lineHeight: 1,
     position: "relative"
   },
+  titleLink: {
+    "& a": {
+      textDecoration: "none",
+      color: theme.navigator.colors.postsListItemLink,
+      "@media (hover: hover)": {
+        "&:hover": {
+          color: theme.navigator.colors.postsListItemLinkHover
+        }
+      }
+    }
+  },
   avatarLink: {
     willChange: "left, top",
     float: "left",
@@ -28,8 +39,8 @@ const styles = theme => ({
       top: "10px",
       left: "50%",
       marginLeft: "-30px",
-      transition: "all .5s",
-      transitionTimingFunction: "ease",
+      transition: "all .315s",
+      transitionTimingFunction: "ease-in",
       ".navigator-in-transition-from.navigator-is-opened &": {
         left: "50%"
       },
@@ -45,7 +56,7 @@ const styles = theme => ({
     borderRadius: "65% 75%",
     border: "1px solid #ddd",
     transition: "all .3s",
-    transitionTimingFunction: "ease",
+    transitionTimingFunction: "ease-in",
     display: "inline-block",
     overflow: "hidden",
     "& img": {
@@ -67,11 +78,18 @@ const styles = theme => ({
   },
   title: {
     willChange: "transform, left, top",
+    color: theme.navigator.colors.postsListItemLink,
+    "@media (hover: hover)": {
+      "&:hover": {
+        color: theme.navigator.colors.postsListItemLinkHover
+      }
+    },
     fontSize: `${theme.info.fonts.boxTitleSize}em`,
     margin: 0,
     float: "left",
     transitionTimingFunction: "ease",
     "& small": {
+      color: theme.navigator.colors.postsListItemLink,
       display: "block",
       fontSize: ".6em",
       marginTop: ".3em",
@@ -81,13 +99,14 @@ const styles = theme => ({
       fontSize: `${theme.info.fonts.boxTitleSizeM}em`
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+      color: theme.navigator.colors.postsListItemLink,
       fontSize: `${theme.info.fonts.boxTitleSizeL}em`,
       position: "absolute",
       top: "85px",
       textAlign: "center",
       left: "50%",
       transform: "translate(-50%)",
-      transition: "all .5s",
+      transition: "all .315s",
       ".is-aside.open &": {
         left: "60%",
         top: `${1.9 - theme.info.fonts.boxTitleSizeL}em`,
@@ -117,10 +136,12 @@ const InfoHeader = props => {
           <img src={avatar} alt="" />
         </div>
       </Link>
-      <h1 className={classes.title}>
-        {config.infoTitle.replace(/ /g, "\u00a0")}
-        <small>{config.infoTitleNote}</small>
-      </h1>
+      <Link className={classes.titleLink} to="/" title="back to Home page">
+        <h1 className={classes.title}>
+          {config.infoTitle.replace(/ /g, "\u00a0")}
+          <small>{config.infoTitleNote}</small>
+        </h1>
+      </Link>
       <IconButton
         aria-label="Expand the box"
         className={classes.expand}

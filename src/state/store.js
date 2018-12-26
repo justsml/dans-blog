@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
  * action types
  */
 
+const SET_LOCATION_URL = "SET_LOCATION_URL";
 const SET_NAVIGATOR_POSITION = "SET_NAVIGATOR_POSITION";
 const SET_NAVIGATOR_SHAPE = "SET_NAVIGATOR_SHAPE";
 const SET_NAVIGATOR_FILTER = "SET_NAVIGATOR_FILTER";
@@ -16,6 +17,11 @@ const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 /*
  * action creators
  */
+
+export function setLocationUrl(val) {
+  // console.log("setLocationUrl", val);
+  return { type: SET_LOCATION_URL, val };
+}
 
 export function setNavigatorPosition(val) {
   return { type: SET_NAVIGATOR_POSITION, val };
@@ -50,6 +56,12 @@ export function setCategoryFilter(val) {
  */
 const reducer = (state, action) => {
   switch (action.type) {
+    case SET_LOCATION_URL:
+      return {
+        ...state,
+        locationUrl: action.val
+      };
+
     case SET_NAVIGATOR_POSITION:
       return {
         ...state,
@@ -98,6 +110,7 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
+  locationUrl: "/",
   navigatorPosition: "is-aside",
   navigatorShape: "open",
   navigatorFilter: "",
@@ -109,4 +122,5 @@ const initialState = {
 
 const createStore = () =>
   reduxCreateStore(reducer, initialState, composeWithDevTools(applyMiddleware()));
+
 export default createStore;

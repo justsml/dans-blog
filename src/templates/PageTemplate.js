@@ -2,14 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { setNavigatorPosition, setNavigatorShape } from "../state/store";
 import { moveNavigatorAside } from "../utils/shared";
+import { setNavigatorPosition, setNavigatorShape, setLocationUrl } from "../state/store";
 import Main from "../components/Main/";
 import Page from "../components/Page/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
 
 class PageTemplate extends React.Component {
+  static propTypes = {
+    data: PropTypes.object.isRequired,
+    pathContext: PropTypes.object.isRequired,
+    navigatorPosition: PropTypes.string.isRequired,
+    setNavigatorPosition: PropTypes.func.isRequired,
+    setLocationUrl: PropTypes.func.isRequired,
+    locationUrl: PropTypes.string.isRequired,
+    isWideScreen: PropTypes.bool.isRequired
+  };
+
   moveNavigatorAside = moveNavigatorAside.bind(this);
 
   componentDidMount() {
@@ -19,16 +29,21 @@ class PageTemplate extends React.Component {
   }
 
   render() {
-    const { data } = this.props;
+    const { data, pathContext } = this.props;
+    console.log("PROPS:", this.props);
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
-    // console.log("template.props", this.props);
+
+    const { locationUrl } = this.props;
+    if (pathContext.slug !== locationUrl) this.props.setLocationUrl(pathContext.slug);
 
     if (!data || !data.page) {
       return (
         <div className="alert-warning" style={{ width: "50%" }}>
           <h2>⚠️ Error</h2>
           <label>The requested page is not available</label>
-          <div className="details">URL: {window.self.location.href}</div>
+          <div className="details">
+            URL: {typeof window !== "undefined" && window.self.location.href}
+          </div>
         </div>
       );
     }
@@ -43,26 +58,24 @@ class PageTemplate extends React.Component {
   }
 }
 
-PageTemplate.propTypes = {
-  data: PropTypes.object.isRequired,
-  navigatorPosition: PropTypes.string.isRequired,
-  setNavigatorPosition: PropTypes.func.isRequired,
-  isWideScreen: PropTypes.bool.isRequired
-};
-
 const mapStateToProps = (state, ownProps) => {
   return {
+    locationUrl: state.locationUrl,
     navigatorPosition: state.navigatorPosition,
     isWideScreen: state.isWideScreen
   };
 };
 
 const mapDispatchToProps = {
+  setLocationUrl,
   setNavigatorPosition,
   setNavigatorShape
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageTemplate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PageTemplate);
 
 //eslint-disable-next-line no-undef
 export const pageQuery = graphql`
@@ -70,6 +83,9 @@ export const pageQuery = graphql`
     page: markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       html
+      fields {
+        slug
+      }
       frontmatter {
         title
       }
