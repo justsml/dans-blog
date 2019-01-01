@@ -2,7 +2,7 @@
 title: "You may not need Axios"
 subTitle: Fetch API to the rescue!
 date: 2018-11-14
-modified: 2018-11-24
+modified: 2018-12-31
 tags: [programming, patterns, source code, nodejs, javascript, promises]
 category: programming
 cover: william-bout-103533-unsplash.jpg
@@ -62,7 +62,8 @@ Click the links below to go directly to the code snippet.
 1. [Form encoded data](#form-encoded-data)
 1. [Uploading a File](#uploading-a-file)
 1. [Uploading Multiple Files](#uploading-multiple-files)
-1. [Show Download Progress Percent](#download-progress-helper)
+1. [Timeouts](#timeouts)
+1. [Progress Percent - Download](#download-progress-helper)
 1. TODO: _Recursive: Retry on Failure_
 1. TODO: _Recursive: Automated results paging_
 
@@ -120,6 +121,16 @@ Setup a file upload element with the `multiple` attribute:
 Then use with something like:
 
 `gist:justsml/d17f50c36a5ddb70f584c0aa6de94237`
+
+### Timeouts
+
+Here's a generic Promise timeout, using the "Partial Application" pattern. It'll work with any Promise interface. Don't do too much work in the supplied promise chain, it will keep running - and any failures have a way of creating long term memory leaks.
+
+`gist:justsml/f93b2ef6457b3e52eb995831b67cab85`
+
+And a more complex example, featuring a tracking flag `__timeout` so you can **intercept any costly work.**
+
+`gist:justsml/5e492db8997a4f7e22e61b7486cbf273`
 
 ### Download Progress Helper
 
