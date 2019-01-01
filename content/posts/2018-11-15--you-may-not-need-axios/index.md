@@ -126,11 +126,11 @@ Then use with something like:
 
 Here's a generic Promise timeout, using the "Partial Application" pattern. It'll work with any Promise interface. Don't do too much work in the supplied promise chain, it will keep running - and any failures have a way of creating long term memory leaks.
 
-`gist:https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85`
+`gist:justsml/f93b2ef6457b3e52eb995831b67cab85`
 
 And a more complex example, featuring a tracking flag `__timeout` so you can **intercept any costly work.**
 
-`gist:https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273`
+`gist:justsml/5e492db8997a4f7e22e61b7486cbf273`
 
 ### Download Progress Helper
 
