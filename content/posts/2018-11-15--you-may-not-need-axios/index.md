@@ -2,7 +2,7 @@
 title: "You may not need Axios"
 subTitle: Fetch API to the rescue!
 date: 2018-11-14
-modified: 2018-11-24
+modified: 2018-12-31
 tags: [programming, patterns, source code, nodejs, javascript, promises]
 category: programming
 cover: william-bout-103533-unsplash.jpg
