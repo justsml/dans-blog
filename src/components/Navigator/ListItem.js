@@ -250,12 +250,12 @@ class ListItem extends React.Component {
 
     return (
       <li
-        className={`${classes.listItem} ${post.node.frontmatter.category}`}
+        className={`posts-menu-item ${classes.listItem} category-${post.node.frontmatter.category}`}
         style={{ display: `${this.state.hidden ? "none" : "block"}` }}
         key={post.node.fields.slug}
       >
         <Link
-          activeClassName="active"
+          activeClassName="active-nav-link"
           className={classes.listLink}
           to={post.node.fields.slug}
           onClick={linkOnClick}

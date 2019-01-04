@@ -53,6 +53,9 @@ const styles = theme => ({
     borderRadius: "65% 75%",
     border: "1px solid #ddd",
     height: "36px"
+  },
+  titleLink: {
+    width: "100%"
   }
 });
 
@@ -62,15 +65,19 @@ class InfoBar extends React.Component {
 
   render() {
     const { classes, pages } = this.props;
+    // const baseUrl = window.location.origin;
 
+    // onClick={this.homeLinkOnClick}
     return (
       <aside className={classes.infoBar}>
-        <Link to="/" className={classes.avatarLink} onClick={this.homeLinkOnClick}>
+        <Link to={`/`} className={classes.avatarLink}>
           <Avatar alt={config.infoTitle} src={avatar} className={classes.avatar} />
         </Link>
         <h3 className={classes.title}>
-          {config.infoTitle}
-          <small>{config.infoTitleNote}</small>
+          <Link to={`/`} className={classes.titleLink}>
+            {config.infoTitle}
+            <small>{config.infoTitleNote}</small>
+          </Link>
         </h3>
         <TopMenu
           pages={pages}

@@ -62,7 +62,7 @@ class List extends React.Component {
     } = this.props;
 
     return (
-      <div className={classes.posts}>
+      <div className={"posts-menu-list " + classes.posts}>
         <SpringScrollbars forceCheckOnScroll={true} isNavigator={true}>
           <div className={classes.inner}>
             <ListHeader
