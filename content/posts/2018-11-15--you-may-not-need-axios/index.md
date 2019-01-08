@@ -81,7 +81,7 @@ Click the links below to go directly to the code snippet.
 
 ### HTTP Error Handling
 
-`https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2`
+`gist:justsml/81919a72897ebc503c6b34a556a9bde2`
 
 ### CORS example
 
