@@ -1,4 +1,4 @@
-const debug = require("debug")("GATSBY-NODE");
+// const debug = require("debug")("GATSBY-NODE");
 const webpack = require("webpack");
 //const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const _ = require("lodash");
@@ -63,7 +63,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     const slug = createFilePath({ node, getNode, basePath: `pages` });
     const separtorIndex = ~slug.indexOf("--") ? slug.indexOf("--") : 0;
     const shortSlugStart = separtorIndex ? separtorIndex + 2 : 0;
-    debug(`createNodeField: ${slug}: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
+    // debug(`createNodeField: ${slug}: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
     // console.log(`slug: ${separtorIndex ? "/" : ""}${slug.substring(shortSlugStart)}`);
     // console.log(`prefix: ${separtorIndex ? slug.substring(1, separtorIndex) : ""}`);
     createNodeField({
