@@ -46,7 +46,8 @@ module.exports = class HTML extends React.Component {
           <div key={`body`} id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
           {this.props.postBodyComponents}
 
-          <script src="https://platform.twitter.com/widgets.js" charSet="utf-8" />
+          <script src="https://platform.twitter.com/widgets.js" charSet="utf-8" async defer />
+          <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer />
         </body>
       </html>
     );
