@@ -1,7 +1,7 @@
 const colors = require("../../src/styles/colors");
 
 module.exports = {
-  siteTitle: "Dan Levy's Collection of Articles & Learning Materials for Programmers", // <title>
+  siteTitle: "Dan Levy's Articles, Guides and Cats", // <title>
   shortSiteTitle: "Dan Levy's Programming Blog", // <title> ending for posts and pages
   siteDescription: "Come for the JavaScript, stay for the cat memes.",
   siteUrl: "https://danlevy.net",

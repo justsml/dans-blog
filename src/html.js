@@ -47,6 +47,7 @@ module.exports = class HTML extends React.Component {
           {this.props.postBodyComponents}
 
           <script src="https://platform.twitter.com/widgets.js" charSet="utf-8" />
+          <script src="https://www.google.com/recaptcha/api.js?render=explicit" />
         </body>
       </html>
     );
