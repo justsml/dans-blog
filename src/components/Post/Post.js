@@ -14,6 +14,8 @@ const focusOnPage = () => {
   if (page && page.focus) page.focus();
 };
 
+const MAX_RETRIES = 20;
+
 export default class Post extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
@@ -31,10 +33,17 @@ export default class Post extends React.Component {
       setTimeout(focusOnPage, 150);
       setTimeout(focusOnPage, 300);
     }
-    if (typeof window.twttr !== "undefined") {
+    this.renderTwitter();
+  }
+
+  renderTwitter = (retries = 0) => {
+    if (!window.twttr || !window.twttr.widgets || typeof window.twttr.widgets.load !== "function") {
+      return setTimeout(() => this.renderTwitter(retries + 1), 250);
+    }
+    if (retries < MAX_RETRIES) {
       window.twttr.widgets.load();
     }
-  }
+  };
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log("slug", this.props.slug, nextProps.slug);
