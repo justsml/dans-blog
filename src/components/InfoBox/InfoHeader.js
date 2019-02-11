@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import Link from "gatsby-link";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
@@ -13,6 +13,15 @@ const styles = theme => ({
   header: {
     lineHeight: 1,
     position: "relative"
+  },
+  titleLink: {
+    color: theme.info.colors.text,
+    "& :link, :active ": {
+      color: theme.info.colors.text
+    },
+    "&:hover": {
+      color: theme.base.colors.linkHover
+    }
   },
   avatarLink: {
     willChange: "left, top",
@@ -112,23 +121,25 @@ const InfoHeader = props => {
 
   return (
     <header className={classes.header}>
-      <Link className={classes.avatarLink} to="/" title="back to Home page">
+      <Link className={classes.avatarLink} to="/" title="home page / all articles">
         <div className={classes.avatar}>
           <img src={avatar} alt="" />
         </div>
       </Link>
-      <h1 className={classes.title}>
-        {config.infoTitle.replace(/ /g, "\u00a0")}
-        <small>{config.infoTitleNote}</small>
-      </h1>
-      <IconButton
-        aria-label="Expand the box"
+      <Link className={classes.titleLink} to="/" title="home page / all articles">
+        <h1 className={classes.title}>
+          {config.infoTitle.replace(/ /g, "\u00a0")}
+          <small>{config.infoTitleNote}</small>
+        </h1>
+      </Link>
+      <Button
+        aria-label="show top menu"
         className={classes.expand}
         onClick={expandOnClick}
-        title="Expand the box"
+        title="show top menu"
       >
         <ExpandMoreIcon />
-      </IconButton>
+      </Button>
     </header>
   );
 };

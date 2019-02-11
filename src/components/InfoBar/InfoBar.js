@@ -53,6 +53,15 @@ const styles = theme => ({
     borderRadius: "65% 75%",
     border: "1px solid #ddd",
     height: "36px"
+  },
+  titleLink: {
+    color: theme.info.colors.text,
+    "& :link, :active ": {
+      color: theme.info.colors.text
+    },
+    "&:hover": {
+      color: theme.base.colors.linkHover
+    }
   }
 });
 
@@ -65,13 +74,15 @@ class InfoBar extends React.Component {
 
     return (
       <aside className={classes.infoBar}>
-        <Link to="/" className={classes.avatarLink} onClick={this.homeLinkOnClick}>
+        <Link to="/" className={classes.avatarLink}>
           <Avatar alt={config.infoTitle} src={avatar} className={classes.avatar} />
         </Link>
-        <h3 className={classes.title}>
-          {config.infoTitle}
-          <small>{config.infoTitleNote}</small>
-        </h3>
+        <Link to="/" className={classes.titleLink}>
+          <h3 className={classes.title}>
+            {config.infoTitle}
+            <small>{config.infoTitleNote}</small>
+          </h3>
+        </Link>
         <TopMenu
           pages={pages}
           homeLinkOnClick={this.homeLinkOnClick}
