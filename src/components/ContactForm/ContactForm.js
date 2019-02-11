@@ -92,7 +92,7 @@ class ContactForm extends React.Component {
         name="contact"
         ref={f => (this.form = f)}
         data-netlify="true"
-        data-netlify-honeypot="bot-field"
+        data-netlify-honeypot="a-field"
       >
         {submitError && <p className={classes.submitError}>{submitError}</p>}
         <TextValidator
@@ -132,7 +132,8 @@ class ContactForm extends React.Component {
           margin="normal"
           className={classes.multilineInput}
         />
-        <input name="bot-field" style={{ display: "none" }} />
+        <input name="a-field" style={{ display: "none" }} />
+        <div data-netlify-recaptcha="true" />
         <Button
           variant="raised"
           color="primary"
