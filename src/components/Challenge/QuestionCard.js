@@ -100,7 +100,13 @@ class QuestionCard extends React.Component {
 }
 
 QuestionCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  title: PropTypes.string.isRequired,
+  answer: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  explanation: PropTypes.string,
+  attempts: PropTypes.number,
+  children: PropTypes.node
 };
 
 export default withStyles(styles)(QuestionCard);
