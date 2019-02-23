@@ -14,8 +14,17 @@ EXAMPLE CHALLENGE DEFINITION:
   </ul>
   <div class="explanation">Overview & more resources</div>
 </div>
-
 */
+
+const retryApp = (fn, { limit = 10, delayMsec = 100 }) => {
+  try {
+    if (limit > 0 && fn() === false) {
+      return setTimeout(() => retryApp(fn, { limit: limit - 1, delayMsec }), delayMsec);
+    }
+  } catch (e) {
+    console.warn(`retryFail #${limit} remain: `, e);
+  }
+};
 
 export default class AutoLoader extends React.Component {
   state = { loaded: false, challenges: [] };
@@ -27,9 +36,13 @@ export default class AutoLoader extends React.Component {
 
   componentDidMount() {
     // check the DOM for static data to extract
-    this.loadTimeout = setTimeout(this.loadChallenges, 750);
+    retryApp(this.checkInlineChallenges, { limit: 8, delayMsec: 125 });
   }
 
+  checkInlineChallenges = () => {
+    if (!document.querySelector(".challenge")) return false;
+    this.loadTimeout = setTimeout(() => this.loadChallenges(this.getChallenges()), 750);
+  };
   componentWillUnmount() {
     clearTimeout(this.loadTimeout);
   }
@@ -42,6 +55,12 @@ export default class AutoLoader extends React.Component {
 
     return true;
   }
+
+  loadChallenges = challengeConfigs => {
+    this.setState({ challenges: challengeConfigs }, () => {
+      this.forceUpdate();
+    });
+  };
 
   getChallenges = () => {
     const challenges = Array.from(document.querySelectorAll(".challenge"));
@@ -67,14 +86,9 @@ export default class AutoLoader extends React.Component {
     return challengeConfigs;
   };
 
-  loadChallenges = (challengeConfigs = this.getChallenges()) => {
-    this.setState({ challenges: challengeConfigs });
-  };
-
   render() {
     return (
       <div className="challenges-test">
-        {/* <button onClick={this.loadChallenges}>Load Challenge</button> */}
         {this.state.challenges.map(config => {
           return <Challenge key={config.title} {...config} />;
         })}
