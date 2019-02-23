@@ -19,6 +19,7 @@ EXAMPLE CHALLENGE DEFINITION:
 const retryApp = (fn, { limit = 10, delayMsec = 100 }) => {
   try {
     if (limit > 0 && fn() === false) {
+      console.trace("retryApp Triggered!!!", { limit });
       return setTimeout(() => retryApp(fn, { limit: limit - 1, delayMsec }), delayMsec);
     }
   } catch (e) {
@@ -66,7 +67,7 @@ export default class AutoLoader extends React.Component {
     const challenges = Array.from(document.querySelectorAll(".challenge"));
     if (challenges.length <= 0) return [];
 
-    console.log("challenges", challenges);
+    // console.log("challenges", challenges);
 
     const challengeConfigs = challenges.map(c => {
       const config = {
@@ -82,7 +83,7 @@ export default class AutoLoader extends React.Component {
       // return <Challenge key={config.title} {...config} />
     });
 
-    console.log("config", JSON.stringify(challengeConfigs));
+    // console.log("config", JSON.stringify(challengeConfigs));
     return challengeConfigs;
   };
 

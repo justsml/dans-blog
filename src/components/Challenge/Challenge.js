@@ -37,7 +37,8 @@ const styles = {
     // cursor: 'pointer',
     listStyle: "none",
     margin: "0",
-    paddingLeft: "1em"
+    paddingLeft: "1em",
+    width: "100%"
   },
   optionItem: {
     cursor: "pointer",
@@ -51,6 +52,13 @@ const styles = {
       border: "1px solid #333"
     }
   },
+  statusBox: {
+    width: "100%",
+    height: "12rem",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
   optionItemCompleted: {
     margin: "1.2em 0.25em",
     padding: "0.5em",
@@ -59,12 +67,13 @@ const styles = {
 };
 
 const isHtml = text => text.split(/<[^>]+>/).length > 1;
-const isMarkdown = text => text.split(/^#/).length >= 1;
+// const isMarkdown = text => text.split(/^#/).length >= 1;
 
 class Challenge extends React.Component {
   state = {
     selection: "",
-    attempts: 0
+    attempts: 0,
+    showExplanation: false
   };
 
   static propTypes = {
@@ -83,13 +92,13 @@ class Challenge extends React.Component {
   saveState = () => {
     const { attempts, selection } = this.state;
     const data = JSON.stringify({ attempts, selection });
-    console.log("saving cachedState", data);
+    // console.log("saving cachedState", data);
     localStorage.setItem("Challenge_" + this.props.title, data);
   };
 
   loadState = () => {
     let cachedState = localStorage.getItem("Challenge_" + this.props.title);
-    console.log("loading cachedState", this.props.title, cachedState);
+    // console.log("loading cachedState", this.props.title, cachedState);
     cachedState = cachedState
       ? JSON.parse(cachedState)
       : {
@@ -128,7 +137,9 @@ class Challenge extends React.Component {
   };
 
   reset = () => {
-    this.setState({ attempts: 0, selection: "" }, () => setTimeout(this.saveState, 1));
+    this.setState({ attempts: 0, selection: "", showExplanation: false }, () =>
+      setTimeout(this.saveState, 1)
+    );
   };
 
   getMarkdownHtml = markdown => {
@@ -144,6 +155,18 @@ class Challenge extends React.Component {
     };
   };
 
+  renderHtml = (content, props = {}) => (
+    <div dangerouslySetInnerHTML={{ __html: content }} {...props} />
+  );
+
+  renderMarkdown = (content, props = {}) => (
+    <div dangerouslySetInnerHTML={this.getMarkdownHtml(content)} {...props} />
+  );
+
+  detectAndRenderContent = (content, props = {}) => {
+    return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
+  };
+
   render() {
     const { classes } = this.props;
     let challengeClasses =
@@ -152,23 +175,24 @@ class Challenge extends React.Component {
       (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
     // this.isCorrect()
 
+    const showHelp = this.isCorrect() || this.state.showExplanation;
     return (
       <section className={challengeClasses}>
         <h1>{this.props.title}</h1>
-        <div
-          className={classes.description}
-          dangerouslySetInnerHTML={this.getMarkdownHtml(this.props.description)}
-        />
+        {this.detectAndRenderContent(this.props.description, { className: "description" })}
         <blockquote>Please select from the following options:</blockquote>
         <ul className={classes.optionList}>{this.props.options.map(this.getOption)}</ul>
         {this.state.attempts > 0 && (
-          <div className={"status"}>
-            {`Attempts: ${this.state.attempts}`}
-            {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ "}
-            <button onClick={this.reset}>Reset</button>
+          <div className={classes.statusBox}>
+            <small>{`Attempts: ${this.state.attempts}`}</small>
+            {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ Try Again "}
+            <button role="button" onClick={this.reset}>
+              Reset
+            </button>
           </div>
         )}
-        {this.isCorrect() && <div className={"explanation"}>{this.props.explanation}</div>}
+        {showHelp &&
+          this.detectAndRenderContent(this.props.explanation, { className: "explanation" })}
       </section>
     );
   }
