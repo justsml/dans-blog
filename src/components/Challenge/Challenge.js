@@ -3,6 +3,22 @@ import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import marked from "marked";
 
+/*
+EXAMPLE CHALLENGE DEFINITION:
+
+<div class="challenge" title="Question #1: Meaning of life:">
+  <div class="description">What is the meaning of life?</div>
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="explanation">Overview & more resources</div>
+</div>
+
+*/
+
 const styles = {
   outerBox: {
     width: "95%",
