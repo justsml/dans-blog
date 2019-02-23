@@ -41,6 +41,7 @@ const styles = {
     width: "100%"
   },
   optionItem: {
+    transition: "all 0.33s ease-in",
     cursor: "pointer",
     margin: "1.2em 0.25em",
     padding: "0.5em",
@@ -54,12 +55,13 @@ const styles = {
   },
   statusBox: {
     width: "100%",
-    height: "12rem",
+    height: "2.125rem",
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between"
   },
   optionItemCompleted: {
+    zoom: "150%",
     margin: "1.2em 0.25em",
     padding: "0.5em",
     border: "1px solid transparent"
