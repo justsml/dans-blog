@@ -4,19 +4,18 @@ import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
+// import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import red from "@material-ui/core/colors/red";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import CancelIcon from "@material-ui/icons/Cancel";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckCircle from "@material-ui/icons/CheckCircle";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 // import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
@@ -66,7 +65,12 @@ class QuestionCard extends React.Component {
 
     return (
       <Card className={classes.card}>
-        <CardHeader avatar={headerIcon} action={<HelpIcon />} title={title} subheader={""} />
+        <CardHeader
+          avatar={headerIcon}
+          action={<HelpIcon />}
+          title={title} subheader={""}>
+          {title}
+        </CardHeader>
         {/* <CardMedia
           className={classes.media}
           image="/static/images/cards/paella.jpg"

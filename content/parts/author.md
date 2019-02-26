@@ -4,7 +4,7 @@ title: author
 
 [*Dan Levy*](https://danlevy.net/) is a former Lead Instructor at Galvanize and is **currently looking for the opportunity to help develop amazing software/services, teams and culture.**
 <br />
-[**Contact Dan Here ✉️**](/contact/)
+[**Contact Dan Here ✉️**](/contact/) or on Twitter [@justsml]()
 
 
 ------------------------------

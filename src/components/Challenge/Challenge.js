@@ -2,6 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import marked from "marked";
+import { withStyles } from "@material-ui/core/styles";
+import classnames from "classnames";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+// import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+// import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import RefreshIcon from "@material-ui/icons/RefreshOutlined";
+import Typography from "@material-ui/core/Typography";
+import red from "@material-ui/core/colors/red";
+import CancelIcon from "@material-ui/icons/Cancel";
+import HelpIcon from "@material-ui/icons/Help";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 /*
 EXAMPLE CHALLENGE DEFINITION:
@@ -20,11 +38,12 @@ EXAMPLE CHALLENGE DEFINITION:
 */
 
 const styles = {
+  card: {},
   outerBox: {
     width: "95%",
     margin: "1em auto",
     border: "1px solid #999",
-    padding: "0em 1em 1em 1em"
+    padding: "0em 1rem 1rem 1rem"
   },
   failed: {
     border: "1px dashed red"
@@ -65,6 +84,14 @@ const styles = {
     margin: "1.2em 0.25em",
     padding: "0.5em",
     border: "1px solid transparent"
+  },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: "all 0.25s ease-in"
   }
 };
 
@@ -144,6 +171,10 @@ class Challenge extends React.Component {
     );
   };
 
+  handleExpandClick = () => {
+    this.setState({ showExplanation: !this.state.showExplanation });
+  };
+
   getMarkdownHtml = markdown => {
     return {
       __html: marked(markdown, {
@@ -166,6 +197,7 @@ class Challenge extends React.Component {
   );
 
   detectAndRenderContent = (content, props = {}) => {
+    // might need to default assume markdown
     return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
   };
 
@@ -177,26 +209,86 @@ class Challenge extends React.Component {
       (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
     // this.isCorrect()
 
-    const showHelp = this.isCorrect() || this.state.showExplanation;
-    return (
-      <section className={challengeClasses}>
-        <h1>{this.props.title}</h1>
-        {this.detectAndRenderContent(this.props.description, { className: "description" })}
-        <blockquote>Please select from the following options:</blockquote>
-        <ul className={classes.optionList}>{this.props.options.map(this.getOption)}</ul>
-        {this.state.attempts > 0 && (
-          <div className={classes.statusBox}>
-            <small>{`Attempts: ${this.state.attempts}`}</small>
-            {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ Try Again "}
-            <button role="button" onClick={this.reset}>
-              Reset
-            </button>
-          </div>
-        )}
-        {showHelp &&
-          this.detectAndRenderContent(this.props.explanation, { className: "explanation" })}
-      </section>
+    const showHelp = this.state.showExplanation;
+
+    const { isCorrect, showExplanation } = this.state;
+    const { title, description, options, explanation } = this.props;
+    const headerIcon = isCorrect ? (
+      <CheckCircle className={classes.correct} />
+    ) : (
+      <CancelIcon style={{ color: "red" }} />
     );
+
+    return (
+      <Card className={challengeClasses}>
+        <CardHeader
+          className="question-header"
+          avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
+          action={headerIcon}
+          title={<h2>{title}</h2>}
+        >
+          {title}
+        </CardHeader>
+        <CardContent>
+          <Typography className="q-description" component="p">
+            {this.detectAndRenderContent(description, { className: "description" })}
+          </Typography>
+          <Typography className="q-answers-list" component="p">
+            <blockquote>Please select the most appropriate answer:</blockquote>
+            <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
+          </Typography>
+          <Typography component="q-results-bar">
+            {this.state.attempts > 0 && (
+              <div className={classes.statusBox}>
+                <small>{`Attempts: ${this.state.attempts}`}</small>
+                {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ Try Again "}
+                <Button
+                  role="button"
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={this.reset}
+                >
+                  Reset
+                  <RefreshIcon />
+                </Button>
+              </div>
+            )}
+          </Typography>
+        </CardContent>
+        <CardActions className={classes.actions} disableActionSpacing>
+          <Button
+            variant="outlined"
+            size="small"
+            color="primary"
+            className={classnames(classes.expand, {
+              [classes.expandOpen]: showHelp
+            })}
+            onClick={this.handleExpandClick}
+            aria-expanded={showHelp}
+            aria-label="Show Hint"
+            title="Show Hint"
+          >
+            {this.state.showExplanation ? `Hide Hint` : `Show Hint`}
+            <HelpIcon />
+          </Button>
+        </CardActions>
+        <Collapse in={showHelp} unmountOnExit>
+          <CardContent>
+            {this.detectAndRenderContent(explanation, { className: "explanation" })}
+          </CardContent>
+        </Collapse>
+      </Card>
+    );
+
+    // return (
+    //   <section className={challengeClasses}>
+    //     <h1>{this.props.title}</h1>
+
+    //     {showHelp &&
+    //       }
+    //   </section>
+    // );
   }
 }
 
