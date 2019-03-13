@@ -12,9 +12,9 @@ cover: andrew-wulf-303962-unsplash.jpg
 
 ![credit: andrew-wulf-303962-unsplash.jpg](andrew-wulf-303962-unsplash.jpg)
 
-Relatively recent additions to JavaScript have made a core concept harder to understand.
+Relatively recent additions to JavaScript have made a core concept a bit harder to understand.
 
-> We're talking about functions, methods and procedures!
+> We're talking functions, methods and procedures!
 
 For most of JavaScript's life we've had a few variations on this syntax:
 
