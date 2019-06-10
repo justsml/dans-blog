@@ -12,14 +12,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 // import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/RefreshOutlined";
 import Typography from "@material-ui/core/Typography";
-import red from "@material-ui/core/colors/red";
 import CancelIcon from "@material-ui/icons/Cancel";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckCircle from "@material-ui/icons/CheckCircle";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import "./style.css";
+
 import { isHtml } from "../../utils/shared.js";
 /*
 EXAMPLE CHALLENGE DEFINITION:
@@ -51,7 +50,11 @@ const styles = {
   correct: {
     border: "1px solid green"
   },
-  description: {},
+  description: {
+    h1: {
+      display: "none"
+    }
+  },
   optionList: {
     // cursor: 'pointer',
     listStyle: "none",
@@ -60,7 +63,6 @@ const styles = {
     width: "100%"
   },
   optionItem: {
-    transition: "all 0.33s ease-in",
     cursor: "pointer",
     margin: "1.2em 0.25em",
     padding: "0.5em",
@@ -72,6 +74,19 @@ const styles = {
       border: "1px solid #333"
     }
   },
+  // optionItem: {
+  //   transition: "all 0.33s ease-in",
+  //   cursor: "pointer",
+  //   margin: "1.2em 0.25em",
+  //   padding: "0.5em",
+  //   border: "1px solid transparent",
+  //   "> *": {
+  //     cursor: "pointer"
+  //   },
+  //   "&:hover": {
+  //     border: "1px solid #333"
+  //   }
+  // },
   statusBox: {
     width: "100%",
     height: "2.125rem",
@@ -108,8 +123,7 @@ class Challenge extends React.Component {
     description: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
-    classes: PropTypes.object.isRequired,
-    onAnswer: PropTypes.function.isRequired
+    classes: PropTypes.object.isRequired
   };
 
   componentDidMount() {
@@ -152,6 +166,22 @@ class Challenge extends React.Component {
     setTimeout(this.saveState, 1);
   };
 
+  // getOption = option => {
+  //   const { classes } = this.props;
+  //   const selectionIcon =
+  //     this.state.selection === option && option === this.props.answer ? "✅ " : "⬜ ";
+
+  //   return (
+  //     <li
+  //       key={option}
+  //       onClick={() => this.tryAnswer(option)}
+  //       className={this.isCorrect() ? classes.optionItemCompleted : classes.optionItem}
+  //     >
+  //       <span>{selectionIcon}</span>
+  //       <label>{option}</label>
+  //     </li>
+  //   );
+  // };
   getOption = option => {
     const { classes } = this.props;
     const selectionIcon =
@@ -225,7 +255,7 @@ class Challenge extends React.Component {
     );
 
     return (
-      <Card className={challengeClasses}>
+      <Card className={`challenge-ui ${challengeClasses}`}>
         <CardHeader
           className="question-header"
           avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
@@ -235,8 +265,8 @@ class Challenge extends React.Component {
           {title}
         </CardHeader>
         <CardContent>
-          <Typography className="q-description" component="span">
-            {this.renderContent(description, { className: "description" })}
+          <Typography className={`q-description ${classes.description}`} component="span">
+            {this.renderContent(this.props.html || description, { className: "description" })}
           </Typography>
           <Typography className="q-answers-list" component="span">
             <blockquote>Please select the most appropriate answer:</blockquote>

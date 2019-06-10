@@ -1,21 +1,21 @@
 import React from "react";
 import Challenge from "./";
 import { delay } from "functional-promises";
-import { isHtml } from "../../utils/shared.js";
+import { isHtml, stripHtml, removeBySelector, extractTagContent } from "../../utils/shared.js";
 
 /*
 EXAMPLE CHALLENGE DEFINITION:
 
-<section class="challenge" group="Definitions" title="Question #1: Meaning of life:">
-  <h2 class="description">What is the meaning of life?</h2>
-  <legend class="hint"><i>Do great good; it will be revealed</i> - dan levy</hint>
-  <ul class="options">
+<section className="challenge" group="Definitions" title="Question #1: Meaning of life:">
+  <h2 className="description">What is the meaning of life?</h2>
+  <legend className="hint"><i>Do great good; it will be revealed</i> - dan levy</hint>
+  <ul className="options">
     <li>1</li>
     <li>2</li>
-    <li class="answer">42</li>
+    <li className="answer">42</li>
     <li>3</li>
   </ul>
-  <div class="explanation">Overview & more resources</div>
+  <div className="explanation">Overview & more resources</div>
 </section>
 */
 
@@ -48,23 +48,32 @@ export default class AutoLoader extends React.Component {
   componentDidMount() {
     // check the DOM for static data to extract
     retryApp(this.checkInlineChallenges, { limit: 8, delayMsec: 125 });
+    this.__mounted = true;
   }
 
-  checkContentForMetadata = content => {
+  checkContentForMetadata = config => {
+    const { description: content } = config;
     if (!content) return {};
-    // TODO: Extract to pure fns file
-    const stripHtml = html => html.replace(/<\/?[a-z][a-z0-9]*[^<>]*>|<!--.*?-->/gim, "");
-    const extractH1 = html => html.match(/<h1>[^<]*<\/h1>/im);
-    const extractBlockquote = html => html.match(/<blockquote>[^<]*<\/blockquote>/im);
 
-    const html = isHtml(content) ? html : this.renderMarkdown(content);
+    const html = isHtml(content) ? content : this.renderMarkdown(content);
+    config.html = html;
     const data = {
-      title: stripHtml(extractH1(html)),
-      hint: stripHtml(extractBlockquote(html))
+      title: stripHtml(extractTagContent("h1", html)),
+      subtitle: stripHtml(extractTagContent("h2", html)),
+      hint: stripHtml(extractTagContent("blockquote", html))
     };
-    if (data.title && data.title.length <= 2) data.title = undefined;
-    if (data.hint && data.hint.length <= 2) data.hint = undefined;
-    return data;
+    if (data.hint && data.hint.length >= 2) {
+      config.hint = data.hint.trim();
+    }
+
+    if (data.title && data.title.length >= 2) {
+      config.title = String(data.title).trim();
+      // console.log(`MetaCheck.pre.removeBySelector`, config.html.length, config.html);
+      config.html = removeBySelector("h1", config.html);
+      // console.log(`MetaCheck.post.removeBySelector`, config.html.length, config.html);
+    }
+
+    return config;
   };
 
   checkInlineChallenges = () => {
@@ -73,6 +82,7 @@ export default class AutoLoader extends React.Component {
   };
 
   componentWillUnmount() {
+    this.__mounted = false;
     clearTimeout(this.loadTimeout);
   }
 
@@ -92,6 +102,10 @@ export default class AutoLoader extends React.Component {
   };
 
   getChallenges = () => {
+    if (!this.__mounted) {
+      console.warn("Short circuit Statful Work when UNMOUNTED!");
+      return [];
+    }
     const challenges = Array.from(document.querySelectorAll(".challenge"));
     if (challenges.length <= 0) return [];
 
@@ -109,7 +123,7 @@ export default class AutoLoader extends React.Component {
           : Array.from(c.querySelectorAll(".options > *")).map(li => li.textContent)
       };
       // Check for in-line overides before going any further
-      const overrides = this.checkContentForMetadata(config.description);
+      const overrides = this.checkContentForMetadata(config);
 
       console.log(`Overrides:`, overrides);
       return Object.assign({}, config, overrides);
@@ -123,6 +137,8 @@ export default class AutoLoader extends React.Component {
   render() {
     return (
       <div className="challenges-test">
+        <h1>Mini Quiz: Check your knowledge!</h1>
+        <span className="challenge-label">&nbsp; quiz &nbsp;</span>
         {this.state.challenges.map(config => {
           return <Challenge key={config.title} {...config} />;
         })}
