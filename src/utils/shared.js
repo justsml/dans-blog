@@ -1,6 +1,9 @@
 import { forceCheck } from "react-lazyload";
 // import { navigateTo } from 'gatsby-link';
 
+export const isHtml = text => /^---/.test(text) || text.split(/<[^>]+>/).length > 1;
+// export const isMarkdown = text => /^---/.test(text) || /^#/.test(text) >= 1;
+
 export function featureNavigator(e) {
   e && e.preventDefault();
 

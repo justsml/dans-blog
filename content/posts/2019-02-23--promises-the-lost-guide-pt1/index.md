@@ -22,21 +22,33 @@ cover: null
 ## Techniques
 
 1. Logging values
-1. 2 ways to create Promises
-1. 3 parameter tricks with Promises
+1. Creating Promises
+  1. Parameter tricks
+
+## Applied Solutions
+
 1. Show `Promise.all()` Progress
 1. `Auto-Retry` helper function
 
 
-## Fun quiz!
 
 
-<div class="challenge" title="Logging 1">
+
+## Test Your Understanding!
+<!-- QUIZ HTML HERE WILL BE AUTO-EXTRACTED BY
+  `AutoLoader` COMPONENT HELPER CLASS  -->
+
+<section class="challenge" title="" group="Syntax + Functions">
   <div class="description">
-    What does the following code print?
 
-![challenge-1.png](challenge-1.png)
+# What type does \`getCustomers()\` return?
 
+```js
+const dummyData = []
+function getCustomers() {
+  return Promise.resolve(dummyData)
+}
+```
   </div>
   <ul class="options">
     <li>1</li>
@@ -47,7 +59,8 @@ cover: null
   <div class="explanation">The Promise method `.then()` must be given a function.
 
   Here, we are executing a `console.log` with an undefined variable `result`. The essential problem here is that `console.log` isn't being passed as a function to `.then()`, instead it executes immediately and passes `undefined` into `.then()`. This leads to some confusing behavior, see later challenges will</div>
-</div>
+</section>
+
 
 
 

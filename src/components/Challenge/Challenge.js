@@ -20,7 +20,7 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import HelpIcon from "@material-ui/icons/Help";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import { isHtml } from "../../utils/shared.js";
 /*
 EXAMPLE CHALLENGE DEFINITION:
 
@@ -95,9 +95,6 @@ const styles = {
   }
 };
 
-const isHtml = text => text.split(/<[^>]+>/).length > 1;
-// const isMarkdown = text => text.split(/^#/).length >= 1;
-
 class Challenge extends React.Component {
   state = {
     selection: "",
@@ -111,7 +108,8 @@ class Challenge extends React.Component {
     description: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
-    classes: PropTypes.object.isRequired
+    classes: PropTypes.object.isRequired,
+    onAnswer: PropTypes.function.isRequired
   };
 
   componentDidMount() {
@@ -143,7 +141,13 @@ class Challenge extends React.Component {
   };
 
   tryAnswer = option => {
-    if (this.isCorrect()) return null;
+    const isCorrect = this.isCorrect();
+    if (typeof this.props.onAnswer !== "function") {
+      console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
+    } else {
+      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
+    }
+    if (isCorrect) return null;
     this.setState((state, props) => ({ selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
   };
@@ -196,23 +200,24 @@ class Challenge extends React.Component {
     <div dangerouslySetInnerHTML={this.getMarkdownHtml(content)} {...props} />
   );
 
-  detectAndRenderContent = (content, props = {}) => {
+  renderContent = (content, props = {}) => {
     // might need to default assume markdown
     return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
   };
 
   render() {
+    const { isCorrect, showExplanation } = this.state;
+    const { title, description, options, explanation } = this.props;
     const { classes } = this.props;
+
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
       (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
     // this.isCorrect()
 
-    const showHelp = this.state.showExplanation;
+    const showHelp = showExplanation;
 
-    const { isCorrect, showExplanation } = this.state;
-    const { title, description, options, explanation } = this.props;
     const headerIcon = isCorrect ? (
       <CheckCircle className={classes.correct} />
     ) : (
@@ -230,10 +235,10 @@ class Challenge extends React.Component {
           {title}
         </CardHeader>
         <CardContent>
-          <Typography className="q-description" component="p">
-            {this.detectAndRenderContent(description, { className: "description" })}
+          <Typography className="q-description" component="span">
+            {this.renderContent(description, { className: "description" })}
           </Typography>
-          <Typography className="q-answers-list" component="p">
+          <Typography className="q-answers-list" component="span">
             <blockquote>Please select the most appropriate answer:</blockquote>
             <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
           </Typography>
@@ -274,9 +279,7 @@ class Challenge extends React.Component {
           </Button>
         </CardActions>
         <Collapse in={showHelp} unmountOnExit>
-          <CardContent>
-            {this.detectAndRenderContent(explanation, { className: "explanation" })}
-          </CardContent>
+          <CardContent>{this.renderContent(explanation, { className: "explanation" })}</CardContent>
         </Collapse>
       </Card>
     );
