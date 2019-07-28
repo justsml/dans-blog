@@ -2,6 +2,7 @@
 layout: post
 title:  "Docker server Setup"
 date:   2015-04-06 01:00:59
+modified: 2019-07-28
 category: docker
 tags: [devops, docker, server, setup, shell script]
 cover: markus-spiske-193031-unsplash.jpg
@@ -11,60 +12,36 @@ cover: markus-spiske-193031-unsplash.jpg
 
 ![credit: markus-spiske-193031-unsplash.jpg](markus-spiske-193031-unsplash.jpg)
 
-## Basic Monitoring Tools
+## Quick Install
+
+Install Docker, with 1 shell command!
 
 ~~~sh
-# Debian/BSD Requirements / Updates + monitoring tools: atop & htop
-apt-get update && apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
-
-# OSX, Debian & RHEL: Host OS Tuning
-sysctl -w vm.max_map_count=262144
-
-# Updates Profile init scripts before appending new scripts below
-mkdir ~/backups
-cp ~/.bash* ~/backups/
-
-# Debian/BSD:  Append Shell Environment Shortcuts + XTERM Colors
-curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash
-
-curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
-curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
-# Read into current shell (login steps already missed the aliases file)
-source ~/.bashrc
-
-# Docker pre reqs
-# sudo apt-get install -y linux-image-virtual linux-image-extra-virtual
-# Install Docker, straight from the horses mouth
 curl -sSL https://get.docker.com/ | sh
-
 ~~~
 
-> Only for SELinux Enabled Systems
+# Complex `run` Command Examples
 
-~~~sh
-# SELinux fixes (optional)
-# chcon -Rt svirt_sandbox_file_t /mongodb
-# chcon -Rt svirt_sandbox_file_t /elastic
-~~~
-
-# Simple Database Setup/Startup
+> NOTE: the `-p 127.0.0.1:27017:27017` option prevents access to your instance except from the server 'localhost network'.
+> Remove the local IP address prefix to allow other containers access: `-p 27017:27017`
 
 ## MongoDB v3 Server
 
 ~~~sh
-mkdir /mongodb
-docker run --name mongo -p 27017:27017 -v /mongodb:/data -d mongo:latest bash -c 'mongod --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'
+mkdir $HOME/mongodb
+docker run -p 127.0.0.1:27017:27017  --name mongo -p 27017:27017 -v $HOME/mongodb:/data -d mongo:3 bash -c 'mongod --bind_ip 0.0.0.0 --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'
 ~~~
 
 ## Elastic Search
 
 ~~~sh
-mkdir /elastic
-docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
+mkdir $HOME/elastic
+docker run --name elastic -d -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -v $HOME/elastic:/data elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
 ~~~
 
-> You just lit up 2 database docker instances!!!
-> If it were any easier, I'm pretty sure you couldn't invoice for it.
+> You just spun up 2 database instances!!!
+
+
 
 
 # Package up your NodeJS/Ruby/Python/Web App
@@ -76,13 +53,13 @@ docker run --name elastic -d -p 9200:9200 -p 9300:9300 -v /elastic:/data elastic
 
 ~~~dockerfile
 # Example for NodeJS
-FROM node:0.12
+FROM node:12
 EXPOSE [3000]
 COPY . /app/
 WORKDIR /app
-RUN apt-get update \
-	&& apt-get dist-upgrade -y
+RUN apt-get update && apt-get dist-upgrade -yqq
 RUN ["npm", "install"]
+
 # Overridable Command
 CMD ["npm", "start"]
 ~~~
@@ -98,7 +75,7 @@ docker build -t app-name-here .
 
 # Docker Commands to Learn
 
-## Build Docker Image Every Deploy/Change
+## Build Docker Image
 
 ~~~sh
 docker build -t app-name-here .
@@ -129,3 +106,37 @@ docker rm -f webapp01
 docker rm -f mongo elastic
 ~~~
 
+
+
+## Optional Config & Monitoring Tools
+
+~~~sh
+# Debian/BSD Requirements / Updates + monitoring tools: atop & htop
+apt-get update && apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
+
+# OSX, Debian & RHEL: Host OS Tuning
+sysctl -w vm.max_map_count=262144
+
+# Updates Profile init scripts before appending new scripts below
+mkdir ~/backups
+cp ~/.bash* ~/backups/
+
+# Debian/BSD:  Append Shell Environment Shortcuts + XTERM Colors
+curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/modules/vim-update.sh | bash
+
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
+curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
+# Read into current shell (login steps already missed the aliases file)
+source ~/.bashrc
+
+# Docker pre reqs
+# sudo apt-get install -y linux-image-virtual linux-image-extra-virtual
+~~~
+
+> Only for SELinux Enabled Systems
+
+~~~sh
+# SELinux fixes (optional)
+# chcon -Rt svirt_sandbox_file_t /mongodb
+# chcon -Rt svirt_sandbox_file_t /elastic
+~~~
