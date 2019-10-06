@@ -16,7 +16,7 @@ folder="./content/posts/$(date +%F)--$slug"
 if [ -d "$folder" ]; then
   printf "\\nWARNING: Post already exists: \"%s\"\\n\\n" "$title"
   printf "To delete current post: \\n  rm -rf %s\\n\\n" "$folder"
-  exit -1
+  exit 1
 fi
 
 if [ "" != "$2" ]; then
