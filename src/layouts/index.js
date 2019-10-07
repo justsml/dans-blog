@@ -129,7 +129,7 @@ export const guery = graphql`
   query LayoutQuery {
     posts: allMarkdownRemark(
       filter: { id: { regex: "//posts//" } }
-      sort: { fields: [fields___prefix], order: DESC }
+      sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {
         node {
@@ -160,7 +160,7 @@ export const guery = graphql`
     }
     pages: allMarkdownRemark(
       filter: { id: { regex: "//pages//" }, fields: { prefix: { regex: "/^\\d+$/" } } }
-      sort: { fields: [fields___prefix], order: ASC }
+      sort: { fields: [frontmatter___date], order: ASC }
     ) {
       edges {
         node {
