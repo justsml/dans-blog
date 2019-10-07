@@ -1,7 +1,7 @@
 ---
 title: "Top Mistakes Seen in 500+ Interviews"
 subTitle: Are you guilty of these mistakes?
-date: 2018-12-05
+date: 2019-10-05
 modified: 2019-10-07
 tags: [interview tips, software interview, developer interview, interviews, interviewing]
 category: Interviewing
