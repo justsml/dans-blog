@@ -2,7 +2,7 @@
 layout: post
 title:  "Docker server Setup"
 date:   2015-04-06 01:00:59
-modified: 2019-07-28
+modified: 2019-11-03 13:00:00
 category: docker
 tags: [devops, docker, server, setup, shell script]
 cover: markus-spiske-193031-unsplash.jpg
@@ -25,31 +25,84 @@ curl -sSL https://get.docker.com/ | sh
 > NOTE: the `-p 127.0.0.1:27017:27017` option prevents access to your instance except from the server 'localhost network'.
 > Remove the local IP address prefix to allow other containers access: `-p 27017:27017`
 
-## MongoDB v3 Server
+## MongoDB Server
 
 ~~~sh
-mkdir $HOME/mongodb
-docker run -p 127.0.0.1:27017:27017  --name mongo -p 27017:27017 -v $HOME/mongodb:/data -d mongo:3 bash -c 'mongod --bind_ip 0.0.0.0 --logpath /data/mongodb.log --logappend --dbpath /data/data --storageEngine=wiredTiger'
+mkdir -p $HOME/.mongodb/data
+
+docker run -d \
+  --name mongodb \
+  --restart on-failure:15 \
+  -p 127.0.0.1:27017:27017 \
+  -v $HOME/.mongodb:/data \
+  mongo:4 bash -c 'mongod --bind_ip 0.0.0.0 --storageEngine=wiredTiger'
 ~~~
+
+Now that your server is setup, verify your data is at `$HOME/.mongodb` with:
+
+```sh
+ls -lach $HOME/.mongodb
+```
+
+Let's connect to the server with `mongo` CLI tool. (If you don't have it installed see below.)
+
+```sh
+#> Using default arguments:
+mongo
+```
+
+And you should see something like this:
+
+<img width="807" alt="image" src="https://user-images.githubusercontent.com/397632/68092978-2ac57a80-fe4e-11e9-9b15-d365da0b4637.png">
+
+
+### Setup mongo CLI tools
+
+#### Using brew & OSX
+
+```sh
+brew tap mongodb/brew
+brew install mongodb-community-shell
+```
+
+
+## Mysql Server
+
+> **WARNING:** CHANGE THE PASSWORD IN `MYSQL_ROOT_PASSWORD` BELOW.
+
+```sh
+mkdir -p $HOME/.mysql
+
+docker run -d \
+  -v $HOME/.mysql:/var/lib/mysql \
+  -p 127.0.0.1:3306:3306 \
+  --name mysql-$USER \
+  -e MYSQL_DATABASE=$USER \
+  -e MYSQL_ROOT_HOST='172.*.*.*' \
+  -e MYSQL_ROOT_PASSWORD='p@ssw0rd' \
+  mysql/mysql-server:8
+```
 
 ## Elastic Search
 
 ~~~sh
-mkdir $HOME/elastic
-docker run --name elastic -d -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -v $HOME/elastic:/data elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
+mkdir -p $HOME/.elastic
+
+docker run -d \
+  --name elastic \
+  -p 127.0.0.1:9200:9200 \
+  -p 127.0.0.1:9300:9300 \
+  -v $HOME/.elastic:/data \
+  elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
 ~~~
 
-> You just spun up 2 database instances!!!
 
-
-
-
-# Package up your NodeJS/Ruby/Python/Web App
+## Package up your NodeJS/Ruby/Python/Web App
 
 1. Add a blank file named `Dockerfile` in your project root.
 1. _(Optional, Recommended)_ Add a `.dockerignore` using .gitignore rules to exclude large non-essential paths. By default all project files are included.
 
-## Create a `Dockerfile`
+## Create a `Dockerfile` in your apps root
 
 ~~~dockerfile
 # Example for NodeJS
@@ -95,7 +148,7 @@ docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:el
 
 ## Delete Container Instance or Image
 
-> Important: Any data not stored on the mounted volume path will be lost!!
+> Important: Any data not stored on a mounted volume path will be lost!!
 
 ~~~sh
 # Delete Image
@@ -107,6 +160,7 @@ docker rm -f mongo elastic
 ~~~
 
 
+<!--
 
 ## Optional Config & Monitoring Tools
 
@@ -126,6 +180,7 @@ curl -o- https://raw.githubusercontent.com/justsml/system-setup-tools/master/mod
 
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bashrc >> ~/.bashrc
 curl -sSL https://raw.githubusercontent.com/justsml/system-setup-tools/master/home-scripts/.bash_aliases >> ~/.bash_aliases
+
 # Read into current shell (login steps already missed the aliases file)
 source ~/.bashrc
 
@@ -140,3 +195,7 @@ source ~/.bashrc
 # chcon -Rt svirt_sandbox_file_t /mongodb
 # chcon -Rt svirt_sandbox_file_t /elastic
 ~~~
+
+-->
+
+
