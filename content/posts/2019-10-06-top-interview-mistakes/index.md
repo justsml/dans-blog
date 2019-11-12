@@ -13,18 +13,11 @@ cover: amy-hirschi-JaoVGh5aJ3E-unsplash.jpg
 
 ![credit: amy-hirschi-JaoVGh5aJ3E-unsplash.jpg](amy-hirschi-JaoVGh5aJ3E-unsplash.jpg)
 
-First off, you may be asking "Who is this guy? And, really, 500 interviews?"
-
-Fair question. My name is [Dan Levy](/about/).
-
-Over the last few years, I've been teaching adults Software Development. I've helped teach over 750+ students. Topics ranged from Web Development, Micro-electronics, Docker, JavaScript, Python, Java, Ruby and more - always with the help of amazing teams ❤️.
-
-Currently I am the Web Program Manager at [Lambda School](https://lambdaschool.com), before that I worked at 2 other well-known Software Schools. In various roles I've conducted over 500 practice interviews, white-board workshops and interview role-play exercises.
+My name is [Dan Levy](/about/). I've helped teach over 750+ students and I've conducted over 500 practice interviews, white-board workshops and interview role-play exercises.
 
 <!-- Some students endured 5-6 interview exercises with me. Some days I'd conduct 10+ interviews or exercises, varying 30-60 minute blocks. -->
 
-I've also been involved in over 100 "real" interviews over my professional software development career (20+ years.)
-
+I've also been involved in 100s of "real" interviews over my professional software development career (20+ years.)
 
 # Top Mistakes
 
