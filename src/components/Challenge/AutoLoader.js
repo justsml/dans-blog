@@ -139,8 +139,8 @@ export default class AutoLoader extends React.Component {
       <div className="challenges-test">
         <h1>Mini Quiz: Check your knowledge!</h1>
         <span className="challenge-label">&nbsp; quiz &nbsp;</span>
-        {this.state.challenges.map(config => {
-          return <Challenge key={config.title} {...config} />;
+        {this.state.challenges.map((config, i) => {
+          return <Challenge key={config.title} number={i + 1} {...config} />;
         })}
       </div>
     );

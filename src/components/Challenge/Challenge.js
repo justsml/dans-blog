@@ -118,6 +118,7 @@ class Challenge extends React.Component {
   };
 
   static propTypes = {
+    number: PropTypes.number,
     title: PropTypes.string.isRequired,
     answer: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -134,11 +135,11 @@ class Challenge extends React.Component {
     const { attempts, selection } = this.state;
     const data = JSON.stringify({ attempts, selection });
     // console.log("saving cachedState", data);
-    localStorage.setItem("Challenge_" + this.props.title, data);
+    localStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
   };
 
   loadState = () => {
-    let cachedState = localStorage.getItem("Challenge_" + this.props.title);
+    let cachedState = localStorage.getItem("Challenge_" + this.props.title + this.props.number);
     // console.log("loading cachedState", this.props.title, cachedState);
     cachedState = cachedState
       ? JSON.parse(cachedState)
@@ -237,7 +238,7 @@ class Challenge extends React.Component {
 
   render() {
     const { isCorrect, showExplanation } = this.state;
-    const { title, description, options, explanation } = this.props;
+    const { title, number, description, options, explanation } = this.props;
     const { classes } = this.props;
 
     let challengeClasses =
@@ -260,7 +261,12 @@ class Challenge extends React.Component {
           className="question-header"
           avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
           action={headerIcon}
-          title={<h2>{title}</h2>}
+          title={
+            <h2>
+              {Number(number) > 0 ? number + ". " : ""}
+              {title}
+            </h2>
+          }
         >
           {title}
         </CardHeader>
@@ -304,7 +310,11 @@ class Challenge extends React.Component {
             aria-label="Show Hint"
             title="Show Hint"
           >
-            {this.state.showExplanation ? `Hide Hint` : `Show Hint`}
+            {!explanation || explanation.length < 30
+              ? "[todo]"
+              : this.state.showExplanation
+                ? `Hide Hint`
+                : `Show Hint`}
             <HelpIcon />
           </Button>
         </CardActions>
