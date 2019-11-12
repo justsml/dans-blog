@@ -5,12 +5,12 @@ date: 2019-01-18
 modified: 2019-11-11
 tags: [promises, programming, async, javascript, guides]
 category: promises
-cover: null
+cover: olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg
 ---
 
 # Check your JavaScript Promises Knowledge
 
-
+![olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg](olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg)
 <!-- QUIZ HTML HERE WILL BE AUTO-EXTRACTED BY
   `AutoLoader` COMPONENT HELPER CLASS  -->
 
