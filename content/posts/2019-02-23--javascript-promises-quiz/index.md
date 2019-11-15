@@ -21,7 +21,9 @@ cover: olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg
 # Multiple `.catch`'s
 
 ```js
-var promise = new Promise((resolve, reject) => reject(Error('The Fails!')))
+var promise = new Promise((resolve, reject) => {
+  reject(Error('The Fails!'))
+})
 promise.catch(error => console.log(error.message))
 promise.catch(error => console.log(error.message))
 ```
@@ -52,7 +54,9 @@ Then the `.catch` handler works like the DOM's `.addEventListener(event, callbac
 # Multiple `.catch`'s
 
 ```js
-var promise = new Promise((resolve, reject) => Promise.reject(Error('The Fails!')))
+var promise = new Promise((resolve, reject) => {
+  Promise.reject(Error('The Fails!'))
+})
 promise.catch(error => console.log(error.message))
 promise.catch(error => console.log(error.message))
 ```
@@ -82,7 +86,9 @@ In this example the `Promise.reject(Error('The Fails!'))` effectively creates a 
 # Chaining `.then` and `.catch`'s
 
 ```js
-var promise = new Promise((resolve, reject) => reject(Error('The Fails!')))
+var promise = new Promise((resolve, reject) => {
+    reject(Error('The Fails!'))
+  })
   .catch(error => console.log(error))
   .then(error => console.log(error))
 ```
@@ -114,7 +120,9 @@ What does `console.log` return?
 # Chaining `.catch`'s
 
 ```js
-var promise = new Promise((resolve, reject) => reject(Error('The Fails!')))
+var promise = new Promise((resolve, reject) => {
+    reject(Error('The Fails!'))
+  })
   .catch(error => console.log(error.message))
   .catch(error => console.log(error.message))
 ```
@@ -144,7 +152,9 @@ When chaining `.catch`'s, each one only handles errors thrown in previous `.then
 # Multiple `.catch`'s
 
 ```js
-var promise = new Promise((resolve, reject) => resolve('Success!'))
+var promise = new Promise((resolve, reject) => {
+    resolve('Success!')
+  })
   .then(() => {
     throw Error('Oh noes!')
   })
