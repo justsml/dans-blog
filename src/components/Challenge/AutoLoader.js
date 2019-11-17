@@ -2,7 +2,9 @@ import React from "react";
 import Challenge from "./";
 import { delay } from "functional-promises";
 import { isHtml, stripHtml, removeBySelector, extractTagContent } from "../../utils/shared.js";
+import Score from "./Score";
 
+// import ScrollAnimation from "react-animate-on-scroll";
 /*
 EXAMPLE CHALLENGE DEFINITION:
 
@@ -38,7 +40,11 @@ const retryApp = (fn, { limit = 10, delayMsec = 100, rateAmplifyDelay = 1.0 }) =
 };
 
 export default class AutoLoader extends React.Component {
-  state = { loaded: false, challenges: [] };
+  state = {
+    score: { totalAvailable: -1, current: 0 },
+    loaded: false,
+    challenges: []
+  };
 
   getContent = (elem, selector) => {
     const el = elem && elem.querySelector && elem.querySelector(selector);
@@ -96,9 +102,15 @@ export default class AutoLoader extends React.Component {
   }
 
   loadChallenges = challengeConfigs => {
-    this.setState({ challenges: challengeConfigs }, () => {
-      this.forceUpdate();
-    });
+    this.setState(
+      {
+        challenges: challengeConfigs,
+        score: { ...this.state.score, totalAvailable: challengeConfigs.length }
+      },
+      () => {
+        this.forceUpdate();
+      }
+    );
   };
 
   getChallenges = () => {
@@ -134,14 +146,43 @@ export default class AutoLoader extends React.Component {
     return challengeConfigs;
   };
 
+  onAnswer = ({ correct, value }) => {
+    let current = this.state.score.current;
+    if (correct) {
+      current++;
+    }
+    this.setState({
+      ...this.state,
+      score: { totalAvailable: this.state.challenges.length, current }
+    });
+  };
+
+  resetScores = () => {
+    this.setState({
+      ...this.state,
+      score: { totalAvailable: this.state.challenges.length, current: 0 }
+    });
+  };
+
   render() {
     return (
       <div className="challenges-test">
-        <h1>Mini Quiz: Check your knowledge!</h1>
-        <span className="challenge-label">&nbsp; quiz &nbsp;</span>
         {this.state.challenges.map((config, i) => {
-          return <Challenge key={config.title} number={i + 1} {...config} />;
+          return (
+            <Challenge
+              key={`${i + 1}-${config.title}`}
+              number={i + 1}
+              {...config}
+              onAnswer={this.onAnswer}
+              reset={this.resetScores}
+            />
+          );
         })}
+        <Score
+          reset={this.resetScores}
+          totalAvailable={this.state.score.totalAvailable}
+          score={this.state.score.current}
+        />
       </div>
     );
   }

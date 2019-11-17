@@ -12,11 +12,14 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Collapse from "@material-ui/core/Collapse";
 // import Avatar from "@material-ui/core/Avatar";
+import CancelIcon from "@material-ui/icons/Cancel";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import HelpIcon from "@material-ui/icons/Help";
 import RefreshIcon from "@material-ui/icons/RefreshOutlined";
 import Typography from "@material-ui/core/Typography";
-import CancelIcon from "@material-ui/icons/Cancel";
-import HelpIcon from "@material-ui/icons/Help";
-import CheckCircle from "@material-ui/icons/CheckCircle";
+import LightSpeed from "react-reveal/LightSpeed";
 import "./style.css";
 
 import { isHtml } from "../../utils/shared.js";
@@ -63,11 +66,15 @@ const styles = {
     width: "100%"
   },
   optionItem: {
+    display: "flex",
     cursor: "pointer",
     margin: "1.2em 0.25em",
     padding: "0.5em",
     border: "1px solid transparent",
-    "> *": {
+    "> span": {
+      width: "35px"
+    },
+    "> *, label": {
       cursor: "pointer"
     },
     "&:hover": {
@@ -92,13 +99,19 @@ const styles = {
     height: "2.125rem",
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
+    alignContent: "center",
     justifyContent: "space-between"
   },
   optionItemCompleted: {
+    display: "flex",
     zoom: "150%",
     margin: "1.2em 0.25em",
     padding: "0.5em",
-    border: "1px solid transparent"
+    border: "1px solid transparent",
+    "> span": {
+      width: "35px"
+    }
   },
   expandOpen: {
     transform: "rotate(180deg)"
@@ -118,6 +131,8 @@ class Challenge extends React.Component {
   };
 
   static propTypes = {
+    onAnswer: PropTypes.func,
+    reset: PropTypes.func,
     number: PropTypes.number,
     title: PropTypes.string.isRequired,
     answer: PropTypes.string.isRequired,
@@ -167,26 +182,14 @@ class Challenge extends React.Component {
     setTimeout(this.saveState, 1);
   };
 
-  // getOption = option => {
-  //   const { classes } = this.props;
-  //   const selectionIcon =
-  //     this.state.selection === option && option === this.props.answer ? "✅ " : "⬜ ";
-
-  //   return (
-  //     <li
-  //       key={option}
-  //       onClick={() => this.tryAnswer(option)}
-  //       className={this.isCorrect() ? classes.optionItemCompleted : classes.optionItem}
-  //     >
-  //       <span>{selectionIcon}</span>
-  //       <label>{option}</label>
-  //     </li>
-  //   );
-  // };
   getOption = option => {
     const { classes } = this.props;
     const selectionIcon =
-      this.state.selection === option && option === this.props.answer ? "✅ " : "⬜ ";
+      this.state.selection === option && option === this.props.answer ? (
+        <CheckBoxIcon />
+      ) : (
+        <CheckBoxOutlineBlankIcon />
+      );
 
     return (
       <li
@@ -204,6 +207,7 @@ class Challenge extends React.Component {
     this.setState({ attempts: 0, selection: "", showExplanation: false }, () =>
       setTimeout(this.saveState, 1)
     );
+    if (this.props.reset) this.props.reset();
   };
 
   handleExpandClick = () => {
@@ -211,25 +215,21 @@ class Challenge extends React.Component {
   };
 
   getMarkdownHtml = markdown => {
-    return {
-      __html: marked(markdown, {
-        gfm: true,
-        tables: true,
-        breaks: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false
-      })
-    };
+    return marked(markdown, {
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
   };
 
   renderHtml = (content, props = {}) => (
     <div dangerouslySetInnerHTML={{ __html: content }} {...props} />
   );
 
-  renderMarkdown = (content, props = {}) => (
-    <div dangerouslySetInnerHTML={this.getMarkdownHtml(content)} {...props} />
-  );
+  renderMarkdown = (content, props = {}) => this.renderHtml(this.getMarkdownHtml(content), props);
 
   renderContent = (content, props = {}) => {
     // might need to default assume markdown
@@ -249,10 +249,10 @@ class Challenge extends React.Component {
 
     const showHelp = showExplanation;
 
-    const headerIcon = isCorrect ? (
-      <CheckCircle className={classes.correct} />
+    const headerIcon = this.isCorrect() ? (
+      <CheckCircle color="primary" />
     ) : (
-      <CancelIcon style={{ color: "red" }} />
+      <CancelIcon color="error" />
     );
 
     return (
@@ -282,7 +282,14 @@ class Challenge extends React.Component {
             {this.state.attempts > 0 && (
               <div className={classes.statusBox}>
                 <small>{`Attempts: ${this.state.attempts}`}</small>
-                {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ Try Again "}
+                {this.isCorrect() ? (
+                  <div>
+                    <CheckBoxIcon color="primary" fontSize="large" />
+                    {` Correct: ${this.state.selection}`}
+                  </div>
+                ) : (
+                  <div>❌ Try Again</div>
+                )}
                 <Button
                   role="button"
                   variant="outlined"

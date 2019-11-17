@@ -2,17 +2,19 @@
 title: "Promises: 9 Questions to Test Your Knowledge"
 subTitle: JavaScript
 date: 2019-01-18
-modified: 2019-11-11
+modified: 2019-11-15
 tags: [promises, programming, async, javascript, guides]
 category: promises
 cover: olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg
 ---
 
-# Check your JavaScript Promises Knowledge
+# Test your Knowledge of JavaScript Promises
 
 ![olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg](olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg)
 <!-- QUIZ HTML HERE WILL BE AUTO-EXTRACTED BY
-  `AutoLoader` COMPONENT HELPER CLASS  -->
+`AutoLoader` COMPONENT HELPER CLASS  -->
+
+## 9 Question Mini Quiz
 
 <!-- #1 -->
 <section class="challenge" group="Handling Errors">
@@ -39,9 +41,9 @@ promise.catch(error => console.log(error.message))
   </ul>
   <div class="explanation">
 
-First, inside the Promise constructor we correctly trigger an error by invoking `reject`.
+First, inside the Promise constructor we trigger an error by invoking `reject`.
 
-Then the `.catch` handler works like the DOM's `.addEventListener(event, callback)` or Event Emitter's `.on(event, callback)` where multiple handler callbacks can be added. Usually this is undesirable as it's hard to visualize any cleanup or overriding you might want to do.
+Then the `.catch` handler works like the DOM's `.addEventListener(event, callback)` or Event Emitter's `.on(event, callback)` where **multiple handler callbacks can be added.** Usually this is undesirable as it's hard to visualize any cleanup or overriding you might want to do.
 
   </div>
 </section>
@@ -55,7 +57,7 @@ Then the `.catch` handler works like the DOM's `.addEventListener(event, callbac
 
 ```js
 var promise = new Promise((resolve, reject) => {
-  Promise.reject(Error('The Fails!'))
+  return Promise.reject(Error('The Fails!'))
 })
 promise.catch(error => console.log(error.message))
 promise.catch(error => console.log(error.message))
@@ -104,11 +106,9 @@ var promise = new Promise((resolve, reject) => {
   </ul>
   <div class="explanation">
 
-When chaining `.then`'s it's helpful to think of them as a series of steps. Each `.then` receives the value returned by the previous `.then` as its argument. 
+When chaining `.then`'s and `.catch`'s it is helpful to think of them as a series of steps. Each `.then` receives the value returned by the previous `.then` (as its argument.) However, if your "step" encountered an error, any subsequent `.then` "steps" will be skipped until a `.catch` is encountered. If you want to override an error, all you need to do is return a non-error value. It can be accessed via any subsequent `.then`.
 
-There's 1 exception, if your "step" encountered an error, any subsequent `.then` "steps" will be skipped until a `.catch` is found. When the `.catch` returns a normal value, it can be accessed by chaining a `.then`. 
-
-What does `console.log` return? 
+**Hint:** `console.log()` always return `undefined`.
 
   </div>
 </section>
@@ -138,7 +138,7 @@ var promise = new Promise((resolve, reject) => {
   </ul>
   <div class="explanation">
 
-When chaining `.catch`'s, each one only handles errors thrown in previous `.then` "steps" or `reject()`. In this example the first `.catch` returns the `console.log` which could only be accessed via adding a `.then()` after the `.catch` on line 2 or 3.
+When chaining `.catch`'s, each one only handles errors thrown in previous `.then` or `.catch` "steps". In this example the first `.catch` returns the `console.log` which could only be accessed via adding a `.then()` after both the `.catch`'s.
 
   </div>
 </section>
