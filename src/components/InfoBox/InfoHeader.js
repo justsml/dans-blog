@@ -76,14 +76,15 @@ const styles = theme => ({
   },
   title: {
     willChange: "transform, left, top",
-    fontSize: `${theme.info.fonts.boxTitleSize}em`,
+    fontSize: `1.6rem`,
     margin: 0,
     float: "left",
     transitionTimingFunction: "ease",
     "& small": {
+      whiteSpace: "nowrap",
       display: "block",
-      fontSize: ".6em",
-      marginTop: ".3em",
+      fontSize: "1rem",
+      marginTop: ".4rem",
       width: "140px"
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {

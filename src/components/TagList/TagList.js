@@ -14,20 +14,26 @@ const styles = theme => ({
     // justifyContent: "space-between",
     listStyle: "none",
     "& a": {
-      fontSize: "11px",
+      fontSize: "0.8rem",
       color: theme.base.colors.link,
-      transition: "0.3s",
+      transition: "0.18s",
+      opacity: "0.5",
       "&:hover, &:visited, &:link": {
+        opacity: "0.5",
         color: theme.base.colors.linkHover
+      },
+      "&:hover": {
+        opacity: "0.95"
       }
     },
     "& h4": {
-      fontSize: "11px",
+      fontSize: "0.8rem",
+      fontWeight: "300",
       marginRight: "6px",
       margin: 0
     },
     "& > div": {
-      fontSize: "11px",
+      fontSize: "0.8rem",
       marginRight: "6px"
     },
     "> *": {
@@ -42,11 +48,10 @@ const TagList = ({ tags, classes }) => {
   return (
     <div className="tags-list">
       <div className={classes.tagList}>
-        <h4>tags: </h4>
         {tags.map(tag => {
           return (
             <div key={tag}>
-              <Link data-count={1} to={`/tags/${tag}`}>
+              <Link data-count={1} to={`/tags/${tag}`} title={`search for tag '${tag}'`}>
                 {tag}
               </Link>
             </div>

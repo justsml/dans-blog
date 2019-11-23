@@ -49,8 +49,8 @@ const styles = theme => ({
       display: "flex",
       justifyContent: "space-between",
       maxWidth: "300px",
-      fontSize: "0.85em",
-      margin: "0 4px 4px 0",
+      fontSize: "0.8em",
+      margin: "0.2rem 0",
       // "& label": {
       //   width: "255px",
       //   fontSize: "11px",
@@ -59,11 +59,12 @@ const styles = theme => ({
       // },
       "& span.human-date": {
         width: "100%",
-        fontSize: "1.325em"
+        fontSize: "0.8rem"
       },
       "& small": {
         width: "100%",
-        fontWeight: 700
+        fontSize: "0.8rem"
+        // fontWeight: 700
         // marginLeft: "4px"
       }
     },
@@ -79,7 +80,7 @@ const styles = theme => ({
   },
   tags: {
     width: "100%",
-    margin: ".85em 0"
+    margin: "0.1em 0"
   }
 });
 
@@ -103,12 +104,12 @@ const PostHeader = props => {
 
   return (
     <Header {...props}>
+      <div className={classes.tags}>
+        <TagList tags={tags} />
+      </div>
       <div className={classes.meta}>
         {getDateLabel(date, "published")}
         {getDateLabel(modified, "updated", "text-right")}
-      </div>
-      <div className={classes.tags}>
-        <TagList tags={tags} />
       </div>
     </Header>
   );
