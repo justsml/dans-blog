@@ -18,8 +18,11 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import HelpIcon from "@material-ui/icons/Help";
 import RefreshIcon from "@material-ui/icons/RefreshOutlined";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import Typography from "@material-ui/core/Typography";
 import LightSpeed from "react-reveal/LightSpeed";
+import HeadShake from "react-reveal/HeadShake";
+import Fade from "react-reveal/Fade";
 import "./style.css";
 
 import { isHtml } from "../../utils/shared.js";
@@ -41,6 +44,9 @@ EXAMPLE CHALLENGE DEFINITION:
 
 const styles = {
   card: {},
+  prompt: {
+    marginLeft: "14px"
+  },
   outerBox: {
     width: "95%",
     margin: "1em auto",
@@ -63,22 +69,24 @@ const styles = {
     listStyle: "none",
     margin: "0",
     paddingLeft: "1em",
-    width: "100%"
-  },
-  optionItem: {
-    display: "flex",
-    cursor: "pointer",
-    margin: "1.2em 0.25em",
-    padding: "0.5em",
-    border: "1px solid transparent",
-    "> span": {
-      width: "35px"
-    },
-    "> *, label": {
-      cursor: "pointer"
-    },
-    "&:hover": {
-      border: "1px solid #333"
+    width: "100%",
+    "& li": {
+      display: "flex",
+      alignItems: "center",
+      alignContent: "center",
+      cursor: "pointer",
+      margin: "1.2em 0.25em",
+      padding: "0.5em",
+      border: "1px solid transparent",
+      "> span": {
+        width: "35px"
+      },
+      "> *, label": {
+        cursor: "pointer"
+      },
+      "&:hover": {
+        border: "1px solid #333"
+      }
     }
   },
   // optionItem: {
@@ -102,6 +110,11 @@ const styles = {
     alignItems: "center",
     alignContent: "center",
     justifyContent: "space-between"
+  },
+  centered: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center"
   },
   optionItemCompleted: {
     display: "flex",
@@ -127,7 +140,8 @@ class Challenge extends React.Component {
   state = {
     selection: "",
     attempts: 0,
-    showExplanation: false
+    showExplanation: false,
+    cachedState: {}
   };
 
   static propTypes = {
@@ -139,6 +153,7 @@ class Challenge extends React.Component {
     description: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
+    html: PropTypes.string,
     classes: PropTypes.object.isRequired
   };
 
@@ -162,7 +177,7 @@ class Challenge extends React.Component {
           attempts: 0,
           selection: ""
         };
-    this.setState(cachedState);
+    this.setState({ ...this.state, cachedState, ...cachedState });
   };
 
   isCorrect = answer => {
@@ -178,7 +193,7 @@ class Challenge extends React.Component {
       this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
     }
     if (isCorrect) return null;
-    this.setState((state, props) => ({ selection: option, attempts: ++state.attempts }));
+    this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
   };
 
@@ -186,32 +201,32 @@ class Challenge extends React.Component {
     const { classes } = this.props;
     const selectionIcon =
       this.state.selection === option && option === this.props.answer ? (
-        <CheckBoxIcon />
+        <CheckBoxIcon fontSize="large" />
       ) : (
-        <CheckBoxOutlineBlankIcon />
+        <CheckBoxOutlineBlankIcon fontSize="large" />
       );
 
     return (
       <li
         key={option}
         onClick={() => this.tryAnswer(option)}
-        className={this.isCorrect() ? classes.optionItemCompleted : classes.optionItem}
+        className={this.isCorrect() ? "challenge-answer" : classes.optionItem}
       >
-        <span>{selectionIcon}</span>
+        {selectionIcon}
         <label>{option}</label>
       </li>
     );
   };
 
   reset = () => {
-    this.setState({ attempts: 0, selection: "", showExplanation: false }, () =>
+    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false }, () =>
       setTimeout(this.saveState, 1)
     );
     if (this.props.reset) this.props.reset();
   };
 
   handleExpandClick = () => {
-    this.setState({ showExplanation: !this.state.showExplanation });
+    this.setState({ ...this.state, showExplanation: !this.state.showExplanation });
   };
 
   getMarkdownHtml = markdown => {
@@ -237,98 +252,116 @@ class Challenge extends React.Component {
   };
 
   render() {
-    const { isCorrect, showExplanation } = this.state;
+    const { showExplanation } = this.state;
     const { title, number, description, options, explanation } = this.props;
     const { classes } = this.props;
 
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
-      (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
+      (this.isCorrect()
+        ? `challenge-correct ${classes.correct}`
+        : `challenge-not-correct ${this.state.attempts}` >= 1
+          ? classes.failed
+          : "");
     // this.isCorrect()
 
     const showHelp = showExplanation;
 
     const headerIcon = this.isCorrect() ? (
-      <CheckCircle color="primary" />
+      <CheckCircle color="primary" fontSize="large" />
     ) : (
-      <CancelIcon color="error" />
+      <CancelIcon color="error" fontSize="large" />
     );
 
     return (
-      <Card className={`challenge-ui ${challengeClasses}`}>
-        <CardHeader
-          className="question-header"
-          avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
-          action={headerIcon}
-          title={
-            <h2>
-              {Number(number) > 0 ? number + ". " : ""}
-              {title}
-            </h2>
-          }
-        >
-          {title}
-        </CardHeader>
-        <CardContent>
-          <Typography className={`q-description ${classes.description}`} component="span">
-            {this.renderContent(this.props.html || description, { className: "description" })}
-          </Typography>
-          <Typography className="q-answers-list" component="span">
-            <blockquote>Please select the most appropriate answer:</blockquote>
-            <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
-          </Typography>
-          <Typography component="q-results-bar">
-            {this.state.attempts > 0 && (
-              <div className={classes.statusBox}>
-                <small>{`Attempts: ${this.state.attempts}`}</small>
-                {this.isCorrect() ? (
-                  <div>
-                    <CheckBoxIcon color="primary" fontSize="large" />
-                    {` Correct: ${this.state.selection}`}
-                  </div>
-                ) : (
-                  <div>❌ Try Again</div>
-                )}
-                <Button
-                  role="button"
-                  variant="outlined"
-                  color="secondary"
-                  size="small"
-                  onClick={this.reset}
-                >
-                  Reset
-                  <RefreshIcon />
-                </Button>
-              </div>
-            )}
-          </Typography>
-        </CardContent>
-        <CardActions className={classes.actions} disableActionSpacing>
-          <Button
-            variant="outlined"
-            size="small"
-            color="primary"
-            className={classnames(classes.expand, {
-              [classes.expandOpen]: showHelp
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={showHelp}
-            aria-label="Show Hint"
-            title="Show Hint"
+      <HeadShake
+        spy={this.state.attempts}
+        when={this.state.attempts !== this.state.cachedState.attempts}
+      >
+        <Card className={`challenge-ui ${challengeClasses}`}>
+          <CardHeader
+            className="question-header"
+            avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
+            action={headerIcon}
+            title={
+              <h2>
+                {Number(number) > 0 ? number + ". " : ""}
+                {title}
+              </h2>
+            }
           >
-            {!explanation || explanation.length < 30
-              ? "[todo]"
-              : this.state.showExplanation
-                ? `Hide Hint`
-                : `Show Hint`}
-            <HelpIcon />
-          </Button>
-        </CardActions>
-        <Collapse in={showHelp} unmountOnExit>
-          <CardContent>{this.renderContent(explanation, { className: "explanation" })}</CardContent>
-        </Collapse>
-      </Card>
+            {title}
+          </CardHeader>
+          <CardContent>
+            <Typography className={`q-description ${classes.description}`} component="span">
+              {this.renderContent(this.props.html || description, { className: "description" })}
+            </Typography>
+            <Typography className="q-answers-list" component="span">
+              <blockquote className={classes.centered + " " + classes.prompt}>
+                <HelpOutlineIcon fontSize="large" />
+                Please select the most appropriate answer:
+              </blockquote>
+              <Fade top cascade fraction="0.5">
+                <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
+              </Fade>
+            </Typography>
+            <Typography component="q-results-bar">
+              {this.state.attempts > 0 && (
+                <div className={classes.statusBox}>
+                  <small>{`Attempts: ${this.state.attempts}`}</small>
+                  {this.isCorrect() ? (
+                    <div className={classes.centered}>
+                      <CheckBoxIcon color="primary" fontSize="large" />
+                      {` Correct: ${this.state.selection}`}
+                    </div>
+                  ) : (
+                    <div className={classes.centered}>
+                      <CancelIcon color="error" /> Try Again
+                    </div>
+                  )}
+                  <Button
+                    role="button"
+                    variant="outlined"
+                    color="secondary"
+                    size="small"
+                    onClick={this.reset}
+                  >
+                    Reset
+                    <RefreshIcon />
+                  </Button>
+                </div>
+              )}
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.actions} disableActionSpacing>
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: showHelp
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={showHelp}
+              aria-label="Show Hint"
+              title="Show Hint"
+            >
+              {!explanation || explanation.length < 30
+                ? "[todo]"
+                : this.state.showExplanation
+                  ? `Hide Hint`
+                  : `Show Hint`}
+              <HelpIcon />
+            </Button>
+          </CardActions>
+          <Collapse in={showHelp} unmountOnExit>
+            <CardContent>
+              {this.renderContent(explanation, { className: "explanation" })}
+            </CardContent>
+          </Collapse>
+        </Card>
+      </HeadShake>
     );
 
     // return (
