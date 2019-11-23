@@ -1,9 +1,12 @@
+/* eslint-disable no-param-reassign */
 import React from "react";
+import PropTypes from "prop-types";
+import injectSheet from "react-jss";
 import Challenge from "./";
-import { delay } from "functional-promises";
+// import { delay } from "functional-promises";
 import { isHtml, stripHtml, removeBySelector, extractTagContent } from "../../utils/shared.js";
 import Score from "./Score";
-
+import { retryApp } from "../../utils/helpers.js";
 // import ScrollAnimation from "react-animate-on-scroll";
 /*
 EXAMPLE CHALLENGE DEFINITION:
@@ -21,29 +24,27 @@ EXAMPLE CHALLENGE DEFINITION:
 </section>
 */
 
-const retryApp = (fn, { limit = 10, delayMsec = 100, rateAmplifyDelay = 1.0 }) => {
-  try {
-    if (rateAmplifyDelay < 0.5 || rateAmplifyDelay > 1000) rateAmplifyDelay = 1.0;
-
-    if (limit > 0 && fn() === false) {
-      console.trace("retryApp Triggered!!!", { limit });
-      delayMsec = delayMsec * rateAmplifyDelay;
-      return setTimeout(
-        () => retryApp(fn, { limit: limit - 1, delayMsec }),
-        delayMsec,
-        rateAmplifyDelay
-      );
+const styles = theme => ({
+  autoloader: {
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      width: "99vw",
+      margin: "0 -1.4rem",
+      "& .gatsby-highlight": {
+        margin: "0 -2.1rem"
+      }
     }
-  } catch (e) {
-    console.warn(`retryFail #${limit} remain: `, e);
   }
-};
+});
 
-export default class AutoLoader extends React.Component {
+class AutoLoader extends React.Component {
   state = {
     score: { totalAvailable: -1, current: 0 },
     loaded: false,
     challenges: []
+  };
+
+  static propTypes = {
+    classes: PropTypes.object.isRequired
   };
 
   getContent = (elem, selector) => {
@@ -137,7 +138,7 @@ export default class AutoLoader extends React.Component {
       // Check for in-line overides before going any further
       const overrides = this.checkContentForMetadata(config);
 
-      console.log(`Overrides:`, overrides);
+      // console.log(`Overrides:`, overrides);
       return Object.assign({}, config, overrides);
       // return <Challenge key={config.title} {...config} />
     });
@@ -165,8 +166,10 @@ export default class AutoLoader extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="challenges-test">
+      <div className={"challenges-autoloader " + classes.autoloader}>
         {this.state.challenges.map((config, i) => {
           return (
             <Challenge
@@ -187,3 +190,5 @@ export default class AutoLoader extends React.Component {
     );
   }
 }
+
+export default injectSheet(styles)(AutoLoader);

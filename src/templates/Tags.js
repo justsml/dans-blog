@@ -6,7 +6,7 @@ import Header from "../components/Header";
 // import "../styles/shared.css";
 import injectSheet from "react-jss";
 import { slugify } from "./../utils/helpers.js";
-import distanceInWords from "date-fns/distance_in_words";
+import formatDistance from "date-fns/formatDistance";
 
 // Components
 import Link from "gatsby-link";
@@ -115,8 +115,8 @@ const Tags = ({ pathContext, data, classes }) => {
             {nodes.map(node => {
               // console.log('tagging', post)
               const slugStr = node.slug.trim("/");
-              const createdAgo = distanceInWords(new Date(node.date), new Date());
-              const modifiedAgo = distanceInWords(new Date(node.modified || node.date), new Date());
+              const createdAgo = formatDistance(new Date(), new Date(node.date));
+              const modifiedAgo = formatDistance(new Date(), new Date(node.modified || node.date));
               // slugify
               return (
                 <li key={node.slug}>

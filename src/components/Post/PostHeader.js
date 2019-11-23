@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
-import distanceInWords from "date-fns/distance_in_words";
+import formatDistance from "date-fns/formatDistance";
 import TagList from "../TagList";
 import injectSheet from "react-jss";
 import Header from "../Header";
@@ -91,9 +91,9 @@ const getDateLabel = (date, label, className = "text-left") => {
   return (
     <h3 className={"post-details " + className}>
       <small>
-        {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
+        {label}&#160;{formatDistance(new Date(), aDate)}&#160;ago
       </small>
-      <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
+      <span className="human-date">{format(aDate, "MMM do, yyyy")}</span>
     </h3>
   );
 };

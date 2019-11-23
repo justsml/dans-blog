@@ -20,11 +20,12 @@ import HelpIcon from "@material-ui/icons/Help";
 import RefreshIcon from "@material-ui/icons/RefreshOutlined";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 import Typography from "@material-ui/core/Typography";
-import LightSpeed from "react-reveal/LightSpeed";
+import Pulse from "react-reveal/Pulse";
 import HeadShake from "react-reveal/HeadShake";
 import Fade from "react-reveal/Fade";
 import "./style.css";
-
+// import { trackCustomEvent } from "gatsby-plugin-google-analytics";
+import { trackCustomEvent } from "../../utils/helpers.js";
 import { isHtml } from "../../utils/shared.js";
 /*
 EXAMPLE CHALLENGE DEFINITION:
@@ -42,16 +43,60 @@ EXAMPLE CHALLENGE DEFINITION:
 
 */
 
-const styles = {
+const styles = theme => ({
   card: {},
   prompt: {
-    marginLeft: "14px"
+    marginLeft: "0",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "flex-start"
   },
   outerBox: {
-    width: "95%",
+    width: "100%",
     margin: "1em auto",
     border: "1px solid #999",
-    padding: "0em 1rem 1rem 1rem"
+    padding: "0em 1rem 1rem 1rem",
+    // "& svg"
+    "& .question-header": {
+      padding: "0.1em"
+    },
+    "&.challenge-correct li.challenge-option-incorrect": {
+      border: "1px solid transparent",
+      "& *": {
+        cursor: "default",
+        color: "rgba(0, 0, 0, 0.4)"
+      }
+    },
+    "&.challenge-correct li.challenge-option-correct": {
+      transition: "all 0.33s ease-in",
+      border: "1px solid transparent",
+      zoom: "120%",
+      color: "rgba(0, 0, 0, 0.9)"
+    },
+    "&.challenge-correct li": {
+      "& *": {
+        cursor: "default"
+      }
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      width: "100%",
+      "& .gatsby-highlight": {
+        margin: "0 -2.1rem"
+      }
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.L}px)`]: {
+      width: "100%",
+      "& .gatsby-highlight": {
+        margin: "0 -2.1rem"
+      }
+    }
+    // [`@media (max-width: ${theme.mediaQueryTresholds.L}px)`]: {
+    //   width: "95%"
+    // }
+  },
+  icon: {
+    margin: "0 1rem 0 0"
   },
   failed: {
     border: "1px dashed red"
@@ -68,24 +113,32 @@ const styles = {
     // cursor: 'pointer',
     listStyle: "none",
     margin: "0",
-    paddingLeft: "1em",
+    paddingLeft: "0rem",
     width: "100%",
     "& li": {
       display: "flex",
       alignItems: "center",
       alignContent: "center",
       cursor: "pointer",
-      margin: "1.2em 0.25em",
-      padding: "0.5em",
+      margin: "1.2rem 0em 0 -1.5rem",
+      padding: "0.5rem 0",
       border: "1px solid transparent",
       "> span": {
         width: "35px"
       },
-      "> *, label": {
+      "& *": {
         cursor: "pointer"
       },
       "&:hover": {
-        border: "1px solid #333"
+        border: "1px solid #999"
+      },
+      [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+        justifyContent: "space-between",
+        width: "100%"
+      },
+      [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+        margin: "1.2rem -2.6rem 0 -2.6rem",
+        padding: "0.5rem 0.5rem"
       }
     }
   },
@@ -102,11 +155,19 @@ const styles = {
   //     border: "1px solid #333"
   //   }
   // },
-  statusBox: {
-    width: "100%",
-    height: "2.125rem",
-    display: "flex",
+  actions: {
+    // width: "100%",
+    // height: "2.125rem",
     flexDirection: "row",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "space-between"
+  },
+  status: {
+    flexGrow: 2,
+    textAlign: "center",
+    display: "flex",
     alignItems: "center",
     alignContent: "center",
     justifyContent: "space-between"
@@ -114,18 +175,19 @@ const styles = {
   centered: {
     display: "flex",
     alignItems: "center",
-    alignContent: "center"
+    alignContent: "center",
+    justifyContent: "center"
   },
-  optionItemCompleted: {
-    display: "flex",
-    zoom: "150%",
-    margin: "1.2em 0.25em",
-    padding: "0.5em",
-    border: "1px solid transparent",
-    "> span": {
-      width: "35px"
-    }
-  },
+  // optionItemCompleted: {
+  //   display: "flex",
+  //   zoom: "150%",
+  //   margin: "1.2em 0.25em",
+  //   padding: "0.5em",
+  //   border: "1px solid transparent",
+  //   "> span": {
+  //     width: "35px"
+  //   }
+  // },
   expandOpen: {
     transform: "rotate(180deg)"
   },
@@ -134,7 +196,7 @@ const styles = {
     marginLeft: "auto",
     transition: "all 0.25s ease-in"
   }
-};
+});
 
 class Challenge extends React.Component {
   state = {
@@ -160,6 +222,19 @@ class Challenge extends React.Component {
   componentDidMount() {
     this.loadState();
   }
+
+  trackResult = () => {
+    trackCustomEvent({
+      // string - required - The object that was interacted with (e.g.video)
+      category: "Quiz",
+      // string - required - Type of interaction (e.g. 'play')
+      action: this.isCorrect() ? "Correct" : "Incorrect",
+      // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+      label: this.props.title + " #" + this.props.number,
+      // number - optional - Numeric value associated with the event. (e.g. A product ID)
+      value: this.state.attempts
+    });
+  };
 
   saveState = () => {
     const { attempts, selection } = this.state;
@@ -195,24 +270,33 @@ class Challenge extends React.Component {
     if (isCorrect) return null;
     this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
+    setTimeout(this.trackResult, 90);
   };
 
   getOption = option => {
     const { classes } = this.props;
+    const isCurrentAnswer = this.props.answer === option;
+    const isCurrentSelection = this.state.selection === option;
     const selectionIcon =
-      this.state.selection === option && option === this.props.answer ? (
-        <CheckBoxIcon fontSize="large" />
+      isCurrentSelection && isCurrentAnswer ? (
+        <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
       ) : (
-        <CheckBoxOutlineBlankIcon fontSize="large" />
+        <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
       );
-
     return (
       <li
         key={option}
         onClick={() => this.tryAnswer(option)}
-        className={this.isCorrect() ? "challenge-answer" : classes.optionItem}
+        className={
+          "challenge-option " +
+          (this.isCorrect() && isCurrentAnswer
+            ? "challenge-option-correct"
+            : "challenge-option-incorrect")
+        }
       >
-        {selectionIcon}
+        <Pulse duration={500} count={2} spy={this.isCorrect() && isCurrentAnswer}>
+          {selectionIcon}
+        </Pulse>
         <label>{option}</label>
       </li>
     );
@@ -252,7 +336,7 @@ class Challenge extends React.Component {
   };
 
   render() {
-    const { showExplanation } = this.state;
+    const { showExplanation, attempts } = this.state;
     const { title, number, description, options, explanation } = this.props;
     const { classes } = this.props;
 
@@ -261,7 +345,7 @@ class Challenge extends React.Component {
       " challenge-block " +
       (this.isCorrect()
         ? `challenge-correct ${classes.correct}`
-        : `challenge-not-correct ${this.state.attempts}` >= 1
+        : `challenge-incorrect ${attempts}` >= 1
           ? classes.failed
           : "");
     // this.isCorrect()
@@ -269,8 +353,8 @@ class Challenge extends React.Component {
     const showHelp = showExplanation;
 
     const headerIcon =
-      this.state.attempts === 0 ? (
-        <HelpIcon color="default" fontSize="large" title={`Quiz/Question ${title}`} />
+      attempts === 0 ? (
+        <HelpIcon color="action" fontSize="large" title={`Question: ${title}`} />
       ) : this.isCorrect() ? (
         <CheckCircle color="primary" fontSize="large" />
       ) : (
@@ -279,8 +363,8 @@ class Challenge extends React.Component {
 
     return (
       <HeadShake
-        spy={this.state.attempts}
-        when={this.state.attempts !== this.state.cachedState.attempts}
+        spy={attempts}
+        when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
       >
         <Card className={`challenge-ui ${challengeClasses}`}>
           <CardHeader
@@ -300,43 +384,35 @@ class Challenge extends React.Component {
               {this.renderContent(this.props.html || description, { className: "description" })}
             </Typography>
             <Typography className="q-answers-list" component="span">
-              <blockquote className={classes.centered + " " + classes.prompt}>
-                <HelpOutlineIcon fontSize="large" />
+              <div className={classes.prompt}>
+                <HelpOutlineIcon fontSize="large" className={classes.icon} />
                 Please select the most appropriate answer:
-              </blockquote>
-              <Fade top cascade fraction="0.5">
+              </div>
+              <Fade top cascade duration={500} fraction={0.25}>
                 <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
               </Fade>
             </Typography>
-            <Typography component="q-results-bar">
-              {this.state.attempts > 0 && (
-                <div className={classes.statusBox}>
-                  <small>{`Attempts: ${this.state.attempts}`}</small>
-                  {this.isCorrect() ? (
-                    <div className={classes.centered}>
-                      <CheckBoxIcon color="primary" fontSize="large" />
-                      {` Correct: ${this.state.selection}`}
-                    </div>
-                  ) : (
-                    <div className={classes.centered}>
-                      <CancelIcon color="error" /> Try Again
-                    </div>
-                  )}
-                  <Button
-                    role="button"
-                    variant="outlined"
-                    color="secondary"
-                    size="small"
-                    onClick={this.reset}
-                  >
-                    Reset
-                    <RefreshIcon />
-                  </Button>
-                </div>
-              )}
-            </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
+            {attempts > 0 && (
+              <Button
+                role="button"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={this.reset}
+                className={"challenge-reset-button"}
+              >
+                Reset
+                <RefreshIcon />
+              </Button>
+            )}
+            {!this.isCorrect() &&
+              attempts > 0 && (
+                <div className={classes.status}>
+                  <CancelIcon color="secondary" fontSize="large" /> Try Again
+                </div>
+              )}
             <Button
               variant="outlined"
               size="small"

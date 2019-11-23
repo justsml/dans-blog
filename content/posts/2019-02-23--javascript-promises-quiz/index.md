@@ -1,8 +1,8 @@
 ---
 title: "Promises: 9 Questions to Test Your Knowledge"
 subTitle: JavaScript
-date: 2019-01-18
-modified: 2019-11-15
+date: 2019-11-18
+modified: 2019-11-23
 tags: [promises, programming, async, javascript, guides]
 category: promises
 cover: olav-ahrens-rotne-jvBXiynINGE-unsplash-quiz-difficult.jpg
