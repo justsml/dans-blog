@@ -268,11 +268,14 @@ class Challenge extends React.Component {
 
     const showHelp = showExplanation;
 
-    const headerIcon = this.isCorrect() ? (
-      <CheckCircle color="primary" fontSize="large" />
-    ) : (
-      <CancelIcon color="error" fontSize="large" />
-    );
+    const headerIcon =
+      this.state.attempts === 0 ? (
+        <HelpIcon color="default" fontSize="large" title={`Quiz/Question ${title}`} />
+      ) : this.isCorrect() ? (
+        <CheckCircle color="primary" fontSize="large" />
+      ) : (
+        <CancelIcon color="error" fontSize="large" />
+      );
 
     return (
       <HeadShake
@@ -282,8 +285,7 @@ class Challenge extends React.Component {
         <Card className={`challenge-ui ${challengeClasses}`}>
           <CardHeader
             className="question-header"
-            avatar={<HelpIcon title={`Quiz/Question ${title}`} />}
-            action={headerIcon}
+            avatar={headerIcon}
             title={
               <h2>
                 {Number(number) > 0 ? number + ". " : ""}
