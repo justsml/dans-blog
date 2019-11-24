@@ -129,24 +129,28 @@ class Score extends Component {
   }
 
   updateScores = () => {
-    const challenges = window.document.querySelectorAll(`.challenge-block`);
-    const correctChallenges = window.document.querySelectorAll(
-      `.challenge-block.challenge-correct`
-    );
-    console.log(
-      `challenges.length`,
-      challenges.length,
-      `correctChallenges`,
-      correctChallenges.length
-    );
-    this.setState({ score: correctChallenges.length, totalAvailable: challenges.length });
+    if (typeof window !== `undefined`) {
+      const challenges = window.document.querySelectorAll(`.challenge-block`);
+      const correctChallenges = window.document.querySelectorAll(
+        `.challenge-block.challenge-correct`
+      );
+      console.log(
+        `challenges.length`,
+        challenges.length,
+        `correctChallenges`,
+        correctChallenges.length
+      );
+      this.setState({ score: correctChallenges.length, totalAvailable: challenges.length });
+    }
   };
 
   resetAll = () => {
-    const challengeResetButtons = window.document.querySelectorAll(".challenge-reset-button");
-    challengeResetButtons.forEach(b => {
-      if (b) b.click();
-    });
+    if (typeof window !== `undefined`) {
+      const challengeResetButtons = window.document.querySelectorAll(".challenge-reset-button");
+      challengeResetButtons.forEach(b => {
+        if (b) b.click();
+      });
+    }
   };
 
   render() {
