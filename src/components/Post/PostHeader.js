@@ -99,17 +99,17 @@ const getDateLabel = (date, label, className = "text-left") => {
 };
 
 const PostHeader = props => {
-  const { classes, title, subTitle, date, modified, tags } = props;
+  const { classes, date, modified, tags } = props;
   // console.log("title", title, "post.props", props);
 
   return (
     <Header {...props}>
-      <div className={classes.tags}>
-        <TagList tags={tags} />
-      </div>
       <div className={classes.meta}>
         {getDateLabel(date, "published")}
         {getDateLabel(modified, "updated", "text-right")}
+      </div>
+      <div className={classes.tags}>
+        <TagList tags={tags} />
       </div>
     </Header>
   );

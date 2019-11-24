@@ -129,8 +129,10 @@ class Score extends Component {
   }
 
   updateScores = () => {
-    const challenges = document.querySelectorAll(`.challenge-block`);
-    const correctChallenges = document.querySelectorAll(`.challenge-block.challenge-correct`);
+    const challenges = window.document.querySelectorAll(`.challenge-block`);
+    const correctChallenges = window.document.querySelectorAll(
+      `.challenge-block.challenge-correct`
+    );
     console.log(
       `challenges.length`,
       challenges.length,
@@ -141,14 +143,14 @@ class Score extends Component {
   };
 
   resetAll = () => {
-    const challengeResetButtons = document.querySelectorAll(".challenge-reset-button");
+    const challengeResetButtons = window.document.querySelectorAll(".challenge-reset-button");
     challengeResetButtons.forEach(b => {
       if (b) b.click();
     });
   };
 
   render() {
-    const { classes, reset } = this.props;
+    const { classes } = this.props;
     const { score = 0, totalAvailable = -1 } = this.state;
     const hasPerfectScore = score === totalAvailable;
     if (totalAvailable <= 0) return <div />;

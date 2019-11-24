@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import marked from "marked";
-import { withStyles } from "@material-ui/core/styles";
 import classnames from "classnames";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";

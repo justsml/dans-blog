@@ -118,7 +118,7 @@ const styles = theme => ({
 });
 
 const InfoHeader = props => {
-  const { classes, avatarOnClick, expandOnClick } = props;
+  const { classes, expandOnClick } = props;
 
   return (
     <header className={classes.header}>
