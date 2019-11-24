@@ -27,8 +27,12 @@ const getScoreIcon = (score, totalAvailable) => {
 };
 
 const styles = theme => {
-  console.log("theme.mediaQueryTresholds", theme.mediaQueryTresholds);
+  // console.log("theme.mediaQueryTresholds", theme.mediaQueryTresholds);
   return {
+    social: {
+      display: "inline-block",
+      margin: "0.2rem 1rem"
+    },
     container: {
       display: "flex",
       alignItems: "center",
@@ -45,12 +49,12 @@ const styles = theme => {
       fontSize: `1.25rem`,
       lineHeight: theme.footer.fonts.footnote.lineHeight,
       "& a": {
-        color: theme.footer.colors.link,
+        color: "white", // theme.footer.colors.link,
         fontWeight: "normal",
         textShadow: "none"
       },
       "& a:hover": {
-        color: theme.footer.colors.linkHover
+        color: "white" // theme.footer.colors.linkHover
       }
     },
     flexBar: {
@@ -90,6 +94,13 @@ const styles = theme => {
         cursor: "pointer",
         fontSize: "1.5rem"
         // flex: "0 1 0"
+      }
+    },
+    successLbl: {
+      fontSize: "1.125rem",
+      color: "white",
+      "& a, a:hover, a:link": {
+        color: "white !important"
       }
     }
   };
@@ -146,19 +157,22 @@ class Score extends Component {
       <AppBar position="fixed" color="primary" className={classes.container}>
         <Tada when={hasPerfectScore}>
           <div className={classes.flexBar}>
-            {getScoreIcon(score, totalAvailable)}
+            {hasPerfectScore ? (
+              <TwitterIcon size={19} logoFillColor={"white"} className={classes.social} />
+            ) : (
+              getScoreIcon(score, totalAvailable)
+            )}
             <Bounce spy={score} bottom>
               {hasPerfectScore ? (
                 <a
                   href={shareOnTwitter(
-                    `I Completed the #JavaScriptChallenge on DanLevy.net! \n#jsquiz #promises\n\nTest your skills here: ${
-                      self.location.href
-                    }`,
+                    `I completed the latest #JavaScriptChallenge on DanLevy.net! \n#JSquiz #promises\n\n\nTake the challenge here: `,
                     self.location.href
                   )}
                   target="_blank"
+                  className={classes.successLbl}
                 >
-                  <TwitterIcon />
+                  <label style={{ whiteSpace: "nowrap" }}>Click to Tweet the Great News!</label>
                 </a>
               ) : (
                 <h4>

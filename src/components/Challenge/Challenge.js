@@ -57,7 +57,9 @@ const styles = theme => ({
     margin: "1em auto",
     border: "1px solid #999",
     padding: "0em 1rem 1rem 1rem",
-    // "& svg"
+    "& .challenge-option svg": {
+      marginBottom: "-0.4rem"
+    },
     "& .question-header": {
       padding: "0.1em"
     },
@@ -69,17 +71,19 @@ const styles = theme => ({
       }
     },
     "&.challenge-correct li.challenge-option-correct": {
-      transition: "all 0.33s ease-in",
+      transition: "zoom 0.33s ease-in",
       border: "1px solid transparent",
-      zoom: "120%",
+      zoom: "100%",
       color: "rgba(0, 0, 0, 0.9)"
     },
     "&.challenge-correct li": {
+      transition: "zoom 0.33s ease-in",
       "& *": {
         cursor: "default"
       }
     },
     [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      padding: "0em 0rem 0rem 1rem",
       width: "100%",
       "& .gatsby-highlight": {
         margin: "0 -2.1rem"
@@ -170,7 +174,7 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "space-between"
+    justifyContent: "center"
   },
   centered: {
     display: "flex",
@@ -386,7 +390,7 @@ class Challenge extends React.Component {
             <Typography className="q-answers-list" component="span">
               <div className={classes.prompt}>
                 <HelpOutlineIcon fontSize="large" className={classes.icon} />
-                Please select the most appropriate answer:
+                Please select the closest answer:
               </div>
               <Fade top cascade duration={500} fraction={0.25}>
                 <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
