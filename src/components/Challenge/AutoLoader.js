@@ -98,10 +98,23 @@ class AutoLoader extends React.Component {
     const challenges = this.getChallenges();
     const getTitles = cs => cs.map(c => c.title);
 
+    this.resetLoadingSpinner();
+
     if (getTitles(challenges).join(",") === getTitles(nextState.challenges).join(",")) return false;
 
     return true;
   }
+
+  resetLoadingSpinner = () => {
+    if (this.__mounted && this.state.challenges && this.state.challenges.length > 0) {
+      const quizReadyUi = document.querySelector(".quiz-ready");
+      const quizLoadingUi = document.querySelector(".quiz-loading");
+      if (quizReadyUi && quizLoadingUi) {
+        quizReadyUi.style.display = "block";
+        quizLoadingUi.style.display = "none";
+      }
+    }
+  };
 
   loadChallenges = challengeConfigs => {
     this.setState(
@@ -111,6 +124,7 @@ class AutoLoader extends React.Component {
       },
       () => {
         this.forceUpdate();
+        this.resetLoadingSpinner();
       }
     );
   };
@@ -182,11 +196,13 @@ class AutoLoader extends React.Component {
             />
           );
         })}
-        <Score
-          reset={this.resetScores}
-          totalAvailable={this.state.score.totalAvailable}
-          score={this.state.score.current}
-        />
+        {this.state.challenges.length > 0 && (
+          <Score
+            reset={this.resetScores}
+            totalAvailable={this.state.score.totalAvailable}
+            score={this.state.score.current}
+          />
+        )}
       </div>
     );
   }

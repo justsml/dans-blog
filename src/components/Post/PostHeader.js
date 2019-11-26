@@ -6,6 +6,10 @@ import TagList from "../TagList";
 import injectSheet from "react-jss";
 import Header from "../Header";
 
+function fixDateString(str) {
+  return typeof str === "string" && str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
+}
+
 const styles = theme => ({
   header: {
     margin: "0 0 3em"
@@ -87,7 +91,7 @@ const styles = theme => ({
 const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
 
-  const aDate = new Date(date);
+  const aDate = new Date(fixDateString(date));
   return (
     <h3 className={"post-details " + className}>
       <small>
