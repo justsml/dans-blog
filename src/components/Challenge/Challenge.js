@@ -56,6 +56,9 @@ const styles = theme => ({
     margin: "1em auto",
     border: "1px solid #999",
     padding: "0em 1rem 1rem 1rem",
+    "& code[class*='language-'], pre[class*='language-']": {
+      fontSize: "0.9rem"
+    },
     "& .challenge-option svg": {
       marginBottom: "-0.4rem"
     },
@@ -84,12 +87,19 @@ const styles = theme => ({
     [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
       padding: "0em 0rem 0rem 1rem",
       width: "100%",
+      "& code[class*='language-'], pre[class*='language-']": {
+        fontSize: "0.8rem",
+        wordSpacing: "-0.125rem"
+      },
       "& .gatsby-highlight": {
         margin: "0 -2.1rem"
       }
     },
     [`@media (max-width: ${theme.mediaQueryTresholds.L}px)`]: {
       width: "100%",
+      "& code[class*='language-'], pre[class*='language-']": {
+        fontSize: "0.9rem"
+      },
       "& .gatsby-highlight": {
         margin: "0 -2.1rem"
       }
@@ -115,7 +125,7 @@ const styles = theme => ({
   optionList: {
     // cursor: 'pointer',
     listStyle: "none",
-    margin: "0",
+    margin: "0 0 0 0rem",
     paddingLeft: "0rem",
     width: "100%",
     "& li": {
@@ -136,12 +146,15 @@ const styles = theme => ({
         border: "1px solid #999"
       },
       [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
-        justifyContent: "space-between",
-        width: "100%"
+        justifyContent: "left",
+        margin: "1.2rem -2.6rem 0 0",
+        width: "100%",
+        overflowX: "auto"
       },
       [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-        margin: "1.2rem -2.6rem 0 -2.6rem",
-        padding: "0.5rem 0.5rem"
+        margin: "1.2rem -2.6rem 0 0",
+        padding: "0.5rem 0",
+        overflowX: "auto"
       }
     }
   },

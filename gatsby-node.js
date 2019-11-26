@@ -6,6 +6,8 @@ const Promise = require("bluebird");
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
+const { fixDateString } = require(`./src/utils/helpers.js`);
+
 // query TagsQuery {
 //   allMarkdownRemark(
 //     limit: 2000
@@ -31,10 +33,6 @@ function slugify(text) {
     .replace(/-+/g, "-") // Replace multiple - with single -
     .replace(/^-+/g, "") // Trim - from start of text
     .replace(/-+$/g, ""); // Trim - from end of text
-}
-
-function fixDateString(str) {
-  return str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
 }
 
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {

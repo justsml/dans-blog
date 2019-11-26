@@ -182,11 +182,13 @@ class AutoLoader extends React.Component {
             />
           );
         })}
-        <Score
-          reset={this.resetScores}
-          totalAvailable={this.state.score.totalAvailable}
-          score={this.state.score.current}
-        />
+        {this.state.challenges.length > 0 && (
+          <Score
+            reset={this.resetScores}
+            totalAvailable={this.state.score.totalAvailable}
+            score={this.state.score.current}
+          />
+        )}
       </div>
     );
   }

@@ -19,6 +19,10 @@ export function timeoutThrottlerHandler(timeouts, name, delay, handler) {
   }
 }
 
+export function fixDateString(str) {
+  return typeof str === "string" && str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
+}
+
 export function slugify(text) {
   return text
     .toString()

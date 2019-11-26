@@ -5,6 +5,7 @@ import formatDistance from "date-fns/formatDistance";
 import TagList from "../TagList";
 import injectSheet from "react-jss";
 import Header from "../Header";
+import { fixDateString } from "../../utils/helpers.js";
 
 const styles = theme => ({
   header: {
@@ -87,7 +88,7 @@ const styles = theme => ({
 const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
 
-  const aDate = new Date(date);
+  const aDate = new Date(fixDateString(date));
   return (
     <h3 className={"post-details " + className}>
       <small>
