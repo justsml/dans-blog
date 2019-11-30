@@ -106,15 +106,15 @@ class AutoLoader extends React.Component {
   }
 
   resetLoadingSpinner = () => {
-    if (this.__mounted && this.state.challenges && this.state.challenges.length > 0) {
-      const quizReadyUi = document.querySelector(".quiz-ready");
-      const quizLoadingUi = document.querySelector(".quiz-loading");
-      if (quizReadyUi && quizLoadingUi) {
-        quizReadyUi.style.display = "block";
-        quizLoadingUi.style.display = "none";
-      }
+    const challengeUiCards = document.querySelectorAll(".challenge-ui");
+    if (!challengeUiCards) return;
+    const quizReadyUi = document.querySelector(".quiz-ready");
+    const quizLoadingUi = document.querySelector(".quiz-loading");
+    if (quizReadyUi && quizLoadingUi) {
+      quizReadyUi.style.display = "block";
+      quizLoadingUi.style.display = "none";
     }
-  };
+  }
 
   loadChallenges = challengeConfigs => {
     this.setState(

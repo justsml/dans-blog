@@ -1,14 +1,14 @@
 ---
-title: "Promises: 9 Questions to Test Your Knowledge"
-subTitle: JavaScript
+title: "JavaScript Promises: 9 Questions"
+subTitle: Learn about promises & take the quiz!
 date: 2019-11-26
-modified: 2019-11-27
+modified: 2019-11-30
 tags: [promises, programming, async, javascript, guides]
 category: promises
 cover: olav-ahrens-rotne-jvBXiynINGE-resized.png
 ---
 
-# Test your Knowledge of JavaScript Promises
+# Do you know your JavaScript & Promises???
 
 > * **Prove your JavaScript skillz!** 🚀
 > * No login or signup required. ✨
@@ -18,6 +18,20 @@ cover: olav-ahrens-rotne-jvBXiynINGE-resized.png
 <!-- QUIZ HTML HERE WILL BE AUTO-EXTRACTED BY
 `AutoLoader` COMPONENT HELPER CLASS  -->
 
+<!-- #### This is not you old school quiz!  -->
+
+## Goal
+
+> My goal is to try a new 'quiz tool' I built for my blog, and get feedback on how well you learned from the excercise. 
+
+### If you get stuck
+
+1. **Read the Hints** (Green button, lower left corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
+2. Try the code in your browser's Console (try shortcut `F12` or search it) or use [repl.it](https://repl.it)*.
+3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
+
+
+<!-- _I hopy you learn some fun, quirky and occasionally maddening things about Promises._ -->
 
 <div style="text-align: center; width: 75%; margin: 0 auto 10rem auto; white-space: nowrap; font-size: 1.4em;" class="quiz-loading">
 
