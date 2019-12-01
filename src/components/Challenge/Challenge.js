@@ -2,7 +2,30 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import marked from "marked";
-
+import classnames from "classnames";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+// import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions";
+import Collapse from "@material-ui/core/Collapse";
+// import Avatar from "@material-ui/core/Avatar";
+import CancelIcon from "@material-ui/icons/Cancel";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import HelpIcon from "@material-ui/icons/Help";
+import RefreshIcon from "@material-ui/icons/RefreshOutlined";
+import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import Typography from "@material-ui/core/Typography";
+import Pulse from "react-reveal/Pulse";
+import HeadShake from "react-reveal/HeadShake";
+import Fade from "react-reveal/Fade";
+import "./style.css";
+// import { trackCustomEvent } from "gatsby-plugin-google-analytics";
+import { trackCustomEvent } from "../../utils/helpers.js";
+import { isHtml } from "../../utils/shared.js";
 /*
 EXAMPLE CHALLENGE DEFINITION:
 
@@ -19,12 +42,74 @@ EXAMPLE CHALLENGE DEFINITION:
 
 */
 
-const styles = {
+const styles = theme => ({
+  card: {},
+  prompt: {
+    marginLeft: "0",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "flex-start"
+  },
   outerBox: {
-    width: "95%",
+    width: "100%",
     margin: "1em auto",
     border: "1px solid #999",
-    padding: "0em 1em 1em 1em"
+    padding: "0em 1rem 1rem 1rem",
+    "& code[class*='language-'], pre[class*='language-']": {
+      fontSize: "0.9rem"
+    },
+    "& .challenge-option svg": {
+      marginBottom: "-0.4rem"
+    },
+    "& .question-header": {
+      padding: "0.1em"
+    },
+    "&.challenge-correct li.challenge-option-incorrect": {
+      border: "1px solid transparent",
+      "& *": {
+        cursor: "default",
+        color: "rgba(0, 0, 0, 0.4)"
+      }
+    },
+    "&.challenge-correct li.challenge-option-correct": {
+      transition: "zoom 0.33s ease-in",
+      border: "1px solid transparent",
+      zoom: "100%",
+      color: "rgba(0, 0, 0, 0.9)"
+    },
+    "&.challenge-correct li": {
+      transition: "zoom 0.33s ease-in",
+      "& *": {
+        cursor: "default"
+      }
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      padding: "0em 0rem 0rem 1rem",
+      width: "100%",
+      "& code[class*='language-'], pre[class*='language-']": {
+        fontSize: "0.8rem",
+        wordSpacing: "-0.125rem"
+      },
+      "& .gatsby-highlight": {
+        margin: "0 -2.1rem"
+      }
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.L}px)`]: {
+      width: "100%",
+      "& code[class*='language-'], pre[class*='language-']": {
+        fontSize: "0.9rem"
+      },
+      "& .gatsby-highlight": {
+        margin: "0 -2.1rem"
+      }
+    }
+    // [`@media (max-width: ${theme.mediaQueryTresholds.L}px)`]: {
+    //   width: "95%"
+    // }
+  },
+  icon: {
+    margin: "0 1rem 0 0"
   },
   failed: {
     border: "1px dashed red"
@@ -32,47 +117,121 @@ const styles = {
   correct: {
     border: "1px solid green"
   },
-  description: {},
+  description: {
+    h1: {
+      display: "none"
+    }
+  },
   optionList: {
     // cursor: 'pointer',
     listStyle: "none",
-    margin: "0",
-    paddingLeft: "1em"
-  },
-  optionItem: {
-    cursor: "pointer",
-    margin: "1.2em 0.25em",
-    padding: "0.5em",
-    border: "1px solid transparent",
-    "> *": {
-      cursor: "pointer"
-    },
-    "&:hover": {
-      border: "1px solid #333"
+    margin: "0 0 0 0rem",
+    paddingLeft: "0rem",
+    width: "100%",
+    "& li": {
+      display: "flex",
+      alignItems: "center",
+      alignContent: "center",
+      cursor: "pointer",
+      margin: "1.2rem 0em 0 -1.5rem",
+      padding: "0.5rem 0",
+      border: "1px solid transparent",
+      "> span": {
+        width: "35px"
+      },
+      "& *": {
+        cursor: "pointer"
+      },
+      "&:hover": {
+        border: "1px solid #999"
+      },
+      [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+        justifyContent: "left",
+        margin: "1.2rem -2.6rem 0 0",
+        width: "100%",
+        overflowX: "auto"
+      },
+      [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
+        margin: "1.2rem -2.6rem 0 0",
+        padding: "0.5rem 0",
+        overflowX: "auto"
+      }
     }
   },
-  optionItemCompleted: {
-    margin: "1.2em 0.25em",
-    padding: "0.5em",
-    border: "1px solid transparent"
+  // optionItem: {
+  //   transition: "all 0.33s ease-in",
+  //   cursor: "pointer",
+  //   margin: "1.2em 0.25em",
+  //   padding: "0.5em",
+  //   border: "1px solid transparent",
+  //   "> *": {
+  //     cursor: "pointer"
+  //   },
+  //   "&:hover": {
+  //     border: "1px solid #333"
+  //   }
+  // },
+  actions: {
+    // width: "100%",
+    // height: "2.125rem",
+    flexDirection: "row",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "space-between"
+  },
+  status: {
+    flexGrow: 2,
+    textAlign: "center",
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center"
+  },
+  centered: {
+    display: "flex",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center"
+  },
+  // optionItemCompleted: {
+  //   display: "flex",
+  //   zoom: "150%",
+  //   margin: "1.2em 0.25em",
+  //   padding: "0.5em",
+  //   border: "1px solid transparent",
+  //   "> span": {
+  //     width: "35px"
+  //   }
+  // },
+  expandOpen: {
+    transform: "rotate(180deg)"
+  },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: "all 0.25s ease-in"
   }
-};
-
-const isHtml = text => text.split(/<[^>]+>/).length > 1;
-const isMarkdown = text => text.split(/^#/).length >= 1;
+});
 
 class Challenge extends React.Component {
   state = {
     selection: "",
-    attempts: 0
+    attempts: 0,
+    showExplanation: false,
+    cachedState: {}
   };
 
   static propTypes = {
+    onAnswer: PropTypes.func,
+    reset: PropTypes.func,
+    number: PropTypes.number,
     title: PropTypes.string.isRequired,
     answer: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
+    html: PropTypes.string,
     classes: PropTypes.object.isRequired
   };
 
@@ -80,23 +239,36 @@ class Challenge extends React.Component {
     this.loadState();
   }
 
+  trackResult = () => {
+    trackCustomEvent({
+      // string - required - The object that was interacted with (e.g.video)
+      category: "Quiz",
+      // string - required - Type of interaction (e.g. 'play')
+      action: this.isCorrect() ? "Correct" : "Incorrect",
+      // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+      label: this.props.title + " #" + this.props.number,
+      // number - optional - Numeric value associated with the event. (e.g. A product ID)
+      value: this.state.attempts
+    });
+  };
+
   saveState = () => {
     const { attempts, selection } = this.state;
     const data = JSON.stringify({ attempts, selection });
-    console.log("saving cachedState", data);
-    localStorage.setItem("Challenge_" + this.props.title, data);
+    // console.log("saving cachedState", data);
+    localStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
   };
 
   loadState = () => {
-    let cachedState = localStorage.getItem("Challenge_" + this.props.title);
-    console.log("loading cachedState", this.props.title, cachedState);
+    let cachedState = localStorage.getItem("Challenge_" + this.props.title + this.props.number);
+    // console.log("loading cachedState", this.props.title, cachedState);
     cachedState = cachedState
       ? JSON.parse(cachedState)
       : {
           attempts: 0,
           selection: ""
         };
-    this.setState(cachedState);
+    this.setState({ ...this.state, cachedState, ...cachedState });
   };
 
   isCorrect = answer => {
@@ -105,72 +277,195 @@ class Challenge extends React.Component {
   };
 
   tryAnswer = option => {
-    if (this.isCorrect()) return null;
-    this.setState((state, props) => ({ selection: option, attempts: ++state.attempts }));
+    const isCorrect = this.isCorrect();
+    if (typeof this.props.onAnswer !== "function") {
+      console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
+    } else {
+      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
+    }
+    if (isCorrect) return null;
+    this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
+    setTimeout(this.trackResult, 90);
   };
 
   getOption = option => {
     const { classes } = this.props;
+    const isCurrentAnswer = this.props.answer === option;
+    const isCurrentSelection = this.state.selection === option;
     const selectionIcon =
-      this.state.selection === option && option === this.props.answer ? "✅ " : "⬜ ";
-
+      isCurrentSelection && isCurrentAnswer ? (
+        <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
+      ) : (
+        <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
+      );
     return (
       <li
         key={option}
         onClick={() => this.tryAnswer(option)}
-        className={this.isCorrect() ? classes.optionItemCompleted : classes.optionItem}
+        className={
+          "challenge-option " +
+          (this.isCorrect() && isCurrentAnswer
+            ? "challenge-option-correct"
+            : "challenge-option-incorrect")
+        }
       >
-        <span>{selectionIcon}</span>
+        <Pulse duration={500} count={2} spy={this.isCorrect() && isCurrentAnswer}>
+          {selectionIcon}
+        </Pulse>
         <label>{option}</label>
       </li>
     );
   };
 
   reset = () => {
-    this.setState({ attempts: 0, selection: "" }, () => setTimeout(this.saveState, 1));
+    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false }, () =>
+      setTimeout(this.saveState, 1)
+    );
+    if (this.props.reset) this.props.reset();
+  };
+
+  handleExpandClick = () => {
+    this.setState({ ...this.state, showExplanation: !this.state.showExplanation });
   };
 
   getMarkdownHtml = markdown => {
-    return {
-      __html: marked(markdown, {
-        gfm: true,
-        tables: true,
-        breaks: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false
-      })
-    };
+    return marked(markdown, {
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
+  };
+
+  renderHtml = (content, props = {}) => (
+    <div dangerouslySetInnerHTML={{ __html: content }} {...props} />
+  );
+
+  renderMarkdown = (content, props = {}) => this.renderHtml(this.getMarkdownHtml(content), props);
+
+  renderContent = (content, props = {}) => {
+    // might need to default assume markdown
+    return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
   };
 
   render() {
+    const { showExplanation, attempts } = this.state;
+    const { title, number, description, options, explanation } = this.props;
     const { classes } = this.props;
+
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
-      (this.isCorrect() ? classes.correct : this.state.attempts >= 1 ? classes.failed : "");
+      (this.isCorrect()
+        ? `challenge-correct ${classes.correct}`
+        : `challenge-incorrect ${attempts}` >= 1
+          ? classes.failed
+          : "");
     // this.isCorrect()
 
+    const showHelp = showExplanation;
+
+    const headerIcon =
+      attempts === 0 ? (
+        <HelpIcon color="action" fontSize="large" title={`Question: ${title}`} />
+      ) : this.isCorrect() ? (
+        <CheckCircle color="primary" fontSize="large" />
+      ) : (
+        <CancelIcon color="error" fontSize="large" />
+      );
+
     return (
-      <section className={challengeClasses}>
-        <h1>{this.props.title}</h1>
-        <div
-          className={classes.description}
-          dangerouslySetInnerHTML={this.getMarkdownHtml(this.props.description)}
-        />
-        <blockquote>Please select from the following options:</blockquote>
-        <ul className={classes.optionList}>{this.props.options.map(this.getOption)}</ul>
-        {this.state.attempts > 0 && (
-          <div className={"status"}>
-            {`Attempts: ${this.state.attempts}`}
-            {this.isCorrect() ? ` ✅ Correct: ${this.state.selection}` : " ❌ "}
-            <button onClick={this.reset}>Reset</button>
-          </div>
-        )}
-        {this.isCorrect() && <div className={"explanation"}>{this.props.explanation}</div>}
-      </section>
+      <HeadShake
+        spy={attempts}
+        when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
+      >
+        <Card className={`challenge-ui ${challengeClasses}`}>
+          <CardHeader
+            className="question-header"
+            avatar={headerIcon}
+            title={
+              <h2>
+                {Number(number) > 0 ? number + ". " : ""}
+                {title}
+              </h2>
+            }
+          >
+            {title}
+          </CardHeader>
+          <CardContent>
+            <Typography className={`q-description ${classes.description}`} component="span">
+              {this.renderContent(this.props.html || description, { className: "description" })}
+            </Typography>
+            <Typography className="q-answers-list" component="span">
+              <div className={classes.prompt}>
+                <HelpOutlineIcon fontSize="large" className={classes.icon} />
+                Please select the closest answer:
+              </div>
+              <Fade top cascade duration={500} fraction={0.25}>
+                <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
+              </Fade>
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.actions} disableActionSpacing>
+            {attempts > 0 && (
+              <Button
+                role="button"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={this.reset}
+                className={"challenge-reset-button"}
+              >
+                Reset
+                <RefreshIcon />
+              </Button>
+            )}
+            {!this.isCorrect() &&
+              attempts > 0 && (
+                <div className={classes.status}>
+                  <CancelIcon color="secondary" fontSize="large" /> Try Again
+                </div>
+              )}
+            <Button
+              variant="outlined"
+              size="small"
+              color="primary"
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: showHelp
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={showHelp}
+              aria-label="Show Hint"
+              title="Show Hint"
+            >
+              {!explanation || explanation.length < 30
+                ? "[todo]"
+                : this.state.showExplanation
+                  ? `Hide Hint`
+                  : `Show Hint`}
+              <HelpIcon />
+            </Button>
+          </CardActions>
+          <Collapse in={showHelp} unmountOnExit>
+            <CardContent>
+              {this.renderContent(explanation, { className: "explanation" })}
+            </CardContent>
+          </Collapse>
+        </Card>
+      </HeadShake>
     );
+
+    // return (
+    //   <section className={challengeClasses}>
+    //     <h1>{this.props.title}</h1>
+
+    //     {showHelp &&
+    //       }
+    //   </section>
+    // );
   }
 }
 

@@ -33,12 +33,18 @@ function slugify(text) {
     .replace(/-+$/g, ""); // Trim - from end of text
 }
 
+function fixDateString(str) {
+  return str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
+}
+
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
     if (!node.date && node.frontmatter && node.frontmatter.date) {
       // console.log("Invalid date: ", node.date, "frontmatter.date=", node.frontmatter.date);
-      node.date = node.frontmatter.date ? new Date(node.frontmatter.date) : new Date();
+      node.date = node.frontmatter.date
+        ? new Date(fixDateString(node.frontmatter.date))
+        : new Date();
     }
 
     let { categories, category } = node.frontmatter;

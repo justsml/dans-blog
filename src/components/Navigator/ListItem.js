@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import LazyLoad from "react-lazyload";
 import format from "date-fns/format";
-import distanceInWords from "date-fns/distance_in_words";
+import formatDistance from "date-fns/formatDistance";
 
 const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
@@ -14,9 +14,9 @@ const getDateLabel = (date, label, className = "text-left") => {
   return (
     <h3 className={"list-item " + lblClass + " " + className}>
       <small className={className}>
-        {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
+        {label}&#160;{formatDistance(new Date(), aDate)}&#160;ago
       </small>
-      <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
+      <span className="human-date">{format(aDate, "MMM do, yyyy")}</span>
     </h3>
   );
 };

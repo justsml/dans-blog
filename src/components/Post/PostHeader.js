@@ -1,10 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
-import distanceInWords from "date-fns/distance_in_words";
+import formatDistance from "date-fns/formatDistance";
 import TagList from "../TagList";
 import injectSheet from "react-jss";
 import Header from "../Header";
+
+function fixDateString(str) {
+  return typeof str === "string" && str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
+}
 
 const styles = theme => ({
   header: {
@@ -87,29 +91,29 @@ const styles = theme => ({
 const getDateLabel = (date, label, className = "text-left") => {
   if (!date) return <span date={date} />;
 
-  const aDate = new Date(date);
+  const aDate = new Date(fixDateString(date));
   return (
     <h3 className={"post-details " + className}>
       <small>
-        {label}&#160;{distanceInWords(aDate, new Date())}&#160;ago
+        {label}&#160;{formatDistance(new Date(), aDate)}&#160;ago
       </small>
-      <span className="human-date">{format(aDate, "MMM Do, YYYY")}</span>
+      <span className="human-date">{format(aDate, "MMM do, yyyy")}</span>
     </h3>
   );
 };
 
 const PostHeader = props => {
-  const { classes, title, subTitle, date, modified, tags } = props;
+  const { classes, date, modified, tags } = props;
   // console.log("title", title, "post.props", props);
 
   return (
     <Header {...props}>
-      <div className={classes.tags}>
-        <TagList tags={tags} />
-      </div>
       <div className={classes.meta}>
         {getDateLabel(date, "published")}
         {getDateLabel(modified, "updated", "text-right")}
+      </div>
+      <div className={classes.tags}>
+        <TagList tags={tags} />
       </div>
     </Header>
   );

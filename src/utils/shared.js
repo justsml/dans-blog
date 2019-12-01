@@ -1,5 +1,43 @@
+import cheerio from "cheerio";
 import { forceCheck } from "react-lazyload";
 // import { navigateTo } from 'gatsby-link';
+
+export const extractTagContent = (selector, html) => {
+  const $ = cheerio.load(html);
+  return $(selector)
+    .text()
+    .trim();
+};
+
+export const removeBySelector = (selector, html) => {
+  const $ = cheerio.load(html);
+  // console.info(`$('${selector}')`, $(selector))
+  $(selector)
+    .first()
+    .remove();
+  return cleanupCheerioHtml($.html());
+};
+
+const cleanupCheerioHtml = html => {
+  return html
+    .replace(`<html><head></head><body>`, "")
+    .replace(`</body></html>`, "")
+    .trim();
+};
+
+export const stripHtml = html =>
+  html && html.replace(/<\/?[a-z][a-z0-9]*[^<>]*>|<!--.*?-->/gim, "");
+
+export const isHtml = text => /^---/.test(text) || text.split(/<[^>]+>/).length > 1;
+export const isMarkdown = text => /^---/.test(text) || /^#/.test(text) >= 1;
+
+export const extractBlockquote = html => html && html.match(/<blockquote>[^<]*<\/blockquote>/gim);
+export const extractH1 = html =>
+  html && /(<\/?h1>)/gim.test(html) ? html.split(/(<\/?h1>)/gim)[0] : "";
+export const extractH2 = html =>
+  html && /(<\/?h2>)/gim.test(html) ? html.split(/(<\/?h2>)/gim)[0] : "";
+export const extractH3 = html =>
+  html && /(<\/?h3>)/gim.test(html) ? html.split(/(<\/?h3>)/gim)[0] : "";
 
 export function featureNavigator(e) {
   e && e.preventDefault();

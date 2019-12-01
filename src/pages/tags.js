@@ -14,14 +14,17 @@ const sortByKey = (key, arr, reverse = false) => {
   return [].concat(arr).sort((a, b) => (reverse ? a[key] - b[key] : b[key] - a[key]));
 };
 
-const TagsPage = ({
-  data: {
-    allMarkdownRemark: { group },
-    site: {
-      siteMetadata: { title }
+const TagsPage = args => {
+  console.log("TAGS", args);
+  let {
+    data: {
+      allMarkdownRemark: { group },
+      site: {
+        siteMetadata: { title }
+      }
     }
-  }
-}) => {
+  } = args;
+
   group = sortByKey("totalCount", group);
   return (
     <Main>
