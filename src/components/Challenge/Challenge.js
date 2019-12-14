@@ -239,10 +239,10 @@ class Challenge extends React.Component {
     this.loadState();
   }
 
-  trackResult = () => {
+  trackAnswer = () => {
     trackCustomEvent({
       // string - required - The object that was interacted with (e.g.video)
-      category: "Quiz",
+      category: `Quiz: ${window.location.host}/${window.location.pathname.replace(/^\/|\/$/g, "")}`,
       // string - required - Type of interaction (e.g. 'play')
       action: this.isCorrect() ? "Correct" : "Incorrect",
       // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
@@ -286,7 +286,7 @@ class Challenge extends React.Component {
     if (isCorrect) return null;
     this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
-    setTimeout(this.trackResult, 90);
+    setTimeout(this.trackAnswer, 90);
   };
 
   getOption = option => {
