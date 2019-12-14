@@ -30,6 +30,10 @@ const styles = theme => ({
 const Hit = props => {
   const { classes, hit } = props;
 
+  if (!hit || !hit.fields || !hit.fields.slug) {
+    return <div className="invalid-search-result" />;
+  }
+
   return (
     <Link to={hit.fields.slug} className={classes.link}>
       {hit.frontmatter.title}
