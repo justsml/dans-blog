@@ -13,6 +13,12 @@ const styles = theme => ({
     justifyContent: "flex-start",
     // justifyContent: "space-between",
     listStyle: "none",
+    "& .badge": {
+      color: "#555555",
+      opacity: "60%",
+      display: "inline-block",
+      marginRight: "0.275rem"
+    },
     "& a": {
       fontSize: "0.8rem",
       color: theme.base.colors.link,
@@ -57,6 +63,7 @@ function buildTagStats(allTags) {
 const TagList = ({ tags, allTags, classes }) => {
   if (!tags || tags.length <= 0) return <span style={{ display: "none" }}>No tags</span>;
   const tagDict = buildTagStats(allTags);
+  tags.sort((a, b) => (tagDict[a] === tagDict[b] ? 0 : tagDict[a] < tagDict[b] ? 1 : -1));
 
   return (
     <div className="tags-list">
@@ -64,9 +71,15 @@ const TagList = ({ tags, allTags, classes }) => {
         {tags.map(tag => {
           return (
             <div key={tag}>
-              <Link data-count={1} to={`/tags/${tag}`} title={`search for tag '${tag}'`}>
-                {tag} <span className="badge">{tagDict[tag]}</span>
-              </Link>
+              <Link
+                data-count={1}
+                to={`/tags/${tag}`}
+                title={`see ${tagDict[tag]} posts related to ${tag}`}
+              >
+                {tag}
+              </Link>{" "}
+              <span className="badge">({tagDict[tag]})</span>
+              {"  "}
             </div>
           );
         })}

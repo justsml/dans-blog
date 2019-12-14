@@ -53,7 +53,7 @@ const styles = theme => ({
       fontWeight: "100"
     },
     "& b": {
-      fontWeight: "500",
+      fontWeight: "300",
       opacity: "70%"
     },
     "& h3": {
@@ -96,7 +96,7 @@ const styles = theme => ({
     width: "100%",
     margin: "0.2rem 0",
     display: "inline-flex",
-    alignItems: "center",
+    alignItems: "baseline",
     justifyContent: "flex-start",
     "&:hover": {
       "& svg": {
@@ -109,9 +109,10 @@ const styles = theme => ({
     transition: "all 0.75s ease-in",
     color: theme.bars.colors.icon,
     opacity: "60%",
-    transform: "scale(0.7)",
+    transform: "scale(0.88)",
     width: "1.2rem",
-    flexShrink: 1
+    flexShrink: 1,
+    alignSelf: "center"
   },
   tagList: {
     flexGrow: 2,
