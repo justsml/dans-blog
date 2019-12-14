@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import theme from "../styles/theme";
+import yup from "yup";
 
 export function isWideScreen() {
   if (typeof window !== `undefined`) {
@@ -55,6 +56,16 @@ export const shareOnTwitter = (text, url, source = "danlevy.net") => {
   )}&related=${encodeURIComponent(source)}`;
 };
 
+function validateGoogleAnalyticsEvent(event) {
+  let schema = yup.object().shape({
+    eventCategory: yup.string().max(150),
+    eventAction: yup.string().max(500),
+    eventLabel: yup.string().max(500),
+    eventValue: yup.number()
+  });
+  return schema.isValidSync(event);
+}
+
 /**
  * This allows the user to create custom events within their Gatsby projects.
  *
@@ -80,6 +91,10 @@ export function trackCustomEvent({
       nonInteraction: nonInteraction,
       transport
     };
+
+    if (!validateGoogleAnalyticsEvent(trackingEventOptions)) {
+      console.error("WARNING: Analytics data invalid, may be truncated.", trackingEventOptions);
+    }
 
     if (hitCallback && typeof hitCallback === `function`) {
       trackingEventOptions.hitCallback = () => setTimeout(hitCallback, callbackTimeout);

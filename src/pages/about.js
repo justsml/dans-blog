@@ -52,7 +52,7 @@ const styles = theme => ({
     },
     "& .octicon-repo": {
       marginRight: "4px",
-      zoom: "1.3"
+      transform: "scale(1.4, 1.4)"
     },
     "& .octicon": {
       color: "#959da5",
