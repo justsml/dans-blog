@@ -73,13 +73,13 @@ const styles = theme => ({
       }
     },
     "&.challenge-correct li.challenge-option-correct": {
-      transition: "zoom 0.33s ease-in",
+      transition: "transform 0.33s ease-in",
       border: "1px solid transparent",
-      zoom: "100%",
+      transform: "scale(1.1, 1.1)",
       color: "rgba(0, 0, 0, 0.9)"
     },
     "&.challenge-correct li": {
-      transition: "zoom 0.33s ease-in",
+      transition: "transform 0.33s ease-in",
       "& *": {
         cursor: "default"
       }
@@ -196,7 +196,6 @@ const styles = theme => ({
   },
   // optionItemCompleted: {
   //   display: "flex",
-  //   zoom: "150%",
   //   margin: "1.2em 0.25em",
   //   padding: "0.5em",
   //   border: "1px solid transparent",
