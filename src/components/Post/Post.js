@@ -25,7 +25,7 @@ export default class Post extends React.Component {
   };
 
   componentDidMount() {
-    console.info("Post.CDM! Slug=", this.props.slug);
+    // console.info("Post.CDM! Slug=", this.props.slug);
     if (lastSlug !== this.props.slug) {
       // loading new post - need to trigger :focus update (a11y)
       lastSlug = this.props.slug;
@@ -46,7 +46,7 @@ export default class Post extends React.Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("slug", this.props.slug, nextProps.slug);
+    // console.log("slug", this.props.slug, nextProps.slug);
     return true;
   }
 
