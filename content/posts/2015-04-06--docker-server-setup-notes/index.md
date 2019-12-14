@@ -11,8 +11,6 @@ cover: markus-spiske-193031-unsplash.jpg
 
 # Docker Server Setup
 
-![credit: markus-spiske-193031-unsplash.jpg](markus-spiske-193031-unsplash.jpg)
-
 ## Who's this guide for?
 
 - Have you ever wanted to test an app with a 'throw-away' database?
@@ -22,43 +20,68 @@ cover: markus-spiske-193031-unsplash.jpg
 
 > Never let those reasons get in your way again!
 
-## Quick Links to 1-liners
+## Quick Links To 1-liners
 
 This article features 1-line commands to start some of the most popular databases, including:
 
-* [Postgres](#postgres-server)
-* [MongoDB](#mongodb-server)
-* [MySQL](#mysql-server)
-* [ElasticSearch](#elasticsearch-server)
+<section class="font-lg">
+
+* [<img src="./postgresql.svg" class="svg-icon"> Postgres](#postgres-server)
+* [<img src="./mongodb.svg" class="svg-icon"> MongoDB](#mongodb-server)
+* [<img src="./mysql.svg" class="svg-icon"> MySQL](#mysql-server)
+* [<img src="./elastic.svg" class="svg-icon"> ElasticSearch](#elasticsearch-server)
+
+</section>
 
 **Note:** The commands work in production. However they are mainly designed to accelerate your development workflow.
 
 > **Advanced Docker Users:** If you are familiar with `docker-compose` you may want to convert the shell commands below for use in your `docker-compose.yml` files.
 
 
+![credit: markus-spiske-193031-cropped-2.png](markus-spiske-193031-cropped-2.png)
 
 
 ## Postgres Server
 
+##### Start a container, naming it `pg-server`
+
 ```sh
+# Store db files on a local path, outside the container
 mkdir -p $HOME/.postgres-data
 
 docker run \
-  --name postgres-server \
+  --name pg-server \
   -v $HOME/.postgres-data:/var/lib/postgresql/data \
   -p 127.0.0.1:5432:5432 \
   --restart on-failure:5 \
   --detach \
   --shm-size=256mb \
   postgres:12-alpine \
-  postgres \
-    -c 'listen_addresses=*' \
+  postgres -c 'listen_addresses=*' \
     -c 'password_encryption=scram-sha-256' \
     -c 'shared_memory_type=sysv' \
     -c 'shared_buffers=256MB' \
     -c 'max_connections=200'
-
 ```
+
+> Adjust the command line options as needed. (The postgres daemon arguments start following the docker image name `postgres:12-alpine`. See `postgres -c 'listen_addresses=*'...`)
+
+
+##### Access the `psql` prompt as postgres user
+
+```sh
+docker exec --user postgres -it pg-server psql
+```
+
+##### Access the container's shell as root
+
+```sh
+docker exec -it pg-server bash
+```
+
+**Note:** The above command uses the official Alpine Linux base images. _It is not your typical debian environment._
+
+> To use the debian/ubuntu base image, change `postgres:12-alpine` to `postgres:12`.
 
 
 ## MongoDB Server
@@ -89,8 +112,7 @@ mongo
 
 And you should see something like this:
 
-<img width="807" alt="image" src="https://user-images.githubusercontent.com/397632/68092978-2ac57a80-fe4e-11e9-9b15-d365da0b4637.png">
-
+![Preview of mongo shell output](mongo-shell-screenshot.png)
 
 ### Setup mongo CLI tools
 
