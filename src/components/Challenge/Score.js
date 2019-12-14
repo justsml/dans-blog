@@ -134,12 +134,12 @@ class Score extends Component {
       const correctChallenges = window.document.querySelectorAll(
         `.challenge-block.challenge-correct`
       );
-      console.log(
-        `challenges.length`,
-        challenges.length,
-        `correctChallenges`,
-        correctChallenges.length
-      );
+      // console.log(
+      //   `challenges.length`,
+      //   challenges.length,
+      //   `correctChallenges`,
+      //   correctChallenges.length
+      // );
       this.setState({ score: correctChallenges.length, totalAvailable: challenges.length });
     }
   };

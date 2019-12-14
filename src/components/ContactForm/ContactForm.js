@@ -115,7 +115,7 @@ class ContactForm extends React.PureComponent {
         return response.text();
       })
       .then(data => {
-        console.log("Form submission success", data);
+        // console.log("Form submission success", data);
         navigateTo("/success");
       })
       .catch(error => {

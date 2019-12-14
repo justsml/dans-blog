@@ -3,40 +3,77 @@ layout: post
 title:  "Docker Server Setup"
 date:   2015-04-06
 modified: 2019-12-01
+subTitle: "Start Database Servers w/ single commands"
+date:   2015-04-06 01:00:59
 category: docker
-tags: [devops, docker, server, setup, shell script]
+tags: [devops, docker, server, postgres, mysql, mongodb, elasticsearch, setup, shell script]
 cover: markus-spiske-193031-unsplash.jpg
 ---
 
-# Docker **Host Server** Setup
+# Docker Server Setup
 
 ![credit: markus-spiske-193031-unsplash.jpg](markus-spiske-193031-unsplash.jpg)
 
-## Quick Install
+## Who's this guide for?
 
-Install Docker, with 1 shell command!
+- Have you ever wanted to test an app with a 'throw-away' database?
+- Inherited a suspicious codebase? Prefer not sharing access to your existing database?
+- Work with security sensitive clients? Don't risk cross-contamination! Use containers & control data persistance!
+- Can't upgrade your dev environment to the latest database version because your legacy apps depend on a 12 year old version of mysql?
 
-~~~sh
-curl -sSL https://get.docker.com/ | sh
-~~~
+> Never let those reasons get in your way again!
 
-# Complex `run` Command Examples
+## Quick Links to 1-liners
 
-> NOTE: the `-p 127.0.0.1:27017:27017` option prevents access to your instance except from the server 'localhost network'.
-> Remove the local IP address prefix to allow other containers access: `-p 27017:27017`
+This article features 1-line commands to start some of the most popular databases, including:
+
+* [Postgres](#postgres-server)
+* [MongoDB](#mongodb-server)
+* [MySQL](#mysql-server)
+* [ElasticSearch](#elasticsearch-server)
+
+**Note:** The commands work in production. However they are mainly designed to accelerate your development workflow.
+
+> **Advanced Docker Users:** If you are familiar with `docker-compose` you may want to convert the shell commands below for use in your `docker-compose.yml` files.
+
+
+
+
+## Postgres Server
+
+```sh
+mkdir -p $HOME/.postgres-data
+
+docker run \
+  --name postgres-server \
+  -v $HOME/.postgres-data:/var/lib/postgresql/data \
+  -p 127.0.0.1:5432:5432 \
+  --restart on-failure:5 \
+  --detach \
+  --shm-size=256mb \
+  postgres:12-alpine \
+  postgres \
+    -c 'listen_addresses=*' \
+    -c 'password_encryption=scram-sha-256' \
+    -c 'shared_memory_type=sysv' \
+    -c 'shared_buffers=256MB' \
+    -c 'max_connections=200'
+
+```
+
 
 ## MongoDB Server
 
-~~~sh
+```sh
 mkdir -p $HOME/.mongodb/data
 
 docker run -d \
   --name mongodb \
-  --restart on-failure:15 \
+  --restart on-failure:5 \
   -p 127.0.0.1:27017:27017 \
   -v $HOME/.mongodb:/data \
   mongo:4 bash -c 'mongod --bind_ip 0.0.0.0 --storageEngine=wiredTiger'
-~~~
+```
 
 Now that your server is setup, verify your data is at `$HOME/.mongodb` with:
 
@@ -83,9 +120,9 @@ docker run -d \
   mysql/mysql-server:8
 ```
 
-## Elastic Search
+## ElasticSearch Server
 
-~~~sh
+```sh
 mkdir -p $HOME/.elastic
 
 docker run -d \
@@ -94,17 +131,30 @@ docker run -d \
   -p 127.0.0.1:9300:9300 \
   -v $HOME/.elastic:/data \
   elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
-~~~
+```
 
 
-## Package up your NodeJS/Ruby/Python/Web App
+#### Security Notes
+
+> **NOTE:** the `-p 127.0.0.1:27017:27017`-style port option prevents access to your instance except from the docker server's localhost network.
+> To 'publish' the exposed ports, remove the local IP address prefix to allow external access: `-p 27017:27017`. **Make sure you have taken necessary security precautions.**
+
+**Recommended:** Always use a port scanning tool (like nmap/masscan) to verify your network configuration (from separate system on another network.)
+
+
+
+> Now that you have the commands to start your database servers, the next step is to package up your application as a docker image. Part 2 continued below:
+
+
+
+# Packaging a NodeJS Web App
 
 1. Add a blank file named `Dockerfile` in your project root.
 1. _(Optional, Recommended)_ Add a `.dockerignore` using .gitignore rules to exclude large non-essential paths. By default all project files are included.
 
-## Create a `Dockerfile` in your apps root
+### Create a `Dockerfile` in your apps root
 
-~~~dockerfile
+```dockerfile
 # Example for NodeJS
 FROM node:12
 EXPOSE [3000]
@@ -115,7 +165,7 @@ RUN ["npm", "install"]
 
 # Overridable Command
 CMD ["npm", "start"]
-~~~
+```
 
 It's easier to show how to start using the Dockerfile and demonstrate the results via console (see commands below).
 
@@ -126,45 +176,56 @@ docker build -t app-name-here .
 ```
 
 
-# Docker Commands to Learn
 
-## Build Docker Image
+<!-- 
+#### Docker Install
 
-~~~sh
+If you don't have Docker installed, use the following command to install on Linux or macOS:
+
+```sh
+curl -sSL https://get.docker.com/ | sh
+``` -->
+
+
+### Key Docker Commands Reference
+
+#### Build Docker Image
+
+```sh
 docker build -t app-name-here .
-~~~
+```
 
-## Create/Run Web App w/ Links to DB Servers
+#### Create/Run Web App w/ Links to DB Servers
 
-~~~sh
+```sh
 docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
-~~~
+```
 
-## Run Interactively (non-daemon, in terminal)
+#### Run Interactively (non-daemon, in terminal)
 
-~~~sh
+```sh
 docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
-~~~
+```
 
-## Delete Container Instance or Image
+#### Delete Container Instance or Image
 
 > Important: Any data not stored on a mounted volume path will be lost!!
 
-~~~sh
+```sh
 # Delete Image
 docker rmi -f app-name-here
 docker rm -f webapp01
 # now re-run your `docker run...` from ^^^
 # So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )
 docker rm -f mongo elastic
-~~~
+```
 
 
 <!--
 
 ## Optional Config & Monitoring Tools
 
-~~~sh
+```sh
 # Debian/BSD Requirements / Updates + monitoring tools: atop & htop
 apt-get update && apt-get install -y vim-nox git-core curl atop htop build-essential libssl-dev linux-image-amd64 linux-headers-amd64 sudo
 
@@ -186,15 +247,15 @@ source ~/.bashrc
 
 # Docker pre reqs
 # sudo apt-get install -y linux-image-virtual linux-image-extra-virtual
-~~~
+```
 
 > Only for SELinux Enabled Systems
 
-~~~sh
+```sh
 # SELinux fixes (optional)
 # chcon -Rt svirt_sandbox_file_t /mongodb
 # chcon -Rt svirt_sandbox_file_t /elastic
-~~~
+```
 
 -->
 

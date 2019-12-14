@@ -31,12 +31,12 @@ export function slugify(text) {
     .replace(/-+$/g, ""); // Trim - from end of text
 }
 
-export const retryApp = (fn, { limit = 10, delayMsec = 100, rateAmplifyDelay = 1.0 }) => {
+export const retryApp = (fn, { limit = 10, delayMsec = 100, rateAmplifyDelay = 2.0 }) => {
   try {
     if (rateAmplifyDelay < 0.5 || rateAmplifyDelay > 1000) rateAmplifyDelay = 1.0;
 
     if (limit > 0 && fn() === false) {
-      console.trace("retryApp Triggered!!!", { limit });
+      // console.trace("retryApp Triggered!!!", { limit });
       delayMsec = delayMsec * rateAmplifyDelay;
       return setTimeout(
         () => retryApp(fn, { limit: limit - 1, delayMsec, rateAmplifyDelay }),

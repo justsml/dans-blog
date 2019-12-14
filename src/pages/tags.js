@@ -15,7 +15,7 @@ const sortByKey = (key, arr, reverse = false) => {
 };
 
 const TagsPage = args => {
-  console.log("TAGS", args);
+  // console.log("TAGS", args);
   let {
     data: {
       allMarkdownRemark: { group },
