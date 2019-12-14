@@ -4,7 +4,6 @@ title:  "Docker Server Setup"
 date:   2015-04-06
 modified: 2019-12-01
 subTitle: "Start Database Servers w/ single commands"
-date:   2015-04-06 01:00:59
 category: docker
 tags: [devops, docker, server, postgres, mysql, mongodb, elasticsearch, setup, shell script]
 cover: markus-spiske-193031-unsplash.jpg
