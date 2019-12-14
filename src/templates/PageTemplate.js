@@ -67,6 +67,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(PageTemplate);
 //eslint-disable-next-line no-undef
 export const pageQuery = graphql`
   query PageByPath($slug: String!) {
+    allTags: allMarkdownRemark(limit: 2000, filter: { frontmatter: { title: { ne: "" } } }) {
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
+      }
+    }
     page: markdownRemark(fields: { slug: { eq: $slug } }) {
       id
       html

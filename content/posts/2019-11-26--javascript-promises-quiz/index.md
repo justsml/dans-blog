@@ -2,7 +2,7 @@
 title: "JavaScript Promises: 9 Questions"
 subTitle: Learn about promises & take the quiz!
 date: 2019-11-26
-modified: 2019-11-30
+modified: 2019-12-14
 tags: [promises, programming, async, javascript, guides]
 category: promises
 cover: olav-ahrens-rotne-jvBXiynINGE-resized.png
