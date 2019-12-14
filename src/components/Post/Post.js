@@ -20,7 +20,8 @@ export default class Post extends React.Component {
   static propTypes = {
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
-    slug: PropTypes.string.isRequired
+    slug: PropTypes.string.isRequired,
+    allTags: PropTypes.object
     // facebook: PropTypes.object.isRequired
   };
 
@@ -51,7 +52,7 @@ export default class Post extends React.Component {
   }
 
   render() {
-    const { post, author, slug } = this.props;
+    const { post, author, slug, allTags } = this.props;
     const frontmatter = (post || {}).frontmatter;
     const title = ((post || {}).frontmatter || {}).title;
     const subTitle = ((post || {}).frontmatter || {}).subTitle;
@@ -63,7 +64,13 @@ export default class Post extends React.Component {
 
     return (
       <Article>
-        <PostHeader title={title} subTitle={subTitle} date={date} {...frontmatter} />
+        <PostHeader
+          allTags={allTags}
+          title={title}
+          subTitle={subTitle}
+          date={date}
+          {...frontmatter}
+        />
         <Content html={html} />
         <AutoLoader post={post} frontmatter={frontmatter} />
         <PostFooter title={title} author={author} post={post} slug={slug} {...frontmatter} />

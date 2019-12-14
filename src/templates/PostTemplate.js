@@ -23,10 +23,16 @@ class PostTemplate extends React.Component {
   render() {
     const { data, pathContext } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
-
+    const { allTags } = data;
     return (
       <Main>
-        <Post post={data.post} slug={pathContext.slug} author={data.author} facebook={facebook} />
+        <Post
+          allTags={allTags}
+          post={data.post}
+          slug={pathContext.slug}
+          author={data.author}
+          facebook={facebook}
+        />
         <Footer footnote={data.footnote} />
         <Seo data={data.post} facebook={facebook} />
       </Main>
@@ -39,7 +45,8 @@ PostTemplate.propTypes = {
   pathContext: PropTypes.object.isRequired,
   navigatorPosition: PropTypes.string.isRequired,
   setNavigatorPosition: PropTypes.func.isRequired,
-  isWideScreen: PropTypes.bool.isRequired
+  isWideScreen: PropTypes.bool.isRequired,
+  allTags: PropTypes.object
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -104,6 +111,12 @@ export const postQuery = graphql`
         facebook {
           appId
         }
+      }
+    }
+    allTags: allMarkdownRemark(limit: 2000, filter: { frontmatter: { title: { ne: "" } } }) {
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
       }
     }
   }
