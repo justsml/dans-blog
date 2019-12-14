@@ -73,13 +73,13 @@ const styles = theme => ({
       }
     },
     "&.challenge-correct li.challenge-option-correct": {
-      transition: "zoom 0.33s ease-in",
+      transition: "transform 0.33s ease-in",
       border: "1px solid transparent",
-      zoom: "100%",
+      transform: "scale(1.1, 1.1)",
       color: "rgba(0, 0, 0, 0.9)"
     },
     "&.challenge-correct li": {
-      transition: "zoom 0.33s ease-in",
+      transition: "transform 0.33s ease-in",
       "& *": {
         cursor: "default"
       }
@@ -196,7 +196,6 @@ const styles = theme => ({
   },
   // optionItemCompleted: {
   //   display: "flex",
-  //   zoom: "150%",
   //   margin: "1.2em 0.25em",
   //   padding: "0.5em",
   //   border: "1px solid transparent",
@@ -239,10 +238,10 @@ class Challenge extends React.Component {
     this.loadState();
   }
 
-  trackResult = () => {
+  trackAnswer = () => {
     trackCustomEvent({
       // string - required - The object that was interacted with (e.g.video)
-      category: "Quiz",
+      category: `Quiz: ${window.location.host}/${window.location.pathname.replace(/^\/|\/$/g, "")}`,
       // string - required - Type of interaction (e.g. 'play')
       action: this.isCorrect() ? "Correct" : "Incorrect",
       // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
@@ -286,7 +285,7 @@ class Challenge extends React.Component {
     if (isCorrect) return null;
     this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
     setTimeout(this.saveState, 1);
-    setTimeout(this.trackResult, 90);
+    setTimeout(this.trackAnswer, 90);
   };
 
   getOption = option => {
