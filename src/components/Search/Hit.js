@@ -29,7 +29,6 @@ const styles = theme => ({
 
 const Hit = props => {
   const { classes, hit } = props;
-  console.log("Hit", JSON.stringify(props, null, 2));
 
   if (!hit || !hit.fields || !hit.fields.slug) {
     return <div className="invalid-search-result" />;
