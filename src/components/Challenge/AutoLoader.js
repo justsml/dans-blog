@@ -114,7 +114,7 @@ class AutoLoader extends React.Component {
       quizReadyUi.style.display = "block";
       quizLoadingUi.style.display = "none";
     }
-  }
+  };
 
   loadChallenges = challengeConfigs => {
     this.setState(
