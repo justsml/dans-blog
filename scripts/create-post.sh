@@ -1,8 +1,9 @@
 #!/bin/bash
+set -e
 
 # credit: https://gist.github.com/oneohthree/f528c7ae1e701ad990e6
 function slugify () {
-  echo "$1" | iconv -t ascii//TRANSLIT | sed -r s/[^a-zA-Z0-9]+/-/g | sed -r s/^-+\|-+$//g | tr '[:upper:]' '[:lower:]'
+  echo "$1" | iconv -t ascii//TRANSLIT | gsed -r 's/[^a-zA-Z0-9]+/-/g' | gsed -r 's/^-+\|-+$//g' | tr '[:upper:]' '[:lower:]'
 }
 
 title="${1:-'title'}"
