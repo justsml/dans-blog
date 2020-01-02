@@ -1,11 +1,11 @@
 ---
 title: "Top Date Handling Mistakes in JavaScript"
 subTitle: Gotchas every developer will run into.
-date: 2019-12-20
-modified: 2020-01-02
+date: 2020-01-02
+modified: 2020-01-03
 tags: [javascript,date,date class,gotchas,quiz,challenge]
 category: Quiz
-cover: null
+cover: pocket-watch.jpg
 ---
 
 # How well do you know the `Date` class?
@@ -18,7 +18,7 @@ cover: null
 
 Working with `Date`'s is often challenging, however certain requirements are especially challenging & likely to break.
 
-Let me rank various challenges in order of 'everything is broken' to 'I might not need momentjs':
+Let me rank various challenges in order of **'everything is broken'** to **'I might not need momentjs'**:
 
 1. ☢️ **Modify Dates with Math.** Examples include extending subscriptions, trials, etc. (e.g. Add 1 week/year to `expiresDate`)
     - Timezones
@@ -34,8 +34,7 @@ Let me rank various challenges in order of 'everything is broken' to 'I might no
 
 Handling calculations & changes to datetime values is critical.
 
-This may seem obvious, but
-While most of the time you'll want to avoid using the native `Date` class, in favor of [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs). The `Date` class in JavaScript is essentially a clone of Java's `Date` namespace from `System.Calendar.DateTime.HumanCalendars.Gregorian.Date` (may not be 'real' qualified namespace).
+While most of the time you'll want to avoid using the native `Date` class, in favor of [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs). The `Date` class in JavaScript is essentially a clone of Java's `Date` namespace from `System.Calendar.DateTime.HumanCalendars.Gregorian.Date` (kidding with the namespace).
 
 ### If you get stuck
 
