@@ -16,37 +16,42 @@ cover: pocket-watch.jpg
 
 ## Summary
 
-Working with `Date`'s is often challenging, however certain requirements are especially challenging & likely to break.
+The `Date` class in JavaScript has a notoriously difficult API. This leads many developers to large 3rd party libraries. (Often a safe and reliable choice.)
 
-Let me rank various challenges in order of **'everything is broken'** to **'I might not need momentjs'**:
+The native API is still worth learning about! It's not going anywhere! Often it's all you'll need - no 3rd party library necessary.
 
-1. ☢️ **Modify Dates with Math.** Examples include extending subscriptions, trials, etc. (e.g. Add 1 week/year to `expiresDate`)
-    - Timezones
+<!-- I often see mistakes in code that attempts to use it. Especially in regards to date math (e.g. add/subtract a week from today). Formatting  -->
+
+<!-- > It might help you understand the situation better to know JavaScript's `Date` is inherited from Java's `Date`.  -->
+
+There are 3 big areas around dates that each have unique risks & tradeoffs. These 3 areas are listed in order of **'everything is broken'** to **'I might not need momentjs'**:
+
+1. ☢️ **Modify Dates with Math.** _Write operation, not read-only._ Examples include extending subscriptions, trials, etc. (e.g. Add 1 week/year to `expiresDate`)
+    - Account for timezones
     - Business rules (How many days is in a `Month` worth of subscription time? Fixed #, say 30? Current month's days?)
       - Do you add to existing `expiresDate` or from current date? (Affects those paying early/late.)
       - What if the expiry date is _way_ expired (by years) and customer renews for 1 month?
-2. ⚠️ **Formatting** (in timezone aware ways)
-    - Timezones
+2. ⚠️ **Formatting** (in timezone aware ways). _Can be read-only._
+    - Account for timezones
       - Preserve UTC/GMT for DB storage 😭
     - Locale rules (e.g. `en-US` uses `MM/DD/YYYY` vs `en-GB`'s `DD/MM/YYYY`)
-3. 👍 **Coordinated Client-side Data** (for logging, 3rd party APIs, etc.)
+3. 👍 **Coordinated Client-side Data** (for logging, 3rd party APIs, etc.) _Can be read-only._
     - Need to know if your APIs require UTC dates.
 
-Handling calculations & changes to datetime values is critical.
+While most _write operations_ should avoid using the native `Date` class in favor of far more intuitive 3rd party libraries, it certainly doesn't hurt to learn the native API.
 
-While most of the time you'll want to avoid using the native `Date` class, in favor of [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs). The `Date` class in JavaScript is essentially a clone of Java's `Date` namespace from `System.Calendar.DateTime.HumanCalendars.Gregorian.Date` (kidding with the namespace).
+As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs).
+
 
 ### If you get stuck
 
 1. **Read the Hints** (Green button, lower left corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
-2. Try the code in your browser's Console (try shortcut `F12` or search it) or use [repl.it](https://repl.it)*.
-3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
+2. Try the code in your browser's Console (try shortcut `F12`).
+3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Date%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
 
 
-> **NOTE:** Assume all examples run with GMT-7 timezone offset.
+### **NOTE:** Assume all examples run with GMT-7 timezone offset.
 
-
-<!-- _I hopy you learn some fun, quirky and occasionally maddening things about Promises._ -->
 
 <div style="text-align: center; width: 75%; margin: 0 auto 10rem auto; white-space: nowrap; font-size: 1.4em;" class="quiz-loading">
 
@@ -60,7 +65,7 @@ While most of the time you'll want to avoid using the native `Date` class, in fa
 
 <div style="text-align: center; display: none;" class="quiz-ready">
 
-## 👇 Complete [x] Questions Below 👇
+## 👇 Complete 13 Questions Below 👇
 
 </div>
 
@@ -162,7 +167,7 @@ You won't observe this effect if you live at GMT-0 (or greater than GMT+1.)
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Constructor in UTC
+# UTC Dates
 
 ```js
 const d = Date.UTC(2020, 0, 1)
@@ -282,7 +287,7 @@ The correct way to create `Date` instances from a string: `new Date(dateString)`
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Creating UTC Dates
+# UTC Dates
 
 ```js
 // Assume local TZ is -07:00
