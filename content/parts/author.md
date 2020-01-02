@@ -2,7 +2,9 @@
 title: author
 ---
 
-[*Dan Levy*](https://danlevy.net/) is the Web Program Manager at LambdaSchool.
+[*Dan Levy*](https://danlevy.net/) is currently looking for new opportunities in 2020!
+
+Previously Dan was the Web Program Manager at Lambda School, and before that a Lead Instructor at Galvanize/Hack Reactor.
 
 ------------------------------
 
