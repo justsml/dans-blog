@@ -46,8 +46,8 @@ As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-
 
 ### If you get stuck
 
-1. **Read the Hints** (Green button, lower left corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
-2. Try the code in your browser's Console (try shortcut `F12`).
+1. **Read the Hints** (Green button, lower right corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
+2. Try the code in your browser's Console (try shortcut `F12` on Windows, or `Command + Option + J` on Mac).
 3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Date%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
 
 
@@ -69,6 +69,95 @@ As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-
 ## 👇 Complete 14 Questions Below 👇
 
 </div>
+
+
+<!-- #6 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
+
+# Date Constructor Part 1
+
+```js
+const d1 = new Date(2020, 1, 1)
+console.log(d1)
+```
+
+## What will the output include?
+
+  </div>
+  <ul class="options">
+    <li>Jan 01 2020</li>
+    <li class="answer">Feb 01 2020</li>
+    <li>RangeError: Invalid argument.</li>
+  </ul>
+  <div class="explanation">
+
+The Month argument is zero-based. With a range of 0-11 (using western calendars.)
+
+'February' has an index value of one. (Think of it like an array lookup.)
+
+  </div>
+</section>
+
+<!-- #7 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
+
+# Date Constructor Part 2
+
+```js
+const d2 = new Date(2020, 0, 1)
+console.log(d2)
+```
+
+## What will the output include?
+
+  </div>
+  <ul class="options">
+    <li class="answer">Jan 01 2020</li>
+    <li>Feb 01 2020</li>
+    <li>RangeError: Invalid argument.</li>
+  </ul>
+  <div class="explanation">
+
+The Month argument is zero-based. With a range of 0-11 (using western calendars.)
+
+'January' has an index value of zero. (Think of it like an array lookup.)
+
+  </div>
+</section>
+
+<!-- #8 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
+
+# Date Constructor Part 3
+
+```js
+const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+console.log(d3)
+```
+
+## What will the output include?
+
+  </div>
+  <ul class="options">
+    <li>01 Jan 1970</li>
+    <li>Unix Epoch of 0</li>
+    <li>Current Date, in UTC/GMT</li>
+    <li class="answer">Current Date</li>
+    <li>NaN</li>
+  </ul>
+  <div class="explanation">
+
+This is a **common gotcha** that's **easy to overlook**, even in code review.
+
+A `Date` instance created with `Date([args])` will always return today's date. In other words, the arguments are ignored. `Date('blah')` is an alias for `new Date()`.
+
+The missing piece is the `new` keyword: `new Date(dateString)`.
+
+  </div>
+</section>
 
 <!-- #1 -->
 <section class="challenge" group="Handling Dates">
@@ -251,96 +340,6 @@ Date's will be implicitly presented in local time, with an unchanging [`.getTime
   </div>
 </section>
 
-<!-- #6 -->
-<section class="challenge" group="Handling Dates">
-  <div class="description">
-
-# Date Constructor Part 1
-
-```js
-const d1 = new Date(2020, 1, 1)
-console.log(d1)
-```
-
-## What will the output include?
-
-  </div>
-  <ul class="options">
-    <li>Jan 01 2020</li>
-    <li class="answer">Feb 01 2020</li>
-    <li>RangeError: Invalid argument.</li>
-  </ul>
-  <div class="explanation">
-
-The Month argument is zero-based. With a range of 0-11 (using western calendars.)
-
-'February' has an index value of one. (Think of it like an array lookup.)
-
-  </div>
-</section>
-
-<!-- #7 -->
-<section class="challenge" group="Handling Dates">
-  <div class="description">
-
-# Date Constructor Part 2
-
-```js
-const d2 = new Date(2020, 0, 1)
-console.log(d2)
-```
-
-## What will the output include?
-
-  </div>
-  <ul class="options">
-    <li class="answer">Jan 01 2020</li>
-    <li>Feb 01 2020</li>
-    <li>RangeError: Invalid argument.</li>
-  </ul>
-  <div class="explanation">
-
-Similar to the question above:
-
-The Month argument is zero-based. With a range of 0-11 (using western calendars.)
-
-'January' has an index value of zero. (Think of it like an array lookup.)
-
-  </div>
-</section>
-
-<!-- #8 -->
-<section class="challenge" group="Handling Dates">
-  <div class="description">
-
-# Date Constructor Part 3
-
-```js
-const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
-console.log(d3)
-```
-
-## What will the output include?
-
-  </div>
-  <ul class="options">
-    <li>01 Jan 1970</li>
-    <li>Unix Epoch of 0</li>
-    <li>Current Date, in UTC/GMT</li>
-    <li class="answer">Current Date</li>
-    <li>NaN</li>
-  </ul>
-  <div class="explanation">
-
-This is a **common gotcha** that's **easy to overlook**, even in code review.
-
-A `Date` instance created with `Date([args])` will always return today's date. In other words, the arguments are ignored. `Date('blah')` is an alias for `new Date()`.
-
-The missing piece is the `new` keyword: `new Date(dateString)`.
-
-  </div>
-</section>
-
 <!-- #10 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
@@ -365,7 +364,7 @@ console.log(d)
 
 The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
 
-If a value is provided outside of the number of days available, the date instance month value will be adjusted as is necessary. (e.g. A `setDate(32)` in January will calculate as February 1st.)
+If a value is provided outside of the number of days available, the date instance month value will be adjusted (e.g. A `setDate(32)` in January will calculate as February 1st.)
 
   </div>
 </section>
