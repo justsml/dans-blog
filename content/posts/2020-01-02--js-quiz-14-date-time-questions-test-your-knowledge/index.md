@@ -1,6 +1,6 @@
 ---
-title: "Top Date Handling Mistakes in JavaScript"
-subTitle: Gotchas every developer will run into.
+title: "JS Quiz: 14 Date Time Questions in JavaScript"
+subTitle: Gotchas every developer will encounter ✨
 date: 2020-01-02
 modified: 2020-01-03
 tags: [javascript,date,date class,gotchas,quiz,challenge]
@@ -65,7 +65,7 @@ As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-
 
 <div style="text-align: center; display: none;" class="quiz-ready">
 
-## 👇 Complete 13 Questions Below 👇
+## 👇 Complete 14 Questions Below 👇
 
 </div>
 
@@ -163,6 +163,33 @@ You won't observe this effect if you live at GMT-0 (or greater than GMT+1.)
   </div>
 </section>
 
+<!-- #3.5 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
+
+# UTC Dates
+
+```js
+var date = new Date(Date.UTC(2020, 0, 1))
+console.log(date.getUTCFullYear(), date.getFullYear())
+```
+
+## What will the output include?
+
+  </div>
+  <ul class="options">
+    <li>2020 2020</li>
+    <li class="answer">2020 2019</li>
+    <li>2019 2020</li>
+    <li>2019 2019</li>
+  </ul>
+  <div class="explanation">
+
+The `getFullYear()` method is based off a local offset of GMT-07:00. Which means it will give the previous year, as the date is represented locally is `Dec 31 2019 17:00:00`.
+
+  </div>
+</section>
+
 <!-- #4 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
@@ -195,7 +222,7 @@ The helper method `Date.UTC` doesn't return a date instance. It returns an integ
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Constructor
+# Date Constructor Part 1
 
 ```js
 const d1 = new Date(2020, 1, 1)
@@ -224,7 +251,7 @@ The Month argument is zero-based. With a range of 0-11 (using western calendars.
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Constructor
+# Date Constructor Part 2
 
 ```js
 const d2 = new Date(2020, 0, 1)
@@ -254,7 +281,7 @@ The Month argument is zero-based. With a range of 0-11 (using western calendars.
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Constructor
+# Date Constructor Part 3
 
 ```js
 const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
@@ -274,11 +301,9 @@ console.log(d3)
 
 This is a **common gotcha** that's **easy to overlook**, even in code review.
 
-A `Date` instance created with `Date([args])` will always return today's date. In other words, the arguments are ignored.
+A `Date` instance created with `Date([args])` will always return today's date. In other words, the arguments are ignored. `Date('blah')` is an alias for `new Date()`.
 
-The missing piece is the `new` keyword.
-
-The correct way to create `Date` instances from a string: `new Date(dateString)`.
+The missing piece is the `new` keyword: `new Date(dateString)`.
 
   </div>
 </section>
@@ -410,7 +435,7 @@ If a positive integer is provided to `setDate` outside of the number of days ava
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Dates: Stranger Setters
+# Dates: Strange Setters
 
 ```js
 const d = new Date(2020, 1, 1)
@@ -438,7 +463,7 @@ console.log(d)
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Dates: Stranger Setters
+# Dates: Strange Setters
 
 ```js
 const d = new Date(2020, 1, 1)
@@ -464,3 +489,33 @@ console.log(d)
   </div>
 </section>
 
+
+<!-- #14 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
+
+# UTC Dates
+
+```js
+const d = new Date(Date.UTC(2020, 0, 1))
+d.setDate(100)
+d.setDate(-100)
+console.log(d)
+```
+
+  </div>
+  <ul class="options">
+    <li>Feb 01 2020</li>
+    <li>Feb -100 2020</li>
+    <li class="answer">Jan 21 2020</li>
+    <li>Jan 01 2020</li>
+    <li>RangeError: Invalid argument.</li>
+  </ul>
+  <div class="explanation">
+
+**Hint:** Setting the date with `setDate(X)` isn't the same as adding `X` days. Nor is it the same using negative integers.
+
+![screenshots/date-setters.ex1.jpg](screenshots/date-setters.ex1.jpg)
+
+  </div>
+</section>
