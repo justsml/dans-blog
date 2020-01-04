@@ -488,34 +488,3 @@ console.log(d)
 
   </div>
 </section>
-
-
-<!-- #14 -->
-<section class="challenge" group="Handling Dates">
-  <div class="description">
-
-# UTC Dates
-
-```js
-const d = new Date(Date.UTC(2020, 0, 1))
-d.setDate(100)
-d.setDate(-100)
-console.log(d)
-```
-
-  </div>
-  <ul class="options">
-    <li>Feb 01 2020</li>
-    <li>Feb -100 2020</li>
-    <li class="answer">Jan 21 2020</li>
-    <li>Jan 01 2020</li>
-    <li>RangeError: Invalid argument.</li>
-  </ul>
-  <div class="explanation">
-
-**Hint:** Setting the date with `setDate(X)` isn't the same as adding `X` days. Nor is it the same using negative integers.
-
-![screenshots/date-setters.ex1.jpg](screenshots/date-setters.ex1.jpg)
-
-  </div>
-</section>
