@@ -20,7 +20,7 @@ The `Date` class in JavaScript has a notoriously difficult API. It was inherited
 
 This situation leads many developers to use 3rd party libraries without question. While often a safe and reliable choice, these libraries are rarely needed for formatting dates or localization!
 
-This quiz is designed to test your knowledge of the native `Date` API. Use the green buttons for hints & explanations! Hopefully by the end of the challenge you'll have solidified your understanding of `Date`'s in JavaScript.
+This quiz is designed to test (and deepen) your knowledge of the native `Date` API. Use the green buttons for hints & explanations! Hopefully by the end of the challenge you'll have solidified your understanding of `Date`'s in JavaScript.
 
 <!-- There are 3 big areas around dates that each have unique risks & tradeoffs. These 3 areas are listed in order of **'native API is broken'** to **'the native API can handle this'**:
 
