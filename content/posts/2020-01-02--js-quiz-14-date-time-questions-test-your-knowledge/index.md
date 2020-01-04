@@ -14,34 +14,35 @@ cover: pocket-watch.jpg
 > * No login or signup required. ✨
 > * Multiple choice. 🤖 ... _How difficult can it be, eh?_
 
-## Summary
+## Outline
 
-The `Date` class in JavaScript has a notoriously difficult API. This leads many developers to large 3rd party libraries. (Often a safe and reliable choice.)
+The `Date` class in JavaScript has a notoriously difficult API. It was inherited from Java...
 
-The native API is still worth learning about! It's not going anywhere! Often it's all you'll need - no 3rd party library necessary.
+This situation leads many developers to use 3rd party libraries without question. While often a safe and reliable choice, these libraries are rarely needed for formatting dates or localization!
 
-<!-- I often see mistakes in code that attempts to use it. Especially in regards to date math (e.g. add/subtract a week from today). Formatting  -->
+This quiz is designed to test your knowledge of the native `Date` API. Use the green buttons for hints & explanations! Hopefully by the end of the challenge you'll have solidified your understanding of `Date`'s in JavaScript.
 
-<!-- > It might help you understand the situation better to know JavaScript's `Date` is inherited from Java's `Date`.  -->
+<!-- There are 3 big areas around dates that each have unique risks & tradeoffs. These 3 areas are listed in order of **'native API is broken'** to **'the native API can handle this'**:
 
-There are 3 big areas around dates that each have unique risks & tradeoffs. These 3 areas are listed in order of **'everything is broken'** to **'I might not need momentjs'**:
-
-1. ☢️ **Modify Dates with Math.** _Write operation, not read-only._ Examples include extending subscriptions, trials, etc. (e.g. Add 1 week/year to `expiresDate`)
-    - Account for timezones
-    - Business rules (How many days is in a `Month` worth of subscription time? Fixed #, say 30? Current month's days?)
+1. ☢️ **Modify Dates with Math.** Examples include extending subscriptions, trials, etc. (e.g. Add 1 week/year to `expiresDate`)
+    - _Write operation, not read-only._
+    - Handle timezones
+    - Business rules (How many days is in a `Month`? Based on current month? Fixed #, e.g. 30? Dynamic?)
       - Do you add to existing `expiresDate` or from current date? (Affects those paying early/late.)
       - What if the expiry date is _way_ expired (by years) and customer renews for 1 month?
-2. ⚠️ **Formatting** (in timezone aware ways). _Can be read-only._
-    - Account for timezones
+2. ⚠️ **Formatting** (in timezone aware ways).
+    - _Can be read-only._
+    - Handle timezones
       - Preserve UTC/GMT for DB storage 😭
     - Locale rules (e.g. `en-US` uses `MM/DD/YYYY` vs `en-GB`'s `DD/MM/YYYY`)
-3. 👍 **Coordinated Client-side Data** (for logging, 3rd party APIs, etc.) _Can be read-only._
+3. 👍 **Coordinated Client-side Data** (for logging, 3rd party APIs, etc.)
+    - _Can be read-only._
     - Need to know if your APIs require UTC dates.
 
 While most _write operations_ should avoid using the native `Date` class in favor of far more intuitive 3rd party libraries, it certainly doesn't hurt to learn the native API.
 
 As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs).
-
+ -->
 
 ### If you get stuck
 
@@ -156,18 +157,18 @@ console.log(date.getFullYear())
 
 A Date instance cannot be created with a single integer as an argument. It is invalid, and will default to the start of 'computer time' (milliseconds since Jan 1st, 1970.)
 
-The reason the answer is not 1970 is because you'd need to use `.getUTCFullYear()` to get the year without timezone offset (for these questions, GMT-7 is assumed.)
+The reason the answer is not 1970 is because you'd need to use [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) to get the year without timezone offset (for these questions, GMT-7 is assumed.)
 
 You won't observe this effect if you live at GMT-0 (or greater than GMT+1.)
 
   </div>
 </section>
 
-<!-- #3.5 -->
+<!-- #4 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# UTC Dates
+# UTC Dates Part 1
 
 ```js
 var date = new Date(Date.UTC(2020, 0, 1))
@@ -185,16 +186,16 @@ console.log(date.getUTCFullYear(), date.getFullYear())
   </ul>
   <div class="explanation">
 
-The `getFullYear()` method is based off a local offset of GMT-07:00. Which means it will give the previous year, as the date is represented locally is `Dec 31 2019 17:00:00`.
+The [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) method is based off a local offset of GMT-07:00. Which means it will give the previous year, as the date is represented locally is `Dec 31 2019 17:00:00`.
 
   </div>
 </section>
 
-<!-- #4 -->
+<!-- #5 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# UTC Dates
+# UTC Dates Part 2
 
 ```js
 const d = Date.UTC(2020, 0, 1)
@@ -212,13 +213,45 @@ console.log(d)
   </ul>
   <div class="explanation">
 
-The helper method `Date.UTC` doesn't return a date instance. It returns an integer in milliseconds.
+The helper method [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) doesn't return a date instance. It returns an integer in milliseconds.
 
   </div>
 </section>
 
+<!-- #9 -->
+<section class="challenge" group="Handling Dates">
+  <div class="description">
 
-<!-- #5 -->
+# UTC Dates Part 3
+
+```js
+// Assume local TZ is -07:00
+const d = new Date(Date.UTC(2020, 0, 1))
+console.log(d.getTimezoneOffset())
+```
+
+## What will the output include?
+
+  </div>
+  <ul class="options">
+    <li>0</li>
+    <li class="answer">420</li>
+    <li>700</li>
+    <li>1400</li>
+    <li>null</li>
+  </ul>
+  <div class="explanation">
+
+Date instances do not store original timezone data, at least after it's been parsed.
+
+Date's will be implicitly presented in local time, with an unchanging [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+
+![screenshots/timezones-ex1.jpg](screenshots/timezones-ex1.jpg)
+
+  </div>
+</section>
+
+<!-- #6 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
@@ -246,8 +279,7 @@ The Month argument is zero-based. With a range of 0-11 (using western calendars.
   </div>
 </section>
 
-
-<!-- #6 -->
+<!-- #7 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
@@ -277,7 +309,7 @@ The Month argument is zero-based. With a range of 0-11 (using western calendars.
   </div>
 </section>
 
-<!-- #7 -->
+<!-- #8 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
@@ -309,44 +341,11 @@ The missing piece is the `new` keyword: `new Date(dateString)`.
   </div>
 </section>
 
-<!-- #8 -->
+<!-- #10 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# UTC Dates
-
-```js
-// Assume local TZ is -07:00
-const d = new Date(Date.UTC(2020, 0, 1))
-console.log(d.getTimezoneOffset())
-```
-
-## What will the output include?
-
-  </div>
-  <ul class="options">
-    <li>0</li>
-    <li class="answer">420</li>
-    <li>700</li>
-    <li>1400</li>
-    <li>null</li>
-  </ul>
-  <div class="explanation">
-
-Date instances do not store original timezone data, at least after it's been parsed.
-
-Date's will be implicitly presented in local time, with an unchanging `getTimezoneOffset`.
-
-![screenshots/timezones-ex1.jpg](screenshots/timezones-ex1.jpg)
-
-  </div>
-</section>
-
-<!-- #9 -->
-<section class="challenge" group="Handling Dates">
-  <div class="description">
-
-# Date Setters
+# Date Setters Part 1
 
 ```js
 const d = new Date(2020, 0, 1)
@@ -364,18 +363,18 @@ console.log(d)
   </ul>
   <div class="explanation">
 
-The [`setDate`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
+The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
 
 If a value is provided outside of the number of days available, the date instance month value will be adjusted as is necessary. (e.g. A `setDate(32)` in January will calculate as February 1st.)
 
   </div>
 </section>
 
-<!-- #10 -->
+<!-- #11 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Setters
+# Date Setters Part 2
 
 ```js
 const d = new Date(2020, 0, 1)
@@ -402,12 +401,11 @@ If you invoke `setDate(0)` the date instance will adjust to the last day of the 
   </div>
 </section>
 
-
-<!-- #11 -->
+<!-- #12 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Date Setters
+# Date Setters Part 3
 
 ```js
 const d = new Date(2020, 0, 1)
@@ -431,12 +429,11 @@ If a positive integer is provided to `setDate` outside of the number of days ava
   </div>
 </section>
 
-
-<!-- #12 -->
+<!-- #13 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Dates: Strange Setters
+# Date Setters Part 4
 
 ```js
 const d = new Date(2020, 1, 1)
@@ -460,11 +457,11 @@ console.log(d)
 </section>
 
 
-<!-- #13 -->
+<!-- #14 -->
 <section class="challenge" group="Handling Dates">
   <div class="description">
 
-# Dates: Strange Setters
+# Date Setters Part 5
 
 ```js
 const d = new Date(2020, 1, 1)
@@ -482,6 +479,10 @@ console.log(d)
     <li>RangeError: Invalid argument.</li>
   </ul>
   <div class="explanation">
+
+This is perhaps a strange bit of code, and hopefully you don't find this in your code base.
+
+Every senior developer I've shown this to guessed the wrong answer.
 
 **Hint:** Setting the date with `setDate(X)` isn't the same as adding `X` days. Nor is it the same using negative integers.
 
