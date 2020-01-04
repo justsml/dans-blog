@@ -296,7 +296,7 @@ class About extends React.Component {
               </p>
               <div className="text-center">
                 <br />
-                <a href={`${withPrefix("/DanLevy-Resume-2019.pdf")}`}>
+                <a href={`${withPrefix("/resume-dan-levy-2020.pdf")}`}>
                   <b>Download Dan&apos;s Resume</b>
                 </a>
                 <br />
