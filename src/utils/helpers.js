@@ -92,9 +92,9 @@ export function trackCustomEvent({
       transport
     };
 
-    if (!validateGoogleAnalyticsEvent(trackingEventOptions)) {
-      console.error("WARNING: Analytics data invalid, may be truncated.", trackingEventOptions);
-    }
+    // if (!validateGoogleAnalyticsEvent(trackingEventOptions)) {
+    //   console.error("WARNING: Analytics data invalid, may be truncated.", trackingEventOptions);
+    // }
 
     if (hitCallback && typeof hitCallback === `function`) {
       trackingEventOptions.hitCallback = () => setTimeout(hitCallback, callbackTimeout);
