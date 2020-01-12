@@ -26,6 +26,7 @@ import "./style.css";
 // import { trackCustomEvent } from "gatsby-plugin-google-analytics";
 import { trackCustomEvent } from "../../utils/helpers.js";
 import { isHtml } from "../../utils/shared.js";
+import safeStorage from "../../utils/safeStorage.js";
 /*
 EXAMPLE CHALLENGE DEFINITION:
 
@@ -255,11 +256,11 @@ class Challenge extends React.Component {
     const { attempts, selection } = this.state;
     const data = JSON.stringify({ attempts, selection });
     // console.log("saving cachedState", data);
-    localStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
+    safeStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
   };
 
   loadState = () => {
-    let cachedState = localStorage.getItem("Challenge_" + this.props.title + this.props.number);
+    let cachedState = safeStorage.getItem("Challenge_" + this.props.title + this.props.number);
     // console.log("loading cachedState", this.props.title, cachedState);
     cachedState = cachedState
       ? JSON.parse(cachedState)
