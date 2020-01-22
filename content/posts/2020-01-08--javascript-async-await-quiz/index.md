@@ -130,7 +130,7 @@ async function getData() {
   </ul>
   <div class="explanation">
 
-One unique aspect of `async` functions is that the last `await` behaves a lot like a `return` in _JS Original Recipe_. So, for this example whatever comes after the last `await` (or `return`) will be the promise's return value.
+One unique aspect of `async` functions is that the last `await` behaves a lot like a `return` in _JS Original Recipe_. So, for this example whatever comes after the last `await` (or `return`) will be the ultimate return value.
 
   </div>
 </section>
@@ -155,12 +155,78 @@ async function getData() {
     <li>Promise&lt;null&gt;</li>
     <li>Promise&lt;5&gt;</li>
     <li class="answer">Promise&lt;42&gt;</li>
+    <li>42</li>
     <li>5</li>
-    <li>Error: Missing `await`</li>
   </ul>
   <div class="explanation">
 
 One unique aspect of `async` functions is that the last `await` behaves a lot like a `return` in _JS Original Recipe_. So, for this example whatever comes after the last `await` (or `return`) will be the promise's return value.
+
+  </div>
+</section>
+
+<!-- #5 -->
+<section class="challenge" group="Async/Await">
+  <div class="description">
+
+# Async/Await Fundamentals - Part 5
+
+```js
+let data;
+
+(async () => {
+  data = 5
+  return 42
+})()
+
+console.log(data)
+```
+
+## What will print in the console?
+
+  </div>
+  <ul class="options">
+    <li>null</li>
+    <li>Promise&lt;5&gt;</li>
+    <li class="answer">5</li>
+    <li>42</li>
+    <li>undefined</li>
+  </ul>
+  <div class="explanation">
+
+Here our `async` function is going to behave exactly like synchronous code - it's dealing exclusively with synchronous values. The IIFE (Immediately Invoked Function Expression) is the wrapped function in the middle. It will fully execute before the `console.log` line.
+
+  </div>
+</section>
+
+
+<!-- #6 -->
+<section class="challenge" group="Async/Await Errors">
+  <div class="description">
+
+# Async/Await Error Handling Part 1
+
+```js
+const getData = async () => {
+  await 42
+  throw Error('Not connected')
+}
+
+console.log(getData())
+```
+
+## What will print in the console?
+
+  </div>
+  <ul class="options">
+    <li>Error: Not connected</li>
+    <li>Promise&lt;42&gt;</li>
+    <li class="answer">UnhandledPromiseRejectionWarning: Not Connected</li>
+    <li>42</li>
+  </ul>
+  <div class="explanation">
+
+This one is a bit tricky because it prints a little differently depending on the runtime.
 
   </div>
 </section>

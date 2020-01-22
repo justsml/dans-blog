@@ -38,24 +38,33 @@ class Layout extends React.Component {
   categories = [];
 
   componentDidMount() {
-    this.props.setIsWideScreen(isWideScreen());
-    if (typeof window !== "undefined") {
-      window.addEventListener("resize", this.resizeThrottler, false);
+    try {
+      this.props.setIsWideScreen(isWideScreen());
+      if (typeof window !== "undefined") {
+        window.addEventListener("resize", this.resizeThrottler, false);
+      }
+    } catch (error) {
+      this.storageError = error;
     }
   }
 
   componentWillMount() {
-    if (typeof localStorage !== "undefined") {
-      const inLocal = +localStorage.getItem("font-size-increase");
+    // if (this.storageError) return;
+    try {
+      if (typeof localStorage !== "undefined") {
+        const inLocal = +localStorage.getItem("font-size-increase");
 
-      const inStore = this.props.fontSizeIncrease;
+        const inStore = this.props.fontSizeIncrease;
 
-      if (inLocal && inLocal !== inStore && inLocal >= 1 && inLocal <= 1.5) {
-        this.props.setFontSizeIncrease(inLocal);
+        if (inLocal && inLocal !== inStore && inLocal >= 1 && inLocal <= 1.5) {
+          this.props.setFontSizeIncrease(inLocal);
+        }
       }
-    }
 
-    this.getCategories();
+      this.getCategories();
+    } catch (error) {
+      this.storageError = error;
+    }
   }
 
   getCategories = () => {
