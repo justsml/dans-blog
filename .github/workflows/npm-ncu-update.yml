@@ -8,14 +8,14 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: set remote url
-      run: git remote set-url --push origin https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+      run: git remote set-url --push origin https://$GITHUB_ACTOR:${{ secrets.GH_TOKEN }}@github.com/$GITHUB_REPOSITORY
     - name: package-update
       uses: justsml/actions-package-update@master
       env:
         AUTHOR_EMAIL: dan@danlevy.net
         AUTHOR_NAME: justsml
         EXECUTE: "true"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         LOG_LEVEL: debug
       with:
         args: -u --packageFile package.json --loglevel verbose
