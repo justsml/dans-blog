@@ -10,7 +10,7 @@ jobs:
     - name: set remote url
       run: git remote set-url --push origin https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
     - name: package-update
-      uses: taichi/actions-package-update@master
+      uses: justsml/actions-package-update@master
       env:
         AUTHOR_EMAIL: dan@danlevy.net
         AUTHOR_NAME: justsml
