@@ -25,7 +25,7 @@ const styles = theme => ({
       marginBottom: "10px",
       "&:hover span": {
         cursor: "pointer",
-        backgroundColor: "#70942580",
+        backgroundColor: "#578c1880",
         borderRadius: "10%"
       },
       "& span": {
@@ -35,9 +35,11 @@ const styles = theme => ({
         cursor: "pointer",
         transition: "all 0.25s ease-in",
         // textShadow: "1px 1px 1px #709425",
-        backgroundColor: "#70942511",
+        backgroundColor: "#578c1811",
+        //accent: "#578c18e6", //"#709425",
+
         // theme.navigator.colors.postsListItemLinkHover,
-        color: "#709425",
+        color: "#578c18",
         height: "28px",
         minWidth: "132px",
         // textAlign: "right",
@@ -104,7 +106,7 @@ const Tags = ({ allTags, pathContext, data, classes }) => {
   const tagHeader = `${totalCount} post${totalCount === 1 ? "" : "s"} tagged with "${tagName}"`;
   const nodes = edges.map(mergePostNode); //pathContext.posts;
   // console.log("nodes:", nodes);
-  
+
   return (
     <Main>
       <Article>
