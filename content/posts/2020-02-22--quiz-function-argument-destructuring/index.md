@@ -39,32 +39,195 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 </div>
 
 
-<!-- #6 -->
-<section class="challenge" group="Handling Dates">
+<section class="challenge" group="Object Arguments">
   <div class="description">
 
-# Date Constructor Part 1
+# Object Arguments - Fundamentals
 
 ```js
-const d1 = new Date(2020, 1, 1)
-console.log(d1)
+function saveSettings({title, theme = 'darkMode'}) {
+  console.log(theme)
+}
+saveSettings('lightMode')
 ```
 
 ## What will the output include?
 
   </div>
   <ul class="options">
-    <li>Jan 01 2020</li>
-    <li class="answer">Feb 01 2020</li>
-    <li>RangeError: Invalid argument.</li>
+    <li>Error</li>
+    <li>`darkMode`</li>
+    <li>`lightMode`</li>
+    <li>C'mon, there's only `darkMode`</li>
   </ul>
   <div class="explanation">
-
-The Month argument is zero-based. With a range of 0-11 (using western calendars.)
-
-'February' has an index value of one. (Think of it like an array lookup.)
 
   </div>
 </section>
 
+
+<section class="challenge" group="Object Arguments - Gotchas">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+function createPerson({title, name, location}) {
+  return `Hi, I'm ${title} ${name} from ${location}`
+}
+console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
+```
+
+  </div>
+  <ul class="options">
+    <li>`Hi, I'm undefined undefined from undefined`</li>
+    <li>Error</li>
+    <li>`Hi, I'm Capt. Marvel from Earth?`</li>
+    <li>**Hint/Explanation**</li>
+  </ul>
+
+  <aside class="hint" hint-id="1">It's important you can spot this issue. It won't produce an error (aka line numbers). This silent-fail is missed in the majority of code lacking tests. But you probably always TDD, right? </aside>
+  <aside class="hint" hint-id="2">**Hint:** What type is the first argument?</aside>
+
+</section>
+
+<section class="challenge" group="Object Arguments - Gotchas">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+function createPerson({title, name, location}) {
+  return `Hi, I'm ${title} ${name} from ${location}`
+}
+console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
+```
+
+  </div>
+  <ul class="options">
+    <li>`Hi, I'm Capt. Marvel from undefined`</li>
+    <li>Error</li>
+    <li>`Hi, I'm Capt. Marvel from Earth?`</li>
+    <li>`Hi, I'm undefined undefined from undefined`</li>
+  </ul>
+
+</section>
+
+<section class="challenge" group="Defaults">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+const updateStatus = ({status = 'n/a'}) => {
+  console.log(status)
+}
+updateStatus()
+```
+
+  </div>
+  <ul class="options">
+    <li>Error</li>
+    <li>`n/a`</li>
+    <li>`null`</li>
+    <li>`undefined`</li>
+  </ul>
+
+  <aside class="hint">The function `updateStatus` is expecting an object. It will attempt to get the `.status` property from the input argument.</aside>
+
+  <aside class="hint">This mistake is easy to miss. I remember making it plenty of times when I started learning destructuring & defaults.</aside>
+
+  <aside class="hint">Additional Hint: Calling `updateStatus()` is similar to `updateStatus(undefined)`</aside>
+
+</section>
+
+<section class="challenge" group="Defaults #2">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+const updateStatus = ({status = 'n/a'}) => {
+  console.log(status)
+}
+let myStatus = '🤔'
+updateStatus(myStatus)
+```
+
+  </div>
+  <ul class="options">
+    <li>`n/a`</li>
+    <li>Error</li>
+    <li>🤔</li>
+    <li>`null`</li>
+    <li>`undefined`</li>
+    <li>**Hint/Explanation**</li>
+  </ul>
+
+  <aside class="hint">You won't get an error, even though `myStatus` is a string, not the object `updateStatus`'s signature suggests.</aside>
+
+</section>
+
+<section class="challenge" group="Defaults #3">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+const updateStatus = ({status = 'n/a'}) => {
+  console.log(status)
+}
+updateStatus({status: `🥳`})
+updateStatus({status: null})
+```
+
+  </div>
+  <ul class="options">
+    <li>🥳, `null`</li>
+    <li>🥳</li>
+  </ul>
+
+</section>
+
+<section class="challenge" group="Common Handlers">
+  <div class="description">
+
+# What will print in the console?
+
+```js
+// Assume usage: <input onchange='inputHandler' name='email' type='text' />
+function inputHandler({target: {name, value}}) {
+  console.log(`Name: ${name}`)
+}
+```
+
+  </div>
+  <ul class="options">
+    <li>Error</li>
+  </ul>
+
+</section>
+
+<section class="challenge" group="Aliasing">
+  <div class="description">
+
+```js
+function createListing({listing_title, city_name}) {
+  console.log(`Saving ${listing_title}`)
+  // Sends listing to database, where snake-case is required
+}
+createListing({listingTitle: 'Red Wagon', cityName: 'NYC'})
+```
+
+## What will fix this code?
+
+  </div>
+  <ul class="options">
+    <li>`createListing({listingTitle: listing_title, cityName: city_name})`</li>
+    <li>`createListing({listing_title: listingTitle, city_name: cityName})`</li>
+    <li>`createListing({listing_title = listingTitle, city_name = cityName})`</li>
+    <li>`createListing({listingTitle = listing_title, cityName = city_name})`</li>
+  </ul>
+
+</section>
 

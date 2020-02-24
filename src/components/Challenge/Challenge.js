@@ -22,6 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import Pulse from "react-reveal/Pulse";
 import HeadShake from "react-reveal/HeadShake";
 import Fade from "react-reveal/Fade";
+import Hints from "./Hints.js";
 import "./style.css";
 // import { trackCustomEvent } from "gatsby-plugin-google-analytics";
 import { trackCustomEvent } from "../../utils/helpers.js";
@@ -42,6 +43,283 @@ EXAMPLE CHALLENGE DEFINITION:
 </div>
 
 */
+
+class Challenge extends React.Component {
+  state = {
+    selection: "",
+    attempts: 0,
+    showExplanation: false,
+    cachedState: {}
+  };
+
+  static propTypes = {
+    onAnswer: PropTypes.func,
+    reset: PropTypes.func,
+    number: PropTypes.number,
+    title: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    options: PropTypes.arrayOf(PropTypes.string).isRequired,
+    explanation: PropTypes.string,
+    hints: PropTypes.oneOf(PropTypes.string, PropTypes.arrayOf(PropTypes.string)),
+    classes: PropTypes.object.isRequired,
+    html: PropTypes.string
+  };
+
+  componentDidMount() {
+    this.loadState();
+  }
+
+  trackAnswer = () => {
+    trackCustomEvent({
+      // string - required - The object that was interacted with (e.g.video)
+      category: `Quiz: ${window.location.host}/${window.location.pathname.replace(/^\/|\/$/g, "")}`,
+      // string - required - Type of interaction (e.g. 'play')
+      action: this.isCorrect() ? "Correct" : "Incorrect",
+      // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
+      label: this.props.title + " #" + this.props.number,
+      // number - optional - Numeric value associated with the event. (e.g. A product ID)
+      value: this.state.attempts
+    });
+  };
+
+  saveState = () => {
+    const { attempts, selection } = this.state;
+    const data = JSON.stringify({ attempts, selection });
+    // console.log("saving cachedState", data);
+    safeStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
+  };
+
+  loadState = () => {
+    let cachedState = safeStorage.getItem("Challenge_" + this.props.title + this.props.number);
+    // console.log("loading cachedState", this.props.title, cachedState);
+    cachedState = cachedState
+      ? JSON.parse(cachedState)
+      : {
+          attempts: 0,
+          selection: ""
+        };
+    this.setState({ ...this.state, cachedState, ...cachedState });
+  };
+
+  isCorrect = answer => {
+    if (answer === this.props.answer) return true;
+    return this.state.selection === this.props.answer;
+  };
+
+  tryAnswer = option => {
+    const isCorrect = this.isCorrect();
+    if (typeof this.props.onAnswer !== "function") {
+      console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
+    } else {
+      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
+    }
+    if (isCorrect) return null;
+    this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
+    if (option === this.props.answer) {
+      this.handleShowExplanation();
+    }
+    setTimeout(this.saveState, 1);
+    setTimeout(this.trackAnswer, 90);
+  };
+
+  getOption = option => {
+    const { classes } = this.props;
+    const isCurrentAnswer = this.props.answer === option;
+    const isCurrentSelection = this.state.selection === option;
+    const selectionIcon =
+      isCurrentSelection && isCurrentAnswer ? (
+        <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
+      ) : (
+        <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
+      );
+    return (
+      <li
+        key={option}
+        onClick={() => this.tryAnswer(option)}
+        className={
+          "challenge-option " +
+          (this.isCorrect() && isCurrentAnswer
+            ? "challenge-option-correct"
+            : "challenge-option-incorrect")
+        }
+      >
+        <Pulse duration={500} count={2} spy={this.isCorrect() && isCurrentAnswer}>
+          {selectionIcon}
+        </Pulse>
+        <label>{option}</label>
+      </li>
+    );
+  };
+
+  reset = () => {
+    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false }, () =>
+      setTimeout(this.saveState, 1)
+    );
+    if (this.props.reset) this.props.reset();
+  };
+
+  handleShowExplanation = () => {
+    this.setState({ ...this.state, showExplanation: !this.state.showExplanation });
+  };
+
+  showHintByIndex = (hintIndex) => {
+    this.setState({ ...this.state, showHintIndex: hintIndex})
+  };
+
+  showNextHint = () => {
+    const {hints, showHintIndex} = this.state
+    if (!hints || hints.length <= 0) return
+    const nextHint = showHintIndex == null ? 0 : showHintIndex >= hints.length - 1 ? 0 : showHintIndex + 1
+    this.setState({ ...this.state, showHintIndex: nextHint})
+  };
+
+  showNextHint = () => {
+    const {hints, showHintIndex} = this.state
+    if (!hints || hints.length <= 0) return
+    const nextHint = showHintIndex == null ? 0 : showHintIndex >= hints.length - 1 ? 0 : showHintIndex + 1
+    this.setState({ ...this.state, showHintIndex: nextHint})
+  };
+
+  getMarkdownHtml = markdown => {
+    return marked(markdown, {
+      gfm: true,
+      tables: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false
+    });
+  };
+
+  renderHtml = (content, props = {}) => (
+    <div dangerouslySetInnerHTML={{ __html: content }} {...props} />
+  );
+
+  renderMarkdown = (content, props = {}) => this.renderHtml(this.getMarkdownHtml(content), props);
+
+  renderContent = (content, props = {}) => {
+    // might need to default assume markdown
+    return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
+  };
+
+  render() {
+    const { showExplanation, attempts, showHintIndex, hints } = this.state;
+    const { title, number, description, options, explanation } = this.props;
+    const { classes } = this.props;
+
+    let challengeClasses =
+      classes.outerBox +
+      " challenge-block " +
+      (this.isCorrect()
+        ? `challenge-correct ${classes.correct}`
+        : `challenge-incorrect ${attempts}` >= 1
+          ? classes.failed
+          : "");
+    // this.isCorrect()
+
+    const showHelp = showExplanation || showHintIndex != null;
+
+    const headerIcon =
+      attempts === 0 ? (
+        <HelpIcon color="action" fontSize="large" title={`Question: ${title}`} />
+      ) : this.isCorrect() ? (
+        <CheckCircle color="primary" fontSize="large" />
+      ) : (
+        <CancelIcon color="error" fontSize="large" />
+      );
+
+    return (
+      <HeadShake
+        spy={attempts}
+        when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
+      >
+        <Card className={`challenge-ui ${challengeClasses}`}>
+          <CardHeader
+            className="question-header"
+            avatar={headerIcon}
+            title={
+              <h2>
+                {Number(number) > 0 ? number + ". " : ""}
+                {title}
+              </h2>
+            }
+          >
+            {title}
+          </CardHeader>
+          <CardContent>
+            <Typography className={`q-description ${classes.description}`} component="span">
+              {this.renderContent(this.props.html || description, { className: "description" })}
+            </Typography>
+            <Typography className="q-answers-list" component="span">
+              <div className={classes.prompt}>
+                <HelpOutlineIcon fontSize="large" className={classes.icon} />
+                Please select the closest answer:
+              </div>
+              <Fade top cascade duration={500} fraction={0.25}>
+                <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
+              </Fade>
+            </Typography>
+          </CardContent>
+          <CardActions className={classes.actions} disableActionSpacing>
+            {attempts > 0 && (
+              <Button
+                role="button"
+                variant="outlined"
+                color="secondary"
+                size="small"
+                onClick={this.reset}
+                className={"challenge-reset-button"}
+              >
+                Reset
+                <RefreshIcon />
+              </Button>
+            )}
+            {!this.isCorrect() &&
+              attempts > 0 && (
+                <div className={classes.status}>
+                  <CancelIcon color="secondary" fontSize="large" /> Try Again
+                </div>
+              )}
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: showHelp
+              })}
+              onClick={() => this.showNextHint()}
+              aria-expanded={showHelp}
+              aria-label="Show Hint"
+              title="Toggle Hint"
+            >
+              {this.state.showHintByIndex != null
+                  ? `Hide Hint`
+                  : `Show Hint`}
+              <HelpIcon />
+            </Button>
+          </CardActions>
+          <Collapse in={showHelp} unmountOnExit>
+            <CardContent>
+              {showHintIndex != null && <Hints showIndex={showHintIndex} hints={hints} />}
+              {showExplanation && this.renderContent(explanation, { className: "explanation" })}
+            </CardContent>
+          </Collapse>
+        </Card>
+      </HeadShake>
+    );
+
+    // return (
+    //   <section className={challengeClasses}>
+    //     <h1>{this.props.title}</h1>
+
+    //     {showHelp &&
+    //       }
+    //   </section>
+    // );
+  }
+}
+
 
 const styles = theme => ({
   card: {},
@@ -213,260 +491,5 @@ const styles = theme => ({
     transition: "all 0.25s ease-in"
   }
 });
-
-class Challenge extends React.Component {
-  state = {
-    selection: "",
-    attempts: 0,
-    showExplanation: false,
-    cachedState: {}
-  };
-
-  static propTypes = {
-    onAnswer: PropTypes.func,
-    reset: PropTypes.func,
-    number: PropTypes.number,
-    title: PropTypes.string.isRequired,
-    answer: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    options: PropTypes.arrayOf(PropTypes.string).isRequired,
-    explanation: PropTypes.string,
-    html: PropTypes.string,
-    classes: PropTypes.object.isRequired
-  };
-
-  componentDidMount() {
-    this.loadState();
-  }
-
-  trackAnswer = () => {
-    trackCustomEvent({
-      // string - required - The object that was interacted with (e.g.video)
-      category: `Quiz: ${window.location.host}/${window.location.pathname.replace(/^\/|\/$/g, "")}`,
-      // string - required - Type of interaction (e.g. 'play')
-      action: this.isCorrect() ? "Correct" : "Incorrect",
-      // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
-      label: this.props.title + " #" + this.props.number,
-      // number - optional - Numeric value associated with the event. (e.g. A product ID)
-      value: this.state.attempts
-    });
-  };
-
-  saveState = () => {
-    const { attempts, selection } = this.state;
-    const data = JSON.stringify({ attempts, selection });
-    // console.log("saving cachedState", data);
-    safeStorage.setItem("Challenge_" + this.props.title + this.props.number, data);
-  };
-
-  loadState = () => {
-    let cachedState = safeStorage.getItem("Challenge_" + this.props.title + this.props.number);
-    // console.log("loading cachedState", this.props.title, cachedState);
-    cachedState = cachedState
-      ? JSON.parse(cachedState)
-      : {
-          attempts: 0,
-          selection: ""
-        };
-    this.setState({ ...this.state, cachedState, ...cachedState });
-  };
-
-  isCorrect = answer => {
-    if (answer === this.props.answer) return true;
-    return this.state.selection === this.props.answer;
-  };
-
-  tryAnswer = option => {
-    const isCorrect = this.isCorrect();
-    if (typeof this.props.onAnswer !== "function") {
-      console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
-    } else {
-      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
-    }
-    if (isCorrect) return null;
-    this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
-    setTimeout(this.saveState, 1);
-    setTimeout(this.trackAnswer, 90);
-  };
-
-  getOption = option => {
-    const { classes } = this.props;
-    const isCurrentAnswer = this.props.answer === option;
-    const isCurrentSelection = this.state.selection === option;
-    const selectionIcon =
-      isCurrentSelection && isCurrentAnswer ? (
-        <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
-      ) : (
-        <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
-      );
-    return (
-      <li
-        key={option}
-        onClick={() => this.tryAnswer(option)}
-        className={
-          "challenge-option " +
-          (this.isCorrect() && isCurrentAnswer
-            ? "challenge-option-correct"
-            : "challenge-option-incorrect")
-        }
-      >
-        <Pulse duration={500} count={2} spy={this.isCorrect() && isCurrentAnswer}>
-          {selectionIcon}
-        </Pulse>
-        <label>{option}</label>
-      </li>
-    );
-  };
-
-  reset = () => {
-    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false }, () =>
-      setTimeout(this.saveState, 1)
-    );
-    if (this.props.reset) this.props.reset();
-  };
-
-  handleExpandClick = () => {
-    this.setState({ ...this.state, showExplanation: !this.state.showExplanation });
-  };
-
-  getMarkdownHtml = markdown => {
-    return marked(markdown, {
-      gfm: true,
-      tables: true,
-      breaks: false,
-      sanitize: false,
-      smartLists: true,
-      smartypants: false
-    });
-  };
-
-  renderHtml = (content, props = {}) => (
-    <div dangerouslySetInnerHTML={{ __html: content }} {...props} />
-  );
-
-  renderMarkdown = (content, props = {}) => this.renderHtml(this.getMarkdownHtml(content), props);
-
-  renderContent = (content, props = {}) => {
-    // might need to default assume markdown
-    return isHtml(content) ? this.renderHtml(content, props) : this.renderMarkdown(content, props);
-  };
-
-  render() {
-    const { showExplanation, attempts } = this.state;
-    const { title, number, description, options, explanation } = this.props;
-    const { classes } = this.props;
-
-    let challengeClasses =
-      classes.outerBox +
-      " challenge-block " +
-      (this.isCorrect()
-        ? `challenge-correct ${classes.correct}`
-        : `challenge-incorrect ${attempts}` >= 1
-          ? classes.failed
-          : "");
-    // this.isCorrect()
-
-    const showHelp = showExplanation;
-
-    const headerIcon =
-      attempts === 0 ? (
-        <HelpIcon color="action" fontSize="large" title={`Question: ${title}`} />
-      ) : this.isCorrect() ? (
-        <CheckCircle color="primary" fontSize="large" />
-      ) : (
-        <CancelIcon color="error" fontSize="large" />
-      );
-
-    return (
-      <HeadShake
-        spy={attempts}
-        when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
-      >
-        <Card className={`challenge-ui ${challengeClasses}`}>
-          <CardHeader
-            className="question-header"
-            avatar={headerIcon}
-            title={
-              <h2>
-                {Number(number) > 0 ? number + ". " : ""}
-                {title}
-              </h2>
-            }
-          >
-            {title}
-          </CardHeader>
-          <CardContent>
-            <Typography className={`q-description ${classes.description}`} component="span">
-              {this.renderContent(this.props.html || description, { className: "description" })}
-            </Typography>
-            <Typography className="q-answers-list" component="span">
-              <div className={classes.prompt}>
-                <HelpOutlineIcon fontSize="large" className={classes.icon} />
-                Please select the closest answer:
-              </div>
-              <Fade top cascade duration={500} fraction={0.25}>
-                <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
-              </Fade>
-            </Typography>
-          </CardContent>
-          <CardActions className={classes.actions} disableActionSpacing>
-            {attempts > 0 && (
-              <Button
-                role="button"
-                variant="outlined"
-                color="secondary"
-                size="small"
-                onClick={this.reset}
-                className={"challenge-reset-button"}
-              >
-                Reset
-                <RefreshIcon />
-              </Button>
-            )}
-            {!this.isCorrect() &&
-              attempts > 0 && (
-                <div className={classes.status}>
-                  <CancelIcon color="secondary" fontSize="large" /> Try Again
-                </div>
-              )}
-            <Button
-              variant="outlined"
-              size="small"
-              color="primary"
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: showHelp
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={showHelp}
-              aria-label="Show Hint"
-              title="Show Hint"
-            >
-              {!explanation || explanation.length < 30
-                ? "[todo]"
-                : this.state.showExplanation
-                  ? `Hide Hint`
-                  : `Show Hint`}
-              <HelpIcon />
-            </Button>
-          </CardActions>
-          <Collapse in={showHelp} unmountOnExit>
-            <CardContent>
-              {this.renderContent(explanation, { className: "explanation" })}
-            </CardContent>
-          </Collapse>
-        </Card>
-      </HeadShake>
-    );
-
-    // return (
-    //   <section className={challengeClasses}>
-    //     <h1>{this.props.title}</h1>
-
-    //     {showHelp &&
-    //       }
-    //   </section>
-    // );
-  }
-}
 
 export default injectSheet(styles)(Challenge);

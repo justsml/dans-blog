@@ -37,6 +37,15 @@ const styles = theme => ({
   }
 });
 
+const getOneBySelector = (elem, selector) => {
+  const el = elem && elem.querySelector && elem.querySelector(selector);
+  return el ? el.innerHTML : "";
+}
+
+const getAllBySelector = (c, selector) => !c.querySelectorAll
+  ? []
+  : Array.from(c.querySelectorAll(selector))
+
 class AutoLoader extends React.Component {
   state = {
     score: { totalAvailable: -1, current: 0 },
@@ -48,11 +57,6 @@ class AutoLoader extends React.Component {
     classes: PropTypes.object.isRequired
   };
 
-  getContent = (elem, selector) => {
-    const el = elem && elem.querySelector && elem.querySelector(selector);
-    return el ? el.innerHTML : "";
-  };
-
   componentDidMount() {
     // check the DOM for static data to extract
     retryApp(this.checkInlineChallenges, { limit: 8, delayMsec: 125 });
@@ -60,7 +64,7 @@ class AutoLoader extends React.Component {
   }
 
   checkContentForMetadata = config => {
-    const { description: content } = config;
+    const { description: content, hints } = config;
     if (!content) return {};
 
     const html = isHtml(content) ? content : this.renderMarkdown(content);
@@ -141,14 +145,13 @@ class AutoLoader extends React.Component {
 
     const challengeConfigs = challenges.map(c => {
       const config = {
-        title: c.title || this.getContent(c, ".title"),
-        answer: this.getContent(c, ".answer"),
-        description: this.getContent(c, ".description"),
-        explanation: this.getContent(c, ".explanation"),
-        hint: this.getContent(c, ".hint"),
-        options: !c.querySelectorAll
-          ? []
-          : Array.from(c.querySelectorAll(".options > *")).map(li => li.textContent)
+        title: c.title || getOneBySelector(c, ".title"),
+        answer: getOneBySelector(c, ".answer"),
+        description: getOneBySelector(c, ".description"),
+        explanation: getOneBySelector(c, ".explanation"),
+        hint: getOneBySelector(c, ".hint"),
+        options: getAllBySelector(c, ".options > *").map(li => li.textContent),
+        hints: getAllBySelector(c, ".hint").map(li => li.textContent)
       };
       // Check for in-line overides before going any further
       const overrides = this.checkContentForMetadata(config);
