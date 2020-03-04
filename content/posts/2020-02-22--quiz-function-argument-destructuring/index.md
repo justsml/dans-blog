@@ -55,18 +55,20 @@ saveSettings('lightMode')
 
   </div>
   <ul class="options">
-    <li>Error</li>
+    <li class='answer'>Error</li>
     <li>`darkMode`</li>
     <li>`lightMode`</li>
     <li>C'mon, there's only `darkMode`</li>
   </ul>
   <div class="explanation">
 
+Test: placeholder content!
+
   </div>
 </section>
 
 
-<section class="challenge" group="Object Arguments - Gotchas">
+<section class="challenge" title="Object Arguments - Gotchas">
   <div class="description">
 
 # What will print in the console?
@@ -80,13 +82,13 @@ console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
 
   </div>
   <ul class="options">
-    <li>`Hi, I'm undefined undefined from undefined`</li>
+    <li class='answer'>`Hi, I'm undefined undefined from undefined`</li>
     <li>Error</li>
     <li>`Hi, I'm Capt. Marvel from Earth?`</li>
     <li>**Hint/Explanation**</li>
   </ul>
 
-  <aside class="hint" hint-id="1">It's important you can spot this issue. It won't produce an error (aka line numbers). This silent-fail is missed in the majority of code lacking tests. But you probably always TDD, right? </aside>
+  <aside class="hint" hint-id="1">It's important you can spot this issue. It won't produce an error (aka line numbers). This silent-fail is often missed. Especially if you are prone to forget TDD/tests. But you probably always TDD, right?</aside>
   <aside class="hint" hint-id="2">**Hint:** What type is the first argument?</aside>
 
 </section>
@@ -105,7 +107,7 @@ console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
 
   </div>
   <ul class="options">
-    <li>`Hi, I'm Capt. Marvel from undefined`</li>
+    <li class='answer'>`Hi, I'm Capt. Marvel from undefined`</li>
     <li>Error</li>
     <li>`Hi, I'm Capt. Marvel from Earth?`</li>
     <li>`Hi, I'm undefined undefined from undefined`</li>
@@ -127,7 +129,7 @@ updateStatus()
 
   </div>
   <ul class="options">
-    <li>Error</li>
+    <li class='answer'>Error</li>
     <li>`n/a`</li>
     <li>`null`</li>
     <li>`undefined`</li>
@@ -156,7 +158,7 @@ updateStatus(myStatus)
 
   </div>
   <ul class="options">
-    <li>`n/a`</li>
+    <li class='answer'>`n/a`</li>
     <li>Error</li>
     <li>🤔</li>
     <li>`null`</li>
@@ -183,7 +185,7 @@ updateStatus({status: null})
 
   </div>
   <ul class="options">
-    <li>🥳, `null`</li>
+    <li class='answer'>🥳, `null`</li>
     <li>🥳</li>
   </ul>
 
@@ -203,7 +205,7 @@ function inputHandler({target: {name, value}}) {
 
   </div>
   <ul class="options">
-    <li>Error</li>
+    <li class='answer'>Error</li>
   </ul>
 
 </section>
@@ -223,7 +225,7 @@ createListing({listingTitle: 'Red Wagon', cityName: 'NYC'})
 
   </div>
   <ul class="options">
-    <li>`createListing({listingTitle: listing_title, cityName: city_name})`</li>
+    <li class='answer'>`createListing({listingTitle: listing_title, cityName: city_name})`</li>
     <li>`createListing({listing_title: listingTitle, city_name: cityName})`</li>
     <li>`createListing({listing_title = listingTitle, city_name = cityName})`</li>
     <li>`createListing({listingTitle = listing_title, cityName = city_name})`</li>

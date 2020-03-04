@@ -148,8 +148,8 @@ class AutoLoader extends React.Component {
         title: c.title || getOneBySelector(c, ".title"),
         answer: getOneBySelector(c, ".answer"),
         description: getOneBySelector(c, ".description"),
-        explanation: getOneBySelector(c, ".explanation"),
-        hint: getOneBySelector(c, ".hint"),
+        explanation: getOneBySelector(c, ".explanation").trim(),
+        hint: getAllBySelector(c, ".hint"),
         options: getAllBySelector(c, ".options > *").map(li => li.textContent),
         hints: getAllBySelector(c, ".hint").map(li => li.textContent)
       };

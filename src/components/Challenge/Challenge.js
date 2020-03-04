@@ -49,6 +49,7 @@ class Challenge extends React.Component {
     selection: "",
     attempts: 0,
     showExplanation: false,
+    showHintIndex: -1,
     cachedState: {}
   };
 
@@ -61,7 +62,7 @@ class Challenge extends React.Component {
     description: PropTypes.string.isRequired,
     options: PropTypes.arrayOf(PropTypes.string).isRequired,
     explanation: PropTypes.string,
-    hints: PropTypes.oneOf(PropTypes.string, PropTypes.arrayOf(PropTypes.string)),
+    hints: PropTypes.arrayOf(PropTypes.string),
     classes: PropTypes.object.isRequired,
     html: PropTypes.string
   };
@@ -97,39 +98,39 @@ class Challenge extends React.Component {
       ? JSON.parse(cachedState)
       : {
           attempts: 0,
-          selection: ""
+          selection: null
         };
     this.setState({ ...this.state, cachedState, ...cachedState });
   };
 
-  isCorrect = answer => {
-    if (answer === this.props.answer) return true;
-    return this.state.selection === this.props.answer;
+  isCorrect = (selection = this.state.selection) => {
+    return selection === this.props.answer;
   };
 
   tryAnswer = option => {
-    const isCorrect = this.isCorrect();
+    const wasCorrect = this.props.answer === this.state.selection;
+    const isCorrect = this.props.answer === option;
+    if (wasCorrect) return null
     if (typeof this.props.onAnswer !== "function") {
       console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
     } else {
-      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
+      this.props.onAnswer({ correct: isCorrect, selection: option, attempts: this.state.attempts, questionTitle: this.props.title });
     }
-    if (isCorrect) return null;
+    this.toggleExplanation(true);
+    if (!isCorrect) this.showNextHint();
+    // if (isCorrect) return null;
     this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
-    if (option === this.props.answer) {
-      this.handleShowExplanation();
-    }
     setTimeout(this.saveState, 1);
     setTimeout(this.trackAnswer, 90);
   };
 
   getOption = option => {
     const { classes } = this.props;
-    const isCurrentAnswer = this.props.answer === option;
-    const isCurrentSelection = this.state.selection === option;
+    const { attempts = 0, selection } = this.state;
+    const isSelectedAnswer = selection === option;
     const selectionIcon =
-      isCurrentSelection && isCurrentAnswer ? (
-        <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
+      isSelectedAnswer && attempts > 0 ? (
+        <CheckBoxIcon className={classes.icon} fontSize="large" color={this.isCorrect() ? "primary" : "error"} />
       ) : (
         <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
       );
@@ -139,12 +140,11 @@ class Challenge extends React.Component {
         onClick={() => this.tryAnswer(option)}
         className={
           "challenge-option " +
-          (this.isCorrect() && isCurrentAnswer
-            ? "challenge-option-correct"
-            : "challenge-option-incorrect")
+          (attempts > 0 && isSelectedAnswer ? "challenge-option-correct " : " ") +
+          (attempts > 0 && !isSelectedAnswer ? "challenge-option-incorrect " : "")
         }
       >
-        <Pulse duration={500} count={2} spy={this.isCorrect() && isCurrentAnswer}>
+        <Pulse duration={500} count={2} spy={isSelectedAnswer}>
           {selectionIcon}
         </Pulse>
         <label>{option}</label>
@@ -159,25 +159,39 @@ class Challenge extends React.Component {
     if (this.props.reset) this.props.reset();
   };
 
-  handleShowExplanation = () => {
-    this.setState({ ...this.state, showExplanation: !this.state.showExplanation });
+  toggleExplanation = (showExplanation = !this.state.showExplanation) => {
+    this.setState({ ...this.state, showExplanation: showExplanation });
   };
 
-  showHintByIndex = (hintIndex) => {
-    this.setState({ ...this.state, showHintIndex: hintIndex})
+  showPrevHint = () => {
+    const {showHintIndex = 0} = this.state
+    const {hints} = this.props;
+    if (!hints || hints.length <= 0) return
+    let prevHint = showHintIndex - 1;
+
+    if (prevHint < 0) {
+      prevHint = hints.length - 1;
+    }
+
+    console.debug('showPrevHint', {showHintIndex, prevHint})
+    this.setState({ ...this.state, showHintIndex: prevHint})
   };
+
+  hideHints = () => {
+    console.debug('hideHints', {showHintIndex: -1})
+    this.setState({...this.state, showHintIndex: -1});
+  }
 
   showNextHint = () => {
-    const {hints, showHintIndex} = this.state
+    console.debug('showNextHint', {showHintIndex, nextHint})
+    const {showHintIndex = 0} = this.state
+    const {hints} = this.props;
     if (!hints || hints.length <= 0) return
-    const nextHint = showHintIndex == null ? 0 : showHintIndex >= hints.length - 1 ? 0 : showHintIndex + 1
-    this.setState({ ...this.state, showHintIndex: nextHint})
-  };
+    let nextHint = showHintIndex + 1
 
-  showNextHint = () => {
-    const {hints, showHintIndex} = this.state
-    if (!hints || hints.length <= 0) return
-    const nextHint = showHintIndex == null ? 0 : showHintIndex >= hints.length - 1 ? 0 : showHintIndex + 1
+    if (nextHint >= hints.length) {
+      nextHint = 0
+    }
     this.setState({ ...this.state, showHintIndex: nextHint})
   };
 
@@ -204,18 +218,18 @@ class Challenge extends React.Component {
   };
 
   render() {
-    const { showExplanation, attempts, showHintIndex, hints } = this.state;
-    const { title, number, description, options, explanation } = this.props;
+    const { selection, showExplanation, showHintIndex, attempts } = this.state;
+    const { answer, title, number, description, options, explanation, hints } = this.props;
     const { classes } = this.props;
+    const isDirty = attempts && attempts >= 1
+    const isCorrect = selection === answer
 
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
-      (this.isCorrect()
-        ? `challenge-correct ${classes.correct}`
-        : `challenge-incorrect ${attempts}` >= 1
-          ? classes.failed
-          : "");
+      (isDirty && isCorrect
+        ? `challenge-correct ${classes.correct}` : ` `) +
+      (isDirty && !isCorrect ? `challenge-incorrect attempt-count-${attempts} ${classes.failed}` : ``);
     // this.isCorrect()
 
     const showHelp = showExplanation || showHintIndex != null;
@@ -223,7 +237,7 @@ class Challenge extends React.Component {
     const headerIcon =
       attempts === 0 ? (
         <HelpIcon color="action" fontSize="large" title={`Question: ${title}`} />
-      ) : this.isCorrect() ? (
+      ) : isCorrect ? (
         <CheckCircle color="primary" fontSize="large" />
       ) : (
         <CancelIcon color="error" fontSize="large" />
@@ -232,7 +246,7 @@ class Challenge extends React.Component {
     return (
       <HeadShake
         spy={attempts}
-        when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
+        when={attempts !== this.state.cachedState.attempts && !isCorrect}
       >
         <Card className={`challenge-ui ${challengeClasses}`}>
           <CardHeader
@@ -252,17 +266,13 @@ class Challenge extends React.Component {
               {this.renderContent(this.props.html || description, { className: "description" })}
             </Typography>
             <Typography className="q-answers-list" component="span">
-              <div className={classes.prompt}>
-                <HelpOutlineIcon fontSize="large" className={classes.icon} />
-                Please select the closest answer:
-              </div>
               <Fade top cascade duration={500} fraction={0.25}>
                 <ul className={classes.optionList}>{options.map(this.getOption)}</ul>
               </Fade>
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            {attempts > 0 && (
+            {isDirty && (
               <Button
                 role="button"
                 variant="outlined"
@@ -274,34 +284,51 @@ class Challenge extends React.Component {
                 Reset
                 <RefreshIcon />
               </Button>
-            )}
-            {!this.isCorrect() &&
-              attempts > 0 && (
+            ) || null}
+            {!isCorrect && isDirty && (
                 <div className={classes.status}>
-                  <CancelIcon color="secondary" fontSize="large" /> Try Again
+                  <CancelIcon color="secondary" fontSize="large" /> Incorrect! Try another option.
                 </div>
-              )}
-            <Button
+              ) || null}
+            {hints.length > 0 && <Button
               variant="contained"
               size="small"
               color="primary"
               className={classnames(classes.expand, {
-                [classes.expandOpen]: showHelp
+                [classes.expandOpen]: showHintIndex != -1
               })}
-              onClick={() => this.showNextHint()}
-              aria-expanded={showHelp}
-              aria-label="Show Hint"
+              onClick={() => showHintIndex === -1 ? this.showNextHint() : this.hideHints()}
+              aria-expanded={showHintIndex != -1}
+              aria-label={`Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`}
               title="Toggle Hint"
             >
-              {this.state.showHintByIndex != null
-                  ? `Hide Hint`
-                  : `Show Hint`}
-              <HelpIcon />
-            </Button>
+              {showHintIndex == -1
+                  ? `Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`
+                  : `Hide Hint${hints.length > 1 ? 's' : ''}`}
+              <HelpIcon style={{marginLeft: '0.5rem'}} />
+            </Button>}
+
+            {explanation && explanation.length > 0 && <Button
+              variant="contained"
+              size="small"
+              color="default"
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: showExplanation
+              })}
+              onClick={() => this.toggleExplanation()}
+              aria-expanded={showExplanation}
+              aria-label={`Show Explanation`}
+              title="Toggle Explanation"
+            >
+              {showExplanation
+                  ? `Hide Explanation`
+                  : `Show Explanation`}
+              <HelpIcon style={{marginLeft: '0.5rem'}} />
+            </Button>}
           </CardActions>
           <Collapse in={showHelp} unmountOnExit>
             <CardContent>
-              {showHintIndex != null && <Hints showIndex={showHintIndex} hints={hints} />}
+              {showHintIndex != -1 && <Hints showIndex={showHintIndex} hints={hints} handleNext={this.showNextHint} handlePrev={this.showPrevHint} />}
               {showExplanation && this.renderContent(explanation, { className: "explanation" })}
             </CardContent>
           </Collapse>
@@ -324,7 +351,14 @@ class Challenge extends React.Component {
 const styles = theme => ({
   card: {},
   prompt: {
-    marginLeft: "0",
+    marginBottom: "0.5rem",
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      marginLeft: "-.5rem"
+    },
+    [`@media (max-width: ${theme.mediaQueryTresholds.M}px)`]: {
+      marginLeft: "-.5rem"
+    },
+    marginLeft: "-0.5rem",
     display: "flex",
     alignItems: "center",
     alignContent: "center",
@@ -332,11 +366,13 @@ const styles = theme => ({
   },
   outerBox: {
     width: "100%",
-    margin: "1em auto",
+    // margin: "1em auto",
     border: "1px solid #999",
     padding: "0em 1rem 1rem 1rem",
     "& code[class*='language-'], pre[class*='language-']": {
-      fontSize: "0.9rem"
+      fontSize: "0.9rem",
+      margin: "2rem 0"
+
     },
     "& .challenge-option svg": {
       marginBottom: "-0.4rem"
@@ -431,8 +467,12 @@ const styles = theme => ({
         overflowX: "auto"
       },
       [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-        margin: "1.2rem -2.6rem 0 0",
-        padding: "0.5rem 0",
+        marginLeft: '-2.6rem',
+        marginRight: '-2.6rem',
+        marginBottom: "0",
+        marginTop: "0",
+        // margin: "1.2rem -2.6rem 0 0",
+        padding: "0.5rem 2.6rem",
         overflowX: "auto"
       }
     }
