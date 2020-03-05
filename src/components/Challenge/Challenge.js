@@ -22,6 +22,7 @@ import Typography from "@material-ui/core/Typography";
 import Pulse from "react-reveal/Pulse";
 import HeadShake from "react-reveal/HeadShake";
 import Fade from "react-reveal/Fade";
+import MoreInfo from "./MoreInfo.js";
 import Hints from "./Hints.js";
 import "./style.css";
 // import { trackCustomEvent } from "gatsby-plugin-google-analytics";
@@ -71,17 +72,17 @@ class Challenge extends React.Component {
     this.loadState();
   }
 
-  trackAnswer = () => {
-    trackCustomEvent({
+  trackEvent = (action = this.isCorrect() ? "Correct" : "Incorrect", defer = 25) => {
+    setTimeout(() => trackCustomEvent({
       // string - required - The object that was interacted with (e.g.video)
       category: `Quiz: ${window.location.host}/${window.location.pathname.replace(/^\/|\/$/g, "")}`,
       // string - required - Type of interaction (e.g. 'play')
-      action: this.isCorrect() ? "Correct" : "Incorrect",
+      action,
       // string - optional - Useful for categorizing events (e.g. 'Spring Campaign')
       label: this.props.title + " #" + this.props.number,
       // number - optional - Numeric value associated with the event. (e.g. A product ID)
       value: this.state.attempts
-    });
+    }), defer);
   };
 
   saveState = () => {
@@ -119,47 +120,55 @@ class Challenge extends React.Component {
     this.toggleExplanation(true);
     if (!isCorrect) this.showNextHint();
     // if (isCorrect) return null;
-    this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
-    setTimeout(this.saveState, 1);
-    setTimeout(this.trackAnswer, 90);
+    this.setState((state, props) => {
+      setTimeout(this.saveState, 1);
+      this.trackEvent();
+      return { ...state, selection: option, attempts: ++state.attempts }
+    });
   };
 
   getOption = option => {
     const { classes } = this.props;
     const { attempts = 0, selection } = this.state;
-    const isSelectedAnswer = selection === option;
-    const selectionIcon =
-      isSelectedAnswer && attempts > 0 ? (
-        <CheckBoxIcon className={classes.icon} fontSize="large" color={this.isCorrect() ? "primary" : "error"} />
-      ) : (
-        <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />
-      );
+    const isCurrentlySelected = selection === option;
+    let selectionIcon = <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" />;
+
+    if (isCurrentlySelected) {
+      if (this.isCorrect()) {
+        selectionIcon = <CheckBoxIcon className={classes.icon} fontSize="large" color="primary" />
+      } else {
+        selectionIcon = <CheckBoxOutlineBlankIcon className={classes.icon} fontSize="large" color="error" />
+      }
+    }
+
     return (
       <li
         key={option}
         onClick={() => this.tryAnswer(option)}
         className={
           "challenge-option " +
-          (attempts > 0 && isSelectedAnswer ? "challenge-option-correct " : " ") +
-          (attempts > 0 && !isSelectedAnswer ? "challenge-option-incorrect " : "")
+          (attempts > 0 && isCurrentlySelected ? "challenge-option-correct " : " ") +
+          (attempts > 0 && !isCurrentlySelected ? "challenge-option-incorrect " : "")
         }
       >
-        <Pulse duration={500} count={2} spy={isSelectedAnswer}>
+        <Pulse duration={500} count={2} spy={isCurrentlySelected}>
           {selectionIcon}
         </Pulse>
-        <label>{option}</label>
+        <label>{this.renderContent(option)}</label>
       </li>
     );
   };
 
   reset = () => {
-    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false }, () =>
+    this.setState({ ...this.state, attempts: 0, selection: "", showExplanation: false, showHintIndex: -1 }, () => {
+      this.trackEvent(`Reset`)
       setTimeout(this.saveState, 1)
-    );
+    });
     if (this.props.reset) this.props.reset();
   };
 
   toggleExplanation = (showExplanation = !this.state.showExplanation) => {
+    this.trackEvent(showExplanation ? `ShowExplanation` : `HideExplanation`)
     this.setState({ ...this.state, showExplanation: showExplanation });
   };
 
@@ -173,17 +182,18 @@ class Challenge extends React.Component {
       prevHint = hints.length - 1;
     }
 
-    console.debug('showPrevHint', {showHintIndex, prevHint})
+    this.trackEvent(`Hint_${prevHint}`)
     this.setState({ ...this.state, showHintIndex: prevHint})
   };
 
   hideHints = () => {
-    console.debug('hideHints', {showHintIndex: -1})
+    this.trackEvent(`HideHints`)
+    // console.debug('hideHints', {showHintIndex: -1})
     this.setState({...this.state, showHintIndex: -1});
   }
 
   showNextHint = () => {
-    console.debug('showNextHint', {showHintIndex, nextHint})
+    // console.debug('showNextHint', {showHintIndex, nextHint})
     const {showHintIndex = 0} = this.state
     const {hints} = this.props;
     if (!hints || hints.length <= 0) return
@@ -192,6 +202,7 @@ class Challenge extends React.Component {
     if (nextHint >= hints.length) {
       nextHint = 0
     }
+    this.trackEvent(`Hint_${nextHint}`)
     this.setState({ ...this.state, showHintIndex: nextHint})
   };
 
@@ -272,64 +283,67 @@ class Challenge extends React.Component {
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            {isDirty && (
-              <Button
-                role="button"
-                variant="outlined"
-                color="secondary"
-                size="small"
-                onClick={this.reset}
-                className={"challenge-reset-button"}
-              >
-                Reset
-                <RefreshIcon />
-              </Button>
-            ) || null}
-            {!isCorrect && isDirty && (
-                <div className={classes.status}>
-                  <CancelIcon color="secondary" fontSize="large" /> Incorrect! Try another option.
-                </div>
+            {!isCorrect && <div className="wrong-answer">
+              {isDirty && (
+                <Button
+                  role="button"
+                  variant="outlined"
+                  color="secondary"
+                  size="small"
+                  onClick={this.reset}
+                  className={"challenge-reset-button"}
+                >
+                  Reset
+                  <RefreshIcon />
+                </Button>
               ) || null}
-            {hints.length > 0 && <Button
-              variant="contained"
-              size="small"
-              color="primary"
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: showHintIndex != -1
-              })}
-              onClick={() => showHintIndex === -1 ? this.showNextHint() : this.hideHints()}
-              aria-expanded={showHintIndex != -1}
-              aria-label={`Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`}
-              title="Toggle Hint"
-            >
-              {showHintIndex == -1
-                  ? `Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`
-                  : `Hide Hint${hints.length > 1 ? 's' : ''}`}
-              <HelpIcon style={{marginLeft: '0.5rem'}} />
-            </Button>}
-
-            {explanation && explanation.length > 0 && <Button
-              variant="contained"
-              size="small"
-              color="default"
-              className={classnames(classes.expand, {
-                [classes.expandOpen]: showExplanation
-              })}
-              onClick={() => this.toggleExplanation()}
-              aria-expanded={showExplanation}
-              aria-label={`Show Explanation`}
-              title="Toggle Explanation"
-            >
-              {showExplanation
-                  ? `Hide Explanation`
-                  : `Show Explanation`}
-              <HelpIcon style={{marginLeft: '0.5rem'}} />
-            </Button>}
+              {!isCorrect && isDirty && (
+                  <div className={classes.status}>
+                    <CancelIcon color="secondary" fontSize="large" /> Incorrect! Try another option.
+                  </div>
+                ) || null}
+            </div>}
+            <div className="btn-group help-buttons" role="group" aria-label="Available hints or explanation">
+              {hints.length > 0 && <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                className={classnames(classes.expand, 'btn', {
+                  [classes.expandOpen]: showHintIndex != -1
+                })}
+                onClick={() => showHintIndex === -1 ? this.showNextHint() : this.hideHints()}
+                aria-expanded={showHintIndex != -1}
+                aria-label={`Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`}
+                title="Toggle Hint"
+              >
+                {showHintIndex == -1
+                    ? `Show ${hints.length} Hint${hints.length > 1 ? 's' : ''}`
+                    : `Hide Hint${hints.length > 1 ? 's' : ''}`}
+                <HelpIcon style={{marginLeft: '0.5rem'}} />
+              </Button>}
+              {explanation && explanation.length > 0 && <Button
+                variant="contained"
+                size="small"
+                color="default"
+                className={classnames(classes.expand, 'btn', {
+                  [classes.expandOpen]: showExplanation
+                })}
+                onClick={() => this.toggleExplanation()}
+                aria-expanded={showExplanation}
+                aria-label={`Show Explanation`}
+                title="Toggle Explanation"
+              >
+                {showExplanation
+                    ? `Hide Explanation`
+                    : `Show Explanation`}
+                <HelpIcon style={{marginLeft: '0.5rem'}} />
+              </Button>}
+            </div>
           </CardActions>
           <Collapse in={showHelp} unmountOnExit>
             <CardContent>
               {showHintIndex != -1 && <Hints showIndex={showHintIndex} hints={hints} handleNext={this.showNextHint} handlePrev={this.showPrevHint} />}
-              {showExplanation && this.renderContent(explanation, { className: "explanation" })}
+              {showExplanation && <MoreInfo className="explanation">{explanation}</MoreInfo>}
             </CardContent>
           </Collapse>
         </Card>
@@ -497,7 +511,21 @@ const styles = theme => ({
     display: "flex",
     alignItems: "center",
     alignContent: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    //.btn-group > .btn-group:not(:last-child) > .btn,
+    //.btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+    //.btn-group > .dropdown-toggle:not(:last-of-type)
+    "& .btn-group:not(:last-child) > .btn, .btn-group > .btn:not(:last-child):not(.dropdown-toggle)": {
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+    "& .btn-group > .btn:not(:first-child)": {
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+    },
+    "& .help-buttons": {
+      maxWidth: 365
+    }
   },
   status: {
     flexGrow: 2,

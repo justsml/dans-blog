@@ -1,11 +1,11 @@
 ---
-title: "JS Quiz: Function Argument Destructuring"
-subTitle: Have you mastered this powerful features?
+title: "JS Quiz: Destructuring Function Argument"
+subTitle: Master one of ES6's most powerful features!
 date: 2020-02-22
-modified: 2020-02-22
-tags: [javascript,quiz,challenge,]
+modified: 2020-03-06
+tags: [javascript,quiz,challenge,destructuring,es6]
 category: Quiz
-# cover: pocket-watch.jpg
+cover: nathan-dumlao-3kZpELkaxHc-resized.png
 ---
 
 # Have you mastered ES2015 Destructuring?
@@ -17,10 +17,14 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 
 ### If you get stuck
 
-1. **Read the Hints** (Green button, lower right corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
+1. **Read the Hints** (Green button, lower right corner).
 2. Try the code in your browser's Console (try shortcut `F12` on Windows, or `Command + Option + J` on Mac).
 3. Please feel free to [Tweet me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Destructuring%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
 4. Post comment at the end of the post.
+
+> If you are new to destructuring, I'd recommend first reading Wes Bos' <a href="https://wesbos.com/destructuring-objects/" target="_blank">excellent introduction</a> and his <a href="https://wesbos.com/destructuring-renaming/" target="_blank">post on renaming.</a>
+
+> If you are a more experienced JS developer, check out the <a href="https://exploringjs.com/es6/ch_destructuring.html" target="_blank">detailed reference on ExploringJS.</a>
 
 <div style="text-align: center; width: 75%; margin: 0 auto 10rem auto; white-space: nowrap; font-size: 1.4em;" class="quiz-loading">
 
@@ -39,10 +43,8 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 </div>
 
 
-<section class="challenge" group="Object Arguments">
+<section class="challenge" title="Fundamentals">
   <div class="description">
-
-# Object Arguments - Fundamentals
 
 ```js
 function saveSettings({title, theme = 'darkMode'}) {
@@ -55,23 +57,28 @@ saveSettings('lightMode')
 
   </div>
   <ul class="options">
-    <li class='answer'>Error</li>
     <li>`darkMode`</li>
     <li>`lightMode`</li>
     <li>C'mon, there's only `darkMode`</li>
+    <li class='answer'>Error</li>
+    <li>`undefined`</li>
   </ul>
   <div class="explanation">
 
-Test: placeholder content!
+The issue here is we need to pass in an object, not a string, into any function with destructured parameters.
+
+The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
+
+The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will be `undefined`, which triggers the default values specified in the function declaration.
 
   </div>
 </section>
 
 
-<section class="challenge" title="Object Arguments - Gotchas">
+<section class="challenge" title="Gotchas">
   <div class="description">
 
-# What will print in the console?
+## What will print in the console?
 
 ```js
 function createPerson({title, name, location}) {
@@ -83,20 +90,27 @@ console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
   </div>
   <ul class="options">
     <li class='answer'>`Hi, I'm undefined undefined from undefined`</li>
-    <li>Error</li>
     <li>`Hi, I'm Capt. Marvel from Earth?`</li>
-    <li>**Hint/Explanation**</li>
+    <li>`undefined`</li>
+    <li>Error</li>
   </ul>
 
   <aside class="hint" hint-id="1">It's important you can spot this issue. It won't produce an error (aka line numbers). This silent-fail is often missed. Especially if you are prone to forget TDD/tests. But you probably always TDD, right?</aside>
   <aside class="hint" hint-id="2">**Hint:** What type is the first argument?</aside>
+  <div class="explanation">
+
+The issue here is we need to pass in an object, not a string, into any function with destructured parameters.
+
+The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
+
+The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will be `undefined`, which triggers the default values specified in the function declaration.
+
+  </div>
 
 </section>
 
-<section class="challenge" group="Object Arguments - Gotchas">
+<section class="challenge" title="Gotchas">
   <div class="description">
-
-# What will print in the console?
 
 ```js
 function createPerson({title, name, location}) {
@@ -105,20 +119,21 @@ function createPerson({title, name, location}) {
 console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
 ```
 
+## What will print in the console?
+
   </div>
   <ul class="options">
     <li class='answer'>`Hi, I'm Capt. Marvel from undefined`</li>
-    <li>Error</li>
     <li>`Hi, I'm Capt. Marvel from Earth?`</li>
     <li>`Hi, I'm undefined undefined from undefined`</li>
+    <li>`undefined`</li>
+    <li>Error</li>
   </ul>
 
 </section>
 
-<section class="challenge" group="Defaults">
+<section class="challenge" title="Defaults">
   <div class="description">
-
-# What will print in the console?
 
 ```js
 const updateStatus = ({status = 'n/a'}) => {
@@ -127,12 +142,14 @@ const updateStatus = ({status = 'n/a'}) => {
 updateStatus()
 ```
 
+## What will print in the console?
+
   </div>
   <ul class="options">
-    <li class='answer'>Error</li>
     <li>`n/a`</li>
     <li>`null`</li>
     <li>`undefined`</li>
+    <li class='answer'>Error</li>
   </ul>
 
   <aside class="hint">The function `updateStatus` is expecting an object. It will attempt to get the `.status` property from the input argument.</aside>
@@ -143,10 +160,8 @@ updateStatus()
 
 </section>
 
-<section class="challenge" group="Defaults #2">
+<section class="challenge" title="Defaults #2">
   <div class="description">
-
-# What will print in the console?
 
 ```js
 const updateStatus = ({status = 'n/a'}) => {
@@ -156,24 +171,23 @@ let myStatus = '🤔'
 updateStatus(myStatus)
 ```
 
+## What will print in the console?
+
   </div>
   <ul class="options">
-    <li class='answer'>`n/a`</li>
-    <li>Error</li>
     <li>🤔</li>
+    <li class='answer'>`n/a`</li>
     <li>`null`</li>
     <li>`undefined`</li>
-    <li>**Hint/Explanation**</li>
+    <li>Error</li>
   </ul>
 
   <aside class="hint">You won't get an error, even though `myStatus` is a string, not the object `updateStatus`'s signature suggests.</aside>
 
 </section>
 
-<section class="challenge" group="Defaults #3">
+<section class="challenge" title="Defaults #3">
   <div class="description">
-
-# What will print in the console?
 
 ```js
 const updateStatus = ({status = 'n/a'}) => {
@@ -183,53 +197,197 @@ updateStatus({status: `🥳`})
 updateStatus({status: null})
 ```
 
+## What will print in the console?
+
   </div>
   <ul class="options">
     <li class='answer'>🥳, `null`</li>
     <li>🥳</li>
+    <li>Error</li>
   </ul>
 
 </section>
 
-<section class="challenge" group="Common Handlers">
+<section class="challenge" title="Use Cases: DOM Events">
   <div class="description">
 
-# What will print in the console?
+For this question I'm assuming some DOM API knowledge - specifically <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event#Properties" target="_blank" rel="noopener noreferrer">the event callback's argument.</a>
+
+Given the following HTML `<input id='email' type='text' />`.
+
+And JavaScript wire-up like this: `email.addEventListener('focus', () => inputHandler())`
 
 ```js
-// Assume usage: <input onchange='inputHandler' name='email' type='text' />
-function inputHandler({target: {name, value}}) {
-  console.log(`Name: ${name}`)
+function inputHandler({target: {id, value}}) {
+  console.log(`${id}: ${value}`)
 }
 ```
 
+## What will print as a result of triggering the event?
+
   </div>
   <ul class="options">
+    <li>`email: `</li>
+    <li>`name: `</li>
+    <li>`name: undefined`</li>
     <li class='answer'>Error</li>
   </ul>
 
-</section>
+  <aside class="hint">A common gotcha around `addEventListener` callback. Verify the wire-up code.</aside>
+  <aside class="hint">What happens when you invoke `inputHandler()` without an argument?</aside>
 
-<section class="challenge" group="Aliasing">
-  <div class="description">
+  <section class="explanation">
+
+We get an error because we're trying to access properties on an undefined object (`target`)!
+
+It's similar to the issue in this pre-ES5 code:
 
 ```js
-function createListing({listing_title, city_name}) {
-  console.log(`Saving ${listing_title}`)
-  // Sends listing to database, where snake-case is required
+// ❌💩❌💩❌💩
+function inputHandler(element) {
+  var target = element.target;
+  // Breaks if `target` is undefined
+  var id = target.id;
+  var value = target.value;
+
+  console.log(`${id}: ${value}`)
 }
-createListing({listingTitle: 'Red Wagon', cityName: 'NYC'})
 ```
 
-## What will fix this code?
+### So, what's the fix?
+
+#### Option 1
+
+Remember to pass through expected objects.
+
+Using either:
+
+1. `email.addEventListener('focus', inputHandler)`
+1. `email.addEventListener('focus', (event) => inputHandler(event))`
+
+#### Option 2
+
+This is more of a strategy for avoiding the JS runtime's generic error messages.
+
+**Why?**
+
+Ideally your API has a very narrow and tightly-scoped 'surface area.'
+
+When given various bad input, it should *predictably* either return a placeholder value, or throw an error.
+
+_How does this relate to destructuring?_
+
+Destructuring is not very tolerant of nulls by default. In fact it can feel quite brittle.
+
+Here we'll look at a technique to address this potential pitfall: let me introduce you to _DAN_ (Defensive Argument Nulls). _DAN_ is all about well-placed default values in our object arguments.
+
+Let's look at an more complex example: a geo-spatial/mapping library requires a specific-shaped object as input to display pushpin(s). We need an `input` like `{coords: [{lat, lon}, {lat, lon}, ...]}` which is used by `displayPushpin(input)`.
+
+`displayPushpin` needs to get the first coordinates from the `coords` array, while handling these 3 scenarios:
+
+1. Permit empty/missed input object argument,
+1. `coords` being `undefined`,
+1. and `coords` being otherwise invalid `[]`.
+
+\* invalid coords should be interpreted as being `[{lat: null, lon: null}]`.
+
+##### Before: DAN (Defensive Argument Nulls)
+
+```js
+// Presumptive destructuring, may throw null errors:
+const displayPushpin = ({coords: [{lat: lat1, lon: lon1}]}) => console.log({lat1, lon1})
+
+displayPushpin() // ❌ Error!
+displayPushpin({coords: undefined}) // ❌ Error!
+displayPushpin({coords: []}) // ❌ Error!
+displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
+```
+
+##### After: DAN (Defensive Argument Nulls)
+
+To fix each 'error' in the code above, we'd need to adjust `displayPushpin`'s arguments:
+
+1. `({coords: [{lat: lat1, lon: lon1}]} = {}) => ...`
+    - added ` = {}`
+1. `({coords: [{lat: lat1, lon: lon1}] = [{lat: null, lon: null}]}) => ...`
+    - added ` = [{lat: null, lon: null}]`
+1. `({coords: [{lat: lat1, lon: lon1} = {lat: null, lon: null}]}) => ...`
+    - added ` = {lat: null, lon: null}`
+
+It takes a bit of practice to identify the needed defaults and add them at _exactly_ the right bracket/position.
+
+As you add default values for nested object/array data structures you might notice things start to get messy. For example, let's combine the 3 _DAN_ patterns listed above and:
+
+```js
+// ✅ 3 Combined DAN Techniques 😰. It works...
+const displayPushpin = ({
+  coords: [
+    { lat: lat1, lon: lon1 } = { lat: null, lon: null }
+  ] = [{ lat: null, lon: null }]
+} = {}) => console.log({ lat1, lon1 })
+
+displayPushpin() // {lat1: null, lon1: null}
+displayPushpin({coords: undefined}) // {lat1: null, lon1: null}
+displayPushpin({coords: []}) // {lat1: null, lon1: null}
+displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
+```
+
+> _Note:_ This approach isn't always the "right tool," and it can get a bit convoluted if you have 3+ levels of nested data structures.
+
+Our `displayPushpin()` is a bit complex as it's expected input requires an `object->array->object`. In general I try avoid mixing destructuring objects and arrays together like this.
+
+The most important take-away you'll want to remember: 95% of the time I only need to add `= {}` somewhere. Like in the following example.
+
+```js
+// My code looks more like this after refactoring w/ DAN
+function inputHandler({target: {id, value} = {}} = {}) {
+  // ☝️ Note the 2 defaults added above: ' = {}'
+  console.log(`${id}: ${value}`)
+}
+```
+
+> It's much more manageable when setting empty-object fallbacks without any complex structure. Note the ` = {}` bit added to each object 'level'.
+
+  </section>
+
+</section>
+
+<section class="challenge" title="Use Cases: Re-shaping Data">
+  <div class="description">
+
+Choose the destructuring syntax which will make `cityName` available as `city_name` inside `createListing()`.
+
+Assume our app uses camel-case naming conventions.
+
+```js
+const createListing = (/* choose an option below */) => {
+  // [Sends listing to database, where snake-case is required]
+}
+createListing({title: 'E-Corp', cityName: 'NYC'})
+```
+
+## What change to `createListing()` will fix this code?
 
   </div>
   <ul class="options">
-    <li class='answer'>`createListing({listingTitle: listing_title, cityName: city_name})`</li>
-    <li>`createListing({listing_title: listingTitle, city_name: cityName})`</li>
-    <li>`createListing({listing_title = listingTitle, city_name = cityName})`</li>
-    <li>`createListing({listingTitle = listing_title, cityName = city_name})`</li>
+    <li>`const createListing = ({title: title, city_name: cityName}) => {}`</li>
+    <li class='answer'>`const createListing = ({title: title, cityName: city_name}) => {}`</li>
+    <li>`const createListing = ({title = title, cityName = city_name}) => {}`</li>
+    <li>`const createListing = ({title = title, city_name = (cityName || city_name) }) => {}`</li>
   </ul>
+
+  <aside class="hint">If you are a Node/JS developer whos used Postgresql you've probably run into a related situation.</aside>
+  <aside class="hint">Variable assignment in destructuring is indicated by a `:`</aside>
+  <aside class="hint">One way to think of it is with `${input-name}: ${to-name}`</aside>
+
+  <section class="explanation">
+
+> When re-assigning names in destructuring I sometimes feel like its a secret Dyslexia test for JS devs...
+
+One way to think of this pattern is `${input-name}: ${to-name}`, where `to-name` is the local name available inside the function.
+And `input-name` is the property name from the input object argument.
+
+  </section>
 
 </section>
 
