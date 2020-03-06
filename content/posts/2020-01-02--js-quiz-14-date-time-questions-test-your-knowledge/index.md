@@ -168,9 +168,9 @@ The missing piece is the `new` keyword: `new Date(dateString)`.
 > Assume all examples run with GMT-7 timezone offset.
 
 ```js
-const dateOnlyString = new Date('2020-01-01')
-const dateZeroTime   = new Date('2020-01-01T00:00')
-console.log(dateOnlyString.getFullYear(), dateZeroTime.getFullYear())
+const d1 = new Date('2020-01-01')
+const d2 = new Date('2020-01-01T00:00')
+console.log(d1.getFullYear(), d2.getFullYear())
 ```
 
 ## What value will print to the console?
