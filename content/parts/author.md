@@ -5,8 +5,8 @@ title: author
 Dan Levy is an accomplished programmer, teacher, speaker and cat dad.
 <br /><br />
 
-In his free time, Dan loves contributing back to the community! His personal Open Source work includes everything from the 'small': minor typos, 1-line changes (some with huge impact); as well 'big' contributions: feature development, security fix, documentation, or maintaining an OSS project.
-<br /><br />
+<!-- In his free time, Dan loves contributing back to the community! His personal Open Source work includes everything from the 'small': minor typos, 1-line changes (some with huge impact); as well 'big' contributions: feature development, security fix, documentation, or maintaining an OSS project.
+<br /><br /> -->
 
 Some of Dan's documentation work is seen by countless developers visiting the [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) site to learn about the Fetch & Promise APIs.
 <br /><br />
@@ -21,7 +21,8 @@ Attendees to Dan's (free) Open Source Workshops have also made 100's of their ow
 
 **Dan is available for consulting and contract work!**
 <br />
-With a special focus on System Scaling, Performance Audits & Recommendations, Architectural Guidance, and Cloud Cost ~~Reduction~~ Interventions!
+With a special focus on Remote Work consulting, System Scaling, Performance Audits & Recommendations, Architectural Guidance, and Cloud Cost ~~Reduction~~ Interventions!
+
 <br />
 
 Feel free to [grab a spot on Dan's calendar](https://calendly.com/danlevy/project-review), or reach out via [Twitter DMs](https://twitter.com/justsml/) or [the contact form](/contact/).
