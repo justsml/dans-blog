@@ -144,7 +144,7 @@ const getDateLabel = (date, modified) => {
 
 const PostHeader = props => {
   const { classes, date, modified, tags, allTags } = props;
-  console.log("allTags", allTags);
+  // console.log("allTags", allTags);
   return (
     <Header {...props}>
       <div className={classes.meta}>{getDateLabel(date, modified)}</div>
