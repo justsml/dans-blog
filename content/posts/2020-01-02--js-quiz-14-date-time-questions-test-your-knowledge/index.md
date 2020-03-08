@@ -46,7 +46,7 @@ As for 3rd party libraries, check out [date_fns](https://npmjs.com/package/date-
 
 ### If you get stuck
 
-1. **Read the Hints** (Green button, lower right corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
+1. **Read the Hints** (Find the button with the '?' after the list of options).
 2. Try the code in your browser's Console (try shortcut `F12` on Windows, or `Command + Option + J` on Mac).
 3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Date%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
 

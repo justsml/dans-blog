@@ -277,11 +277,11 @@ class Challenge extends React.Component {
   };
 
   tryAnswer = option => {
-    const isCorrect = this.isCorrect();
+    const isCorrect = this.isCorrect(option);
     if (typeof this.props.onAnswer !== "function") {
       console.warn("[danlevy.net - quiz ui] Challenge onAnswer callback is required", option);
     } else {
-      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title });
+      this.props.onAnswer({ correct: isCorrect, value: option, questionTitle: this.props.title, key: this.props.key });
     }
     if (isCorrect) return null;
     this.setState((state, props) => ({ ...state, selection: option, attempts: ++state.attempts }));
@@ -359,11 +359,9 @@ class Challenge extends React.Component {
     let challengeClasses =
       classes.outerBox +
       " challenge-block " +
-      (this.isCorrect()
+      (attempts > 0 && (this.isCorrect()
         ? `challenge-correct ${classes.correct}`
-        : `challenge-incorrect ${attempts}` >= 1
-          ? classes.failed
-          : "");
+        : `challenge-incorrect ${classes.incorrect}`));
     // this.isCorrect()
 
     const showHelp = showExplanation;
