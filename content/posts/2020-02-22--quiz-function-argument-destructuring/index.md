@@ -42,43 +42,8 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 
 </div>
 
-
-<section class="challenge" title="Fundamentals">
+<section class="challenge" title="Exciting Gotchas">
   <div class="description">
-
-```js
-function saveSettings({title, theme = 'darkMode'}) {
-  console.log(theme)
-}
-saveSettings('lightMode')
-```
-
-## What will the output include?
-
-  </div>
-  <ul class="options">
-    <li>`darkMode`</li>
-    <li>`lightMode`</li>
-    <li>C'mon, there's only `darkMode`</li>
-    <li class='answer'>Error</li>
-    <li>`undefined`</li>
-  </ul>
-  <div class="explanation">
-
-The issue here is we need to pass in an object, not a string, into any function with destructured parameters.
-
-The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
-
-The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will be `undefined`, which triggers the default values specified in the function declaration.
-
-  </div>
-</section>
-
-
-<section class="challenge" title="Gotchas">
-  <div class="description">
-
-## What will print in the console?
 
 ```js
 function createPerson({title, name, location}) {
@@ -86,6 +51,8 @@ function createPerson({title, name, location}) {
 }
 console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
 ```
+
+## What will print in the console?
 
   </div>
   <ul class="options">
@@ -95,21 +62,21 @@ console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
     <li>Error</li>
   </ul>
 
-  <aside class="hint" hint-id="1">It's important you can spot this issue. It won't produce an error (aka line numbers). This silent-fail is often missed. Especially if you are prone to forget TDD/tests. But you probably always TDD, right?</aside>
-  <aside class="hint" hint-id="2">**Hint:** What type is the first argument?</aside>
+  <aside class="hint" hint-id="1">What type is the first argument?</aside>
+  <aside class="hint" hint-id="2">This issue won't produce an error (i.e. line numbers), so it's often missed.</aside>
   <div class="explanation">
 
-The issue here is we need to pass in an object, not a string, into any function with destructured parameters.
+The issue here is we need to pass in an object, not 3 string(s).
 
 The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
 
-The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will be `undefined`, which triggers the default values specified in the function declaration.
+The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will however always be `undefined`. Default values specified in the function declaration.
 
   </div>
 
 </section>
 
-<section class="challenge" title="Gotchas">
+<section class="challenge" title="Essentials">
   <div class="description">
 
 ```js
@@ -129,6 +96,13 @@ console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
     <li>`undefined`</li>
     <li>Error</li>
   </ul>
+
+  <aside class="hint">Unset fields behave like unset variables.</aside>
+  <section class="explanation">
+
+
+
+  </section>
 
 </section>
 
@@ -156,7 +130,13 @@ updateStatus()
 
   <aside class="hint">This mistake is easy to miss. I remember making it plenty of times when I started learning destructuring & defaults.</aside>
 
-  <aside class="hint">Additional Hint: Calling `updateStatus()` is similar to `updateStatus(undefined)`</aside>
+  <aside class="hint">Calling `updateStatus()` is similar to `updateStatus(undefined)`</aside>
+
+  <section class="explanation">
+
+
+
+  </section>
 
 </section>
 
@@ -164,11 +144,10 @@ updateStatus()
   <div class="description">
 
 ```js
-const updateStatus = ({status = 'n/a'}) => {
+const updateStatus = ({status = 'n/a'} = { status: 'shizzle' }) => {
   console.log(status)
 }
-let myStatus = '🤔'
-updateStatus(myStatus)
+updateStatus()
 ```
 
 ## What will print in the console?
@@ -176,17 +155,25 @@ updateStatus(myStatus)
   </div>
   <ul class="options">
     <li>🤔</li>
-    <li class='answer'>`n/a`</li>
+    <li>`n/a`</li>
+    <li class='answer'>`shizzle`</li>
     <li>`null`</li>
     <li>`undefined`</li>
     <li>Error</li>
   </ul>
 
-  <aside class="hint">You won't get an error, even though `myStatus` is a string, not the object `updateStatus`'s signature suggests.</aside>
+  <aside class="hint">You won't get an error.</aside>
+  <section class="explanation">
+
+The default value `{ status: 'shizzle' }` is used when the argument is `undefined`.
+
+Without this default object, this code would throw an error.
+
+  </section>
 
 </section>
 
-<section class="challenge" title="Defaults #3">
+<section class="challenge" title="Defaults #4">
   <div class="description">
 
 ```js
@@ -211,11 +198,11 @@ updateStatus({status: null})
 <section class="challenge" title="Use Cases: DOM Events">
   <div class="description">
 
-For this question I'm assuming some DOM API knowledge - specifically <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event#Properties" target="_blank" rel="noopener noreferrer">the event callback's argument.</a>
+For this question I'm assuming some DOM API knowledge - specifically familiarity with the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event#Properties" target="_blank" rel="noopener noreferrer">Event callback argument.</a>
 
 Given the following HTML `<input id='email' type='text' />`.
 
-And JavaScript wire-up like this: `email.addEventListener('focus', () => inputHandler())`
+And JavaScript wire-up like this: `email.addEventListener('focus', () => inputHandler())`.
 
 ```js
 function inputHandler({target: {id, value}}) {
