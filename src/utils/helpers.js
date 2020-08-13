@@ -2,6 +2,16 @@
 import theme from "../styles/theme";
 import yup from "yup";
 
+export function injectCssByUrl(href) {
+  if (document.querySelector(`link[href="${href}"]`)) return false;
+  const resource = document.createElement("link");
+  resource.setAttribute("rel", "stylesheet");
+  resource.setAttribute("type", "text/css");
+  resource.setAttribute("href", href);
+  const head = document.getElementsByTagName("head")[0];
+  head.appendChild(resource);
+}
+
 export function isWideScreen() {
   if (typeof window !== `undefined`) {
     const windowWidth = window.innerWidth;
