@@ -18,10 +18,10 @@ const TagsPage = args => {
   // console.log("TAGS", args);
   let {
     data: {
-      allMarkdownRemark: { group }
-      // site: {
-      //   siteMetadata: { title }
-      // }
+      allMarkdownRemark: { group },
+      site: {
+        siteMetadata: { title }
+      }
     }
   } = args;
 

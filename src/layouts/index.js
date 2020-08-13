@@ -1,6 +1,6 @@
 import React from "react";
 import injectSheet from "react-jss";
-// import { MuiThemeProvider } from "@material-ui/core/styles";
+import { MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -37,12 +37,6 @@ class Layout extends React.Component {
   timeouts = {};
   categories = [];
 
-  componentWillUnmount() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("resize", this.resizeThrottler, false);
-    }
-  }
-
   componentDidMount() {
     try {
       this.props.setIsWideScreen(isWideScreen());
@@ -54,7 +48,7 @@ class Layout extends React.Component {
     }
   }
 
-  UNSAFE_componentWillMount() {
+  componentWillMount() {
     // if (this.storageError) return;
     try {
       if (typeof localStorage !== "undefined") {
@@ -134,7 +128,10 @@ const mapDispatchToProps = {
   setFontSizeIncrease
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRoot(injectSheet(globals)(Layout)));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRoot(injectSheet(globals)(Layout)));
 
 //eslint-disable-next-line no-undef
 export const guery = graphql`
