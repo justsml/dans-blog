@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 require("dotenv").config();
 const config = require("./content/meta/config");
 
