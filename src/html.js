@@ -29,11 +29,7 @@ module.exports = class HTML extends React.Component {
             href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap"
             rel="stylesheet"
           />
-          <link
-            key="gist-theme"
-            href="https://unpkg.com/gist-syntax-themes@1.1.0/stylesheets/solarized-dark.css"
-            rel="stylesheet"
-          />
+          {/* <link rel="stylesheet" key="gist-theme" href="/styles/gist-embed.css" /> */}
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="#D0E0D8" />
           <meta name="apple-mobile-web-app-title" content="Dan's Blog" />
@@ -49,6 +45,7 @@ module.exports = class HTML extends React.Component {
           <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
           <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
           <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png" />
+          <link rel="icon" type="image/png" sizes="256x256" href="/icons/icon-256x256.png" />
           <script src="https://platform.twitter.com/widgets.js" charSet="utf-8" async defer />
           <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer />
         </head>
