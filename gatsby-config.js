@@ -141,12 +141,15 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
+        cache_busting_mode: "none",
         name: config.manifestName,
         short_name: config.manifestShortName,
         start_url: config.manifestStartUrl,
         background_color: config.manifestBackgroundColor,
         theme_color: config.manifestThemeColor,
         display: config.manifestDisplay,
+        crossOrigin: `use-credentials`,
+        icon: `src/images/app-icons/icon.png`,
         icons: [
           {
             src: "/icons/icon-48x48.png",
@@ -186,7 +189,10 @@ module.exports = {
         ]
       }
     },
-    `gatsby-plugin-offline`,
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {}
+    },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
