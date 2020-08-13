@@ -86,7 +86,7 @@ class AutoLoader extends React.Component {
 
   checkInlineChallenges = () => {
     if (!document.querySelector(".challenge")) return false;
-    this.loadTimeout = setTimeout(() => this.loadChallenges(this.getChallenges()), 750);
+    this.loadTimeout = setTimeout(() => this.loadChallenges(this.getChallenges()), 50);
   };
 
   componentWillUnmount() {
@@ -117,6 +117,7 @@ class AutoLoader extends React.Component {
   };
 
   loadChallenges = challengeConfigs => {
+    if (!this.__mounted) return;
     this.setState(
       {
         challenges: challengeConfigs,
@@ -163,6 +164,7 @@ class AutoLoader extends React.Component {
   };
 
   onAnswer = ({ correct, value }) => {
+    if (!this.__mounted) return;
     let current = this.state.score.current;
     if (correct) {
       current++;
@@ -174,6 +176,7 @@ class AutoLoader extends React.Component {
   };
 
   resetScores = () => {
+    if (!this.__mounted) return;
     this.setState({
       ...this.state,
       score: { totalAvailable: this.state.challenges.length, current: 0 }

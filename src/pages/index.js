@@ -9,7 +9,7 @@ import Seo from "../components/Seo";
 class Index extends React.Component {
   featureNavigator = featureNavigator.bind(this);
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.navigatorPosition !== "is-featured") {
       this.props.setNavigatorPosition("is-featured");
     }
