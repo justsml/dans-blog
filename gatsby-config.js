@@ -142,7 +142,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        cache_busting_mode: "none",
+        // cache_busting_mode: "none",
         name: config.manifestName,
         short_name: config.manifestShortName,
         start_url: config.manifestStartUrl,
