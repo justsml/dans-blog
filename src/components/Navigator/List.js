@@ -17,12 +17,15 @@ const styles = theme => ({
   },
   inner: {
     maxWidth: "780px",
-    padding: `calc(${theme.bars.sizes.infoBar}px + 1.3rem) 1.3rem calc(${theme.bars.sizes.actionsBar}px + 1.3rem) 1.3rem`,
+    padding: `calc(${theme.bars.sizes.infoBar}px + 1.3rem) 1.3rem calc(${
+      theme.bars.sizes.actionsBar
+    }px + 1.3rem) 1.3rem`,
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
-      padding: `calc(${theme.bars.sizes.infoBar}px + 2rem) 2rem calc(${theme.bars.sizes.actionsBar}px + 2rem) 2rem`
+      padding: `calc(${theme.bars.sizes.infoBar}px + 2rem) 2rem calc(${
+        theme.bars.sizes.actionsBar
+      }px + 2rem) 2rem`
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-      maxWidth: "980px",
       padding: `2rem  calc(1rem + 17px) calc(2rem + 17px) 2rem`,
       left: `${theme.info.sizes.width}px`,
       ".moving-featured &, .is-aside &": {

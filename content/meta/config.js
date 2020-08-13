@@ -30,7 +30,7 @@ module.exports = {
     { name: "twitter", url: "https://twitter.com/justsml" },
     {
       name: "youtube",
-      url: "https://www.youtube.com/user/justsml/videos?shelf_id=0&sort=dd&view=0"
+      url: "https://www.youtube.com/user/justsml/videos?shelf_id=0&amp;sort=dd&amp;view=0"
     }
   ]
 };
