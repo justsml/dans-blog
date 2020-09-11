@@ -192,5 +192,4 @@ Help spread the #PromiseTruth & share this article. ❤️
 ### Related Reading
 
 * [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
-* [JavaScript Teacher @js_tut](https://medium.com/@js_tut/the-great-escape-from-callback-hell-3006fa2c82e)
 * [Eric Elliott](https://twitter.com/_ericelliott?lang=en)
