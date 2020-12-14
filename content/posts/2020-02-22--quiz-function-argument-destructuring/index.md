@@ -42,7 +42,7 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 
 </div>
 
-<section class="challenge" title="Exciting Gotchas">
+<section class="challenge" title="Essentials #1">
   <div class="description">
 
 ```js
@@ -70,13 +70,13 @@ The issue here is we need to pass in an object, not 3 string(s).
 
 The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
 
-The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will however always be `undefined`. Default values specified in the function declaration.
+The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will however always be `undefined`.
 
   </div>
 
 </section>
 
-<section class="challenge" title="Essentials">
+<section class="challenge" title="Essentials #2">
   <div class="description">
 
 ```js
@@ -106,7 +106,7 @@ console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
 
 </section>
 
-<section class="challenge" title="Defaults">
+<section class="challenge" title="Defaults #1">
   <div class="description">
 
 ```js
@@ -173,7 +173,7 @@ Without this default object, this code would throw an error.
 
 </section>
 
-<section class="challenge" title="Defaults #4">
+<section class="challenge" title="Defaults #3">
   <div class="description">
 
 ```js
@@ -225,15 +225,15 @@ function inputHandler({target: {id, value}}) {
 
   <section class="explanation">
 
-We get an error because we're trying to access properties on an undefined object (`target`)!
+We get an error because we're trying to access properties on an undefined variable (`target`)!
 
 It's similar to the issue in this pre-ES5 code:
 
 ```js
 // ❌💩❌💩❌💩
-function inputHandler(element) {
-  var target = element.target;
-  // Breaks if `target` is undefined
+function inputHandler(event) {
+  var target = event.target;
+  // Following lines break if `target` is undefined
   var id = target.id;
   var value = target.value;
 
@@ -266,7 +266,7 @@ _How does this relate to destructuring?_
 
 Destructuring is not very tolerant of nulls by default. In fact it can feel quite brittle.
 
-Here we'll look at a technique to address this potential pitfall: let me introduce you to _DAN_ (Defensive Argument Nulls). _DAN_ is all about well-placed default values in our object arguments.
+Here we'll look at a technique to address this potential pitfall: let me introduce you to _DAN_ (Defense Against Nulls). _DAN_ is all about well-placed default values in our object arguments.
 
 Let's look at an more complex example: a geo-spatial/mapping library requires a specific-shaped object as input to display pushpin(s). We need an `input` like `{coords: [{lat, lon}, {lat, lon}, ...]}` which is used by `displayPushpin(input)`.
 
@@ -278,7 +278,7 @@ Let's look at an more complex example: a geo-spatial/mapping library requires a 
 
 \* invalid coords should be interpreted as being `[{lat: null, lon: null}]`.
 
-##### Before: DAN (Defensive Argument Nulls)
+##### Before: DAN (Defense Against Nulls)
 
 ```js
 // Presumptive destructuring, may throw null errors:
@@ -290,7 +290,7 @@ displayPushpin({coords: []}) // ❌ Error!
 displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
 ```
 
-##### After: DAN (Defensive Argument Nulls)
+##### After: DAN (Defense Against Nulls)
 
 To fix each 'error' in the code above, we'd need to adjust `displayPushpin`'s arguments:
 
@@ -319,7 +319,7 @@ displayPushpin({coords: []}) // {lat1: null, lon1: null}
 displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
 ```
 
-> _Note:_ This approach isn't always the "right tool," and it can get a bit convoluted if you have 3+ levels of nested data structures.
+> _Note:_ This approach isn't always the "right tool," and it can get a bit convoluted if you have 2-3+ levels of nested data structures.
 
 Our `displayPushpin()` is a bit complex as it's expected input requires an `object->array->object`. In general I try avoid mixing destructuring objects and arrays together like this.
 

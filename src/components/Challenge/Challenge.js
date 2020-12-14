@@ -380,7 +380,7 @@ const styles = theme => ({
   },
   outerBox: {
     width: "100%",
-    // margin: "1em auto",
+    margin: "1.5rem auto",
     border: "1px solid #999",
     padding: "0em 1rem 1rem 1rem",
     "& code[class*='language-'], pre[class*='language-']": {

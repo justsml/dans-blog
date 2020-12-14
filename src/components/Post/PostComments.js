@@ -32,7 +32,7 @@ const PostComments = props => {
     url
   };
 
-  console.log("POST COMMENTS:", JSON.stringify(disqusConfig));
+  // console.log("POST COMMENTS:", JSON.stringify(disqusConfig));
   // console.log("POST COMMENTS PROPS:", JSON.stringify(props, null, 2));
   return (
     <div id="post-comments" className={classes.postComments}>
