@@ -2,10 +2,10 @@
 title: "JS Quiz: Destructuring Function Argument"
 subTitle: Master one of ES6's most powerful features!
 date: 2020-02-22
-modified: 2020-03-06
+modified: 2020-12-14
 tags: [javascript,quiz,challenge,destructuring,es6]
 category: Quiz
-cover: nathan-dumlao-3kZpELkaxHc-resized.png
+cover: blake-weyland-9hhOVsf1lpU-portrait.jpg
 ---
 
 # Have you mastered ES2015 Destructuring?
