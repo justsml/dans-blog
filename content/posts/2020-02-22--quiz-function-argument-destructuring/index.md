@@ -1,19 +1,22 @@
 ---
-title: "JS Quiz: Destructuring Function Argument"
-subTitle: Master one of ES6's most powerful features!
+title: "JS Quiz: Destructuring Parameters"
+subTitle: Master one of JavaScripts most powerful features!
 date: 2020-02-22
-modified: 2020-12-14
-tags: [javascript,quiz,challenge,destructuring,es6]
+modified: 2021-01-07
+tags: [javascript, quiz, challenge, destructuring, es6, es2015]
 category: Quiz
 cover: blake-weyland-9hhOVsf1lpU-portrait.jpg
 ---
 
 # Have you mastered ES2015 Destructuring?
 
-In this quiz we'll cover Object Arguments and how destructuring can be used to create self-documenting functions (VS Code's tool tips infer types based on the arguments).
+In this quiz we'll cover **Destructured Object Parameters,** or DOP (pronounced dope, because I insist).
+
+DOP can be used to create self-documenting functions (many IDE's, including VS Code, will automatically show tooltips with info based on the variable usage).
+
+**TypeScript Users:** DOP syntax doesn't simplify code when used with TypeScript's inline types. Pair with declared types instead (for example, `type x = ...` or `interface Iface ...`).
 
 Topic areas we'll touch on: default values, nested structures, re-assigning/aliasing names, rest operator.
-
 
 ### If you get stuck
 
@@ -24,7 +27,7 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
 
 > If you are new to destructuring, I'd recommend first reading Wes Bos' <a href="https://wesbos.com/destructuring-objects/" target="_blank">excellent introduction</a> and his <a href="https://wesbos.com/destructuring-renaming/" target="_blank">post on renaming.</a>
 
-> If you are a more experienced JS developer, check out the <a href="https://exploringjs.com/es6/ch_destructuring.html" target="_blank">detailed reference on ExploringJS.</a>
+> If you are more experienced, check out the <a href="https://exploringjs.com/es6/ch_destructuring.html" target="_blank">detailed reference on ExploringJS.</a>
 
 <div style="text-align: center; width: 75%; margin: 0 auto 10rem auto; white-space: nowrap; font-size: 1.4em;" class="quiz-loading">
 
@@ -46,10 +49,10 @@ Topic areas we'll touch on: default values, nested structures, re-assigning/alia
   <div class="description">
 
 ```js
-function createPerson({title, name, location}) {
-  return `Hi, I'm ${title} ${name} from ${location}`
+function createPerson({ title, name, location }) {
+  return `Hi, I'm ${title} ${name} from ${location}`;
 }
-console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
+console.log(createPerson("Capt.", "Marvel", "Earth?"));
 ```
 
 ## What will print in the console?
@@ -68,7 +71,7 @@ console.log(createPerson('Capt.', 'Marvel', 'Earth?'))
 
 The issue here is we need to pass in an object, not 3 string(s).
 
-The correct way usage looks like `saveSettings({theme: 'lightMode'})`.
+The correct way usage looks like `createPerson({title: 'Capt.'})`.
 
 The reason this does not cause an error is because the runtime can check for the existance of the `.theme` and `.title` properties on a string. They will however always be `undefined`.
 
@@ -80,10 +83,10 @@ The reason this does not cause an error is because the runtime can check for the
   <div class="description">
 
 ```js
-function createPerson({title, name, location}) {
-  return `Hi, I'm ${title} ${name} from ${location}`
+function createPerson({ title, name, location }) {
+  return `Hi, I'm ${title} ${name} from ${location}`;
 }
-console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
+console.log(createPerson({ title: "Capt.", name: "Marvel" }));
 ```
 
 ## What will print in the console?
@@ -100,8 +103,6 @@ console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
   <aside class="hint">Unset fields behave like unset variables.</aside>
   <section class="explanation">
 
-
-
   </section>
 
 </section>
@@ -110,10 +111,10 @@ console.log(createPerson({title: 'Capt.', name: 'Marvel'}))
   <div class="description">
 
 ```js
-const updateStatus = ({status = 'n/a'}) => {
-  console.log(status)
-}
-updateStatus()
+const updateStatus = ({ status = "n/a" }) => {
+  console.log(status);
+};
+updateStatus();
 ```
 
 ## What will print in the console?
@@ -134,8 +135,6 @@ updateStatus()
 
   <section class="explanation">
 
-
-
   </section>
 
 </section>
@@ -144,10 +143,10 @@ updateStatus()
   <div class="description">
 
 ```js
-const updateStatus = ({status = 'n/a'} = { status: 'shizzle' }) => {
-  console.log(status)
-}
-updateStatus()
+const updateStatus = ({ status = "n/a" } = { status: "shizzle" }) => {
+  console.log(status);
+};
+updateStatus();
 ```
 
 ## What will print in the console?
@@ -177,11 +176,11 @@ Without this default object, this code would throw an error.
   <div class="description">
 
 ```js
-const updateStatus = ({status = 'n/a'}) => {
-  console.log(status)
-}
-updateStatus({status: `🥳`})
-updateStatus({status: null})
+const updateStatus = ({ status = "n/a" }) => {
+  console.log(status);
+};
+updateStatus({ status: `🥳` });
+updateStatus({ status: null });
 ```
 
 ## What will print in the console?
@@ -205,8 +204,8 @@ Given the following HTML `<input id='email' type='text' />`.
 And JavaScript wire-up like this: `email.addEventListener('focus', () => inputHandler())`.
 
 ```js
-function inputHandler({target: {id, value}}) {
-  console.log(`${id}: ${value}`)
+function inputHandler({ target: { id, value } }) {
+  console.log(`${id}: ${value}`);
 }
 ```
 
@@ -237,7 +236,7 @@ function inputHandler(event) {
   var id = target.id;
   var value = target.value;
 
-  console.log(`${id}: ${value}`)
+  console.log(`${id}: ${value}`);
 }
 ```
 
@@ -260,7 +259,7 @@ This is more of a strategy for avoiding the JS runtime's generic error messages.
 
 Ideally your API has a very narrow and tightly-scoped 'surface area.'
 
-When given various bad input, it should *predictably* either return a placeholder value, or throw an error.
+When given various bad input, it should _predictably_ either return a placeholder value, or throw an error.
 
 _How does this relate to destructuring?_
 
@@ -282,12 +281,12 @@ Let's look at an more complex example: a geo-spatial/mapping library requires a 
 
 ```js
 // Presumptive destructuring, may throw null errors:
-const displayPushpin = ({coords: [{lat: lat1, lon: lon1}]}) => console.log({lat1, lon1})
+const displayPushpin = ({ coords: [{ lat: lat1, lon: lon1 }] }) => console.log({ lat1, lon1 });
 
-displayPushpin() // ❌ Error!
-displayPushpin({coords: undefined}) // ❌ Error!
-displayPushpin({coords: []}) // ❌ Error!
-displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
+displayPushpin(); // ❌ Error!
+displayPushpin({ coords: undefined }); // ❌ Error!
+displayPushpin({ coords: [] }); // ❌ Error!
+displayPushpin({ coords: [{ lat: 99, lon: 199 }] }); // {lat1: 99, lon1: 199}
 ```
 
 ##### After: DAN (Defense Against Nulls)
@@ -295,11 +294,11 @@ displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
 To fix each 'error' in the code above, we'd need to adjust `displayPushpin`'s arguments:
 
 1. `({coords: [{lat: lat1, lon: lon1}]} = {}) => ...`
-    - added ` = {}`
+   - added `= {}`
 1. `({coords: [{lat: lat1, lon: lon1}] = [{lat: null, lon: null}]}) => ...`
-    - added ` = [{lat: null, lon: null}]`
+   - added `= [{lat: null, lon: null}]`
 1. `({coords: [{lat: lat1, lon: lon1} = {lat: null, lon: null}]}) => ...`
-    - added ` = {lat: null, lon: null}`
+   - added `= {lat: null, lon: null}`
 
 It takes a bit of practice to identify the needed defaults and add them at _exactly_ the right bracket/position.
 
@@ -308,15 +307,13 @@ As you add default values for nested object/array data structures you might noti
 ```js
 // ✅ 3 Combined DAN Techniques 😰. It works...
 const displayPushpin = ({
-  coords: [
-    { lat: lat1, lon: lon1 } = { lat: null, lon: null }
-  ] = [{ lat: null, lon: null }]
-} = {}) => console.log({ lat1, lon1 })
+  coords: [{ lat: lat1, lon: lon1 } = { lat: null, lon: null }] = [{ lat: null, lon: null }]
+} = {}) => console.log({ lat1, lon1 });
 
-displayPushpin() // {lat1: null, lon1: null}
-displayPushpin({coords: undefined}) // {lat1: null, lon1: null}
-displayPushpin({coords: []}) // {lat1: null, lon1: null}
-displayPushpin({coords: [{lat: 99, lon: 199}]}) // {lat1: 99, lon1: 199}
+displayPushpin(); // {lat1: null, lon1: null}
+displayPushpin({ coords: undefined }); // {lat1: null, lon1: null}
+displayPushpin({ coords: [] }); // {lat1: null, lon1: null}
+displayPushpin({ coords: [{ lat: 99, lon: 199 }] }); // {lat1: 99, lon1: 199}
 ```
 
 > _Note:_ This approach isn't always the "right tool," and it can get a bit convoluted if you have 2-3+ levels of nested data structures.
@@ -327,13 +324,13 @@ The most important take-away you'll want to remember: 95% of the time I only nee
 
 ```js
 // My code looks more like this after refactoring w/ DAN
-function inputHandler({target: {id, value} = {}} = {}) {
+function inputHandler({ target: { id, value } = {} } = {}) {
   // ☝️ Note the 2 defaults added above: ' = {}'
-  console.log(`${id}: ${value}`)
+  console.log(`${id}: ${value}`);
 }
 ```
 
-> It's much more manageable when setting empty-object fallbacks without any complex structure. Note the ` = {}` bit added to each object 'level'.
+> It's much more manageable when setting empty-object fallbacks without any complex structure. Note the `= {}` bit added to each object 'level'.
 
   </section>
 
@@ -349,8 +346,8 @@ Assume our app uses camel-case naming conventions.
 ```js
 const createListing = (/* choose an option below */) => {
   // [Sends listing to database, where snake-case is required]
-}
-createListing({title: 'E-Corp', cityName: 'NYC'})
+};
+createListing({ title: "E-Corp", cityName: "NYC" });
 ```
 
 ## What change to `createListing()` will fix this code?
@@ -377,4 +374,3 @@ And `input-name` is the property name from the input object argument.
   </section>
 
 </section>
-
