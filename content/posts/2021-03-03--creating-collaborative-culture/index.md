@@ -1,14 +1,12 @@
 ---
 title: "Creating Collaborative Culture"
-subTitle: Collaborate & Succeed
+subTitle: Unlock your Teams Creativity!
 date: 2021-01-01
-modified: 2021-03-03
-tags: [collaborative-culture,culture,teams,growth,personal development]
+modified: 2021-03-04
+tags: [collaborative-culture,culture,teams,growth,personal-development]
 category: leadership
 cover: pexels-photo-3184431--cropped.jpg
 ---
-
-# Creating Collaborative Culture
 
 ## What is *Collaborative Culture*?
 
@@ -30,8 +28,7 @@ Montañez knew there was an untapped market for spicy snacks, and decided to sha
 
 **Montañez went on to become a VP of Sales, generating billions for PepsiCo.** His incredible story was made possible thanks to a *Collaborative Culture*.
 
-In a sense the cultural & language barriers Montañez faced were a freedom from the rules - he didn't realize he was expected to "stay in his lane."
-
+In a sense, the cultural & language barriers Montañez faced were a freedom from the rules. He didn't realize he was expected to "stay in his lane."
 
 ## Next Steps
 
@@ -54,5 +51,4 @@ More personally:
 
 Stay tuned, my next article will be **The 4 Pillars of Collaborative Culture**!
 
-<!-- We'd all be living in a better world if we shared ideas & collaborated more. With less stress, expectations and judgement. -->
 
