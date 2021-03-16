@@ -147,6 +147,7 @@ const Tags = ({ allTags, pathContext, data, classes }) => {
 Tags.propTypes = {
   classes: PropTypes.object.isRequired,
   pathContext: PropTypes.shape({
+    tagName: PropTypes.string,
     tag: PropTypes.string.isRequired
   }),
   data: PropTypes.shape({

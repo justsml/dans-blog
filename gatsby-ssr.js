@@ -7,7 +7,6 @@ require("dotenv").config();
 
 import getPageContext from "./src/getPageContext";
 import createStore from "./src/state/store";
-import theme from "./src/styles/theme";
 
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
   const pageContext = getPageContext();
@@ -47,19 +46,7 @@ exports.onRenderBody = ({ setPostBodyComponents }) => {
     <script
       key={`webfontsloader-setup`}
       dangerouslySetInnerHTML={{
-        __html: `
-        WebFontConfig = {
-          google: {
-            families: ["${theme.base.fonts.styledFamily}:${theme.base.fonts.styledFonts}"]
-          }
-        };
-
-        (function(d) {
-            var wf = d.createElement('script'), s = d.scripts[0];
-            wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
-            wf.async = true;
-            s.parentNode.insertBefore(wf, s);
-        })(document);`
+        __html: ``
       }}
     />
   ]);

@@ -10,6 +10,7 @@ import { moveNavigatorAside } from "../utils/shared";
 import Post from "../components/Post/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
+import { injectCssByUrl } from "../utils/helpers";
 
 class PostTemplate extends React.Component {
   moveNavigatorAside = moveNavigatorAside.bind(this);
@@ -18,6 +19,7 @@ class PostTemplate extends React.Component {
     if (this.props.navigatorPosition === "is-featured") {
       this.moveNavigatorAside();
     }
+    injectCssByUrl("/styles/gist-embed.css");
   }
 
   render() {

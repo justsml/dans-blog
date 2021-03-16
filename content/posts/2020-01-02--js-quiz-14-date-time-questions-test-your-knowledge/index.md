@@ -168,9 +168,9 @@ The missing piece is the `new` keyword: `new Date(dateString)`.
 > Assume all examples run with GMT-7 timezone offset.
 
 ```js
-const dateOnlyString = new Date('2020-01-01')
-const dateZeroTime   = new Date('2020-01-01T00:00')
-console.log(dateOnlyString.getFullYear(), dateZeroTime.getFullYear())
+const d1 = new Date('2020-01-01')
+const d2 = new Date('2020-01-01T00:00')
+console.log(d1.getFullYear(), d2.getFullYear())
 ```
 
 ## What value will print to the console?
@@ -331,9 +331,9 @@ console.log(d.getTimezoneOffset())
   </ul>
   <div class="explanation">
 
-Date instances do not store original timezone data, at least after it's been parsed.
-
 Date's will be implicitly presented in local time, with an unchanging [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+
+Date instances do not store 'original' timezone data. Date instances essentially store only the # of milliseconds since the Unix Epoch (Jan 1, 1970). The timezone is accounted for when Date String parsing. And the default display behavior is automatically determined based on the system or browser's locale settings.
 
 ![screenshots/timezones-ex1.jpg](screenshots/timezones-ex1.jpg)
 
@@ -360,6 +360,9 @@ console.log(d)
     <li>Feb 01 2020</li>
     <li>RangeError: Invalid argument.</li>
   </ul>
+
+  <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
+
   <div class="explanation">
 
 The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
@@ -391,6 +394,9 @@ console.log(d)
     <li class="answer">Dec 31 2019</li>
     <li>RangeError: Invalid argument.</li>
   </ul>
+
+  <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
+
   <div class="explanation">
 
 The [`setDate`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
@@ -421,6 +427,10 @@ console.log(d)
     <li class="answer">Feb 01 2020</li>
     <li>RangeError: Invalid argument.</li>
   </ul>
+
+  <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
+  <aside class="hint">Negative numbers and any numbers greater than `31` will cause the day & month to adjust, sometimes in surprising ways.</aside>
+
   <div class="explanation">
 
 If a positive integer is provided to `setDate` outside of the number of days available, the date instance's month and day will be adjusted as necessary. (e.g. A `setDate(32)` in January will calculate as February 1st.)
@@ -477,13 +487,21 @@ console.log(d)
     <li>Jan 01 2020</li>
     <li>RangeError: Invalid argument.</li>
   </ul>
+
+  <aside class="hint">Months are non-uniform, range between 28-31 days.</aside>
+  <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31. Negative numbers and any numbers greater than `31` will cause the day & month to adjust, sometimes in surprising ways.</aside>
+
   <div class="explanation">
 
-This is perhaps a strange bit of code, and hopefully you don't find this in your code base.
+This is perhaps one of the stranger questions here.
 
-Every senior developer I've shown this to guessed the wrong answer.
+The reason this even comes up is the likely scenario: You know `setDate(1)` goes to the first day of the month. And that `setDate(-1)` will select the last day of the previous month, "wow, that's handy" you say. Then, a requirement comes down: we need be able to extend (and cancel) subscriptions by 120-day increments.
+ This question simulates this scenario.
 
-**Hint:** Setting the date with `setDate(X)` isn't the same as adding `X` days. Nor is it the same using negative integers.
+Hopefully you don't find yourself with code attempting tricks like this with `setDate`. Use a 3rd party library, check out [date_fns](https://npmjs.com/package/date-fns), [dayjs](https://npmjs.com/package/dayjs), or [momentjs](https://npmjs.com/package/momentjs). They feature a vastly more practical interface.
+
+
+Here's a screenshot of what the values are after each change:
 
 ![screenshots/date-setters.ex1.jpg](screenshots/date-setters.ex1.jpg)
 
