@@ -14,8 +14,8 @@ Most organizations fall somewhere between **Happy Honey Bees** and **Swarm of mu
 
 *Collaborative Culture* features 2 key principles for **Happy Honey Bees**:
 
-- All ideas are celebrated! Especially the ridiculous ones.
-- Anyone can contribute ideas & solutions across the organization.
+1. Ideas are celebrated! (Especially the ridiculous ones.)
+1. Ideas are welcome! (Irrespective of any title or role.)
 
 > Ultimately the best organizations welcome all ideas, from any rank and without prejudice.
 
