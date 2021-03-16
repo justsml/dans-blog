@@ -17,7 +17,7 @@ Most organizations fall somewhere between **Happy Honey Bees** and **Swarm of mu
 1. Ideas are celebrated! (Especially the ridiculous ones.)
 1. Ideas are welcome! (Irrespective of any title or role.)
 
-> Ultimately the best organizations welcome all ideas, from any rank and without prejudice.
+<!-- > Ultimately the best organizations welcome all ideas, from any rank and without prejudice. -->
 
 ## Why *Collaborative Culture*?
 
