@@ -10,45 +10,43 @@ cover: pexels-photo-3184431--cropped.jpg
 
 ## What is *Collaborative Culture*?
 
-*Collaborative Culture* describes organizations where:
+Most organizations fall somewhere between **Happy Honey Bees** and **Swarm of murder hornets**.
 
-- All ideas are celebrated! Even silly ones.
-- People are empowered to contribute ideas & solutions across the organization.
-- Ideas & input are welcome from anyone - regardless of rank or role.
+*Collaborative Culture* features 2 key principles for **Happy Honey Bees**:
 
+1. Ideas are celebrated! (Especially the ridiculous ones.)
+1. Ideas are welcome! (Irrespective of any title or role.)
 
-The best organizations welcome all ideas, from any rank and without prejudice.
+<!-- > Ultimately the best organizations welcome all ideas, from any rank and without prejudice. -->
 
 ## Why *Collaborative Culture*?
 
-One of my favorite examples is the incredible [story of Richard Montañez](https://thehustle.co/hot-cheetos-inventor/), an immigrant & janitor at Frito-Lay who created the multi-billion dollar "Flamin' Hot" brand of snacks. 
-When PepsiCo's CEO, Roger Enrico, implored his employees to **"act like an owner"** few employees took him seriously.
+My favorite case for *Collaborative Culture* is the unlikely story about a janitor, his billion-dollar idea, and the CEO who listened.
 
-Montañez knew there was an untapped market for spicy snacks, and decided to share his idea. So, he simply called the CEO's number from the company directory, and asked for a meeting. Due to some fortuitous confusion, they setup the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming meeting, and after some choice words, told Montañez it was his chance to sink or swim - and to never pull a stunt like that again.
+When PepsiCo's CEO, Roger Enrico, implored his employees to "act like an owner," few employees took him seriously. Not Richard Montañez. He knew there was an untapped market for spicy snacks. So, he called the CEO's number (from the company directory) and asked for a meeting. Due to some fortuitous confusion, they set up the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming pitch meeting, and after some choice words, the Plant Manager told Montañez it was his chance to sink or swim - and never pull a stunt like that again.
 
-**Montañez went on to become a VP of Sales, generating billions for PepsiCo.** His incredible story was made possible thanks to a *Collaborative Culture*.
+After that meeting (and plenty of hard work), Montañez was ascendant, eventually becoming a VP of Sales, generating billions for PepsiCo.
 
-In a sense, the cultural & language barriers Montañez faced were a freedom from the rules. He didn't realize he was expected to "stay in his lane."
+Great ideas & inspiration can come from anyone, anywhere, and anytime!
+
+To succeed long-term, work culture must embrace this!
 
 ## Next Steps
 
-As they say *Collaborative Culture* isn't the destination, it's the journey.
+First, take stock of where things are. Spend a few moments to consider some questions:
 
-The first steps along that journey are fairly easy! 
-
-Spend a few moments to reflect on some important questions:
-
-* What % of the organization shares ideas?
-* How quickly after being hired?
-* How often?
+- What % of the organization shares ideas?
+- How quickly do new hires propose ideas?
+- How often?
 
 More personally:
 
-* What's the last idea that a colleague brought to you?
-* How did you respond? Did you empower them? Did you take the time to listen? And hopefully give them credit?
-* Do colleagues feel comfortable to bring you their next idea?
+- What's the last idea that a colleague brought to you?
+- How did you respond? Did you empower them? Did you take the time to listen? And give them credit?
+- Do colleagues feel comfortable bringing you their next idea?
 
 
-Stay tuned, my next article will be **The 4 Pillars of Collaborative Culture**!
+> Stay tuned!
+> My next article is about the processes and habits that fuel *Collaborative Culture* in your organization!
 
 
