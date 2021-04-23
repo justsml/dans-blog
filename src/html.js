@@ -29,7 +29,7 @@ module.exports = class HTML extends React.Component {
             href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap"
             rel="stylesheet"
           />
-          {/* <link rel="stylesheet" key="gist-theme" href="/styles/gist-embed.css" /> */}
+          <meta name="google-site-verification" content="j-qzWjBXBWEMTB6JylBTTJT5HAggnAfG8fzBj8H-jYc" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-status-bar-style" content="#D0E0D8" />
           <meta name="apple-mobile-web-app-title" content="Dan's Blog" />
