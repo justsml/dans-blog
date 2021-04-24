@@ -10,6 +10,7 @@ import formatDistance from "date-fns/formatDistance";
 
 // Components
 import Link from "gatsby-link";
+import { Helmet } from "react-helmet";
 
 const styles = theme => ({
   tagsList: {
@@ -25,7 +26,7 @@ const styles = theme => ({
       marginBottom: "10px",
       "&:hover span": {
         cursor: "pointer",
-        backgroundColor: "#578c1880",
+        backgroundColor: "#33333380",
         borderRadius: "10%"
       },
       "& span": {
@@ -109,6 +110,8 @@ const Tags = ({ allTags, pathContext, data, classes }) => {
 
   return (
     <Main>
+      <Helmet title={"DanLevy.net - Explore posts by tag"} />
+
       <Article>
         <Header title="Tags Browser" subTitle={`Tag: ${tagName}`} />
 

@@ -21,9 +21,11 @@ const Seo = props => {
         lang: config.siteLanguage,
         prefix: "og: http://ogp.me/ns#"
       }}
+      title={title || description}
+      defaultTitle={title || description}
     >
       {/* General tags */}
-      <title>{title}</title>
+      <title>{title || description}</title>
       <meta name="description" content={description} />
       {/* OpenGraph tags */}
       <meta property="og:url" content={url} />

@@ -9,6 +9,7 @@ import Main from "../components/Main/";
 import Article from "../components/Main/Article";
 // import Helmet from "react-helmet";
 import Link from "gatsby-link";
+// import { Helmet } from "react-helmet";
 
 const sortByKey = (key, arr, reverse = false) => {
   return [].concat(arr).sort((a, b) => (reverse ? a[key] - b[key] : b[key] - a[key]));
@@ -18,10 +19,10 @@ const TagsPage = args => {
   // console.log("TAGS", args);
   let {
     data: {
-      allMarkdownRemark: { group },
-      site: {
-        siteMetadata: { title }
-      }
+      allMarkdownRemark: { group }
+      // site: {
+      //   siteMetadata: { title }
+      // }
     }
   } = args;
 

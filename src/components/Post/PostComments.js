@@ -4,8 +4,6 @@ import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
 import { DiscussionEmbed } from "disqus-react";
 
-require("core-js/fn/array/find");
-
 import config from "../../../content/meta/config";
 
 const styles = theme => ({
