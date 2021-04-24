@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Main from "../components/Main/";
 import { connect } from "react-redux";
-require("core-js/fn/array/find");
+// require("core-js/fn/array/find");
 require("prismjs/themes/prism-okaidia.css");
 
 import { setNavigatorPosition, setNavigatorShape } from "../state/store";
