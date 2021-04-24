@@ -42,12 +42,5 @@ exports.onRenderBody = ({ setHeadComponents }) => {
 };
 
 exports.onRenderBody = ({ setPostBodyComponents }) => {
-  return setPostBodyComponents([
-    <script
-      key={`webfontsloader-setup`}
-      dangerouslySetInnerHTML={{
-        __html: ``
-      }}
-    />
-  ]);
+  return setPostBodyComponents([]);
 };
