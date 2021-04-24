@@ -1,9 +1,8 @@
 import React from "react";
+// import React, { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import Main from "../components/Main/";
 import { connect } from "react-redux";
-require("core-js/fn/array/find");
-require("prismjs/themes/prism-okaidia.css");
 
 import { setNavigatorPosition, setNavigatorShape } from "../state/store";
 import { moveNavigatorAside } from "../utils/shared";
@@ -11,6 +10,19 @@ import Post from "../components/Post/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
 import { injectCssByUrl } from "../utils/helpers";
+// import ErrorBoundary from "../components/ErrorBoundary";
+
+// const PostLazyWrapper = lazy(() => import("../components/Post/Post.js"));
+
+// const renderLoader = () => <p>Loading</p>;
+
+// const PostComponent = props => (
+//   <ErrorBoundary>
+//     <Suspense fallback={renderLoader()}>
+//       <PostLazyWrapper {...props} />
+//     </Suspense>
+//   </ErrorBoundary>
+// );
 
 class PostTemplate extends React.Component {
   moveNavigatorAside = moveNavigatorAside.bind(this);
@@ -20,6 +32,7 @@ class PostTemplate extends React.Component {
       this.moveNavigatorAside();
     }
     injectCssByUrl("/styles/gist-embed.css");
+    injectCssByUrl(`https://unpkg.com/prismjs@0.0.1/dist/prism-okaidia/prism-okaidia.css`);
   }
 
   render() {
@@ -63,10 +76,7 @@ const mapDispatchToProps = {
   setNavigatorShape
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PostTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(PostTemplate);
 
 //eslint-disable-next-line no-undef
 export const postQuery = graphql`
