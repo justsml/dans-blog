@@ -8,6 +8,8 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
 const currentPath = process.env.CWD || path.resolve("./");
 
+console.warn("CURRENTPATH", currentPath);
+
 // query TagsQuery {
 //   allMarkdownRemark(
 //     limit: 2000
@@ -57,7 +59,7 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
     if (node.frontmatter)
       node.frontmatter.relativePath = nodeIdToRelativePath(node.id, currentPath);
 
-    // console.log('node.frontmatter.relativePath', node.frontmatter.relativePath);
+    console.log("node.frontmatter.relativePath", node.frontmatter.relativePath);
     let { categories, category } = node.frontmatter;
     categories = categories || [];
     if (category) categories.push(category);
