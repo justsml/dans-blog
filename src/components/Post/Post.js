@@ -6,6 +6,7 @@ import PostHeader from "./PostHeader";
 import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
 import AutoLoader from "../Challenge/AutoLoader";
+import EditOnGithub from "../common/EditOnGithub";
 
 let lastSlug = "";
 
@@ -21,8 +22,9 @@ export default class Post extends React.Component {
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
-    allTags: PropTypes.object
-    // facebook: PropTypes.object.isRequired
+    allTags: PropTypes.object,
+    image: PropTypes.object,
+    githubUrl: PropTypes.string
   };
 
   componentDidMount() {
@@ -38,6 +40,8 @@ export default class Post extends React.Component {
   }
 
   renderTwitter = (retries = 0) => {
+    if (retries < MAX_RETRIES) return;
+
     if (!window.twttr || !window.twttr.widgets || typeof window.twttr.widgets.load !== "function") {
       return setTimeout(() => this.renderTwitter(retries + 1), 250);
     }
@@ -64,6 +68,7 @@ export default class Post extends React.Component {
 
     return (
       <Article>
+        {this.props.githubUrl && <EditOnGithub githubUrl={this.props.githubUrl} />}
         <PostHeader
           allTags={allTags}
           title={title}

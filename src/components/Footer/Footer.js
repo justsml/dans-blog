@@ -20,8 +20,7 @@ const styles = theme => ({
   }
 });
 
-const Footer = props => {
-  const { classes, footnote } = props;
+const Footer = ({ classes, footnote, githubEditUrl }) => {
   const { html } = footnote;
 
   return (
@@ -33,7 +32,8 @@ const Footer = props => {
 
 Footer.propTypes = {
   classes: PropTypes.object.isRequired,
-  footnote: PropTypes.object.isRequired
+  footnote: PropTypes.object.isRequired,
+  githubEditUrl: PropTypes.string
 };
 
 export default injectSheet(styles)(Footer);

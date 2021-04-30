@@ -6,6 +6,7 @@ import TagList from "../TagList";
 import injectSheet from "react-jss";
 import Header from "../Header";
 import LabelIcon from "@material-ui/icons/Label";
+import CalendarIcon from "@material-ui/icons/Event";
 
 function fixDateString(str) {
   return typeof str === "string" && str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
@@ -44,17 +45,23 @@ const styles = theme => ({
   },
   meta: {
     display: "flex",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     flexFlow: "row",
     lineHeight: "1.55",
     width: "100%",
+    "& svg": {
+      width: "1.5rem",
+      height: "1.5rem",
+      margin: "0.2rem",
+      color: theme.base.colors.linkHover
+    },
     "& label": {
-      opacity: "60%",
+      // opacity: "90%",
       fontWeight: "100"
     },
     "& b": {
-      fontWeight: "300",
-      opacity: "70%"
+      fontWeight: "300"
+      // opacity: "80%"
     },
     "& h3": {
       flexFlow: "column",
@@ -62,7 +69,7 @@ const styles = theme => ({
       display: "flex",
       justifyContent: "space-between",
       maxWidth: "300px",
-      fontSize: "0.8em",
+      fontSize: "0.85rem",
       margin: "0.2rem 0",
       // "& label": {
       //   width: "255px",
@@ -72,11 +79,11 @@ const styles = theme => ({
       // },
       "& span.human-date": {
         width: "100%",
-        fontSize: "0.8rem"
+        fontSize: "0.85rem"
       },
       "& small": {
         width: "100%",
-        fontSize: "0.8rem"
+        fontSize: "0.85rem"
         // fontWeight: 700
         // marginLeft: "4px"
       }
@@ -96,23 +103,41 @@ const styles = theme => ({
     width: "100%",
     margin: "0.2rem 0",
     display: "inline-flex",
-    alignItems: "baseline",
+    alignItems: "center",
     justifyContent: "flex-start",
+    flexDirection: "row",
     "&:hover": {
       "& svg": {
-        color: theme.base.colors.linkHover,
-        opacity: "90%"
+        color: theme.base.colors.linkHover
+        // opacity: "95%"
       }
     }
   },
   labelIcon: {
+    "& svg": {
+      width: "1.5rem",
+      height: "1.5rem",
+      color: theme.bars.colors.icon
+    },
     transition: "all 0.75s ease-in",
+    width: "1.5rem",
+    height: "1.5rem",
     color: theme.bars.colors.icon,
-    opacity: "60%",
-    transform: "scale(0.88)",
-    width: "1.2rem",
     flexShrink: 1,
-    alignSelf: "center"
+    alignSelf: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
+    justifyContent: "center"
+  },
+  calendarIcon: {
+    "& svg": { color: theme.bars.colors.icon },
+    color: theme.bars.colors.icon,
+    // opacity: "95%",
+    display: "flex",
+    flexDirection: "column",
+    alignContent: "center",
+    justifyContent: "center"
   },
   tagList: {
     flexGrow: 2,
@@ -147,9 +172,16 @@ const PostHeader = props => {
   // console.log("allTags", allTags);
   return (
     <Header {...props}>
-      <div className={classes.meta}>{getDateLabel(date, modified)}</div>
+      <div className={classes.meta}>
+        <div className={classes.calendarIcon}>
+          <CalendarIcon />
+        </div>
+        {getDateLabel(date, modified)}
+      </div>
       <div className={classes.tags} title="click a tag to explore similar content">
-        <LabelIcon className={classes.labelIcon} />
+        <div className={classes.labelIcon}>
+          <LabelIcon />
+        </div>
         <TagList tags={tags} allTags={allTags} className={classes.tagList} />
       </div>
     </Header>

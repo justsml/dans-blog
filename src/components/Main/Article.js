@@ -5,10 +5,10 @@ import injectSheet from "react-jss";
 const styles = theme => ({
   article: {
     outline: "0px",
-    background: theme.main.colors.background,
+    // background: theme.main.colors.background,
     maxWidth: theme.main.sizes.articleMaxWidth,
-    margin: "0 auto",
-    padding: `calc(${theme.bars.sizes.infoBar}px + 1.5rem) 1.5rem  1.5rem 1.5rem`,
+    margin: "0 auto 0 auto",
+    padding: `1.5rem 1.5rem 1.5rem 1.5rem`,
     "& strong, & b": {
       letterSpacing: "-.02em"
     },
@@ -22,17 +22,15 @@ const styles = theme => ({
       }
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
-      padding: `calc(2.5rem + ${theme.bars.sizes.infoBar}px) 3.5rem 2.5rem`
+      padding: `1.5rem 3.5rem 2.5rem 3.5rem`
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-      padding: "3.5rem"
+      padding: `1.5rem 3.5rem`
     }
   }
 });
 
-const Article = props => {
-  const { children, classes } = props;
-
+const Article = ({ children, classes }) => {
   return (
     <article tabIndex="-1" className={classes.article}>
       {children}

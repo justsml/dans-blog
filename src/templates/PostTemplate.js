@@ -11,6 +11,7 @@ import Post from "../components/Post/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
 import { injectCssByUrl } from "../utils/helpers";
+import ResponsiveImage from "../components/ResponsiveImage/ResponsiveImage";
 
 class PostTemplate extends React.Component {
   moveNavigatorAside = moveNavigatorAside.bind(this);
@@ -25,15 +26,31 @@ class PostTemplate extends React.Component {
   render() {
     const { data, pathContext } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
-    const { allTags } = data;
+    const { allTags, post } = data;
+    const id = (post || {}).id;
+    const title = ((post || {}).frontmatter || {}).title;
+    const postCover = ((post || {}).frontmatter || {}).cover;
+    const resolutions = postCover ? postCover.childImageSharp.resolutions : null;
+    const editFilePath = id
+      .replace(" absPath of file >>> MarkdownRemark", "")
+      .replace("/Users/danlevy/code/oss/dans-blog", "");
+    const githubUrl = `https://github.com/justsml/dans-blog/blob/master${editFilePath}`;
+    // editFilePath will look like: `/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md`
+    // console.log(`postCover`, JSON.stringify(postCover));
+    // console.trace("image", resolutions);
+
     return (
       <Main>
+        <div className="header-image-box">
+          <ResponsiveImage className="header-image" {...resolutions} alt={`${title} cover image`} />
+        </div>
         <Post
           allTags={allTags}
           post={data.post}
           slug={pathContext.slug}
           author={data.author}
           facebook={facebook}
+          githubUrl={githubUrl}
         />
         <Footer footnote={data.footnote} />
         <Seo data={data.post} facebook={facebook} />
@@ -93,8 +110,8 @@ export const postQuery = graphql`
         tags
         cover {
           childImageSharp {
-            resize(width: 300) {
-              src
+            resolutions(width: 400, height: 400) {
+              ...GatsbyImageSharpResolutions_withWebp_noBase64
             }
           }
         }
