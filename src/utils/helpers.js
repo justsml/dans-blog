@@ -1,15 +1,35 @@
 /* eslint-disable no-param-reassign */
 import theme from "../styles/theme";
-import yup from "yup";
+// import yup from "yup";
 
-export function injectCssByUrl(href) {
-  if (document.querySelector(`link[href="${href}"]`)) return false;
+export function injectCssByUrl(url) {
+  if (document.querySelector(`link[href="${url}"]`)) return false;
   const resource = document.createElement("link");
+  const result = domToPromise(resource);
   resource.setAttribute("rel", "stylesheet");
   resource.setAttribute("type", "text/css");
-  resource.setAttribute("href", href);
+  resource.setAttribute("href", url);
   const head = document.getElementsByTagName("head")[0];
   head.appendChild(resource);
+  return result;
+}
+
+export function injectJsByUrl(url) {
+  if (document.querySelector(`script[src="${url}"]`)) return false;
+  const resource = document.createElement("script");
+  const result = domToPromise(resource);
+  resource.setAttribute("src", url);
+  const head = document.getElementsByTagName("head")[0];
+  head.appendChild(resource);
+  return result;
+}
+
+function domToPromise(element) {
+  if (!(`onload` in element)) throw new Error("Element must have `onload` property!");
+  return new Promise((onLoad, onError) => {
+    element.onload = onLoad;
+    element.onerror = onError;
+  });
 }
 
 export function isWideScreen() {
@@ -66,15 +86,15 @@ export const shareOnTwitter = (text, url, source = "danlevy.net") => {
   )}&related=${encodeURIComponent(source)}`;
 };
 
-function validateGoogleAnalyticsEvent(event) {
-  let schema = yup.object().shape({
-    eventCategory: yup.string().max(150),
-    eventAction: yup.string().max(500),
-    eventLabel: yup.string().max(500),
-    eventValue: yup.number()
-  });
-  return schema.isValidSync(event);
-}
+// function validateGoogleAnalyticsEvent(event) {
+//   let schema = yup.object().shape({
+//     eventCategory: yup.string().max(150),
+//     eventAction: yup.string().max(500),
+//     eventLabel: yup.string().max(500),
+//     eventValue: yup.number()
+//   });
+//   return schema.isValidSync(event);
+// }
 
 /**
  * This allows the user to create custom events within their Gatsby projects.

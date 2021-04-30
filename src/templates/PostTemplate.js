@@ -1,10 +1,8 @@
 import React from "react";
+// import React, { lazy, Suspense } from "react";
 import PropTypes from "prop-types";
 import Main from "../components/Main/";
 import { connect } from "react-redux";
-require("core-js/fn/array/find");
-require("prismjs/themes/prism-okaidia.css");
-
 import { setNavigatorPosition, setNavigatorShape } from "../state/store";
 import { moveNavigatorAside } from "../utils/shared";
 import Post from "../components/Post/";
@@ -21,6 +19,7 @@ class PostTemplate extends React.Component {
       this.moveNavigatorAside();
     }
     injectCssByUrl("/styles/gist-embed.css");
+    injectCssByUrl(`https://unpkg.com/prismjs@0.0.1/dist/prism-okaidia/prism-okaidia.css`);
   }
 
   render() {
@@ -80,10 +79,7 @@ const mapDispatchToProps = {
   setNavigatorShape
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PostTemplate);
+export default connect(mapStateToProps, mapDispatchToProps)(PostTemplate);
 
 //eslint-disable-next-line no-undef
 export const postQuery = graphql`

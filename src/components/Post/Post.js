@@ -7,15 +7,21 @@ import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
 import AutoLoader from "../Challenge/AutoLoader";
 import EditOnGithub from "../common/EditOnGithub";
+import { injectJsByUrl } from "../../utils/helpers";
 
 let lastSlug = "";
+const MAX_RETRIES = 10;
 
-const focusOnPage = () => {
+const focusOnPage = (retries = 1) => {
   const page = document.querySelector("article");
-  if (page && page.focus) page.focus();
+  if (page && page.focus) {
+    page.focus();
+  } else {
+    if (retries < MAX_RETRIES) {
+      return setTimeout(focusOnPage, 250, retries + 1);
+    }
+  }
 };
-
-const MAX_RETRIES = 20;
 
 export default class Post extends React.Component {
   static propTypes = {
@@ -32,20 +38,21 @@ export default class Post extends React.Component {
     if (lastSlug !== this.props.slug) {
       // loading new post - need to trigger :focus update (a11y)
       lastSlug = this.props.slug;
-      setTimeout(focusOnPage, 750);
-      setTimeout(focusOnPage, 150);
-      setTimeout(focusOnPage, 300);
+      focusOnPage();
     }
     this.renderTwitter();
   }
 
   renderTwitter = (retries = 0) => {
-    if (retries < MAX_RETRIES) return;
+    if (retries >= MAX_RETRIES) return;
 
     if (!window.twttr || !window.twttr.widgets || typeof window.twttr.widgets.load !== "function") {
-      return setTimeout(() => this.renderTwitter(retries + 1), 250);
-    }
-    if (retries < MAX_RETRIES) {
+      injectJsByUrl(`https://platform.twitter.com/widgets.js`)
+        .then(() => {
+          window.twttr.widgets.load();
+        })
+        .catch(console.error);
+    } else {
       window.twttr.widgets.load();
     }
   };

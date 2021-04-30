@@ -75,7 +75,12 @@ class InfoBar extends React.Component {
     return (
       <aside className={classes.infoBar}>
         <Link to="/" className={classes.avatarLink}>
-          <Avatar alt={config.infoTitle} src={avatar} className={classes.avatar} />
+          <Avatar
+            alt={config.infoTitle}
+            src={avatar}
+            className={classes.avatar}
+            imgProps={{ style: { width: 36, height: 36 } }}
+          />
         </Link>
         <Link to="/" className={classes.titleLink}>
           <h3 className={classes.title}>
@@ -109,7 +114,4 @@ const mapDispatchToProps = {
   setNavigatorPosition
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(injectSheet(styles)(InfoBar));
+export default connect(mapStateToProps, mapDispatchToProps)(injectSheet(styles)(InfoBar));

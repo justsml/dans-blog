@@ -4,6 +4,7 @@ import injectSheet from "react-jss";
 import Button from "@material-ui/core/Button";
 import { navigateTo } from "gatsby-link";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
+import { injectJsByUrl } from "../../utils/helpers";
 
 function encode(data) {
   return Object.keys(data)
@@ -64,20 +65,28 @@ class ContactForm extends React.PureComponent {
   };
 
   setupRecaptcha = (retries = 0) => {
-    if (!window.grecaptcha || typeof window.grecaptcha.render !== "function") {
-      console.warn("WARN: Couldn't find `recaptcha`. [Retrying... %i]", retries);
-      if (retries > MAX_RETRIES)
-        return console.error("CRITICAL: FAILED TO LOAD RECAPTCHA", window.grecaptcha);
-      return setTimeout(() => this.setupRecaptcha(retries + 1), 200);
+    let promise = Promise.resolve();
+    if (!window.grecaptcha) {
+      promise = injectJsByUrl(`https://www.google.com/recaptcha/api.js?render=explicit`);
     }
-    window.grecaptcha.render(this._recaptcha, {
-      sitekey: "6LeiiJAUAAAAABLlXbDQOBosXwU5d9me6FWZCQ2x",
-      theme: "light", // "dark",
-      size: "compact",
-      callback: token => {
-        this.setState({ recaptchaToken: token });
-      }
-    });
+    promise
+      .then(() => {
+        if (!window.grecaptcha || typeof window.grecaptcha.render !== "function") {
+          console.warn("WARN: Couldn't find `recaptcha`. [Retrying... %i]", retries);
+          if (retries > MAX_RETRIES)
+            return console.error("CRITICAL: FAILED TO LOAD RECAPTCHA", window.grecaptcha);
+          return setTimeout(() => this.setupRecaptcha(retries + 1), 200);
+        }
+        window.grecaptcha.render(this._recaptcha, {
+          sitekey: "6LeiiJAUAAAAABLlXbDQOBosXwU5d9me6FWZCQ2x",
+          theme: "light", // "dark",
+          size: "compact",
+          callback: token => {
+            this.setState({ recaptchaToken: token });
+          }
+        });
+      })
+      .catch(console.error);
   };
 
   handleChange = event => {
