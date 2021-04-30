@@ -26,14 +26,12 @@ class PostTemplate extends React.Component {
     const { data, pathContext } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
     const { allTags, post } = data;
-    const id = (post || {}).id;
+    // const id = (post || {}).id;
     const title = ((post || {}).frontmatter || {}).title;
+    const relativePath = ((post || {}).frontmatter || {}).relativePath;
     const postCover = ((post || {}).frontmatter || {}).cover;
     const resolutions = postCover ? postCover.childImageSharp.resolutions : null;
-    const editFilePath = id
-      .replace(" absPath of file >>> MarkdownRemark", "")
-      .replace("/Users/danlevy/code/oss/dans-blog", "");
-    const githubUrl = `https://github.com/justsml/dans-blog/blob/master${editFilePath}`;
+    const githubUrl = `https://github.com/justsml/dans-blog/blob/master${relativePath}`;
     // editFilePath will look like: `/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md`
     // console.log(`postCover`, JSON.stringify(postCover));
     // console.trace("image", resolutions);

@@ -6,6 +6,8 @@ const Promise = require("bluebird");
 const path = require("path");
 const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
+const currentPath = process.env.CWD || path.resolve("./");
+
 // query TagsQuery {
 //   allMarkdownRemark(
 //     limit: 2000
@@ -37,6 +39,10 @@ function fixDateString(str) {
   return str.length === "yyyy-mm-DD".length ? str + "T00:00" : str;
 }
 
+function nodeIdToRelativePath(id, dir = __dirname) {
+  return id.replace(" absPath of file >>> MarkdownRemark", "").replace(dir, "");
+}
+
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {
@@ -47,6 +53,11 @@ exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
         : new Date();
     }
 
+    // add relativePath for easier edit links later
+    if (node.frontmatter)
+      node.frontmatter.relativePath = nodeIdToRelativePath(node.id, currentPath);
+
+    // console.log('node.frontmatter.relativePath', node.frontmatter.relativePath);
     let { categories, category } = node.frontmatter;
     categories = categories || [];
     if (category) categories.push(category);
