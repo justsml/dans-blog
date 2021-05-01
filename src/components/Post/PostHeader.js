@@ -44,9 +44,11 @@ const styles = theme => ({
     }
   },
   meta: {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "30px auto",
+
     // justifyContent: "space-between",
-    flexFlow: "row",
+    // flexFlow: "row",
     lineHeight: "1.55",
     width: "100%",
     "& svg": {
@@ -96,13 +98,20 @@ const styles = theme => ({
     },
     fontSize: `${theme.main.fonts.meta.size}em`,
     fontWeight: theme.main.fonts.meta.weight,
-    color: theme.main.colors.meta
+    color: theme.main.colors.meta,
+    "&:hover": {
+      "& svg": {
+        color: theme.base.colors.linkHover
+        // opacity: "95%"
+      }
+    }
   },
   tags: {
     transition: "all 0.75s ease-in",
     width: "100%",
     margin: "0.2rem 0",
-    display: "inline-flex",
+    display: "grid",
+    gridTemplateColumns: "30px auto",
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
@@ -113,25 +122,33 @@ const styles = theme => ({
       }
     }
   },
-  labelIcon: {
+  tagsIcon: {
     "& svg": {
       width: "1.5rem",
       height: "1.5rem",
-      color: theme.bars.colors.icon
+      // color: theme.bars.colors.icon,
+      maxWidth: "21px"
     },
     transition: "all 0.75s ease-in",
-    width: "1.5rem",
+    width: "2rem",
     height: "1.5rem",
     color: theme.bars.colors.icon,
-    flexShrink: 1,
+    // flexShrink: 1,
     alignSelf: "center",
     display: "flex",
-    flexDirection: "column",
+    placeSelf: "center",
+    gridTemplateColumns: "30px auto",
     alignContent: "center",
     justifyContent: "center"
   },
-  calendarIcon: {
-    "& svg": { color: theme.bars.colors.icon },
+  metaIcon: {
+    "& svg": {
+      color: theme.bars.colors.icon,
+      maxWidth: "24px"
+    },
+    placeSelf: "center",
+    width: "2rem",
+    height: "1.5rem",
     color: theme.bars.colors.icon,
     // opacity: "95%",
     display: "flex",
@@ -173,13 +190,13 @@ const PostHeader = props => {
   return (
     <Header {...props}>
       <div className={classes.meta}>
-        <div className={classes.calendarIcon}>
+        <div className={`${classes.metaIcon} icon-box`}>
           <CalendarIcon />
         </div>
         {getDateLabel(date, modified)}
       </div>
       <div className={classes.tags} title="click a tag to explore similar content">
-        <div className={classes.labelIcon}>
+        <div className={`${classes.tagsIcon} icon-box`}>
           <LabelIcon />
         </div>
         <TagList tags={tags} allTags={allTags} className={classes.tagList} />

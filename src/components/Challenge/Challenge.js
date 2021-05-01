@@ -396,10 +396,10 @@ class Challenge extends React.Component {
             {title}
           </CardHeader>
           <CardContent>
-            <Typography className={`q-description ${classes.description}`} component="span">
+            <Typography className={`q-description ${classes.description}`} variant="body2">
               {this.renderContent(this.props.html || description, { className: "description" })}
             </Typography>
-            <Typography className="q-answers-list" component="span">
+            <Typography className="q-answers-list" variant="body2">
               <div className={classes.prompt}>
                 <HelpOutlineIcon fontSize="large" className={classes.icon} />
                 Please select the closest answer:

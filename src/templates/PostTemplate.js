@@ -19,7 +19,7 @@ class PostTemplate extends React.Component {
       this.moveNavigatorAside();
     }
     injectCssByUrl("/styles/gist-embed.css");
-    injectCssByUrl(`https://unpkg.com/prismjs@0.0.1/dist/prism-okaidia/prism-okaidia.css`);
+    injectCssByUrl(`https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css`);
   }
 
   render() {
@@ -99,9 +99,10 @@ export const postQuery = graphql`
         title
         subTitle
         category
+        relativePath
+        tags
         date
         modified
-        tags
         cover {
           childImageSharp {
             resolutions(width: 400, height: 400) {
