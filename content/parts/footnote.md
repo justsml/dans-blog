@@ -2,6 +2,6 @@
 title: footnote
 ---
 
-Unless otherwise noted, all content is copyright _Dan Levy 2014-1019._
+Unless otherwise noted, copyright ©2014-2021 Dan Levy.
 
-* photos by [unsplash.com](https://unsplash.com)
+* Photos by [unsplash.com](https://unsplash.com)

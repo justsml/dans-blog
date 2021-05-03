@@ -67,10 +67,10 @@ const styles = theme => ({
     },
     "& h3": {
       flexFlow: "column",
-      width: "50%",
+      width: "100%",
       display: "flex",
       justifyContent: "space-between",
-      maxWidth: "300px",
+      // maxWidth: "300px",
       fontSize: "0.85rem",
       margin: "0.2rem 0",
       // "& label": {
@@ -85,7 +85,8 @@ const styles = theme => ({
       },
       "& small": {
         width: "100%",
-        fontSize: "0.85rem"
+        fontSize: "0.85rem",
+        marginLeft: "6px"
         // fontWeight: 700
         // marginLeft: "4px"
       }
@@ -127,7 +128,8 @@ const styles = theme => ({
       width: "1.5rem",
       height: "1.5rem",
       // color: theme.bars.colors.icon,
-      maxWidth: "21px"
+      maxWidth: "21px",
+      marginRight: "6.5px"
     },
     transition: "all 0.75s ease-in",
     width: "2rem",

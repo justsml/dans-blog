@@ -1,4 +1,3 @@
-
 ul.tag-list {
   list-style-type: none;
   list-style: none;
@@ -53,9 +52,8 @@ ul.tag-page li {
 
 .alert-warning .details {
   margin: 1.75em 0;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-size: 0.7em;
-
 }
 
 .alert-warning h2 {
@@ -78,7 +76,6 @@ ul.tag-page li {
   opacity: 95%;
 }
 
-
 .avatar-img {
   width: 60px;
   height: 60px;
@@ -95,7 +92,7 @@ ul.tag-page li {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 400;
-  text-shadow: 0 0 1px rgba(255,255,255,0.3);
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
   font-size: 1.15em;
 }
 
@@ -103,7 +100,6 @@ ul.tag-page li {
 .pages-side-menu a:focus {
   outline: none;
 }
-
 
 /* Effect 1: Brackets */
 .cl-effect-1 a::before,
@@ -119,7 +115,7 @@ ul.tag-page li {
 .cl-effect-1 a::before {
   color: #555555;
   margin-right: 10px;
-  content: '[';
+  content: "[";
   -webkit-transform: translateX(30px);
   -moz-transform: translateX(30px);
   transform: translateX(30px);
@@ -128,7 +124,7 @@ ul.tag-page li {
 .cl-effect-1 a::after {
   color: #555555;
   margin-left: 10px;
-  content: ']';
+  content: "]";
   -webkit-transform: translateX(-30px);
   -moz-transform: translateX(-30px);
   transform: translateX(-30px);
@@ -157,7 +153,7 @@ ul.tag-page li {
   width: 100%;
   height: 1px;
   background: #7ba329;
-  content: '';
+  content: "";
   opacity: 0;
   -webkit-transition: height 0.3s, opacity 0.3s, -webkit-transform 0.3s;
   -moz-transition: height 0.3s, opacity 0.3s, -moz-transform 0.3s;
@@ -176,7 +172,6 @@ ul.tag-page li {
   transform: translateY(0px);
 }
 
-
 /* Effect 13: three circles */
 .cl-effect-13 a {
   -webkit-transition: color 0.3s;
@@ -189,7 +184,7 @@ ul.tag-page li {
   top: 100%;
   left: 50%;
   color: transparent;
-  content: '•';
+  content: "•";
   text-shadow: 0 0 transparent;
   font-size: 1.2em;
   -webkit-transition: text-shadow 0.3s, color 0.3s;
@@ -212,9 +207,6 @@ ul.tag-page li {
   color: #ba7700;
 }
 
-
-
-
 .quiz-loading {
   display: flex;
   align-items: center;
@@ -227,10 +219,10 @@ ul.tag-page li {
 
 @keyframes rotation {
   from {
-      -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
   to {
-      -webkit-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
   }
 }
 
@@ -242,7 +234,6 @@ ul.tag-page li {
 .font-lg {
   font-size: 1.45rem;
 }
-
 
 .header-image-box {
   display: flex;
@@ -259,41 +250,50 @@ ul.tag-page li {
   border-radius: 100%;
   margin-top: 30px;
   margin-bottom: 10px;
-  filter: saturate(1) drop-shadow(0.2rem 0.2rem 0.3rem #666);
+  filter: drop-shadow(0.125rem 0.125rem 0.2rem #66666666);
   transition: all 0.4s ease-in-out;
 }
 
 .header-image-box img:hover {
-  border: 3px solid #333333aa;
+  border: 3px solid #666666dc;
+  filter: drop-shadow(0 0 0 #66666666);
   /* filter: saturate(3); */
 }
 
 .github-edit-link {
+  margin-right: 0.6rem;
   position: absolute;
   top: 30px;
   right: 30px;
   text-decoration: none !important;
   color: rgb(60, 94, 18);
-  display: flex;
+  display: grid;
+  grid-template-columns: 38px 32px;
   align-items: center;
   justify-content: center;
 }
+.github-edit-link span {
+  align-self: center;
+  place-self: center;
+  text-align: right;
+}
 .github-edit-link svg {
-  width: 1.9rem;
-  height: 1.9rem;
-  float: right;
+  align-self: center;
+  place-self: auto;
+  width: 2rem;
+  height: 2rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
 .github-edit-link svg path {
-  fill:rgb(60, 94, 18);
+  fill: rgb(60, 94, 18);
 }
 .github-edit-link:hover svg path {
-  fill:rgb(60, 94, 18);
+  fill: rgb(60, 94, 18);
 }
 
-code[class="language-text"] {
-  background-color: #99999999 !important;
+code[class="language-text"], pre[class="language-text"] {
+  background-color: rgb(245, 245, 245) !important;
   color: #333 !important;
 }
 
@@ -302,15 +302,14 @@ code[class="language-text"] {
     margin-top: 80px;
   }
   .github-edit-link svg {
-    width: 1.2rem;
-    height: 1.2rem;
-    margin-left: 0.25rem;
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.5rem;
     margin-right: 0.25rem;
-    }
+  }
   .github-edit-link {
     top: 70px;
-    right: 20px;
-    font-size: 0.75rem;
+    right: 25px;
+    font-size: 0.88rem;
   }
 }
-

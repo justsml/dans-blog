@@ -49,28 +49,32 @@ const styles = theme => ({
     }
   },
   avatar: {
-    width: "36px",
-    height: "36px",
-    borderRadius: "65% 75%",
+    "& img": {
+      width: "36px",
+      height: "36px",
+      maxWidth: "100%"
+    },
+    borderRadius: "100%",
     border: "1px solid #ddd",
     transition: "all .3s",
     transitionTimingFunction: "ease",
     display: "inline-block",
     overflow: "hidden",
-    "& img": {
-      maxWidth: "100%"
-    },
     [`@media (min-width: ${theme.mediaQueryTresholds.M}px)`]: {
-      width: "44px",
-      height: "44px"
+      "& img": {
+        width: "44px",
+        height: "44px"
+      }
     },
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-      width: "60px",
-      height: "60px"
+      "& img": {
+        width: "60px",
+        height: "60px"
+      }
     },
     "@media (hover: hover)": {
       "&:hover": {
-        borderRadius: "75% 65%"
+        borderRadius: "100%"
       }
     }
   },
@@ -124,7 +128,7 @@ const InfoHeader = props => {
     <header className={classes.header}>
       <Link className={classes.avatarLink} to="/" title="home page / all articles">
         <div className={classes.avatar}>
-          <img src={avatar} alt="" />
+          <img src={avatar} alt="" className="avatar-img" />
         </div>
       </Link>
       <Link className={classes.titleLink} to="/" title="home page / all articles">

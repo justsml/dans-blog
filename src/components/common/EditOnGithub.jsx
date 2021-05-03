@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 // import GitHubIcon from "@material-ui/icons/GitHub";
 import GitHubIcon from "!svg-react-loader!./GitHubIcon.svg?name=GitHubIcon";
 
-export default function EditOnGithub({ githubUrl, className, description = "this page" }) {
+export default function EditOnGithub({ githubUrl, className, description = "Page" }) {
   return (
     <a
       target="_blank"
@@ -12,7 +12,11 @@ export default function EditOnGithub({ githubUrl, className, description = "this
       href={githubUrl}
       title="Found a mistake or error? Suggest a fix on GitHub!"
     >
-      Edit {description} <GitHubIcon />
+      <span>
+        Edit<br />
+        {description}
+      </span>
+      <GitHubIcon />
     </a>
   );
 }

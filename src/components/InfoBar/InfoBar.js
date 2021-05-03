@@ -50,7 +50,7 @@ const styles = theme => ({
   },
   avatar: {
     width: "36px",
-    borderRadius: "65% 75%",
+    borderRadius: "100%",
     border: "1px solid #ddd",
     height: "36px"
   },
@@ -73,7 +73,7 @@ class InfoBar extends React.Component {
     const { classes, pages } = this.props;
 
     return (
-      <aside className={classes.infoBar}>
+      <aside className={`info-bar ${classes.infoBar}`}>
         <Link to="/" className={classes.avatarLink}>
           <Avatar
             alt={config.infoTitle}
