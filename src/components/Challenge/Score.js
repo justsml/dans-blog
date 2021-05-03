@@ -114,15 +114,17 @@ class Score extends Component {
 
   constructor(props) {
     super(props);
-    this.updateScores();
+    // this.updateScores();
   }
 
   componentDidMount() {
+    this._mounted = true;
     this.timer = setInterval(this.updateScores, 1200);
     window.addEventListener("click", this.updateScores);
   }
 
   componentWillUnmount() {
+    this._mounted = false;
     window.removeEventListener("click", this.updateScores);
     clearInterval(this.timer);
     this.timer = null;
