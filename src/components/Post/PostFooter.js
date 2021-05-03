@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 
@@ -34,11 +34,24 @@ const PostComments = asyncComponent(() =>
 );
 
 const PostFooter = ({ classes, author, post, slug }) => {
+  const [showComments, setShowComments] = useState(false);
+
+  useEffect(() => {
+    const handler = event => cleanup() && setShowComments(true);
+    const cleanup = () => {
+      window.removeEventListener("click", handler);
+      window.removeEventListener("mousemove", handler);
+    };
+    window.addEventListener("click", handler);
+    window.addEventListener("mousemove", handler);
+    return cleanup;
+  }, []);
+
   return (
     <footer className={classes.footer}>
-      <PostShare post={post} slug={slug} />
+      {showComments && <PostShare post={post} slug={slug} />}
       <PostAuthor author={author} />
-      <PostComments post={post} slug={slug} author={author} />
+      {showComments && <PostComments post={post} slug={slug} author={author} />}
     </footer>
   );
 };

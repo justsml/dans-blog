@@ -40,8 +40,18 @@ export default class Post extends React.Component {
       lastSlug = this.props.slug;
       focusOnPage();
     }
-    setTimeout(this.renderTwitter, 7000, 1);
+    setTimeout(() => this.interactionHandler(this.renderTwitter), 5000, 1);
   }
+
+  interactionHandler = callback => {
+    const handler = event => cleanup() && callback();
+    const cleanup = () => {
+      window.removeEventListener("click", handler);
+      window.removeEventListener("mousemove", handler);
+    };
+    window.addEventListener("click", handler);
+    window.addEventListener("mousemove", handler);
+  };
 
   renderTwitter = (retries = 0) => {
     if (retries >= MAX_RETRIES) return;
@@ -58,7 +68,7 @@ export default class Post extends React.Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log("slug", this.props.slug, nextProps.slug);
+    console.log("slug", this.props.slug, nextProps.slug);
     return true;
   }
 
