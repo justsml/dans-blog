@@ -111,7 +111,7 @@ const styles = theme => ({
     width: "100%",
     margin: "0.2rem 0",
     display: "grid",
-    gridTemplateColumns: "30px auto",
+    gridTemplateColumns: "36px auto",
     alignItems: "center",
     justifyContent: "flex-start",
     flexDirection: "row",
@@ -137,7 +137,7 @@ const styles = theme => ({
     alignSelf: "center",
     display: "flex",
     placeSelf: "center",
-    gridTemplateColumns: "30px auto",
+    gridTemplateColumns: "36px auto",
     alignContent: "center",
     justifyContent: "center"
   },
