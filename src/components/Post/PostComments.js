@@ -36,6 +36,10 @@ const PostComments = props => {
     url
   };
 
+  // eslint-disable-next-line no-undef
+  const isSSR = globalThis !== window;
+  if (isSSR) return <div className="post-comments-ssr-placeholder" />;
+
   useEffect(() => {
     setTimeout(setShowComments, DISQUS_DELAY, true);
   }, []);
