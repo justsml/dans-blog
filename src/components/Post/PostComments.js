@@ -4,10 +4,19 @@ import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
 // import { DiscussionEmbed } from "disqus-react";
 import config from "../../../content/meta/config";
+import asyncComponent from "../common/AsyncComponent";
 
-const DiscussionEmbedAsync = React.lazy(() =>
-  import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
+// const DiscussionEmbedAsync = React.lazy(() =>
+//   import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
+// );
+const DiscussionEmbed = asyncComponent(() =>
+  import("disqus-react")
+    .then(module => {
+      return module.DiscussionEmbed;
+    })
+    .catch(error => {})
 );
+
 
 const styles = theme => ({
   postComments: {
@@ -47,11 +56,7 @@ const PostComments = props => {
 
   return (
     <div id="post-comments" className={classes.postComments}>
-      <Suspense fallback={<p>Loading comments, please wait...</p>}>
-        {showComments && (
-          <DiscussionEmbedAsync shortname={config.disqusShortname} config={disqusConfig} />
-        )}
-      </Suspense>
+      {showComments && <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />}
 
       {/* <FacebookProvider appId={facebook}>
         <Comments

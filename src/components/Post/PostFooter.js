@@ -4,7 +4,7 @@ import injectSheet from "react-jss";
 
 import asyncComponent from "../common/AsyncComponent/";
 import PostAuthor from "./PostAuthor";
-import PostComments from "./PostComments";
+// import PostComments from "./PostComments";
 
 const styles = theme => ({
   footer: {
@@ -19,6 +19,14 @@ const styles = theme => ({
 
 const PostShare = asyncComponent(() =>
   import("./PostShare")
+    .then(module => {
+      return module;
+    })
+    .catch(error => {})
+);
+
+const PostComments = asyncComponent(() =>
+  import("./PostComments")
     .then(module => {
       return module;
     })
