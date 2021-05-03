@@ -6,7 +6,7 @@ import injectSheet from "react-jss";
 import config from "../../../content/meta/config";
 
 const DiscussionEmbedAsync = React.lazy(() =>
-  import("disqus-react/lib/DiscussionEmbed.js").then(({ DiscussionEmbed }) => DiscussionEmbed)
+  import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
 );
 
 const styles = theme => ({
