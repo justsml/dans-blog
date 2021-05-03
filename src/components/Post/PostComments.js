@@ -37,7 +37,8 @@ const PostComments = props => {
   };
 
   // eslint-disable-next-line no-undef
-  const isSSR = globalThis !== window;
+  const isSSR = typeof globalThis === "undefined";
+
   if (isSSR) return <div className="post-comments-ssr-placeholder" />;
 
   useEffect(() => {
