@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
-import { DiscussionEmbed } from "disqus-react";
-
+// import { DiscussionEmbed } from "disqus-react";
 import config from "../../../content/meta/config";
+
+const DiscussionEmbedAsync = React.lazy(() =>
+  import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
+);
 
 const styles = theme => ({
   postComments: {
@@ -18,7 +21,10 @@ const styles = theme => ({
 //   Comments
 // </Disqus.CommentCount> */}
 
+const DISQUS_DELAY = 6000;
+
 const PostComments = props => {
+  const [showComments, setShowComments] = useState(false);
   const { classes, slug, post } = props || {};
   const title = post && post.frontmatter && post.frontmatter.title;
   const category = post && post.frontmatter && post.frontmatter.category;
@@ -30,11 +36,15 @@ const PostComments = props => {
     url
   };
 
-  // console.log("POST COMMENTS:", JSON.stringify(disqusConfig));
-  // console.log("POST COMMENTS PROPS:", JSON.stringify(props, null, 2));
+  useEffect(() => {
+    setTimeout(setShowComments, DISQUS_DELAY, true);
+  }, []);
+
   return (
     <div id="post-comments" className={classes.postComments}>
-      <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />
+      {showComments && (
+        <DiscussionEmbedAsync shortname={config.disqusShortname} config={disqusConfig} />
+      )}
 
       {/* <FacebookProvider appId={facebook}>
         <Comments
