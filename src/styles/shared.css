@@ -250,16 +250,17 @@ ul.tag-page li {
 }
 
 .header-image img {
-  border: 3px solid #CCC;
+  border: 3px solid #fff;
   margin: 0 auto;
   border-radius: 100%;
-  margin-top: -200px;
-  filter: saturate(1);
+  margin-top: 30px;
+  margin-bottom: 10px;
+  filter: saturate(1) drop-shadow(0.2rem 0.2rem 0.3rem #666);
   transition: all 0.4s ease-in-out;
 }
 
 .header-image img:hover {
-  border: 3px solid #666;
+  border: 3px solid #333333aa;
   /* filter: saturate(3); */
 }
 
@@ -291,3 +292,21 @@ code[class="language-text"] {
   background-color: #99999999 !important;
   color: #333 !important;
 }
+
+@media (max-width: 1024px) {
+  .header-image img {
+    margin-top: 80px;
+  }
+  .github-edit-link svg {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    }
+  .github-edit-link {
+    top: 70px;
+    right: 20px;
+    font-size: 0.75rem;
+  }
+}
+

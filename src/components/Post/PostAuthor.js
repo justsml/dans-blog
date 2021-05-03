@@ -37,7 +37,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     minHeight: "50px",
-    alignItems: "center"
+    alignItems: "flex-start"
   }
 });
 

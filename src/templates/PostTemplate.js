@@ -77,7 +77,10 @@ const mapDispatchToProps = {
   setNavigatorShape
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostTemplate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostTemplate);
 
 //eslint-disable-next-line no-undef
 export const postQuery = graphql`
@@ -105,7 +108,7 @@ export const postQuery = graphql`
         modified
         cover {
           childImageSharp {
-            resolutions(width: 400, height: 400) {
+            resolutions(width: 220, height: 220) {
               ...GatsbyImageSharpResolutions_withWebp_noBase64
             }
           }
