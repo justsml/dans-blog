@@ -40,7 +40,7 @@ export default class Post extends React.Component {
       lastSlug = this.props.slug;
       focusOnPage();
     }
-    this.renderTwitter();
+    setTimeout(this.renderTwitter, 7000, 1);
   }
 
   renderTwitter = (retries = 0) => {
