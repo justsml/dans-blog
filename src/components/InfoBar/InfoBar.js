@@ -78,7 +78,7 @@ class InfoBar extends React.Component {
           <Avatar
             alt={config.infoTitle}
             src={avatar}
-            className={classes.avatar}
+            className={`${classes.avatar} avatar-img`}
             imgProps={{ style: { width: 36, height: 36 } }}
           />
         </Link>
