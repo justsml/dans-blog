@@ -20,10 +20,10 @@ const styles = theme => ({
       marginRight: "0.275rem"
     },
     "& a": {
-      fontSize: "0.8rem",
+      fontSize: "0.85rem",
       color: theme.base.colors.link,
       transition: "0.18s",
-      opacity: "0.5",
+      opacity: "1",
       "&:hover, &:visited, &:link": {
         opacity: "0.5",
         color: theme.base.colors.linkHover
@@ -33,13 +33,14 @@ const styles = theme => ({
       }
     },
     "& h4": {
-      fontSize: "0.8rem",
+      fontSize: "0.85rem",
       fontWeight: "300",
       marginRight: "6px",
       margin: 0
     },
     "& > div": {
-      fontSize: "0.8rem",
+      lineHeight: 1.5,
+      fontSize: "0.85rem",
       marginRight: "6px"
     },
     "> *": {

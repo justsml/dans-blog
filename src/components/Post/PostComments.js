@@ -1,10 +1,22 @@
-import React from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
-import { DiscussionEmbed } from "disqus-react";
-
+// import { DiscussionEmbed } from "disqus-react";
 import config from "../../../content/meta/config";
+import asyncComponent from "../common/AsyncComponent";
+
+// const DiscussionEmbedAsync = React.lazy(() =>
+//   import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
+// );
+const DiscussionEmbed = asyncComponent(() =>
+  import("disqus-react")
+    .then(module => {
+      return module.DiscussionEmbed;
+    })
+    .catch(error => {})
+);
+
 
 const styles = theme => ({
   postComments: {
@@ -18,7 +30,10 @@ const styles = theme => ({
 //   Comments
 // </Disqus.CommentCount> */}
 
+const DISQUS_DELAY = 6000;
+
 const PostComments = props => {
+  const [showComments, setShowComments] = useState(false);
   const { classes, slug, post } = props || {};
   const title = post && post.frontmatter && post.frontmatter.title;
   const category = post && post.frontmatter && post.frontmatter.category;
@@ -30,11 +45,18 @@ const PostComments = props => {
     url
   };
 
-  // console.log("POST COMMENTS:", JSON.stringify(disqusConfig));
-  // console.log("POST COMMENTS PROPS:", JSON.stringify(props, null, 2));
+  // eslint-disable-next-line no-undef
+  const isSSR = typeof globalThis === "undefined";
+
+  if (isSSR) return <div className="post-comments-ssr-placeholder" />;
+
+  useEffect(() => {
+    setTimeout(setShowComments, DISQUS_DELAY, true);
+  }, []);
+
   return (
     <div id="post-comments" className={classes.postComments}>
-      <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />
+      {showComments && <DiscussionEmbed shortname={config.disqusShortname} config={disqusConfig} />}
 
       {/* <FacebookProvider appId={facebook}>
         <Comments

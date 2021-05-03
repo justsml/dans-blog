@@ -24,7 +24,9 @@ const styles = theme => ({
       "& > div > div": {
         position: "relative!important"
       }
-    }
+    },
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center -320px"
   },
   article: {
     maxWidth: theme.main.sizes.maxWidth,
@@ -71,11 +73,9 @@ const styles = theme => ({
   }
 });
 
-const Main = props => {
-  const { classes, children } = props;
-
+const Main = ({ classes, children, image }) => {
   return (
-    <main className={classes.main}>
+    <main className={classes.main} style={{ backgroundImage: image && `url(${image})` }}>
       <SpringScrollbars>{children}</SpringScrollbars>
     </main>
   );
@@ -83,7 +83,8 @@ const Main = props => {
 
 Main.propTypes = {
   classes: PropTypes.object.isRequired,
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
+  image: PropTypes.string
 };
 
 export default injectSheet(styles)(Main);

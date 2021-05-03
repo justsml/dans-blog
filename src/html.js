@@ -52,7 +52,12 @@ module.exports = class HTML extends React.Component {
         </head>
         <body {...this.props.bodyAttributes}>
           {this.props.preBodyComponents}
-          <div key={`body`} id="___gatsby" dangerouslySetInnerHTML={{ __html: this.props.body }} />
+          <div
+            key={`body`}
+            className="line-numbers"
+            id="___gatsby"
+            dangerouslySetInnerHTML={{ __html: this.props.body }}
+          />
           {this.props.postBodyComponents}
           <noscript>You need to enable JavaScript to run this app!</noscript>
         </body>

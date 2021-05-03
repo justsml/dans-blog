@@ -152,8 +152,9 @@ const theme = createMuiTheme({
     }
   },
   typography: {
-    fontFamily: `Arial, sans-serif`,
-    fontSize: 16
+    fontFamily: `Lato, Arial, sans-serif`,
+    fontSize: 16,
+    useNextVariants: true
   }
 });
 

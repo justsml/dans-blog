@@ -9,19 +9,7 @@ import Post from "../components/Post/";
 import Footer from "../components/Footer/";
 import Seo from "../components/Seo";
 import { injectCssByUrl } from "../utils/helpers";
-// import ErrorBoundary from "../components/ErrorBoundary";
-
-// const PostLazyWrapper = lazy(() => import("../components/Post/Post.js"));
-
-// const renderLoader = () => <p>Loading</p>;
-
-// const PostComponent = props => (
-//   <ErrorBoundary>
-//     <Suspense fallback={renderLoader()}>
-//       <PostLazyWrapper {...props} />
-//     </Suspense>
-//   </ErrorBoundary>
-// );
+import ResponsiveImage from "../components/ResponsiveImage/ResponsiveImage";
 
 class PostTemplate extends React.Component {
   moveNavigatorAside = moveNavigatorAside.bind(this);
@@ -31,21 +19,35 @@ class PostTemplate extends React.Component {
       this.moveNavigatorAside();
     }
     injectCssByUrl("/styles/gist-embed.css");
-    injectCssByUrl(`https://unpkg.com/prismjs@0.0.1/dist/prism-okaidia/prism-okaidia.css`);
+    injectCssByUrl(`https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css`);
   }
 
   render() {
     const { data, pathContext } = this.props;
     const facebook = (((data || {}).site || {}).siteMetadata || {}).facebook;
-    const { allTags } = data;
+    const { allTags, post } = data;
+    // const id = (post || {}).id;
+    const title = ((post || {}).frontmatter || {}).title;
+    const relativePath = ((post || {}).frontmatter || {}).relativePath;
+    const postCover = ((post || {}).frontmatter || {}).cover;
+    const resolutions = postCover ? postCover.childImageSharp.resolutions : null;
+    const githubUrl = `https://github.com/justsml/dans-blog/blob/master${relativePath}`;
+    // editFilePath will look like: `/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md`
+    // console.log(`postCover`, JSON.stringify(postCover));
+    // console.trace("image", resolutions);
+
     return (
       <Main>
+        <div className="header-image-box">
+          <ResponsiveImage className="header-image" {...resolutions} alt={`${title} cover image`} />
+        </div>
         <Post
           allTags={allTags}
           post={data.post}
           slug={pathContext.slug}
           author={data.author}
           facebook={facebook}
+          githubUrl={githubUrl}
         />
         <Footer footnote={data.footnote} />
         <Seo data={data.post} facebook={facebook} />
@@ -75,7 +77,10 @@ const mapDispatchToProps = {
   setNavigatorShape
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostTemplate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostTemplate);
 
 //eslint-disable-next-line no-undef
 export const postQuery = graphql`
@@ -97,13 +102,14 @@ export const postQuery = graphql`
         title
         subTitle
         category
+        relativePath
+        tags
         date
         modified
-        tags
         cover {
           childImageSharp {
-            resize(width: 300) {
-              src
+            resolutions(width: 220, height: 220) {
+              ...GatsbyImageSharpResolutions_withWebp_noBase64
             }
           }
         }

@@ -6,6 +6,7 @@ import PostHeader from "./PostHeader";
 import Content from "../Main/Content";
 import PostFooter from "./PostFooter";
 import AutoLoader from "../Challenge/AutoLoader";
+import EditOnGithub from "../common/EditOnGithub";
 import { injectJsByUrl } from "../../utils/helpers";
 
 let lastSlug = "";
@@ -27,8 +28,9 @@ export default class Post extends React.Component {
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
-    allTags: PropTypes.object
-    // facebook: PropTypes.object.isRequired
+    allTags: PropTypes.object,
+    image: PropTypes.object,
+    githubUrl: PropTypes.string
   };
 
   componentDidMount() {
@@ -38,10 +40,22 @@ export default class Post extends React.Component {
       lastSlug = this.props.slug;
       focusOnPage();
     }
-    this.renderTwitter();
+    setTimeout(() => this.interactionHandler(this.renderTwitter), 5000, 1);
   }
 
-  renderTwitter = () => {
+  interactionHandler = callback => {
+    const handler = event => cleanup() && callback();
+    const cleanup = () => {
+      window.removeEventListener("click", handler);
+      window.removeEventListener("mousemove", handler);
+    };
+    window.addEventListener("click", handler);
+    window.addEventListener("mousemove", handler);
+  };
+
+  renderTwitter = (retries = 0) => {
+    if (retries >= MAX_RETRIES) return;
+
     if (!window.twttr || !window.twttr.widgets || typeof window.twttr.widgets.load !== "function") {
       injectJsByUrl(`https://platform.twitter.com/widgets.js`)
         .then(() => {
@@ -54,7 +68,7 @@ export default class Post extends React.Component {
   };
 
   shouldComponentUpdate(nextProps, nextState) {
-    // console.log("slug", this.props.slug, nextProps.slug);
+    console.log("slug", this.props.slug, nextProps.slug);
     return true;
   }
 
@@ -71,6 +85,7 @@ export default class Post extends React.Component {
 
     return (
       <Article>
+        {this.props.githubUrl && <EditOnGithub githubUrl={this.props.githubUrl} />}
         <PostHeader
           allTags={allTags}
           title={title}
