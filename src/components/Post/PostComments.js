@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
@@ -42,9 +42,11 @@ const PostComments = props => {
 
   return (
     <div id="post-comments" className={classes.postComments}>
-      {showComments && (
-        <DiscussionEmbedAsync shortname={config.disqusShortname} config={disqusConfig} />
-      )}
+      <Suspense fallback={<p>Loading comments, please wait...</p>}>
+        {showComments && (
+          <DiscussionEmbedAsync shortname={config.disqusShortname} config={disqusConfig} />
+        )}
+      </Suspense>
 
       {/* <FacebookProvider appId={facebook}>
         <Comments
