@@ -7,12 +7,30 @@
 /
   # Cache-Control: public, max-age=0, must-revalidate 
 /*.js
-  # Cache-Control: public, max-age=31536000, stale-while-revalidate=2592000
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=31536000
 /static/*
-  Cache-Control: public, max-age=31536000, stale-while-revalidate=2592000
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=31536000
 /favicon.ico
-  # Cache-Control: public, max-age=31536000, stale-while-revalidate=2592000
+  # Cache-Control: public, max-age=2592000, stale-while-revalidate=31536000
 /icons/*
-  # Cache-Control: public, max-age=31536000, stale-while-revalidate=2592000
+  # Cache-Control: public, max-age=2592000, stale-while-revalidate=31536000
+/*---*
+  Cache-Control: immutable
+/*-*.svg
+  Cache-Control: immutable
+/*-*.jpg
+  Cache-Control: immutable
+/app-*.js*
+  Cache-Control: immutable
+/commons-*.js*
+  Cache-Control: immutable
+/0-*.js*
+  Cache-Control: immutable
+/1-*.js*
+  Cache-Control: immutable
+/2-*.js*
+  Cache-Control: immutable
+/3-*.js*
+  Cache-Control: immutable
 
- 
+
