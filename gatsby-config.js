@@ -110,6 +110,7 @@ module.exports = {
               showCaptions: false
             }
           },
+          `gatsby-remark-lazy-load`,
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
@@ -122,7 +123,8 @@ module.exports = {
               // Optional:
               // the github handler whose gists are to be accessed
               username: "justsml",
-              gistDefaultCssInclude: false
+              gistDefaultCssInclude: false.valueOf
+              // truncate: true
             }
           },
           `gatsby-remark-autolink-headers`,
@@ -221,7 +223,7 @@ module.exports = {
             query: `
               {
                 allMarkdownRemark(
-                  limit: 1000,
+                  limit: 50,
                   sort: { order: DESC, fields: [fields___prefix] },
                   filter: { id: { regex: "//posts//" } }
                 ) {
@@ -255,5 +257,23 @@ module.exports = {
         include: /svg-icons/
       }
     }
+    // {
+    //   resolve: "gatsby-plugin-minify-html",
+    //   options: {
+    //     debug: true, // debug optional, default false
+    //     config: {
+    //       // Enabled default by this plugin
+    //       collapseWhitespace: false,
+    //       minifyCSS: true,
+    //       minifyJS: true,
+    //       removeComments: false,
+    //       removeScriptTypeAttributes: false,
+    //       removeStyleLinkTypeAttributes: false,
+    //       // Disabled default by html-minifier-terser
+    //       sortAttributes: true,
+    //       useShortDoctype: true
+    //     }
+    //   }
+    // }
   ]
 };

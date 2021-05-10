@@ -1,6 +1,6 @@
 import React from "react";
 import injectSheet from "react-jss";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+// import { MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -9,7 +9,7 @@ import withRoot from "../withRoot";
 import theme from "../styles/theme";
 import globals from "../styles/globals";
 
-import { setFontSizeIncrease, setIsWideScreen } from "../state/store";
+import { setBrowserActive, setFontSizeIncrease, setIsWideScreen } from "../state/store";
 
 import asyncComponent from "../components/common/AsyncComponent/";
 import Loading from "../components/common/Loading/";
@@ -38,6 +38,7 @@ class Layout extends React.Component {
   categories = [];
 
   componentDidMount() {
+    setBrowserActive(true);
     try {
       this.props.setIsWideScreen(isWideScreen());
       if (typeof window !== "undefined") {
@@ -91,13 +92,18 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { children, data } = this.props;
+    const { children, data, isBrowserRendering } = this.props;
 
     // TODO: dynamic management of tabindexes for keybord navigation
     return (
       <LayoutWrapper>
         {children()}
-        <Navigator posts={data.posts.edges} />
+
+        {isBrowserRendering ? (
+          <Navigator posts={data.posts.edges} />
+        ) : (
+          <nav className="ssr-placeholder-navigation" />
+        )}
         <ActionsBar categories={this.categories} />
         <InfoBar pages={data.pages.edges} parts={data.parts.edges} />
         {this.props.isWideScreen && <InfoBox pages={data.pages.edges} parts={data.parts.edges} />}
@@ -112,7 +118,9 @@ Layout.propTypes = {
   setIsWideScreen: PropTypes.func.isRequired,
   isWideScreen: PropTypes.bool.isRequired,
   fontSizeIncrease: PropTypes.number.isRequired,
-  setFontSizeIncrease: PropTypes.func.isRequired
+  setFontSizeIncrease: PropTypes.func.isRequired,
+  isInitialRender: PropTypes.bool,
+  isBrowserRendering: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -124,6 +132,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
+  setBrowserActive,
   setIsWideScreen,
   setFontSizeIncrease
 };

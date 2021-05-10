@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import injectSheet from "react-jss";
 import PropTypes from "prop-types";
 import Avatar from "@material-ui/core/Avatar";
@@ -69,6 +69,14 @@ class InfoBar extends React.Component {
   homeLinkOnClick = featureNavigator.bind(this);
   pageLinkOnClick = moveNavigatorAside.bind(this);
 
+  componentDidMount() {
+    // Reference: https://developers.google.com/web/updates/2015/09/history-api-scroll-restoration
+    if ("scrollRestoration" in history) {
+      // Back off, browser, I got this...
+      history.scrollRestoration = "manual";
+    }
+  }
+
   render() {
     const { classes, pages } = this.props;
 
@@ -114,4 +122,7 @@ const mapDispatchToProps = {
   setNavigatorPosition
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectSheet(styles)(InfoBar));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(injectSheet(styles)(InfoBar));
