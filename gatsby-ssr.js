@@ -3,7 +3,7 @@ import { JssProvider } from "react-jss";
 import { Provider } from "react-redux";
 import { renderToString } from "react-dom/server";
 import React from "react";
-// import csso from "csso";
+import csso from "csso";
 // import minifier from "./src/utils/minifier";
 import getPageContext from "./src/getPageContext";
 import createStore from "./src/state/store";
@@ -27,7 +27,7 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadCompon
     )
   );
 
-  const minifiedCss = pageContext.sheetsRegistry.toString(); // csso.minify(pageContext.sheetsRegistry.toString()).css;
+  const minifiedCss = csso.minify(pageContext.sheetsRegistry.toString()).css;
 
   setHeadComponents([
     <style
