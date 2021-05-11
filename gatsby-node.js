@@ -45,6 +45,10 @@ function nodeIdToRelativePath(id, dir = __dirname) {
   return id.replace(" absPath of file >>> MarkdownRemark", "").replace(dir, "");
 }
 
+exports.onPostBuild = ({ reporter }) => {
+  reporter.info(`Your Gatsby site has been built!`);
+};
+
 exports.onCreateNode = ({ node, getNode, boundActionCreators }) => {
   const { createNodeField } = boundActionCreators;
   if (node.internal.type === `MarkdownRemark`) {

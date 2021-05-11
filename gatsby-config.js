@@ -256,24 +256,24 @@ module.exports = {
       options: {
         include: /svg-icons/
       }
+    },
+    {
+      resolve: "gatsby-plugin-minify-html",
+      options: {
+        debug: true, // debug optional, default false
+        config: {
+          // Enabled default by this plugin
+          collapseWhitespace: false,
+          minifyCSS: true,
+          minifyJS: true,
+          removeComments: false,
+          removeScriptTypeAttributes: false,
+          removeStyleLinkTypeAttributes: false,
+          // Disabled default by html-minifier-terser
+          sortAttributes: true,
+          useShortDoctype: true
+        }
+      }
     }
-    // {
-    //   resolve: "gatsby-plugin-minify-html",
-    //   options: {
-    //     debug: true, // debug optional, default false
-    //     config: {
-    //       // Enabled default by this plugin
-    //       collapseWhitespace: false,
-    //       minifyCSS: true,
-    //       minifyJS: true,
-    //       removeComments: false,
-    //       removeScriptTypeAttributes: false,
-    //       removeStyleLinkTypeAttributes: false,
-    //       // Disabled default by html-minifier-terser
-    //       sortAttributes: true,
-    //       useShortDoctype: true
-    //     }
-    //   }
-    // }
   ]
 };

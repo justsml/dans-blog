@@ -39,5 +39,22 @@ $ ll public/index.html public/you-may-not-need-axios/index.html public/visualizi
 > After gist plugin fixes
 
 ```sh
-### May, 7th 01:41
+### May, 11th 01:41
+ 38K    public/index.html
+ 70K    public/pitfalls-in-promise-docs/index.html
+ 63K    public/promise-gotchas/index.html
+ 65K    public/protect-your-tokens/index.html
+ 65K    public/visualizing-promises/index.html
+179K    public/you-may-not-need-axios/index.html
+```
+
+> After `gatsby-plugin-minify-html`
+
+```sh
+ 35K    public/index.html
+ 63K    public/pitfalls-in-promise-docs/index.html
+ 57K    public/promise-gotchas/index.html
+ 58K    public/protect-your-tokens/index.html
+ 58K    public/visualizing-promises/index.html
+175K    public/you-may-not-need-axios/index.html
 ```
