@@ -118,13 +118,13 @@ module.exports = {
             }
           },
           {
-            resolve: `gatsby-remark-embed-gist`,
+            resolve: `gatsby-remark-embed-gist-slim`,
             options: {
               // Optional:
               // the github handler whose gists are to be accessed
               username: "justsml",
-              gistDefaultCssInclude: false.valueOf
-              // truncate: true
+              gistDefaultCssInclude: false,
+              truncate: true
             }
           },
           `gatsby-remark-autolink-headers`,

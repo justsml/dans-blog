@@ -58,3 +58,12 @@ $ ll public/index.html public/you-may-not-need-axios/index.html public/visualizi
  58K    public/visualizing-promises/index.html
 175K    public/you-may-not-need-axios/index.html
 ```
+
+```sh
+ 35K    public/index.html
+ 63K    public/pitfalls-in-promise-docs/index.html
+ 58K    public/promise-gotchas/index.html
+ 59K    public/protect-your-tokens/index.html
+ 59K    public/visualizing-promises/index.html
+ 70K    public/you-may-not-need-axios/index.html
+```
