@@ -118,13 +118,13 @@ module.exports = {
             }
           },
           {
-            resolve: `gatsby-remark-embed-gist-slim`,
+            resolve: `gatsby-remark-embed-gist`,
             options: {
               // Optional:
               // the github handler whose gists are to be accessed
               username: "justsml",
-              gistDefaultCssInclude: false,
-              truncate: true
+              gistDefaultCssInclude: false
+              // truncate: true
             }
           },
           `gatsby-remark-autolink-headers`,
@@ -266,9 +266,10 @@ module.exports = {
           collapseWhitespace: false,
           minifyCSS: true,
           minifyJS: true,
-          removeComments: false,
-          removeScriptTypeAttributes: false,
-          removeStyleLinkTypeAttributes: false,
+          maxLineLength: 512,
+          removeComments: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
           // Disabled default by html-minifier-terser
           sortAttributes: true,
           useShortDoctype: true

@@ -73,7 +73,7 @@
   dependencies:
     regenerator-runtime "^0.12.0"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.2.0", "@babel/runtime@^7.7.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.2.0", "@babel/runtime@^7.7.2":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
   integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
@@ -5929,10 +5929,8 @@ gatsby-remark-copy-linked-files@1.5.37:
     probe-image-size "^4.0.0"
     unist-util-visit "^1.1.1"
 
-gatsby-remark-embed-gist-slim@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/gatsby-remark-embed-gist-slim/-/gatsby-remark-embed-gist-slim-1.3.2.tgz#2bc4a29194a678413c703426a32fae54e31515f0"
-  integrity sha512-w+DkQzYLFrv8cCmOGnOP/kYe9XT8Qj8Jnn6Dk4fTbok42CW4EobP103FA/0+urfNwx/7kalKFzYPiY5PFrZZXg==
+"gatsby-remark-embed-gist-slim@file:../gatsby-remark-embed-gist":
+  version "1.3.3"
   dependencies:
     "@babel/runtime" "^7.11.2"
     async-unist-util-visit "^1.0.0"
@@ -5940,17 +5938,16 @@ gatsby-remark-embed-gist-slim@^1.3.2:
     node-fetch "^2.6.0"
     parse-numeric-range "^1.2.0"
 
-gatsby-remark-embed-gist@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/gatsby-remark-embed-gist/-/gatsby-remark-embed-gist-1.2.0.tgz#68edf00a6dc66076862e827e2cc0af2374027648"
-  integrity sha512-nOfYtOLA8+SQIMJGRZmWBJgAiZXqkQgzRyxrIkhLTsJsnnY53AJjKzLf8zaiOUbt1aoGbH4lon10KsfVpBsv2g==
+gatsby-remark-embed-gist@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/gatsby-remark-embed-gist/-/gatsby-remark-embed-gist-1.2.1.tgz#d6cc1c48b7670df59e51adecfa910a02e452bf7f"
+  integrity sha512-kBUHsjCObbdejhZ0n+roNe1iAWVj4l7yWLKMNDbTEmVklLcFRuv4koPUruTye1Hxv5j97A/l6aKk1ka2AZ9Wkg==
   dependencies:
-    "@babel/runtime" "^7.10.3"
+    "@babel/runtime" "^7.11.2"
     async-unist-util-visit "^1.0.0"
     cheerio "^1.0.0-rc.3"
+    node-fetch "^2.6.0"
     parse-numeric-range "^1.2.0"
-    request "^2.88.2"
-    request-promise "^4.2.5"
 
 gatsby-remark-external-links@0.0.4:
   version "0.0.4"
@@ -8959,7 +8956,7 @@ lodash@3.10.1:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
   integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
 
-lodash@4, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.11.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@4, lodash@^4.0.0, lodash@^4.1.0, lodash@^4.11.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.19"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.19.tgz#e48ddedbe30b3321783c5b4301fbd353bc1e4a4b"
   integrity sha512-JNvd8XER9GQX0v2qJgsaN/mzFCNA5BRe/j8JN9d+tWyGLSodKQHKFicdwNYzWwI3wjRnaKPsGj1XkBjx/F96DQ==
@@ -12613,24 +12610,7 @@ replace-ext@^1.0.0:
   resolved "https://registry.yarnpkg.com/replace-ext/-/replace-ext-1.0.1.tgz#2d6d996d04a15855d967443631dd5f77825b016a"
   integrity sha512-yD5BHCe7quCgBph4rMQ+0KkIRKwWCrHDOX1p1Gp6HwjPM5kVoCdKGNhN7ydqqsX6lJEnQDKZ/tFMiEdQ1dvPEw==
 
-request-promise-core@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/request-promise-core/-/request-promise-core-1.1.4.tgz#3eedd4223208d419867b78ce815167d10593a22f"
-  integrity sha512-TTbAfBBRdWD7aNNOoVOBH4pN/KigV6LyapYNNlAPA8JwbovRti1E88m3sYAwsLi5ryhPKsE9APwnjFTgdUjTpw==
-  dependencies:
-    lodash "^4.17.19"
-
-request-promise@^4.2.5:
-  version "4.2.6"
-  resolved "https://registry.yarnpkg.com/request-promise/-/request-promise-4.2.6.tgz#7e7e5b9578630e6f598e3813c0f8eb342a27f0a2"
-  integrity sha512-HCHI3DJJUakkOr8fNoCc73E5nU5bqITjOYFMDrKHYOXWXrgD/SBaC7LjwuPymUprRyuF06UK7hd/lMHkmUXglQ==
-  dependencies:
-    bluebird "^3.5.0"
-    request-promise-core "1.1.4"
-    stealthy-require "^1.1.1"
-    tough-cookie "^2.3.3"
-
-request@^2.58.0, request@^2.67.0, request@^2.74.0, request@^2.83.0, request@^2.88.2:
+request@^2.58.0, request@^2.67.0, request@^2.74.0, request@^2.83.0:
   version "2.88.2"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
   integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
@@ -13729,11 +13709,6 @@ statuses@~1.4.0:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.4.0.tgz#bb73d446da2796106efcc1b601a253d6c46bd087"
   integrity sha512-zhSCtt8v2NDrRlPQpCNtw/heZLtfUDqxBM1udqikb/Hbk52LK4nQSwr10u77iopCW5LsyHpuXS0GnEc48mLeew==
 
-stealthy-require@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
-  integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
-
 steno@^0.4.1:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/steno/-/steno-0.4.4.tgz#071105bdfc286e6615c0403c27e9d7b5dcb855cb"
@@ -14422,7 +14397,7 @@ toposort@^2.0.2:
   resolved "https://registry.yarnpkg.com/toposort/-/toposort-2.0.2.tgz#ae21768175d1559d48bef35420b2f4962f09c330"
   integrity sha1-riF2gXXRVZ1IvvNUILL0li8JwzA=
 
-tough-cookie@^2.3.3, tough-cookie@~2.5.0:
+tough-cookie@~2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.5.0.tgz#cd9fb2a0aa1d5a12b473bd9fb96fa3dcff65ade2"
   integrity sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==

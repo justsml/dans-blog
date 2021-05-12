@@ -117,6 +117,7 @@ class AutoLoader extends React.Component {
   };
 
   loadChallenges = challengeConfigs => {
+    if (!this.__mounted) return;
     this.setState(
       {
         challenges: challengeConfigs,

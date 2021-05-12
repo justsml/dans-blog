@@ -13,12 +13,19 @@ import { setBrowserActive, setFontSizeIncrease, setIsWideScreen } from "../state
 
 import asyncComponent from "../components/common/AsyncComponent/";
 import Loading from "../components/common/Loading/";
-import Navigator from "../components/Navigator/";
+// import Navigator from "../components/Navigator/";
 import ActionsBar from "../components/ActionsBar/";
 import InfoBar from "../components/InfoBar/";
 import LayoutWrapper from "../components/LayoutWrapper/";
 
 import { isWideScreen, timeoutThrottlerHandler } from "../utils/helpers";
+
+const loadingJsx = (
+  <Loading
+    overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
+    afterRight={true}
+  />
+);
 
 const InfoBox = asyncComponent(
   () =>
@@ -27,12 +34,18 @@ const InfoBox = asyncComponent(
         return module;
       })
       .catch(error => {}),
-  <Loading
-    overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
-    afterRight={true}
-  />
+  loadingJsx
 );
 
+const Navigator = asyncComponent(
+  () =>
+    import("../components/Navigator/")
+      .then(module => {
+        return module;
+      })
+      .catch(error => {}),
+  loadingJsx
+);
 class Layout extends React.Component {
   timeouts = {};
   categories = [];
@@ -92,18 +105,13 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { children, data, isBrowserRendering } = this.props;
+    const { children, data } = this.props;
 
     // TODO: dynamic management of tabindexes for keybord navigation
     return (
       <LayoutWrapper>
         {children()}
-
-        {isBrowserRendering ? (
-          <Navigator posts={data.posts.edges} />
-        ) : (
-          <nav className="ssr-placeholder-navigation" />
-        )}
+        <Navigator posts={data.posts.edges} />
         <ActionsBar categories={this.categories} />
         <InfoBar pages={data.pages.edges} parts={data.parts.edges} />
         {this.props.isWideScreen && <InfoBox pages={data.pages.edges} parts={data.parts.edges} />}
@@ -120,7 +128,7 @@ Layout.propTypes = {
   fontSizeIncrease: PropTypes.number.isRequired,
   setFontSizeIncrease: PropTypes.func.isRequired,
   isInitialRender: PropTypes.bool,
-  isBrowserRendering: PropTypes.bool
+  isBrowserActive: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {

@@ -2,34 +2,34 @@ import React, { useState, useEffect } from "react";
 
 /**
  * Function-as-a-child (aka FaaC) pattern
- * to provide the `isBrowserRendering` value.
+ * to provide the `isBrowserActive` value.
  *
  * @example
  * ```js
  * <SsrDetectionFaaC>
- *   {({isBrowserRendering}) => {
+ *   {({isBrowserActive}) => {
  *     <NavBar
- *       browserMode={isBrowserRendering}
- *       serverMode={!isBrowserRendering}
+ *       browserMode={isBrowserActive}
+ *       serverMode={!isBrowserActive}
  *     />
  *   }}
  * </SsrDetectionFaaC>
  * ```
  *
  * @param Component a React Component
- * @returns `<Component isBrowserRendering={isBrowserRendering} />`
+ * @returns `<Component isBrowserActive={isBrowserActive} />`
  */
 export function SsrDetectionFaaC({ children }) {
-  const [isBrowserRendering, setIsBrowserRendering] = useState(false);
+  const [isBrowserActive, setIsBrowserRendering] = useState(false);
   useEffect(() => {
     setIsBrowserRendering(true);
   }, []);
 
-  return children({ isBrowserRendering });
+  return children({ isBrowserActive });
 }
 
 /**
- * Higher-order Component adds `isBrowserRendering` prop to provided component.
+ * Higher-order Component adds `isBrowserActive` prop to provided component.
  *
  * @example
  * ```js
@@ -37,17 +37,17 @@ export function SsrDetectionFaaC({ children }) {
  * ```
  *
  * @param Component a React Component
- * @returns `<Component isBrowserRendering={isBrowserRendering} />`
+ * @returns `<Component isBrowserActive={isBrowserActive} />`
  */
 export function withBrowserDetection(Component) {
-  const [isBrowserRendering, setIsBrowserRendering] = useState(false);
+  const [isBrowserActive, setIsBrowserRendering] = useState(false);
   useEffect(() => {
     setIsBrowserRendering(true);
   }, []);
 
   const WrappedComponent = React.useCallback(
-    props => <Component {...props} isBrowserRendering={isBrowserRendering} />,
-    [isBrowserRendering]
+    props => <Component {...props} isBrowserActive={isBrowserActive} />,
+    [isBrowserActive]
   );
 
   return WrappedComponent;

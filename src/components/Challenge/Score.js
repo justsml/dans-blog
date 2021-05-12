@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/jsx-no-target-blank */
 import React, { Component } from "react";
 import Tada from "react-reveal/Tada";
@@ -112,23 +113,22 @@ class Score extends Component {
     totalAvailable: 0
   };
 
-  constructor(props) {
-    super(props);
-    this.updateScores();
-  }
-
   componentDidMount() {
     this.timer = setInterval(this.updateScores, 1200);
     window.addEventListener("click", this.updateScores);
+    this.updateScores();
+    this.__mounted = true;
   }
 
   componentWillUnmount() {
+    this.__mounted = false;
     window.removeEventListener("click", this.updateScores);
     clearInterval(this.timer);
     this.timer = null;
   }
 
   updateScores = () => {
+    if (!this.__mounted) return;
     if (typeof window !== `undefined`) {
       const challenges = window.document.querySelectorAll(`.challenge-block`);
       const correctChallenges = window.document.querySelectorAll(
@@ -145,6 +145,7 @@ class Score extends Component {
   };
 
   resetAll = () => {
+    if (!this.__mounted) return;
     if (typeof window !== `undefined`) {
       const challengeResetButtons = window.document.querySelectorAll(".challenge-reset-button");
       challengeResetButtons.forEach(b => {
