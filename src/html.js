@@ -1,9 +1,11 @@
 /* eslint  react/prop-types: 0 */
 import React from "react";
+import { minifiedFontFace } from "./styles/gfonts-open-sans-snippet";
 
 let stylesStr;
 if (process.env.NODE_ENV === `production`) {
   try {
+    // eslint-disable-next-line global-require
     stylesStr = require(`!raw-loader!../public/styles.css`);
   } catch (e) {
     console.log(e);
@@ -15,6 +17,10 @@ module.exports = class HTML extends React.Component {
     let css;
     if (process.env.NODE_ENV === `production`) {
       css = <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />;
+    } else {
+      css = (
+        <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: minifiedFontFace }} />
+      );
     }
     return (
       <html {...this.props.htmlAttributes}>
