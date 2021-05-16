@@ -43,8 +43,21 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadCompon
 };
 
 exports.onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
-  // };
-  setHeadComponents([]);
+  const unregisterJs = `
+const unregisterServiceWorkers = () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(workers => {
+      if (workers && workers.length > 0) {
+        workers.forEach(sw => sw.unregister());
+      }
+    });
+  }
+}
+unregisterServiceWorkers();
+`;
+  setHeadComponents([
+    <script key="ssr-sw-unregister" dangerouslySetInnerHTML={{ __html: unregisterJs }} />
+  ]);
   // exports.onRenderBody = ({ setPostBodyComponents }) => {
   return setPostBodyComponents([]);
 };

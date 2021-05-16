@@ -12,20 +12,8 @@ if (process.env.NODE_ENV === `production`) {
   }
 }
 
-const unregisterServiceWorkers = () => {
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.getRegistrations().then(workers => {
-      if (workers && workers.length > 0) {
-        workers.forEach(sw => sw.unregister());
-      }
-    });
-  }
-};
-
 module.exports = class HTML extends React.Component {
   render() {
-    unregisterServiceWorkers();
-
     let css;
     if (process.env.NODE_ENV === `production`) {
       css = <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />;

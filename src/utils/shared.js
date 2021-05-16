@@ -39,6 +39,16 @@ export const extractH2 = html =>
 export const extractH3 = html =>
   html && /(<\/?h3>)/gim.test(html) ? html.split(/(<\/?h3>)/gim)[0] : "";
 
+export const unregisterServiceWorkers = () => {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.getRegistrations().then(workers => {
+      if (workers && workers.length > 0) {
+        workers.forEach(sw => sw.unregister());
+      }
+    });
+  }
+};
+
 export function featureNavigator(e) {
   e && e.preventDefault();
 
