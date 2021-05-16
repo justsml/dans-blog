@@ -50,6 +50,15 @@ class Layout extends React.Component {
   timeouts = {};
   categories = [];
 
+  componentWillUnmount() {
+    try {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", this.resizeThrottler, false);
+      }
+    } catch (error) {
+      // ignore
+    }
+  }
   componentDidMount() {
     setBrowserActive(true);
     try {
@@ -151,7 +160,7 @@ export default connect(
 )(withRoot(injectSheet(globals)(Layout)));
 
 //eslint-disable-next-line no-undef
-export const guery = graphql`
+export const query = graphql`
   query LayoutQuery {
     posts: allMarkdownRemark(
       filter: { id: { regex: "//posts//" } }
