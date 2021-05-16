@@ -7,6 +7,7 @@ import React from "react";
 // import minifier from "./src/utils/minifier";
 import getPageContext from "./src/getPageContext";
 import createStore from "./src/state/store";
+import { minifiedFontFace } from "./src/styles/gfonts-open-sans-snippet";
 
 exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadComponents }) => {
   const pageContext = getPageContext();
@@ -34,7 +35,9 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadCompon
       type="text/css"
       id="server-side-jss"
       key="server-side-jss"
-      dangerouslySetInnerHTML={{ __html: pageContext.sheetsRegistry.toString() }}
+      dangerouslySetInnerHTML={{
+        __html: minifiedFontFace + "\n" + pageContext.sheetsRegistry.toString()
+      }}
     />
   ]);
 };
