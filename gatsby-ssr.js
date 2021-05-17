@@ -44,7 +44,7 @@ exports.replaceRenderer = ({ bodyComponent, replaceBodyHTMLString, setHeadCompon
 
 exports.onRenderBody = ({ setHeadComponents, setPostBodyComponents }) => {
   const unregisterJs = `
-const unregisterServiceWorkers = () => {
+(function() {
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.getRegistrations().then(workers => {
       if (workers && workers.length > 0) {
@@ -52,8 +52,7 @@ const unregisterServiceWorkers = () => {
       }
     });
   }
-}
-unregisterServiceWorkers();
+})();
 `;
   setHeadComponents([
     <script key="ssr-sw-unregister" dangerouslySetInnerHTML={{ __html: unregisterJs }} />
