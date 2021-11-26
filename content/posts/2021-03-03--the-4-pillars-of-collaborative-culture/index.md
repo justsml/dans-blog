@@ -42,9 +42,9 @@ The next 2 pillars will ensure your process demonstrates value over the near- an
 
 ### Teams should define their norms & expectations
 
-**Tip:** Choose expectations & best practices that make sense, adjust as necessary.
+**Tip:** Discuss and determine the best way to work as a team. Adjust as necessary.
 
-Document them as succinctly as possible, for example:
+Document your findings as succinctly as possible, for example:
 
 - Screenshots in intro preferred for anything UI related.
 - 1-line text summary preferred. (Use 1-paragraph for BizDev or New Features.)
@@ -52,6 +52,10 @@ Document them as succinctly as possible, for example:
 - Make specific label recommendations: (e.g. `Urgent`, `[Team-Name]`, `Needs C-Level Approval`, `Hackathon`, `Spike related`.)
 
 ### Considerations for your Team
+
+Take some time to think about this process, demonstrate to your team that you value an environment where their ideas are heard.
+
+Focus on these areas:
 
 - **Set Clear & Minimal Expectations. Usually this is defined per role/division** (e.g. finance, security, incident response, engineering, executive.)
     - [ ]  No draft is too rough to share. (Use clear labels to indicate as such.)
@@ -69,15 +73,20 @@ Document them as succinctly as possible, for example:
     - [ ]  **Talk about this** with your group (or individually) regularly. Often a quick pairing session or brain-storming can help unblock and re-energize.
 
 **Tip:** Make a habit to **share the proposal as soon as a title is written.**
+
 It's ok if it's in `draft` a while.
-Whenever a proposal is ready to advance, simply fill in more of the blanks.
+
+Whenever a proposal is ready to advance, bring in the stakeholders, discuss & move things forward.
+
 As proposals develop, a backlog of draft ideas becomes a fountain of opportunities.
 
-Are fresh ideas celebrated? Do you celebrate "out there" proposals? This will impact the volume of ideas your team produces. Be intentional about modeling what you want to see.
+Are fresh ideas celebrated? Do you celebrate "out there" proposals? This will impact the value & volume of ideas.
+
+**Be intentional about modeling what you want to see.**
 
 ### Scope & Expectations
 
-If possible, responding to a proposal is ideally a few-click process. Key stakeholders may include a sentence or two.
+Whernever possible, responding to a proposal is ideally a few-click process.
 
 Decide if you need a lengthy analysis with exhaustive notes, or a quick 1-line comment, or even an emoji vote.
 
@@ -89,13 +98,10 @@ Every team will have different norms & priorities here. Try to reflect & improve
 
 ### Measuring Success 
 
-Measure how welcome new ideas are in your org/team by asking: 
+Consider how ideas come about & evolve in your organization:
 
-- What percent of your employees/team have created proposals? How low-friction is your process?
-- What's the average time before an employee's first proposals? Days? Months? Years?
+- What percent of your employees/team share ideas?
+- What's the average time before an employee's first suggestion? Days? Months? Years?!?!?
+- Does everyone on your team regularly share ideas?
+- Do people feel safe? Can they be vulnerable? Even question the mission?
 
-
-
-<!-- Does everyone on your team share ideas regularly?
-Volunteer feedback or ask questions?
-Can they be vulnerable? Safely challenge even the mission? -->
