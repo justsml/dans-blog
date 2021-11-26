@@ -1,8 +1,8 @@
 ---
 title: "The 4 Pillars of Collaborative Culture"
 subTitle: Safety, Speed, Clarity and Commitment.
-date: 2021-03-03
-modified: null
+date: 2021-04-03
+modified: 2021-11-25
 tags: [collaborative-culture, culture, teams, growth, personal-development]
 category: leadering
 cover: null
