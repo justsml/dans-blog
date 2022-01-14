@@ -110,6 +110,7 @@ module.exports = {
               showCaptions: false
             }
           },
+          `gatsby-remark-lazy-load`,
           {
             resolve: `gatsby-remark-responsive-iframe`,
             options: {
@@ -184,7 +185,7 @@ module.exports = {
         ]
       }
     },
-    `gatsby-plugin-offline`,
+    // `gatsby-plugin-offline`,
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
@@ -253,6 +254,25 @@ module.exports = {
       resolve: "gatsby-plugin-react-svg",
       options: {
         include: /svg-icons/
+      }
+    },
+    {
+      resolve: "gatsby-plugin-minify-html",
+      options: {
+        debug: true, // debug optional, default false
+        config: {
+          // Enabled default by this plugin
+          collapseWhitespace: false,
+          minifyCSS: true,
+          minifyJS: true,
+          maxLineLength: 512,
+          removeComments: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          // Disabled default by html-minifier-terser
+          sortAttributes: true,
+          useShortDoctype: true
+        }
       }
     }
   ]
