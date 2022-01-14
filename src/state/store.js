@@ -5,6 +5,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
  * action types
  */
 
+const SET_BROWSER_ACTIVE = "SET_BROWSER_ACTIVE";
 const SET_NAVIGATOR_POSITION = "SET_NAVIGATOR_POSITION";
 const SET_NAVIGATOR_SHAPE = "SET_NAVIGATOR_SHAPE";
 const SET_NAVIGATOR_FILTER = "SET_NAVIGATOR_FILTER";
@@ -16,6 +17,10 @@ const SET_CATEGORY_FILTER = "SET_CATEGORY_FILTER";
 /*
  * action creators
  */
+
+export function setBrowserActive(val) {
+  return { type: SET_BROWSER_ACTIVE, val };
+}
 
 export function setNavigatorPosition(val) {
   return { type: SET_NAVIGATOR_POSITION, val };
@@ -54,6 +59,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         navigatorPosition: action.val
+      };
+
+    case SET_BROWSER_ACTIVE:
+      return {
+        ...state,
+        isBrowserActive: action.val
       };
 
     case SET_NAVIGATOR_SHAPE:
@@ -98,6 +109,7 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
+  isBrowserActive: false,
   navigatorPosition: "is-aside",
   navigatorShape: "open",
   navigatorFilter: "",

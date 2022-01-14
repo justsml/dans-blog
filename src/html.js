@@ -1,9 +1,11 @@
 /* eslint  react/prop-types: 0 */
 import React from "react";
+import { minifiedFontFace } from "./styles/gfonts-open-sans-snippet";
 
 let stylesStr;
 if (process.env.NODE_ENV === `production`) {
   try {
+    // eslint-disable-next-line global-require
     stylesStr = require(`!raw-loader!../public/styles.css`);
   } catch (e) {
     console.log(e);
@@ -15,6 +17,10 @@ module.exports = class HTML extends React.Component {
     let css;
     if (process.env.NODE_ENV === `production`) {
       css = <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: stylesStr }} />;
+    } else {
+      css = (
+        <style id="gatsby-inlined-css" dangerouslySetInnerHTML={{ __html: minifiedFontFace }} />
+      );
     }
     return (
       <html {...this.props.htmlAttributes}>
@@ -24,11 +30,11 @@ module.exports = class HTML extends React.Component {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           {this.props.headComponents}
           {css}
-          <link
+          {/* <link
             key="open-sans-font"
             href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&amp;display=swap&amp;text=abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!%2522%23%24%25%26'()*%2B%2C-.%2F0123456789%3A%3B%3C%3D%3E%3F%40%5B%5D%5E_`%7B%7C%7D~"
             rel="stylesheet"
-          />
+          /> */}
           <meta
             name="google-site-verification"
             content="j-qzWjBXBWEMTB6JylBTTJT5HAggnAfG8fzBj8H-jYc"

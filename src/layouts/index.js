@@ -1,6 +1,6 @@
 import React from "react";
 import injectSheet from "react-jss";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+// import { MuiThemeProvider } from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -9,16 +9,23 @@ import withRoot from "../withRoot";
 import theme from "../styles/theme";
 import globals from "../styles/globals";
 
-import { setFontSizeIncrease, setIsWideScreen } from "../state/store";
+import { setBrowserActive, setFontSizeIncrease, setIsWideScreen } from "../state/store";
 
 import asyncComponent from "../components/common/AsyncComponent/";
 import Loading from "../components/common/Loading/";
-import Navigator from "../components/Navigator/";
+// import Navigator from "../components/Navigator/";
 import ActionsBar from "../components/ActionsBar/";
 import InfoBar from "../components/InfoBar/";
 import LayoutWrapper from "../components/LayoutWrapper/";
 
 import { isWideScreen, timeoutThrottlerHandler } from "../utils/helpers";
+
+const loadingJsx = (
+  <Loading
+    overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
+    afterRight={true}
+  />
+);
 
 const InfoBox = asyncComponent(
   () =>
@@ -27,17 +34,33 @@ const InfoBox = asyncComponent(
         return module;
       })
       .catch(error => {}),
-  <Loading
-    overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
-    afterRight={true}
-  />
+  loadingJsx
 );
 
+const Navigator = asyncComponent(
+  () =>
+    import("../components/Navigator/")
+      .then(module => {
+        return module;
+      })
+      .catch(error => {}),
+  loadingJsx
+);
 class Layout extends React.Component {
   timeouts = {};
   categories = [];
 
+  componentWillUnmount() {
+    try {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", this.resizeThrottler, false);
+      }
+    } catch (error) {
+      // ignore
+    }
+  }
   componentDidMount() {
+    setBrowserActive(true);
     try {
       this.props.setIsWideScreen(isWideScreen());
       if (typeof window !== "undefined") {
@@ -112,7 +135,9 @@ Layout.propTypes = {
   setIsWideScreen: PropTypes.func.isRequired,
   isWideScreen: PropTypes.bool.isRequired,
   fontSizeIncrease: PropTypes.number.isRequired,
-  setFontSizeIncrease: PropTypes.func.isRequired
+  setFontSizeIncrease: PropTypes.func.isRequired,
+  isInitialRender: PropTypes.bool,
+  isBrowserActive: PropTypes.bool
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -124,6 +149,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = {
+  setBrowserActive,
   setIsWideScreen,
   setFontSizeIncrease
 };
@@ -134,7 +160,7 @@ export default connect(
 )(withRoot(injectSheet(globals)(Layout)));
 
 //eslint-disable-next-line no-undef
-export const guery = graphql`
+export const query = graphql`
   query LayoutQuery {
     posts: allMarkdownRemark(
       filter: { id: { regex: "//posts//" } }

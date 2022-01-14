@@ -38,9 +38,6 @@ This article features 1-line commands to start some of the most popular database
 > **Advanced Docker Users:** If you are familiar with `docker-compose` you may want to convert the shell commands below for use in your `docker-compose.yml` files.
 
 
-![credit: markus-spiske-193031-cropped-2.png](markus-spiske-193031-cropped-2.png)
-
-
 ## Postgres Server
 
 ##### Start a container, naming it `pg-server`
@@ -198,7 +195,7 @@ docker build -t app-name-here .
 
 
 
-<!-- 
+<!--
 #### Docker Install
 
 If you don't have Docker installed, use the following command to install on Linux or macOS:
