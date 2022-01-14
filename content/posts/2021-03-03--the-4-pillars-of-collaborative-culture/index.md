@@ -5,10 +5,8 @@ date: 2021-04-03
 modified: 2021-11-25
 tags: [collaborative-culture, culture, teams, growth, personal-development]
 category: leadering
-cover: null
-photo: pexels-fauxels-3184430-cropped.jpg
+cover: pexels-fauxels-3184430-cropped.jpg
 credit: Photo by fauxels from Pexels
-
 ---
 
 # The 4 Pillars of Collaborative Culture
@@ -24,7 +22,7 @@ There are 4 essential pillars to a Culture of Collaboration:
 - Clarity.
 - Commitment.
 
-The first two substantially impact each other: ***Safety & Speed***. 
+The first two substantially impact each other: ***Safety & Speed***.
 The next 2 pillars will ensure your process demonstrates value over the near- and long-term.
 
 ### The 4 Pillars
@@ -96,7 +94,7 @@ Rejection (or the perception of failure) should never become a dis-incentive. A 
 
 Every team will have different norms & priorities here. Try to reflect & improve your teams approach as part of retrospectives.
 
-### Measuring Success 
+### Measuring Success
 
 Consider how ideas come about & evolve in your organization:
 
