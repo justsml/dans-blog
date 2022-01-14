@@ -1,0 +1,2 @@
+webpackJsonp([0xc340a4e373fc],{1370:function(o,e){o.exports={data:{allMarkdownRemark:null},pathContext:{posts:[{title:"Higher Order Programming",slug:"/higher-order-programming/"},{title:"Naming things real good",slug:"/naming-things-real-good/"},{title:"You may not need Axios",slug:"/you-may-not-need-axios/"}],tagName:"source-code",tagCount:3}}}});
+//# sourceMappingURL=path---tags-source-code-2aabce3e990e1d9b7911.js.map

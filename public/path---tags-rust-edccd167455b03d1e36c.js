@@ -1,0 +1,2 @@
+webpackJsonp([0xeb7914649a24],{1359:function(e,t){e.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/love-computer-languages/"},frontmatter:{title:"Love (Computer) Languages",subTitle:null,date:"2015-06-12T00:00:00.000Z",modified:"2018-09-24T00:00:00.000Z",category:"languages"}}}]}},pathContext:{posts:[{title:"Love (Computer) Languages",slug:"/love-computer-languages/"}],tagName:"rust",tagCount:1}}}});
+//# sourceMappingURL=path---tags-rust-edccd167455b03d1e36c.js.map

@@ -1,0 +1,2 @@
+webpackJsonp([34788886813031],{1308:function(t,e){t.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/creating-collaborative-culture/"},frontmatter:{title:"Creating Collaborative Culture",subTitle:"Unlock your Teams Creativity!",date:"2021-01-01T00:00:00.000Z",modified:"2021-03-04T00:00:00.000Z",category:"leadership"}}}]}},pathContext:{posts:[{title:"Creating Collaborative Culture",slug:"/creating-collaborative-culture/"}],tagName:"culture",tagCount:1}}}});
+//# sourceMappingURL=path---tags-culture-567e4ba919d7789c8fd3.js.map

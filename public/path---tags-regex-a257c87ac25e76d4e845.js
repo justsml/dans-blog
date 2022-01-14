@@ -1,0 +1,2 @@
+webpackJsonp([0xb9555246e4c3],{1356:function(e,t){e.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/security-notes-regex/"},frontmatter:{title:"Security Notes: RegEx",subTitle:"Even RegEx can be vulnerable",date:"2015-02-24T00:00:00.000Z",modified:"2018-10-01T00:00:00.000Z",category:"security"}}}]}},pathContext:{posts:[{title:"Security Notes: RegEx",slug:"/security-notes-regex/"}],tagName:"regex",tagCount:1}}}});
+//# sourceMappingURL=path---tags-regex-a257c87ac25e76d4e845.js.map
