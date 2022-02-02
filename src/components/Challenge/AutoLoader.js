@@ -134,7 +134,7 @@ class AutoLoader extends React.Component {
       console.warn("Short circuit Statful Work when UNMOUNTED!");
       return [];
     }
-    const challenges = Array.from(document.querySelectorAll(".challenge"));
+    const challenges = Array.from(window.document.querySelectorAll(".challenge"));
     if (challenges.length <= 0) return [];
 
     // console.log("challenges", challenges);
