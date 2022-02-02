@@ -9,7 +9,8 @@ export const extractTagContent = (selector, html) => {
       .text()
       .trim();
   } catch (error) {
-    return `Error: ${error.message}: \n${html}`;
+    console.error(`Error: ${error.message}: \n${html}`);
+    return `Error: ${error.message}`;
   }
 };
 
@@ -22,7 +23,8 @@ export const removeBySelector = (selector, html) => {
       .remove();
     return cleanupCheerioHtml($.html());
   } catch (error) {
-    return `Error: ${error.message}: \n${html}`;
+    console.error(`Error: ${error.message}: \n${html}`);
+    return `Error: ${error.message}`;
   }
 };
 
