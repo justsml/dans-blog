@@ -52,11 +52,15 @@ const styles = theme => ({
     alignContent: "center",
     justifyContent: "flex-start"
   },
+  content: {
+    paddingTop: "0px",
+  },
   outerBox: {
     width: "100%",
     margin: "1em auto",
     border: "1px solid #999",
     padding: "0em 1rem 1rem 1rem",
+    position: "relative",
     "& code[class*='language-'], pre[class*='language-']": {
       fontSize: "0.9rem"
     },
@@ -64,7 +68,10 @@ const styles = theme => ({
       marginBottom: "-0.4rem"
     },
     "& .question-header": {
-      padding: "0.1em"
+      padding: "0 0.1em 0.1em 0.1em",
+      position: "absolute",
+      top: "1.7rem",
+      left: "1.25rem",
     },
     "&.challenge-correct li.challenge-option-incorrect": {
       border: "1px solid transparent",
@@ -120,7 +127,8 @@ const styles = theme => ({
   },
   description: {
     h1: {
-      display: "none"
+      display: "none",
+      marginLeft: "1.25rem"
     }
   },
   optionList: {
@@ -265,9 +273,9 @@ class Challenge extends React.Component {
     cachedState = cachedState
       ? JSON.parse(cachedState)
       : {
-          attempts: 0,
-          selection: ""
-        };
+        attempts: 0,
+        selection: ""
+      };
     this.setState({ ...this.state, cachedState, ...cachedState });
   };
 
@@ -386,16 +394,13 @@ class Challenge extends React.Component {
           <CardHeader
             className="question-header"
             avatar={headerIcon}
-            title={
-              <h2>
-                {Number(number) > 0 ? number + ". " : ""}
-                {title}
-              </h2>
-            }
           >
-            {title}
+            <Typography>
+              {Number(number) > 0 ? number + ". " : ""}
+              {title}
+            </Typography>
           </CardHeader>
-          <CardContent>
+          <CardContent className={`${classes.content}`}>
             <Typography className={`q-description ${classes.description}`} variant="body2">
               {this.renderContent(this.props.html || description, { className: "description" })}
             </Typography>

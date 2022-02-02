@@ -2,29 +2,31 @@ import cheerio from "cheerio";
 import { forceCheck } from "react-lazyload";
 // import { navigateTo } from 'gatsby-link';
 
+const wrapElement = (s, tag) => `<${tag}>${s}</${tag}>`;
+
 export const extractTagContent = (selector, html) => {
   try {
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(wrapElement(html, 'span'), {_useHtmlParser2: true});
     return $(selector)
       .text()
       .trim();
   } catch (error) {
-    console.error(`Error: ${error.message}: \n${html}`);
-    return `Error: ${error.message}`;
+    console.error(`Error: ${error.message}: \n${html}`, `selector=${selector}`);
+    return `${html}`;
   }
 };
 
 export const removeBySelector = (selector, html) => {
   try {
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(wrapElement(html, 'span'), {_useHtmlParser2: true});
     // console.info(`$('${selector}')`, $(selector))
     $(selector)
       .first()
       .remove();
     return cleanupCheerioHtml($.html());
   } catch (error) {
-    console.error(`Error: ${error.message}: \n${html}`);
-    return `Error: ${error.message}`;
+    console.error(`Error: ${error.message}: \n${html}`, `selector=${selector}`);
+    return `${html}`;
   }
 };
 
