@@ -3,19 +3,27 @@ import { forceCheck } from "react-lazyload";
 // import { navigateTo } from 'gatsby-link';
 
 export const extractTagContent = (selector, html) => {
-  const $ = cheerio.load(html);
-  return $(selector)
-    .text()
-    .trim();
+  try {
+    const $ = cheerio.load(html);
+    return $(selector)
+      .text()
+      .trim();
+  } catch (error) {
+    return `Error: ${error.message}: \n${html}`;
+  }
 };
 
 export const removeBySelector = (selector, html) => {
-  const $ = cheerio.load(html);
-  // console.info(`$('${selector}')`, $(selector))
-  $(selector)
-    .first()
-    .remove();
-  return cleanupCheerioHtml($.html());
+  try {
+    const $ = cheerio.load(html);
+    // console.info(`$('${selector}')`, $(selector))
+    $(selector)
+      .first()
+      .remove();
+    return cleanupCheerioHtml($.html());
+  } catch (error) {
+    return `Error: ${error.message}: \n${html}`;
+  }
 };
 
 const cleanupCheerioHtml = html => {
