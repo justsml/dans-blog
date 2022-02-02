@@ -126,8 +126,8 @@ const styles = theme => ({
     border: "1px solid green"
   },
   description: {
-    h1: {
-      display: "none",
+    "& h1": {
+      // display: "none",
       marginLeft: "1.25rem"
     }
   },
