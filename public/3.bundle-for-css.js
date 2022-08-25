@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 1014:
+/***/ 1015:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19,7 +19,7 @@ webpackJsonp([3],{
 
 	var _reactJss2 = _interopRequireDefault(_reactJss);
 
-	var _config = __webpack_require__(881);
+	var _config = __webpack_require__(882);
 
 	var _config2 = _interopRequireDefault(_config);
 
@@ -38,7 +38,7 @@ webpackJsonp([3],{
 	var DiscussionEmbed = (0, _AsyncComponent2.default)(function () {
 	  return new Promise(function (resolve) {
 	    __webpack_require__.e/* nsure */(4, function (require) {
-	      resolve(__webpack_require__(1015));
+	      resolve(__webpack_require__(1016));
 	    });
 	  }).then(function (module) {
 	    return module.DiscussionEmbed;

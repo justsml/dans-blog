@@ -1,6 +1,6 @@
 webpackJsonp([2],{
 
-/***/ 955:
+/***/ 956:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -19,9 +19,9 @@ webpackJsonp([2],{
 
 	var _reactJss2 = _interopRequireDefault(_reactJss);
 
-	var _reactShare = __webpack_require__(956);
+	var _reactShare = __webpack_require__(957);
 
-	var _config = __webpack_require__(881);
+	var _config = __webpack_require__(882);
 
 	var _config2 = _interopRequireDefault(_config);
 
