@@ -53,7 +53,7 @@ const styles = theme => ({
     justifyContent: "flex-start"
   },
   content: {
-    paddingTop: "0px",
+    paddingTop: "0px"
   },
   outerBox: {
     width: "100%",
@@ -71,7 +71,7 @@ const styles = theme => ({
       padding: "0 0.1em 0.1em 0.1em",
       position: "absolute",
       top: "1.7rem",
-      left: "1.25rem",
+      left: "1.25rem"
     },
     "&.challenge-correct li.challenge-option-incorrect": {
       border: "1px solid transparent",
@@ -391,10 +391,7 @@ class Challenge extends React.Component {
         when={attempts !== this.state.cachedState.attempts && !this.isCorrect()}
       >
         <Card className={`challenge-ui ${challengeClasses}`}>
-          <CardHeader
-            className="question-header"
-            avatar={headerIcon}
-          >
+          <CardHeader className="question-header" avatar={headerIcon}>
             <Typography>
               {Number(number) > 0 ? number + ". " : ""}
               {title}

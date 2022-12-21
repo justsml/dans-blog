@@ -248,11 +248,11 @@ class ListItem extends React.Component {
     const date = post.node.frontmatter && post.node.frontmatter.date;
     const modified = post.node.frontmatter && post.node.frontmatter.modified;
 
-    console.log("cover", post.node.frontmatter.cover);
-    console.log(
-      "resolutions",
-      post.node.frontmatter.cover && post.node.frontmatter.cover.children[0].resolutions
-    );
+    // console.log("cover", post.node.frontmatter.cover);
+    // console.log(
+    //   "resolutions",
+    //   post.node.frontmatter.cover && post.node.frontmatter.cover.children[0].resolutions
+    // );
 
     return (
       <li

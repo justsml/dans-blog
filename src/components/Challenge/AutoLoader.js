@@ -77,7 +77,7 @@ class AutoLoader extends React.Component {
     if (data.title && data.title.length >= 2) {
       config.title = String(data.title).trim();
       // console.log(`MetaCheck.pre.removeBySelector`, config.html.length, config.html);
-      config.html = config.html.replace(/<h1[^>]*>.*?<\/h1>/gi, "");
+      // config.html = config.html.replace(/<h1/gi, "<h1 style='display:none'");
       // console.log(`MetaCheck.post.removeBySelector`, config.html.length, config.html);
     }
 
@@ -86,7 +86,7 @@ class AutoLoader extends React.Component {
 
   checkInlineChallenges = () => {
     if (!document.querySelector(".challenge")) return false;
-    this.loadTimeout = setTimeout(() => this.loadChallenges(this.getChallenges()), 750);
+    this.loadTimeout = setTimeout(() => this.loadChallenges(this.getChallenges()), 2750);
   };
 
   componentWillUnmount() {
