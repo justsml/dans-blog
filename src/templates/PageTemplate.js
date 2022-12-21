@@ -35,9 +35,9 @@ class PageTemplate extends React.Component {
 
     return (
       <Main>
+        <Seo data={data && data.post} facebook={facebook} />
         <Page page={data && data.page} />
         <Footer footnote={data && data.footnote} />
-        <Seo data={data && data.post} facebook={facebook} />
       </Main>
     );
   }
@@ -62,7 +62,10 @@ const mapDispatchToProps = {
   setNavigatorShape
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageTemplate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PageTemplate);
 
 //eslint-disable-next-line no-undef
 export const pageQuery = graphql`

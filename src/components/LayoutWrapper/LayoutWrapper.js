@@ -10,7 +10,7 @@ const styles = theme => ({
     left: 0,
     bottom: 0,
     right: 0,
-    overflow: "hidden",
+    // overflow: "hidden",
     "@media print": {
       position: "relative",
       overflow: "visible"

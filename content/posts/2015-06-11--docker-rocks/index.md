@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Docker rocks & now works on OSX"
-date:   2015-06-11 05:00:12
-modified:   2015-06-15 10:00:01
+date: 2015-06-11 05:00:12
+modified: 2015-06-15 10:00:01
 category: docker
 tags: [docker, boot2docker, devops]
 cover: guillaume-bolduc-259596-unsplash.jpg
@@ -10,7 +10,7 @@ cover: guillaume-bolduc-259596-unsplash.jpg
 
 # Docker Rocks
 
-~[credit: guillaume-bolduc-259596-unsplash.jpg](guillaume-bolduc-259596-unsplash.jpg)
+![credit: guillaume-bolduc-259596-unsplash.jpg](guillaume-bolduc-259596-unsplash.jpg)
 
 
 > Updates September 2016, 2018

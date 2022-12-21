@@ -248,6 +248,12 @@ class ListItem extends React.Component {
     const date = post.node.frontmatter && post.node.frontmatter.date;
     const modified = post.node.frontmatter && post.node.frontmatter.modified;
 
+    console.log("cover", post.node.frontmatter.cover);
+    console.log(
+      "resolutions",
+      post.node.frontmatter.cover && post.node.frontmatter.cover.children[0].resolutions
+    );
+
     return (
       <li
         className={`${classes.listItem} ${post.node.frontmatter.category}`}
@@ -263,16 +269,16 @@ class ListItem extends React.Component {
           {post.node.frontmatter.cover &&
             post.node.frontmatter.cover.children[0] && (
               <div className={`${classes.listItemPointer} pointer`}>
-                <LazyLoad height={60} overflow={true} throttle={300} once={true} offset={100}>
-                  <picture>
-                    <source
-                      type="image/webp"
-                      srcSet={post.node.frontmatter.cover.children[0].resolutions.srcSetWebp}
-                    />
-                    <source srcSet={post.node.frontmatter.cover.children[0].resolutions.srcSet} />
-                    <img src={post.node.frontmatter.cover.children[0].resolutions.src} alt="" />
-                  </picture>
-                </LazyLoad>
+                {/* <LazyLoad height={60} overflow={true} throttle={300} once={true} offset={100}> */}
+                <picture>
+                  <source
+                    type="image/webp"
+                    srcSet={post.node.frontmatter.cover.children[0].resolutions.srcSetWebp}
+                  />
+                  <source srcSet={post.node.frontmatter.cover.children[0].resolutions.srcSet} />
+                  <img src={post.node.frontmatter.cover.children[0].resolutions.src} alt="" />
+                </picture>
+                {/* </LazyLoad> */}
               </div>
             )}
           <div className={classes.listItemText}>

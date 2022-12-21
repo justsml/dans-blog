@@ -77,7 +77,7 @@ class AutoLoader extends React.Component {
     if (data.title && data.title.length >= 2) {
       config.title = String(data.title).trim();
       // console.log(`MetaCheck.pre.removeBySelector`, config.html.length, config.html);
-      config.html = removeBySelector("h1", config.html);
+      config.html = config.html.replace(/<h1[^>]*>.*?<\/h1>/gi, "");
       // console.log(`MetaCheck.post.removeBySelector`, config.html.length, config.html);
     }
 

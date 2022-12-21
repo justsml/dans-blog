@@ -17,5 +17,5 @@ ResponsiveImage.propTypes = {
   className: PropTypes.string,
   srcSetWebp: PropTypes.string,
   srcSet: PropTypes.string,
-  src: PropTypes.string
+  src: PropTypes.string.isRequired
 };

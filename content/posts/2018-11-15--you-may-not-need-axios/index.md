@@ -5,7 +5,7 @@ date: 2018-11-14
 modified: 2022-12-20
 tags: [programming, patterns, examples, nodejs, javascript, promises, axios, fetch]
 category: fetch
-cover: william-bout-103533-unsplash.jpg
+cover: brock-dupont-575648-unsplash.jpg
 ---
 
 # You may not need Axios
@@ -19,6 +19,28 @@ cover: william-bout-103533-unsplash.jpg
 ## Overview
 
 This article is a collection of the "missing" `fetch` [code snippets and common use cases](#fetch-examples) I wish were easier to find.
+
+## Fetch Snippets
+
+My top 10 list of `fetch` examples, plus a bonus or 2.
+
+- [Get JSON from a URL](#get-json-from-a-url)
+- [Custom headers](#custom-headers)
+- [HTTP Error Handling](#http-error-handling)
+- [CORS example](#cors-example)
+- [Posting JSON](#posting-json)
+- [Posting an HTML `<form>`](#posting-an-html-form)
+- [Form encoded data](#form-encoded-data)
+- [Uploading a file](#uploading-a-file)
+- [Uploading multiple files](#uploading-multiple-files)
+- [Timeouts](#timeouts)
+- [Download Progress Helper](#download-progress-helper)
+- [Recursive Retry Helper](#recursive-retry-helper)
+- [Handling HTTP Redirects](#handling-http-redirects)
+
+> Is your Use Case not listed? [Let me know ✉️](/contact/)
+
+<br />
 
 ## Feature Comparison
 
@@ -42,28 +64,6 @@ Well, as it turns out, **I overestimated the need for 3rd party http libraries.*
 Despite using `fetch` for several years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits.)
 
 Well, let's check out what `fetch` can do...
-
-## Fetch Examples
-
-Here's my top 10 list of `fetch` examples, plus a bonus or 2.
-
-- [Get JSON from a URL](#get-json-from-a-url)
-- [Custom headers](#custom-headers)
-- [HTTP Error Handling](#http-error-handling)
-- [CORS example](#cors-example)
-- [Posting JSON](#posting-json)
-- [Posting an HTML `<form>`](#posting-an-html-form)
-- [Form encoded data](#form-encoded-data)
-- [Uploading a file](#uploading-a-file)
-- [Uploading multiple files](#uploading-multiple-files)
-- [Timeouts](#timeouts)
-- [Download Progress Helper](#download-progress-helper)
-- [Recursive Retry Helper](#recursive-retry-helper)
-- [Handling HTTP Redirects](#handling-http-redirects)
-
-> Is your Use Case not listed? [Let me know ✉️](/contact/)
-
-<br />
 
 ### Get JSON from a URL
 
@@ -168,7 +168,7 @@ _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC s
 
 ### Handling HTTP Redirects
 
-`justsml/3dd0a799ada8da7cd15943ff254266de`
+`gist:justsml/3dd0a799ada8da7cd15943ff254266de`
 
 ## Compatibility
 

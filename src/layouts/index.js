@@ -26,7 +26,7 @@ const InfoBox = asyncComponent(
       .then(module => {
         return module;
       })
-      .catch(error => {}),
+      .catch(error => { }),
   <Loading
     overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
     afterRight={true}
@@ -157,7 +157,7 @@ export const guery = graphql`
             cover {
               children {
                 ... on ImageSharp {
-                  resolutions(width: 90, height: 90) {
+                  resolutions(width: 220, height: 220) {
                     ...GatsbyImageSharpResolutions_withWebp_noBase64
                   }
                 }
