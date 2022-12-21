@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Docker Firewall Setup"
-date:       2015-06-06
-modified:   2015-11-08
+title: "Docker Firewall Setup"
+date: 2015-06-06
+modified: 2015-11-08
 category: docker
 tags: [docker, security, devops]
 cover: charles-deluvio-456501-unsplash.jpg

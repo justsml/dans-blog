@@ -2,9 +2,9 @@
 title: "You may not need Axios"
 subTitle: Fetch API to the rescue!
 date: 2018-11-14
-modified: 2019-01-07
-tags: [programming, patterns, source code, nodejs, javascript, promises]
-category: programming
+modified: 2022-12-20
+tags: [programming, patterns, examples, nodejs, javascript, promises, axios, fetch]
+category: fetch
 cover: william-bout-103533-unsplash.jpg
 ---
 
@@ -18,16 +18,9 @@ cover: william-bout-103533-unsplash.jpg
 
 ## Overview
 
-I'll be the first to say: I was an early hater of the `fetch` API. My first attempt turned into an entirely wasted weekend. I didn't know I was using broken examples. #fail <br />
-The good news is that a [large proportion of the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and corresponding examples have been improved, and I’ve included several [code snippets](#fetch-examples) with [common uses cases below](#feature-comparison).
+This article is a collection of the "missing" `fetch` [code snippets and common use cases](#fetch-examples) I wish were easier to find.
 
-I've collected up-to-date code examples for the patterns which "unlocked" [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) for me.
-
-Check out the head-to-head [Feature Comparison](#feature-comparison); then browse my curated [Fetch Examples](#fetch-examples) I've accumulated over the past year.
-
-
-
-# Feature Comparison
+## Feature Comparison
 
 |                                                 | fetch    | axios    | request |
 |-------------------------------------------------|:--------:|:--------:|:-------:|
@@ -38,34 +31,35 @@ Check out the head-to-head [Feature Comparison](#feature-comparison); then brows
 | Client side support for protecting against XSRF |✅        |✅         |✅       |
 | Progress                                        |✅        |✅         |✅       |
 | Streaming                                       |✅        |✅         |✅       |
+| Redirects                                       |✅        |✅         |✅       |
 
 <br /><br />
 
-When starting this article (late 2018) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc. Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
+When starting this article (late 2018, updated 2022) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc.
 
-Despite using `fetch` for 2 years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits. (Specifically regarding [progress updates](#download-progress-helper) or canceling requests.)
+Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
 
-<br />
+Despite using `fetch` for several years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits.)
 
--------------------------------------
+Well, let's check out what `fetch` can do...
 
-# Fetch Examples
+## Fetch Examples
 
-Click the links below to go directly to the code snippet.
+Here's my top 10 list of `fetch` examples, plus a bonus or 2.
 
-1. [GET: JSON from a URL](#get-json-from-a-url)
-1. [Custom headers](#custom-headers)
-1. [Error handling w/ HTTP status codes](#http-error-handling)
-1. [CORS example](#cors-example)
-1. [Posting JSON](#posting-json)
-1. [Posting an HTML `<form>`](#posting-an-html-form)
-1. [Form encoded data](#form-encoded-data)
-1. [Uploading a File](#uploading-a-file)
-1. [Uploading Multiple Files](#uploading-multiple-files)
-1. [Timeouts](#timeouts)
-1. [Progress Percent - Download](#download-progress-helper)
-1. TODO: _Recursive: Retry on Failure_
-1. TODO: _Recursive: Automated results paging_
+- [Get JSON from a URL](#get-json-from-a-url)
+- [Custom headers](#custom-headers)
+- [HTTP Error Handling](#http-error-handling)
+- [CORS example](#cors-example)
+- [Posting JSON](#posting-json)
+- [Posting an HTML `<form>`](#posting-an-html-form)
+- [Form encoded data](#form-encoded-data)
+- [Uploading a file](#uploading-a-file)
+- [Uploading multiple files](#uploading-multiple-files)
+- [Timeouts](#timeouts)
+- [Download Progress Helper](#download-progress-helper)
+- [Recursive Retry Helper](#recursive-retry-helper)
+- [Handling HTTP Redirects](#handling-http-redirects)
 
 > Is your Use Case not listed? [Let me know ✉️](/contact/)
 
@@ -134,7 +128,8 @@ And a more complex example, featuring a tracking flag `__timeout` so you can **i
 
 ### Download Progress Helper
 
-> This is included for completeness. You may still want to use a 3rd party library here. Browser streaming interfaces may lack browser compatibility (as of late 2018).
+<!-- > This is included for completeness. You may still want to use a 3rd party library here. Browser streaming interfaces may lack browser compatibility (as of late 2018). -->
+
 Upload Progress is currently a bit buggy outside of Chrome.
 
 The Progress Handler [technique shown below avoids wrapping](#source-progress-helper) the `fetch` call in a closure. 👍
@@ -161,19 +156,27 @@ My preference is `Option #1`. However, your scope design may force you to use `O
 
 Finally, here's the last part of this recipe, our `progressHelper`:
 
-#### Source: Progress Helper
+##### Source: Progress Helper
 
 `gist:justsml/a8ffd810fc7e5a5295dfc898302ddbfc`
 
 _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC shown here](https://github.com/AnthumChris/fetch-progress-indicators)
 
+### Recursive Retry Helper
+
+`gist:justsml/7e52521a0af50fa590be57d5b4593120`
+
+### Handling HTTP Redirects
+
+`justsml/3dd0a799ada8da7cd15943ff254266de`
+
 ## Compatibility
 
-"What about NodeJS and the poor IE people?!?"
+As of 2022, the `fetch` API is [widely supported](https://caniuse.com/#feat=fetch) in all modern browsers and in more recent versions of NodeJS v18+.
 
-Fear not, the fractional % of IE9-10 users [can be polyfilled](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by some awesome team at GitHub). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
+If you must support IE you can [polyfill fetch](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by an awesome team at GitHub). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
 
-NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package:
+Earlier NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package:
 
 ```sh
 npm install node-fetch
@@ -182,9 +185,6 @@ npm install node-fetch
 _After polyfill+node-fetch: 99.99% compatible_ ✅
 
 
-## More coming soon.
-
 > Please [Tweet at me](https://twitter.com/justsml) if you have other _Use Cases_ you'd like to see. ❤️
 
 ![End of Dan's fetch API Examples](jonas-vincent-2717-unsplash.jpg "End of Dan's fetch API Examples")
-

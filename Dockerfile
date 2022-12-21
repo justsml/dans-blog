@@ -9,6 +9,7 @@ EXPOSE 8080
 # RUN npm install yarn -g
 RUN curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
 RUN yarn install
-RUN yarn build:site
+RUN npx browserslist@latest --update-db
+# RUN yarn build:site
 
 CMD ["yarn", "start"]
