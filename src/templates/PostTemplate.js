@@ -18,7 +18,7 @@ class PostTemplate extends React.Component {
     if (this.props.navigatorPosition === "is-featured") {
       this.moveNavigatorAside();
     }
-    injectCssByUrl("/styles/gist-embed.css");
+    injectCssByUrl("/styles/gist-embed-compact.css");
     injectCssByUrl(`https://unpkg.com/prismjs@1.23.0/themes/prism-tomorrow.css`);
   }
 

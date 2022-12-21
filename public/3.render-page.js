@@ -1,7 +1,7 @@
 exports.ids = [3];
 exports.modules = {
 
-/***/ 952:
+/***/ 956:
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -16,15 +16,15 @@ exports.modules = {
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _reactJss = __webpack_require__(194);
+	var _reactJss = __webpack_require__(198);
 	
 	var _reactJss2 = _interopRequireDefault(_reactJss);
 	
-	var _config = __webpack_require__(849);
+	var _config = __webpack_require__(853);
 	
 	var _config2 = _interopRequireDefault(_config);
 	
-	var _AsyncComponent = __webpack_require__(372);
+	var _AsyncComponent = __webpack_require__(376);
 	
 	var _AsyncComponent2 = _interopRequireDefault(_AsyncComponent);
 	
@@ -39,7 +39,7 @@ exports.modules = {
 	var DiscussionEmbed = (0, _AsyncComponent2.default)(function () {
 	  return new Promise(function (resolve) {
 	    __webpack_require__.e/* nsure */(4, function (require) {
-	      resolve(__webpack_require__(953));
+	      resolve(__webpack_require__(957));
 	    });
 	  }).then(function (module) {
 	    return module.DiscussionEmbed;
