@@ -118,10 +118,11 @@ module.exports = {
             }
           },
           {
-            // resolve: `gatsby-remark-embed-gist`,
-            resolve: `gatsby-remark-embed-gist-slim`,
+            resolve: `gatsby-remark-embed-gist`,
+            // resolve: `gatsby-remark-embed-gist-slim`,
             options: {
               secretToken: process.env.GITHUB_TOKEN,
+              truncate: false,
               // Optional:
               // the github handler whose gists are to be accessed
               username: "justsml",
