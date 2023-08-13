@@ -1,8 +1,8 @@
 ---
 title: "Pro Tip: Get Stats for Any Shell Command"
 subTitle: CPU Time, Memory, Sockets and More!
-date: 2023-05-06
-modified: 2023-05-08
+date: 2023-06-06
+modified: 2023-08-08
 tags: [shell,bash,gnu-time,time,performance,stats,runtime,snapshots,profile]
 category: performance
 cover: null
