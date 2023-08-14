@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Mon, 14 Aug 2023 03:25:19 GMT</lastBuildDate><item><title><![CDATA[Master of Pipelines: Passing State - Part 1]]></title><description><![CDATA[Master of Pipelines: Passing State - Part 1 Have you ever run into challenges passing state around Functional Pipelines? In this article we…]]></description><link>https://danlevy.net/mastering-functional-pipelines-passing-state/</link><guid isPermaLink="false">https://danlevy.net/mastering-functional-pipelines-passing-state/</guid><content:encoded>&lt;h1 id=&quot;master-of-pipelines-passing-state---part-1&quot;&gt;&lt;a href=&quot;#master-of-pipelines-passing-state---part-1&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Master of Pipelines: Passing State - Part 1&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Mon, 14 Aug 2023 03:42:58 GMT</lastBuildDate><item><title><![CDATA[Master of Pipelines: Passing State - Part 1]]></title><description><![CDATA[Master of Pipelines: Passing State - Part 1 Have you ever run into challenges passing state around Functional Pipelines? In this article we…]]></description><link>https://danlevy.net/mastering-functional-pipelines-passing-state/</link><guid isPermaLink="false">https://danlevy.net/mastering-functional-pipelines-passing-state/</guid><content:encoded>&lt;h1 id=&quot;master-of-pipelines-passing-state---part-1&quot;&gt;&lt;a href=&quot;#master-of-pipelines-passing-state---part-1&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Master of Pipelines: Passing State - Part 1&lt;/h1&gt;
+&lt;p&gt;
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 645px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 100.25%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAUABQDASIAAhEBAxEB/8QAGAABAQEBAQAAAAAAAAAAAAAAAAUEAQL/xAAWAQEBAQAAAAAAAAAAAAAAAAAAAQL/2gAMAwEAAhADEAAAAfW2Ry5oIiLcoNAP/8QAGxAAAgIDAQAAAAAAAAAAAAAAAQIAAwQTIRL/2gAIAQEAAQUCxso+Rbw3sYw1ttLDa0KgyzkqoRk//8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPwEf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPwEf/8QAIRAAAgEDAwUAAAAAAAAAAAAAAAEhAxIxAhFhIkFRcaH/2gAIAQEABj8CteV9G6kSdNKOWXY9dzUnlGSfA+Wbs//EAB0QAAICAwADAAAAAAAAAAAAAAEhABExQXFRgfD/2gAIAQEAAT8hQXiWErrBCPMMXboRgxdJXf4IABRdzm9SpDMY4AssDgG+z//aAAwDAQACAAMAAAAQYOCC/8QAFxEBAAMAAAAAAAAAAAAAAAAAABARQf/aAAgBAwEBPxBTY//EABYRAAMAAAAAAAAAAAAAAAAAAAAQEf/aAAgBAgEBPxAr/8QAHBABAQADAQEBAQAAAAAAAAAAAREAITFRcWGh/9oACAEBAAE/EGGwtCoamuP7zJrfHZdbDrlqFNgj2eYamGEgU8v9fMIgtMfNXp0zQBAIAMBDAK+iTACwMI8GAeGMWpeTn//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px transparent;&quot;
+        alt=&quot;credit: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg&quot;
+        title=&quot;&quot;
+        src=&quot;/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-ef7b7.jpg&quot;
+        srcset=&quot;/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-c3db7.jpg 161w,
+/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-e67ed.jpg 323w,
+/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-ef7b7.jpg 645w,
+/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-04582.jpg 968w,
+/static/sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200-a0ed61fcb87e341ec455ff348b274a4c-c7ae5.jpg 1200w&quot;
+        sizes=&quot;(max-width: 645px) 100vw, 645px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;/p&gt;
 &lt;p&gt;Have you ever run into challenges passing state around Functional Pipelines?&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;In this article we’ll explore a few techniques for passing state through a pipeline. We’ll also look at how to improve the readability of your code, and how to identify opportunities for refactoring.&lt;/p&gt;
@@ -83,18 +108,19 @@
 &lt;/blockquote&gt;
 &lt;h3 id=&quot;how-do-you-know-if-youre-helping&quot;&gt;&lt;a href=&quot;#how-do-you-know-if-youre-helping&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How do you know if you’re helping?&lt;/h3&gt;
 &lt;p&gt;If you remove ad-hoc arguments to zero, &lt;strong&gt;and readability doesn’t suffer… CONGRATULATIONS!!! You’ve likely built a module with a clear and durable scope!&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Removing intermediate arguments has a way of forcing ‘layers’ to emerge.&lt;/li&gt;
+&lt;li&gt;It &lt;em&gt;should&lt;/em&gt; be hard to dump ad-hoc code in the wrong place!&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So, that begs the question, how do we add functionality?&lt;/p&gt;
+&lt;p&gt;In my experience there are 2 primary strategies to evaluate when adding functionality:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Extend/refactor existing method. (When new code is close enough to existing code.)&lt;/li&gt;
+&lt;li&gt;Create a new (5th) function at the desired place in the chain. (Assuming new code is unrelated to existing work.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ultimately this makes it easier to decide where new functionality belongs. (e.g. &lt;code class=&quot;language-text&quot;&gt;cart.applyDiscounts()&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;cart.applyTaxes()&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;rewards.getBalance()&lt;/code&gt;.)&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;tsx&quot;&gt;
-      &lt;pre class=&quot;language-tsx&quot;&gt;&lt;code class=&quot;language-tsx&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// Removing intermediate arguments has a way of forcing &apos;layers&apos; to emerge.&lt;/span&gt;
-&lt;span class=&quot;token comment&quot;&gt;// It *should* be hard to dump ad-hoc one-off code in the wrong place!&lt;/span&gt;
-
-&lt;span class=&quot;token comment&quot;&gt;// The &quot;correct&quot; behavior is encouraged, while messy&lt;/span&gt;
-&lt;span class=&quot;token comment&quot;&gt;//   ad-hoc code is discouraged (by leaving it no place it doesn&apos;t belong.).&lt;/span&gt;
-
-&lt;span class=&quot;token comment&quot;&gt;// There are 2 main Options for adding functionality:&lt;/span&gt;
-&lt;span class=&quot;token comment&quot;&gt;// 1. Create a 5th function, added to the desired place in the chain.&lt;/span&gt;
-&lt;span class=&quot;token comment&quot;&gt;// 2. Extend/refactor a prior existing method.&lt;/span&gt;
-
-&lt;span class=&quot;token comment&quot;&gt;// 🌈 Functions stack like legos &amp;amp; read like normal &quot;Human Words!&quot; 💅&lt;/span&gt;
+      &lt;pre class=&quot;language-tsx&quot;&gt;&lt;code class=&quot;language-tsx&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// 🌈 Functions stack like legos &amp;amp; read like normal &quot;Human Words!&quot; 💅&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; Promise&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;products&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;cart&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;getProductsSubtotal&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;cart&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;applyTaxes&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
@@ -116,9 +142,8 @@
 &lt;h2 id=&quot;conclusion&quot;&gt;&lt;a href=&quot;#conclusion&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;Passing state through a complex pipeline can be tricky. However, with a little refactor practice, you’ll find yourself writing more readable code, with less cognitive load.&lt;/p&gt;
 &lt;p&gt;Questions? Comments? Concerns? Feel free to reach out &lt;a href=&quot;https://twitter.com/justsml&quot;&gt;@justsml&lt;/a&gt; or &lt;a href=&quot;mailto:dan@danlevy.net&quot;&gt;email&lt;/a&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Stay tuned for the next part in the series. We’ll explore how to add functionality to our module, without breaking the pipeline.&lt;/p&gt;
-&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
+&lt;h3 id=&quot;stay-tuned-for-the-next-part-in-the-series&quot;&gt;&lt;a href=&quot;#stay-tuned-for-the-next-part-in-the-series&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Stay tuned for the next part in the series.&lt;/h3&gt;
+&lt;p&gt;We’ll explore externalizing state, and extending functionality in our module!&lt;/p&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
 Volunteer  feedback or ask questions? 
 Can they…]]></description><link>https://danlevy.net/the-4-pillars-of-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/the-4-pillars-of-collaborative-culture/</guid><content:encoded>&lt;h1 id=&quot;the-4-pillars-of-collaborative-culture&quot;&gt;&lt;a href=&quot;#the-4-pillars-of-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;The 4 Pillars of Collaborative Culture&lt;/h1&gt;
 &lt;p&gt;Does &lt;strong&gt;everyone on your team share ideas&lt;/strong&gt; regularly?

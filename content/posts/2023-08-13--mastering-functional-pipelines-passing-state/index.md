@@ -1,6 +1,6 @@
 ---
 title: "Master of Pipelines: Passing State - Part 1"
-subTitle: Hello Closure, my old friend
+subTitle: Hello Closure, My Old Friend.
 date: 2023-07-01
 modified: 2023-08-10
 tags: [typescript,closure,stateful,scoping,hoisting,functional,pipeline]
@@ -101,17 +101,19 @@ While there is no single “right answer” to designing modules, it helps to id
 
 If you remove ad-hoc arguments to zero, **and readability doesn’t suffer… CONGRATULATIONS!!! You’ve likely built a module with a clear and durable scope!**
 
+- Removing intermediate arguments has a way of forcing 'layers' to emerge.
+- It _should_ be hard to dump ad-hoc code in the wrong place!
+
+So, that begs the question, how do we add functionality?
+
+In my experience there are 2 primary strategies to evaluate when adding functionality:
+
+1.  Extend/refactor existing method. (When new code is close enough to existing code.)
+2.  Create a new (5th) function at the desired place in the chain. (Assuming new code is unrelated to existing work.)
+
+Ultimately this makes it easier to decide where new functionality belongs. (e.g. `cart.applyDiscounts()`, `cart.applyTaxes()`, `rewards.getBalance()`.)
+
 ```tsx
-// Removing intermediate arguments has a way of forcing 'layers' to emerge.
-// It *should* be hard to dump ad-hoc one-off code in the wrong place!
-
-// The "correct" behavior is encouraged, while messy
-//   ad-hoc code is discouraged (by leaving it no place it doesn't belong.).
-
-// There are 2 main Options for adding functionality:
-// 1. Create a 5th function, added to the desired place in the chain.
-// 2. Extend/refactor a prior existing method.
-
 // 🌈 Functions stack like legos & read like normal "Human Words!" 💅
 return Promise.resolve(products)
   .then(cart.getProductsSubtotal)
@@ -140,4 +142,6 @@ Passing state through a complex pipeline can be tricky. However, with a little r
 
 Questions? Comments? Concerns? Feel free to reach out [@justsml](https://twitter.com/justsml) or [email](mailto:dan@danlevy.net).
 
-> Stay tuned for the next part in the series. We’ll explore how to add functionality to our module, without breaking the pipeline.
+### Stay tuned for the next part in the series.
+
+We’ll explore externalizing state, and extending functionality in our module!
