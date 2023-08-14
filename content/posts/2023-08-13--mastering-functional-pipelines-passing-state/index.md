@@ -1,8 +1,8 @@
 ---
 title: "Master of Pipelines: Passing State - Part 1"
 subTitle: Hello Closure, My Old Friend.
-date: 2023-07-01
-modified: 2023-08-10
+date: 2023-08-09
+modified: 2023-08-11
 tags: [typescript,closure,stateful,scoping,hoisting,functional,pipeline]
 category: JavaScript
 cover: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
