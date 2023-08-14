@@ -10,6 +10,8 @@ cover: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 
 # Master of Pipelines: Passing State - Part 1
 
+![credit: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg](sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg)
+
 Have you ever run into challenges passing state around Functional Pipelines?
 
 > In this article we’ll explore a few techniques for passing state through a pipeline. We’ll also look at how to improve the readability of your code, and how to identify opportunities for refactoring.
