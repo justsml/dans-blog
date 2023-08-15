@@ -13,9 +13,10 @@ let lastSlug = "";
 const MAX_RETRIES = 10;
 
 const focusOnPage = (retries = 1) => {
-  const page = document.querySelector("article");
+  const page = document.querySelector(".github-edit-link") || document.querySelector("main");
   if (page && page.focus) {
     page.focus();
+    // console.info("Focused on page", page);
   } else {
     if (retries < MAX_RETRIES) {
       return setTimeout(focusOnPage, 250, retries + 1);
@@ -30,7 +31,8 @@ export default class Post extends React.Component {
     slug: PropTypes.string.isRequired,
     allTags: PropTypes.object,
     image: PropTypes.object,
-    githubUrl: PropTypes.string
+    githubUrl: PropTypes.string,
+    children: PropTypes.node
   };
 
   componentDidMount() {
@@ -86,6 +88,7 @@ export default class Post extends React.Component {
     return (
       <Article>
         {this.props.githubUrl && <EditOnGithub githubUrl={this.props.githubUrl} />}
+        {this.props.children}
         <PostHeader
           allTags={allTags}
           title={title}

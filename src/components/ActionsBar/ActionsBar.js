@@ -131,13 +131,18 @@ class ActionsBar extends React.Component {
     const { classes, navigatorPosition, navigatorShape, isWideScreen, categories } = this.props;
 
     return (
-      <div className={classes.actionsBar}>
-        <div className={classes.group}>
+      <div className={`actions-bar ${classes.actionsBar}`}>
+        <div className={`group-1 ${classes.group}`}>
           <IconButton
             aria-label="Back to list"
             onClick={this.homeOnClick}
-            title="Back to the list"
+            title="Back Home"
             className={classes.button}
+            component={props => (
+              <a href="https://danlevy.net/" {...props}>
+                {props.children}
+              </a>
+            )}
           >
             <HomeIcon />
           </IconButton>
@@ -154,7 +159,7 @@ class ActionsBar extends React.Component {
           >
             <LabelIcon className={classes.button} />
           </IconButton>
-
+          {/*
           <IconButton
             aria-label="Search"
             onClick={this.searchOnClick}
@@ -165,9 +170,9 @@ class ActionsBar extends React.Component {
             className={classes.button}
           >
             <SearchIcon className={classes.button} />
-          </IconButton>
+          </IconButton> */}
         </div>
-        <div className={classes.group}>
+        <div className={`group-2 ${classes.group}`}>
           {navigatorPosition === "is-aside" && <FontSetter increaseFont={this.fontSetterOnClick} />}
           {screenfull.enabled && (
             <IconButton

@@ -13,7 +13,8 @@ const styles = theme => ({
     animationName: "main-entry",
     animationDuration: ".5s",
     [`@media (min-width: ${theme.mediaQueryTresholds.L}px)`]: {
-      width: `calc(100vw - ${theme.info.sizes.width}px - ${theme.bars.sizes.actionsBar}px)`,
+      width: `calc(100vw - ${theme.info.sizes.width}px)`,
+      // width: `calc(100vw - ${theme.info.sizes.width}px - ${theme.bars.sizes.actionsBar}px)`,
       left: `${theme.info.sizes.width}px`
     },
     "@media print": {
@@ -74,9 +75,19 @@ const styles = theme => ({
 });
 
 const Main = ({ classes, children, image }) => {
+  let isSafari = true;
+  // try {
+  //   isSafari = /^((?!chrome|android).)*safari/i.test(window.navigator.userAgent);
+  // } catch (e) {
+  //   console.error(e);
+  //   isSafari = true;
+  // }
   return (
-    <main className={classes.main} style={{ backgroundImage: image && `url(${image})` }}>
-      <SpringScrollbars>{children}</SpringScrollbars>
+    <main
+      className={classes.main}
+      style={{ backgroundImage: image && `url(${image})`, maxHeight: "100vh", overflowY: "scroll" }}
+    >
+      {isSafari ? children : <SpringScrollbars>{children}</SpringScrollbars>}
     </main>
   );
 };

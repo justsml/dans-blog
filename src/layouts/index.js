@@ -26,7 +26,7 @@ const InfoBox = asyncComponent(
       .then(module => {
         return module;
       })
-      .catch(error => { }),
+      .catch(error => {}),
   <Loading
     overrides={{ width: `${theme.info.sizes.width}px`, height: "100vh", right: "auto" }}
     afterRight={true}
@@ -98,7 +98,7 @@ class Layout extends React.Component {
       <LayoutWrapper>
         {children()}
         <Navigator posts={data.posts.edges} />
-        <ActionsBar categories={this.categories} />
+        {/* <ActionsBar categories={this.categories} /> */}
         <InfoBar pages={data.pages.edges} parts={data.parts.edges} />
         {this.props.isWideScreen && <InfoBox pages={data.pages.edges} parts={data.parts.edges} />}
       </LayoutWrapper>

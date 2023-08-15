@@ -38,9 +38,6 @@ class PostTemplate extends React.Component {
 
     return (
       <Main>
-        <div className="header-image-box">
-          <ResponsiveImage className="header-image" {...resolutions} alt={`${title} cover image`} />
-        </div>
         <Post
           allTags={allTags}
           post={data.post}
@@ -48,7 +45,15 @@ class PostTemplate extends React.Component {
           author={data.author}
           facebook={facebook}
           githubUrl={githubUrl}
-        />
+        >
+          <div className="header-image-box">
+            <ResponsiveImage
+              className="header-image"
+              {...resolutions}
+              alt={`${title} cover image`}
+            />
+          </div>
+        </Post>
         <Footer footnote={data.footnote} />
         <Seo data={data.post} facebook={facebook} />
       </Main>
