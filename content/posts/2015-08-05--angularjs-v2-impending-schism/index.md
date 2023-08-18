@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "AngularJS v2.0 and the Impending Schism"
-date:   2015-08-05
-modified:   2015-09-18
+date: 2015-08-05
+modified: 2015-09-18
 category: angularjs
 tags: [programming, angularjs, javascript, python, opinion]
 cover: alex-perez-753751-unsplash.jpg
@@ -34,7 +34,6 @@ Oh well, I'll add it to the Newbie training list: somewhere between `Basic Shell
   <img alt='everything is going to be ok' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
 
-
 [schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
 [not_a_fan]: https://res.cloudinary.com/ddd/image/upload/timeout-expired.gif
 [teamwork]: https://res.cloudinary.com/ddd/image/upload/teamwork__tumblr_n2df80cPZa1s373hwo1_400_ghv4xn.gif
@@ -46,4 +45,3 @@ Oh well, I'll add it to the Newbie training list: somewhere between `Basic Shell
 [cat_bowl]: https://res.cloudinary.com/ddd/image/upload/v1441143883/kitten_bowl.gif
 [cat_wtf]: https://res.cloudinary.com/ddd/image/upload/v1441143878/cat-wtf.gif
 [endless_loop]: https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif
-

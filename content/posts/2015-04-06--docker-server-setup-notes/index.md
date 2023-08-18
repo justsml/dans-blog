@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Docker Server Setup"
-date:   2015-04-06
+date: 2015-04-06
 modified: 2019-12-01
 subTitle: "Start Database Servers w/ single commands"
 category: docker
@@ -26,17 +26,16 @@ This article features 1-line commands to start some of the most popular database
 
 <section class="font-lg">
 
-* [<img src="./postgresql.svg" class="svg-icon"> Postgres](#postgres-server)
-* [<img src="./mongodb.svg" class="svg-icon"> MongoDB](#mongodb-server)
-* [<img src="./mysql.svg" class="svg-icon"> MySQL](#mysql-server)
-* [<img src="./elastic.svg" class="svg-icon"> ElasticSearch](#elasticsearch-server)
+- [<img src="./postgresql.svg" class="svg-icon"> Postgres](#postgres-server)
+- [<img src="./mongodb.svg" class="svg-icon"> MongoDB](#mongodb-server)
+- [<img src="./mysql.svg" class="svg-icon"> MySQL](#mysql-server)
+- [<img src="./elastic.svg" class="svg-icon"> ElasticSearch](#elasticsearch-server)
 
 </section>
 
 **Note:** The commands work in production. However they are mainly designed to accelerate your development workflow.
 
 > **Advanced Docker Users:** If you are familiar with `docker-compose` you may want to convert the shell commands below for use in your `docker-compose.yml` files.
-
 
 ## Postgres Server
 
@@ -63,7 +62,6 @@ docker run \
 
 > Adjust the command line options as needed. (The postgres daemon arguments start following the docker image name `postgres:12-alpine`. See `postgres -c 'listen_addresses=*'...`)
 
-
 ##### Access the `psql` prompt as postgres user
 
 ```sh
@@ -79,7 +77,6 @@ docker exec -it pg-server bash
 **Note:** The above command uses the official Alpine Linux base images. _It is not your typical debian environment._
 
 > To use the debian/ubuntu base image, change `postgres:12-alpine` to `postgres:12`.
-
 
 ## MongoDB Server
 
@@ -120,7 +117,6 @@ brew tap mongodb/brew
 brew install mongodb-community-shell
 ```
 
-
 ## Mysql Server
 
 > **WARNING:** CHANGE THE PASSWORD IN `MYSQL_ROOT_PASSWORD` BELOW.
@@ -151,7 +147,6 @@ docker run -d \
   elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
 ```
 
-
 #### Security Notes
 
 > **NOTE:** the `-p 127.0.0.1:27017:27017`-style port option prevents access to your instance except from the docker server's localhost network.
@@ -159,16 +154,12 @@ docker run -d \
 
 **Recommended:** Always use a port scanning tool (like nmap/masscan) to verify your network configuration (from separate system on another network.)
 
-
-
 > Now that you have the commands to start your database servers, the next step is to package up your application as a docker image. Part 2 continued below:
-
-
 
 # Packaging a NodeJS Web App
 
-1. Add a blank file named `Dockerfile` in your project root.
-1. _(Optional, Recommended)_ Add a `.dockerignore` using .gitignore rules to exclude large non-essential paths. By default all project files are included.
+1.  Add a blank file named `Dockerfile` in your project root.
+1.  _(Optional, Recommended)_ Add a `.dockerignore` using .gitignore rules to exclude large non-essential paths. By default all project files are included.
 
 ### Create a `Dockerfile` in your apps root
 
@@ -193,8 +184,6 @@ In terminal, `cd` to your project folder and run the following `build` command _
 docker build -t app-name-here .
 ```
 
-
-
 <!--
 #### Docker Install
 
@@ -203,7 +192,6 @@ If you don't have Docker installed, use the following command to install on Linu
 ```sh
 curl -sSL https://get.docker.com/ | sh
 ``` -->
-
 
 ### Key Docker Commands Reference
 
@@ -237,7 +225,6 @@ docker rm -f webapp01
 # So for example, let's kill your db instances above, run: ( start with something like `docker stop {mongo,elastic}` )
 docker rm -f mongo elastic
 ```
-
 
 <!--
 
@@ -276,5 +263,3 @@ source ~/.bashrc
 ```
 
 -->
-
-

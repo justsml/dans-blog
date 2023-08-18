@@ -2,8 +2,8 @@
 layout: post
 title:  "Visualizing Promises"
 subTitle: Break on through...
-date:   2018-09-30
-modified:   2018-12-14
+date: 2018-09-30
+modified: 2018-12-14
 category: promises
 cover: junior-ferreira-735237-unsplash.jpg
 tags: [promises, async, visualizing, javascript, composition]
@@ -16,8 +16,8 @@ In order to visualize how Promises execute, let's define a new method `delay(mil
 ```js
 function delay(millisecs) {
   return new Promise(resolve => {
-    setTimeout(() => resolve(millisecs), millisecs)
-  })
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
 }
 ```
 
@@ -32,7 +32,7 @@ Let's look at 4 examples (with animated timelines).
 This shows how `console.log()`'s execution will be delayed by `delay(msec)`.
 
 ```js
-delay(1000).then(() => console.log('done'))
+delay(1000).then(() => console.log("done"));
 ```
 
 ![](N_1000ms_log.gif)
@@ -57,7 +57,7 @@ Note the difference between `typeof console.log === 'function'` vs. `typeof cons
 Generally the desired usage for `console.log` is shown in Example #1. Make sure you pass functions into `.then` and `.catch`.
 
 ```js
-delay(1000).then(console.log('done'))
+delay(1000).then(console.log("done"));
 ```
 
 ![](N_1000ms_!log.gif)
@@ -69,15 +69,14 @@ console.log('done')
 0msec             1sec                 2sec                 3sec
 ``` -->
 
-
 #### Example #3/4
 
 3 Promises execute simultaneously.
 
 ```js
-delay(1000).then(console.log)
-delay(2000).then(console.log)
-delay(3000).then(console.log)
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
 ```
 
 ![](N_3000ms.gif)
@@ -96,8 +95,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 `Promise.all` with 3 `delay` Promises. They will execute simultaneously.
 
 ```js
-Promise.all([delay(1000), delay(2000), delay(3000)])
-  .then(console.log)
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
 ![](N_3000ms_PromiseAll.gif)
@@ -114,12 +112,10 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 ```
 -->
 
-
-
 > Credits:
-> * Animated async diagrams by [Patrick Biffle](https://github.com/Piglacquer)
-> * Inspiration for this article: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
-
+>
+> - Animated async diagrams by [Patrick Biffle](https://github.com/Piglacquer)
+> - Inspiration for this article: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
 <!-- <div class="challenge" title="Question #1: Meaning of life:">
   <ul class="options">

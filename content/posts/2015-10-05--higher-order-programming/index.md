@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Higher Order Programming"
-date:   2015-09-22
-modified:   2017-05-13
+date: 2015-09-22
+modified: 2017-05-13
 category: programming
 tags: [programming, patterns, models, source code, organization]
 cover: susan-holt-simpson-799094-unsplash.jpg
@@ -18,14 +18,14 @@ This is an exploration of advantages gained when you **code everything as an arr
 
 Here's some guiding principles:
 
-1. All input is array-like. Even if an array of 1.
-1. Higher level functions should generally accept AND return arrays. (Except for callback methods for loops: map/reduce/each/filter)
-1. 99 out of 100 devs code suffers from what I call `acute schema surplusage` syndrome.
-1. Beware bloated `class-backed models` - with all the predictable trappings: fragile `instance state` w/ so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic `property getter/setters`, and your `public/private/final/etc` usage is solid, right?
+1.  All input is array-like. Even if an array of 1.
+1.  Higher level functions should generally accept AND return arrays. (Except for callback methods for loops: map/reduce/each/filter)
+1.  99 out of 100 devs code suffers from what I call `acute schema surplusage` syndrome.
+1.  Beware bloated `class-backed models` - with all the predictable trappings: fragile `instance state` w/ so many levers and knobs to mess with, DB transactions, sql locks, async/mutexing (that always works first time), using idiomatic `property getter/setters`, and your `public/private/final/etc` usage is solid, right?
 
-1. So let me take a common problem and *shoehorn* ~~~add~~~ some set-based musings.
-  1. A hypothetical Blog Site has lots of Articles, and has even more Posts (Comments).
-  1. Let's add a `delete` method (below) - but with support for both singular OR arrays.
+1.  So let me take a common problem and _shoehorn_ ~~~add~~~ some set-based musings.
+1.  A hypothetical Blog Site has lots of Articles, and has even more Posts (Comments).
+1.  Let's add a `delete` method (below) - but with support for both singular OR arrays.
 
 ```java
 package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
@@ -55,15 +55,9 @@ public class Post {
     return posts.map(Dao.remove);
   }
 }
-
-
-
 ```
 
 > Forgive me if my Java is a little rusty.
-
-
-
 
 <!-- ![schema refactor][schema_refactor] -->
 
@@ -78,4 +72,3 @@ public class Post {
 [cat_bowl]: https://res.cloudinary.com/ddd/image/upload/v1441143883/kitten_bowl.gif
 [cat_wtf]: https://res.cloudinary.com/ddd/image/upload/v1441143878/cat-wtf.gif
 [endless_loop]: https://res.cloudinary.com/ddd/image/upload/v1441143881/endless-loop.gif
-

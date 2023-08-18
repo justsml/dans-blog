@@ -2,7 +2,7 @@
 layout: post
 title:  "AngularJS Tricks"
 subTitle: AngularJS CAN BE Fun!
-date:   2015-02-26
+date: 2015-02-26
 modified: 2015-02-26
 category: angularjs
 tags: [angularjs, development, performance, programming]
