@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Linux Server Benchmarking Scripts"
-date:   2017-05-01
+date: 2017-05-01
 modified: 2018-09-21
 category: servers
 tags: [benchmarks, servers, performance]
@@ -10,11 +10,9 @@ cover: rod-long-1052613-unsplash.jpg
 
 # Linux Benchmark Shell Scripts
 
-
 Current tests include CPU & HDD from `sysbench` (will auto install on Debian/Ubuntu flavors.)
 
 > Goal: To avoid remembering arguments for performance utilities. Written in bash.
-
 
 **Step 1:** SETUP BENCHMARK:
 
@@ -147,6 +145,3 @@ benchDisk
 1. System: iotop
 1. Per command: dtrace/ltrace/strace
 -->
-
-
-
