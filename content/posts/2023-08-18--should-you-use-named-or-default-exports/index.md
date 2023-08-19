@@ -1,5 +1,5 @@
 ---
-title: "Should ES6 modules use named or default exports?"
+title: "ESM exports: named vs. default?"
 subTitle: To name, or not to name?
 date: 2023-08-10
 modified: 2023-08-18
@@ -8,17 +8,17 @@ category: JavaScript
 cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
 ---
 
-# Should ES6 modules use `named` or `default` exports?
+# Should you use `named` or `default` exports in JavaScript?
 
 There’s no shortage of strongly worded articles on this topic.
 
-The majority judge `default export` as “terrible.” Others maintain it should be the default (e.g. AirBnb style guide.)
+The majority judge `default export` as “terrible.” Others maintain `default` should win (e.g. AirBnb style guide.)
 
-They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or possibility of typos naming an import.
+They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.
 
 Have we missed the point of `export`ing in the first place?
 
-**It’s about Communication. ✨**
+**Code is Communication. ✨**
 
 > We are sending a signal to `import`ers _how to use a thing._
 
@@ -29,7 +29,7 @@ Broadly speaking, there are 2 ways to export things in modern JavaScript:
 - An `export default` boldly declares “This is **_THE SINGLE MOST IMPORTANT_** thing.” Also, “any named exports only play a supporting role.”
 - A `named export` says it’s “definitely **_A THING!_**” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”
 
-Of course you can combine both, or use different approaches for different parts of your codebase. I've included a table with more examples at the end of the article: [see detailed comparison of export patterns.](#conclusion)
+Of course you can combine both, or use different approaches for different parts of your codebase. [See more examples at the end of the article.](#summary)
 
 ## Weak Args, Man
 
@@ -41,8 +41,6 @@ Let’s address some of the common “temporary issues” folks run into.
 
 ```tsx
 // You can alias using both!
-import { Knife } from "./knife.js";
-import Knife from "./knife.js";
 import { Knife as Handle } from "./knife.js"; // 🔪
 import { default as Handle } from "./knife.js"; // 🔪
 import Handle from "./knife.js"; // 🔪
@@ -50,7 +48,7 @@ import Handle from "./knife.js"; // 🔪
 
 - Arg #2: Use `import * as soManyKnives from './kinves.js'` to combine named exports. (Not linked, author retracted.)
   - Neat feature. Not the point.
-  - Now tell me, how do I hold your contraption again? No author intent conveyed.
+  - Now tell me, how do I hold your contraption again? No author intent.
 - Arg #3: Named exports have better IDE import or renaming support. [source](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
 
   - Incorrect (any more). Configure/update your tools.
