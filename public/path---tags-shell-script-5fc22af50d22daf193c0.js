@@ -1,2 +1,2 @@
-webpackJsonp([0x8fa24a349166],{1392:function(e,t){e.exports={data:{allMarkdownRemark:null},pathContext:{posts:[{title:"Docker Server Setup",slug:"/docker-server-setup-notes/"}],tagName:"shell-script",tagCount:1}}}});
+webpackJsonp([0x8fa24a349166],{1393:function(e,t){e.exports={data:{allMarkdownRemark:null},pathContext:{posts:[{title:"Docker Server Setup",slug:"/docker-server-setup-notes/"}],tagName:"shell-script",tagCount:1}}}});
 //# sourceMappingURL=path---tags-shell-script-5fc22af50d22daf193c0.js.map

@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Fri, 18 Aug 2023 22:51:31 GMT</lastBuildDate><item><title><![CDATA[Should ES6 modules use named or default exports?]]></title><description><![CDATA[Should ES6 modules use   or   exports? There’s no shortage of strongly worded articles on this topic. The majority judge   as “terrible…]]></description><link>https://danlevy.net/should-you-use-named-or-default-exports/</link><guid isPermaLink="false">https://danlevy.net/should-you-use-named-or-default-exports/</guid><content:encoded>&lt;h1 id=&quot;should-es6-modules-use-named-or-default-exports&quot;&gt;&lt;a href=&quot;#should-es6-modules-use-named-or-default-exports&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Should ES6 modules use &lt;code class=&quot;language-text&quot;&gt;named&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;default&lt;/code&gt; exports?&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Sat, 19 Aug 2023 05:50:25 GMT</lastBuildDate><item><title><![CDATA[ESM exports: named vs. default?]]></title><description><![CDATA[Should you use   or   exports in JavaScript? There’s no shortage of strongly worded articles on this topic. The majority judge   as…]]></description><link>https://danlevy.net/should-you-use-named-or-default-exports/</link><guid isPermaLink="false">https://danlevy.net/should-you-use-named-or-default-exports/</guid><content:encoded>&lt;h1 id=&quot;should-you-use-named-or-default-exports-in-javascript&quot;&gt;&lt;a href=&quot;#should-you-use-named-or-default-exports-in-javascript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Should you use &lt;code class=&quot;language-text&quot;&gt;named&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;default&lt;/code&gt; exports in JavaScript?&lt;/h1&gt;
 &lt;p&gt;There’s no shortage of strongly worded articles on this topic.&lt;/p&gt;
-&lt;p&gt;The majority judge &lt;code class=&quot;language-text&quot;&gt;default export&lt;/code&gt; as “terrible.” Others maintain it should be the default (e.g. AirBnb style guide.)&lt;/p&gt;
-&lt;p&gt;They often blame &lt;strong&gt;entirely temporary&lt;/strong&gt; things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or possibility of typos naming an import.&lt;/p&gt;
+&lt;p&gt;The majority judge &lt;code class=&quot;language-text&quot;&gt;default export&lt;/code&gt; as “terrible.” Others maintain &lt;code class=&quot;language-text&quot;&gt;default&lt;/code&gt; should win (e.g. AirBnb style guide.)&lt;/p&gt;
+&lt;p&gt;They often blame &lt;strong&gt;entirely temporary&lt;/strong&gt; things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.&lt;/p&gt;
 &lt;p&gt;Have we missed the point of &lt;code class=&quot;language-text&quot;&gt;export&lt;/code&gt;ing in the first place?&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;It’s about Communication. ✨&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Code is Communication. ✨&lt;/strong&gt;&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;We are sending a signal to &lt;code class=&quot;language-text&quot;&gt;import&lt;/code&gt;ers &lt;em&gt;how to use a thing.&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -13,7 +13,7 @@
 &lt;li&gt;An &lt;code class=&quot;language-text&quot;&gt;export default&lt;/code&gt; boldly declares “This is &lt;strong&gt;&lt;em&gt;THE SINGLE MOST IMPORTANT&lt;/em&gt;&lt;/strong&gt; thing.” Also, “any named exports only play a supporting role.”&lt;/li&gt;
 &lt;li&gt;A &lt;code class=&quot;language-text&quot;&gt;named export&lt;/code&gt; says it’s “definitely &lt;strong&gt;&lt;em&gt;A THING!&lt;/em&gt;&lt;/strong&gt;” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Of course you can combine both, or use different approaches for different parts of your codebase. I’ve included a table with more examples at the end of the article: &lt;a href=&quot;#conclusion&quot;&gt;see detailed comparison of export patterns.&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Of course you can combine both, or use different approaches for different parts of your codebase. &lt;a href=&quot;#summary&quot;&gt;See more examples at the end of the article.&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;weak-args-man&quot;&gt;&lt;a href=&quot;#weak-args-man&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Weak Args, Man&lt;/h2&gt;
 &lt;p&gt;Let’s address some of the common “temporary issues” folks run into.&lt;/p&gt;
 &lt;ul&gt;
@@ -27,8 +27,6 @@
 &lt;/ul&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;tsx&quot;&gt;
       &lt;pre class=&quot;language-tsx&quot;&gt;&lt;code class=&quot;language-tsx&quot;&gt;&lt;span class=&quot;token comment&quot;&gt;// You can alias using both!&lt;/span&gt;
-&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Knife &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./knife.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Knife &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./knife.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; Knife &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; Handle &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./knife.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 🔪&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;as&lt;/span&gt; Handle &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./knife.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 🔪&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; Handle &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;./knife.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;token comment&quot;&gt;// 🔪&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;
@@ -38,7 +36,7 @@
 &lt;p&gt;Arg #2: Use &lt;code class=&quot;language-text&quot;&gt;import * as soManyKnives from &amp;#39;./kinves.js&amp;#39;&lt;/code&gt; to combine named exports. (Not linked, author retracted.)&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Neat feature. Not the point.&lt;/li&gt;
-&lt;li&gt;Now tell me, how do I hold your contraption again? No author intent conveyed.&lt;/li&gt;
+&lt;li&gt;Now tell me, how do I hold your contraption again? No author intent.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
@@ -268,7 +266,37 @@ Now combine that with another issue that’s easily missed by developers &amp;#x
 &lt;h3 id=&quot;related-reading&quot;&gt;&lt;a href=&quot;#related-reading&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Related Reading&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://kyleshevlin.com/quit-your-yapping&quot;&gt;Similar struggles exist in the Component-driven React world.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Creating Collaborative Culture]]></title><description><![CDATA[What is  Collaborative Culture ? Most organizations fall somewhere between  Happy Honey Bees  and  Swarm of murder hornets . Collaborative…]]></description><link>https://danlevy.net/creating-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/creating-collaborative-culture/</guid><content:encoded>&lt;h2 id=&quot;what-is-collaborative-culture&quot;&gt;&lt;a href=&quot;#what-is-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What is &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
+&lt;p&gt;Most organizations fall somewhere between &lt;strong&gt;Happy Honey Bees&lt;/strong&gt; and &lt;strong&gt;Swarm of murder hornets&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Collaborative Culture&lt;/em&gt; features 2 key principles for &lt;strong&gt;Happy Honey Bees&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ideas are celebrated! (Especially the ridiculous ones.)&lt;/li&gt;
+&lt;li&gt;Ideas are welcome! (Irrespective of any title or role.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- &gt; Ultimately the best organizations welcome all ideas, from any rank and without prejudice. --&gt;
+&lt;h2 id=&quot;why-collaborative-culture&quot;&gt;&lt;a href=&quot;#why-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Why &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
+&lt;p&gt;My favorite case for &lt;em&gt;Collaborative Culture&lt;/em&gt; is the unlikely story about a janitor, his billion-dollar idea, and the CEO who listened.&lt;/p&gt;
+&lt;p&gt;When PepsiCo’s CEO, Roger Enrico, implored his employees to “act like an owner,” few employees took him seriously. Not Richard Montañez. He knew there was an untapped market for spicy snacks. So, he called the CEO’s number (from the company directory) and asked for a meeting. Due to some fortuitous confusion, they set up the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming pitch meeting, and after some choice words, the Plant Manager told Montañez it was his chance to sink or swim - and never pull a stunt like that again.&lt;/p&gt;
+&lt;p&gt;After that meeting (and plenty of hard work), Montañez was ascendant, eventually becoming a VP of Sales, generating billions for PepsiCo.&lt;/p&gt;
+&lt;p&gt;Great ideas &amp;#x26; inspiration can come from anyone, anywhere, and anytime!&lt;/p&gt;
+&lt;p&gt;To succeed long-term, work culture must embrace this!&lt;/p&gt;
+&lt;h2 id=&quot;next-steps&quot;&gt;&lt;a href=&quot;#next-steps&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
+&lt;p&gt;First, take stock of where things are. Spend a few moments to consider some questions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What % of the organization shares ideas?&lt;/li&gt;
+&lt;li&gt;How quickly do new hires propose ideas?&lt;/li&gt;
+&lt;li&gt;How often?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More personally:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What’s the last idea that a colleague brought to you?&lt;/li&gt;
+&lt;li&gt;How did you respond? Did you empower them? Did you take the time to listen? And give them credit?&lt;/li&gt;
+&lt;li&gt;Do colleagues feel comfortable bringing you their next idea?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Stay tuned!
+My next article is about the processes and habits that fuel &lt;em&gt;Collaborative Culture&lt;/em&gt; in your organization!&lt;/p&gt;
+&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
 Volunteer  feedback or ask questions? 
 Can they…]]></description><link>https://danlevy.net/the-4-pillars-of-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/the-4-pillars-of-collaborative-culture/</guid><content:encoded>&lt;h1 id=&quot;the-4-pillars-of-collaborative-culture&quot;&gt;&lt;a href=&quot;#the-4-pillars-of-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;The 4 Pillars of Collaborative Culture&lt;/h1&gt;
 &lt;p&gt;Does &lt;strong&gt;everyone on your team share ideas&lt;/strong&gt; regularly?
@@ -367,37 +395,7 @@ The next 2 pillars will ensure your process demonstrates value over the near- an
 &lt;li&gt;What’s the average time before an employee’s first suggestion? Days? Months? Years?!?!?&lt;/li&gt;
 &lt;li&gt;Does everyone on your team regularly share ideas?&lt;/li&gt;
 &lt;li&gt;Do people feel safe? Can they be vulnerable? Even question the mission?&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Creating Collaborative Culture]]></title><description><![CDATA[What is  Collaborative Culture ? Most organizations fall somewhere between  Happy Honey Bees  and  Swarm of murder hornets . Collaborative…]]></description><link>https://danlevy.net/creating-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/creating-collaborative-culture/</guid><content:encoded>&lt;h2 id=&quot;what-is-collaborative-culture&quot;&gt;&lt;a href=&quot;#what-is-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What is &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
-&lt;p&gt;Most organizations fall somewhere between &lt;strong&gt;Happy Honey Bees&lt;/strong&gt; and &lt;strong&gt;Swarm of murder hornets&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Collaborative Culture&lt;/em&gt; features 2 key principles for &lt;strong&gt;Happy Honey Bees&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Ideas are celebrated! (Especially the ridiculous ones.)&lt;/li&gt;
-&lt;li&gt;Ideas are welcome! (Irrespective of any title or role.)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;!-- &gt; Ultimately the best organizations welcome all ideas, from any rank and without prejudice. --&gt;
-&lt;h2 id=&quot;why-collaborative-culture&quot;&gt;&lt;a href=&quot;#why-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Why &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
-&lt;p&gt;My favorite case for &lt;em&gt;Collaborative Culture&lt;/em&gt; is the unlikely story about a janitor, his billion-dollar idea, and the CEO who listened.&lt;/p&gt;
-&lt;p&gt;When PepsiCo’s CEO, Roger Enrico, implored his employees to “act like an owner,” few employees took him seriously. Not Richard Montañez. He knew there was an untapped market for spicy snacks. So, he called the CEO’s number (from the company directory) and asked for a meeting. Due to some fortuitous confusion, they set up the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming pitch meeting, and after some choice words, the Plant Manager told Montañez it was his chance to sink or swim - and never pull a stunt like that again.&lt;/p&gt;
-&lt;p&gt;After that meeting (and plenty of hard work), Montañez was ascendant, eventually becoming a VP of Sales, generating billions for PepsiCo.&lt;/p&gt;
-&lt;p&gt;Great ideas &amp;#x26; inspiration can come from anyone, anywhere, and anytime!&lt;/p&gt;
-&lt;p&gt;To succeed long-term, work culture must embrace this!&lt;/p&gt;
-&lt;h2 id=&quot;next-steps&quot;&gt;&lt;a href=&quot;#next-steps&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
-&lt;p&gt;First, take stock of where things are. Spend a few moments to consider some questions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What % of the organization shares ideas?&lt;/li&gt;
-&lt;li&gt;How quickly do new hires propose ideas?&lt;/li&gt;
-&lt;li&gt;How often?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;More personally:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What’s the last idea that a colleague brought to you?&lt;/li&gt;
-&lt;li&gt;How did you respond? Did you empower them? Did you take the time to listen? And give them credit?&lt;/li&gt;
-&lt;li&gt;Do colleagues feel comfortable bringing you their next idea?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Stay tuned!
-My next article is about the processes and habits that fuel &lt;em&gt;Collaborative Culture&lt;/em&gt; in your organization!&lt;/p&gt;
-&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[JS Quiz: 14 Date Time Questions in JavaScript]]></title><description><![CDATA[How well do you know the   class? Prove your JavaScript skillz!  🚀 No login or signup required. ✨ Multiple choice. 🤖 …  How difficult can…]]></description><link>https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</link><guid isPermaLink="false">https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</guid><content:encoded>&lt;h1 id=&quot;how-well-do-you-know-the-date-class&quot;&gt;&lt;a href=&quot;#how-well-do-you-know-the-date-class&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How well do you know the &lt;code class=&quot;language-text&quot;&gt;Date&lt;/code&gt; class?&lt;/h1&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[JS Quiz: 14 Date Time Questions in JavaScript]]></title><description><![CDATA[How well do you know the   class? Prove your JavaScript skillz!  🚀 No login or signup required. ✨ Multiple choice. 🤖 …  How difficult can…]]></description><link>https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</link><guid isPermaLink="false">https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</guid><content:encoded>&lt;h1 id=&quot;how-well-do-you-know-the-date-class&quot;&gt;&lt;a href=&quot;#how-well-do-you-know-the-date-class&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How well do you know the &lt;code class=&quot;language-text&quot;&gt;Date&lt;/code&gt; class?&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Prove your JavaScript skillz!&lt;/strong&gt; 🚀&lt;/li&gt;
@@ -1262,12 +1260,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1278,7 +1275,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1322,7 +1319,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/de941bd61cc86e30beedbb8a3a646f81#file-basic-example-js&quot;&gt;
           basic-example.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1341,12 +1338,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1357,7 +1353,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1417,7 +1413,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/fca7cd72ec1ebc07d994eac13a665ddf#file-custom-headers-js&quot;&gt;
           custom-headers.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1436,12 +1432,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1452,7 +1447,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1505,7 +1500,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2#file-fetch-custom-error-js&quot;&gt;
           fetch-custom-error.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1526,12 +1521,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1542,7 +1536,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1594,7 +1588,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/3ddd9ed8705f48cdf45d313d1e57aa2a#file-cors-example-js&quot;&gt;
           cors-example.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1613,12 +1607,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1629,7 +1622,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1702,7 +1695,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/13915347d6c8413c73f4bd7240c68e51#file-posting-json-js&quot;&gt;
           posting-json.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1721,12 +1714,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1737,7 +1729,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1811,7 +1803,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/ef2e356bec0ef7c6e528d84a5f75ba7e#file-post-form-data-js&quot;&gt;
           post-form-data.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1832,12 +1824,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1848,7 +1839,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -1925,7 +1916,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/716c4534ef4afb22f65d4fc4367c7136#file-posting-form-encoded-data-js&quot;&gt;
           posting-form-encoded-data.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -1944,12 +1935,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -1960,7 +1950,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2051,7 +2041,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/301f22aa37df565ba3051bd5f95b4df1#file-uploading-files-js&quot;&gt;
           uploading-files.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2071,12 +2061,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2087,7 +2076,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2111,7 +2100,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/37836357041d8ca4d1b32e12638cb0ba#file-file-upload-field-html&quot;&gt;
           file-upload-field.html
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2130,12 +2119,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2146,7 +2134,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2245,7 +2233,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/d17f50c36a5ddb70f584c0aa6de94237#file-uploading-multiple-files-js&quot;&gt;
           uploading-multiple-files.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2265,12 +2253,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2281,7 +2268,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2430,7 +2417,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85#file-promised-timeout-js&quot;&gt;
           promised-timeout.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2449,12 +2436,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2465,7 +2451,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2566,7 +2552,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273#file-promise-timeout-js&quot;&gt;
           promise-timeout.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2589,12 +2575,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2605,7 +2590,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2658,7 +2643,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/db5ccc55ffb93c75e04e014d1f553cfb#file-progresshelper-signature-js&quot;&gt;
           progressHelper-signature.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2677,12 +2662,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2693,7 +2677,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2750,7 +2734,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/9bec219590ff50688972c1caff67c14b#file-progress-helper-usage-js&quot;&gt;
           progress-helper-usage.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2769,12 +2753,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2785,7 +2768,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2817,7 +2800,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/bef2dd7e630eb7642beb3e2be29489b2#file-getblob-js&quot;&gt;
           getBlob.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2837,12 +2820,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2853,7 +2835,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -2915,7 +2897,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/6ad9e37a96ad1f3a75ca509038510a5b#file-progresshelper-usage-js&quot;&gt;
           progressHelper-usage.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -2936,12 +2918,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -2952,7 +2933,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -3107,7 +3088,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/a8ffd810fc7e5a5295dfc898302ddbfc#file-progresshelper-js&quot;&gt;
           progressHelper.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -3127,12 +3108,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -3143,7 +3123,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -3254,7 +3234,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-retry-with-curry-js&quot;&gt;
           fetch-retry-with-curry.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div class=&quot;gist-file&quot; translate=&quot;no&quot;&gt;
@@ -3270,12 +3250,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -3286,7 +3265,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -3372,7 +3351,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-with-retries-js&quot;&gt;
           fetch-with-retries.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;
@@ -3391,12 +3370,11 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
   &lt;template class=&quot;js-file-alert-template&quot;&gt;
   &lt;div data-view-component=&quot;true&quot; class=&quot;flash flash-warn flash-full d-flex flex-items-center&quot;&gt;
   &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
-  
     &lt;span&gt;
       This file contains bidirectional Unicode text that may be interpreted or compiled differently than what appears below. To review, open the file in an editor that reveals hidden Unicode characters.
-      &lt;a href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
+      &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.co/hiddenchars&quot; target=&quot;_blank&quot;&gt;Learn more about bidirectional Unicode characters&lt;/a&gt;
     &lt;/span&gt;
 
 
@@ -3407,7 +3385,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 &lt;template class=&quot;js-line-alert-template&quot;&gt;
   &lt;span aria-label=&quot;This line has hidden Unicode characters&quot; data-view-component=&quot;true&quot; class=&quot;line-alert tooltipped tooltipped-e&quot;&gt;
     &lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; viewBox=&quot;0 0 16 16&quot; version=&quot;1.1&quot; width=&quot;16&quot; data-view-component=&quot;true&quot; class=&quot;octicon octicon-alert&quot;&gt;
-    &lt;path fill-rule=&quot;evenodd&quot; d=&quot;M8.22 1.754a.25.25 0 00-.44 0L1.698 13.132a.25.25 0 00.22.368h12.164a.25.25 0 00.22-.368L8.22 1.754zm-1.763-.707c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0114.082 15H1.918a1.75 1.75 0 01-1.543-2.575L6.457 1.047zM9 11a1 1 0 11-2 0 1 1 0 012 0zm-.25-5.25a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5z&quot;&gt;&lt;/path&gt;
+    &lt;path d=&quot;M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z&quot;&gt;&lt;/path&gt;
 &lt;/svg&gt;
 &lt;/span&gt;&lt;/template&gt;
 
@@ -3516,7 +3494,7 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
         &lt;a href=&quot;https://gist.github.com/justsml/3dd0a799ada8da7cd15943ff254266de#file-location-redirect-js&quot;&gt;
           location-redirect.js
         &lt;/a&gt;
-        hosted with &amp;#10084; by &lt;a href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
+        hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 &lt;/div&gt;&lt;/p&gt;

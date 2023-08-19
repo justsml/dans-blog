@@ -2,19 +2,25 @@ import React from "react";
 import PropTypes from "prop-types";
 import Helmet from "react-helmet";
 import config from "../../../content/meta/config";
+import { get } from "lodash";
 
 const Seo = props => {
   const { data, facebook } = props;
+  // console.log("frontmatter", );
+
   const postTitle = ((data || {}).frontmatter || {}).title;
   const postDescription = ((data || {}).frontmatter || {}).description;
-  const postCover = ((data || {}).frontmatter || {}).cover;
+  // const postCover = ((data || {}).frontmatter || {}).cover;
   const postSlug = ((data || {}).fields || {}).slug;
 
   const title = postTitle ? `${postTitle} - ${config.shortSiteTitle}` : config.siteTitle;
   const description = postDescription ? postDescription : config.siteDescription;
-  const image = postCover ? postCover.childImageSharp.resolutions.src : config.siteImage;
+  const image = get(data, "frontmatter.cover.childImageSharp.resolutions.src") || config.siteImage;
   const url = config.siteUrl + config.pathPrefix + postSlug;
-
+  // if (image) {
+  //   console.log("image", { title, image });
+  // }
+  // data.frontmatter.cover.childImageSharp.resolutions;
   return (
     <Helmet
       htmlAttributes={{
@@ -46,7 +52,8 @@ const Seo = props => {
 
 Seo.propTypes = {
   data: PropTypes.object,
-  facebook: PropTypes.object.isRequired
+  facebook: PropTypes.object.isRequired,
+  children: PropTypes.node
 };
 
 export default Seo;
