@@ -1,5 +1,5 @@
 ---
-title: "Deathmatch: Git Rebase vs. Merge!"
+title: "Deathmatch: Git Rebase vs. Merge"
 subTitle: A timeless question
 date: 2023-08-27
 modified: 2023-08-30
