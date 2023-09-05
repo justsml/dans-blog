@@ -94,13 +94,13 @@ I removed the `Agent` table, as it didn't contain fields which were unique to Ag
 
 Some guiding principles:
 
-1.  Eliminate unessesary tables. Do you really need to have a `statuses` table? When you could add a `status::VARCHAR(8)` field on the `User` table? It's ok, use the extra bytes per row.
+1.  Eliminate unnecessary tables. Do you really need to have a `statuses` table? When you could add a `status::VARCHAR(8)` field on the `User` table? It's ok, use the extra bytes per row.
 2.  Try merge related tables. **Data**
 3.  Delete redundant data collection (e.g. remove `ActivityLogs` table if replaced by an Analytics solution.)
 4.  Try keeping **all field names** to a **single word/noun/pro-noun**. It's ok to rely on the context provided by the table. (e.g. `PersonalAccount.email` vs `BusinessAccount.email` - the context is provided by the table name.)
 5.  There is **no such thing** as `Agent.agentEmail` or `Agent.agentPhonePrimary`. Period. Say it with me: "it's `email` & `phone`."
 6.  By using Highly Specific Names, you cast-in-stone a specific level of `code-reusability` and `durability`, well, specifically **ZERO %**.
-7.  You are doing yourself any favors with crap like this `User.profileSummaryEmail`. 💞
+7.  You aren't doing yourself any favors with crap like this `User.profileSummaryEmail`. 💞
 
 **Recommended reading includes:**
 
