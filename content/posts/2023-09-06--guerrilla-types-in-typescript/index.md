@@ -10,7 +10,7 @@ cover: DALL·E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red
 
 # Guerrilla Types in TypeScript
 
-In this article we’ll explore three intriguing (possibly terrible?) techniques to assist in type design.
+In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!
 
 The main goal is **consistent** and **predictable** Model/Entity/Class interfaces.
 
@@ -37,11 +37,11 @@ The main goal is **consistent** and **predictable** Model/Entity/Class interface
 
 ## Approaches to Designing Types
 
-If you consume structured and/or relational API data in your TypeScript code, you've probably encountered or written varying approaches.
+You've probably encountered or written varying patterns around "type implementations." Especially when consuming data from 3rd party APIs.
 
-**Note:** I'm intentionally ignoring traditional processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here were building types to represent semi-structured API data.
+**Note:** I'm intentionally ignoring "traditional" processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here, we're building types to represent semi-structured API data.
 
-Let's explore 2 high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)
+Let's explore two high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)
 
 ### Single large object
 
@@ -49,7 +49,7 @@ Prioritizes being explicit over reusability & DRY-ness.
 
 **Bonus:** IDE/Dev Experience is great, since tooltips include a more complete preview - without fuss.
 
-```ts
+```tsx
 interface ProductDetails {
   name: string;
   seller: { name: string };
@@ -58,9 +58,7 @@ interface ProductDetails {
 }
 ```
 
-Since we're prioritizing readability, it's okay to indulge in _some_ repetition (within reason.) When groups of properties repeat _many_ times, it may make sense to extract them into a common type.
-
-Speaking of extracting types... What if that was our default approach?
+Since we are prioritizing explicit readability, it's okay to indulge in _some_ repetition (within reason.) When groups of properties repeat _many_ times, feel free to extract the repeated fields to a named type.
 
 ### Multiple named types
 
@@ -82,13 +80,13 @@ interface Availability { warehouseId: string; quantity: number; }
 interface Reviews { authorId: number; stars: number; }
 ```
 
-Overall this approach is great, but it has some drawbacks.
+Overall, this approach is great. But it's not without drawbacks.
 
-- **Readability** is great at first, but _can_ suffer as the size & number of types increases.
+- **Readability** is excellent at first; however, it _can_ suffer as the size & number of types grows.
 - Relentlessly DRY, but at what cost? (More on this later.)
-- Developer experience can suffer, since tooltips are less informative.
+- Developer experience can suffer since tooltips are less informative.
 
-> ⚠️ Side-bar: Since (approximately) TypeScript v3, the Language Server truncates tooltips, omitting nested properties.
+> ⚠️ Since (approximately) TypeScript v3, the Language Server truncates tooltips, omitting nested properties.
 > 💡 There are tricks to improve things a bit. Try holding `Cmd or Ctrl`, then hover over various type names - you should see at least one extra 'layer' of properties in the tooltip.
 
 Why do we have to choose between these two approaches? (Big ol' type vs. Named sub-types.)
@@ -115,7 +113,7 @@ Can we have it all?
 
 Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? -->
 
-```ts
+```tsx
 export interface ProductDetails {
   name: string;
   seller: { name: string };
@@ -130,17 +128,18 @@ export type Availability = ProductDetails["availability"][number];
 1.  Create large "Primary" structured types.
 2.  Export sub-types derived from the Primary type.
 
-This approach can be great in systems where "high level" objects must include inline documentation - in one place. Supports re-use between use cases: Models, Query Results, etc.
+This approach really shines in systems where "high-level" objects benefit from documentation in one place.
+Also, this technique supports re-use between many use cases: Models, Services, Query Results, etc.
 
 ## Technique #2: Mix-ins
 
-This strategy is all about putting together the **right fields**, with the **right names**, to **represent single logical objects.** The goal is to efficiently address multiple use-cases with TypeScript Utilities and Union Types (a mix-in style pattern.)
+This strategy is all about putting together the **right fields**, with the **right names**, to **represent single logical objects.** The goal is to efficiently address multiple use cases with TypeScript Utilities and Type Unions.
 
-This approach differs from traditional OOP inheritance & hierarchies, which aims to create layers of objects into tightly bound taxonomies. The **mix-in approach is about flat and loosely-related types**, grouping related fields, while eliminating duplication of fields.
+This approach differs from traditional OOP inheritance & hierarchies, which aims to create layers of objects into tightly bound taxonomies. The **mix-in approach is about flat and loosely-related types**, grouping related fields while reducing duplication.
 
 ### Mix-in Examples
 
-```ts
+```tsx
 interface TodoModel {
   text: string;
   complete: boolean;
@@ -156,7 +155,7 @@ export type Todo = TodoModel & InstanceMixin;
 
 ### Example `User`
 
-```ts
+```tsx
 interface User {
   id: number;
   name: string;
@@ -167,7 +166,7 @@ interface User {
 
 Let's represent the `User` before & after saving to the database.
 
-```ts
+```tsx
 // Core User fields (say for a <form>)
 interface UserBase {
   name: string;
@@ -186,7 +185,7 @@ type UserInstance = InstanceMixin & UserBase;
 
 Now we can sculpt the exact fields we need (like `password` for create/update, but not included in queries of `UserInstance`).
 
-```ts
+```tsx
 interface UserBase {
   name: string;
   bio: string;
@@ -206,18 +205,18 @@ export type UserInstance = UserBase & InstanceMixin;
 1.  "Is this a good practice?"
 2.  "Should I try it out?"
 
-No idea, let's keep going...
+No idea. Let's keep going!
 
 ## Technique #3: Organizing with Namespaces
 
-Here we declare a `ModelMixins` namespace. This provides some organization with a clearer reuse pattern.
+Here, we declare a `ModelMixins` namespace. This provides some organization plus a clearer reuse pattern.
 
 **Standardized Shapes**
 
 - `createdAt` & `updatedAt` exist together.
 - `id`, not `ID` or `_id`.
 
-```ts
+```tsx
 // `src/types/mixins.d.ts`
 namespace ModelMixins {
   interface Identity {
@@ -239,7 +238,7 @@ namespace ModelMixins {
 
 **Using Type Unions**
 
-```ts
+```tsx
 // `src/types/user.d.ts`
 export interface UserBase {
   name: string;
@@ -255,7 +254,7 @@ export type User =
 
 If desired, you can also export individual named types:
 
-```ts
+```tsx
 /** User payload for signup, including `password` field */
 export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
 /** Represents User type returned from server. */
@@ -266,7 +265,7 @@ export type UserInstance = UserBase & ModelMixins.InputPassword;
 
 Here's an `upsert()` function that uses `in` operator to distinguish between `UserInstance` and `UserPayload` types.
 
-```ts
+```tsx
 function upsert(user: User) {
   if ("id" in user) {
     // TypeScript knows `user` here has fields from Instance (id, createdAt, etc)
@@ -280,11 +279,11 @@ function upsert(user: User) {
 
 ## Summary
 
-We covered 3 techniques and a few supporting ideas.
+We covered three techniques and a few related supporting ideas.
 
 You may be asking, are these good patterns? Should I adopt some of these ideas?
 
-**Answer:** Try them out. Find what works for you, your team and project. 🌈✨
+**Answer:** Try them out. Find what works for you, your team, and your project. 🌈✨
 
 Let me know what you think on [Twitter](https://twitter.com/justsml) or
 [GitHub](https://github.com/justsml/dans-blog/issues/new).
