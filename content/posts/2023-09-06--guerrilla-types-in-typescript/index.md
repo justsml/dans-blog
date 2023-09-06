@@ -10,14 +10,14 @@ cover: DALL·E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red
 
 # Guerrilla Types in TypeScript
 
-In this article we’ll explore three intriguing (disclaimer: possibly terrible?) techniques to assist in type design.
+In this article we’ll explore three intriguing (possibly terrible?) techniques to assist in type design.
 
 The main goal is **consistent** and **predictable** Model/Entity/Class interfaces.
 
 - [Approaches to Designing Types](#approaches-to-designing-types)
   - [Single large object](#single-large-object)
   - [Multiple named types](#multiple-named-types)
-- [Technique #1: Why not both](#technique-1-why-not-both)
+- [Technique #1: Why not all](#technique-1-why-not-all)
 - [Technique #2: Mix-ins](#technique-2-mix-ins)
   - [Mix-in Examples](#mix-in-examples)
   - [Example `User`](#example-user)
@@ -37,9 +37,11 @@ The main goal is **consistent** and **predictable** Model/Entity/Class interface
 
 ## Approaches to Designing Types
 
-If you consume structured and/or relational data in your TypeScript code, you've probably encountered or written varying ways of defining the supporting types.
+If you consume structured and/or relational API data in your TypeScript code, you've probably encountered or written varying approaches.
 
-Let's compare 2 approaches: **Single large object** vs **Multiple named types**.
+**Note:** I'm intentionally ignoring traditional processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here were building types to represent semi-structured API data.
+
+Let's explore 2 high-level approaches: **Single large object** (Top-down) vs. **Multiple named types** (Bottom-up.)
 
 ### Single large object
 
@@ -52,7 +54,7 @@ interface ProductDetails {
   name: string;
   seller: { name: string };
   availability: Array<{ warehouseId: string; quantity: number }>;
-  reviews: Array<{ authorId: number; rating: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
 }
 ```
 
@@ -72,26 +74,26 @@ This approach is likely the favored approach by a wide margin.
 interface ProductDetails {
   name: string;
   seller: Seller;
-  availability: Availability;
-  reviews: Ratings;
+  reviews: Reviews[];
+  availability: Availability[];
 }
 interface Seller { name: string; }
 interface Availability { warehouseId: string; quantity: number; }
-interface Ratings { authorId: number; rating: number; }
+interface Reviews { authorId: number; stars: number; }
 ```
 
 Overall this approach is great, but it has some drawbacks.
 
-- **Readability** _can_ suffer as the size & number of types increases.
+- **Readability** is great at first, but _can_ suffer as the size & number of types increases.
 - Relentlessly DRY, but at what cost? (More on this later.)
 - Developer experience can suffer, since tooltips are less informative.
 
 > ⚠️ Side-bar: Since (approximately) TypeScript v3, the Language Server truncates tooltips, omitting nested properties.
 > 💡 There are tricks to improve things a bit. Try holding `Cmd or Ctrl`, then hover over various type names - you should see at least one extra 'layer' of properties in the tooltip.
 
-Why do we have to choose between these two approaches? (Big type vs named sub-types.)
+Why do we have to choose between these two approaches? (Big ol' type vs. Named sub-types.)
 
-## Technique #1: Why not both
+## Technique #1: Why not all
 
 Can we have it all?
 
@@ -104,7 +106,7 @@ Can we have it all?
 <!-- ### Some things to consider
 
 - How do you represent a `one-to-one` relationship like `Product` -> `Seller`?
-- What about `one-to-many` relationships? Say `Ratings`, or `Photos`?
+- What about `one-to-many` relationships? Say `Reviews`, or `Photos`?
 - Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) -->
 
 <!-- This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the "big picture" more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. -->
@@ -113,20 +115,20 @@ Can we have it all?
 
 Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? -->
 
-1.  Create large "Primary" structured types.
-2.  Export sub-types derived from the Primary type.
-
 ```ts
 export interface ProductDetails {
   name: string;
-  seller: Seller;
-  availability: Availability[];
-  reviews: Ratings[];
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
 }
-export type Seller = Product["seller"];
-export type Ratings = Product["ratings"];
-export type Availability = Product["availability"];
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
 ```
+
+1.  Create large "Primary" structured types.
+2.  Export sub-types derived from the Primary type.
 
 This approach can be great in systems where "high level" objects must include inline documentation - in one place. Supports re-use between use cases: Models, Query Results, etc.
 

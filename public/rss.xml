@@ -1,4 +1,248 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Fri, 01 Sep 2023 02:54:38 GMT</lastBuildDate><item><title><![CDATA[Deathmatch: Git Rebase vs. Merge]]></title><description><![CDATA[Deathmatch: Git Rebase vs. (Squash) Merge! Should I Rebase? Or Squash Merge? Is it a personal preference? Answer: Not when one or more teams…]]></description><link>https://danlevy.net/deathmatch-git-rebase-vs-merge/</link><guid isPermaLink="false">https://danlevy.net/deathmatch-git-rebase-vs-merge/</guid><content:encoded>&lt;h1 id=&quot;deathmatch-git-rebase-vs-squash-merge&quot;&gt;&lt;a href=&quot;#deathmatch-git-rebase-vs-squash-merge&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Deathmatch: Git Rebase vs. (Squash) Merge!&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Wed, 06 Sep 2023 11:30:32 GMT</lastBuildDate><item><title><![CDATA[Guerrilla Types in TypeScript]]></title><description><![CDATA[Guerrilla Types in TypeScript In this article we’ll explore three intriguing (possibly terrible?) techniques to assist in type design. The…]]></description><link>https://danlevy.net/guerrilla-types-in-typescript/</link><guid isPermaLink="false">https://danlevy.net/guerrilla-types-in-typescript/</guid><content:encoded>&lt;h1 id=&quot;guerrilla-types-in-typescript&quot;&gt;&lt;a href=&quot;#guerrilla-types-in-typescript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guerrilla Types in TypeScript&lt;/h1&gt;
+&lt;p&gt;In this article we’ll explore three intriguing (possibly terrible?) techniques to assist in type design.&lt;/p&gt;
+&lt;p&gt;The main goal is &lt;strong&gt;consistent&lt;/strong&gt; and &lt;strong&gt;predictable&lt;/strong&gt; Model/Entity/Class interfaces.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#approaches-to-designing-types&quot;&gt;Approaches to Designing Types&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#single-large-object&quot;&gt;Single large object&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#multiple-named-types&quot;&gt;Multiple named types&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#technique-1-why-not-all&quot;&gt;Technique #1: Why not all&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#technique-2-mix-ins&quot;&gt;Technique #2: Mix-ins&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#mix-in-examples&quot;&gt;Mix-in Examples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#example-user&quot;&gt;Example &lt;code class=&quot;language-text&quot;&gt;User&lt;/code&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;a href=&quot;#technique-3-organizing-with-namespaces&quot;&gt;Technique #3: Organizing with Namespaces&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#real-world-usage&quot;&gt;Real-world Usage&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#summary&quot;&gt;Summary&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!--
+1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
+2.  Durable way to model combinations of logically related fields.
+    1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
+    2.  Model Request &amp; Response fields from your discrete database models. (e.g. `_version`, `_v`)
+    3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
+3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
+4.  Compose higher level types with multiple smaller reusable interfaces &amp; types.
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to &apos;automatically&apos; match variants of a type. --&gt;
+&lt;h2 id=&quot;approaches-to-designing-types&quot;&gt;&lt;a href=&quot;#approaches-to-designing-types&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Approaches to Designing Types&lt;/h2&gt;
+&lt;p&gt;If you consume structured and/or relational API data in your TypeScript code, you’ve probably encountered or written varying approaches.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; I’m intentionally ignoring traditional processes building Entity Relationship Diagrams (ERD) or Object Oriented Programming (OOP) inheritance hierarchies. Here were building types to represent semi-structured API data.&lt;/p&gt;
+&lt;p&gt;Let’s explore 2 high-level approaches: &lt;strong&gt;Single large object&lt;/strong&gt; (Top-down) vs. &lt;strong&gt;Multiple named types&lt;/strong&gt; (Bottom-up.)&lt;/p&gt;
+&lt;h3 id=&quot;single-large-object&quot;&gt;&lt;a href=&quot;#single-large-object&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Single large object&lt;/h3&gt;
+&lt;p&gt;Prioritizes being explicit over reusability &amp;#x26; DRY-ness.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bonus:&lt;/strong&gt; IDE/Dev Experience is great, since tooltips include a more complete preview - without fuss.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array&amp;lt;{ warehouseId: string; quantity: number }&amp;gt;;
+  reviews: Array&amp;lt;{ authorId: number; stars: number }&amp;gt;;
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Since we’re prioritizing readability, it’s okay to indulge in &lt;em&gt;some&lt;/em&gt; repetition (within reason.) When groups of properties repeat &lt;em&gt;many&lt;/em&gt; times, it may make sense to extract them into a common type.&lt;/p&gt;
+&lt;p&gt;Speaking of extracting types… What if that was our default approach?&lt;/p&gt;
+&lt;h3 id=&quot;multiple-named-types&quot;&gt;&lt;a href=&quot;#multiple-named-types&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Multiple named types&lt;/h3&gt;
+&lt;p&gt;Prioritizing reusability &amp;#x26; DRY-ness.&lt;/p&gt;
+&lt;!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** --&gt;
+&lt;p&gt;This approach is likely the favored approach by a wide margin.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;
+      &lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Overall this approach is great, but it has some drawbacks.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Readability&lt;/strong&gt; is great at first, but &lt;em&gt;can&lt;/em&gt; suffer as the size &amp;#x26; number of types increases.&lt;/li&gt;
+&lt;li&gt;Relentlessly DRY, but at what cost? (More on this later.)&lt;/li&gt;
+&lt;li&gt;Developer experience can suffer, since tooltips are less informative.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ Side-bar: Since (approximately) TypeScript v3, the Language Server truncates tooltips, omitting nested properties.
+💡 There are tricks to improve things a bit. Try holding &lt;code class=&quot;language-text&quot;&gt;Cmd or Ctrl&lt;/code&gt;, then hover over various type names - you should see at least one extra ‘layer’ of properties in the tooltip.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Why do we have to choose between these two approaches? (Big ol’ type vs. Named sub-types.)&lt;/p&gt;
+&lt;h2 id=&quot;technique-1-why-not-all&quot;&gt;&lt;a href=&quot;#technique-1-why-not-all&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Technique #1: Why not all&lt;/h2&gt;
+&lt;p&gt;Can we have it all?&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Clarity of “big-picture” types?&lt;/li&gt;
+&lt;li&gt;Plus named sub-types?&lt;/li&gt;
+&lt;li&gt;Without duplication?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;✅ YES! 🎉&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;!-- ### Some things to consider
+
+- How do you represent a `one-to-one` relationship like `Product` -&gt; `Seller`?
+- What about `one-to-many` relationships? Say `Reviews`, or `Photos`?
+- Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) --&gt;
+&lt;!-- This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the &quot;big picture&quot; more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. --&gt;
+&lt;!-- When provided with some structured array/object data, many TypeScript coders feel the urge to create types. Loads of types. Eventually a cascade of layers forms, made up of simpler types building ever more complex types.
+
+Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? --&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array&amp;lt;{ authorId: number; stars: number }&amp;gt;;
+  availability: Array&amp;lt;{ warehouseId: string; quantity: number }&amp;gt;;
+}
+export type Seller = ProductDetails[&amp;quot;seller&amp;quot;];
+export type Review = ProductDetails[&amp;quot;reviews&amp;quot;][number];
+export type Availability = ProductDetails[&amp;quot;availability&amp;quot;][number];&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Create large “Primary” structured types.&lt;/li&gt;
+&lt;li&gt;Export sub-types derived from the Primary type.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This approach can be great in systems where “high level” objects must include inline documentation - in one place. Supports re-use between use cases: Models, Query Results, etc.&lt;/p&gt;
+&lt;h2 id=&quot;technique-2-mix-ins&quot;&gt;&lt;a href=&quot;#technique-2-mix-ins&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Technique #2: Mix-ins&lt;/h2&gt;
+&lt;p&gt;This strategy is all about putting together the &lt;strong&gt;right fields&lt;/strong&gt;, with the &lt;strong&gt;right names&lt;/strong&gt;, to &lt;strong&gt;represent single logical objects.&lt;/strong&gt; The goal is to efficiently address multiple use-cases with TypeScript Utilities and Union Types (a mix-in style pattern.)&lt;/p&gt;
+&lt;p&gt;This approach differs from traditional OOP inheritance &amp;#x26; hierarchies, which aims to create layers of objects into tightly bound taxonomies. The &lt;strong&gt;mix-in approach is about flat and loosely-related types&lt;/strong&gt;, grouping related fields, while eliminating duplication of fields.&lt;/p&gt;
+&lt;h3 id=&quot;mix-in-examples&quot;&gt;&lt;a href=&quot;#mix-in-examples&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Mix-in Examples&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft represents Form state, possibly all undefined */
+export type TodoDraft = Partial&amp;lt;TodoModel&amp;gt;;
+/** Todo represents a Todo instance record from the database */
+export type Todo = TodoModel &amp;amp; InstanceMixin;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h3 id=&quot;example-user&quot;&gt;&lt;a href=&quot;#example-user&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Example &lt;code class=&quot;language-text&quot;&gt;User&lt;/code&gt;&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record&amp;lt;&amp;quot;facebook&amp;quot; | &amp;quot;instagram&amp;quot; | &amp;quot;github&amp;quot;, URL&amp;gt;;
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Let’s represent the &lt;code class=&quot;language-text&quot;&gt;User&lt;/code&gt; before &amp;#x26; after saving to the database.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;// Core User fields (say for a &amp;lt;form&amp;gt;)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record&amp;lt;&amp;quot;facebook&amp;quot; | &amp;quot;instagram&amp;quot; | &amp;quot;github&amp;quot;, URL&amp;gt;;
+}
+// Fields from the database
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// A User **instance** - with all fields
+type UserInstance = InstanceMixin &amp;amp; UserBase;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;Now we can sculpt the exact fields we need (like &lt;code class=&quot;language-text&quot;&gt;password&lt;/code&gt; for create/update, but not included in queries of &lt;code class=&quot;language-text&quot;&gt;UserInstance&lt;/code&gt;).&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;interface UserBase {
+  name: string;
+  bio: string;
+  social: Record&amp;lt;&amp;quot;facebook&amp;quot; | &amp;quot;instagram&amp;quot; | &amp;quot;github&amp;quot;, URL&amp;gt;;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase &amp;amp; { password: string };
+/** Represents User type returned from server. */
+export type UserInstance = UserBase &amp;amp; InstanceMixin;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;“Is this a good practice?”&lt;/li&gt;
+&lt;li&gt;“Should I try it out?”&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;No idea, let’s keep going…&lt;/p&gt;
+&lt;h2 id=&quot;technique-3-organizing-with-namespaces&quot;&gt;&lt;a href=&quot;#technique-3-organizing-with-namespaces&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Technique #3: Organizing with Namespaces&lt;/h2&gt;
+&lt;p&gt;Here we declare a &lt;code class=&quot;language-text&quot;&gt;ModelMixins&lt;/code&gt; namespace. This provides some organization with a clearer reuse pattern.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Standardized Shapes&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;createdAt&lt;/code&gt; &amp;#x26; &lt;code class=&quot;language-text&quot;&gt;updatedAt&lt;/code&gt; exist together.&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;id&lt;/code&gt;, not &lt;code class=&quot;language-text&quot;&gt;ID&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;_id&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity &amp;amp; ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Using Type Unions&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record&amp;lt;&amp;quot;facebook&amp;quot; | &amp;quot;instagram&amp;quot; | &amp;quot;github&amp;quot;, URL&amp;gt;;
+}
+// Single `User` type, using Type Union to dynamically
+//  represent the pre- &amp;amp; post-creation states.
+export type User =
+  | (UserBase &amp;amp; ModelMixins.Instance &amp;amp; ModelMixins.HashedPassword)
+  | (UserBase &amp;amp; ModelMixins.InputPassword);&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;p&gt;If desired, you can also export individual named types:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;/** User payload for signup, including `password` field */
+export type UserPayload = UserBase &amp;amp; ModelMixins.Instance &amp;amp; ModelMixins.HashedPassword;
+/** Represents User type returned from server. */
+export type UserInstance = UserBase &amp;amp; ModelMixins.InputPassword;&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h3 id=&quot;real-world-usage&quot;&gt;&lt;a href=&quot;#real-world-usage&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Real-world Usage&lt;/h3&gt;
+&lt;p&gt;Here’s an &lt;code class=&quot;language-text&quot;&gt;upsert()&lt;/code&gt; function that uses &lt;code class=&quot;language-text&quot;&gt;in&lt;/code&gt; operator to distinguish between &lt;code class=&quot;language-text&quot;&gt;UserInstance&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;UserPayload&lt;/code&gt; types.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;ts&quot;&gt;
+      &lt;pre class=&quot;language-ts&quot;&gt;&lt;code class=&quot;language-ts&quot;&gt;function upsert(user: User) {
+  if (&amp;quot;id&amp;quot; in user) {
+    // TypeScript knows `user` here has fields from Instance (id, createdAt, etc)
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript knows this must be the `UserBase &amp;amp; ModelMixins.InputPassword` version of user.
+    return createUser(user);
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2 id=&quot;summary&quot;&gt;&lt;a href=&quot;#summary&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Summary&lt;/h2&gt;
+&lt;p&gt;We covered 3 techniques and a few supporting ideas.&lt;/p&gt;
+&lt;p&gt;You may be asking, are these good patterns? Should I adopt some of these ideas?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Answer:&lt;/strong&gt; Try them out. Find what works for you, your team and project. 🌈✨&lt;/p&gt;
+&lt;p&gt;Let me know what you think on &lt;a href=&quot;https://twitter.com/justsml&quot;&gt;Twitter&lt;/a&gt; or
+&lt;a href=&quot;https://github.com/justsml/dans-blog/issues/new&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Deathmatch: Git Rebase vs. Merge]]></title><description><![CDATA[Deathmatch: Git Rebase vs. (Squash) Merge! Should I Rebase? Or Squash Merge? Is it a personal preference? Answer: Not when one or more teams…]]></description><link>https://danlevy.net/deathmatch-git-rebase-vs-merge/</link><guid isPermaLink="false">https://danlevy.net/deathmatch-git-rebase-vs-merge/</guid><content:encoded>&lt;h1 id=&quot;deathmatch-git-rebase-vs-squash-merge&quot;&gt;&lt;a href=&quot;#deathmatch-git-rebase-vs-squash-merge&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Deathmatch: Git Rebase vs. (Squash) Merge!&lt;/h1&gt;
 &lt;p&gt;Should I Rebase? Or Squash Merge?&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -5021,13 +5265,13 @@ User
 &lt;p&gt;I removed the &lt;code class=&quot;language-text&quot;&gt;Agent&lt;/code&gt; table, as it didn’t contain fields which were unique to Agents. And the &lt;code class=&quot;language-text&quot;&gt;User.company&lt;/code&gt; object (with &lt;code class=&quot;language-text&quot;&gt;.name&lt;/code&gt;, &lt;code class=&quot;language-text&quot;&gt;.address&lt;/code&gt;) emerged once the naming was cleaned up.&lt;/p&gt;
 &lt;p&gt;Some guiding principles:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;Eliminate unessesary tables. Do you really need to have a &lt;code class=&quot;language-text&quot;&gt;statuses&lt;/code&gt; table? When you could add a &lt;code class=&quot;language-text&quot;&gt;status::VARCHAR(8)&lt;/code&gt; field on the &lt;code class=&quot;language-text&quot;&gt;User&lt;/code&gt; table? It’s ok, use the extra bytes per row.&lt;/li&gt;
+&lt;li&gt;Eliminate unnecessary tables. Do you really need to have a &lt;code class=&quot;language-text&quot;&gt;statuses&lt;/code&gt; table? When you could add a &lt;code class=&quot;language-text&quot;&gt;status::VARCHAR(8)&lt;/code&gt; field on the &lt;code class=&quot;language-text&quot;&gt;User&lt;/code&gt; table? It’s ok, use the extra bytes per row.&lt;/li&gt;
 &lt;li&gt;Try merge related tables. &lt;strong&gt;Data&lt;/strong&gt;&lt;/li&gt;
 &lt;li&gt;Delete redundant data collection (e.g. remove &lt;code class=&quot;language-text&quot;&gt;ActivityLogs&lt;/code&gt; table if replaced by an Analytics solution.)&lt;/li&gt;
 &lt;li&gt;Try keeping &lt;strong&gt;all field names&lt;/strong&gt; to a &lt;strong&gt;single word/noun/pro-noun&lt;/strong&gt;. It’s ok to rely on the context provided by the table. (e.g. &lt;code class=&quot;language-text&quot;&gt;PersonalAccount.email&lt;/code&gt; vs &lt;code class=&quot;language-text&quot;&gt;BusinessAccount.email&lt;/code&gt; - the context is provided by the table name.)&lt;/li&gt;
 &lt;li&gt;There is &lt;strong&gt;no such thing&lt;/strong&gt; as &lt;code class=&quot;language-text&quot;&gt;Agent.agentEmail&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;Agent.agentPhonePrimary&lt;/code&gt;. Period. Say it with me: “it’s &lt;code class=&quot;language-text&quot;&gt;email&lt;/code&gt; &amp;#x26; &lt;code class=&quot;language-text&quot;&gt;phone&lt;/code&gt;.”&lt;/li&gt;
 &lt;li&gt;By using Highly Specific Names, you cast-in-stone a specific level of &lt;code class=&quot;language-text&quot;&gt;code-reusability&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;durability&lt;/code&gt;, well, specifically &lt;strong&gt;ZERO %&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;You are doing yourself any favors with crap like this &lt;code class=&quot;language-text&quot;&gt;User.profileSummaryEmail&lt;/code&gt;. 💞&lt;/li&gt;
+&lt;li&gt;You aren’t doing yourself any favors with crap like this &lt;code class=&quot;language-text&quot;&gt;User.profileSummaryEmail&lt;/code&gt;. 💞&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;strong&gt;Recommended reading includes:&lt;/strong&gt;&lt;/p&gt;
 &lt;ol&gt;
