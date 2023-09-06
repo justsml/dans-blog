@@ -61,7 +61,7 @@ This technique is about organizing related functions into a single module (e.g. 
 
 Example of a `CartHelpers` module, where `userId` is passed in once, and all methods are single-argument.
 
-```ts
+```tsx
 const CartHelpers = (userId: number) => {
   return {
     getProductsSubtotal: products => getProductsSubtotal(userId, products),
@@ -76,7 +76,7 @@ const CartHelpers = (userId: number) => {
 
 If classes are your thing, it's easy to adapt:
 
-```ts
+```tsx
 class CartHelpers {
   constructor(userId) {
     this.userId = userId;
@@ -104,7 +104,7 @@ By grouping related functions, we create an opportunity to reduce exposed surfac
 
 Let's see how the `checkout()` function looks now:
 
-```ts
+```tsx
 export const checkout = ({ userId, products }) => {
   const cart = CartHelpers(userId);
 
@@ -122,7 +122,7 @@ export const checkout = ({ userId, products }) => {
 
 When a functions’ arguments are provided by the output of prior functions, you can simplify the code even further.
 
-```ts
+```tsx
 export const checkout = ({ userId, products }) => {
   const cart = CartHelpers(userId);
 
