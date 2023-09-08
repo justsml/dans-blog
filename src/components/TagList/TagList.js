@@ -5,6 +5,8 @@ import Link from "gatsby-link";
 // import "../../styles/shared.css";
 import injectSheet from "react-jss";
 
+const MIN_TAG_COUNT_THRESHOLD = 1;
+
 const styles = theme => ({
   tagList: {
     width: "100%",
@@ -69,7 +71,7 @@ const TagList = ({ tags, allTags, classes }) => {
   return (
     <div className="tags-list">
       <div className={classes.tagList}>
-        {tags.map(tag => {
+        {tags.filter(tag => tagDict[tag] > MIN_TAG_COUNT_THRESHOLD).map(tag => {
           return (
             <div key={tag}>
               <Link
