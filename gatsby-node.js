@@ -8,6 +8,8 @@ const { createFilePath } = require(`gatsby-source-filesystem`);
 const { store } = require(`./node_modules/gatsby/dist/redux`);
 const currentPath = process.env.CWD || path.resolve("./");
 
+const MIN_TAG_COUNT_THRESHOLD = 1;
+
 // console.warn("CURRENTPATH", currentPath);
 
 // query TagsQuery {
@@ -150,7 +152,9 @@ const createTagPages = (createPage, posts) => {
   });
   // console.log("Adding tags:", JSON.stringify(postsByTags, null, 2));
   tags.forEach(tagName => {
-    const { posts } = postsByTags[tagName];
+    const { posts, count } = postsByTags[tagName];
+    if (count <= MIN_TAG_COUNT_THRESHOLD)
+      return console.warn('Skipping "orphan" tag:', tagName, count);
     createPage({
       path: `/tags/${tagName}`,
       component: tagPageTemplate,
