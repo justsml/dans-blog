@@ -14,14 +14,39 @@ export function injectCssByUrl(url) {
   return result;
 }
 
-export function injectJsByUrl(url) {
-  if (document.querySelector(`script[src="${url}"]`)) return false;
+export function createScriptTag(url, attributes = {}) {
   const resource = document.createElement("script");
   const result = domToPromise(resource);
   resource.setAttribute("src", url);
+  Object.entries(attributes).forEach(([key, value]) => resource.setAttribute(key, value));
   const head = document.getElementsByTagName("head")[0];
   head.appendChild(resource);
-  return result;
+  console.info(`createScriptTag: ${url}`, { attributes }, resource);
+  return { element: resource, promise: result };
+}
+
+export const isScriptLoaded = url => {
+  return !!document.querySelector(`script[src="${url}"]`);
+};
+
+export const removeScript = url => {
+  const script = document.querySelector(`script[src="${url}"]`);
+  if (script) script.remove();
+};
+
+export function injectJsByUrl(
+  url,
+  attributes = {},
+  force = false,
+  parent = document.getElementsByTagName("head")[0]
+) {
+  if (force && isScriptLoaded(url)) removeScript(url);
+  if (isScriptLoaded(url)) return Promise.resolve({ alreadyLoaded: true, url });
+  const { element, promise } = createScriptTag(url, attributes);
+  const head = parent;
+  head.appendChild(element);
+  console.info(`injectJsByUrl: ${url}`, { attributes, force }, element);
+  return promise;
 }
 
 function domToPromise(element) {

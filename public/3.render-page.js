@@ -20,31 +20,23 @@ exports.modules = {
 	
 	var _reactJss2 = _interopRequireDefault(_reactJss);
 	
-	var _config = __webpack_require__(853);
-	
-	var _config2 = _interopRequireDefault(_config);
-	
-	var _AsyncComponent = __webpack_require__(376);
-	
-	var _AsyncComponent2 = _interopRequireDefault(_AsyncComponent);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	// import FacebookProvider, { Comments } from "react-facebook";
+	// import { DiscussionEmbed } from "disqus-react";
+	// import config from "../../../content/meta/config";
+	// import asyncComponent from "../common/AsyncComponent";
 	
 	// const DiscussionEmbedAsync = React.lazy(() =>
 	//   import("disqus-react").then(({ DiscussionEmbed }) => DiscussionEmbed)
 	// );
-	
-	// import FacebookProvider, { Comments } from "react-facebook";
-	// import { DiscussionEmbed } from "disqus-react";
-	var DiscussionEmbed = (0, _AsyncComponent2.default)(function () {
-	  return new Promise(function (resolve) {
-	    __webpack_require__.e/* nsure */(4, function (require) {
-	      resolve(__webpack_require__(957));
-	    });
-	  }).then(function (module) {
-	    return module.DiscussionEmbed;
-	  }).catch(function (error) {});
-	});
+	// const DiscussionEmbed = asyncComponent(() =>
+	//   import("disqus-react")
+	//     .then(module => {
+	//       return module.DiscussionEmbed;
+	//     })
+	//     .catch(error => {})
+	// );
 	
 	var styles = function styles(theme) {
 	  return {
@@ -56,11 +48,19 @@ exports.modules = {
 	  };
 	};
 	
-	// {/* <Disqus.CommentCount shortname={disqusShortname} config={disqusConfig}>
-	//   Comments
-	// </Disqus.CommentCount> */}
+	var COMMENTS_DELAY = 3000;
 	
-	var DISQUS_DELAY = 6000;
+	var GitHubIssueComments = function GitHubIssueComments() {
+	  return _react2.default.createElement("script", {
+	    src: "https://utteranc.es/client.js",
+	    repo: "justsml/dans-blog",
+	    "issue-term": "pathname",
+	    label: "\uD83D\uDCAC comment",
+	    theme: "photon-dark",
+	    crossOrigin: "anonymous",
+	    async: true
+	  });
+	};
 	
 	var PostComments = function PostComments(props) {
 	  var _useState = (0, _react.useState)(false),
@@ -68,33 +68,35 @@ exports.modules = {
 	      setShowComments = _useState[1];
 	
 	  var _ref = props || {},
-	      classes = _ref.classes,
-	      slug = _ref.slug,
-	      post = _ref.post;
+	      classes = _ref.classes;
+	  // const title = post && post.frontmatter && post.frontmatter.title;
+	  // const category = post && post.frontmatter && post.frontmatter.category;
 	
-	  var title = post && post.frontmatter && post.frontmatter.title;
-	  var category = post && post.frontmatter && post.frontmatter.category;
-	
-	  var url = _config2.default.siteUrl + _config2.default.pathPrefix + slug;
-	  var disqusConfig = {
-	    identifier: (post && post.fields && post.fields.prefix) + "/" + category,
-	    title: title || slug,
-	    url: url
-	  };
+	  // const url = config.siteUrl + config.pathPrefix + slug;
+	  // const disqusConfig = {
+	  //   identifier: `${post && post.fields && post.fields.prefix}/${category}`,
+	  //   title: title || slug,
+	  //   url
+	  // };
 	
 	  // eslint-disable-next-line no-undef
+	
+	
 	  var isSSR = typeof globalThis === "undefined";
 	
 	  if (isSSR) return _react2.default.createElement("div", { className: "post-comments-ssr-placeholder" });
 	
 	  (0, _react.useEffect)(function () {
-	    setTimeout(setShowComments, DISQUS_DELAY, true);
+	    var t = setTimeout(setShowComments, COMMENTS_DELAY, true);
+	    return function () {
+	      return clearTimeout(t);
+	    };
 	  }, []);
 	
 	  return _react2.default.createElement(
 	    "div",
 	    { id: "post-comments", className: classes.postComments },
-	    showComments && _react2.default.createElement(DiscussionEmbed, { shortname: _config2.default.disqusShortname, config: disqusConfig })
+	    showComments ? _react2.default.createElement(GitHubIssueComments, null) : "Loading comments..."
 	  );
 	};
 	

@@ -2,18 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 import {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  LinkedinShareButton,
-  TwitterShareButton,
-  FacebookShareCount,
-  GooglePlusShareCount,
-  LinkedinShareCount,
   FacebookIcon,
+  FacebookShareButton,
+  FacebookShareCount,
+  LinkedinIcon,
+  LinkedinShareButton,
+  LinkedinShareCount,
+  // RedditIcon,
+  RedditShareButton,
+  RedditShareCount,
   TwitterIcon,
-  GooglePlusIcon,
-  LinkedinIcon
+  TwitterShareButton
 } from "react-share";
+import RedditIcon from "!svg-react-loader!../../images/svg-icons/reddit.svg?name=RedditIcon";
 
 import config from "../../../content/meta/config";
 
@@ -56,18 +57,18 @@ class PostShare extends React.Component {
     const filter = count => (count > 0 ? count : "");
 
     return (
-      <div className={classes.share}>
+      <div className={classes.share + " post-share"}>
         <span className={classes.label}>SHARE</span>
         <div className={classes.links}>
           <TwitterShareButton url={url} title={title}>
             <TwitterIcon round size={iconSize} />
           </TwitterShareButton>
-          <GooglePlusShareButton url={url}>
-            <GooglePlusIcon round size={iconSize} />
-            <GooglePlusShareCount url={url}>
+          <RedditShareButton url={url} title={title}>
+            <RedditIcon round size={iconSize} />
+            <RedditShareCount url={url}>
               {count => <div className="share-count">{filter(count)}</div>}
-            </GooglePlusShareCount>
-          </GooglePlusShareButton>
+            </RedditShareCount>
+          </RedditShareButton>
           <FacebookShareButton
             url={url}
             quote={`${title} - ${excerpt}`}

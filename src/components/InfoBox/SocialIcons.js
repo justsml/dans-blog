@@ -6,6 +6,7 @@ import config from "../../../content/meta/config";
 
 import GithubIcon from "!svg-react-loader!../../images/svg-icons/github.svg?name=GithubIcon";
 import TwitterIcon from "!svg-react-loader!../../images/svg-icons/twitter.svg?name=TwitterIcon";
+import RedditIcon from "!svg-react-loader!../../images/svg-icons/reddit.svg?name=RedditIcon";
 
 import { FaYoutube } from "react-icons/fa";
 

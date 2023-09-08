@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 
-import asyncComponent from "../common/AsyncComponent/";
+// import asyncComponent from "../common/AsyncComponent/";
 import PostAuthor from "./PostAuthor";
-// import PostComments from "./PostComments";
+import PostComments from "./PostComments";
+import PostShare from "./PostShare";
 
 const styles = theme => ({
   footer: {
@@ -17,24 +18,24 @@ const styles = theme => ({
   }
 });
 
-const PostShare = asyncComponent(() =>
-  import("./PostShare")
-    .then(module => {
-      return module;
-    })
-    .catch(error => {})
-);
+// const PostShare = asyncComponent(() =>
+//   import("./PostShare")
+//     .then(module => {
+//       return module;
+//     })
+//     .catch(error => {})
+// );
 
-const PostComments = asyncComponent(() =>
-  import("./PostComments")
-    .then(module => {
-      return module;
-    })
-    .catch(error => {})
-);
+// const PostComments = asyncComponent(() =>
+//   import("./PostComments")
+//     .then(module => {
+//       return module;
+//     })
+//     .catch(error => {})
+// );
 
 const PostFooter = ({ classes, author, post, slug }) => {
-  const [showComments, setShowComments] = useState(false);
+  const [showComments, setShowComments] = useState(true);
 
   useEffect(() => {
     const handler = event => cleanup() && setShowComments(true);
@@ -50,8 +51,8 @@ const PostFooter = ({ classes, author, post, slug }) => {
   return (
     <footer className={classes.footer}>
       {showComments && <PostShare post={post} slug={slug} />}
-      <PostAuthor author={author} />
       {showComments && <PostComments post={post} slug={slug} author={author} />}
+      <PostAuthor author={author} />
     </footer>
   );
 };
