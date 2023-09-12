@@ -1,0 +1,2 @@
+webpackJsonp([0xcca08df713f4],{1359:function(e,t){e.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/deathmatch-git-rebase-vs-merge/"},frontmatter:{title:"Deathmatch: Git Rebase vs. Merge",subTitle:"A timeless question",date:"2023-08-27T00:00:00.000Z",modified:"2023-09-12T00:00:00.000Z",category:"Git"}}}]}},pathContext:{posts:[{title:"Deathmatch: Git Rebase vs. Merge",slug:"/deathmatch-git-rebase-vs-merge/"}],tagName:"git",tagCount:1}}}});
+//# sourceMappingURL=path---tags-git-7e12263a1a87af1f3944.js.map
