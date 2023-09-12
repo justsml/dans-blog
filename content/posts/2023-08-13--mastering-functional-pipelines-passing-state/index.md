@@ -43,7 +43,7 @@ Before we decide how to improve this code, let's identify some pros/cons.
 - Good use of a closure! Passing in `userId` & `products` once!
 - Consistent argument naming.
 - Relatively effective & succinct composition of 4 key functions for checkout.
-- “Free” error flow control. (Errors bubble up from any nested functions, rejecting on the Promise returned by `checkout()`.)
+- "Free" error flow control. (Errors bubble up from any nested functions, rejecting on the Promise returned by `checkout()`.)
 
 ### Cons
 
@@ -51,7 +51,7 @@ Before we decide how to improve this code, let's identify some pros/cons.
 - Functions are not single-parameter (aka unary.) _This affects composability. See [final example](#checkout-with-further-improvements) for why?_
 - Can be non-obvious what each function returns. (Is it the email send result, or that `result` var? Or?)
 - Not obvious how to add functionality (e.g. Say we needed to load customer discount/credit/points/etc.)
-- Sometimes “temp” parameter names (like in each `.then(param => {})`) add context. However given time, they’ll likely become home to naming cruft.
+- Sometimes "temp" parameter names (like in each `.then(param => {})`) add context. However given time, they’ll likely become home to naming cruft.
 
 ## Solution, Part 1: Make a module!
 
@@ -149,11 +149,11 @@ One neat trick: Find repetition in function parameters. Ask is there a relations
 
 - ✅ Functions with repeated, common arguments. (e.g. If 4 methods accept `userRewards`, chances are you need a `Rewards` or other module.)
 - ✅ Functions whose arguments are provided directly by the output of prior functions. (Sequences of steps. e.g. `Extract`, `Transform`, `Load`.)
-- ❌ Anything vaguely related to the feature area, “product purchasing?”
+- ❌ Anything vaguely related to the feature area, "product purchasing?"
 - ❌ Functions featuring common prefix or suffix naming?
 - ❌ Functions which require large objects as arguments, despite only using a few values from inside those object(s). (e.g. `applyTaxes({ user, business, rewards, kitchenSink })` vs `applyTaxes({ subTotal })`)
 
-While there is no single “right answer” to designing modules, it helps to identify 2-3 options for organization - draw an outline, write “fantasy” code, ask "does it spark joy?"
+While there is no single "right answer" to designing modules, it helps to identify 2-3 options for organization - draw an outline, write "fantasy" code, ask "does it spark joy?"
 
 <aside>
 📌 It often takes a few attempts at module organization before your Domain Model shakes out. Don’t agonize getting it perfect.

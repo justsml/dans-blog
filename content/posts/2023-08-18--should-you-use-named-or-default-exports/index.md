@@ -12,7 +12,7 @@ cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
 
 There’s no shortage of strongly worded articles on this topic.
 
-The majority judge `default export` as “terrible.” Others maintain `default` should win (e.g. AirBnb style guide.)
+The majority judge `default export` as "terrible." Others maintain `default` should win (e.g. AirBnb style guide.)
 
 They often blame **entirely temporary** things: IDE auto-import bugs, a particular bundler’s tree-shaking abilities, or the mere possibility of typos when naming an import.
 
@@ -26,14 +26,14 @@ Have we missed the point of `export`ing in the first place?
 
 Broadly speaking, there are 2 ways to export things in modern JavaScript:
 
-- An `export default` boldly declares “This is **_THE SINGLE MOST IMPORTANT_** thing.” Also, “any named exports only play a supporting role.”
-- A `named export` says it’s “definitely **_A THING!_**” Also raises some questions, “got any other buddies there?“ Follow up, “Are they invited or required?”
+- An `export default` boldly declares "This is **_THE SINGLE MOST IMPORTANT_** thing." Also, "any named exports only play a supporting role."
+- A `named export` says it’s "definitely **_A THING!_**" Also raises some questions, "got any other buddies there?" Follow up, "Are they invited or required?"
 
 Of course you can combine both, or use different approaches for different parts of your codebase. [See more examples at the end of the article.](#summary)
 
 ## Weak Args, Man
 
-Let’s address some of the common “temporary issues” folks run into.
+Let’s address some of the common "temporary issues" folks run into.
 
 - Arg #1: Named exports ensure name consistency. [source](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
   - No, they don’t. You’re maybe looking for a lint rule?
@@ -53,7 +53,7 @@ import Handle from "./knife.js"; // 🔪
 
   - Incorrect (any more). Configure/update your tools.
   - Support has existed for 3+ years in [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.
-  - Still, there are some “best practices” to use with `default exports` to get the best IDE & refactor experience.
+  - Still, there are some "best practices" to use with `default exports` to get the best IDE & refactor experience.
   - ✅ `export default function UserService() {}` - always prefer named functions.
   - ❌ `export default function() { }` - anonymous functions are not implicitly tied to their filename. If you don’t name the thing, it’s hard to ask the computer to change it.
   - **Note:** For historical reasons you cannot combine `export default` with a `const` expression.
@@ -80,11 +80,11 @@ There are actually many combinations of ways we could export things, each tells 
 
 | Default (Exports) | Named (Exports) | Private Fns | Pattern                                                   | Meaning                                                       |
 | ----------------- | --------------- | ----------- | --------------------------------------------------------- | ------------------------------------------------------------- |
-| ✅                | ❌              | ❌          | One default export.                                       | “Presenting ONE function w/ Single Purpose!”                  |
-| ❌                | ✅              | ❌          | One named export.                                         | “Please don’t rename me.”                                     |
-| ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | “Here’s some related logic. Also, expect class-ish behavior.“ |
-| ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | “A grab-bag of loosely related things, no hierarchy implied.” |
-| ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | “You can’t mess up importing me.”                             |
+| ✅                | ❌              | ❌          | One default export.                                       | "Presenting ONE function w/ Single Purpose!"                  |
+| ❌                | ✅              | ❌          | One named export.                                         | "Please don’t rename me."                                     |
+| ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | "Here’s some related logic. Also, expect class-ish behavior." |
+| ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | "A grab-bag of loosely related things, no hierarchy implied." |
+| ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | "You can’t mess up importing me."                             |
 
 **Something to think about:** What are we saying when the file name does or doesn’t match one of its exports? (For example, a `utils.js` with many functions.)
 

@@ -30,7 +30,7 @@ You know where this is going: an exhausted browser! Forever doomed to work at a 
 
 ## Stop OVER-Angular.JSification
 
-> “If your only tool is a hammer, then every problem looks like a nail.”
+> "If your only tool is a hammer, then every problem looks like a nail."
 >
 > - old adage
 

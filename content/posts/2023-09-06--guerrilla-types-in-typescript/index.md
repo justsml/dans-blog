@@ -5,7 +5,7 @@ date: 2023-09-05
 modified: 2023-09-06
 tags: [engineering,typescript,composition,types]
 category: TypeScript
-cover: DALL·E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
+cover: DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
 ---
 
 # Guerrilla Types in TypeScript
