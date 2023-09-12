@@ -1,0 +1,37 @@
+%%{init: {
+  'logLevel': 'debug',
+  'theme': 'base',
+  'gitGraph': {'mainBranchName': 'staging'},
+  'themeVariables': {
+    'gitBranchLabel0': '#ffffff',
+    'gitBranchLabel1': '#ffffff',
+    'gitBranchLabel2': '#ffffff',
+    'gitBranchLabel3': '#ffffff',
+    'gitBranchLabel4': '#ffffff',
+    'gitBranchLabel5': '#ffffff',
+    'tagLabelColor': '#333333',
+    'tagLabelBackground': '#efefef',
+    'tagLabelBorder': '#ffffff'
+} } }%%
+
+gitGraph TB:
+  commit tag:"v1.0.0" id: "abcdef"
+  commit tag:"v1.0.1" id: "bbcccd"
+
+  branch feat/login-redirect
+  commit id: "feat(service)"
+  commit id: "docs(auth)"
+  checkout staging
+
+  branch fix/auth-router
+  commit id: "fix(component): 1"
+  commit id: "fix(component): 2"
+  checkout staging
+
+  branch release/123 order: 4
+
+  merge fix/auth-router id: "fix/auth-router"
+  merge feat/login-redirect id: "feat/login-redirect"
+
+  checkout staging
+  merge release/123 tag: "v1.0.2"

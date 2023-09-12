@@ -2,7 +2,7 @@
 title: "Deathmatch: Git Rebase vs. Merge"
 subTitle: A timeless question
 date: 2023-08-27
-modified: 2023-08-30
+modified: 2023-09-11
 tags: [engineering,git,rebase,merge]
 category: Git
 cover: casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
@@ -44,6 +44,8 @@ Given that there are very different mindsets around commit strategy, it's no won
 ## Scenario: Create a revised release tag
 
 Let us compare the process of creating a tag release excluding some recent commits on `main`.
+
+![Git Tag Releasing from main with 2 feature branches](/cover-images/git-branching-with-main-simplified.svg)
 
 ## The Rebase Way
 

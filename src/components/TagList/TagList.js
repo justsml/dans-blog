@@ -71,16 +71,22 @@ const TagList = ({ tags, allTags, classes }) => {
   return (
     <div className="tags-list">
       <div className={classes.tagList}>
-        {tags.filter(tag => tagDict[tag] > MIN_TAG_COUNT_THRESHOLD).map(tag => {
+        {tags.map(tag => {
           return (
             <div key={tag}>
-              <Link
-                data-count={1}
-                to={`/tags/${tag}`}
-                title={`see ${tagDict[tag]} posts related to ${tag}`}
-              >
-                {tag}
-              </Link>{" "}
+              {typeof tagDict === "object" &&
+              typeof tagDict[tag] === "number" &&
+              tagDict[tag] > MIN_TAG_COUNT_THRESHOLD ? (
+                <Link
+                  data-count={1}
+                  to={`/tags/${tag}`}
+                  title={`see ${tagDict[tag]} posts related to ${tag}`}
+                >
+                  {tag}
+                </Link>
+              ) : (
+                { tag }
+              )}{" "}
               <span className="badge">({tagDict[tag]})</span>
               {"  "}
             </div>
