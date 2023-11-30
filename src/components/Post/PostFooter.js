@@ -4,7 +4,6 @@ import injectSheet from "react-jss";
 
 import asyncComponent from "../common/AsyncComponent/";
 import PostAuthor from "./PostAuthor";
-// import PostComments from "./PostComments";
 
 const styles = theme => ({
   footer: {

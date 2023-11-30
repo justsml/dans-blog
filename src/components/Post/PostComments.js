@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
@@ -16,7 +16,6 @@ const DiscussionEmbed = asyncComponent(() =>
     })
     .catch(error => {})
 );
-
 
 const styles = theme => ({
   postComments: {

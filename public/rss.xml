@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Tue, 12 Sep 2023 16:35:46 GMT</lastBuildDate><item><title><![CDATA[Guerrilla Types in TypeScript]]></title><description><![CDATA[Guerrilla Types in TypeScript In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design! The…]]></description><link>https://danlevy.net/guerrilla-types-in-typescript/</link><guid isPermaLink="false">https://danlevy.net/guerrilla-types-in-typescript/</guid><content:encoded>&lt;h1 id=&quot;guerrilla-types-in-typescript&quot;&gt;&lt;a href=&quot;#guerrilla-types-in-typescript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guerrilla Types in TypeScript&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Sun, 17 Sep 2023 18:16:25 GMT</lastBuildDate><item><title><![CDATA[Guerrilla Types in TypeScript]]></title><description><![CDATA[Guerrilla Types in TypeScript In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design! The…]]></description><link>https://danlevy.net/guerrilla-types-in-typescript/</link><guid isPermaLink="false">https://danlevy.net/guerrilla-types-in-typescript/</guid><content:encoded>&lt;h1 id=&quot;guerrilla-types-in-typescript&quot;&gt;&lt;a href=&quot;#guerrilla-types-in-typescript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guerrilla Types in TypeScript&lt;/h1&gt;
 &lt;p&gt;In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!&lt;/p&gt;
 &lt;p&gt;The main goal is &lt;strong&gt;consistent&lt;/strong&gt; and &lt;strong&gt;predictable&lt;/strong&gt; Model/Entity/Class interfaces.&lt;/p&gt;
 &lt;ul&gt;
@@ -638,37 +638,7 @@ Now combine that with another issue that’s easily missed by developers &amp;#x
 &lt;h3 id=&quot;related-reading&quot;&gt;&lt;a href=&quot;#related-reading&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Related Reading&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://kyleshevlin.com/quit-your-yapping&quot;&gt;Similar struggles exist in the Component-driven React world.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Creating Collaborative Culture]]></title><description><![CDATA[What is  Collaborative Culture ? Most organizations fall somewhere between  Happy Honey Bees  and  Swarm of murder hornets . Collaborative…]]></description><link>https://danlevy.net/creating-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/creating-collaborative-culture/</guid><content:encoded>&lt;h2 id=&quot;what-is-collaborative-culture&quot;&gt;&lt;a href=&quot;#what-is-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What is &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
-&lt;p&gt;Most organizations fall somewhere between &lt;strong&gt;Happy Honey Bees&lt;/strong&gt; and &lt;strong&gt;Swarm of murder hornets&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;em&gt;Collaborative Culture&lt;/em&gt; features 2 key principles for &lt;strong&gt;Happy Honey Bees&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Ideas are celebrated! (Especially the ridiculous ones.)&lt;/li&gt;
-&lt;li&gt;Ideas are welcome! (Irrespective of any title or role.)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;!-- &gt; Ultimately the best organizations welcome all ideas, from any rank and without prejudice. --&gt;
-&lt;h2 id=&quot;why-collaborative-culture&quot;&gt;&lt;a href=&quot;#why-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Why &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
-&lt;p&gt;My favorite case for &lt;em&gt;Collaborative Culture&lt;/em&gt; is the unlikely story about a janitor, his billion-dollar idea, and the CEO who listened.&lt;/p&gt;
-&lt;p&gt;When PepsiCo’s CEO, Roger Enrico, implored his employees to “act like an owner,” few employees took him seriously. Not Richard Montañez. He knew there was an untapped market for spicy snacks. So, he called the CEO’s number (from the company directory) and asked for a meeting. Due to some fortuitous confusion, they set up the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming pitch meeting, and after some choice words, the Plant Manager told Montañez it was his chance to sink or swim - and never pull a stunt like that again.&lt;/p&gt;
-&lt;p&gt;After that meeting (and plenty of hard work), Montañez was ascendant, eventually becoming a VP of Sales, generating billions for PepsiCo.&lt;/p&gt;
-&lt;p&gt;Great ideas &amp;#x26; inspiration can come from anyone, anywhere, and anytime!&lt;/p&gt;
-&lt;p&gt;To succeed long-term, work culture must embrace this!&lt;/p&gt;
-&lt;h2 id=&quot;next-steps&quot;&gt;&lt;a href=&quot;#next-steps&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
-&lt;p&gt;First, take stock of where things are. Spend a few moments to consider some questions:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What % of the organization shares ideas?&lt;/li&gt;
-&lt;li&gt;How quickly do new hires propose ideas?&lt;/li&gt;
-&lt;li&gt;How often?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;More personally:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;What’s the last idea that a colleague brought to you?&lt;/li&gt;
-&lt;li&gt;How did you respond? Did you empower them? Did you take the time to listen? And give them credit?&lt;/li&gt;
-&lt;li&gt;Do colleagues feel comfortable bringing you their next idea?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Stay tuned!
-My next article is about the processes and habits that fuel &lt;em&gt;Collaborative Culture&lt;/em&gt; in your organization!&lt;/p&gt;
-&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[The 4 Pillars of Collaborative Culture]]></title><description><![CDATA[The 4 Pillars of Collaborative Culture Does  everyone on your team share ideas  regularly?
 Volunteer  feedback or ask questions? 
 Can they…]]></description><link>https://danlevy.net/the-4-pillars-of-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/the-4-pillars-of-collaborative-culture/</guid><content:encoded>&lt;h1 id=&quot;the-4-pillars-of-collaborative-culture&quot;&gt;&lt;a href=&quot;#the-4-pillars-of-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;The 4 Pillars of Collaborative Culture&lt;/h1&gt;
 &lt;p&gt;Does &lt;strong&gt;everyone on your team share ideas&lt;/strong&gt; regularly?
@@ -767,7 +737,37 @@ The next 2 pillars will ensure your process demonstrates value over the near- an
 &lt;li&gt;What’s the average time before an employee’s first suggestion? Days? Months? Years?!?!?&lt;/li&gt;
 &lt;li&gt;Does everyone on your team regularly share ideas?&lt;/li&gt;
 &lt;li&gt;Do people feel safe? Can they be vulnerable? Even question the mission?&lt;/li&gt;
-&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[JS Quiz: 14 Date Time Questions in JavaScript]]></title><description><![CDATA[How well do you know the   class? Prove your JavaScript skillz!  🚀 No login or signup required. ✨ Multiple choice. 🤖 …  How difficult can…]]></description><link>https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</link><guid isPermaLink="false">https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</guid><content:encoded>&lt;h1 id=&quot;how-well-do-you-know-the-date-class&quot;&gt;&lt;a href=&quot;#how-well-do-you-know-the-date-class&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How well do you know the &lt;code class=&quot;language-text&quot;&gt;Date&lt;/code&gt; class?&lt;/h1&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Creating Collaborative Culture]]></title><description><![CDATA[What is  Collaborative Culture ? Most organizations fall somewhere between  Happy Honey Bees  and  Swarm of murder hornets . Collaborative…]]></description><link>https://danlevy.net/creating-collaborative-culture/</link><guid isPermaLink="false">https://danlevy.net/creating-collaborative-culture/</guid><content:encoded>&lt;h2 id=&quot;what-is-collaborative-culture&quot;&gt;&lt;a href=&quot;#what-is-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;What is &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
+&lt;p&gt;Most organizations fall somewhere between &lt;strong&gt;Happy Honey Bees&lt;/strong&gt; and &lt;strong&gt;Swarm of murder hornets&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Collaborative Culture&lt;/em&gt; features 2 key principles for &lt;strong&gt;Happy Honey Bees&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Ideas are celebrated! (Especially the ridiculous ones.)&lt;/li&gt;
+&lt;li&gt;Ideas are welcome! (Irrespective of any title or role.)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;!-- &gt; Ultimately the best organizations welcome all ideas, from any rank and without prejudice. --&gt;
+&lt;h2 id=&quot;why-collaborative-culture&quot;&gt;&lt;a href=&quot;#why-collaborative-culture&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Why &lt;em&gt;Collaborative Culture&lt;/em&gt;?&lt;/h2&gt;
+&lt;p&gt;My favorite case for &lt;em&gt;Collaborative Culture&lt;/em&gt; is the unlikely story about a janitor, his billion-dollar idea, and the CEO who listened.&lt;/p&gt;
+&lt;p&gt;When PepsiCo’s CEO, Roger Enrico, implored his employees to “act like an owner,” few employees took him seriously. Not Richard Montañez. He knew there was an untapped market for spicy snacks. So, he called the CEO’s number (from the company directory) and asked for a meeting. Due to some fortuitous confusion, they set up the meeting thinking it was with the regional Plant Manager. The Plant Manager was understandably a bit surprised to hear about the upcoming pitch meeting, and after some choice words, the Plant Manager told Montañez it was his chance to sink or swim - and never pull a stunt like that again.&lt;/p&gt;
+&lt;p&gt;After that meeting (and plenty of hard work), Montañez was ascendant, eventually becoming a VP of Sales, generating billions for PepsiCo.&lt;/p&gt;
+&lt;p&gt;Great ideas &amp;#x26; inspiration can come from anyone, anywhere, and anytime!&lt;/p&gt;
+&lt;p&gt;To succeed long-term, work culture must embrace this!&lt;/p&gt;
+&lt;h2 id=&quot;next-steps&quot;&gt;&lt;a href=&quot;#next-steps&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Next Steps&lt;/h2&gt;
+&lt;p&gt;First, take stock of where things are. Spend a few moments to consider some questions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What % of the organization shares ideas?&lt;/li&gt;
+&lt;li&gt;How quickly do new hires propose ideas?&lt;/li&gt;
+&lt;li&gt;How often?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;More personally:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What’s the last idea that a colleague brought to you?&lt;/li&gt;
+&lt;li&gt;How did you respond? Did you empower them? Did you take the time to listen? And give them credit?&lt;/li&gt;
+&lt;li&gt;Do colleagues feel comfortable bringing you their next idea?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Stay tuned!
+My next article is about the processes and habits that fuel &lt;em&gt;Collaborative Culture&lt;/em&gt; in your organization!&lt;/p&gt;
+&lt;/blockquote&gt;</content:encoded></item><item><title><![CDATA[JS Quiz: 14 Date Time Questions in JavaScript]]></title><description><![CDATA[How well do you know the   class? Prove your JavaScript skillz!  🚀 No login or signup required. ✨ Multiple choice. 🤖 …  How difficult can…]]></description><link>https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</link><guid isPermaLink="false">https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/</guid><content:encoded>&lt;h1 id=&quot;how-well-do-you-know-the-date-class&quot;&gt;&lt;a href=&quot;#how-well-do-you-know-the-date-class&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;How well do you know the &lt;code class=&quot;language-text&quot;&gt;Date&lt;/code&gt; class?&lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Prove your JavaScript skillz!&lt;/strong&gt; 🚀&lt;/li&gt;
@@ -5940,112 +5940,7 @@ Boot2Docker has been replaced by Docker for Mac&lt;/p&gt;
 &lt;li&gt;DNS: Use a local cache or low-latency DNS server.&lt;/li&gt;
 &lt;li&gt;Storage: Use the correct storage driver (&lt;code class=&quot;language-text&quot;&gt;overlay2&lt;/code&gt; is likely)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;Check out the &lt;a href=&quot;https://docs.docker.com/docker-for-mac/install/&quot;&gt;Docker for Mac homepage&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Docker Firewall Setup]]></title><description><![CDATA[Setup Docker Host’s Firewall Debian/Ubuntu Server is assumed Designed to run on Docker Host Server Install Requirements Get your Internal…]]></description><link>https://danlevy.net/docker-firewall-setup/</link><guid isPermaLink="false">https://danlevy.net/docker-firewall-setup/</guid><content:encoded>&lt;h1 id=&quot;setup-docker-hosts-firewall&quot;&gt;&lt;a href=&quot;#setup-docker-hosts-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Setup Docker Host’s Firewall&lt;/h1&gt;
-&lt;p&gt;
-  &lt;span
-    class=&quot;gatsby-resp-image-wrapper&quot;
-    style=&quot;position: relative; display: block; ; max-width: 645px; margin-left: auto; margin-right: auto;&quot;
-  &gt;
-    &lt;span
-      class=&quot;gatsby-resp-image-background-image&quot;
-      style=&quot;padding-bottom: 66.640625%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQID/9oADAMBAAIQAxAAAAHCaq4pGEaf/8QAGhAAAgIDAAAAAAAAAAAAAAAAAQIAIQMRIv/aAAgBAQABBQIzGNsy9QVA1f/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAwEBPwFkf//EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAgEBPwFtf//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CX//EABkQAQEBAQEBAAAAAAAAAAAAAAEAESExUf/aAAgBAQABPyEdgw+2azyfYPYyI2//2gAMAwEAAgADAAAAEJ8f/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAgBAwEBPxAcdlO3/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAgBAgEBPxBqohh//8QAGBABAQEBAQAAAAAAAAAAAAAAAREAIVH/2gAIAQEAAT8QADGPe5EuAY+Z4ETQxs+az2B5kQC7/9k=&apos;); background-size: cover; display: block;&quot;
-    &gt;
-      &lt;img
-        class=&quot;gatsby-resp-image-image&quot;
-        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px transparent;&quot;
-        alt=&quot;credit: charles-deluvio-456501-unsplash.jpg&quot;
-        title=&quot;&quot;
-        src=&quot;/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-ef7b7.jpg&quot;
-        srcset=&quot;/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-c3db7.jpg 161w,
-/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-e67ed.jpg 323w,
-/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-ef7b7.jpg 645w,
-/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-04582.jpg 968w,
-/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-a5fcc.jpg 1280w&quot;
-        sizes=&quot;(max-width: 645px) 100vw, 645px&quot;
-      /&gt;
-    &lt;/span&gt;
-  &lt;/span&gt;
-  &lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Debian/Ubuntu Server is assumed&lt;/li&gt;
-&lt;li&gt;Designed to run on Docker Host Server&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;install-requirements&quot;&gt;&lt;a href=&quot;#install-requirements&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install Requirements&lt;/h2&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
-      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Ultimate Firewall Needed
-apt-get update &amp;amp;&amp;amp; apt-get install -y ufw nmap curl&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;h2 id=&quot;get-your-internal--external-ip-addresses&quot;&gt;&lt;a href=&quot;#get-your-internal--external-ip-addresses&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Get your Internal &amp;#x26; External IP Addresses&lt;/h2&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
-      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Get your IP Addresses, simple output:
-hostname --all-ip-addresses
-
-# OR use ip tool, example:
-ip addr&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;h2 id=&quot;firtewall-ufw-setup---example-cmds&quot;&gt;&lt;a href=&quot;#firtewall-ufw-setup---example-cmds&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Firtewall (UFW) Setup - Example Cmds&lt;/h2&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
-      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;ufw logging on # on=low - medium might be better for diagnostics
-ufw logging medium
-# First, block all the things
-ufw default deny incoming
-
-# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:
-ufw default deny outgoing
-ufw default allow outgoing
-
-
-# Allow and log all new ssh connections,
-ufw allow log proto tcp from any to any port 22
-## Allow http traffic (w/o explicit logging)
-ufw allow out on docker0 53/udp to 172.17.0.1/16
-ufw allow out on eth0 to any port 53
-ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
-ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
-
-# Verbose: ufw allow proto tcp from any to any port 80
-ufw allow 80/tcp
-ufw allow 443/tcp
-ufw allow log 22/tcp
-ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
-
-# Set your ext IP
-export EXTERNAL_IP=123.123.123.123
-# Update docker IP if needed
-export DOCKER_IP=172.17.42.1
-# Forward tcp 8080 traffic to  Dockerized App
-ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;h2 id=&quot;enable--start-firewall&quot;&gt;&lt;a href=&quot;#enable--start-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Enable / Start Firewall&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Be Careful, Don’t Lock out your SSH port (sshd defaults to 22)&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
-      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;ufw --force enable
-
-ufw reset&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;hr&gt;
-&lt;h2 id=&quot;test-your-firewall&quot;&gt;&lt;a href=&quot;#test-your-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Test Your Firewall&lt;/h2&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Important: USE A REMOTE IP ADDR/LOCATION&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
-      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Verify dependency
-apt-get update &amp;amp;&amp;amp; apt-get install -y nmap
-
-# Set scan target
-export TARGET_HOST=123.123.123.123
-
-# Example Scan Commands:
-# Fast open port check
-nmap -p 1-10240,27017 -T5 $TARGET_HOST
-# Thorough scan
-nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
-# Svc Inspection
-nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST&lt;/code&gt;&lt;/pre&gt;
-      &lt;/div&gt;
-&lt;h4 id=&quot;done-now-you-should-see-only-the-ports-you-configured&quot;&gt;&lt;a href=&quot;#done-now-you-should-see-only-the-ports-you-configured&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;DONE! Now you should see ONLY the ports you configured!&lt;/h4&gt;</content:encoded></item><item><title><![CDATA[JavaScript Magic]]></title><description><![CDATA[Imperative vs. Recursive vs. Functional  Work-in-progress  Promises: Awesome! While, native ES6 Promises are great, I prefer the robust…]]></description><link>https://danlevy.net/javascript-scope-magic/</link><guid isPermaLink="false">https://danlevy.net/javascript-scope-magic/</guid><content:encoded>&lt;h1 id=&quot;imperative-vs-recursive-vs-functional&quot;&gt;&lt;a href=&quot;#imperative-vs-recursive-vs-functional&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Imperative vs. Recursive vs. Functional&lt;/h1&gt;
+&lt;p&gt;Check out the &lt;a href=&quot;https://docs.docker.com/docker-for-mac/install/&quot;&gt;Docker for Mac homepage&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[JavaScript Magic]]></title><description><![CDATA[Imperative vs. Recursive vs. Functional  Work-in-progress  Promises: Awesome! While, native ES6 Promises are great, I prefer the robust…]]></description><link>https://danlevy.net/javascript-scope-magic/</link><guid isPermaLink="false">https://danlevy.net/javascript-scope-magic/</guid><content:encoded>&lt;h1 id=&quot;imperative-vs-recursive-vs-functional&quot;&gt;&lt;a href=&quot;#imperative-vs-recursive-vs-functional&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Imperative vs. Recursive vs. Functional&lt;/h1&gt;
 &lt;p&gt;
   &lt;span
     class=&quot;gatsby-resp-image-wrapper&quot;
@@ -6154,7 +6049,112 @@ fs&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&
 # Inversion of Control Techniques
 
 Work-in-progress
---&gt;</content:encoded></item><item><title><![CDATA[Docker Server Setup]]></title><description><![CDATA[Docker Server Setup Who’s this guide for? Have you ever wanted to test an app with a ‘throw-away’ database? Inherited a suspicious codebase…]]></description><link>https://danlevy.net/docker-server-setup-notes/</link><guid isPermaLink="false">https://danlevy.net/docker-server-setup-notes/</guid><content:encoded>&lt;h1 id=&quot;docker-server-setup&quot;&gt;&lt;a href=&quot;#docker-server-setup&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Docker Server Setup&lt;/h1&gt;
+--&gt;</content:encoded></item><item><title><![CDATA[Docker Firewall Setup]]></title><description><![CDATA[Setup Docker Host’s Firewall Debian/Ubuntu Server is assumed Designed to run on Docker Host Server Install Requirements Get your Internal…]]></description><link>https://danlevy.net/docker-firewall-setup/</link><guid isPermaLink="false">https://danlevy.net/docker-firewall-setup/</guid><content:encoded>&lt;h1 id=&quot;setup-docker-hosts-firewall&quot;&gt;&lt;a href=&quot;#setup-docker-hosts-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Setup Docker Host’s Firewall&lt;/h1&gt;
+&lt;p&gt;
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block; ; max-width: 645px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 66.640625%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAANABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAXAQADAQAAAAAAAAAAAAAAAAAAAQID/9oADAMBAAIQAxAAAAHCaq4pGEaf/8QAGhAAAgIDAAAAAAAAAAAAAAAAAQIAIQMRIv/aAAgBAQABBQIzGNsy9QVA1f/EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAwEBPwFkf//EABYRAQEBAAAAAAAAAAAAAAAAAAABEf/aAAgBAgEBPwFtf//EABQQAQAAAAAAAAAAAAAAAAAAACD/2gAIAQEABj8CX//EABkQAQEBAQEBAAAAAAAAAAAAAAEAESExUf/aAAgBAQABPyEdgw+2azyfYPYyI2//2gAMAwEAAgADAAAAEJ8f/8QAFxEBAQEBAAAAAAAAAAAAAAAAAQARIf/aAAgBAwEBPxAcdlO3/8QAFxEAAwEAAAAAAAAAAAAAAAAAAAERIf/aAAgBAgEBPxBqohh//8QAGBABAQEBAQAAAAAAAAAAAAAAAREAIVH/2gAIAQEAAT8QADGPe5EuAY+Z4ETQxs+az2B5kQC7/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px transparent;&quot;
+        alt=&quot;credit: charles-deluvio-456501-unsplash.jpg&quot;
+        title=&quot;&quot;
+        src=&quot;/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-ef7b7.jpg&quot;
+        srcset=&quot;/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-c3db7.jpg 161w,
+/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-e67ed.jpg 323w,
+/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-ef7b7.jpg 645w,
+/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-04582.jpg 968w,
+/static/charles-deluvio-456501-unsplash-a8c647afa0163fc37f1b389d2fcba5ec-a5fcc.jpg 1280w&quot;
+        sizes=&quot;(max-width: 645px) 100vw, 645px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  &lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Debian/Ubuntu Server is assumed&lt;/li&gt;
+&lt;li&gt;Designed to run on Docker Host Server&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;install-requirements&quot;&gt;&lt;a href=&quot;#install-requirements&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Install Requirements&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
+      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Ultimate Firewall Needed
+apt-get update &amp;amp;&amp;amp; apt-get install -y ufw nmap curl&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2 id=&quot;get-your-internal--external-ip-addresses&quot;&gt;&lt;a href=&quot;#get-your-internal--external-ip-addresses&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Get your Internal &amp;#x26; External IP Addresses&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
+      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Get your IP Addresses, simple output:
+hostname --all-ip-addresses
+
+# OR use ip tool, example:
+ip addr&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2 id=&quot;firtewall-ufw-setup---example-cmds&quot;&gt;&lt;a href=&quot;#firtewall-ufw-setup---example-cmds&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Firtewall (UFW) Setup - Example Cmds&lt;/h2&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
+      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;ufw logging on # on=low - medium might be better for diagnostics
+ufw logging medium
+# First, block all the things
+ufw default deny incoming
+
+# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:
+ufw default deny outgoing
+ufw default allow outgoing
+
+
+# Allow and log all new ssh connections,
+ufw allow log proto tcp from any to any port 22
+## Allow http traffic (w/o explicit logging)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Verbose: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
+
+# Set your ext IP
+export EXTERNAL_IP=123.123.123.123
+# Update docker IP if needed
+export DOCKER_IP=172.17.42.1
+# Forward tcp 8080 traffic to  Dockerized App
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h2 id=&quot;enable--start-firewall&quot;&gt;&lt;a href=&quot;#enable--start-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Enable / Start Firewall&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Be Careful, Don’t Lock out your SSH port (sshd defaults to 22)&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
+      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;ufw --force enable
+
+ufw reset&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;test-your-firewall&quot;&gt;&lt;a href=&quot;#test-your-firewall&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Test Your Firewall&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Important: USE A REMOTE IP ADDR/LOCATION&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;
+      &lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;# Verify dependency
+apt-get update &amp;amp;&amp;amp; apt-get install -y nmap
+
+# Set scan target
+export TARGET_HOST=123.123.123.123
+
+# Example Scan Commands:
+# Fast open port check
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Thorough scan
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Svc Inspection
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST&lt;/code&gt;&lt;/pre&gt;
+      &lt;/div&gt;
+&lt;h4 id=&quot;done-now-you-should-see-only-the-ports-you-configured&quot;&gt;&lt;a href=&quot;#done-now-you-should-see-only-the-ports-you-configured&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;DONE! Now you should see ONLY the ports you configured!&lt;/h4&gt;</content:encoded></item><item><title><![CDATA[Docker Server Setup]]></title><description><![CDATA[Docker Server Setup Who’s this guide for? Have you ever wanted to test an app with a ‘throw-away’ database? Inherited a suspicious codebase…]]></description><link>https://danlevy.net/docker-server-setup-notes/</link><guid isPermaLink="false">https://danlevy.net/docker-server-setup-notes/</guid><content:encoded>&lt;h1 id=&quot;docker-server-setup&quot;&gt;&lt;a href=&quot;#docker-server-setup&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Docker Server Setup&lt;/h1&gt;
 &lt;h2 id=&quot;whos-this-guide-for&quot;&gt;&lt;a href=&quot;#whos-this-guide-for&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Who’s this guide for?&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Have you ever wanted to test an app with a ‘throw-away’ database?&lt;/li&gt;
