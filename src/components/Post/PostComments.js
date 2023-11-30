@@ -20,12 +20,12 @@ import injectSheet from "react-jss";
 const styles = theme => ({
   postComments: {
     margin: "3em 0 0",
-    padding: "3em 0 0",
-    borderTop: "1px solid #ddd"
+    padding: "3em 0 0"
+    // borderTop: "1px solid #ddd"
   }
 });
 
-const COMMENTS_DELAY = 3000;
+// const COMMENTS_DELAY = 3000;
 
 // eslint-disable-next-line react/prop-types
 const GitHubIssueComments = ({ path }) => {
@@ -40,7 +40,9 @@ const GitHubIssueComments = ({ path }) => {
       script.setAttribute("label", "💬 comment");
       script.setAttribute("theme", "preferred-color-scheme"); // "photon-dark");
       script.setAttribute("crossorigin", "anonymous");
-      // const comments = document.querySelectorAll("#post-comments");
+      const commentLoadingMsg = document.querySelector("#post-comments .loading-msg");
+      if (commentLoadingMsg && commentLoadingMsg.parentNode)
+        commentLoadingMsg.parentNode.removeChild(commentLoadingMsg);
       const comment = ref.current;
       if (comment) comment.appendChild(script);
       return () => {
@@ -66,7 +68,8 @@ const GitHubIssueComments = ({ path }) => {
   return (
     <div
       ref={ref}
-      id="post-comments utterances-frame relative"
+      id="post-comments"
+      className="utterances-frame relative"
       style={{
         maxHeight: "70vh",
         overflowY: "auto",
@@ -76,7 +79,7 @@ const GitHubIssueComments = ({ path }) => {
         borderRadius: "0.75rem"
       }}
     >
-      Loading comments...
+      <span className="loading-msg">Loading comments...</span>
     </div>
   );
 };

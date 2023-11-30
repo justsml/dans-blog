@@ -45,7 +45,7 @@ Given that there are very different mindsets around commit strategy, it's no won
 
 Let us compare the process of creating a tag release excluding some recent commits on `main`.
 
-![Git Tag Releasing from main with 2 feature branches](/cover-images/git-branching-with-main-simplified.svg)
+![Git Tag Releasing from main with 2 feature branches](./git-branching-with-main-simplified.svg)
 
 ## The Rebase Way
 

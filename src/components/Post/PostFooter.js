@@ -35,24 +35,11 @@ const styles = theme => ({
 // );
 
 const PostFooter = ({ classes, author, post, slug }) => {
-  const [showComments, setShowComments] = useState(true);
-
-  useEffect(() => {
-    const handler = event => cleanup() && setShowComments(true);
-    const cleanup = () => {
-      window.removeEventListener("click", handler);
-      window.removeEventListener("mousemove", handler);
-    };
-    window.addEventListener("click", handler);
-    window.addEventListener("mousemove", handler);
-    return cleanup;
-  }, []);
-
   return (
     <footer className={classes.footer}>
-      {showComments && <PostShare post={post} slug={slug} />}
-      {showComments && <PostComments post={post} slug={slug} author={author} />}
+      <PostShare post={post} slug={slug} />
       <PostAuthor author={author} />
+      <PostComments post={post} slug={slug} author={author} />
     </footer>
   );
 };

@@ -64,37 +64,43 @@ function buildTagStats(allTags) {
 }
 
 const TagList = ({ tags, allTags, classes }) => {
-  if (!tags || tags.length <= 0) return <span style={{ display: "none" }}>No tags</span>;
-  const tagDict = buildTagStats(allTags);
-  tags.sort((a, b) => (tagDict[a] === tagDict[b] ? 0 : tagDict[a] < tagDict[b] ? 1 : -1));
+  try {
+    if (!tags || tags.length <= 0) return <span style={{ display: "none" }}>No tags</span>;
+    const tagDict = buildTagStats(allTags);
+    tags.sort((a, b) => (tagDict[a] === tagDict[b] ? 0 : tagDict[a] < tagDict[b] ? 1 : -1));
 
-  return (
-    <div className="tags-list">
-      <div className={classes.tagList}>
-        {tags.map(tag => {
-          return (
-            <div key={tag}>
-              {typeof tagDict === "object" &&
-              typeof tagDict[tag] === "number" &&
-              tagDict[tag] > MIN_TAG_COUNT_THRESHOLD ? (
-                <Link
-                  data-count={1}
-                  to={`/tags/${tag}`}
-                  title={`see ${tagDict[tag]} posts related to ${tag}`}
-                >
-                  {tag}
-                </Link>
-              ) : (
-                { tag }
-              )}{" "}
-              <span className="badge">({tagDict[tag]})</span>
-              {"  "}
-            </div>
-          );
-        })}
+    return (
+      <div className="tags-list">
+        <div className={classes.tagList}>
+          {tags.map(tag => {
+            return (
+              <div key={tag}>
+                {tagDict &&
+                typeof tagDict === "object" &&
+                typeof tagDict[tag] === "number" &&
+                tagDict[tag] > MIN_TAG_COUNT_THRESHOLD ? (
+                  <Link
+                    data-count={1}
+                    to={`/tags/${tag}`}
+                    title={`see ${tagDict[tag]} posts related to ${tag}`}
+                  >
+                    {tag}
+                  </Link>
+                ) : (
+                  <span>{`${tag}`}</span>
+                )}{" "}
+                <span className="badge">({tagDict[tag]})</span>
+                {"  "}
+              </div>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } catch (e) {
+    console.log(e);
+    return <div>error</div>;
+  }
 };
 
 TagList.propTypes = {
