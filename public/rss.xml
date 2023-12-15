@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Fri, 08 Sep 2023 04:44:18 GMT</lastBuildDate><item><title><![CDATA[Guerrilla Types in TypeScript]]></title><description><![CDATA[Guerrilla Types in TypeScript In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design! The…]]></description><link>https://danlevy.net/guerrilla-types-in-typescript/</link><guid isPermaLink="false">https://danlevy.net/guerrilla-types-in-typescript/</guid><content:encoded>&lt;h1 id=&quot;guerrilla-types-in-typescript&quot;&gt;&lt;a href=&quot;#guerrilla-types-in-typescript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guerrilla Types in TypeScript&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Dan Levy's Articles, Guides and Cats]]></title><description><![CDATA[Come for the JavaScript, stay for the cat memes.]]></description><link>https://danlevy.net</link><generator>RSS for Node</generator><lastBuildDate>Fri, 15 Dec 2023 07:49:03 GMT</lastBuildDate><item><title><![CDATA[Guerrilla Types in TypeScript]]></title><description><![CDATA[Guerrilla Types in TypeScript In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design! The…]]></description><link>https://danlevy.net/guerrilla-types-in-typescript/</link><guid isPermaLink="false">https://danlevy.net/guerrilla-types-in-typescript/</guid><content:encoded>&lt;h1 id=&quot;guerrilla-types-in-typescript&quot;&gt;&lt;a href=&quot;#guerrilla-types-in-typescript&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Guerrilla Types in TypeScript&lt;/h1&gt;
 &lt;p&gt;In this article, we’ll explore three intriguing (possibly terrible?) techniques to assist in type design!&lt;/p&gt;
 &lt;p&gt;The main goal is &lt;strong&gt;consistent&lt;/strong&gt; and &lt;strong&gt;predictable&lt;/strong&gt; Model/Entity/Class interfaces.&lt;/p&gt;
 &lt;ul&gt;
@@ -280,6 +280,7 @@ Also, this technique supports re-use between many use cases: Models, Services, Q
 &lt;p&gt;Given that there are very different mindsets around commit strategy, it’s no wonder there’s so much confusion about the “right” way to use git.&lt;/p&gt;
 &lt;h2 id=&quot;scenario-create-a-revised-release-tag&quot;&gt;&lt;a href=&quot;#scenario-create-a-revised-release-tag&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;Scenario: Create a revised release tag&lt;/h2&gt;
 &lt;p&gt;Let us compare the process of creating a tag release excluding some recent commits on &lt;code class=&quot;language-text&quot;&gt;main&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/git-branching-with-main-simplified-28211b49f96d122626f9574380847c5c.svg&quot; alt=&quot;Git Tag Releasing from main with 2 feature branches&quot;&gt;&lt;/p&gt;
 &lt;h2 id=&quot;the-rebase-way&quot;&gt;&lt;a href=&quot;#the-rebase-way&quot; aria-hidden=&quot;true&quot; class=&quot;anchor&quot;&gt;&lt;svg aria-hidden=&quot;true&quot; height=&quot;16&quot; version=&quot;1.1&quot; viewBox=&quot;0 0 16 16&quot; width=&quot;16&quot;&gt;&lt;path fill-rule=&quot;evenodd&quot; d=&quot;M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z&quot;&gt;&lt;/path&gt;&lt;/svg&gt;&lt;/a&gt;The Rebase Way&lt;/h2&gt;
 &lt;p&gt;Mental model: “I want to create an alternate version of an existing history. (e.g. I made an oopsie 16 merges ago, and may need fine-grained control to correct it. Also, might get stuck in a seemingly endless cycle of conflict &amp;#x26; &lt;code class=&quot;language-text&quot;&gt;--continue&lt;/code&gt;.)”&lt;/p&gt;
 &lt;ol&gt;
@@ -1674,8 +1675,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/de941bd61cc86e30beedbb8a3a646f81/raw/f636e7f15ba9a18dd5976a1f4a8325516d2f630a/basic-example.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/de941bd61cc86e30beedbb8a3a646f81#file-basic-example-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/de941bd61cc86e30beedbb8a3a646f81/raw/f636e7f15ba9a18dd5976a1f4a8325516d2f630a/basic-example.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/de941bd61cc86e30beedbb8a3a646f81#file-basic-example-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           basic-example.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -1768,8 +1769,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/fca7cd72ec1ebc07d994eac13a665ddf/raw/ac3e5db5c997a755950799dc1838f700fbc3d516/custom-headers.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/fca7cd72ec1ebc07d994eac13a665ddf#file-custom-headers-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/fca7cd72ec1ebc07d994eac13a665ddf/raw/ac3e5db5c997a755950799dc1838f700fbc3d516/custom-headers.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/fca7cd72ec1ebc07d994eac13a665ddf#file-custom-headers-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           custom-headers.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -1855,8 +1856,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2/raw/f25a89332b87d16a1cb06a123046091f0a207e0e/fetch-custom-error.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2#file-fetch-custom-error-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2/raw/f25a89332b87d16a1cb06a123046091f0a207e0e/fetch-custom-error.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/81919a72897ebc503c6b34a556a9bde2#file-fetch-custom-error-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           fetch-custom-error.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -1943,8 +1944,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/3ddd9ed8705f48cdf45d313d1e57aa2a/raw/e1b9b3610b748ac12d465b008ba2c2c40a4fafb8/cors-example.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/3ddd9ed8705f48cdf45d313d1e57aa2a#file-cors-example-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/3ddd9ed8705f48cdf45d313d1e57aa2a/raw/e1b9b3610b748ac12d465b008ba2c2c40a4fafb8/cors-example.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/3ddd9ed8705f48cdf45d313d1e57aa2a#file-cors-example-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           cors-example.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2050,8 +2051,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/13915347d6c8413c73f4bd7240c68e51/raw/b8ed797b118af65eb858bffdd385ef49dac4105f/posting-json.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/13915347d6c8413c73f4bd7240c68e51#file-posting-json-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/13915347d6c8413c73f4bd7240c68e51/raw/b8ed797b118af65eb858bffdd385ef49dac4105f/posting-json.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/13915347d6c8413c73f4bd7240c68e51#file-posting-json-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           posting-json.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2158,8 +2159,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/ef2e356bec0ef7c6e528d84a5f75ba7e/raw/9f860fa93577c379eaf44d5a29cf97003afa1882/post-form-data.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/ef2e356bec0ef7c6e528d84a5f75ba7e#file-post-form-data-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/ef2e356bec0ef7c6e528d84a5f75ba7e/raw/9f860fa93577c379eaf44d5a29cf97003afa1882/post-form-data.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/ef2e356bec0ef7c6e528d84a5f75ba7e#file-post-form-data-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           post-form-data.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2271,8 +2272,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/716c4534ef4afb22f65d4fc4367c7136/raw/7b9a41727c9cd4754b8f53d43b9db6f1c82bf785/posting-form-encoded-data.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/716c4534ef4afb22f65d4fc4367c7136#file-posting-form-encoded-data-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/716c4534ef4afb22f65d4fc4367c7136/raw/7b9a41727c9cd4754b8f53d43b9db6f1c82bf785/posting-form-encoded-data.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/716c4534ef4afb22f65d4fc4367c7136#file-posting-form-encoded-data-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           posting-form-encoded-data.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2396,8 +2397,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/301f22aa37df565ba3051bd5f95b4df1/raw/b370e4d13c77ef77f418dded1218c3c4c8ca7590/uploading-files.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/301f22aa37df565ba3051bd5f95b4df1#file-uploading-files-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/301f22aa37df565ba3051bd5f95b4df1/raw/b370e4d13c77ef77f418dded1218c3c4c8ca7590/uploading-files.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/301f22aa37df565ba3051bd5f95b4df1#file-uploading-files-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           uploading-files.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2455,8 +2456,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/37836357041d8ca4d1b32e12638cb0ba/raw/053a016eaf8d32dc38e57e9f2dcd8d6b6c4a069e/file-upload-field.html&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/37836357041d8ca4d1b32e12638cb0ba#file-file-upload-field-html&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/37836357041d8ca4d1b32e12638cb0ba/raw/053a016eaf8d32dc38e57e9f2dcd8d6b6c4a069e/file-upload-field.html&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/37836357041d8ca4d1b32e12638cb0ba#file-file-upload-field-html&quot; class=&quot;Link--inTextBlock&quot;&gt;
           file-upload-field.html
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2588,8 +2589,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/d17f50c36a5ddb70f584c0aa6de94237/raw/afd229d2c402858893a43686ba398a6547a0b0a3/uploading-multiple-files.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/d17f50c36a5ddb70f584c0aa6de94237#file-uploading-multiple-files-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/d17f50c36a5ddb70f584c0aa6de94237/raw/afd229d2c402858893a43686ba398a6547a0b0a3/uploading-multiple-files.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/d17f50c36a5ddb70f584c0aa6de94237#file-uploading-multiple-files-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           uploading-multiple-files.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2772,8 +2773,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85/raw/ffae8631192e2d2efe5e1f117d05570e83df4205/promised-timeout.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85#file-promised-timeout-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85/raw/ffae8631192e2d2efe5e1f117d05570e83df4205/promised-timeout.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/f93b2ef6457b3e52eb995831b67cab85#file-promised-timeout-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           promised-timeout.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2907,8 +2908,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273/raw/6757f76ee1005fe9b079cd4295a999b346bfa43c/promise-timeout.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273#file-promise-timeout-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273/raw/6757f76ee1005fe9b079cd4295a999b346bfa43c/promise-timeout.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/5e492db8997a4f7e22e61b7486cbf273#file-promise-timeout-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           promise-timeout.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -2998,8 +2999,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/db5ccc55ffb93c75e04e014d1f553cfb/raw/6c23959db2ab2fa475caac925d66451bfd8bd85f/progressHelper-signature.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/db5ccc55ffb93c75e04e014d1f553cfb#file-progresshelper-signature-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/db5ccc55ffb93c75e04e014d1f553cfb/raw/6c23959db2ab2fa475caac925d66451bfd8bd85f/progressHelper-signature.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/db5ccc55ffb93c75e04e014d1f553cfb#file-progresshelper-signature-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           progressHelper-signature.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3089,8 +3090,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/9bec219590ff50688972c1caff67c14b/raw/c864ecab54f57da7b10d852f512bd4d80abf79c9/progress-helper-usage.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/9bec219590ff50688972c1caff67c14b#file-progress-helper-usage-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/9bec219590ff50688972c1caff67c14b/raw/c864ecab54f57da7b10d852f512bd4d80abf79c9/progress-helper-usage.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/9bec219590ff50688972c1caff67c14b#file-progress-helper-usage-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           progress-helper-usage.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3155,8 +3156,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/bef2dd7e630eb7642beb3e2be29489b2/raw/d83780ba007df97b127559c99e6cb98501bc1af4/getBlob.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/bef2dd7e630eb7642beb3e2be29489b2#file-getblob-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/bef2dd7e630eb7642beb3e2be29489b2/raw/d83780ba007df97b127559c99e6cb98501bc1af4/getBlob.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/bef2dd7e630eb7642beb3e2be29489b2#file-getblob-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           getBlob.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3252,8 +3253,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/6ad9e37a96ad1f3a75ca509038510a5b/raw/845fded7ea68678d6d9777b2926aa8e97dfdb48d/progressHelper-usage.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/6ad9e37a96ad1f3a75ca509038510a5b#file-progresshelper-usage-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/6ad9e37a96ad1f3a75ca509038510a5b/raw/845fded7ea68678d6d9777b2926aa8e97dfdb48d/progressHelper-usage.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/6ad9e37a96ad1f3a75ca509038510a5b#file-progresshelper-usage-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           progressHelper-usage.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3443,8 +3444,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/a8ffd810fc7e5a5295dfc898302ddbfc/raw/d4e3989b3a5573ee39a30c929dce7652af221a7c/progressHelper.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/a8ffd810fc7e5a5295dfc898302ddbfc#file-progresshelper-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/a8ffd810fc7e5a5295dfc898302ddbfc/raw/d4e3989b3a5573ee39a30c929dce7652af221a7c/progressHelper.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/a8ffd810fc7e5a5295dfc898302ddbfc#file-progresshelper-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           progressHelper.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3589,8 +3590,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120/raw/ef3181cb46e88f47f8f02375a0ce09a5fcf85d31/fetch-retry-with-curry.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-retry-with-curry-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120/raw/ef3181cb46e88f47f8f02375a0ce09a5fcf85d31/fetch-retry-with-curry.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-retry-with-curry-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           fetch-retry-with-curry.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3706,8 +3707,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120/raw/ef3181cb46e88f47f8f02375a0ce09a5fcf85d31/fetch-with-retries.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-with-retries-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120/raw/ef3181cb46e88f47f8f02375a0ce09a5fcf85d31/fetch-with-retries.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/7e52521a0af50fa590be57d5b4593120#file-fetch-with-retries-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           fetch-with-retries.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -3849,8 +3850,8 @@ Rather, it’s &lt;strong&gt;advocacy for the &lt;code class=&quot;language-text
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/3dd0a799ada8da7cd15943ff254266de/raw/ee5256d1b7dc5bea89fccaf8a75c0c00188a2dc7/location-redirect.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/3dd0a799ada8da7cd15943ff254266de#file-location-redirect-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/3dd0a799ada8da7cd15943ff254266de/raw/ee5256d1b7dc5bea89fccaf8a75c0c00188a2dc7/location-redirect.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/3dd0a799ada8da7cd15943ff254266de#file-location-redirect-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           location-redirect.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;
@@ -5754,8 +5755,8 @@ Because code is more succinct, appreciably less brain power is needed to sift th
 
       &lt;/div&gt;
       &lt;div class=&quot;gist-meta&quot;&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/aaddc9852c1624d61cf3/raw/932612dbbfa6a50dde7bf050acad6d767104cfa2/services.user.js&quot; style=&quot;float:right&quot;&gt;view raw&lt;/a&gt;
-        &lt;a href=&quot;https://gist.github.com/justsml/aaddc9852c1624d61cf3#file-services-user-js&quot;&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/aaddc9852c1624d61cf3/raw/932612dbbfa6a50dde7bf050acad6d767104cfa2/services.user.js&quot; style=&quot;float:right&quot; class=&quot;Link--inTextBlock&quot;&gt;view raw&lt;/a&gt;
+        &lt;a href=&quot;https://gist.github.com/justsml/aaddc9852c1624d61cf3#file-services-user-js&quot; class=&quot;Link--inTextBlock&quot;&gt;
           services.user.js
         &lt;/a&gt;
         hosted with &amp;#10084; by &lt;a class=&quot;Link--inTextBlock&quot; href=&quot;https://github.com&quot;&gt;GitHub&lt;/a&gt;

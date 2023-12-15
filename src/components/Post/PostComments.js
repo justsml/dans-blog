@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 // import FacebookProvider, { Comments } from "react-facebook";
@@ -70,14 +70,14 @@ const GitHubIssueComments = ({ path }) => {
       ref={ref}
       id="post-comments"
       className="utterances-frame relative"
-      style={{
-        maxHeight: "70vh",
-        overflowY: "auto",
-        border: "0.5px solid #333",
-        margin: "1rem 0.25rem",
-        padding: "0.5rem",
-        borderRadius: "0.75rem"
-      }}
+      // style={{
+      //   maxHeight: "70vh",
+      //   overflowY: "auto",
+      //   border: "0.5px solid #333",
+      //   margin: "1rem 0.25rem",
+      //   padding: "0.5rem",
+      //   borderRadius: "0.75rem"
+      // }}
     >
       <span className="loading-msg">Loading comments...</span>
     </div>
@@ -85,17 +85,10 @@ const GitHubIssueComments = ({ path }) => {
 };
 
 const PostComments = props => {
-  const [showComments, setShowComments] = useState(false);
-  const { classes, post } = props || {};
+  // const [showComments, setShowComments] = useState(false);
+  const { post } = props || {};
   const title = post && post.frontmatter && post.frontmatter.title;
   // const category = post && post.frontmatter && post.frontmatter.category;
-
-  // const url = config.siteUrl + config.pathPrefix + slug;
-  // const disqusConfig = {
-  //   identifier: `${post && post.fields && post.fields.prefix}/${category}`,
-  //   title: title || slug,
-  //   url
-  // };
 
   // eslint-disable-next-line no-undef
   const isSSR = typeof globalThis === "undefined";
@@ -103,16 +96,6 @@ const PostComments = props => {
   if (isSSR) return <div className="post-comments-ssr-placeholder post-comments" />;
 
   return <GitHubIssueComments path={title} />;
-  // useEffect(() => {
-  //   const t = setTimeout(setShowComments, COMMENTS_DELAY, true);
-  //   return () => clearTimeout(t);
-  // }, []);
-
-  // return (
-  //   <div id="post-comments" className={classes.postComments}>
-  //     {showComments ? <GitHubIssueComments /> : "Loading comments..."}
-  //   </div>
-  // );
 };
 
 PostComments.propTypes = {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import injectSheet from "react-jss";
 
@@ -14,6 +14,31 @@ const styles = theme => ({
     lineHeight: theme.main.fonts.footer.lineHeight,
     "& p": {
       margin: 0
+    }
+  },
+  footnote: {
+    textAlign: "center",
+    margin: "1em 0 0",
+    fontSize: `${theme.main.fonts.footer.size}em`,
+    lineHeight: theme.main.fonts.footer.lineHeight,
+    color: theme.main.colors.footer,
+    "& a": {
+      color: theme.main.colors.link,
+      fontWeight: "normal",
+      textShadow: "none"
+    },
+    "& a:hover": {
+      color: theme.main.colors.linkHover
+    },
+    "& ul": {
+      listStyle: "none",
+      margin: 0,
+      padding: 0,
+      textAlign: "center"
+    },
+    "& li": {
+      display: "inline-block",
+      margin: "0 .3em"
     }
   }
 });
@@ -34,17 +59,19 @@ const styles = theme => ({
 //     .catch(error => {})
 // );
 
-const PostFooter = ({ classes, author, post, slug }) => {
+const PostFooter = ({ classes, author, post, slug, footnote }) => {
   return (
     <footer className={classes.footer}>
       <PostShare post={post} slug={slug} />
       <PostAuthor author={author} />
+      <div className={classes.footnote} dangerouslySetInnerHTML={{ __html: footnote }} />
       <PostComments post={post} slug={slug} author={author} />
     </footer>
   );
 };
 
 PostFooter.propTypes = {
+  footnote: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
   author: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,

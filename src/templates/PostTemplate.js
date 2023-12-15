@@ -45,6 +45,7 @@ class PostTemplate extends React.Component {
           author={data.author}
           facebook={facebook}
           githubUrl={githubUrl}
+          footnote={data.footnote}
         >
           <div className="header-image-box">
             <ResponsiveImage
@@ -54,7 +55,7 @@ class PostTemplate extends React.Component {
             />
           </div>
         </Post>
-        <Footer footnote={data.footnote} />
+        {/* <Footer footnote={data.footnote} /> */}
         <Seo data={data.post} facebook={facebook} />
       </Main>
     );

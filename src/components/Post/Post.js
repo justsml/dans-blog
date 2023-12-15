@@ -26,6 +26,8 @@ const focusOnPage = (retries = 1) => {
 
 export default class Post extends React.Component {
   static propTypes = {
+    footnote: PropTypes.object.isRequired,
+
     post: PropTypes.object.isRequired,
     author: PropTypes.object.isRequired,
     slug: PropTypes.string.isRequired,
@@ -42,7 +44,7 @@ export default class Post extends React.Component {
       lastSlug = this.props.slug;
       focusOnPage();
     }
-    setTimeout(() => this.interactionHandler(this.renderTwitter), 5000, 1);
+    setTimeout(() => this.interactionHandler(this.renderTwitter), 3000, 1);
   }
 
   interactionHandler = callback => {
@@ -75,12 +77,13 @@ export default class Post extends React.Component {
   }
 
   render() {
-    const { post, author, slug, allTags } = this.props;
+    const { post, author, slug, allTags, footnote } = this.props;
     const frontmatter = (post || {}).frontmatter;
     const title = ((post || {}).frontmatter || {}).title;
     const subTitle = ((post || {}).frontmatter || {}).subTitle;
     let date = ((post || {}).fields || {}).prefix;
     const html = (post || {}).html;
+    const footnoteHtml = (footnote || {}).html;
     // const htmlAst = (post || {}).htmlAst;
 
     // console.log(post);
@@ -98,7 +101,14 @@ export default class Post extends React.Component {
         />
         <Content html={html} />
         <AutoLoader post={post} frontmatter={frontmatter} />
-        <PostFooter title={title} author={author} post={post} slug={slug} {...frontmatter} />
+        <PostFooter
+          title={title}
+          author={author}
+          post={post}
+          slug={slug}
+          footnote={footnoteHtml}
+          {...frontmatter}
+        />
       </Article>
     );
   }
