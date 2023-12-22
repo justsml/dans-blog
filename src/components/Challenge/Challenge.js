@@ -273,9 +273,9 @@ class Challenge extends React.Component {
     cachedState = cachedState
       ? JSON.parse(cachedState)
       : {
-        attempts: 0,
-        selection: ""
-      };
+          attempts: 0,
+          selection: ""
+        };
     this.setState({ ...this.state, cachedState, ...cachedState });
   };
 
