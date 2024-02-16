@@ -14,7 +14,7 @@ cover: open-source-high-life.jpg
 
 Drippin’ in donations? 💰
 Rollin’ in repos? 🏎️
-Rebasin' ritalin? 🤯
+Rebasin' robb report! 🤯
 
 <img src="open-source-high-life-smaller.jpg" alt="OSS High Life" />
 
