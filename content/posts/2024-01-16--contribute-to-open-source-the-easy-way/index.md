@@ -10,38 +10,63 @@ cover: open-source-high-life.jpg
 
 <!-- # How To: Contribute to Open Source -->
 
-Do you want that Open Source Fast Life? Drippin’ in donations? Rollin’ in repos?
+## That Open Source Dream Life?
 
-I’m going to share my exclusive - yet simple - approach which I’ve used to successfully author countless PR’s across dozens of 10,000-Star repositories!
+Drippin’ in donations? 💰
+Rollin’ in repos? 🏎️
+Rebasin' ritalin? 🤯
 
-My small contributions can be seen in a range of projects from Node.js, Docker, Lodash, Bluebird, Gatsby, Rancher, Angular, React Router, Minio, MDN (Mozilla Developer Network) and many more.
+<img src="open-source-high-life-smaller.jpg" alt="OSS High Life" />
 
-<img src="open-source-high-life-slice.jpg" alt="OSS High Life" />
+<br />
 
-## Not The Way
+Hell yea! Let me know if you ever find it. 🤙
+
+## The Reality
+
+If you want to **_`contribute`_** to Open Source, and you’ve struggled to get started, keep reading...
+
+Over my career, I’ve written many PR’s for dozens of 10,000-Star repositories. My modest contributions have landed in Node.js, Docker, Lodash, Bluebird, Gatsby, Rancher, Angular, React Router, Minio, MDN (Mozilla Developer Network) and many more.
+
+I'm going to share my secret to banging out slick contributions, but first we need to discuss the problems with the conventional advice.
+
+## This is (Not) The Way
 
 Why is it difficult to **_`contribute`_** to Open Source?
 
-I believe the main reason for this is virtually everyone gives terrible advice.
+The most common advice actually falls somewhere between useless-to-terrible: Find a `GFI` issue (`Good First Issue` label) and solve it. Or, contribute to a project out of sheer love.
 
-Have you heard about `“Good First Issue”` labelled tickets?!?
-While well-intentioned, in practice it’s a laughably subjective description which obscures an unknowable number of steps.
+It's all well-intentioned, however in practice `GFI` labels are highly subjective, and often obscure an unknowable number of steps.
 
-## Thinking Right
+## A Better Way
 
-The Struggle is the Way: Every bit of open source software you’ve ever struggled with (and overcome) is potentially your next “easy” contribution!
+<!-- ❌ Don't look outward, look inward. -->
 
-**By definition, you already solved the thing, most of the work is done.**
+<!-- ❌ Searching GitHub Repo Issues pages for a `good first issue`. That's reasonable in scope. Also interesting. And hasn't been claimed by someone else. And isn't hiding impossible complexity.
 
-The real challenge is figuring out how to **help others avoid your struggle.**
+👎 When Searching Repos, you may lack any context, and the issue may be too complex for you to easily solve. -->
 
-Maybe a Tweet or Stack Overflow answer will do.
+✅ Scan your project dependency file(s). Which libraries spark rage? What led to a missed deadline? How did you overcome it?
 
-However, if you want the glory that lives forever: help others avoid your struggle in the first place.
+💪 By starting with something you already solved, there's **no need to worry if you can.** You're already **fluent; and familiar** with the context!
+
+<!-- The Struggle is the Way: Every project or library you’ve ever struggled with could become an "easy" contribution! -->
+
+By definition, **you already solved the thing, most of the work is done.**
+
+Next, figure out how to **help others avoid your struggle altogether.**
+
+Maybe a Tweet or Stack Overflow answer will do, but if you want to make a **lasting impact, _`contribute`_ to the project itself.**
+
+<!-- However, if you want the glory that lives forever: help others avoid your struggle in the first place. -->
 
 ## The Glory
 
-The key thing to figure out is how your _dumb dumb_ brain got so lost.
+Preferably while the experience is somewhat fresh, contemplate how your _dumb dumb_ brain got so lost in the first place.
+
+What did you try **first?** And why? What did you assume? Or misunderstand?
+
+💪 You don't need to come up with a perfect solution, often simple documentation updates can save countless hours of struggle for others.
 
 - An outdated README? Missing or bad examples? Omitted setup steps? _Simple fix, include any missing info!_
 
@@ -55,20 +80,18 @@ These types of issues are easy for maintainers to miss! And can have surprisingl
 
 Think about it this way: how would you feel if you knew that sharing your fix might save 100’s (or 100,000’s) of devs from countless lost hours?
 
-Next time you conquer some challenge, _don’t rebase away the evidence of your inadequacy!_
+Next time you conquer some challenge, _don’t rebase away evidence of your inadequacy!_
 **Instead share your struggle & solution publicly!**
 
-## The Fine Print
+## Fine, Fine Print
 
 Always follow project guidelines, and never be an asshole. ✨
 
 It’s all public. So, be gracious, great, and grateful.
 
-And if you need any more convincing: do Open Source for the learning! Experience new processes, languages, frameworks, automation!
+If you need any more convincing: `contribute` for the learning! New processes, languages, frameworks, automation!
 
-Perhaps most importantly, you can **quickly advance your communication skills!**
-
-The ability to advocate for your ideas can change your life!
+> Perhaps even more importantly, you can **quickly advance your communication skills!** The ability to advocate for your ideas can change your life!
 
 🚀
 
