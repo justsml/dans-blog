@@ -6,6 +6,7 @@ export type ArticlePost = {
   data: {
     title: string;
     subTitle: string;
+    draft?: boolean;
     cover_icon: ImageMetadata;
     cover_mobile: ImageMetadata;
     date: string;

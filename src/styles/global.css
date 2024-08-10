@@ -15,6 +15,7 @@
     --neon-orange: 24 100% 50%;
 
     --highlight: #f9f9f9;
+    --highlight-secondary: #f9f9f999;
 
     --text-color: #FFFFFF;
     /* --mobile-screen-break: 580px; */
@@ -293,6 +294,9 @@ main pre {
   transition: box-shadow 0.25s ease-in-out;
   color: var(--muted);
 
+  &.draft {
+    border: 2.5px dashed var(--highlight-secondary);
+  }
   img {
     border-radius: 100%;
     margin: 0.75rem auto;

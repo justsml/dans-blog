@@ -44,7 +44,7 @@ export const ArticleCard = ({
     <a
       href={`/${slug}/`}
       className={"article-card " + categoryClass}
-      title={title}
+      title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}
       data-modified={modified}
     >
