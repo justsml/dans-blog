@@ -10,7 +10,7 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { CalendarIcon, TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import { ViewTransitions, fade } from 'astro:transitions';
+import { fade } from 'astro:transitions';
 import { GOOGLE_ANALYTICS_ID } from "../consts";
 
 import "@/styles/nav.css";
@@ -96,10 +96,9 @@ const coverUrl = cover && typeof cover === "object" && "src" in cover ? (cover a
         }
       });
     </script>
-    <ViewTransitions />
   </head>
 
-  <body transition:animate={fade({ duration: '0.4s' })}>
+  <body>
     <Header date={date} modified={modified} />
     <main>
       {title && <h1>{title}</h1>}
