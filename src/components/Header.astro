@@ -2,12 +2,18 @@
 import { SITE_TITLE } from "../consts";
 import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar.png";
+import { PostCollections } from "@/shared/dataCache";
+import "./Header.css";
 
-import './Header.css';
+const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
+const categories = getCategoryCounts();
+const popularPosts = getPopularPosts();
+const recentPosts = getRecentPosts();
+// const tagCounts = getTagCounts();
 ---
 
 <header class="top-header">
-  <nav class:list={['header-nav']}>
+  <nav class:list={["header-nav"]}>
     <h2>
       <a href="/" aria-label="Return Home">
         <img
@@ -19,7 +25,12 @@ import './Header.css';
       </a>
     </h2>
     <div class="nav-box">
-      <NavMenu client:only="react" />
+      <NavMenu
+        client:only="react"
+        categories={categories}
+        popularPosts={popularPosts}
+        recentPosts={recentPosts}
+      />
     </div>
   </nav>
 </header>

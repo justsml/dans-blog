@@ -1,7 +1,6 @@
 "use client";
-import "./index.css";
+import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import { PostCollections } from "@/shared/dataCache";
 import { slugify } from "@/shared/pathHelpers";
 import avatarImage from "@/assets/avatar.png";
 import {
@@ -13,23 +12,19 @@ import {
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { ListItem } from "./ListItem";
-
-const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
-
-const categories = getCategoryCounts();
-const popularPosts = getPopularPosts();
-// const tagCounts = getTagCounts();
-const recentPosts = getRecentPosts();
-// const allPosts = PostCollections._posts;
-
-import { createPortal } from "react-dom";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
+import "./index.css";
 
-// const popIdx = Math.floor(Math.random() * popularPosts.length);
-// const popularSelection = popularPosts[popIdx];
-
-const NavMenu = () => {
+const NavMenu = ({
+  categories,
+  popularPosts,
+  recentPosts,
+}: {
+  categories: Array<[string, unknown]>;
+  popularPosts: any[];
+  recentPosts: any[];
+}) => {
   const handlePreventDefault = (e: CustomEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -62,7 +57,7 @@ const NavMenu = () => {
                           href={`/category/${slugify(category)}/`}
                           className="CalloutItem"
                         >
-                          {category} <Badge variant={"secondary"}>{count}</Badge>
+                          {category} <Badge variant={"secondary"}>{count as number}</Badge>
                         </a>
                       ))}
                     </p>
