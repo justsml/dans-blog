@@ -1,0 +1,354 @@
+---
+title: "JS Quiz: 9 Promise Questions"
+subTitle: Never drop a promise again!
+date: 2019-11-26
+modified: 2024-08-01
+tags: [promises, programming, async, javascript, guides, quiz]
+category: Quizzes
+subCategory: Quiz
+cover: olav-ahrens-rotne-jvBXiynINGE-resized.png
+cover_mobile: w300_olav-ahrens-rotne-jvBXiynINGE-resized.png
+cover_tablet: w600_olav-ahrens-rotne-jvBXiynINGE-resized.png
+cover_desktop: w900_olav-ahrens-rotne-jvBXiynINGE-resized.png
+cover_icon: icon_olav-ahrens-rotne-jvBXiynINGE-resized.png
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+## Do you know JavaScript Promises?
+
+> * **Prove your JavaScript skillz!** 🚀
+
+1. **Check for Hints** (Big button, bottom corner).
+2. Try the code in your browser's Console (try shortcut `F12` or search it) or use [repl.it](https://repl.it)*.
+3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!**
+
+### 👇 Complete 9 Questions Below👇
+
+<QuizUI>
+
+<Challenge
+  client:only="react"
+  group="Handling Errors"
+  title="Multiple `.catch`'s #1"
+  options={[
+    {text: 'print message once'},
+    {text: 'print message twice', isAnswer: true },
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'process exits'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+We create a Promise using the constructor method, triggering an error immediately with the `reject` callback.
+
+Then the `.catch` handlers work like the DOM's `.addEventListener(event, callback)` or Event Emitter's `.on(event, callback)` where **multiple handler callbacks can be added.** Each will be called with the same arguments.
+    </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:only="react"
+  group="Handling Errors"
+  title="Multiple `.catch`'s #2"
+  options={[
+    {text: 'print message once'},
+    {text: 'print message twice'},
+    {text: 'UnhandledPromiseRejectionWarning', isAnswer: true },
+    {text: 'process exits'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    var p = new Promise((resolve, reject) => {
+      return Promise.reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+When using the Promise constructor you must invoke either `resolve()` or `reject()` callbacks. The Promise constructor doesn't use your return value, so the additional Promise created with `Promise.reject()` will effectively never be heard from again.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+client:only="react"
+group="Handling Errors"
+title="Chaining `.then` and `.catch`'s"
+options={[
+  {text: 'print error and `undefined`', isAnswer: true },
+  {text: 'print error twice'},
+  {text: 'UnhandledPromiseRejectionWarning'},
+  {text: 'undefined'}
+]}
+>
+<slot name="question">
+<div className="question">
+  What will the output be for the following code?
+  ```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error))
+    .then(error => console.log(error))
+  ```
+</div>
+</slot>
+
+<slot name='explanation'>
+<div className="explanation">
+When chaining `.then`'s and `.catch`'s it is helpful to think of them as a series of steps. Each `.then` receives the value returned by the previous `.then` (as its argument.) However, if your "step" encountered an error, any subsequent `.then` "steps" will be skipped until a `.catch` is encountered. If you want to override an error, all you need to do is return a non-error value. It can be accessed via any subsequent `.then`.
+</div>
+</slot>
+
+</Challenge>
+
+<Challenge
+client:only="react"
+group="Handling Errors"
+title="Chaining `.catch`'s"
+options={[
+  {text: 'print error message once', isAnswer: true },
+  {text: 'print error message twice'},
+  {text: 'UnhandledPromiseRejectionWarning'},
+  {text: 'process exits'}
+]}
+>
+<slot name="question">
+<div className="question">
+  What will the output be for the following code?
+  ```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error.message))
+    .catch(error => console.log(error.message))
+  ```
+</div>
+</slot>
+
+<slot name='explanation'>
+<div className="explanation">
+When chaining `.catch`'s, each one only handles errors thrown in previous `.then` or `.catch` "steps". In this example the first `.catch` returns the `console.log` which could only be accessed via adding a `.then()` after both the `.catch`'s.
+</div>
+</slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Errors"
+  title="Multiple `.catch`'s"
+  options={[
+    {text: 'print message once'},
+    {text: 'print message twice'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'nothing prints', isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    new Promise((resolve, reject) => {
+        resolve('Success!')
+      })
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return "actually, that worked"
+      })
+      .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+**Hint:** `.catch`'s can be used to ignore (or override) errors simply by returning a regular value.
+
+This trick works only when there is a subsequent `.then` to receive the value.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Data"
+  title="Flow between `.then`'s"
+  options={[
+    {text: 'print "Success!" and "SUCCESS!"'},
+    {text: 'print "Success!"'},
+    {text: 'print "SUCCESS!"', isAnswer: true },
+    {text: 'nothing prints'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+**Hint:** `.then`'s pass data sequentially, from `return value` to the next `.then(value => /* handle value */)`.
+
+A `return` is key in order to pass a value to the next `.then`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Data"
+  title="Flow between `.then`'s"
+  options={[
+    {text: 'print "SUCCESS!"'},
+    {text: 'print "Success!"'},
+    {text: 'print "SUCCESS!" and "SUCCESS!"', isAnswer: true },
+    {text: 'nothing prints'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+        return data
+      })
+      .then(console.log)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+There are 2 `console.log` calls which will be called.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Data"
+  title="Flow between `.then`'s"
+  options={[
+    {text: 'print "SUCCESS!"'},
+    {text: 'print "Success!"'},
+    {text: 'print "SUCCESS!" and "SUCCESS!"'},
+    {text: 'prints `undefined`', isAnswer: true }
+  ]}
+  >
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    Promise.resolve('Success!')
+      .then(data => {
+        data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+**Hint:** `.then`'s pass data sequentially, from `return value` to the next `.then(value => /* handle value */)`.
+
+A `return` is key in order to pass a value to the next `.then`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Data"
+  title="Flow between `.then`'s and `.catch`'s"
+  options={[
+    {text: 'print "Oh noes!" and "The fails!"'},
+    {text: 'print "Oh noes!"'},
+    {text: 'print "The fails!"', isAnswer: true },
+    {text: 'print "actually, that worked"'},
+    {text: 'nothing prints'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output be for the following code?
+    ```js
+    Promise.resolve('Success!')
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return 'actually, that worked'
+      })
+      .then(data => {
+        throw Error('The fails!')
+      })
+      .catch(error => console.log(error.message))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+
+![annotated-code/question-9-4.gif](annotated-code/question-9-4.gif)
+
+  </div>
+  </slot>
+
+</Challenge>
+
+
+
+</QuizUI>
+

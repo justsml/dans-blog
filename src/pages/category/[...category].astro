@@ -1,0 +1,55 @@
+---
+import { ArticleCard } from "../../components/ArticleCard";
+import Page from "../../layouts/Page.astro";
+import { PostCollections } from "../../shared/dataCache";
+import { type CollectionEntry } from "astro:content";
+import type { ArticlePost } from "../../types";
+
+export async function getStaticPaths() {
+  return PostCollections.getStaticPathsCategoryList();
+}
+
+type Props = CollectionEntry<"category">;
+
+const hasCatAndCount = (obj: any): obj is { category: string; count: number } =>
+  "category" in obj && "count" in obj;
+
+const getProps = () => {
+  let { category, count } = hasCatAndCount(Astro.props)
+    ? Astro.props
+    : hasCatAndCount(Astro.props.data)
+      ? Astro.props.data
+      : { category: "Invalid Category Page", count: -1 };
+
+  return { category, count };
+};
+const { category, count } = getProps();
+const posts = PostCollections.getPostsByCategory(category);
+
+// console.log("category.astro.props", Astro.props);
+---
+
+<style>
+  .path-display {
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    h1 {
+      font-size: 1.75rem;
+      margin: 1.5rem 0 1rem;
+    }
+  }
+</style>
+
+<Page>
+  <div class="path-display">
+    <h3 style="color: #c4c4c4; font-weight: 100;">Category /</h3>
+    <h1>{category}</h1>
+  </div>
+  <p style="margin: .2rem .75rem">Found {count} articles</p>
+  <div class:list={["article-list"]}>
+    {posts.map(post => (
+      <ArticleCard article={post as ArticlePost} />
+    ))}
+  </div>
+</Page>

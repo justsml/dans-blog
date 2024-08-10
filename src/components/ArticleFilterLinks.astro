@@ -1,0 +1,27 @@
+---
+import { PostCollections } from "../shared/dataCache";
+
+
+// get categories from the API
+let cats = PostCollections.getCategoryCounts();
+
+// Limit first 4
+if (cats.length > 4) {
+  cats = cats.slice(0, 4);
+}
+
+
+---
+
+<div class="flex h-5 items-center space-x-4 text-sm">
+  {cats.map((cat) => {
+    return <Fragment>
+      {cat[0]}
+      <div
+        data-orientation="vertical"
+        role="none"
+        class="separator"
+      />
+      </Fragment>;
+  })}
+</div>

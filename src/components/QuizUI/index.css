@@ -1,0 +1,239 @@
+.quiz-ui {
+  padding: 1rem 0;
+  max-width: 80vw;
+}
+
+
+.challenge {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  width: 100%;
+  text-align: left;
+  margin: 2.5rem 0.5rem;
+  /* @apply sm:w-screen; md:w-95 lg:w-1/4 xl:w-1/5; */
+
+  &.untouched {
+    .btn-reset {
+      filter: grayscale(100%);
+      opacity: 50%;
+      cursor: not-allowed;
+    }
+  }
+
+  .title {
+    color: var(--neon-cyan);
+    font-size: 1.875rem;
+    margin: 0.5rem -1rem;
+    text-align: left;
+
+    svg {
+      display: inline-block;
+      margin-right: 0.5rem;
+    }
+  }
+  
+  .icon {
+    width: 2rem;
+    height: 2rem;
+
+  }
+
+  .question {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .question .explanation {
+    display: none;
+  }
+
+  .option {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    cursor: pointer;
+    line-height: 1.5;
+    color: var(--secondary);
+    border: 1px dashed transparent;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    & * {
+      cursor: pointer;
+    }
+    &:hover {
+      /* background-color: var(--primary-foreground); */
+      color: var(--primary-forground);
+      border: 1px dashed rgba(200, 200, 200, 0.5);
+    }
+    /* &:hover {
+      color: var(--primary-forground);
+      border: 1px dashed rgba(200, 200, 200, 0.5);
+    } */
+    &.correctly-answered {
+      border: 1px dashed rgba(230, 230, 230, 0.75);
+    }
+  }
+
+  &.correct {
+    .option {
+
+      & * {
+        cursor: default;
+      }
+      &:hover {
+        color: var(--secondary);
+        border: inherit;
+        border: 1px dashed transparent;
+      }
+      &.correctly-answered {
+        border: 1px dashed rgba(230, 230, 230, 0.75);
+      }
+  
+    }
+  }
+
+  .toolbar {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    margin-top: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+    /* align-content: center; */
+    .btn {
+      text-align: center;
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      grid-template-rows: 1fr;
+      /* max-width: 40%; */
+      width: auto;
+      align-items: center;
+      color: var(--secondary);
+      text-wrap: nowrap;
+    }
+  }
+
+  .btn {
+    /* background: none;
+    text-decoration: inherit;
+
+    border-image-source: linear-gradient(to left, #00C853, #B2FF59);
+    border-image-slice: 1; */
+    border: 2px solid var(--neon-cyan);
+    color: var(--neon-cyan);
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .explanation {
+    padding: 1rem 0.5rem;
+    line-height: 1.5;
+    p {
+      margin: 1rem 0;
+      line-height: 1.75;
+    }
+  }
+
+
+
+  &.incorrect {
+    .title {
+      color: var(--neon-pink);
+    }
+    btn {
+      background-color: var(--neon-pink);
+      color: var(--neon-cyan);
+    }
+    /* color: var(--neon-pink); */
+  }
+}
+
+@screen sm {
+  .challenge {
+    width: 100%;
+
+    .options {
+      margin-left: -2rem;
+    }
+
+    pre {
+      margin: .5rem -0.2rem 0 -2rem;
+    }
+  }
+}
+
+@screen md {
+  .challenge {
+    width: 100%;
+  }
+
+  .options {
+    margin-left: -3rem;
+  }
+
+pre {
+    margin: .5rem -0.2rem 0 -2rem;
+  }
+}
+
+@screen lg {
+  .challenge {
+    width: 100%;
+  }
+
+}
+
+.pulse {
+  animation: .3s cubic-bezier(0.24, 0.94, 0.53, 1.45) 0s 1 pulse;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.shake {
+  animation: .3s cubic-bezier(0.24, 0.94, 0.53, 1.45) 0s 1 shake;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-0.5rem);
+  }
+  50% {
+    transform: translateX(0.5rem);
+  }
+  75% {
+    transform: translateX(-0.5rem);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* .squiggle {
+  stroke-dasharray: 450;
+  stroke-dashoffset: 450;
+  animation: draw 2s linear infinite alternate;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+} */

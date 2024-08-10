@@ -1,0 +1,25 @@
+---
+import { SITE_TITLE } from "../consts";
+import NavMenu from "./NavMenu";
+import avatarImage from "@/assets/avatar.png";
+
+import './Header.css';
+---
+
+<header class="top-header">
+  <nav class:list={['header-nav']}>
+    <h2>
+      <a href="/" aria-label="Return Home">
+        <img
+          src={avatarImage.src}
+          style="margin-left: -.5rem; margin-right: .5rem; height: 2.125rem; width: 2.125rem; min-height: 48px; min-width: 48px; aspect-ratio: 1/1; border-radius: 100%;"
+        />
+
+        <span class="title">{SITE_TITLE}</span>
+      </a>
+    </h2>
+    <div class="nav-box">
+      <NavMenu client:only="react" />
+    </div>
+  </nav>
+</header>

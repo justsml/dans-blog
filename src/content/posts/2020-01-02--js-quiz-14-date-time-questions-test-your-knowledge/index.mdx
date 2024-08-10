@@ -1,0 +1,570 @@
+---
+title: "JS Quiz: 14 Date Questions"
+subTitle: Learn to impress at parties with JS trivia! ✨
+date: 2020-01-02
+modified: 2024-08-09
+tags: [javascript,date,date class,gotchas,quiz,challenge]
+category: Quizzes
+subCategory: Quiz
+cover: pocket-watch.jpg
+cover_mobile: w300_pocket-watch.jpg
+cover_tablet: w600_pocket-watch.jpg
+cover_desktop: w900_pocket-watch.jpg
+cover_icon: icon_pocket-watch.jpg
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+## How well do you know the `Date` class?
+
+> * **Prove your JavaScript skillz!** 🚀
+> * No login or signup required. ✨
+> * Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
+### Outline
+
+The `Date` class in JavaScript has a notoriously difficult API. It was inherited from Java, and I can only assume was inspired ancient neolithic time keeping methods.
+
+The struggle to get `Date`'s leads many developers to use 3rd party libraries without question. While often a safe and reliable choice, these libraries are rarely needed for formatting dates or localization!
+
+This quiz is designed to test (and deepen) your knowledge of the native `Date` API. Use the green buttons for hints & explanations! Hopefully by the end of the challenge you'll have solidified your understanding of `Date`'s in JavaScript.
+
+{/* 
+#### If you get stuck
+
+1. **Read the Hints** (Green button, lower right corner). Some include a few animated answers w/ detailed annotations, while others offer only a few clues. I can't give away all the answers so easy!  <br>Seriously though, this is intentional, the answers are there. Skip ahead or try the code snippets out, then change it, and play some more.
+2. Try the code in your browser's Console (try shortcut `F12` on Windows, or `Command + Option + J` on Mac).
+3. Please feel free to [Tweet at me @justsml](https://twitter.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Date%20quiz%2E%2E%2E&url=https://danlevy.net/). **I'd love to hear your thoughts!** */}
+
+
+#### **NOTE:** Assume all examples assume GMT-7 local timezone.
+
+
+### 👇 14 Questions Below 👇
+
+<QuizUI>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Constructor Part 1"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true },
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output include?
+    ```js
+    const d1 = new Date(2020, 1, 1)
+    console.log(d1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The Month argument is zero-based. With a range of 0-11 (using western calendars.)
+
+    'February' has an index value of one. (Think of it like an array lookup.)
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Constructor Part 2"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true },
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will the output include?
+    ```js
+    const d2 = new Date(2020, 0, 1)
+    console.log(d2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The Month argument is zero-based. With a range of 0-11 (using western calendars.)
+
+    'January' has an index value of zero. (Think of it like an array lookup.)
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Constructor Part 3"
+  options={[
+    {text: '01 Jan 1970'},
+    {text: 'Unix Epoch of 0'},
+    {text: 'Current Date, in UTC/GMT'},
+    {text: 'Current Date', isAnswer: true },
+    {text: 'NaN'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What will the output include?
+    ```js
+    const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+    console.log(d3)
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Don't forget the `new` keyword! `Date` is a class, and should be called with `new`.
+
+    `Date('...')` without `new` ignores what you give it. It appears to always produce the current date & time with `new Date()` (no arguments).
+
+    This is a **common gotcha** that's **easy to overlook**, even in code review.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Constructor Part 4"
+  options={[
+    {text: '1969', isAnswer: true },
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const date = new Date(2020)
+      console.log(date.getFullYear())
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      A Date instance created with a single integer argument is interpreted as a Unix `Epoch` value. `Epoch` is a count of milliseconds since Jan 1st, 1970.
+
+      A value of `2020` (milliseconds) translates to 2 seconds after Jan 1st, 1970.
+      
+      Then since our local time zone is a negative offset of -7 hours, we end up with `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
+  
+      You can side-step the local timezone offset by using [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date String Parsing"
+  options={[
+    {text: '2019 2020', isAnswer: true },
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What value will print to the console?
+      ```js
+      const d1 = new Date('2020-01-01')
+      const d2 = new Date('2020-01-01T00:00')
+      console.log(d1.getFullYear(), d2.getFullYear())
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The string without a `T` time value may appear to be Jan 1st, 2020 - but it's interpreted as a GMT time, and when adjusted to our local timezone (GMT-7) we find we're still in 2019.
+
+      The `Date` class implicitly applies local time to date strings when a time is not provided.
+  
+      The `T00:00` causes it to adjust for local time.
+
+      The first date is interpreted as `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
+      The second date is interpreted as `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Formatting Part 1"
+  options={[
+    {text: 'date.toLocaleFormat(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })', isAnswer: true },
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
+    {text: 'date.toLocaleTimeString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+  ]}
+>
+    
+      <slot name="question">
+      <div className="question">
+        Select an _incorrect_ formatting method:
+      </div>
+      </slot>
+    
+      <slot name='hints'>
+
+      </slot>
+
+      <slot name='explanation'>
+      <div className="explanation">
+
+        It can be hard to remember what to use when both `toLocaleDateString` and `toLocaleTimeString` exist. I feel `toLocaleFormat` _should_ exist. 
+        The method [`Date.toLocaleFormat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleFormat) is not standard. It's not supported in any browser, and should not be used.
+
+        Check out the [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) method. It's behavior is documented under [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
+
+      </div>
+      </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="UTC Dates Part 1"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true },
+    {text: 'NaN'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      var date = Date.UTC('2020-01-02T00:00')
+      console.log(date.toUTCString())
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+
+      You'll get `TypeError: date.toUTCString is not a function`, since [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) returns an integer in milliseconds, not a date instance.
+
+      {/* The [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) method uses your local offset (assume GMT-07:00 for these questions.)
+      Which means it will give the previous year (NYE -7 hours).
+      The [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) method will give the year as we supplied to `Date.UTC()`, 2020.
+      */}
+    </div>
+    </slot>
+    
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="UTC Dates Part 2"
+  options={[
+    {text: 'A UTC-based date instance'},
+    {text: 'A date instance adjusted for local time-zone'},
+    {text: 'Milliseconds since Jan 1st, 1970 GMT', isAnswer: true },
+    {text: 'An error'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = Date.UTC(2020, 0, 1)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The helper method [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) doesn't return a date instance. It returns an integer in milliseconds.
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="UTC Dates Part 3"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true },
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      // Assume local TZ is -07:00
+      const d = new Date(Date.UTC(2020, 0, 1))
+      console.log(d.getTimezoneOffset())
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      Date's will be implicitly presented in local time, with an (effectively) unchanging [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+  
+      `Date` instances do not store timezone data. They store the # of milliseconds since the Unix Epoch (Jan 1, 1970). The timezone is accounted for when Date String parsing & rendering. The default display behavior is automatically determined based on the system or browser's locale settings.
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Setters Part 1"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true },
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = new Date(2020, 0, 1)
+      d.setDate(1)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+      <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
+  
+      If a value is provided outside of the number of days available, the date instance month value will be adjusted (e.g. A `setDate(32)` in January will calculate as February 1st.)
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Setters Part 2"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true },
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(1)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    <slot name='explanation'>
+    <div className="explanation">
+      The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.
+  
+      The month argument is zero-based, with a range of 0-11 (using western calendars.)
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Setters Part 3"
+  options={[
+    {text: 'Jan 01 2020' },
+    {text: 'Jan 01 2021', isAnswer: true },
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.' },
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(12)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.
+  
+      The `month` argument is zero-based, with 12 values in the range of 0-11 (using western calendars.)
+
+      Here we see the year is adjusted to 2021, because `setMonth(12)` is 1 more than 11 (December).
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Setters Part 4"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2021'},
+    {text: 'Feb 01 2021', isAnswer: true },
+    {text: 'RangeError: Invalid argument.' },
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(13)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    <slot name='hints'>
+      <aside class="hint">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>
+      <aside class="hint">
+        Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).
+      </aside>
+    </slot>
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.
+  
+      The month argument is zero-based, with a range of 0-11 (using western calendars.)
+
+      Here we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).
+    </div>
+    </slot>
+
+</Challenge>
+
+<Challenge
+  client:only="react"
+  group="Handling Dates"
+  title="Date Setters Part 5"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2019'},
+    {text: 'Feb 01 2019', isAnswer: true },
+
+    {text: 'RangeError: Invalid argument.' },
+  ]}
+>
+  
+    <slot name="question">
+    <div className="question">
+      What will the output include?
+      ```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(-1)
+      console.log(d)
+      ```
+    </div>
+    </slot>
+  
+    {/* <slot name='hints'>
+      <aside class="hint">Months are non-uniform, range between 28-31 days.</aside>
+      <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31. Negative numbers and any numbers greater than `31` will cause the day & month to adjust, sometimes in surprising ways.</aside>
+    </slot> */}
+
+    <slot name='explanation'>
+    <div className="explanation">
+      The [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) method sets the month of the given date instance.
+  
+      The month argument is zero-based, with a range of 0-11 (using western calendars.)
+
+      Here we see the month and year rolls back to December 2019, because `setMonth(-1)` is less than 0 (January).
+    </div>
+    </slot>
+
+</Challenge>
+
+</QuizUI>

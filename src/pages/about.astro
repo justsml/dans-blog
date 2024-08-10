@@ -1,0 +1,47 @@
+---
+import { SITE_DESCRIPTION } from "../consts";
+import Layout from "../layouts/Page.astro";
+---
+
+<Layout
+  frontmatter={{
+    title: "About Me",
+    subTitle: SITE_DESCRIPTION,
+  }}
+>
+  <h3>About</h3>
+  <h1 style={{marginTop: 0}}>Dan Levy</h1>
+
+  <p>
+    Dan is an accomplished programmer, teacher, mentor, and leader. He has over
+    20 years of extensive professional software development experience.
+    Including consulting, Agile team building, architectural leadership,
+    security audits, accessibility reviews and UI/UX analysis. At both startups
+    and big companies.
+  </p>
+  <p>
+    After years of study and research in software patterns and architecture, Dan
+    has become a highly sought-out subject matter expert. Additionally,
+    Dan&apos;s talks have earned him a reputation as an incisive,
+    thought-provoking and motivating public speaker.
+  </p>
+  <p>
+    As an active contributor to numerous Open Source projects, Dan has
+    established himself as a dynamic problem solver, constantly seeking personal
+    growth and always learning. Dan pulls from his deep bench of experience to
+    gain a better understanding of any challenge. He closely follows changes
+    across a broad Technology landscape: learning new languages, methodologies,
+    patterns, and adapting to different code styles.
+  </p>
+  <div class="text-center">
+    <br />
+    <a href={`${"/docs/resume.pdf"}`}>
+      <b>Download Dan&apos;s Resume</b>
+    </a>
+    <br />
+    <br />
+    <a href={`/about/talks/`}>
+      <b>View Talks &amp; Videos</b>
+    </a>
+  </div>
+</Layout>

@@ -1,0 +1,152 @@
+---
+import { ContactForm } from "../components/ContactForm";
+import { SITE_DESCRIPTION } from "../consts";
+import Layout from "../layouts/Page.astro";
+
+const reCaptchaSiteKey =
+  import.meta.env.SITE_RECAPTCHA_KEY ||
+  import.meta.env.PUBLIC_SITE_RECAPTCHA_KEY ||
+  import.meta.env.VITE_SITE_RECAPTCHA_KEY ||
+  import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY ||
+  import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
+  import.meta.env.RECAPTCHA_SITE_KEY ||
+  "";
+---
+
+<script is:inline src="https://www.google.com/recaptcha/api.js?render=explicit"
+></script>
+
+
+<Layout
+  frontmatter={{
+    title: "Contact Dan!",
+    subTitle: SITE_DESCRIPTION,
+  }}
+>
+  <ContactForm reCaptchaSiteKey={reCaptchaSiteKey} />
+</Layout>
+
+<script>
+  var $hideBotRetries = 0;
+  var $hideBotInterval: NodeJS.Timer | null = null;
+  let reCaptchaSiteKey = "";
+  let $form: HTMLFormElement | null = null;
+  let $gRecaptchaResponse: HTMLInputElement | null = null;
+  // g-recaptcha-response is the token that you'll submit as part of the form
+  // on DOMDontentLoaded, render the reCaptcha widget
+  document.addEventListener("DOMContentLoaded", async () => {
+    const $reCaptchaSiteKey: HTMLDivElement | null = document.querySelector(
+      "[data-recaptcha-site-key]"
+    );
+    $form = document.querySelector('form[name="contact"]');
+    $gRecaptchaResponse = document.querySelector(
+      '[name="g-recaptcha-response"]'
+    );
+
+    if (!$form) return console.error("No form found");
+    if (!$reCaptchaSiteKey)
+      return console.error("No reCaptcha Site Key found");
+    reCaptchaSiteKey =
+      // @ts-ignore
+      $reCaptchaSiteKey?.dataset?.recaptchaSiteKey ||
+      $reCaptchaSiteKey?.getAttribute("data-recaptcha-site-key") ||
+      "";
+
+    if (!reCaptchaSiteKey) return console.error("No reCaptcha site key found");
+
+    // setTimeout(renderReCaptcha, 200);
+    // @ts-ignore
+    window.grecaptcha.ready(() => {
+      renderReCaptcha();
+    });
+    $hideBotInterval = setInterval(hideBotFood, 200);
+
+    document.body.addEventListener("submit", handleSubmit);
+  });
+
+  const BOT_CLEAR_RETRY_LIMIT = 10;
+  function hideBotFood() {
+    console.info("hideBotFood()", { $hideBotRetries, $hideBotInterval });
+    // @ts-ignore
+    window.$hideBotRetries = window.$hideBotRetries || 0;
+    // @ts-ignore
+    window.$hideBotRetries++;
+    
+    if ($hideBotRetries > BOT_CLEAR_RETRY_LIMIT && $hideBotInterval) {
+      console.warn("Failed to hide bot food");
+      // @ts-ignore
+      return clearInterval($hideBotInterval);
+    }
+
+    const botFields = document.querySelectorAll(".bot-food");
+    if (botFields.length > 0 && $hideBotInterval) {
+      console.info(`Hiding ${botFields.length} bot fields`);
+      // @ts-ignore
+      clearInterval($hideBotInterval);
+    }
+    botFields.forEach((field) => {
+      // @ts-ignore
+      field.style.display = "none";
+    });
+  }
+
+  function renderReCaptcha() {
+    // @ts-ignore
+    window.grecaptcha.render("recaptcha", {
+      sitekey: reCaptchaSiteKey,
+      theme: "light",
+      // size: "compact",
+      callback: (response: unknown) => {
+        if ($gRecaptchaResponse) $gRecaptchaResponse!.value = response as string;
+        console.log("reCaptcha response:", response);
+      },
+    });
+  }
+
+  function handleResponse(succeeded: boolean) {
+    if (succeeded) {
+      $form?.classList.add("success");
+      $form?.classList.remove("failure");
+    } else {
+      $form?.classList.add("failure");
+      $form?.classList.remove("success");
+    }
+    $form?.classList.remove("loading");
+  }
+
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+    const form: HTMLFormElement | null = event.target as HTMLFormElement;
+    if (!form) return console.error("Invalid form configuration!");
+    const formData = new FormData(form);
+    $form?.classList.add("loading");
+    // @ts-ignore
+    const recaptchaResponse = window.grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      console.error("reCaptcha not completed");
+      $form?.classList.remove("loading");
+      $form?.classList.add("failure");
+      return;
+    }
+    formData.set("g-recaptcha-response", recaptchaResponse);
+    const response = await fetch("/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      // @ts-ignore
+      body: new URLSearchParams(formData).toString(),
+    }).catch((error) => {
+      console.error("Error submitting form", error);
+      return { ok: false };
+    });
+
+    handleResponse(response.ok);
+
+    if (response.ok) {
+      console.log("Form submitted successfully");
+    } else {
+      console.error("Form submission failed");
+    }
+  }
+</script>

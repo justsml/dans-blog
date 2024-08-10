@@ -1,0 +1,82 @@
+main, body > header {
+  width: 100vw;
+}
+
+main {
+  & ul, ol {
+    margin: 1rem 1rem;
+    list-style-type: initial !important;
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: flex-start;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 80%;
+    > div {
+      display: grid;
+      grid-template-columns: auto auto;
+
+      align-items: center;
+      gap: .5rem;
+      align-content: flex-start;
+      justify-content: flex-start;
+    }
+
+    .category {
+      align-items: flex-end;
+      justify-content: flex-end;
+      width: fit-content;
+    }
+    svg {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  main {
+    width: 100%;
+    font-size: 1rem;;
+
+    .info {
+      .date { display: none; }
+    }
+
+    nav {
+      padding: 0;
+    }
+    header {
+      padding: 0;
+    }
+  }
+
+  .quiz-ui {
+    padding: 0;
+  }
+
+  .toolbar {
+    margin-left: -1.25rem;
+  }
+  .options {
+    margin: 0 -0.2rem 0 -1.25rem;
+  }
+
+
+
+  pre {
+    margin: 0 -0.2rem 0 -2rem;
+  }
+}
+main, body > header {
+  width: clamp(380px, 90%, 820px);
+  max-width: 820px;
+  margin: 0 auto;
+}
+header h2 .title {
+  display: block;
+}

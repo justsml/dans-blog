@@ -1,0 +1,110 @@
+---
+// import type { CollectionEntry } from "astro:content";
+import BaseHead from "@/components/BaseHead.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import { slugify } from "@/shared/pathHelpers";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+// import { Image } from "astro:assets";
+import { PostCollections } from "../../shared/dataCache";
+
+const categories = PostCollections.getCategoryList();
+
+const categoryList = Object.entries(categories).sort((a, b) => {
+  return a[1] === b[1] ? 0 : a[1] < b[1] ? 1 : -1;
+});
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main section {
+        max-width: fit-content;
+        margin: 0 auto;
+      }
+      .category-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 25%));
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+
+        margin: 5rem 0;
+        padding: 0;
+      }
+      .category-list .card {
+        width: calc(30% - 1rem);
+      }
+      .category-list .card * {
+        text-decoration: none;
+        transition: 0.2s ease;
+      }
+      .category-list .card img {
+        margin-bottom: 0.5rem;
+        border-radius: 12px;
+      }
+      .category-list .card a {
+        display: grid;
+        grid-template-columns: 1fr 2rem;
+        gap: 1rem;
+        align-items: center;
+      }
+      .title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1;
+      }
+      .count {
+        margin: 0;
+        color: var(--neon-pink);
+        display: inline;
+        font-size: 1.5rem;
+      }
+      .category-list .card a:hover h4,
+      .category-list .card a:hover .date {
+        color: rgb(var(--accent));
+      }
+      .category-list a:hover img {
+        box-shadow: var(--box-shadow);
+      }
+      @media (max-width: 720px) {
+        .category-list {
+          gap: 0.5rem;
+        }
+        .category-list .card {
+          width: 30%;
+          text-align: center;
+        }
+        .category-list .card:first-child {
+          margin-bottom: 0;
+        }
+        .category-list .card:first-child .title {
+          font-size: 1.563rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section>
+        <h1>Articles by Category</h1>
+        <div class="category-list">
+          {
+            categoryList.map(async ([category, count]) => (
+              <div class="card">
+                <a href={`/category/${slugify(category)}/`}>
+                  <h4 class="title">{category}</h4>
+                  <small class="count">{count}</small>
+                </a>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>

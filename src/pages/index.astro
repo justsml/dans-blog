@@ -1,0 +1,101 @@
+---
+import Page from "../layouts/Page.astro";
+
+import { PostCollections } from "../shared/dataCache";
+import "@/styles/nav.css";
+import "@/styles/global.css";
+import { ArticleCard } from "../components/ArticleCard";
+import { Combobox } from "../components/ui/combobox";
+import type { ArticlePost } from "../types";
+// import ArticleFilterLinks from "../components/ArticleFilterLinks.astro";
+
+const posts = PostCollections.getPosts();
+
+const filterOptions = [
+  { label: "By recently updated", value: "modified" },
+  { label: "By publish date", value: "created" },
+  // { label: "", value: "" },
+  // ...PostCollections.getCategoryCounts().map(([cat, count]) => ({
+  //   label: `By '${cat}': ${count}`,
+  //   value: cat,
+  // })),
+];
+---
+
+<Page>
+  <div class="filter-toolbar">
+    {/* <ArticleFilterLinks /> */}
+    <Combobox
+      client:only={"react"}
+      options={filterOptions}
+      buttonText="View articles by..."
+      onChange={(value) =>
+        console.log(
+          "Combobox changed!",
+          value,
+          "sortCardsBy" in window ? window.sortCardsBy : "sortCardsBy not found"
+        )}
+    />
+  </div>
+  <div class:list={["article-list"]}>
+    {
+      posts.map((post) => (
+        <ArticleCard article={post as ArticlePost} width={200} />
+      ))
+    }
+  </div>
+</Page>
+
+<script is:inline>
+  // document.addEventListener("DOMContentLoaded", function () {});
+
+  function sortCardsByDate(mode) {
+    if (!mode) return;
+    const grid = document.querySelector(".article-list");
+    if (!grid) return console.info("No article-list grid found");
+
+    let reverse = grid.dataset.lastSortMode === mode;
+
+    if (mode === "modified" || mode === "created") {
+      const sortedCards = [...document.querySelectorAll(".article-card")].sort(
+        (a, b) => {
+          const aDate = a.dataset[mode];
+          const bDate = b.dataset[mode];
+          if (!aDate || !bDate)
+            return console.warn("No date found for", a, b) || 0;
+          const aTime = new Date(aDate).getTime();
+          const bTime = new Date(bDate).getTime();
+          if (mode === 'created') {
+            return reverse ? bTime - aTime : aTime - bTime
+          } else {
+            return reverse ? aTime - bTime : bTime - aTime
+          }
+        }
+      );
+
+      if (reverse) {
+        grid.dataset.lastSortMode = "";
+      } else {
+        grid.dataset.lastSortMode = mode;
+      }
+      // Update the order of the cards
+      sortedCards.forEach((card, index) => {
+        card.style.order = `${index + 1}`;
+      });
+    } else {
+      console.error("Invalid sort mode", mode);
+    }
+  }
+
+  function sortCardsBy(mode) {
+    if (!mode) return;
+    if (mode === "modified" || mode === "created") {
+      sortCardsByDate(mode);
+    } else {
+      console.error("TODO: redirect to categoryInvalid sort mode", mode);
+    }
+  }
+
+  window.sortCardsByDate = sortCardsByDate;
+  window.sortCardsBy = sortCardsBy;
+</script>
