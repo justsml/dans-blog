@@ -58,6 +58,8 @@ export function Combobox({
             variant="outline"
             role="combobox"
             aria-expanded={open}
+            aria-label="Sort by"
+            aria-haspopup="listbox"
             className="w-[200px] justify-between bg-inherit hover:bg-gray-600 "
           >
             {value
