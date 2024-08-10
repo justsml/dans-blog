@@ -17,7 +17,7 @@ import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import "./index.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const NavMenu = ({
   categories,
@@ -28,22 +28,28 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
-  const [viewportTopOffset, setViewportTopOffset] = useState('4.6rem');
+  const safeDetectViewportOffset = useCallback(
+    throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
+    []
+  );
+
+  const [viewportTopOffset, setViewportTopOffset] = useState("4.6rem");
   const handlePreventDefault = (e: CustomEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
   function detectViewportOffset() {
-    const $arrow = document.querySelector('.Arrow') as HTMLDivElement | null;
-    const $viewport = document.querySelector('.ViewportPosition') as HTMLDivElement | null;
+    const $arrow = document.querySelector(".Arrow") as HTMLDivElement | null;
+    const $viewport = document.querySelector(
+      ".ViewportPosition"
+    ) as HTMLDivElement | null;
     if (!$arrow || !$viewport) return;
 
     const arrowBox = $arrow.getBoundingClientRect();
-    const topOffset = arrowBox.top - 8
+    const topOffset = arrowBox.top - 8;
 
-    
-    console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
+    // console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
     // $viewport.style.top = `${topOffset}px`
     setViewportTopOffset(`${topOffset}px`);
   }
@@ -51,23 +57,29 @@ const NavMenu = ({
   // Update the viewport offset on window resize and orientation change
   useEffect(() => {
     // throttle the event listener
-    const safeDetectViewportOffset = throttle(detectViewportOffset, 100, { leading: true, trailing: true });
-    
+
     // Call the function once to set the initial offset
     safeDetectViewportOffset();
 
-    window.addEventListener('resize', safeDetectViewportOffset, { passive: true });
-    window.addEventListener('orientationchange', safeDetectViewportOffset);
+    window.addEventListener("resize", safeDetectViewportOffset, {
+      passive: true,
+    });
+    window.addEventListener("orientationchange", safeDetectViewportOffset);
 
     return () => {
       safeDetectViewportOffset.cancel();
-      window.removeEventListener('resize', safeDetectViewportOffset, { passive: true });
-      window.removeEventListener('orientationchange', safeDetectViewportOffset);
-    }
+      window.removeEventListener("resize", safeDetectViewportOffset);
+      window.removeEventListener("orientationchange", safeDetectViewportOffset);
+    };
   }, []);
 
   return (
-    <NavigationMenu.Root className="NavigationMenuRoot" delayDuration={300}>
+    <NavigationMenu.Root
+      className="NavigationMenuRoot"
+      delayDuration={300}
+      onClick={safeDetectViewportOffset}
+      onMouseMove={safeDetectViewportOffset}
+    >
       <NavigationMenu.List className="NavigationMenuList">
         <NavigationMenu.Item value="/">
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
@@ -77,13 +89,10 @@ const NavMenu = ({
             onFocusOutside={handlePreventDefault}
             className="NavigationMenuContent"
           >
-            
             <ul className="List one">
-            <li className="item-categories">
+              <li className="item-categories">
                 <NavigationMenu.Link asChild>
-                  <div
-                    className="Callout neon-bg-3"
-                  >
+                  <div className="Callout neon-bg-3">
                     <div className="CalloutHeading">Categories</div>
                     <p className="CalloutText">
                       {categories.map(([category, count]) => (
@@ -93,7 +102,8 @@ const NavMenu = ({
                           href={`/category/${slugify(category)}/`}
                           className="CalloutItem"
                         >
-                          {category} <Badge variant={"secondary"}>{count as number}</Badge>
+                          {category}{" "}
+                          <Badge variant={"secondary"}>{count as number}</Badge>
                         </a>
                       ))}
                     </p>
@@ -102,48 +112,62 @@ const NavMenu = ({
               </li>
               <li className="item-popular">
                 <NavigationMenu.Link asChild>
-                  <div
-                    className="Callout neon-bg-2"
-                  >
+                  <div className="Callout neon-bg-2">
                     <div className="CalloutHeading">Popular</div>
                     <p className="CalloutText">
-                      {popularPosts.map(({data: {title, subTitle, modified, date}, slug}) => {
-                        const { modifiedAgo } = getComputedDates({date, modified});
-                        return (
-                        <a
-                          key={slug}
-                          title={title + " - " + subTitle}
-                          href={`/${slug}/`}
-                          className="CalloutItem"
-                        >
-                          {title}
-                          <sup>{modifiedAgo} ago</sup>
-                        </a>
-                      )})}
+                      {popularPosts.map(
+                        ({
+                          data: { title, subTitle, modified, date },
+                          slug,
+                        }) => {
+                          const { modifiedAgo } = getComputedDates({
+                            date,
+                            modified,
+                          });
+                          return (
+                            <a
+                              key={slug}
+                              title={title + " - " + subTitle}
+                              href={`/${slug}/`}
+                              className="CalloutItem"
+                            >
+                              {title}
+                              <sup>{modifiedAgo} ago</sup>
+                            </a>
+                          );
+                        }
+                      )}
                     </p>
                   </div>
                 </NavigationMenu.Link>
               </li>
-            <li className="item-recent columns-all">
+              <li className="item-recent columns-all">
                 <NavigationMenu.Link asChild>
-                  <div
-                    className="Callout neon-bg-6"
-                  >
+                  <div className="Callout neon-bg-6">
                     <div className="CalloutHeading">Recent</div>
                     <p className="CalloutText">
-                      {recentPosts.map(({data: {title, subTitle, modified, date}, slug}) => {
-                        const { modifiedAgo } = getComputedDates({date, modified});
-                        return (
-                        <a
-                          key={slug}
-                          title={title + " - " + subTitle}
-                          href={`/${slug}/`}
-                          className="CalloutItem"
-                        >
-                          {title}
-                          <sup>{modifiedAgo} ago</sup>
-                        </a>
-                      )})}
+                      {recentPosts.map(
+                        ({
+                          data: { title, subTitle, modified, date },
+                          slug,
+                        }) => {
+                          const { modifiedAgo } = getComputedDates({
+                            date,
+                            modified,
+                          });
+                          return (
+                            <a
+                              key={slug}
+                              title={title + " - " + subTitle}
+                              href={`/${slug}/`}
+                              className="CalloutItem"
+                            >
+                              {title}
+                              <sup>{modifiedAgo} ago</sup>
+                            </a>
+                          );
+                        }
+                      )}
                     </p>
                   </div>
                 </NavigationMenu.Link>
@@ -170,7 +194,8 @@ const NavMenu = ({
                   >
                     <div className="CalloutHeading">Demos &amp; Examples</div>
                     <p className="CalloutText" style={{ gridColumn: "span 2" }}>
-                      A selection of my projects, experiments and assorted repos.
+                      A selection of my projects, experiments and assorted
+                      repos.
                     </p>
                   </a>
                 </NavigationMenu.Link>
@@ -179,19 +204,22 @@ const NavMenu = ({
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
               >
-                A code + schema generator capable of handling any JSON or CSV input.
+                A code + schema generator capable of handling any JSON or CSV
+                input.
               </ListItem>
               <ListItem
                 href="https://fpromises.io/"
                 title="Functional Promises"
               >
-                A functional & fluent API built around native JavaScript promises.
+                A functional & fluent API built around native JavaScript
+                promises.
               </ListItem>
               <ListItem
                 href="https://github.com/justsml/node-streaming-image-proxy"
                 title="Node Streaming Image Proxy"
               >
-                High performance, low latency image resizing & streaming proxy for Node.js.
+                High performance, low latency image resizing & streaming proxy
+                for Node.js.
               </ListItem>
               <ListItem
                 href="https://github.com/justsml/fact-service"
@@ -251,7 +279,7 @@ const NavMenu = ({
                       />
                     </a>
                     <div className="CalloutHeading">Dan Levy</div>
-                    <p className="CalloutText" style={{textWrap: 'nowrap'}}>
+                    <p className="CalloutText" style={{ textWrap: "nowrap" }}>
                       Coder | Leader
                       <br /> Thinker | Tinker
                     </p>
@@ -263,45 +291,65 @@ const NavMenu = ({
                   <div className="Callout ContactSubMenu">
                     <div className="CalloutHeading">Contact Me</div>
                     <p className="CalloutText">
-                    <span className="SocialLinks">
+                      <span className="SocialLinks">
+                        <a href="/contact">
+                          <span className="Icon">
+                            <EnvelopeClosedIcon
+                              className="svg-icon"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
+                          <label>
+                            <code>&lt;form&gt;</code>
+                          </label>
+                        </a>
 
-                      <a href="/contact">
-                        <span className="Icon">
-                          <EnvelopeClosedIcon className="svg-icon" width={30} height={30} />
-                        </span>
-                        <label><code>&lt;form&gt;</code></label>
-                      </a>
+                        <a href="http://twitter.com/justsml" target="_blank">
+                          <span className="Icon">
+                            <TwitterLogoIcon
+                              className="svg-icon"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
+                          <label>Twitter</label>
+                        </a>
+                        <a href="https://github.com/justsml" target="_blank">
+                          <span className="Icon">
+                            <GitHubLogoIcon
+                              className="svg-icon"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
+                          <label>GitHub</label>
+                        </a>
+                        <a
+                          href="https://linkedin.com/in/realdaniellevy"
+                          target="_blank"
+                        >
+                          <span className="Icon">
+                            <LinkedInLogoIcon
+                              className="svg-icon"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
+                          <label>LinkedIn</label>
+                        </a>
 
-                      <a href="http://twitter.com/justsml" target="_blank">
-                        <span className="Icon">
-                          <TwitterLogoIcon className="svg-icon" width={30} height={30} />
-                        </span>
-                        <label>Twitter</label>
-                      </a>
-                      <a href="https://github.com/justsml" target="_blank">
-                        <span className="Icon">
-                          <GitHubLogoIcon className="svg-icon" width={30} height={30} />
-                        </span>
-                        <label>GitHub</label>
-                      </a>
-                      <a
-                        href="https://linkedin.com/in/realdaniellevy"
-                        target="_blank"
-                      >
-                        <span className="Icon">
-                          <LinkedInLogoIcon className="svg-icon" width={30} height={30} />
-                        </span>
-                        <label>LinkedIn</label>
-                      </a>
-
-                      <a href="/docs/resume.pdf" target="_blank">
-                        <span className="Icon">
-                          <RocketIcon className="svg-icon" width={30} height={30} />
-                        </span>
-                        <label>Résumé (PDF)</label>
-                      </a>
-
-                    </span>
+                        <a href="/docs/resume.pdf" target="_blank">
+                          <span className="Icon">
+                            <RocketIcon
+                              className="svg-icon"
+                              width={30}
+                              height={30}
+                            />
+                          </span>
+                          <label>Résumé (PDF)</label>
+                        </a>
+                      </span>
                     </p>
                   </div>
                 </NavigationMenu.Link>
@@ -316,7 +364,7 @@ const NavMenu = ({
       </NavigationMenu.List>
 
       {createPortal(
-        <div className="ViewportPosition" style={{top: viewportTopOffset}}>
+        <div className="ViewportPosition" style={{ top: viewportTopOffset }}>
           <NavigationMenu.Viewport className="NavigationMenuViewport" />
         </div>,
         document.body
