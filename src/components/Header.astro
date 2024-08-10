@@ -5,12 +5,31 @@ import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar-64.jpg";
 import { PostCollections } from "@/shared/dataCache";
 import "./Header.css";
+import type { ArticlePost } from "../types";
 
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const categories = getCategoryCounts();
-const popularPosts = getPopularPosts();
-const recentPosts = getRecentPosts();
+const popularPosts = getPopularPosts() as MyPost[];
+const recentPosts = getRecentPosts() as MyPost[];
 // const tagCounts = getTagCounts();
+console.log("popularPosts", popularPosts.map(getMinimalPostData)[0]);
+
+type Post<TData extends Record<string, any> = any> = {
+  id: string;
+  slug: string;
+  collection: string;
+  body: string;
+  data: TData;
+}
+type MyPost = Post<ArticlePost['data']>;
+
+function getMinimalPostData(value: MyPost) {
+
+  return {
+    ...value,
+    body: undefined, // omit the body
+  };
+}
 ---
 
 <header class="top-header">

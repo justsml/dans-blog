@@ -1,5 +1,7 @@
 
 export type ArticlePost = {
+  id: string;
+  body?: string;
   slug: string;
   collection?: string;
 

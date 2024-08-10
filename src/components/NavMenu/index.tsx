@@ -1,4 +1,6 @@
 "use client";
+import { throttle } from "lodash";
+
 import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { slugify } from "@/shared/pathHelpers";
@@ -15,6 +17,7 @@ import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import "./index.css";
+import { useEffect, useState } from "react";
 
 const NavMenu = ({
   categories,
@@ -25,10 +28,43 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
+  const [viewportTopOffset, setViewportTopOffset] = useState('4.6rem');
   const handlePreventDefault = (e: CustomEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
+
+  function detectViewportOffset() {
+    const $arrow = document.querySelector('.Arrow') as HTMLDivElement | null;
+    const $viewport = document.querySelector('.ViewportPosition') as HTMLDivElement | null;
+    if (!$arrow || !$viewport) return;
+
+    const arrowBox = $arrow.getBoundingClientRect();
+    const topOffset = arrowBox.top - 8
+
+    
+    console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
+    // $viewport.style.top = `${topOffset}px`
+    setViewportTopOffset(`${topOffset}px`);
+  }
+
+  // Update the viewport offset on window resize and orientation change
+  useEffect(() => {
+    // throttle the event listener
+    const safeDetectViewportOffset = throttle(detectViewportOffset, 100, { leading: true, trailing: true });
+    
+    // Call the function once to set the initial offset
+    safeDetectViewportOffset();
+
+    window.addEventListener('resize', safeDetectViewportOffset, { passive: true });
+    window.addEventListener('orientationchange', safeDetectViewportOffset);
+
+    return () => {
+      safeDetectViewportOffset.cancel();
+      window.removeEventListener('resize', safeDetectViewportOffset, { passive: true });
+      window.removeEventListener('orientationchange', safeDetectViewportOffset);
+    }
+  }, []);
 
   return (
     <NavigationMenu.Root className="NavigationMenuRoot" delayDuration={300}>
@@ -280,7 +316,7 @@ const NavMenu = ({
       </NavigationMenu.List>
 
       {createPortal(
-        <div className="ViewportPosition">
+        <div className="ViewportPosition" style={{top: viewportTopOffset}}>
           <NavigationMenu.Viewport className="NavigationMenuViewport" />
         </div>,
         document.body

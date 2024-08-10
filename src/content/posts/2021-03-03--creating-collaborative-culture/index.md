@@ -8,8 +8,8 @@ category: Leadership
 subCategory: culture
 cover: pexels-photo-3184431--cropped.jpg
 cover_mobile: w300_pexels-photo-3184431--cropped.jpg
-cover_tablet: w600_pexels-photo-3184431--cropped.jpg
-cover_desktop: w900_pexels-photo-3184431--cropped.jpg
+# cover_tablet: w600_pexels-photo-3184431--cropped.jpg
+# cover_desktop: w900_pexels-photo-3184431--cropped.jpg
 cover_icon: icon_pexels-photo-3184431--cropped.jpg
 ---
 

@@ -2,23 +2,27 @@
 
 # DanLevy.net
 
+## TODO
+
+- [ ] Add comments
+- [ ] Fine tune: crank lighthouse score
+
 ## Features
 
-- [ ] Add new nav
+- [x] Add new nav
   - [ ] Add tags
-  - [ ] Add categories
-  - [ ] Add Popular/Related posts
-- [ ] Convert Quiz UI to MDX/Astro
-- [ ] Add favicon
-- [ ] Add social media meta tags
-- [ ] Add RSS feed
-- [ ] Add sitemap
-- [ ] Add smart 404 page
-- [ ] Add about page
-- [ ] Add OSS info page
-- [ ] Add contact page
+  - [x] Add categories
+  - [x] Add Popular/Related posts
+- [x] Convert Quiz UI to MDX/Astro
+- [x] Add favicon
+- [x] Add social media meta tags
+- [x] Add RSS feed
+- [x] Add sitemap
+- [x] Add smart 404 page
+- [x] Add about page
+- [x] Add OSS project list (in menu)
+- [x] Add contact page
 - [ ] Add Video page
-- [ ] Add comments
 - [ ] Add search
 - [ ] Add newsletter
 
@@ -63,11 +67,11 @@ All commands are run from the root of the project, from a terminal:
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
 | `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| `bun run dev`             | Starts local dev server at `localhost:4321`      |
+| `bun run build`           | Build your production site to `./dist/`          |
+| `bun run preview`         | Preview your build locally, before deploying     |
+| `bun run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun run astro -- --help` | Get help using the Astro CLI                     |
 
 ## 👀 Want to learn more?
 

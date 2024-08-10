@@ -7,8 +7,8 @@ subCategory: angularjs
 tags: [programming, angularjs, javascript, python, opinion]
 cover: alex-perez-753751-unsplash.jpg
 cover_mobile: w300_alex-perez-753751-unsplash.jpg
-cover_tablet: w600_alex-perez-753751-unsplash.jpg
-cover_desktop: w900_alex-perez-753751-unsplash.jpg
+# cover_tablet: w600_alex-perez-753751-unsplash.jpg
+# cover_desktop: w900_alex-perez-753751-unsplash.jpg
 cover_icon: icon_alex-perez-753751-unsplash.jpg
 ---
 

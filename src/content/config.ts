@@ -40,8 +40,8 @@ const posts = defineCollection({
       modified: z.coerce.string().optional(),
       cover: image(), // z.string().optional(),
       cover_mobile: image().optional(),
-      cover_tablet: image().optional(),
-      cover_desktop: image().optional(),
+      // cover_tablet: image().optional(),
+      // cover_desktop: image().optional(),
       cover_icon: image().optional(),
       
       category: z.string(),

@@ -8,8 +8,8 @@ subCategory: promises
 tags: [promises, async, javascript, composition]
 cover: joe-yates-480485-unsplash.jpg
 cover_mobile: w300_joe-yates-480485-unsplash.jpg
-cover_tablet: w600_joe-yates-480485-unsplash.jpg
-cover_desktop: w900_joe-yates-480485-unsplash.jpg
+# cover_tablet: w600_joe-yates-480485-unsplash.jpg
+# cover_desktop: w900_joe-yates-480485-unsplash.jpg
 cover_icon: icon_joe-yates-480485-unsplash.jpg
 ---
 
