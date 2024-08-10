@@ -15,6 +15,7 @@ export const ArticleCard = ({
   const {
     title,
     subTitle,
+    draft,
     cover_mobile,
     date,
     modified,
@@ -34,7 +35,10 @@ export const ArticleCard = ({
       <img src={icon.src} alt={title} width={icon.width} height={icon.height} />
     );
 
-  const categoryClass = `category-${slugify(category)}`;
+  let categoryClass = `category-${slugify(category)}`;
+  if (draft) {
+    categoryClass += " draft";
+  }
 
   return (
     <a
