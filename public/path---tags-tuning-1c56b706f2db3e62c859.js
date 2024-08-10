@@ -1,2 +1,0 @@
-webpackJsonp([0xc43a5979045e],{1409:function(e,a){e.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/disable-transparent-hugepages/"},frontmatter:{title:"MongoDB Tuning: disable transparent huge pages",subTitle:"a fix for Debian/Ubuntu",date:"2015-12-22T00:00:00.000Z",modified:"2018-09-28T00:00:00.000Z",category:"mongodb"}}}]}},pathContext:{posts:[{title:"MongoDB Tuning: disable transparent huge pages",slug:"/disable-transparent-hugepages/"}],tagName:"tuning",tagCount:1}}}});
-//# sourceMappingURL=path---tags-tuning-1c56b706f2db3e62c859.js.map

@@ -1,2 +1,0 @@
-webpackJsonp([0xcdbdd6ad2950],{1410:function(e,t){e.exports={data:{allMarkdownRemark:{totalCount:1,edges:[{node:{fields:{slug:"/guerrilla-types-in-typescript/"},frontmatter:{title:"Guerrilla Types in TypeScript",subTitle:"Renegade Type Design",date:"2023-09-05T00:00:00.000Z",modified:"2023-09-06T00:00:00.000Z",category:"TypeScript"}}}]}},pathContext:{posts:[{title:"Guerrilla Types in TypeScript",slug:"/guerrilla-types-in-typescript/"}],tagName:"types",tagCount:1}}}});
-//# sourceMappingURL=path---tags-types-ba577c101ec9e8dc67ef.js.map
