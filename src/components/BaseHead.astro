@@ -2,6 +2,7 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import '@/styles/global.css';
+import pkg from '../../package.json';
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from '../consts';
 // import '@/styles/gist-embed.css';
 
@@ -22,18 +23,21 @@ if (description === 'undefined') {
 const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
 const siteDescription = description || SITE_SEO_DESCRIPTION;
 
+const version = pkg.version;
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-
+<meta name="site-version" content={version ?? "0.0.0"} />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&family=Tilt+Neon&display=swap" rel="stylesheet"> -->
 <!-- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Tilt+Neon:YROT@13&display=swap" rel="stylesheet"> -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Playwrite+AU+NSW:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Tilt+Neon:YROT@13&display=swap" rel="stylesheet" crossorigin>
+<!-- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Playwrite+AU+NSW:wght@100..400&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Slab:wght@100..900&family=Tilt+Neon:YROT@13&display=swap" rel="stylesheet" crossorigin> -->
+<link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+NSW:wght@100..400&family=Raleway:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" crossorigin="anonymous">
+
 <!-- Font preloads -->
 <!-- <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin />
 <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin /> -->
