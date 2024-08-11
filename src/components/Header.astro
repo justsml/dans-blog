@@ -9,10 +9,10 @@ import type { ArticlePost } from "../types";
 
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const categories = getCategoryCounts();
-const popularPosts = getPopularPosts() as MyPost[];
-const recentPosts = getRecentPosts() as MyPost[];
+const popularPosts = (getPopularPosts() as MyPost[]).map(getMinimalPostData);
+const recentPosts = (getRecentPosts() as MyPost[]).map(getMinimalPostData);
 // const tagCounts = getTagCounts();
-console.log("popularPosts", popularPosts.map(getMinimalPostData)[0]);
+// console.log("popularPosts", popularPosts[0]);
 
 type Post<TData extends Record<string, any> = any> = {
   id: string;
@@ -23,10 +23,10 @@ type Post<TData extends Record<string, any> = any> = {
 }
 type MyPost = Post<ArticlePost['data']>;
 
-function getMinimalPostData(value: MyPost) {
+function getMinimalPostData({body: _body, ...data}: MyPost) {
 
   return {
-    ...value,
+    ...data,
     body: undefined, // omit the body
   };
 }
