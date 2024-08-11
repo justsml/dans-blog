@@ -6,6 +6,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { InfoLabel } from "../components/ui/infoLabel";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
+import { GitHubIssueComments } from "../components/Comments";
 
 import { CalendarIcon, TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
@@ -47,7 +48,13 @@ const lastModified = modifiedDate
   : "";
 const publishedTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
-const coverUrl = cover && typeof cover === "object" && "src" in cover ? (cover as ImageMetadata).src : cover;
+const coverUrl =
+  cover && typeof cover === "object" && "src" in cover
+    ? (cover as ImageMetadata).src
+    : cover;
+
+const commentsKey = new URL(Astro.request.url).pathname;
+
 ---
 
 <html lang="en">
@@ -85,11 +92,11 @@ const coverUrl = cover && typeof cover === "object" && "src" in cover ? (cover a
       };
 
       document.addEventListener("DOMContentLoaded", function () {
-        const quiz = document.querySelector('.quiz-ui');
+        const quiz = document.querySelector(".quiz-ui");
 
         if (quiz) {
           setTimeout(window.__updateCounts, 500);
-          quiz.addEventListener('click', () => {
+          quiz.addEventListener("click", () => {
             window.__updateCounts();
           });
         }
@@ -127,17 +134,15 @@ const coverUrl = cover && typeof cover === "object" && "src" in cover ? (cover a
         cover && typeof cover === "object" && "src" in cover && (
           <div class="hero-image">
             <div class="hero-image-wrapper">
-              <Image
-                src={cover as ImageMetadata}
-                width="400"
-                alt={title}
-              />
+              <Image src={cover as ImageMetadata} width="400" alt={title} />
             </div>
           </div>
         )
       }
 
       <slot />
+
+      <GitHubIssueComments client:only="react" path={commentsKey} />
     </main>
     <Footer />
     <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
