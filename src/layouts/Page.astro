@@ -2,21 +2,22 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import AnalyticsTag from "../components/AnalyticsTag.astro";
+import { GOOGLE_ANALYTICS_ID } from "../consts";
+import socialBanner from '../assets/social-banner.png';
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
 
 // console.log("Page.astro", Astro.props);
 
-import AnalyticsTag from "../components/AnalyticsTag.astro";
-import { GOOGLE_ANALYTICS_ID } from "../consts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
 
 ---
 <html lang="en">
   <head>
-    <BaseHead title={title} description={`${subTitle}`} />    
+    <BaseHead title={title} description={`${subTitle}`} image={socialBanner.src} />    
   </head>
 
   <body class="layout-page">
