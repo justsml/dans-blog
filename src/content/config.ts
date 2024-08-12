@@ -31,6 +31,8 @@ const posts = defineCollection({
     z.object({
       title: z.string(),
       subTitle: z.string().optional().default(""),
+      /** To override utteranc.es lookup string */
+      commentsKeyOverride: z.string().optional(),
       // Transform string to Date object
       // date: z.coerce.date(),
       // modified: z.coerce.date().optional(),

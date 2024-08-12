@@ -23,6 +23,7 @@ type Props = {
   frontmatter?: {
     title: string;
     subTitle?: string;
+    commentsKeyOverride?: string;
     date?: string;
     modified?: string;
     tags?: string[];
@@ -31,8 +32,15 @@ type Props = {
   };
 };
 
-const { title, subTitle, cover, category, date, modified } =
-  Astro.props.frontmatter! || Astro.props;
+const {
+  title,
+  subTitle,
+  cover,
+  category,
+  date,
+  modified,
+  commentsKeyOverride,
+} = Astro.props.frontmatter! || Astro.props;
 
 // console.log("Post.astro", Astro.props);
 
@@ -53,8 +61,7 @@ const coverUrl =
     ? (cover as ImageMetadata).src
     : cover;
 
-const commentsKey = new URL(Astro.request.url).pathname;
-
+const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 ---
 
 <html lang="en">

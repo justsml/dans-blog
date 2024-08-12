@@ -4,8 +4,12 @@
 
 ## TODO
 
-- [ ] Add comments
-- [ ] Fine tune: crank lighthouse score
+- [x] Add comments
+- [x] Fine tune: crank lighthouse score
+- Publish:
+  - [ ] Comments Component
+  - [ ] Free local search
+  - [ ] Newsletter
 
 ## Features
 
@@ -34,6 +38,48 @@ Features:
 - ✅ Sitemap support
 - ✅ RSS Feed support
 - ✅ Markdown & MDX support
+
+## Helpers
+
+Browser snippets to run in console to better understand the main factors in your generated site's size in bytes.
+
+### Misc DOM Helpers
+
+```js
+const getAttrObject = el => Object.fromEntries(Object.values(el.attributes).map(attr => [attr.name, attr.value]));
+```
+
+### Analyze Size of Astro Sites
+
+```js
+Array.from(document.querySelectorAll('astro-island'))
+.map(island => {
+  var url = island.getAttribute('component-url');
+  var size = island.outerHTML.length;
+  return { url, size };
+})
+.sort((a, b) => b.size - a.size)
+.map(island => `${island.url}: ${(island.size).toLocaleString()}`);
+```
+
+### Analyze Size of Key Elements
+
+Get the size of the main elements in your site.
+
+```js
+var sections = Array.from(document.querySelectorAll('html, body, head, main, article, aside, nav, header, footer, style, script, astro-root, astro-island'))
+.map(element => {
+  var tag = element.tagName.toLowerCase();
+  var size = element.outerHTML.length;
+  return { tag, size, attrs: element.attributes };
+})
+var sectionSizes = Object.entries(sections.reduce((acc, {tag, size}) => {
+  acc[tag] = size;
+  return acc;
+}, {}))
+.sort((a, b) => b.size - a.size)
+.map(element => `${element.tag}: ${(element.size).toLocaleString()}`);
+```
 
 ## 🚀 Project Structure
 

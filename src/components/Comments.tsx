@@ -41,11 +41,13 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
     margin: 0.5rem;
     padding: 0.5rem;
     border-radius: 5px;
+}
      */
   return (
     <div
       ref={ref}
       id="post-comments"
+      style={{position: "relative"}}
       className="post-comments utterances-frame relative"
       // style={{
       //   maxHeight: "70vh",
