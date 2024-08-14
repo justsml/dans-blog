@@ -1,0 +1,131 @@
+---
+title: "Eliminate Frontend JS with Backend JS and HTMX"
+subTitle: Introducing the BESH Stack
+date: 2024-08-12
+modified: 2024-08-12
+tags: [htmx, bun, elysia, full-stack, coding]
+category: Guides
+subCategory: Open Source
+cover: Matthew_Hamilton--Docked_yacht_in_Croatia.jpg
+cover_mobile: w300_Matthew_Hamilton--Docked_yacht_in_Croatia.jpg
+cover_icon: icon_Matthew_Hamilton--Docked_yacht_in_Croatia.jpg
+---
+
+## Building a Full-Stack Application with Bun, Elysia, and HTMX
+
+Ethan Niser recently introduced the [BETH Stack](https://github.com). It stands for Bun, Elysia, Turso, HTMX which is fantastic.
+
+
+### Step 1: Cloning the Repository
+
+First, clone the repository to your local machine:
+
+```bash
+git clone https://github.com/justsml/bun-elysia-htmx.git
+cd bun-elysia-htmx
+```
+
+### Step 2: Installing Dependencies
+
+Once you've navigated into the project directory, install the necessary dependencies using Bun:
+
+```bash
+bun install
+```
+
+Bun will automatically read the `package.json` file and install the required dependencies faster than `npm` or `yarn`.
+
+### Step 3: Understanding the Project Structure
+
+Here’s a quick overview of the main directories and files in the project:
+
+- **`src/`**: Contains the source code for the application.
+  - **`index.ts`**: The entry point of the application where Elysia is configured.
+  - **`routes/`**: Contains the route handlers for different endpoints.
+  - **`views/`**: Holds the HTML templates rendered by HTMX.
+- **`public/`**: Static files like CSS, images, and client-side JavaScript.
+- **`bunfig.toml`**: Configuration file for Bun, similar to `package.json`.
+
+### Step 4: Configuring Elysia
+
+[Elysia](https://elysia.js.org/) is a lightweight and fast web framework for Bun. It’s similar to Express.js but optimized for Bun’s environment.
+
+In the `src/index.ts` file, you’ll see how Elysia is set up:
+
+```typescript
+import Elysia from 'elysia';
+
+const app = new Elysia();
+
+app.get('/', ({ html }) => {
+  return html('<h1>Hello from Elysia and HTMX!</h1>');
+});
+
+app.listen(3000, () => {
+  console.log(`Server is running on http://localhost:3000`);
+});
+```
+
+This basic setup creates a server that listens on port 3000 and responds with a simple HTML message when accessed at the root URL.
+
+### Step 5: Integrating HTMX
+
+[HTMX](https://htmx.org/) is a powerful library that allows you to create dynamic, interactive web pages with less JavaScript by leveraging HTML attributes.
+
+The repository demonstrates how to use HTMX for sending HTTP requests and updating parts of the page dynamically. For example, in the `views/` directory, you might find a template file like `index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elysia + HTMX</title>
+  <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+</head>
+<body>
+  <h1>Elysia + HTMX Example</h1>
+  <button hx-get="/api/data" hx-target="#result">Fetch Data</button>
+  <div id="result"></div>
+</body>
+</html>
+```
+
+In this example, clicking the button triggers an HTMX `GET` request to the `/api/data` endpoint, and the response is inserted into the `div` with the ID `result`.
+
+### Step 6: Running the Application
+
+To run the application, simply use the following command:
+
+```bash
+bun run src/index.ts
+```
+
+You should see output confirming that the server is running:
+
+```
+Server is running on http://localhost:3000
+```
+
+Visit `http://localhost:3000` in your browser, and you’ll see the application in action. The button click will dynamically load data into the page using HTMX without requiring a full page reload.
+
+### Step 7: Customizing and Extending
+
+Now that you have the application up and running, you can start customizing it to suit your needs. Some potential enhancements include:
+
+- **Adding more routes**: Extend the application by adding more API routes in the `routes/` directory.
+- **Database Integration**: Connect a database (e.g., SQLite, PostgreSQL) to handle persistent data.
+- **Styling**: Use CSS frameworks like Tailwind or Bootstrap to improve the look and feel of the application.
+- **Advanced HTMX Usage**: Implement more complex interactions with HTMX, like form submissions, real-time updates, etc.
+
+### Conclusion
+
+By combining Bun, Elysia, and HTMX, you get a powerful stack that leverages modern JavaScript tooling for building fast and dynamic web applications. This setup is lightweight yet extensible, making it suitable for a wide range of projects. Feel free to explore the [justsml/bun-elysia-htmx](https://github.com/justsml/bun-elysia-htmx) repository further and adapt it to your next web project!
+
+
+
+
+### References & Credits
+
+- [The BETH Stack](https://github.com/ethanniser/the-beth-stack) by [Ethan Niser](https://github.com/ethanniser)
+- [Full-stack web development with HTMX and Bun, Part 1: Elysia and MongoDB](https://www.infoworld.com/article/2336494/full-stack-web-development-with-htmx-and-bun-part-1-elysia-and-mongodb.html)

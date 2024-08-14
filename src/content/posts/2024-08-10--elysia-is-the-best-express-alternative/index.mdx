@@ -1,0 +1,100 @@
+---
+title: "Elysia bodied Express. RIP."
+subTitle: The case for Elysia over Express
+date: 2024-08-12
+modified: 2024-08-12
+tags: [nodejs, bun, elysia, express, full-stack, coding]
+category: Guides
+subCategory: Open Source
+cover: omar-ram-3Yz8pqRIuoE-unsplash.jpg
+cover_mobile: w300_omar-ram-3Yz8pqRIuoE-unsplash.jpg
+cover_icon: icon_omar-ram-3Yz8pqRIuoE-unsplash.jpg
+---
+
+## Express vs. Elysia: A New Challenger Approaches
+
+When it comes to building web applications with Node.js, Express has been the go-to framework for many developers. However, a new contender has entered the ring: Elysia. In this article, we'll explore the differences between Express and Elysia and why you might want to consider using Elysia for your next project.
+
+### What is Elysia?
+
+[Elysia](https://elysia.js.org/) is a lightweight and fast web framework for Bun, a JavaScript runtime that aims to be faster than Node.js. Elysia is similar to Express in many ways but is optimized for Bun's environment. It provides a familiar API for building web applications, making it easy to transition from Express to Elysia.
+
+### Why Choose Elysia Over Express?
+
+While Express is a mature and battle-tested framework, Elysia offers several advantages that make it a compelling alternative:
+
+1. **API Design**: Elysia is far more ergonomic; with clear error handling, named lifecycle handlers, and a simpler routing design.
+1. **Rich Features**: Elysia provides a rich set of features out of the box, including typed & validated payloads, [Swagger](https://elysiajs.com/plugins/swagger.html) (OpenAPI), [WebSockets](https://elysiajs.com/patterns/websocket.html), native [stream & AsyncGenerator support](https://elysiajs.com/patterns/stream.html), and more. But not _too_ much.
+
+Another reason to favor Elysia is performance. It is [faster than Express in many cases.](https://elysiajs.com/at-glance.html#performance)
+
+### So, what's the code like?
+
+Let's look at some code:
+
+```javascript
+import Elysia from 'elysia';
+
+new Elysia()
+  .get('/', () => 'Hello Elysia')
+  .get('/user/:id', ({ params: { id }}) => id)
+  .post('/form', ({ body }) => body)
+  .listen(3000)
+```
+
+#### Pros
+
+1. It figures out sending JSON or HTML based on the return type.
+1. Destructured arguments let you use only what you need. (No `req`, `res`, `next`).
+1. The plugin system is overall better than Express middleware. (Better === more idempotent.)
+
+
+#### Cons
+
+1. It's not as mature as Express, so you might run into some rough edges.
+1. Some parts of the state API (`.decorate({serviceA, serviceB})`) are a bit AngularJS-ish.
+1. The type system essentially requires inline functions (to get typed access `body`, `request`, `params`, `query`, etc).
+1. Plugins have a bit of a learning curve.
+
+
+
+##### `./plugin/count.js`
+
+```javascript
+import Elysia from "elysia";
+
+export const countPlugin = new Elysia()
+  .state('counter', 0)
+  .state(({ store }) => ({ counter: store.counter + 1 }))
+```
+
+{/* ```javascript
+import Elysia from "elysia";
+
+class CountService {
+  #count = 0;
+  increment = () => this.#count++;
+  getCount = () => this.#count;
+}
+
+export default new Elysia({ name: "plugins.countService" })
+  .decorate("countService", new CountService());
+``` */}
+
+##### `./server.mjs`
+
+```javascript
+import Elysia from 'elysia';
+import { countPlugin } from './plugin/count.js';
+
+const app = new Elysia();
+
+app.use(countPlugin)
+  .get('/', ({ store }) => `Seen ${store.counter} requests!`)
+```
+
+
+### References & Credits
+
+- [The BETH Stack](https://github.com/ethanniser/the-beth-stack) by [Ethan Niser](https://github.com/ethanniser)
+- [Full-stack web development with HTMX and Bun, Part 1: Elysia and MongoDB](https://www.infoworld.com/article/2336494/full-stack-web-development-with-htmx-and-bun-part-1-elysia-and-mongodb.html)
