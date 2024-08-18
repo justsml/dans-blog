@@ -58,15 +58,17 @@ const publishedTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
 const coverUrl =
   cover && typeof cover === "object" && "src" in cover
-    ? (cover as ImageMetadata).src
-    : cover;
+    ? (cover as ImageMetadata)
+    : typeof cover === "string"
+      ? cover
+      : undefined;
 
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={title} description={`${subTitle}`} image={`${coverUrl}`} />
+    <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
     {lastModified && <meta http-equiv="last-modified" content={lastModified} />}
     {
       publishedTime && (

@@ -1,5 +1,5 @@
 ---
-// import {} from 'lodash';
+import omit from "lodash/omit";
 import { SITE_TITLE } from "../consts";
 import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar-64.jpg";
@@ -8,9 +8,18 @@ import "./Header.css";
 import type { ArticlePost } from "../types";
 
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
+const imgPaths = [
+  "data.cover",
+  "data.cover_icon",
+  "data.cover_mobile"
+];
 const categories = getCategoryCounts();
-const popularPosts = (getPopularPosts() as MyPost[]).map(getMinimalPostData);
-const recentPosts = (getRecentPosts() as MyPost[]).map(getMinimalPostData);
+const popularPosts = (getPopularPosts() as MyPost[]).map((p) =>
+  getMinimalPostData(p, ["data.body", ...imgPaths])
+);
+const recentPosts = (getRecentPosts() as MyPost[]).map((p) =>
+  getMinimalPostData(p, ["data.body", ...imgPaths])
+);
 // const tagCounts = getTagCounts();
 // console.log("popularPosts", popularPosts[0]);
 
@@ -20,15 +29,14 @@ type Post<TData extends Record<string, any> = any> = {
   collection: string;
   body: string;
   data: TData;
-}
-type MyPost = Post<ArticlePost['data']>;
+};
+type MyPost = Post<ArticlePost["data"]>;
 
-function getMinimalPostData({body: _body, ...data}: MyPost) {
-
-  return {
-    ...data,
-    body: undefined, // omit the body
-  };
+function getMinimalPostData(
+  { body: _body, ...data }: MyPost,
+  omitFields = ["body"]
+) {
+  return omit(data, omitFields);
 }
 ---
 

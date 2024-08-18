@@ -7,9 +7,17 @@ import "@/styles/global.css";
 import { ArticleCard } from "../components/ArticleCard";
 import { Combobox } from "../components/ui/combobox";
 import type { ArticlePost } from "../types";
+import omit from "lodash/omit";
 // import ArticleFilterLinks from "../components/ArticleFilterLinks.astro";
 
-const posts = PostCollections.getPosts();
+const posts = PostCollections.getPosts().map((p) =>
+  omit(p as ArticlePost, [
+    "data.body",
+    "data.cover",
+    "data.cover_icon",
+    // "data.cover_mobile",
+  ])
+);
 
 const filterOptions = [
   { label: "By recently updated", value: "modified" },
@@ -65,10 +73,10 @@ const filterOptions = [
             return console.warn("No date found for", a, b) || 0;
           const aTime = new Date(aDate).getTime();
           const bTime = new Date(bDate).getTime();
-          if (mode === 'created') {
-            return reverse ? bTime - aTime : aTime - bTime
+          if (mode === "created") {
+            return reverse ? bTime - aTime : aTime - bTime;
           } else {
-            return reverse ? aTime - bTime : bTime - aTime
+            return reverse ? aTime - bTime : bTime - aTime;
           }
         }
       );
