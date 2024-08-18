@@ -8,8 +8,6 @@ subCategory: promises
 tags: [promises, async, await, async-await, javascript, composition]
 cover: matt-nelson-414464-unsplash.jpg
 cover_mobile: w300_matt-nelson-414464-unsplash.jpg
-# cover_tablet: w600_matt-nelson-414464-unsplash.jpg
-# cover_desktop: w900_matt-nelson-414464-unsplash.jpg
 cover_icon: icon_matt-nelson-414464-unsplash.jpg
 ---
 

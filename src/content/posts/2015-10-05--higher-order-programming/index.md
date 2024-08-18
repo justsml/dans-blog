@@ -7,8 +7,6 @@ subCategory: programming
 tags: [programming, patterns, models, source code, organization]
 cover: susan-holt-simpson-799094-unsplash.jpg
 cover_mobile: w300_susan-holt-simpson-799094-unsplash.jpg
-# cover_tablet: w600_susan-holt-simpson-799094-unsplash.jpg
-# cover_desktop: w900_susan-holt-simpson-799094-unsplash.jpg
 cover_icon: icon_susan-holt-simpson-799094-unsplash.jpg
 ---
 

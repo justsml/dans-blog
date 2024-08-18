@@ -8,8 +8,6 @@ category: Thoughts
 subCategory: Git
 cover: casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
 cover_mobile: w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
-# cover_tablet: w600_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
-# cover_desktop: w900_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
 cover_icon: icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.jpg
 ---
 

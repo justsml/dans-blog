@@ -8,8 +8,6 @@ category: Code
 subCategory: promises
 cover: lennart-heim-766366-unsplash.jpg
 cover_mobile: w300_lennart-heim-766366-unsplash.jpg
-# cover_tablet: w600_lennart-heim-766366-unsplash.jpg
-# cover_desktop: w900_lennart-heim-766366-unsplash.jpg
 cover_icon: icon_lennart-heim-766366-unsplash.jpg
 ---
 

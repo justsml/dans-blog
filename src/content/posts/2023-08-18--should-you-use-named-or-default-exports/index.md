@@ -8,8 +8,6 @@ category: Guides
 subCategory: JavaScript
 cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
 cover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
-# cover_tablet: w600_austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
-# cover_desktop: w900_austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
 cover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.jpg
 ---
 

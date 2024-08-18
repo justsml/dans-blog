@@ -8,8 +8,6 @@ subCategory: promises
 tags: [promises, async, debugging, errors, javascript, composition]
 cover: michal-parzuchowski-224092-unsplash.jpg
 cover_mobile: w300_michal-parzuchowski-224092-unsplash.jpg
-# cover_tablet: w600_michal-parzuchowski-224092-unsplash.jpg
-# cover_desktop: w900_michal-parzuchowski-224092-unsplash.jpg
 cover_icon: icon_michal-parzuchowski-224092-unsplash.jpg
 ---
 

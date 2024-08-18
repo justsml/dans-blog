@@ -7,8 +7,6 @@ subCategory: machine-learning
 tags: [artificial intelligence, ai, self-driving cars, fails]
 cover: sandy-millar-749381-unsplash.jpg
 cover_mobile: w300_sandy-millar-749381-unsplash.jpg
-# cover_tablet: w600_sandy-millar-749381-unsplash.jpg
-# cover_desktop: w900_sandy-millar-749381-unsplash.jpg
 cover_icon: icon_sandy-millar-749381-unsplash.jpg
 ---
 

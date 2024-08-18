@@ -8,8 +8,6 @@ subCategory: programming
 tags: [cloud, servers, architecture, scaling, digital-ocean, amazon-web-services, google-cloud-engine, azure, packet.net, ovh.net, ssd, io]
 cover: solaiman-hossen-553024-unsplash.jpg
 cover_mobile: w300_solaiman-hossen-553024-unsplash.jpg
-# cover_tablet: w600_solaiman-hossen-553024-unsplash.jpg
-# cover_desktop: w900_solaiman-hossen-553024-unsplash.jpg
 cover_icon: icon_solaiman-hossen-553024-unsplash.jpg
 ---
 
