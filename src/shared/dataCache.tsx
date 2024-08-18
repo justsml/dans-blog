@@ -1,6 +1,7 @@
 import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import { fixSlugPrefix, slugify } from "../shared/pathHelpers";
+import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
@@ -64,20 +65,15 @@ export const PostCollections = {
     // console.log("dataCache.getPosts", posts.length);
     return posts;
   },
-  getStaticPaths(): Array<{
+
+  getStaticPaths(posts: ArticlePost[] = _posts as unknown as ArticlePost[]): Array<{
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
-    let posts = PostCollections._posts;
-
-    let fixedPosts = posts.map((post) => ({
+    return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },
     }));
-
-    // console.log("getStaticPaths[0]", fixedPosts[0]);
-
-    return fixedPosts;
   },
 
   getStaticPathsCategoryList(): Array<{
@@ -99,7 +95,9 @@ export const PostCollections = {
     return PostCollections._categories;
   },
   getPostsByCategory(category: string) {
-    return PostCollections._posts.filter((post) => post.data.category === category);
+    return PostCollections._posts.filter(
+      (post) => post.data.category === category
+    );
   },
 
   /** Popular posts according to google analytics. 2024/Q2 */
@@ -119,15 +117,30 @@ export const PostCollections = {
     // TODO?
   },
   getRecentPosts() {
-    return [...PostCollections._posts].sort((a, b) => {
-      const aDate = new Date(a.data.date!).getTime();
-      const bDate = new Date(b.data.date!).getTime();
+    return [...PostCollections._posts]
+      .sort((a, b) => {
+        const aDate = new Date(a.data.date!).getTime();
+        const bDate = new Date(b.data.date!).getTime();
 
-      return aDate === bDate ? 0 : aDate > bDate ? -1 : 1;
-      // return a.data.modified! === b.data.modified! ? 0 : a.data.modified! > b.data.modified! ? -1 : 1;
-    })
-    .slice(0, 7);
-  }
+        return aDate === bDate ? 0 : aDate > bDate ? -1 : 1;
+        // return a.data.modified! === b.data.modified! ? 0 : a.data.modified! > b.data.modified! ? -1 : 1;
+      })
+      .slice(0, 7);
+  },
+};
+
+export const getArticleSortFn = (
+  field: "date" | "modified",
+  direction: "asc" | "desc" = "desc"
+) => {
+  return (a: ArticlePost, b: ArticlePost) => {
+    const aDate = a.data[field];
+    const bDate = b.data[field];
+    if (!aDate || !bDate) return console.warn("No date found for", a, b), 0;
+    const aTime = new Date(aDate).getTime();
+    const bTime = new Date(bDate).getTime();
+    return direction === "desc" ? bTime - aTime : aTime - bTime;
+  };
 };
 
 export const images = import.meta.glob<{ default: ImageMetadata }>(
@@ -183,7 +196,7 @@ export const getResponsiveImage = (imagePath: string) => {
 // console.log("responsiveImages", responsiveImages);
 
 export const getImageProps = (
-  imagePath: string,
+  imagePath: string
   // responsiveLevel: "mobile" | "tablet" | "desktop" | "large" = "desktop"
 ) => {
   // console.log('images:', images, 'imagePath:', imagePath);
