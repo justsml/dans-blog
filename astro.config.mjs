@@ -3,6 +3,7 @@ import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
+import pagefind from "astro-pagefind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,6 +15,7 @@ export default defineConfig({
 
   site: "https://danlevy.net",
   integrations: [
+    pagefind(),
     react({
       // experimentalReactChildren: true,
     }),
@@ -22,20 +24,13 @@ export default defineConfig({
     tailwind({
       applyBaseStyles: false,
 			nesting: true,
-			
     }),
   ],
   image: {
-    // Example: Enable the Sharp-based image service with a custom config
     service: {
-      //  entrypoint: 'astro/assets/services/sharp',
        config: {
          limitInputPixels: false,
       },
      },
   },
-
-  // prefetch: {
-  // 	defaultStrategy: 'viewport', // 'hover',
-  // }
 });

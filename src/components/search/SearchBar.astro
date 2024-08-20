@@ -1,0 +1,18 @@
+---
+import Search from "astro-pagefind/components/Search";
+
+type Props = {
+  className?: string;
+  showImages?: boolean;
+}
+
+const { showImages = false, className } = Astro.props;
+---
+
+<div class:list={["searchBar","hidden", className]}>
+  <Search
+    id="search"
+    class:list="pagefind-ui"
+    uiOptions={{ showImages }}
+  />
+</div>
