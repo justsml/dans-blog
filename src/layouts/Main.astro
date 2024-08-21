@@ -10,13 +10,10 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import AnalyticsTag from "../components/AnalyticsTag.astro";
-import socialBanner from "../assets/social-banner.png";
-
-import { GOOGLE_ANALYTICS_ID, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 import "@/styles/nav.css";
-
+import { GOOGLE_ANALYTICS_ID, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import AnalyticsTag from "../components/AnalyticsTag.astro";
 
 type Props = {
   children: any[];
@@ -51,18 +48,12 @@ const publishedTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
 const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
 
-const coverUrl =
-  cover && typeof cover === "object" && "src" in cover
-    ? (cover as ImageMetadata).src
-    : typeof cover === "string" && cover
-      ? cover
-      : socialBanner.src;
 
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={siteTitle} description={`${subTitle}`} image={`${coverUrl}`} />
+    <BaseHead title={siteTitle} description={`${subTitle}`} image={`${cover}`} />
     {lastModified && <meta http-equiv="last-modified" content={lastModified} />}
     {
       publishedTime && (
