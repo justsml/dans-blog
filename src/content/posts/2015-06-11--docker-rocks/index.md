@@ -1,14 +1,12 @@
 ---
 title:  "Docker rocks & now works on OSX"
 date: 2015-06-11
-modified: 2024-08-10
+modified: 2017-08-10
 category: DevOps
 subCategory: docker
 tags: [docker, boot2docker, devops]
 cover: guillaume-bolduc-259596-unsplash.jpg
 cover_mobile: w300_guillaume-bolduc-259596-unsplash.jpg
-# cover_tablet: w600_guillaume-bolduc-259596-unsplash.jpg
-# cover_desktop: w900_guillaume-bolduc-259596-unsplash.jpg
 cover_icon: icon_guillaume-bolduc-259596-unsplash.jpg
 ---
 

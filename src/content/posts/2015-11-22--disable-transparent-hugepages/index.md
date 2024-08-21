@@ -8,8 +8,6 @@ subCategory: mongodb
 tags: [devops, mongodb, performance, tuning]
 cover: victor-garcia-645096-unsplash.jpg
 cover_mobile: w300_victor-garcia-645096-unsplash.jpg
-# cover_tablet: w600_victor-garcia-645096-unsplash.jpg
-# cover_desktop: w900_victor-garcia-645096-unsplash.jpg
 cover_icon: icon_victor-garcia-645096-unsplash.jpg
 ---
 

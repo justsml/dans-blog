@@ -8,8 +8,6 @@ category: Guides
 subCategory: JavaScript
 cover: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 cover_mobile: w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
-# cover_tablet: w600_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
-# cover_desktop: w900_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 cover_icon: icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 ---
 

@@ -9,8 +9,6 @@ subCategory: servers
 tags: [benchmarks, servers, performance]
 cover: rod-long-1052613-unsplash.jpg
 cover_mobile: w300_rod-long-1052613-unsplash.jpg
-# cover_tablet: w600_rod-long-1052613-unsplash.jpg
-# cover_desktop: w900_rod-long-1052613-unsplash.jpg
 cover_icon: icon_rod-long-1052613-unsplash.jpg
 ---
 
