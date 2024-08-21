@@ -531,14 +531,15 @@ pre.astro-code {
   --pagefind-ui-tag: #152028;
   --pagefind-ui-border-radius: 4rem;
 
-  margin: 0 2rem 1rem 2rem;
+  margin: .5rem auto;
   padding: 0 1rem;
   /* position: absolute; */
   z-index: 10;
   /* background-color: var(--pagefind-ui-background); */
   padding-right: .5rem;
 
-  .pagefind-ui__search-input {
+  max-width: 760px;
+  .pagefind-ui__search-input is(:focus, :hover) {
     box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
   }
 }
