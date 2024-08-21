@@ -16,9 +16,7 @@ export default defineConfig({
   site: "https://danlevy.net",
   integrations: [
     pagefind(),
-    react({
-      // experimentalReactChildren: true,
-    }),
+    react({ }),
     mdx(),
     sitemap(),
     tailwind({
