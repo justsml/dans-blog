@@ -4,15 +4,13 @@ import { SITE_TITLE } from "../consts";
 import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar-64.jpg";
 import { PostCollections } from "@/shared/dataCache";
-import "./Header.css";
+import SearchBar from "./search/SearchBar.astro";
 import type { ArticlePost } from "../types";
 
+import "./Header.css";
+
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
-const imgPaths = [
-  "data.cover",
-  "data.cover_icon",
-  "data.cover_mobile"
-];
+const imgPaths = ["data.cover", "data.cover_icon", "data.cover_mobile"];
 const categories = getCategoryCounts();
 const popularPosts = (getPopularPosts() as MyPost[]).map((p) =>
   getMinimalPostData(p, ["data.body", ...imgPaths])
@@ -49,7 +47,6 @@ function getMinimalPostData(
           style="margin-left: -.5rem; margin-right: .5rem; height: 2.125rem; width: 2.125rem; min-height: 48px; min-width: 48px; aspect-ratio: 1/1; border-radius: 100%;"
           alt="Dan Levy's Avatar"
         />
-
         <span class="title">{SITE_TITLE}</span>
       </a>
     </h2>
@@ -63,3 +60,5 @@ function getMinimalPostData(
     </div>
   </nav>
 </header>
+
+<SearchBar />

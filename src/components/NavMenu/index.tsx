@@ -18,6 +18,7 @@ import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import "./index.css";
 import { useCallback, useEffect, useState } from "react";
+import { SearchButton } from "../search/SearchButton";
 
 const NavMenu = ({
   categories,
@@ -81,7 +82,12 @@ const NavMenu = ({
       onMouseMove={safeDetectViewportOffset}
     >
       <NavigationMenu.List className="NavigationMenuList">
-        <NavigationMenu.Item value="/">
+
+        <NavigationMenu.Item value="#search" asChild>
+          <SearchButton />
+        </NavigationMenu.Item>
+
+        <NavigationMenu.Item value="/" style={{ gridColumn: 2 }}>
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>

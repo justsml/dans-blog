@@ -286,22 +286,51 @@ pre {
 
   /* 2x2 square (small screens) */
   grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 4rem 1fr;
 
+li {
+  grid-column: 2;
+}
+/*
   @screen sm {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: unset;
+    grid-template-columns: 4rem 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
   
+  }
+*/
+}
+
+.btnSearchToggle {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  justify-self: stretch;
+  align-self: stretch;
+  height: auto;
+
+  svg {
+    max-width: 1.5rem;
   }
 }
 
 @media only screen and (min-width: 580px) {
   .NavigationMenuList {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: unset;
+    align-items: center;
+    grid-template-columns: 4rem 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    li {
+      grid-column: unset;
+    }
   }
+  .btnSearchToggle {
+    grid-row: unset;
+    grid-column: 1;
+    justify-self: unset;
+    align-self: unset;
+    height: unset;
+    padding-right: 0rem;
+  }
+
 }
-
-
 
 .ViewportPosition {
   top: 5.6rem;
@@ -506,7 +535,7 @@ pre {
   }
   .List.one {
     max-width: 100vw;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.6fr 1fr;
   }
   .List.two {
     max-width: 100vw;
@@ -521,7 +550,7 @@ pre {
   }
   .List.one {
     max-width: 85vw;
-    grid-template-columns: 0.75fr 1fr;
+    grid-template-columns: 0.6fr 1fr;
   }
   .List.two {
     max-width: 85vw;
