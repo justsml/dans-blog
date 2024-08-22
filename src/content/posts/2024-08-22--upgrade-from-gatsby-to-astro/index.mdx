@@ -1,0 +1,107 @@
+---
+title: "Lessons Learned Upgrading My Blog"
+subTitle: "Astro, Tailwind, MDX, Pagefind, and more!"
+date: "2024-08-21"
+modified: "2024-08-22"
+category: Guides
+tags: [astro, tailwind, mdx, pagefind, gatsby]
+cover: galaxy-contribution-mode.jpg
+cover_mobile: w300_galaxy-contribution-mode.jpg
+cover_icon: icon_galaxy-contribution-mode.jpg
+---
+
+In this post I'm going to share the things I learned upgrading my 8+ year-old Gatsby v1 site!
+
+Recently, I embarked on a journey to upgrade my 8+ year-old Gatsby v1 site. This blog post will share the lessons I learned during this process and the fun technologies I explored.
+
+## Project Requirements
+
+Before diving into the upgrade, I established a set of requirements to ensure the new site would meet my needs:
+
+- Support for dozens of old Markdown articles
+- Code highlighting
+- Search functionality
+- Contact form
+- Minimal custom UI components: Quiz component, Gist embeds.
+- Responsive images
+- Sub 1-second load time
+- Browser compatibility: 2018+
+- Automated deployments, PR deployments.
+
+## Choosing the Right Technology Stack
+
+Over the years I have worked with many static site tools, from Jekyll, Hugo, Slate, and Gatsby. As well as many front-end frameworks: Ember, Knockout, Angular, Vue and of course React.
+
+After considering my options, including Remix and Next.js, I decided that Astro simply struck the right balance for me.
+
+Here's a top run down:
+
+- Astro: A modern static site generator.
+- ShadcnUI: A collection of re-usable components.
+- Tailwind CSS: A utility-first CSS framework.
+- MDX: Markdown enhanced with inline components.
+- Pagefind: Static & offline site search library. No need for Algolia!
+- Netlify: Automated deployments, contact form w/ captcha.
+
+## Learning Astro: A Game-Changer
+
+Astro quickly became the cornerstone of my upgrade. Here are some key features I found particularly useful:
+
+- `.astro` files: At first glance, Astro components may look like the React JSX components, however they are quite different and serve a different set of goals. (See comparison table below.)
+- Powered by Vite under the hood - it just works. Seamlessly handles ESM/CJS, TypeScript, code bundling, styles, images, etc.
+- No framework bias or cloud bias. (*Cough* Next.js, OpenNext)
+- Static vs. hybrid rendering: Astro provides flexibility in choosing the right rendering strategy for each page.
+- Content collections: The `getCollection` API simplifies working with content files as a data source.
+- File-based routing: Astro's file-based routing system, combined with `getStaticPaths`, makes generating pages a breeze.
+- SEO: [Astro doesn't get in your way](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63), and only emits a minimal amount of ~~detritus~~ boilerplate (`astro-island`) when necessary.
+
+Some things were a little surprising, like styling around Astro's injected markup, and the effect of `display:contents`.
+
+```tsx
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+```
+
+### Astro vs. Client Components
+
+| What do you need to do?                                                            | `.astro` Component    | Client Component    |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| Generate HTML with powerful template+component pattern                             | ✅ | ❌ |
+| Fetch data at build-time                                                           | ✅ | ❌ |
+| Access backend resources (directly)                                                | ✅ | ❌ |
+| Keep sensitive information hidden (access tokens, API keys, etc)                   | ✅ | ❌ |
+| Reduce client-side JavaScript                                                      | ✅ | ❌ |
+| Use Client components (React, Vue, Svelte, etc)                                    | ✅ | ✅ |
+| Add interactivity and event listeners (`onClick()`, `onChange()`, etc)             | ❌ | ✅ |
+| Use State and Lifecycle Effects (`useState()`, `useReducer()`, `useEffect()`, etc) | ❌ | ✅ |
+| Use browser-only APIs                                                              | ❌ | ✅ |
+| Use custom hooks that depend on state, effects, or browser-only APIs               | ❌ | ✅ |
+
+
+## Rediscovering the Power of Modern CSS
+
+Coming back to frontend development, I was amazed by the advancements in native CSS:
+
+- CSS Variables: Available for a while, and pretty stable across browsers since 2022.
+- Nesting: Finally in spec, and without earlier awkward syntax. Now it's similar to Less or SCSS.
+- New selectors: [`:is()`, `:where()`, and `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) offer more precise targeting of elements.
+- Modern units like `ch`, `vw`, and functions like `clamp()` provide better control over layouts and typography.
+- Set spacing more naturally with `-inline` and `-block` attributes. Set padding or margin on either the horizontal or vertical axis. Instead of `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
+- Advanced layouts: Re-learning CSS Grid. Wow, there's a lot of shit in there. It can be daunting with seemingly endless ways of using it. Keep in mind, you can get away with figuring out 1 or 2 ways. Check out these great resources that helped me do tricks with grid: [Kevin Powell's video: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
+
+## Every static site should use Pagefind!
+
+Implementing a site search functionality without 3rd party services or database hosting seemed like a fun challenge.
+
+Then I found a fantastic tool called [Pagefind](https://pagefind.app/). It neatly solved for everything I wanted, perfectly. It took only minutes to integrate, and most of the work involved adding a `<div id="search"></div>` tag and some styling!
+
+## Regrets
+
+There's only one bit of technology I'm increasingly regretting using: Tailwind.
+
+Over time, I can feel the cost difference in writing vs. maintaining. Tailwind is so fast to write, however once it's complex enough, it can become tedious to read & extend.
+
+## Conclusion
+
+Upgrading my old Gatsby v1 site to a modern stack built around Astro was a fun experience. 10/10 would recommend.
+
+If you're considering upgrading an old site or building a new static (or hybrid) site, I highly recommend looking at Astro. The learning curve may be steep at times, but the benefits in terms of performance, developer experience, and future-proofing your project are well worth the effort.
