@@ -5,7 +5,7 @@ import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
-const _postsCollection = await getCollection("posts");
+const _postsCollection: ArticlePost[] = await getCollection("posts");
 let _posts = _postsCollection
   .map((post) => ({
     ...post,
@@ -15,7 +15,7 @@ let _posts = _postsCollection
     // @ts-ignore
     (a, b) => a.data?.date - b.data?.date
   )
-  .reverse();
+  .reverse() as unknown as ArticlePost[];
 
 /**
  * PostCollections provides access to posts' data, pre-.

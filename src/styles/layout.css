@@ -27,6 +27,11 @@
     [full-width-end];
 }
 
+.content-grid.article, article.content-grid {
+  --content-max-width: min(800px, 90vw);
+  --breakout-max-width: min(1200px, 90vw);
+}
+
 .content-grid > img,
 .content-grid > p :has(> img)  {
   margin-inline: auto;
@@ -105,7 +110,7 @@ p img {
 :root {
   --color-scheme: dark;
 
-  --font-family: system-ui;
+  --font-family: 'Raleway', Tahoma, Helvetica, sans-serif;
 
   --flow-spacing: 1rem;
 
@@ -162,17 +167,6 @@ img {
   max-width: 100%;
   display: block;
 }
-/* 
-.site-title {
-  font-size: var(--fs-900);
-  line-height: 1.05;
-  text-transform: uppercase;
-}
-
-.section-title {
-  font-size: var(--fs-800);
-  line-height: 1.1;
-} */
 
 .bg-primary {
   background: var(--clr-primary-500);

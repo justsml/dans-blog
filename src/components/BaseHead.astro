@@ -1,35 +1,37 @@
 ---
 import type { ImageMetadata } from "astro";
+import pkg from "../../package.json";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
+import socialBanner from "../assets/social-banner.png";
+
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import pkg from '../../package.json';
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from '../consts';
-import socialBanner from '../assets/social-banner.png';
-import '@/styles/global.css';
+import "@/styles/global.css";
+import "@/styles/nav.css";
+import "@/styles/layout.css";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string | ImageMetadata | undefined;
+  title: string;
+  description: string | undefined;
+  image?: string | ImageMetadata | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 let { title, description, image } = Astro.props;
-// @ts-ignore
-if (description === 'undefined') description = undefined;
+
+if (description === "undefined") description = undefined;
 
 if (!image) image = socialBanner;
 
-const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
+const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 const siteDescription = description || SITE_SEO_DESCRIPTION;
 
 const version = pkg.version;
 
-const imgSrc = typeof image === 'string' ? image : image?.src
-const imageWidth = typeof image !== 'string' ? image?.width : null;
-const imageHeight = typeof image !== 'string' ? image?.height : null;
-
+const imgSrc = typeof image === "string" ? image : image?.src;
+const imageWidth = typeof image !== "string" ? image?.width : null;
+const imageHeight = typeof image !== "string" ? image?.height : null;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -38,7 +40,7 @@ const imageHeight = typeof image !== 'string' ? image?.height : null;
 
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Primary Meta Tags -->
+{/*Primary Meta Tags*/}
 <slot name="title">
 	<title>{siteTitle}</title>
 	<meta name="title" content={siteTitle} />
@@ -51,14 +53,14 @@ const imageHeight = typeof image !== 'string' ? image?.height : null;
 	{siteDescription && <meta property="og:description" content={siteDescription} />}
 </slot>
 
-<!-- Open Graph / Facebook -->
+{/*Open Graph / Facebook*/}
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 {imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.url)} />}
 {imageWidth && <meta property="og:image:width" content={`${imageWidth}`} />}
 {imageHeight && <meta property="og:image:height" content={`${imageHeight}`} />}
 
-<!-- Twitter -->
+{/*Twitter*/}
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 {imgSrc && <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />}

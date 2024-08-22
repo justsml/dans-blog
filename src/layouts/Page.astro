@@ -6,16 +6,10 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GOOGLE_ANALYTICS_ID } from "../consts";
 import socialBanner from '../assets/social-banner.png';
 
-import "@/styles/nav.css";
-import "@/styles/global.css";
-import "@/styles/layout.css";
-
-// console.log("Page.astro", Astro.props);
-
-
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
 
 ---
+
 <html lang="en">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />    
