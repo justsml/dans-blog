@@ -24,7 +24,7 @@ const getProps = () => {
   return { category, count };
 };
 const { category, count } = getProps();
-const posts: ArticlePost[] = PostCollections.getPostsByCategory(category);
+const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unknown as ArticlePost[];
 
 // console.log("category.astro.props", Astro.props);
 ---

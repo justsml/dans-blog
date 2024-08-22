@@ -333,7 +333,7 @@ main pre {
   &:hover {
     box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
     color: unset;
-    scale: 1.05;
+    scale: 1.02;
     .small-label {
       color: unset;
     }
@@ -391,12 +391,14 @@ main .info {
   border-radius: 1rem;
   box-shadow: var(--box-shadow);
   width: 260px;
+  margin-block: 0 !important;
   /* aspect-ratio: 1 / 1; */
 }
 
 @media (min-width: 600px) {
   .hero-image img {
-    width: 400px;
+    width: 100%;
+    margin-block: 0 !important;
   }
 }
 
@@ -437,6 +439,7 @@ main .info {
   display: grid;
   place-content: center end;
   margin: 0.5rem 0 1rem 0;
+  margin-inline: 3rem;
 }
 
 .combobox-options {

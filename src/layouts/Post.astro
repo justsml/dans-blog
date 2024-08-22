@@ -7,7 +7,7 @@ import Footer from "../components/Footer.astro";
 import { InfoLabel } from "../components/ui/infoLabel";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GitHubIssueComments } from "../components/Comments";
-import socialBanner from '../assets/social-banner.png';
+import socialBanner from "../assets/social-banner.png";
 
 import { CalendarIcon, TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
@@ -29,6 +29,7 @@ type Props = {
     modified?: string;
     tags?: string[];
     cover?: unknown;
+    cover_full_width?: unknown;
     category?: string;
   };
 };
@@ -37,6 +38,7 @@ const {
   title,
   subTitle,
   cover,
+  cover_full_width,
   category,
   date,
   modified,
@@ -141,8 +143,28 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
       </div>
 
       {
-        cover && typeof cover === "object" && "src" in cover && (
-          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width flow" />
+        cover_full_width &&
+        typeof cover_full_width === "object" &&
+        "src" in cover_full_width ? (
+          <Image
+            src={cover_full_width as ImageMetadata}
+            width="400"
+            alt={title}
+            class="full-width flow"
+          />
+        ) : (
+          cover &&
+          typeof cover === "object" &&
+          "src" in cover && (
+            <div class="hero-image">
+              <div class="hero-image-wrapper">
+                <Image src={cover as ImageMetadata} alt={title}
+                  widths={[400, 800, 1200, 1600, 2000]}
+                  sizes={`(min-width: 800px) 400px, (min-width: 1200px) 800px, (min-width: 1600px) 1200px, (min-width: 2000px) 1600px, 2000px`}
+                />
+              </div>
+            </div>
+          )
         )
       }
 
@@ -151,7 +173,6 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
       <div class="comments-wrapper full-width">
         <GitHubIssueComments client:only="react" path={commentsKey} />
       </div>
-      
     </main>
     <Footer />
     <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />

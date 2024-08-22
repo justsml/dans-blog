@@ -41,6 +41,7 @@ const posts = defineCollection({
       date: z.coerce.string(),
       modified: z.coerce.string().optional(),
       cover: image(), // z.string().optional(),
+      cover_full_width: image().optional(),
       cover_mobile: image().optional(),
       // cover_tablet: image().optional(),
       // cover_desktop: image().optional(),
