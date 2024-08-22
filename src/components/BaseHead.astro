@@ -2,10 +2,10 @@
 import type { ImageMetadata } from "astro";
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '@/styles/global.css';
 import pkg from '../../package.json';
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from '../consts';
 import socialBanner from '../assets/social-banner.png';
+import '@/styles/global.css';
 
 interface Props {
 	title: string;
@@ -35,10 +35,6 @@ const imageHeight = typeof image !== 'string' ? image?.height : null;
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+NSW:wght@100..400&family=Raleway:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" crossorigin="anonymous">
-
-<link rel="stylesheet" href="/styles/gist-embed.css" type="text/css" />
 
 <link rel="canonical" href={canonicalURL} />
 
