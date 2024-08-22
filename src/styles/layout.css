@@ -1,8 +1,10 @@
 /* credit: [Kevin Powell](https://codepen.io/kevinpowell/pen/ExrZrrw) */
 .content-grid {
+  --gutter-size: 4rem;
   --padding-inline: 1rem;
-  --content-max-width: 800px;
+  --content-max-width: 960px;
   --breakout-max-width: 1100px;
+  --inset-size: calc(100% - (var(--content-max-width) * 75%));
 
   --breakout-size: calc(
     (var(--breakout-max-width) - var(--content-max-width)) / 2
@@ -14,8 +16,8 @@
       minmax(var(--padding-inline), 1fr)
         [breakout-start]
           minmax(0, var(--breakout-size))
-            [content-start] 
-              min(100% - (var(--padding-inline) * 2), var(--content-max-width))
+            [content-start]
+              minmax(0, min(100% - (var(--padding-inline) * 2), var(--content-max-width)))
             [content-end]
           minmax(0, var(--breakout-size))
         [breakout-end]
@@ -32,17 +34,41 @@
   grid-column: breakout;
 }
 
-.content-grid > .full-width {
-  grid-column: full-width;
+.content-grid > .skinny {
+  grid-column: content;
+  display: grid;
+  grid-template-columns: 
+    [gutter-start]
+      minmax(0, var(--gutter-size))
+        [inner-start]
+          1fr
+        [inner-end]
+      minmax(0, var(--gutter-size))
+    [gutter-end];
+  
+    & > * {
+      grid-column: inner;
+    }
+}
 
+.content-grid > .full-width,
+.content-grid > :where(astro-island, astro-slot) > .full-width {
+  grid-column: full-width;
   display: grid;
   grid-template-columns: inherit;
+}
+
+.full-width > :where(astro-island, astro-slot) {
+  display: unset !important;
 }
 
 img.full-width {
   width: 100%;
   max-height: 45vh;
   object-fit: cover;
+  image-rendering: crisp-edges;
+  filter: grayscale(1.0);
+  margin-block: 2rem;
 }
 
 
@@ -54,6 +80,7 @@ img.full-width {
 
   --flow-spacing: 1rem;
 
+  --fs-200: clamp(0.75rem, calc(0.75rem + 0.08vw), 0.8rem);
   --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
   --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
   --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
@@ -72,6 +99,13 @@ img.full-width {
   --clr-accent-300: hsl(358, 72%, 65%);
   --clr-accent-400: hsl(358, 72%, 50%);
   --clr-accent-500: hsl(358, 72%, 35%);
+  --clr-muted-300: hsl(0, 0%, 80%);
+  --clr-muted-400: hsl(0, 0%, 65%);
+  --clr-muted-500: hsl(0, 0%, 50%);
+  --clr-muted-600: hsl(0, 0%, 35%);
+  --clr-muted-700: hsl(0, 0%, 20%);
+  --clr-muted-800: hsl(0, 0%, 10%);
+
 }
 
 *,
@@ -82,13 +116,6 @@ img.full-width {
 
 html {
   color-scheme: var(--color-scheme);
-}
-
-body {
-  margin: 0;
-  font-family: var(--font-family);
-  font-size: var(--fs-400);
-  line-height: 1.6;
 }
 
 h1,
@@ -106,7 +133,7 @@ img {
   max-width: 100%;
   display: block;
 }
-
+/* 
 .site-title {
   font-size: var(--fs-900);
   line-height: 1.05;
@@ -116,7 +143,7 @@ img {
 .section-title {
   font-size: var(--fs-800);
   line-height: 1.1;
-}
+} */
 
 .bg-primary {
   background: var(--clr-primary-500);
@@ -157,7 +184,7 @@ img {
   justify-content: space-between;
 }
 
-.logo {
+/* .logo {
   max-width: 250px;
 }
 
@@ -179,7 +206,7 @@ nav a:hover,
 nav a:focus {
   color: var(--clr-accent-500);
   text-decoration: underline;
-}
+} */
 
 .even-columns {
   display: flex;

@@ -2,7 +2,7 @@
 title:  "Naming things good"
 subTitle: "Naming stuff: Object Oriented Basics"
 date: 2016-06-01
-modified: 2024-07-30
+modified: 2024-08-10
 category: Guides
 subCategory: programming
 tags: [programming, patterns, naming, source code, organization]

@@ -5,6 +5,12 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
   const ref = useRef<HTMLDivElement | null>(null);
   useEffect(
     () => {
+      const $postComments = document.querySelector("#post-comments");
+      const commentsFrame = document.querySelector(".utterances-frame");
+      if (commentsFrame) {
+        console.log("Comments already loaded, skipping...", path);
+        return;
+      }
       const script = document.createElement("script");
       script.src = "https://utteranc.es/client.js";
       script.async = true;

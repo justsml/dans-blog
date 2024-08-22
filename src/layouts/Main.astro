@@ -97,11 +97,7 @@ const coverUrl =
 
       {
         cover && typeof cover === "object" && "src" in cover && (
-          <div class="hero-image">
-            <div class="hero-image-wrapper">
-              <Image src={cover as ImageMetadata} width="400" alt={title} />
-            </div>
-          </div>
+          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width" />
         )
       }
 

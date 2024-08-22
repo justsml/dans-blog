@@ -7,6 +7,7 @@ import Footer from "../components/Footer.astro";
 import { InfoLabel } from "../components/ui/infoLabel";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GitHubIssueComments } from "../components/Comments";
+import socialBanner from '../assets/social-banner.png';
 
 import { CalendarIcon, TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
@@ -61,7 +62,7 @@ const coverUrl =
     ? (cover as ImageMetadata)
     : typeof cover === "string"
       ? cover
-      : undefined;
+      : socialBanner;
 
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 ---
@@ -141,17 +142,15 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 
       {
         cover && typeof cover === "object" && "src" in cover && (
-          <div class="hero-image">
-            <div class="hero-image-wrapper">
-              <Image src={cover as ImageMetadata} width="400" alt={title} />
-            </div>
-          </div>
+          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width flow" />
         )
       }
 
       <slot />
 
-      <GitHubIssueComments client:only="react" path={commentsKey} />
+      <div class="comments-wrapper full-width">
+        <GitHubIssueComments client:only="react" path={commentsKey} />
+      </div>
     </main>
     <Footer />
     <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />

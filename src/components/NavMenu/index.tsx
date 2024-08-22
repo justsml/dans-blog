@@ -83,11 +83,11 @@ const NavMenu = ({
     >
       <NavigationMenu.List className="NavigationMenuList">
 
-        <NavigationMenu.Item value="#search" asChild>
+        <NavigationMenu.Item value="#search" className="searchToggle">
           <SearchButton />
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="/" style={{ gridColumn: 2 }}>
+        <NavigationMenu.Item value="/">
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>

@@ -1,8 +1,8 @@
 ---
 title: "Creating Collaborative Culture"
-subTitle: Unlock your Teams Creativity!
+subTitle: Unlock your teams' creativity!
 date: 2021-01-01
-modified: 2022-02-25
+modified: 2023-01-25
 tags: [collaborative-culture,culture,teams,growth,personal-development]
 category: Leadership
 subCategory: culture
