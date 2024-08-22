@@ -1,11 +1,13 @@
 /* credit: [Kevin Powell](https://codepen.io/kevinpowell/pen/ExrZrrw) */
 .content-grid {
-  --gutter-size: 4rem;
+  --gutter-size: 2rem;
+  --gutter-main: minmax(300px, 100% - (2 * var(--gutter-size)));
   --padding-inline: 1rem;
-  --content-max-width: 960px;
-  --breakout-max-width: 1100px;
+  --content-max-width: min(1200px, 90vw);
+  --breakout-max-width: min(1600px, 90vw);
+  /* --content-max-width: 1600px;
+  --breakout-max-width: 1800px; */
   --inset-size: calc(100% - (var(--content-max-width) * 75%));
-
   --breakout-size: calc(
     (var(--breakout-max-width) - var(--content-max-width)) / 2
   );
@@ -25,6 +27,12 @@
     [full-width-end];
 }
 
+.content-grid > img,
+.content-grid > p :has(> img)  {
+  margin-inline: auto;
+  margin-block: 2rem;
+}
+
 .content-grid > :not(.breakout, .full-width),
 .full-width > :not(.breakout, .full-width) {
   grid-column: content;
@@ -34,21 +42,36 @@
   grid-column: breakout;
 }
 
+.skinny-xl {
+  --gutter-size: 20vw;
+}
 .content-grid > .skinny {
   grid-column: content;
   display: grid;
+  justify-self: center;
+
   grid-template-columns: 
     [gutter-start]
-      minmax(0, var(--gutter-size))
+      2rem
         [inner-start]
           1fr
         [inner-end]
-      minmax(0, var(--gutter-size))
+      2rem
     [gutter-end];
-  
+
     & > * {
       grid-column: inner;
     }
+}
+
+/* a narrow "inlay"/"inset" section */
+.content-grid > .narrow {
+  grid-column: content;
+  display: grid;
+  justify-self: center;
+  padding-inline: 2.5rem;
+  margin-inline: 10% 30%;
+  border-left: 1px solid var(--clr-muted-300);
 }
 
 .content-grid > .full-width,
@@ -64,14 +87,20 @@
 
 img.full-width {
   width: 100%;
-  max-height: 45vh;
+  max-height: 20vh;
   object-fit: cover;
   image-rendering: crisp-edges;
   filter: grayscale(1.0);
   margin-block: 2rem;
 }
 
-
+p :has(img) {
+  margin-block: 1.5rem;
+}
+p img {
+  margin-inline: auto;
+  margin-block: 1.5rem;
+}
 
 :root {
   --color-scheme: dark;
@@ -213,6 +242,11 @@ nav a:focus {
   gap: 1rem;
 }
 
+.content-grid {
+  img, p {
+    margin-block: 1rem;
+  }
+}
 
 
 /* Style GIST */

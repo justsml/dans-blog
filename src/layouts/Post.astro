@@ -151,6 +151,7 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
       <div class="comments-wrapper full-width">
         <GitHubIssueComments client:only="react" path={commentsKey} />
       </div>
+      
     </main>
     <Footer />
     <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
