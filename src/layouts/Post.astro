@@ -15,7 +15,7 @@ import { GOOGLE_ANALYTICS_ID } from "../consts";
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
-import "./Post.css";
+import "@/styles/layout.css";
 
 type Props = {
   children: any[];
@@ -114,12 +114,12 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
   </head>
 
   <body>
-    <Header date={date} modified={modified} />
-    <main>
+    <Header className="content-grid" date={date} modified={modified} />
+    <main class="content-grid">
       {title && <h1>{title}</h1>}
       {subTitle && <h2>{subTitle}</h2>}
 
-      <div class="info">
+      <div class="info skinny">
         {
           createdAgo && (
             <InfoLabel

@@ -8,6 +8,7 @@ import socialBanner from '../assets/social-banner.png';
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
+import "@/styles/layout.css";
 
 // console.log("Page.astro", Astro.props);
 
@@ -21,8 +22,8 @@ const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
   </head>
 
   <body class="layout-page">
-    <Header />
-    <main>
+    <Header className="content-grid" />
+    <main class="content-grid">
       <slot name="default"></slot>
     </main>
     <Footer />

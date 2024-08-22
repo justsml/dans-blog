@@ -9,6 +9,13 @@ import type { ArticlePost } from "../types";
 
 import "./Header.css";
 
+type Props = {
+  className?: string;
+  date?: string;
+  modified?: string;
+};
+
+const { className } = Astro.props;
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const imgPaths = ["data.cover", "data.cover_icon", "data.cover_mobile"];
 const categories = getCategoryCounts();
@@ -38,7 +45,7 @@ function getMinimalPostData(
 }
 ---
 
-<header class="top-header">
+<header class:list={["top-header", className]}>
   <nav class:list={["header-nav"]}>
     <h2>
       <a href="/" aria-label="Return Home">

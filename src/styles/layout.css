@@ -1,0 +1,209 @@
+/* credit: [Kevin Powell](https://codepen.io/kevinpowell/pen/ExrZrrw) */
+.content-grid {
+  --padding-inline: 1rem;
+  --content-max-width: 800px;
+  --breakout-max-width: 1100px;
+
+  --breakout-size: calc(
+    (var(--breakout-max-width) - var(--content-max-width)) / 2
+  );
+
+  display: grid;
+  grid-template-columns:
+    [full-width-start]
+      minmax(var(--padding-inline), 1fr)
+        [breakout-start]
+          minmax(0, var(--breakout-size))
+            [content-start] 
+              min(100% - (var(--padding-inline) * 2), var(--content-max-width))
+            [content-end]
+          minmax(0, var(--breakout-size))
+        [breakout-end]
+      minmax(var(--padding-inline), 1fr)
+    [full-width-end];
+}
+
+.content-grid > :not(.breakout, .full-width),
+.full-width > :not(.breakout, .full-width) {
+  grid-column: content;
+}
+
+.content-grid > .breakout {
+  grid-column: breakout;
+}
+
+.content-grid > .full-width {
+  grid-column: full-width;
+
+  display: grid;
+  grid-template-columns: inherit;
+}
+
+img.full-width {
+  width: 100%;
+  max-height: 45vh;
+  object-fit: cover;
+}
+
+
+
+:root {
+  --color-scheme: dark;
+
+  --font-family: system-ui;
+
+  --flow-spacing: 1rem;
+
+  --fs-300: clamp(0.94rem, calc(0.92rem + 0.08vw), 0.98rem);
+  --fs-400: clamp(1.13rem, calc(1.06rem + 0.33vw), 1.31rem);
+  --fs-500: clamp(1.35rem, calc(1.21rem + 0.69vw), 1.75rem);
+  --fs-600: clamp(1.62rem, calc(1.37rem + 1.24vw), 2.33rem);
+  --fs-700: clamp(1.94rem, calc(1.54rem + 2.03vw), 3.11rem);
+  --fs-800: clamp(2.33rem, calc(1.7rem + 3.15vw), 4.14rem);
+  --fs-900: clamp(2.8rem, calc(1.85rem + 4.74vw), 5.52rem);
+
+  --clr-primary-300: hsl(219, 76%, 55%);
+  --clr-primary-400: hsl(219, 76%, 40%);
+  --clr-primary-500: hsl(219, 76%, 25%);
+  --clr-secondary-300: hsl(269, 75%, 55%);
+  --clr-secondary-400: hsl(269, 75%, 40%);
+  --clr-secondary-500: hsl(269, 75%, 25%);
+  --clr-accent-200: hsl(358, 85%, 80%);
+  --clr-accent-300: hsl(358, 72%, 65%);
+  --clr-accent-400: hsl(358, 72%, 50%);
+  --clr-accent-500: hsl(358, 72%, 35%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: var(--color-scheme);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--fs-400);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure {
+  margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.site-title {
+  font-size: var(--fs-900);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+.section-title {
+  font-size: var(--fs-800);
+  line-height: 1.1;
+}
+
+.bg-primary {
+  background: var(--clr-primary-500);
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.call-to-action {
+  padding: 1rem;
+  background: hsl(0 0% 100% / 0.15);
+}
+
+.wrapper {
+  width: calc(100% - 3rem);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.flow > * + * {
+  margin-top: var(--flow-spacing, 1em);
+}
+
+.section-padding {
+  padding-block: 2.5rem;
+}
+
+.primary-header__layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  max-width: 250px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: max(5vw, 1rem);
+}
+
+nav a {
+  color: inherit;
+  text-decoration: none;
+}
+
+nav a:hover,
+nav a:focus {
+  color: var(--clr-accent-500);
+  text-decoration: underline;
+}
+
+.even-columns {
+  display: flex;
+  gap: 1rem;
+}
+
+
+
+/* Style GIST */
+
+main .gist {
+  width: 100%;
+  max-width: 90vw;
+  margin: 0 auto;
+
+  @screen sm {
+    max-width: min(100%, 550px);
+  }
+
+  @screen md {
+    max-width: min(100%, 680px);
+  }
+
+  @screen lg {
+    max-width: min(100%, 800px);
+  }
+}
