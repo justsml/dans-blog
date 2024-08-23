@@ -2,7 +2,7 @@
 title: "Lessons Learned Upgrading My Blog"
 subTitle: "Astro, Tailwind, MDX, Pagefind, and more!"
 date: "2024-08-21"
-modified: "2024-08-22"
+modified: "2024-08-23"
 category: Guides
 tags: [astro, tailwind, mdx, pagefind, gatsby]
 cover: galaxy-contribution-mode.jpg
@@ -10,38 +10,37 @@ cover_mobile: w300_galaxy-contribution-mode.jpg
 cover_icon: icon_galaxy-contribution-mode.jpg
 ---
 
-In this post I'm going to share the things I learned upgrading my 8+ year-old Gatsby v1 site!
-
 Recently, I embarked on a journey to upgrade my 8+ year-old Gatsby v1 site. This blog post will share the lessons I learned during this process and the fun technologies I explored.
 
 ## Project Requirements
 
-Before diving into the upgrade, I established a set of requirements to ensure the new site would meet my needs:
+Before diving into the upgrade, I established a set of requirements:
 
 - Support for dozens of old Markdown articles
 - Code highlighting
 - Search functionality
 - Contact form
-- Minimal custom UI components: Quiz component, Gist embeds.
+- Minimal UI components: Quiz component, Gist embeds
 - Responsive images
 - Sub 1-second load time
 - Browser compatibility: 2018+
-- Automated deployments, PR deployments.
+- Automated deployments, PR deployments
 
 ## Choosing the Right Technology Stack
 
 Over the years I have worked with many static site tools, from Jekyll, Hugo, Slate, and Gatsby. As well as many front-end frameworks: Ember, Knockout, Angular, Vue and of course React.
 
-After considering my options, including Remix and Next.js, I decided that Astro simply struck the right balance for me.
+After considering the many options, it came down to Remix, Next.js and Astro,
+Ultimately I decided on Astro because of how quickly I could _do meaningful things_. Their API design is largely refreshingly simple. It's a great balance between flexibility and opinion.
 
-Here's a top run down:
+Astro wasn't the only technology I used, here's a run down of the stack:
 
-- Astro: A modern static site generator.
-- ShadcnUI: A collection of re-usable components.
-- Tailwind CSS: A utility-first CSS framework.
-- MDX: Markdown enhanced with inline components.
-- Pagefind: Static & offline site search library. No need for Algolia!
-- Netlify: Automated deployments, contact form w/ captcha.
+- [Astro](https://astro.build): A modern static site generator.
+- [ShadcnUI](https://ui.shadcn.com): A collection of re-usable components.
+- [Tailwind CSS](https://tailwindcss.com): A utility-first CSS framework.
+- [MDX](https://mdxjs.com): Markdown enhanced with inline components.
+- [Pagefind](https://pagefind.app): Static & offline site search library. No need for Algolia!
+- [Netlify](https://www.netlify.com): Automated deployments, contact form w/ captcha.
 
 ## Learning Astro: A Game-Changer
 
