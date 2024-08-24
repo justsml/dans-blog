@@ -244,7 +244,6 @@ h1:first-of-type {
 nav.header-nav {
   display: grid;
   /* grid-template-rows: min-content auto; */
-
   /* repeat(auto-fit, minmax(250px, 1fr)) */
   grid-auto-rows: 1fr 1fr;
   grid-auto-flow: row dense;
@@ -543,3 +542,31 @@ pre.astro-code {
     box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
   }
 }
+
+  /* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url */
+  .article a[href*="youtube.com"]::after {
+    content: "📺";
+    font-size: 1.25rem;
+    margin-left: 0.25rem;
+  }
+  /*
+  .article a[href*="danlevy.net"]::after {
+    content: "<span class='iconify' data-icon='fa-solid:link' data-inline='false'></span> 📄";
+    font-size: 1.25rem;
+    margin-left: 0.25rem;
+  } */
+  .article a:not([href*="danlevy.net"]):not([href*="youtube.com"])::after {
+    content: "🔗";
+    font-size: 1.25rem;
+    margin-left: 0.25rem;
+  }
+  
+  /* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url 
+  
+  exclude hash anchor links */
+  
+  /*
+  .article a[href^="#"]::after {
+    content: "";
+  } */
+   
