@@ -95,7 +95,7 @@ Expectations should be clear. Trying to describe the level of quality by labelin
 
 Rejection (or the perception of failure) should never become a dis-incentive. A "culture of error" is critical here: **Embrace failing faster/more often! Value a cheap & early feedback loop!**
 
-Every team will have different norms & priorities here. Try to reflect & improve your teams approach as part of retrospectives.
+Every team will have different norms & priorities here. Try to reflect & improve your teams' approach as part of retrospectives.
 
 #### Measuring Success
 

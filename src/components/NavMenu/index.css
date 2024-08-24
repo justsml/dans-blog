@@ -288,9 +288,6 @@ pre {
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 4rem 1fr;
 
-li {
-  grid-column: 2;
-}
 /*
   @screen sm {
     grid-template-columns: 4rem 1fr 1fr 1fr;
@@ -300,7 +297,7 @@ li {
 */
 }
 
-.btnSearchToggle {
+.searchToggle {
   grid-row: 1 / -1;
   grid-column: 1;
   justify-self: stretch;
@@ -315,13 +312,13 @@ li {
 @media only screen and (min-width: 580px) {
   .NavigationMenuList {
     align-items: center;
-    grid-template-columns: 4rem 1fr 1fr 1fr;
+    grid-template-columns: 4rem repeat(3, minmax(5rem, 1fr));
     grid-template-rows: 1fr;
     li {
       grid-column: unset;
     }
   }
-  .btnSearchToggle {
+  .searchToggle {
     grid-row: unset;
     grid-column: 1;
     justify-self: unset;

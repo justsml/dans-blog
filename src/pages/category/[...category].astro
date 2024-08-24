@@ -24,7 +24,7 @@ const getProps = () => {
   return { category, count };
 };
 const { category, count } = getProps();
-const posts = PostCollections.getPostsByCategory(category);
+const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unknown as ArticlePost[];
 
 // console.log("category.astro.props", Astro.props);
 ---
@@ -43,13 +43,13 @@ const posts = PostCollections.getPostsByCategory(category);
 
 <Page>
   <div class="path-display">
-    <h3 style="color: #c4c4c4; font-weight: 100;">Category /</h3>
+    <h3>
+      <a style="color: #c4c4c4; font-weight: 100; text-wrap: nowrap;" href="../">Category /</a>
+    </h3>
     <h1>{category}</h1>
   </div>
   <p style="margin: .2rem .75rem">Found {count} articles</p>
   <div class:list={["article-list"]}>
-    {posts.map(post => (
-      <ArticleCard article={post as ArticlePost} />
-    ))}
+    {posts.map((post) => <ArticleCard article={post} />)}
   </div>
 </Page>

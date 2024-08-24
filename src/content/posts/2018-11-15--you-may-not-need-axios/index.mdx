@@ -2,7 +2,7 @@
 title: "You may not need Axios"
 subTitle: Fetch API to the rescue!
 date: 2018-11-14
-modified: 2024-07-31
+modified: 2024-08-21
 tags: [programming, patterns, examples, nodejs, javascript, promises, axios, fetch]
 category: Guides
 subCategory: fetch
@@ -16,20 +16,16 @@ import Gist from '../../../components/Gist.astro'
 
 ## You may not need Axios
 
-> This **is not an attack** on [Axios](https://www.npmjs.com/package/axios). <br />
-> Rather, it's **advocacy for the `fetch` API which has become quite capable.** 🦄
+<p class="breakout call-to-action">This **is not an attack** on [Axios](https://www.npmjs.com/package/axios). <br />
+Rather, it's **advocacy for the `fetch` API which has become quite capable.** 🦄</p>
 
 ### Overview
 
 This article is a collection of the "missing" `fetch` [code snippets and common use cases](#fetch-examples) I wish were easier to find.
 
-### Fetch Snippets
-
-My top 10 list of `fetch` examples, plus a bonus or 2.
-
 - [Overview](#overview)
-- [Fetch Snippets](#fetch-snippets)
 - [Feature Comparison](#feature-comparison)
+- [Fetch Recipes](#fetch-recipes)
   - [Get JSON from a URL](#get-json-from-a-url)
   - [Custom headers](#custom-headers)
   - [HTTP Error Handling](#http-error-handling)
@@ -43,6 +39,7 @@ My top 10 list of `fetch` examples, plus a bonus or 2.
   - [Download Progress Helper](#download-progress-helper)
   - [Recursive Retry Helper](#recursive-retry-helper)
   - [Handling HTTP Redirects](#handling-http-redirects)
+  - [Canceling a fetch request](#canceling-a-fetch-request) ✨new✨
 - [Compatibility](#compatibility)
 
 > Is your Use Case not listed? [Let me know ✉️](/contact/)
@@ -64,13 +61,15 @@ My top 10 list of `fetch` examples, plus a bonus or 2.
 
 <br /><br />
 
-When starting this article (late 2018, updated 2022) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc.
+When starting this article (late 2018, updated 2024) I assumed I'd end with a table of mixed check boxes. Surely there are special _Use Cases_ which justified [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc.
 
 Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
 
 Despite using `fetch` for several years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits.
 
 Well, let's check out what `fetch` can do...
+
+### Fetch Recipes
 
 #### Get JSON from a URL
 
@@ -174,6 +173,10 @@ _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC s
 #### Handling HTTP Redirects
 
 <Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+#### Canceling a fetch request
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
 
 ### Compatibility
 

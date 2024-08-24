@@ -15,7 +15,6 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import socialBanner from "../assets/social-banner.png";
 
 import { GOOGLE_ANALYTICS_ID, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
-import "@/styles/nav.css";
 
 type Props = {
   children: any[];
@@ -69,8 +68,8 @@ const coverUrl =
   </head>
 
   <body>
-    <Header date={date} modified={modified} />
-    <main>
+    <Header className="content-grid" date={date} modified={modified} />
+    <main class="content-grid">
       {title && <h1>{title}</h1>}
       {subTitle && <h2>{subTitle}</h2>}
       {
@@ -95,11 +94,7 @@ const coverUrl =
 
       {
         cover && typeof cover === "object" && "src" in cover && (
-          <div class="hero-image">
-            <div class="hero-image-wrapper">
-              <Image src={cover as ImageMetadata} width="400" alt={title} />
-            </div>
-          </div>
+          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width" />
         )
       }
 
