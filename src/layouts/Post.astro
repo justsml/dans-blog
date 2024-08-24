@@ -118,25 +118,27 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
       {title && <h1>{title}</h1>}
       {subTitle && <h2>{subTitle}</h2>}
 
-      <div class="info skinny">
-        {
-          createdAgo && (
-            <InfoLabel
-              text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
-            >
-              <CalendarIcon className="icon" strokeWidth={1} />
-            </InfoLabel>
-          )
-        }
-
-        {
-          category && (
-            <InfoLabel text={category!}>
-              <TagIcon className="icon" strokeWidth={1} />
-            </InfoLabel>
-          )
-        }
-      </div>
+      <aside class="skinny">
+        <div class="info">
+          {
+            createdAgo && (
+              <InfoLabel
+                text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
+              >
+                <CalendarIcon className="icon" strokeWidth={1} />
+              </InfoLabel>
+            )
+          }
+  
+          {
+            category && (
+              <InfoLabel text={category!}>
+                <TagIcon className="icon" strokeWidth={1} />
+              </InfoLabel>
+            )
+          }
+        </div>
+      </aside>
 
       {
         cover_full_width &&
