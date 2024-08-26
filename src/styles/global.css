@@ -146,7 +146,7 @@
     h6 {
       font-weight: 300;
       letter-spacing: 0.002em;
-      @apply mx-2 my-4 mt-6;
+      margin-block: 1.75rem;
       color: var(--neon-cyan);
       opacity: 0.965;
     }
@@ -207,7 +207,7 @@
   }
 
   code {
-    @apply bg-card-foreground text-primary-foreground p-1 rounded;
+    @apply bg-card-foreground text-primary-foreground p-1 rounded text-nowrap;
   }
 
   img {
@@ -238,7 +238,7 @@ h6 {
   font-family: "Playwrite AU NSW", cursive;
 
   line-height: 1.75;
-  margin: 2rem 0;
+  margin-block: 1.5rem;
 
   scroll-margin-top: 5rem;
 }
@@ -254,7 +254,7 @@ h6 {
 /* first h1 in the page*/
 h1:first-of-type {
   font-size: 2.5rem;
-  margin-block: 1.5rem;
+  margin-block: 2rem;
   color: #fff;
   /* // add glow/shadow effect */
   text-shadow: 
@@ -640,18 +640,27 @@ pre.astro-code {
   content: "📺";
   font-size: 1.25rem;
   margin-left: 0.25rem;
+
+  text-decoration: none;
+  opacity: 0.5;
+  &:hover { opacity: 1; }
 }
+
 /*
 .article a[href*="danlevy.net"]::after {
   content: "<span class='iconify' data-icon='fa-solid:link' data-inline='false'></span> 📄";
   font-size: 1.25rem;
   margin-left: 0.25rem;
 } */
-.article a[href]:not([href*="danlevy.net"]):not([href*="youtube.com"])::after {
+.article a[href]:not([href*="danlevy.net"]):not([href*="youtube.com"]):not([href^="#"])::after {
   content: "🔗";
   font-size: 1.25rem;
   margin-left: 0.25rem;
+
+  text-decoration: none;
+  opacity: 0.75;
 }
+.article a[href]:hover::after { opacity: 1; }
 
 /* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url 
 
@@ -659,10 +668,13 @@ exclude hash anchor links */
 
 header a[href]::after,
 nav a[href]::after,
+.gist a[href]::after,
 .challenge a[href]::after {
   content: "" !important;
 }
 
+
+/* TABLE GLOBAL STYLES */
 table {
   margin-block: 2rem;
   line-height: 2;

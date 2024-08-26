@@ -4,9 +4,9 @@
 
 .score {
   background-color: hsl(var(--background));
-  opacity: 0.9;
+  opacity: 0.85;
+  filter: brightness(0.65);
   bottom: 0;
-  filter: brightness(0.5);
   box-shadow: inset 0 .7px .3px var(--clr-muted-300);
   color: var(--primary);
   font-size: 1.75rem;
@@ -15,7 +15,7 @@
   
   padding: 0.5rem;
   width: 100%;
-  height: fit-content;
+  height: 3.6rem;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -23,9 +23,15 @@
   z-index: 1000;
 
   text-align: center;
-}
 
-.score-wrapper {
-  max-width: 720px;
-  margin: 0 auto;
+  transition: filter 0.2s ease-out;
+
+}
+.score.active {
+    opacity: .9;
+    filter: brightness(0.8);
+  }
+
+.score:hover {
+  filter: brightness(1);
 }

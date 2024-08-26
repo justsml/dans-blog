@@ -5,7 +5,7 @@ import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
-const _postsCollection: ArticlePost[] = await getCollection("posts");
+const _postsCollection: ArticlePost[] = await getCollection("posts") as unknown as ArticlePost[];
 let _posts = _postsCollection
   .map((post) => ({
     ...post,

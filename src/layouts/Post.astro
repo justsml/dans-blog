@@ -74,42 +74,6 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
         <meta property="article:published_time" content={publishedTime} />
       )
     }
-
-    <script is:inline>
-      // Hackety hack to update the score on quiz pages
-      window.__updateCounts = () => {
-        const scoreEls = document.querySelectorAll(".score");
-        const scoreLabel = document.querySelector(".score label");
-        const questions = document.querySelectorAll("main .challenge");
-        const correct = document.querySelectorAll("main .challenge.correct");
-
-        const isQuizPage = questions.length > 0;
-
-        if (!isQuizPage) return; // Not a quiz page
-
-        if (scoreEls.length >= 2)
-          console.error("Multiple score elements found");
-        if (!scoreLabel)
-          return console.error("Expected score label, not found");
-
-        if (questions.length === correct.length) {
-          scoreLabel.innerHTML = "All correct!";
-        } else {
-          scoreLabel.innerHTML = `${correct.length} / ${questions.length}`;
-        }
-      };
-
-      document.addEventListener("DOMContentLoaded", function () {
-        const quiz = document.querySelector(".quiz-ui");
-
-        if (quiz) {
-          setTimeout(window.__updateCounts, 500);
-          quiz.addEventListener("click", () => {
-            window.__updateCounts();
-          });
-        }
-      });
-    </script>
   </head>
 
   <body>
@@ -145,10 +109,12 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
         typeof cover_full_width === "object" &&
         "src" in cover_full_width ? (
           <Image
-            src={cover_full_width as ImageMetadata}
-            width="400"
-            alt={title}
             class="full-width flow"
+            src={cover_full_width as ImageMetadata}
+            format="webp"
+            widths={[400, 800, 1200, 1600, 2000]}
+            sizes={`(min-width: 800px) 400px, (min-width: 1200px) 800px, (min-width: 1600px) 1200px, (min-width: 2000px) 1600px, 2000px`}
+            alt={title}
           />
         ) : (
           cover &&
@@ -175,4 +141,42 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
     <Footer />
     <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
   </body>
+  <script is:inline>
+    // Hackety hack to update the score on quiz pages
+    window.__updateCounts = () => {
+      const scoreEls = document.querySelectorAll(".score");
+      const scoreLabel = document.querySelector(".score label");
+      const questions = document.querySelectorAll("main .challenge");
+      const correct = document.querySelectorAll("main .challenge.correct");
+
+      const isQuizPage = questions.length > 0;
+
+      if (!isQuizPage) return; // Not a quiz page
+
+      if (scoreEls.length >= 2)
+        console.error("Multiple score elements found");
+      if (!scoreLabel)
+        return console.error("Expected score label, not found");
+      if (correct.length > 0) {
+        scoreEls[0].classList.add("active");
+      }
+      if (questions.length === correct.length) {
+        scoreEls[0].classList.add("all-correct");
+        scoreLabel.innerHTML = "All correct!";
+      } else {
+        scoreLabel.innerHTML = `${correct.length} / ${questions.length}`;
+      }
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const quiz = document.querySelector(".quiz-ui");
+
+      if (quiz) {
+        setTimeout(window.__updateCounts, 500);
+        quiz.addEventListener("click", () => {
+          window.__updateCounts();
+        });
+      }
+    });
+  </script>
 </html>

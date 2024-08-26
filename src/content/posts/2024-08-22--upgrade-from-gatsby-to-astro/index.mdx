@@ -6,25 +6,25 @@ modified: "2024-08-23"
 category: Guides
 tags: [astro, tailwind, mdx, pagefind, gatsby]
 cover: galaxy-contribution-mode.jpg
+cover_full_width: galaxy-contribution-banner.jpg
 cover_mobile: w300_galaxy-contribution-mode.jpg
 cover_icon: icon_galaxy-contribution-mode.jpg
 ---
 
-Recently, I embarked on a journey to upgrade my 8+ year-old Gatsby v1 site. This blog post will share the lessons I learned during this process and the fun technologies I explored.
+Recently, I embarked on a journey to upgrade my 8+ year-old Gatsby v1 site.
 
-{/* Write a table of contents */}
+This blog post will share some lessons I learned during this process and the fun technologies I explored.
+
 ## Table of Contents
 
 - [Project Requirements](#project-requirements)
 - [Choosing my Right Technology Stack](#choosing-my-right-technology-stack)
 - [Astro: Learning Curve and Key Features](#astro-learning-curve-and-key-features)
-- [Rediscovering Modern CSS](#rediscovering-modern-css)
-- [Every static site should use Pagefind!](#every-static-site-should-use-pagefind)
+- [Modern CSS: Wow](#modern-css-wow)
+- [Search: Pagefind](#search-pagefind)
 - [Comments: Utterances](#comments-utterances)
-- [Regret: Tailwind](#regret-tailwind)
+- [Tailwind: Regrets](#tailwind-regrets)
 - [Conclusion](#conclusion)
-
-
 
 ## Project Requirements
 
@@ -52,7 +52,9 @@ So, I have precisely too many options, which I ultimately narrowed down to **Rem
 
 I could write an entire blog series on my evaluation process, but I'll summarize it here:
 
-I decided on Astro because of how quickly I could _do meaningful things_. Their API design is refreshingly simple. It's a [great balance between flexibility and good design opinions.](https://docs.astro.build/en/concepts/why-astro/)
+<p class="breakout">I chose [Astro](https://astro.build) because of how quickly I could _do meaningful things_.</p>
+
+Their API design is refreshingly simple. It's a [great balance between flexibility and good design opinions.](https://docs.astro.build/en/concepts/why-astro/)
 
 It was a bit reassuring that Astro lacks any obvious cloud bias or framework agenda.
 
@@ -68,7 +70,9 @@ Astro wasn't the only technology I used, here's a full run down of the stack:
 
 ## Astro: Learning Curve and Key Features
 
-Astro quickly became the cornerstone of my upgrade. Here are some key features I found particularly useful:
+<p class="breakout quote">Astro quickly became the cornerstone of my upgrade.</p>
+
+Here are some key features I found particularly useful:
 
 - `.astro` files: At first glance, Astro components may look like React JSX components, however they are quite different and serve a different set of goals. (See comparison table below.)
 - Powered by Vite under the hood - it just works. Seamlessly handles ESM/CJS, TypeScript, code bundling, styles, images, etc.
@@ -100,18 +104,18 @@ Some things were a little surprising, like styling around Astro's injected marku
 | Use custom hooks that depend on state, effects, or browser-only APIs               | ❌ | ✅ |
 
 
-## Rediscovering Modern CSS
+## Modern CSS: Wow
 
 Coming back to frontend development, I was delighted by the advancements in native CSS:
 
-- CSS Variables: Available for a while, and pretty stable across browsers since 2022.
+- CSS Variables: Available for a while, and pretty stable across browsers since 202\*.
 - Nesting: Finally in spec, and without earlier awkward syntax. Now it's similar to Less or SCSS.
 - New selectors: [`:is()`, `:where()`, and `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) offer more precise targeting of elements.
 - Modern units like `ch`, `vw`, and functions like `clamp()` provide better control over layouts and typography.
 - Set spacing more naturally with `-inline` and `-block` attributes. Set padding or margin on either the horizontal or vertical axis. Instead of `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
 - Advanced layouts: Re-learning CSS Grid. Wow, there's a lot of shit in there. It can be daunting with seemingly endless ways of using it. Keep in mind, you can get away with figuring out 1 or 2 ways. Check out these great resources that helped me do tricks with grid: [Kevin Powell's video: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
 
-## Every static site should use Pagefind!
+## Search: Pagefind
 
 Implementing a **site search** without 3rd party services or database hosting seemed like a fun challenge. After all, it's not like I have 10,000 posts to index (yet.)
 
@@ -121,7 +125,7 @@ While browsing [Astro's community integrations](https://astro.build/integrations
 
 The simplicity of implementing Pagefind is a delight. It can integrated with ANY static site content, and you can choose if you want a default UI, or you can build anything custom if you choose.
 
-It neatly solved for everything I wanted, perfectly. It took only minutes to integrate, and most of the work involved adding a `<div id="search"></div>` tag and some styling!
+It neatly solved for everything I wanted. It took only minutes to integrate, and most of the work involved adding a `<div id="search"></div>` tag and some styling!
 
 ## Comments: Utterances
 
@@ -133,7 +137,7 @@ Also, it needs to be simple & maintainable.
 
 This lead me to chose the fantastic [Utterances](https://utteranc.es/) service. Its GitHub (issues-based) comments system lines up well with my audience. Plus, it's easy to set up, and free.
 
-## Regret: Tailwind
+## Tailwind: Regrets
 
 There's only one bit of technology I'm increasingly regretting using: Tailwind.
 
