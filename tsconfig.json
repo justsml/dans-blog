@@ -3,15 +3,31 @@
   "compilerOptions": {
     "strictNullChecks": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "jsxImportSource": "preact",
     "baseUrl": ".",
+    "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@/utils/*": ["./src/utils/*"],
-      "@/utils": ["./src/utils.ts", "./src/utils/*"],
-      "@/components/*": ["./src/components/*"],
+      // This is the key - module resolution path remapping
+      "react": ["node_modules/preact/compat/"],
+      "react-dom": ["node_modules/preact/compat/"],
 
-    },
+      "@/*": [
+        "./src/*"
+      ],
+      "@/utils/*": [
+        "./src/utils/*"
+      ],
+      "@/utils": [
+        "./src/utils.ts",
+        "./src/utils/*"
+      ],
+      "@/components/*": [
+        "./src/components/*"
+      ]
+    }
   },
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

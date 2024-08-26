@@ -1,7 +1,7 @@
 "use client";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
-import { createPortal } from "react-dom";
+import { createPortal } from "preact/compat";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { slugify } from "@/shared/pathHelpers";
 import avatarImage from "@/assets/avatar-256.jpg";
@@ -17,7 +17,7 @@ import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import "./index.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "preact/compat";
 import { SearchButton } from "../search/SearchButton";
 
 const NavMenu = ({

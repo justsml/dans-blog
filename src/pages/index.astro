@@ -34,7 +34,7 @@ const filterOptions = [
   <div class="filter-toolbar">
     {/* <ArticleFilterLinks /> */}
     <Combobox
-      client:only={"react"}
+      client:idle
       options={filterOptions}
       buttonText="View articles by..."
       onChange={(value) =>
@@ -54,23 +54,23 @@ const filterOptions = [
   </div>
 </Page>
 
-<script is:inline>
-  // document.addEventListener("DOMContentLoaded", function () {});
-
-  function sortCardsByDate(mode) {
+<script>
+  function sortCardsByDate(mode: string) {
     if (!mode) return;
-    const grid = document.querySelector(".article-list");
+    const grid: HTMLDivElement | null = document.querySelector(".article-list");
     if (!grid) return console.info("No article-list grid found");
 
     let reverse = grid.dataset.lastSortMode === mode;
 
     if (mode === "modified" || mode === "created") {
-      const sortedCards = [...document.querySelectorAll(".article-card")].sort(
+      const sortedCards = ([...document.querySelectorAll(".article-card")] as Array<HTMLDivElement>).sort(
         (a, b) => {
           const aDate = a.dataset[mode];
           const bDate = b.dataset[mode];
-          if (!aDate || !bDate)
-            return console.warn("No date found for", a, b) || 0;
+          if (!aDate || !bDate) {
+            console.warn("No date found for", a, b);
+            return 0;
+          }
           const aTime = new Date(aDate).getTime();
           const bTime = new Date(bDate).getTime();
           if (mode === "created") {
@@ -95,7 +95,7 @@ const filterOptions = [
     }
   }
 
-  function sortCardsBy(mode) {
+  function sortCardsBy(mode: string) {
     if (!mode) return;
     if (mode === "modified" || mode === "created") {
       sortCardsByDate(mode);
@@ -104,6 +104,8 @@ const filterOptions = [
     }
   }
 
+  // @ts-ignore
   window.sortCardsByDate = sortCardsByDate;
+  // @ts-ignore
   window.sortCardsBy = sortCardsBy;
 </script>
