@@ -8,6 +8,11 @@ import socialBanner from '../assets/social-banner.png';
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
 
+type Props = {
+  title?: string;
+  subTitle?: string;
+  frontmatter?: Record<string, any>;
+}
 ---
 
 <html lang="en">

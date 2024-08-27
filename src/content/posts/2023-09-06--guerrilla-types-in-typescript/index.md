@@ -6,9 +6,9 @@ modified: 2024-07-30
 tags: [engineering,typescript,composition,types]
 category: Guides
 subCategory: TypeScript
-cover: DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-cover_mobile: w300_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-cover_icon: icon_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
+cover: gorilla-types_dall-e.jpg
+cover_mobile: w300_gorilla-types_dall-e.jpg
+cover_icon: icon_gorilla-types_dall-e.jpg
 ---
 
 ## Guerrilla Types in TypeScript

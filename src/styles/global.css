@@ -621,7 +621,16 @@ pre.astro-code {
   padding-right: .5rem;
 
   max-width: 760px;
+  max-height: 2.5rem;
+  transition: max-height 0.25s ease-in-out, margin 0.25s ease-in-out, padding 0.25s ease-in-out;
 
+
+  form {
+    background: var(--pagefind-ui-background);
+    border-radius: 2rem;
+    z-index: 10;
+    padding: 0.5rem 1rem;
+  }
   .pagefind-ui {
     width: 50%;
   }
@@ -630,6 +639,12 @@ pre.astro-code {
   }
 }
 
+.collapsed {
+  overflow: hidden;
+  max-height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 .comments-wrapper {
   margin-block: 1rem;

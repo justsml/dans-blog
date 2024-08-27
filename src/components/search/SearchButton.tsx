@@ -11,7 +11,7 @@ export const SearchButton = () => (
     onClick={() => {
       const $searchBar = document.querySelector(".searchBar");
       if (!$searchBar) return console.warn(`Missing '.searchBar' element`);
-      $searchBar?.classList.toggle("hidden");
+      $searchBar?.classList.toggle("collapsed");
     }}
   >
     <SearchIcon />
