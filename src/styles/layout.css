@@ -98,11 +98,14 @@
 
 img.full-width {
   width: 100%;
-  max-height: 25vh;
+  max-height: 35vh;
   object-fit: cover;
+  border-radius: 0;
   /* image-rendering: crisp-edges; */
-  filter: blur(1px);
+  /* filter: blur(1px); */
   margin-block: 2rem;
+  border-top: 2px solid var(--clr-muted-100);
+  border-bottom: 2px solid var(--clr-muted-100);
 }
 
 p :has(img) {
@@ -139,6 +142,8 @@ p img {
   --clr-accent-300: hsl(358, 72%, 65%);
   --clr-accent-400: hsl(358, 72%, 50%);
   --clr-accent-500: hsl(358, 72%, 35%);
+  --clr-muted-100: hsl(0, 0%, 100%);
+  --clr-muted-200: hsl(0, 0%, 90%);
   --clr-muted-300: hsl(0, 0%, 80%);
   --clr-muted-400: hsl(0, 0%, 65%);
   --clr-muted-500: hsl(0, 0%, 50%);
