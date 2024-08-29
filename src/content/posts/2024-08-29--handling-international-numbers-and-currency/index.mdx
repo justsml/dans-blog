@@ -1,0 +1,133 @@
+---
+title: "HowTo: Display International Numbers & Currency"
+subTitle: "Localized money explained"
+draft: true
+date: 2024-08-28
+modified: 2024-08-30
+tags: [engineering, internationalization, localization, currency, numbers]
+category: HowTo
+subCategory: Internationalization
+cover: currency-banner-pic.webp
+# cover_full_width: currency-banner-pic.webp
+cover_mobile: w300_currency-banner-pic.jpg
+cover_icon: icon_currency-banner-pic.jpg
+---
+
+# Why localize Numbers & Currency?
+
+Localization is a key part of making your app **feel at home in different countries.** Localization is a big topic, including language translation, date formatting, etc. But today, we'll focus on **numbers and currency.**
+
+<p class="breakout">Nothing can feel less authentic to an international user than finding an app littered with inconsistent Local- or US-formatted numbers, dates, and phone numbers.</p>
+
+It may be surprising to many people the big differences even between major Euro countries:
+
+In Ireland folks expect to see `€1,234.56`, in Germany `1.234,56 €`, in France `1 234,56 €`, and compared to the US `$1,234.56`.
+
+Note the whitespace and punctuation differences in those examples.
+
+In this guide, we'll get a handle on how to localize numbers in our own apps.
+
+1. [Key Terms](#key-terms)
+1. [Formatting Numbers](#formatting-numbers)
+1. [Formatting Currency](#formatting-currency)
+
+## Key Terms
+
+- Locale: describes an [Language](https://www.loc.gov/standards/iso639-2/php/English_list.php) & [Country](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) pair. ( `en-US` , `en-GB`, `xh-ZA`)
+- Currency Code: Three letter codes from the [ISO 4217 Currency Code](https://en.wikipedia.org/wiki/ISO_4217) identify every currency. (`EUR: Euro`, `CAD: Canadian Dollars`, `USD: US Dollars`)
+
+
+Every country or territory actually has 3 ways to refer to it: a two letter code, a three letter code, and a numeric code.  (`US`, `USA`, `840`).
+
+> Note: Locales ONLY use two letter country codes.
+
+
+## Formatting Numbers
+
+Before we get to money, let's talk numbers.
+
+To format a number locally, we'll need a `locale` - a language + country string (`en-US`). Every `locale` defines how to format numbers.
+
+Details like whether commas, periods, or spaces are used as separators. For example, compare several EU/Euro locales:
+
+- Germany: `1.234.567,89`
+- Ireland: `1,234,567.89`
+- France: `1 234 567,89`
+
+<details open>
+  <summary>View source: JS number formatting.</summary>
+  <p>
+
+```javascript
+const number = 1_234_567.89;
+const germany = new Intl.NumberFormat('de-DE');
+const ireland = new Intl.NumberFormat('ga-IE');
+const france = new Intl.NumberFormat('fr-FR');
+
+console.log('Germany: ' + germany.format(number));
+console.log('Ireland: ' + ireland.format(number));
+console.log('France: ' + france.format(number));
+```
+
+  </p>
+</details>
+
+## Formatting Currency
+
+Fortunately, `Intl.NumberFormat` can do more than "numbers," it can handle **currency** when given a `Currency Code` option: (`{ style: 'currency', currency: 'USD' }`)!
+
+Now let's look at formatting across Euro locales:
+
+- Germany: `1.234.567,89 €`
+- Ireland: `€1,234,567.89`
+- France: `1 234 567,89 €`
+
+<details open>
+  <summary>View source: JS currency formatting.</summary>
+  <p>
+
+```javascript
+const number = 1_234_567.89;
+
+const moneyFormatter = (locale, currency) => // helper function
+  new Intl.NumberFormat(locale, { style: 'currency', currency });
+
+const germany = moneyFormatter('de-DE', 'EUR');
+const ireland = moneyFormatter('ga-IE', 'EUR');
+const france = moneyFormatter('fr-FR', 'EUR');
+
+console.log('Germany: ' + germany.format(number));
+console.log('Ireland: ' + ireland.format(number));
+console.log('France: ' + france.format(number));
+```
+
+  </p>
+</details>
+
+## Next Steps
+
+Depending on your particular needs, you may want to explore a few related concepts:
+
+- Best practices with user locale. Detect + allow overrides. (e.g. a country drop down.)
+- Persisting whole integers (store cents, not dollars.)
+- Money math. (e.g. applying a `20% off` coupon, calculating `subTotal + taxes`, etc.)
+- Live exchange rates. (Interbank orders, forex/currency exchanges.)
+
+<p class="breakout quote">Let me know if would like to see a future article on these topics!</p>
+
+## Recommendations
+
+Some libraries can help with these tasks: 
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supports money math, exchange rates, formatting, and parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) is my preferred Rust library.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) is my current Golang choice.
+

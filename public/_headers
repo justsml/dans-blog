@@ -2,18 +2,14 @@
 
 # Headers
 # Set X-Frame-Options header to deny all iframes
-/* X-Frame-Options: DENY 
-# Set Referrer-Policy header to no-referrer
-# /* Referrer-Policy: no-referrer
-# Set Content-Security-Policy header to default-src 'self'
-/* Content-Security-Policy: default-src 'self'
-# Set X-XSS-Protection header to 1; mode=block
-/* X-XSS-Protection: 1; mode=block
-# Set Cache-Control header to no-cache
-/* Cache-Control: public, max-age=3600, must-revalidate
+/*
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'self'
+  X-XSS-Protection: 1; mode=block
+  <!-- Cache-Control: public, max-age=3600, must-revalidate -->
 
-# cache fonts
-/fonts/* Cache-Control: immutable
+/fonts/*
+  Cache-Control: immutable
 
-
-
+/.astro/*
+  Cache-Control: immutable
