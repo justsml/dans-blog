@@ -18,7 +18,7 @@ cover_icon: icon_currency-banner-pic.jpg
   - [Numbers are Local 🏘️](#numbers-are-local-️)
   - [Currency is Global 🌎](#currency-is-global-️)
   - [When Locale Matters](#when-locale-matters)
-- [The Solution](#the-solution)
+- [A Solution](#a-solution)
 - [Next Steps](#next-steps)
 
 ## Money: Localization (L10n) and Internationalization (i18n)
@@ -69,7 +69,7 @@ Most ecommerce/payment REST APIs deal in `price` + `currencyCode`. Why no locale
 
 Locales are (typically) set at the OS/Device level, and browsers make it available via `navigator.language`. Since every one of your users could have a different locale, it only makes sense to format numbers and currency on the client side.
 
-## The Solution
+## A Solution
 
 Ok, good news! Modern programming languages have built-in support for this. In JavaScript, we have the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) class and `Intl.NumberFormat`!
 
@@ -78,16 +78,19 @@ Let's check out some code:
 ```javascript
 const number = 1_234_567.89;
 
-const moneyFormat = (locale = navigator.language, currency = 'USD') =>
-  new Intl.NumberFormat(locale, { currency, style: 'currency' });
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
 
-const germany = moneyFormat('de-DE', 'EUR');
-const ireland = moneyFormat('ga-IE', 'EUR');
-const france = moneyFormat('fr-FR', 'EUR');
-
-console.log('🇩🇪 ' + germany.format(number));
-console.log('🇮🇪 ' + ireland.format(number));
-console.log('🇫🇷 ' + france.format(number));
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
 ```
 
 If you need to do fancier things, like calculating taxes, applying discounts, or converting between currencies, you'll want to use a library like [dinero.js](https://v2.dinerojs.com/).
