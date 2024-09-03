@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* From @fontsource/raleway */
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
@@ -38,6 +39,7 @@
   font-display: swap;
 }
 
+/* From @fontsource-variable/playwrite-au-nsw */
 @font-face {
   font-family: 'Playwrite AU NSW';
   src: url('/fonts/playwrite-au-nsw-fallback-wght-normal.woff2') format('woff');
@@ -725,5 +727,28 @@ table {
   }
   td {
     padding: 0.5rem;
+  }
+}
+
+@keyframes fade-to-grayscale {
+  to {
+    filter: grayscale(100%) brightness(0.5);
+  }
+}
+
+@keyframes fancy-in {
+  /* card entry */
+  0% {
+    transform: translateY(25vw);
+  }
+  /* card on stage */
+  20%, 80% {
+    opacity: 1;
+    transform: none;
+  }
+  /* card exit */
+  100% {
+    transform: translateY(90%) scale(.98);
+    opacity: 0;
   }
 }
