@@ -1,0 +1,121 @@
+---
+title: "Understanding International Numbers & Currency"
+subTitle: "Localized money explained!"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [engineering, internationalization, localization, currency, numbers]
+category: HowTo
+subCategory: Internationalization
+cover: currency-banner-pic.webp
+cover_full_width: currency-banner-wide.jpg
+cover_mobile: w300_currency-banner-pic.jpg
+cover_icon: icon_currency-banner-pic.jpg
+---
+
+- [Money: Localization (L10n) and Internationalization (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Critical Concepts](#critical-concepts)
+  - [Numbers are Local 🏘️](#numbers-are-local-️)
+  - [Currency is Global 🌎](#currency-is-global-️)
+  - [When Locale Matters](#when-locale-matters)
+- [The Solution](#the-solution)
+- [Next Steps](#next-steps)
+
+## Money: Localization (L10n) and Internationalization (i18n)
+
+They aren't just for dominating a game of Scrabble, _localization_ & _internationalization_ refer to the process of making a product **feel at home in a different country.**
+
+<p class="breakout quote">Showing a currency in the wrong local format is a dead give-away: you've put in no effort.<br/>If you can't format a price, how could you handle shipping?</p>
+
+Internationalization is a big topic, covering everything from text translation to date formatting. In this post we'll focus in on a particular subtopic, **formatting numbers and currency.**
+
+Let's explore formatting between 3 Eurozone countries, USA and India:
+
+- `€1,234,567.89` Ireland 🇮🇪
+- `1.234.567,89 €` Germany 🇩🇪
+- `1 234 567,89 €` France 🇫🇷
+- `$1,234,567.89` USA 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+Chaos! Right? There are symbols, whitespace and punctuation flying all over! It's amazing the EU can agree on anything if they can't agree on how to show Euros! 😅
+
+## Critical Concepts
+
+Before we dive into solutions, what do we mean by "Numbers are Local"?
+
+### Numbers are Local 🏘️
+
+Every locale ([Country per ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) defines rules for formatting numbers.
+
+Number formatting rules include:
+
+- Decimal: comma, period.
+- Thousands: comma, period, space.
+- Currency symbol position & spacing.
+
+### Currency is Global 🌎
+
+A `currency` refers to a specific unit of money. (See [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) for list.)
+
+- Specifies a symbol: `$`, `€`, `£`, `¥`. (Often reused.)
+- Always has a 3-letter code: `USD`, `EUR`, `GBP`, `JPY`.
+- Can be used/exchanged in "any" country. In theory.
+- Converting between currencies requires exchange rate data.
+- Value doesn't change based on locale.
+
+### When Locale Matters
+
+Most ecommerce/payment REST APIs deal in `price` + `currencyCode`. Why no locales?
+
+Locales are (typically) set at the OS/Device level, and browsers make it available via `navigator.language`. Since every one of your users could have a different locale, it only makes sense to format numbers and currency on the client side.
+
+## The Solution
+
+Ok, good news! Modern programming languages have built-in support for this. In JavaScript, we have the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) class and `Intl.NumberFormat`!
+
+Let's check out some code:
+
+```javascript
+const number = 1_234_567.89;
+
+const moneyFormat = (locale = navigator.language, currency = 'USD') =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' });
+
+const germany = moneyFormat('de-DE', 'EUR');
+const ireland = moneyFormat('ga-IE', 'EUR');
+const france = moneyFormat('fr-FR', 'EUR');
+
+console.log('🇩🇪 ' + germany.format(number));
+console.log('🇮🇪 ' + ireland.format(number));
+console.log('🇫🇷 ' + france.format(number));
+```
+
+If you need to do fancier things, like calculating taxes, applying discounts, or converting between currencies, you'll want to use a library like [dinero.js](https://v2.dinerojs.com/).
+
+## Next Steps
+
+Depending on your particular needs, you may want to explore related concepts:
+
+- Best practices with user locale. Detect + allow overrides. (e.g. a country drop down.)
+- Persisting whole integers (store cents, not dollars.)
+- Money math. (e.g. applying a `20% off` coupon, calculating `subTotal + taxes`, etc.)
+- Live exchange rates. (For retail purchases, forex/currency exchanges.)
+
+<p class="breakout quote">Let me know if would like to see a future article on these topics!</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: 
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supports money math, exchange rates, formatting, and parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) is my preferred Rust library.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) is my current Golang choice.
+ */}
