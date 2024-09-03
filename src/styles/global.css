@@ -158,8 +158,22 @@
   /* Make links more accessible */
   article, .article {
     a[href] { text-decoration: underline; }
+
   }
 
+  li::marker {
+    color: var(--neon-pink);
+    font-size: 1.25rem;
+    content: "‣ ";
+  }
+
+  nav, .ViewportPosition {
+    li::marker {
+      color: inherit;
+      font-size: inherit;
+      content: inherit
+    }
+  }
   h1 {
     @apply text-3xl;
   }
@@ -205,10 +219,21 @@
   pre {
     @apply bg-card p-4 rounded;
   }
-
   code {
     @apply bg-card-foreground text-primary-foreground p-1 rounded text-nowrap;
+    
   }
+
+  .article, article {
+    p, ul {
+      code {
+        background-color: #152028;
+        padding: .25rem .5rem;
+        border-radius: .5rem;
+        box-shadow: 0 0 .8px #fff;
+      }
+    }
+  } 
 
   img {
     @apply rounded;

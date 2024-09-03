@@ -13,6 +13,14 @@ cover_mobile: w300_currency-banner-pic.jpg
 cover_icon: icon_currency-banner-pic.jpg
 ---
 
+- [Money: Localization (L10n) and Internationalization (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Critical Concepts](#critical-concepts)
+  - [Numbers are Local 🏘️](#numbers-are-local-️)
+  - [Currency is Global 🌎](#currency-is-global-️)
+  - [When Locale Matters](#when-locale-matters)
+- [The Solution](#the-solution)
+- [Next Steps](#next-steps)
+
 ## Money: Localization (L10n) and Internationalization (i18n)
 
 They aren't just for dominating a game of Scrabble, _localization_ & _internationalization_ refer to the process of making a product **feel at home in a different country.**
@@ -27,12 +35,11 @@ Let's explore formatting between 3 Eurozone countries, USA and India:
 - `1.234.567,89 €` Germany 🇩🇪
 - `1 234 567,89 €` France 🇫🇷
 - `$1,234,567.89` USA 🇺🇸
-- `₹1,234,567.89` India 🇮🇳
+- `₹12,34,567.89` India 🇮🇳
 
-Chaos! Right? There are symbols, whitespace and punctuation flying all over! It's amazing the EU can agree on anything! 😅
+Chaos! Right? There are symbols, whitespace and punctuation flying all over! It's amazing the EU can agree on anything if they can't agree on how to show Euros! 😅
 
-
-## Key Concepts
+## Critical Concepts
 
 Before we dive into solutions, what do we mean by "Numbers are Local"?
 
@@ -60,85 +67,43 @@ A `currency` refers to a specific unit of money. (See [ISO 4217](https://en.wiki
 
 Most ecommerce/payment REST APIs deal in `price` + `currencyCode`. Why no locales?
 
-Because backend APIs don't know where the data will be displayed. It's up to the frontend to format numbers and currency correctly based on the provided locale. Locales are (typically) set at the OS level; and browsers make it available via `navigator.language`.
+Locales are (typically) set at the OS/Device level, and browsers make it available via `navigator.language`. Since every one of your users could have a different locale, it only makes sense to format numbers and currency on the client side.
 
 ## The Solution
 
-Ok, good news! Modern programming languages have built-in support for this. In JavaScript, we can use the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) object to format numbers and currencies according to a given locale.
+Ok, good news! Modern programming languages have built-in support for this. In JavaScript, we have the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) class and `Intl.NumberFormat`!
 
-In this guide, we'll get a handle on how to localize numbers in our own apps.
-
-1. [Key Terms](#key-terms)
-1. [Formatting Numbers](#formatting-numbers)
-1. [Formatting Currency](#formatting-currency)
-
-## Key Terms
-
-- Locale: a [Language](https://www.loc.gov/standards/iso639-2/php/English_list.php) & [Country](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) pair. ( `en-US` , `en-GB`, `xh-ZA`)
-- Currency Code: Three letter codes identify every currency. (`EUR: Euro`, `CAD: Canadian Dollars`, `USD: US Dollars`, `JPY: Japanese Yen`, see [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)))
-
-
-Every country or territory has 3 ways to refer to it: a two-letter code, a three-letter code, and a numeric code.  (`US`, `USA`, `840`).
-
-> Note: Locales ONLY use two letter country codes.
-
-
-## Formatting Numbers
-
-Before we get to money, let's talk numbers.
-
-To format a number locally, we'll need a `locale` - a language + country string (`en-US`). Every `locale` defines how to format numbers.
-
-Details like whether commas, periods, or spaces are used as separators. For example, compare several EU/Euro locales:
-
-- Germany: `1.234.567,89`
-- Ireland: `1,234,567.89`
-- France: `1 234 567,89`
-
-## Formatting Currency
-
-Fortunately, `Intl.NumberFormat` can do more than "numbers," it can handle **currency** when given a `Currency Code` option: (`{ style: 'currency', currency: 'USD' }`)!
-
-Now let's look at formatting across Euro locales:
-
-- Germany: `1.234.567,89 €`
-- Ireland: `€1,234,567.89`
-- France: `1 234 567,89 €`
-
-<details open>
-  <summary>View source: JS currency formatting.</summary>
-  <p>
+Let's check out some code:
 
 ```javascript
 const number = 1_234_567.89;
 
-const moneyFormatter = (locale, currency) => // helper function
-  new Intl.NumberFormat(locale, { style: 'currency', currency });
+const moneyFormat = (locale = navigator.language, currency = 'USD') =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' });
 
-const germany = moneyFormatter('de-DE', 'EUR');
-const ireland = moneyFormatter('ga-IE', 'EUR');
-const france = moneyFormatter('fr-FR', 'EUR');
+const germany = moneyFormat('de-DE', 'EUR');
+const ireland = moneyFormat('ga-IE', 'EUR');
+const france = moneyFormat('fr-FR', 'EUR');
 
-console.log('Germany: ' + germany.format(number));
-console.log('Ireland: ' + ireland.format(number));
-console.log('France: ' + france.format(number));
+console.log('🇩🇪 ' + germany.format(number));
+console.log('🇮🇪 ' + ireland.format(number));
+console.log('🇫🇷 ' + france.format(number));
 ```
 
-  </p>
-</details>
+If you need to do fancier things, like calculating taxes, applying discounts, or converting between currencies, you'll want to use a library like [dinero.js](https://v2.dinerojs.com/).
 
 ## Next Steps
 
-Depending on your particular needs, you may want to explore a few related concepts:
+Depending on your particular needs, you may want to explore related concepts:
 
 - Best practices with user locale. Detect + allow overrides. (e.g. a country drop down.)
 - Persisting whole integers (store cents, not dollars.)
 - Money math. (e.g. applying a `20% off` coupon, calculating `subTotal + taxes`, etc.)
-- Live exchange rates. (Interbank orders, forex/currency exchanges.)
+- Live exchange rates. (For retail purchases, forex/currency exchanges.)
 
 <p class="breakout quote">Let me know if would like to see a future article on these topics!</p>
 
-## Recommendations
+{/* ## Recommendations
 
 Some libraries can help with these tasks: 
 
@@ -153,4 +118,4 @@ Some libraries can help with these tasks:
 **Go**
 
 - [currency](https://github.com/bojanz/currency) is my current Golang choice.
-
+ */}
