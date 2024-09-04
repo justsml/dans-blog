@@ -169,6 +169,24 @@
     content: "‣ ";
   }
 
+  details {
+    summary {
+      cursor: pointer;
+    }
+  }
+  summary::marker {
+    color: var(--neon-cyan);
+    font-size: 1.25rem;
+    transition: color 0.25s ease-in-out;
+    /* content: "‣ "; */
+  }
+
+  details:hover {
+    summary::marker {
+      color: var(--neon-pink);
+    }
+  }
+
   nav, .ViewportPosition {
     li::marker {
       color: inherit;
@@ -209,7 +227,6 @@
       @apply list-outside list-decimal my-4 mx-4;
     }
   }
-
   blockquote {
     @apply border-l-4 border-primary-foreground pl-4;
   }
@@ -733,22 +750,5 @@ table {
 @keyframes fade-to-grayscale {
   to {
     filter: grayscale(100%) brightness(0.5);
-  }
-}
-
-@keyframes fancy-in {
-  /* card entry */
-  0% {
-    transform: translateY(25vw);
-  }
-  /* card on stage */
-  20%, 80% {
-    opacity: 1;
-    transform: none;
-  }
-  /* card exit */
-  100% {
-    transform: translateY(90%) scale(.98);
-    opacity: 0;
   }
 }
