@@ -14,6 +14,9 @@ export default defineConfig({
   },
 
   site: "https://danlevy.net",
+  experimental: {
+    contentIntellisense: true,
+  },
   integrations: [
     pagefind(),
     react({
@@ -28,7 +31,7 @@ export default defineConfig({
   image: {
     service: {
        config: {
-         limitInputPixels: false,
+        limitInputPixels: false,
       },
      },
   },
