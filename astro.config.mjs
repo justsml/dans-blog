@@ -14,9 +14,6 @@ export default defineConfig({
   },
 
   site: "https://danlevy.net",
-  experimental: {
-    contentIntellisense: true,
-  },
   integrations: [
     pagefind(),
     react({
