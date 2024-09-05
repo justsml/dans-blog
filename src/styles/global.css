@@ -83,8 +83,8 @@
     --popover-foreground: 210 5% 90%;
     --primary: var(--neon-pink);
     --primary-foreground: var(--neon-pink-subtle);
-    --secondary: 210 30% 10%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: hsla(0, 0%, 87%, 1);
+    --secondary-foreground: hsla(0, 0%, 24%, 1);
     --muted: 172 30% 15%;
     --muted-foreground: 210 5% 60%;
     --accent: #333;
@@ -100,33 +100,6 @@
     --link-text-color: 180 100% 50%;
     --heading-text-color: 180 100% 25%;
   }
-  .dark {
-    --background: 210 100% 95%;
-    --foreground: 210 5% 0%;
-    --card: 210 50% 90%;
-    --card-foreground: 210 5% 10%;
-    --popover: 210 100% 95%;
-    --popover-foreground: 210 100% 0%;
-    --primary: var(--neon-pink);
-    --primary-foreground: var(--neon-pink-subtle);
-    --secondary: 210 30% 70%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 172 30% 85%;
-    --muted-foreground: 210 5% 35%;
-    --accent: #333;
-    /* --accent: 172 30% 80%; */
-    --accent-foreground: 210 5% 10%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 210 5% 90%;
-    --border: 210 30% 50%;
-    --input: 210 30% 18%;
-    --ring: var(--neon-pink);
-    --radius: 0.5rem;
-
-    --link-text-color: 180 100% 50%;
-    --heading-text-color: 180 100% 25%;
-  }
-
 }
 
 @layer base {
@@ -250,7 +223,7 @@ body {
   @apply bg-background text-foreground;
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
-  line-height: 1.6;
+  line-height: 1.8;
   font-size: 1rem;
 }
 
@@ -750,5 +723,32 @@ table {
   100% {
     transform: translateY(90%) scale(.98);
     opacity: 0;
+  }
+}
+
+
+figure {
+  transition: border .5s ease-in-out 0s;
+  padding: .25rem;
+  border: .25px solid var(--secondary, #FFF);
+  border-radius: .125rem;
+  margin: 2.25rem auto;
+
+  &:hover {
+    border: .25px solid var(--neon-cyan);
+    /* box-shadow: 0 0 .2rem 0.25rem hsla(var(--primary-foreground)); */
+  }
+
+  figcaption {
+    font-size: .95rem;
+    font-weight: 200;
+    color: var(--secondary);
+    background-color: var(--secondary-foreground);
+    text-align: left;
+    padding: .25rem;
+  }
+
+  p:last-child:empty {
+    display: none;
   }
 }
