@@ -6,9 +6,9 @@ modified: 2023-01-25
 tags: [collaborative-culture,culture,teams,growth,personal-development]
 category: Leadership
 subCategory: culture
-cover: pexels-photo-3184431--cropped.jpg
-cover_mobile: w300_pexels-photo-3184431--cropped.jpg
-cover_icon: icon_pexels-photo-3184431--cropped.jpg
+cover: pexels-photo-3184431--cropped.webp
+cover_mobile: w300_pexels-photo-3184431--cropped.webp
+cover_icon: icon_pexels-photo-3184431--cropped.webp
 ---
 
 ## What is *Collaborative Culture*?

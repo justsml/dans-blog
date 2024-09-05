@@ -5,9 +5,9 @@ modified: 2016-11-30
 category: Thoughts
 subCategory: angularjs
 tags: [programming, angularjs, javascript, python, opinion]
-cover: alex-perez-753751-unsplash.jpg
-cover_mobile: w300_alex-perez-753751-unsplash.jpg
-cover_icon: icon_alex-perez-753751-unsplash.jpg
+cover: alex-perez-753751-unsplash.webp
+cover_mobile: w300_alex-perez-753751-unsplash.webp
+cover_icon: icon_alex-perez-753751-unsplash.webp
 ---
 
 I think we are witnessing the Python 2->3 'Conversion' all over again.

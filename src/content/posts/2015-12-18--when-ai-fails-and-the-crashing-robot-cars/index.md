@@ -5,9 +5,9 @@ modified: 2024-07-30
 category: Leadership
 subCategory: machine-learning
 tags: [artificial intelligence, ai, self-driving cars, fails]
-cover: sandy-millar-749381-unsplash.jpg
-cover_mobile: w300_sandy-millar-749381-unsplash.jpg
-cover_icon: icon_sandy-millar-749381-unsplash.jpg
+cover: sandy-millar-749381-unsplash.webp
+cover_mobile: w300_sandy-millar-749381-unsplash.webp
+cover_icon: icon_sandy-millar-749381-unsplash.webp
 ---
 
 ## Robotic Cars: More or Less Crashes?

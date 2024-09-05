@@ -6,9 +6,9 @@ modified: 2024-07-30
 category: Code
 subCategory: promises
 tags: [promises, async, debugging, errors, javascript, composition]
-cover: michal-parzuchowski-224092-unsplash.jpg
-cover_mobile: w300_michal-parzuchowski-224092-unsplash.jpg
-cover_icon: icon_michal-parzuchowski-224092-unsplash.jpg
+cover: michal-parzuchowski-224092-unsplash.webp
+cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: icon_michal-parzuchowski-224092-unsplash.webp
 ---
 
 ### Promises don't work like other values

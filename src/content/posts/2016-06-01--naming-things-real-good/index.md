@@ -6,9 +6,9 @@ modified: 2024-08-10
 category: Guides
 subCategory: programming
 tags: [programming, patterns, naming, source code, organization]
-cover: rawpixel-652639-unsplash.jpg
-cover_mobile: w300_rawpixel-652639-unsplash.jpg
-cover_icon: icon_rawpixel-652639-unsplash.jpg
+cover: rawpixel-652639-unsplash.webp
+cover_mobile: w300_rawpixel-652639-unsplash.webp
+cover_icon: icon_rawpixel-652639-unsplash.webp
 ---
 
 ## Naming stuff: Object Oriented Basics

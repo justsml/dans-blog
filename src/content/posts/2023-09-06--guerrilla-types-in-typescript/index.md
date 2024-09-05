@@ -6,9 +6,9 @@ modified: 2024-07-30
 tags: [engineering,typescript,composition,types]
 category: Guides
 subCategory: TypeScript
-cover: gorilla-types_dall-e.jpg
-cover_mobile: w300_gorilla-types_dall-e.jpg
-cover_icon: icon_gorilla-types_dall-e.jpg
+cover: gorilla-types_dall-e.webp
+cover_mobile: w300_gorilla-types_dall-e.webp
+cover_icon: icon_gorilla-types_dall-e.webp
 ---
 
 ## Guerrilla Types in TypeScript

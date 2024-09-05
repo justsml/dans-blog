@@ -6,9 +6,9 @@ modified: 2024-07-30
 tags: [promises, javascript, errors, programming]
 category: Code
 subCategory: promises
-cover: lennart-heim-766366-unsplash.jpg
-cover_mobile: w300_lennart-heim-766366-unsplash.jpg
-cover_icon: icon_lennart-heim-766366-unsplash.jpg
+cover: lennart-heim-766366-unsplash.webp
+cover_mobile: w300_lennart-heim-766366-unsplash.webp
+cover_icon: icon_lennart-heim-766366-unsplash.webp
 ---
 
 ## Are JavaScript Promises Broken?

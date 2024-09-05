@@ -6,9 +6,9 @@ modified: 2022-02-27
 tags: [collaborative-culture, culture, teams, growth, personal-development]
 category: Leadership
 subCategory: culture
-cover: pexels-fauxels-3184430-cropped.jpg
-cover_mobile: w300_pexels-fauxels-3184430-cropped.jpg
-cover_icon: icon_pexels-fauxels-3184430-cropped.jpg
+cover: pexels-fauxels-3184430-cropped.webp
+cover_mobile: w300_pexels-fauxels-3184430-cropped.webp
+cover_icon: icon_pexels-fauxels-3184430-cropped.webp
 credit: Photo by fauxels from Pexels
 ---
 

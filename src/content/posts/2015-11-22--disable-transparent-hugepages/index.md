@@ -6,9 +6,9 @@ modified: 2016-01-20
 category: DevOps
 subCategory: mongodb
 tags: [devops, mongodb, performance, tuning]
-cover: victor-garcia-645096-unsplash.jpg
-cover_mobile: w300_victor-garcia-645096-unsplash.jpg
-cover_icon: icon_victor-garcia-645096-unsplash.jpg
+cover: victor-garcia-645096-unsplash.webp
+cover_mobile: w300_victor-garcia-645096-unsplash.webp
+cover_icon: icon_victor-garcia-645096-unsplash.webp
 ---
 
 ### disable-transparent-hugepages fix for Debian/Ubuntu
