@@ -4,6 +4,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
+import criticalCSS from "astro-critical-css";
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,6 +25,7 @@ export default defineConfig({
       applyBaseStyles: false,
 			nesting: true,
     }),
+    criticalCSS(),
   ],
   image: {
     service: {

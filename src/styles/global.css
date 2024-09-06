@@ -2,52 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* From @fontsource/raleway */
-@font-face {
-  font-family: 'Raleway';
-  src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raleway';
-  src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
-  font-weight: 100;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raleway';
-  src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raleway';
-  src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Raleway';
-  src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* From @fontsource-variable/playwrite-au-nsw */
-@font-face {
-  font-family: 'Playwrite AU NSW';
-  src: url('/fonts/playwrite-au-nsw-fallback-wght-normal.woff2') format('woff');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   :root {
     --neon-cyan: 180 100% 50%;
@@ -248,41 +202,32 @@
 
 body {
   @apply bg-background text-foreground;
-  font-family: "Raleway", sans-serif;
+  font-family: "Raleway", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-optical-sizing: auto;
   line-height: 1.6;
   font-size: 1rem;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
   /* font-family: "Tilt Neon", sans-serif; */
   /* font-family: "Orbitron", sans-serif; */
-  font-family: "Playwrite AU NSW", cursive;
-
+  font-family: "Playwrite AU NSW", "Noteworthy", "Bradley Hand", "Chalkboard", cursive;
   line-height: 1.75;
   margin-block: 1.5rem;
 
   scroll-margin-top: 5rem;
 }
 
-h2,
-h3,
-h4,
-h5,
-h6 {
+h2, h3, h4, h5, h6 {
   color: var(--neon-cyan);
 }
 
 /* first h1 in the page*/
 h1:first-of-type {
+  color: #fff;
+  font-style: italic;
   font-size: 2.5rem;
   margin-block: 2rem;
-  color: #fff;
   /* // add glow/shadow effect */
   text-shadow: 
     /* White glow */
@@ -313,142 +258,6 @@ h1:first-of-type {
   max-height: 20ch; */
   margin: 2rem auto;
 }
-.main > * + *,
-.main > * + :where(astro-island, astro-slot) > *:first-child {
-  margin: 1rem 0;
-}
-
-nav.header-nav {
-  display: grid;
-  /* grid-template-rows: min-content auto; */
-  /* repeat(auto-fit, minmax(250px, 1fr)) */
-  
-  /* repeat(auto-fit, minmax(3rem, 1fr)) */
-  /* grid-auto-rows: 1fr 1fr; */
-  grid-auto-rows: 1fr;
-  grid-auto-flow: row dense;
-  place-items: center start;
-  grid-template-columns: auto 1fr;
-
-  height: 7.25rem;
-
-  column-gap: 0rem;
-
-  @screen sm {
-    column-gap: 0rem;
-  }
-
-  @screen md {
-    column-gap: 1rem;
-  }
-
-  @screen lg {
-    column-gap: 2rem;
-  }
-
-  /* padding-inline: 3rem; */
-  .nav-box {
-    justify-self: flex-end;
-  }
-}
-
-main pre {
-  margin: 1rem 0;
-  border: 0.25px solid #fff;
-  border-radius: 0.5rem;
-}
-
-.article-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px, 260px));
-  
-  /* grid-template-rows: repeat(auto-fit, minmax(440px, 1fr)); */
-  grid-auto-flow: row dense;
-  gap: 1.25rem;
-  justify-content: center;
-
-  width: 100%;
-
-  /* max-width: 700px; */
-  margin: 0 auto;
-  font-weight: 300;
-}
-
-.article-card {
-  position: relative;
-  display: grid;
-  line-height: 1.5;
-
-  width: clamp(220px, 80vw, 100%);
-  /* margin-inline: 0.75rem; */
-  grid-template-rows: auto 210px auto max-content;
-  /* gap: 1rem; */
-  padding: 1rem;
-  border-radius: 1.5rem;
-  background-color: hsl(var(--secondary));
-  box-shadow: 0 0 1rem 0.25rem hsla(var(--card-foreground));
-  transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
-  color: var(--clr-muted-400);
-
-  &.draft {
-    border: 2.5px dashed var(--clr-muted-400);
-    filter: grayscale(1);
-    transition: border 0.3s ease-in, filter 0.3s ease-in;
-  }
-  &.draft:hover {
-    border: 2.5px dashed var(--clr-muted-600);
-    filter: grayscale(.25);
-  }
-  
-  img {
-    border-radius: 100%;
-    margin: 0.75rem auto;
-    /* object-fit: contain; */
-    object-fit: cover;
-    width: 200px;
-    height: 200px;
-  }
-
-  .small-label {
-    
-    font-size: var(--fs-200);
-    color: var(--clr-muted-400);
-    /* margin: 0 auto 0 0; */
-
-    position: absolute;
-    right: 0.75rem;
-    top: 0.65rem;
-    transition: color 0.125s ease-in-out, scale 0.125s ease-in-out;
-  }
-
-  &:hover {
-    box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
-    color: unset;
-    scale: 1.02;
-    .small-label {
-      color: unset;
-    }
-  }
-
-  p {
-    line-height: 1.5;
-    font-weight: 100;
-    align-self: center;
-    padding-block: 1rem;
-  }
-  h2 {
-    font-size: 1.4rem;
-    font-family: "Raleway", sans-serif;
-    margin-top: 1rem;
-    margin-bottom: 0;
-    margin-left: 0;
-    margin-right: 0;
-    line-height: 1.25;
-    /* color: var(--neon-cyan); */
-  }
-
-}
-
 div.separator {
   @apply shrink-0 bg-border h-full w-[1px];
 }
@@ -527,6 +336,7 @@ main .info {
 }
 
 .filter-toolbar {
+  height: 40px;
   display: grid;
   place-content: center end;
   margin: 0.5rem 0 1rem 0;
