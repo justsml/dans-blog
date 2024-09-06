@@ -316,8 +316,10 @@ main pre {
 /* credit: [Kevin Powell](https://codepen.io/kevinpowell/pen/ExrZrrw) */
 .content-grid {
   --padding-inline: 1rem;
-  --content-max-width: min(1200px, 90vw);
-  --breakout-max-width: min(1600px, 90vw);
+  --article-width: 1200px;
+  --offset-size: 100px;
+  --content-max-width: min(var(--article-width), 90vw);
+  --breakout-max-width: min(calc(var(--offset-size) + var(--article-width)), 90vw);
   --breakout-size: calc(
     (var(--breakout-max-width) - var(--content-max-width)) / 2
   );
@@ -338,8 +340,9 @@ main pre {
 }
 
 .content-grid.article, article.content-grid {
-  --content-max-width: min(800px, 90vw);
-  --breakout-max-width: min(1000px, 90vw);
+  /* --content-max-width: min(780px, 90vw);
+  --breakout-max-width: min(880px, 90vw); */
+  --article-width: 760px;
 }
 
 .content-grid > img,
@@ -448,6 +451,7 @@ p img {
   }
 
   h2 {
+    font-style: italic;
     margin: 0;
     font-size: 1.6rem;
     font-weight: 400;
