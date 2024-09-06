@@ -5,7 +5,8 @@ import ms from "ms";
 const isProd = import.meta.env.PROD;
 const GIST_TTL_DAYS = import.meta.env.GIST_TTL_DAYS ?? 31;
 
-const ttl = Number(GIST_TTL_DAYS) < 1 ? 1 : Number(GIST_TTL_DAYS);
+const ttlDays = Number(GIST_TTL_DAYS) < 1 ? 1 : Number(GIST_TTL_DAYS);
+const ttl = ttlDays * 24 * 60 * 60 * 1000;
 const cache = new SqliteCache({
   database: "/tmp/danlevy-net-cache.db",
   defaultTtlMs: ttl,
