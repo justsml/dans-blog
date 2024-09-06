@@ -1,4 +1,13 @@
-# netlify _headers file
+# NETLIFY CONFIG
+
+# KEY
+# 1 Year = 31536000
+# 1 Month = 2592000
+# 2 Weeks = 1209600
+# 1 Week = 604800
+# 1 Day = 86400
+# 2 Hours = 7200
+# 1 Hour = 3600
 
 /*
   X-Frame-Options: DENY
@@ -7,7 +16,8 @@
 # Cache-Control: public, max-age=3600, must-revalidate
 
 /fonts/*
-  Cache-Control: immutable
+#  Netlify-CDN-Cache-Control: public, max-age=604800, stale-while-revalidate=1209600
+  Cache-Control: public, max-age=604800, stale-while-revalidate=1209600
 
 /.astro/*
-  Cache-Control: immutable
+  Cache-Control: public, max-age=31536000, immutable

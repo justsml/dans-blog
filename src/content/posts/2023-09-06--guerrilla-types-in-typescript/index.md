@@ -286,7 +286,8 @@ We covered three techniques and a few related supporting ideas.
 
 You may be asking, are these good patterns? Should I adopt some of these ideas?
 
-**Answer:** Try them out. Find what works for you, your team, and your project. 🌈✨
+## Resources
 
-Let me know what you think on [Twitter](https://twitter.com/justsml) or
-[GitHub](https://github.com/justsml/dans-blog/issues/new).
+- [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
+- [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript Tips](https://www.totaltypescript.com/tips)
