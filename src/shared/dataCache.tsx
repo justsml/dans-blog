@@ -62,7 +62,6 @@ export const PostCollections = {
 
   getPosts() {
     let posts = PostCollections._posts;
-    // console.log("dataCache.getPosts", posts.length);
     return posts;
   },
 
@@ -70,6 +69,7 @@ export const PostCollections = {
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
+    console.log("getStaticPaths", posts);
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },
