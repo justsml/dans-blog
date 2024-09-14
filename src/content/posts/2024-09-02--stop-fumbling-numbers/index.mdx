@@ -1,0 +1,83 @@
+---
+title: "Stop Fumbling Numbers"
+subTitle: "3 myths destroyed!"
+draft: true
+date: 2024-09-02
+modified: 2024-09-03
+tags: [accounting, money-math, numbers, floating-point, real-numbers, imaginary-numbers, complex-numbers]
+category: HowTo
+subCategory: Programming
+cover: currency-banner-pic.webp
+# cover_full_width: currency-banner-wide.jpg
+# cover_mobile: w300_currency-banner-pic.jpg
+# cover_icon: icon_currency-banner-pic.jpg
+---
+
+{/* <details>
+  <summary>Table of Contents</summary>
+  <p>contents!!!</p>
+</details> */}
+
+This article is primarily for developers who work with numbers & currency. 
+
+We'll explore best practices & some common myths and misconceptions about numbers and how they work in programming languages.
+
+Apps have varying requirements for how they handle numbers. Some apps need to merely pass around monetary values, some need to perform percentage calculations like taxes or discounts. This is a very important difference. (More on that in a sec.) Other apps need more specialized handling of scientific values, formal notation, etc.
+
+## Best practice: Store Money in Cents
+
+This is a popular recommendation. The idea is to store money as an integer (or bigint), representing the smallest unit of currency (e.g. cents, pence, etc). Its often the recommended way to avoid rounding issues with floating-point numbers.
+
+But why?
+
+Instead of mindlessly following the advice, let's explore the two main reasons behind it.
+
+1. Payment APIs (Stripe, PayPal, etc.) only accept values in cents.
+2. Avoid accidental rounding between parts of your system (e.g. decimal values in JSON may not match your DB `currency`, `float`, or `decimal` types.)
+
+If those don't apply to your app, you may not need to convert money to cents.
+
+### Pros: Storing Money in Cents
+
+1. **Ensures monetary values** are stored in a 'valid' format, without fractional cents.
+2. **Compatibility** with payment APIs, some 3rd party libraries, and other systems.
+
+### Cons: Storing Money in Cents
+
+1. **Complexity cascade** you'll forever have to remember to divide or multiply by 100 when displaying values, running SQL reporting, 3rd party libraries.
+2. **Confusing naming** and patterns sometimes emerge (e.g. `price_in_cents: integer`, `price_original: string`, `price_decimal: decimal`, etc.)
+3. **Accidentally increasing/decreasing price.**
+
+
+Is this necessary? Let's explore.
+
+First, let's _divide_ apps into 2 categories:
+
+1. **Simple apps** that only need to pass around, add, or subtract monetary values. (e.g. shopping cart, budgeting app, etc.)
+2. **Complex apps** perform percentage calculations, like taxes or discounts. (e.g. B2B ecommerce, accounting, financial apps, games, etc.)
+
+As 
+
+Sometimes you have to calculate taxes, discounts, or other percentages. If you use integers, you'll have to deal with rounding errors.
+
+```js
+const discount = 0.5
+// $1.23
+1.23 * discount // 0.615
+// 123 cents === $1.23
+123 * discount // 61.5
+// Both result in a rounding value of half cent
+```
+
+Any time you divide a number (or multiply by a float), you'll have to deal with rounding errors.
+
+<p class="breakout">Someone has to lose or get that half cent! (Yes, this is the plot to several movies: _Office Space_, _Superman III_, et al.)</p>
+
+```js
+
+
+Now, it's not inherently wrong to use integers for money. It just doesn't save you  It does have some advantages. For example, you can more easily guarantee that you won't find issues across systems (database, 3rd party, etc).
+
+It is not inherently wrong to use integers for money. However, it is not the only way to handle money. There are pros and cons to using integers for money, just as there are pros and cons to using floating-point numbers.
+
+This myth is based on the idea that floating-point numbers are imprecise or prone to rounding errors.
