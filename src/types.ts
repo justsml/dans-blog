@@ -4,12 +4,13 @@ export type ArticlePost = {
   body?: string;
   slug: string;
   collection?: string;
-
+  
   data: {
     title: string;
     subTitle: string;
     /** To override utteranc.es lookup string */
     commentsKeyOverride?: string;
+    hidden?: boolean;
     draft?: boolean;
     cover_icon: ImageMetadata;
     cover_mobile: ImageMetadata;

@@ -53,7 +53,7 @@
     --neon-cyan: 180 100% 50%;
     --neon-cyan-dark: 180 100% 25%;
     --neon-pink: 322 100% 72%;
-    --neon-pink-subtle: 322 98% 82%;
+    --neon-pink-subtle: hsl(322, 100%, 60%, 1);
     --neon-green: 120 100% 50%;
     --neon-purple: 276 100% 60%;
     --neon-yellow: 60 100% 50%;
@@ -750,5 +750,76 @@ figure {
 
   p:last-child:empty {
     display: none;
+  }
+}
+
+
+.timeline {
+
+  h2, h3, h4, h5, h6 {
+    font-family: Raleway, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    font-weight: 300;
+    margin: 0;
+    color: var(--neon-pink-subtle)
+  }
+
+
+  h3 {
+    margin-left: -1rem;
+    font-size: 200%;
+  }
+  h4 {
+    color: var(--clr-muted-400);
+    font-size: 80%;
+  }
+
+  figure:hover {
+    border: .25px solid rgba(220, 220, 220, .75);
+  }
+}
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1rem;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 800px;
+
+  .book {
+    display: grid;
+    grid-template-columns: 1fr 60%;
+    grid-template-rows: auto 1fr;
+
+    h3 {
+      font-size: 1.25rem;
+    }
+    h4 {
+      font-size: 0.85rem;
+    }
+    .review::before {
+      content: "❝";
+      font-size: 2.25rem;
+      margin-right: 0.25rem;
+    }
+
+    .review::after {
+      content: "❞";
+      font-size: 2.25rem;
+      margin-left: 0.25rem;
+    }
+
+    .review {
+      grid-column: 2 / -1;
+      grid-row: 1 / -1;
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: hsl(var(--secondary));
+      box-shadow: 0 0 1rem 0.25rem hsla(var(--card-foreground));
+      transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
+      color: var(--link-text-color);
+      line-height: 1.5;
+      font-weight: 300;
+    }
   }
 }

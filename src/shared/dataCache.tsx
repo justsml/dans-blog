@@ -69,7 +69,8 @@ export const PostCollections = {
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
-    console.log("getStaticPaths", posts);
+    // console.log("getStaticPaths", posts);
+    posts = posts.filter((post) => !post.data.hidden);
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },

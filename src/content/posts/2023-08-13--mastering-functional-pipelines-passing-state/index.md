@@ -11,7 +11,7 @@ cover_mobile: w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 cover_icon: icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.jpg
 ---
 
-## Master of Pipelines: Passing State - Part 1
+## Master of Pipelines: Passing State
 
 Have you run into challenges passing state around using Functional Pipelines?
 
