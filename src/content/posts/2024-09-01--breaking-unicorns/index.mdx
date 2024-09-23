@@ -1,6 +1,6 @@
 ---
 title: "Breaking Unicorns"
-subTitle: "Or, how to lose a billion dollars"
+subTitle: "Or, how to lose a billion dollars super fast."
 # Raising the Bar
 # Data Driven to Death
 # Product Development
@@ -13,7 +13,7 @@ subTitle: "Or, how to lose a billion dollars"
 # 360 Reviews
 draft: true
 date: 2024-09-01
-modified: 2024-09-06
+modified: 2024-09-22
 tags: [breaking-unicorns, product, agile-framework, kanban]
 category: Proposal
 subCategory: Thoughts
@@ -22,21 +22,34 @@ cover_full_width: your-score-zero.jpg
 cover_mobile: square-icon-w200.jpg
 cover_icon: square-icon-w200.jpg
 ---
+
 import {Timeline} from '../../../components/ui/timeline'
 
 <p class="breakout">This series is a collection of observations on companies chasing a billion dollar valuation.</p>
 
+<h3>Featuring...</h3>
+<ul>
+  <li>[Enterprise Theater 🎭](#enterprise-theater-)</li>
+  <li>[Raising the Bar 💪](#raising-the-bar-)</li>
+  <li>[Are You Disrupted? 🚀](#are-you-disrupted-)</li>
+  <li>[Book Clubbed to Death 📚](#book-clubbed-to-death-)</li>
+</ul>
+
 <div className="w-[1000px]">
   <Timeline client:idle
-    headline='Secret Startup Stages'
+    headline=''
   
     data={[
       {
+        title: "Enterprise Theater 🎭",
+        slot: "slotEnterpriseTheater",
+      },
+      /*{
         title: "The Savior",
         slot: "slotTheSavior",
-      },
+      },*/
       {
-        title: "Raising the Bar",
+        title: "Raising the Bar 💪",
         slot: "slotRaisingTheBar",
       },
       /* {
@@ -47,19 +60,32 @@ import {Timeline} from '../../../components/ui/timeline'
         title: "The Big Raise & oops we spent it all",
         slot: "slotTheBigRaise",
       }, */
+      /*{
+        title: "How to be a Big Boi CEO",
+        slot: "slotHowToBigBoiCEO",
+      },*/
       {
-        title: "Product Team Lifecycle",
-        slot: "slotProductLifecycle",
+        title: "Are You Disrupted? 🚀",
+        slot: "slotAreYouARealDisruptor",
       },
       {
-        title: "Product: Theory vs Reality",
-        slot: "slotProductTheoryVsReality",
-      },
-      {
-        title: "Book Clubbing",
+        title: "Book Clubbed to Death 📚",
         slot: "slotBookClubbing",
       }
     ]}>
+
+<section slot="slotEnterpriseTheater">
+Is your company stuck? Maybe in full chaos? Or, just lacking in _hustle_?
+
+No worries, the big boss has figured it out!
+
+- It's culture! We need to read a book! Or, hire a consultant! Company offsite? Hawaii? _Sure!_
+- It's values! _Embrace your new mandated values!_
+- Actually, it's people's _perception_. Stupid people. Rebranding time!
+- We forgot, we need to hire an adult. A `savior`! Someone who will fix everything. Someone from a real company, respected by friends & enemies alike. Someone who clearly spent a [pretentious amount of time on their website.](https://danlevy.net).
+- The savior said we need to be data-driven. Duh, dummies. Now, we _drive data_ & make charts go up and to the right, brrr!
+- Funny story, turns out it's the staff. `Fire key/random people.` _Let folks know we're serious._
+</section>
 
 <section slot="slotTheSavior">
   <p>Is your `<Insert Dept. Name>` in chaos?</p>
@@ -67,42 +93,45 @@ import {Timeline} from '../../../components/ui/timeline'
   <p>Was it the layoffs? (Err, _strategic adjustment._) No, no, it can't be that...</p>
 
   <p>Don't worry about causes, the company has a fix!</p>
-  <p>A `savior`! Someone who will fix everything.</p>
-  <p>Someone from a real company, respected by friends & enemies alike, and who spent a pretentious amount of time on their website.</p>
+  <p>Enter: A `savior`! Someone to fix everything!</p>
   
+  <p><b>Spoiler:</b> It's always "data." The "fix" is (unironically) always Jira.</p>
 </section>
 
 <section slot="slotRaisingTheBar">
-  <p>It's a common startup story: a company raises a big round, and then the founders go on a hiring spree. They bring in a bunch of new people, better people, smarter people.</p>
-  <p>A funny thing happens to those raising the bar: they find themselves underneath it.</p>
+  <p>So, you raised a big round? Time to go on a hiring spree!</p>
+  <p>_We can afford new people, better people, **smarter people**._</p>
+
+  <p>Introducing 360 Reviews! (Named for the number of reviews you'll be assigned.)</p>
+  <p>It's time to `raise the bar`! (Euphamism for _hire & fire people!_)</p>
 
 <figure>
-![](RaisingTheBar.png "Raising the Bar")
-  <figcaption>RIP Team Falcon: Lost to tragic "Raising the Bar" incident</figcaption>
+![](TeamFalcon.png "RIP Team Falcon: Lost in tragic 'Raising the Bar' incident.")
+  <figcaption>RIP Team Falcon: Lost in tragic "Raising the Bar" incident.</figcaption>
 </figure>
 </section>
 
-<figure slot="slotProductLifecycle">
-![](product-team-lifecycle.png "Product (Team) Lifecycle")
-<figcaption>Product (Team) Lifecycle</figcaption>
+<figure slot="slotHowToBigBoiCEO">
+![](HowToBeBigBoiCEO.png "Product (Team) Lifecycle")
+<figcaption>How to be a Big Boi CEO</figcaption>
 </figure>
 
-<section slot="slotProductTheoryVsReality">
-  <p>So, you think you're a hyper-scale company? Only `true scalers` create the chaos necessary to win!</p>
+<section slot="slotAreYouARealDisruptor">
+  <p>Are you a `real disruptor`? Turn it up to 11! Boil that Blue Ocean!</p>
   <figure>
-![](product-theory-vs-reality.svg "Product Management: Theory vs Reality")
-    <figcaption>Product Management: Theory vs Reality</figcaption>
+![](HowItStartedHowItsGoing.png "How it's going.")
+    <figcaption>Be the Disruption</figcaption>
   </figure>
 </section>
 
-<div slot="slotBookClubbing">
+<section slot="slotBookClubbing">
 
 <figure>
 ![](HowToWinAtBookClub.png "How to Win at Book Club")
   <figcaption>How to win at Book Club</figcaption>
 </figure>
 
-  <h5>Understanding Management's Mood</h5>
+  <h3>Book Decoder Ring</h3>
 
   The selection of a book club book says a lot about where a company's heading. It can be a way to set the tone for the next quarter, or telegraph imminent layoffs.
 
@@ -111,41 +140,41 @@ import {Timeline} from '../../../components/ui/timeline'
   <section class="books-list">
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Crucial Conversations: Tools for Talking When Stakes are High</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzle</h4>
-      <div class="review" itemscope itemtype="http://schema.org/Review">Someone's getting fired!</div>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Joseph Grenny, Kerry Patterson, Ron McMillan, Al Switzle</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">With all due respect, fuck you.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Flow: The Psychology of Optimal Experience</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Mihály Csíkszentmihály</h4>
-      <div class="review" itemscope itemtype="http://schema.org/Review">Work faster!</div>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Mihály Csíkszentmihály</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">Faster peasants!</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">What Got You Here Won't Get You There</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Marshall Goldsmith</h4>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Marshall Goldsmith</h5>
       <div class="review" itemscope itemtype="http://schema.org/Review">Level-up you fucking amatuers.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">No Rules Rules: Netflix and the Culture of Reinvention</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Reed Hastings, Erin Meyer</h4>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Reed Hastings, Erin Meyer</h5>
       <div class="review" itemscope itemtype="http://schema.org/Review">You're about to get a lot more work.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">Super Pumped: The Battle for Uber</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Mike Isaac</h4>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Mike Isaac</h5>
       <div class="review" itemscope itemtype="http://schema.org/Review">You're about to get a lot less sleep.</div>
     </div>
 
     <div class="book" itemscope itemtype="http://schema.org/Book">
       <h3 itemprop="name" itemscope itemtype="http://schema.org/Book">The Everything Store: Jeff Bezos and the Age of Amazon</h3>
-      <h4 itemprop="author" itemscope itemtype="http://schema.org/Person">Brad Stone</h4>
-      <div class="review" itemscope itemtype="http://schema.org/Review">Get ready to pee in a bottle!</div>
+      <h5 itemprop="author" itemscope itemtype="http://schema.org/Person">Brad Stone</h5>
+      <div class="review" itemscope itemtype="http://schema.org/Review">I hope you like to pee in a bottle!</div>
     </div>
   </section>
-</div>
+</section>
 
   </Timeline>
 
