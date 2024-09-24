@@ -63,7 +63,7 @@
     --highlight: #f9f9f9;
     --highlight-secondary: #f9f9f999
     
-    --primary-foreground: --neon-pink;
+    --primary-foreground: var(--neon-pink);
 
     --text-color: #FFFFFF;
     /* --mobile-screen-break: 580px; */
@@ -74,7 +74,7 @@
     --neon-yellow-gradient: linear-gradient(to top left, hsl(var(--neon-yellow)), hsl(var(--neon-yellow)));
     --neon-blue-gradient: linear-gradient(to top left, hsl(var(--neon-blue)), hsl(var(--neon-blue)));
     --neon-orange-gradient: linear-gradient(to top left, hsl(var(--neon-orange)), hsl(var(--neon-orange))); */
-
+    --bg-dark: 210 30% 10%;
     --background: 208 52% 15%;
     --foreground: 210 5% 90%;
     --card: 210 50% 0%;
@@ -83,8 +83,8 @@
     --popover-foreground: 210 5% 90%;
     --primary: var(--neon-pink);
     --primary-foreground: var(--neon-pink-subtle);
-    --secondary: hsla(0, 0%, 87%, 1);
-    --secondary-foreground: hsla(0, 0%, 24%, 1);
+    --secondary: 0 0% 87% 1;
+    --secondary-foreground: 0 0% 24% 1;
     --muted: 172 30% 15%;
     --muted-foreground: 210 5% 60%;
     --accent: #333;
@@ -220,7 +220,8 @@
 }
 
 body {
-  @apply bg-background text-foreground;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
   line-height: 1.8;
@@ -347,7 +348,21 @@ main pre {
   font-weight: 300;
 }
 
+/*
+    background-color: hsl(var(--secondary));
+    border-radius: 1.5rem;
+    box-shadow: 0 0 1rem .25rem hsl(var(--card-foreground));
+    color: var(--clr-muted-400);
+    display: grid;
+    grid-template-rows: auto 210px auto max-content;
+    line-height: 1.5;
+    padding: 1rem;
+    position: relative;
+    transition: box-shadow .125s ease-in-out, color .125s ease-in-out;
+    width: clamp(220px, 80vw, 100%);
+*/
 .article-card {
+  background-color: hsl(var(--bg-dark));
   position: relative;
   display: grid;
   line-height: 1.5;
@@ -358,10 +373,10 @@ main pre {
   /* gap: 1rem; */
   padding: 1rem;
   border-radius: 1.5rem;
-  background-color: hsl(var(--secondary));
-  box-shadow: 0 0 1rem 0.25rem hsla(var(--card-foreground));
-  transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
+  box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+  transition: box-shadow 0.175s ease-in-out, color 0.175s ease-in-out;
   color: var(--clr-muted-400);
+
 
   &.draft {
     border: 2.5px dashed var(--clr-muted-400);
@@ -386,8 +401,6 @@ main pre {
     
     font-size: var(--fs-200);
     color: var(--clr-muted-400);
-    /* margin: 0 auto 0 0; */
-
     position: absolute;
     right: 0.75rem;
     top: 0.65rem;
@@ -395,7 +408,7 @@ main pre {
   }
 
   &:hover {
-    box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
+    box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
     color: unset;
     scale: 1.02;
     .small-label {
@@ -504,6 +517,7 @@ main .info {
   place-content: center end;
   margin: 0.5rem 0 1rem 0;
   margin-inline: 3rem;
+  height: 2.5rem;
 }
 
 .combobox-options {
@@ -635,7 +649,7 @@ pre.astro-code {
     width: 50%;
   }
   .pagefind-ui__search-input :is(:focus, :hover) {
-    box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
+    box-shadow: 0 0 1rem 0.25rem hsl(var(--primary-foreground));
   }
 }
 
@@ -730,20 +744,20 @@ table {
 figure {
   transition: border .5s ease-in-out 0s;
   padding: .25rem;
-  border: .25px solid var(--secondary, #FFF);
+  border: .25px solid #dedede;
   border-radius: .125rem;
   margin: 2.25rem auto;
 
   &:hover {
     border: .25px solid var(--neon-cyan);
-    /* box-shadow: 0 0 .2rem 0.25rem hsla(var(--primary-foreground)); */
+    /* box-shadow: 0 0 .2rem 0.25rem hsl(var(--primary-foreground)); */
   }
 
   figcaption {
     font-size: .95rem;
     font-weight: 200;
     color: var(--secondary);
-    background-color: var(--secondary-foreground);
+    background-color: #3d3d3d;
     text-align: left;
     padding: .25rem;
   }
@@ -815,7 +829,7 @@ figure {
       padding: 1rem;
       border-radius: 1rem;
       background-color: hsl(var(--secondary));
-      box-shadow: 0 0 1rem 0.25rem hsla(var(--card-foreground));
+      box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
       transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
       color: var(--link-text-color);
       line-height: 1.5;
