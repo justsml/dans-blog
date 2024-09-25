@@ -41,10 +41,9 @@ const NavMenu = ({
   };
 
   function detectViewportOffset() {
-    const $arrow = document.querySelector(".Arrow") as HTMLDivElement | null;
-    const $viewport = document.querySelector(
-      ".ViewportPosition"
-    ) as HTMLDivElement | null;
+    const $arrow: HTMLDivElement | null = document.querySelector(".Arrow");
+    const $viewport: HTMLDivElement | null =
+      document.querySelector(".ViewportPosition");
     if (!$arrow || !$viewport) return;
 
     const arrowBox = $arrow.getBoundingClientRect();
@@ -82,7 +81,6 @@ const NavMenu = ({
       onMouseMove={safeDetectViewportOffset}
     >
       <NavigationMenu.List className="NavigationMenuList">
-
         <NavigationMenu.Item value="#search" className="searchToggle">
           <SearchButton />
         </NavigationMenu.Item>

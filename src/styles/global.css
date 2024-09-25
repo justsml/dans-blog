@@ -53,7 +53,7 @@
     --neon-cyan: 180 100% 50%;
     --neon-cyan-dark: 180 100% 25%;
     --neon-pink: 322 100% 72%;
-    --neon-pink-subtle: 322 98% 82%;
+    --neon-pink-subtle: hsl(322, 100%, 60%, 1);
     --neon-green: 120 100% 50%;
     --neon-purple: 276 100% 60%;
     --neon-yellow: 60 100% 50%;
@@ -63,7 +63,7 @@
     --highlight: #f9f9f9;
     --highlight-secondary: #f9f9f999
     
-    --primary-foreground: --neon-pink;
+    --primary-foreground: var(--neon-pink);
 
     --text-color: #FFFFFF;
     /* --mobile-screen-break: 580px; */
@@ -74,7 +74,7 @@
     --neon-yellow-gradient: linear-gradient(to top left, hsl(var(--neon-yellow)), hsl(var(--neon-yellow)));
     --neon-blue-gradient: linear-gradient(to top left, hsl(var(--neon-blue)), hsl(var(--neon-blue)));
     --neon-orange-gradient: linear-gradient(to top left, hsl(var(--neon-orange)), hsl(var(--neon-orange))); */
-
+    --bg-dark: 210 30% 10%;
     --background: 208 52% 15%;
     --foreground: 210 5% 90%;
     --card: 210 50% 0%;
@@ -83,8 +83,8 @@
     --popover-foreground: 210 5% 90%;
     --primary: var(--neon-pink);
     --primary-foreground: var(--neon-pink-subtle);
-    --secondary: 210 30% 10%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 87% 1;
+    --secondary-foreground: 0 0% 24% 1;
     --muted: 172 30% 15%;
     --muted-foreground: 210 5% 60%;
     --accent: #333;
@@ -100,33 +100,6 @@
     --link-text-color: 180 100% 50%;
     --heading-text-color: 180 100% 25%;
   }
-  .dark {
-    --background: 210 100% 95%;
-    --foreground: 210 5% 0%;
-    --card: 210 50% 90%;
-    --card-foreground: 210 5% 10%;
-    --popover: 210 100% 95%;
-    --popover-foreground: 210 100% 0%;
-    --primary: var(--neon-pink);
-    --primary-foreground: var(--neon-pink-subtle);
-    --secondary: 210 30% 70%;
-    --secondary-foreground: 0 0% 0%;
-    --muted: 172 30% 85%;
-    --muted-foreground: 210 5% 35%;
-    --accent: #333;
-    /* --accent: 172 30% 80%; */
-    --accent-foreground: 210 5% 10%;
-    --destructive: 0 100% 30%;
-    --destructive-foreground: 210 5% 90%;
-    --border: 210 30% 50%;
-    --input: 210 30% 18%;
-    --ring: var(--neon-pink);
-    --radius: 0.5rem;
-
-    --link-text-color: 180 100% 50%;
-    --heading-text-color: 180 100% 25%;
-  }
-
 }
 
 @layer base {
@@ -148,7 +121,7 @@
     h6 {
       font-weight: 300;
       letter-spacing: 0.002em;
-      margin-block: 1.75rem;
+      margin-block: 1rem;
       color: var(--neon-cyan);
       opacity: 0.965;
     }
@@ -247,10 +220,11 @@
 }
 
 body {
-  @apply bg-background text-foreground;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
-  line-height: 1.6;
+  line-height: 1.8;
   font-size: 1rem;
 }
 
@@ -374,7 +348,21 @@ main pre {
   font-weight: 300;
 }
 
+/*
+    background-color: hsl(var(--secondary));
+    border-radius: 1.5rem;
+    box-shadow: 0 0 1rem .25rem hsl(var(--card-foreground));
+    color: var(--clr-muted-400);
+    display: grid;
+    grid-template-rows: auto 210px auto max-content;
+    line-height: 1.5;
+    padding: 1rem;
+    position: relative;
+    transition: box-shadow .125s ease-in-out, color .125s ease-in-out;
+    width: clamp(220px, 80vw, 100%);
+*/
 .article-card {
+  background-color: hsl(var(--bg-dark));
   position: relative;
   display: grid;
   line-height: 1.5;
@@ -385,10 +373,10 @@ main pre {
   /* gap: 1rem; */
   padding: 1rem;
   border-radius: 1.5rem;
-  background-color: hsl(var(--secondary));
-  box-shadow: 0 0 1rem 0.25rem hsla(var(--card-foreground));
-  transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
+  box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+  transition: box-shadow 0.175s ease-in-out, color 0.175s ease-in-out;
   color: var(--clr-muted-400);
+
 
   &.draft {
     border: 2.5px dashed var(--clr-muted-400);
@@ -413,8 +401,6 @@ main pre {
     
     font-size: var(--fs-200);
     color: var(--clr-muted-400);
-    /* margin: 0 auto 0 0; */
-
     position: absolute;
     right: 0.75rem;
     top: 0.65rem;
@@ -422,7 +408,7 @@ main pre {
   }
 
   &:hover {
-    box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
+    box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
     color: unset;
     scale: 1.02;
     .small-label {
@@ -531,6 +517,7 @@ main .info {
   place-content: center end;
   margin: 0.5rem 0 1rem 0;
   margin-inline: 3rem;
+  height: 2.5rem;
 }
 
 .combobox-options {
@@ -662,7 +649,7 @@ pre.astro-code {
     width: 50%;
   }
   .pagefind-ui__search-input :is(:focus, :hover) {
-    box-shadow: 0 0 1rem 0.25rem hsla(var(--primary-foreground));
+    box-shadow: 0 0 1rem 0.25rem hsl(var(--primary-foreground));
   }
 }
 
@@ -750,5 +737,103 @@ table {
   100% {
     transform: translateY(90%) scale(.98);
     opacity: 0;
+  }
+}
+
+
+figure {
+  transition: border .5s ease-in-out 0s;
+  padding: .25rem;
+  border: .25px solid #dedede;
+  border-radius: .125rem;
+  margin: 2.25rem auto;
+
+  &:hover {
+    border: .25px solid var(--neon-cyan);
+    /* box-shadow: 0 0 .2rem 0.25rem hsl(var(--primary-foreground)); */
+  }
+
+  figcaption {
+    font-size: .95rem;
+    font-weight: 200;
+    color: var(--secondary);
+    background-color: #3d3d3d;
+    text-align: left;
+    padding: .25rem;
+  }
+
+  p:last-child:empty {
+    display: none;
+  }
+}
+
+
+.timeline {
+
+  h2, h3, h4, h5, h6 {
+    font-family: Raleway, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif !important;
+    font-weight: 300;
+    margin: 0;
+    color: var(--neon-pink-subtle)
+  }
+
+
+  h3 {
+    margin-left: -1rem;
+    font-size: 175%;
+  }
+  h5 {
+    color: var(--clr-muted-400);
+    font-size: 80%;
+  }
+
+  figure:hover {
+    border: .25px solid rgba(220, 220, 220, .75);
+  }
+}
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 800px;
+
+  .book {
+    display: grid;
+    grid-template-columns: 1fr 60%;
+    grid-template-rows: auto 1fr;
+
+    h3 {
+      font-size: 105%;
+    }
+    h4 {
+      font-size: 0.85rem;
+    }
+    .review::before {
+      content: "❝";
+      font-size: 2.25rem;
+      margin-right: 0.25rem;
+    }
+
+    .review::after {
+      content: "❞";
+      font-size: 2.25rem;
+      margin-left: 0.25rem;
+    }
+
+    .review {
+      grid-column: 2 / -1;
+      grid-row: 1 / -1;
+      padding: 1rem;
+      border-radius: 1rem;
+      background-color: hsl(var(--secondary));
+      box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+      transition: box-shadow 0.125s ease-in-out, color 0.125s ease-in-out;
+      color: var(--link-text-color);
+      line-height: 1.5;
+      font-weight: 300;
+    }
   }
 }

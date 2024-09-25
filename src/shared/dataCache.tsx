@@ -62,7 +62,6 @@ export const PostCollections = {
 
   getPosts() {
     let posts = PostCollections._posts;
-    // console.log("dataCache.getPosts", posts.length);
     return posts;
   },
 
@@ -70,6 +69,8 @@ export const PostCollections = {
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
+    // console.log("getStaticPaths", posts);
+    posts = posts.filter((post) => !post.data.hidden);
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },
@@ -103,13 +104,13 @@ export const PostCollections = {
   /** Popular posts according to google analytics. 2024/Q2 */
   getPopularPosts() {
     return [
+      "breaking-unicorns",
       "js-quiz-14-date-time-questions-test-your-knowledge",
       "javascript-promises-quiz",
       "contribute-to-open-source-the-easy-way",
-      "the-4-pillars-of-collaborative-culture",
-      "you-may-not-need-axios",
-      "should-you-use-named-or-default-exports",
-      // "naming-things-real-good",
+      "naming-things-real-good",
+      // "you-may-not-need-axios",
+      // "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
 
