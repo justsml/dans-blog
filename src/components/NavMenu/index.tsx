@@ -1,5 +1,5 @@
 "use client";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
 import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
@@ -29,6 +29,8 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
+  let viewPortal: unknown = null;
+
   const safeDetectViewportOffset = useCallback(
     throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
     []
@@ -367,12 +369,13 @@ const NavMenu = ({
         </NavigationMenu.Indicator>
       </NavigationMenu.List>
 
-      {createPortal(
-        <div className="ViewportPosition" style={{ top: viewportTopOffset }}>
-          <NavigationMenu.Viewport className="NavigationMenuViewport" />
-        </div>,
-        document.body
-      )}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div className="ViewportPosition" style={{ top: "5.6rem" }}>
+            <NavigationMenu.Viewport className="NavigationMenuViewport" />
+          </div>,
+          document.body
+        )}
     </NavigationMenu.Root>
   );
 };
