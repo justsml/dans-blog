@@ -16,9 +16,9 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
-import "./index.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { SearchButton } from "../search/SearchButton";
+import "./index.css";
 
 const NavMenu = ({
   categories,
@@ -29,18 +29,10 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
-  let viewPortal: unknown = null;
-
   const safeDetectViewportOffset = useCallback(
     throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
     []
   );
-
-  const [viewportTopOffset, setViewportTopOffset] = useState("4.6rem");
-  const handlePreventDefault = (e: CustomEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
 
   function detectViewportOffset() {
     const $arrow: HTMLDivElement | null = document.querySelector(".Arrow");
@@ -53,7 +45,8 @@ const NavMenu = ({
 
     // console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
     // $viewport.style.top = `${topOffset}px`
-    setViewportTopOffset(`${topOffset}px`);
+    // setViewportTopOffset(`${topOffset}px`);
+    $viewport.style.top = `${topOffset}px`;
   }
 
   // Update the viewport offset on window resize and orientation change
@@ -78,11 +71,14 @@ const NavMenu = ({
   return (
     <NavigationMenu.Root
       className="NavigationMenuRoot"
+      suppressHydrationWarning={true}
       delayDuration={300}
       onClick={safeDetectViewportOffset}
       onMouseMove={safeDetectViewportOffset}
     >
-      <NavigationMenu.List className="NavigationMenuList">
+      <NavigationMenu.List
+        className="NavigationMenuList"
+      >
         <NavigationMenu.Item value="#search" className="searchToggle">
           <SearchButton />
         </NavigationMenu.Item>
@@ -91,10 +87,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one">
               <li className="item-categories">
                 <NavigationMenu.Link asChild>
@@ -186,10 +179,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Projects <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List two">
               <li className="panel-projects">
                 <NavigationMenu.Link asChild>
@@ -269,10 +259,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Contact <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>

@@ -46,7 +46,7 @@ function getMinimalPostData(
 ---
 
 <header class:list={["top-header", className]}>
-  <nav class:list={["header-nav"]}>
+  <div class:list={["header-nav"]}>
     <h2>
       <a href="/" aria-label="Return Home">
         <img
@@ -59,13 +59,13 @@ function getMinimalPostData(
     </h2>
     <div class="nav-box">
       <NavMenu
-        client:idle
+        client:only="react"
         categories={categories}
         popularPosts={popularPosts}
         recentPosts={recentPosts}
       />
     </div>
-  </nav>
+  </div>
 </header>
 
 <SearchBar showImages={true} />
