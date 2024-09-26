@@ -303,30 +303,36 @@ h1:first-of-type {
   grid-auto-flow: row dense;
   place-items: center start;
   grid-template-columns: auto 1fr;
-
+  /* margin-inline: 1.25rem; */
   height: 7.25rem;
 
   column-gap: 0rem;
 
+  a {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    padding-left: 0;
+    font-size: 80%;
+  }
+
   @screen sm {
+    a { padding-left: 0; }
     column-gap: 0rem;
   }
 
   @screen md {
+    a { padding-left: 1.5rem; }
     column-gap: 1rem;
   }
 
   @screen lg {
+    a { padding-left: 2.5rem; }
     column-gap: 2rem;
   }
 
   /* padding-inline: 3rem; */
   .nav-box {
     justify-self: flex-end;
-  }
-  a {
-    display: grid;
-    grid-template-columns: 3.5rem 1fr;
   }
 }
 
@@ -493,8 +499,20 @@ main .info {
 
 .title {
   /* margin-bottom: 1em; */
-  font-size: 1.8rem;
-  margin-top: -0.5rem;
+  font-size: 1.4rem;
+  margin-top: 0;
+
+  @screen sm {
+    font-size: 1.8rem;
+    margin-top: -0.5rem;
+  }
+
+  @screen lg {
+    font-size: 2.25rem;
+    margin-top: -1.25rem;
+  }
+
+
   padding: 1em 0;
   text-align: center;
   line-height: 1.75;

@@ -375,19 +375,23 @@ pre {
   padding: 1rem;
 }
 .NavigationMenuContent[data-motion="from-start"] {
-  overflow: hidden;
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: enterFromLeft;
 }
 .NavigationMenuContent[data-motion="from-end"] {
-  overflow: hidden;
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: enterFromRight;
 }
 .NavigationMenuContent[data-motion="to-start"] {
-  overflow: hidden;
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: exitToLeft;
 }
 .NavigationMenuContent[data-motion="to-end"] {
-  overflow: hidden;
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: exitToRight;
 }
 
@@ -649,10 +653,14 @@ pre {
   position: absolute;
   display: flex;
   justify-content: center;
-  width: calc(100% - 2rem);
-  left: 4rem;
+  width: 100vw;
   perspective: 2000px;
   transition: top 250ms ease;
+
+  @screen md {
+    width: calc(100% - 2rem);
+    left: 4rem;
+  }
 }
 
 .CaretDown {
