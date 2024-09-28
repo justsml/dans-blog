@@ -20,6 +20,7 @@ export function CreatedModifiedLabel({
     createdAgo && (
       <InfoLabel
         text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
+        tooltips={[`created at ${date}`, `updated at ${modified}`]}
       >
         <CalendarIcon className="icon" strokeWidth={1} />
       </InfoLabel>
