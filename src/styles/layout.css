@@ -105,7 +105,7 @@
 
 img.full-width {
   width: 100%;
-  max-height: 35vh;
+  max-height: min(35vh, 260px);
   object-fit: cover;
   border-radius: 0;
   /* image-rendering: crisp-edges; */
@@ -115,11 +115,11 @@ img.full-width {
   border-bottom: 2px solid var(--clr-muted-100);
 
   @media (prefers-reduced-motion: no-preference) {
-    @supports (animation-timeline: scroll()) {
+    /* @supports (animation-timeline: scroll()) {
       animation: fade-to-grayscale linear forwards;;
       animation-timeline: view(30px);
       animation-range: contain;
-    }
+    } */
   }
   
 }
