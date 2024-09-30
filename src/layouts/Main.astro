@@ -14,7 +14,7 @@ import type { ImageMetadata } from "astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import socialBanner from "../assets/social-banner.png";
 
-import { GOOGLE_ANALYTICS_ID, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 type Props = {
   children: any[];
@@ -101,6 +101,6 @@ const coverUrl =
       <slot />
     </main>
     <Footer />
-    <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
+    <AnalyticsTag />
   </body>
 </html>
