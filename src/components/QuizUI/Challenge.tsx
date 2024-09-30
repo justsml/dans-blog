@@ -62,6 +62,14 @@ export default function Challenge({
     setShowExplanation(false);
   };
 
+  const logEvent = (name: string, data: unknown) => {
+    // @ts-ignore
+    const posthog = window?.posthog;
+    if (posthog) {
+      posthog.capture(name, data);
+    }
+  }
+
   const handleAnswer = (option: Option) => {
     if (option.isAnswer) {
       setIsCorrect(true);
@@ -70,6 +78,7 @@ export default function Challenge({
       setIsCorrect(false);
       setChallengeClass("incorrect shake");
     }
+    logEvent(option.isAnswer ? "Correct Answer" : "Incorrect Answer", option);
     setTimeout(updateCounts, 200);
   };
 

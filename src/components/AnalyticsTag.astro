@@ -1,64 +1,15 @@
 ---
-type Props = {
-  googleAnalyticsId: string;
-};
-
-const { googleAnalyticsId } = Astro.props;
 
 ---
 
-<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
+<script>
+  import posthog from "posthog-js";
 
-<span style="display: none;" class="analytics-tag" data-google-id={googleAnalyticsId}></span>
+  posthog.init("phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9", {
+    api_host: "https://us.i.posthog.com",
+    person_profiles: "always", // 'identified_only' // or 'always' to create profiles for anonymous users as well
+  });
 
-
-<script is:inline>
-  // DOM HACK TO GET THE GOOGLE ANALYTICS ID
-  const googleAnalyticsId =
-    document.querySelector("[data-google-id]").dataset.googleId;
-
-  //// STANDARDISH GA CODE
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
-
-  gtag("config", googleAnalyticsId);
-
-  // @ts-ignore
-  window._trackCustomEvent = _trackCustomEvent;
-
-  function _trackCustomEvent({
-    category,
-    action,
-    label,
-    value,
-    nonInteraction = false,
-    transport,
-    hitCallback,
-    callbackTimeout = 100,
-  }) {
-    if (typeof window !== `undefined` && window.ga) {
-      const trackingEventOptions = {
-        eventCategory: category,
-        eventAction: action,
-        eventLabel: label,
-        eventValue: value,
-        nonInteraction: nonInteraction,
-        transport,
-      };
-
-      if (hitCallback && typeof hitCallback === `function`) {
-        trackingEventOptions.hitCallback = () =>
-          setTimeout(hitCallback, callbackTimeout);
-      }
-
-      window.ga(`send`, `event`, trackingEventOptions);
-    } else {
-      console.error(`Analytics is not loaded`);
-    }
-  }
+  //@ts-expect-error - silly typescript
+  window._posthog = posthog;
 </script>
-
-
