@@ -12,9 +12,14 @@ cover_mobile: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
 cover_icon: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
 ---
 
+{/* Add html5 toggle element */}
+
+<details>
+<summary>Table of Contents</summary>
+
 - [Thinking in Keys](#thinking-in-keys)
   - [Designing with Keys](#designing-with-keys)
-  - [KVs for Graphs & Trees?](#kvs-for-graphs--trees)
+  - [KVs as Graphs & Trees?](#kvs-as-graphs--trees)
   - [When to Use KV Patterns](#when-to-use-kv-patterns)
   - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
   - [When you need more than KV](#when-you-need-more-than-kv)
@@ -23,7 +28,9 @@ cover_icon: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
 - [Conclusion](#conclusion)
   - [Further Reading](#further-reading)
 
-When designing a new system or feature, it's easy to get bogged down refining your schema design. In this article I will share a trick that has paid dividends over my career.
+</details>
+
+When designing a new system or feature, it's easy to get bogged down on schema design. In this article I will share a neat trick that has paid dividends over my career.
 
 <section class="breakout">
   _Try_ the simplest possible data persistence when designing a new system or feature.
@@ -31,7 +38,7 @@ When designing a new system or feature, it's easy to get bogged down refining yo
 
 All too often, I see teams reach for SQL or MongoDB as their only choice for data storage. Sure, no one's getting fired for choosing SQL. But what if I told you there's a simpler, faster, and cheaper way to start?
 
-A KV or Key-value store might be all you need. Something like Redis? Or S3?
+A KV or Key-value store might be all you need. Something like Redis or S3.
 
 It's not always the right choice, but perhaps **more often than you realize.**
 
@@ -66,7 +73,7 @@ product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
 
 You may have noticed, but the `ID` is often a key in itself! This is a common pattern in KV stores. The key is often a composite of the entity type and the unique identifier. (e.g `user/123`, `user:456`)
 
-### KVs for Graphs & Trees?
+### KVs as Graphs & Trees?
 
 It can be helpful to represent complex data structures like Graphs or Trees using KV patterns. (Again, REST URLs are a great example of this.)
 
@@ -88,9 +95,10 @@ This is a quick & cheap way to serialize graph data structures. Especially if yo
 
 ### When to Avoid KV Patterns
 
+Don't store things like blog comments in a _**single**_ KV pair. For example, `post/666 -> {comments: [...too many...]}`. Instead you might use `post/666/comments/1`, or `post/666/comments/<UUID>`, etc. Or go for a SQL table.
+
 - When you need to query by properties (not Key or ID) in your dataset.
 - When you need to JOIN data across multiple entities.
-- When you have an unbounded/infinitely growing arrays in `Values`.
 - When you need to enforce complex constraints or relationships.
 
 ### When you need more than KV
@@ -99,9 +107,9 @@ As project requirements naturally evolve, you may need to do more than your KV s
 
 {/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo-spatial, Streams, and Sorted Sets) that can help you meet some requirements. */}
 
-Migrating a single KV store to SQL is way easier than migrating a complex SQL schema to a KV store. (With multiple tables, indexes, constraints, etc.) I've done this many times with a 50-line script.
+The good news is that migrating a single KV store to SQL is relatively easier than migrating a complex SQL schema into a KV store. (With multiple tables, indexes, constraints, etc.) I've done this many times with a 50-line script.
 
-Anecdotally, I've found the quality of SQL designs is higher if you start with a KV pattern first. It forces you to think about the data in a different way, and better understand _exactly_ what you really need.
+Anecdotally, I've found the quality of SQL designs is higher if you start with a KV pattern first. It forces you to really think about the data in a different way, and better understand _exactly_ what you really need from SQL.
 
 ## Next Steps
 
