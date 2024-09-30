@@ -11,8 +11,6 @@ import socialBanner from "../assets/social-banner.png";
 import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
-import { GOOGLE_ANALYTICS_ID } from "../consts";
-import { formatDistance } from "date-fns/formatDistance";
 
 type Props = {
   children: any[];
@@ -119,7 +117,7 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
       </div>
     </main>
     <Footer />
-    <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
+    <AnalyticsTag />
   </body><script is:inline>
     // Hackety hack to update the score on quiz pages
     window.__updateCounts = () => {
