@@ -7,11 +7,9 @@ subCategory: javascript
 draft: true
 publish: true
 tags: [javascript, programming, performance, patterns]
-cover: markus-spiske-197281-unsplash.jpg
-cover_mobile: w300_markus-spiske-197281-unsplash.jpg
-# cover_tablet: w600_markus-spiske-197281-unsplash.jpg
-# cover_desktop: w900_markus-spiske-197281-unsplash.jpg
-cover_icon: icon_markus-spiske-197281-unsplash.jpg
+cover: markus-spiske-197281-unsplash.webp
+cover_mobile: w300_markus-spiske-197281-unsplash.webp
+cover_icon: icon_markus-spiske-197281-unsplash.webp
 ---
 
 ## Imperative vs. Recursive vs. Functional

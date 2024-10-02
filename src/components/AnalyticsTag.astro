@@ -1,64 +1,10 @@
 ---
-type Props = {
-  googleAnalyticsId: string;
-};
-
-const { googleAnalyticsId } = Astro.props;
 
 ---
 
-<script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsId}`}></script>
-
-<span style="display: none;" class="analytics-tag" data-google-id={googleAnalyticsId}></span>
-
-
 <script is:inline>
-  // DOM HACK TO GET THE GOOGLE ANALYTICS ID
-  const googleAnalyticsId =
-    document.querySelector("[data-google-id]").dataset.googleId;
-
-  //// STANDARDISH GA CODE
-  window.dataLayer = window.dataLayer || [];
-  function gtag() {
-    dataLayer.push(arguments);
-  }
-  gtag("js", new Date());
-
-  gtag("config", googleAnalyticsId);
-
-  // @ts-ignore
-  window._trackCustomEvent = _trackCustomEvent;
-
-  function _trackCustomEvent({
-    category,
-    action,
-    label,
-    value,
-    nonInteraction = false,
-    transport,
-    hitCallback,
-    callbackTimeout = 100,
-  }) {
-    if (typeof window !== `undefined` && window.ga) {
-      const trackingEventOptions = {
-        eventCategory: category,
-        eventAction: action,
-        eventLabel: label,
-        eventValue: value,
-        nonInteraction: nonInteraction,
-        transport,
-      };
-
-      if (hitCallback && typeof hitCallback === `function`) {
-        trackingEventOptions.hitCallback = () =>
-          setTimeout(hitCallback, callbackTimeout);
-      }
-
-      window.ga(`send`, `event`, trackingEventOptions);
-    } else {
-      console.error(`Analytics is not loaded`);
-    }
-  }
+  // POSTHOG
+!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+posthog.init('phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9',{api_host:'https://us.i.posthog.com', person_profiles: 'always'})
+window._posthog = posthog;
 </script>
-
-

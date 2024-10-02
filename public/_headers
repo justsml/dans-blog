@@ -1,0 +1,26 @@
+# NETLIFY CONFIG
+
+# KEY
+# 1 Year = 31536000
+# 1 Month = 2592000
+# 2 Weeks = 1209600
+# 1 Week = 604800
+# 1 Day = 86400
+# 2 Hours = 7200
+# 1 Hour = 3600
+
+/*
+  X-Frame-Options: DENY
+#  Content-Security-Policy: default-src 'self'
+  X-XSS-Protection: 1; mode=block
+# Cache-Control: public, max-age=3600, must-revalidate
+
+/fonts/*
+#  Netlify-CDN-Cache-Control: public, max-age=604800, stale-while-revalidate=1209600
+  Cache-Control: public, max-age=604800, stale-while-revalidate=1209600
+
+/.astro/*
+  Cache-Control: public, max-age=302400, immutable
+
+/_astro/*
+  Cache-Control: public, max-age=302400, stale-while-revalidate=604800

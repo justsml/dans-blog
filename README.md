@@ -74,11 +74,14 @@ var sections = Array.from(document.querySelectorAll('html, body, head, main, art
   return { tag, size, attrs: element.attributes };
 })
 var sectionSizes = Object.entries(sections.reduce((acc, {tag, size}) => {
-  acc[tag] = size;
+  acc[tag] = acc[tag] == null ? size : acc[tag] + size;
   return acc;
 }, {}))
 .sort((a, b) => b.size - a.size)
-.map(element => `${element.tag}: ${(element.size).toLocaleString()}`);
+// .map(element => `${element.tag}: ${(element.size).toLocaleString()}`);
+console.table(sections);
+console.table(sectionSizes);
+
 ```
 
 ## 🚀 Project Structure

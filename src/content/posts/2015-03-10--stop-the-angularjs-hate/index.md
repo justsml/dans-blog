@@ -6,11 +6,9 @@ modified: 2016-02-01
 category: Code
 subCategory: angularjs
 tags: [angularjs, development, performance, programming]
-cover: sharon-mccutcheon-522851-unsplash.jpg
-cover_mobile: w300_sharon-mccutcheon-522851-unsplash.jpg
-# cover_tablet: w600_sharon-mccutcheon-522851-unsplash.jpg
-# cover_desktop: w900_sharon-mccutcheon-522851-unsplash.jpg
-cover_icon: icon_sharon-mccutcheon-522851-unsplash.jpg
+cover: sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: icon_sharon-mccutcheon-522851-unsplash.webp
 
 ---
 

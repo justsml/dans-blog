@@ -1,18 +1,5 @@
 import { defineCollection, z } from "astro:content";
 
-// const blog = defineCollection({
-// 	type: 'content',
-// 	// Type-check frontmatter using a schema
-// 	schema: z.object({
-// 		title: z.string(),
-// 		description: z.string(),
-// 		// Transform string to Date object
-// 		pubDate: z.coerce.date(),
-// 		updatedDate: z.coerce.date().optional(),
-// 		heroImage: z.string().optional(),
-// 	}),
-// });
-
 const category = defineCollection({
   type: "content",
   // Type-check frontmatter using a schema
@@ -38,18 +25,19 @@ const posts = defineCollection({
       // modified: z.coerce.date().optional(),
       draft: z.boolean().optional(),
 
-      date: z.coerce.string(),
+      date: z.coerce.string().optional(),
       modified: z.coerce.string().optional(),
-      cover: image(), // z.string().optional(),
+      cover: image().optional(), // z.string().optional(),
+      cover_full_width: image().optional(),
       cover_mobile: image().optional(),
       // cover_tablet: image().optional(),
       // cover_desktop: image().optional(),
       cover_icon: image().optional(),
       
-      category: z.string(),
+      category: z.string().optional(),
       subCategory: z.string().optional(),
 
-      tags: z.array(z.string()),
+      tags: z.array(z.string()).optional(),
 
       popularity: z.number().min(0).max(1.0).optional(),
       // `related` is a list of post slugs

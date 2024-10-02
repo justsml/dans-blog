@@ -5,11 +5,9 @@ date: 2018-09-30
 modified: 2024-07-30
 category: Guides
 subCategory: promises
-cover: junior-ferreira-735237-unsplash.jpg
-cover_mobile: w300_junior-ferreira-735237-unsplash.jpg
-# cover_tablet: w600_junior-ferreira-735237-unsplash.jpg
-# cover_desktop: w900_junior-ferreira-735237-unsplash.jpg
-cover_icon: icon_junior-ferreira-735237-unsplash.jpg
+cover: junior-ferreira-735237-unsplash.webp
+cover_mobile: w300_junior-ferreira-735237-unsplash.webp
+cover_icon: icon_junior-ferreira-735237-unsplash.webp
 tags: [promises, async, visualizing, javascript, composition]
 ---
 

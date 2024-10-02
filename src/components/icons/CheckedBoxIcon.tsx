@@ -1,7 +1,6 @@
 export const CheckedBoxIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
-    width="2.5rem"
-    height="2.5rem"
+    style={{ width: '2.5rem', height: '2.5rem' }}
     viewBox="0 0 15 15"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

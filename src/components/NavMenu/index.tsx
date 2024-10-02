@@ -1,5 +1,5 @@
 "use client";
-import { throttle } from "lodash";
+import throttle from "lodash/throttle";
 
 import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
@@ -16,8 +16,9 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
+import { useCallback, useEffect } from "react";
+import { SearchButton } from "../search/SearchButton";
 import "./index.css";
-import { useCallback, useEffect, useState } from "react";
 
 const NavMenu = ({
   categories,
@@ -33,17 +34,10 @@ const NavMenu = ({
     []
   );
 
-  const [viewportTopOffset, setViewportTopOffset] = useState("4.6rem");
-  const handlePreventDefault = (e: CustomEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   function detectViewportOffset() {
-    const $arrow = document.querySelector(".Arrow") as HTMLDivElement | null;
-    const $viewport = document.querySelector(
-      ".ViewportPosition"
-    ) as HTMLDivElement | null;
+    const $arrow: HTMLDivElement | null = document.querySelector(".Arrow");
+    const $viewport: HTMLDivElement | null =
+      document.querySelector(".ViewportPosition");
     if (!$arrow || !$viewport) return;
 
     const arrowBox = $arrow.getBoundingClientRect();
@@ -51,7 +45,8 @@ const NavMenu = ({
 
     // console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
     // $viewport.style.top = `${topOffset}px`
-    setViewportTopOffset(`${topOffset}px`);
+    // setViewportTopOffset(`${topOffset}px`);
+    $viewport.style.top = `${topOffset}px`;
   }
 
   // Update the viewport offset on window resize and orientation change
@@ -76,19 +71,23 @@ const NavMenu = ({
   return (
     <NavigationMenu.Root
       className="NavigationMenuRoot"
+      suppressHydrationWarning={true}
       delayDuration={300}
       onClick={safeDetectViewportOffset}
       onMouseMove={safeDetectViewportOffset}
     >
-      <NavigationMenu.List className="NavigationMenuList">
+      <NavigationMenu.List
+        className="NavigationMenuList"
+      >
+        <NavigationMenu.Item value="#search" className="searchToggle">
+          <SearchButton />
+        </NavigationMenu.Item>
+
         <NavigationMenu.Item value="/">
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one">
               <li className="item-categories">
                 <NavigationMenu.Link asChild>
@@ -180,10 +179,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Projects <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List two">
               <li className="panel-projects">
                 <NavigationMenu.Link asChild>
@@ -263,10 +259,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Contact <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content
-            onFocusOutside={handlePreventDefault}
-            className="NavigationMenuContent"
-          >
+          <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>
@@ -363,12 +356,13 @@ const NavMenu = ({
         </NavigationMenu.Indicator>
       </NavigationMenu.List>
 
-      {createPortal(
-        <div className="ViewportPosition" style={{ top: viewportTopOffset }}>
-          <NavigationMenu.Viewport className="NavigationMenuViewport" />
-        </div>,
-        document.body
-      )}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div className="ViewportPosition" style={{ top: "5.6rem" }}>
+            <NavigationMenu.Viewport className="NavigationMenuViewport" />
+          </div>,
+          document.body
+        )}
     </NavigationMenu.Root>
   );
 };

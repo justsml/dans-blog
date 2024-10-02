@@ -6,11 +6,9 @@ modified: 2024-07-31
 category: Code
 subCategory: promises
 tags: [promises, async, javascript, composition]
-cover: joe-yates-480485-unsplash.jpg
-cover_mobile: w300_joe-yates-480485-unsplash.jpg
-# cover_tablet: w600_joe-yates-480485-unsplash.jpg
-# cover_desktop: w900_joe-yates-480485-unsplash.jpg
-cover_icon: icon_joe-yates-480485-unsplash.jpg
+cover: joe-yates-480485-unsplash.webp
+cover_mobile: w300_joe-yates-480485-unsplash.webp
+cover_icon: icon_joe-yates-480485-unsplash.webp
 ---
 
 ## Promises... What's their deal?

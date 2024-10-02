@@ -80,7 +80,7 @@ export default function QuizUI({ children }: any) {
     >
       <div className="quiz-ui">{children}</div>
 
-      <div className="score">
+      <div className="score full-width">
         <div className="score-wrapper">
           Quiz Score:{" "}
           <label>

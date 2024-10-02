@@ -2,17 +2,22 @@
 import omit from "lodash/omit";
 import { SITE_TITLE } from "../consts";
 import NavMenu from "./NavMenu";
-import avatarImage from "@/assets/avatar-64.jpg";
+import avatarImage from "@/assets/avatar-44.webp";
 import { PostCollections } from "@/shared/dataCache";
-import "./Header.css";
+import SearchBar from "./search/SearchBar.astro";
 import type { ArticlePost } from "../types";
 
+import "./Header.css";
+
+type Props = {
+  className?: string;
+  date?: string;
+  modified?: string;
+};
+
+const { className } = Astro.props;
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
-const imgPaths = [
-  "data.cover",
-  "data.cover_icon",
-  "data.cover_mobile"
-];
+const imgPaths = ["data.cover", "data.cover_icon", "data.cover_mobile"];
 const categories = getCategoryCounts();
 const popularPosts = (getPopularPosts() as MyPost[]).map((p) =>
   getMinimalPostData(p, ["data.body", ...imgPaths])
@@ -40,16 +45,15 @@ function getMinimalPostData(
 }
 ---
 
-<header class="top-header">
-  <nav class:list={["header-nav"]}>
+<header class:list={["top-header", className]}>
+  <div class:list={["header-nav"]}>
     <h2>
       <a href="/" aria-label="Return Home">
         <img
           src={avatarImage.src}
-          style="margin-left: -.5rem; margin-right: .5rem; height: 2.125rem; width: 2.125rem; min-height: 48px; min-width: 48px; aspect-ratio: 1/1; border-radius: 100%;"
+          style="margin-left: -.5rem; margin-right: .5rem; height: 44px; width: 44px; min-height: 44px; min-width: 44px; aspect-ratio: 1/1; border-radius: 100%;"
           alt="Dan Levy's Avatar"
         />
-
         <span class="title">{SITE_TITLE}</span>
       </a>
     </h2>
@@ -61,5 +65,7 @@ function getMinimalPostData(
         recentPosts={recentPosts}
       />
     </div>
-  </nav>
+  </div>
 </header>
+
+<SearchBar showImages={true} />

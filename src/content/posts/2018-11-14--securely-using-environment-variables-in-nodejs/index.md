@@ -6,11 +6,9 @@ modified: 2020-07-30
 tags: [dotenv, api-keys, secrets, tokens, security, nodejs]
 category: Code
 subCategory: howto
-cover: john-salvino-417565-unsplash.jpg
-cover_mobile: w300_john-salvino-417565-unsplash.jpg
-# cover_tablet: w600_john-salvino-417565-unsplash.jpg
-# cover_desktop: w900_john-salvino-417565-unsplash.jpg
-cover_icon: icon_john-salvino-417565-unsplash.jpg
+cover: john-salvino-417565-unsplash.webp
+cover_mobile: w300_john-salvino-417565-unsplash.webp
+cover_icon: icon_john-salvino-417565-unsplash.webp
 ---
 
 ## Handling Secrets & API Tokens Safely

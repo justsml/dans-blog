@@ -5,11 +5,9 @@ modified: 2024-07-30
 category: Code
 subCategory: programming
 tags: [programming, patterns, models, source code, organization]
-cover: susan-holt-simpson-799094-unsplash.jpg
-cover_mobile: w300_susan-holt-simpson-799094-unsplash.jpg
-# cover_tablet: w600_susan-holt-simpson-799094-unsplash.jpg
-# cover_desktop: w900_susan-holt-simpson-799094-unsplash.jpg
-cover_icon: icon_susan-holt-simpson-799094-unsplash.jpg
+cover: susan-holt-simpson-799094-unsplash.webp
+cover_mobile: w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: icon_susan-holt-simpson-799094-unsplash.webp
 ---
 
 ## Exploring Array- and Set-based Pipeline Techniques

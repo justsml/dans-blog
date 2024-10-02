@@ -6,11 +6,9 @@ modified: 2024-08-03
 category: Guides
 subCategory: promises
 tags: [promises, async, await, async-await, javascript, composition]
-cover: matt-nelson-414464-unsplash.jpg
-cover_mobile: w300_matt-nelson-414464-unsplash.jpg
-# cover_tablet: w600_matt-nelson-414464-unsplash.jpg
-# cover_desktop: w900_matt-nelson-414464-unsplash.jpg
-cover_icon: icon_matt-nelson-414464-unsplash.jpg
+cover: matt-nelson-414464-unsplash.webp
+cover_mobile: w300_matt-nelson-414464-unsplash.webp
+cover_icon: icon_matt-nelson-414464-unsplash.webp
 ---
 
 Since the beginning of time, developers have fought many silly fights. From the classic _"Tabs vs. Spaces"_ to the timeless _"Mac vs. PC"_ debate, we're good at finding distracting arguments.

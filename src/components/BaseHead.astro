@@ -1,48 +1,45 @@
 ---
 import type { ImageMetadata } from "astro";
+import pkg from "../../package.json";
+import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
+import socialBanner from "../assets/social-banner.png";
+
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
-import '@/styles/global.css';
-import pkg from '../../package.json';
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from '../consts';
-import socialBanner from '../assets/social-banner.png';
+import "@/styles/nav.css";
+import "@/styles/layout.css";
+import "@/styles/global.css";
 
 interface Props {
-	title: string;
-	description: string;
-	image?: string | ImageMetadata | undefined;
+  title: string;
+  description: string | undefined;
+  image?: string | ImageMetadata | undefined;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 let { title, description, image } = Astro.props;
-// @ts-ignore
-if (description === 'undefined') description = undefined;
+
+if (description === "undefined") description = undefined;
 
 if (!image) image = socialBanner;
 
-const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
+const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 const siteDescription = description || SITE_SEO_DESCRIPTION;
 
 const version = pkg.version;
 
-const imgSrc = typeof image === 'string' ? image : image?.src
-const imageWidth = typeof image !== 'string' ? image?.width : null;
-const imageHeight = typeof image !== 'string' ? image?.height : null;
-
+const imgSrc = typeof image === "string" ? image : image?.src;
+const imageWidth = typeof image !== "string" ? image?.width : null;
+const imageHeight = typeof image !== "string" ? image?.height : null;
 ---
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" href="/favicon.ico" type="image/x-icon" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playwrite+AU+NSW:wght@100..400&family=Raleway:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet" crossorigin="anonymous">
-
-<link rel="stylesheet" href="/styles/gist-embed.css" type="text/css" />
 
 <link rel="canonical" href={canonicalURL} />
 
-<!-- Primary Meta Tags -->
+{/*Primary Meta Tags*/}
 <slot name="title">
 	<title>{siteTitle}</title>
 	<meta name="title" content={siteTitle} />
@@ -55,14 +52,24 @@ const imageHeight = typeof image !== 'string' ? image?.height : null;
 	{siteDescription && <meta property="og:description" content={siteDescription} />}
 </slot>
 
-<!-- Open Graph / Facebook -->
+{/*Open Graph / Facebook*/}
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
 {imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.url)} />}
 {imageWidth && <meta property="og:image:width" content={`${imageWidth}`} />}
 {imageHeight && <meta property="og:image:height" content={`${imageHeight}`} />}
 
-<!-- Twitter -->
+{/*Twitter*/}
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 {imgSrc && <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />}
+
+<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">

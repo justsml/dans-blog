@@ -197,9 +197,10 @@ p {
 }
 
 main > ul {
+  line-height: 2;
   margin: 1rem 0 2rem 2rem;
   li {
-    margin: 0.3rem 0;
+    margin: 0.5rem 0;
   }
 }
 
@@ -249,24 +250,6 @@ pre {
   }
 }
 
-/* .SocialLinks {
-  width: 100%;
-  line-height: 1.25rem;
-  margin-top: 1rem;
-  a {
-    color: var(--neon-purple);
-    display: block;
-    justify-content: flex-start;
-    text-wrap: nowrap;
-    line-height: 125%;
-    margin: 0.5rem 0;
-    .Icon {
-      scale: 1.25;;
-      display: inline-block;
-    }
-  }
-} */
-
 .NavigationMenuRoot {
   position: relative;
   display: flex;
@@ -286,25 +269,53 @@ pre {
 
   /* 2x2 square (small screens) */
   grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 2rem 1fr;
 
-  @screen sm {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: unset;
-  
+  margin-top: -.75rem;
+  margin-left: -1.75rem;
+  @media only screen and (min-width: 350px) {
+    grid-template-columns: 3rem 1fr;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+}
+
+.searchToggle {
+  grid-row: 1 / -1;
+  grid-column: 1;
+  justify-self: stretch;
+  align-self: stretch;
+  height: auto;
+
+  svg {
+    max-width: 1.5rem;
   }
 }
 
 @media only screen and (min-width: 580px) {
   .NavigationMenuList {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: unset;
+    align-items: center;
+    grid-template-columns: 4rem repeat(3, minmax(5rem, 1fr));
+    grid-template-rows: 1fr;
+    li {
+      grid-column: unset;
+    }
   }
+  .searchToggle {
+    grid-row: unset;
+    grid-column: 1;
+    justify-self: unset;
+    align-self: unset;
+    height: unset;
+    padding-right: 0rem;
+  }
+
 }
-
-
 
 .ViewportPosition {
   top: 5.6rem;
+  z-index: 20;
 }
 
 @screen sm {
@@ -364,15 +375,23 @@ pre {
   padding: 1rem;
 }
 .NavigationMenuContent[data-motion="from-start"] {
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: enterFromLeft;
 }
 .NavigationMenuContent[data-motion="from-end"] {
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: enterFromRight;
 }
 .NavigationMenuContent[data-motion="to-start"] {
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: exitToLeft;
 }
 .NavigationMenuContent[data-motion="to-end"] {
+  overflow: scroll;
+  @screen md { overflow: hidden; }
   animation-name: exitToRight;
 }
 
@@ -458,8 +477,6 @@ pre {
 .List {
   display: grid;
   padding: 0.25rem;
-  /* margin: 0 2rem; */
-  /* column-gap: 0.7rem; */
   list-style: none;
   padding-top: 0;
   gap: 1rem;
@@ -506,7 +523,7 @@ pre {
   }
   .List.one {
     max-width: 100vw;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 0.6fr 1fr;
   }
   .List.two {
     max-width: 100vw;
@@ -521,7 +538,7 @@ pre {
   }
   .List.one {
     max-width: 85vw;
-    grid-template-columns: 0.75fr 1fr;
+    grid-template-columns: 0.6fr 1fr;
   }
   .List.two {
     max-width: 85vw;
@@ -636,10 +653,14 @@ pre {
   position: absolute;
   display: flex;
   justify-content: center;
-  width: calc(100% - 2rem);
-  left: 1rem;
+  width: 100vw;
   perspective: 2000px;
   transition: top 250ms ease;
+
+  @screen md {
+    width: calc(100% - 2rem);
+    left: 4rem;
+  }
 }
 
 .CaretDown {

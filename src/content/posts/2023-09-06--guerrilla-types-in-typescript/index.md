@@ -6,11 +6,9 @@ modified: 2024-07-30
 tags: [engineering,typescript,composition,types]
 category: Guides
 subCategory: TypeScript
-cover: DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-cover_mobile: w300_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-# cover_tablet: w600_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-# cover_desktop: w900_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
-cover_icon: icon_DALL-E 2023-09-06 00.20.58 - A rebellious gorilla wearing camo and a red bandana typing on an Apple macbook oil painting-60q.jpg
+cover: gorilla-types_dall-e.webp
+cover_mobile: w300_gorilla-types_dall-e.webp
+cover_icon: icon_gorilla-types_dall-e.webp
 ---
 
 ## Guerrilla Types in TypeScript
@@ -288,7 +286,8 @@ We covered three techniques and a few related supporting ideas.
 
 You may be asking, are these good patterns? Should I adopt some of these ideas?
 
-**Answer:** Try them out. Find what works for you, your team, and your project. 🌈✨
+## Resources
 
-Let me know what you think on [Twitter](https://twitter.com/justsml) or
-[GitHub](https://github.com/justsml/dans-blog/issues/new).
+- [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
+- [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript Tips](https://www.totaltypescript.com/tips)

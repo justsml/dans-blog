@@ -6,11 +6,9 @@ modified: 2024-08-09
 tags: [javascript,date,date class,gotchas,quiz,challenge]
 category: Quizzes
 subCategory: Quiz
-cover: pocket-watch.jpg
-cover_mobile: w300_pocket-watch.jpg
-# cover_tablet: w600_pocket-watch.jpg
-# cover_desktop: w900_pocket-watch.jpg
-cover_icon: icon_pocket-watch.jpg
+cover: pocket-watch.webp
+cover_mobile: w300_pocket-watch.webp
+cover_icon: icon_pocket-watch.webp
 ---
 
 import Challenge from '../../../components/QuizUI/Challenge';
@@ -398,7 +396,6 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
     </slot>
   
     <slot name='hints'>
-      <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
     </slot>
 
     <slot name='explanation'>
@@ -406,8 +403,10 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
       The [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) method sets the day of the month, based on the given instance's current month.
   
       If a value is provided outside of the number of days available, the date instance month value will be adjusted (e.g. A `setDate(32)` in January will calculate as February 1st.)
+
+      <aside class="hint">`setDate` sets the day of the month, typically in the range 1-31.</aside>
     </div>
-    </slot>
+  </slot>
 
 </Challenge>
 
@@ -507,10 +506,6 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
     </slot>
   
     <slot name='hints'>
-      <aside class="hint">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>
-      <aside class="hint">
-        Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).
-      </aside>
     </slot>
 
     <slot name='explanation'>
@@ -520,6 +515,11 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
       The month argument is zero-based, with a range of 0-11 (using western calendars.)
 
       Here we see the month and year is adjusted to February 2021, because `setMonth(13)` is 2 more than 11 (December).
+
+      <aside class="hint">`setMonth` sets the month by index, 12 months are indexed from 0-11. </aside>
+      <aside class="hint">
+        Numbers outside the range of 0-11 will cause the year to over- or under-flow. For example, `setMonth(13)` will adjust the year to 2021 (in February because 13 is 2 more than 11).
+      </aside>
     </div>
     </slot>
 

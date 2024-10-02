@@ -6,11 +6,9 @@ modified: 2024-07-30
 category: DevOps
 subCategory: docker
 tags: [docker, devops, patterns]
-cover: guillaume-bolduc-259596-unsplash.jpg
-cover_mobile: w300_guillaume-bolduc-259596-unsplash.jpg
-# cover_tablet: w600_guillaume-bolduc-259596-unsplash.jpg
-# cover_desktop: w900_guillaume-bolduc-259596-unsplash.jpg
-cover_icon: icon_guillaume-bolduc-259596-unsplash.jpg
+cover: guillaume-bolduc-259596-unsplash.webp
+cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
 ---
 
 ## Docker Can Do Everything!\*

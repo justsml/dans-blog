@@ -6,11 +6,9 @@ modified: 2024-07-30
 tags: [tokens, api-keys, secrets, security, nodejs, json-web-tokens]
 category: Guides
 subCategory: security
-cover: dayne-topkin-78982-unsplash.jpg
-cover_mobile: w300_dayne-topkin-78982-unsplash.jpg
-# cover_tablet: w600_dayne-topkin-78982-unsplash.jpg
-# cover_desktop: w900_dayne-topkin-78982-unsplash.jpg
-cover_icon: icon_dayne-topkin-78982-unsplash.jpg
+cover: dayne-topkin-78982-unsplash.webp
+cover_mobile: w300_dayne-topkin-78982-unsplash.webp
+cover_icon: icon_dayne-topkin-78982-unsplash.webp
 ---
 
 ## When to protect your tokens?

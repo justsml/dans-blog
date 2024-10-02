@@ -6,11 +6,9 @@ modified: 2022-02-27
 tags: [collaborative-culture, culture, teams, growth, personal-development]
 category: Leadership
 subCategory: culture
-cover: pexels-fauxels-3184430-cropped.jpg
-cover_mobile: w300_pexels-fauxels-3184430-cropped.jpg
-# cover_tablet: w600_pexels-fauxels-3184430-cropped.jpg
-# cover_desktop: w900_pexels-fauxels-3184430-cropped.jpg
-cover_icon: icon_pexels-fauxels-3184430-cropped.jpg
+cover: pexels-fauxels-3184430-cropped.webp
+cover_mobile: w300_pexels-fauxels-3184430-cropped.webp
+cover_icon: icon_pexels-fauxels-3184430-cropped.webp
 credit: Photo by fauxels from Pexels
 ---
 
@@ -97,7 +95,7 @@ Expectations should be clear. Trying to describe the level of quality by labelin
 
 Rejection (or the perception of failure) should never become a dis-incentive. A "culture of error" is critical here: **Embrace failing faster/more often! Value a cheap & early feedback loop!**
 
-Every team will have different norms & priorities here. Try to reflect & improve your teams approach as part of retrospectives.
+Every team will have different norms & priorities here. Try to reflect & improve your teams' approach as part of retrospectives.
 
 #### Measuring Success
 

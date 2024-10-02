@@ -11,9 +11,10 @@ import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
-import "@/styles/nav.css";
-import { GOOGLE_ANALYTICS_ID, SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
+import socialBanner from "../assets/social-banner.png";
+
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 
 type Props = {
   children: any[];
@@ -40,20 +41,24 @@ const modifiedAgo = modified
   ? formatDistance(new Date(modified), new Date())
   : "";
 const modifiedDate = modified ? new Date(modified) : null;
-// yyyy-MM-dd
 const lastModified = modifiedDate
   ? modifiedDate.toISOString().split("T")[0]
   : "";
 const publishedTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
-const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
+const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 
-
+const coverUrl =
+  cover && typeof cover === "object" && "src" in cover
+    ? (cover as ImageMetadata)
+    : typeof cover === "string" && cover
+      ? cover
+      : socialBanner;
 ---
 
 <html lang="en">
   <head>
-    <BaseHead title={siteTitle} description={`${subTitle}`} image={`${cover}`} />
+    <BaseHead title={siteTitle} description={`${subTitle}`} image={coverUrl} />
     {lastModified && <meta http-equiv="last-modified" content={lastModified} />}
     {
       publishedTime && (
@@ -63,8 +68,8 @@ const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
   </head>
 
   <body>
-    <Header date={date} modified={modified} />
-    <main>
+    <Header className="content-grid" date={date} modified={modified} />
+    <main class="content-grid">
       {title && <h1>{title}</h1>}
       {subTitle && <h2>{subTitle}</h2>}
       {
@@ -89,21 +94,13 @@ const siteTitle = title || (SITE_TITLE + ' ' + SITE_DESCRIPTION);
 
       {
         cover && typeof cover === "object" && "src" in cover && (
-          <div class="hero-image">
-            <div class="hero-image-wrapper">
-              <Image
-                src={cover as ImageMetadata}
-                width="400"
-                alt={title}
-              />
-            </div>
-          </div>
+          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width" />
         )
       }
 
       <slot />
     </main>
     <Footer />
-    <AnalyticsTag googleAnalyticsId={GOOGLE_ANALYTICS_ID} />
+    <AnalyticsTag />
   </body>
 </html>

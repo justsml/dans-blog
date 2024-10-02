@@ -1,0 +1,154 @@
+---
+title: "Lessons Learned Upgrading My Blog"
+subTitle: "Astro, Tailwind, MDX, Pagefind, and more!"
+date: "2024-08-21"
+modified: "2024-08-23"
+category: Guides
+tags: [astro, tailwind, mdx, pagefind, gatsby]
+cover: galaxy-contribution-mode.webp
+cover_full_width: galaxy-contribution-banner.webp
+cover_mobile: w300_galaxy-contribution-mode.webp
+cover_icon: icon_galaxy-contribution-mode.webp
+---
+
+Recently, I embarked on a journey to upgrade my 8+ year-old Gatsby v1 site.
+
+This blog post will share some lessons I learned during this process and the fun technologies I explored.
+
+## Table of Contents
+
+- [Project Requirements](#project-requirements)
+- [Choosing my Right Technology Stack](#choosing-my-right-technology-stack)
+- [Astro: Learning Curve and Key Features](#astro-learning-curve-and-key-features)
+- [Modern CSS: Wow](#modern-css-wow)
+- [Search: Pagefind](#search-pagefind)
+- [Comments: Utterances](#comments-utterances)
+- [Tailwind: Regrets](#tailwind-regrets)
+- [Conclusion](#conclusion)
+
+## Project Requirements
+
+Before diving into the upgrade, I established a set of requirements:
+
+Since my blog gets a highly variable number of daily page views, I felt a statically pre-generated site would give the performance I wanted without extra complexity.
+
+Also, I needed to keep this site's existing content and features, including:
+
+- Code highlighting
+- Comments
+- Site Search
+- Pre-existing React components: Quiz UI, Gist embeds
+- Contact form
+- Responsive images
+- Sub 1-second load time
+- Browser compatibility: 2018+
+- Automated + PR-based deployments
+
+## Choosing my Right Technology Stack
+
+Over the years I have worked with many static site tools, from Jekyll, Hugo, Slate, and Gatsby. As well as many front-end frameworks: Ember, Knockout, Angular, Vue and of course React.
+
+So, I have precisely too many options, which I ultimately narrowed down to **Remix**, **Next.js** and **Astro**,
+
+I could write an entire blog series on my evaluation process, but I'll summarize it here:
+
+<p class="breakout">I chose [Astro](https://astro.build) because of how quickly I could _do meaningful things_.</p>
+
+Their API design is refreshingly simple. It's a [great balance between flexibility and good design opinions.](https://docs.astro.build/en/concepts/why-astro/)
+
+It was a bit reassuring that Astro lacks any obvious cloud bias or framework agenda.
+
+Astro wasn't the only technology I used, here's a full run down of the stack:
+
+- [Astro](https://astro.build): A modern static site generator.
+- [ShadcnUI](https://ui.shadcn.com): A collection of re-usable components.
+- [Tailwind CSS](https://tailwindcss.com): A utility-first CSS framework.
+- [MDX](https://mdxjs.com): Markdown content + inline components.
+- [Pagefind](https://pagefind.app): Fast, static & offline site search library. No need for Algolia!
+- [Utterances](https://utteranc.es): Comments system based on GitHub issues.
+- [Netlify](https://www.netlify.com): Automated deployments, contact form w/ captcha.
+
+## Astro: Learning Curve and Key Features
+
+<p class="breakout quote">Astro quickly became the cornerstone of my upgrade.</p>
+
+Here are some key features I found particularly useful:
+
+- `.astro` files: At first glance, Astro components may look like React JSX components, however they are quite different and serve a different set of goals. (See comparison table below.)
+- Powered by its own Golang [build tools](https://github.com/withastro/compiler) and Vite: it just works. Seamlessly handles ESM/CJS, TypeScript, code bundling, styles, images, etc.
+- [No framework bias](https://docs.astro.build/en/guides/framework-components/#official-ui-framework-integrations) or [cloud bias.](https://docs.astro.build/en/guides/deploy/) (*Cough* Next.js, OpenNext)
+- [Static vs. hybrid](https://docs.astro.build/en/basics/rendering-modes/) rendering: Astro provides [flexibility to target most cloud platforms](https://docs.astro.build/en/guides/deploy/): AWS, GCP, Firebase, Netlify, Vercel, Cloudflare Pages, Azure, Fly.io, and many others.
+- Content collections: The [`getCollection`](https://docs.astro.build/en/reference/api-reference/#getcollection) API simplifies working with content files as a data source.
+- File-based routing: Astro's file-based routing system, combined with `getStaticPaths`, makes generating pages a breeze.
+- SEO: [Astro doesn't get in your way](https://github.com/justsml/dans-blog/blob/010c5cb58bb327adb8c8fff608594daa612ad9d5/src/components/BaseHead.astro#L43-L63), and only emits a minimal amount of ~~detritus~~ boilerplate (`astro-island`) when necessary.
+
+Some things were a little surprising, like styling around Astro's injected markup, and the effect of `display:contents`.
+
+```tsx
+<style>astro-island,astro-slot,astro-static-slot{display:contents}</style>
+```
+
+### Comparing `.astro` vs. Client Components
+
+Astro components are basically HTML templates with a powerful component & props pattern. They can fetch data at build-time, access backend resources, and keep certain sensitive information hidden.
+
+The best way to understand Astro's `.astro` components is to compare & contrast with client-side components. (React, Vue, Svelte, etc.)
+
+| What do you need to do?                                                            | `.astro` Component    | Client Component    |
+| ---------------------------------------------------------------------------------- | ------------------- | ------------------- |
+| Generate HTML with powerful template+component pattern                             | ✅ | ❌ |
+| Fetch data at build-time                                                           | ✅ | ❌ |
+| Access backend resources (directly)                                                | ✅ | ❌ |
+| Keep sensitive information hidden (access tokens, API keys, etc)                   | ✅ | ❌ |
+| Reduce client-side JavaScript                                                      | ✅ | ❌ |
+| Use Client components (React, Vue, Svelte, etc)                                    | ✅ | ✅ |
+| Add interactivity and event listeners (`onClick()`, `onChange()`, etc)             | ❌ | ✅ |
+| Use State and Lifecycle Effects (`useState()`, `useReducer()`, `useEffect()`, etc) | ❌ | ✅ |
+| Use browser-only APIs                                                              | ❌ | ✅ |
+| Use custom hooks that depend on state, effects, or browser-only APIs               | ❌ | ✅ |
+
+
+## Modern CSS: Wow
+
+Coming back to frontend development, I was delighted by the advancements in native CSS:
+
+- CSS Variables: Available for a while, and pretty stable across browsers since 202\*.
+- Nesting: Finally in spec, and without earlier awkward syntax. Now it's similar to Less or SCSS.
+- New selectors: [`:is()`, `:where()`, and `:has()`](https://www.youtube.com/watch?v=3ncFpP8GP4g) offer more precise targeting of elements.
+- Modern units like `ch`, `vw`, and functions like `clamp()` provide better control over layouts and typography.
+- Set spacing more naturally with `-inline` and `-block` attributes. Set padding or margin on either the horizontal or vertical axis. Instead of `margin: 0 1rem 0 1rem` → `margin-inline: 1rem`.
+- Advanced layouts: Re-learning CSS Grid. Wow, there's a lot of shit in there. It can be daunting with seemingly endless ways of using it. Keep in mind, you can get away with figuring out 1 or 2 ways. Check out these great resources that helped me do tricks with grid: [Kevin Powell's video: Learn CSS Grid the easy way](https://www.youtube.com/watch?v=rg7Fvvl3taU), [Responsive w/o media queries](https://ardilamorin.com/responsive-no-media-queries/), [Ten modern layouts in one line of CSS](https://web.dev/articles/one-line-layouts).
+
+## Search: Pagefind
+
+Implementing a **site search** without 3rd party services or database hosting seemed like a fun challenge. After all, it's not like I have 10,000 posts to index (yet.)
+
+While browsing [Astro's community integrations](https://astro.build/integrations/?search=find) I stumbled upon a fantastic tool I wish I had known about sooner: [Pagefind](https://pagefind.app/).
+
+<p class="breakout quote">Few tools solve any problem as well as Pagefind solves local site search.</p>
+
+The simplicity of implementing Pagefind is a delight. It can integrated with ANY static site content, and you can choose if you want a default UI, or you can build anything custom if you choose.
+
+It neatly solved for everything I wanted. It took only minutes to integrate, and most of the work involved adding a `<div id="search"></div>` tag and some styling!
+
+## Comments: Utterances
+
+Unfortunately, I had to say goodbye to Disqus and the comments I'd accumulated over many years.
+
+I wanted better control/visibility into the 3rd party scripts on my site.
+
+Also, it needs to be simple & maintainable.
+
+This lead me to chose the fantastic [Utterances](https://utteranc.es/) service. Its GitHub (issues-based) comments system lines up well with my audience. Plus, it's easy to set up, and free.
+
+## Tailwind: Regrets
+
+There's only one bit of technology I'm increasingly regretting using: Tailwind.
+
+Over time, I can feel the cost difference in writing vs. maintaining. Tailwind is so fast to write, however once it's complex enough, it can become tedious to read & extend.
+
+## Conclusion
+
+Upgrading my old Gatsby v1 site to a modern stack built around Astro was a fun experience. 10/10 would recommend.
+
+If you're considering upgrading an old site or building a new static (or hybrid) site, I highly recommend looking at Astro. The learning curve may be steep at times, but the benefits in terms of performance, developer experience, and future-proofing your project are well worth the effort.
