@@ -3,14 +3,21 @@ import { slugify } from "../shared/pathHelpers";
 import { CalendarIcon } from "./icons/CalendarIcon";
 import type { ArticlePost } from "../types";
 import { getComputedDates } from "../shared/dateUtils";
+import { url } from "inspector";
 
 export const ArticleCard = ({
   article,
   width,
+  ...htmxArgs
 }: {
   article: ArticlePost;
   width?: number;
+  'hx-url'?: string;
+  'hx-trigger'?: string;
+  'hx-swap'?: string;
+
 }) => {
+  // console.log('🚀 ~ article', article);
   const slug = article.slug;
   const {
     title,
@@ -24,6 +31,7 @@ export const ArticleCard = ({
   } = article.data;
 
 
+  // console.log('🚀 htmxArgs', htmxArgs);
   const { createdAgo, modifiedAgo } = getComputedDates({date, modified});
 
   const icon = cover_mobile;
@@ -47,6 +55,7 @@ export const ArticleCard = ({
       title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}
       data-modified={modified}
+      {...htmxArgs}
     >
       <label className="small-label" title={tags && tags.join(', ')}>{category}</label>
       <h2>{title}</h2>
