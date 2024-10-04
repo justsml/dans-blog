@@ -51,6 +51,24 @@ const coverUrl =
       : socialBanner;
 
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
+
+const responsiveImgSizes_breakLeft = {
+  widths: [360, 480, 720, 1280],
+  sizes: `
+    360px,
+    (min-width: 500px) 480px,
+    (min-width: 800px) 720px,
+    (min-width: 1440px) 1280px`,
+};
+const responsiveImgSizes_breakRight = {
+  widths: [380, 500, 800, 1440],
+  sizes: `
+    380px,
+    (min-width: 480px) 500px,
+    (min-width: 720px) 800px,
+    (min-width: 1200px) 1440px`,
+};
+
 ---
 
 <html lang="en">
@@ -87,10 +105,9 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
           <Image
             class="full-width flow"
             src={cover_full_width as ImageMetadata}
-            format="webp"
-            widths={[400, 800, 1200, 1600, 1600]}
-            sizes={`(min-width: 400px) 400px, (min-width: 800px) 800px, (min-width: 1200px) 1200px, (min-width: 1600px) 1600px, 1600px`}
             alt={title}
+            format="webp"
+            {...responsiveImgSizes_breakRight}
           />
         ) : (
           cover &&
@@ -101,8 +118,7 @@ const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
                 <Image
                   src={cover as ImageMetadata}
                   alt={title}
-                  widths={[400, 800, 1200, 1600, 1600]}
-                  sizes={`(min-width: 400px) 400px, (min-width: 800px) 800px, (min-width: 1200px) 1200px, (min-width: 1600px) 1600px, 1600px`}
+                  {...responsiveImgSizes_breakLeft}
                 />
               </div>
             </div>
