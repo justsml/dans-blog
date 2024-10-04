@@ -22,7 +22,7 @@ let { title, description, image } = Astro.props;
 
 if (description === "undefined") description = undefined;
 
-if (!image) image = socialBanner;
+if (!image || (typeof image === 'string' ? image.length <= 1 : !('src' in image))) image = socialBanner;
 
 const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 const siteDescription = description || SITE_SEO_DESCRIPTION;

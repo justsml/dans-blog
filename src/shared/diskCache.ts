@@ -4,15 +4,15 @@ import ms from "ms";
 
 const IS_PRODUCTION = import.meta.env.NODE_ENV !== "development";
 const GIST_TTL_DAYS = import.meta.env.GIST_TTL_DAYS ?? 31;
-const ttl = Number(GIST_TTL_DAYS) < 1 ? 1 : Number(GIST_TTL_DAYS);
+const ttl = Number(GIST_TTL_DAYS) < 1 ? 10 : Number(GIST_TTL_DAYS);
 
 const dbFilePath = ".data/danlevy-net-cache.db";
 
 const cache = new SqliteCache({
   database: dbFilePath,
-  defaultTtlMs: ttl,
-  maxItems: 1000,
-  compress: true,
+  defaultTtlMs: 1000 * 60 * 60 * 24 * ttl,
+  maxItems: 10000,
+  // compress: true,
 });
 
 if (IS_PRODUCTION) {
