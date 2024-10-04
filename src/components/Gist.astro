@@ -51,7 +51,7 @@ function isValid(query: querystring.ParsedUrlQuery | { file: any } | null) {
  * # is interpreted as a filename.
  */
 function getQuery(value: string): Record<string, any> {
-  console.info("getQuery", value);
+  // console.info("getQuery", value);
   const hash = value.includes("#");
 
   // this will give us
@@ -121,7 +121,7 @@ function buildUrl(value: string, options: PluginOptions, file: null) {
 }
 
 const handleError = (url: string) => (error: any) => {
-  console.error(`Failed to load GitHub Gist: ${url}`, error);
+  console.error(`\n\n\n\n\n🚨 Failed to load GitHub Gist: ${url}\n\n\n\n`, error);
   return null;
 };
 
@@ -133,7 +133,7 @@ async function loadGist(path: string, options: PluginOptions = {}) {
   const query = getQuery(path);
   const url = buildUrl(path, options, query.file);
 
-  console.log("loadGist", url);
+  // console.log("loadGist", url);
   // call the gist and update the node type and value
   const response = await fetch(url, {
     headers: {
@@ -232,7 +232,7 @@ if (!gist) {
     includeDefaultCss: true,
     gistDefaultCssInclude: false,
   }).catch((error) => {
-    console.error("Failed to load gist", error);
+    console.error("\n\n\n🚨 Failed to load gist", error);
     return null
   });
   diskCache.set(props.path, gist);
@@ -264,8 +264,8 @@ const stylesheetUrl = gist?.stylesheet;
     gists.forEach((e) => {
       // @ts-expect-error
       e.dataset.cssLoaded = "true";
-      // @ts-expect-error
-      console.log("adding css", gists.length, e.dataset.cssurl);
+      // @ts-ignore
+      // console.log("adding css", gists.length, e.dataset.cssurl);
       // @ts-expect-error
       const stylesheetUrl = e.dataset.cssurl;
       if (!stylesheetUrl) return;

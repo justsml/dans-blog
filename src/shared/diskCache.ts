@@ -7,7 +7,7 @@ const GIST_TTL_DAYS = import.meta.env.GIST_TTL_DAYS ?? 31;
 
 const ttl = Number(GIST_TTL_DAYS) < 1 ? 1 : Number(GIST_TTL_DAYS);
 const cache = new SqliteCache({
-  database: "/tmp/danlevy-net-cache.db",
+  database: ".data/danlevy-net-cache.db",
   defaultTtlMs: ttl,
   maxItems: 1000,
   compress: true,
@@ -15,7 +15,7 @@ const cache = new SqliteCache({
 
 if (isProd) {
   const info = await getDbInfo();
-  console.log("Disk cache info", info);
+  // console.log("Disk cache info", info);
 }
 
 export const diskCache = {
