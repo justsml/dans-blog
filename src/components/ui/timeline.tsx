@@ -1,11 +1,12 @@
 import {
-  useMotionValueEvent,
   useScroll,
   useTransform,
   motion,
 } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 import { slugify } from "../../shared/pathHelpers";
+
+import './timeline.css'
 
 type TimelineEntry =
   | {
@@ -71,13 +72,13 @@ export const Timeline = ({
             key={index}
             className="flex justify-start pt-10 md:pt-10 md:gap-10"
           >
-            <div className="sticky flex flex-col z-40 items-center top-40 pl-6 self-start max-w-xs">
-              <div className="h-10 absolute left-3 w-10 rounded-full bg-neutral-200 flex items-center justify-center">
-                <div className="h-4 w-4 rounded-full border-neutral-300 p-2" />
+            <div className="dot-anchor sticky flex flex-col z-1 items-center top-40 pl-6 self-start max-w-xs">
+              <div className="moving-dot h-10 absolute left-3 w-10 rounded-full bg-neutral-300 flex items-center justify-center">
+                <div className="h-4 w-4 rounded-full border-neutral-600 p-2" />
               </div>
           </div>
 
-            <div className="relative pl-20 pr-4 md:pl-4 w-full">
+            <div className="relative pl-10 pr-4 md:pl-4 w-full">
               <h3 className="block text-xl mb-4 text-left text-neutral-200 font-sans font-extralight" id={slugify(item.title)}>
                 <a href={'#' + slugify(item.title)}>{item.title}</a>
               </h3>
@@ -89,14 +90,14 @@ export const Timeline = ({
           style={{
             height: height + "px",
           }}
-          className="absolute md:left-8 left-8 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-700 to-transparent to-[99%]  [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
+          className="absolute md:left-8 left-0 top-0 overflow-hidden w-[2px] bg-[linear-gradient(to_bottom,var(--tw-gradient-stops))] from-transparent from-[0%] via-neutral-700 to-transparent to-[99%]  [mask-image:linear-gradient(to_bottom,transparent_0%,black_10%,black_90%,transparent_100%)] "
         >
           <motion.div
             style={{
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
+            className="vertical-line absolute z-0 inset-x-0 top-0  w-[2px] bg-gradient-to-t from-purple-500 via-blue-500 to-transparent from-[0%] via-[10%] rounded-full"
           />
         </div>
       </div>
