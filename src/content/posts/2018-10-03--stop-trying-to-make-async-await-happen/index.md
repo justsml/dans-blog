@@ -189,7 +189,7 @@ Try apply these techniques to your own code! Then [tweet at me](https://twitter.
 
 Help spread the #PromiseTruth & share this article. ❤️
 
-![credit: matt-nelson-414464-unsplash.jpg](matt-nelson-414464-unsplash.jpg)
+![credit: matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
 
 #### Related Reading
 
