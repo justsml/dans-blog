@@ -53,20 +53,20 @@ const coverUrl =
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 
 const responsiveImgSizes_breakLeft = {
-  widths: [360, 480, 720, 1280],
+  widths: [480, 720, 1280, 1920],
   sizes: `
-    360px,
     (min-width: 500px) 480px,
     (min-width: 800px) 720px,
-    (min-width: 1440px) 1280px`,
+    (min-width: 1440px) 1280px,
+    1920px`,
 };
 const responsiveImgSizes_breakRight = {
-  widths: [380, 500, 800, 1440],
+  widths: [500, 800, 1440, 1920],
   sizes: `
-    380px,
     (min-width: 480px) 500px,
     (min-width: 720px) 800px,
-    (min-width: 1200px) 1440px`,
+    (min-width: 1200px) 1440px,
+    1920px`,
 };
 
 ---
@@ -107,7 +107,7 @@ const responsiveImgSizes_breakRight = {
             src={cover_full_width as ImageMetadata}
             alt={title}
             format="webp"
-            {...responsiveImgSizes_breakRight}
+            {...responsiveImgSizes_breakLeft}
           />
         ) : (
           cover &&
@@ -118,7 +118,7 @@ const responsiveImgSizes_breakRight = {
                 <Image
                   src={cover as ImageMetadata}
                   alt={title}
-                  {...responsiveImgSizes_breakLeft}
+                  {...responsiveImgSizes_breakRight}
                 />
               </div>
             </div>

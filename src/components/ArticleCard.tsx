@@ -1,9 +1,8 @@
 import { InfoLabel } from "../components/ui/infoLabel";
 import { slugify } from "../shared/pathHelpers";
 import { CalendarIcon } from "./icons/CalendarIcon";
-import type { ArticlePost } from "../types";
 import { getComputedDates } from "../shared/dateUtils";
-import { url } from "inspector";
+import type { ArticlePost } from "../types";
 
 export const ArticleCard = ({
   article,

@@ -4,6 +4,7 @@ import { PostCollections, getArticleSortFn } from "../../shared/dataCache";
 import { pageSize } from "../../shared/pagination";
 import { ArticleCard } from "../../components/ArticleCard";
 import { PaginateFunction } from "astro";
+import { RefreshCw } from "lucide-react";
 
 export const partial = true;
 
@@ -15,8 +16,11 @@ type Props = {
   direction: "asc" | "desc";
 };
 
-
-export async function getStaticPaths({ paginate }: {paginate: PaginateFunction}) {
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: PaginateFunction;
+}) {
   const sortKeys = [
     ["date", "asc"],
     ["date", "desc"],
@@ -28,12 +32,12 @@ export async function getStaticPaths({ paginate }: {paginate: PaginateFunction})
     const posts = PostCollections.getPosts() as ArticlePost[];
     const sortFn = getArticleSortFn(field, direction);
     const sortedPosts = posts.concat().sort(sortFn);
-    
+
     const pageData = paginate(PostCollections.getStaticPaths(sortedPosts), {
       pageSize,
-    })
+    });
     // console.warn("📄 PAGE DATA", pageData)
-    
+
     const fixed = pageData.flatMap((p: any) => ({
       ...p,
       props: {
@@ -62,17 +66,16 @@ export async function getStaticPaths({ paginate }: {paginate: PaginateFunction})
 }
 
 const {
-  page: { data, currentPage, start, end, size, lastPage, total, url },
+  page: { data, currentPage, lastPage, url },
   pageUrlSuffix,
 } = Astro.props;
 // console.log("📄 PROPS", Astro.props);
 // console.log("📄 NEXT", `${url.next ? url.next + pageUrlSuffix :url.next}`);
 
-
-// , currentPage, start, end, size, lastPage, total, url 
+// , currentPage, start, end, size, lastPage, total, url
 // console.log("📄 Page", data);
 let nextUrl: string | null = null;
-const head = (arr: any[], n: number) => arr.slice(0, n);
+// const head = (arr: any[], n: number) => arr.slice(0, n);
 
 const isLast = currentPage === lastPage;
 if (!isLast) {
@@ -81,17 +84,72 @@ if (!isLast) {
   // prevUrl = `${url.prev ? url.prev + pageUrlSuffix : url.prev}`;
 }
 
-const nextPageAttrs = nextUrl ? {
-  'hx-get': nextUrl,
-  'hx-trigger': "revealed",
-  'hx-swap': "afterend",
-} : {};
-
+const nextPageAttrs = nextUrl
+  ? {
+      "hx-get": nextUrl,
+      "hx-trigger": "revealed",
+      "hx-swap": "afterend",
+    }
+  : {};
 ---
+
 {
-  data.map(({ props }: any, index) => (
-    index === data.length - 1
-      ? <ArticleCard article={props as ArticlePost} width={200} {...nextPageAttrs} />
-      : <ArticleCard article={props as ArticlePost} width={200} />
-  ))
+  data.map(({ props }: any, index) =>
+    index === data.length - 1 ? (
+      <ArticleCard
+        article={props as ArticlePost}
+        width={200}
+        {...nextPageAttrs}
+      />
+    ) : (
+      <ArticleCard article={props as ArticlePost} width={200} />
+    )
+  )
 }
+
+{/*
+{nextUrl && (
+  <div class="pagination load-more">
+    <div class="spinner"><RefreshCw /></div>
+    <a {...nextPageAttrs} hx-trigger="click" hx-swap="beforebegin" class="button">Load More</a>
+  </div>
+)}
+
+
+<style>
+  .spinner {
+    display: none;
+  }
+  .load-more.loading {
+    .spinner {
+      display: block;
+    }
+    a {
+      display: none;
+    }
+  }
+</style>
+<script>
+
+  const getLastArticleCard = () => document.querySelector(".article-card:last-of-type");
+  const isNextPageAvailable = () => {
+    const lastArticleCard = getLastArticleCard();
+    return lastArticleCard && lastArticleCard.getAttribute("hx-get") != null;
+  };
+  document.addEventListener("DOMContentLoaded", function () {
+    const loadMore = document.querySelector(".pagination.load-more");
+
+    if (loadMore) {
+      loadMore.addEventListener("click", () => {
+        if (!isNextPageAvailable()) return;
+        loadMore.classList.add("loading");
+        console.info(`Last article card's next page:`, getLastArticleCard()?.getAttribute("hx-get"));
+        setTimeout(() => {
+          loadMore.classList.remove("loading");
+        }, 2000);
+      });
+    }
+  });
+</script>
+*/}
+
