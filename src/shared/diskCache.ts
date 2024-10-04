@@ -2,20 +2,22 @@ import { SqliteCache } from "cache-sqlite-lru-ttl";
 import fs from "fs/promises";
 import ms from "ms";
 
-const isProd = import.meta.env.PROD;
+const IS_PRODUCTION = import.meta.env.NODE_ENV !== "development";
 const GIST_TTL_DAYS = import.meta.env.GIST_TTL_DAYS ?? 31;
-
 const ttl = Number(GIST_TTL_DAYS) < 1 ? 1 : Number(GIST_TTL_DAYS);
+
+const dbFilePath = ".data/danlevy-net-cache.db";
+
 const cache = new SqliteCache({
-  database: ".data/danlevy-net-cache.db",
+  database: dbFilePath,
   defaultTtlMs: ttl,
   maxItems: 1000,
   compress: true,
 });
 
-if (isProd) {
+if (IS_PRODUCTION) {
   const info = await getDbInfo();
-  // console.log("Disk cache info", info);
+  console.log("Disk cache info", info);
 }
 
 export const diskCache = {
@@ -44,7 +46,7 @@ export const diskCache = {
 };
 
 export async function getDbInfo() {
-  const stat = await fs.stat("/tmp/danlevy-net-cache.db");
+  const stat = await fs.stat(dbFilePath);
   const sizeMb = stat.size / 1024 / 1024;
   const createdAt = stat.ctime || stat.birthtime;
   const modifiedAt = stat.mtime;
