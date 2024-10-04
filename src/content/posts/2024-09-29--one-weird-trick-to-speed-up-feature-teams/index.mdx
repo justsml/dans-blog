@@ -5,11 +5,11 @@ date: 2024-09-29
 modified: 2024-09-30
 tags: [agile, teams]
 category: Engineering
-cover: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
+cover: icon_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: icon_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_icon: icon_danny-howe-98KlbUsOO_w-unsplash.webp
 cover_credit: Photo by <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> on <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.jpg
-cover_mobile: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
-cover_icon: icon_danny-howe-98KlbUsOO_w-unsplash.jpg
 ---
 
 {/* Add html5 toggle element */}
@@ -82,7 +82,7 @@ The key hierarchy (`user/420` -> `user/420/friends`) naturally encodes a graph r
 This is a quick & cheap way to serialize graph data structures. Especially if you don't need the complexity of a graph database (like Neo4j).
 
 <figure>
-![Graph of user/123](./KVsCanBeGraphs.png)
+![Graph of user/123](./KVsCanBeGraphs.webp)
 <figcaption>Graph of user/123</figcaption>
 </figure>
 
@@ -97,7 +97,7 @@ This is a quick & cheap way to serialize graph data structures. Especially if yo
 
 Don't store things like blog comments in a _**single**_ KV pair. For example, `post/666 -> {comments: [...too many...]}`. Instead you might use `post/666/comments/1`, or `post/666/comments/<UUID>`, etc. Or go for a SQL table.
 
-- When you need to query by properties (not Key or ID) in your dataset.
+- When you need to search by properties (not Key or ID) in your dataset.
 - When you need to JOIN data across multiple entities.
 - When you need to enforce complex constraints or relationships.
 

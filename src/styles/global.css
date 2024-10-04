@@ -304,7 +304,7 @@ h1:first-of-type {
   place-items: center start;
   grid-template-columns: auto 1fr;
   /* margin-inline: 1.25rem; */
-  height: 7.25rem;
+  height: 7.26rem;
 
   column-gap: 0rem;
 
@@ -779,7 +779,13 @@ figure {
   padding: .25rem;
   border: .25px solid #dedede;
   border-radius: .125rem;
-  margin: 2.25rem auto;
+  margin-block: 2.25rem;
+  margin-left: -1.25rem;
+  margin-right: -2rem;
+  
+  @screen sm {
+    margin: 2.25rem auto;
+  }
 
   &:hover {
     border: .25px solid var(--neon-cyan);

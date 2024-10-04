@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     format: "directory",
   },
-
+  cacheDir: ".cache",
   site: "https://danlevy.net",
   integrations: [
     pagefind(),

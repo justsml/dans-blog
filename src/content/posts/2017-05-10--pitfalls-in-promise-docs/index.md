@@ -13,7 +13,7 @@ cover_icon: icon_craig-whitehead-433328-unsplash.webp
 
 > Spotting Promise Anti-Patterns in google search results, and popular libraries.
 
-![craig-whitehead-433328-unsplash.jpg](craig-whitehead-433328-unsplash.jpg)
+![craig-whitehead-433328-unsplash.webp](craig-whitehead-433328-unsplash.webp)
 
 Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I criticize below, as I'm sure many JS developers are as well. Nothing I've laid out is meant to be personal or even directed at the original authors. I'm merely doing a code review on common patterns - I hope to pass along an understanding of my priorities & critical thinking processes.
 
@@ -27,12 +27,12 @@ Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I
 --------------------------
 ### CallbackHell.com
 > **CREDIT:** http://callbackhell.com/
-![CallbackHell.com](callbackhell.png)
+![CallbackHell.com](callbackhell.webp)
 
 ----------------------
 ### StrongLoop
 > **CREDIT:** https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/
-![strong loop](strongloop.png)
+![strong loop](strongloop.webp)
 
 
 ----------------
@@ -40,7 +40,7 @@ Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I
 > **CREDIT:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
 This is a pretty solid article. I only have 1 concern:
 
-![Rising Stack](risingstack.png)
+![Rising Stack](risingstack.webp)
 
 ------------------------
 ### Q Library
@@ -53,9 +53,9 @@ It may resemble Promises, however I insist it ain't. It has far too large a surf
 
 Bottom line: the `deferred` pattern is a painful anti-pattern - it improves virtually nothing over the typical callback approach.
 
-![q first example](qlibrary-1.png)
+![q first example](qlibrary-1.webp)
 
-![q xmlHTTP deferred anti-pattern](qlibrary-2.png)
+![q xmlHTTP deferred anti-pattern](qlibrary-2.webp)
 
 
 > Please take a look at (& star) this article's companion Github project, [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)

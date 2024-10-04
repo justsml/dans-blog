@@ -176,11 +176,11 @@ There are 5 anonymous methods defined in this single function. As Jake even poin
 
 ### Begin by **extracting methods**...
 
-![](async-refactor-google-extract-methods-resized-75.gif "Extracting methods")
+![](async-refactor-google-extract-methods-resized-75.webp "Extracting methods")
 
 ### Continue by replacing the `.reduce()` and `logPromise()` with a `Promise.all` and a `..map()`...
 
-![](async-refactor-google-chain-methods-resized-75.gif "Improving readability")
+![](async-refactor-google-chain-methods-resized-75.webp "Improving readability")
 
 
 ### Summary
@@ -189,7 +189,7 @@ Try apply these techniques to your own code! Then [tweet at me](https://twitter.
 
 Help spread the #PromiseTruth & share this article. ❤️
 
-![credit: matt-nelson-414464-unsplash.jpg](matt-nelson-414464-unsplash.jpg)
+![credit: matt-nelson-414464-unsplash.webp](matt-nelson-414464-unsplash.webp)
 
 #### Related Reading
 

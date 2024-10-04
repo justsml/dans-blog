@@ -4,7 +4,7 @@ import throttle from "lodash/throttle";
 import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { slugify } from "@/shared/pathHelpers";
-import avatarImage from "@/assets/avatar-256.jpg";
+import avatarImage from "@/assets/avatar-256.webp";
 import {
   CaretDownIcon,
   EnvelopeClosedIcon,

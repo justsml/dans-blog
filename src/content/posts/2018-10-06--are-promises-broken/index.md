@@ -81,7 +81,7 @@ Promise.resolve(10)  // 10
 JavaScript has an interesting behavior around errors (which applys to asynchronous **and** synchronous code.)
 
 <a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>see example in repl.it: `throwing errors in javascript`</i>]</a>
-<img alt="throwing errors in javascript" src="throwing-errors-in-javascript.png" />
+<img alt="throwing errors in javascript" src="throwing-errors-in-javascript.webp" />
 
 
 In order to **get useful details about the line number** and call stack, you must use `Error` instances. Throwing strings does not work like in Python or Ruby. 

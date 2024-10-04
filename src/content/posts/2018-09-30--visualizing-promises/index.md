@@ -35,7 +35,7 @@ This shows how `console.log()`'s execution will be delayed by `delay(msec)`.
 delay(1000).then(() => console.log("done"));
 ```
 
-![](N_1000ms_log.gif)
+![](N_1000ms_log.webp)
 
 <!-- ```
 delay(1000) --------|.then(fn)
@@ -60,7 +60,7 @@ Generally the desired usage for `console.log` is shown in Example #1. Make sure 
 delay(1000).then(console.log("done"));
 ```
 
-![](N_1000ms_!log.gif)
+![](N_1000ms_!log.webp)
 
 <!-- ```
 delay(1000) --------|.then(null)
@@ -79,7 +79,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![](N_3000ms.gif)
+![](N_3000ms.webp)
 
 <!-- ```
 delay(1000) ------|.then(console.log)
@@ -98,7 +98,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![](N_3000ms_PromiseAll.gif)
+![](N_3000ms_PromiseAll.webp)
 
 <!--
 ```

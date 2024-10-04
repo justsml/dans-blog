@@ -39,7 +39,7 @@ cover_icon: icon_solaiman-hossen-553024-unsplash.webp
 
 [View Prices on EC2](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
 
-![ec2instances.info](ec2-updated-prices-2018.jpg)
+![ec2instances.info](ec2-updated-prices-2018.webp)
 
 Note the **i3.\*xlarge** is the only hardware to feature competitively priced NVMe storage (ultra-fast +1GB/s speeds). The major limiting factor I found was the real network speed. Servers with advertised speeds "up to 10/Gb/s" struggled to get close to 1/Gb/s (60-80MB/s).
 
