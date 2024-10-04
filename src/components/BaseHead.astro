@@ -2,7 +2,7 @@
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
-import socialBanner from "../assets/social-banner.png";
+import socialBanner from "../assets/social-banner.webp";
 
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
@@ -65,14 +65,25 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta property="twitter:url" content={canonicalURL} />
 {imgSrc && <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />}
 
-<link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
 <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
 <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
-<script defer async src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
 
+<link rel="icon" type="image/webp" sizes="48x48" href="/icons/icon-48x48.webp">
+<link rel="icon" type="image/webp" sizes="256x256" href="/icons/icon-256x256.webp">
+<link rel="icon" type="image/webp" sizes="512x512" href="/icons/icon-512x512.webp">
+
+{/* <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png"> */}
+{/* <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png"> */}
+{/* <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png"> */}
+{/* <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png"> */}
+{/* <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png"> */}
+{/* <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png"> */}
+
+{/* <link rel="icon" type="image/webp" sizes="96x96" href="/icons/icon-96x96.webp"> */}
+{/* <link rel="icon" type="image/webp" sizes="144x144" href="/icons/icon-144x144.webp"> */}
+{/* <link rel="icon" type="image/webp" sizes="192x192" href="/icons/icon-192x192.webp"> */}
+{/* <link rel="icon" type="image/webp" sizes="384x384" href="/icons/icon-384x384.webp"> */}
+
+<script defer async src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
+<!-- add extensions -->

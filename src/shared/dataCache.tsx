@@ -211,11 +211,11 @@ export const getImageProps = (
 
 /**
  * Convert paths like:
- * `/@fs/Users/dan/code/oss/dans-blog-v3/src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/open-source-high-life.jpg?origWidth=1020&origHeight=673&origFormat=jpg`
+ * `/@fs/Users/dan/code/oss/dans-blog-v3/src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/open-source-high-life.webp?origWidth=1020&origHeight=673&origFormat=webp`
  *
  * Into:
  *
- * `/src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/open-source-high-life.jpg`
+ * `/src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/open-source-high-life.webp`
  *
  */
 export const getSrcPath = (imagePath: string) => {
