@@ -19,16 +19,20 @@ webp_utils_help
 
 function find_old_image_formats () {
   # Find legacy images, ignoring the `dist`, `node_modules`, `.cache` folders
-  find "$PWD" -type f \( -iname \*.jpg \
+  find "$PWD" -type f \( \
+       -iname \*.jpg \
     -o -iname \*.jpeg \
     -o -iname \*.png \
     -o -iname \*.gif \
     -o -iname \*.bmp \
     -o -iname \*.tif \
     -o -iname \*.tiff \) \
-    -not -path "./dist/*" \
-    -not -path "./node_modules/*" \
-    -not -path "./.cache/*"
+    \( \
+    -not -iregex ".*/dist/.*" \
+    -and -not -iregex ".*/node_modules/.*" \
+    -and -not -iregex ".*/.cache/.*" \
+    -and -not -iregex ".*/public/icons/.*" \
+    -and -not -iregex ".*/public/apple.*" \)
 }
 
 
