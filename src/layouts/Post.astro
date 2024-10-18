@@ -40,7 +40,7 @@ const {
 } = Astro.props.frontmatter! || Astro.props;
 
 const modDate = modified ? new Date(modified) : null;
-const lastModified = modDate ? modDate.toISOString().split("T")[0] : "";
+const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
 const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
 const coverUrl =
@@ -74,8 +74,9 @@ const responsiveImgSizes_breakRight = {
 <html lang="en">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
-    {lastModified && <meta http-equiv="last-modified" content={lastModified} />}
+    {modTime && <meta http-equiv="last-modified" content={modTime} />}
     {pubTime && <meta property="article:published_time" content={pubTime} />}
+    {modTime && <meta property="article:modified_time" content={modTime} />}
   </head>
 
   <body>
