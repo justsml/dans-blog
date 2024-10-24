@@ -36,7 +36,6 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<meta name="fediverse:creator" content="@justsml@mastodon.social">
 <link rel="preconnect" href="https://unpkg.com" />
 <link rel="preconnect" href="https://posthog.com" />
 <link rel="canonical" href={canonicalURL} />
@@ -55,6 +54,8 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 </slot>
 
 {/*Open Graph / Facebook*/}
+<meta name="fediverse:creator" content="@justsml@mastodon.social" />
+<meta name="bsky:creator" content="@justsml.bsky.social" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
 {imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.url)} />}
