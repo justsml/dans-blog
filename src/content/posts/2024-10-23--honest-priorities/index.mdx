@@ -1,0 +1,114 @@
+---
+title:  "The Priority Trap"
+subTitle: Is Multiple Choice the Best Choice?
+category: Thoughts
+subCategory: Agile
+date: 2024-10-23
+modified: 2024-10-24
+tags: [agile, leadership, priority, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> on <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+# The `Priority` Dropdown Trap
+
+<aside className="breakout">
+💡 As an organization grows, it will inevitably have a ballooning backlog. Eventually, the size of the list will *demand* prioritization.
+</aside>
+
+## A Startup Story
+
+Without fail, your Jira Admins will have a solution: behold a `Priority` field dropdown! (Pro tip enterprise devs: possibly named `Priority2` or `P-level`.)
+
+Curiously, 100% of companies choose between  `P1, P2, P3, P4` or `Low, Med, High, and Critical` — apparently there are no other options.
+
+A hard-coded list of four options? Okay. Let's try it for a few weeks...
+
+### 2 Days Later
+
+In a *shocking-to-no-one* turn of events, the organization discovered a ticket with a new, higher priority, necessitating a minor hack: adding `P0`, or `Critical Max+`!
+
+### 3 More Days
+
+*Our intrepid boss had some exciting meetings & discoveries at the conference!* 
+
+Somehow they uncovered an even higher priority than `P0`!
+
+Since then, the team has been heads-down researching how to label this new Priority.
+
+Maybe `-1`? No, no. That's too confusing (`P-1` vs. `P1`). Ok, how about `P0.5`, no?
+
+<p className="breakout">In an "inspired" moment, the team invented a higher priority: the double-zero!<br />Now known as the `P00` Priority.</p>
+
+{/* *Finally, we can neatly label everything in the world into our Priorities dropdown! (…evil laugh…)* */}
+
+### Before the Flood
+
+Before anyone realizes it, your team is somehow drowning in `P00` tickets!
+
+<b>How can we avoid this silly game of Engineering Theater?</b>
+
+## What if Priority Wasn't Multiple Choice?
+
+How could we better represent an ever-changing, fluid human concept like `Priority`?
+
+- In the real world, priorities constantly shift and evolve based on new information, market changes, and organizational goals.
+- There's often a complex interplay between urgency, importance, resource availability, and cost/risk analysis that a simple dropdown can't capture, especially over time. (Ticket rot.)
+- Different stakeholders may have conflicting views on what constitutes a high priority, making a one-size-fits-all approach unsuitable.
+
+## So, what next?
+
+There are several alternative approaches worth exploring, from low to high effort:
+
+- To provide more leg and headroom, pick a “neutral” starting value, say 100 or 1,000. You can always increase or decrease the number.
+    - Or stick with zero to start, where higher numbers have higher priority.
+- Implement a multidimensional prioritization system that considers factors like business value, urgency, and effort required. (Create a `composite` score to make sorting and filtering easier.)
+- Adopt a dynamic prioritization method, such as the [MoSCoW technique](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won't have), allowing regular reassessment. (See also the [Kano Model](https://en.wikipedia.org/wiki/Kano_model).)
+
+## Summary
+
+So much is put on Priority despite its rapid rate of decay. Yesterday's `CRITICAL` tickets are not likely to be next quarter's `CRITICAL` tickets.
+
+Over time, older high-priority tickets become resistant to cleanup and maintenance. After all, who wants to lower the `Priority` of something once declared ***essential***? Never mind deleting said irrelevant tickets… (Gasp! Think of the backlog!)
+
+I've seen multiple companies mix up `Severity` & `Priority`. `Severity` describes ***urgency*** (or time-sensitivity.)
+
+`Priority ≠ Severity`. It can make sense to define 3-5 severity levels (often used to maintain Service Level Agreements.) 
+
+The levels of urgency help communicate `zero customer impact` to a `partial/complete service outage`.
+
+## A word of caution
+
+Deploying an unbounded Priority field requires a little planning & discipline!
+
+If you are familiar with front-end development, you may have experienced a `z-index` war.
+
+Essentially, `z-index` lets designers set *any* positive integer to ensure their widgets show “above” other lower `z-index` content.
+
+Even a minor component update could introduce a change to the z-index on their `<Dialog />` - making it suddenly invisible.  These situations could become messy as our third-party components, feature work, and other team contributions tried to out-`z-index` each other.
+
+`Z-index` was once limited to ~32,000. However, I recently saw a snippet with a billion `z-index: 1000000000`!
+
+Inflation must be hitting `z-index` hard.
+
+## Discuss
+
+- Is this a worthy thought experiment?
+- Is the idea of an ever-increasing Priority horrifying? Anxiety inducing?
+- Is it inevitable that this approach eventually exceeds 64-bit integer limits?
+- Can other fields (beyond `Severity` or `Urgency`) add to this conversation?
+- How much blame does Jira deserve? Or credit?
+
+We could scream into the internet, “Who's going to clean all these `P00` tix?”
+
+Or, you can get ***real*** about your backlog.
+
+- Accept that 90% of your 1,000 tickets will never get done. It's ok.
+- Archive tickets that have been untouched for months. Any initial priority/urgency is no longer applicable. Anyway, archived issues can often be retrieved.
+- When an issue comes back, that's cool; it just increased its priority.
+- Anecdotally, I've noticed zero harm from discarding older & incomplete tickets.
+- Endlessly appending to a backlog-as-database misses the opportunity to focus your team & organization on what matters. (Things ahead of us. Whereas backlogs inherently look backward.)
+- A deep backlog ends up like a Bizzaro Trophy Room, celebrating the shit you'll never ship.
