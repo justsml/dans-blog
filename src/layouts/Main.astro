@@ -41,10 +41,8 @@ const modifiedAgo = modified
   ? formatDistance(new Date(modified), new Date())
   : "";
 const modifiedDate = modified ? new Date(modified) : null;
-const lastModified = modifiedDate
-  ? modifiedDate.toISOString().split("T")[0]
-  : "";
-const publishedTime = date ? new Date(date).toISOString().split("T")[0] : "";
+const modTime = modifiedDate ? modifiedDate.toISOString().split("T")[0] : "";
+const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
 const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 
@@ -59,12 +57,9 @@ const coverUrl =
 <html lang="en">
   <head>
     <BaseHead title={siteTitle} description={`${subTitle}`} image={coverUrl} />
-    {lastModified && <meta http-equiv="last-modified" content={lastModified} />}
-    {
-      publishedTime && (
-        <meta property="article:published_time" content={publishedTime} />
-      )
-    }
+    {modTime && <meta http-equiv="last-modified" content={modTime} />}
+    {modTime && <meta property="article:modified_time" content={modTime} />}
+    {pubTime && <meta property="article:published_time" content={pubTime} />}
   </head>
 
   <body>
@@ -94,7 +89,12 @@ const coverUrl =
 
       {
         cover && typeof cover === "object" && "src" in cover && (
-          <Image src={cover as ImageMetadata} width="400" alt={title} class="full-width" />
+          <Image
+            src={cover as ImageMetadata}
+            width="400"
+            alt={title}
+            class="full-width"
+          />
         )
       }
 

@@ -54,6 +54,8 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 </slot>
 
 {/*Open Graph / Facebook*/}
+<meta name="fediverse:creator" content="@justsml@mastodon.social" />
+<meta name="bsky:creator" content="@justsml.bsky.social" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content={canonicalURL} />
 {imgSrc && <meta property="og:image" content={new URL(imgSrc, Astro.url)} />}
@@ -61,6 +63,8 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 {imageHeight && <meta property="og:image:height" content={`${imageHeight}`} />}
 
 {/*Twitter*/}
+<meta property="twitter:site" content="@justsml" />
+<meta name="twitter:creator" content="@justsml"/>
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
 {imgSrc && <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />}
