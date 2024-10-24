@@ -105,10 +105,11 @@ export const PostCollections = {
   getPopularPosts() {
     return [
       "breaking-unicorns",
-      "js-quiz-14-date-time-questions-test-your-knowledge",
+      "one-weird-trick-to-speed-up-feature-teams",
+      // "js-quiz-14-date-time-questions-test-your-knowledge",
       "javascript-promises-quiz",
       "contribute-to-open-source-the-easy-way",
-      "naming-things-real-good",
+      // "naming-things-real-good",
       // "you-may-not-need-axios",
       // "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
