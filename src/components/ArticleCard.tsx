@@ -7,8 +7,10 @@ import type { ArticlePost } from "../types";
 export const ArticleCard = ({
   article,
   width,
+  className,
   ...htmxArgs
 }: {
+  className?: string;
   article: ArticlePost;
   width?: number;
   'hx-url'?: string;
@@ -50,7 +52,7 @@ export const ArticleCard = ({
   return (
     <a
       href={`/${slug}/`}
-      className={"article-card " + categoryClass}
+      className={"article-card " + categoryClass + (className ? ` ${className}` : "")}
       title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}
       data-modified={modified}

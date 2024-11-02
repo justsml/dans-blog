@@ -15,11 +15,11 @@ import {
   QuestionMarkCircledIcon,
 } from "@radix-ui/react-icons";
 
-import "./index.css";
 import { CheckedBoxIcon } from "../icons/CheckedBoxIcon";
 import { RefreshCwIcon } from "lucide-react";
 import classNames from "classnames";
 import { slugify } from "../../shared/pathHelpers";
+import "./index.css";
 
 /**
  * Challenge component
@@ -100,8 +100,6 @@ export default function Challenge({
     }
   }, [explanationText]);
 
-  // hints ||= [];
-  explanation ||= "";
 
   return (
     <div className={"challenge " + challengeClass} ref={challengeRef}>
