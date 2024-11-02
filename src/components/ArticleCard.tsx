@@ -39,7 +39,7 @@ export const ArticleCard = ({
     typeof icon === "string" ? (
       <img src={icon} alt={title} width={width} height={width} />
     ) : (
-      <img src={icon.src} alt={title} width={icon.width} height={icon.height} />
+      icon && <img src={icon.src} alt={title} width={icon.width} height={icon.height} />
     );
 
   let categoryClass = `category-${slugify(category)}`;
