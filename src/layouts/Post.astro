@@ -8,7 +8,6 @@ import { GitHubIssueComments } from "../components/Comments";
 import { CreatedModifiedLabel } from "../components/CreatedModifiedLabel";
 import socialBanner from "../assets/social-banner.webp";
 
-import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import AdditionalReading from "../components/AdditionalReading.astro";
@@ -71,7 +70,6 @@ const responsiveImgSizes_breakRight = {
     (min-width: 1200px) 1440px,
     1920px`,
 };
-
 ---
 
 <html lang="en">
@@ -91,21 +89,12 @@ const responsiveImgSizes_breakRight = {
       <aside class="skinny">
         <div class="info">
           <CreatedModifiedLabel client:idle date={date} modified={modified} />
-
-          {
-            category && (
-              <InfoLabel text={category!}>
-                <TagIcon className="icon" strokeWidth={1} />
-              </InfoLabel>
-            )
-          }
+          {category && <InfoLabel text={category!} />}
         </div>
       </aside>
 
       {
-        cover_full_width &&
-        typeof cover_full_width === "object" &&
-        "src" in cover_full_width ? (
+        cover_full_width && typeof cover_full_width === "object" && "src" in cover_full_width ? (
           <Image
             class="full-width flow"
             src={cover_full_width as ImageMetadata}
@@ -130,7 +119,6 @@ const responsiveImgSizes_breakRight = {
         )
       }
       <slot />
-
     </main>
 
     <AdditionalReading slugs={related} className="default-links" />
@@ -140,9 +128,7 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body>
-  
-  <script is:inline>
+  </body><script is:inline>
     // Hackety hack to update the score on quiz pages
     window.__updateCounts = () => {
       const scoreEls = document.querySelectorAll(".score");

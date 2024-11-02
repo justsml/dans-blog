@@ -1,6 +1,5 @@
 import { InfoLabel } from "../components/ui/infoLabel";
 import { slugify } from "../shared/pathHelpers";
-import { CalendarIcon } from "./icons/CalendarIcon";
 import { getComputedDates } from "../shared/dateUtils";
 import type { ArticlePost } from "../types";
 
@@ -56,7 +55,7 @@ export const ArticleCard = ({
     <a
       href={`/${slug}/`}
       className={myClass + " " + categoryClass + (className ? ` ${className}` : "")}
-      title={(draft ? 'DRAFT: ' : '') + title}
+      // title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}
       data-modified={modified}
       {...htmxArgs}
@@ -67,9 +66,8 @@ export const ArticleCard = ({
       <p>{subTitle}</p>
       <InfoLabel
         text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
-      >
-        <CalendarIcon className="icon" width={20} height={20} strokeWidth={1} />
-      </InfoLabel>
+      />
+      
     </a>
   );
 };

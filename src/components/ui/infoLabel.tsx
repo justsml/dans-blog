@@ -5,8 +5,7 @@ export function InfoLabel({
   // icon,
   text,
   tooltips,
-  className,
-  children,
+  className
 }: {
   children?: ReactNode;
   className?: string;
@@ -38,8 +37,7 @@ className = className ?? "";
   }
 
   return <div className={"info-grid " + className}>
-    <div className="icon" style={lineStyle}></div>
     <div className="line1" style={lineStyle} {...line1Tooltip}>{line1}</div>
-    {line2 && <div className="line2" {...line2Tooltip}>{line2}</div>}
+    {line2 && <span className="line2" {...line2Tooltip}>{line2}</span>}
   </div>;
 }
