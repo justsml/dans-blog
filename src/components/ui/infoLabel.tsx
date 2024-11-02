@@ -38,7 +38,7 @@ className = className ?? "";
   }
 
   return <div className={"info-grid " + className}>
-    <div className="icon" style={lineStyle}>{children}</div>
+    <div className="icon" style={lineStyle}></div>
     <div className="line1" style={lineStyle} {...line1Tooltip}>{line1}</div>
     {line2 && <div className="line2" {...line2Tooltip}>{line2}</div>}
   </div>;
