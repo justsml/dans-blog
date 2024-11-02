@@ -11,6 +11,7 @@ import socialBanner from "../assets/social-banner.webp";
 import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
+import AdditionalReading from "../components/AdditionalReading.astro";
 
 type Props = {
   children: any[];
@@ -25,6 +26,7 @@ type Props = {
     cover?: unknown;
     cover_full_width?: unknown;
     category?: string;
+    related?: string[];
   };
 };
 
@@ -37,6 +39,7 @@ const {
   date,
   modified,
   commentsKeyOverride,
+  related,
 } = Astro.props.frontmatter! || Astro.props;
 
 const modDate = modified ? new Date(modified) : null;
@@ -126,16 +129,20 @@ const responsiveImgSizes_breakRight = {
           )
         )
       }
-
       <slot />
 
-      <div class="comments-wrapper full-width">
-        <GitHubIssueComments client:only="react" path={commentsKey} />
-      </div>
     </main>
+
+    <AdditionalReading slugs={related} className="default-links" />
+
+    <div class="comments-wrapper full-width default-links">
+      <GitHubIssueComments client:only="react" path={commentsKey} />
+    </div>
     <Footer />
     <AnalyticsTag />
-  </body><script is:inline>
+  </body>
+  
+  <script is:inline>
     // Hackety hack to update the score on quiz pages
     window.__updateCounts = () => {
       const scoreEls = document.querySelectorAll(".score");

@@ -1,0 +1,47 @@
+---
+import { ArticleCard } from "./ArticleCard.tsx";
+import { PostCollections } from "../shared/dataCache.tsx";
+import type { ArticlePost } from "../types.ts";
+import "./AdditionalReading.css";
+
+type Props = {
+  slugs?: string[];
+  articleLimit?: number;
+  className?: string;
+};
+
+const className = Astro.props.className ?? "";
+const articleLimit = Astro.props.articleLimit ?? 4;
+let slugs = Astro.props.slugs ?? [];
+slugs = addRandomArticleSlugs(slugs, articleLimit);
+
+const _posts = PostCollections.getPostsBySlugs(slugs);
+if (_posts.length > articleLimit) {
+  _posts.length = articleLimit;
+}
+
+function addRandomArticleSlugs(slugs: string[], limit: number) {
+  const articleCount = PostCollections._slugs.length;
+  let i = 0;
+  while (slugs.length < limit) {
+    i++;
+    if (i > articleCount) break;
+    const rnd = Math.floor(Math.random() * articleCount);
+    const randomPost = PostCollections._slugs[rnd] as string;
+    const _post = PostCollections._postsBySlug[randomPost];
+    if (!slugs.includes(randomPost) && !_post.data.draft && !_post.data.hidden)
+      slugs.push(randomPost);
+  }
+
+  return slugs;
+}
+
+const posts = _posts.map((p) => p as ArticlePost);
+---
+
+<div class={`additional-reading default-links ${className}`}>
+  <h2>Additional Reading</h2>
+  <section class="article-tiles">
+    {posts.map((article) => <ArticleCard article={article} className="tile" />)}
+  </section>
+</div>

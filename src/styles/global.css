@@ -432,7 +432,7 @@ main pre {
     align-self: center;
     padding-block: 1rem;
   }
-  h2 {
+  h2, h4 {
     font-size: 1.4rem;
     font-family: "Raleway", sans-serif;
     margin-top: 1rem;
@@ -728,14 +728,21 @@ pre.astro-code {
 /* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url 
 
 exclude hash anchor links */
+.default-links .a[href]::after {
+  content: unset !important;
+}
 
 header a[href]::after,
 nav a[href]::after,
+.default-links .a[href]::after,
 .gist a[href]::after,
 .challenge a[href]::after {
-  content: "" !important;
+  content: intial !important;
 }
 
+.default-links a[href] {
+  text-decoration: none;
+}
 
 /* TABLE GLOBAL STYLES */
 table {

@@ -31,6 +31,7 @@ export const ArticleCard = ({
     tags,
   } = article.data;
 
+  const isTile = className?.includes("tile");
 
   // console.log('🚀 htmxArgs', htmxArgs);
   const { createdAgo, modifiedAgo } = getComputedDates({date, modified});
@@ -49,17 +50,19 @@ export const ArticleCard = ({
     categoryClass += " draft";
   }
 
+  const myClass = isTile ? "article-tile" : "article-card";
+
   return (
     <a
       href={`/${slug}/`}
-      className={"article-card " + categoryClass + (className ? ` ${className}` : "")}
+      className={myClass + " " + categoryClass + (className ? ` ${className}` : "")}
       title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}
       data-modified={modified}
       {...htmxArgs}
     >
       <label className="small-label" title={tags && tags.join(', ')}>{category}</label>
-      <h2>{title}</h2>
+      {isTile ? <h4 className="post-title">{title}</h4> : <h2 className="post-title">{title}</h2>}
       {image}
       <p>{subTitle}</p>
       <InfoLabel
