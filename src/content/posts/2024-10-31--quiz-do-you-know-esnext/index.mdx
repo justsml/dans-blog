@@ -14,6 +14,12 @@ cover_icon: christopher-burns-8KfCR12oeUM-unsplash-square.webp
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
+# Quiz: Do You Know ESNext?
+
+> * **Prove your JavaScript skillz!** 🚀
+> * No login or signup required. ✨
+> * Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
 <QuizUI>
 
 <Challenge
@@ -48,7 +54,40 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     The null coalescing operator (`??`) returns the right-hand side operand (`b`) if the left-hand side (`a`) is `null` or `undefined`. In this case, `a` is `null`, so `result` is `100`.
   </div>
   </slot>
+</Challenge>
 
+<Challenge
+  client:only="react"
+  group="Null Coalescing"
+  title="Null Coalescing Part 2"
+  options={[
+    {text: 'false', isAnswer: true },
+    {text: '42' },
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100' },
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The null coalescing operator (`??`) treats falsey values like `false` as valid values. Since `value` is `false`, it is considered a valid value and returned.
+  </div>
+  </slot>
 </Challenge>
 
 <Challenge

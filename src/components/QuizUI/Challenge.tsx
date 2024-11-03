@@ -20,6 +20,7 @@ import { RefreshCwIcon } from "lucide-react";
 import classNames from "classnames";
 import { slugify } from "../../shared/pathHelpers";
 import "./index.css";
+import { QuestionStore } from "./QuestionStore.ts";
 
 /**
  * Challenge component
@@ -62,6 +63,22 @@ export default function Challenge({
     setShowExplanation(false);
   };
 
+  // Check if we already answered this question
+  useEffect(() => {
+    const data = QuestionStore.getQuestion({
+      question: question || "",
+      title: title,
+      slug: document.location.pathname,
+    });
+
+    if (data.isCorrect !== null) {
+      console.log("Found cached answer:", data);
+      setIsCorrect(data.isCorrect);
+      setChallengeClass(data.isCorrect ? "correct" : "incorrect");
+    }
+  }, []);
+
+
   const logEvent = (name: string, data: unknown) => {
     // @ts-ignore
     const posthog = window?.posthog;
@@ -71,6 +88,12 @@ export default function Challenge({
   }
 
   const handleAnswer = (option: Option) => {
+    QuestionStore.setQuestion({
+      slug: document.location.pathname,
+      title: title,
+      question: question || "",
+      isCorrect: option.isAnswer,
+    })
     if (option.isAnswer) {
       setIsCorrect(true);
       setChallengeClass("correct pulse");

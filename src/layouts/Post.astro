@@ -128,26 +128,38 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body><script is:inline>
-    // Hackety hack to update the score on quiz pages
-    window.__updateCounts = () => {
-      const scoreEls = document.querySelectorAll(".score");
-      const scoreLabel = document.querySelector(".score label");
-      const questions = document.querySelectorAll("main .challenge");
-      const correct = document.querySelectorAll("main .challenge.correct");
+  </body><script>
+    declare global {
+      interface Window {
+        __updateCounts: () => void;
+      }
+    }
+    import { QuestionStore } from "../components/QuizUI/QuestionStore";
 
+    let $interval: NodeJS.Timeout | null = null;
+    let intCount = 0;
+    // Hackety hack to update the score-wrapper on quiz pages
+    window.__updateCounts = () => {
+      const questions = document.querySelectorAll("main .challenge");
       const isQuizPage = questions.length > 0;
 
       if (!isQuizPage) return; // Not a quiz page
 
+      const scoreEls = document.querySelectorAll(".score");
+      const scoreEl = scoreEls[0];
+      const scoreWrapper = document.querySelector(".score-wrapper");
+      const scoreLabel = document.querySelector(".score label");
+      const correct = document.querySelectorAll("main .challenge.correct");
+
       if (scoreEls.length >= 2) console.error("Multiple score elements found");
       if (!scoreLabel) return console.error("Expected score label, not found");
-      if (correct.length > 0) {
-        scoreEls[0].classList.add("active");
-      }
+      if (correct.length > 0) scoreEls[0].classList.add("active");
+
       if (questions.length === correct.length) {
         scoreEls[0].classList.add("all-correct");
         scoreLabel.innerHTML = "All correct!";
+        scoreWrapper?.classList.toggle("pulse");
+        scoreEl?.classList.add("success");
       } else {
         scoreLabel.innerHTML = `${correct.length} / ${questions.length}`;
       }
@@ -157,8 +169,33 @@ const responsiveImgSizes_breakRight = {
       const quiz = document.querySelector(".quiz-ui");
 
       if (quiz) {
-        setTimeout(window.__updateCounts, 500);
+        const resetButton = document.querySelector("button.reset-quiz");
+        if (resetButton) {
+          resetButton.addEventListener("click", () => {
+            console.log("Resetting quiz state for", location.pathname);
+            QuestionStore.resetBySlug(location.pathname);
+            const questions = document.querySelectorAll("main .challenge");
+            questions.forEach((q) => q.classList.remove("correct", "incorrect", "answered"));
+            window.__updateCounts();
+          });
+        }
+
+        $interval = setInterval(() => {
+          intCount++;
+          if (intCount > 12) {
+            console.warn("Too many iterations, stopping interval");
+            clearInterval($interval!);
+            return;
+          }
+
+          window.__updateCounts();
+        }, 100);
+
+        quiz.addEventListener("mousedown", () => {
+          clearInterval($interval!);
+        });
         quiz.addEventListener("click", () => {
+          clearInterval($interval!);
           window.__updateCounts();
         });
       }
