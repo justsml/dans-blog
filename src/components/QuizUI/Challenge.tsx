@@ -14,13 +14,20 @@ import {
   CrossCircledIcon,
   QuestionMarkCircledIcon,
 } from "@radix-ui/react-icons";
+import classNames from "classnames";
 
 import { CheckedBoxIcon } from "../icons/CheckedBoxIcon";
 import { RefreshCwIcon } from "lucide-react";
-import classNames from "classnames";
-import { slugify } from "../../shared/pathHelpers";
-import "./index.css";
+import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
+import "./index.css";
+import "./icons.css";
+
+declare global {
+  interface Window {
+    __questionCounter?: number;
+  }
+}
 
 /**
  * Challenge component
@@ -28,6 +35,7 @@ import { QuestionStore } from "./QuestionStore.ts";
 export default function Challenge({
   children,
   title,
+  group,
   question,
   options,
   explanation,
@@ -35,11 +43,15 @@ export default function Challenge({
 }: {
   children: ReactNode[] | ReactNode;
   title: string;
+  group?: string;
   question?: string;
   options: Option[];
   explanation?: string;
   // hints?: string[];
 }) {
+  window.__questionCounter ??= 0;
+  window.__questionCounter++;
+  
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
