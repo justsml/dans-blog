@@ -6,6 +6,12 @@
 
 - [x] Add comments
 - [x] Fine tune: crank lighthouse score
+- [ ] Add Quizzes to the Menu
+- [ ] Publish next batch of quizzes
+  - [ ] Add `Group` to Question Title/Banner. Auto-count / number.
+
+- [ ] Add Video page
+- [ ] Add search
 - Publish:
   - [ ] Comments Component
   - [ ] Free local search

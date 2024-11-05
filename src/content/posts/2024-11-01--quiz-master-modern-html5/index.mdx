@@ -1,9 +1,9 @@
 ---
 title: "Quiz: Do you really know HTML5?"
-subTitle: "Prove your knowledge!"
+subTitle: "Prove yourself!"
 category: Quiz
 date: 2024-10-31
-modified: 2024-11-01
+modified: 2024-11-04
 tags: [web, quiz, semantic, html5, web]
 cover_full_width: jakob-owens-FBih1nqPi0w-unsplash-wide.webp
 cover_mobile: jakob-owens-FBih1nqPi0w-unsplash-square.webp
@@ -14,8 +14,11 @@ import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
 
-## So, you think you have some HTML5 skills?
+## So, you think you got some HTML5 skills?
 
+After all, you know your `<div>` from your `<span>`, right? But how well do you know the more advanced, semantic elements in HTML5?
+
+> If you can't pass this test, you legally have to remove `HTML Skills` from your Resume.
 
 <QuizUI>
 
@@ -52,7 +55,7 @@ The `<ul>` tag creates an unordered list, with items typically marked by bullets
     {text: 'Description definition'},
     {text: 'Description term'},
     {text: 'Data display'},
-    {text: 'Definition description', isAnswer: true },
+    {text: 'Description Details', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -63,7 +66,7 @@ The `<ul>` tag creates an unordered list, with items typically marked by bullets
 
   <slot name='explanation'>
   <div className="explanation">
-The `<dd>` element defines the "Description Definition" in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
+The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines the "Description Definition" in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
 
 This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
 
@@ -88,10 +91,10 @@ This is useful when showing key-value data. Profile information, Settings, and S
   group="Advanced Semantic HTML"
   title="Usage of `<figure>/<figcaption>`"
   options={[
-    {text: 'Used to define images'},
-    {text: 'Used for figures with captions', isAnswer: true },
-    {text: 'Used only for tables'},
-    {text: 'Used only for image descriptions'},
+    {text: 'For images with copyright info to be displayed'},
+    {text: 'Describing images, charts, etc.', isAnswer: true },
+    {text: 'To annotate tables, computations, etc.'},
+    {text: 'Used for captioning videos'},
   ]}
 >
   <slot name="question">
@@ -102,7 +105,16 @@ This is useful when showing key-value data. Profile information, Settings, and S
 
   <slot name='explanation'>
   <div className="explanation">
-`<figure>` is used to wrap self-contained content, like an image or chart, along with `<figcaption>` to provide a caption.
+The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) tag is typically used to wrap self-contained (media) content, like an image or chart, along with [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) to provide a caption.
+
+This is useful for images, diagrams, code snippets, and more.
+
+```html
+<figure>
+  <img src="image.jpg" alt="Description of image">
+  <figcaption>Image caption</figcaption>
+</figure>
+```
   </div>
   </slot>
 
@@ -127,7 +139,23 @@ This is useful when showing key-value data. Profile information, Settings, and S
 
   <slot name='explanation'>
   <div className="explanation">
-The `<article>` element is used to define a standalone piece of content that can be independently distributed or reused.
+The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) is used to define a standalone piece of content that can be independently distributed or reused.
+
+It is often used for blog posts, news articles, forum posts, or user comments.
+
+You can use multiple articles on a page (for infinitely scrolling pages, for example). Or, you can nest them within each other to create a hierarchy of "standalone content."
+
+```html
+<article>
+  <h2>Article Title</h2>
+  <p>Article content...</p>
+  <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+  </article>
+</article>
+```
+
   </div>
   </slot>
 
@@ -153,22 +181,39 @@ The `<article>` element is used to define a standalone piece of content that can
 
   <slot name='explanation'>
   <div className="explanation">
-`<fieldset>` is used to group related form controls, and `<legend>` provides a title/label for the group, improving accessibility.
+[`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) is used to group related form controls, and `<legend>` provides a title/label for the group, improving accessibility.
+
+This is useful for grouping related form elements, like a section for shipping address or payment details.
+
+```html
+<fieldset>
+  <legend>Shipping Address</legend>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  ...
+</fieldset>
+<fieldset>
+  <legend>Payment Details</legend>
+  <label for="card">Card Number:</label>
+  <input type="text" id="card" name="card">
+  ...
+</fieldset>
+```
+
   </div>
   </slot>
 
 </Challenge>
-
 
 <Challenge
   client:only="react"
   group="Advanced Semantic HTML"
   title="Purpose of `<meter>`"
   options={[
-    {text: 'Alternative style for a progress bar'},
+    {text: 'A progress bar in Metric units'},
     {text: 'Depict a numeric value within a range', isAnswer: true },
-    {text: 'Declare a standard metric unit'},
-    {text: 'A customizable sort of slider UI'},
+    {text: 'Converts a distance to meters'},
+    {text: 'Specialty performance related tag'},
   ]}
 >
   <slot name="question">
@@ -179,9 +224,15 @@ The `<article>` element is used to define a standalone piece of content that can
 
   <slot name='explanation'>
   <div className="explanation">
-The `<meter>` element is used to represent a scalar measurement within a known range, such as disk usage or a vote tally.
+The [`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) is used to represent a scalar (single) measurement within a set range, such as temperature, disk usage or a vote tally.
 
-It is very similar to a progress bar, but with slightly different meaning.
+It may seem similar to a [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) bar, however progress bars **ALWAYS** start at zero. Therefore `<progress>` elements show a `percent of completion`, while a `<meter>` shows any value within a definable range.
+
+```html
+<meter min="-60" max="130" value="75" /> 75°F
+<meter min="0" max="100" value="75" /> 75%
+```
+
   </div>
   </slot>
 
@@ -194,7 +245,7 @@ It is very similar to a progress bar, but with slightly different meaning.
   options={[
     {text: 'Used to define a data source'},
     {text: 'Declare available media file format(s)', isAnswer: true },
-    {text: 'Properly cite sources in APA or MLA format'},
+    {text: 'Cite sources using APA or MLA format'},
     {text: 'Define a source code block'},
   ]}
 >
@@ -206,12 +257,21 @@ It is very similar to a progress bar, but with slightly different meaning.
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<source>` element is used to specify multiple media resources](https://developer.mozilla.org/en-us/docs/web/html/element/source) for the `<video>`, `<audio>`, and `<picture>` elements, allowing the browser to choose the most suitable format.
+The [`<source>` element is used to specify available media formats](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), and [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) elements, allowing the browser to choose the most suitable format.
+
+```html
+<video controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+</video>
+```
+
   </div>
   </slot>
 
 </Challenge>
-{/* Add a question on hgroup */}
 
 <Challenge
   client:only="react"
@@ -232,19 +292,26 @@ The [`<source>` element is used to specify multiple media resources](https://dev
 
   <slot name='explanation'>
   <div className="explanation">
-The `<hgroup>` element groups a set of `<h1>` to `<h6>` elements when they are part of a single heading, such as a heading and a subtitle.
+
+The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a neighboring related `<h1>` to `<h6>` elements.
 
 It may be useful if you frequently put `<h1>` and `<h2>` elements together, since the `<h2>` should probably be a `<p>` tag.
 
 ```html
-<hgroup>
-  <h1>Frankenstein</h1>
-  <p>Or: The Modern Prometheus</p>
-</hgroup>
+<article>
+  <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+    <h2>Understanding Mary Shelley</h2>
+  </hgroup>
+  <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+  </section>
+</article>
 ```
   </div>
   </slot>
-
 </Challenge>
 
 <Challenge
@@ -266,7 +333,18 @@ It may be useful if you frequently put `<h1>` and `<h2>` elements together, sinc
 
   <slot name='explanation'>
   <div className="explanation">
-The `<menu>` element is used to define a list of commands or options, often presented as a context menu.
+The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) functions exactly like a `<ul>`.
+
+If your `<li>`'s have mostly links, **you should use a `<menu>` element instead.**
+
+```html
+<menu> <!-- Instead of <ul> use a <menu> -->
+  <li><a href="/home">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/contact">Contact</a></li>
+</menu>
+```
+
   </div>
   </slot>
 
@@ -278,10 +356,10 @@ The `<menu>` element is used to define a list of commands or options, often pres
   group="Advanced Semantic HTML"
   title="Role of `<details>/<summary>`"
   options={[
-    {text: 'To create collapsible content', isAnswer: true },
-    {text: 'To define tooltips'},
-    {text: 'To create a new section'},
-    {text: 'To display time data'},
+    {text: 'Native collapsible content', isAnswer: true },
+    {text: 'Native tooltips'},
+    {text: 'Add context to <section>'},
+    {text: 'To display structured data'},
   ]}
 >
   <slot name="question">
@@ -292,7 +370,17 @@ The `<menu>` element is used to define a list of commands or options, often pres
 
   <slot name='explanation'>
   <div className="explanation">
-`<details>` allows for collapsible content, and `<summary>` specifies a visible title for the content.
+[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) allows for collapsible content, and [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) specifies a visible title for the content.
+
+This is useful for FAQs, collapsible sections, or any content that can be toggled.
+
+```html
+<details>
+  <summary>Click to expand 🤯</summary>
+  <p>Hidden content! 💥</p>
+</details>
+```
+
   </div>
   </slot>
 
@@ -304,9 +392,9 @@ The `<menu>` element is used to define a list of commands or options, often pres
   group="Advanced Semantic HTML"
   title="Purpose of `<dialog>`"
   options={[
-    {text: 'A longer quote than a <blockquote>'},
-    {text: 'Create modal or popup', isAnswer: true },
-    {text: 'Declare a ChatGPT dialog'},
+    {text: 'Format for screenwriters'},
+    {text: 'Declare a modal or popup', isAnswer: true },
+    {text: 'Declare a ChatGPT-style chat discussion'},
     {text: 'Deprecated in favor of <wizard>'},
   ]}
 >
@@ -318,7 +406,21 @@ The `<menu>` element is used to define a list of commands or options, often pres
 
   <slot name='explanation'>
   <div className="explanation">
-The `<dialog>` element is used for dialogs, pop-ups, or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
+The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element is used for pop-ups or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
+
+It's functionally like a `<div>` - with a few extra built-in features.
+
+> According to MDN:
+> JavaScript should be used to display the `<dialog>` element. Use the .showModal() method to display a modal dialog and the `.show()` method to display a non-modal dialog. The dialog box can be closed using the `.close()` method or using the dialog method when submitting a `<form>` that is nested within the `<dialog>` element. Modal dialogs can also be closed by pressing the Esc key.
+
+```html
+<dialog>
+  <h2>Modal Title</h2>
+  <p>Modal content...</p>
+  <button>Close</button>
+</dialog>
+```
+
   </div>
   </slot>
 
