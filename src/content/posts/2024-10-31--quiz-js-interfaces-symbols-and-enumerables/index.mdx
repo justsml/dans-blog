@@ -39,7 +39,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     ```js
     const obj = {
       get val() {
-        return 'getter called';
+        return 'got it!';
       }
     };
     console.log(obj.val);
@@ -53,7 +53,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. 
-    In this example, accessing `obj.val` directly invokes the getter method and outputs `getter called`.
+    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`.
   </div>
   </slot>
 
@@ -101,7 +101,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="Enumerable Properties"
   options={[
     {text: 'Yes, it will be listed', isAnswer: true },
-    {text: 'No, it won’t be listed'},
+    {text: 'No, it won\'t be listed'},
     {text: 'It depends on the value type'},
     {text: 'Throws an error'},
   ]}
@@ -136,7 +136,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:only="react"
-  group="Advanced Interfaces"
+  group="Working with Objects"
   title="Default Enumerability with Object.defineProperty()"
   options={[
     {text: 'false', isAnswer: true },
@@ -209,7 +209,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Advanced Interfaces"
   title="Symbols as Non-Enumerable Keys"
   options={[
-    {text: 'No, it won’t be listed', isAnswer: true },
+    {text: 'No, it won\'t be listed', isAnswer: true },
     {text: 'Yes, it will be listed'},
     {text: 'Depends on the iteration method'},
     {text: 'Throws an error'},
@@ -250,7 +250,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   options={[
     {text: 'Object.getOwnPropertySymbols()', isAnswer: true },
     {text: 'Object.keys()'},
-    {text: 'for...in loop'},
+    {text: 'Object.symbols()'},
     {text: 'Object.entries()'},
   ]}
 >

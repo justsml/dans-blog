@@ -6,10 +6,12 @@
 
 - [x] Add comments
 - [x] Fine tune: crank lighthouse score
+- [ ] Add Link to Category on Posts
+- [ ] Update Quiz UI, 
 - [ ] Add Quizzes to the Menu
 - [ ] Publish next batch of quizzes
   - [ ] Add `Group` to Question Title/Banner. Auto-count / number.
-
+- [ ] Disable posthog locally
 - [ ] Add Video page
 - [ ] Add search
 - Publish:
