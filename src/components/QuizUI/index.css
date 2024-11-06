@@ -19,11 +19,25 @@
   }
   
   /* Toggle flip effect */
-  .card-flip .card,
-  .card-container:focus-within .card {
-    transform: rotateY(180deg); /* Flips the card on hover */
-    /* z-index: 250; */
+  .card-container:not(.card-flip) {
+    .card-front {
+      transform: rotateY(0deg);
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
   }
+
+  .card-container.card-flip {
+    .card-front {
+      transform: rotateY(180deg);
+    }
+    .card-back {
+      transform: rotateY(0deg);
+    }
+  }
+
+
   
   /* Front and back faces of the card */
   .card-front, .card-back {
@@ -37,9 +51,9 @@
   }
   
   /* Back face styling */
-  .card-back {
-    transform: rotateY(180deg); /* Rotates the back face */
-  }
+  /* .card-back { */
+    /* transform: rotateY(-180deg); Rotates the back face */
+  /* } */
   
 }
 

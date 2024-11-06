@@ -42,7 +42,7 @@ export default function Challenge({
 
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
   // const [selectedOption, setSelectedOption] = useState<OptionSelection>({ text: "" });
-  const [showExplanation, setShowExplanation] = useState<boolean>(true);
+  const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
 
   const updateCounts = () => {
@@ -161,7 +161,7 @@ export default function Challenge({
   return (
     <div
       id={`qq-${sequenceNum}`}
-      className={clsx("challenge", challengeClass, { "card-flip": showExplanation })}
+      className={clsx("challenge", challengeClass)}
       ref={challengeRef}
     >
       <div className="quiz-header">
@@ -183,7 +183,7 @@ export default function Challenge({
           {showExplanation ? "Hide" : "Show"} Explanation
         </button>
       </aside>
-      <section className="quiz-body-panel card-container">
+      <section className={clsx("quiz-body-panel", "card-container", { "card-flip": showExplanation })}>
         <section className="quiz-options card card-front">
           {options.map((option) => {
             const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
