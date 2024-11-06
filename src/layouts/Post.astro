@@ -165,15 +165,22 @@ const responsiveImgSizes_breakRight = {
       }
     };
 
+    function getQuestionStore() {
+      const store = QuestionStore(window.location.pathname);
+      if (!store) return null;
+      return store;
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
       const quiz = document.querySelector(".quiz-ui");
 
       if (quiz) {
+        const questionStore = getQuestionStore();
         const resetButton = document.querySelector("button.reset-quiz");
         if (resetButton) {
           resetButton.addEventListener("click", () => {
             console.log("Resetting quiz state for", location.pathname);
-            QuestionStore.resetBySlug(location.pathname);
+            questionStore?.resetBySlug();
             const questions = document.querySelectorAll("main .challenge");
             questions.forEach((q) => q.classList.remove("correct", "incorrect", "answered"));
             window.__updateCounts();
