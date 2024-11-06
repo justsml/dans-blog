@@ -11,6 +11,7 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import "./index.css";
 import "./icons.css";
+import clsx from "clsx";
 
 /**
  * Challenge component
@@ -156,7 +157,7 @@ export default function Challenge({
       if (e) setExplanationText(e);
     }
   }, [explanationText]);
-
+clsx("challenge", challengeClass);
   return (
     <div className={"challenge " + challengeClass} ref={challengeRef}>
       <div className="quiz-header">
@@ -174,28 +175,30 @@ export default function Challenge({
           >
             {showExplanation ? "Hide" : "Show"} Explanation
           </button>
-          <section className={"explanation " + (showExplanation ? "open" : "closed")}>
-            {showExplanation && (
-              <p dangerouslySetInnerHTML={{ __html: explanationText }}></p>
-            )}
-          </section>
         </section>
       )}
-      <section className="quiz-options">
-        {options.map((option) => {
-          const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
-          return (
-            <a
-              key={option.text}
-              className={classNames("option", {
-                "correct-answer": isCurrentOptionCorrectAnswer,
-              })}
-              onClick={() => !isCorrect && handleAnswer(option)}
-            >
-              <label>{option.text}</label>
-            </a>
-          );
-        })}
+      <section className="quiz-body-panel card-container">
+        <section className={"explanation card card-back " + (showExplanation ? "open" : "closed")}>
+          {showExplanation && (
+            <p dangerouslySetInnerHTML={{ __html: explanationText }}></p>
+          )}
+        </section>
+        <section className="quiz-options card card-front">
+          {options.map((option) => {
+            const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
+            return (
+              <a
+                key={option.text}
+                className={classNames("option", {
+                  "correct-answer": isCurrentOptionCorrectAnswer,
+                })}
+                onClick={() => !isCorrect && handleAnswer(option)}
+              >
+                <label>{option.text}</label>
+              </a>
+            );
+          })}
+        </section>
       </section>
     </div>
   );
