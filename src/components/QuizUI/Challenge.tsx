@@ -10,8 +10,6 @@ import { QuizContext } from "./QuizContext";
 import type { Option } from "./types";
 import {
   BoxIcon,
-  CheckCircledIcon,
-  CrossCircledIcon,
   QuestionMarkCircledIcon,
 } from "@radix-ui/react-icons";
 import classNames from "classnames";
@@ -22,12 +20,6 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import "./index.css";
 import "./icons.css";
-
-declare global {
-  interface Window {
-    __questionCounter?: number;
-  }
-}
 
 /**
  * Challenge component
@@ -43,15 +35,14 @@ export default function Challenge({
 }: {
   children: ReactNode[] | ReactNode;
   title: string;
-  group?: string;
-  question?: string;
+  group: string;
+  question: string;
   options: Option[];
   explanation?: string;
   // hints?: string[];
 }) {
-  window.__questionCounter ??= 0;
-  window.__questionCounter++;
-  
+  let questionStore: QuestionStore | null = null;
+
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
@@ -61,6 +52,8 @@ export default function Challenge({
   // const [selectedOption, setSelectedOption] = useState<OptionSelection>({ text: "" });
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
+
+  const [questionIndex, setQuestionIndex] = useState<number>(0);
 
   const updateCounts = () => {
     const questions = document.querySelectorAll("main .challenge");
@@ -75,18 +68,48 @@ export default function Challenge({
     setShowExplanation(false);
   };
 
+  useEffect(() => {
+    if (!window.__questionStoreBySlug) window.__questionStoreBySlug = {};
+    
+    // console.log("QuestionStore INIT @ path:", document.location.pathname);
+    let q = window.__questionStoreBySlug?.[document.location.pathname];
+    if (!q) {
+      q = QuestionStore(document.location.pathname);
+      window.__questionStoreBySlug[document.location.pathname] = q;
+    }
+
+    questionStore = q;
+  }, [window.location.pathname]);
+
+  // Add Question to store
+
+  useEffect(() => {
+    if (questionStore) {
+      const questionIndex = questionStore.addQuestion({
+        title,
+        group,
+        question,
+        options,
+        explanation,
+      });
+      setQuestionIndex(questionIndex);
+      console.log("Added question to store:", questionIndex, group, title);
+    } else {
+      console.error("QuestionStore is not initialized");
+    }
+  }, [questionStore, title, group, question, options, explanation]);
+
   // Check if we already answered this question
   useEffect(() => {
-    const data = QuestionStore.getQuestion({
-      question: question || "",
-      title: title,
-      slug: document.location.pathname,
+    const isCorrect = questionStore?.isCorrect({
+      question,
+      title,
     });
 
-    if (data.isCorrect !== null) {
-      console.log("Found cached answer:", data);
-      setIsCorrect(data.isCorrect);
-      setChallengeClass(data.isCorrect ? "correct" : "incorrect");
+    if (isCorrect !== null) {
+      console.log("Found cached answer:", isCorrect);
+      setIsCorrect(isCorrect);
+      setChallengeClass(isCorrect ? "correct" : "incorrect");
     }
   }, []);
 
@@ -100,12 +123,10 @@ export default function Challenge({
   }
 
   const handleAnswer = (option: Option) => {
-    QuestionStore.setQuestion({
-      slug: document.location.pathname,
+    questionStore?.answerQuestion({
       title: title,
       question: question || "",
-      isCorrect: option.isAnswer,
-    })
+    }, option);
     if (option.isAnswer) {
       setIsCorrect(true);
       setChallengeClass("correct pulse");
@@ -113,7 +134,13 @@ export default function Challenge({
       setIsCorrect(false);
       setChallengeClass("incorrect shake");
     }
-    logEvent(option.isAnswer ? "Correct Answer" : "Incorrect Answer", option);
+    logEvent("QuizAnswer", {
+      isCorrect: option.isAnswer,
+      option,
+      question: question || "",
+      title: title,
+      questionIndex
+    });
     setTimeout(updateCounts, 200);
   };
 
@@ -139,13 +166,7 @@ export default function Challenge({
   return (
     <div className={"challenge " + challengeClass} ref={challengeRef}>
       <h2 className="title" id={slugify(title)}>
-        {isCorrect === undefined && (
-          <QuestionMarkCircledIcon className="icon" />
-        )}
-
-        {isCorrect && <CheckCircledIcon className="icon" />}
-        {isCorrect === false && <CrossCircledIcon className="icon" />}
-
+        {questionIndex + 1}.&#160;
         {title}
       </h2>
       <div className="question">{question || children}</div>

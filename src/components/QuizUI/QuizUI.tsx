@@ -3,8 +3,6 @@ import type { Answer } from "./types";
 import { QuizContext } from "./QuizContext";
 import { RefreshCcwIcon } from "lucide-react";
 
-import "./QuizUI.css";
-
 export default function QuizUI({ children }: any) {
   const [answers, setAnswers] = useState<Array<Answer>>([]);
   const [currentChallenge, setCurrentChallenge] = useState<number>(0);
