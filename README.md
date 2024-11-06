@@ -8,6 +8,10 @@
 - [x] Fine tune: crank lighthouse score
 - [ ] Add Link to Category on Posts
 - [ ] Update Quiz UI, 
+  - [ ] Make Question's Linkable
+  - [ ] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [ ] Get rid of cliche icons abuse.
+- [ ] Add/update ld+json / JSON-LD
 - [ ] Add Quizzes to the Menu
 - [ ] Publish next batch of quizzes
   - [ ] Add `Group` to Question Title/Banner. Auto-count / number.

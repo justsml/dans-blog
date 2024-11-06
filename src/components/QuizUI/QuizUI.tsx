@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { Answer } from "./types";
 import { QuizContext } from "./QuizContext";
 import { RefreshCcwIcon } from "lucide-react";
+import "./index.css";
+import "./icons.css";
 
 export default function QuizUI({ children }: any) {
   const [answers, setAnswers] = useState<Array<Answer>>([]);

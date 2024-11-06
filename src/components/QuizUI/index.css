@@ -6,12 +6,11 @@
   .card-container {
     perspective: 1000px; /* Creates the 3D perspective */
     transform-style: preserve-3d; /* Preserves 3D effect for children */
-    width: 100%;
-    height: min(max-content, 50vh);
+    min-height: 280px;
   }
   
   .card {
-    background-color: var(--quiz-bg-solid);
+    background-color: var(--quiz-bg);
     width: 100%;
     height: 100%;
     position: relative;
@@ -19,13 +18,16 @@
   }
   
   /* Toggle flip effect */
-  .card-container:hover .card {
+  .card-container:focus-within .card {
     transform: rotateY(180deg); /* Flips the card on hover */
+    /* z-index: 250; */
   }
   
   /* Front and back faces of the card */
   .card-front, .card-back {
-    background-color: var(--quiz-bg-solid);
+    overflow-y: auto;
+
+    background-color: var(--quiz-bg);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -95,16 +97,18 @@
     height: 3rem;
     overflow: hidden;
   
-    counter-increment: question-counter;
     padding-inline: 1rem;
     .quiz-question-count {
       font-size: 2rem;
       font-weight: 600;
       margin: 0;
     }
+    /*
+    counter-increment: question-counter;
+
     .quiz-question-count::after {
       content: " / " counter(question-counter);
-    }
+    } */
   
     /* gap: 1rem; */
     .quiz-title {
@@ -123,7 +127,7 @@
       border-bottom: 2px solid var(--quiz-success);
       .quiz-title,
       .quiz-question-count {
-        color: var(--quiz-fg-dark);
+        color: var(--quiz-fg);
       }
     }
   }
@@ -132,7 +136,7 @@
       border-bottom: 2px solid var(--quiz-error);
       .quiz-title,
       .quiz-question-count {
-        color: var(--quiz-fg-dark);
+        color: var(--quiz-fg);
       }
     }
   }
@@ -142,18 +146,6 @@
       filter: grayscale(100%);
       opacity: 50%;
       cursor: not-allowed;
-    }
-  }
-
-  .quiz-question {
-    font-size: 1.1rem;
-    /* margin-bottom: 1rem; */
-    margin-inline: auto;
-    width: calc(100% - 1.25rem);
-    overflow: auto;
-
-    pre {
-      max-width: 100vw;
     }
   }
 
@@ -245,6 +237,7 @@
   }
   .option {
     font-size: 1.25rem;
+    color: var(--quiz-fg);
     border-bottom: 1px solid var(--quiz-divider-color);
     cursor: pointer;
     line-height: 1.5;
