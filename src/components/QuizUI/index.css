@@ -1,12 +1,13 @@
 .quiz-ui {
   padding: 1rem auto;
   max-width: 98vw;
+  scroll-padding-top: 1.5rem;
   /* counter-increment: question-counter; */
 
   .card-container {
     perspective: 1000px; /* Creates the 3D perspective */
-    transform-style: preserve-3d; /* Preserves 3D effect for children */
     min-height: 280px;
+    transform-style: preserve-3d; /* Preserves 3D effect for children */
   }
   
   .card {
@@ -18,6 +19,7 @@
   }
   
   /* Toggle flip effect */
+  .card-flip .card,
   .card-container:focus-within .card {
     transform: rotateY(180deg); /* Flips the card on hover */
     /* z-index: 250; */
@@ -102,6 +104,9 @@
       font-size: 2rem;
       font-weight: 600;
       margin: 0;
+      a, :active, :visited {
+        color: var(--quiz-muted-fg)
+      }
     }
     /*
     counter-increment: question-counter;
@@ -148,6 +153,13 @@
       cursor: not-allowed;
     }
   }
+
+  &:has(:target) {
+    .quiz-header {
+      border-bottom: 2px solid var(--neon-pink) !important;
+    }
+  }
+
 
   div.explanation {
     display: none;

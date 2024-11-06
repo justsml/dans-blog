@@ -140,7 +140,9 @@ export default function Challenge({
       challengeClass.includes("shake") || challengeClass.includes("pulse");
 
     if (challengeClass && hasAnimation) {
-      const cssBefore = challengeClass.split(" ").filter((c) => !["shake", "pulse"].includes(c));
+      const cssBefore = challengeClass
+        .split(" ")
+        .filter((c) => !["shake", "pulse"].includes(c));
       setTimeout(() => {
         setChallengeClass(cssBefore.join(" "));
       }, 1000);
@@ -153,16 +155,34 @@ export default function Challenge({
       if (e) setExplanationText(e);
     }
   }, [explanationText]);
-  // clsx("challenge", challengeClass);
+
+  const sequenceNum = (questionIndex ?? 0) + 1;
+
   return (
-    <div className={"challenge " + challengeClass} ref={challengeRef}>
+    <div
+      id={`qq-${sequenceNum}`}
+      className={clsx("challenge", challengeClass, { "card-flip": showExplanation })}
+      ref={challengeRef}
+    >
       <div className="quiz-header">
-        <div className="quiz-question-count">{(questionIndex ?? 0) + 1}.&#160;</div>
+        <div className="quiz-question-count">
+          <a href={`#qq-${sequenceNum}`}>{sequenceNum}.</a>
+          &#160;
+        </div>
         <h2 className="quiz-title" id={slugify(title)}>
           {title}
         </h2>
       </div>
+
       <div className="quiz-question">{question || children}</div>
+      <aside className="quiz-hint-toggle">
+        <button
+          onClick={() => setShowExplanation(!showExplanation)}
+          className={clsx("hint-toggle", { open: showExplanation })}
+        >
+          {showExplanation ? "Hide" : "Show"} Explanation
+        </button>
+      </aside>
       <section className="quiz-body-panel card-container">
         <section className="quiz-options card card-front">
           {options.map((option) => {
@@ -180,7 +200,11 @@ export default function Challenge({
             );
           })}
         </section>
-        <section className={"explanation card card-back " + (showExplanation ? "open" : "closed")}>
+        <section
+          className={
+            "explanation card card-back " + (showExplanation ? "open" : "closed")
+          }
+        >
           <p dangerouslySetInnerHTML={{ __html: explanationText }}></p>
         </section>
       </section>
