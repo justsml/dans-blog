@@ -57,6 +57,8 @@ export const QuestionStore = (slug: string) => {
 
   // Load answers from localStorage
   const data = localStorage.getItem(slugKey);
+  console.info(`Init QuestionStore for ${slugKey} with data`, !!data);
+
   if (data) {
     console.info(`Loading previous quiz state for ${slugKey}`, answers);
     Object.assign(answers, JSON.parse(data));
@@ -84,13 +86,16 @@ export const QuestionStore = (slug: string) => {
 
     isCorrect: ({title, question}: Partial<TitleQuestionPair>) => {
       const key = getQKey({question: question!, title: title!});
+      console.info(`Checking if question is correct: ${key}`, answers[key]);
       return answers[key];
     },
 
     answerQuestion: (question: TitleQuestionPair, option: Option) => {
-      const key = getQKey(question);
-      answers[key] = option.isAnswer;
-      localStorage.setItem(slugKey, JSON.stringify(answers));
+      answers[getQKey(question)] = option.isAnswer;
+      const answerKey = slugify(KEY_PREFIX + "-answers-" + slug);
+
+      localStorage.setItem(answerKey, JSON.stringify(answers));
+      console.info(`Answered question ${answerKey} with ${option.isAnswer}`);
       return option.isAnswer;
     },
 

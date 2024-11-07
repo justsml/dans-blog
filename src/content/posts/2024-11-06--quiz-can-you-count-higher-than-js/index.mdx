@@ -1,6 +1,6 @@
 ---
-title: "Quiz: Do you know parseInt, parseFloat, and BigInt?"
-subTitle: "Prove your skillz! 🚀"
+title: "Quiz: Do you know `parseInt`, `parseFloat`, and `BigInt`?"
+subTitle: "Prove Number slinging skills!"
 date: 2024-10-31
 modified: 2024-11-05
 category: Quiz
@@ -21,6 +21,14 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <QuizUI>
 
+Welcome to the ultimate quiz on JavaScript number handling!
+
+This quiz will test your knowledge all things Numbers in JS, `parseInt`, `parseFloat`, and `BigInt` too!.
+
+We'll cover parsing numeric expressions - in varying bases, handling floating-point precision, and understanding the quirks of JavaScript's number system.
+
+> It's only numbers, how hard can it be? 🤓
+
 <Challenge
   client:load
   index={0}
@@ -37,7 +45,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What will this code do?
     ```tsx
     parseInt(" 123456.00")
     ```
@@ -54,7 +61,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={1}
-  group="Numbers in JS"
+  group="Parsing"
   title="Comma handling"
   options={[
     {text: '123', isAnswer: true},
@@ -66,7 +73,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What will this code do?
     ```tsx
     parseInt("123,456.00")
     ```
@@ -94,7 +100,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What is the result of the following code?
     ```tsx
     0.1 + 0.2 === 0.3
     ```
@@ -126,7 +131,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What is the result of the following code?
     ```tsx
     Number.MAX_VALUE * 2
     ```
@@ -145,7 +149,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={4}
-  group="Numbers in JS"
+  group="Formatting"
   title="String Conversion with `.toFixed()`"
   options={[
     {text: 'TypeError'},
@@ -178,7 +182,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={5}
-  group="Numbers in JS"
+  group="Comparing types"
   title="Equality Comparison between `parseInt` and `parseFloat`"
   options={[
     {text: 'true', isAnswer: true},
@@ -188,7 +192,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What will the result be for this equality comparison?
     ```jsx
     parseInt("42") === parseFloat("42")
     ```
@@ -208,16 +211,16 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="BigInt Equality"
   title="Equality Comparison with BigInt"
   options={[
-    {text: 'false', isAnswer: true},
+    {text: 'TypeError'},
     {text: 'true'},
-    {text: 'NaN'}
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    What will the result be for this equality comparison?
     ```jsx
-    parseInt("42") === BigInt("42")
+    BigInt("42") === parseInt("42")
     ```
   </div>
   </slot>
@@ -232,18 +235,19 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={7}
-  group="Numbers in JS"
+  group="Based"
   title="Hexadecimal Parsing"
   options={[
     {text: 'true', isAnswer: true},
     {text: 'false'},
     {text: 'NaN'},
+    {text: 'Must be uppercase: 2A'},
     {text: 'Error'}
   ]}
 >
   <slot name="question">
   <div className="question">
-    What will the result be for this comparison?
+    What will this work out to?
     ```jsx
     parseInt("0x2A") === parseInt("2a", 16)
     ```
@@ -253,7 +257,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
   Any input string that begins with `0x` is auto-magically treated as a hexadecimal (radix `16`).
-  It is therefore equivalent to explicitly passing a radix of 16. So, `parseInt("0x2A")` is the same as `parseInt("2a", 16)`.
+  It is therefore equivalent to passing a radix of 16. So, `parseInt("0x2A")` is the same as `parseInt("2a", 16)`. (It's case insensitive.)
   </div>
   </slot>
 </Challenge>
@@ -261,7 +265,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={8}
-  group="Numbers in JS"
+  group="Based"
   title="Parsing with Radix"
   options={[
     {text: '255', isAnswer: true},
@@ -272,7 +276,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What is the result of the following code?
+    What's the dealio here?
     ```jsx
     parseInt('0xFF', 16)
     ```
@@ -289,7 +293,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={9}
-  group="Numbers in JS"
+  group="Number[]"
   title="Using `.map(parseInt)`"
   options={[
     {text: '[24, NaN, NaN]', isAnswer: true},
@@ -300,7 +304,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    What is the result of this mapping?
     ```jsx
     [24, 'One', 42].map(parseInt)
     ```
@@ -309,7 +312,11 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-  The second argument to `parseInt` (the radix) is set to the array index during `.map`. This leads to unexpected results, as `parseInt("One", 1)` returns `NaN` due to the invalid radix.
+  The second argument to `parseInt` (the radix) aligns with the array methods' `index` argument. This leads to unexpected results, as `parseInt("One", 1)` returns `NaN` due to the invalid input.
+
+  The first element, `24`, is parsed as `24` in base 0 (auto-detect), so it remains `24`. The second element, `'One'`, is parsed as `NaN` in base 1. The third element, `42`, is parsed using base 2. In base 2, `'42'` is `NaN`, so the result is `[24, NaN, NaN]`.
+
+  This is a common gotcha with `parseInt` and `map`. If you want to parse an array of strings to numbers, the only safe "built-in" method is `.map(Number)` or adding a callback/enclosure `.map(x => parseInt(x, 10))`.
   </div>
   </slot>
 </Challenge>
@@ -317,19 +324,19 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={10}
-  group="Numbers in JS"
+  group="Number[]"
   title="Using `.map(Number)`"
   options={[
     {text: '[24, NaN, 34]'},
     {text: '[24, NaN, 42]', isAnswer: true},
-    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
     {text: '[24, 42]'},
-    {text: 'NaN'}
+    {text: 'NaN'},
+    {text: 'TypeError'}
   ]}
 >
   <slot name="question">
   <div className="question">
-    What is the result of this mapping?
     ```jsx
     [24, 'Twenty1', 0o42].map(Number)
     ```
@@ -338,7 +345,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-  `Number` converts values to a numeric type. Here, `'Twenty1'` becomes `NaN`, while `0o42` is recognized as an octal literal and converted to `34`.
+  `Number` converts values to a numeric type more strictly than `parseInt`. Here, `'Twenty1'` becomes `NaN`, while `0o42` is recognized as an octal literal and converted to `34`.
   </div>
   </slot>
 </Challenge>
@@ -346,8 +353,8 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={11}
-  group="Numbers in JS"
-  title="Parsing"
+  group="Parsing"
+  title="Handling nulls"
   options={[
     {text: '0 NaN'},
     {text: '0 0'},
@@ -368,7 +375,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-
+  `parseInt` coerces the input to a string, so `null` becomes `"null"`. Since `"null"` has no valid base-10 characters (regular numbers) it will return `NaN`.
+  
+  `Number(null)` returns `0`. because JS likes to keep you on your toes.
+  Why? Well, I might go deeper if there's interest.
   </div>
   </slot>
 </Challenge>
@@ -376,7 +386,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={12}
-  group="Numbers in JS"
+  group="Based"
   title="Parsing on base"
   options={[
     {text: '1112745', isAnswer: true},
@@ -397,7 +407,9 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-  `parseInt` coerces the input to a string, so `null` becomes `"null"`. In base 36, `"null"` represents `1112745`.
+  Since `parseInt` always coerces the input to a string, `null` becomes string `"null"`.
+  
+  In base 36 (hexatrigesimal, if you're keeping track), `"null"` represents `1112745`.
   </div>
   </slot>
 </Challenge>

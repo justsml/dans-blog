@@ -52,6 +52,8 @@ export default function Challenge({
     setCorrectAnswers(correct?.length);
   };
 
+  // const [clean]
+
   const reset = () => {
     setIsCorrect(undefined);
     setChallengeClass("untouched");
@@ -158,6 +160,37 @@ export default function Challenge({
 
   const sequenceNum = (questionIndex ?? 0) + 1;
 
+  const _options = options
+    .map((option) => {
+      const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
+      // Bail out of wrong answers once answered
+      if (isCorrect && !option.isAnswer) return null;
+      // if (challengeClass.includes("answerAnimationEnded")) {
+      //   return null;
+      // }
+
+      return (
+        <a
+          key={option.text}
+          className={classNames("option", {
+            "correct-answer": isCurrentOptionCorrectAnswer,
+            // "slideOutRight": isCorrect && !option.isAnswer,
+          })}
+          onClick={() => !isCorrect && handleAnswer(option)}
+          // onTransitionEnd={(e) => {
+          //   if (isCorrect && !option.isAnswer) {
+          //     document.removeChild(e.currentTarget!)
+          //     // setChallengeClass(challengeClass.concat(" answerAnimationEnded"));
+
+          //   }
+          // }}
+        >
+          <label>{option.text}</label>
+        </a>
+      );
+    })
+    .filter(Boolean);
+
   return (
     <div
       id={`qq-${sequenceNum}`}
@@ -180,32 +213,24 @@ export default function Challenge({
           onClick={() => setShowExplanation(!showExplanation)}
           className={clsx("hint-toggle", { open: showExplanation })}
         >
-          {showExplanation ? "Hide" : "Show"} Explanation
+          {showExplanation ? "Hide" : "Show"} Explainer{" "}
         </button>
       </aside>
-      <section className={clsx("quiz-body-panel", "card-container", { "card-flip": showExplanation })}>
-        <section className="quiz-options card card-front">
-          {options.map((option) => {
-            const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
-            return (
-              <a
-                key={option.text}
-                className={classNames("option", {
-                  "correct-answer": isCurrentOptionCorrectAnswer,
-                })}
-                onClick={() => !isCorrect && handleAnswer(option)}
-              >
-                <label>{option.text}</label>
-              </a>
-            );
-          })}
-        </section>
-        <section
-          className={
-            "explanation card card-back " + (showExplanation ? "open" : "closed")
-          }
-        >
-          <p dangerouslySetInnerHTML={{ __html: explanationText }}></p>
+      <section
+        className={clsx("quiz-body-panel", "card-container", {
+          "card-flip": showExplanation,
+        })}
+        style={{
+          height: `${80 * _options.length}px`,
+          transition: "height 0.2s ease-in-out",
+        }}
+      >
+        <section className="quiz-options card card-front">{_options}</section>
+        <section className={"explanation card card-back "}>
+          <p
+            className="help-box"
+            dangerouslySetInnerHTML={{ __html: explanationText }}
+          ></p>
         </section>
       </section>
     </div>
