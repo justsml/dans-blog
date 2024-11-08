@@ -199,10 +199,7 @@ const responsiveImgSizes_breakRight = {
         $interval = setInterval(() => {
           intCount++;
 
-          if (window.__updateCounts()) {
-            clearInterval($interval!);
-            return;
-          }
+          window.__updateCounts();
 
           if (intCount > 12) {
             // console.warn("Too many iterations, stopping interval");

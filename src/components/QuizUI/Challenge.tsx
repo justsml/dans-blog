@@ -77,9 +77,9 @@ export default function Challenge({
         question,
         index: questionIndex,
       });
-      console.log("Added question to store:", questionIndex, group, title);
+      // console.log("Added question to store:", questionIndex, group, title);
     } else {
-      console.error("QuestionStore is not initialized");
+      // console.error("QuestionStore is not initialized");
     }
   }, [questionStore, title, group, question, options, explanation]);
 
@@ -90,8 +90,6 @@ export default function Challenge({
         index: questionIndex,
       }) ?? undefined;
 
-    console.log("Checking if we already answered this question:", isCorrect);
-    console.log("Found cached answer:", isCorrect);
     setIsCorrect(isCorrect);
     setChallengeClass(
       isCorrect === true ? "correct" : isCorrect === false ? "incorrect" : "",
@@ -163,13 +161,16 @@ export default function Challenge({
       title,
       options,
     );
-  } else if (correctCount >= 2) {
-    console.error("NotYrtSupported: Multiple correct answers found for question:",
-      question,
-      title,
-      options,
-    );
   }
+
+  // Sorta supported, **only need to select one correct answer**
+  // if (correctCount >= 2) {
+  //   console.error("NotYetSupported: Multiple correct answers found for question:",
+  //     question,
+  //     title,
+  //     options,
+  //   );
+  // }
 
   const _options = options
     .map((option) => {
