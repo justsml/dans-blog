@@ -160,6 +160,22 @@ export default function Challenge({
 
   const sequenceNum = (questionIndex ?? 0) + 1;
 
+  let correctCount = options.filter((o) => o.isAnswer).length;
+
+  if (correctCount === 0) {
+    console.error("No correct answers found for question:",
+      question,
+      title,
+      options,
+    );
+  } else if (correctCount >= 2) {
+    console.error("NotYrtSupported: Multiple correct answers found for question:",
+      question,
+      title,
+      options,
+    );
+  }
+
   const _options = options
     .map((option) => {
       const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
@@ -181,7 +197,6 @@ export default function Challenge({
           //   if (isCorrect && !option.isAnswer) {
           //     document.removeChild(e.currentTarget!)
           //     // setChallengeClass(challengeClass.concat(" answerAnimationEnded"));
-
           //   }
           // }}
         >

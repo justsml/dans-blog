@@ -110,9 +110,9 @@ export const PostCollections = {
       "one-weird-trick-to-speed-up-feature-teams",
       // "js-quiz-14-date-time-questions-test-your-knowledge",
       "javascript-promises-quiz",
-      "contribute-to-open-source-the-easy-way",
+      // "contribute-to-open-source-the-easy-way",
       // "naming-things-real-good",
-      // "you-may-not-need-axios",
+      "you-may-not-need-axios",
       // "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
@@ -129,7 +129,7 @@ export const PostCollections = {
   generateCoverImgs() {
     // TODO?
   },
-  getRecentPosts() {
+  getRecentPosts(limit = 7) {
     return [...PostCollections._posts]
       .sort((a, b) => {
         const aDate = new Date(a.data.date!).getTime();
@@ -138,7 +138,7 @@ export const PostCollections = {
         return aDate === bDate ? 0 : aDate > bDate ? -1 : 1;
         // return a.data.modified! === b.data.modified! ? 0 : a.data.modified! > b.data.modified! ? -1 : 1;
       })
-      .slice(0, 7);
+      .slice(0, limit);
   },
 };
 
