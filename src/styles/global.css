@@ -707,48 +707,6 @@ pre.astro-code {
   margin-block: 1rem;
 }
 
-/* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url */
-.article a[href*="youtube.com"]::after {
-  content: "📺";
-  font-size: 1.25rem;
-  margin-left: 0.25rem;
-
-  text-decoration: none;
-  opacity: 0.5;
-  &:hover { opacity: 1; }
-}
-
-/*
-.article a[href*="danlevy.net"]::after {
-  content: "<span class='iconify' data-icon='fa-solid:link' data-inline='false'></span> 📄";
-  font-size: 1.25rem;
-  margin-left: 0.25rem;
-} */
-.article a[href]:not([href*="danlevy.net"]):not([href*="youtube.com"]):not([href^="#"])::after {
-  content: "🔗";
-  font-size: 1.25rem;
-  margin-left: 0.25rem;
-
-  text-decoration: none;
-  opacity: 0.75;
-}
-.article a[href]:hover::after { opacity: 1; }
-
-/* add trailing icons to links to indicate: 1. a youtube link, 2. a link to this site danlevy.net or 3. an extrnal url 
-
-exclude hash anchor links */
-.default-links .a[href]::after {
-  content: unset !important;
-}
-
-header a[href]::after,
-nav a[href]::after,
-.default-links .a[href]::after,
-.gist a[href]::after,
-.challenge a[href]::after {
-  content: unset !important;
-}
-
 .default-links a[href] {
   text-decoration: none;
 }

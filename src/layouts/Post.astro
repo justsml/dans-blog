@@ -11,9 +11,12 @@ import socialBanner from "../assets/social-banner.webp";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import AdditionalReading from "../components/AdditionalReading.astro";
+import CategoryLink from "../components/CategoryLink.astro";
 
 type Props = {
   children: any[];
+
+  slug: string;
 
   frontmatter?: {
     title: string;
@@ -40,6 +43,8 @@ const {
   commentsKeyOverride,
   related,
 } = Astro.props.frontmatter! || Astro.props;
+
+const slug = Astro.props.slug;
 
 const modDate = modified ? new Date(modified) : null;
 const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
@@ -89,12 +94,14 @@ const responsiveImgSizes_breakRight = {
       <aside class="skinny">
         <div class="info">
           <CreatedModifiedLabel client:idle date={date} modified={modified} />
-          {category && <InfoLabel text={category!} />}
+          <CategoryLink category={category} />
         </div>
       </aside>
 
       {
-        cover_full_width && typeof cover_full_width === "object" && "src" in cover_full_width ? (
+        cover_full_width &&
+        typeof cover_full_width === "object" &&
+        "src" in cover_full_width ? (
           <Image
             class="full-width flow"
             src={cover_full_width as ImageMetadata}
@@ -121,7 +128,7 @@ const responsiveImgSizes_breakRight = {
       <slot />
     </main>
 
-    <AdditionalReading slugs={related} className="default-links" />
+    <AdditionalReading slugs={related} excludeSlugs={[slug]} className="default-links" />
 
     <div class="comments-wrapper full-width default-links">
       <GitHubIssueComments client:only="react" path={commentsKey} />
@@ -131,7 +138,7 @@ const responsiveImgSizes_breakRight = {
   </body><script>
     declare global {
       interface Window {
-        __updateCounts: () => void;
+        __updateCounts: () => boolean;
       }
     }
     import { QuestionStore } from "../components/QuizUI/QuestionStore";
@@ -143,7 +150,7 @@ const responsiveImgSizes_breakRight = {
       const questions = document.querySelectorAll("main .challenge");
       const isQuizPage = questions.length > 0;
 
-      if (!isQuizPage) return; // Not a quiz page
+      if (!isQuizPage) return false; // Not a quiz page
 
       const scoreEls = document.querySelectorAll(".score");
       const scoreEl = scoreEls[0];
@@ -152,7 +159,10 @@ const responsiveImgSizes_breakRight = {
       const correct = document.querySelectorAll("main .challenge.correct");
 
       if (scoreEls.length >= 2) console.error("Multiple score elements found");
-      if (!scoreLabel) return console.error("Expected score label, not found");
+      if (!scoreLabel) {
+        console.error("Expected score label, not found");
+        return false;
+      }
       if (correct.length > 0) scoreEls[0].classList.add("active");
 
       if (questions.length === correct.length) {
@@ -163,6 +173,7 @@ const responsiveImgSizes_breakRight = {
       } else {
         scoreLabel.innerHTML = `${correct.length} / ${questions.length}`;
       }
+      return true;
     };
 
     function getQuestionStore() {
@@ -187,13 +198,17 @@ const responsiveImgSizes_breakRight = {
 
         $interval = setInterval(() => {
           intCount++;
-          if (intCount > 12) {
-            console.warn("Too many iterations, stopping interval");
+
+          if (window.__updateCounts()) {
             clearInterval($interval!);
             return;
           }
 
-          window.__updateCounts();
+          if (intCount > 12) {
+            // console.warn("Too many iterations, stopping interval");
+            clearInterval($interval!);
+            return;
+          }
         }, 100);
 
         quiz.addEventListener("mousedown", () => {

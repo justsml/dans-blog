@@ -6,13 +6,16 @@ import "./AdditionalReading.css";
 
 type Props = {
   slugs?: string[];
+  excludeSlugs?: string[];
   articleLimit?: number;
   className?: string;
 };
 
 const className = Astro.props.className ?? "";
 const articleLimit = Astro.props.articleLimit ?? 4;
+const excludeSlugs = Astro.props.excludeSlugs ?? [];
 let slugs = Astro.props.slugs ?? [];
+
 slugs = addRandomArticleSlugs(slugs, articleLimit);
 
 const _posts = PostCollections.getPostsBySlugs(slugs);
@@ -43,10 +46,11 @@ function addRandomArticleSlugs(slugs: string[], limit: number) {
     i++;
     if (i > articleCount) break;
     const rnd = Math.floor(Math.random() * articleCount);
-    const randomPost = _slugs[rnd] as string;
-    const _post = _postsBySlug[randomPost];
-    if (!slugs.includes(randomPost) && !_post.data.draft && !_post.data.hidden)
-      slugs.push(randomPost);
+    const randomSlug = _slugs[rnd] as string;
+    if (excludeSlugs.some(exclude => randomSlug.includes(exclude))) continue;
+    const _post = _postsBySlug[randomSlug];
+    if (!slugs.includes(randomSlug) && !_post.data.draft && !_post.data.hidden)
+      slugs.push(randomSlug);
   }
   return slugs;
 }
@@ -55,7 +59,7 @@ const posts = _posts.map((p) => p as ArticlePost);
 ---
 
 <div class={`additional-reading default-links ${className}`}>
-  <h2>Additional Reading</h2>
+  <h2>Read More Shit (by Dan Levy)</h2>
   <section class="article-tiles">
     {posts.map((article) => <ArticleCard article={article} className="tile" />)}
   </section>
