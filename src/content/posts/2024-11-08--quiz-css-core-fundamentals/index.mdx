@@ -288,14 +288,15 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={9}
-  group="Layouts: Units"
+  group="Units: REM"
   title="Calculating Pixel Size with REMs"
   options={[
-    { text: '12px' },
     { text: '10px' },
-    { text: '24px' },
+    { text: '12px', isAnswer: true },
     { text: '14px' },
-    { text: '34px' }
+    { text: '20px' },
+    { text: '24px' },
+    { text: '34px' },
   ]}
 >
   <slot name="question">
@@ -303,7 +304,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
       What will be the pixel size of `1.2rem` for the "HOME" link in the following HTML?
       ```html
       <html style="font-size: 10px;">
-        <body style="font-size: 24px;">
+        <body style="font-size: 20px;">
           <a style="font-size: 1.2rem;">HOME</a>
         </body>
       </html>
@@ -312,7 +313,40 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      `1.2rem` translates to 12px because `rem` units reference the `<html>` font size, set here to 10px.
+      `1.2rem` translates to 12px because `rem` units reference the root or `<html>` font size, set here to 10px.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Units: EM"
+  title="Calculating Pixel Size with EMs"
+  options={[
+    { text: '10px' },
+    { text: '12px' },
+    { text: '14px' },
+    { text: '20px' },
+    { text: '24px', isAnswer: true },
+    { text: '34px' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Similar to the previous question, what will be the pixel size of `1.2em` for the "HOME" link in the following HTML?
+      ```html
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `1.2rem` translates to 24px because `rem` units reference the `<html>` font size, set here to 10px.
     </div>
   </slot>
 </Challenge>
