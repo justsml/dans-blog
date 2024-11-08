@@ -255,26 +255,17 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="Retrieve All Symbol Keys"
   index={6}
   options={[
-    {text: 'Object.getOwnPropertySymbols()', isAnswer: true },
     {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
     {text: 'Object.symbols()'},
     {text: 'Object.entries()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true },
   ]}
 >
 
   <slot name="question">
   <div className="question">
     Which method can be used to retrieve all Symbol keys of an object?
-    ```js
-    const sym1 = Symbol('key1');
-    const sym2 = Symbol('key2');
-    const obj = {
-      [sym1]: 'value1',
-      [sym2]: 'value2'
-    };
-    const symbols = /* method here */(obj);
-    console.log(symbols);
-    ```
   </div>
   </slot>
 
@@ -283,7 +274,19 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    The `Object.getOwnPropertySymbols()` method is used to retrieve all Symbol properties of an object. In this example, it will return an array containing `sym1` and `sym2`.
+    The `Object.getOwnPropertySymbols()` method is used to retrieve all Symbol properties of an object.
+
+    ```js
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
+    ```
+
   </div>
   </slot>
 

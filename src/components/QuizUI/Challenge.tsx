@@ -30,10 +30,10 @@ export default function Challenge({
   question: string;
   options: Option[];
   explanation?: string;
-  index?: number;
+  index: number;
   // hints?: string[];
 }) {
-  let questionStore: QuestionStore | null = null;
+  let questionStore: ReturnType<typeof QuestionStore> | null = null;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
@@ -61,26 +61,21 @@ export default function Challenge({
   };
 
   useEffect(() => {
-    if (!global.__questionStoreBySlug) global.__questionStoreBySlug = {};
-
-    // console.log("QuestionStore INIT @ path:", location.pathname);
-    let q = global.__questionStoreBySlug?.[location.pathname];
-    if (!q) {
-      q = QuestionStore(location.pathname);
-      global.__questionStoreBySlug[location.pathname] = q;
-    }
-
-    questionStore = q;
+    if (!questionStore) 
+      questionStore = QuestionStore(global?.location.pathname);
+    
   }, [global?.location?.pathname]);
 
   useEffect(() => {
+    if (!questionStore) 
+      questionStore = QuestionStore(global?.location.pathname);
+
     if (questionStore) {
-      const questionIndex = questionStore.addQuestion({
+      const idx = questionStore.addQuestion({
         title,
         group,
         question,
-        options,
-        explanation,
+        index: questionIndex,
       });
       console.log("Added question to store:", questionIndex, group, title);
     } else {
@@ -92,8 +87,7 @@ export default function Challenge({
   useEffect(() => {
     const isCorrect =
       questionStore?.isCorrect({
-        question,
-        title,
+        index: questionIndex,
       }) ?? undefined;
 
     console.log("Checking if we already answered this question:", isCorrect);
@@ -113,10 +107,11 @@ export default function Challenge({
   };
 
   const handleAnswer = (option: Option) => {
+    console.log("Answering question:", title, question, option);
+    if (!questionStore) questionStore = QuestionStore(global?.location.pathname);
     questionStore?.answerQuestion(
       {
-        title: title,
-        question: question || "",
+        index: questionIndex,
       },
       option,
     );
@@ -134,7 +129,7 @@ export default function Challenge({
       title: title,
       questionIndex,
     });
-    setTimeout(updateCounts, 200);
+    setTimeout(updateCounts, 20);
   };
 
   useEffect(() => {
@@ -240,7 +235,9 @@ export default function Challenge({
           transition: "height 0.2s ease-in-out",
         }}
       >
-        <section className="quiz-options card card-front">{_options}</section>
+        <section className="quiz-options card card-front">
+          {_options}
+        </section>
         <section className={"explanation card card-back "}>
           <p
             className="help-box"

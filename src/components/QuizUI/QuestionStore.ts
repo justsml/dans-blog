@@ -1,132 +1,53 @@
-import { slugify } from "../../shared/pathHelpers.ts";
-import { Option, QuizQuestion } from "./types.ts";
-import { toBoolean } from "../../shared/parsingUtils.ts";
-
-declare global {
-  interface Window {
-    __questions?: QuizQuestion[];
-    __answers?: Record<string, boolean>;
-    __questionCountBySlug?: Record<string, number>;
-    __questionsByKeys?: Record<string, QuizQuestion>;
-    __questionStoreBySlug?: Record<string, QuestionStore>;
-  }
-  interface GlobalThis {
-    __questions: QuizQuestion[];
-    __answers: Record<string, boolean>;
-    __questionCountBySlug?: Record<string, number>;
-    __questionsByKeys?: Record<string, QuizQuestion>;
-  }
-}
+import { Option } from "./types.ts";
 
 const KEY_PREFIX = "quiz-";
 
-// const questionCountBySlug: Record<string, number> = {};
-// const questionsByKeys: Record<string, QuizQuestion> = {};
-// const questions: QuizQuestion[] = [];
-// const answers: Record<string, boolean> = {};
 
-if (typeof window !== "undefined") {
-  window.__questionStoreBySlug ??= {};
-  window.__questionCountBySlug ??= {};
-  window.__questionsByKeys ??= {};
-  window.__questions ??= [];
-  window.__answers ??= {};
-} else {
-  // @ts-expect-error
-  globalThis.__questionCountBySlug ??= {};
-  // @ts-expect-error
-  globalThis.__questionsByKeys ??= {};
-  // @ts-expect-error
-  globalThis.__questions ??= [];
-  // @ts-expect-error
-  globalThis.__answers ??= {};
-}
+export type QuestionInfo = { title?: string; group: string; question: string, index: number }
+type QuestionAnswerInfo = { isCorrect: boolean | undefined, tries: number };
+// type QuestionData = { [key: string]: boolean };
+type QuestionList = Array<QuestionInfo & QuestionAnswerInfo>;
+type IdxOnly = { index: number };
 
-export type QuestionStore = ReturnType<typeof QuestionStore>;
-export type TitleQuestionPair = { title: string; question: string };
 export const QuestionStore = (slug: string) => {
-  const questionCountBySlug = window.__questionCountBySlug!;
-  const questionsByKeys = window.__questionsByKeys!;
-  const questions = window.__questions!;
-  const answers = window.__answers!;
+  const questions: QuestionList = JSON.parse(localStorage.getItem(slug) ?? '[]');
+  const save = () => localStorage.setItem(slug, JSON.stringify(questions));
+  const reset = () => localStorage.setItem(slug, '[]');
 
-  const slugKey = slugify(KEY_PREFIX + slug);
-  /* Warning: May return a very long string */
-  const getQKey = (q: TitleQuestionPair) =>
-    slugify(KEY_PREFIX + slug + "-" + q.title + "-" + q.question);
-
-  // Load answers from localStorage
-  const data = localStorage.getItem(slugKey);
-  console.info(`Init QuestionStore for ${slugKey} with data`, !!data);
-
-  if (data) {
-    console.info(`Loading previous quiz state for ${slugKey}`, answers);
-    Object.assign(answers, JSON.parse(data));
-  }
   return {
-    countBySlug: () => questionCountBySlug[slug] ?? 0,
-    countCorrectBySlug: () => Object.entries(answers).filter(
-      ([key, answer]) => key.startsWith(slugKey) && answer,
-    ).length,
+    total: () => questions.length,
+    correct: () => questions.filter((q: any) => q.isCorrect).length,
+
+    reset,
 
     /** Adds Question & returns the # for that page (slug) */
-    addQuestion: (question: QuizQuestion) => {
-      const key = getQKey(question);
-      let count = 0;
-      if (!questionsByKeys[key]) {
-        questionCountBySlug[slug!] ??= 0;
-        count = questionCountBySlug[slug!]++;
-        questionsByKeys[key] = question;
-        questions.push(question);
-      } else {
-        console.warn("Question already exists", question);
+    addQuestion: (question: QuestionInfo) => {
+      if (!question) Error("Missing question arg");
+      if (question.index == null) Error("Missing question.index");
+      if (questions[question.index]) {
+        // already exists
+        return questions.length;
       }
-      return count;
+      questions[question.index] = { ...question, isCorrect: undefined, tries: 0 };
+      save();
+      return questions.length;
     },
 
-    isCorrect: ({title, question}: Partial<TitleQuestionPair>) => {
-      const key = getQKey({question: question!, title: title!});
-      console.info(`Checking if question is correct: ${key}`, answers[key]);
-      return answers[key];
+    isCorrect: ({index}: {index: number}) => {
+      return questions?.[index].isCorrect;
     },
 
-    answerQuestion: (question: TitleQuestionPair, option: Option) => {
-      answers[getQKey(question)] = option.isAnswer;
-      const answerKey = slugify(KEY_PREFIX + "-answers-" + slug);
+    answerQuestion: (question: IdxOnly, option: Option) => {
+      if (!question || !option) throw Error("Missing question and/or option args");
+      if (question.index == null) throw Error("Missing question.index");
 
-      localStorage.setItem(answerKey, JSON.stringify(answers));
-      console.info(`Answered question ${answerKey} with ${option.isAnswer}`);
+      if (!questions[question.index]) throw Error(`Question ${question.index} not found`);
+      const isCorrect = option.isAnswer;
+      
+      questions[question.index].isCorrect = isCorrect;
+      questions[question.index].tries++;
+      save();
       return option.isAnswer;
-    },
-
-    /** @deprecated */
-    getQuestion: ({ question, title }: QuizQuestion) => {
-      const key = slugify(KEY_PREFIX + slug + "-" + title + "-" + question);
-      const data = localStorage.getItem(key);
-      return data ? JSON.parse(data) : { isCorrect: null };
-    },
-
-    /** @deprecated */
-    setQuestion: ({
-      question,
-      title,
-      isCorrect,
-    }: {
-      title: string;
-      question: string;
-      isCorrect: boolean;
-    }) => {
-      const key = slugify(KEY_PREFIX + slug + "-" + title + "-" + question);
-      localStorage.setItem(key, JSON.stringify({ isCorrect }));
-      return isCorrect;
-    },
-
-    /** @deprecated */
-    resetBySlug: () => {
-      console.info(`Resetting quiz data for ${slugKey}`, localStorage.getItem(slugKey));
-      Object.keys(localStorage).forEach((k) => {
-        if (k.startsWith(slugKey)) localStorage.removeItem(k);
-      });
     },
   };
 };

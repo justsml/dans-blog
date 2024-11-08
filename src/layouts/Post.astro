@@ -156,7 +156,7 @@ const responsiveImgSizes_breakRight = {
       if (correct.length > 0) scoreEls[0].classList.add("active");
 
       if (questions.length === correct.length) {
-        scoreEls[0].classList.add("all-correct");
+        scoreEl.classList.add("all-correct");
         scoreLabel.innerHTML = "All correct!";
         scoreWrapper?.classList.toggle("pulse");
         scoreEl?.classList.add("success");
@@ -180,10 +180,8 @@ const responsiveImgSizes_breakRight = {
         if (resetButton) {
           resetButton.addEventListener("click", () => {
             console.log("Resetting quiz state for", location.pathname);
-            questionStore?.resetBySlug();
-            const questions = document.querySelectorAll("main .challenge");
-            questions.forEach((q) => q.classList.remove("correct", "incorrect", "answered"));
-            window.__updateCounts();
+            questionStore?.reset();
+            location.reload();
           });
         }
 

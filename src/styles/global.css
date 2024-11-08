@@ -582,7 +582,8 @@ main .info {
 
 
 pre.astro-code {
-  .line:last-child:empty {
+  .line:last-child:empty,
+  :has(span:empty) .line:last-child {
     display: none;
   }
   .line:first-child {

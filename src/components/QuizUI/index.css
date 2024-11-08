@@ -1,7 +1,11 @@
+html {
+  scroll-padding-top: 2.5rem;
+  scroll-behavior: smooth;
+}
+
 .quiz-ui {
   padding: 1rem 0;
   max-width: 98vw;
-  scroll-padding-top: 2.5rem;
   /* counter-increment: question-counter; */
 
   .card-container {
@@ -29,7 +33,7 @@
   }
 
   .card-container.card-flip {
-    min-height: 220px;
+    min-height: 260px;
     transition: height 0.25s ease-in-out;
     .card-front {
       transform: rotateY(180deg);
@@ -273,7 +277,8 @@
     font-size: 1.1rem;
     /* margin-bottom: 1rem; */
     margin-inline: auto;
-    width: calc(100% - 1.25rem);
+    width: 100%;
+    padding-inline: 1rem;
     overflow: auto;
 
     pre {
@@ -326,7 +331,7 @@
 
 
   .help-box {
-    width: 75%;
+    width: clamp(320px, 100% - 2rem, 90vw);
     margin-inline: auto;
     padding: 1rem;
     background-color: var(--quiz-bg-solid);
@@ -495,6 +500,11 @@
   filter: brightness(1);
 }
 
+.all-correct {
+  .score-wrapper {
+    display: none;;
+  }
+}
 .score-wrapper {
   display: inline-flex;
   label {
