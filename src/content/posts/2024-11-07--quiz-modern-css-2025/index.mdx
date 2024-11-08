@@ -1,10 +1,11 @@
 ---
-title: "Quiz: Do You know Modern CSS? (2024)"
+title: "Quiz: Do You know Modern CSS? (for 2025)"
 subTitle: "Are you front-end enough?"
 category: Quiz
+subCategory: CSS
 date: 2024-10-31
 modified: 2024-11-07
-tags: [javascript, advanced, moderate, quiz, css, styles]
+tags: [quiz, css, advanced, moderate, styles]
 # cover: quiz-CSS-features.webp
 cover_full_width: dan-levy-downtown-denver-at-night-wide.webp
 cover_mobile: dan-levy-downtown-denver-at-night-square.webp
@@ -69,6 +70,7 @@ The other options may be familiar from other languages or preprocessor syntaxes,
     {text: 'width: 250px;', isAnswer: true},
     {text: 'width: 500px;'},
     {text: 'width: max(50%, 200px);'},
+    {text: 'Invalid syntax'},
   ]}
 >
   <slot name="question">
@@ -227,6 +229,8 @@ The \`clamp()\` function allows the width to scale based on \`10vw\`, but keeps 
 This means the width will be 200px when the viewport is less than 2000px, and 600px when the viewport is greater than 6000px. In between, it will scale linearly.
 
 It lets you be auto-magically responsive! The thing to know about `clamp` is it combines **fixed units** with **responsive or computed units.**
+
+Normally you wouldn't want to use viewport units for font sizes, but with `clamp()` we can ensure the font size doesn't get too small or too large.
   </div>
   </slot>
 </Challenge>

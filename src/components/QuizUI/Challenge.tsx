@@ -214,7 +214,7 @@ export default function Challenge({
           &#160;
         </div>
         <h2 className="quiz-title" id={slugify(title)}>
-          {title}
+          {group}
         </h2>
       </div>
 

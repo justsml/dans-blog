@@ -8,35 +8,35 @@
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
   font-weight: 100;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
   font-weight: 200;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
   font-weight: 300;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Raleway';
   src: url('/fonts/raleway-latin-wght-normal.woff2') format('woff');
   font-weight: 400;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 /* From @fontsource-variable/playwrite-au-nsw */
@@ -45,20 +45,23 @@
   src: url('/fonts/playwrite-au-nsw-fallback-wght-normal.woff2') format('woff');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: fallback;
 }
 
 @layer base {
   :root {
+    --neon-pink-subtle: hsl(322, 100%, 60%, 1);
     --neon-cyan: 180 100% 50%;
     --neon-cyan-dark: 180 100% 25%;
     --neon-pink: 322 100% 72%;
-    --neon-pink-subtle: hsl(322, 100%, 60%, 1);
     --neon-green: 120 100% 50%;
     --neon-purple: 276 100% 60%;
     --neon-yellow: 60 100% 50%;
     --neon-blue: 240 97% 32%;
     --neon-orange: 24 100% 50%;
+    --neon-red: 0 100% 50%;
+    --neon-indigo: 240 100% 50%;
+    
 
     --highlight: #f9f9f9;
     --highlight-secondary: #f9f9f999
@@ -123,7 +126,7 @@
       letter-spacing: 0.002em;
       margin-block: 1rem;
       color: var(--neon-cyan);
-      opacity: 0.965;
+      opacity: 1;
     }
   }
   a {
@@ -245,6 +248,7 @@ h6 {
   margin-block: 1.5rem;
 
   scroll-margin-top: 5rem;
+  text-wrap: balance;
 }
 
 h2,
@@ -861,3 +865,40 @@ h2, h3, h4, h5, h6 {
     }
   }
 }
+
+
+.custom-gist {
+  font-size: 1.25rem;
+  /* a:has(.octicon-link) {
+    display: none;
+  } */
+  margin-block: 4rem;
+  div :has(> .Link--inTextBlock) {
+    display: none;
+  }
+
+  .markdown-heading {
+    .heading-element {
+      display: inline-block;
+      margin-inline: 0.5rem;
+    }
+    a.anchor {
+      /* display: inline-block; */
+      display: none; /* currently broken */
+      color: var(--text-color);
+      fill: var(--text-color);
+
+    }
+  }
+  
+  h3 {
+    font-size: 175%;
+  }
+
+  ul[dir] {
+    list-style-type: none !important;
+    /* padding-inline: 0; */
+  }
+}
+
+
