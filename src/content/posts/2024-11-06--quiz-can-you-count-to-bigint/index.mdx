@@ -1,0 +1,419 @@
+---
+title: "Quiz: Can you count on JavaScript?"
+subTitle: "Know your `parseInt` from `parseFloat`?"
+date: 2024-10-31
+modified: 2024-11-07
+category: Quiz
+subCategory: "Numbers"
+tags: [quiz, data-structures, algorithms]
+cover: victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+# related:
+#   - "quiz-do-you-know-esnext"
+#   - "quiz-js-interfaces-symbols-and-enumerables"
+#   - "quiz-javascript-promises"
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+Welcome to the ultimate quiz on JavaScript number handling!
+
+This quiz will test your knowledge all things Numbers in JS, `parseInt`, `parseFloat`, and `BigInt` too!.
+
+We'll cover parsing numeric expressions - in varying bases, handling floating-point precision, and understanding the quirks of JavaScript's number system.
+
+> It's only numbers, how hard can it be? 🤓
+
+<Challenge
+  client:load
+  index={0}
+  group="Warm-up"
+  title="Parsing with `parseInt`"
+  options={[
+    {text: '123456.00'},
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  The `parseInt` function ignores spaces and parses the initial sequence of digits as an integer. Here, it stops at the decimal point, so only `123456` is returned.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Parsing"
+  title="Comma handling"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  Generally speaking, `parseInt` stops parsing when it encounters a non-numeric character. Here, it stops at the comma, so only `123` is returned.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Precision"
+  title="Precision with Floating Points"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  Due to floating-point precision errors, `0.1 + 0.2` does not exactly equal `0.3`. Due to the way floating-point numbers are stored in memory, the result is `0.30000000000000004`. The IEEE 754 standard for handling floating-point arithmetic is the culprit, it can't represent some numbers exactly. This is a common issue in all programming languages. Eventually you'll run into a infinitely repeating decimal, and no matter the language - the computer simply has to stop chasing infinitely repeating digits.
+
+  Some languages like Python and Java have `Decimal` or `BigDecimal` to handle this, but it's not built into JavaScript. You can use libraries like `big.js` or `decimal.js` to handle these cases.
+
+  (Note: Some languages are designed to handle fractions, imaginary numbers, etc at a higher logical level, preserving literal expressions. But they still have to deal with the same floating-point precision issues at the hardware level.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Overflowing Numbers"
+  title="Handling Infinity"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+    Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  Since `Number.MAX_VALUE` is the largest **representable** regular number in JavaScript, going over its limit will quickly overflow - basically you might see meaningless results. Multiplying it by `2` results in `Infinity`.
+  
+  *Ya know, JavaScript be like that sometimes.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Formatting"
+  title="String Conversion with `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What might this do?
+    ```tsx
+    5..toFixed(2)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  `.toFixed(2)` returns a string representation of `5` with two decimal places, so the result is `"5.00"`.
+
+  The double dot (`5..toFixed(2)`) is a 'trick' to access Number Literals' Object Model.
+
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Comparing types"
+  title="Equality Comparison between `parseInt` and `parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  In JavaScript, both `parseInt` and `parseFloat` will interpret the string `"42"` as the number `42`. Therefore, the comparison `parseInt("42") === parseFloat("42")` evaluates to `true`. While `parseInt` stops parsing at the first non-digit character, `parseFloat` continues parsing until it encounters a character that is not part of a floating-point number. However, since there are no decimal points or other non-numeric characters in `"42"`, both functions return the same value.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Equality"
+  title="Equality Comparison with BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) is a different type from `number`, so `parseInt("42")` (a regular number) is not strictly equal to `BigInt("42")`. To compare, you must convert both to the same type: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Based"
+  title="Hexadecimal Parsing"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: 'Must be uppercase: 2A'},
+    {text: 'Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this work out to?
+    ```jsx
+    parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  Any input string that begins with `0x` is auto-magically treated as a hexadecimal (radix `16`).
+  It is therefore equivalent to passing a radix of 16. So, `parseInt("0x2A")` is the same as `parseInt("2a", 16)`. (It's case insensitive.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Based"
+  title="Parsing with Radix"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the dealio here?
+    ```jsx
+    parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  `parseInt` with a hexadecimal (`16`) base converts `"FF"` to `255` in decimal. You may have seen this in CSS RGB/Hex color codes.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Number[]"
+  title="Using `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  The second argument to `parseInt` (the radix) aligns with the array methods' `index` argument. This leads to unexpected results, as `parseInt("One", 1)` returns `NaN` due to the invalid input.
+
+  The first element, `24`, is parsed as `24` in base 0 (auto-detect), so it remains `24`. The second element, `'One'`, is parsed as `NaN` in base 1. The third element, `42`, is parsed using base 2. In base 2, `'42'` is `NaN`, so the result is `[24, NaN, NaN]`.
+
+  This is a common gotcha with `parseInt` and `map`. If you want to parse an array of strings to numbers, the only safe "built-in" method is `.map(Number)` or adding a callback/enclosure `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Number[]"
+  title="Using `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]'},
+    {text: '[24, NaN, 42]', isAnswer: true},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+    [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  `Number` converts values to a numeric type more strictly than `parseInt`. Here, `'Twenty1'` becomes `NaN`, while `0o42` is recognized as an octal literal and converted to `34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Parsing"
+  title="Handling nulls"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN' },
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the result of this code?
+    ```jsx
+    console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  `parseInt` coerces the input to a string, so `null` becomes `"null"`. Since `"null"` has no valid base-10 characters (regular numbers) it will return `NaN`.
+  
+  `Number(null)` returns `0`. because JS likes to keep you on your toes.
+  Why? Well, I might go deeper if there's interest.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Based"
+  title="Parsing on base"
+  options={[
+    {text: '1112745', isAnswer: true},
+    {text: '36'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: 'NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the result of this spell?
+    ```jsx
+    parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+  Since `parseInt` always coerces the input to a string, `null` becomes string `"null"`.
+  
+  In base 36 (hexatrigesimal, if you're keeping track), the string `"null"` represents `1112745`.
+
+  The sequential values of `nulk`, `null`, and `nulm` are respectively `1112744`, `1112745`, and `1112746` in base 36.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

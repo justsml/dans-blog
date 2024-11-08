@@ -1,53 +1,23 @@
 
 .info-grid {
-  display: grid; 
+  line-height: 1.5;
 
-  grid-template-rows: 1fr 1fr;
-  grid-template-columns: auto 1fr;
-  
-  gap: 0;
-  height: 100%;  
+  height: 100%;
 
   font-weight: 200;
   font-size: .75rem;
 
   align-items: center;
-}
-
-div.icon {
-  align-content: center;
-  grid-row: span 2;
-  margin: 0 0.5rem;
-}
-
-
-.line1 {
-
-  align-self: center;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
-
-  grid-row-start: 1;
-  grid-column-start: 2;
-
-  grid-row-end: 2;
-  grid-column-end: 3;
   
-}
-.line2 {
-
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  text-wrap: nowrap;
-
-  grid-row-start: 2;
-  grid-column-start: 2;
-
-  grid-row-end: 3;
-  grid-column-end: 3;
+  /* div.icon {
+    align-content: center;
+    grid-row: span 2;
+    margin: 0 0.5rem;
+  } */
   
+  &::before {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 0.5rem;
+  }
 }

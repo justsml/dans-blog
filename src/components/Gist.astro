@@ -7,9 +7,12 @@ const GITHUB_TOKEN =
 
 export type Props = {
   path: string;
+  disableStyles?: boolean;
+  disableTruncating?: boolean;
 };
 
 const { props } = Astro;
+const {disableStyles, disableTruncating} = props;
 
 const baseUrl = "https://gist.github.com";
 
@@ -125,6 +128,14 @@ const handleError = (url: string) => (error: any) => {
   return null;
 };
 
+function removeGistClasses(html: string) {
+  return html?.replaceAll(/\bgist-file\b/g, "")
+  .replaceAll(/\bgist-meta\b/g, "")
+  .replaceAll(/\bgist-data\b/g, "")
+  .replaceAll(/\bgist-embed-wrapper\b/g, "")
+  .replaceAll(/\bgist-embed\b/g, "")
+  .replaceAll(`class="gist"`, "")
+}
 /**
  * Handles the markdown AST.
  */
@@ -181,7 +192,10 @@ async function loadGist(path: string, options: PluginOptions = {}) {
   // }
   const level = options.truncate ? 2 : 0;
 
-  content.div = truncateGist(content.div, level);
+  if (options.truncate)
+    content.div = truncateGist(content.div, level);
+  if (disableStyles)
+    content.div = removeGistClasses(content.div);
 
   return content;
 }
@@ -228,21 +242,23 @@ if (!gist) {
   gist = await loadGist(props.path, {
     username: "justsml",
     secretToken: GITHUB_TOKEN,
-    truncate: true,
-    includeDefaultCss: true,
+    truncate: !disableTruncating,
+    includeDefaultCss: disableStyles ? false : true,
     gistDefaultCssInclude: false,
   }).catch((error) => {
     console.error("\n\n\n🚨 Failed to load gist", error);
     return null
   });
   diskCache.set(props.path, gist);
+} else {
+  gist.div = removeGistClasses(gist.div);
 }
 const stylesheetUrl = gist?.stylesheet;
 ---
 
 {
   gist && (
-    <astro-embed-gist data-cssurl={stylesheetUrl} data-cached-response={loadedFromCache}>
+    <astro-embed-gist class="custom-gist" data-cssurl={stylesheetUrl} data-cached-response={loadedFromCache}>
       <p class="gist-embed-description">{gist.description}</p>
       <Fragment set:html={gist.div} />
     </astro-embed-gist>

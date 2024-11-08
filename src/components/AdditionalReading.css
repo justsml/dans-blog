@@ -1,0 +1,94 @@
+.additional-reading {
+  margin-block: 2rem;
+  margin-inline: auto;
+  max-width: 580px;
+  h2 {
+    margin-left: -2rem;
+    font-size: 1.75rem;
+  }
+}
+.article-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(220px, 280px));
+  grid-auto-flow: row dense;
+  gap: 1.25rem;
+  justify-content: center;
+
+  .tile {
+    background-color: hsl(var(--bg-dark));
+    position: relative;
+    display: grid;
+    line-height: 1.5;
+    min-width: 220px;
+    max-width: 280px;
+
+    /* margin-inline: 0.75rem; */
+    grid-template-rows: auto auto auto 1fr auto;
+    /* gap: 1rem; */
+    /* padding: 1rem; */
+    border-radius: 1rem;
+    box-shadow: 0 0 .5rem 0.125rem hsl(var(--card-foreground));
+    transition: box-shadow 0.1s ease-in-out, color 0.1s ease-in-out;
+    color: var(--clr-muted-200);
+  
+    &:hover {
+      box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
+      color: unset;
+      scale: 1.02;
+      .small-label {
+        color: unset;
+      }
+    }
+  
+    .small-label {
+      order: 1;
+      padding-inline: 0.5rem;
+      padding-block: 0.25rem;
+      text-align: right;
+      font-size: var(--fs-200);
+      color: var(--clr-muted-400);
+    }
+
+    img {
+      order: 2;
+      border-top: 1px solid var(--clr-muted-200);
+      border-bottom: 1px solid var(--clr-muted-200);
+      border-radius: 0;
+      width: 100%;
+      max-height: 80px;
+      min-height: 80px;
+      object-fit: cover;
+    }
+
+    .post-title {
+      font-size: 1.25rem;
+      font-weight: 300;
+      /* padding: 0.5rem; */
+      padding-inline: 0.5rem;
+      order: 3;
+
+      font-size: 1.2rem;
+      font-family: "Raleway", sans-serif;
+      margin-top: 1rem;
+      margin-bottom: 0;
+      margin-left: 0;
+      margin-right: 0;
+      line-height: 1.25;
+      /* color: var(--neon-cyan); */
+    }
+
+    p {
+      padding-inline: 0.5rem;
+      order: 4;
+      /* font-size: 0.9rem; */
+      font-weight: 200;
+    }
+
+    .info-grid {
+      padding-inline: 0.5rem;
+      padding-block: 0.25rem;
+      order: 5;
+    }
+  }
+}
+

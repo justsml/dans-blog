@@ -1,0 +1,305 @@
+---
+title: "Quiz: Prove your SQL Query Fundamentals"
+subTitle: "Are you team SQL? Or noSQL?"
+category: Quiz
+subCategory: SQL
+date: 2024-11-08
+modified: 2024-11-08
+tags: [quiz, intro, sql, core, fundamentals]
+cover_full_width: peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+# Test your SQL Query Fundamentals
+
+Has using an ORM been making you soft - in the skills dept? 
+Don't worry, it happens to loads of devs. 
+
+Jump right in to prove your SQL Query Fundamentals! 👇
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="SQL Basics"
+  title="Basic WHERE clause"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = \'John\';', isAnswer: true },
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of the following SQL queries correctly retrieves rows where the name is "John"?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+In SQL, single equal sign (`=`) is used for equality checks in the `WHERE` clause, not `==` or `===`, which are JavaScript operators.
+
+The correct syntax is `SELECT * FROM users WHERE name = 'John';`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="SQL Basics"
+  title="Aggregate Function COUNT"
+  options={[
+    {text: 'Counts all rows including NULL values'},
+    {text: 'Counts only non-NULL values in a column', isAnswer: true },
+    {text: 'Counts NULL values as one unique value'},
+    {text: 'Treats each NULL value as unique, similar to NaN !== NaN'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does `COUNT(column_name)` do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+`COUNT(column_name)` counts the number of non-NULL values in a specified column. To count all rows, including NULLs, use `COUNT(*)`.
+
+You can also use `COALESCE` to ensure NULLs default to a non-NULL value. Something like: `COUNT(COALESCE(column_name, 0))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="SQL Joins"
+  title="LEFT JOIN Basics"
+  options={[
+    {text: 'Returns one row per every matching row, ignores unmatched rows'},
+    {text: 'Returns all rows from the left table, plus matching right rows', isAnswer: true },
+    {text: 'Returns all matched or unmatched rows, where NULLs indicate no match'},
+    {text: 'Returns all rows from the right table, with any matching left rows'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does a `LEFT JOIN` do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+A `LEFT JOIN` returns all rows from the left table and matched rows from the right table, with NULL for unmatched rows in the right table.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="SQL Joins"
+  title="Using INNER JOIN"
+  options={[
+    {text: 'Returns unmatched rows from both tables'},
+    {text: 'Returns all rows from both tables, with NULLs for unmatched rows'},
+    {text: 'Returns rows with a match in both tables, excluding NULLs', isAnswer: true },
+    {text: 'Returns unmatched rows from the right table'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does an `INNER JOIN` do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+An `INNER JOIN` returns rows where there is a match in both tables. Unmatched rows are not included in the result set.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="SQL Subqueries"
+  title="Correlated Subquery"
+  options={[
+    {text: 'A subquery that runs once for each row in the outer query', isAnswer: true },
+    {text: 'A subquery that runs once overall'},
+    {text: 'A subquery used only in JOIN statements'},
+    {text: 'A subquery that returns multiple columns only'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is a correlated subquery in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+A correlated subquery is evaluated once per row of the outer query. It references columns from the outer query, making it dependent on each row.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="SQL CTEs"
+  title="WITH Clause Syntax"
+  options={[
+    {text: 'Defining a temporary result set to use within a SELECT query', isAnswer: true },
+    {text: 'Only allowed in DELETE statements'},
+    {text: 'Using recursive aggregations'},
+    {text: 'Used for defining views only'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of the `WITH` clause (Common Table Expression) in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="SQL Basics"
+  title="IS NULL vs IS NOT NULL"
+  options={[
+    {text: 'Checks if a value is NULL', isAnswer: true },
+    {text: 'Checks if a value is empty'},
+    {text: 'Checks if a value is a string'},
+    {text: 'Checks if a value is numeric'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `IS NULL` operator do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+`IS NULL` checks if a specified column contains a NULL value. `IS NOT NULL` checks the opposite.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="SQL Operators"
+  title="Using the IN Operator"
+  options={[
+    {text: 'Returns rows matching any value in a specified list', isAnswer: true },
+    {text: 'Checks for exact equality only'},
+    {text: 'Returns only unique rows'},
+    {text: 'Applies only to numeric columns'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `IN` operator do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `IN` operator filters rows to match any values in a specified list, often as an alternative to multiple OR conditions.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="SQL Functions"
+  title="Using the COALESCE Function"
+  options={[
+    {text: 'Returns the first non-NULL value in a list', isAnswer: true },
+    {text: 'Returns the last non-NULL value in a list'},
+    {text: 'Counts NULL values'},
+    {text: 'Only works with numeric values'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `COALESCE` function do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `COALESCE` function returns the first non-NULL value in a specified list, useful for substituting default values when NULLs are encountered.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="SQL Aggregate Functions"
+  title="GROUP BY Usage"
+  options={[
+    {text: 'Used to group rows by a specified column for aggregate functions', isAnswer: true },
+    {text: 'Sorts rows in ascending order'},
+    {text: 'Deletes duplicates'},
+    {text: 'Only used in joins'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of the `GROUP BY` clause in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `GROUP BY` clause groups rows that have the same values in specified columns, allowing aggregate functions to be applied on each group.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="SQL Joins"
+  title="FULL OUTER JOIN Basics"
+  options={[
+    {text: 'Returns all rows from both tables, with NULLs for unmatched rows', isAnswer: true },
+    {text: 'Returns only matched rows'},
+    {text: 'Returns unmatched rows from the left table only'},
+    {text: 'Returns unmatched rows from the right table only'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does a `FULL OUTER JOIN` do in SQL?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+A `FULL OUTER JOIN` returns all rows from both tables, filling unmatched rows with NULLs for missing values.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

@@ -6,6 +6,27 @@
 
 - [x] Add comments
 - [x] Fine tune: crank lighthouse score
+- [x] Add Link to Category on Posts
+- [ ] Stop using REM for layout (padding)
+- [ ] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [ ] Add Mastodon & Bsky links to footer.
+- [ ] Support disabling styles in `<Gist />` component.
+
+- Add Scroll CSS Effects:
+  - [ ] Adjust Quiz box-shadow using scroll position
+  - [ ] Look into scroll snap for each quiz.
+
+- [x] Update Quiz UI, 
+  - [x] Make Question's Linkable
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [x] Get rid of cliche icons abuse.
+- [ ] Add/update ld+json / JSON-LD
+- [ ] Add Quizzes to the Menu
+- [ ] Publish next batch of quizzes
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+- [ ] Disable posthog locally
+- [ ] Add Video page
+- [x] Add search
 - Publish:
   - [ ] Comments Component
   - [ ] Free local search

@@ -6,8 +6,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { InfoLabel } from "../components/ui/infoLabel";
 
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { TagIcon } from "lucide-react";
 import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -76,13 +74,9 @@ const coverUrl =
                   `created ${createdAgo} ago`,
                   `updated ${modifiedAgo} ago`,
                 ]}
-              >
-                <CalendarIcon className="icon" strokeWidth={1} />
-              </InfoLabel>
+              />
 
-              <InfoLabel text={category!}>
-                <TagIcon className="icon" strokeWidth={1} />
-              </InfoLabel>
+              <InfoLabel text={category!} />
             </div>
           ))
       }

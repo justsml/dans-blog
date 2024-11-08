@@ -2,7 +2,7 @@
 
 import { formatDistance } from "date-fns/formatDistance";
 import { InfoLabel } from "./ui/infoLabel";
-import { CalendarIcon } from "lucide-react";
+// import { } from "lucide-react";
 
 export function CreatedModifiedLabel({
   date,
@@ -21,9 +21,7 @@ export function CreatedModifiedLabel({
       <InfoLabel
         text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
         tooltips={[`created at ${date}`, `updated at ${modified}`]}
-      >
-        <CalendarIcon className="icon" strokeWidth={1} />
-      </InfoLabel>
+      />
     )
   );
 }

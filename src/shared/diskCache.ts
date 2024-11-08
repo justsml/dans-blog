@@ -10,7 +10,7 @@ const dbFilePath = ".data/danlevy-net-cache.db";
 
 const cache = new SqliteCache({
   database: dbFilePath,
-  defaultTtlMs: 1000 * 60 * 60 * 24 * ttl,
+  defaultTtlMs: ms(ttl + "d"),
   maxItems: 10000,
   // compress: true,
 });
