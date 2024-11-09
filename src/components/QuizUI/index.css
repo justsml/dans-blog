@@ -54,7 +54,7 @@ html {
     height: 100%;
     backface-visibility: hidden; /* Hides the back when not visible */
   }
-/* .correct .card-front,
+  /* .correct .card-front,
 .correct .card-back {
 
   background-color: var(--quiz-success);
@@ -77,8 +77,8 @@ html {
 :root {
   --quiz-header-bg: #121a21;
   /* --quiz-muted-bg: rgb(250, 250, 250, 0.5); */
-  --quiz-muted-bg-transparent: rgb(170, 170, 170, .1);
-  --quiz-muted-bg: rgb(170, 170, 170, 1.0);
+  --quiz-muted-bg-transparent: rgb(170, 170, 170, 0.1);
+  --quiz-muted-bg: rgb(170, 170, 170, 1);
   --quiz-muted-fg: rgb(250, 250, 250, 0.85);
   --quiz-darker: rgb(50, 50, 50, 0.95);
   --quiz-bg-solid: rgb(33, 33, 33, 1);
@@ -95,7 +95,8 @@ html {
 }
 
 @keyframes shadow-in {
-  0%, 100% {
+  0%,
+  100% {
     /* opacity: 0; */
     box-shadow: 0 0 0rem 0rem transparent;
   }
@@ -104,7 +105,7 @@ html {
   } */
   50% {
     /* opacity: 1; */
-    box-shadow: 0 0 .75rem .125rem hsl(322 100% 72%);
+    box-shadow: 0 0 0.75rem 0.125rem hsl(322 100% 72%);
   }
 }
 
@@ -118,7 +119,6 @@ html {
     scroll-snap-align: start;
   }
 } */
-
 
 .challenge {
   background-color: var(--quiz-bg);
@@ -263,14 +263,14 @@ html {
     color: var(--quiz-muted-fg);
     overflow: hidden;
     /* padding-inline: 0.5rem; */
-    
+
     button {
-      z-index: 90;;
+      z-index: 90;
       padding-right: 0.5rem;
-      opacity: .75;
+      opacity: 0.75;
       background-color: var(--quiz-bg-lighter);
       color: var(--quiz-muted-fg);
-      border: .5px solid var(--quiz-border);
+      border: 0.5px solid var(--quiz-border);
       padding: 0.25rem 0.5rem;
       font-size: 0.8rem;
       cursor: pointer;
@@ -281,12 +281,12 @@ html {
         padding 0.125s ease-in-out,
         transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275),
         translate 0.25s ease-in-out;
-      border-radius: .5rem 0rem 0rem 0rem;
+      border-radius: 0.5rem 0rem 0rem 0rem;
 
-      transform: translateX(.4rem);
-      margin-bottom: -1px;;
+      transform: translateX(0.4rem);
+      margin-bottom: -1px;
       &:hover {
-        opacity: .95;;
+        opacity: 0.95;
         transform: translateX(0);
         /* background-color: var(--quiz-bg-solid);
         color: var(--quiz-fg); */
@@ -365,14 +365,15 @@ html {
     & * {
       cursor: pointer;
     }
-    transition: background-color 0.125s ease-in-out, color 0.125s ease-in-out;
+    transition:
+      background-color 0.125s ease-in-out,
+      color 0.125s ease-in-out;
     &:hover {
       background-color: var(--quiz-muted-bg-transparent);
       /* color: var(--quiz-bg-solid); */
       /* color: var(--quiz-fg); */
     }
   }
-
 
   .help-box {
     width: clamp(320px, 100% - 2rem, 90vw);
@@ -527,26 +528,27 @@ html {
     display: none;
   }
 
+  &.active {
+    opacity: 0.9;
+    filter: brightness(0.8);
+  }
+
+  &:hover {
+    filter: brightness(1);
+  }
+
   &.success {
-    background-color: hsl(var(--success));
-    opacity: 0;
+    background-color: var(--quiz-bg-lighter);
+    opacity: 1;
     .congrats-message {
       display: block;
     }
   }
 }
-.score.active {
-  opacity: 0.9;
-  filter: brightness(0.8);
-}
-
-.score:hover {
-  filter: brightness(1);
-}
 
 .all-correct {
   .score-wrapper {
-    display: none;;
+    display: none;
   }
 }
 .score-wrapper {

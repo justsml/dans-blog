@@ -1,0 +1,1 @@
+import{f as n}from"./formatDistance.Ci3P8epv.js";const o=({date:e,modified:t})=>{typeof e=="string"&&(e=new Date(e)),typeof t=="string"&&t!=null&&(t=new Date(t));const r=e?n(new Date(e),new Date):"",s=t?n(new Date(t),new Date):"";return{createdAgo:r,modifiedAgo:s}};export{o as g};

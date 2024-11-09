@@ -62,7 +62,7 @@ export const ArticleCard = ({
       {...htmxArgs}
     >
       <label className="small-label" title={tags && tags.join(', ')} dangerouslySetInnerHTML={{
-        __html: category + (subCategory != null ? `: <sup>${subCategory}</sup>` : ``)
+        __html: category + (category === "Quiz" ? `: <sup>${subCategory}</sup>` : ``)
       }}></label>
       {isTile ? <h4 className="post-title">{title}</h4> : <h2 className="post-title">{title}</h2>}
       {image}

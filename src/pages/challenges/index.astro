@@ -1,0 +1,106 @@
+---
+import Page from "../../layouts/Page.astro";
+
+import omit from "lodash/omit";
+import { PostCollections } from "../../shared/dataCache";
+import { QuizGrid } from "./QuizGrid.tsx";
+
+import type { ArticlePost, QuizPost } from "../../types";
+import { slugify } from "../../shared/pathHelpers.ts";
+import { brightColors } from "../../content/colors.ts";
+// import { FilterForm } from "./QuizFilter.tsx";
+
+import "@/styles/nav.css";
+import "@/styles/global.css";
+import "./challenges.css";
+import "../../components/QuizUI/icons.css";
+
+// import ArticleFilterLinks from "../../components/ArticleFilterLinks.astro";
+
+let posts = PostCollections._quizPosts
+  .map(
+    (p) => omit(p as ArticlePost, ["data.cover", "data.cover_icon"]),
+    // omit(p as ArticlePost, ["data.body", "data.cover", "data.cover_icon"])
+  )
+  .concat() as ArticlePost[];
+
+const subCategoryList: string[] = [
+  ...new Set(posts.map((p) => p.data.subCategory)),
+].filter(Boolean) as string[];
+const subCategoryCounts = subCategoryList.reduce((acc, subCategory) => {
+  // @ts-expect-error
+  acc[subCategory] = posts.filter(
+    (p) => p.data.subCategory === subCategory,
+  ).length;
+  return acc;
+}, {});
+const subCategoryColors = subCategoryList.reduce((acc, subCategory, idx) => {
+  // @ts-expect-error
+  acc["cat-" + slugify(subCategory)] = brightColors[idx % brightColors.length];
+  return acc;
+}, {});
+
+console.log(
+  `Found ${subCategoryList.length} subcategories %o  %o    %o`,
+  subCategoryList,
+  subCategoryCounts,
+  subCategoryColors,
+);
+
+posts.sort((_a: ArticlePost, _b: ArticlePost) => {
+  const a = _a.data.subCategory;
+  const b = _b.data.subCategory;
+
+  if (a == null || b == null) {
+    return 0;
+  }
+  if (a < b) {
+    return -1;
+  } else if (a > b) {
+    return 1;
+  }
+  return 0;
+});
+
+// 1. Sort by subcategory
+// 2. Decorate with QuizPost
+
+const quizList = posts.map((p, idx): QuizPost => {
+  // @ts-expect-error
+  const questionCount = p.body?.split("</Challenge>").length - 1;
+
+  return {
+    ...p,
+    data: {
+      ...p.data,
+      index: idx,
+      subCategory: p.data.subCategory || "Uncategorized",
+      correctCount: 0,
+      questionCount,
+      label: p.data.label || p.data.title,
+    },
+  };
+});
+
+// console.log("QuizList %o", quizList);
+---
+
+<Page>
+  <section class="full-width">
+    <h2>Tech Challenge Quizzes</h2>
+  </section>
+  <p class="inset">
+    Prove your knowledge with my curated questions - from Node.js, SQL to HTML & CSS!
+  </p>
+
+  <section class="full-width">
+    <QuizGrid
+      client:load
+      quizList={quizList}
+      subCategoryCounts={subCategoryCounts}
+      subCategoryList={subCategoryList}
+    />
+  </section>
+
+  <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
+</Page>

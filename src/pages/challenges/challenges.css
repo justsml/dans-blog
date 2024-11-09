@@ -1,0 +1,116 @@
+
+:root {
+  --border-radius: .25rem;
+}
+
+.quiz-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
+  grid-auto-flow: dense;
+  gap: 1rem;
+
+}
+
+.expanded-row {
+  grid-column: 1 / -1;
+}
+
+.quiz-card {
+  position: relative;
+  border-radius: var(--border-radius);
+  padding: 4px;
+  --local-color: var(--cold-bg);
+  transition: background 0.3s ease-out, color 0.3s ease-out, padding 0.3s ease-out, transform 0.3s ease-out;
+  
+  h2 {
+    font-size: 1.25rem;
+    margin: 0;
+  }
+}
+
+.quiz-card-inner {
+  display: grid;
+  align-content: space-between;
+  padding: 0.75rem;
+
+  /* padding: 1.5rem; */
+  background: #222;
+  color: #fff;
+  border-radius: var(--border-radius);
+  width: 100%;
+  height: 100%;
+}
+
+.quiz-card::before,
+.quiz-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--local-color, --after-party-bg);
+  background-size: 500%;
+  z-index: -1;
+  /* animation: none; */
+  animation: glow 2s linear 3 normal;
+  /* animation-play-state: paused; */
+  width: 100%;
+  border-radius: var(--border-radius);
+  /* transform: rotateX(--x-rotation) rotateY(--y-rotation) scale(1.1); */
+}
+
+.quiz-card::after {
+  filter: blur(25px);
+  transform: translate3d(0, 0, 0);
+}
+
+.toggle-filters {
+  font-size: 1.5rem;
+}
+
+.toggle-filters::after {
+  content: "";
+  background: var(--icon-settings);
+  display: inline-block;
+  margin-left: 0.5em;
+  width: 1.125em;
+  height: 1.125em;
+
+}
+
+.selectedItem {
+  background-image: var(--neon-purple-gradient);
+  color: #fff;
+  
+}
+
+.quiz-card:hover, .quiz-card:focus-within {
+  --local-color: var(--party-bg);
+  &::before,
+  &::after {
+    animation: glow 2s linear infinite alternate;
+    /* animation-play-state: running; */
+  }
+  /* animation-play-state: running; */
+}
+
+@keyframes glow {
+  0% {
+    background-position: 0 0;
+  }
+
+  50% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+@keyframes keyRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

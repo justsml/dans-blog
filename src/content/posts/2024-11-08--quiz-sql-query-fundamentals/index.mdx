@@ -1,11 +1,13 @@
 ---
-title: "Quiz: Prove your SQL Query Fundamentals"
+unlisted: true
+title: "Quiz: Prove your SQL Skills!"
 subTitle: "Are you team SQL? Or noSQL?"
+label: "SQL 101"
 category: Quiz
 subCategory: SQL
 date: 2024-11-08
 modified: 2024-11-08
-tags: [quiz, intro, sql, core, fundamentals]
+tags: [quiz, intro, sql, core, fundamentals, beginner, intermediate]
 cover_full_width: peter-thomas-os14nsuXdI4-unsplash-wide.webp
 cover_mobile: peter-thomas-os14nsuXdI4-unsplash-square.webp
 cover_icon: peter-thomas-os14nsuXdI4-unsplash-square.webp
@@ -133,10 +135,10 @@ An `INNER JOIN` returns rows where there is a match in both tables. Unmatched ro
   group="SQL Subqueries"
   title="Correlated Subquery"
   options={[
-    {text: 'A subquery that runs once for each row in the outer query', isAnswer: true },
     {text: 'A subquery that runs once overall'},
     {text: 'A subquery used only in JOIN statements'},
-    {text: 'A subquery that returns multiple columns only'}
+    {text: 'A subquery that returns multiple columns only'},
+    {text: 'A subquery that runs once for each row in the outer query', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -158,10 +160,10 @@ A correlated subquery is evaluated once per row of the outer query. It reference
   group="SQL CTEs"
   title="WITH Clause Syntax"
   options={[
-    {text: 'Defining a temporary result set to use within a SELECT query', isAnswer: true },
     {text: 'Only allowed in DELETE statements'},
-    {text: 'Using recursive aggregations'},
-    {text: 'Used for defining views only'}
+    {text: 'Used for aggregation functions'},
+    {text: 'Used for defining views only'},
+    {text: 'Defining a temporary result set to use within a SELECT query', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -173,6 +175,19 @@ A correlated subquery is evaluated once per row of the outer query. It reference
   <slot name="explanation">
   <div className="explanation">
 The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query.
+
+This can help improve readability and maintainability of complex queries.
+
+The syntax is:
+```sql
+WITH cte_name AS (
+  SELECT column_name
+  FROM table_name
+)
+SELECT *
+FROM cte_name;
+```
+
   </div>
   </slot>
 </Challenge>
@@ -208,10 +223,10 @@ The `WITH` clause, or Common Table Expression (CTE), is used to define a tempora
   group="SQL Operators"
   title="Using the IN Operator"
   options={[
-    {text: 'Returns rows matching any value in a specified list', isAnswer: true },
-    {text: 'Checks for exact equality only'},
-    {text: 'Returns only unique rows'},
-    {text: 'Applies only to numeric columns'}
+    {text: 'Returns unique rows'},
+    {text: 'Requires an indexed column'},
+    {text: 'Applies only to numeric columns'},
+    {text: 'Returns rows matching values in a specified list', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -223,6 +238,11 @@ The `WITH` clause, or Common Table Expression (CTE), is used to define a tempora
   <slot name="explanation">
   <div className="explanation">
 The `IN` operator filters rows to match any values in a specified list, often as an alternative to multiple OR conditions.
+
+While it *might* return "unique rows" (and often does), it's not necessarily the primary purpose. 
+
+Indexing is not required here, though it's certainly a best practice to use `IN` on a column with an index, preferably a `UNIQUE` index, as it can improve performance.
+
   </div>
   </slot>
 </Challenge>
@@ -233,10 +253,11 @@ The `IN` operator filters rows to match any values in a specified list, often as
   group="SQL Functions"
   title="Using the COALESCE Function"
   options={[
-    {text: 'Returns the first non-NULL value in a list', isAnswer: true },
-    {text: 'Returns the last non-NULL value in a list'},
     {text: 'Counts NULL values'},
-    {text: 'Only works with numeric values'}
+    {text: 'Returns the last non-NULL argument'},
+    {text: 'Returns the first non-NULL argument', isAnswer: true },
+    {text: 'Limited to IDENTITY columns'},
+    {text: 'Originally from Printer Coalation' }
   ]}
 >
   <slot name="question">
@@ -248,6 +269,8 @@ The `IN` operator filters rows to match any values in a specified list, often as
   <slot name="explanation">
   <div className="explanation">
 The `COALESCE` function returns the first non-NULL value in a specified list, useful for substituting default values when NULLs are encountered.
+
+For example, `COALESCE(column_name, 0)` would return `0` if `column_name` is `NULL`.
   </div>
   </slot>
 </Challenge>
@@ -258,10 +281,11 @@ The `COALESCE` function returns the first non-NULL value in a specified list, us
   group="SQL Aggregate Functions"
   title="GROUP BY Usage"
   options={[
-    {text: 'Used to group rows by a specified column for aggregate functions', isAnswer: true },
+    {text: 'Hides duplicates'},
+    {text: 'Only used in joins'},
     {text: 'Sorts rows in ascending order'},
-    {text: 'Deletes duplicates'},
-    {text: 'Only used in joins'}
+    {text: 'Groups rows by the specified column(s)', isAnswer: true },
+    {text: 'Syntax should be GROUP WITH/USING' }
   ]}
 >
   <slot name="question">
@@ -283,10 +307,11 @@ The `GROUP BY` clause groups rows that have the same values in specified columns
   group="SQL Joins"
   title="FULL OUTER JOIN Basics"
   options={[
-    {text: 'Returns all rows from both tables, with NULLs for unmatched rows', isAnswer: true },
     {text: 'Returns only matched rows'},
+    {text: 'Returns only rows with non-NULL values' },
     {text: 'Returns unmatched rows from the left table only'},
-    {text: 'Returns unmatched rows from the right table only'}
+    {text: 'Returns unmatched rows from the right table only'},
+    {text: 'Returns all rows from both tables, with NULLs for unmatched rows', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -298,6 +323,8 @@ The `GROUP BY` clause groups rows that have the same values in specified columns
   <slot name="explanation">
   <div className="explanation">
 A `FULL OUTER JOIN` returns all rows from both tables, filling unmatched rows with NULLs for missing values.
+
+This is useful for comparing two tables and finding differences between them.
   </div>
   </slot>
 </Challenge>

@@ -136,7 +136,7 @@ const nextPageAttrs = nextUrl
     const lastArticleCard = getLastArticleCard();
     return lastArticleCard && lastArticleCard.getAttribute("hx-get") != null;
   };
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("astro:page-load", function () {
     const loadMore = document.querySelector(".pagination.load-more");
 
     if (loadMore) {

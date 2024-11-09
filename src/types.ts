@@ -8,6 +8,7 @@ export type ArticlePost = {
   data: {
     title: string;
     subTitle: string;
+    label?: string;
     /** To override utteranc.es lookup string */
     commentsKeyOverride?: string;
     unlisted?: boolean;
@@ -22,6 +23,20 @@ export type ArticlePost = {
     tags: string[];
   };
 };
+
+export type QuizPostFields = {
+  /** Server-side "known" data */
+  label: string;
+  index: number;
+  tags: string[];
+  questionCount: number;
+  /** Client-side values */
+  tries?: number;
+  status?: "not-started" | "in-progress" | "completed";
+  correctCount?: number;
+};
+
+export type QuizPost = ArticlePost & { data: QuizPostFields };
 
 /**
  * From: https://docs.astro.build/en/guides/routing/#complete-api-reference

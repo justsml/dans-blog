@@ -18,6 +18,7 @@ const posts = defineCollection({
     z.object({
       title: z.string(),
       subTitle: z.string().optional().default(""),
+      label: z.string().optional(),
       /** To override utteranc.es lookup string */
       commentsKeyOverride: z.string().optional(),
       
