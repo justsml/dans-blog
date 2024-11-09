@@ -8,6 +8,7 @@ export type ArticlePost = {
   data: {
     title: string;
     subTitle: string;
+    label?: string;
     /** To override utteranc.es lookup string */
     commentsKeyOverride?: string;
     unlisted?: boolean;

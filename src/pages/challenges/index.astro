@@ -3,13 +3,12 @@ import Page from "../../layouts/Page.astro";
 
 import omit from "lodash/omit";
 import { PostCollections } from "../../shared/dataCache";
-import { pageSize } from "../../shared/pagination";
-import { Badge } from "../../components/ui/badge.tsx";
-import { QuizCard } from "./QuizCard.tsx";
+import { QuizGrid } from "./QuizGrid.tsx";
 
 import type { ArticlePost, QuizPost } from "../../types";
 import { slugify } from "../../shared/pathHelpers.ts";
 import { brightColors } from "../../content/colors.ts";
+import { FilterForm } from "./FilterForm.tsx";
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
@@ -18,7 +17,7 @@ import "./challenges.css";
 
 let posts = PostCollections._quizPosts
   .map(
-    (p) => omit(p as ArticlePost, ["data.cover", "data.cover_icon"])
+    (p) => omit(p as ArticlePost, ["data.cover", "data.cover_icon"]),
     // omit(p as ArticlePost, ["data.body", "data.cover", "data.cover_icon"])
   )
   .concat() as ArticlePost[];
@@ -29,7 +28,7 @@ const subCategoryList: string[] = [
 const subCategoryCounts = subCategoryList.reduce((acc, subCategory) => {
   // @ts-expect-error
   acc[subCategory] = posts.filter(
-    (p) => p.data.subCategory === subCategory
+    (p) => p.data.subCategory === subCategory,
   ).length;
   return acc;
 }, {});
@@ -43,7 +42,7 @@ console.log(
   `Found ${subCategoryList.length} subcategories %o  %o    %o`,
   subCategoryList,
   subCategoryCounts,
-  subCategoryColors
+  subCategoryColors,
 );
 
 posts.sort((_a: ArticlePost, _b: ArticlePost) => {
@@ -64,7 +63,7 @@ posts.sort((_a: ArticlePost, _b: ArticlePost) => {
 // 1. Sort by subcategory
 // 2. Decorate with QuizPost
 
-const quizList: QuizPost[] = posts.map((p, idx) => {
+const quizList = posts.map((p, idx): QuizPost => {
   // @ts-expect-error
   const questionCount = p.body?.split("</Challenge>").length - 1;
 
@@ -76,6 +75,7 @@ const quizList: QuizPost[] = posts.map((p, idx) => {
       subCategory: p.data.subCategory || "Uncategorized",
       correctCount: 0,
       questionCount,
+      label: p.data.label || p.data.title,
     },
   };
 });
@@ -84,36 +84,25 @@ const quizList: QuizPost[] = posts.map((p, idx) => {
 ---
 
 <Page>
-  <div class="filter-toolbar">
-    {/* <ArticleFilterLinks /> */}
-    <section class="tag-filters skill-level">
-      <Badge>Beginner</Badge>
-      <Badge>Intermediate</Badge>
-      <Badge>Advanced</Badge>
-    </section>
-    <section class="status-filters">
-      <Badge variant={"outline"}>Not Started</Badge>
-      <Badge variant={"outline"}>Started</Badge>
-      <Badge variant={"outline"}>Complete</Badge>
-    </section>
-  </div>
-  <div class:list={["quiz-list"]}>
-    {
-      quizList
-        .filter(
-          ({ data: { unlisted, hidden } }) =>
-            hidden !== true
-        )
-        .map((props, index) => (
-          <QuizCard
-            client:load
-            article={props}
-            width={200}
-            subCategoryCounts={subCategoryCounts}
-            subCategoryList={subCategoryList}
-          />
-        ))
-    }
-    <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
-  </div>
+
+  <section class="full-width">
+    <h2>Tech Challenge Quizzes</h2>
+    <p>
+      Prove your knowledge with my curated quiz questions!
+      
+      Most have a Each quiz has a set of questions
+      that you can answer to test your knowledge on a particular topic.
+    </p>
+  </section>
+  
+  <section class="full-width">
+    <QuizGrid
+    client:load
+    quizList={quizList}
+    subCategoryCounts={subCategoryCounts}
+    subCategoryList={subCategoryList}
+  />
+</section>
+
+  <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
 </Page>
