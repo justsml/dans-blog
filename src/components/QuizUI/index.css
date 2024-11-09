@@ -5,7 +5,7 @@ html {
 
 .quiz-ui {
   padding: 1rem 0;
-  max-width: 98vw;
+  /* max-width: 98vw; */
   /* counter-increment: question-counter; */
 
   .card-container {
@@ -104,17 +104,20 @@ html {
   } */
   50% {
     /* opacity: 1; */
-    box-shadow: 0 0 1.25rem .25rem hsl(322 100% 72%);
+    box-shadow: 0 0 .75rem .125rem hsl(322 100% 72%);
   }
 }
 
-@supports (scroll-snap-align: start) {
-  .challenge {
+/* @supports (scroll-snap-align: start) {
+  .quiz-ui {
     scroll-snap-type: y proximity;
     scroll-padding-top: 15vh;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
   }
-}
+  .challenge {
+    scroll-snap-align: start;
+  }
+} */
 
 
 .challenge {
@@ -140,7 +143,9 @@ html {
   /* animation-range-start: contain 5rem;
   animation-range-end: exit; */
 
-  animation-range-start: cover 400px;
+  animation-range-start: cover 300px;
+
+  animation-range-end: cover;
   /* animation-range-end: 10vh; */
   /* &:focus-within,
   &:hover:not(.correct) {
@@ -215,9 +220,14 @@ html {
     .option *:hover {
       cursor: default;
     }
+    .quiz-hint-toggle button:hover {
+      opacity: 1;
+      transform: unset;
+      box-shadow: none;
+    }
   }
   &.incorrect {
-    animation: none;
+    /* animation: none; */
     border: 1px solid var(--quiz-error) !important;
     .quiz-header {
       border-bottom: 2px solid var(--quiz-error);
