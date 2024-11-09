@@ -34,7 +34,7 @@ const reCaptchaSiteKey =
   let $gRecaptchaResponse: HTMLInputElement | null = null;
   // g-recaptcha-response is the token that you'll submit as part of the form
   // on DOMDontentLoaded, render the reCaptcha widget
-  document.addEventListener("DOMContentLoaded", async () => {
+  document.addEventListener("astro:page-load", async () => {
     const $reCaptchaSiteKey: HTMLDivElement | null = document.querySelector(
       "[data-recaptcha-site-key]"
     );

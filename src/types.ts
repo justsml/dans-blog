@@ -23,6 +23,19 @@ export type ArticlePost = {
   };
 };
 
+export type QuizPostFields = {
+  /** Server-side "known" data */
+  index: number;
+  tags: string[];
+  questionCount: number;
+  /** Client-side values */
+  tries?: number;
+  status?: "not-started" | "in-progress" | "completed";
+  correctCount?: number;
+};
+
+export type QuizPost = ArticlePost & { data: QuizPostFields };
+
 /**
  * From: https://docs.astro.build/en/guides/routing/#complete-api-reference
  */
