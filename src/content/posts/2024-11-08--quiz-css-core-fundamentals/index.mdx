@@ -52,7 +52,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      
       New units like `ch`, `vmin`, `vmax`, `vh`, `vw` are quite useful for dynamic/responsive layouts.
       
       There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, `cap` for the size of capital letters, and `ex` which is equal to the height of the letter `x`.
@@ -68,10 +67,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Selector: Fundamentals"
   title="Matching Selectors to HTML Elements"
   options={[
-    { text: "a#home[name='home']", isAnswer: true },
     { text: "#Home" },
     { text: "a [id='home']" },
-    { text: "a:contains(home)" }
+    { text: "a:contains(home)" },
+    { text: "a#home[name='home']", isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -97,10 +96,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Selector: Fundamentals"
   title="Attribute Selector for a Button"
   options={[
-    { text: 'button[onclick]', isAnswer: true },
-    { text: '.contact' },
     { text: 'button:link' },
-    { text: 'button:onclick' }
+    { text: 'button::click' },
+    { text: 'button:onclick' },
+    { text: 'button[onclick]', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -124,10 +123,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Selector: Fundamentals"
   title="Invalid CSS Selector"
   options={[
+    { text: 'a {}' },
+    { text: 'b.b {}' },
     { text: 'c {}', isAnswer: true },
     { text: '#d {}' },
-    { text: 'a {}' },
-    { text: '.b {}' }
   ]}
 >
   <slot name="question">
@@ -138,6 +137,8 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   <slot name="explanation">
     <div className="explanation">
       The selector `c {}` is invalid because there is no `<c></c>` HTML element. Valid CSS selectors match known HTML tags, IDs, or classes.
+
+      The other selectors are valid, targeting `<a>`, `<b class="b">`, and an element with the ID `d`.
     </div>
   </slot>
 </Challenge>
@@ -148,10 +149,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Selector: Fundamentals"
   title="Selecting the Last Link"
   options={[
-    { text: 'nav:nth-child(3)', isAnswer: true },
-    { text: 'nav:last-of-type(a)' },
     { text: 'a :nth-child(3)' },
-    { text: 'a:last-item' }
+    { text: 'a:last-item' },
+    { text: 'nav:last-of-type(a)' },
+    { text: 'nav:nth-child(3)', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -179,9 +180,9 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Selector: Specificity"
   title="Selector Priority"
   options={[
-    { text: 'a#quote', isAnswer: true },
     { text: 'main article section blockquote a' },
     { text: 'blockquote a' },
+    { text: 'a#quote', isAnswer: true },
     { text: 'a.quote' }
   ]}
 >
@@ -203,10 +204,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Layouts: Centering"
   title="Centering Text in a Block Element"
   options={[
-    { text: '.box { text-align: center; }', isAnswer: true },
     { text: '.box { align: center; }' },
     { text: '.box { margin: 0 auto; }' },
     { text: '.box { align-content: center; }' },
+    { text: '.box { text-align: center; }', isAnswer: true },
     { text: '.box { text-content: center; }' }
   ]}
 >
@@ -229,10 +230,10 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="Invalid CSS Unit for Font Size"
   options={[
     { text: '10cx', isAnswer: true },
+    { text: '10mm' },
+    { text: '10pt' },
     { text: '10px' },
     { text: '10vmin' },
-    { text: '10pt' },
-    { text: '10mm' }
   ]}
 >
   <slot name="question">
@@ -260,10 +261,11 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Layouts: Units"
   title="Calculating Pixel Size of Nested Font Sizes"
   options={[
+    { text: '!40px' },
     { text: '5px', isAnswer: true },
-    { text: '40px' },
+    { text: '20px' },
     { text: '25px' },
-    { text: '20px' }
+    { text: '40px' },
   ]}
 >
   <slot name="question">

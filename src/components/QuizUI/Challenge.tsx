@@ -61,13 +61,12 @@ export default function Challenge({
   };
 
   useEffect(() => {
-    if (!questionStore) 
+    if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
-    
   }, [global?.location?.pathname]);
 
   useEffect(() => {
-    if (!questionStore) 
+    if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
     if (questionStore) {
@@ -105,14 +104,25 @@ export default function Challenge({
   };
 
   const handleAnswer = (option: Option) => {
-    console.log("Answering question:", title, question, option);
-    if (!questionStore) questionStore = QuestionStore(global?.location.pathname);
+    // console.log("Answering question:", title, question, option);
+    if (!questionStore)
+      questionStore = QuestionStore(global?.location.pathname);
     questionStore?.answerQuestion(
       {
         index: questionIndex,
       },
       option,
     );
+
+    // console.log("Answered question:", title, option, {
+    //   __slug: questionStore.__slug,
+    //   sumOfTries: questionStore.sumOfTries(),
+    //   correct: questionStore.correct(),
+    //   total: questionStore.total(),
+    // });
+
+    // questionStore.total();
+
     if (option.isAnswer) {
       setIsCorrect(true);
       setChallengeClass("correct pulse");
@@ -146,7 +156,8 @@ export default function Challenge({
 
   useEffect(() => {
     if (challengeRef.current) {
-      const e = challengeRef.current.querySelector("div.explanation")?.innerHTML;
+      const e =
+        challengeRef.current.querySelector("div.explanation")?.innerHTML;
       if (e) setExplanationText(e);
     }
   }, [explanationText]);
@@ -156,7 +167,8 @@ export default function Challenge({
   let correctCount = options.filter((o) => o.isAnswer).length;
 
   if (correctCount === 0) {
-    console.error("No correct answers found for question:",
+    console.error(
+      "No correct answers found for question:",
       question,
       title,
       options,
@@ -236,9 +248,7 @@ export default function Challenge({
           transition: "height 0.2s ease-in-out",
         }}
       >
-        <section className="quiz-options card card-front">
-          {_options}
-        </section>
+        <section className="quiz-options card card-front">{_options}</section>
         <section className={"explanation card card-back "}>
           <p
             className="help-box"
