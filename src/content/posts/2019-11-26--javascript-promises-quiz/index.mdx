@@ -4,8 +4,8 @@ subTitle: Never drop a promise again!
 date: 2019-11-26
 modified: 2024-08-01
 tags: [promises, programming, async, javascript, guides, quiz]
-category: Quizzes
-subCategory: Quiz
+category: Quiz
+subCategory: JavaScript
 cover: olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_mobile: w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
 cover_icon: icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
@@ -28,7 +28,8 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <QuizUI>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={0}
   group="Handling Errors"
   title="Multiple `.catch`'s #1"
   options={[
@@ -63,7 +64,8 @@ Then the `.catch` handlers work like the DOM's `.addEventListener(event, callbac
 
 
 <Challenge
-  client:only="react"
+  client:load
+  index={1}
   group="Handling Errors"
   title="Multiple `.catch`'s #2"
   options={[
@@ -96,6 +98,7 @@ When using the Promise constructor you must invoke either `resolve()` or `reject
 
 <Challenge
 client:only="react"
+index={2}
 group="Handling Errors"
 title="Chaining `.then` and `.catch`'s"
 options={[
@@ -128,6 +131,7 @@ When chaining `.then`'s and `.catch`'s it is helpful to think of them as a serie
 
 <Challenge
 client:only="react"
+index={3}
 group="Handling Errors"
 title="Chaining `.catch`'s"
 options={[
@@ -159,7 +163,8 @@ When chaining `.catch`'s, each one only handles errors thrown in previous `.then
 </Challenge>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={4}
   group="Handling Errors"
   title="Multiple `.catch`'s"
   options={[
@@ -198,7 +203,8 @@ This trick works only when there is a subsequent `.then` to receive the value.
 </Challenge>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={5}
   group="Handling Data"
   title="Flow between `.then`'s"
   options={[
@@ -234,7 +240,8 @@ A `return` is key in order to pass a value to the next `.then`.
 </Challenge>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={6}
   group="Handling Data"
   title="Flow between `.then`'s"
   options={[
@@ -270,7 +277,8 @@ There are 2 `console.log` calls which will be called.
 </Challenge>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={7}
   group="Handling Data"
   title="Flow between `.then`'s"
   options={[
@@ -306,7 +314,8 @@ A `return` is key in order to pass a value to the next `.then`.
 </Challenge>
 
 <Challenge
-  client:only="react"
+  client:load
+  index={8}
   group="Handling Data"
   title="Flow between `.then`'s and `.catch`'s"
   options={[

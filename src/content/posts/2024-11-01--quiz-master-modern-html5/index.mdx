@@ -1,0 +1,546 @@
+---
+title: "Quiz: Does HTML still belong on your résumé?"
+subTitle: "Prove yourself!"
+category: Quiz
+subCategory: HTML
+date: 2024-10-31
+modified: 2024-11-06
+tags: [web, quiz, semantic, html5, web]
+cover_full_width: jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+## So, you think you got HTML5 skills?
+
+After all, you know your `<div>` from your `<span>`, right? But how well do you know the more advanced, semantic elements in HTML5?
+
+> Note: If you can't pass this test, you legally have to remove `HTML Skills` from your Resume.
+
+### Begin!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup"
+  title="Role of `<ul>`"
+  options={[
+    {text: 'Unordered List', isAnswer: true },
+    {text: 'Unique List'},
+    {text: 'Universal List'},
+    {text: 'User List'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the primary role of the `<ul>` element in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The `<ul>` tag creates an unordered list, with items typically marked by bullets.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Advanced Semantic HTML"
+  title="Usage of `<dd>`"
+  options={[
+    {text: 'Description definition'},
+    {text: 'Description term'},
+    {text: 'Data display'},
+    {text: 'Description Details', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `<dd>` element represent in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines the "Description Definition" in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
+
+This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
+
+```html
+<dl>
+  <dt>JS</dt>
+  <dd>Client-side</dd>
+  <dd>Server-side</dd>
+
+  <dt>HTML</dt>
+  <dd>Client-side</dd>
+</dl>
+
+```
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Advanced Semantic HTML"
+  title="Usage of `<figure>/<figcaption>`"
+  options={[
+    {text: 'For images with copyright info to be displayed'},
+    {text: 'Describing images, charts, etc.', isAnswer: true },
+    {text: 'To annotate tables, computations, etc.'},
+    {text: 'Used for captioning videos'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    When should the `<figure>` and `<figcaption>` elements be used?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) tag is typically used to wrap self-contained (media) content, like an image or chart, along with [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) to provide a caption.
+
+This is useful for images, diagrams, code snippets, and more.
+
+```html
+<figure>
+  <img src="image.jpg" alt="Description of image">
+  <figcaption>Image caption</figcaption>
+</figure>
+```
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Advanced Semantic HTML"
+  title="Usage of `<article>`"
+  options={[
+    {text: 'For content, sidebars & copyright info'},
+    {text: 'A standalone content section', isAnswer: true },
+    {text: 'Part of a <newsletter>'},
+    {text: 'Defines a news article'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of the `<article>` element in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<article>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) is used to define a standalone piece of content that can be independently distributed or reused.
+
+It is often used for blog posts, news articles, forum posts, or user comments.
+
+You can use multiple articles on a page (for infinitely scrolling pages, for example). Or, you can nest them within each other to create a hierarchy of "standalone content."
+
+```html
+<article>
+  <h2>Article Title</h2>
+  <p>Article content...</p>
+  <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+  </article>
+</article>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={4}
+  group="Advanced Semantic HTML"
+  title="Usage of `<fieldset>/<legend>`"
+  options={[
+    {text: 'Grouping form elements under a title', isAnswer: true },
+    {text: 'Define instructions for the form fields'},
+    {text: 'Not a valid use of <legend>'},
+    {text: 'Defines expandable section'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of `<fieldset>` and `<legend>` elements in a form?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+[`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) is used to group related form controls, and `<legend>` provides a title/label for the group, improving accessibility.
+
+This is useful for grouping related form elements, like a section for shipping address or payment details.
+
+```html
+<fieldset>
+  <legend>Shipping Address</legend>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  ...
+</fieldset>
+<fieldset>
+  <legend>Payment Details</legend>
+  <label for="card">Card Number:</label>
+  <input type="text" id="card" name="card">
+  ...
+</fieldset>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Advanced Semantic HTML"
+  title="Purpose of `<meter>`"
+  options={[
+    {text: 'A progress bar in Metric units'},
+    {text: 'Depict a numeric value within a range', isAnswer: true },
+    {text: 'Converts a distance to meters'},
+    {text: 'Specialty performance related tag'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of the `<meter>` element?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<meter>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) is used to represent a scalar (single) measurement within a set range, such as temperature, disk usage or a vote tally.
+
+It may seem similar to a [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) bar, however progress bars **ALWAYS** start at zero. Therefore `<progress>` elements show a `percent of completion`, while a `<meter>` shows any value within a definable range.
+
+```html
+<meter min="-60" max="130" value="75" /> 75°F
+<meter min="0" max="100" value="75" /> 75%
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Semantic HTML"
+  title="Usage of `<source>`"
+  options={[
+    {text: 'Used to define a data source'},
+    {text: 'Declare available media file format(s)', isAnswer: true },
+    {text: 'Cite sources using APA or MLA format'},
+    {text: 'Define a source code block'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Why is the `<source>` element used?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<source>` element is used to specify available media formats](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), and [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) elements, allowing the browser to choose the most suitable format.
+
+```html
+<video controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+</video>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Advanced Semantic HTML"
+  title="Usage of `<hgroup>`"
+  options={[
+    {text: 'Legacy element, no longer in use'},
+    {text: 'To group headings together'},
+    {text: 'Define a table of contents'},
+    {text: 'Group a heading with its subtitle', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How should you use the `<hgroup>` element?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+
+The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a neighboring related `<h1>` to `<h6>` elements.
+
+It may be useful if you frequently put `<h1>` and `<h2>` elements together, since the `<h2>` should probably be a `<p>` tag.
+
+```html
+<article>
+  <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+    <h2>Understanding Mary Shelley</h2>
+  </hgroup>
+  <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+  </section>
+</article>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Advanced Semantic HTML"
+  title="Usage of `<menu>`"
+  options={[
+    {text: 'To define an ordered list'},
+    {text: 'To create a menu or context menu', isAnswer: true },
+    {text: 'To represent a navigation bar'},
+    {text: 'To define a button group'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the `<menu>` element used for in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) functions exactly like a `<ul>`.
+
+If your `<li>`'s have mostly links, **you should use a `<menu>` element instead.**
+
+```html
+<menu> <!-- Instead of <ul> use a <menu> -->
+  <li><a href="/home">Home</a></li>
+  <li><a href="/about">About</a></li>
+  <li><a href="/contact">Contact</a></li>
+</menu>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={9}
+  group="Advanced Semantic HTML"
+  title="Role of `<details>/<summary>`"
+  options={[
+    {text: 'Native collapsible content', isAnswer: true },
+    {text: 'Native tooltips'},
+    {text: 'Add context to <section>'},
+    {text: 'To display structured data'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What role do `<details>` and `<summary>` play in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) allows for collapsible content, and [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) specifies a visible title for the content.
+
+This is useful for FAQs, collapsible sections, or any content that can be toggled.
+
+```html
+<details>
+  <summary>Click to expand 🤯</summary>
+  <p>Hidden content! 💥</p>
+</details>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={10}
+  group="Advanced Semantic HTML"
+  title="Purpose of `<dialog>`"
+  options={[
+    {text: 'Format for screenwriters'},
+    {text: 'Declare a modal or popup', isAnswer: true },
+    {text: 'Declare a ChatGPT-style chat discussion'},
+    {text: 'Deprecated in favor of <wizard>'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Why should you use a `<dialog>` element?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element is used for pop-ups or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
+
+It's functionally like a `<div>` - with a few extra built-in features.
+
+> According to MDN:
+> JavaScript should be used to display the `<dialog>` element. Use the .showModal() method to display a modal dialog and the `.show()` method to display a non-modal dialog. The dialog box can be closed using the `.close()` method or using the dialog method when submitting a `<form>` that is nested within the `<dialog>` element. Modal dialogs can also be closed by pressing the Esc key.
+
+```html
+<dialog>
+  <h2>Modal Title</h2>
+  <p>Modal content...</p>
+  <button>Close</button>
+</dialog>
+```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={11}
+  group="Advanced Semantic HTML"
+  title="Usage of `<date>` + `<time>`"
+  options={[
+    {text: 'To represent date and time', isAnswer: true },
+    {text: 'To define timestamp'},
+    {text: 'To format dates only'},
+    {text: 'To make date inputs draggable'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How are `<date>` and `<time>` elements used in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The `<time>` element is used for date and time, which can include human-readable content and machine-readable `datetime` attributes.
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={12}
+  group="Advanced Semantic HTML"
+  title="Purpose of ARIA attributes"
+  options={[
+    {text: 'Helpers for touch devices'},
+    {text: 'Improve accessibility', isAnswer: true },
+    {text: 'Control sounds & playback'},
+    {text: 'To only use <div>\'s'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the purpose of ARIA attributes?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+ARIA (Accessible Rich Internet Applications) attributes enhance web accessibility by providing extra context for screen readers and other assistive technologies.
+
+There are roles, states, and properties that can be used to describe elements.
+
+```html
+<button aria-label="Close" aria-expanded="true">X</button>
+<main aria-live="polite">...</main>
+<dialog
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="dialog_label"
+  aria-describedby="dialog_desc"
+></dialog>
+```
+  </div>
+  </slot>
+
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={13}
+  group="Advanced Semantic HTML"
+  title="Use of `role` attribute"
+  options={[
+    {text: 'For defining component behavior'},
+    {text: 'To describe element purpose', isAnswer: true },
+    {text: 'Restrict access to elements'},
+    {text: 'For Web Components only'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the use of the `role` attribute in HTML?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+The `role` attribute describes
+
+ the purpose of an element to assistive technologies, helping improve accessibility.
+  </div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>
+
+
+So, how did you do? Excited to use more semantic HTML elements in your next project? 🚀
+
+Or, resigned to `<div>` and `<span>` for life? 😅
+
+Let me know in the comments below! 👇

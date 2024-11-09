@@ -1,0 +1,296 @@
+---
+title: "Quiz: Symbols & Enumerables"
+subTitle: "Do you know the less- bits of ES2015?"
+category: Quiz
+subCategory: JavaScript
+date: 2024-10-31
+modified: 2024-11-07
+tags: [javascript, quiz, interfaces, symbols, enumerables]
+cover_full_width: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+
+# Quiz: JavaScript Interfaces, Symbols, and Enumerables
+
+> * **Prove your JavaScript skillz!** 🚀
+> * No login or signup required. ✨
+> * Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Getter vs Direct Property Access"
+  index={0}
+  options={[
+    {text: 'Access the value directly', isAnswer: true },
+    {text: 'Call a method to access the value'},
+    {text: 'Use a loop'},
+    {text: 'Throw an error'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    How should you access a JavaScript object property that uses a getter method?
+    ```js
+    const obj = {
+      get val() {
+        return 'got it!';
+      }
+    };
+    console.log(obj.val);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    In JavaScript, a getter can be accessed like a normal property. There's no need to call it like a function. 
+    In this example, accessing `obj.val` directly invokes the getter method and outputs `got it!`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Symbol Usage in Object Keys"
+  index={1}
+  options={[
+    {text: 'Using a Symbol', isAnswer: true },
+    {text: 'Using a string'},
+    {text: 'Using a number'},
+    {text: 'Using an object as a key'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the correct way to create a truly unique property key for a JavaScript object?
+    ```js
+    const uniqueKey = Symbol('myUniqueKey');
+    const obj = {
+      [uniqueKey]: 'unique value'
+    };
+    console.log(obj[uniqueKey]);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Symbols are a unique and immutable primitive type that can be used as keys for object properties. This helps in avoiding name collisions, especially in large codebases or when writing reusable libraries.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Enumerable Properties"
+  index={2}
+  options={[
+    {text: 'Yes, it will be listed', isAnswer: true },
+    {text: 'No, it won\'t be listed'},
+    {text: 'It depends on the value type'},
+    {text: 'Throws an error'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Will the property `age` be listed during a `for...in` iteration?
+    ```js
+    const person = {};
+    Object.defineProperty(person, 'age', {
+      value: 25,
+      enumerable: true
+    });
+    for (let key in person) {
+      console.log(key);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The `enumerable` property in `Object.defineProperty()` controls whether the property will show up in enumeration methods like `for...in`. In this example, since `enumerable: true`, the `age` property will be listed during iteration.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Working with Objects"
+  title="Default Enumerability with Object.defineProperty()"
+  index={3}
+  options={[
+    {text: 'false', isAnswer: true },
+    {text: 'true'},
+    {text: 'undefined'},
+    {text: 'Depends on context'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the default enumerability of a property when using `Object.defineProperty()` without specifying `enumerable`?
+    ```js
+    const car = {};
+    Object.defineProperty(car, 'make', {
+      value: 'Toyota'
+    });
+    console.log(Object.keys(car));
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    When you use `Object.defineProperty()` without specifying `enumerable`, its default value is `false`. This means the `make` property will not show up in `Object.keys()` or other enumeration methods.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Unique Symbols"
+  index={4}
+  options={[
+    {text: 'false', isAnswer: true },
+    {text: 'true'},
+    {text: 'Depends on their descriptions'},
+    {text: 'Throws an error'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What will be the result of the following comparison?
+    ```js
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('id');
+    console.log(sym1 === sym2);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Each call to `Symbol()` creates a unique and immutable value, even if the description is the same. In this case, `sym1` and `sym2` are different symbols, so the comparison returns `false`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Symbols as Non-Enumerable Keys"
+  index={5}
+  options={[
+    {text: 'No, it won\'t be listed', isAnswer: true },
+    {text: 'Yes, it will be listed'},
+    {text: 'Depends on the iteration method'},
+    {text: 'Throws an error'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Will the Symbol-keyed property be listed during a `for...in` iteration?
+    ```js
+    const sym = Symbol('uniqueKey');
+    const obj = {
+      [sym]: 'symbol value',
+      regularKey: 'regular value'
+    };
+    for (let key in obj) {
+      console.log(key);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Properties keyed by Symbols are not enumerable in `for...in` loops or `Object.keys()`. In this example, only `regularKey` will be listed, not the Symbol-keyed property.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Advanced Interfaces"
+  title="Retrieve All Symbol Keys"
+  index={6}
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.entries()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true },
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which method can be used to retrieve all Symbol keys of an object?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The `Object.getOwnPropertySymbols()` method is used to retrieve all Symbol properties of an object.
+
+    ```js
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
+    ```
+
+  </div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>

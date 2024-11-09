@@ -27,6 +27,8 @@ const posts = defineCollection({
 
       date: z.coerce.string().optional(),
       modified: z.coerce.string().optional(),
+      minReleaseDate: z.coerce.date().optional(),
+
       cover: image().optional(), // z.string().optional(),
       cover_full_width: image().optional(),
       cover_mobile: image().optional(),
@@ -36,7 +38,6 @@ const posts = defineCollection({
       
       category: z.string().optional(),
       subCategory: z.string().optional(),
-
       tags: z.array(z.string()).optional(),
 
       popularity: z.number().min(0).max(1.0).optional(),

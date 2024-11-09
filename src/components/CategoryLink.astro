@@ -1,0 +1,17 @@
+---
+import { PostCollections } from "../shared/dataCache.tsx";
+import { slugify } from "../shared/pathHelpers.ts";
+
+type Props = {
+  category?: string;
+};
+
+const { category } = Astro.props;
+const posts = PostCollections.getPostsByCategory(category ?? '');
+const count = posts.length;
+
+---
+
+{category && <label class="category-link" title={count >= 2 ? `${count} posts` : `${count} post`}>
+  {count > 2 ? <a href={`/category/${slugify(category)}`}>{category}</a> : category} ({count})
+</label>}

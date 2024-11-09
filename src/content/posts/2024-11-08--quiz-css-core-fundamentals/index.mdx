@@ -1,0 +1,354 @@
+---
+title: "Quiz: Do You know CSS fundamentals? (for 2025)"
+subTitle: "Are you front-end enough?"
+category: Quiz
+subCategory: CSS
+date: 2024-11-08
+modified: 2024-11-08
+tags: [quiz, intro, css, styles]
+cover_full_width: yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+# Quiz: Do You Know CSS?
+
+* Modern CSS?  🤔
+* **Does CSS belong on _your_ resume???** 🚀
+* Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup"
+  title="Do You Understand CSS Fundamentals?"
+  options={[
+    { text: 'em' },
+    { text: 'rem' },
+    { text: 'cm' },
+    { text: 'mm' },
+    { text: 'in' },
+    { text: 'pt' },
+    { text: 'pc' },
+    { text: 'px' },
+    { text: 'ex' },
+    { text: 'ch' },
+    { text: 'vmin' },
+    { text: 'vmax' },
+    { text: 'vh' },
+    { text: 'vl', isAnswer: true },
+    { text: 'vw' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which of the following is not a `unit` of CSS?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      
+      New units like `ch`, `vmin`, `vmax`, `vh`, `vw` are quite useful for dynamic/responsive layouts.
+      
+      There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, `cap` for the size of capital letters, and `ex` which is equal to the height of the letter `x`.
+
+      Popular units include the familiar `px` for pixels, `em` for the width of the letter `m`, and `rem` is secretly an homage to the forgotten 90's band R.E.M. (ok, not really, it's just a relative `em` unit that references the root element).
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Selector: Fundamentals"
+  title="Matching Selectors to HTML Elements"
+  options={[
+    { text: "a#home[name='home']", isAnswer: true },
+    { text: "#Home" },
+    { text: "a [id='home']" },
+    { text: "a:contains(home)" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector best matches the following HTML?
+      ```html
+      <a id="home" name="home" href="/home">Home</a>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The correct answer is `a#home[name='home']`, which matches both the `id` and `name` attributes. CSS selectors are case-sensitive, so `#Home` wouldn't work, and spaces imply child elements, which doesn't apply here.
+
+      The `:contains()` selector is not a standard CSS selector, but it is available in several JS libraries.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Selector: Fundamentals"
+  title="Attribute Selector for a Button"
+  options={[
+    { text: 'button[onclick]', isAnswer: true },
+    { text: '.contact' },
+    { text: 'button:link' },
+    { text: 'button:onclick' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector matches the following HTML button?
+      ```html
+      <button id="contact" onclick="emailModal.open()">Contact</button>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The correct answer is `button[onclick]`, which targets the attribute `onclick`. Note that `.contact` would target a class, not an ID, and `:link` applies only to anchors with `href` attributes.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Selector: Fundamentals"
+  title="Invalid CSS Selector"
+  options={[
+    { text: 'c {}', isAnswer: true },
+    { text: '#d {}' },
+    { text: 'a {}' },
+    { text: '.b {}' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which of these selectors is invalid?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The selector `c {}` is invalid because there is no `<c></c>` HTML element. Valid CSS selectors match known HTML tags, IDs, or classes.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Selector: Fundamentals"
+  title="Selecting the Last Link"
+  options={[
+    { text: 'nav:nth-child(3)', isAnswer: true },
+    { text: 'nav:last-of-type(a)' },
+    { text: 'a :nth-child(3)' },
+    { text: 'a:last-item' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector matches the last link in the following HTML?
+      ```html
+      <nav>
+        <a id="home" name="home" href="/home">Home</a>
+        <a id="login" name="login" href="/login">Login</a>
+        <a id="help" name="help" href="/help">Help</a>
+      </nav>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `nav:nth-child(3)` selects the third child in the list, but `a:last-of-type` might be more direct. Note that `a:last-item` is not a valid CSS pseudo-class.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Selector: Specificity"
+  title="Selector Priority"
+  options={[
+    { text: 'a#quote', isAnswer: true },
+    { text: 'main article section blockquote a' },
+    { text: 'blockquote a' },
+    { text: 'a.quote' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector will take priority?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The `a#quote` selector takes priority due to the ID, which has a higher specificity than tag or class-based selectors.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Layouts: Centering"
+  title="Centering Text in a Block Element"
+  options={[
+    { text: '.box { text-align: center; }', isAnswer: true },
+    { text: '.box { align: center; }' },
+    { text: '.box { margin: 0 auto; }' },
+    { text: '.box { align-content: center; }' },
+    { text: '.box { text-content: center; }' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      What's the correct way to center text in a block element?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      Using `text-align: center;` is the correct way to center text in a block element.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Layouts: Units"
+  title="Invalid CSS Unit for Font Size"
+  options={[
+    { text: '10cx', isAnswer: true },
+    { text: '10px' },
+    { text: '10vmin' },
+    { text: '10pt' },
+    { text: '10mm' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which is ***NOT*** a valid value for `font-size`?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `10cx` is incorrect since `cx` isn't a real CSS unit. (At least at the time of writing.)
+      
+      Popular units include the familiar `px`, `rem`, `em`.
+
+      Though new units like `ch`, `vmin`, `vmax`, `vh`, `vw` are useful for responsive layouts.
+
+      There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, and `ex` which is equal to the width of the letter `x`.
+      
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Layouts: Units"
+  title="Calculating Pixel Size of Nested Font Sizes"
+  options={[
+    { text: '5px', isAnswer: true },
+    { text: '40px' },
+    { text: '25px' },
+    { text: '20px' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      What is the pixel size of the `<a>` link's text in the following HTML?
+      ```html
+      <body style="font-size: 40px !important;">
+        <nav style="font-size: 50%;">
+          <a style="font-size: 25%;">HOME</a>
+        </nav>
+      </body>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The `font-size` for `<a>` calculates as 5px: 40px (body) * 50% (nav) = 20px, then 20px * 25% = 5px.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Units: REM"
+  title="Calculating Pixel Size with REMs"
+  options={[
+    { text: '10px' },
+    { text: '12px', isAnswer: true },
+    { text: '14px' },
+    { text: '20px' },
+    { text: '24px' },
+    { text: '34px' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      What will be the pixel size of `1.2rem` for the "HOME" link in the following HTML?
+      ```html
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `1.2rem` translates to 12px because `rem` units reference the root or `<html>` font size, set here to 10px.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Units: EM"
+  title="Calculating Pixel Size with EMs"
+  options={[
+    { text: '10px' },
+    { text: '12px' },
+    { text: '14px' },
+    { text: '20px' },
+    { text: '24px', isAnswer: true },
+    { text: '34px' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Similar to the previous question, what will be the pixel size of `1.2em` for the "HOME" link in the following HTML?
+      ```html
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `1.2rem` translates to 24px because `rem` units reference the `<html>` font size, set here to 10px.
+    </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

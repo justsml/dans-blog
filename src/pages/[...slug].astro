@@ -14,6 +14,6 @@ const results = await post.render();
 const { Content } = results;
 ---
 
-<Post frontmatter={{ ...post.data }}>
+<Post slug={post.slug} frontmatter={{ ...post.data }}>
   <Content />
 </Post>

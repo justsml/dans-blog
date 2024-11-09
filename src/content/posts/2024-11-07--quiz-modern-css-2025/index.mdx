@@ -1,0 +1,406 @@
+---
+title: "Quiz: Do You know Modern CSS? (for 2025)"
+subTitle: "Are you front-end enough?"
+category: Quiz
+subCategory: CSS
+minReleaseDate: 2024-10-31
+date: 2024-10-31
+modified: 2024-11-07
+tags: [quiz, css, advanced, moderate, styles]
+# cover: quiz-CSS-features.webp
+cover_full_width: dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: dan-levy-downtown-denver-at-night-square.webp
+cover_icon: dan-levy-downtown-denver-at-night-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+# Quiz: Do You Know CSS?
+
+* Modern CSS?  🤔
+* **Does CSS belong on _your_ resume???** 🚀
+* Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup"
+  title="Using CSS Variables"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the correct way to use a CSS variable called \`--main-color\` to set an element's background color?
+    ```css
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+CSS variables are used with the \`var\` function, so the correct answer is \`background-color: var(--main-color);\`. This syntax retrieves the value of \`--main-color\` and applies it.
+
+The other options may be familiar from other languages or preprocessor syntaxes, namely Sass or Less.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="CSS Functions"
+  title="CSS min() function"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;'},
+    {text: 'width: 250px;', isAnswer: true},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    If the viewport width is 400px, what will the computed width of the following element be?
+    ```css
+    div {
+      width: min(250px, 50%);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The \`min()\` function will choose the smallest value between 250px and 50% of its parents width. Since `50%` of `400px` is `200px`, which is smaller than the _other_ minimum value `250px`. So, the computed width is `250px`.
+
+The `min()` function is especially useful for responsive design, where you can ensure a component (or font size) doesn't exceed a certain limit.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="CSS Functions"
+  title="CSS max() function"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Given a container with a width of 200px, what would be the computed width of the `<div>`?
+    ```css
+    div {
+      width: max(50px, 10%, 6rem);
+    }
+    ```
+  </div>
+  </slot>
+
+<slot name="explanation">
+<div className="explanation">
+  The \`max()\` function accepts 2 or more inputs, and will use the largest value automatically. In this case, the width works out to `96px`.
+
+  To understand the computed value, we need to convert the relative units to pixels:
+
+- `50px` is already in pixels
+- `10%` of `200px` is `20px`
+- `6rem` is `6 * 16px` (the default font size) which is `96px`
+
+```css
+/* This gets computed to */
+width: max(50px, 20px, 96px);
+/* -> 96px wins */
+```
+
+</div>
+</slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="CSS Grid Functions"
+  title="CSS minmax() function"
+  options={[
+    {text: 'All column widths between 100px & 200px'},
+    {text: 'Set Columns to 100px, Rows to 200px'},
+    {text: 'Column one will be between 100px & 200px', isAnswer: true},
+    {text: 'Apply range recursively, incl. subgrids'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the effect of using \`minmax(100px, 200px)\` for a CSS grid track?
+    ```css
+    grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+Using \`minmax(100px, 200px)\` allows the grid track to resize between `100px` and `200px`, adapting to the available space but never going below `100px` or above `200px`.
+
+You can create auto-adjusting layouts where the container and children each play a role in computing layouts. This is powerful when combined with `repeat()` and `auto-fill` or `auto-fit`, which will create as many tracks as possible within the constraints.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="CSS Variables"
+  title="CSS Variable Fallbacks"
+  options={[
+    {text: 'red', isAnswer: true},
+    {text: 'blue'},
+    {text: 'no color is applied'},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What color will the background be for the following CSS?
+    ```css
+    div {
+      background-color: var(--primary-color, red);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+When a CSS variable isn't defined, the value provided as a fallback (in this case, \`red\`) will be used.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="CSS Functions"
+  title="Using clamp() for responsive design"
+  options={[
+    {text: 'Fallback for possibly unsupported units'},
+    {text: 'Ensure \`vw\` units are between 20px and 50px'},
+    {text: 'Linear scale between 200px and 500px', isAnswer: true},
+    {text: 'Log₂ scale between 200px and 500px'},
+    {text: 'Fail! No IE 11 support'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `clamp()` do?
+    ```css
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The \`clamp()\` function allows the width to scale based on \`10vw\`, but keeps it within a range of 200px to 600px.
+
+This means the width will be 200px when the viewport is less than 2000px, and 600px when the viewport is greater than 6000px. In between, it will scale linearly.
+
+It lets you be auto-magically responsive! The thing to know about `clamp` is it combines **fixed units** with **responsive or computed units.**
+
+Normally you wouldn't want to use viewport units for font sizes, but with `clamp()` we can ensure the font size doesn't get too small or too large.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="CSS Nesting"
+  title="Native CSS Nesting"
+  options={[
+    {text: 'Only with SCSS'},
+    {text: 'Technically with PostCSS'},
+    {text: 'Yes', isAnswer: true},
+    {text: 'No'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Does CSS support nesting natively?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+Yes! We finally have native CSS nesting! CSS introduced native nesting syntax in recent years (2023), allowing for hierarchical styling directly in CSS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="CSS Nesting"
+  title="Nesting CSS"
+  options={[
+    {text: 'Filename must end w/ .scss'},
+    {text: '`.title` must precede properties like `color`'},
+    {text: 'Only w/ PostCSS'},
+    {text: 'Perfect. No notes.', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Is this a correct use of native CSS nesting?
+    ```css
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `.title` class is nested within the `.container` class, and the properties are applied as expected.
+
+This is a great way to keep related styles together and avoid long selectors.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="CSS Nesting"
+  title="Direct Child Selector with Nesting"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What background color will be applied to direct child \`div\`s of \`.container\`?
+    ```css
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The \`>\` selector in the nested rule applies \`background-color: yellow\` only to direct children \`div\` elements within \`.container\`.
+
+The last rule, \`background-color: blue !important;\`, is a little distraction. It's **outside the nested rule** and will be applied to all \`.container\` elements.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="CSS Variables"
+  title="Changing CSS Variable at Runtime"
+  options={[
+    {text: 'CSS variables are immutable'},
+    {text: 'Using JavaScript', isAnswer: true},
+    {text: 'Only with SCSS'},
+    {text: 'Only with inline styles'},
+    {text: 'Using responsive units'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How can you change the value of a CSS variable at runtime?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+CSS variables can be set using classes & JavaScript. They can even be defined 'after' they are technically used.
+
+```js
+document.documentElement.style.setProperty('--main-color', 'blue');
+```
+
+This will change the value of \`--main-color\` to \`blue\` for the entire document.
+
+CSS variables are mutable, and can be changed at runtime using JavaScript.
+
+They also can be changed by adding or removing classes, which is a common pattern for theming.
+
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="CSS Variables"
+  title="Using calc() with CSS Variables"
+  options={[
+    {text: 'Width: 50px'},
+    {text: 'Width: 100px'},
+    {text: 'Width: 110px', isAnswer: true},
+    {text: 'Width: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the computed width of the element?
+    ```css
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The \`calc()\` function combines the value of \`--base-width\` (100px) with an additional 10px, resulting in a width of 110px.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

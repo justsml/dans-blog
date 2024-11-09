@@ -142,7 +142,7 @@ const NavMenu = ({
               </li>
               <li className="item-recent columns-all">
                 <NavigationMenu.Link asChild>
-                  <div className="Callout neon-bg-6">
+                  <div className="Callout neon-bg-4">
                     <div className="CalloutHeading">Recent</div>
                     <p className="CalloutText">
                       {recentPosts.map(

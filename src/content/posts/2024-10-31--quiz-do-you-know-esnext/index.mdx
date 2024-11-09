@@ -1,0 +1,411 @@
+---
+title: "Quiz: Do You Know Modern JavaScript?"
+subTitle: "Prove your esteemed JavaScript skillz!"
+category: Quiz
+subCategory: JavaScript
+date: 2024-10-31
+modified: 2024-11-02
+tags: [javascript, intro, quiz, esnext, features]
+# cover: quiz-esnext-features.webp
+cover_full_width: christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+### Do you know your ES2015 from ES2022?
+
+* **Prove your JavaScript skillz!** 🚀
+* No login or signup required. ✨
+* Multiple choice. 🤖 ... _How difficult can it be, eh?_
+
+<QuizUI>
+<Challenge
+  client:load
+  index={0}
+  group="ES2020"
+  title="Null Coalescing"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true },
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the value of `result`?
+    ```js
+    const a = null;
+    const b = 100;
+    const result = a ?? b;
+    console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The null coalescing operator (`??`) returns the right-hand side operand (`b`) if the left-hand side (`a`) is `null` or `undefined`. In this case, `a` is `null`, so `result` is `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="ES2020"
+  title="Null Coalescing"
+  options={[
+    {text: 'false', isAnswer: true },
+    {text: '42' },
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100' },
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The null coalescing operator (`??`) treats falsey values like `false` as valid values. Since `value` is `false`, it is considered a valid value and returned.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Optional Chaining"
+  title="Optional Chaining"
+  options={[
+    {text: 'undefined', isAnswer: true },
+    {text: 'Error: Cannot read property of undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the output of the following code?
+    ```js
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The optional chaining operator (`?.`) stops the evaluation if the left-hand side is `null` or `undefined`. Since `obj.foo` is `null`, `obj.foo?.bar` evaluates to `undefined`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="BigInt"
+  title="BigInt Usage"
+  options={[
+    {text: 'TypeError: Cannot mix BigInt and number'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true },
+    {text: 'undefined'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the output of the following code?
+    ```js
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    BigInt values are created by appending `n` to a number. You cannot mix BigInt with regular numbers in arithmetic operations. Here, both values are BigInt, so the multiplication works, resulting in `84n`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Dynamic Import"
+  title="Dynamic Import Syntax"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module', isAnswer: true },
+    {text: 'undefined'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What does the `import()` function return?
+    ```js
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The `import()` function returns a `Promise` that resolves to the module object. In this case, `typeof modulePromise` will return `'object'`, as it is an instance of `Promise`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'Fulfilled: success', isAnswer: true },
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What will be the result of the following code?
+    ```js
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` returns an array of objects describing the outcome of each promise. The first promise is `fulfilled` with the value `'success'`, so the log statement will print `Fulfilled: success`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="String.matchAll"
+  title="String.matchAll Usage"
+  options={[
+    {text: 'Array of matches'},
+    {text: 'Iterator of matches', isAnswer: true },
+    {text: 'Error: Invalid call'},
+    {text: 'null'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What does `str.matchAll()` return?
+    ```js
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
+    console.log(typeof matches);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` returns an iterator of matches, not an array. This iterator can be used to get all the matching groups from a string.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Import Meta"
+  title="Import Meta Usage"
+  options={[
+    {text: 'URL of the current module', isAnswer: true },
+    {text: 'Current timestamp'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What does `import.meta.url` represent?
+    ```js
+    console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` is an object that contains metadata about the current module. The `import.meta.url` property represents the URL of the current module, which can be used to get information about where the script is running.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Logical Assignment"
+  title="Logical Assignment"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true },
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the value of `a` after the logical assignment?
+    ```js
+    let a = null;
+    a ||= 10;
+    console.log(a);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The logical OR assignment (`||=`) assigns the right-hand value if the left-hand value is falsy (`null`, `undefined`, `0`, `false`, etc.). Since `a` is `null`, it is assigned the value `10`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="WeakRef"
+  title="WeakRef Usage"
+  options={[
+    {text: 'ReferenceError'},
+    {text: 'Weak reference to object', isAnswer: true },
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What does `WeakRef` provide?
+    ```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` provides a weak reference to an object, which allows the object to be garbage collected if no other references exist. The `deref()` method returns the original object if it is still available, otherwise `undefined`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Logical Nullish Assignment"
+  title="Logical Nullish Assignment"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true },
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the value of `b` after the nullish assignment?
+    ```js
+    let b = null;
+    b ??= 10;
+    console.log(b);
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The nullish coalescing assignment (`??=`) assigns the right-hand value if the left-hand value is `null` or `undefined`. Since `b` is `null`, it is assigned the value `10`.
+  </div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>

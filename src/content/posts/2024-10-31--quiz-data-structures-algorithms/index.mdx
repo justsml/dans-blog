@@ -1,0 +1,644 @@
+---
+title: "Quiz: Data Structures & Algorithms"
+subTitle: "Can you BS a Binary Tree?"
+date: 2024-10-31
+modified: 2024-11-06
+category: Quiz
+subCategory: Data Structures
+tags: [quiz, data-structures, algorithms]
+cover: redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+Welcome to my moderate-to-advanced quiz on core data structures and algorithms. 
+
+This quiz will test your knowledge of fundamental concepts in computer science, including data structures, algorithms, and time complexity.
+
+### 20 Questions... Begin!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Stacks vs Queues"
+  index={0}
+  options={[
+    {text: 'Stacks', isAnswer: true },
+    {text: 'Queues'},
+    {text: 'Both'},
+    {text: 'Neither'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which data structure is best suited for a LIFO (Last In, First Out) access pattern?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Stacks are best suited for LIFO access patterns. Queues are best suited for FIFO (First In, First Out) access patterns.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Algorithms"
+  title="Big O Notation"
+  index={1}
+  options={[
+    {text: 'O(1)', isAnswer: true },
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the time complexity of an algorithm that always takes the same amount of time to run, regardless of the input size?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) represents constant time complexity. It means the algorithm always takes the same amount of time to run, regardless of the input size.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Linked List Length Calculation"
+  index={2}
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the time complexity for calculating the length of a singly linked list?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To calculate the length of a singly linked list, you must traverse every node from head to tail, resulting in O(n) time complexity.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Binary Search Tree Lookup"
+  index={3}
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the average time complexity for looking up an element in a balanced Binary Search Tree?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    In a balanced BST, the average time complexity for lookup is O(log n) because each level allows the search space to be halved.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Sorting Algorithms"
+  title="Merge Sort Complexity"
+  index={4}
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(log n)'},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the time complexity of the Merge Sort algorithm in the worst case?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Merge Sort always operates with a worst-case complexity of O(n log n) as it repeatedly splits the array in half and merges the sorted subarrays.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Graphs"
+  title="DFS vs BFS"
+  index={5}
+  options={[
+    {text: 'Queue', isAnswer: true},
+    {text: 'Stack'},
+    {text: 'Priority Queue'},
+    {text: 'Hash Map'},
+    {text: 'Set'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What data structure is typically used to implement Breadth-First Search (BFS)?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS uses a Queue to explore nodes level by level, processing nodes in a breadth-first manner (by "row").
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Graphs"
+  title="Cycle Detection in Graphs"
+  index={6}
+  options={[
+    {text: 'Depth-First Search', isAnswer: true},
+    {text: 'Breadth-First Search'},
+    {text: 'Merge Sort'},
+    {text: 'Quick Sort'},
+    {text: 'Bubble Sort'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which algorithm is commonly used to detect cycles in a directed graph?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Depth-First Search (DFS) is typically used to detect cycles in a graph by maintaining a recursion stack to track visited nodes.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Sorting Algorithms"
+  title="Heap Sort Complexity"
+  index={7}
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the time complexity of Heap Sort in the worst case?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Heap Sort maintains a worst-case time complexity of O(n log n), as it builds a heap and repeatedly extracts the maximum element.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Hash Table Time Complexity"
+  index={8}
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(log n)'},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the average time complexity for accessing an element in a hash table?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Hash tables have an average time complexity of O(1) for accessing elements, assuming a good hash function that minimizes collisions.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Stack Operations"
+  index={9}
+  options={[
+    {text: 'Push', isAnswer: true},
+    {text: 'Pop', isAnswer: true},
+    {text: 'Peek', isAnswer: true},
+    {text: 'Enqueue'},
+    {text: 'Traverse'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which of the following are typical operations performed on a stack?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The primary operations of a stack are Push (add element), Pop (remove element), and Peek (view the top element without removing it).
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Graph Algorithms"
+  title="Shortest Path Algorithm"
+  index={10}
+  options={[
+    {text: "Kruskal's Algorithm"},
+    {text: "Prim's Algorithm"},
+    {text: "Dijkstra's Algorithm", isAnswer: true},
+    {text: "Bellman-Ford Algorithm"},
+    {text: "Floyd-Warshall Algorithm"},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which algorithm is commonly used to find the shortest path in a weighted graph with non-negative edges?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Dijkstra's Algorithm is frequently used for finding the shortest path in graphs with non-negative edge weights. It employs a priority queue to determine the shortest distance efficiently.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Tree Data Structures"
+  title="Balanced Tree"
+  index={11}
+  options={[
+    {text: 'AVL Tree', isAnswer: true},
+    {text: 'Binary Search Tree'},
+    {text: 'Red-Black Tree', isAnswer: true},
+    {text: 'Min Heap'},
+    {text: 'Max Heap'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which of the following are examples of balanced tree data structures?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    AVL Trees and Red-Black Trees are types of self-balancing trees, which ensure that the tree remains balanced after each insertion or deletion.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Recursion"
+  title="Recursion Base Case"
+  index={12}
+  options={[
+    {text: 'Infinite Loop'},
+    {text: 'Stack Overflow'},
+    {text: 'Base Case', isAnswer: true},
+    {text: 'Global Variable'},
+    {text: 'Scope Limitation'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What must be defined in a recursive function to prevent infinite recursion?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    A base case is necessary in a recursive function to stop the recursive calls when a specific condition is met, preventing infinite recursion.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Queue Operations"
+  index={13}
+  options={[
+    {text: 'Push'},
+    {text: 'Pop'},
+    {text: 'Enqueue', isAnswer: true},
+    {text: 'Dequeue', isAnswer: true},
+    {text: 'Top'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What are the two primary operations for a queue?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The two primary operations in a queue are Enqueue (add an element to the back) and Dequeue (remove an element from the front).
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Graph Algorithms"
+  title="Topological Sorting"
+  index={14}
+  options={[
+    {text: 'Graph must be directed', isAnswer: true},
+    {text: 'Graph must be acyclic', isAnswer: true},
+    {text: 'Graph must be weighted'},
+    {text: 'Graph must be connected'},
+    {text: 'Graph must contain cycles'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What are the conditions for performing topological sorting on a graph?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Topological sorting can be performed on a graph if it is directed and acyclic (DAG). This type of ordering is useful in task scheduling problems.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Dynamic Programming"
+  title="Fibonacci Recursion Complexity"
+  index={15}
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(n)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What is the time complexity of a naive recursive implementation of the Fibonacci series?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The naive recursive implementation of the Fibonacci series has a time complexity of O(2^n) due to the extensive repeated calculations for each Fibonacci number.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Priority Queue Implementation"
+  index={16}
+  options={[
+    {text: 'Array'},
+    {text: 'Heap', isAnswer: true},
+    {text: 'Stack'},
+    {text: 'Queue'},
+    {text: 'Linked List'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which data structure is commonly used to implement a priority queue?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    A priority queue is most often implemented using a heap because it allows efficient extraction of the highest or lowest priority element.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Data Structures"
+  title="Binary Tree Traversals"
+  index={17}
+  options={[
+    {text: 'In-order', isAnswer: true},
+    {text: 'Pre-order', isAnswer: true},
+    {text: 'Breadth-First'},
+    {text: 'Depth-First'},
+    {text: 'Post-order', isAnswer: true},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which of the following are common traversal techniques for a binary tree?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    In-order, Pre-order, and Post-order are the three common techniques to traverse binary trees, each with a different order of visiting nodes.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Tree Data Structures"
+  title="Heap Property"
+  index={18}
+  options={[
+    {text: 'Root is always the smallest element', isAnswer: true},
+    {text: 'Root is always the largest element'},
+    {text: 'All leaves are at the same level'},
+    {text: 'All nodes are balanced'},
+    {text: 'Tree height is O(log n)', isAnswer: true},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Which of the following properties are true for a min-heap?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    In a min-heap, the root is always the smallest element, and the height of the tree is O(log n), making insertion and extraction efficient.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Sorting Algorithms"
+  title="Bubble Sort Stability"
+  index={19}
+  options={[
+    {text: 'Stable', isAnswer: true},
+    {text: 'Unstable'},
+    {text: 'Depends on the implementation'},
+    {text: 'Neither'},
+    {text: 'Complexity determines stability'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    Is the Bubble Sort algorithm stable?
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Bubble Sort is a stable sorting algorithm as it preserves the relative order of equal elements during sorting.
+  </div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>
