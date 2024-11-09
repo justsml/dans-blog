@@ -10,6 +10,7 @@ export type ArticlePost = {
     subTitle: string;
     /** To override utteranc.es lookup string */
     commentsKeyOverride?: string;
+    unlisted?: boolean;
     hidden?: boolean;
     draft?: boolean;
     cover_icon: ImageMetadata;

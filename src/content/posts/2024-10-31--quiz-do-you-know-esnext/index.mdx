@@ -341,41 +341,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={9}
-  group="WeakRef"
-  title="WeakRef Usage"
-  options={[
-    {text: 'ReferenceError'},
-    {text: 'Weak reference to object', isAnswer: true },
-    {text: 'null'},
-    {text: 'undefined'},
-  ]}
->
-
-  <slot name="question">
-  <div className="question">
-    What does `WeakRef` provide?
-    ```js
-    const obj = { data: 'important' };
-    const ref = new WeakRef(obj);
-    console.log(ref.deref());
-    ```
-  </div>
-  </slot>
-
-  <slot name='hints'>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    `WeakRef` provides a weak reference to an object, which allows the object to be garbage collected if no other references exist. The `deref()` method returns the original object if it is still available, otherwise `undefined`.
-  </div>
-  </slot>
-
-</Challenge>
-
-<Challenge
-  client:load
-  index={10}
   group="Logical Nullish Assignment"
   title="Logical Nullish Assignment"
   options={[
@@ -403,6 +368,41 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     The nullish coalescing assignment (`??=`) assigns the right-hand value if the left-hand value is `null` or `undefined`. Since `b` is `null`, it is assigned the value `10`.
+  </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="WeakRef"
+  title="WeakRef Usage"
+  options={[
+    {text: 'ReferenceError'},
+    {text: 'Weak reference to object', isAnswer: true },
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+
+  <slot name="question">
+  <div className="question">
+    What does `WeakRef` provide?
+    ```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` provides a weak reference to an object, which allows the object to be garbage collected if no other references exist. The `deref()` method returns the original object if it is still available, otherwise `undefined`.
   </div>
   </slot>
 

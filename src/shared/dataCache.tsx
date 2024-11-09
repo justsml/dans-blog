@@ -5,7 +5,8 @@ import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
-const _postsCollection: ArticlePost[] = await getCollection("posts") as unknown as ArticlePost[];
+const _postsCollection: ArticlePost[] = (await getCollection("posts") as unknown as ArticlePost[]).filter((post) => !post.data.unlisted && !post.data.hidden);
+
 let _posts = _postsCollection
   .map((post) => ({
     ...post,

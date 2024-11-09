@@ -60,17 +60,22 @@ posts = posts.slice(0, pageSize - 1);
   </div>
   <div class:list={["article-list"]}>
     {
-      posts.map((props: any, index) =>
-        index === posts.length - 1 ? (
-          <ArticleCard
-            article={props as ArticlePost}
-            width={200}
-            {...nextPageAttrs}
-          />
-        ) : (
-          <ArticleCard article={props as ArticlePost} width={200} />
+      posts
+        .filter(
+          // @ts-expect-error
+          ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
         )
-      )
+        .map((props: any, index) =>
+          index === posts.length - 1 ? (
+            <ArticleCard
+              article={props as ArticlePost}
+              width={200}
+              {...nextPageAttrs}
+            />
+          ) : (
+            <ArticleCard article={props as ArticlePost} width={200} />
+          )
+        )
     }
     <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
   </div>

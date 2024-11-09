@@ -20,10 +20,12 @@ const posts = defineCollection({
       subTitle: z.string().optional().default(""),
       /** To override utteranc.es lookup string */
       commentsKeyOverride: z.string().optional(),
-      // Transform string to Date object
-      // date: z.coerce.date(),
-      // modified: z.coerce.date().optional(),
+      
       draft: z.boolean().optional(),
+      /** unlisted omits in post lists */
+      unlisted: z.coerce.boolean().optional(),
+
+      hidden: z.coerce.boolean().optional(),
 
       date: z.coerce.string().optional(),
       modified: z.coerce.string().optional(),
