@@ -8,11 +8,13 @@ import { QuizGrid } from "./QuizGrid.tsx";
 import type { ArticlePost, QuizPost } from "../../types";
 import { slugify } from "../../shared/pathHelpers.ts";
 import { brightColors } from "../../content/colors.ts";
-import { FilterForm } from "./FilterForm.tsx";
+// import { FilterForm } from "./QuizFilter.tsx";
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import "./challenges.css";
+import "../../components/QuizUI/icons.css";
+
 // import ArticleFilterLinks from "../../components/ArticleFilterLinks.astro";
 
 let posts = PostCollections._quizPosts
@@ -84,25 +86,21 @@ const quizList = posts.map((p, idx): QuizPost => {
 ---
 
 <Page>
-
   <section class="full-width">
     <h2>Tech Challenge Quizzes</h2>
-    <p>
-      Prove your knowledge with my curated quiz questions!
-      
-      Most have a Each quiz has a set of questions
-      that you can answer to test your knowledge on a particular topic.
-    </p>
   </section>
-  
+  <p class="inset">
+    Prove your knowledge with my curated questions - from Node.js, SQL to HTML & CSS!
+  </p>
+
   <section class="full-width">
     <QuizGrid
-    client:load
-    quizList={quizList}
-    subCategoryCounts={subCategoryCounts}
-    subCategoryList={subCategoryList}
-  />
-</section>
+      client:load
+      quizList={quizList}
+      subCategoryCounts={subCategoryCounts}
+      subCategoryList={subCategoryList}
+    />
+  </section>
 
   <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
 </Page>

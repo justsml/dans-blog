@@ -80,6 +80,8 @@ export const QuizCard = ({
     setCountTries(qStore.sumOfTries());
   }, [slug, countCorrect]);
 
+  const allCorrect = countCorrect === questionCount;
+
   return (
     <div
       className={clsx(quizClass, categoryClass, className)}
@@ -122,13 +124,20 @@ export const QuizCard = ({
           {label}
         </h2>
 
-        <p title={"in " + (countTries ?? 0) + " tries"}>
-          {countCorrect ?? 0} correct / {questionCount} questions
-        </p>
-        <p>{tags && tags.join(", ")}</p>
-        <InfoLabel
+        {allCorrect ? (
+          <div className="quiz-status">
+            <span className="status-icon">✅&#160;</span>
+            <span className="status-text">&#160;Completed</span>
+          </div>
+        ) : (
+          <p title={"in " + (countTries ?? 0) + " tries"}>
+            {countCorrect ?? 0} correct / {questionCount} questions
+          </p>
+        )}
+        {/* <p>{tags && tags.join(", ")}</p> */}
+        {/* <InfoLabel
           text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
-        />
+        /> */}
       </a>
     </div>
   );
