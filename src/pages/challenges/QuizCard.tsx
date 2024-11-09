@@ -4,7 +4,7 @@ import { slugify } from "../../shared/pathHelpers";
 import { getComputedDates } from "../../shared/dateUtils";
 import type { QuizPost } from "../../types";
 // import { brightColors } from "../../content/colors.ts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { QuestionStore } from "../../components/QuizUI/QuestionStore.ts";
 
 export const QuizCard = ({
@@ -34,7 +34,9 @@ export const QuizCard = ({
   } = article.data;
   // console.log('🚀 htmxArgs', htmxArgs);
   const { createdAgo, modifiedAgo } = getComputedDates({ date, modified });
-
+  const [countCorrect, setCountCorrect] = useState(0);
+  const [countTotal, setCountTotal] = useState(0);
+  const [countTries, setCountTries] = useState(0);
   // Load prev user data
 
   // useEffect(() => {
@@ -70,16 +72,13 @@ export const QuizCard = ({
 
   const questionCount = article.data.questionCount;
 
-  // const boundingRef = useRef<DOMRect | null>(null);
-  const counts: Record<string, number> = {}
-
   useEffect(() => {
     const qStore = QuestionStore(slug);
     console.log('🚀 ~ qStore', qStore.correct(), slug, qStore);
-    counts.correct = qStore.correct();
-    counts.total = qStore.total();
-    counts.tries = qStore.sumOfTries();
-  }, [slug, counts.correct, counts.total, counts.tries]);
+    setCountCorrect(qStore.correct());
+    setCountTotal(qStore.total());
+    setCountTries(qStore.sumOfTries());
+  }, [slug, countCorrect]);
 
   return (
     <div
@@ -118,8 +117,8 @@ export const QuizCard = ({
         </label>
         <h2 className="post-title">{title.replace("Quiz: ", "")}</h2>
 
-        <p title={'in ' + (counts['tries'] ?? 0) + ' tries'}>
-          {counts['correct'] ?? 0} correct / {questionCount} questions
+        <p title={'in ' + (countTries ?? 0) + ' tries'}>
+          {countCorrect ?? 0} correct / {questionCount} questions
         </p>
         <p>
           {tags && tags.join(", ")}
