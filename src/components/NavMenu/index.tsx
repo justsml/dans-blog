@@ -89,6 +89,25 @@ const NavMenu = ({
           </NavigationMenu.Trigger>
           <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one">
+
+
+            <li className="item-quizzes">
+                <NavigationMenu.Link asChild>
+                  <div className="Callout neon-bg-4">
+                    <div className="CalloutHeading">Quizzes</div>
+                    <p className="CalloutText">
+                      <a href="/challenges" className="CalloutItem">
+                        Try Dan's challenge!
+                      </a>
+                    </p>
+                  </div>
+                </NavigationMenu.Link>
+              </li>
+
+
+
+
+
               <li className="item-categories">
                 <NavigationMenu.Link asChild>
                   <div className="Callout neon-bg-3">
@@ -140,7 +159,7 @@ const NavMenu = ({
                   </div>
                 </NavigationMenu.Link>
               </li>
-              <li className="item-recent columns-all">
+              <li className="item-recent">
                 <NavigationMenu.Link asChild>
                   <div className="Callout neon-bg-4">
                     <div className="CalloutHeading">Recent</div>

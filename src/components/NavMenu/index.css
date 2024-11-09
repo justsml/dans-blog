@@ -483,6 +483,10 @@ pre {
 
   width: 100%;
 
+  &.one {
+    grid-template-rows: 120px 100px auto;
+  }
+
   &.two {
     grid-template-columns: 1fr 1fr;
   }
@@ -639,8 +643,15 @@ pre {
   }
 }
 
+.item-quizzes {
+  grid-row: span 1;
+}
+.item-popular {
+  grid-row: span 2;
+}
 .item-categories {
-  
+  grid-row: span 2;
+
   .CalloutText {
     display: grid;
 
@@ -648,6 +659,8 @@ pre {
     text-wrap: nowrap;
   }
 }
+
+/* .grid-auto-rows: 120px 100px auto; */
 
 .CategoryItem {
   width: 38%;
