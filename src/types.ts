@@ -25,6 +25,7 @@ export type ArticlePost = {
 
 export type QuizPostFields = {
   /** Server-side "known" data */
+  label: string;
   index: number;
   tags: string[];
   questionCount: number;

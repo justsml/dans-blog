@@ -16,9 +16,9 @@ let posts = PostCollections.getPosts().map((p) =>
     "data.body",
     "data.cover",
     "data.cover_icon",
-    // "data.cover_mobile",
   ])
-);
+)
+.filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
 
 const filterOptions = [
   { label: "By recently updated", value: "modified" },
@@ -39,7 +39,7 @@ const nextPageAttrs = defaultNextUrl
       "hx-swap": "afterend",
     }
   : {};
-// Slice first page
+// 
 posts = posts.slice(0, pageSize - 1);
 ---
 
@@ -61,10 +61,9 @@ posts = posts.slice(0, pageSize - 1);
   <div class:list={["article-list"]}>
     {
       posts
-        .filter(
-          // @ts-expect-error
-          ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
-        )
+        // .filter(
+        //   ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
+        // )
         .map((props: any, index) =>
           index === posts.length - 1 ? (
             <ArticleCard

@@ -16,7 +16,7 @@ import "@/styles/global.css";
 import "./challenges.css";
 // import ArticleFilterLinks from "../../components/ArticleFilterLinks.astro";
 
-let posts = PostCollections.getPostsByCategory("Quiz")
+let posts = PostCollections._quizPosts
   .map(
     (p) => omit(p as ArticlePost, ["data.cover", "data.cover_icon"])
     // omit(p as ArticlePost, ["data.body", "data.cover", "data.cover_icon"])
@@ -102,7 +102,7 @@ const quizList: QuizPost[] = posts.map((p, idx) => {
       quizList
         .filter(
           ({ data: { unlisted, hidden } }) =>
-            unlisted !== true && hidden !== true
+            hidden !== true
         )
         .map((props, index) => (
           <QuizCard

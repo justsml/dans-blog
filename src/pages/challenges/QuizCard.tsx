@@ -26,8 +26,8 @@ export const QuizCard = ({
     index: idx,
     title,
     subCategory,
+    label,
     draft,
-    // cover_mobile,
     date,
     modified,
     tags,
@@ -74,7 +74,7 @@ export const QuizCard = ({
 
   useEffect(() => {
     const qStore = QuestionStore(slug);
-    console.log('🚀 ~ qStore', qStore.correct(), slug, qStore);
+    console.log("🚀 ~ qStore", qStore.correct(), slug, qStore);
     setCountCorrect(qStore.correct());
     setCountTotal(qStore.total());
     setCountTries(qStore.sumOfTries());
@@ -115,14 +115,17 @@ export const QuizCard = ({
         <label className="small-label" title={tags && tags.join(", ")}>
           <b>{subCategory}</b>
         </label>
-        <h2 className="post-title">{title.replace("Quiz: ", "")}</h2>
+        <h2
+          className="post-title"
+          aria-description={title.replace("Quiz: ", "")}
+        >
+          {label}
+        </h2>
 
-        <p title={'in ' + (countTries ?? 0) + ' tries'}>
+        <p title={"in " + (countTries ?? 0) + " tries"}>
           {countCorrect ?? 0} correct / {questionCount} questions
         </p>
-        <p>
-          {tags && tags.join(", ")}
-        </p>
+        <p>{tags && tags.join(", ")}</p>
         <InfoLabel
           text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
         />

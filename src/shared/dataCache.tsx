@@ -5,7 +5,7 @@ import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
-const _postsCollection: ArticlePost[] = (await getCollection("posts") as unknown as ArticlePost[]).filter((post) => !post.data.unlisted && !post.data.hidden);
+const _postsCollection: ArticlePost[] = (await getCollection("posts") as unknown as ArticlePost[]).filter((post) => !post.data.hidden);
 
 let _posts = _postsCollection
   .map((post) => ({
@@ -18,7 +18,7 @@ let _posts = _postsCollection
   )
   .reverse() as unknown as ArticlePost[];
 
-/**
+  /**
  * PostCollections provides access to posts' data, pre-.
  */
 export const PostCollections = {
@@ -29,6 +29,7 @@ export const PostCollections = {
   }, {} as Record<string, (typeof _posts)[0]>),
 
   _slugs: _posts.map((post) => post.slug),
+  _quizPosts: _posts.filter((post) => post.data.category === "Quiz"),
 
   _categories: _posts.reduce((acc, post) => {
     const { category } = post.data;
@@ -109,12 +110,12 @@ export const PostCollections = {
     return [
       "breaking-unicorns",
       "one-weird-trick-to-speed-up-feature-teams",
-      // "js-quiz-14-date-time-questions-test-your-knowledge",
+      "js-quiz-14-date-time-questions-test-your-knowledge",
       "javascript-promises-quiz",
-      // "contribute-to-open-source-the-easy-way",
-      // "naming-things-real-good",
+      "contribute-to-open-source-the-easy-way",
+      "naming-things-real-good",
       "you-may-not-need-axios",
-      // "should-you-use-named-or-default-exports",
+      "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
 
@@ -158,7 +159,7 @@ export const getArticleSortFn = (
 };
 
 export const images = import.meta.glob<{ default: ImageMetadata }>(
-  "/src/content/posts/**/*.{jpeg,jpg,png,gif,svg}",
+  "/src/content/posts/**/*.{jpeg,jpg,png,gif,svg,webp}",
   {
     eager: true,
   }
@@ -216,7 +217,7 @@ export const getImageProps = (
   // console.log('images:', images, 'imagePath:', imagePath);
   if (!imagePaths[imagePath])
     throw new Error(
-      `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,svg}"`
+      `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,svg,webp}"`
     );
 
   return imagePaths[imagePath].default;

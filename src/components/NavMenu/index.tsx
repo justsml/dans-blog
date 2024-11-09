@@ -31,7 +31,7 @@ const NavMenu = ({
 }) => {
   const safeDetectViewportOffset = useCallback(
     throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
-    []
+    [],
   );
 
   function detectViewportOffset() {
@@ -76,9 +76,7 @@ const NavMenu = ({
       onClick={safeDetectViewportOffset}
       onMouseMove={safeDetectViewportOffset}
     >
-      <NavigationMenu.List
-        className="NavigationMenuList"
-      >
+      <NavigationMenu.List className="NavigationMenuList">
         <NavigationMenu.Item value="#search" className="searchToggle">
           <SearchButton />
         </NavigationMenu.Item>
@@ -89,24 +87,16 @@ const NavMenu = ({
           </NavigationMenu.Trigger>
           <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List one">
-
-
-            <li className="item-quizzes">
+              <li className="item-quizzes">
                 <NavigationMenu.Link asChild>
-                  <div className="Callout neon-bg-4">
-                    <div className="CalloutHeading">Quizzes</div>
-                    <p className="CalloutText">
-                      <a href="/challenges" className="CalloutItem">
-                        Try Dan's challenge!
-                      </a>
-                    </p>
-                  </div>
+                  <a href="/challenges" className="CalloutItem">
+                    <div className="Callout neon-bg-4">
+                      <div className="CalloutHeading">Quizzes</div>
+                      <p className="CalloutText">Try Dan's 10+ challenges!</p>
+                    </div>
+                  </a>
                 </NavigationMenu.Link>
               </li>
-
-
-
-
 
               <li className="item-categories">
                 <NavigationMenu.Link asChild>
@@ -153,7 +143,7 @@ const NavMenu = ({
                               <sup>{modifiedAgo} ago</sup>
                             </a>
                           );
-                        }
+                        },
                       )}
                     </p>
                   </div>
@@ -184,7 +174,7 @@ const NavMenu = ({
                               <sup>{modifiedAgo} ago</sup>
                             </a>
                           );
-                        }
+                        },
                       )}
                     </p>
                   </div>
@@ -380,7 +370,7 @@ const NavMenu = ({
           <div className="ViewportPosition" style={{ top: "5.6rem" }}>
             <NavigationMenu.Viewport className="NavigationMenuViewport" />
           </div>,
-          document.body
+          document.body,
         )}
     </NavigationMenu.Root>
   );
