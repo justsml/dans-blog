@@ -19,6 +19,7 @@ export const QuizGrid = ({
     setSearchData(value);
   };
 
+  
   quizList.forEach((q) => {
     // const statuses = ["not-started", "started", "complete"];
     // if (statuses.every((s) => !q.data.tags.includes(s))) {
@@ -32,7 +33,6 @@ export const QuizGrid = ({
 
     q.data.tags = q.data.tags.map((tag) => tag.toLowerCase());
   });
-
   useEffect(() => {
     if (searchData.length > 0) {
       setQuizList(
@@ -60,9 +60,8 @@ export const QuizGrid = ({
           .map((props, index) => (
             <QuizCard
               key={index}
+              className="tilt-effect"
               article={props}
-              subCategoryCounts={subCategoryCounts}
-              subCategoryList={subCategoryList}
             />
           ))}
       </div>
