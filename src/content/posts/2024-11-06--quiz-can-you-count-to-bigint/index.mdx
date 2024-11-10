@@ -420,3 +420,14 @@ We'll cover parsing numeric expressions - in varying bases, handling floating-po
 </Challenge>
 
 </QuizUI>
+
+
+# Comparison Table
+
+| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Ignores Whitespace | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| Supports Radix Arg | ✅ | ❌ | ❌ | ❌ |
+| Binary/Octal/Hex literals | ✅ | ❌ | ✅ | ✅ |
+| Invalid chars `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
