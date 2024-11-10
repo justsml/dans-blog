@@ -40,12 +40,12 @@ const subCategoryColors = subCategoryList.reduce((acc, subCategory, idx) => {
   return acc;
 }, {});
 
-console.log(
-  `Found ${subCategoryList.length} subcategories %o  %o    %o`,
-  subCategoryList,
-  subCategoryCounts,
-  subCategoryColors,
-);
+// console.log(
+//   `Found ${subCategoryList.length} subcategories %o  %o    %o`,
+//   subCategoryList,
+//   subCategoryCounts,
+//   subCategoryColors,
+// );
 
 posts.sort((_a: ArticlePost, _b: ArticlePost) => {
   const a = _a.data.subCategory;
@@ -61,9 +61,6 @@ posts.sort((_a: ArticlePost, _b: ArticlePost) => {
   }
   return 0;
 });
-
-// 1. Sort by subcategory
-// 2. Decorate with QuizPost
 
 const quizList = posts.map((p, idx): QuizPost => {
   // @ts-expect-error
@@ -82,15 +79,22 @@ const quizList = posts.map((p, idx): QuizPost => {
   };
 });
 
+const styleString = subCategoryList
+  .map((key) => `:has(.cat-${slugify(key)}:hover) .cat-${slugify(key)} { animation: wobble 1s 1 forwards; }`)
+  .join("\n");
+
 // console.log("QuizList %o", quizList);
 ---
+<style set:html={styleString}></style>
 
 <Page>
   <section class="full-width">
     <h2>Tech Challenge Quizzes</h2>
   </section>
   <p class="inset">
-    Prove your knowledge with my curated questions - from Node.js, SQL to HTML & CSS!
+    Welcome to my curated collection of tech questions & answers.
+    
+    From HTML & CSS to Node.js and SQL, these quizzes are designed to test your knowledge and help learn new things!
   </p>
 
   <section class="full-width">

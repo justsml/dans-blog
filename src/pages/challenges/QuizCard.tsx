@@ -9,16 +9,10 @@ import { QuestionStore } from "../../components/QuizUI/QuestionStore.ts";
 
 export const QuizCard = ({
   article,
-  width,
   className,
-  subCategoryList,
-  subCategoryCounts,
 }: {
   className?: string;
   article: QuizPost;
-  width?: number;
-  subCategoryList: string[];
-  subCategoryCounts: Record<string, number>;
 }) => {
   // console.log('🚀 ~ article', article);
   const slug = article.slug;
@@ -37,32 +31,7 @@ export const QuizCard = ({
   const [countCorrect, setCountCorrect] = useState(0);
   const [countTotal, setCountTotal] = useState(0);
   const [countTries, setCountTries] = useState(0);
-  // Load prev user data
-
-  // useEffect(() => {
-  //   const prevUserData = localStorage.getItem(`quiz-${slug}`);
-  //   if (prevUserData) {
-  //     const userData = JSON.parse(prevUserData);
-  //     // console.log("🚀 ~ userData", userData);
-  //   }
-  // }, [slug]);
-
-  // const icon = cover_mobile;
-  // // console.log(cover_icon);
-  // const image =
-  //   typeof icon === "string" ? (
-  //     <img src={icon} alt={title} width={width} height={width} />
-  //   ) : (
-  //     icon && (
-  //       <img
-  //         src={icon.src}
-  //         alt={title}
-  //         width={icon.width}
-  //         height={icon.height}
-  //       />
-  //     )
-  //   );
-
+  
   let categoryClass = `cat-${slugify(subCategory)}`;
   if (draft) {
     categoryClass += " draft";
@@ -74,7 +43,6 @@ export const QuizCard = ({
 
   useEffect(() => {
     const qStore = QuestionStore(slug);
-    console.log("🚀 ~ qStore", qStore.correct(), slug, qStore);
     setCountCorrect(qStore.correct());
     setCountTotal(qStore.total());
     setCountTries(qStore.sumOfTries());
@@ -82,9 +50,16 @@ export const QuizCard = ({
 
   const allCorrect = countCorrect === questionCount;
 
+  // console.log("QuizCard %o", { countCorrect, countTotal, countTries, questionCount });
+
   return (
     <div
-      className={clsx(quizClass, categoryClass, className)}
+      style={{ "--quiz-index": idx, "--percent-completed": countCorrect / questionCount }}
+      className={clsx(quizClass, categoryClass, className, {
+        "completed": allCorrect,
+        "started": countCorrect > 0 || countTries > 0,
+
+      })}
 
       // onMouseLeave={() => (boundingRef.current = null)}
       // onMouseEnter={(ev) => {
@@ -131,7 +106,7 @@ export const QuizCard = ({
           </div>
         ) : (
           <p title={"in " + (countTries ?? 0) + " tries"}>
-            {countCorrect ?? 0} correct / {questionCount} questions
+            {((countCorrect ?? 0) < 1) ? 'Zero' : countCorrect} correct of {questionCount}
           </p>
         )}
         {/* <p>{tags && tags.join(", ")}</p> */}
