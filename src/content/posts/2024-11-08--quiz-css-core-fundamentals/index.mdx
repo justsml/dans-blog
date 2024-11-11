@@ -6,8 +6,8 @@ label: "CSS Fundamentals"
 category: Quiz
 subCategory: CSS
 date: 2024-11-08
-modified: 2024-11-08
-tags: [quiz, intro, css, styles]
+modified: 2024-11-10
+tags: [quiz, intro, css, styles, beginner, intermediate]
 cover_full_width: yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
 cover_mobile: yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
 cover_icon: yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
@@ -24,9 +24,37 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <QuizUI>
 
+{/* Add question to see what colors come from `#A`, `#AB`, `#ABC` or `#ABCD` */}
+
 <Challenge
   client:load
   index={0}
+  group="Warmup"
+  title="Colors from Hex Codes"
+  options={[
+    { text: '#A' },
+    { text: '#AB' },
+    { text: '#ABC' },
+    { text: '#ABCD', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which of the following hex codes is valid?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      {/* Hex codes are used to represent colors in CSS. Each pair of characters represents a color channel (red, green, blue, and sometimes alpha).  */}
+
+      {/* The hex code `#ABCD` is valid, representing a color with red `0xAA`, green `0xCD`, and blue `0xEF` values.  */}
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
   group="Warmup"
   title="Do You Understand CSS Fundamentals?"
   options={[
