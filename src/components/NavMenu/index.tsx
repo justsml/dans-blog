@@ -269,7 +269,7 @@ const NavMenu = ({
             Contact <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
           <NavigationMenu.Content className="NavigationMenuContent">
-            <ul className="List one contact-info-list">
+            <ul className="List two contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>
                   <div className="Callout neon-bg-6">
@@ -289,72 +289,70 @@ const NavMenu = ({
                 </NavigationMenu.Link>
               </li>
               <li style={{ gridRow: "span 2" }}>
-                <NavigationMenu.Link asChild>
-                  <div className="Callout ContactSubMenu">
-                    <div className="CalloutHeading">Contact Me</div>
-                    <p className="CalloutText">
-                      <span className="SocialLinks">
-                        <a href="/contact">
-                          <span className="Icon">
-                            <EnvelopeClosedIcon
-                              className="svg-icon"
-                              width={30}
-                              height={30}
-                            />
-                          </span>
-                          <label>
-                            <code>&lt;form&gt;</code>
-                          </label>
-                        </a>
+                <div className="Callout ContactSubMenu">
+                  <div className="CalloutHeading">Contact Me</div>
+                  <p className="CalloutText">
+                    <span className="SocialLinks">
+                      <a href="/contact">
+                        <span className="Icon">
+                          <EnvelopeClosedIcon
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>
+                          <code>&lt;form&gt;</code>
+                        </label>
+                      </a>
 
-                        <a href="http://twitter.com/justsml" target="_blank">
-                          <span className="Icon">
-                            <TwitterLogoIcon
-                              className="svg-icon"
-                              width={30}
-                              height={30}
-                            />
-                          </span>
-                          <label>Twitter</label>
-                        </a>
-                        <a href="https://github.com/justsml" target="_blank">
-                          <span className="Icon">
-                            <GitHubLogoIcon
-                              className="svg-icon"
-                              width={30}
-                              height={30}
-                            />
-                          </span>
-                          <label>GitHub</label>
-                        </a>
-                        <a
-                          href="https://linkedin.com/in/realdaniellevy"
-                          target="_blank"
-                        >
-                          <span className="Icon">
-                            <LinkedInLogoIcon
-                              className="svg-icon"
-                              width={30}
-                              height={30}
-                            />
-                          </span>
-                          <label>LinkedIn</label>
-                        </a>
+                      <a href="http://twitter.com/justsml" target="_blank">
+                        <span className="Icon">
+                          <TwitterLogoIcon
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>Twitter</label>
+                      </a>
+                      <a href="https://github.com/justsml" target="_blank">
+                        <span className="Icon">
+                          <GitHubLogoIcon
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>GitHub</label>
+                      </a>
+                      <a
+                        href="https://linkedin.com/in/realdaniellevy"
+                        target="_blank"
+                      >
+                        <span className="Icon">
+                          <LinkedInLogoIcon
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>LinkedIn</label>
+                      </a>
 
-                        <a href="/docs/resume.pdf" target="_blank">
-                          <span className="Icon">
-                            <RocketIcon
-                              className="svg-icon"
-                              width={30}
-                              height={30}
-                            />
-                          </span>
-                          <label>Résumé (PDF)</label>
-                        </a>
-                      </span>
-                    </p>
-                  </div>
-                </NavigationMenu.Link>
+                      <a href="/docs/resume.pdf" target="_blank">
+                        <span className="Icon">
+                          <RocketIcon
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>Résumé (PDF)</label>
+                      </a>
+                    </span>
+                  </p>
+                </div>
               </li>
             </ul>
           </NavigationMenu.Content>

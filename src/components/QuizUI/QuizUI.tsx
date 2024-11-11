@@ -5,7 +5,7 @@ import "./icons.css";
 export default function QuizUI({ children }: any) {
 
   return (
-    <section>
+    <section className="full-section full-width">
       <div className="quiz-ui">{children}</div>
 
       <div className="score">

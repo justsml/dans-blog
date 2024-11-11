@@ -367,7 +367,7 @@ pre {
   left: 0;
   width: 100%;
   
-  max-height: calc(100vh - 8rem);
+  max-height: calc(100vh - 4rem);
   overflow-y: auto;
   
   animation-duration: 250ms;
@@ -461,15 +461,17 @@ pre {
 
 .contact-info-list {
   .Callout {
+    row-gap: 0.5rem;
+    padding: .5em;;
     max-width: 100%;
     a {
       text-align: center;
     }
   }
   img {
-    margin: 1rem auto;
+    margin: 0.1rem auto;
     border: 0.25rem solid var(--highlight);
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     background-color: var(--highlight);
   }
 }
@@ -525,7 +527,7 @@ pre {
   .List.two {
     max-width: 100vw;
     /* grid-auto-flow: column; */
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 40% auto;
   }
 }
 
@@ -626,10 +628,11 @@ pre {
   font-weight: 500;
   line-height: 1.1;
   /* margin-top: 1rem; */
-  margin-left: -0.5rem
+  /* margin-left: -0.5rem */
 }
 
 .ContactSubMenu {
+  padding: .5rem 0;
   .CalloutHeading {
     color: var(--accent);
   }

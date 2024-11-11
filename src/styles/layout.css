@@ -1,13 +1,13 @@
 /* credit: [Kevin Powell](https://codepen.io/kevinpowell/pen/ExrZrrw) */
 .content-grid {
-  --gutter-size: 2rem;
+  --gutter-size: 0rem;
   --gutter-main: minmax(300px, 100% - (2 * var(--gutter-size)));
-  --padding-inline: 1rem;
-  --content-max-width: min(1240px, 90vw);
-  --breakout-max-width: min(1400px, 90vw);
+  --padding-inline: .5rem;
+  --content-max-width: min(800px, 100vw);
+  --breakout-max-width: min(1000px, 100vw);
   /* --content-max-width: 1600px;
   --breakout-max-width: 1800px; */
-  --inset-size: calc(100% - (var(--content-max-width) * 75%));
+  --inset-size: calc(100% - (var(--content-max-width) * 80%));
   --breakout-size: calc(
     (var(--breakout-max-width) - var(--content-max-width)) / 2
   );
@@ -27,25 +27,65 @@
     [full-width-end];
   
   transition: grid-template-columns 0.3s ease-out, max-width 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out, width 0.3s ease-out;
+
+  > h1,
+  > h2, 
+  > h3, 
+  > section, 
+  > article, 
+  > aside, 
+  > .challenge {
+    --padding-inline: 1rem;
+  }
+
+  &:has(.challenge) {
+    --padding-inline: 0;
+  }
+
+  .full-section {
+    --padding-inline: 0;
+    width: 100vw;
+    grid-column: full-width;
+  }
+
+  @screen sm {
+    --gutter-size: 1rem;
+    --padding-inline: 1rem;
+
+    > :has(.challenge) :is(.challenge) {
+      --padding-inline: 0rem;
+    }
+
+  }
+
+  > * {
+    padding-inline: var(--padding-inline);
+  }
 }
 
-.content-grid.article, article.content-grid {
-  --content-max-width: min(800px, 90vw);
-  --breakout-max-width: min(1000px, 90vw);
+.content-grid.article,
+article.content-grid {
+  --content-max-width: min(800px, 100vw);
+  --breakout-max-width: min(1000px, 100vw);
+
+  @screen sm {
+    --padding-inline: 1rem;
+  }
+
 }
 
-.content-grid > img,
-.content-grid > p :has(> img)  {
+.content-grid>img,
+.content-grid>p :has(> img) {
   margin-inline: auto;
   margin-block: 2rem;
 }
 
-.content-grid > :not(.breakout, .full-width),
-.full-width > :not(.breakout, .full-width) {
+.content-grid> :not(.breakout, .full-width),
+.full-width> :not(.breakout, .full-width) {
   grid-column: content;
 }
 
-.content-grid > .breakout {
+.content-grid>.breakout {
   grid-column: breakout;
   border-left: .5rem solid var(--neon-pink);
   padding-left: 1rem;
@@ -53,7 +93,7 @@
   font-size: 120%;
 }
 
-.content-grid > .inset {
+.content-grid>.inset {
   border-left: .5rem solid var(--neon-pink);
   margin-inline: 3rem;
   padding-inline: 1.5rem;
@@ -63,7 +103,8 @@
 .skinny-xl {
   --gutter-size: 20vw;
 }
-.content-grid > .skinny {
+
+.content-grid>.skinny {
   grid-column: content;
   width: 100%;
   margin-block: 1.5rem;
@@ -85,7 +126,7 @@
 }
 
 /* a narrow "inlay"/"inset" section */
-.content-grid > .narrow {
+.content-grid>.narrow {
   grid-column: content;
   display: grid;
   justify-self: center;
@@ -94,14 +135,14 @@
   border-left: 1px solid var(--clr-muted-300);
 }
 
-.content-grid > .full-width,
-.content-grid > :where(astro-island, astro-slot) > .full-width {
+.content-grid>.full-width,
+.content-grid> :where(astro-island, astro-slot)>.full-width {
   grid-column: full-width;
   display: grid;
   grid-template-columns: inherit;
 }
 
-.full-width > :where(astro-island, astro-slot) {
+.full-width> :where(astro-island, astro-slot) {
   display: unset !important;
 }
 
@@ -123,12 +164,13 @@ img.full-width {
       animation-range: contain;
     } */
   }
-  
+
 }
 
 p :has(img) {
   margin-block: 1.5rem;
 }
+
 p img {
   margin-inline: auto;
   margin-block: 1.5rem;
@@ -222,7 +264,7 @@ img {
   margin-inline: auto;
 }
 
-.flow > * + * {
+.flow>*+* {
   margin-top: var(--flow-spacing, 1em);
 }
 
@@ -266,7 +308,9 @@ nav a:focus {
 }
 
 .content-grid {
-  img, p {
+
+  img,
+  p {
     margin-block: 1rem;
   }
 }

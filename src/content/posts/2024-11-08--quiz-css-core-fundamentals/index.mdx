@@ -39,19 +39,24 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
     <div className="question">
-      Which is ***NOT*** a valid `font-size`?
+      Select the <em class="highlight">ONE INVALID</em> ❌ `font-size`:
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      `10cx` is incorrect since `cx` isn't a real CSS unit. (At least at the time of writing.)
-      
-      Popular units include the familiar `px`, `rem`, `em`.
+`10cx` is incorrect since `cx` isn't a real CSS unit. (At least at the time of writing.)
 
-      Though new units like `ch`, `vmin`, `vmax`, `vh`, `vw` are useful for responsive layouts.
+Popular units include the familiar `px`, `rem`, `em`.
 
-      There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, and `ex` which is equal to the width of the letter `x`.
-      
+Newer units are useful for dynamic, responsive layouts.
+
+- `ch` - width of the `0` character
+- `vmin` - viewport minimum
+- `vmax` - viewport maximum
+- `vh` - viewport height
+- `vw` - viewport width
+
+There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points
     </div>
   </slot>
 </Challenge>
@@ -70,12 +75,16 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
     <div className="question">
-      Which of the following hex codes are **VALID**?
+      Can you spot the <em class="highlight">ONE</em> valid 👍 hex code?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Hex codes can be 3, 4, 6, or 8 characters long. The correct answer is `#ABCD`, which has 4 characters. The others are valid hex codes.
+      Hex codes can be used to represent colors in CSS. They are prefixed with a `#` and must be 3, 4, 6, or 8 characters long.
+      
+      The 3-character hex code is a shorthand for the 6-character code, where each character is repeated. The 4-character code includes an alpha channel for transparency.
+
+      For example `#ABC` is the same as `#AABBCC`, and `#ABCD` is the same as `#AABBCCDD`. To learn more about handling hex values, check out my [JavaScript numbers quiz.](/quiz-can-you-count-to-bigint/)
     </div>
   </slot>
 </Challenge>
@@ -83,7 +92,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={2}
-  group="Warmup"
+  group="Warmup: Units"
   title="Oops, all units!"
   options={[
     { text: 'em' },
@@ -99,13 +108,13 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     { text: 'vmin' },
     { text: 'vmax' },
     { text: 'vh' },
-    { text: 'vl', isAnswer: true },
+    { text: 'rel', isAnswer: true },
     { text: 'vw' },
   ]}
 >
   <slot name="question">
     <div className="question">
-      Which of the following is not a `unit` of CSS?
+      Which of these units is <em class="highlight">NOT</em> a valid ❌ CSS unit? (Yes, ALL but ONE are unsupported.)
     </div>
   </slot>
   <slot name="explanation">
@@ -437,5 +446,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     </div>
   </slot>
 </Challenge>
+
 
 </QuizUI>
