@@ -40,7 +40,7 @@ function getRecentPosts(limitCount = 20) {
 function addRandomArticleSlugs(slugs: string[], limit: number) {
   const {posts, _postsBySlug, _slugs} = getRecentPosts(30);
   const lastPost = posts[posts.length - 1];
-  console.log("Oldest post %s %s", lastPost.data.date, lastPost.slug);
+  // console.log("Oldest post %s %s", lastPost.data.date, lastPost.slug);
   const articleCount = _slugs.length;
   let i = 0;
   while (slugs.length < limit) {
