@@ -34,11 +34,8 @@ const subCategoryCounts = subCategoryList.reduce((acc, subCategory) => {
   ).length;
   return acc;
 }, {});
-const subCategoryColors = subCategoryList.reduce((acc, subCategory, idx) => {
-  // @ts-expect-error
-  acc["cat-" + slugify(subCategory)] = brightColors[idx % brightColors.length];
-  return acc;
-}, {});
+
+const totalQuizzes = posts.length;
 
 // console.log(
 //   `Found ${subCategoryList.length} subcategories %o  %o    %o`,
@@ -62,9 +59,13 @@ posts.sort((_a: ArticlePost, _b: ArticlePost) => {
   return 0;
 });
 
+let totalQuestionCount = 0;
+
 const quizList = posts.map((p, idx): QuizPost => {
   // @ts-expect-error
   const questionCount = p.body?.split("</Challenge>").length - 1;
+  totalQuestionCount += questionCount;
+
 
   return {
     ...p,
@@ -91,7 +92,11 @@ const styleString = subCategoryList
 ---
 <style set:html={styleString}></style>
 
-<Page>
+<Page
+  frontmatter={{
+    title: "🧠 Tech Challenges & Quizzes - DanLevy.net",
+    subTitle: `A collection of exactly ${totalQuizzes} quizzes, with ${totalQuestionCount} tech questions (+ explainers & notes) I've acquired from around the world.`,
+  }}>
 <section class="full-width">
   <h2>Tech Challenges & Quizzes</h2>
 </section>

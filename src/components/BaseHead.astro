@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ViewTransitions } from "astro:transitions";
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
@@ -23,7 +23,11 @@ let { title, description, image } = Astro.props;
 
 if (description === "undefined") description = undefined;
 
-if (!image || (typeof image === 'string' ? image.length <= 1 : !('src' in image))) image = socialBanner;
+if (
+  !image ||
+  (typeof image === "string" ? image.length <= 1 : !("src" in image))
+)
+  image = socialBanner;
 
 const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
 const siteDescription = description || SITE_SEO_DESCRIPTION;
@@ -34,6 +38,7 @@ const imgSrc = typeof image === "string" ? image : image?.src;
 const imageWidth = typeof image !== "string" ? image?.width : null;
 const imageHeight = typeof image !== "string" ? image?.height : null;
 ---
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
@@ -43,15 +48,27 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 
 {/*Primary Meta Tags*/}
 <slot name="title">
-	<title>{siteTitle}</title>
-	<meta name="title" content={siteTitle} />
-	<meta property="twitter:title" content={siteTitle} />
-	<meta property="og:title" content={siteTitle} />
+  <title>{title ?? siteTitle}</title>
+  <meta name="title" content={title ?? siteTitle} />
+  <meta property="twitter:title" content={title ?? siteTitle} />
+  <meta property="og:title" content={title ?? siteTitle} />
 </slot>
 <slot name="description">
-	{siteDescription && <meta name="description" content={siteDescription} />}
-	{siteDescription && <meta property="twitter:description" content={siteDescription} />}
-	{siteDescription && <meta property="og:description" content={siteDescription} />}
+  {
+    siteDescription && (
+      <meta name="description" content={description ?? siteDescription} />
+    )
+  }
+  {
+    siteDescription && (
+      <meta property="twitter:description" content={siteDescription} />
+    )
+  }
+  {
+    siteDescription && (
+      <meta property="og:description" content={siteDescription} />
+    )
+  }
 </slot>
 
 {/*Open Graph / Facebook*/}
@@ -65,31 +82,84 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 
 {/*Twitter*/}
 <meta property="twitter:site" content="@justsml" />
-<meta name="twitter:creator" content="@justsml"/>
+<meta name="twitter:creator" content="@justsml" />
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalURL} />
-{imgSrc && <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />}
+{
+  imgSrc && (
+    <meta property="twitter:image" content={new URL(imgSrc, Astro.url)} />
+  )
+}
 
-<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png" />
+<link
+  rel="apple-touch-icon"
+  sizes="120x120"
+  href="/icons/apple-icon-120x120.png"
+/>
+<link
+  rel="apple-touch-icon"
+  sizes="180x180"
+  href="/icons/apple-icon-180x180.png"
+/>
 
-<link rel="icon" type="image/webp" sizes="48x48" href="/icons/icon-48x48.webp">
-<link rel="icon" type="image/webp" sizes="256x256" href="/icons/icon-256x256.webp">
-<link rel="icon" type="image/webp" sizes="512x512" href="/icons/icon-512x512.webp">
+<link
+  rel="icon"
+  type="image/webp"
+  sizes="48x48"
+  href="/icons/icon-48x48.webp"
+/>
+<link
+  rel="icon"
+  type="image/webp"
+  sizes="256x256"
+  href="/icons/icon-256x256.webp"
+/>
+<link
+  rel="icon"
+  type="image/webp"
+  sizes="512x512"
+  href="/icons/icon-512x512.webp"
+/>
 
-{/* <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png"> */}
-{/* <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png"> */}
-{/* <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png"> */}
-{/* <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png"> */}
-{/* <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png"> */}
-{/* <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png"> */}
+{
+  /* <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png"> */
+}
+{
+  /* <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png"> */
+}
+{
+  /* <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png"> */
+}
+{
+  /* <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png"> */
+}
+{
+  /* <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png"> */
+}
+{
+  /* <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png"> */
+}
 
-{/* <link rel="icon" type="image/webp" sizes="96x96" href="/icons/icon-96x96.webp"> */}
-{/* <link rel="icon" type="image/webp" sizes="144x144" href="/icons/icon-144x144.webp"> */}
-{/* <link rel="icon" type="image/webp" sizes="192x192" href="/icons/icon-192x192.webp"> */}
-{/* <link rel="icon" type="image/webp" sizes="384x384" href="/icons/icon-384x384.webp"> */}
+{
+  /* <link rel="icon" type="image/webp" sizes="96x96" href="/icons/icon-96x96.webp"> */
+}
+{
+  /* <link rel="icon" type="image/webp" sizes="144x144" href="/icons/icon-144x144.webp"> */
+}
+{
+  /* <link rel="icon" type="image/webp" sizes="192x192" href="/icons/icon-192x192.webp"> */
+}
+{
+  /* <link rel="icon" type="image/webp" sizes="384x384" href="/icons/icon-384x384.webp"> */
+}
 
-<script is:inline defer async src="https://unpkg.com/htmx.org@2.0.2" integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ" crossorigin="anonymous"></script>
+<script
+  is:inline
+  defer
+  async
+  src="https://unpkg.com/htmx.org@2.0.2"
+  integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+  crossorigin="anonymous"></script>
 
 <ViewTransitions />
