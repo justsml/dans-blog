@@ -15,7 +15,7 @@ export const QuizGrid = ({
   const [quizList, setQuizList] = useState<QuizPost[]>(_quizList);
   const [searchData, setSearchData] = useState<string[]>([]);
   const onFiltersChanged = (value: string[]) => {
-    console.log("Filter changed!", value, searchData, quizList.length);
+    // console.log("Filter changed!", value, searchData, quizList.length);
     setSearchData(value);
   };
 

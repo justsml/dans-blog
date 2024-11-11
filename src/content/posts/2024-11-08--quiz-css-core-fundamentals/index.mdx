@@ -24,12 +24,42 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <QuizUI>
 
-{/* Add question to see what colors come from `#A`, `#AB`, `#ABC` or `#ABCD` */}
-
 <Challenge
   client:load
   index={0}
-  group="Warmup"
+  group="Warmup: Fonts"
+  title="Invalid CSS Unit for Font Size"
+  options={[
+    { text: '10cx', isAnswer: true },
+    { text: '10mm' },
+    { text: '10pt' },
+    { text: '10px' },
+    { text: '10vmin' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which is ***NOT*** a valid `font-size`?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      `10cx` is incorrect since `cx` isn't a real CSS unit. (At least at the time of writing.)
+      
+      Popular units include the familiar `px`, `rem`, `em`.
+
+      Though new units like `ch`, `vmin`, `vmax`, `vh`, `vw` are useful for responsive layouts.
+
+      There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, and `ex` which is equal to the width of the letter `x`.
+      
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Colors"
   title="Hex Codes"
   options={[
     { text: '#A' },
@@ -52,7 +82,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={1}
+  index={2}
   group="Warmup"
   title="Oops, all units!"
   options={[
@@ -91,7 +121,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={2}
+  index={3}
   group="Selector: Fundamentals"
   title="Matching Selectors to HTML Elements"
   options={[
@@ -120,7 +150,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={3}
+  index={4}
   group="Selector: Fundamentals"
   title="Attribute Selector for a Button"
   options={[
@@ -150,7 +180,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={4}
+  index={5}
   group="Selector: Fundamentals"
   title="Invalid CSS Selector"
   options={[
@@ -176,7 +206,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={5}
+  index={6}
   group="Selector: Fundamentals"
   title="Selecting the Last Link"
   options={[
@@ -184,6 +214,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     { text: 'a:last-item' },
     { text: 'nav:last-of-type(a)' },
     { text: 'nav:nth-child(3)', isAnswer: true },
+    { text: 'a:last-child' },
   ]}
 >
   <slot name="question">
@@ -200,14 +231,14 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      `nav:nth-child(3)` selects the third child in the list, but `a:last-of-type` might be more direct. Note that `a:last-item` is not a valid CSS pseudo-class.
+      The correct selector is `nav:nth-child(3)`, which targets the third child of the `nav` element. The `:last-item` and `:last-child` selectors are not valid CSS selectors, and `:nth-child(3)` targets the third child of any parent element.
     </div>
   </slot>
 </Challenge>
 
 <Challenge
   client:load
-  index={6}
+  index={7}
   group="Selector: Specificity"
   title="Selector Priority"
   options={[
@@ -231,57 +262,27 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={7}
+  index={8}
   group="Layouts: Centering"
   title="Centering Text in a Block Element"
   options={[
-    { text: '.box { align: center; }' },
-    { text: '.box { margin: 0 auto; }' },
-    { text: '.box { align-content: center; }' },
-    { text: '.box { text-align: center; }', isAnswer: true },
-    { text: '.box { text-content: center; }' }
+    { text: 'align: center;' },
+    { text: 'margin: 0 auto;' },
+    { text: 'align-content: center;' },
+    { text: 'text-align: center;', isAnswer: true },
+    { text: 'text-content: center;' },
   ]}
 >
   <slot name="question">
     <div className="question">
-      What's the correct way to center text in a block element?
+      How can you center "shit" in a box?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Using `text-align: center;` is the correct way to center text in a block element.
-    </div>
-  </slot>
-</Challenge>
+      Using `text-align: center;` is the correct way to center text in a block element. The `align` properties are used for flexbox layouts, and `margin: 0 auto;` is used to center block elements horizontally.
 
-<Challenge
-  client:load
-  index={8}
-  group="Layouts: Units"
-  title="Invalid CSS Unit for Font Size"
-  options={[
-    { text: '10cx', isAnswer: true },
-    { text: '10mm' },
-    { text: '10pt' },
-    { text: '10px' },
-    { text: '10vmin' },
-  ]}
->
-  <slot name="question">
-    <div className="question">
-      Which is ***NOT*** a valid value for `font-size`?
-    </div>
-  </slot>
-  <slot name="explanation">
-    <div className="explanation">
-      `10cx` is incorrect since `cx` isn't a real CSS unit. (At least at the time of writing.)
-      
-      Popular units include the familiar `px`, `rem`, `em`.
-
-      Though new units like `ch`, `vmin`, `vmax`, `vh`, `vw` are useful for responsive layouts.
-
-      There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, and `ex` which is equal to the width of the letter `x`.
-      
+      The `align-content` property is used for grid layouts, and `text-content` is not a valid CSS property.
     </div>
   </slot>
 </Challenge>
@@ -289,6 +290,35 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={9}
+  group="Layouts: Centering"
+  title="Centering a Block Element Vertically"
+  options={[
+    { text: 'align-items: center;' },
+    { text: 'justify-content: center;' },
+    { text: 'align-content: center;' },
+    { text: 'margin: auto;', isAnswer: true },
+    { text: 'margin: 0 auto;' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      How do you center a block element vertically?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      Using `margin: auto;` is the correct way to center a block element vertically.
+
+      The `align-items` and `justify-content` properties are used for flexbox layouts, and `align-content` is used for grid layouts.
+
+      The `margin: 0 auto;` centers a block element horizontally, not vertically. To center both horizontally and vertically, you can use `margin: auto;` for both. Or use flexbox or grid layouts.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
   group="Layouts: Units"
   title="Calculating Pixel Size of Nested Font Sizes"
   options={[
@@ -320,7 +350,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={10}
+  index={11}
   group="Units: REM"
   title="Calculating Pixel Size with REMs"
   options={[
@@ -353,7 +383,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={11}
+  index={12}
   group="Units: EM"
   title="Calculating Pixel Size with EMs"
   options={[
@@ -380,6 +410,30 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   <slot name="explanation">
     <div className="explanation">
       `1.2rem` translates to 24px because `rem` units reference the `<html>` font size, set here to 10px.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={13}
+  group="Selector: Specificity"
+  title="Selector Priority"
+  options={[
+    { text: 'main article section blockquote a' },
+    { text: 'blockquote a' },
+    { text: 'a#quote', isAnswer: true },
+    { text: 'a.quote' }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector will take priority?
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The `a#quote` selector takes priority due to the ID, which has a higher specificity than tag or class-based selectors.
     </div>
   </slot>
 </Challenge>

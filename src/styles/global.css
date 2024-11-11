@@ -71,10 +71,10 @@
     
     --sky-blue-bg: linear-gradient(300deg, #dedede, #dddddd, #d5d8d5, #bec9c2, #8fada5, #4a8290, #266389, #205185, #224a84, #224984);
   
-    --red-hot-bg: radial-gradient(circle at 90% 80%, #ffdf42, #ffde41, #ffd93b, #ffca29, #ffac00, #ff7b00, #ff5100, #ff340d, #ff2511, #ff2212);
-  
+    
     --springtime-bg: linear-gradient(315deg, #dde409, #a6dd30, #71d34c, #36c664, #00b777, #00a786, #00968e, #00848e, #007288, #0a607b);
-   */
+    */
+    --red-hot-bg: radial-gradient(circle at 90% 80%, hsl(50, 100%, 42.5%), hsl(50, 100%, 42.5%), hsl(50, 100%, 42.5%), hsl(50, 100%, 42.5%), #ffac00, #ff7b00, #ff5100, #ff340d, #ff2511, #ff2212);
     --brainblow-bg: linear-gradient(315deg, #f7ff0a, #f2ff0c, #d0fe1e, #65f653, #00d6b1, #008ff2, #4a50c1, #712891, #77147e, #77107b);
   
     --deep-blue-bg: linear-gradient(15deg, #142850, #14365f, #13476f, #125d80, #107792, #0d96a5, #09b8b4, #04ccb1);
@@ -645,7 +645,7 @@ pre.astro-code {
     margin-left: -0.25rem;
   }
 
-  padding: 0.5rem;
+  padding: 1em;
 
   code {
     font-size: .8rem;
@@ -655,12 +655,22 @@ pre.astro-code {
     }
   
     @screen md {
-      font-size: 1.40rem;
+      font-size: 1.125rem;
     }
   }
 }
 
+.quiz-ui pre.astro-code {
+  
+  width: 548px;
+  margin-right: 0;
+  margin-left: -1rem;
+  border-radius: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  padding: .75em;;
 
+}
 /* Contact form */
 .columns-all {
   grid-column: 1 / -1;
