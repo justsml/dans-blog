@@ -1,6 +1,6 @@
 import { QuizPost } from "../../types.ts";
-import { QuizFilter } from "./QuizFilter.tsx";
-import { QuizCard } from "./QuizCard.tsx";
+import { QuizFilter } from "./QuizFilter";
+import { QuizCard } from "./QuizCard";
 import { useEffect, useState } from "react";
 
 export const QuizGrid = ({
