@@ -1,7 +1,20 @@
-
 :root {
-  --border-radius: .125rem;
-  --percent-completed: 0.5;
+  --border-radius: 0.125rem;
+  --percent-completed: 0;
+}
+.quiz-grid {
+  margin-top: -3em;
+}
+.top-text {
+  max-width: clamp(30ch, 80%, 46ch);
+}
+
+.inset .top-text {
+  max-width: clamp(20ch, 80%, 46ch);
+}
+
+strike {
+  color: #696969
 }
 
 .quiz-list {
@@ -12,7 +25,6 @@
   perspective: 1000px;
   transform-style: preserve-3d;
 }
-
 .expanded-row {
   grid-column: 1 / -1;
 }
@@ -22,8 +34,13 @@
   border-radius: var(--border-radius);
   padding: calc(var(--border-radius) * 2);
   --local-color: var(--cold-bg);
-  transition: background 0.3s ease-out, color 0.3s ease-out, padding 0.3s ease-out, transform 0.3s ease-out;
-  
+  transition:
+    background 0.3s ease-out,
+    background-color 0.3s ease-out,
+    color 0.3s ease-out,
+    padding 0.3s ease-out,
+    transform 0.3s ease-out;
+
   h2 {
     font-size: 1.25rem;
     margin: 0;
@@ -35,18 +52,22 @@
   position: absolute;
   --card-border-size: calc(var(--border-radius) * 2);
   --progress-height: calc(var(--percent-completed) * 100%);
-  inset: auto var(--card-border-size) var(--card-border-size) var(--card-border-size);
+  inset: auto var(--card-border-size) var(--card-border-size)
+    var(--card-border-size);
   background-color: var(--neon-green);
   background-blend-mode: overlay;
   background-position: 0 0;
   background-size: 100% 100%;
-  border-bottom-left-radius:  0;
+  border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
   border-top-left-radius: 0;
   border-top-right-radius: var(--border-radius);
-  transition: width 0.5s ease-in-out .5s;
+  transition:
+    width 0.5s ease-in-out 0.5s,
+    background-color 0.3s ease-out,
+    background 0.3s ease-out;
   /* border-bottom-left-radius: var(--border-radius); */
-  height: .25rem; /* calc(100% - var(--card-border-size) * 2);*/
+  height: 0.25rem; /* calc(100% - var(--card-border-size) * 2);*/
   width: calc(var(--progress-height) - var(--card-border-size) * 2);
   /* border-radius: var(--border-radius); */
 }
@@ -69,12 +90,10 @@
   &::after {
     border-radius: 0;
   }
-
 }
 
 .quiz-card * {
   cursor: pointer;
-
 }
 
 .quiz-card::before,
@@ -100,13 +119,13 @@
 
 .tilt-effect:not(.completed) {
   /* perspective: 1000px; */
-  transition: all .25s ease-in-out;
+  transition: all 0.25s ease-in-out;
   object-fit: contain;
   /* border-radius: 10px; */
   &:hover {
     transform: perspective(400px) rotate3d(1, -1, 0, 5deg);
     /* rotateX(-5deg) rotateY(0) rotateZ(0deg) skewX(-5deg) translateX(-5px) translateY(-5px) rotate3d(1, 1, 1, 10deg); */
-    box-shadow: .5rem .5rem .125rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0.5rem 0.5rem 0.125rem rgba(0, 0, 0, 0.5);
     /* animation: wobble3d 5s infinite alternate .05s ; */
   }
 }
@@ -115,58 +134,73 @@
   animation: none !important;
 }
 
-
 .quiz-card:nth-child(1) {
-  animation-delay: .1s;
+  animation-delay: 0.1s;
   /* transform: rotateY(0deg) rotateX(10deg); */
 }
 .quiz-card:nth-child(2) {
-  animation-delay: .2s;
+  animation-delay: 0.2s;
   /* transform: rotateY(90deg) rotateX(10deg); */
 }
 .quiz-card:nth-child(3) {
-  animation-delay: .3s;
+  animation-delay: 0.3s;
   /* transform: rotateY(180deg) rotateX(10deg); */
 }
 .quiz-card:nth-child(4) {
-  animation-delay: .4s;
+  animation-delay: 0.4s;
 }
 .quiz-card:nth-child(5) {
-  animation-delay: .5s;
+  animation-delay: 0.5s;
 }
 .quiz-card:nth-child(6) {
-  animation-delay: .6s;
+  animation-delay: 0.6s;
 }
 
 .toggle-filters {
   font-size: 1.25rem;
-}
 
-.toggle-filters::after {
-  content: "";
-  background: var(--icon-settings);
-  display: inline-block;
-  margin-left: 0.5em;
-  width: 1.125em;
-  height: 1.125em;
-
+  &::after {
+    content: "";
+    background: var(--icon-settings);
+    display: inline-block;
+    margin-left: 0.5em;
+    width: 1.125em;
+    height: 1.125em;
+  }
 }
 
 .selectedItem {
   background-image: var(--neon-purple-gradient);
   color: #fff;
-  
 }
 
-
-.quiz-card:not(.completed):hover, .quiz-card:not(.completed):focus-within {
+.quiz-card:not(.completed):hover,
+.quiz-card:not(.completed):active,
+.quiz-card:not(.completed):focus,
+.quiz-card:not(.completed):focus-within {
   --local-color: var(--party-bg);
   &::before,
   &::after {
-    animation: glow 2.5s linear infinite alternate;
+    animation: glow 2.5s linear infinite alternate paused;
     /* animation-play-state: running; */
   }
   /* animation-play-state: running; */
+}
+
+:target {
+  animation: yellowFlash .5s ease-out 1;
+}
+
+@keyframes yellowFlash {
+  0% {
+    background-color: var(--neon-yellow);
+  }
+  50% {
+    background-color: var(--neon-yellow);
+  }
+  100% {
+    background-color: var(--neon-yellow);
+  }
 }
 
 @keyframes glow {
@@ -237,5 +271,22 @@
   }
   100% {
     transform: rotate3d(0, 1, 0, 0deg);
+  }
+}
+
+
+.fact-box {
+  max-width: min(900px, 98vw);
+  
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 18rem auto 1rem auto;
+  
+  strong {
+    font-size: 125%;
+    font-weight: 400;
+    padding-inline: 0 .25rem;
   }
 }

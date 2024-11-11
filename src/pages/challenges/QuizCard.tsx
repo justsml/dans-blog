@@ -27,11 +27,11 @@ export const QuizCard = ({
     tags,
   } = article.data;
   // console.log('🚀 htmxArgs', htmxArgs);
-  const { createdAgo, modifiedAgo } = getComputedDates({ date, modified });
+  // const { createdAgo, modifiedAgo } = getComputedDates({ date, modified });
   const [countCorrect, setCountCorrect] = useState(0);
   const [countTotal, setCountTotal] = useState(0);
   const [countTries, setCountTries] = useState(0);
-  
+
   let categoryClass = `cat-${slugify(subCategory)}`;
   if (draft) {
     categoryClass += " draft";
@@ -52,13 +52,20 @@ export const QuizCard = ({
 
   // console.log("QuizCard %o", { countCorrect, countTotal, countTries, questionCount });
 
+  const ratioCompleted = countCorrect / questionCount;
+  const isStarted = countTries > 0 || countCorrect > 0;
+
   return (
     <div
-      style={{ "--quiz-index": idx, "--percent-completed": countCorrect / questionCount }}
+      style={{
+        "--quiz-index": idx,
+        "--percent-completed": Number.isNaN(ratioCompleted)
+          ? 0
+          : ratioCompleted,
+      }}
       className={clsx(quizClass, categoryClass, className, {
-        "completed": allCorrect,
-        "started": countCorrect > 0 || countTries > 0,
-
+        completed: allCorrect,
+        started: isStarted,
       })}
 
       // onMouseLeave={() => (boundingRef.current = null)}
@@ -104,10 +111,13 @@ export const QuizCard = ({
             <span className="status-icon">✅&#160;</span>
             <span className="status-text">&#160;Completed</span>
           </div>
-        ) : (
+        ) : isStarted ? (
           <p title={"in " + (countTries ?? 0) + " tries"}>
-            {((countCorrect ?? 0) < 1) ? 'Zero' : countCorrect} correct of {questionCount}
+            {(countCorrect ?? 0) < 1 ? "Zero" : countCorrect} correct of{" "}
+            {questionCount}
           </p>
+        ) : (
+          <p>{questionCount} questions - click to begin!</p>
         )}
         {/* <p>{tags && tags.join(", ")}</p> */}
         {/* <InfoLabel

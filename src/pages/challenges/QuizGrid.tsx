@@ -47,7 +47,7 @@ export const QuizGrid = ({
   }, [searchData]);
 
   return (
-    <>
+    <section className="quiz-grid">
       <div className="filter-toolbar">
         <QuizFilter
           onOpenChange={console.log}
@@ -65,6 +65,6 @@ export const QuizGrid = ({
             />
           ))}
       </div>
-    </>
+    </section>
   );
 };

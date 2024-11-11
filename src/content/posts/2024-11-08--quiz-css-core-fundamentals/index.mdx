@@ -30,24 +30,22 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   client:load
   index={0}
   group="Warmup"
-  title="Colors from Hex Codes"
+  title="Hex Codes"
   options={[
     { text: '#A' },
     { text: '#AB' },
-    { text: '#ABC' },
     { text: '#ABCD', isAnswer: true },
+    { text: '#ABCDE' },
   ]}
 >
   <slot name="question">
     <div className="question">
-      Which of the following hex codes is valid?
+      Which of the following hex codes are **VALID**?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      {/* Hex codes are used to represent colors in CSS. Each pair of characters represents a color channel (red, green, blue, and sometimes alpha).  */}
-
-      {/* The hex code `#ABCD` is valid, representing a color with red `0xAA`, green `0xCD`, and blue `0xEF` values.  */}
+      Hex codes can be 3, 4, 6, or 8 characters long. The correct answer is `#ABCD`, which has 4 characters. The others are valid hex codes.
     </div>
   </slot>
 </Challenge>
@@ -56,7 +54,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   client:load
   index={1}
   group="Warmup"
-  title="Do You Understand CSS Fundamentals?"
+  title="Oops, all units!"
   options={[
     { text: 'em' },
     { text: 'rem' },
@@ -93,7 +91,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={1}
+  index={2}
   group="Selector: Fundamentals"
   title="Matching Selectors to HTML Elements"
   options={[
@@ -115,34 +113,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     <div className="explanation">
       The correct answer is `a#home[name='home']`, which matches both the `id` and `name` attributes. CSS selectors are case-sensitive, so `#Home` wouldn't work, and spaces imply child elements, which doesn't apply here.
 
-      The `:contains()` selector is not a standard CSS selector, but it is available in several JS libraries.
-    </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={2}
-  group="Selector: Fundamentals"
-  title="Attribute Selector for a Button"
-  options={[
-    { text: 'button:link' },
-    { text: 'button::click' },
-    { text: 'button:onclick' },
-    { text: 'button[onclick]', isAnswer: true },
-  ]}
->
-  <slot name="question">
-    <div className="question">
-      Which selector matches the following HTML button?
-      ```html
-      <button id="contact" onclick="emailModal.open()">Contact</button>
-      ```
-    </div>
-  </slot>
-  <slot name="explanation">
-    <div className="explanation">
-      The correct answer is `button[onclick]`, which targets the attribute `onclick`. Note that `.contact` would target a class, not an ID, and `:link` applies only to anchors with `href` attributes.
+      The `:contains()` selector is not a standard CSS selector, but it is available in some JS libraries.
     </div>
   </slot>
 </Challenge>
@@ -150,6 +121,36 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 <Challenge
   client:load
   index={3}
+  group="Selector: Fundamentals"
+  title="Attribute Selector for a Button"
+  options={[
+    { text: 'button:link' },
+    { text: 'button::click' },
+    { text: 'button:focus' },
+    { text: 'button[onclick]', isAnswer: true },
+    { text: 'button[on-click]' },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Which selector matches the following HTML button?
+      ```html
+      <button onclick="openModal()">Contact</button>
+      ```
+    </div>
+  </slot>
+  <slot name="explanation">
+    <div className="explanation">
+      The correct answer is `button[onclick]`, which targets the existence of attribute `onclick`.
+      
+      Note that `:link` only targets unvisited `href` links, `::click` is not a valid pseudo-element, and `:focus` targets only the focused element.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
   group="Selector: Fundamentals"
   title="Invalid CSS Selector"
   options={[
@@ -175,7 +176,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={4}
+  index={5}
   group="Selector: Fundamentals"
   title="Selecting the Last Link"
   options={[
@@ -190,9 +191,9 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
       Which selector matches the last link in the following HTML?
       ```html
       <nav>
-        <a id="home" name="home" href="/home">Home</a>
-        <a id="login" name="login" href="/login">Login</a>
-        <a id="help" name="help" href="/help">Help</a>
+        <a name="home" href="/home">Home</a>
+        <a name="login" href="/login">Login</a>
+        <a name="help" href="/help">Help</a>
       </nav>
       ```
     </div>
@@ -206,7 +207,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={5}
+  index={6}
   group="Selector: Specificity"
   title="Selector Priority"
   options={[
@@ -230,7 +231,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={6}
+  index={7}
   group="Layouts: Centering"
   title="Centering Text in a Block Element"
   options={[
@@ -255,7 +256,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={7}
+  index={8}
   group="Layouts: Units"
   title="Invalid CSS Unit for Font Size"
   options={[
@@ -287,7 +288,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={8}
+  index={9}
   group="Layouts: Units"
   title="Calculating Pixel Size of Nested Font Sizes"
   options={[
@@ -319,7 +320,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={9}
+  index={10}
   group="Units: REM"
   title="Calculating Pixel Size with REMs"
   options={[
@@ -352,7 +353,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 <Challenge
   client:load
-  index={10}
+  index={11}
   group="Units: EM"
   title="Calculating Pixel Size with EMs"
   options={[

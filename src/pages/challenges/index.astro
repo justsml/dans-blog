@@ -79,8 +79,12 @@ const quizList = posts.map((p, idx): QuizPost => {
   };
 });
 
+
 const styleString = subCategoryList
-  .map((key) => `:has(.cat-${slugify(key)}:hover) .cat-${slugify(key)} { animation: wobble 1s 1 forwards; }`)
+  .map((key) => `:has(.cat-${slugify(key)}:hover:not(.completed)) .cat-${slugify(key)} {
+  animation: wobble 1s 1 forwards 0.75s;
+  .quiz-card-inner {background-color: #111;}
+}`)
   .join("\n");
 
 // console.log("QuizList %o", quizList);
@@ -88,23 +92,26 @@ const styleString = subCategoryList
 <style set:html={styleString}></style>
 
 <Page>
-  <section class="full-width">
-    <h2>Tech Challenge Quizzes</h2>
-  </section>
-  <p class="inset">
-    Welcome to my curated collection of tech questions & answers.
-    
-    From HTML & CSS to Node.js and SQL, these quizzes are designed to test your knowledge and help learn new things!
-  </p>
+<section class="full-width">
+  <h2>Tech Challenges & Quizzes</h2>
+</section>
+<div class="inset"><div class="top-text">A carefully curated collection of tech questions (+ explainers & notes) I've acquired from around the world.</div></div>
+<p>
+  <p class="top-text">From HTML & CSS to Node.js & SQL, these quizzes are filled with gems inspired by real <strike>trauma</strike> experiences from my career.</p>
+  <p class="top-text">They are designed to be <strike>hurtful</strike> challenging at times, and may indeed test your <strike>sanity</strike> knowledge of the quirks and edge cases of various technologies.</p>
+</p>
+<section class="full-width">
+  <QuizGrid
+    client:load
+    quizList={quizList}
+    subCategoryCounts={subCategoryCounts}
+    subCategoryList={subCategoryList}
+  />
+</section>
 
-  <section class="full-width">
-    <QuizGrid
-      client:load
-      quizList={quizList}
-      subCategoryCounts={subCategoryCounts}
-      subCategoryList={subCategoryList}
-    />
-  </section>
-
-  <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
+<section class="fact-box">
+  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> Remember how the Ghostbusters trapped ghosts in that containment unit? This is my containment unit.</div></div>
+  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> Completing all Quizzes unlocks a special "experience" on the site! (Comic Sans & Papyrus everywhere.)</div></div>
+  <div class="fun-fact"><div class="top-text"><strong>Fun fact:</strong> "Fun facts" not necessarily fun, or facts.</div></div>
+</section>
 </Page>

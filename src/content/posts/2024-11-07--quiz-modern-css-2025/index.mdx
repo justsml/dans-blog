@@ -8,7 +8,7 @@ subCategory: CSS
 minReleaseDate: 2024-10-31
 date: 2024-10-31
 modified: 2024-11-09
-tags: [quiz, css, advanced, moderate]
+tags: [quiz, css, advanced, intermediate]
 # cover: quiz-CSS-features.webp
 cover_full_width: dan-levy-downtown-denver-at-night-wide.webp
 cover_mobile: dan-levy-downtown-denver-at-night-square.webp
@@ -177,9 +177,10 @@ You can create auto-adjusting layouts where the container and children each play
   group="CSS Variables"
   title="CSS Variable Fallbacks"
   options={[
-    {text: 'red', isAnswer: true},
     {text: 'blue'},
-    {text: 'no color is applied'},
+    {text: 'red'},
+    {text: 'system default'},
+    {text: '#6b8e23', isAnswer: true},
     {text: 'var(--secondary-color)'},
   ]}
 >
@@ -188,7 +189,7 @@ You can create auto-adjusting layouts where the container and children each play
     What color will the background be for the following CSS?
     ```css
     div {
-      background-color: var(--primary-color, red);
+      background: var(--primary, olivedrab);
     }
     ```
   </div>
@@ -196,7 +197,9 @@ You can create auto-adjusting layouts where the container and children each play
 
   <slot name="explanation">
   <div className="explanation">
-When a CSS variable isn't defined, the value provided as a fallback (in this case, `red`) will be used.
+The `var()` function allows you to set a fallback value if the variable is not defined. In this case, the background will be `red` because `--primary` is not defined.
+
+This is a great way to ensure your styles don't break if a variable is missing or not supported.
   </div>
   </slot>
 </Challenge>
