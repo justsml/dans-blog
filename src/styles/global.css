@@ -413,24 +413,28 @@ main pre {
 
 .article-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px, 260px));
+  grid-template-columns: repeat(auto-fit,minmax(220px, 250px));
   
   /* grid-template-rows: repeat(auto-fit, minmax(440px, 1fr)); */
   grid-auto-flow: row dense;
   gap: 1.25rem;
   justify-content: space-evenly;
 
-  width: 100%;
-
+  
   /* max-width: 700px; */
   margin: 0 auto;
   font-weight: 300;
+  width: calc(100% - 1rem);
 
   @screen sm {
-    justify-content: space-between;
+    width: calc(100% - 2rem);
+
+    justify-content: space-evenly;
   }
 
   @screen md {
+    width: calc(100% - 4rem);
+
     justify-content: space-around;
   }
 
