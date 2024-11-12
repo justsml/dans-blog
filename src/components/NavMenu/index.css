@@ -367,8 +367,8 @@ pre {
   left: 0;
   width: 100%;
   
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
+  /* max-height: calc(100vh - 10rem); */
+  /* overflow-y: auto; */
   
   animation-duration: 250ms;
   animation-timing-function: ease;
@@ -680,14 +680,19 @@ pre {
 .ViewportPosition {
   position: absolute;
   display: flex;
-  justify-content: center;
-  width: 100vw;
-  perspective: 2000px;
+  justify-content: flex-end;
+  padding-inline: 1rem;
+  /* width: 90vw; */
+  width: calc(100vw - 2rem);
+  perspective: 1000px;
   transition: top 250ms ease;
 
+  @screen sm {
+    padding-right: 150px;
+  }
   @screen md {
     width: calc(100% - 2rem);
-    left: 4rem;
+    /* left: 4rem; */
   }
 }
 

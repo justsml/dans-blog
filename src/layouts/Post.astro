@@ -2,7 +2,6 @@
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { InfoLabel } from "../components/ui/infoLabel";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { GitHubIssueComments } from "../components/Comments";
 import { CreatedModifiedLabel } from "../components/CreatedModifiedLabel";
@@ -12,8 +11,10 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import AdditionalReading from "../components/AdditionalReading.astro";
 import CategoryLink from "../components/CategoryLink.astro";
+import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
 
 type Props = {
+  sourcePath: string;
   children: any[];
 
   slug: string;
@@ -73,6 +74,12 @@ const responsiveImgSizes_breakRight = {
     (max-width: 1200px) 80vw,
     60vw`,
 };
+
+// console.log("ID: ", Astro.props.sourcePath);
+// console.log(`props: %o
+// params: %o
+// url: %s`, Astro, Astro.params, Astro.url)
+
 ---
 
 <html lang="en">
@@ -125,6 +132,8 @@ const responsiveImgSizes_breakRight = {
       }
       <slot />
     </main>
+
+    <EditOnGitHubLink sourcePath={Astro.props.sourcePath} repoUri="https://github.com/justsml/dans-blog/tree/main/src/content/posts" />
 
     <AdditionalReading slugs={related} excludeSlugs={[slug]} className="default-links" />
 
