@@ -304,23 +304,23 @@ There are also several units that have always been around but are rarely used, l
   options={[
     { text: 'align-items: center;' },
     { text: 'justify-content: center;' },
-    { text: 'align-content: center;' },
-    { text: 'margin: auto;', isAnswer: true },
+    { text: 'align-content: center;', isAnswer: true },
+    { text: 'margin: auto;' },
     { text: 'margin: 0 auto;' }
   ]}
 >
   <slot name="question">
     <div className="question">
-      How do you center a block element vertically?
+      How do you center a block element vertically in flow layout?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Using `margin: auto;` is the correct way to center a block element vertically.
+      Using `align-content` is the correct way to center a block element vertically, since being added to flow layout in 2024.
 
-      The `align-items` and `justify-content` properties are used for flexbox layouts, and `align-content` is used for grid layouts.
+      The `align-items` and `justify-content` properties are used for flexbox and grid layouts, but not flow.
 
-      The `margin: 0 auto;` centers a block element horizontally, not vertically. To center both horizontally and vertically, you can use `margin: auto;` for both. Or use flexbox or grid layouts.
+      Both `margin: 0 auto;` and `margin: auto;` center a block element horizontally, but not vertically.
     </div>
   </slot>
 </Challenge>
