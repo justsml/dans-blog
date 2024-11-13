@@ -7,7 +7,7 @@ import { QuizGrid } from "./QuizGrid.tsx";
 
 import type { ArticlePost, QuizPost } from "../../types";
 import { slugify } from "../../shared/pathHelpers.ts";
-import { brightColors } from "../../content/colors.ts";
+// import { brightColors } from "../../content/colors.ts";
 // import { FilterForm } from "./QuizFilter.tsx";
 
 import "@/styles/nav.css";
@@ -36,13 +36,6 @@ const subCategoryCounts = subCategoryList.reduce((acc, subCategory) => {
 }, {});
 
 const totalQuizzes = posts.length;
-
-// console.log(
-//   `Found ${subCategoryList.length} subcategories %o  %o    %o`,
-//   subCategoryList,
-//   subCategoryCounts,
-//   subCategoryColors,
-// );
 
 posts.sort((_a: ArticlePost, _b: ArticlePost) => {
   const a = _a.data.subCategory;
@@ -98,13 +91,11 @@ const styleString = subCategoryList
     subTitle: `A collection of exactly ${totalQuizzes} quizzes and ${totalQuestionCount} tech questions!`,
   }}>
 <section class="full-width">
-  <h2>Tech Challenges & Quizzes</h2>
+  <h1>Tech Challenges & Quizzes</h1>
 </section>
 <!-- <div class="inset"><div class="top-text">A carefully curated collection of tech questions (+ explainers & notes) I've acquired from around the world.</div></div> -->
-<p>
-  <p class="top-text">From HTML & CSS to Node.js & SQL, these quizzes are filled with gems inspired by real <strike>trauma</strike> experiences from my career.</p>
-  <p class="top-text">They are designed to be <strike>hurtful</strike> challenging at times, and may indeed test your <strike>sanity</strike> knowledge of the quirks and edge cases of various technologies.</p>
-</p>
+<div class="two-col"><p class="top-text">From HTML & CSS to Node.js & SQL, these quizzes are filled with gems inspired by real <strike>trauma</strike> experiences from my career.</p><p class="top-text">They are designed to be <strike>hurtful</strike> challenging at times, and may indeed test your <strike>sanity</strike> knowledge of the quirks and edge cases of various technologies.</p></div>
+
 <section class="full-width">
   <QuizGrid
     client:load

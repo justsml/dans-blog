@@ -38,7 +38,7 @@ To **safely access secrets in your NodeJS code:**
 
 > **DON'T** create a `.env` file on deployed servers. Use your hosting services' (e.g. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) provided environment variable management tool: e.g. **dashboard or command line.**
 
-##️ Code Example:
+### Code Example
 
 We're going to define a few files.
 
