@@ -1,0 +1,822 @@
+---
+unlisted: true
+title: "Quiz: Destructuring Delights"
+subTitle: "Are you a maestero of Destructuring?"
+label: Destructuring
+category: Quiz
+subCategory: JavaScript
+date: 2024-11-12
+modified: 2024-11-12
+tags: [quiz, intro, javascript, es2015, destructuring, beginner, intermediate]
+cover_full_width: dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp
+cover_icon: dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+## Prove your Destructuring Skills!
+
+Are you a maestero of Destructuring? Or is it your <em>symphony of destruction</em>
+
+This quiz will test your knowledge of Destructuring in JavaScript: from basic object and array destructuring to nested destructuring and default values. 
+Bonus questions added to cover nesting, renaming, and TypeScript inline types!
+
+Jump right in to prove your Destructuring skills! 👇
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Objects"
+  title="Basic Object Destructuring"
+  options={[
+    { text: "Name: Dan, Age: 20" },
+    { text: "Name: Dan, Age: 40" },
+    { text: "Name: Dan, Age: Infinity" },
+    { text: "Name: Dan, Age: undefined", isAnswer: true },
+    { text: "Error: Cannot read property 'age'" },
+    { text: "Name: undefined, Age: 40" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this print
+    ```js
+    const person = {
+      name: 'Dan Levy',,
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `age` property does not exist on `person`, so `age` will be `undefined`. Definitely not `Infinity` 😅
+    
+    This results in:
+    ```plaintext
+    Name: Dan, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Arrays"
+  title="Default Value in Object Destructuring"
+  options={[
+    { text: "Name: Dan, Age: NaN" },
+    { text: "Name: Dan, Age: null" },
+    { text: "Name: Dan, Age: undefined", isAnswer: true },
+    { text: "Name: Dan, Age: 40" },
+    { text: "Error: Cannot destructure property 'age'" },
+    { text: "SyntaxError: Unexpected token ','" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this code do?
+    ```js
+    const tuple = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `age` variable is not present in the `tuple` array, so it will be `undefined`. 
+
+    This results in:
+    ```plaintext
+    Name: Dan, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Destructuring and Defaults"
+  title="Nested Destructuring"
+  options={[
+    { text: "First: Dan, City: Denver", isAnswer: true },
+    { text: "First: undefined, City: Denver" },
+    { text: "Error: Cannot read property 'first'" },
+    { text: "First: Dan, City: undefined" },
+    { text: "Error" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first },
+  address: { city },
+  birth: { place },
+} = person;
+console.log(
+  `First: ${first}, City: ${place}`,
+);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  You have to be careful when accessing nested properties, as the errors can be hard to parse. And they differ between browsers and platforms.
+
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node 20, `ReferenceError: place is not defined`
+
+  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+
+  The solution is to provide default values for nested properties, or refactor to use optional chaining to avoid errors.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Warmup: Defaults"
+  title="Default Values in Object Destructuring"
+  options={[
+    { text: "Hi Dan from Unknown" },
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this do?
+    ```js
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first = 'Unknown' },
+  birth: { place = 'Unknown' },
+} = person;
+console.log(
+  `Hi ${first} from ${place}`,
+);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. It's missing a ` = {}` default object.
+
+  This results in:
+  ```plaintext
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node 20, `ReferenceError: place is not defined`
+
+  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+  ```
+  </div>
+  </slot>
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={4}
+  group="Defaults"
+  title="Default Values in Object Destructuring"
+  options={[
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Dan from Johannesburg" },
+    { text: "Hi Dan from Unknown", isAnswer: true },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this do?
+    ```js
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first = 'Unknown' },
+  birth: { place = 'Unknown' } = {},
+} = person;
+
+console.log(
+  `Hi ${first} from ${place}`,
+);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The `birth` property does not exist on `person`, so it falls back to an empty object ` = {}`. This allows the default value to be used.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Function Arguments"
+  title="Destructuring Function Parameters with Defaults"
+  options={[
+    { text: "Hi Dan from Unknown" },
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now as function parameters, what will this do?
+    ```js
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser({ name: "Dan" })`.
+  
+  We should get an error due to `place` not being defined in the destructured fields, or defined in function scope.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Function Arguments"
+  title="Destructuring with Nested Default Values"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+In this case, `breed` does not exist within `type`, so the default value `'Unknown'` is used. `nickname` is destructured from the `name` object, resulting in:
+    ```plaintext
+    Cat Name: Whiskers, Breed: Unknown
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="TypeScript Inline Types"
+  title="TypeScript Inline Type for Destructured Parameter"
+  options={[
+    { text: "Kitten: Mew, Shelter" },
+    { text: "Kitten: Mew, undefined" },
+    { text: "Kitten: Mew, Shelter", isAnswer: true },
+    { text: "Error: Property 'location' is missing" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following TypeScript code?
+    ```typescript
+    function displayKitten({
+      name,
+      location,
+    }: {
+      name: string;
+      location?: string;
+    }) {
+      console.log(
+        `Kitten: ${name}, ${location ?? "Shelter"}`,
+      );
+    }
+    displayKitten({ name: "Mew" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The parameter destructuring includes a type annotation with an optional `location` property. When `location` is missing, the `??` operator provides `'Shelter'` as the fallback:
+    ```plaintext
+    Kitten: Mew, Shelter
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Function Object Arguments"
+  title="Setting Default Values for Nested Destructuring in Function Parameters"
+  options={[
+    { text: "Owner: Rosie, City: Unknown", isAnswer: true },
+    { text: "Owner: Rosie, City: Denver" },
+    { text: "Owner: Rosie, City: undefined" },
+    { text: "Error: Cannot destructure property 'city'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    function showOwnerDetails({
+      name = "Owner",
+      address: { city = "Unknown" } = {},
+    } = {}) {
+      console.log(
+        `Owner: ${name}, City: ${city}`,
+      );
+    }
+    showOwnerDetails({ name: "Rosie" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `address` object itself has a default of `{}`, allowing access to `city` even if `address` is missing. Here, `name` is provided as `'Rosie'`, and since `city` isn't specified, it defaults to `'Unknown'`:
+    ```plaintext
+    Owner: Rosie, City: Unknown
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="TypeScript Inline Types"
+  title="Destructuring with Inline Type Signature and Default Parameter"
+  options={[
+    { text: "Pet: Kitten, Color: White" },
+    { text: "Pet: Kitten, Color: Black" },
+    { text: "Pet: Kitten, Color: White", isAnswer: true },
+    { text: "Error: Missing property 'color'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following TypeScript code?
+    ```typescript
+    function describePet({
+      type,
+      color = "White",
+    }: {
+      type: string;
+      color?: string;
+    }) {
+      console.log(
+        `Pet: ${type}, Color: ${color}`,
+      );
+    }
+    describePet({ type: "Kitten" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `color` property in this TypeScript function is optional, with a default value of `'White'`. Since only `type` is provided, `color` defaults to `'White'`, resulting in:
+    ```plaintext
+    Pet: Kitten, Color: White
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="TypeScript Inline Types"
+  title="Destructuring with Optional Nested Properties"
+  options={[
+    { text: "Pet: Cat, Status: Adopted" },
+    { text: "Pet: Cat, Status: Available" },
+    { text: "Pet: Cat, Status: Available", isAnswer: true },
+    { text: "Error: Cannot destructure property 'status'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following TypeScript code?
+    ```typescript
+    function checkAvailability({
+      type,
+      adoption: { status = "Available" } = {},
+    }: {
+      type: string;
+      adoption?: { status?: string };
+    }) {
+      console.log(
+        `Pet: ${type}, Status: ${status}`,
+      );
+    }
+    checkAvailability({ type: "Cat" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+This function has a nested optional `adoption` parameter with `status`. Since `adoption` is missing, it defaults to `{}`, and `status` then defaults to `'Available'`, producing:
+    ```plaintext
+    Pet: Cat, Status: Available
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Destructuring and Defaults"
+  title="Object Destructuring with Missing Property"
+  options={[
+    { text: "Owner: Dan, Pet Type: Cat" },
+    { text: "Owner: Dan, Pet Type: Kitten", isAnswer: true },
+    { text: "Owner: Dan, Pet Type: undefined" },
+    { text: "Error: Cannot destructure property 'type'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const petOwner = { name: 'Dan' };
+    const { name, type = 'Kitten' } = petOwner;
+    console.log(`Owner: ${name}, Pet Type: ${type}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The `type` property does not exist on `petOwner`, so the default value `'Kitten'` is used. This results in:
+    ```plaintext
+    Owner: Dan, Pet Type: Kitten
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Destructuring and Defaults"
+  title="Renaming with Default Values in Destructuring"
+  options={[
+    { text: "Name: Rosie, Title: Cat Whisperer", isAnswer: true },
+    { text: "Name: Rosie, Title: undefined" },
+    { text: "Error: Cannot destructure property 'title'" },
+    { text: "Name: Rosie, Title: Volunteer" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const volunteer = { name: 'Rosie' };
+    const { name, role: title = 'Cat Whisperer' } = volunteer;
+    console.log(`Name: ${name}, Title: ${title}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+Here, `role` is renamed to `title` with a default of `'Cat Whisperer'`. Since `role` is missing from `volunteer`, `title` takes the default:
+    ```plaintext
+    Name: Rosie, Title: Cat Whisperer
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={13}
+  group="Destructuring and Defaults"
+  title="Nested Object Destructuring with Defaults"
+  options={[
+    { text: "Pet Name: Whiskers, Status: Available", isAnswer: true },
+    { text: "Pet Name: Whiskers, Status: Adopted" },
+    { text: "Pet Name: Whiskers, Status: undefined" },
+    { text: "Error: Cannot destructure property 'status'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const pet = {
+      name: { nickname: 'Whiskers' },
+    };
+    const {
+      name: { nickname },
+      adoption: { status = 'Available' } = {},
+    } = pet;
+    console.log(
+      `Pet Name: ${nickname}, Status: ${status}`,
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+Since the `adoption` object is missing from `pet`, it defaults to `{}`, allowing `status` to use the default `'Available'`. The output will be:
+    ```plaintext
+    Pet Name: Whiskers, Status: Available
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={14}
+  group="Function Object Arguments"
+  title="Destructuring Parameters with Defaults and Renaming"
+  options={[
+    { text: "Name: Dan, Role: Cat Adopter", isAnswer: true },
+    { text: "Name: Dan, Role: Volunteer" },
+    { text: "Name: Dan, Role: undefined" },
+    { text: "Error: Cannot destructure property 'role'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    function showVolunteer({
+      name,
+      position: role = 'Cat Adopter',
+    } = {}) {
+      console.log(`Name: ${name}, Role: ${role}`);
+    }
+    showVolunteer({ name: 'Dan' });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The function destructures `position` as `role` with a default of `'Cat Adopter'`. Since `position` is missing, `role` takes the default, resulting in:
+    ```plaintext
+    Name: Dan, Role: Cat Adopter
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={15}
+  group="Function Object Arguments"
+  title="Function Destructuring with Nested Default Values"
+  options={[
+    { text: "Kitten: Mew, Location: Rescue Center", isAnswer: true },
+    { text: "Kitten: Mew, Location: Adoption Center" },
+    { text: "Kitten: Mew, Location: undefined" },
+    { text: "Error: Cannot destructure property 'location'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    function showKittenDetails({
+      name = 'Unknown',
+      details: {
+        location = 'Rescue Center',
+      } = {},
+    } = {}) {
+      console.log(
+        `Kitten: ${name}, Location: ${location}`,
+      );
+    }
+    showKittenDetails({ name: 'Mew' });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The function uses a nested destructuring default, so if `details` is missing, it defaults to `{}`, allowing access to `location`'s default value `'Rescue Center'`. Since `name` is provided, `location` defaults, resulting in:
+    ```plaintext
+    Kitten: Mew, Location: Rescue Center
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={16}
+  group="TypeScript Inline Types"
+  title="TypeScript Inline Type with Nested Optional Property"
+  options={[
+    { text: "Kitten Name: Paws, Status: Healthy", isAnswer: true },
+    { text: "Kitten Name: Paws, Status: Needs Care" },
+    { text: "Error: Cannot destructure property 'status'" },
+    { text: "Kitten Name: Paws, Status: undefined" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following TypeScript code?
+    ```typescript
+    function describeKitten({
+      name,
+      health: { status = 'Healthy' } = {},
+    }: {
+      name: string;
+      health?: { status?: string };
+    }) {
+      console.log(
+        `Kitten Name: ${name}, Status: ${status}`,
+      );
+    }
+    describeKitten({ name: 'Paws' });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The function uses TypeScript’s optional nested properties with destructuring. Since `health` is missing, it defaults to `{}`, allowing `status` to take the default `'Healthy'`:
+    ```plaintext
+    Kitten Name: Paws, Status: Healthy
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={17}
+  group="Destructuring and Defaults"
+  title="Combining Array Destructuring and Default Values"
+  options={[
+    { text: "Kitten 1: Whiskers, Kitten 2: Socks" },
+    { text: "Kitten 1: Whiskers, Kitten 2: None" },
+    { text: "Kitten 1: Whiskers, Kitten 2: Socks", isAnswer: true },
+    { text: "Error: Cannot read property of undefined" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+    const kittens = ["Whiskers"];
+    const [kitten1, kitten2 = "Socks"] = kittens;
+    console.log(
+      `Kitten 1: ${kitten1}, Kitten 2: ${kitten2}`,
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+In array destructuring, `kitten2` is given a default value of `'Socks'`. Since `kittens` only has one element, `kitten2` will use the default, resulting in:
+    ```plaintext
+    Kitten 1: Whiskers, Kitten 2: Socks
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={18}
+  group="TypeScript Inline Types"
+  title="Destructuring with Optional Properties and Default"
+  options={[
+    { text: "Owner: Rosie, Cat Count: 3" },
+    { text: "Owner: Rosie, Cat Count: 0" },
+    { text: "Owner: Rosie, Cat Count: 3", isAnswer: true },
+    { text: "Error: Cannot destructure property 'catCount'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following TypeScript code?
+    ```typescript
+    function ownerDetails({
+      name,
+      catCount = 3,
+    }: {
+      name: string;
+      catCount?: number;
+    }) {
+      console.log(
+        `Owner: ${name}, Cat Count: ${catCount}`,
+      );
+    }
+    ownerDetails({ name: "Rosie" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+In this TypeScript function, `catCount` is an optional property with a default value of `3`. Since `catCount` is not provided, it defaults to `3`, resulting in:
+    ```plaintext
+    Owner: Rosie, Cat Count: 3
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={19}
+  group="Function Object Arguments"
+  title="Default and Renamed Destructuring in Function Parameters"
+  options={[
+    { text: "Cat Name: Fluffy, Role: Playful" },
+    { text: "Cat Name: Fluffy, Role: Hunter", isAnswer: true },
+    { text: "Cat Name: Fluffy, Role: undefined" },
+    { text: "Error: Cannot destructure property 'role'" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will be the output of the following code?
+    ```js
+      function catDetails({
+        name,
+        role: activity = "Hunter",
+      } = {}) {
+        console.log(
+          `Cat Name: ${name}, Role: ${activity}`,
+        );
+      }
+      catDetails({ name: "Fluffy" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+The function renames `role` to `activity` and sets a default of `'Hunter'`. Since `role` is missing, `activity` takes the default, resulting in:
+    ```plaintext
+    Cat Name: Fluffy, Role: Hunter
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
