@@ -20,7 +20,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 Are you a maestero of Destructuring? Or is it your <em>symphony of destruction</em>
 
-This quiz will test your knowledge of Destructuring in JavaScript: from basic object and array destructuring to nested destructuring and default values. 
+This quiz will test your knowledge of Destructuring in JavaScript: from basic object and array destructuring to nested destructuring and default values.
 Bonus questions added to cover nesting, renaming, and TypeScript inline types!
 
 Jump right in to prove your Destructuring skills! 👇
@@ -58,7 +58,7 @@ Jump right in to prove your Destructuring skills! 👇
   <slot name="explanation">
   <div className="explanation">
     The `age` property does not exist on `person`, so `age` will be `undefined`. Definitely not `Infinity` 😅
-    
+
     This results in:
     ```plaintext
     Name: Dan, Age: undefined
@@ -94,7 +94,7 @@ Jump right in to prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-    The `age` variable is not present in the `tuple` array, so it will be `undefined`. 
+    The `age` variable is not present in the `tuple` array, so it will be `undefined`.
 
     This results in:
     ```plaintext
@@ -273,7 +273,7 @@ console.log(
   <slot name="explanation">
   <div className="explanation">
   This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser({ name: "Dan" })`.
-  
+
   We should get an error due to `place` not being defined in the destructured fields, or defined in function scope.
   </div>
   </slot>
@@ -281,33 +281,51 @@ console.log(
 
 <Challenge
   client:load
-  index={6}
+  index={5}
   group="Function Arguments"
   title="Destructuring with Nested Default Values"
   options={[
+    { text: "Unknown, Unknown, Joburg" },
+    { text: "Unknown, Unknown, Unknown" },
+    { text: "Unknown, `undefined`, Joburg" },
+    { text: "N/A, `undefined`, Joburg" },
+    { text: "N/A, Unknown, Joburg" },
+    { text: "N/A, N/A, Joburg", isAnswer: true },
+    { text: "Unknown, N/A, Joburg", },
+    { text: "Error" }
   ]}
 >
   <slot name="question">
   <div className="question">
-    What will be the output of the following code?
+    What will this gem do?
     ```js
-    function displayUser({
+    function displayPlace({
       name = "Unknown",
+      place = "N/A",
       age = -1,
     } = { place: "Unknown" }) {
-      console.log(`Hi ${name} from ${place}`);
+      console.log(`${place}`);
     }
-    displayUser({ name: "Dan" });
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
     ```
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-In this case, `breed` does not exist within `type`, so the default value `'Unknown'` is used. `nickname` is destructured from the `name` object, resulting in:
-    ```plaintext
-    Cat Name: Whiskers, Breed: Unknown
-    ```
+  The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
+
+  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior.
+
+  This results in:
+
+  ```js
+  displayPlace() // Unknown
+  displayPlace({ name: "Dan" }) // N/A
+  displayPlace({ name: "Dan", place: null }) // N/A
+  ```
   </div>
   </slot>
 </Challenge>
@@ -315,41 +333,46 @@ In this case, `breed` does not exist within `type`, so the default value `'Unkno
 <Challenge
   client:load
   index={7}
-  group="TypeScript Inline Types"
-  title="TypeScript Inline Type for Destructured Parameter"
+  group="Function Arguments"
+  title="Destructuring with Nested Default Values"
   options={[
-    { text: "Kitten: Mew, Shelter" },
-    { text: "Kitten: Mew, undefined" },
-    { text: "Kitten: Mew, Shelter", isAnswer: true },
-    { text: "Error: Property 'location' is missing" }
+    { text: "Unknown, Unknown" },
+    { text: "Unknown, Unknown, Unknown" },
+    { text: "N/A, Unknown, Joburg" },
+    { text: "N/A, N/A, Joburg", isAnswer: true },
+    { text: "Unknown, N/A, Joburg", },
+    { text: "Error" }
   ]}
 >
   <slot name="question">
   <div className="question">
-    What will be the output of the following TypeScript code?
-    ```typescript
-    function displayKitten({
-      name,
-      location,
-    }: {
-      name: string;
-      location?: string;
-    }) {
-      console.log(
-        `Kitten: ${name}, ${location ?? "Shelter"}`,
-      );
+    Similar to the previous one... _what will happen next?_
+    ```js
+    function displayPlace({
+      name = "Unknown",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
     }
-    displayKitten({ name: "Mew" });
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
     ```
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-The parameter destructuring includes a type annotation with an optional `location` property. When `location` is missing, the `??` operator provides `'Shelter'` as the fallback:
-    ```plaintext
-    Kitten: Mew, Shelter
-    ```
+
+  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior.
+
+  This results in:
+
+  ```js
+  displayPlace() // Unknown
+  displayPlace({ name: "Dan" }) // N/A
+  displayPlace({ name: "Dan", place: null }) // N/A
+  ```
   </div>
   </slot>
 </Challenge>
