@@ -277,6 +277,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 body {
   background-color: hsl(var(--background));
@@ -327,8 +328,16 @@ h1:first-of-type {
       0 0 21px var(--primary),
       /* Green glow */
       0 0 42px var(--primary);
-      
   
+    /* animation-name: flicker;
+    animation-timeline: view(50px);
+    animation-duration: 1ms; */ /* Firefox requires this to apply the animation */
+    /* animation-direction: alternate; */
+    /* animation-iteration-count: infinite; */
+    /* animation-timing-function: steps(1); */
+    /* animation-fill-mode: forwards;
+    animation-play-state: running;
+     */
 }
 
 .gist {
