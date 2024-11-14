@@ -5,12 +5,8 @@ import { useEffect, useState } from "react";
 
 export const QuizGrid = ({
   quizList: _quizList,
-  subCategoryList,
-  subCategoryCounts,
 }: {
   quizList: QuizPost[];
-  subCategoryList: string[];
-  subCategoryCounts: Record<string, number>;
 }) => {
   const [quizList, setQuizList] = useState<QuizPost[]>(_quizList);
   const [searchData, setSearchData] = useState<string[]>([]);

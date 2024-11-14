@@ -51,6 +51,8 @@ export default function Challenge({
     const correct = document.querySelectorAll("main .challenge.correct");
     setTotalQuestions(questions?.length);
     setCorrectAnswers(correct?.length);
+    // @ts-ignore
+    window?.__updateCounts();
   };
 
   // const [clean]
@@ -127,6 +129,7 @@ export default function Challenge({
     // });
 
     // questionStore.total();
+    setTries(questionStore.sumOfTries());
 
     if (option.isAnswer) {
       setIsCorrect(true);
@@ -143,6 +146,7 @@ export default function Challenge({
       questionIndex,
     });
     setTimeout(updateCounts, 20);
+
   };
 
   useEffect(() => {
@@ -194,9 +198,6 @@ export default function Challenge({
       const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
       // Bail out of wrong answers once answered
       if (isCorrect && !option.isAnswer) return null;
-      // if (challengeClass.includes("answerAnimationEnded")) {
-      //   return null;
-      // }
 
       return (
         <a
