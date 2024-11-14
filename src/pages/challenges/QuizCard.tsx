@@ -1,10 +1,7 @@
 import clsx from "clsx";
-import { InfoLabel } from "../../components/ui/infoLabel";
 import { slugify } from "../../shared/pathHelpers";
-import { getComputedDates } from "../../shared/dateUtils";
 import type { QuizPost } from "../../types";
-// import { brightColors } from "../../content/colors.ts";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { QuestionStore } from "../../components/QuizUI/QuestionStore.ts";
 
 export const QuizCard = ({
@@ -90,9 +87,6 @@ export const QuizCard = ({
       <a
         href={`/${slug}/`}
         className="quiz-card-inner"
-        // style={{ "borderColor": categoryColor, borderWidth: "4px" }}
-        // style={{ "--highlight-color": brightColors[Math.floor(idx % 8)] }}
-        // title={(draft ? 'DRAFT: ' : '') + title}
         data-created={date}
         data-modified={modified}
       >

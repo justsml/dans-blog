@@ -2,7 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
-import { SITE_DESCRIPTION, SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
+import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import socialBanner from "../assets/social-banner.webp";
 
 // Import the global.css file here so that it is included on
@@ -29,7 +29,7 @@ if (
 )
   image = socialBanner;
 
-const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
+const siteTitle = title || SITE_TITLE;
 const siteDescription = description || SITE_SEO_DESCRIPTION;
 
 const version = pkg.version;

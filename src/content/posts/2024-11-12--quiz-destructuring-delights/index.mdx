@@ -15,13 +15,11 @@ cover_icon: boxes-of-nesting-dolls-square.webp
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
-{/* ## Prove your Destructuring Skills! */}
-
 <p class="inset">Are you a maestero of Destructuring?<br/>Or is it your <em>Symphony of Destruction?</em></p>
 
 This quiz will test your knowledge of Destructuring in JavaScript: from "basic" object syntax to nested destructuring and default values. Plus bonus questions on TypeScript and inline types!
 
-Jump right in to prove your Destructuring skills! 👇
+Jump right in to the warmup - prove your Destructuring skills! 👇
 
 <QuizUI>
 
@@ -41,7 +39,7 @@ Jump right in to prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    What will this print
+    What will this code print?
     ```js
     const person = {
       name: 'Dan Levy',,
@@ -117,7 +115,7 @@ Jump right in to prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    What will be the output of the following code?
+    How about some nested destructuring?
     ```js
     const person = {
       name: { first: 'Dan' },
@@ -165,7 +163,7 @@ Jump right in to prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    What will this do?
+    Now with some defaults, what will this do?
     ```js
     const person = {
       name: { first: 'Dan' },
@@ -184,11 +182,10 @@ Jump right in to prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. It's missing a ` = {}` default object.
+  The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. Basically it's missing a ` = {}` default in there.
 
-  The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which is an error.
+  The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which results in an error.
 
-  This results in:
   ```plaintext
   In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
@@ -272,9 +269,9 @@ Jump right in to prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser({ name: "Dan" })`.
+  This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser()`.
 
-  We should get an error due to `place` not being defined in the destructured fields, or defined in function scope.
+  We should get an error due to `place` not being defined in the destructured fields, or otherwise defined in function scope.
   </div>
   </slot>
 </Challenge>
@@ -317,14 +314,14 @@ Jump right in to prove your Destructuring skills! 👇
   <div className="explanation">
   The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
 
-  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior.
+  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior (ignoring `undefined`, recognizing `null`).
 
   This results in:
 
   ```js
   displayPlace() // Unknown
   displayPlace({ name: "Dan" }) // N/A
-  displayPlace({ name: "Dan", place: null }) // N/A
+  displayPlace({ name: "Dan", place: undefined }) // N/A
   ```
   </div>
   </slot>
