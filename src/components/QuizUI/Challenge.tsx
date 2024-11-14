@@ -44,6 +44,7 @@ export default function Challenge({
   // const [selectedOption, setSelectedOption] = useState<OptionSelection>({ text: "" });
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
+  const [tries, setTries] = useState<number>(0);
 
   const updateCounts = () => {
     const questions = document.querySelectorAll("main .challenge");
@@ -63,6 +64,10 @@ export default function Challenge({
   useEffect(() => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
+
+    if (questionStore) {
+      setTries(questionStore.sumOfTries());
+    }
   }, [global?.location?.pathname]);
 
   useEffect(() => {
@@ -219,6 +224,8 @@ export default function Challenge({
       id={`qq-${sequenceNum}`}
       className={clsx("challenge", challengeClass)}
       ref={challengeRef}
+      data-answer-count={tries}
+      data-question-correct={isCorrect}
     >
       <div className="quiz-header">
         <div className="quiz-question-count">

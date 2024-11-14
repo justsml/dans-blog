@@ -9,12 +9,12 @@ const _postsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
 ).filter((post) => !post.data.hidden);
 
-console.log(
-  "postsCollection",
-  JSON.stringify(_postsCollection[_postsCollection.length - 1]),
-  null,
-  2,
-);
+// console.log(
+//   "postsCollection",
+//   JSON.stringify(_postsCollection[_postsCollection.length - 1]),
+//   null,
+//   2,
+// );
 
 let _posts = _postsCollection
   .map((post) => ({
