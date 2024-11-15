@@ -246,11 +246,11 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   group="Function Arguments"
   title="Destructuring Function Parameters with Defaults"
   options={[
-    { text: "Hi Dan from Unknown" },
+    { text: "Hi Dan from Unknown", isAnswer: true },
     { text: "Hi Dan from Denver" },
     { text: "Hi Unknown from Unknown" },
     { text: "Hi Unknown from Denver" },
-    { text: "Error", isAnswer: true }
+    { text: "Error" }
   ]}
 >
   <slot name="question">
@@ -380,7 +380,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
     { text: "N/A" },
     { text: "undefined" },
     { text: "Unknown" },
-    { text: "null" },
+    { text: "'null'", isAnswer: true },
     { text: "Error", isAnswer: true },
   ]}
 >
@@ -396,7 +396,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
         name: string;
         place: string;
         age: number;
-      } = { place: 'Unknown' },
+      },
     ) {
       console.log(`${place}`);
     }
@@ -407,7 +407,11 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  TypeScript will throw an error because the `age` property is required and has no default defined. This is a good example of how TypeScript can help catch errors at compile time.
+  TypeScript will throw an error because the `place` property cannot be null.
+
+  If you ignore type errors, running the code will print `null` to the console.
+
+  So there's 2 answers.
   </div>
   </slot>
 </Challenge>
@@ -415,40 +419,45 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 <Challenge
   client:load
   index={9}
-  group="TypeScript Inline Types"
+  group="TypeScript: With Assignment"
   title="Destructuring with Nested Default Values"
   options={[
     { text: "undefined" },
     { text: "null" },
     { text: "N/A" },
     { text: "Unknown" },
-    { text: "Error", isAnswer: true },
+    { text: "Denver", isAnswer: true },
+    { text: "SyntaxError" },
+    { text: "Error: Invalid type" },
+    { text: "Error: Invalid Arguments" },
   ]}
 >
   <slot name="question">
   <div className="question">
     Now in TypeScript... _what will this do?_
     ```ts
-    function displayPlace(
-      {
-        name = 'N/A',
-        place = 'N/A',
-      }: {
-        name: string;
-        place: string;
-        age: number;
-      } = { place: 'Unknown' },
-    ) {
-      console.log(`${place}`);
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
     }
-    displayPlace({ name: 'Dan', place: null });
+    displayPlace({ name: 'Dan', place: 'Denver' });
     ```
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-  TypeScript will throw an error because the `age` property is required and has no default defined. This is a good example of how TypeScript can help catch errors at compile time.
+  TypeScript will throw an error because there are missing properties & invalid use of null for a string. This is a good example of how TypeScript can help catch errors at compile time.
+
+  If you run the code **without type checking**, `null` will be printed to the console.
+
+  So there's 2 answers.
   </div>
   </slot>
 </Challenge>
@@ -456,7 +465,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 <Challenge
   client:load
   index={10}
-  group="TypeScript Inline Types"
+  group="Nested Destructuring in TS"
   title="Destructuring with Nested Default Values"
   options={[
     { text: "Error: Property 'first' is missing" },
@@ -471,17 +480,15 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     Spot the type error:
     ```ts
-    function greet(
-      {
-        name: {first = "N/A", last = "N/A"},
-        birth: {place = "N/A"} = {},
-        age = -1,
-      }: {
-        name: {first?: string, last?: string};
-        birth: {place?: string};
-        age: number;
-      }
-    ) {
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
       console.log(`Hi ${first} ${last} from ${place}`);
     }
     greet({ name: {first: 'Dan'} });
@@ -491,7 +498,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The error is in the `greet` function signature. The `birth` property is missing in the passed object, so it should be optional in the type definition, or have a default value.
+  The error is in the `greet` function signature. The `age` and `birth` properties are missing in the passed object. so they should be optional in the type definition.
 
   Even though the `birth` property is destructured with a default value, the type definition requires it to be present. In order to mark a property as optional in TypeScript, you should use the `?` operator. Note `birth?: number` isn't the same as `birth: number | undefined`.
   </div>
@@ -542,7 +549,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   Another Error! You're starting to guess aren't you?!
 
   It is hard to read layers of destructuring, with defaults, assignment and types!
-  
+
   As soon as `place` is reassigned to the `p` variable it is no longer defined in the scope of the `console.log` statement.
   ```ts
   console.log(`Hi ${f} ${l} from ${place}`); // ❌
