@@ -12,7 +12,7 @@ import type { ImageMetadata } from "astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import socialBanner from "../assets/social-banner.webp";
 
-import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import { SITE_TITLE } from "../consts";
 
 type Props = {
   children: any[];
@@ -42,7 +42,7 @@ const modifiedDate = modified ? new Date(modified) : null;
 const modTime = modifiedDate ? modifiedDate.toISOString().split("T")[0] : "";
 const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
-const siteTitle = title || SITE_TITLE + " " + SITE_DESCRIPTION;
+const siteTitle = title || SITE_TITLE;
 
 const coverUrl =
   cover && typeof cover === "object" && "src" in cover

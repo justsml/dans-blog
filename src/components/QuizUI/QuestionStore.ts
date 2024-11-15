@@ -31,7 +31,7 @@ export const QuestionStore = (slug: string) => {
 
     total: () => questions.length,
     correct: () => questions.filter((q: any) => q.isCorrect).length,
-    sumOfTries: () => questions.reduce((acc, q) => acc + q.tries, 0),
+    sumOfTries: () => questions.reduce((acc, q) => acc + (q?.tries ?? 0), 0),
 
     reset,
 

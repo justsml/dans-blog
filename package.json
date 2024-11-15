@@ -1,7 +1,11 @@
 {
   "name": "dans-blog-v3",
   "type": "module",
-  "version": "2024.11.11",
+  "version": "2024.11.14",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/justsml/dans-blog"
+  },
   "scripts": {
     "gen-images": "bun run ./src/scripts/responsive-images.ts",
     "dev": "astro check && astro dev",
@@ -10,7 +14,8 @@
     "build": "astro build",
     "rebuild": "astro build --force",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "clean": "rm -rf .astro .cache dist"
   },
   "engines": {
     "node": ">=20.0.0",
@@ -40,8 +45,8 @@
     "@react-spring/web": "^9.7.5",
     "@stdlib/utils-global": "^0.2.2",
     "@tanstack/react-table": "^8.20.5",
-    "astro": "^4.15.9",
-    "astro-embed": "^0.7.2",
+    "astro": "^4.16.12",
+    "astro-embed": "^0.9.0",
     "astro-pagefind": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",

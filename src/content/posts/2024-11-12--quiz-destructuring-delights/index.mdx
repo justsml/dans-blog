@@ -1,0 +1,505 @@
+---
+unlisted: false
+title: "Quiz: Destructuring Delights"
+subTitle: "Are you a maestero of Destructuring?"
+label: Destructuring
+category: Quiz
+subCategory: JavaScript
+date: 2024-11-12
+modified: 2024-11-14
+tags: [quiz, intro, javascript, es2015, destructuring, beginner, intermediate]
+cover_full_width: boxes-of-nesting-dolls.webp
+cover_mobile: boxes-of-nesting-dolls-square.webp
+cover_icon: boxes-of-nesting-dolls-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+{/* Are you a maestero of Destructuring?<br/> */}
+<p class="inset">Or is it your <em>Symphony of Destruction?</em></p>
+
+This quiz will test your knowledge of Destructuring in JavaScript: from "basic" object syntax to nested destructuring and default values. Plus bonus questions on TypeScript and inline types!
+
+Jump right in to the warmup - prove your Destructuring skills! 👇
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Objects"
+  title="Basic Object Destructuring"
+  options={[
+    { text: "Name: Dan, Age: 20" },
+    { text: "Name: Dan, Age: 40" },
+    { text: "Name: Dan, Age: Infinity" },
+    { text: "Name: Dan, Age: undefined", isAnswer: true },
+    { text: "Error: Cannot read property 'age'" },
+    { text: "Name: undefined, Age: 40" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this code print?
+    ```js
+    const person = {
+      name: 'Dan Levy',,
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `age` property does not exist on `person`, so `age` will be `undefined`. Definitely not `Infinity` 😅
+
+    This results in:
+    ```plaintext
+    Name: Dan, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Arrays"
+  title="Default Value in Object Destructuring"
+  options={[
+    { text: "Name: Dan, Age: NaN" },
+    { text: "Name: Dan, Age: null" },
+    { text: "Name: Dan, Age: undefined", isAnswer: true },
+    { text: "Name: Dan, Age: 40" },
+    { text: "Error: Cannot destructure property 'age'" },
+    { text: "SyntaxError: Unexpected token ','" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this code do?
+    ```js
+    const tuple = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `age` variable is not present in the `tuple` array, so it will be `undefined`.
+
+    This results in:
+    ```plaintext
+    Name: Dan, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Nested Destructuring"
+  title="Nested Destructuring"
+  options={[
+    { text: "First: Dan, City: Denver" },
+    { text: "First: undefined, City: Denver" },
+    { text: "Error: Cannot read property 'first'" },
+    { text: "First: Dan, City: undefined" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How about some nested destructuring?
+    ```js
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  You have to be careful when accessing nested properties, as the errors can be hard to spot, with messages that are hard to parse. And the messages vary between browsers and other platforms.
+
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node 20, `ReferenceError: place is not defined`
+
+  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+
+  The solution is to provide default values for nested properties, or refactor to use optional chaining to avoid errors.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Defaults"
+  title="Default Values in Object Destructuring"
+  options={[
+    { text: "Hi Dan from Unknown" },
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now with some defaults, what will this do?
+    ```js
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The `birth` property does not exist on `person`, so the whole object still needs a default, not just the nested property. Basically it's missing a ` = {}` default in there.
+
+  The way this is written, says "if `person.birth` is `undefined`, then `place` is `Unknown`". But `person.birth` is `undefined`, so it's trying to destructure `undefined`, which results in an error.
+
+  ```plaintext
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node 20, `ReferenceError: place is not defined`
+
+  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+  ```
+  </div>
+  </slot>
+</Challenge>
+
+
+<Challenge
+  client:load
+  index={4}
+  group="Defaults"
+  title="Default Values in Object Destructuring"
+  options={[
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Dan from Johannesburg" },
+    { text: "Hi Dan from Unknown", isAnswer: true },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this do?
+    ```js
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
+
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The `birth` property does not exist on `person`, so it falls back to an empty object ` = {}`. This allows the default value to be used.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Function Arguments"
+  title="Destructuring Function Parameters with Defaults"
+  options={[
+    { text: "Hi Dan from Unknown" },
+    { text: "Hi Dan from Denver" },
+    { text: "Hi Unknown from Unknown" },
+    { text: "Hi Unknown from Denver" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now as function parameters, what will this do?
+    ```js
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser()`.
+
+  We should get an error due to `place` not being defined in the destructured fields, or otherwise defined in function scope.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Function Arguments"
+  title="Destructuring with Nested Default Values"
+  options={[
+    { text: "Unknown, Unknown, Joburg" },
+    { text: "Unknown, Unknown, Unknown" },
+    { text: "Unknown, `undefined`, Joburg" },
+    { text: "N/A, `undefined`, Joburg" },
+    { text: "N/A, Unknown, Joburg" },
+    { text: "N/A, N/A, Joburg", isAnswer: true },
+    { text: "Unknown, N/A, Joburg", },
+    { text: "Error" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this gem do?
+    ```js
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The function `displayPlace` will ONLY use a default object if no object is passed in. So, the only way to get the `{ place: "Unknown" }` default is with zero arguments `displayPlace()`.
+
+  Another notable behavior here is that passing `undefined` for `place` will cause the default value to be used, a bit similar to `JSON.stringify` behavior (ignoring `undefined`, recognizing `null`).
+
+  This results in:
+
+  ```js
+  displayPlace() // Unknown
+  displayPlace({ name: "Dan" }) // N/A
+  displayPlace({ name: "Dan", place: undefined }) // N/A
+  ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Function Arguments"
+  title="Destructuring with Nested Default Values"
+  options={[
+    { text: "N/A, N/A" },
+    { text: "N/A, undefined" },
+    { text: "Unknown, N/A" },
+    { text: "Unknown, Unknown" },
+    { text: "Unknown, undefined" },
+    { text: "null, N/A", isAnswer: true },
+    { text: "null, Unknown" },
+    { text: "null, undefined" },
+    { text: "Error" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Similar to the previous one... _what will happen next?_
+    ```js
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing or `undefined`. Nulls will come through as `null`.
+  </div>
+  </slot>
+</Challenge>
+
+# TypeScript Ahead
+
+<Challenge
+  client:load
+  index={8}
+  group="TypeScript Inline Types"
+  title="Destructuring with Nested Default Values"
+  options={[
+    { text: "N/A" },
+    { text: "undefined" },
+    { text: "Unknown" },
+    { text: "null" },
+    { text: "Error", isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now in TypeScript... _what will this do?_
+    ```ts
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      } = { place: 'Unknown' },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  TypeScript will throw an error because the `age` property is required and has no default defined. This is a good example of how TypeScript can help catch errors at compile time.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="TypeScript Inline Types"
+  title="Destructuring with Nested Default Values"
+  options={[
+    { text: "undefined" },
+    { text: "null" },
+    { text: "N/A" },
+    { text: "Unknown" },
+    { text: "Error", isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now in TypeScript... _what will this do?_
+    ```ts
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      } = { place: 'Unknown' },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  TypeScript will throw an error because the `age` property is required and has no default defined. This is a good example of how TypeScript can help catch errors at compile time.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="TypeScript Inline Types"
+  title="Destructuring with Nested Default Values"
+  options={[
+    { text: "Error: Property 'first' is missing" },
+    { text: "Error: Property 'last' is missing" },
+    { text: "Error: Property 'birth' is missing", isAnswer: true },
+    { text: "Error: Property 'age' is missing" },
+    { text: "Error: Property 'place' is missing" },
+    { text: "Error: 'string' has no properties in {...}" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Spot the type error:
+    ```ts
+    function greet(
+      {
+        name: {first = "N/A", last = "N/A"},
+        birth: {place = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth: {place?: string};
+        age: number;
+      }
+    ) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The error is in the `greet` function signature. The `birth` property is missing in the passed object, so it should be optional in the type definition, or have a default value.
+
+  Even though the `birth` property is destructured with a default value, the type definition requires it to be present. In order to mark a property as optional in TypeScript, you should use the `?` operator. Note `birth?: number` isn't the same as `birth: number | undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+Did you enjoy the quiz? 🎉
+
+If you're looking for more... Of course you are! Check out my [Quiz Collection](/challenges/) for more thrills & excitement!
+
+</QuizUI>

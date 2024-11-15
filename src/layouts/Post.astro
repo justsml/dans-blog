@@ -79,7 +79,6 @@ const responsiveImgSizes_breakRight = {
 // console.log(`props: %o
 // params: %o
 // url: %s`, Astro, Astro.params, Astro.url)
-
 ---
 
 <html lang="en">
@@ -133,17 +132,28 @@ const responsiveImgSizes_breakRight = {
       <slot />
     </main>
 
-    <EditOnGitHubLink sourcePath={Astro.props.sourcePath} repoUri="https://github.com/justsml/dans-blog/tree/main/src/content/posts" />
+    <EditOnGitHubLink
+      sourcePath={Astro.props.sourcePath}
+      repoUri="https://github.com/justsml/dans-blog/tree/main/src/content/posts"
+    />
 
-    <AdditionalReading slugs={related} excludeSlugs={[slug]} className="default-links" />
+    <AdditionalReading
+      slugs={related}
+      excludeSlugs={[slug]}
+      className="default-links"
+    />
 
     <div class="comments-wrapper full-width default-links">
       <GitHubIssueComments client:only="react" path={commentsKey} />
     </div>
     <Footer />
     <AnalyticsTag />
-  </body>
-   <link rel="stylesheet" href="../files/fonts.css" media="print" onload="this.media='all'"/>
+  </body><link
+    rel="stylesheet"
+    href="../files/fonts.css"
+    media="print"
+    onload="this.media='all'"
+  />
   <script>
     declare global {
       interface Window {
@@ -166,6 +176,13 @@ const responsiveImgSizes_breakRight = {
       const scoreWrapper = document.querySelector(".score-wrapper");
       const scoreLabel = document.querySelector(".score label");
       const correct = document.querySelectorAll("main .challenge.correct");
+      // Add up the tries from [data-answer-count]
+      const tries = Array.from(
+        document.querySelectorAll("[data-answer-count"),
+      ).reduce((acc, q) => {
+        const tries = parseInt(q.getAttribute("data-answer-count") || "0", 10);
+        return acc + tries;
+      }, 0);
 
       if (scoreEls.length >= 2) console.error("Multiple score elements found");
       if (!scoreLabel) {
@@ -180,7 +197,7 @@ const responsiveImgSizes_breakRight = {
         scoreWrapper?.classList.toggle("pulse");
         scoreEl?.classList.add("success");
       } else {
-        scoreLabel.innerHTML = `${correct.length} / ${questions.length}`;
+        scoreLabel.innerHTML = `${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}`;
       }
       return true;
     };

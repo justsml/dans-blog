@@ -5,10 +5,16 @@ import type { ArticlePost } from "../types";
 
 const getBaseName = (path: string) => path.split("/").pop() || "";
 
-const _postsCollection: ArticlePost[] = (await getCollection("posts") as unknown as ArticlePost[]).filter((post) => !post.data.hidden);
+const _postsCollection: ArticlePost[] = (
+  (await getCollection("posts")) as unknown as ArticlePost[]
+).filter((post) => !post.data.hidden);
 
-
-console.log("postsCollection", JSON.stringify(_postsCollection[0]), null, 2);
+// console.log(
+//   "postsCollection",
+//   JSON.stringify(_postsCollection[_postsCollection.length - 1]),
+//   null,
+//   2,
+// );
 
 let _posts = _postsCollection
   .map((post) => ({
@@ -17,46 +23,55 @@ let _posts = _postsCollection
   }))
   .sort(
     // @ts-ignore
-    (a, b) => a.data?.date - b.data?.date
+    (a, b) => a.data?.date - b.data?.date,
   )
   .reverse() as unknown as ArticlePost[];
 
-  /**
+/**
  * PostCollections provides access to posts' data, pre-.
  */
 export const PostCollections = {
   _posts,
-  _postsBySlug: _posts.reduce((acc, post) => {
-    acc[post.slug] = post;
-    return acc;
-  }, {} as Record<string, (typeof _posts)[0]>),
+  _postsBySlug: _posts.reduce(
+    (acc, post) => {
+      acc[post.slug] = post;
+      return acc;
+    },
+    {} as Record<string, (typeof _posts)[0]>,
+  ),
 
   _slugs: _posts.map((post) => post.slug),
   _quizPosts: _posts.filter((post) => post.data.category === "Quiz"),
 
-  _categories: _posts.reduce((acc, post) => {
-    const { category } = post.data;
-    acc[category] = acc[category] == null ? 1 : acc[category] + 1;
-    return acc;
-  }, {} as Record<string, number>),
+  _categories: _posts.reduce(
+    (acc, post) => {
+      const { category } = post.data;
+      acc[category] = acc[category] == null ? 1 : acc[category] + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  ),
 
-  _tags: _posts.reduce((acc, post) => {
-    // const { tags, } = post.data;
-    const {
-      slug,
-      data: { tags },
-    } = post;
+  _tags: _posts.reduce(
+    (acc, post) => {
+      // const { tags, } = post.data;
+      const {
+        slug,
+        data: { tags },
+      } = post;
 
-    tags.forEach((tag) => {
-      acc[tag] = acc[tag] == null ? [slug] : [...acc[tag], slug];
-    });
-    return acc;
-  }, {} as Record<string, string[]>),
+      tags.forEach((tag) => {
+        acc[tag] = acc[tag] == null ? [slug] : [...acc[tag], slug];
+      });
+      return acc;
+    },
+    {} as Record<string, string[]>,
+  ),
 
   /** `getTagCounts` returns a sorted list of tags and their counts. */
   getTagCounts() {
     return Object.entries(PostCollections._tags).sort(([, a], [, b]) =>
-      b.length === a.length ? 0 : b.length > a.length ? 1 : -1
+      b.length === a.length ? 0 : b.length > a.length ? 1 : -1,
     );
   },
 
@@ -72,7 +87,9 @@ export const PostCollections = {
     return posts;
   },
 
-  getStaticPaths(posts: ArticlePost[] = _posts as unknown as ArticlePost[]): Array<{
+  getStaticPaths(
+    posts: ArticlePost[] = _posts as unknown as ArticlePost[],
+  ): Array<{
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
@@ -92,7 +109,7 @@ export const PostCollections = {
       ([category, count]) => ({
         params: { category: slugify(category) },
         props: { category, count, slug: slugify(category) },
-      })
+      }),
     );
 
     // console.log("getStaticPathsCategoryList", paths);
@@ -104,7 +121,7 @@ export const PostCollections = {
   },
   getPostsByCategory(category: string) {
     return PostCollections._posts.filter(
-      (post) => post.data.category === category
+      (post) => post.data.category === category,
     );
   },
 
@@ -125,7 +142,11 @@ export const PostCollections = {
   getPostsBySlugs(slugs: string[]) {
     const found = slugs.map((slug) => PostCollections._postsBySlug[slug]);
     if (found.length < slugs.length) {
-      console.error("Some slugs not found: %o   matching: %o", slugs, found.length);
+      console.error(
+        "Some slugs not found: %o   matching: %o",
+        slugs,
+        found.length,
+      );
       throw new Error(`Some slugs not found: ${slugs.join(", ")}`);
     }
     return found;
@@ -149,7 +170,7 @@ export const PostCollections = {
 
 export const getArticleSortFn = (
   field: "date" | "modified",
-  direction: "asc" | "desc" = "desc"
+  direction: "asc" | "desc" = "desc",
 ) => {
   return (a: ArticlePost, b: ArticlePost) => {
     const aDate = a.data[field];
@@ -165,13 +186,13 @@ export const images = import.meta.glob<{ default: ImageMetadata }>(
   "/src/content/posts/**/*.{jpeg,jpg,png,gif,svg,webp}",
   {
     eager: true,
-  }
+  },
 );
 
 const imagePaths = Object.fromEntries(
   Object.entries(images).map(([path, image]) => {
     return [getBaseName(path), image];
-  })
+  }),
 );
 
 // create resized images at 180px, 240px, 480px, 960px using `astro:assets` getImage
@@ -200,7 +221,7 @@ let responsiveImages:
         large: getImage({ src: imgImport, width: 960 }),
       },
     ];
-  })
+  }),
 ).catch(console.error)) as unknown as Record<string, ResponsiveImagesType>;
 
 export const getResponsiveImage = (imagePath: string) => {
@@ -214,13 +235,13 @@ export const getResponsiveImage = (imagePath: string) => {
 // console.log("responsiveImages", responsiveImages);
 
 export const getImageProps = (
-  imagePath: string
+  imagePath: string,
   // responsiveLevel: "mobile" | "tablet" | "desktop" | "large" = "desktop"
 ) => {
   // console.log('images:', images, 'imagePath:', imagePath);
   if (!imagePaths[imagePath])
     throw new Error(
-      `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,svg,webp}"`
+      `"${imagePath}" does not exist in glob: "src/assets/*.{jpeg,jpg,png,gif,svg,webp}"`,
     );
 
   return imagePaths[imagePath].default;

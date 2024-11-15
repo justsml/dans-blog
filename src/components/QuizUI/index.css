@@ -389,6 +389,7 @@ html {
     font-size: 1.25rem;
     line-height: 1.5;
     text-align: left;
+    overflow-x: hidden;
   }
 }
 
@@ -499,9 +500,12 @@ html {
 
 .score {
   display: inline-grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 
+   clamp(30%, 1vw, 40%)
+    5fr
+    clamp(0rem, 1vw, 20%);
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
 
   background-color: hsl(var(--background));
   opacity: 0.85;
@@ -562,10 +566,14 @@ html {
 
 .btn.reset-quiz {
   font-size: 1.125rem;
-  margin-left: 3rem;
-  margin-right: -5rem;
+  /* margin-left: -2rem; */
+  margin-right: 2rem;
   display: inline-flex;
+  justify-content: end;
+  align-self: center;
   align-items: center;
+  /* margin-top: 1.5rem; */
+
 
   svg {
     display: inline-block;

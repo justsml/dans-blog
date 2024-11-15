@@ -44,25 +44,32 @@ export default function Challenge({
   // const [selectedOption, setSelectedOption] = useState<OptionSelection>({ text: "" });
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
+  const [tries, setTries] = useState<number>(0);
 
   const updateCounts = () => {
     const questions = document.querySelectorAll("main .challenge");
     const correct = document.querySelectorAll("main .challenge.correct");
     setTotalQuestions(questions?.length);
     setCorrectAnswers(correct?.length);
+    // @ts-ignore
+    window?.__updateCounts();
   };
 
   // const [clean]
 
-  const reset = () => {
-    setIsCorrect(undefined);
-    setChallengeClass("untouched");
-    setShowExplanation(false);
-  };
+  // const reset = () => {
+  //   setIsCorrect(undefined);
+  //   setChallengeClass("untouched");
+  //   setShowExplanation(false);
+  // };
 
   useEffect(() => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
+
+    if (questionStore) {
+      setTries(questionStore.sumOfTries());
+    }
   }, [global?.location?.pathname]);
 
   useEffect(() => {
@@ -122,6 +129,7 @@ export default function Challenge({
     // });
 
     // questionStore.total();
+    setTries(questionStore.sumOfTries());
 
     if (option.isAnswer) {
       setIsCorrect(true);
@@ -138,6 +146,7 @@ export default function Challenge({
       questionIndex,
     });
     setTimeout(updateCounts, 20);
+
   };
 
   useEffect(() => {
@@ -189,9 +198,6 @@ export default function Challenge({
       const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
       // Bail out of wrong answers once answered
       if (isCorrect && !option.isAnswer) return null;
-      // if (challengeClass.includes("answerAnimationEnded")) {
-      //   return null;
-      // }
 
       return (
         <a
@@ -219,6 +225,8 @@ export default function Challenge({
       id={`qq-${sequenceNum}`}
       className={clsx("challenge", challengeClass)}
       ref={challengeRef}
+      data-answer-count={tries}
+      data-question-correct={isCorrect}
     >
       <div className="quiz-header">
         <div className="quiz-question-count">
