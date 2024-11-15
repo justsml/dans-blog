@@ -60,6 +60,42 @@ Let's see how well you know your streams from your buffers! 🚀
 <Challenge
   client:load
   index={1}
+  group="Warmup: Buffers"
+  title="Buffer to String Conversion"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'Binary data'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this print?
+    ```js
+    const buf = Buffer.from([65]);
+    console.log(buf.toString());
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The numbers in the array represent ASCII codes:
+
+    - 65: 'A'
+
+    `toString()` converts these bytes to their string representation using UTF-8 encoding by default.
+    
+    [Learn more about Buffer encoding](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
   group="Warmup: File System"
   title="Async File Operations"
   options={[
@@ -103,7 +139,7 @@ Let's see how well you know your streams from your buffers! 🚀
 
 <Challenge
   client:load
-  index={2}
+  index={3}
   group="File System Basics"
   title="Reading Files Synchronously"
   options={[
@@ -137,7 +173,7 @@ Let's see how well you know your streams from your buffers! 🚀
 
 <Challenge
   client:load
-  index={3}
+  index={4}
   group="Streams"
   title="Stream Events"
   options={[
@@ -174,7 +210,7 @@ Let's see how well you know your streams from your buffers! 🚀
 
 <Challenge
   client:load
-  index={4}
+  index={5}
   group="Streams"
   title="Stream Piping"
   options={[
@@ -203,44 +239,6 @@ Let's see how well you know your streams from your buffers! 🚀
     This is memory-efficient for large files compared to `fs.readFile()` followed by `fs.writeFile()`.
 
     [Learn more about pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={5}
-  group="Encoding"
-  title="Buffer to String Conversion"
-  options={[
-    {text: 'Hello', isAnswer: true},
-    {text: '[Object object]'},
-    {text: 'Undefined'},
-    {text: 'Binary data'},
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What will this print?
-    ```js
-    const buf = Buffer.from([72, 101, 108, 108, 111]);
-    console.log(buf.toString());
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The numbers in the array represent ASCII codes:
-    - 72: 'H'
-    - 101: 'e'
-    - 108: 'l'
-    - 108: 'l'
-    - 111: 'o'
-
-    `toString()` converts these bytes to their string representation using UTF-8 encoding by default.
-    
-    [Learn more about Buffer encoding](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
