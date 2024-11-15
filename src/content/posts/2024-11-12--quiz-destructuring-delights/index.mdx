@@ -498,7 +498,64 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   </slot>
 </Challenge>
 
-Did you enjoy the quiz? 🎉
+<Challenge
+  client:load
+  index={11}
+  group="TypeScript + Assignment"
+  title="Destructuring with Nested Values, Assignment and Types"
+  options={[
+    { text: "Hi Dan Levy from N/A" },
+    { text: "Hi Dan Levy from Cape Town" },
+    { text: "Hi N/A N/A from N/A" },
+    { text: "Hi N/A N/A from Cape Town" },
+    { text: "Error", isAnswer: true }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now with **assignment** (note the `f`, `l` and `p` variables)
+    ```ts
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  Another Error! You're starting to guess aren't you?!
+
+  It is hard to read layers of destructuring, with defaults, assignment and types!
+  
+  As soon as `place` is reassigned to the `p` variable it is no longer defined in the scope of the `console.log` statement.
+  ```ts
+  console.log(`Hi ${f} ${l} from ${place}`); // ❌
+  // to:
+  console.log(`Hi ${f} ${l} from ${p}`); // ✅
+  ```
+  </div>
+  </slot>
+</Challenge>
+
+Yike's! That was a lot of destructuring, defaults, nesting, assignment, and TypeScript! 🤯
+
+I hope you enjoyed it!
 
 If you're looking for more... Of course you are! Check out my [Quiz Collection](/challenges/) for more thrills & excitement!
 
