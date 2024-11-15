@@ -36,7 +36,7 @@ export const QuizCard = ({
 
   const quizClass = "quiz-card";
 
-  const questionCount = article.data.questionCount;
+  const questionCount = article.data.questionCount ?? countTotal;
 
   useEffect(() => {
     const qStore = QuestionStore(slug);

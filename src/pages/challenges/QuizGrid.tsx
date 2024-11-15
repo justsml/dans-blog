@@ -52,7 +52,8 @@ export const QuizGrid = ({
       </div>
       <div className={"quiz-list"}>
         {quizList
-          .filter(({ data: { unlisted, hidden } }) => hidden !== true)
+        // Should we exclude `unlisted` as well as hidden?
+          .filter(({ data: { hidden } }) => hidden !== true)
           .map((props, index) => (
             <QuizCard
               key={index}

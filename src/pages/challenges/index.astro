@@ -27,13 +27,6 @@ let posts = PostCollections._quizPosts
 const subCategoryList: string[] = [
   ...new Set(posts.map((p) => p.data.subCategory)),
 ].filter(Boolean) as string[];
-const subCategoryCounts = subCategoryList.reduce((acc, subCategory) => {
-  // @ts-expect-error
-  acc[subCategory] = posts.filter(
-    (p) => p.data.subCategory === subCategory,
-  ).length;
-  return acc;
-}, {});
 
 const totalQuizzes = posts.length;
 
@@ -100,8 +93,6 @@ const styleString = subCategoryList
   <QuizGrid
     client:load
     quizList={quizList}
-    subCategoryCounts={subCategoryCounts}
-    subCategoryList={subCategoryList}
   />
 </section>
 

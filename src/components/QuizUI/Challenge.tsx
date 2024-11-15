@@ -57,11 +57,11 @@ export default function Challenge({
 
   // const [clean]
 
-  const reset = () => {
-    setIsCorrect(undefined);
-    setChallengeClass("untouched");
-    setShowExplanation(false);
-  };
+  // const reset = () => {
+  //   setIsCorrect(undefined);
+  //   setChallengeClass("untouched");
+  //   setShowExplanation(false);
+  // };
 
   useEffect(() => {
     if (!questionStore)

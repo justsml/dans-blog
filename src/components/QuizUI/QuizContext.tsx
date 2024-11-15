@@ -1,9 +1,9 @@
 import { createContext } from "react";
-import type { Answer } from "./types";
+// import type { Answer } from "./types";
 
 interface QuizContextProps {
-  answers: Array<Answer>;
-  setAnswers: React.Dispatch<React.SetStateAction<Array<Answer>>>;
+  answers: Array<unknown>;
+  setAnswers: React.Dispatch<React.SetStateAction<Array<unknown>>>;
   currentChallenge: number;
   setCurrentChallenge: React.Dispatch<React.SetStateAction<number>>;
   totalQuestions: number;
