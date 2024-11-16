@@ -90,7 +90,7 @@ const NavMenu = ({
               <li className="item-quizzes">
                 <NavigationMenu.Link asChild>
                   <a href="/challenges" className="CalloutItem">
-                    <div className="Callout neon-bg-4" style={{background: 'var(--springtime-bg)'}}>
+                    <div className="Callout" style={{background: 'var(--neon-gg-bg)'}}>
                       <div className="CalloutHeading">Quizzes</div>
                       <p className="CalloutText">Try Dan's 10+ challenges!</p>
                     </div>

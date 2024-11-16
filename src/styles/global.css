@@ -77,10 +77,17 @@
     */
     /* --red-hot-bg: radial-gradient(circle at 90% 80%, #f7ff0a, #f7ff0a, #f7ff0a, #f7ff0a, #ffac00, #ff7b00, #ff5100, #ff340d, #ff2511, #ff2212); */
     
-    --springtime-bg: linear-gradient(315deg, #dde409, #a6dd30, #71d34c, #36c664, #00b777, #00a786, #00968e, #00848e, #007288, #0a607b);
+    /* --springtime-bg: linear-gradient(315deg, #dde409, #a6dd30, #71d34c, #36c664, #00b777, #00a786, #00968e, #00848e, #007288, #0a607b); */
     
-    --brainblow-bg: linear-gradient(315deg, #f7ff0a, #f2ff0c, #d0fe1e, #65f653, #00d6b1, #008ff2, #4a50c1, #712891, #77147e, #77107b);
+    --brainblow-bg: linear-gradient(315deg, #d0fe1e, #65f653, #00d6b1, #008ff2, #4a50c1, #712891, #77147e, #77107b);
   
+    /* --neon-bg-gg: linear-gradient(190deg, #ff370fef 70%, #fc0 100%); */
+    /* --neon-gg-bg: var(--brainblow-bg); */
+    --sublime-light-bg: linear-gradient(to right, #fc5c7d, #6a82fb);
+    /* --sunrise-bg: linear-gradient(65deg, #f7ff0a 10%, #28c500 20% 80%, #f7ff0a 90%); */
+
+    --neon-gg-bg: var(--sublime-light-bg);
+
     /* --deep-blue-bg: linear-gradient(15deg, #142850, #14365f, #13476f, #125d80, #107792, #0d96a5, #09b8b4, #04ccb1); */
   
     --after-party-bg: linear-gradient(
@@ -1015,4 +1022,13 @@ h2, h3, h4, h5, h6 {
   & :hover {
     text-decoration: underline;
   }
+}
+
+.scroll-x {
+  max-width: calc(100vw - 2rem) !important;
+  margin-inline: auto;
+  overflow-x: auto;
+  overflow-y: auto;
+  background-color: #EEE2;
+  
 }

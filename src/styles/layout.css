@@ -39,11 +39,12 @@
   > article, 
   > aside, 
   > .challenge {
+    max-width: 100vw;
     --padding-inline: 1rem;
   }
 
   &:has(.challenge) {
-    --padding-inline: 0;
+    --padding-inline: 0.5rem;
   }
 
   .full-section {
@@ -57,7 +58,7 @@
     --padding-inline: 1rem;
 
     > :has(.challenge) :is(.challenge) {
-      --padding-inline: 0rem;
+      --padding-inline: 0.5rem;
     }
 
   }
@@ -154,6 +155,7 @@ article.content-grid {
 
 img.full-width {
   width: 100%;
+  max-width: 100vw;
   max-height: min(35vh, 260px);
   object-fit: cover;
   border-radius: 0;
