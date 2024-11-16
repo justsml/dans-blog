@@ -52,6 +52,8 @@ export const QuizCard = ({
   const ratioCompleted = countCorrect / questionCount;
   const isStarted = countTries > 0 || countCorrect > 0;
 
+  const gridOverrideStyle = allCorrect ? { order: -1 } : {};
+
   return (
     <div
       style={{
@@ -59,6 +61,7 @@ export const QuizCard = ({
         "--percent-completed": Number.isNaN(ratioCompleted)
           ? 0
           : ratioCompleted,
+        ...gridOverrideStyle,
       }}
       className={clsx(quizClass, categoryClass, className, {
         completed: allCorrect,

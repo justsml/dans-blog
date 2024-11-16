@@ -52,8 +52,12 @@ export const QuestionStore = (slug: string) => {
       return questions.length;
     },
 
-    isCorrect: ({ index }: { index: number }) => {
+    isCorrect: ({ index }: IdxOnly) => {
       return questions?.[index].isCorrect;
+    },
+
+    getTries: ({ index }: IdxOnly) => {
+      return questions?.[index]?.tries;
     },
 
     answerQuestion: (question: IdxOnly, option: Option) => {

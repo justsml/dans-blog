@@ -500,26 +500,29 @@ html {
 
 .score {
   display: inline-grid;
-  grid-template-columns: 
-   clamp(30%, 1vw, 40%)
-    5fr
-    clamp(0rem, 1vw, 20%);
+  grid-template-columns: 1fr min(600px, 60vw) 1fr;
+  grid-auto-columns: 1fr;
+
+
   justify-content: center;
   align-items: center;
+  text-align: center;
+
+  padding-block: 0.75rem;
 
   background-color: hsl(var(--background));
   opacity: 0.85;
-  filter: brightness(0.65);
+  filter: brightness(0.80);
   bottom: 0;
   box-shadow: inset 0 0.7px 0.3px var(--clr-muted-300);
   color: var(--primary);
-  font-size: 1.5rem;
+  font-size: 0.89rem;
 
   margin: 0;
 
   /* padding: 0.5rem; */
   width: 100%;
-  height: 3.75rem;
+  /* height: 3.75rem; */
   position: fixed;
   bottom: 0;
   left: 0;
@@ -528,7 +531,11 @@ html {
 
   text-align: center;
 
-  transition: filter 0.2s ease-out;
+  transition: filter 0.3s ease-out, opacity 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out, box-shadow 0.3s ease-out, transform 0.3s ease-out, padding 0.3s ease-out, margin 0.3s ease-out;
+
+  h2, h3, h4 {
+    margin: 0.125rem;
+  }
 
   .congrats-message {
     display: none;
@@ -546,11 +553,26 @@ html {
   &.success {
     background-color: var(--quiz-bg-lighter);
     opacity: 1;
+    filter: brightness(1);
     .congrats-message {
       display: block;
     }
   }
+
+  &.perfect {
+    background-color: hsl(var(--background));
+    color: var(--neon-pink-subtle);
+    filter: brightness(1.1);
+    a, button {
+      color: var(--neon-cyan);
+
+    }
+    h2, h3, h4 {
+      color: var(--neon-pink-subtle);
+    }
+  }
 }
+
 
 .all-correct {
   .score-wrapper {
@@ -558,7 +580,7 @@ html {
   }
 }
 .score-wrapper {
-  display: inline-flex;
+  /* display: inline-flex; */
   label {
     margin-left: 0.5rem;
   }
@@ -580,16 +602,47 @@ html {
     margin-inline: 0.5rem;
   }
 
+  /* hide text labels on small screens (by default) */
   & > span {
     display: none;
   }
 }
 
+.view-all-link {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+
+  /* hide text labels on small screens (by default) */
+  span {
+    display: none;
+  }
+}
+
+.btn-view-all {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  column-gap: 0.5rem;
+
+  color: hsl(var(--muted));
+  /* relative color, add opacity */
+
+}
+
 @screen sm {
   .score {
-    font-size: 1.75rem;
+    font-size: 0.95rem;
   }
 
+  .view-all-link {
+    /* show text labels on bigger screens */
+    span {
+      display: inline-block;
+    }
+  }
   .btn.reset-quiz {
     & > span {
       display: inline-block;
