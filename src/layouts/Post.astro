@@ -78,88 +78,88 @@ const responsiveImgSizes_breakRight = {
     60vw`,
 };
 
-if (`${category} ${slug} ${title}`.toLowerCase().includes("quiz")) {
-  console.log("QUIZ PAGE: ", category, slug, title);
-  const siteUrlPrefix = "http://localhost:3000"
-  // const siteUrlPrefix = "https://danlevy.net"; // "http://localhost:4321"
-  const contentPath = Astro.props.sourcePath.split("/")[0];
-  const fullPath = `src/content/posts/${Astro.props.sourcePath}`
-  const basePath = `${process.cwd()}`
-  const fullBasePath = path.dirname(join(`${basePath}`, `${fullPath}`));
-  const socialBannerPreview = `${fullBasePath}/cover.jpg`;
+// if (`${category} ${slug} ${title}`.toLowerCase().includes("quiz")) {
+//   console.log("QUIZ PAGE: ", category, slug, title);
+//   const siteUrlPrefix = "http://localhost:3000"
+//   // const siteUrlPrefix = "https://danlevy.net"; // "http://localhost:4321"
+//   const contentPath = Astro.props.sourcePath.split("/")[0];
+//   const fullPath = `src/content/posts/${Astro.props.sourcePath}`
+//   const basePath = `${process.cwd()}`
+//   const fullBasePath = path.dirname(join(`${basePath}`, `${fullPath}`));
+//   const socialBannerPreview = `${fullBasePath}/cover.jpg`;
   
-  const newBase = `/tmp/screenshots/${contentPath}`;
+//   const newBase = `/tmp/screenshots/${contentPath}`;
   
-  await mkdir(newBase, { recursive: true });
+//   await mkdir(newBase, { recursive: true });
 
-  console.log("ID: ", newBase, fullPath);
-  console.log("Cappin URL: ", `${siteUrlPrefix}/${slug}`);
+//   console.log("ID: ", newBase, fullPath);
+//   console.log("Cappin URL: ", `${siteUrlPrefix}/${slug}`);
   
-  await autoScreenShot({
-    url: `${siteUrlPrefix}/${slug}`,
-    fileName: `${newBase}/preview-q1.jpg`,
-    selectorPathMap: {
-      "#qq-1": `${newBase}/preview-q1.jpg`,
-      "#qq-2": `${newBase}/preview-q2.jpg`,
-      "#qq-3": `${newBase}/preview-q3.jpg`,
-      "#qq-4": `${newBase}/preview-q4.jpg`,
-      "#qq-5": `${newBase}/preview-q5.jpg`,
-      "#qq-6": `${newBase}/preview-q6.jpg`,
-      "#qq-7": `${newBase}/preview-q7.jpg`,
-    },
-    width: 1200,
-    height: 1200,
-    delayMs: 50,
-  });
+//   await autoScreenShot({
+//     url: `${siteUrlPrefix}/${slug}`,
+//     fileName: `${newBase}/preview-q1.jpg`,
+//     selectorPathMap: {
+//       "#qq-1": `${newBase}/preview-q1.jpg`,
+//       "#qq-2": `${newBase}/preview-q2.jpg`,
+//       "#qq-3": `${newBase}/preview-q3.jpg`,
+//       "#qq-4": `${newBase}/preview-q4.jpg`,
+//       "#qq-5": `${newBase}/preview-q5.jpg`,
+//       "#qq-6": `${newBase}/preview-q6.jpg`,
+//       "#qq-7": `${newBase}/preview-q7.jpg`,
+//     },
+//     width: 1200,
+//     height: 1200,
+//     delayMs: 50,
+//   });
   
-  // await autoScreenShot({
-  //   url: `${siteUrlPrefix}/${slug}`,
-  //   fileName: `${newBase}/preview-q2.jpg`,
-  //   width: 1200,
-  //   height: 1200,
-  //   selector: "#qq-2",
-  //   delayMs: 50,
-  // });
-  // await autoScreenShot({
-  //   url: `${siteUrlPrefix}/${slug}`,
-  //   fileName: `${newBase}/preview-q3.jpg`,
-  //   width: 1200,
-  //   height: 1200,
-  //   selector: "#qq-3",
-  //   delayMs: 50,
-  // });
-  // await autoScreenShot({
-  //   url: `${siteUrlPrefix}/${slug}`,
-  //   fileName: `${newBase}/preview-q4.jpg`,
-  //   width: 1200,
-  //   height: 1200,
-  //   selector: "#qq-4",
-  //   delayMs: 50,
-  // });
-  // await autoScreenShot({
-  //   url: `${siteUrlPrefix}/${slug}`,
-  //   fileName: `${newBase}/preview-q5.jpg`,
-  //   width: 1200,
-  //   height: 1200,
-  //   selector: "#qq-5",
-  //   delayMs: 50,
-  // });
-  await autoScreenShot({
-    url: `${siteUrlPrefix}/${slug}`,
-    fileName: `${newBase}/preview-desktop.jpg`,
-    width: 1280,
-    height: 720,
-    delayMs: 50,
-  });
-  await autoScreenShot({
-    url: `${siteUrlPrefix}/${slug}`,
-    fileName: `${newBase}/preview-mobile.jpg`,
-    width: 430,
-    height: 900,
-    delayMs: 50,
-  });
-  // console.log("IMG: ", socialBannerImg);
-}
+//   // await autoScreenShot({
+//   //   url: `${siteUrlPrefix}/${slug}`,
+//   //   fileName: `${newBase}/preview-q2.jpg`,
+//   //   width: 1200,
+//   //   height: 1200,
+//   //   selector: "#qq-2",
+//   //   delayMs: 50,
+//   // });
+//   // await autoScreenShot({
+//   //   url: `${siteUrlPrefix}/${slug}`,
+//   //   fileName: `${newBase}/preview-q3.jpg`,
+//   //   width: 1200,
+//   //   height: 1200,
+//   //   selector: "#qq-3",
+//   //   delayMs: 50,
+//   // });
+//   // await autoScreenShot({
+//   //   url: `${siteUrlPrefix}/${slug}`,
+//   //   fileName: `${newBase}/preview-q4.jpg`,
+//   //   width: 1200,
+//   //   height: 1200,
+//   //   selector: "#qq-4",
+//   //   delayMs: 50,
+//   // });
+//   // await autoScreenShot({
+//   //   url: `${siteUrlPrefix}/${slug}`,
+//   //   fileName: `${newBase}/preview-q5.jpg`,
+//   //   width: 1200,
+//   //   height: 1200,
+//   //   selector: "#qq-5",
+//   //   delayMs: 50,
+//   // });
+//   await autoScreenShot({
+//     url: `${siteUrlPrefix}/${slug}`,
+//     fileName: `${newBase}/preview-desktop.jpg`,
+//     width: 1280,
+//     height: 720,
+//     delayMs: 50,
+//   });
+//   await autoScreenShot({
+//     url: `${siteUrlPrefix}/${slug}`,
+//     fileName: `${newBase}/preview-mobile.jpg`,
+//     width: 430,
+//     height: 900,
+//     delayMs: 50,
+//   });
+//   // console.log("IMG: ", socialBannerImg);
+// }
 ---
 <html lang="en">
   <head>
