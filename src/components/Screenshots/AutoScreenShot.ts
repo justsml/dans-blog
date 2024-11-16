@@ -6,6 +6,7 @@ import ms from "ms";
 type AutoScreenShotOptions = {
   url: string;
   fileName: string;
+  selectorPathMap?: Record<string, string>;
   maxAgeSeconds?: number;
   failOnMissing?: boolean | "production";
   width?: number;
@@ -19,12 +20,14 @@ type AutoScreenShotOptions = {
 export const autoScreenShot = async ({
   url,
   fileName,
-  maxAgeSeconds = ms("3 months") / 1000,
+  // maxAgeSeconds = ms("3 months") / 1000,
+  maxAgeSeconds = 86_400 * 7, // 1 week
   failOnMissing,
   height = 600,
   width = 1200,
   delayMs = 10,
   selector,
+  selectorPathMap,
   scrollTo,
   zoom,
 }: AutoScreenShotOptions) => {
@@ -46,12 +49,12 @@ export const autoScreenShot = async ({
   if (screenshotExists) {
     const { mtime } = fs.statSync(outputPath);
     const ageSeconds = (Date.now() - mtime.getTime()) / 1000;
-    console.log(`Screenshot ${displayPath} is ${ageSeconds} seconds old`);
-
+    
     if (ageSeconds < maxAgeSeconds) {
-      console.log(`Skipping screenshot ${displayPath} as it's still fresh`);
+      // console.log(`Skipping screenshot ${displayPath} as it's still fresh`);
       return createReadStream(outputPath, { encoding: "utf8" });
     }
+    console.log(`Screenshot ${displayPath} is ${ageSeconds} seconds old`);
   }
 
   try {
@@ -65,9 +68,10 @@ export const autoScreenShot = async ({
       delayMs,
       scrollTo,
       selector,
+      selectorPathMap,
       zoom,
     });
-    console.log(`Screenshot ${displayPath} created`);
+    console.log(`Created ${outputPath}`);
   } catch (error) {
     console.error(
       // @ts-expect-error

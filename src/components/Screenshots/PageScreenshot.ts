@@ -12,13 +12,14 @@ type ScreenshotOptions = {
   scrollTo?: string;
   zoom?: number;
   delayMs?: number;
+  selectorPathMap?: Record<string, string>;
 };
 
 /**
  * Service for creating screenshots of web pages.
  * Uses Playwright to control a headless browser.
  * @see https://playwright.dev/
- * 
+ *
  * @example
  * ```typescript
  * const screenshotService = new ScreenshotService();
@@ -59,10 +60,11 @@ class ScreenshotService {
     width,
     height,
     selector,
+    selectorPathMap,
     scrollTo,
     zoom,
     delayMs,
-  }: ScreenshotOptions): Promise<Buffer> {
+  }: ScreenshotOptions) {
     if (!this.browser) {
       throw new Error("Browser is not initialized. Please call init() first.");
     }
@@ -78,6 +80,7 @@ class ScreenshotService {
     log(`Navigated to ${url}`);
 
     if (scrollTo) {
+      await page.waitForSelector(scrollTo);
       await page.evaluate((scrollTo) => {
         const element = document.querySelector(scrollTo);
         if (element) element.scrollIntoView();
@@ -96,15 +99,44 @@ class ScreenshotService {
     if (zoom && zoom > 0 && zoom < 10)
       await page.evaluate(`document.body.style.scale = ${zoom}`);
 
-    let screenshotBuffer: Buffer;
-    if (selector) {
+    let screenshotBuffer: Buffer | null = null;
+
+    if (selectorPathMap) {
+      for (const [selector, path] of Object.entries(selectorPathMap)) {
+        const element = await page.$(selector);
+        if (!element) {
+          throw new Error(`Element with selector '${selector}' not found`);
+        }
+        // delay 1000ms to wait for the element to be fully loaded
+        await page.waitForTimeout(1000);
+        screenshotBuffer = await element.screenshot({
+          path: path,
+          quality: 100,
+          scale: "device",
+        });
+        console.log(`Screenshot saved to ${path}`);
+      }
+    } else if (selector) {
       const element = await page.$(selector);
       if (!element) {
         throw new Error(`Element with selector '${selector}' not found`);
       }
-      screenshotBuffer = await element.screenshot({ path: outputPath });
+      screenshotBuffer = await element.screenshot({
+        path: outputPath,
+        quality: 100,
+        scale: "device",
+      });
+      console.log(`Screenshot saved to ${outputPath}`);
     } else {
-      screenshotBuffer = await page.screenshot({ path: outputPath });
+      await page.evaluate(() => {
+        document.body.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+      });
+      screenshotBuffer = await page.screenshot({
+        path: outputPath,
+        quality: 100,
+        scale: "device",
+      });
+      console.log(`Screenshot saved to ${outputPath}`);
     }
 
     await page.close();
