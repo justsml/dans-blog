@@ -67,9 +67,9 @@ export default function Challenge({
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
-    if (questionStore) {
-      setTries(questionStore.sumOfTries());
-    }
+    // if (questionStore) {
+    //   setTries(questionStore.sumOfTries());
+    // }
   }, [global?.location?.pathname]);
 
   useEffect(() => {
@@ -84,23 +84,25 @@ export default function Challenge({
         index: questionIndex,
       });
       // console.log("Added question to store:", questionIndex, group, title);
-    } else {
-      // console.error("QuestionStore is not initialized");
-    }
-  }, [questionStore, title, group, question, options, explanation]);
-
-  // Check if we already answered this question
-  useEffect(() => {
-    const isCorrect =
+      const isCorrect =
       questionStore?.isCorrect({
         index: questionIndex,
       }) ?? undefined;
 
-    setIsCorrect(isCorrect);
-    setChallengeClass(
-      isCorrect === true ? "correct" : isCorrect === false ? "incorrect" : "",
-    );
-  }, []);
+      const tries = questionStore?.getTries({
+          index: questionIndex,
+        }) ?? 0;
+
+      setTries(tries);
+      setIsCorrect(isCorrect);
+      setChallengeClass(
+        isCorrect === true ? "correct" : isCorrect === false ? "incorrect" : "",
+      );
+    } else {
+      console.error("QuestionStore is not initialized");
+    }
+  }, [questionStore, title, group, question, options, explanation]);
+
 
   const logEvent = (name: string, data: unknown) => {
     // @ts-ignore
@@ -114,6 +116,7 @@ export default function Challenge({
     // console.log("Answering question:", title, question, option);
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
+
     questionStore?.answerQuestion(
       {
         index: questionIndex,
@@ -146,7 +149,6 @@ export default function Challenge({
       questionIndex,
     });
     setTimeout(updateCounts, 20);
-
   };
 
   useEffect(() => {
