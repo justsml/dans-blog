@@ -9,8 +9,12 @@ const today = new Date();
 
 <footer class="content-grid">
 	<p>&copy; 2008-{today.getFullYear()} {COPYRIGHT}</p>
+	<p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸</p>
 	<div class="social-links">
-		
+		<a href={`https://github.com/${SOCIAL_GITHUB}`} target="_blank">
+			<span class="sr-only">Go to Dan's GitHub</span>
+			<img class="icon" src="/icons/github.svg" alt="GitHub" />
+		</a>
 		<a href={`https://twitter.com/${SOCIAL_TWITTER}`} target="_blank">
 			<span class="sr-only">Follow me on Twitter</span>
 			<img class="icon" src="/icons/twitter.svg" alt="Twitter" />
@@ -23,10 +27,6 @@ const today = new Date();
 			<span class="sr-only">Follow me on Bluesky</span>
 			<img class="icon" src="/icons/bluesky.svg" alt="Bluesky" />
 		</a>
-		<a href={`https://github.com/${SOCIAL_GITHUB}`} target="_blank">
-			<span class="sr-only">Go to Dan's GitHub</span>
-			<img class="icon" src="/icons/github.svg" alt="GitHub" />
-		</a>
 	</div>
 </footer>
 <style>
@@ -35,6 +35,9 @@ const today = new Date();
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+	footer .locations {
+		margin: .125em 0;
 	}
 	.social-links {
 		display: flex;
