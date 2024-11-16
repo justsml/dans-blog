@@ -23,10 +23,45 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <QuizUI>
 
-
 <Challenge
   client:load
   index={0}
+  group="Warmup"
+  title="The `i` Flag"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What matches?
+    ```js
+    'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The `i` flag makes the pattern case-insensitive:
+    - `g` finds all matches
+    - **`i` ignores case differences**
+
+    Without the `i` flag, only lowercase "cat" matches.
+
+    This is particularly useful when dealing with user input or HTML where case might vary.
+
+    [Learn more about RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
   group="Warmup"
   title="Simple Character Matching"
   options={[
@@ -61,7 +96,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={1}
+  index={2}
   group="Basic Matching"
   title="Greedy vs Non-Greedy"
   options={[
@@ -98,7 +133,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={2}
+  index={3}
   group="Common Gotchas"
   title="The Dot Metacharacter"
   options={[
@@ -133,7 +168,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={3}
+  index={4}
   group="Look-ahead"
   title="Positive Look-ahead"
   options={[
@@ -170,7 +205,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={4}
+  index={5}
   group="Basic Matching"
   title="Word Boundaries"
   options={[
@@ -207,7 +242,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={5}
+  index={6}
   group="Common Gotchas"
   title="The Global Flag"
   options={[
@@ -244,7 +279,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={6}
+  index={7}
   group="Look-behind"
   title="Negative Look-behind"
   options={[
@@ -280,7 +315,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={7}
+  index={8}
   group="Basic Matching"
   title="Capturing Groups"
   options={[
@@ -313,42 +348,6 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     `slice(1)` is a common trick to get just the capture groups.
 
     [Learn more about groups and capturing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={8}
-  group="Common Gotchas"
-  title="The `i` Flag"
-  options={[
-    {text: '["Cat"]'},
-    {text: '["cat", "CAT", "Cat"]', isAnswer: true},
-    {text: '["cat"]'},
-    {text: '[]'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What matches?
-    ```js
-    'cat CAT Cat'.match(/cat/gi)
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The `i` flag makes the pattern case-insensitive:
-    - `g` finds all matches
-    - `i` ignores case differences
-
-    Without the `i` flag, only lowercase "cat" would match.
-
-    This is particularly useful when dealing with user input or HTML where case might vary.
-
-    [Learn more about RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
   </div>
   </slot>
 </Challenge>
@@ -586,6 +585,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 >
   <slot name="question">
   <div className="question">
+    Apologies in advance! 😈<br />
     Which password matches this pattern?
     ```js
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
