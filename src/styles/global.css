@@ -259,14 +259,14 @@
   }
 
   .article, article {
-    p code, em.highlight {
+    p :not(pre) code, em.highlight {
       font-style: normal;
       background-color: #152028;
       padding: .25em .25em;
       border-radius: .4rem;
       border-color: #666;
       box-shadow: 0 0 .8px #fff;
-      border-width: .5px;
+      border-width: .85px;
     }
   }
 
@@ -288,7 +288,7 @@ body {
   color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
-  line-height: 1.8;
+  line-height: 1.7;
   font-size: 1rem;
 }
 
@@ -694,15 +694,14 @@ pre.astro-code {
 }
 
 .quiz-ui pre.astro-code {
-  
-  width: 548px;
-  margin-right: 0;
-  margin-left: -1rem;
+  width: calc(100% + 1.25rem);
+  margin-left: -0.75rem;
   border-radius: 0;
   border-right-width: 0;
   border-left-width: 0;
-  padding: .75em;;
+  padding: .75em;
 
+  line-height: 1.35;
 }
 /* Contact form */
 .columns-all {

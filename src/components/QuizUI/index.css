@@ -10,6 +10,9 @@ Overriding the style when generating screenshots
   .score {
     display: none !important;
   }
+  body > header {
+    display: none !important;
+  }
 }
 
 .quiz-ui {
@@ -305,26 +308,22 @@ Overriding the style when generating screenshots
     }
   }
 
-  .quiz-hint {
-    /* margin-top: -2rem; */
-    margin-bottom: 1rem;
-    height: 2.125rem;
-    max-width: calc(100% - 1rem);
-    text-align: right;
-    font-weight: 300;
-    font-size: 0.95rem;
+  section.explanation {
+    text-align: left;
+    overflow: auto;
+    background-color: var(--quiz-bg-solid);
+    color: var(--quiz-fg);
+    border: 1px solid var(--quiz-border-solid);
 
-    section.explanation {
-      text-align: left;
-      overflow: auto;
-      background-color: var(--quiz-bg-solid);
-      color: var(--quiz-fg);
-      border: 1px solid var(--quiz-border-solid);
-
-      /* @supports (interpolate-size: allow-keywords) {
-        interpolate-size: allow-keywords;
-      } */
+    pre.astro-code {
+      overflow-x: auto;
+      overflow-y: scroll;
+      width: calc(550px - 3.3rem);
     }
+
+    /* @supports (interpolate-size: allow-keywords) {
+      interpolate-size: allow-keywords;
+    } */
   }
 
   .quiz-question {
