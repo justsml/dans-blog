@@ -1,12 +1,13 @@
 ---
 unlisted: true
 title: "Quiz: Regular Expressions Mastery"
-subTitle: "Can you tame the wild RegEx beast?"
+subTitle: "Can you tame wild RegEx?"
 label: RegEx
+social_image: preview-desktop.webp
 category: Quiz
 subCategory: RegEx
 date: 2024-11-15
-modified: 2024-11-15
+modified: 2024-11-16
 tags: [quiz, regex, javascript, intermediate, patterns]
 cover_full_width: dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp
@@ -26,7 +27,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 <Challenge
   client:load
   index={0}
-  group="Basic Matching"
+  group="Warmup"
   title="Simple Character Matching"
   options={[
     {text: '["cat", "hat"]', isAnswer: true},
@@ -40,17 +41,17 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     What will this code return?
     ```js
     const words = ['cat', 'hat', 'what', 'bat'];
-    words.filter(word => word.match(/[ch]at/))
+    words.filter(word => word.match(/^[ch]at/))
     ```
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    The pattern `/[ch]at/` matches strings that:
-    - Start with either 'c' or 'h' (that's what `[ch]` means - a character class matching one character)
+    The pattern `/^[ch]at/` matches strings that:
+    - Start (`^`) with either 'c' or 'h' (that's what `[ch]` means - a character class matching one character)
     - Followed by literally 'at'
-    
+
     Therefore, only "cat" and "hat" match this pattern. The `filter()` method keeps only the matching elements.
 
     [Learn more about character classes on MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
@@ -66,6 +67,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   options={[
     {text: '["<div>Hello</div>"]'},
     {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
     {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
     {text: '["Hello", "World"]'}
   ]}
@@ -74,8 +76,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What will this match?
     ```js
-    const str = '<div>Hello</div><div>World</div>';
-    str.match(/<div>.*?<\/div>/g)
+    '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
   </div>
   </slot>
@@ -87,8 +88,8 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - Match any character (`.*`) but as few as possible (`?`)
     - Until finding `</div>`
     - The `g` flag makes it match all occurrences
-    
-    Without the `?`, the greedy `.*` would match everything from the first `<div>` to the last `</div>`, giving one big match.
+
+    Without the `?`, the greedy `.*` would match everything from the first `<div>` to the last `</div>`, giving one big match. With `?`, it matches each pair separately.
 
     [Learn more about greedy vs lazy matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
@@ -111,8 +112,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What will this return?
     ```js
-    const str = 'hello\nworld';
-    str.match(/\w+/g)
+    'hello\nworld'.match(/\w+/g)
     ```
   </div>
   </slot>
@@ -123,8 +123,8 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - Letters (a-z, A-Z)
     - Numbers (0-9)
     - Underscore (_)
-    
-    The newline acts as a word boundary, so we get two matches. If we had used `.*`, it wouldn't match the newline by default (you'd need the `s` flag for that).
+
+    So, the newline acts as a word boundary, and we get two matches. If we had used `.*`, it wouldn't match the newline by default (you'd need the `s` flag for that).
 
     [Learn more about metacharacters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
@@ -138,17 +138,17 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   title="Positive Look-ahead"
   options={[
     {text: '["$100", "€50"]'},
-    {text: '["100", "50"]', isAnswer: true},
+    {text: '["100", "50"]'},
     {text: '["$", "€"]'},
-    {text: '[]'}
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
     What will this match?
     ```js
-    const str = '$100 and €50';
-    str.match(/\d+(?=[\$€])/g)
+    '$100 and €50'.match(/\d+(?=[\$€])/g)
     ```
   </div>
   </slot>
@@ -160,7 +160,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     Look-aheads check what comes *after* the current position. The pattern as written looks for:
     - One or more digits (`\d+`)
     - Followed by (`(?=...)`) either $ or € (`[\$€]`)
-    
+
     Since there are no numbers followed by currency symbols (they're preceded by them), we get no matches.
 
     [Learn more about look-ahead assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
@@ -184,8 +184,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What will match?
     ```js
-    const str = 'cat cats category';
-    str.match(/\bcat\b/g)
+    'cat cats category'.match(/\bcat\b/g)
     ```
   </div>
   </slot>
@@ -195,7 +194,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     The `\b` represents a word boundary, which matches:
     - Between a word character and a non-word character
     - At the start/end of the string if there's a word character
-    
+
     So `/\bcat\b/` matches "cat" only when it's a complete word, not part of another word.
     - ✅ "cat" (surrounded by spaces)
     - ❌ "cats" (no boundary after "cat")
@@ -215,15 +214,15 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     {text: 'null'},
     {text: '["a"]'},
     {text: '["a", "a", "a"]', isAnswer: true},
-    {text: 'RangeError'}
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'}
   ]}
 >
   <slot name="question">
   <div className="question">
     What's the output?
     ```js
-    const str = 'banana';
-    str.match(/a/g)
+    'banana'.match(/a/g)
     ```
   </div>
   </slot>
@@ -233,7 +232,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     The `g` (global) flag changes how `match()` behaves:
     - Without `g`: Returns first match with capture groups
     - With `g`: Returns array of all matching strings
-    
+
     In this case, it finds all occurrences of "a" in "banana".
 
     Note: If you need both all matches AND capture groups, use `matchAll()` or the `exec()` method in a loop.
@@ -249,9 +248,10 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   group="Look-behind"
   title="Negative Look-behind"
   options={[
-    {text: '["123", "456"]'},
     {text: '["123"]'},
-    {text: '["456"]', isAnswer: true},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
     {text: '[]'}
   ]}
 >
@@ -259,8 +259,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What matches this pattern?
     ```js
-    const str = 'abc123 def456';
-    str.match(/(?<!abc)\d+/g)
+    'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
   </div>
   </slot>
@@ -269,8 +268,9 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="explanation">
     The negative look-behind `(?<!abc)` ensures that the digits aren't preceded by "abc":
     - ❌ "123" (preceded by "abc")
+    - ✅ "23" (preceded by "abc1")
     - ✅ "456" (preceded by "def")
-    
+
     Look-behinds must be fixed-length in most browsers (no `*` or `+`).
 
     Note: Look-behind support is relatively recent in JavaScript. Check [browser compatibility](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) if you need to support older browsers.
@@ -284,9 +284,9 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   group="Basic Matching"
   title="Capturing Groups"
   options={[
-    {text: '["2023-01-01"]'},
-    {text: '["2023", "01", "01"]', isAnswer: true},
-    {text: '["20", "23", "01", "01"]'},
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
     {text: 'null'}
   ]}
 >
@@ -294,8 +294,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What will this return?
     ```js
-    const date = '2023-01-01';
-    date.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
     ```
   </div>
   </slot>
@@ -306,12 +305,12 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     1. `(\d{4})` captures the year
     2. `(\d{2})` captures the month
     3. `(\d{2})` captures the day
-    
+
     `match()` without the `g` flag returns:
     - Index 0: Full match
     - Index 1+: Capture groups
-    
-    `slice(1)` removes the full match, leaving just the captured groups.
+
+    `slice(1)` is a common trick to get just the capture groups.
 
     [Learn more about groups and capturing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
@@ -334,8 +333,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What matches?
     ```js
-    const str = 'cat CAT Cat';
-    str.match(/cat/gi)
+    'cat CAT Cat'.match(/cat/gi)
     ```
   </div>
   </slot>
@@ -345,7 +343,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     The `i` flag makes the pattern case-insensitive:
     - `g` finds all matches
     - `i` ignores case differences
-    
+
     Without the `i` flag, only lowercase "cat" would match.
 
     This is particularly useful when dealing with user input or HTML where case might vary.
@@ -363,30 +361,24 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   options={[
     {text: '["password123"]'},
     {text: '["abc123"]'},
-    {text: '["123abc"]', isAnswer: true},
-    {text: '[]'}
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'}
   ]}
 >
   <slot name="question">
   <div className="question">
-    Which string matches?
+    Which will be the result of this?
     ```js
-    /\d+(?![a-z])/i.test(string)
+    /^\d+(?![a-z])/ig.match("123aBc")
     ```
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    The pattern looks for:
-    - One or more digits (`\d+`)
-    - NOT followed by a letter (`(?![a-z])`)
-    - Case-insensitive (`i` flag)
-    
-    "123abc" doesn't match because the digits are followed by letters.
-    "abc123" matches because the digits are at the end.
-    
-    Negative look-ahead is useful for validation patterns where you want to ensure something is NOT followed by something else.
+    The negative look-ahead `(?![a-z])` ensures there are no lowercase letters after the digits. Because the "3aBc" part has a lowercase letter after the digits, its portion doesn't match. So only the beginning "12" matches.
 
     [Learn more about negative look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -396,36 +388,36 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 <Challenge
   client:load
   index={10}
-  group="Common Gotchas"
-  title="The Dot and Newlines"
+  group="Look-behind"
+  title="Non-capturing Groups"
   options={[
-    {text: '["Hello\nWorld"]'},
-    {text: '["Hello"]', isAnswer: true},
-    {text: '["World"]'},
-    {text: '[]'}
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'}
   ]}
 >
   <slot name="question">
   <div className="question">
-    What matches?
+    What's returned?
     ```js
-    const str = 'Hello\nWorld';
-    str.match(/.*/)
+    'a,b,c'.split(/(?<=,)/)
     ```
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    By default, the dot (`.`) matches any character EXCEPT newline:
-    - Without the `s` flag, `.` won't match `\n`
-    - The pattern stops at the newline
-    
-    To match across lines, you need either:
-    - The `s` flag: `/.*$/s`
-    - Or explicitly include newline: `/[^]*$/`
+    The pattern `/(?<=,)/` is a look-behind that matches after a comma:
+    - `a,` (after comma)
+    - `b,` (after comma)
+    - `c` (no comma after)
 
-    [Learn more about the dotAll flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/dotAll)
+    The look-behind doesn't consume the comma, so it's not part of the split result.
+
+    This is useful when you want to split a string based on what comes before it **without losing the split character(s).**
+
+    [Learn more about look-behind assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -433,57 +425,21 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 <Challenge
   client:load
   index={11}
-  group="Basic Matching"
-  title="Non-capturing Groups"
-  options={[
-    {text: '["abc"]'},
-    {text: '["abc", "123"]'},
-    {text: '["123"]', isAnswer: true},
-    {text: 'null'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's returned?
-    ```js
-    const str = 'abc123';
-    str.match(/(?:abc)(\d+)/).slice(1)
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The pattern uses:
-    - `(?:abc)`: Non-capturing group matching "abc"
-    - `(\d+)`: Capturing group matching digits
-    
-    Non-capturing groups (starting with `(?:)`) don't create a capture group in the result.
-    This is useful when you need grouping for the pattern but don't need the matched content.
-
-    [Learn more about non-capturing groups](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences#types)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={12}
   group="Common Gotchas"
   title="Escaping Special Characters"
   options={[
     {text: '["$100"]'},
-    {text: '["100"]', isAnswer: true},
-    {text: 'SyntaxError'},
-    {text: '[]'}
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
     What matches?
     ```js
-    const price = '$100';
-    price.match(/\$\d+/)
+    '$100'.match(/$\d+/)
     ```
   </div>
   </slot>
@@ -492,8 +448,8 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="explanation">
     Special characters need escaping with `\` to match literally:
     - `$` is a special character (end of string)
-    - `\$` matches a literal dollar sign
-    
+    - To match a literal dollar sign, escape it: `\$`
+
     Common characters needing escape:
     ```js
     . * + ? ^ $ [ ] \ ( ) { } |
@@ -508,7 +464,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={13}
+  index={12}
   group="Look-behind"
   title="Positive Look-behind"
   options={[
@@ -522,8 +478,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What's matched?
     ```js
-    const price = '$100';
-    price.match(/(?<=\$)\d+/)
+    '$100'.match(/(?<=\$)\d+/)
     ```
   </div>
   </slot>
@@ -533,7 +488,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     The positive look-behind `(?<=\$)` ensures the digits are preceded by a dollar sign:
     - `(?<=\$)`: Look-behind for dollar sign
     - `\d+`: Match one or more digits
-    
+
     Look-behind assertions don't consume characters; they only check what comes before.
     This is useful when you want to match something based on what comes before it without including the preceding part.
 
@@ -544,7 +499,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={14}
+  index={13}
   group="Basic Matching"
   title="Lazy vs Greedy Quantifiers"
   options={[
@@ -558,8 +513,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     What's matched?
     ```js
-    const str = '<b>bold</b>';
-    str.match(/<b>(.*?)<\/b>/).slice(1)
+    '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
     ```
   </div>
   </slot>
@@ -570,7 +524,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - `<b>`: Match opening tag
     - `(.*?)`: Capture any chars (lazy)
     - `</b>`: Match closing tag
-    
+
     The `?` after `*` makes it lazy, matching as few characters as possible.
     Without `?`, it would be greedy and match as much as possible.
 
@@ -583,62 +537,21 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={15}
-  group="Common Gotchas"
-  title="The `y` Flag"
-  options={[
-    {text: '["cat", "cat"]'},
-    {text: '["cat"]', isAnswer: true},
-    {text: '[]'},
-    {text: 'null'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's returned?
-    ```js
-    const str = 'cat cat';
-    const regex = /cat/y;
-    regex.lastIndex = 0;
-    str.match(regex)
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The `y` (sticky) flag requires matches to start at `lastIndex`:
-    - First match works (starts at 0)
-    - Second "cat" isn't at the next position
-    
-    Unlike `g`, which finds matches anywhere after `lastIndex`,
-    `y` requires the match to be exactly at `lastIndex`.
-
-    This is useful for tokenizing strings where you want to match consecutive patterns.
-
-    [Learn more about the sticky flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/sticky)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={16}
+  index={14}
   group="Basic Matching"
   title="Unicode Flag"
   options={[
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},
     {text: 'null'},
-    {text: 'SyntaxError'}
+    {text: 'Error'}
   ]}
 >
   <slot name="question">
   <div className="question">
     What matches?
     ```js
-    const str = '😀 🙂';
-    str.match(/\p{Emoji}/gu)
+    '😀 🙂'.match(/\p{Emoji}/gu)
     ```
   </div>
   </slot>
@@ -648,7 +561,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     The `u` flag enables:
     - Unicode property escapes (`\p{...}`)
     - Correct handling of surrogate pairs
-    
+
     Without `u`, emoji and other Unicode characters might not match correctly.
     The pattern `\p{Emoji}` matches any emoji character.
 
@@ -661,51 +574,14 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
 <Challenge
   client:load
-  index={17}
-  group="Common Gotchas"
-  title="Capturing Group References"
-  options={[
-    {text: '["<div>hello</div>"]'},
-    {text: '["<span>hello</span>"]', isAnswer: true},
-    {text: '["<div>hello</span>"]'},
-    {text: '[]'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    Which string matches?
-    ```js
-    /<(\w+)>hello<\/\1>/.test(string)
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The pattern uses a backreference `\1`:
-    - `(\w+)` captures the tag name
-    - `\1` references that same text in the closing tag
-    
-    This ensures the opening and closing tags match.
-    You can also use named groups: `(?<name>\w+)` and `\k<name>`.
-
-    This is particularly useful for matching paired delimiters.
-
-    [Learn more about backreferences](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences#using_groups)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={18}
-  group="Look-ahead"
+  index={15}
+  group="Look-into-hell"
   title="Password Validation"
   options={[
-    {text: '"password123"'},
-    {text: '"Pass123!"', isAnswer: true},
-    {text: '"PASSWORD123"'},
-    {text: '"Pass word123"'}
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'}
   ]}
 >
   <slot name="question">
@@ -719,52 +595,18 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
   <slot name='explanation'>
   <div className="explanation">
+    Don't write anything like this in production! 😅
+
     This pattern uses multiple positive look-aheads to enforce:
     - At least one uppercase letter: `(?=.*[A-Z])`
     - At least one lowercase letter: `(?=.*[a-z])`
     - At least one digit: `(?=.*\d)`
     - At least one special character: `(?=.*[!@#$%^&*])`
     - Minimum length of 8: `.{8,}`
-    
+
     Look-aheads are perfect for password validation because they can check for multiple criteria without consuming characters.
 
     [Learn more about password validation patterns](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={19}
-  group="Common Gotchas"
-  title="RegExp Constructor vs Literal"
-  options={[
-    {text: 'Both match "\\n"'},
-    {text: 'Both match newline'},
-    {text: 'Constructor matches newline, literal matches "\\n"'},
-    {text: 'Literal matches newline, constructor matches "\\n"', isAnswer: true}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's the difference?
-    ```js
-    const literal = /\n/;
-    const constructor = new RegExp('\\n');
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    String literals and RegExp constructors handle escapes differently:
-    - Literal notation (`/\n/`): `\n` is interpreted as newline
-    - Constructor: String is parsed first, so needs double escape (`\\n`)
-    
-    Common gotcha when converting between the two forms.
-    Rule of thumb: double all backslashes when using the constructor.
-
-    [Learn more about RegExp constructors](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
   </div>
   </slot>
 </Challenge>

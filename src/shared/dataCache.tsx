@@ -3,7 +3,10 @@ import { getCollection } from "astro:content";
 import { fixSlugPrefix, slugify } from "../shared/pathHelpers";
 import type { ArticlePost } from "../types";
 
-const getBaseName = (path: string) => path.split("/").pop() || "";
+const getBaseName = (path: string) => {
+  const parts = path.split("/");
+  return parts.slice(parts.length - 2, parts.length).join("/");
+}
 
 const _postsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
@@ -195,6 +198,7 @@ const imagePaths = Object.fromEntries(
   }),
 );
 
+// console.log("imagePaths", imagePaths);
 // create resized images at 180px, 240px, 480px, 960px using `astro:assets` getImage
 
 export type ResponsiveImagesType = {

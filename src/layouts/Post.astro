@@ -29,6 +29,7 @@ type Props = {
     date?: string;
     modified?: string;
     tags?: string[];
+    social_image?: unknown;
     cover?: unknown;
     cover_full_width?: unknown;
     category?: string;
@@ -46,6 +47,7 @@ const {
   modified,
   commentsKeyOverride,
   related,
+  social_image,
 } = Astro.props.frontmatter! || Astro.props;
 
 const slug = Astro.props.slug;
@@ -54,12 +56,18 @@ const modDate = modified ? new Date(modified) : null;
 const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
 const pubTime = date ? new Date(date).toISOString().split("T")[0] : "";
 
+// Add type guard for ImageMetadata
+const isImageMetadata = (img: any): img is ImageMetadata =>
+  typeof img === "object" && "src" in img && "width" in img && "height" in img;
+
 const coverUrl =
-  cover && typeof cover === "object" && "src" in cover
+    isImageMetadata(cover)
     ? (cover as ImageMetadata)
     : typeof cover === "string"
       ? cover
-      : socialBanner;
+      : isImageMetadata(social_image)
+        ? social_image
+        : socialBanner;
 
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 
@@ -87,14 +95,14 @@ const responsiveImgSizes_breakRight = {
 //   const basePath = `${process.cwd()}`
 //   const fullBasePath = path.dirname(join(`${basePath}`, `${fullPath}`));
 //   const socialBannerPreview = `${fullBasePath}/cover.jpg`;
-  
+
 //   const newBase = `/tmp/screenshots/${contentPath}`;
-  
+
 //   await mkdir(newBase, { recursive: true });
 
 //   console.log("ID: ", newBase, fullPath);
 //   console.log("Cappin URL: ", `${siteUrlPrefix}/${slug}`);
-  
+
 //   await autoScreenShot({
 //     url: `${siteUrlPrefix}/${slug}`,
 //     fileName: `${newBase}/preview-q1.jpg`,
@@ -111,7 +119,7 @@ const responsiveImgSizes_breakRight = {
 //     height: 1200,
 //     delayMs: 50,
 //   });
-  
+
 //   // await autoScreenShot({
 //   //   url: `${siteUrlPrefix}/${slug}`,
 //   //   fileName: `${newBase}/preview-q2.jpg`,
@@ -161,6 +169,7 @@ const responsiveImgSizes_breakRight = {
 //   // console.log("IMG: ", socialBannerImg);
 // }
 ---
+
 <html lang="en">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
