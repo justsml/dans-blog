@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import { slugify } from "../../shared/pathHelpers";
-import type { QuizPost } from "../../types";
+import { slugify } from "../../shared/pathHelpers.ts";
+import type { QuizPost } from "../../types.ts";
 import { useEffect, useState } from "react";
-import { QuestionStore } from "../../components/QuizUI/QuestionStore.ts";
+import { QuestionStore } from "./QuestionStore.ts";
 
 export const QuizCard = ({
   article,

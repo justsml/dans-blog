@@ -1,12 +1,13 @@
-import fs from "node:fs";
+import fs, { createReadStream } from "node:fs";
 import path from "node:path";
 import ScreenshotService from "./PageScreenshot.ts";
+import ms from "ms";
 
 type AutoScreenShotOptions = {
-  fileName: string;
   url: string;
-  maxAgeSeconds: number;
-  failOnMissing: boolean | 'production';
+  fileName: string;
+  maxAgeSeconds?: number;
+  failOnMissing?: boolean | "production";
   width?: number;
   height?: number;
   selector?: string;
@@ -16,44 +17,45 @@ type AutoScreenShotOptions = {
 };
 
 export const autoScreenShot = async ({
-  fileName,
   url,
-  maxAgeSeconds,
+  fileName,
+  maxAgeSeconds = ms("3 months") / 1000,
   failOnMissing,
   height = 600,
   width = 1200,
+  delayMs = 10,
   selector,
   scrollTo,
-  delayMs = 10,
   zoom,
-
 }: AutoScreenShotOptions) => {
-
   const screenshotService = new ScreenshotService();
 
-  const outputPath = path.join(
-    process.cwd(),
-    "public",
-    "screenshots",
-    fileName
-  );
+  const isPathComplete = (s: string) =>
+    s.startsWith("/") &&
+    (s.endsWith(".png") || s.endsWith(".jpg") || s.endsWith(".jpeg"));
+
+  const outputPath = isPathComplete(fileName)
+    ? fileName
+    : path.join(process.cwd(), fileName);
+
+  const displayPath =
+    path.basename(path.dirname(outputPath)) + "/" + path.basename(outputPath);
 
   const screenshotExists = fs.existsSync(outputPath);
 
   if (screenshotExists) {
     const { mtime } = fs.statSync(outputPath);
     const ageSeconds = (Date.now() - mtime.getTime()) / 1000;
-    console.log(`Screenshot ${fileName} is ${ageSeconds} seconds old`);
-
+    console.log(`Screenshot ${displayPath} is ${ageSeconds} seconds old`);
 
     if (ageSeconds < maxAgeSeconds) {
-      console.log(`Skipping screenshot ${fileName} as it's still fresh`);
-      return;
+      console.log(`Skipping screenshot ${displayPath} as it's still fresh`);
+      return createReadStream(outputPath, { encoding: "utf8" });
     }
   }
 
-  console.time(`Screenshot ${fileName}`);
   try {
+    console.time(`Screenshot ${displayPath}`);
     await screenshotService.init();
     await screenshotService.createScreenshot({
       url,
@@ -65,21 +67,22 @@ export const autoScreenShot = async ({
       selector,
       zoom,
     });
-    console.log(`Screenshot ${fileName} created`);
+    console.log(`Screenshot ${displayPath} created`);
   } catch (error) {
-    // @ts-expect-error
-    console.error(`Error creating screenshot ${fileName}: ${error?.message}`);
+    console.error(
+      // @ts-expect-error
+      `Error creating screenshot ${displayPath}: ${error?.message}`,
+    );
     if (failOnMissing === true) {
       throw error;
-    } else if (failOnMissing === 'production') {
-      if (process.env.NODE_ENV === 'production') {
+    } else if (failOnMissing === "production") {
+      if (process.env.NODE_ENV === "production") {
         throw error;
       }
     }
-    
   } finally {
     await screenshotService.close();
+    console.timeEnd(`Screenshot ${displayPath}`);
   }
-  console.timeEnd(`Screenshot ${fileName}`);
-  return 
-}
+  return createReadStream(outputPath, { encoding: "utf8" });
+};

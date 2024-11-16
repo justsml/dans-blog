@@ -14,9 +14,38 @@ type ScreenshotOptions = {
   delayMs?: number;
 };
 
+/**
+ * Service for creating screenshots of web pages.
+ * Uses Playwright to control a headless browser.
+ * @see https://playwright.dev/
+ * 
+ * @example
+ * ```typescript
+ * const screenshotService = new ScreenshotService();
+ * await screenshotService.init();
+ * try {
+ *   const buffer = await screenshotService.createScreenshot({
+ *     url: 'https://example.com',
+ *     width: 1280,
+ *     height: 720,
+ *     selector: '#main-content',
+ *     scrollTo: '#footer',
+ *     delayMs: 1000,
+ *   });
+ *   // Do something with the buffer, like saving it to a file
+ *   require('fs').writeFileSync('screenshot.png', buffer);
+ * } catch (error) {
+ *   console.error('Error:', error);
+ * } finally {
+ *   await screenshotService.close();
+ * }
+ * ```
+ */
 class ScreenshotService {
   private browser: Browser | null = null;
   private headless = true;
+
+  private readonly overrideClassName = "screenshot-mode";
 
   public async init(): Promise<void> {
     log("Initializing browser");
@@ -57,6 +86,12 @@ class ScreenshotService {
     }
 
     if (delayMs) await page.waitForTimeout(delayMs);
+
+    if (this.overrideClassName) {
+      await page.evaluate((overrideClassName) => {
+        document.body.classList.add(overrideClassName);
+      }, this.overrideClassName);
+    }
 
     if (zoom && zoom > 0 && zoom < 10)
       await page.evaluate(`document.body.style.scale = ${zoom}`);
