@@ -166,23 +166,42 @@ const responsiveImgSizes_breakRight = {
     let intCount = 0;
     // Hackety hack to update the score-wrapper on quiz pages
     window.__updateCounts = () => {
+      const quizUI = document.querySelectorAll(".quiz-ui");
       const questions = document.querySelectorAll("main .challenge");
-      const isQuizPage = questions.length > 0;
+      const isQuizPage = quizUI.length > 0;
 
-      if (!isQuizPage) return false; // Not a quiz page
+      if (!isQuizPage || questions.length <= 0) return false; // Not a quiz page
 
       const scoreEls = document.querySelectorAll(".score");
       const scoreEl = scoreEls[0];
       const scoreWrapper = document.querySelector(".score-wrapper");
       const scoreLabel = document.querySelector(".score label");
       const correct = document.querySelectorAll("main .challenge.correct");
+      const congratsMsg = document.querySelector(".congrats-message");
+
       // Add up the tries from [data-answer-count]
-      const tries = Array.from(
-        document.querySelectorAll("[data-answer-count"),
-      ).reduce((acc, q) => {
-        const tries = parseInt(q.getAttribute("data-answer-count") || "0", 10);
-        return acc + tries;
-      }, 0);
+      const questionStore = getQuestionStore();
+
+      const tries: number = questionStore
+        ? questionStore.sumOfTries()
+        : Array.from(document.querySelectorAll("[data-answer-count")).reduce(
+            (acc, q) => {
+              const tries = parseInt(
+                q.getAttribute("data-answer-count") || "0",
+                10,
+              );
+              return acc + tries;
+            },
+            0,
+          );
+
+      const isPerfect =
+        questions.length === correct.length && tries === questions.length;
+
+      if (isPerfect) {
+        scoreEl?.classList.add("perfect");
+        quizUI[0].classList.add("perfect");
+      }
 
       if (scoreEls.length >= 2) console.error("Multiple score elements found");
       if (!scoreLabel) {
@@ -193,7 +212,11 @@ const responsiveImgSizes_breakRight = {
 
       if (questions.length === correct.length) {
         scoreEl.classList.add("all-correct");
-        scoreLabel.innerHTML = "All correct!";
+        if (congratsMsg) {
+          const winningMessage = isPerfect ? "WOW! Perfect!" : "All correct!";
+          const hTag = isPerfect ? "h2" : "h3";
+          congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}</${hTag}>`;
+        }
         scoreWrapper?.classList.toggle("pulse");
         scoreEl?.classList.add("success");
       } else {
