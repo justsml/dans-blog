@@ -119,6 +119,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     How about some nested destructuring?
     ```js
+    'use strict';
     const person = {
       name: { first: 'Dan' },
       address: { city: 'Denver' },
@@ -167,6 +168,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     Now with some defaults, what will this do?
     ```js
+    'use strict';
     const person = {
       name: { first: 'Dan' },
       address: { city: 'Denver' },
@@ -247,17 +249,19 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   group="Function Arguments"
   title="Destructuring Function Parameters with Defaults"
   options={[
-    { text: "Hi Dan from Unknown", isAnswer: true },
+    { text: "Hi Dan from undefined" },
+    { text: "Hi Dan from Unknown" },
     { text: "Hi Dan from Denver" },
     { text: "Hi Unknown from Unknown" },
     { text: "Hi Unknown from Denver" },
-    { text: "Error" }
+    { text: "Error", isAnswer: true },
   ]}
 >
   <slot name="question">
   <div className="question">
     Now as function parameters, what will this do?
     ```js
+    'use strict';
     function displayUser({
       name = "Unknown",
       age = -1,
@@ -273,7 +277,8 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="explanation">
   This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
 
-  We should get `undefined` due to `place` not being defined - in the destructured fields, or otherwise in the function scope.
+  In Strict mode, this will throw an error because `place` is not defined in the function scope. In non-strict mode, it will print `Hi Dan from undefined`.
+  
   </div>
   </slot>
 </Challenge>
@@ -298,6 +303,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     How are `undefined` values handled?
     ```js
+    'use strict';
     function displayPlace({
       name = "N/A",
       place = "N/A",
@@ -389,6 +395,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     Now in TypeScript... _what will this do?_
     ```ts
+    'use strict';
     function displayPlace(
       {
         name = 'N/A',
@@ -472,7 +479,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
     { text: "Error: Property 'first' is missing" },
     { text: "Error: Property 'last' is missing" },
     { text: "Error: Property 'birth' is missing", isAnswer: true },
-    { text: "Error: Property 'age' is missing" },
+    { text: "Error: Property 'age' is missing", isAnswer: true },
     { text: "Error: Property 'place' is missing" },
     { text: "Error: 'string' has no properties in {...}" }
   ]}
@@ -523,6 +530,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="question">
     Now with **assignment** (note the `f`, `l` and `p` variables)
     ```ts
+    'use strict';
     function greet(
       {
         name: {first: f = "N/A", last: l = "N/A"},
