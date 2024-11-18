@@ -1,5 +1,6 @@
 ---
 title:  "JavaScript Magic"
+subTitle: "[draft] Imperative vs. Recursive vs. Functional"
 date: 2015-06-06
 modified: 2024-07-30
 category: Code

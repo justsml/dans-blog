@@ -1,5 +1,6 @@
 ---
 title:  "Higher Order Programming"
+subTitle: "Exploring Array- and Set-based Pipeline Techniques"
 date: 2015-09-22
 modified: 2024-07-30
 category: Code

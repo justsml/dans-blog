@@ -43,15 +43,33 @@ type ScreenshotOptions = {
  * ```
  */
 class ScreenshotService {
+  public pages: Page[] = [];
   private browser: Browser | null = null;
-  private headless = true;
-
+  private headless = false;
   private readonly overrideClassName = "screenshot-mode";
 
   public async init(): Promise<void> {
     log("Initializing browser");
     this.browser = await chromium.launch({ headless: this.headless });
     log("Browser initialized");
+  }
+
+  async goToUrl(url: string) {
+    if (!this.browser) {
+      throw new Error("Browser is not initialized. Please call init() first.");
+    }
+
+    const page: Page = await this.browser.newPage();
+    this.pages.push(page);
+    await page.goto(url);
+    log(`Navigated to ${url}`);
+    return page;
+  }
+  get _browserInstance() {
+    return this.browser;
+  }
+  get _pages() {
+    return this.pages;
   }
 
   public async createScreenshot({

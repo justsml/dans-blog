@@ -1,7 +1,8 @@
 ---
 title:  "Docker rocks & now works on OSX"
+subTitle: "Docker is amazing, fast, and flexible"
 date: 2015-06-11
-modified: 2017-08-10
+modified: 2024-08-10
 category: DevOps
 subCategory: docker
 tags: [docker, boot2docker, devops]
@@ -34,6 +35,7 @@ Review the output of `docker info` command.
 1. DNS: Use a local cache or low-latency DNS server.
 1. Storage: Use the correct storage driver (`overlay2` is likely)
 
-Check out the [Docker for Mac homepage](https://docs.docker.com/docker-for-mac/install/)
+Updated 2024: 
 
-
+- Docker Desktop is proprietary, but free for personal use. It's a great way to get started with Docker on OSX or Windows.
+- If you're looking for a more open-source solution, check out [Rancher Desktop](https://rancherdesktop.io/).

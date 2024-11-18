@@ -1,5 +1,6 @@
 ---
 title:  "AngularJS v2.0 and the Impending Schism"
+subTitle: "Can it be avoided?"
 date: 2015-08-05
 modified: 2016-11-30
 category: Thoughts
