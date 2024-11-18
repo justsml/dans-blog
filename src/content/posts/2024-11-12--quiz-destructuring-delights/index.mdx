@@ -138,15 +138,16 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  You have to be careful when accessing nested properties, as the errors can be hard to spot, with messages that are hard to parse. And the messages vary between browsers and other platforms.
+  The `birth: { place }` property does not exist on `person`, so it will throw an error.
+  One solution is to provide default values for nested properties.
+
+  When accessing nested properties - be careful - as the errors can be hard to spot. And error messages vary between browsers and other platforms, making it a bit more challenging to debug.
 
   In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
   In Node 20, `ReferenceError: place is not defined`
 
   In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
-
-  The solution is to provide default values for nested properties, or refactor to use optional chaining to avoid errors.
   </div>
   </slot>
 </Challenge>
@@ -277,7 +278,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="explanation">
   This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
 
-  In Strict mode, this will throw an error because `place` is not defined in the function scope. In non-strict mode, it will print `Hi Dan from undefined`.
+  In Strict mode, this will throw an error because `place` is not defined in the function scope. In non-strict mode, it will print `Hi Dan from Unknown`.
   
   </div>
   </slot>
@@ -442,8 +443,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    Now in TypeScript... _what will this do?_
+    Let's try some renaming/assignment...
     ```ts
+    'use strict';
     function displayPlace({
       name = 'N/A',
       place: location = 'N/A',
@@ -461,11 +463,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  TypeScript will throw an error because there are missing properties & invalid use of null for a string. This is a good example of how TypeScript can help catch errors at compile time.
-
-  If you run the code **without type checking**, `null` will be printed to the console.
-
-  So there's 2 answers.
+  This will print `Denver` to the console. The `place` property is renamed to `location` in the function signature. This is a common pattern (rename properties during destructuring) when adapting 3rd party data structures.
   </div>
   </slot>
 </Challenge>
