@@ -1,7 +1,7 @@
 import { mkdir } from "fs/promises";
 import path, { dirname, join } from "path";
 import { autoScreenShot } from "../src/components/Screenshots/AutoScreenShot.ts";
-import getSiteRss from "./get-site.ts";
+import getSiteRss, { RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
 import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
@@ -11,8 +11,8 @@ const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
 const siteUrlPrefix = "http://localhost:4321";
-const basePath = `/tmp/screenshots`;
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
+let basePath = `/tmp/screenshots`;
 
 console.log("RSS FEED: ", rssFeed.items[0]);
 
@@ -24,22 +24,23 @@ async function handlePost(post: RSSFeedItem, index?: number) {
 
 await screenshotService.init();
 
-const firstItem = rssFeed.items[0];
+// const firstItem = rssFeed.items[0];
 
-await generateImages(buildArgs(firstItem as RSSFeedItem & { slug: string }));
-// for (let item of rssFeed.items) {
-//   count++;
-//   console.log("COUNT: ", count);
-//   const args = buildArgs(item);
+// await generateImages(buildArgs(firstItem as RSSFeedItem & { slug: string }));
+for await (let item of rssFeed.items) {
+  count++;
+  console.log("COUNT: ", count);
+  
+  const args = buildArgs(item);
 
-//   await generateImages(args);
-// }
+  await generateImages(args);
+}
 // const results = Promise.allSettled(rssFeed.items.map(handlePost));
 screenshotService.close();
 
-function buildArgs(rssItem: RSSFeedItem & {
-  slug: string;
-}): ScreenshotTask {
+function buildArgs(
+  rssItem: RssishItem,
+): ScreenshotTask {
   let { title, slug, link, categories, description } = rssItem;
   link = `${siteUrlPrefix}${link}`;
 
@@ -51,33 +52,52 @@ function buildArgs(rssItem: RSSFeedItem & {
   // const titleName = titleParts[1].trim();
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
-  let selectorPathMap = isQuiz ?{
-    "#qq-1": join(`${basePath}`, `${slug}/q1.jpg`),
-    "#qq-2": join(`${basePath}`, `${slug}/q2.jpg`),
-    "#qq-3": join(`${basePath}`, `${slug}/q3.jpg`),
-    "#qq-4": join(`${basePath}`, `${slug}/q4.jpg`),
-    "#qq-5": join(`${basePath}`, `${slug}/q5.jpg`),
-    "#qq-6": join(`${basePath}`, `${slug}/q6.jpg`),
-    "#qq-7": join(`${basePath}`, `${slug}/q7.jpg`),
-    "#qq-8": join(`${basePath}`, `${slug}/q8.jpg`),
-    "#qq-9": join(`${basePath}`, `${slug}/q9.jpg`),
-    "#qq-10": join(`${basePath}`, `${slug}/q10.jpg`),
-  } : {
-    ".article": join(`${basePath}`, `${slug}/article.jpg`),
-  };
+  if (rssItem.sourcePath) {
+    basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+    console.log("BASE PATH: ", basePath);
+    process.exit(0);
+  } else {
+    basePath = `/tmp/screenshots/${slug}`;
+  }
+
+  let selectorPathMap: Record<string, string> = isQuiz
+    ? {
+        "#qq-1": join(`${basePath}`, `/previews/q1.jpg`),
+        "#qq-2": join(`${basePath}`, `/previews/q2.jpg`),
+        "#qq-3": join(`${basePath}`, `/previews/q3.jpg`),
+        "#qq-4": join(`${basePath}`, `/previews/q4.jpg`),
+        "#qq-5": join(`${basePath}`, `/previews/q5.jpg`),
+        "#qq-6": join(`${basePath}`, `/previews/q6.jpg`),
+        "#qq-7": join(`${basePath}`, `/previews/q7.jpg`),
+        "#qq-8": join(`${basePath}`, `/previews/q8.jpg`),
+        "#qq-9": join(`${basePath}`, `/previews/q9.jpg`),
+        "#qq-10": join(`${basePath}`, `/previews/q10.jpg`),
+      }
+    : {
+        ".article": join(`${basePath}`, `/previews/article.jpg`),
+      };
 
   return {
     [`${link}`]: {
-      fileName: join(`${basePath}`, `${slug}/main.jpg`),
+      fileName: join(`${basePath}`, `/previews/main.jpg`),
       selectorPathMap,
       sizes: [
-        { fileName: join(`${basePath}`, `${slug}/desktop.jpg`), width: 1280, height: 720 },
-        { fileName: join(`${basePath}`, `${slug}/mobile.jpg`), width: 430, height: 900 },
+        {
+          fileName: join(`${basePath}`, `/previews/desktop.jpg`),
+          width: 1280,
+          height: 720,
+        },
+        {
+          fileName: join(`${basePath}`, `/previews/mobile.jpg`),
+          width: 430,
+          height: 900,
+        },
       ],
       delayMs: 50,
     },
   };
 }
+
 type ScreenshotTask = Record<string, ScreenshotOptions>;
 type ScreenshotOptions = {
   fileName: string;
@@ -121,22 +141,32 @@ async function applyClassName(page: Page, overrideClassName: string) {
 }
 
 async function generateImages(args: ScreenshotTask) {
+  let page: Page | undefined;
   const startTime = Date.now();
   for (const [url, options] of Object.entries(args)) {
-    const { selectorPathMap, sizes, scrollTo, delayMs, zoom } =
-      options;
+    const { selectorPathMap, sizes, scrollTo, delayMs, zoom } = options;
 
-
-    const page = await screenshotService.goToUrl(url);
+    if (page) {
+      await page.close();
+    }
+    // init page
+    if (!page) {
+      page = await screenshotService.goToUrl(url);
+    } else {
+      await page.goto(url);
+    }
     applyClassName(page, "screenshot-mode");
     if (zoom && zoom > 0 && zoom < 10) {
       await page.evaluate(`document.body.style.zoom = ${zoom}`);
     }
 
+    // Get main screenshots based on sizes
     if (sizes) {
       for await (const { fileName, width, height } of sizes) {
-        const newFile = fileName.startsWith("/") ? fileName : path.join(process.cwd(), fileName);
-        
+        const newFile = fileName.startsWith("/")
+          ? fileName
+          : path.join(process.cwd(), fileName);
+
         log(`Creating screenshot ${newFile}`);
         await mkdir(dirname(newFile), { recursive: true });
         count++;
@@ -147,16 +177,24 @@ async function generateImages(args: ScreenshotTask) {
           quality: 100,
           path: newFile,
         });
+        console.log(`Screenshot saved to ${newFile}`);
       }
     }
 
+    // get any additional screenshots based on selectorPathMap
     if (selectorPathMap) {
-      for await (const [selector, fileName] of Object.entries(selectorPathMap)) {
-        const newFile = fileName.startsWith("/") ? fileName : path.join(process.cwd(), fileName);
+      for await (const [selector, fileName] of Object.entries(
+        selectorPathMap,
+      )) {
+        const newFile = fileName.startsWith("/")
+          ? fileName
+          : path.join(process.cwd(), fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
         const element = await page.$(selector);
         if (!element) {
-          console.warn(`Element with selector '${selector}' not found. Skipping.`);
+          console.warn(
+            `Element with selector '${selector}' not found. Skipping.`,
+          );
           continue;
           // throw new Error(`Element with selector '${selector}' not found`);
         }
@@ -170,10 +208,11 @@ async function generateImages(args: ScreenshotTask) {
         console.log(`Screenshot saved to ${newFile}`);
       }
     }
+    // close page
+    page.close();
   }
   const endTime = Date.now();
   console.log(`Screenshots generated in ${endTime - startTime}ms`);
-
 }
 // console.log("QUIZ PAGE: ", category, slug, title);
 // const siteUrlPrefix = "http://localhost:3000"

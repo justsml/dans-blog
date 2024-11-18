@@ -1,10 +1,14 @@
 import { RSSFeedItem } from "@astrojs/rss";
+export type RssishItem = RSSFeedItem & {
+  sourcePath: string;
+  slug: string;
+};
 
 type RssDoc = {
   title: string;
   description: string;
   site: string;
-  items: RSSFeedItem[];
+  items: RssishItem[];
 };
 
 export default async function getSiteRss(

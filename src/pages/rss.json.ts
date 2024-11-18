@@ -12,10 +12,12 @@ export async function GET(context: any) {
     description: SITE_SEO_DESCRIPTION,
     site: context.site,
     items: posts.map((post: any) => ({
+      sourcePath: post?.id,
+      // ...post.data,
       title: post.data.title,
       pubDate: new Date(post.data.date!),
       description: post.data.subTitle,
-      categories: [post.data.category, ...(post.data.tags ?? [])],
+      categories: [post.data.category, post.data.subCategory, ...(post.data.tags ?? [])].filter(Boolean),
       category: post.data.category,
       cover: post.data?.cover?.src,
       slug: fixSlugPrefix(post.slug),
