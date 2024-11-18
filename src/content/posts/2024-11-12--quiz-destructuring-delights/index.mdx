@@ -271,9 +271,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  This function extracts `name` and `age` properties, using defaults if necessary. In this case, adding a place key to the default object has no effect, as it's not used executing `displayUser()`.
+  This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
 
-  We should get an error due to `place` not being defined in the destructured fields, or otherwise defined in function scope.
+  We should get `undefined` due to `place` not being defined - in the destructured fields, or otherwise in the function scope.
   </div>
   </slot>
 </Challenge>
@@ -296,7 +296,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    What will this gem do?
+    How are `undefined` values handled?
     ```js
     function displayPlace({
       name = "N/A",
@@ -348,7 +348,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 >
   <slot name="question">
   <div className="question">
-    Similar to the previous one... _what will happen next?_
+    Similar to the previous one... how is `null` handled?_
     ```js
     function displayPlace({
       name = "N/A",
@@ -365,7 +365,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing or `undefined`. Nulls will come through as `null`.
+  In this case, the `place` property is set to `null` in the first call, and `undefined` in the second. The default value for `place` is only used if the whole object is missing **or** `undefined`. Nulls will come through as `null`.
   </div>
   </slot>
 </Challenge>
