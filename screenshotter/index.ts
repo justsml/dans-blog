@@ -13,7 +13,10 @@ const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:3000";
-const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
+const rssFeed = (await getSiteRss(siteUrlPrefix, "/rss.json"))
+
+// rssFeed.items = rssFeed.items.filter((item) => item.categories?.includes("Quiz"));
+
 let basePath = `/tmp/screenshots`;
 
 // console.log("RSS FEED: ", rssFeed.items[0]);
@@ -56,7 +59,7 @@ function buildArgs(
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
   if (rssItem.sourcePath) {
-    basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+    // basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
     basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
     console.log("BASE PATH: ", basePath);
     // process.exit(0);
