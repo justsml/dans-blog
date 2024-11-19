@@ -34,7 +34,9 @@ function find_old_image_formats () {
     -not -iregex ".*/dist/.*" \
     -and -not -iregex ".*/node_modules/.*" \
     -and -not -iregex ".*/.cache/.*" \
-    -and -not -iregex ".*/public/.*" \)
+    -and -not -iregex ".*/public/icons/.*" \
+    -and -not -iregex ".*/public/apple/.*" \
+    -and -not -iregex ".*/public/apple.*" \)
 }
 
 
