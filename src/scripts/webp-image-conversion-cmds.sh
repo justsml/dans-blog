@@ -10,6 +10,9 @@ function webp_utils_help () {
   printf "\tgenerate_rm_cmds\n\n"
 
   printf "Usage:\n"
+
+  printf "\t0. Run 'convert_and_cleanup_images' to convert images to WebP format and auto remove the old formats.\n"
+  printf "\tOR\n"
   printf "\t1. Run 'find_old_image_formats' to find images in the project.\n"
   printf "\t2. Run 'convert_images_to_webp' to convert images to WebP format.\n"
   printf "\t3. Run 'generate_rm_cmds' to generate 'rm' commands to remove original images.\n\n"
@@ -31,8 +34,7 @@ function find_old_image_formats () {
     -not -iregex ".*/dist/.*" \
     -and -not -iregex ".*/node_modules/.*" \
     -and -not -iregex ".*/.cache/.*" \
-    -and -not -iregex ".*/public/icons/.*" \
-    -and -not -iregex ".*/public/apple.*" \)
+    -and -not -iregex ".*/public/.*" \)
 }
 
 
@@ -60,6 +62,12 @@ function generate_rm_cmds () {
   for file in $(find_old_image_formats); do echo rm "$file"; done
   printf "\n\n🔥 Optional: you can remove the old images by running the above 'rm' commands.\n"
 }
+
+function convert_and_cleanup_images () {
+  convert_images_to_webp
+  for file in $(find_old_image_formats); do rm "$file"; done
+}
+
 # print cmds to remove original images
 # for file in src/content/posts/*/*.png; do echo rm "$file"; done
 # for file in src/content/posts/*/*.jpg; do echo rm "$file"; done

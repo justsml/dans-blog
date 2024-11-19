@@ -10,7 +10,7 @@ let count = 0;
 const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
-const siteUrlPrefix = "http://localhost:4321";
+const siteUrlPrefix = "http://localhost:3000";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 let basePath = `/tmp/screenshots`;
 
@@ -30,10 +30,11 @@ await screenshotService.init();
 for await (let item of rssFeed.items) {
   count++;
   console.log("COUNT: ", count);
-  
+
   const args = buildArgs(item);
 
   await generateImages(args);
+  // if (count > 3) break;
 }
 // const results = Promise.allSettled(rssFeed.items.map(handlePost));
 screenshotService.close();
@@ -55,7 +56,7 @@ function buildArgs(
   if (rssItem.sourcePath) {
     basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
     console.log("BASE PATH: ", basePath);
-    process.exit(0);
+    // process.exit(0);
   } else {
     basePath = `/tmp/screenshots/${slug}`;
   }
@@ -74,7 +75,7 @@ function buildArgs(
         "#qq-10": join(`${basePath}`, `/previews/q10.jpg`),
       }
     : {
-        ".article": join(`${basePath}`, `/previews/article.jpg`),
+        "main": join(`${basePath}`, `/previews/main.jpg`),
       };
 
   return {
@@ -93,7 +94,7 @@ function buildArgs(
           height: 900,
         },
       ],
-      delayMs: 50,
+      delayMs: 500,
     },
   };
 }
@@ -169,10 +170,10 @@ async function generateImages(args: ScreenshotTask) {
 
         log(`Creating screenshot ${newFile}`);
         await mkdir(dirname(newFile), { recursive: true });
-        count++;
+        // count++;
         if (scrollTo) applyScrollTo(page, scrollTo);
         page.setViewportSize({ width, height });
-        if (delayMs) await page.waitForTimeout(delayMs);
+        await page.waitForTimeout(delayMs ?? 1000);
         await page.screenshot({
           quality: 100,
           path: newFile,
@@ -183,6 +184,7 @@ async function generateImages(args: ScreenshotTask) {
 
     // get any additional screenshots based on selectorPathMap
     if (selectorPathMap) {
+      page.reload();
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
@@ -190,7 +192,11 @@ async function generateImages(args: ScreenshotTask) {
           ? fileName
           : path.join(process.cwd(), fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
-        const element = await page.$(selector);
+        const element = await page.$(selector).catch((e) => {
+          console.error(`Error selecting element ${selector}: ${e?.message}`);
+          return null;
+        });
+
         if (!element) {
           console.warn(
             `Element with selector '${selector}' not found. Skipping.`,
@@ -199,13 +205,18 @@ async function generateImages(args: ScreenshotTask) {
           // throw new Error(`Element with selector '${selector}' not found`);
         }
         // delay 1000ms to wait for the element to be fully loaded
-        // await page.waitForTimeout(delayMs ?? 1000);
+        await page.waitForTimeout(delayMs ?? 1000);
         await element.screenshot({
           path: newFile,
           quality: 100,
           scale: "device",
-        });
-        console.log(`Screenshot saved to ${newFile}`);
+        })
+        .then(() => {
+          console.log(`Screenshot saved to ${newFile}`);
+        })
+        .catch((e) => {
+          console.error(`Error creating screenshot ${newFile}: ${e?.message}`);
+        })
       }
     }
     // close page

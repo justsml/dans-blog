@@ -45,7 +45,7 @@ type ScreenshotOptions = {
 class ScreenshotService {
   public pages: Page[] = [];
   private browser: Browser | null = null;
-  private headless = false;
+  private headless = true;
   private readonly overrideClassName = "screenshot-mode";
 
   public async init(): Promise<void> {
