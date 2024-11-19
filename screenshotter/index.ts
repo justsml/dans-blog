@@ -57,6 +57,7 @@ function buildArgs(
 
   if (rssItem.sourcePath) {
     basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+    basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
     console.log("BASE PATH: ", basePath);
     // process.exit(0);
   } else {
