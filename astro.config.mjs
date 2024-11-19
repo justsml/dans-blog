@@ -5,6 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
 
+import expressiveCode from "astro-expressive-code";
+import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
+
 // https://astro.build/config
 export default defineConfig({
   output: "static",
@@ -16,20 +19,25 @@ export default defineConfig({
   site: "https://danlevy.net",
   integrations: [
     pagefind(),
-    react({
+    react({}),
+    expressiveCode({
+      themes: ['dracula', 'solarized-light'],
+      
+
     }),
     mdx(),
     sitemap(),
     tailwind({
       applyBaseStyles: false,
-			nesting: true,
+      nesting: true,
     }),
   ],
+  plugins: [pluginLineNumbers()],
   image: {
     service: {
-       config: {
+      config: {
         limitInputPixels: false,
       },
-     },
+    },
   },
 });

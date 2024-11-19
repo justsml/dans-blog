@@ -8,11 +8,11 @@ export async function GET(context: APIContext) {
   const posts = (await getCollection("posts")).filter(
     (post: any) => !post.data.hidden
   );
-  
+
   return rss({
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,
-    site: context.site,
+    site: context.site!,
     items: posts.map((post: any) => ({
       ...post.data,
       pubDate: new Date(post.data.date!),

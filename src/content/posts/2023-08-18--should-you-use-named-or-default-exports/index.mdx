@@ -77,7 +77,8 @@ import Handle from "./knife.js"; // 🔪
     // ^ ✅ Also valid to export a class as default
     ```
 
-### Summary
+<section className="scroll-x">
+# Summary
 
 There are actually many combinations of ways we could export things, each tells a different story:
 
@@ -88,6 +89,7 @@ There are actually many combinations of ways we could export things, each tells 
 | ✅                | ✅              | ✅          | Default export + multiple 'private' un-exported functions | “Here’s some related logic. Also, expect class-ish behavior.“ |
 | ❌                | ❌              | ✅          | Multiple named exports, generic file name.                | “A grab-bag of loosely related things, no hierarchy implied.” |
 | ✅                | ✅              | ❌          | Single named export ALSO exported as default.             | “You can’t mess up importing me.”                             |
+</section>
 
 **Something to think about:** What are we saying when the file name does or doesn’t match one of its exports? (For example, a `utils.js` with many functions.)
 
