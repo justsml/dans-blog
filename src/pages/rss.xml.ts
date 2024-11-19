@@ -2,12 +2,13 @@ import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import { fixSlugPrefix } from "../shared/pathHelpers";
+import type { APIContext } from 'astro';
 
-export async function GET(context: any) {
+export async function GET(context: APIContext) {
   const posts = (await getCollection("posts")).filter(
     (post: any) => !post.data.hidden
   );
-
+  
   return rss({
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,
