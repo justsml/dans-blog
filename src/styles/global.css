@@ -981,13 +981,21 @@ h2, h3, h4, h5, h6 {
   }
 }
 
+/* Select all h3's adjacent to .custom-gist */
+
+h3 + .custom-gist,
+.custom-gist + h3 {
+  font-size: 1.7rem;
+}
 
 .custom-gist {
   font-size: 1.25rem;
-  /* a:has(.octicon-link) {
-    display: none;
+
+  /* h3 {
+    font-size: 1.65rem !important;
   } */
-  margin-block: 4rem;
+
+  margin-block: 1rem 2.5rem;
   div :has(> .Link--inTextBlock) {
     display: none;
   }

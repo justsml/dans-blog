@@ -11,7 +11,7 @@ cover_mobile: w300_brock-dupont-575648-unsplash.webp
 cover_icon: icon_brock-dupont-575648-unsplash.webp
 ---
 
-import Gist from '../../../components/Gist.astro'
+import Gist from '../../../components/Gist/index.astro'
 
 
 ## You may not need Axios
@@ -69,21 +69,21 @@ Despite using `fetch` for several years (including for non-trivial tasks: file u
 
 Well, let's check out what `fetch` can do...
 
-### Fetch Recipes
+## Fetch Recipes
 
-#### Get JSON from a URL
+### Get JSON from a URL
 
 <Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
 
-#### Custom headers
+### Custom headers
 
 <Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
 
-#### HTTP Error Handling
+### HTTP Error Handling
 
 <Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
 
-#### CORS example
+### CORS example
 
 CORS is primarily checked at the server - so make sure your configuration is correct on the server-side.
 
@@ -91,15 +91,15 @@ The `credentials` option controls if your cookies are automatically included.
 
 <Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
 
-#### Posting JSON
+### Posting JSON
 
 <Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
 
-#### Posting an HTML `<form>`
+### Posting an HTML `<form>`
 
 <Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
 
-#### Form encoded data
+### Form encoded data
 
 To post data with a Content-Type of `application/x-www-form-urlencoded` we will use `URLSearchParams` to encode the data like a query string.
 
@@ -107,12 +107,11 @@ For example, `new URLSearchParams({a: 1, b: 2})` yields `a=1&b=2`.
 
 <Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
 
-#### Uploading a file
+### Uploading a file
 
 <Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
 
-
-#### Uploading multiple files
+### Uploading multiple files
 
 Setup a file upload element with the `multiple` attribute:
 
@@ -122,7 +121,7 @@ Then use with something like:
 
 <Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
 
-#### Timeouts
+### Timeouts
 
 Here's a generic Promise timeout, using the "Partial Application" pattern. It'll work with any Promise interface. Don't do too much work in the supplied promise chain, it will keep running - and any failures have a way of creating long term memory leaks.
 
@@ -132,7 +131,7 @@ And a more complex example, featuring a tracking flag `__timeout` so you can **i
 
 <Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
 
-#### Download Progress Helper
+### Download Progress Helper
 
 Upload Progress is currently a bit buggy outside of Chrome.
 
@@ -160,21 +159,21 @@ My preference is `Option #1`. However, your scope design may force you to use `O
 
 Finally, here's the last part of this recipe, our `progressHelper`:
 
-###### Source: Progress Helper
+##### Source: Progress Helper
 
 <Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
 
 _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC shown here](https://github.com/AnthumChris/fetch-progress-indicators)
 
-#### Recursive Retry Helper
+### Recursive Retry Helper
 
 <Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
 
-#### Handling HTTP Redirects
+### Handling HTTP Redirects
 
 <Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
 
-#### Canceling a fetch request
+### Canceling a fetch request
 
 <Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
 

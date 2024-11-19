@@ -1,0 +1,73 @@
+---
+
+import "../../../public/styles/gist-embed.css";
+import { getGist } from "./getGist.ts";
+
+
+export type Props = {
+  path: string;
+  disableStyles?: boolean;
+  disableTruncating?: boolean;
+};
+
+const { props } = Astro;
+const {disableStyles, disableTruncating} = props;
+
+
+let gist: any;
+let loadedFromCache = true;
+gist = await getGist(props.path, {
+  secretToken: process.env.GITHUB_TOKEN!,
+  truncate: !disableTruncating,
+  includeDefaultCss: false,
+  username: "justsml",
+}).catch((error) => {
+  console.error("\n\n\n🚨 Failed to load gist", error);
+  return null
+});
+if (!gist) {
+  throw new Error("Failed to load gist");
+}
+const stylesheetUrl = gist?.stylesheet;
+---
+
+{
+  gist && (
+    <astro-embed-gist class="custom-gist" data-cssurl={stylesheetUrl} data-cached-response={loadedFromCache}>
+      <p class="gist-embed-description">{gist.description}</p>
+      <Fragment set:html={gist.div} />
+    </astro-embed-gist>
+  )
+}
+<style>
+  astro-embed-gist {
+    display: block;
+  }
+</style>
+
+<script>
+  document.addEventListener("astro:page-load", function () {
+    const uniqueUrls = new Set();
+
+    const gists = document.querySelectorAll("astro-embed-gist:not([data-css-loaded])");
+    gists.forEach((e) => {
+      // @ts-expect-error
+      e.dataset.cssLoaded = "true";
+      // @ts-ignore
+      // console.log("adding css", gists.length, e.dataset.cssurl);
+      // @ts-expect-error
+      const stylesheetUrl = e.dataset.cssurl;
+      if (!stylesheetUrl) return;
+
+      // Prevent loading the same stylesheet multiple times
+      if (uniqueUrls.has(stylesheetUrl)) return;
+      uniqueUrls.add(stylesheetUrl);
+
+      const linkElement = document.createElement("link");
+      linkElement.href = stylesheetUrl;
+      linkElement.rel = "stylesheet";
+      linkElement.type = "text/css";
+      document.head.appendChild(linkElement);
+    });
+  });
+</script>

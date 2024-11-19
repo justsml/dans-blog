@@ -6,15 +6,17 @@ import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
 import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
 import { Page } from "playwright";
+const { SITE_URL } = process.env;
+
 let count = 0;
 const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
-const siteUrlPrefix = "http://localhost:3000";
+const siteUrlPrefix = SITE_URL ?? "http://localhost:3000";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 let basePath = `/tmp/screenshots`;
 
-console.log("RSS FEED: ", rssFeed.items[0]);
+// console.log("RSS FEED: ", rssFeed.items[0]);
 
 console.log("Loading RSS FEED: ", rssFeed.items.length);
 
@@ -75,7 +77,7 @@ function buildArgs(
         "#qq-10": join(`${basePath}`, `/previews/q10.jpg`),
       }
     : {
-        "main": join(`${basePath}`, `/previews/main.jpg`),
+        "main.article": join(`${basePath}`, `/previews/main.jpg`),
       };
 
   return {
@@ -94,7 +96,7 @@ function buildArgs(
           height: 900,
         },
       ],
-      delayMs: 500,
+      delayMs: 300,
     },
   };
 }
@@ -141,6 +143,10 @@ async function applyClassName(page: Page, overrideClassName: string) {
   }
 }
 
+function resetViewport(page: Page) {
+  page.setViewportSize({ width: 1280, height: 720 });
+}
+
 async function generateImages(args: ScreenshotTask) {
   let page: Page | undefined;
   const startTime = Date.now();
@@ -160,6 +166,7 @@ async function generateImages(args: ScreenshotTask) {
     if (zoom && zoom > 0 && zoom < 10) {
       await page.evaluate(`document.body.style.zoom = ${zoom}`);
     }
+    await page.waitForTimeout(delayMs ?? 1000);
 
     // Get main screenshots based on sizes
     if (sizes) {
@@ -173,7 +180,6 @@ async function generateImages(args: ScreenshotTask) {
         // count++;
         if (scrollTo) applyScrollTo(page, scrollTo);
         page.setViewportSize({ width, height });
-        await page.waitForTimeout(delayMs ?? 1000);
         await page.screenshot({
           quality: 100,
           path: newFile,
@@ -182,9 +188,11 @@ async function generateImages(args: ScreenshotTask) {
       }
     }
 
+    resetViewport(page);
+
     // get any additional screenshots based on selectorPathMap
     if (selectorPathMap) {
-      page.reload();
+      await page.reload();
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
