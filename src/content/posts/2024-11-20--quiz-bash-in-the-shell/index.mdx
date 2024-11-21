@@ -389,7 +389,7 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    What is used to "chain" commands together?
+    What operator connects the **output** of one command to the **input** of the next command?
   </div>
   </slot>
 
@@ -463,7 +463,7 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    How does **multiplication** work in Bash?
+    Which of these correctly multiplies 10 and 0.5, printing 5?
   </div>
   </slot>
 
@@ -471,7 +471,9 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     The `(( ))` syntax ONLY performs **integer** arithmetic. You know, whole numbers, with no floating point!
 
-    For floating-point arithmetic, consider using [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    Bash (perhaps surprisingly) lacks **built-in** support for floating-point arithmetic.
+
+    The most common solution is to use GNU utils [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
@@ -546,29 +548,31 @@ Sharpen (or prove) your shell scripting **skills**!
   group="Gotchas"
   title="Command Substitution"
   options={[
-    { text: "'command'" },
-    { text: "% command" },
-    { text: "$ command" },
-    { text: "$(command)", isAnswer: true },
-    { text: "${command}" },
+    { text: "'ls -l'" },
+    { text: "% ls -l" },
+    { text: "$ ls -l" },
+    { text: "$(ls -l)", isAnswer: true },
+    { text: "${ls -l}" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    What syntax is used to execute a command?
+    Which syntax executes a `ls -l` while also making its output available for later use?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-    The `$(command)` syntax executes the command inside the **parentheses** and substitutes the output. For example:
+    The `$(ls -l)` syntax executes the command inside the **parentheses** and substitutes the output. For example:
     ```bash
     echo "Today is $(date +%F)"
     ```
 
-    Curly braces `${}` are used for variable expansion, not command substitution.
+    The 1st option uses Single quotes `'`, not backticks. This prevents expansion, so `'$(date +%F)'` would simply print the literal string `$(date +%F)`.
 
-    Single quotes `'` prevent expansion, so `'$(date +%F)'` would not execute the command.
+    While it's still supported to use backticks (`` `ls -l` ``) for command execution, it's recently become somewhat of an anti-pattern (in some contexts.) Most recommend using `$(command)` for better readability & consistency with different shells & versions.
+
+    Curly braces `${}` are used for variable expansion, not command substitution.
 
     The `%` character is not used for command substitution.
   </div>
@@ -590,7 +594,7 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    Which operator is used to combine standard & error outputs?
+    Which operator is used to combine the error output into the standard output?
   </div>
   </slot>
 
@@ -598,7 +602,11 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     The `2>&1` operator redirects standard error (file descriptor 2) to standard output (file descriptor 1). This is useful for capturing error messages in the same output stream as regular output.
 
-    To Learn more about file descriptors, check out [Greg's excellent Wiki](https://mywiki.wooledge.org/BashFAQ/055).
+    The `1>&2` operator redirects standard output to standard error, however, the question asked how to redirect standard error to standard output.
+
+    To Learn more about what's going on under the hood, check out [Greg's excellent Redirection FAQ](https://mywiki.wooledge.org/BashFAQ/055).
+
+    Also, thanks to Reddit user [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) for suggested copy improvements.
   </div>
   </slot>
 </Challenge>
