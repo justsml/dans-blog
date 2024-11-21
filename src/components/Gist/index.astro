@@ -1,8 +1,9 @@
 ---
-
+import * as cheerio from "cheerio";
+import { extname } from "node:path";
+import { Code } from "astro-expressive-code/components";
 import "../../../public/styles/gist-embed.css";
 import { getGist } from "./getGist.ts";
-
 
 export type Props = {
   path: string;
@@ -11,11 +12,10 @@ export type Props = {
 };
 
 const { props } = Astro;
-const {disableStyles, disableTruncating} = props;
-
+const { disableTruncating } = props;
 
 let gist: any;
-let loadedFromCache = true;
+// let loadedFromCache = true;
 gist = await getGist(props.path, {
   secretToken: process.env.GITHUB_TOKEN!,
   truncate: !disableTruncating,
@@ -23,51 +23,42 @@ gist = await getGist(props.path, {
   username: "justsml",
 }).catch((error) => {
   console.error("\n\n\n🚨 Failed to load gist", error);
-  return null
+  return null;
 });
 if (!gist) {
   throw new Error("Failed to load gist");
 }
-const stylesheetUrl = gist?.stylesheet;
+// const stylesheetUrl = gist?.stylesheet;
+
+// console.dir(omit(gist, ['div']), "gist Raw");
+// if (gist?.files?.length >= 2) {
+//   console.warn("Gist has multiple files: %o", gist.div);
+// }
+
+let gists: Record<string, string> = {};
+
+if (gist?.files && gist.files.length >= 1) {
+  const $ = cheerio.load(gist.div);
+  gist?.files?.forEach((file) => {
+    const $gist = $(`[data-tagsearch-path="${file}"]`);
+    const rawText = $gist
+      .text()
+      .replaceAll("\n\n", "\n")
+      .replaceAll("\n\n", "\n");
+    gists[file] = rawText;
+    // console.log("Gist File", file, rawText);
+  });
+  // const $gist = $("[data-tagsearch-path=\"fetch-retry-with-curry.js\"]");
+}
 ---
 
 {
-  gist && (
-    <astro-embed-gist class="custom-gist" data-cssurl={stylesheetUrl} data-cached-response={loadedFromCache}>
-      <p class="gist-embed-description">{gist.description}</p>
-      <Fragment set:html={gist.div} />
-    </astro-embed-gist>
-  )
+  gists &&
+    Object.entries(gists).map(([fileName, rawCode]) => (
+      <Code
+        code={rawCode}
+        title={fileName ?? "script.js"}
+        lang={extname(fileName).slice(1)}
+      />
+    ))
 }
-<style>
-  astro-embed-gist {
-    display: block;
-  }
-</style>
-
-<script>
-  document.addEventListener("astro:page-load", function () {
-    const uniqueUrls = new Set();
-
-    const gists = document.querySelectorAll("astro-embed-gist:not([data-css-loaded])");
-    gists.forEach((e) => {
-      // @ts-expect-error
-      e.dataset.cssLoaded = "true";
-      // @ts-ignore
-      // console.log("adding css", gists.length, e.dataset.cssurl);
-      // @ts-expect-error
-      const stylesheetUrl = e.dataset.cssurl;
-      if (!stylesheetUrl) return;
-
-      // Prevent loading the same stylesheet multiple times
-      if (uniqueUrls.has(stylesheetUrl)) return;
-      uniqueUrls.add(stylesheetUrl);
-
-      const linkElement = document.createElement("link");
-      linkElement.href = stylesheetUrl;
-      linkElement.rel = "stylesheet";
-      linkElement.type = "text/css";
-      document.head.appendChild(linkElement);
-    });
-  });
-</script>

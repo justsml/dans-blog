@@ -6,7 +6,7 @@ import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
 import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
 import { Page } from "playwright";
-import { add } from "lodash";
+
 const { SITE_URL } = process.env;
 
 let count = 0;
@@ -40,7 +40,7 @@ for await (let item of rssFeed.items) {
   const args = buildArgs(item);
 
   await generateImages(args);
-  if (count > 0) break;
+  // if (count > 0) break;
 }
 // const results = Promise.allSettled(rssFeed.items.map(handlePost));
 screenshotService.close();
@@ -58,8 +58,8 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
   if (rssItem.sourcePath) {
-    // basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
-    basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
+    basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+    // basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
     console.log("BASE PATH: ", basePath);
     // process.exit(0);
   } else {
@@ -96,7 +96,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   return {
     [`${link}`]: {
       fileName: join(`${basePath}`, `/previews/main.jpg`),
-      selectorPathMap,
+      selectorPathMap: {},
       sizes: [
         {
           fileName: join(`${basePath}`, `/previews/desktop.jpg`),
@@ -161,8 +161,8 @@ async function addClassName(page: Page, overrideClassName: string) {
   }
 }
 
-function resetViewport(page: Page) {
-  page.setViewportSize({ width: 1280, height: 720 });
+async function resetViewport(page: Page) {
+  await page.setViewportSize({ width: 1280, height: 720 });
 }
 
 async function generateImages(args: ScreenshotTask) {
@@ -211,11 +211,19 @@ async function generateImages(args: ScreenshotTask) {
       }
     }
 
-    resetViewport(page);
+    await resetViewport(page);
 
     // get any additional screenshots based on selectorPathMap
     if (selectorPathMap) {
-      await page.reload();
+      if (page.isClosed()) {
+        page = await screenshotService.goToUrl(url);
+        await addClassName(page, "screenshot-mode");
+      }
+      // if (page.)
+      await page.reload().catch((e) => {
+        console.error(`Error reloading page: ${e?.message}`);
+      });
+      
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
