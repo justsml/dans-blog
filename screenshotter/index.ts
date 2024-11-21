@@ -1,19 +1,20 @@
 import { mkdir } from "fs/promises";
 import path, { dirname, join } from "path";
-import { autoScreenShot } from "../src/components/Screenshots/AutoScreenShot.ts";
+// import { autoScreenShot } from "../src/components/Screenshots/AutoScreenShot.ts";
 import getSiteRss, { RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
 import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
 import { Page } from "playwright";
+import { add } from "lodash";
 const { SITE_URL } = process.env;
 
 let count = 0;
 const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
-const siteUrlPrefix = SITE_URL ?? "http://localhost:3000";
-const rssFeed = (await getSiteRss(siteUrlPrefix, "/rss.json"))
+const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
+const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
 // rssFeed.items = rssFeed.items.filter((item) => item.categories?.includes("Quiz"));
 
@@ -39,14 +40,12 @@ for await (let item of rssFeed.items) {
   const args = buildArgs(item);
 
   await generateImages(args);
-  // if (count > 3) break;
+  if (count > 0) break;
 }
 // const results = Promise.allSettled(rssFeed.items.map(handlePost));
 screenshotService.close();
 
-function buildArgs(
-  rssItem: RssishItem,
-): ScreenshotTask {
+function buildArgs(rssItem: RssishItem): ScreenshotTask {
   let { title, slug, link, categories, description } = rssItem;
   link = `${siteUrlPrefix}${link}`;
 
@@ -79,6 +78,16 @@ function buildArgs(
         "#qq-8": join(`${basePath}`, `/previews/q8.jpg`),
         "#qq-9": join(`${basePath}`, `/previews/q9.jpg`),
         "#qq-10": join(`${basePath}`, `/previews/q10.jpg`),
+        "#qq-11": join(`${basePath}`, `/previews/q11.jpg`),
+        "#qq-12": join(`${basePath}`, `/previews/q12.jpg`),
+        "#qq-13": join(`${basePath}`, `/previews/q13.jpg`),
+        "#qq-14": join(`${basePath}`, `/previews/q14.jpg`),
+        "#qq-15": join(`${basePath}`, `/previews/q15.jpg`),
+        "#qq-16": join(`${basePath}`, `/previews/q16.jpg`),
+        "#qq-17": join(`${basePath}`, `/previews/q17.jpg`),
+        "#qq-18": join(`${basePath}`, `/previews/q18.jpg`),
+        "#qq-19": join(`${basePath}`, `/previews/q19.jpg`),
+        "#qq-20": join(`${basePath}`, `/previews/q20.jpg`),
       }
     : {
         "main.article": join(`${basePath}`, `/previews/main.jpg`),
@@ -93,14 +102,16 @@ function buildArgs(
           fileName: join(`${basePath}`, `/previews/desktop.jpg`),
           width: 1280,
           height: 720,
+          classModifier: "desktop-shot",
         },
         {
           fileName: join(`${basePath}`, `/previews/mobile.jpg`),
-          width: 430,
+          width: 480,
           height: 900,
+          classModifier: "mobile-shot",
         },
       ],
-      delayMs: 300,
+      delayMs: 200,
     },
   };
 }
@@ -122,6 +133,7 @@ type Dimension = {
   fileName: string;
   width: number;
   height: number;
+  classModifier?: string;
 };
 
 // const isPathComplete = (s: string) =>
@@ -139,11 +151,13 @@ async function applyScrollTo(page: Page, scrollTo: string) {
   }
 }
 
-async function applyClassName(page: Page, overrideClassName: string) {
+async function addClassName(page: Page, overrideClassName: string) {
   if (overrideClassName) {
-    await page.evaluate((overrideClassName) => {
+    const classes = await page.evaluate((overrideClassName) => {
       document.body.classList.add(overrideClassName);
+      return document.body.classList.value;
     }, overrideClassName);
+    console.log("Applied classes: ", classes);
   }
 }
 
@@ -162,11 +176,13 @@ async function generateImages(args: ScreenshotTask) {
     }
     // init page
     if (!page) {
+      log("Browser loading %s", url);
       page = await screenshotService.goToUrl(url);
     } else {
+      log("Navigating to %s", url);
       await page.goto(url);
     }
-    applyClassName(page, "screenshot-mode");
+    addClassName(page, "screenshot-mode");
     if (zoom && zoom > 0 && zoom < 10) {
       await page.evaluate(`document.body.style.zoom = ${zoom}`);
     }
@@ -174,16 +190,19 @@ async function generateImages(args: ScreenshotTask) {
 
     // Get main screenshots based on sizes
     if (sizes) {
-      for await (const { fileName, width, height } of sizes) {
+      for await (const { fileName, width, height, classModifier } of sizes) {
         const newFile = fileName.startsWith("/")
           ? fileName
           : path.join(process.cwd(), fileName);
 
         log(`Creating screenshot ${newFile}`);
         await mkdir(dirname(newFile), { recursive: true });
-        // count++;
-        if (scrollTo) applyScrollTo(page, scrollTo);
-        page.setViewportSize({ width, height });
+        await page.reload();
+        await addClassName(page, "screenshot-mode");
+        if (classModifier) await addClassName(page, classModifier);
+
+        if (scrollTo) await applyScrollTo(page, scrollTo);
+        await page.setViewportSize({ width, height });
         await page.screenshot({
           quality: 100,
           path: newFile,
@@ -204,6 +223,7 @@ async function generateImages(args: ScreenshotTask) {
           ? fileName
           : path.join(process.cwd(), fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
+        await addClassName(page, "screenshot-mode");
         const element = await page.$(selector).catch((e) => {
           console.error(`Error selecting element ${selector}: ${e?.message}`);
           return null;
@@ -218,17 +238,20 @@ async function generateImages(args: ScreenshotTask) {
         }
         // delay 1000ms to wait for the element to be fully loaded
         await page.waitForTimeout(delayMs ?? 1000);
-        await element.screenshot({
-          path: newFile,
-          quality: 100,
-          scale: "device",
-        })
-        .then(() => {
-          console.log(`Screenshot saved to ${newFile}`);
-        })
-        .catch((e) => {
-          console.error(`Error creating screenshot ${newFile}: ${e?.message}`);
-        })
+        await element
+          .screenshot({
+            path: newFile,
+            quality: 100,
+            scale: "device",
+          })
+          .then(() => {
+            console.log(`Screenshot saved to ${newFile}`);
+          })
+          .catch((e) => {
+            console.error(
+              `Error creating screenshot ${newFile}: ${e?.message}`,
+            );
+          });
       }
     }
     // close page

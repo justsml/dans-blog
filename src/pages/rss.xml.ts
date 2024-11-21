@@ -7,6 +7,7 @@ import type { APIContext } from 'astro';
 export async function GET(context: APIContext) {
   const posts = (await getCollection("posts")).filter(
     (post: any) => !post.data.hidden
+    // (post: any) => !post.data.hidden && post.data?.title?.includes("Bash"),
   );
 
   return rss({

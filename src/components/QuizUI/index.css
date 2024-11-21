@@ -6,7 +6,24 @@ html {
 /*
 Overriding the style when generating screenshots
 */
+.mobile-shot {
+  .content-grid {
+    grid-template-columns: [full-width-start]
+        0
+          [breakout-start]
+            0
+              [content-start]
+                100vw
+              [content-end]
+            0
+          [breakout-end]
+        0
+      [full-width-end] !important;
+  }
+}
+
 .screenshot-mode {
+
   .score {
     display: none !important;
   }

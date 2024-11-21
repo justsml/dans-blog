@@ -21,9 +21,8 @@ export default defineConfig({
     pagefind(),
     react({}),
     expressiveCode({
-      themes: ['dracula', 'solarized-light'],
-      
-
+      // themes: ['dracula', 'solarized-light'],
+      themes: ['dracula', 'solarized-dark'],
     }),
     mdx(),
     sitemap(),
