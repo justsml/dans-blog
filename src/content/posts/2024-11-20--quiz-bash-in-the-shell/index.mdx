@@ -236,7 +236,12 @@ Sharpen (or prove) your shell scripting **skills**!
     echo ${#username} # => 8
     ```
 
-    While `wc` is an ancient Unix/Posix command, its technically not a part of Bash. Also, `wc -c` counts bytes, which may differ from character count in multi-byte encodings. (Use `wc -m` for character count.)
+    While `wc` would work, it's technically not a part of Bash.
+
+    The utility `wc` is an old inside joke referring to "water closet," or toilet.
+    KIDDING! Does anyone reads these?
+
+    In reality `wc` is an ancient command from Posix (and the AT&T Unix days.) It is short for "word count" and it can count lines, words, and characters in a file or input stream.
   </div>
   </slot>
 </Challenge>
@@ -271,6 +276,8 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     Did you catch the missing space before the closing bracket?
     
+    Bash is quite touchy here: spaces are required inside bracket expressions.
+
     The correct syntax is:
     ```bash
     if [ -e example.txt ]; then
@@ -280,9 +287,7 @@ Sharpen (or prove) your shell scripting **skills**!
     fi
     ```
 
-    Bash is quite picky here: spaces are required inside bracket expressions.
-
-    Note: Double brackets `[[ ]]` are recommended for conditional expressions. [See BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+    Note: Double brackets `[[ ]]` are **recommended** for conditional expressions. [See BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -357,7 +362,7 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     Functions in Bash can accept arguments. The `$1` variable holds the first argument passed to the function.
     
-    Remember, `$0` is the script name, `$1` is the first argument, `$2` is the second, and so on. Spaces separate arguments. So, `greet Hi Dan` passes `"Hi"` as the first argument. In order to pass `"Hi Dan"` as a single argument, you would need to quote it: `greet "Hi Dan"`.
+    Remember, `$0` is the script name, `$1` is the first argument, `$2` is the second, and so on. **Spaces separate arguments.** So, `greet Hi Dan` passes `"Hi"` as the first argument. In order to pass `"Hi Dan"` as a single argument, you would need to quote it: `greet "Hi Dan"`.
   </div>
   </slot>
 </Challenge>
