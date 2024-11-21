@@ -18,13 +18,16 @@ interface Props {
   image?: string | ImageMetadata | undefined;
 }
 
+const slug = Astro.url.pathname.replace(/^\/*|\/*$/g, "");
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 let { title, description, image } = Astro.props;
 
+const isHomePage = slug === "/" || slug.length < 2;
+console.log("📄 BaseHead", { slug, isHomePage });
+
 if (description === "undefined") description = undefined;
 
-// let screenshotUrl: undefined | URL;
 if (
   !image ||
   (typeof image === "string" ? image.length <= 1 : !("src" in image))
@@ -37,7 +40,7 @@ if (
   //   height: 600,
   // };
   // console.log("image %o", image);
-	image = socialBanner;
+  image = socialBanner;
 }
 
 const siteTitle = title || SITE_TITLE;
@@ -133,32 +136,22 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   href="/icons/icon-512x512.webp"
 />
 
-<script
-  is:inline
-  defer
-  async
-  src="https://unpkg.com/htmx.org@2.0.2"
-  integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
-  crossorigin="anonymous"></script>
+{
+  isHomePage && (
+    <script
+      is:inline
+      defer
+      async
+      src="https://unpkg.com/htmx.org@2.0.2"
+      integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+      crossorigin="anonymous"
+    />
+  )
+}
 
 <ViewTransitions fallback="none" />
 
 <style is:global>
-  @keyframes bump {
-    0% {
-      opacity: 0;
-      transform: scale(1) translateX(200px);
-    }
-    50% {
-      opacity: 0.5;
-      transform: scale(1.1);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) translateX(0);
-    }
-  }
-
   @keyframes slideUp {
     0% {
       opacity: 0;
@@ -166,55 +159,54 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     }
     100% {
       opacity: 1;
-      transform: translateY(0) scale(1.0);
+      transform: translateY(0) scale(1);
     }
   }
 
   @view-transition {
     navigation: auto;
-}
+  }
 
-/* Customize the default animation behavior */
+  /* Customize the default animation behavior */
 
-::view-transition-group(root) {
+  ::view-transition-group(root) {
     animation-duration: 0.35s;
-}
+  }
 
-/* Create a custom animation */
+  /* Create a custom animation */
 
-@keyframes move-out {
+  @keyframes move-out {
     100% {
-        transform: translateY(3rem) scale(0.9);
-        opacity: 0;
+      transform: translateY(3rem) scale(0.9);
+      opacity: 0;
     }
     30% {
-        transform: translateY(2rem) scale(0.96);
-        opacity: 0.3;
+      transform: translateY(2rem) scale(0.96);
+      opacity: 0.3;
     }
     5% {
-        opacity: 0.95;
+      opacity: 0.95;
     }
-}
+  }
 
-@keyframes move-in {
+  @keyframes move-in {
     /* from {
         transform: translateY(-120%) scale(0.9);
     } */
 
     100% {
-        transform: translateY(0%) scale(1);
-        opacity: 1;
+      transform: translateY(0%) scale(1);
+      opacity: 1;
     }
-}
+  }
 
-/* Apply the custom animation to the old and new page states */
+  /* Apply the custom animation to the old and new page states */
 
-::view-transition-old(root) {
+  ::view-transition-old(root) {
     animation: 0.35s ease-in both move-out;
+  }
 
-}
-
-::view-transition-new(root) {
+  ::view-transition-new(root) {
     animation: 0.35s ease-in both move-in;
-}
+  }
 </style>
