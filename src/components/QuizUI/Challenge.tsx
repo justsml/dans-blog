@@ -34,6 +34,7 @@ export default function Challenge({
   // hints?: string[];
 }) {
   let questionStore: ReturnType<typeof QuestionStore> | null = null;
+  const siteDomain = `danlevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
@@ -68,12 +69,9 @@ export default function Challenge({
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
-    const link = global?.location?.href ?? "";
+    const link = global?.location?.pathname ?? "";
 
-    setPageLink(link.replace(/https?:\/\//g, ""));
-    // if (questionStore) {
-    //   setTries(questionStore.sumOfTries());
-    // }
+    setPageLink(siteDomain + link);
   }, [global?.location?.pathname]);
 
   useEffect(() => {
@@ -268,6 +266,7 @@ export default function Challenge({
           <p
             className="help-box"
             dangerouslySetInnerHTML={{ __html: explanationText }}
+            onClick={() => setShowExplanation(false)}
           ></p>
         </section>
       </section>
