@@ -58,8 +58,8 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
   if (rssItem.sourcePath) {
-    basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
-    // basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
+    // basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+    basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
     console.log("BASE PATH: ", basePath);
     // process.exit(0);
   } else {
@@ -96,7 +96,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   return {
     [`${link}`]: {
       fileName: join(`${basePath}`, `/previews/main.jpg`),
-      selectorPathMap: {},
+      selectorPathMap,
       sizes: [
         {
           fileName: join(`${basePath}`, `/previews/desktop.jpg`),
@@ -223,7 +223,7 @@ async function generateImages(args: ScreenshotTask) {
       await page.reload().catch((e) => {
         console.error(`Error reloading page: ${e?.message}`);
       });
-      
+
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
