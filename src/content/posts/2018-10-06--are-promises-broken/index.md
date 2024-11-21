@@ -27,7 +27,7 @@ And sadly, some didn't notice.
 
 ### The Now Times
 
-The myth still persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba), and [many](https://medium.com/@avaq/broken-promises-2ae92780f33) other sources.
+The myth still persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/), and [many](https://medium.com/@avaq/broken-promises-2ae92780f33) other sources.
 
 I'll admit, even "official" resources and documentation offer mostly [flimsy examples and bad habits](/promise-gotchas/). These are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse. (note: link removed)
 
