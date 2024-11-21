@@ -141,7 +141,8 @@ Sharpen (or prove) your shell scripting **skills**!
     { text: "Cost: $$100" },
     { text: "Cost: $100" },
     { text: "Cost: 100" },
-    { text: "Cost:", isAnswer: true },
+    { text: "Cost: 00", isAnswer: true },
+    { text: "Cost:" },
     { text: "Error" },
   ]}
 >
@@ -157,7 +158,11 @@ Sharpen (or prove) your shell scripting **skills**!
 
   <slot name="explanation">
   <div className="explanation">
-    Variables in double quotes are expanded by Bash. To print the literal `$` character, use single quotes, or escape it with a backslash (`\`):
+    Numbered variables have special meaning. In this case, `$1` is a special variable that holds the first argument passed to the script or function. 
+
+    Since we're running the script in a REPL, there are no arguments, so `$1` is empty. The remaining text `00` is printed as-is.
+
+    To print a literal `$` character, use single quotes, or escape it with a backslash (`\`):
 
     ```bash
     price="\$100"
