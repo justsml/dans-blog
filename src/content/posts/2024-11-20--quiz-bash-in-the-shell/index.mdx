@@ -444,10 +444,11 @@ Sharpen (or prove) your shell scripting **skills**!
 <Challenge
   client:load
   index={11}
-  group="Arithmetic"
+  group="Multiplication"
   title="Basic Arithmetic"
   options={[
     { text: "echo 10 * 0.5" },
+    { text: "echo (10 * 0.5)" },
     { text: "echo ${ 10 * 0.5 }" },
     { text: "echo %( 10 * 0.5 )" },
     { text: "echo $(( 10 * 0.5 ))" },
@@ -457,29 +458,15 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    How does math work in Bash?
+    How does **multiplication** work in Bash?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-    The `(( ))` syntax performs arithmetic in Bash.
+    The `(( ))` syntax ONLY performs **integer** arithmetic. You know, whole numbers, with no floating point!
 
-    It can be used for simple calculations:
-    ```bash
-    ((result = 2 + 2))
-    echo $result # => 4
-    ```
-
-    Or for conditional expressions:
-    ```bash
-
-    if (( 2 > 1 )); then
-      echo "2 is greater than 1"
-    fi
-    ```
-    
-    **Note:** The `$(( ))` syntax is for integer arithmetic. For floating-point arithmetic, consider using [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    For floating-point arithmetic, consider using [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
