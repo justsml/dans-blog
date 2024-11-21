@@ -31,7 +31,7 @@ Let me start with a confession: I'm guilty of writing the same 'anti-patterns' I
 
 ----------------------
 ### StrongLoop
-> **CREDIT:** https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/
+> **CREDIT:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
 ![strong loop](strongloop.webp)
 
 

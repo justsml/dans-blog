@@ -29,7 +29,9 @@ export async function getStaticPaths({
   ] as const;
 
   const pages = sortKeys.flatMap(([field, direction]) => {
-    const posts = PostCollections.getPosts() as ArticlePost[];
+    const posts = (PostCollections.getPosts() as ArticlePost[]).filter(
+      (post) => !post.data.unlisted,
+    );
     const sortFn = getArticleSortFn(field, direction);
     const sortedPosts = posts.concat().sort(sortFn);
 
@@ -103,11 +105,12 @@ const nextPageAttrs = nextUrl
       />
     ) : (
       <ArticleCard article={props as ArticlePost} width={200} />
-    )
+    ),
   )
 }
 
-{/*
+{
+  /*
 {nextUrl && (
   <div class="pagination load-more">
     <div class="spinner"><RefreshCw /></div>
@@ -151,5 +154,5 @@ const nextPageAttrs = nextUrl
     }
   });
 </script>
-*/}
-
+*/
+}

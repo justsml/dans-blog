@@ -47,4 +47,3 @@ Robotic cars are on the cusp of being technically smarter & faster than any huma
 ### References
 
 1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
-1.  [http://www.claimsjournal.com/magazines/idea-exchange/2014/09/29/255161.htm](http://www.claimsjournal.com/magazines/idea-exchange/2014/09/29/255161.htm)

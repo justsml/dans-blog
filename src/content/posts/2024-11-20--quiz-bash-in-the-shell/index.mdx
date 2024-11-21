@@ -1,0 +1,619 @@
+---
+unlisted: false
+title: "Quiz: Bash & Shell Mastery"
+subTitle: "Can you talk to computers? Like, well?"
+label: Bash
+category: Quiz
+subCategory: Bash
+date: 2024-11-20
+modified: 2024-11-21
+tags: [quiz, bash, scripting, shell, linux, beginner, intermediate, advanced]
+social_image: previews/desktop.webp
+cover_full_width: psychedelic-shell-wide.webp
+cover_mobile: psychedelic-shell-square.webp
+cover_icon: psychedelic-shell-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Test your Bash scripting skills with these 16 questions!</p>
+
+Covering variables, loops, conditionals, string manipulation, functions and basic-to-tricky syntax gotchas.
+
+Sharpen (or prove) your shell scripting **skills**!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup"
+  title="Variable Declaration"
+  options={[
+    { text: "$name=Dan" },
+    { text: "name=Dan", isAnswer: true },
+    { text: "name =Dan" },
+    { text: "name == Dan" },
+    { text: "name : Dan" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How are variables defined in Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Variables in Bash are declared without spaces around the `=` sign. For example:
+    ```bash
+    name=Alice
+    ```
+
+    This assigns the value `"Alice"` to the variable `name`.
+
+    Note: `$name` is used to **reference** or read a variable's value.
+
+    Adding spaces causes the shell to interpret the command as a program to run, which is not what you want when setting a variable.
+
+    Also, Bash is case-sensitive, so `name`, `NAME` and `Name` are different variables.
+
+    Finally, variables can't have spaces or dashes (`-`) in their names. Use underscores (`_`) or camelCase instead.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Escaping"
+  title="Escaping Quotes"
+  options={[
+    { text: `echo 'It's 🔨 Time!'` },
+    { text: `echo 'It\'s 🔨 Time!'` },
+    { text: `echo 'It'\\''s 🔨 Time!'` , isAnswer: true },
+    { text: `echo 'It''s 🔨 Time!'` },
+    { text: `echo 'It\\'s 🔨 Time!'` },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _What will print out `It's 🔨 Time!`?_
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings - with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠
+
+    Single quotes need escaping inside single-quoted strings. The backslash-escaped single quote (`'\''`) allows output of:
+    ```plaintext
+    It's Bash Time!
+    ```
+
+    There are other ways to handle this, but this is the most common.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Warmup: Expansion"
+  title="Echo Command"
+  options={[
+    { text: "cat cab" },
+    { text: "cat cbt", isAnswer: true },
+    { text: "ca bt" },
+    { text: "cat" },
+    { text: "cbd" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this command output?
+    ```bash
+    echo c{a,b}t
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `{}` brace expansion generates multiple versions of its string context, one (or more) for each comma-separated value or pattern.
+
+    Here, `a{b,c}d` expands to:
+    ```plaintext
+    abd acd
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Variables"
+  title="Escaping Characters"
+  options={[
+    { text: "Cost: $$100" },
+    { text: "Cost: $100" },
+    { text: "Cost: 100" },
+    { text: "Cost:", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Now, what will this print?
+    ```bash
+    price="$100"
+    echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Variables in double quotes are expanded by Bash. To print the literal `$` character, use single quotes, or escape it with a backslash (`\`):
+
+    ```bash
+    price="\$100"
+    echo "Cost: $price"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Replacing Substrings"
+  title="Replace Substring"
+  options={[
+    { text: "meow meow" },
+    { text: "Meow meow" },
+    { text: "Bark meow", isAnswer: true },
+    { text: "Bark bark" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's happening here?
+    ```bash
+    str="Bark bark"
+    echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `${var/pattern/replacement}` syntax replaces the first occurrence of `pattern` with `replacement`. Here, the output is:
+    ```plaintext
+    Bark meow
+    ```
+
+    It is case-sensitive. To make it case-insensitive, use `${var^pattern/replacement}`.
+
+    To replace all occurrences, use `${var//pattern/replacement}`.
+
+    To replace from the beginning of the string, use `${var/#pattern/replacement}`.
+
+    To replace from the end of the string, use `${var/%pattern/replacement}`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="String Length"
+  title="String Length"
+  options={[
+    { text: "$#username" },
+    { text: "#$username" },
+    { text: "${#username}", isAnswer: true },
+    { text: "${username#}" },
+    { text: "echo $username | wc -c" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How can you get the length of a variable in Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `${#username}` syntax returns the length of `username`.
+    
+    For example:
+    ```bash
+    username="@justsml"
+    echo ${#username} # => 8
+    ```
+
+    While `wc` would work, it's technically not a part of Bash.
+
+    The utility `wc` is an old inside joke referring to "water closet," or toilet.
+    KIDDING! Does anyone reads these?
+
+    In reality `wc` is an ancient command from Posix (and the AT&T Unix days.) It is short for "word count" and it can count lines, words, and characters in a file or input stream.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Conditionals"
+  title="Basic If-Else"
+  options={[
+    { text: "File exists" },
+    { text: "File does not exist" },
+    { text: "Error", isAnswer: true },
+    { text: "Missing double brackets" },
+    { text: "Nothing" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this script output if the file `cats.txt` EXISTS?
+    ```bash
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Did you catch the missing space before the closing bracket?
+    
+    Bash is quite touchy here: spaces are required inside bracket expressions.
+
+    The correct syntax is:
+    ```bash
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+    ```
+
+    Note: Double brackets `[[ ]]` are **recommended** for conditional expressions. [See BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Conditionals"
+  title="String Comparison"
+  options={[
+    { text: "Same cat" },
+    { text: "Different cats" },
+    { text: "Zalgo" },
+    { text: "Error", isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How can we compare strings in Bash?
+    ```bash
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Another Error! 🚨
+
+    Did you catch the invalid  `===` operator?
+
+    You might have been thinking of JavaScript...
+
+    In Bash, use `==` for equality comparisons.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Functions"
+  title="Function Declaration"
+  options={[
+    { text: "Hi", isAnswer: true },
+    { text: "Dan" },
+    { text: "Hi Dan" },
+    { text: "greet" },
+    { text: "Error" },
+    { text: "Syntax Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What will this script output?
+    ```bash
+   function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Functions in Bash can accept arguments. The `$1` variable holds the first argument passed to the function.
+    
+    Remember, `$0` is the script name, `$1` is the first argument, `$2` is the second, and so on. **Spaces separate arguments.** So, `greet Hi Dan` passes `"Hi"` as the first argument. In order to pass `"Hi Dan"` as a single argument, you would need to quote it: `greet "Hi Dan"`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Composition"
+  title="Using Piping"
+  options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "||" },
+    { text: "|>" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is used to "chain" commands together?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `|` pipe operator connects the output of one command to the input of another. For example:
+    ```bash
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
+    ``` 
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Arithmetic"
+  title="Basic Arithmetic"
+  options={[
+    { text: "echo 2 + 2" },
+    { text: "echo ${2 + 2}" },
+    { text: "echo %(2 + 2)" },
+    { text: "echo $(( 2 + 2 ))", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How does math work in Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `(( ))` syntax performs integer math in Bash.
+
+    It can be used for simple calculations:
+    ```bash
+    ((result = 2 + 2))
+    echo $result # => 4
+    ```
+
+    Or for conditional expressions:
+    ```bash
+
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
+    ```
+    
+    For floating-point arithmetic, consider using [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Multiplication"
+  title="Basic Arithmetic"
+  options={[
+    { text: "echo 10 * 0.5" },
+    { text: "echo (10 * 0.5)" },
+    { text: "echo ${ 10 * 0.5 }" },
+    { text: "echo %( 10 * 0.5 )" },
+    { text: "echo $(( 10 * 0.5 ))" },
+    { text: "echo '10 * 0.5' | bc", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How does **multiplication** work in Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `(( ))` syntax ONLY performs **integer** arithmetic. You know, whole numbers, with no floating point!
+
+    For floating-point arithmetic, consider using [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) or [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="String Manipulation"
+  title="Substring Extraction"
+  options={[
+    { text: "Bad cat" },
+    { text: "Bad cat, good cat:9" },
+    { text: "good cat", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does the `:` do in this script?
+    ```bash
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `${var:offset}` syntax extracts a substring starting from `offset`. Here, the output is:
+    ```plaintext
+    good cat
+    ```
+
+    To extract a substring of a specific length, use `${var:offset:length}`.
+
+    To extract from the end of the string, use `${var: -offset}`. (Note the space before the `-`!)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={13}
+  group="Loops"
+  title="Loops in Bash"
+  options={[
+    { text: "do" },
+    { text: "each", isAnswer: true },
+    { text: "for" },
+    { text: "until" },
+    { text: "while" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is NOT ❌ a keyword for looping in Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    `each` is not a loop keyword in Bash. The main loop keywords are `for`, `while`, and `until`.
+
+    While `do` is not technically a loop keyword, it's a key part of loop syntax.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={14}
+  group="Gotchas"
+  title="Command Substitution"
+  options={[
+    { text: "'command'" },
+    { text: "% command" },
+    { text: "$ command" },
+    { text: "$(command)", isAnswer: true },
+    { text: "${command}" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What syntax is used to execute a command?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `$(command)` syntax executes the command inside the **parentheses** and substitutes the output. For example:
+    ```bash
+    echo "Today is $(date +%F)"
+    ```
+
+    Curly braces `${}` are used for variable expansion, not command substitution.
+
+    Single quotes `'` prevent expansion, so `'$(date +%F)'` would not execute the command.
+
+    The `%` character is not used for command substitution.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={15}
+  group="Standard In/Out"
+  title="Default Values"
+  options={[
+    { text: "1>&2" },
+    { text: "&2>&1" },
+    { text: "2>&1", isAnswer: true },
+    { text: "2>1" },
+    { text: "&2>1" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which operator is used to combine standard & error outputs?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    The `2>&1` operator redirects standard error (file descriptor 2) to standard output (file descriptor 1). This is useful for capturing error messages in the same output stream as regular output.
+
+    To Learn more about file descriptors, check out [Greg's excellent Wiki](https://mywiki.wooledge.org/BashFAQ/055).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">Did my Bash Quiz leave you in shambles?</p>
+
+Let me know in the comments below!
+
+### Further Reading
+
+Brush up on your Bash skills with the following resources:
+
+- [Bash Guide](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [Bash Academy](https://guide.bash.academy/)
+- [Bash Scripting Tutorial](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
+- [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash Reference Card](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)

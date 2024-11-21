@@ -96,7 +96,7 @@ function getText(response) {
 
 > The benefits of this approach are increasingly apparent as you get DRY-er code.
 
-**Additional Resources:** Check out my **1 minute videos** of [basic logging](https://www.youtube.com/xR_MZE1SIkk) and [advanced debugging](https://www.youtube.com/P_tghqWj72M) using this technique.
+**Additional Resources:** Check out my **1 minute videos** of [basic logging](https://youtu.be/xR_MZE1SIkk) and [advanced debugging](https://youtu.be/P_tghqWj72M) using this technique.
 
 <h2 id="rule-2">#2: Single Purpose (Functions)</h2>
 
@@ -130,7 +130,7 @@ Interestingly, most developers report they are _pretty dang good_ at **Single Pu
 
 <!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-Let's look at an example the (incredibly talented) [Jake Archibald](https://twitter.com/jaffathecake) features in his [async/await article for the Google Developers site](https://developers.google.com/web/fundamentals/primers/async-functions).
+Let's look at an example the (incredibly talented) [Jake Archibald](https://twitter.com/jaffathecake) features in his async/await article for the Google Developers site (note: 2024, link removed).
 
 <!--
 Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->

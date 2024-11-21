@@ -1,6 +1,5 @@
 import { diskCache } from "../../shared/diskCache";
 import querystring from "node:querystring";
-import * as cheerio from "cheerio";
 
 const GITHUB_TOKEN =
   import.meta.env.VITE_GITHUB_TOKEN || import.meta.env.GITHUB_TOKEN;
