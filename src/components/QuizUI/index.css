@@ -24,6 +24,12 @@ Overriding the style when generating screenshots
 
 .screenshot-mode {
 
+  .quiz-hint-toggle {
+    grid-template-columns: 1fr 7rem;
+    .watermark {
+      display: grid;
+    }
+  }
   .score {
     display: none !important;
   }
@@ -256,7 +262,7 @@ Overriding the style when generating screenshots
     .quiz-hint-toggle button:hover {
       opacity: 1;
       transform: unset;
-      box-shadow: none;
+      box-shadow: none !important;
     }
   }
   &.incorrect {
@@ -295,7 +301,28 @@ Overriding the style when generating screenshots
     text-align: right;
     color: var(--quiz-muted-fg);
     overflow: hidden;
-    /* padding-inline: 0.5rem; */
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: end;
+
+    .toggle-explainer {
+      max-width: 7rem;
+    }
+    .watermark {
+      /* 
+      We need to make sure the watermark is hidden by default, we only want to see it when in screenshot mode. (screenshotter script).
+      */
+      display: none;
+      text-align: left;
+      justify-self: start;
+      font-size: 0.85rem;
+      font-style: italic;
+      font-family: 'Noto Sans Mono', monospace;
+      /* color: var(--quiz-muted-fg); */
+      padding-left: .5rem;
+      opacity: 0.75;
+      letter-spacing: -0.25px;
+    }
 
     button {
       z-index: 90;
@@ -350,8 +377,9 @@ Overriding the style when generating screenshots
     font-size: 1.1rem;
     /* margin-bottom: 1rem; */
     margin-inline: auto;
-    width: 100%;
+    margin-block: 0.5rem 1.5rem;
     padding-inline: 1rem;
+    width: 100%;
     overflow: auto;
 
     pre {

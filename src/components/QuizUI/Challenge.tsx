@@ -45,6 +45,7 @@ export default function Challenge({
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
   const [tries, setTries] = useState<number>(0);
+  const [pageLink, setPageLink] = useState<string>("");
 
   const updateCounts = () => {
     const questions = document.querySelectorAll("main .challenge");
@@ -67,6 +68,9 @@ export default function Challenge({
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
+    const link = global?.location?.href ?? "";
+
+    setPageLink(link.replace(/https?:\/\//g, ""));
     // if (questionStore) {
     //   setTries(questionStore.sumOfTries());
     // }
@@ -242,9 +246,10 @@ export default function Challenge({
 
       <div className="quiz-question">{question || children}</div>
       <aside className="quiz-hint-toggle">
+        <div className="watermark">{pageLink}</div>
         <button
           onClick={() => setShowExplanation(!showExplanation)}
-          className={clsx("hint-toggle", { open: showExplanation })}
+          className={clsx("toggle-explainer", { open: showExplanation })}
         >
           {showExplanation ? "Hide" : "Show"} Explainer{" "}
         </button>
