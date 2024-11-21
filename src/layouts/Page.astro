@@ -4,8 +4,10 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import socialBanner from '../assets/social-banner.webp';
+import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
+const url = Astro.url.pathname;
 
 // console.log("Astro.props", Astro.props);
 type Props = {
@@ -15,12 +17,11 @@ type Props = {
 }
 ---
 
-<html lang="en">
+<html lang="en" transition:name="root">
   <head>
-    <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />    
+    <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />
   </head>
-
-  <body class="layout-page">
+  <body transition:animate={moveInOutTransition}>
     <Header className="content-grid" />
     <main class="content-grid">
       <slot name="default"></slot>

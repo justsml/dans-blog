@@ -54,6 +54,7 @@ export const ArticleCard = ({
 
   return (
     <a
+      style={{ viewTransitionName: `article-${slug}` }}
       href={`/${slug}/`}
       className={myClass + " " + categoryClass + (className ? ` ${className}` : "")}
       // title={(draft ? 'DRAFT: ' : '') + title}
