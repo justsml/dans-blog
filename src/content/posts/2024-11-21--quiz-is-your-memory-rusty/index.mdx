@@ -1,5 +1,5 @@
 ---
-unlisted: true
+unlisted: false
 title: "Quiz: Essential Rust Memory Management"
 subTitle: "(Borrow) check yo self before you wreck yo self! 🦀"
 label: Memory, man
@@ -8,9 +8,9 @@ subCategory: Rust
 date: 2024-11-21
 modified: 2024-11-23
 tags: [quiz, rust, memory-management, ownership, borrowing, lifetimes, intermediate, advanced]
-# cover_full_width: rust-gears-memory.webp
-# cover_mobile: rust-gears-memory-square.webp 
-# cover_icon: rust-gears-memory-square.webp
+cover_full_width: fade-to-clouds-wide.webp
+cover_mobile: fade-to-clouds-square.webp
+cover_icon: fade-to-clouds-square.webp
 ---
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
@@ -19,7 +19,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 This quiz will test your understanding of Rust's ownership system, borrowing rules, lifetimes, and pointers.
 
-**Note:** Apologies in advance for the 50-column formatting. I want the text to be readable on all devices. 😅
+**Note:** Apologies in advance for the ~50-column formatting. I want the text to be readable on all devices. 😅 (Open to suggestions.)
 
 So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just kidding, let's Rust! 🦀
 
@@ -31,9 +31,10 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   group="Ownership Basics"
   title="Basic Move Semantics"
   options={[
-    {text: 'Hello, Musonius!'},
-    {text: 'Compilation Error: value borrowed after move', isAnswer: true},
     {text: 'Hello, !'},
+    {text: 'Hello, Zeno of Elea!'},
+    {text: 'Hello, Marcus Aurelius'},
+    {text: 'Compilation Error: value borrowed after move', isAnswer: true},
     {text: 'Runtime Error: null pointer exception'},
   ]}
 >
@@ -42,9 +43,12 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     What happens when you run this code?
     ```rust
     fn main() {
-        let philosopher = String::from("Musonius");
+        let philosopher =
+            String::from("Zeno of Elea");
         let greeting = philosopher;
-        println!("Hello, {}!", philosopher);
+
+        println!("Hello, {}!", 
+            philosopher);
     }
     ```
   </div>
@@ -78,11 +82,12 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   <div className="question">
     ```rust
     fn main() {
-        let mut wisdom = String::from("Know thyself");
+        let mut wisdom =
+            String::from("He who laughs at");
         let ref1 = &mut wisdom;
         let ref2 = &mut wisdom;
-        ref1.push_str(" and others");
-        ref2.push_str(" deeply");
+        ref1.push_str(" himself never runs");
+        ref2.push_str(" out of things to laugh at.");
     }
     ```
   </div>
@@ -99,13 +104,13 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
     To fix this, we would need to scope the mutable references so they don't overlap:
     ```rust
-    let mut wisdom = String::from("Know thyself");
+    let mut wisdom = String::from("He who laughs at");
     {
         let ref1 = &mut wisdom;
-        ref1.push_str(" and others");
+        ref1.push_str(" himself never runs");
     } // ref1 goes out of scope here
     let ref2 = &mut wisdom;
-    ref2.push_str(" deeply");
+    ref2.push_str(" out of things to laugh at.");
     ```
   </div>
   </slot>
@@ -117,7 +122,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   group="Lifetimes"
   title="Lifetime Annotations"
   options={[
-    {text: 'Compiles successfully'},
+    {text: 'Result: Seneca the Younger'},
     {text: 'Error: missing lifetime specifier', isAnswer: true},
     {text: 'Error: cannot return reference to local variable'},
     {text: 'Error: lifetime mismatch'}
@@ -125,17 +130,23 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 >
   <slot name="question">
   <div className="question">
-    What happens when you run `longest("Seneca the Younger", "Marcus Aurelius")`?
+    What happens when you attempt this code?
     ```rust
     fn longest(
-      text1: &str,
-      text2: &str
+        text1: &str,
+        text2: &str
     ) -> &str {
         if text1.len() > text2.len() {
             text1
         } else {
             text2
         }
+    }
+    fn main() {
+        println!("{}",
+          longest(
+              "Seneca the Younger",
+              "Marcus Aurelius"));
     }
     ```
   </div>
@@ -147,7 +158,10 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
     Correct version:
     ```rust
-    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
+    fn longest<'a>(
+      text1: &'a str,
+      text2: &'a str
+    ) -> &'a str {
         if text1.len() > text2.len() {
             text1
         } else {
@@ -178,15 +192,16 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     What happens when you try to run this code?
     ```rust
     #[derive(Debug)]
-    enum List {
-        Cons(i32, List),
+    enum CatList {
+        Cons(i32, CatList),
         Nil,
     }
 
     fn main() {
-        let list = List::Cons(1, 
-            List::Cons(2,
-                List::Cons(3, List::Nil)));
+        let catlist = CatList::Cons(1,
+            CatList::Cons(2,
+                CatList::Cons(3,
+                    CatList::Nil)));
     }
     ```
   </div>
@@ -194,13 +209,15 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
   <slot name='explanation'>
   <div className="explanation">
-    This recursive type has infinite size at compile time. Rust needs to know the size of types at compile time, but `List` contains itself, creating an infinite cycle.
+    _Oh no, infinite cat `Box\<\>`!_
+    
+    This recursive type has infinite size at compile time. Rust needs to know the size of types at compile time, but `CatList` contains itself, creating an infinite cycle.
 
     Fix using `Box<T>`:
     ```rust
     #[derive(Debug)]
-    enum List {
-        Cons(i32, Box<List>),
+    enum CatList {
+        Cons(i32, Box<CatList>),
         Nil,
     }
     ```
@@ -228,10 +245,16 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     use std::rc::Rc;
 
     fn main() {
-        let text = Rc::new(String::from("Meditations"));
+        let text = 
+            Rc::new(
+                String::from("Meditations")
+            );
         let marcus = Rc::clone(&text);
         let aurelius = Rc::clone(&text);
-        println!("Reference count: {}", Rc::strong_count(&text));
+        println!(
+            "Reference count: {}",
+            Rc::strong_count(&text)
+        );
     }
     ```
   </div>
@@ -246,7 +269,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     2. `marcus` clone: count = 2
     3. `aurelius` clone: count = 3
 
-    Note that `Rc::clone` doesn't make a deep copy - it just increments the reference count.
+    Note that `Rc::clone` doesn't make a (deep) copy - it just increments the reference count.
   </div>
   </slot>
 </Challenge>
@@ -254,7 +277,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 <Challenge
   client:load
   index={5}
-  group="Interior Mutability"
+  group="RefCells"
   title="RefCell Behavior"
   options={[
     {text: 'Prints: 42'},
@@ -314,7 +337,9 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   <slot name="question">
   <div className="question">
     ```rust
-    fn first_word(s: &str) -> &str {
+    fn first_cat(
+      s: &str
+    ) -> &str {
         match s.find(' ') {
             Some(pos) => &s[0..pos],
             None => s,
@@ -330,7 +355,9 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
     The above is equivalent to:
     ```rust
-    fn first_word<'a>(s: &'a str) -> &'a str {
+    fn first_cat<'a>(
+        s: &'a str
+    ) -> &'a str {
         // ...
     }
     ```
@@ -521,7 +548,9 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     fn main() {
         let phil = Philosopher {
             name: "Seneca",
-            quote: "Luck is what happens when preparation meets opportunity",
+            quote: "Luck happens \
+                    when preparation \
+                    meets opportunity",
         };
     }
     ```
