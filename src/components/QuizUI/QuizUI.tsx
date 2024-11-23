@@ -4,7 +4,10 @@ import "./icons.css";
 
 export default function QuizUI({ children }: any) {
   return (
-    <section className="full-section full-width">
+    <section className="full-section full-width"
+      style={{
+        "--ec-codePadInl": "0.75rem",
+      }}>
       <div className="quiz-ui">{children}</div>
 
       <div className="score screenshot-hidden">

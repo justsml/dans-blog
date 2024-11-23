@@ -34,7 +34,7 @@ export default function Challenge({
   // hints?: string[];
 }) {
   let questionStore: ReturnType<typeof QuestionStore> | null = null;
-  const siteDomain = `danlevy.net`;
+  const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 

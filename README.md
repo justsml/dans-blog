@@ -9,14 +9,16 @@
 - [x] Add Link to Category on Posts
 - [ ] Stop using REM for layout (padding)
 - [ ] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
-- [ ] Add Mastodon & Bsky links to footer.
+- [x] Add Mastodon & Bsky links to footer.
+- [ ] Add LinkedIn link to footer.
 - [ ] Support disabling styles in `<Gist />` component.
 
 - Add Scroll CSS Effects:
   - [ ] Adjust Quiz box-shadow using scroll position
   - [ ] Look into scroll snap for each quiz.
-
-- [x] Update Quiz UI, 
+- [ ] Change inset/blockquote to have an artistic border.
+- [ ] Add pop-shadow effect to `.article-card` on scroll in to view. Animate from `box-shadow: 0.0px 0.0px 0.0px hsl(0deg 0% 0% / 0.50);` and `box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);`
+- [x] Update Quiz UI
   - [x] Make Question's Linkable
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
   - [x] Get rid of cliche icons abuse.
