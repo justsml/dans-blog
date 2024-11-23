@@ -24,7 +24,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 let { title, description, image } = Astro.props;
 
 const isHomePage = slug === "/" || slug.length < 2;
-console.log("📄 BaseHead", { slug, isHomePage });
 
 if (description === "undefined") description = undefined;
 

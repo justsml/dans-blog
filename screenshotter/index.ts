@@ -46,7 +46,7 @@ for await (let item of rssFeed.items) {
 screenshotService.close();
 
 function buildArgs(rssItem: RssishItem): ScreenshotTask {
-  let { title, slug, link, categories, description } = rssItem;
+  let { slug, link, categories } = rssItem;
   link = `${siteUrlPrefix}${link}`;
 
   // const category = categories![0];

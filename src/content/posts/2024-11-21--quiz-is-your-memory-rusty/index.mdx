@@ -1,0 +1,610 @@
+---
+unlisted: true
+title: "Quiz: Essential Rust Memory Management"
+subTitle: "(Borrow) check yo self before you wreck yo self! 🦀"
+label: Memory, man
+category: Quiz
+subCategory: Rust
+date: 2024-11-21
+modified: 2024-11-23
+tags: [quiz, rust, memory-management, ownership, borrowing, lifetimes, intermediate, advanced]
+# cover_full_width: rust-gears-memory.webp
+# cover_mobile: rust-gears-memory-square.webp 
+# cover_icon: rust-gears-memory-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Think you know Rust's memory model? 🦀</p>
+
+This quiz will test your understanding of Rust's ownership system, borrowing rules, lifetimes, and pointers.
+
+**Note:** Apologies in advance for the 50-column formatting. I want the text to be readable on all devices. 😅
+
+So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just kidding, let's Rust! 🦀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Ownership Basics"
+  title="Basic Move Semantics"
+  options={[
+    {text: 'Hello, Musonius!'},
+    {text: 'Compilation Error: value borrowed after move', isAnswer: true},
+    {text: 'Hello, !'},
+    {text: 'Runtime Error: null pointer exception'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens when you run this code?
+    ```rust
+    fn main() {
+        let philosopher = String::from("Musonius");
+        let greeting = philosopher;
+        println!("Hello, {}!", philosopher);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This code fails to compile because of Rust's ownership rules. When we assign `philosopher` to `greeting`, the ownership of the String is moved to `greeting`. After this move, `philosopher` is no longer valid to use.
+
+    To fix this, we could either:
+    1. Clone the string: `let greeting = philosopher.clone();`
+    2. Use a reference: `let greeting = &philosopher;`
+    3. Use a string slice: `let greeting = &philosopher[..]`
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Borrowing"
+  title="Mutable References"
+  options={[
+    {text: 'Compiles successfully'},
+    {text: 'Error: cannot borrow `wisdom` as mutable more than once', isAnswer: true},
+    {text: 'Error: missing lifetime specifier'},
+    {text: 'Runtime panic'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    fn main() {
+        let mut wisdom = String::from("Know thyself");
+        let ref1 = &mut wisdom;
+        let ref2 = &mut wisdom;
+        ref1.push_str(" and others");
+        ref2.push_str(" deeply");
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Rust only allows one mutable reference to a value at a time. This prevents data races at compile time.
+
+    The rules are:
+    - You can have either one mutable reference OR any number of immutable references
+    - References must always be valid
+    - References cannot outlive their referent
+
+    To fix this, we would need to scope the mutable references so they don't overlap:
+    ```rust
+    let mut wisdom = String::from("Know thyself");
+    {
+        let ref1 = &mut wisdom;
+        ref1.push_str(" and others");
+    } // ref1 goes out of scope here
+    let ref2 = &mut wisdom;
+    ref2.push_str(" deeply");
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Lifetimes"
+  title="Lifetime Annotations"
+  options={[
+    {text: 'Compiles successfully'},
+    {text: 'Error: missing lifetime specifier', isAnswer: true},
+    {text: 'Error: cannot return reference to local variable'},
+    {text: 'Error: lifetime mismatch'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens when you run `longest("Seneca the Younger", "Marcus Aurelius")`?
+    ```rust
+    fn longest(
+      text1: &str,
+      text2: &str
+    ) -> &str {
+        if text1.len() > text2.len() {
+            text1
+        } else {
+            text2
+        }
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The compiler needs lifetime annotations to determine how the lifetimes of the input parameters relate to the return value's lifetime.
+
+    Correct version:
+    ```rust
+    fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
+        if text1.len() > text2.len() {
+            text1
+        } else {
+            text2
+        }
+    }
+    ```
+
+    The `'a` annotation tells the compiler that all parameters and the return value must live at least as long as lifetime `'a`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Smart Pointers"
+  title="Box Smart Pointer"
+  options={[
+    {text: '5'},
+    {text: 'null'},
+    {text: 'Compilation Error'},
+    {text: 'Stack overflow', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens when you try to run this code?
+    ```rust
+    #[derive(Debug)]
+    enum List {
+        Cons(i32, List),
+        Nil,
+    }
+
+    fn main() {
+        let list = List::Cons(1, 
+            List::Cons(2,
+                List::Cons(3, List::Nil)));
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This recursive type has infinite size at compile time. Rust needs to know the size of types at compile time, but `List` contains itself, creating an infinite cycle.
+
+    Fix using `Box<T>`:
+    ```rust
+    #[derive(Debug)]
+    enum List {
+        Cons(i32, Box<List>),
+        Nil,
+    }
+    ```
+
+    `Box<T>` provides a known-size pointer to heap-allocated data.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Reference Counting"
+  title="Rc Smart Pointer"
+  options={[
+    {text: 'Reference count: 1'},
+    {text: 'Reference count: 2'},
+    {text: 'Reference count: 3', isAnswer: true},
+    {text: 'Compilation Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::rc::Rc;
+
+    fn main() {
+        let text = Rc::new(String::from("Meditations"));
+        let marcus = Rc::clone(&text);
+        let aurelius = Rc::clone(&text);
+        println!("Reference count: {}", Rc::strong_count(&text));
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Rc<T>` (Reference Counting) allows multiple ownership by tracking the number of references to a value.
+
+    In this code:
+    1. Initial creation: count = 1
+    2. `marcus` clone: count = 2
+    3. `aurelius` clone: count = 3
+
+    Note that `Rc::clone` doesn't make a deep copy - it just increments the reference count.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Interior Mutability"
+  title="RefCell Behavior"
+  options={[
+    {text: 'Prints: 42'},
+    {text: 'Already borrowed: BorrowError', isAnswer: true},
+    {text: 'Compilation Error'},
+    {text: 'Runtime Panic: different message'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::cell::RefCell;
+
+    fn main() {
+        let data = RefCell::new(42);
+        let _borrow1 = data.borrow_mut();
+        let _borrow2 = data.borrow_mut();
+        println!("Value: {}", _borrow2);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `RefCell<T>` enforces borrowing rules at runtime instead of compile time. It allows:
+    - One mutable borrow OR
+    - Any number of immutable borrows
+
+    The second `borrow_mut()` will panic because there's already an active mutable borrow.
+
+    To fix:
+    ```rust
+    let data = RefCell::new(42);
+    {
+        let mut borrow = data.borrow_mut();
+        *borrow = 43;
+    } // mutable borrow dropped here
+    let borrow2 = data.borrow_mut(); // OK
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Lifetime Elision"
+  title="Implicit Lifetimes"
+  options={[
+    {text: 'Compiles successfully', isAnswer: true},
+    {text: 'Error: missing lifetime specifier'},
+    {text: 'Error: explicit lifetime required'},
+    {text: 'Error: lifetime mismatch'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    fn first_word(s: &str) -> &str {
+        match s.find(' ') {
+            Some(pos) => &s[0..pos],
+            None => s,
+        }
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This compiles due to Rust's lifetime elision rules. The compiler automatically assigns lifetimes in simple cases.
+
+    The above is equivalent to:
+    ```rust
+    fn first_word<'a>(s: &'a str) -> &'a str {
+        // ...
+    }
+    ```
+
+    Elision rules:
+    1. Each parameter gets its own lifetime
+    2. If there's exactly one input lifetime, it's assigned to all outputs
+    3. If there's a `&self` parameter, its lifetime is assigned to all outputs
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Smart Pointers"
+  title="Arc and Mutex"
+  options={[
+    {text: 'Prints: 42'},
+    {text: 'Prints: 43'},
+    {text: 'Compilation Error'},
+    {text: 'Deadlock', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::sync::{Arc, Mutex};
+
+    fn main() {
+        let lock = Arc::new(Mutex::new(42));
+        let lock2 = Arc::clone(&lock);
+        
+        let _guard1 = lock.lock().unwrap();
+        let _guard2 = lock2.lock().unwrap();
+        
+        println!("Value: {}", _guard2);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This creates a deadlock because:
+    1. First lock is acquired by `_guard1`
+    2. Second attempt to lock the same mutex will wait forever
+
+    To fix:
+    ```rust
+    let lock = Arc::new(Mutex::new(42));
+    {
+        let mut num = lock.lock().unwrap();
+        *num = 43;
+    } // lock is released here
+    let num2 = lock.lock().unwrap(); // OK
+    ```
+
+    `Arc<T>` (Atomic Reference Counting) is thread-safe version of `Rc<T>`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Ownership"
+  title="Move Semantics with Functions"
+  options={[
+    {text: 'Prints both lines'},
+    {text: 'Prints first line only'},
+    {text: 'Compilation Error', isAnswer: true},
+    {text: 'Runtime Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    fn take_ownership(text: String) {
+        println!("Inside: {}", text);
+    }
+
+    fn main() {
+        let wisdom = String::from("Know thyself");
+        take_ownership(wisdom);
+        println!("Outside: {}", wisdom);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
+
+    To fix, we have several options:
+    1. Pass by reference:
+    ```rust
+    fn borrow_it(text: &String) {
+        println!("Inside: {}", text);
+    }
+    borrow_it(&wisdom);
+    ```
+
+    2. Clone the value:
+    ```rust
+    take_ownership(wisdom.clone());
+    ```
+
+    3. Return ownership:
+    ```rust
+    fn take_and_return(text: String) -> String {
+        println!("Inside: {}", text);
+        text
+    }
+    let wisdom = take_and_return(wisdom);
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Interior Mutability"
+  title="Cell vs RefCell"
+  options={[
+    {text: 'Prints: 42, 43'},
+    {text: 'Compilation Error'},
+    {text: 'Prints: 43, 43', isAnswer: true},
+    {text: 'Runtime Panic'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::cell::Cell;
+
+    fn main() {
+        let x = Cell::new(42);
+        let y = &x;
+        println!("Value: {}", x.get());
+        y.set(43);
+        println!("Value: {}", x.get());
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Cell<T>` provides "interior mutability" but:
+    - Only works with Copy types or by moving values
+    - No borrowing API (unlike `RefCell`)
+    - Get/set operations always copy or move
+
+    Key differences from `RefCell`:
+    - `Cell`: Simple values, no borrowing
+    - `RefCell`: Complex values, runtime borrowing checks
+
+    When to use each:
+    - `Cell`: Simple types that implement Copy
+    - `RefCell`: When you need to mutate through a shared reference
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Lifetimes"
+  title="Struct Lifetimes"
+  options={[
+    {text: 'Compiles successfully'},
+    {text: 'Error: missing lifetime specifier', isAnswer: true},
+    {text: 'Error: lifetime mismatch'},
+    {text: 'Error: invalid reference'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    struct Philosopher {
+        name: &str,
+        quote: &str,
+    }
+
+    fn main() {
+        let phil = Philosopher {
+            name: "Seneca",
+            quote: "Luck is what happens when preparation meets opportunity",
+        };
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Structs containing references must specify lifetimes:
+
+    ```rust
+    struct Philosopher<'a> {
+        name: &'a str,
+        quote: &'a str,
+    }
+    ```
+
+    This tells the compiler:
+    - Both references live at least as long as 'a
+    - The struct cannot outlive the referenced data
+    - All fields with references must use the same lifetime or specify different ones
+
+    Alternative: Own the data instead:
+    ```rust
+    struct Philosopher {
+        name: String,
+        quote: String,
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Smart Pointers"
+  title="Weak References"
+  options={[
+    {text: 'Prints: Some("Wisdom")'},
+    {text: 'Prints: None', isAnswer: true},
+    {text: 'Compilation Error'},
+    {text: 'Runtime Panic'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::rc::{Rc, Weak};
+
+    fn main() {
+        let data = Rc::new(String::from("Wisdom"));
+        let weak = Rc::downgrade(&data);
+        drop(data);
+        
+        println!("Value: {:?}", weak.upgrade());
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Weak<T>` references don't prevent deallocation of their targets. When all strong references (`Rc<T>`) are dropped, the value is deallocated even if weak references exist.
+
+    Key points:
+    - `Weak::upgrade()` returns `Option<Rc<T>>`
+    - Useful for breaking reference cycles
+    - Common in tree/graph structures where parent-child relationships exist
+
+    Example cycle prevention:
+    ```rust
+    struct Node {
+        next: Option<Rc<Node>>,
+        prev: Option<Weak<Node>>, // Weak to prevent cycles
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Whew! That was an intense journey through Rust's memory management system! 🦀
+
+Want to level up your Rust skills further? Check out my [Quiz Collection](/challenges/) for more brain-bending challenges!

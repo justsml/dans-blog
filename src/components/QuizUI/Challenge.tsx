@@ -79,7 +79,7 @@ export default function Challenge({
       questionStore = QuestionStore(global?.location.pathname);
 
     if (questionStore) {
-      const idx = questionStore.addQuestion({
+      const _idx = questionStore.addQuestion({
         title,
         group,
         question,
