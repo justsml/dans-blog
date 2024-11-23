@@ -8,9 +8,9 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       // const commentsFrame = document.querySelectorAll(".utterances-frame");
       // const $postComments = document.querySelector("#post-comments");
       // if (commentsFrame) {
-        //   console.log("Comments already loaded, skipping...", path);
-        //   return;
-        // }
+      //   console.log("Comments already loaded, skipping...", path);
+      //   return;
+      // }
       const script = document.createElement("script");
       script.src = "https://utteranc.es/client.js";
       script.async = true;
@@ -29,9 +29,14 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       const comment = ref.current;
       if (comment) comment.appendChild(script);
       return () => {
-        const comment = ref.current;
+        const doc = window?.document;
+        console.log('Comments count:', doc?.querySelectorAll(".utterances-frame"));
+          const comment = ref.current;
         try {
           if (comment && comment.contains(script)) comment.removeChild(script);
+          if (doc?.querySelectorAll(".utterances-frame").length) {
+            doc?.querySelectorAll(".utterances-frame").forEach((el) => el.remove());
+          }
         } catch (e) {
           console.error(e);
         }

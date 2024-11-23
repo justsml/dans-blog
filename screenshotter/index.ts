@@ -13,7 +13,8 @@ let count = 0;
 const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
-const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
+const newLocal = SITE_URL ?? "http://localhost:4321";
+const siteUrlPrefix = newLocal;
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
 // rssFeed.items = rssFeed.items.filter((item) => item.categories?.includes("Quiz"));
