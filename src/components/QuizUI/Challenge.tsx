@@ -17,9 +17,15 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
-import { autoFit } from "../../shared/autoFit.ts";
+// import { autoFit, reduceFontSizeOnOverflow } from "../../shared/autoFit.ts";
 
 const global = getGlobal();
+
+// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
+// const updateCodeBlocks = () => {
+//   const blocks = getPreBlocks();
+//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
+// }
 
 /**
  * Challenge component
@@ -75,16 +81,24 @@ export default function Challenge({
   //   setShowExplanation(false);
   // };
 
+
+  // useEffect(() => {
+
+  //   document.addEventListener("dblclick", updateCodeBlocks);
+
+  //   return () => document.removeEventListener("dblclick", updateCodeBlocks);
+  // }, []);
+
   useEffect(() => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
-    if (global?.location?.pathname)
-      autoFit(`.challenge .expressive-code pre:has(code)`, {
-        fontMax: "2.25rem",
-        step: 0.1,
-        stepLimit: 25,
-      });
+    // if (global?.location?.pathname)
+    //   autoFit(`.challenge .expressive-code pre:has(code)`, {
+    //     fontMax: "2.05rem",
+    //     step: 0.1,
+    //     stepLimit: 25,
+    //   });
 
     const link = global?.location?.pathname ?? "";
     setPageLink(siteDomain + link);
@@ -247,8 +261,7 @@ export default function Challenge({
       className={clsx("challenge", challengeClass)}
       ref={challengeRef}
       data-answer-count={tries}
-      data-question-correct={isCorrect}
-    >
+      data-question-correct={isCorrect}>
       <div className="quiz-header">
         <div className="quiz-question-count">
           <a href={`#qq-${sequenceNum}`}>{sequenceNum}.</a>

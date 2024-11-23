@@ -371,7 +371,7 @@ Overriding the style when generating screenshots
     color: var(--quiz-fg);
     border: 1px solid var(--quiz-border-solid);
 
-    pre.astro-code {
+    pre.astro-code, .expressive-code pre {
       overflow-x: auto;
       overflow-y: scroll;
       width: calc(550px - 3.3rem);
@@ -470,20 +470,28 @@ Overriding the style when generating screenshots
   width: calc(100% - 2rem);
 }
 
+.challenge {
+  --ec-codeFontSize: .85rem;
+}
+
 @screen sm {
   .challenge {
     width: 100%;
+    --ec-codeFontSize: 1.035rem;
+
   }
 }
 
 @screen md {
   .challenge {
+    font-size: 1.185rem;
     width: 100%;
   }
 }
 
 @screen lg {
   .challenge {
+    font-size: 1.25rem;
     width: 100%;
   }
 }
