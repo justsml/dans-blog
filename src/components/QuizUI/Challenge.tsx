@@ -1,5 +1,14 @@
 "use client";
-import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  EventHandler,
+  MouseEvent,
+  MouseEventHandler,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { QuizContext } from "./QuizContext";
 import type { Option } from "./types";
 import classNames from "classnames";
@@ -72,9 +81,9 @@ export default function Challenge({
 
     if (global?.location?.pathname)
       autoFit(`.challenge .expressive-code pre:has(code)`, {
-        fontSize: "1.25rem",
-        step: 0.025,
-        stepLimit: 10,
+        fontMax: "2.25rem",
+        step: 0.1,
+        stepLimit: 25,
       });
 
     const link = global?.location?.pathname ?? "";
@@ -274,10 +283,117 @@ export default function Challenge({
           <p
             className="help-box"
             dangerouslySetInnerHTML={{ __html: explanationText }}
-            onClick={() => setShowExplanation(false)}
+            onClick={(ev: MouseEvent<HTMLParagraphElement>) =>
+              isAbsoluteElement({
+                target: ev.target,
+              }) && setShowExplanation(false)
+            }
           ></p>
         </section>
       </section>
     </div>
   );
+}
+
+function isAfterElement({
+  target,
+  layerX,
+  layerY,
+}: {
+  target: EventTarget | null;
+  layerX: number;
+  layerY: number;
+}) {
+  if (!target) return false;
+  if (!layerX || !layerY) return false;
+
+  const after = getComputedStyle(target as HTMLElement, ":after");
+  if (after) {
+    // Then we parse out the dimensions
+    const top = Number(after.getPropertyValue("top").slice(0, -2));
+    const height = Number(after.getPropertyValue("height").slice(0, -2));
+    const left = Number(after.getPropertyValue("left").slice(0, -2));
+    const width = Number(after.getPropertyValue("width").slice(0, -2));
+    // And get the mouse position (layerX and layerY are relative to the target)
+    // Finally we do a bounds check (Is the mouse inside of the after element)
+    if (
+      layerX > left &&
+      layerX < left + width &&
+      layerY > top &&
+      layerY < top + height
+    ) {
+      return true;
+    }
+  }
+}
+
+function isBeforeElement({
+  target,
+  layerX,
+  layerY,
+}: {
+  target: EventTarget | null;
+  layerX: number;
+  layerY: number;
+}) {
+  if (!target) return false;
+  if (!layerX || !layerY) return false;
+
+  const before = getComputedStyle(target as HTMLElement, ":before");
+  if (before) {
+    // Then we parse out the dimensions
+    const top = Number(before.getPropertyValue("top").slice(0, -2));
+    const height = Number(before.getPropertyValue("height").slice(0, -2));
+    const left = Number(before.getPropertyValue("left").slice(0, -2));
+    const width = Number(before.getPropertyValue("width").slice(0, -2));
+    // And get the mouse position (layerX and layerY are relative to the target)
+    // Finally we do a bounds check (Is the mouse inside of the before element)
+    if (
+      layerX < left &&
+      layerX > left + width &&
+      layerY < top &&
+      layerY > top + height
+    ) {
+      return true;
+    } else {
+      console.log("Not before element", {
+        layerX,
+        layerY,
+        top,
+        left,
+        width,
+        height,
+      });
+      return false;
+    }
+  }
+}
+
+function isAbsoluteElement({
+  target,
+  pseudo = "::before",
+}: {
+  target: EventTarget | null;
+  pseudo?: string;
+}) {
+  if (!target) return false;
+
+  const before = getComputedStyle(target as HTMLElement, pseudo);
+  if (before) {
+    // Then we parse out the dimensions
+    // const top = Number(before.getPropertyValue("top").slice(0, -2));
+    // const height = Number(before.getPropertyValue("height").slice(0, -2));
+    // const left = Number(before.getPropertyValue("left").slice(0, -2));
+    // const width = Number(before.getPropertyValue("width").slice(0, -2));
+    // And get the mouse position (layerX and layerY are relative to the target)
+    // Finally we do a bounds check (Is the mouse inside of the before element)
+    if (
+      !Number.isNaN(before.getPropertyValue("left")) ||
+      !Number.isNaN(before.getPropertyValue("top")) ||
+      !Number.isNaN(before.getPropertyValue("bottom")) ||
+      !Number.isNaN(before.getPropertyValue("right"))
+    ) {
+      return true;
+    }
+  }
 }

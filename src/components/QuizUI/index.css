@@ -392,7 +392,7 @@ Overriding the style when generating screenshots
     overflow: auto;
 
     pre {
-      max-width: 100vw;
+      max-width: calc(100vw - 2rem);
     }
   }
   .quiz-options {
@@ -450,7 +450,24 @@ Overriding the style when generating screenshots
     line-height: 1.5;
     text-align: left;
     overflow-x: hidden;
+
+    &::before {
+      content: "🅧";
+
+      display: inline-block;
+      font-size: 1.5rem;
+      margin-bottom: .5rem;
+      text-align: right;
+      width: 1rem;
+      position: absolute;
+      right: 1.5rem;
+      top: 1.125rem;
+    }
   }
+}
+
+.challenge .expressive-code pre>code {
+  width: calc(100% - 2rem);
 }
 
 @screen sm {
