@@ -71,7 +71,7 @@ export default function Challenge({
       questionStore = QuestionStore(global?.location.pathname);
 
     if (global?.location?.pathname)
-      autoFit(`.challenge .expressive-code pre :has(code)`, {
+      autoFit(`.challenge .expressive-code pre:has(code)`, {
         fontSize: "1.25rem",
         step: 0.025,
         stepLimit: 10,
