@@ -32,6 +32,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   title="Basic Move Semantics"
   options={[
     {text: 'Hello, !'},
+    {text: 'Hello, Zeno of Citium!'},
     {text: 'Hello, Zeno of Elea!'},
     {text: 'Hello, Marcus Aurelius'},
     {text: 'Compilation Error: value borrowed after move', isAnswer: true},
@@ -44,7 +45,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     ```rust
     fn main() {
         let philosopher =
-            String::from("Zeno of Elea");
+            String::from("Zeno of Citium");
         let greeting = philosopher;
 
         println!("Hello, {}!", 
@@ -336,14 +337,20 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 >
   <slot name="question">
   <div className="question">
+    This one is about Lifetime Elision rules. (`Lifetime Elision Rules` sounds like a dope band name, doesn't it?)
     ```rust
-    fn first_cat(
+    fn first_word(
       s: &str
     ) -> &str {
         match s.find(' ') {
             Some(pos) => &s[0..pos],
             None => s,
         }
+    }
+    fn main() {
+      let name = String::from("Seneca the Younger");
+      let first = first_word(&name);
+      println!("Hello, {}", first);
     }
     ```
   </div>
@@ -379,7 +386,8 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     {text: 'Prints: 42'},
     {text: 'Prints: 43'},
     {text: 'Compilation Error'},
-    {text: 'Deadlock', isAnswer: true}
+    {text: 'Runtime Panic'},
+    {text: 'Deadlock', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -482,12 +490,12 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 <Challenge
   client:load
   index={9}
-  group="Interior Mutability"
+  group="Mutability"
   title="Cell vs RefCell"
   options={[
-    {text: 'Prints: 42, 43'},
+    {text: 'Prints: 42, 43', isAnswer: true},
+    {text: 'Prints: 43, 43'},
     {text: 'Compilation Error'},
-    {text: 'Prints: 43, 43', isAnswer: true},
     {text: 'Runtime Panic'}
   ]}
 >
@@ -497,11 +505,11 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     use std::cell::Cell;
 
     fn main() {
-        let x = Cell::new(42);
-        let y = &x;
-        println!("Value: {}", x.get());
-        y.set(43);
-        println!("Value: {}", x.get());
+        let life = Cell::new(42);
+        let meaning = &life;
+        println!("{}", life.get());
+        meaning.set(43);
+        println!("{}", life.get());
     }
     ```
   </div>
@@ -593,7 +601,8 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     {text: 'Prints: Some("Wisdom")'},
     {text: 'Prints: None', isAnswer: true},
     {text: 'Compilation Error'},
-    {text: 'Runtime Panic'}
+    {text: 'Runtime Panic'},
+    {text: 'Existential Panic'},
   ]}
 >
   <slot name="question">
@@ -634,6 +643,6 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
 </QuizUI>
 
-Whew! That was an intense journey through Rust's memory management system! 🦀
+I hope you enjoyed it as much as I enjoyed writing it! 🦀
 
-Want to level up your Rust skills further? Check out my [Quiz Collection](/challenges/) for more brain-bending challenges!
+Find more [via my Quiz Collection](/challenges/)! 🧠

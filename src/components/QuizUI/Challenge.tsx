@@ -8,6 +8,7 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
+import { autoFit } from "../../shared/autoFit.ts";
 
 const global = getGlobal();
 
@@ -69,8 +70,14 @@ export default function Challenge({
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
-    const link = global?.location?.pathname ?? "";
+    if (global?.location?.pathname)
+      autoFit(`.challenge .expressive-code pre :has(code)`, {
+        fontSize: "1.25rem",
+        step: 0.025,
+        stepLimit: 10,
+      });
 
+    const link = global?.location?.pathname ?? "";
     setPageLink(siteDomain + link);
   }, [global?.location?.pathname]);
 
@@ -79,6 +86,7 @@ export default function Challenge({
       questionStore = QuestionStore(global?.location.pathname);
 
     if (questionStore) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const _idx = questionStore.addQuestion({
         title,
         group,
@@ -87,11 +95,12 @@ export default function Challenge({
       });
       // console.log("Added question to store:", questionIndex, group, title);
       const isCorrect =
-      questionStore?.isCorrect({
-        index: questionIndex,
-      }) ?? undefined;
+        questionStore?.isCorrect({
+          index: questionIndex,
+        }) ?? undefined;
 
-      const tries = questionStore?.getTries({
+      const tries =
+        questionStore?.getTries({
           index: questionIndex,
         }) ?? 0;
 
@@ -104,7 +113,6 @@ export default function Challenge({
       console.error("QuestionStore is not initialized");
     }
   }, [questionStore, title, group, question, options, explanation]);
-
 
   const logEvent = (name: string, data: unknown) => {
     // @ts-ignore

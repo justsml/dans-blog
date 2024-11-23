@@ -239,6 +239,11 @@ Overriding the style when generating screenshots
     }
   }
 
+  :not(.correct) {
+    .option:hover {
+      background-color: var(--quiz-muted-bg-transparent);
+    }
+  }
   &.correct {
     animation: none;
     border: 1px solid var(--quiz-success);
@@ -430,11 +435,6 @@ Overriding the style when generating screenshots
     transition:
       background-color 0.125s ease-in-out,
       color 0.125s ease-in-out;
-    &:hover {
-      background-color: var(--quiz-muted-bg-transparent);
-      /* color: var(--quiz-bg-solid); */
-      /* color: var(--quiz-fg); */
-    }
   }
 
   .help-box {
