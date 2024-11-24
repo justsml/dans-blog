@@ -39,7 +39,7 @@ let gists: Record<string, string> = {};
 
 if (gist?.files && gist.files.length >= 1) {
   const $ = cheerio.load(gist.div);
-  gist?.files?.forEach((file) => {
+  gist?.files?.forEach((file: string) => {
     const $gist = $(`[data-tagsearch-path="${file}"]`);
     const rawText = $gist
       .text()

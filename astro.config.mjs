@@ -22,7 +22,7 @@ export default defineConfig({
     react({}),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
-      themes: ['dracula', 'solarized-dark'],
+      themes: ['dracula'],
     }),
     mdx(),
     sitemap(),

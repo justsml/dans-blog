@@ -3,9 +3,10 @@ import path, { dirname, join } from "path";
 // import { autoScreenShot } from "../src/components/Screenshots/AutoScreenShot.ts";
 import getSiteRss, { RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
-import { RSSFeedItem } from "@astrojs/rss";
+// import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
-import { Page } from "playwright";
+import { ElementHandle, Page } from "playwright";
+import * as webP from "@/shared/webP.ts";
 
 const { SITE_URL } = process.env;
 
@@ -24,9 +25,9 @@ let basePath = `/tmp/screenshots`;
 
 console.log("Loading RSS FEED: ", rssFeed.items.length);
 
-async function handlePost(post: RSSFeedItem, index?: number) {
-  if (index! < 3) console.log("POST: ", post);
-}
+// async function handlePost(post: RSSFeedItem, index?: number) {
+//   if (index! < 3) console.log("POST: ", post);
+// }
 
 await screenshotService.init();
 
@@ -46,7 +47,7 @@ for await (let item of rssFeed.items) {
 screenshotService.close();
 
 function buildArgs(rssItem: RssishItem): ScreenshotTask {
-  let { title, slug, link, categories, description } = rssItem;
+  let { slug, link, categories } = rssItem;
   link = `${siteUrlPrefix}${link}`;
 
   // const category = categories![0];
@@ -60,7 +61,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   if (rssItem.sourcePath) {
     // basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
     basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
-    console.log("BASE PATH: ", basePath);
+    log("BASE PATH: ", basePath);
     // process.exit(0);
   } else {
     basePath = `/tmp/screenshots/${slug}`;
@@ -68,44 +69,44 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
 
   let selectorPathMap: Record<string, string> = isQuiz
     ? {
-        "#qq-1": join(`${basePath}`, `/previews/q1.jpg`),
-        "#qq-2": join(`${basePath}`, `/previews/q2.jpg`),
-        "#qq-3": join(`${basePath}`, `/previews/q3.jpg`),
-        "#qq-4": join(`${basePath}`, `/previews/q4.jpg`),
-        "#qq-5": join(`${basePath}`, `/previews/q5.jpg`),
-        "#qq-6": join(`${basePath}`, `/previews/q6.jpg`),
-        "#qq-7": join(`${basePath}`, `/previews/q7.jpg`),
-        "#qq-8": join(`${basePath}`, `/previews/q8.jpg`),
-        "#qq-9": join(`${basePath}`, `/previews/q9.jpg`),
-        "#qq-10": join(`${basePath}`, `/previews/q10.jpg`),
-        "#qq-11": join(`${basePath}`, `/previews/q11.jpg`),
-        "#qq-12": join(`${basePath}`, `/previews/q12.jpg`),
-        "#qq-13": join(`${basePath}`, `/previews/q13.jpg`),
-        "#qq-14": join(`${basePath}`, `/previews/q14.jpg`),
-        "#qq-15": join(`${basePath}`, `/previews/q15.jpg`),
-        "#qq-16": join(`${basePath}`, `/previews/q16.jpg`),
-        "#qq-17": join(`${basePath}`, `/previews/q17.jpg`),
-        "#qq-18": join(`${basePath}`, `/previews/q18.jpg`),
-        "#qq-19": join(`${basePath}`, `/previews/q19.jpg`),
-        "#qq-20": join(`${basePath}`, `/previews/q20.jpg`),
+        "#qq-1": join(`${basePath}`, `/q1.jpg`),
+        "#qq-2": join(`${basePath}`, `/q2.jpg`),
+        "#qq-3": join(`${basePath}`, `/q3.jpg`),
+        "#qq-4": join(`${basePath}`, `/q4.jpg`),
+        "#qq-5": join(`${basePath}`, `/q5.jpg`),
+        "#qq-6": join(`${basePath}`, `/q6.jpg`),
+        "#qq-7": join(`${basePath}`, `/q7.jpg`),
+        "#qq-8": join(`${basePath}`, `/q8.jpg`),
+        "#qq-9": join(`${basePath}`, `/q9.jpg`),
+        "#qq-10": join(`${basePath}`, `/q10.jpg`),
+        "#qq-11": join(`${basePath}`, `/q11.jpg`),
+        "#qq-12": join(`${basePath}`, `/q12.jpg`),
+        "#qq-13": join(`${basePath}`, `/q13.jpg`),
+        "#qq-14": join(`${basePath}`, `/q14.jpg`),
+        "#qq-15": join(`${basePath}`, `/q15.jpg`),
+        "#qq-16": join(`${basePath}`, `/q16.jpg`),
+        "#qq-17": join(`${basePath}`, `/q17.jpg`),
+        "#qq-18": join(`${basePath}`, `/q18.jpg`),
+        "#qq-19": join(`${basePath}`, `/q19.jpg`),
+        "#qq-20": join(`${basePath}`, `/q20.jpg`),
       }
     : {
-        "main.article": join(`${basePath}`, `/previews/main.jpg`),
+        "main.article": join(`${basePath}`, `/main.jpg`),
       };
 
   return {
     [`${link}`]: {
-      fileName: join(`${basePath}`, `/previews/main.jpg`),
+      fileName: join(`${basePath}`, `/main.jpg`),
       selectorPathMap,
       sizes: [
         {
-          fileName: join(`${basePath}`, `/previews/desktop.jpg`),
+          fileName: join(`${basePath}`, `/desktop.jpg`),
           width: 1280,
           height: 720,
           classModifier: "desktop-shot",
         },
         {
-          fileName: join(`${basePath}`, `/previews/mobile.jpg`),
+          fileName: join(`${basePath}`, `/mobile.jpg`),
           width: 480,
           height: 900,
           classModifier: "mobile-shot",
@@ -165,6 +166,20 @@ async function resetViewport(page: Page) {
   await page.setViewportSize({ width: 1280, height: 720 });
 }
 
+/** Converts supported files to webp in same path */
+async function takeScreenshot(ctx: Page | ElementHandle, fileName: string) {
+  await ctx.screenshot({
+    quality: 100,
+    path: fileName,
+    timeout: 30_000,
+  });
+  if (webP.isFileSupported(fileName)) {
+    const webpFile = webP.convertToWebP(fileName);
+    return webpFile;
+  }
+  return fileName;
+}
+
 async function generateImages(args: ScreenshotTask) {
   let page: Page | undefined;
   const startTime = Date.now();
@@ -203,11 +218,8 @@ async function generateImages(args: ScreenshotTask) {
 
         if (scrollTo) await applyScrollTo(page, scrollTo);
         await page.setViewportSize({ width, height });
-        await page.screenshot({
-          quality: 100,
-          path: newFile,
-        });
-        console.log(`Screenshot saved to ${newFile}`);
+        await takeScreenshot(page, newFile);
+        log(`Screenshot saved to ${newFile}`);
       }
     }
 
@@ -246,12 +258,7 @@ async function generateImages(args: ScreenshotTask) {
         }
         // delay 1000ms to wait for the element to be fully loaded
         await page.waitForTimeout(delayMs ?? 1000);
-        await element
-          .screenshot({
-            path: newFile,
-            quality: 100,
-            scale: "device",
-          })
+        await takeScreenshot(element, newFile)
           .then(() => {
             console.log(`Screenshot saved to ${newFile}`);
           })

@@ -41,10 +41,8 @@ export const getGist = async (
     includeDefaultCss: true,
   },
 ) => {
-  let loadedFromCache = true;
   let gist: unknown = await diskCache.get(fullUrl);
   if (!gist) {
-    loadedFromCache = false;
     gist = await loadGist(fullUrl, {
       username,
       secretToken,

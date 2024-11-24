@@ -24,7 +24,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 let { title, description, image } = Astro.props;
 
 const isHomePage = slug === "/" || slug.length < 2;
-console.log("📄 BaseHead", { slug, isHomePage });
 
 if (description === "undefined") description = undefined;
 
@@ -202,11 +201,11 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 
   /* Apply the custom animation to the old and new page states */
 
-  ::view-transition-old(root) {
-    animation: 0.35s ease-in both move-out;
+  /* ::view-transition-old(root) {
+    animation: 0.35s ease-in both move-in;
   }
 
   ::view-transition-new(root) {
-    animation: 0.35s ease-in both move-in;
-  }
+    animation: 0.35s ease-in both move-out;
+  } */
 </style>
