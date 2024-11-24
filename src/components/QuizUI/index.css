@@ -438,7 +438,7 @@ Overriding the style when generating screenshots
   }
 
   .help-box {
-    width: clamp(320px, 100% - 2rem, 90vw);
+    width: clamp(320px, 100% - 1rem - 2px, 90vw);
     margin-inline: auto;
     padding: 1rem;
     background-color: var(--quiz-bg-solid);
@@ -450,18 +450,28 @@ Overriding the style when generating screenshots
     line-height: 1.5;
     text-align: left;
     overflow-x: hidden;
+    transition: opacity 0.25s ease-in-out, color 0.25s ease-in-out, background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
 
+    pointer-events: visiblePainted;
+    cursor: pointer;
+
+    &:hover {
+      &::before {
+        opacity: .85;
+      }
+    }
     &::before {
       content: "🅧";
-
+      opacity: .35;
       display: inline-block;
-      font-size: 1.5rem;
+      font-size: 1.35rem;
       margin-bottom: .5rem;
       text-align: right;
-      width: 1rem;
+      margin-inline: .125rem;
       position: absolute;
       right: 1.5rem;
       top: 1.125rem;
+
     }
   }
 }

@@ -1,8 +1,7 @@
 "use client";
+import { navigate } from 'astro:transitions/client';
 import {
-  EventHandler,
   MouseEvent,
-  MouseEventHandler,
   useContext,
   useEffect,
   useRef,
@@ -80,7 +79,6 @@ export default function Challenge({
   //   setChallengeClass("untouched");
   //   setShowExplanation(false);
   // };
-
 
   // useEffect(() => {
 
@@ -261,7 +259,8 @@ export default function Challenge({
       className={clsx("challenge", challengeClass)}
       ref={challengeRef}
       data-answer-count={tries}
-      data-question-correct={isCorrect}>
+      data-question-correct={isCorrect}
+    >
       <div className="quiz-header">
         <div className="quiz-question-count">
           <a href={`#qq-${sequenceNum}`}>{sequenceNum}.</a>
@@ -296,11 +295,49 @@ export default function Challenge({
           <p
             className="help-box"
             dangerouslySetInnerHTML={{ __html: explanationText }}
-            onClick={(ev: MouseEvent<HTMLParagraphElement>) =>
-              isAbsoluteElement({
-                target: ev.target,
-              }) && setShowExplanation(false)
-            }
+            onClick={(ev: MouseEvent<HTMLParagraphElement>) => {
+              ev.preventDefault();
+              const {clientX, clientY} = ev;
+              const target: HTMLElement = ev.target as HTMLElement;
+              console.log(
+                "Clicked on explanation",
+                {clientX, clientY},
+                target.tagName,
+                target.getAttributeNames(),
+              );
+
+              // const isAbs = isAbsoluteElement({target});
+
+              const link: HTMLAnchorElement | null =
+                target.tagName === "A"
+                  ? (target as HTMLAnchorElement)
+                  : target?.parentElement?.tagName === "A"
+                    ? (target.parentElement as HTMLAnchorElement)
+                    : null;
+              const isTopRight = isTopRightCorner({target}, 48); 
+              const isInCodeBlock = target.closest("code, pre");
+              const isInParagraph = target.closest("p");
+              if (isTopRight) {
+                console.log("TOP RIGHT CLOSE")
+                setShowExplanation(false);
+                return false
+              }
+
+              if (isInParagraph) {
+                console.log("Clicked in paragraph %o", target);
+                return false;
+              }
+              if (isInCodeBlock) {
+                console.log("Clicked in code block %o", target);
+                return false;
+              }
+
+              if (link) {
+                navigate(link.href, {sourceElement: link});
+                console.log("Clicked on link", link, link?.href);
+                return true;
+              }
+            }}
           ></p>
         </section>
       </section>
@@ -308,80 +345,31 @@ export default function Challenge({
   );
 }
 
-function isAfterElement({
-  target,
-  layerX,
-  layerY,
-}: {
-  target: EventTarget | null;
-  layerX: number;
-  layerY: number;
-}) {
+function isTopRightCorner({target}: {
+  target: HTMLElement | null;
+  clientX?: number;
+  clientY?: number;
+}, hitBox = 48) {
   if (!target) return false;
-  if (!layerX || !layerY) return false;
+  const before = getComputedStyle(target as HTMLElement, "::before");
+  const {scrollY, scrollX} = global;
+  
 
-  const after = getComputedStyle(target as HTMLElement, ":after");
-  if (after) {
-    // Then we parse out the dimensions
-    const top = Number(after.getPropertyValue("top").slice(0, -2));
-    const height = Number(after.getPropertyValue("height").slice(0, -2));
-    const left = Number(after.getPropertyValue("left").slice(0, -2));
-    const width = Number(after.getPropertyValue("width").slice(0, -2));
-    // And get the mouse position (layerX and layerY are relative to the target)
-    // Finally we do a bounds check (Is the mouse inside of the after element)
-    if (
-      layerX > left &&
-      layerX < left + width &&
-      layerY > top &&
-      layerY < top + height
-    ) {
-      return true;
-    }
-  }
-}
-
-function isBeforeElement({
-  target,
-  layerX,
-  layerY,
-}: {
-  target: EventTarget | null;
-  layerX: number;
-  layerY: number;
-}) {
-  if (!target) return false;
-  if (!layerX || !layerY) return false;
-
-  const before = getComputedStyle(target as HTMLElement, ":before");
   if (before) {
-    // Then we parse out the dimensions
     const top = Number(before.getPropertyValue("top").slice(0, -2));
-    const height = Number(before.getPropertyValue("height").slice(0, -2));
+    const right = Number(before.getPropertyValue("right").slice(0, -2));
     const left = Number(before.getPropertyValue("left").slice(0, -2));
-    const width = Number(before.getPropertyValue("width").slice(0, -2));
-    // And get the mouse position (layerX and layerY are relative to the target)
-    // Finally we do a bounds check (Is the mouse inside of the before element)
-    if (
-      layerX < left &&
-      layerX > left + width &&
-      layerY < top &&
-      layerY > top + height
-    ) {
-      return true;
-    } else {
-      console.log("Not before element", {
-        layerX,
-        layerY,
-        top,
-        left,
-        width,
-        height,
-      });
+
+    if (Number.isNaN(right) || Number.isNaN(top)) {
       return false;
     }
+    console.log("isBefore %o %o", {top, right, left, scrollX, scrollY});
+    if (top <= hitBox && right <= hitBox) {
+      return true;
+    }
   }
+  return false;
 }
-
 function isAbsoluteElement({
   target,
   pseudo = "::before",
@@ -394,19 +382,32 @@ function isAbsoluteElement({
   const before = getComputedStyle(target as HTMLElement, pseudo);
   if (before) {
     // Then we parse out the dimensions
-    // const top = Number(before.getPropertyValue("top").slice(0, -2));
-    // const height = Number(before.getPropertyValue("height").slice(0, -2));
-    // const left = Number(before.getPropertyValue("left").slice(0, -2));
-    // const width = Number(before.getPropertyValue("width").slice(0, -2));
+    const top = Number(before.getPropertyValue("top").slice(0, -2));
+    const bottom = Number(before.getPropertyValue("bottom").slice(0, -2));
+    const left = Number(before.getPropertyValue("left").slice(0, -2));
+    const right = Number(before.getPropertyValue("right").slice(0, -2));
+
+    const width = Number(before.getPropertyValue("width").slice(0, -2));
+    const height = Number(before.getPropertyValue("height").slice(0, -2));
+    console.log("isAbsolute %o", {
+      top,
+      bottom,
+      left,
+      right,
+      width,
+      height,
+    });
     // And get the mouse position (layerX and layerY are relative to the target)
     // Finally we do a bounds check (Is the mouse inside of the before element)
     if (
-      !Number.isNaN(before.getPropertyValue("left")) ||
-      !Number.isNaN(before.getPropertyValue("top")) ||
-      !Number.isNaN(before.getPropertyValue("bottom")) ||
-      !Number.isNaN(before.getPropertyValue("right"))
+      Number.isNaN(left) ||
+      Number.isNaN(top) ||
+      Number.isNaN(bottom) ||
+      Number.isNaN(right)
     ) {
-      return true;
+      return false;
     }
+
   }
+  return true;
 }
