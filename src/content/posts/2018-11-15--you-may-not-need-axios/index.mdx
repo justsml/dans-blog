@@ -1,6 +1,6 @@
 ---
 title: "You may not need Axios"
-subTitle: Fetch API to the rescue!
+subTitle: Fetch API in JavaScript & Node.js!
 date: 2018-11-14
 modified: 2024-08-21
 tags: [programming, patterns, examples, nodejs, javascript, promises, axios, fetch]
@@ -181,15 +181,8 @@ _credit:_ Special thanks to Anthum Chris and his [fantastic Progress+Fetch PoC s
 
 As of 2022, the `fetch` API is [widely supported](https://caniuse.com/#feat=fetch) in all modern browsers and in more recent versions of NodeJS v18+.
 
-If you must support IE you can [polyfill fetch](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by an awesome team at GitHub). It's possible to go as far back as [IE8](https://github.com/camsong/fetch-ie8) - _Your mileage may vary_.
+If you must support IE you can [polyfill fetch](https://github.com/github/fetch#browser-support) with the `github/fetch` package (maintained by an awesome team at GitHub).
 
-Earlier NodeJS can take advantage of the the `fetch` API with the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package:
-
-```sh
-npm install node-fetch
-```
-
-_After polyfill+node-fetch: 99.99% compatible_ ✅
-
+Before native NodeJS support, you'd need to use something like the [`node-fetch`](https://www.npmjs.com/package/node-fetch) package.
 
 > Please [Tweet at me](https://twitter.com/justsml) if you have other _Use Cases_ you'd like to see. ❤️

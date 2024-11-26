@@ -34,6 +34,7 @@ type Props = {
     cover_full_width?: unknown;
     category?: string;
     related?: string[];
+    lang?: string;
   };
 };
 
@@ -48,6 +49,7 @@ const {
   commentsKeyOverride,
   related,
   social_image,
+  lang = "en",
 } = Astro.props.frontmatter! || Astro.props;
 
 const slug = Astro.props.slug;
@@ -86,7 +88,7 @@ const responsiveImgSizes_breakRight = {
 };
 ---
 
-<html lang="en" transition:name="root">
+<html lang={lang} transition:name="root">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
     {modTime && <meta http-equiv="last-modified" content={modTime} />}

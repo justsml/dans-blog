@@ -1,0 +1,154 @@
+--- 
+title: واقعة غريبة لتعجيل فرق الميزات!
+subTitle: يحب مهندسي الموارد هذا!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+
+cover_full_width: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: صورة بواسطة <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> على <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>جدول المحتويات</summary>
+
+- [التفكير في المفاتيح](#thinking-in-keys)
+  - [تصميم باستخدام المفاتيح](#designing-with-keys)
+  - [KVs كرسوم واشجار؟](#kvs-as-graphs--trees)
+  - [متى تستخدم أنماط KV؟](#when-to-use-kv-patterns)
+  - [متى تجنب أنماط KV؟](#when-to-avoid-kv-patterns)
+  - [متى تحتاج إلى أكثر من أنماط KV؟](#when-you-need-more-than-kv)
+- [خطوات التاليه](#next-steps)
+  - [خدمة الحقائق - مشروع مرجعي](#fact-service---reference-project)
+- [النهاية](#conclusion)
+  - [قراءة إضافية](#further-reading)
+
+</details>
+
+عند تصميم نظام جديد أو ميزة، يمكن أن يصعب عليك التغلب على التصميم الشمولي. في هذا المقال سأแบحك طريقة مفيدة قمت بها خلال مسيرتي المهنية.
+
+<section class="breakout">
+  _حاول_ استخدام الحفظ البسيط للبيانات عند تصميم نظام جديد أو ميزة.
+</section>
+
+في كثير من الأحيان، أرى فرقًا تستخدم SQL أو MongoDB كاختيار وحيد لstorage البيانات. بالتأكيد، لا أحد سيتم إقالته بسبب اختيار SQL. لكن ماذا لو قلت لك أن هناك طريقة أبسط وأسرع وأرخص للبدء؟
+
+مخزن مفاتيح (Key-value store) قد يكون كل ما تحتاجه. مثل Redis أو S3.
+
+ليس دائمًا الخيار الصحيح، ولكن ربما **أكثر مما تعتقد**.
+
+层 الحفظ البسيط يمكن أن يسرع التنمية المبكرة بشكل معتدل عن طريق استعادة رمز طبقة البيانات وتجنب تكاليف متغيرات التصميم الشمولي والتحديثات. سيحدث المتغيرات بالتأكيد؛ لكن يجب على الكود التعامل معها طالما يمكنه ذلك. أفضل أن تجنب التعامل مع التغييرات في مكانين.
+
+يمكن أن يزيد الأداء من حيث أنه يتم البحث عن المفاتيح بسرعة، ويمكن للكتابة أن يفيد من تحديثات المجموعة.
+
+<figure>
+![رسومة لجذر user/123](./KVsCanBeGraphs.webp)
+<figcaption>رسومة لجذر user/123</figcaption>
+</figure>
+
+## التفكير في المفاتيح
+
+يمكن أن يشعر التصميم باستخدام أنماط مفاتيح غريبًا، خاصة إذا كنت معتادًا على تصميم الأنظمة مع هراريات الأجسام أو مخططات العلاقات وتنفيذها مباشرةً في SQL.
+
+ربما **استخدمت** أنماط مفاتيح قبل ذلك! هم متواجدون في كل مكان، من الإعدادات والعناوين إلى تخزين الملفات على S3-style! كل مرة تتعامل فيها مع البيانات عبر قيمة `ID` فنتيجة، فأنتم تعملون ببعض أنماط مفاتيح أخرى! (ولكن ليس بالضرورة مخزن مفاتيح.)
+
+### تصميم باستخدام المفاتيح
+
+يمكن تمثيل كل البيانات تقريبًا باستخدام أنماط مفاتيح. (في الحقيقة، العديد من قواعد البيانات العليا تعتمد على أنماط مفاتيح الأقل ترتيبًا.) دعونا نلقي نظرة على بعض الأمثلة:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+قد تكون قد لاحظت، ولكن المفتاح هو غالبًا مفتاح في نفسه! هذا نمط شائع في مخازن مفاتيح. يحتوي المفتاح غالبًا على تركيبة من نوع الملف والمعرف الفريد. (مثل `user/123` أو `user:456`)
+
+### KVs كرسوم واشجار؟
+
+يمكن أن يكون مفيدًا تمثيل البيانات المعقدة مثل رسوم الأشجار باستخدام أنماط مفاتيح. (مرة أخرى، عناوين الويب REST هي مثال جيد على ذلك.)
+
+ترتيب المفاتيح (`user/420` -> `user/420/friends`) يؤكد علاقة الجذر بين `user` و `friends`.
+
+هذا طريقة سريعة وميسورة التكلفة لتمثيل البيانات الرسومية. خاصة إذا لم تحتاج إلى تعقيد قاعدة البيانات الرسومية (مثل Neo4j).
+
+### متى تستخدم أنماط KV؟
+
+- عندما تحتاج إلى مقياس كبير. (بليونات أو حتى تريليونات من أزواج المفاتيح.)
+- عندما يتعين عليك الوصول إلى البيانات عبر مفتاح فريد.
+- عندما تحتاج إلى بنية بيانات بسيطة.
+- عندما لديك بيانات مع هراريات، رسوم أو أشجار.
+
+### متى تجنب أنماط KV؟
+
+لا تخزن الأمور مثل تعليقات المدونة في **مجموعة** واحدة من أزواج المفاتيح. على سبيل المثال `post/666 -> {comments: [...way too many...]}`. بدلًا من ذلك قد تستخدم `post/666/comments/1` أو `post/666/comments/<UUID>`, الخ. أو استخدم قاعدة بيانات SQL.
+
+- عندما تحتاج إلى البحث عن خصائص البيانات (ليست مفتاح أو ID) في مجموعة البيانات.
+- عندما تحتاج إلى الاندماج بين البيانات عبر عدة كيانات.
+- عندما تحتاج إلى فرض قيود معقدة أو علاقات.
+
+### متى تحتاج إلى أكثر من أنماط KV؟
+
+كلما تطورت متطلبات المشروع، قد تحتاج إلى القيام بأكثر مما يمكن أن يقدمه مخزن مفاتيح. في هذه الحالة ستحتاج إلى النظر في تحويل المخزن إلى قاعدة بيانات أكثر تعقيدًا.
+
+<figure>
+![رسومة لجذر user/123](./KVsCanBeGraphs.webp)
+<figcaption>رسومة لجذر user/123</figcaption>
+</figure>
+
+الخبر الجيد هو أنك يمكنك بدء استخدام مخزن مفاتيح ثم تحويله إلى قاعدة بيانات أكثر تعقيدًا عندما تحتاج إلى ذلك. (مع العديد من الطاولات والفهرس والقيود الخ.) قمت بذلك العديد من المرات باستخدام 50 سطرًا فقط.
+
+من الناحية الشخصية، وجدت أن جودة التصميمات SQL أعلى إذا بدأت باستخدام مخزن مفاتيح أولاً. يضطرك إلى التفكير في البيانات بطريقة مختلفة، ويعلمك بشكل أفضل ما تحتاج إليه من SQL.
+
+## خطوات التاليه
+
+أفضل طريقة للتعلم هي تجربتها! إذا كنت مهتمًا بمعرفة المزيد عن هذا النمط، فاقترح عليك **بناء الأشياء** باستخدام Redis أو DynamoDB أو S3.
+جميعهم مخازن مفاتيح رائعة مع اختلافات مختلفة.
+
+### خدمة الحقائق - مشروع مرجعي
+
+تحقق من مشروع "خدمة الحقائق" على GitHub، وهو مشروع مفتوح المصدر.
+
+هو API REST المستقل الذي يimplement خادم بيانات KV.
+
+يتضمن العديد من [مستعرضي البيانات](https://github.com/justsml/fact-service/tree/main/lib/providers).
+بما في ذلك Postgres و Redis و DynamoDB و Firestore و Cassandra! (مع أوامر Docker لبدء العمل بسرعة.)
+
+خدمة الحقائق مصمم كمشروع تعليمي، فكركها وتحديها!
+
+## النهاية
+
+أمل أن وجدت هذا المقال مفيدًا! إذا كان لديك أي أسئلة أو تعليقات، فيرجى الإشارة إليهم أو إرسال رسالة على [Twitter](https://twitter.com/justsml).
+
+### الشكر
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### قراءة إضافية
+
+- [خدمة الحقائق](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+{/* <!-- Translated from English to Arabic -->
+<!-- Original text length: 7729 characters -->
+<!-- Translated text length: 6549 characters -->
+<!-- Translation API: http://localhost:1234/v1/chat/completions -->
+<!-- Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF -->
+<!-- Translation date: 2024-11-26T19:40:01.214Z --> */}
