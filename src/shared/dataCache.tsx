@@ -132,14 +132,14 @@ export const PostCollections = {
   getPopularPosts() {
     return [
       "quiz-bash-in-the-shell",
-      "breaking-unicorns",
       "quiz-destructuring-delights",
+      "breaking-unicorns",
       "one-weird-trick-to-speed-up-feature-teams",
       // "js-quiz-14-date-time-questions-test-your-knowledge",
-      "javascript-promises-quiz",
+      // "javascript-promises-quiz",
       // "contribute-to-open-source-the-easy-way",
+      "you-may-not-need-axios",
       "naming-things-real-good",
-      // "you-may-not-need-axios",
       "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
