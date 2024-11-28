@@ -1,11 +1,23 @@
 ---
 
+// import posthog from "posthog-js/dist/module.no-external.js";
 ---
 <script>
-  import posthog from "posthog-js/dist/module.no-external.js";
-  // @ts-ignore
-  window._posthog = posthog.init("phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9", {
-    api_host: "https://us.i.posthog.com",
-    person_profiles: "always",
-  });
+  import isLocalhost from "local-hostname";
+  import globalSafe from "globalthis";
+  const globalThis = globalSafe();
+
+  if (!isLocalhost(globalThis?.location?.hostname)) initStats();
+
+  async function initStats() {
+    const { posthog } = (await import("posthog-js/dist/module.no-external.js"));
+    // @ts-ignore
+    globalThis._posthog = posthog.init(
+      "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9",
+      {
+        api_host: "https://us.i.posthog.com",
+        person_profiles: "always",
+      },
+    );
+  }
 </script>

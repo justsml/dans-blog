@@ -1,7 +1,6 @@
 import fs, { createReadStream } from "node:fs";
 import path from "node:path";
 import ScreenshotService from "./PageScreenshot.ts";
-import ms from "ms";
 
 type AutoScreenShotOptions = {
   url: string;
