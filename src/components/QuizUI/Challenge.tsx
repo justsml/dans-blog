@@ -1,4 +1,3 @@
-"use client";
 import { navigate } from 'astro:transitions/client';
 import {
   MouseEvent,
