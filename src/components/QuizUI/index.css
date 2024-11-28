@@ -23,6 +23,9 @@ Overriding the style when generating screenshots
 }
 /* screenshot-mode mobile-shot */
 .screenshot-mode {
+  .screenshot-hidden {
+    display: none !important;
+  }
 
   .quiz-hint-toggle {
     grid-template-columns: 1fr 7rem !important;
@@ -236,6 +239,11 @@ Overriding the style when generating screenshots
     }
   }
 
+  :not(.correct) {
+    .option:hover {
+      background-color: var(--quiz-muted-bg-transparent);
+    }
+  }
   &.correct {
     animation: none;
     border: 1px solid var(--quiz-success);
@@ -363,7 +371,7 @@ Overriding the style when generating screenshots
     color: var(--quiz-fg);
     border: 1px solid var(--quiz-border-solid);
 
-    pre.astro-code {
+    pre.astro-code, .expressive-code pre {
       overflow-x: auto;
       overflow-y: scroll;
       width: calc(550px - 3.3rem);
@@ -384,7 +392,7 @@ Overriding the style when generating screenshots
     overflow: auto;
 
     pre {
-      max-width: 100vw;
+      max-width: calc(100vw - 2rem);
     }
   }
   .quiz-options {
@@ -427,15 +435,10 @@ Overriding the style when generating screenshots
     transition:
       background-color 0.125s ease-in-out,
       color 0.125s ease-in-out;
-    &:hover {
-      background-color: var(--quiz-muted-bg-transparent);
-      /* color: var(--quiz-bg-solid); */
-      /* color: var(--quiz-fg); */
-    }
   }
 
   .help-box {
-    width: clamp(320px, 100% - 2rem, 90vw);
+    width: clamp(320px, 100% - 1rem - 2px, 90vw);
     margin-inline: auto;
     padding: 1rem;
     background-color: var(--quiz-bg-solid);
@@ -447,23 +450,58 @@ Overriding the style when generating screenshots
     line-height: 1.5;
     text-align: left;
     overflow-x: hidden;
+    transition: opacity 0.25s ease-in-out, color 0.25s ease-in-out, background-color 0.25s ease-in-out, border-color 0.25s ease-in-out;
+
+    pointer-events: visiblePainted;
+    cursor: pointer;
+
+    &:hover {
+      &::before {
+        opacity: .85;
+      }
+    }
+    &::before {
+      content: "🅧";
+      opacity: .35;
+      display: inline-block;
+      font-size: 1.35rem;
+      margin-bottom: .5rem;
+      text-align: right;
+      margin-inline: .125rem;
+      position: absolute;
+      right: 1.5rem;
+      top: 1.125rem;
+
+    }
   }
+}
+
+.challenge .expressive-code pre>code {
+  width: calc(100% - 2rem);
+}
+
+.challenge {
+  --ec-codeFontSize: .85rem;
 }
 
 @screen sm {
   .challenge {
     width: 100%;
+    --ec-codeFontSize: 1.035rem;
+
   }
 }
 
 @screen md {
   .challenge {
+    font-size: 1.185rem;
     width: 100%;
   }
 }
 
 @screen lg {
   .challenge {
+    font-size: 1.25rem;
     width: 100%;
   }
 }
@@ -628,6 +666,7 @@ Overriding the style when generating screenshots
       color: var(--neon-pink-subtle);
       font-weight: 900;
     }
+    .reset-quiz { visibility: visible; }
   }
 }
 
@@ -636,6 +675,7 @@ Overriding the style when generating screenshots
   .score-wrapper {
     display: none;
   }
+  .reset-quiz { visibility: visible; }
 }
 .score-wrapper {
   /* display: inline-flex; */
@@ -645,10 +685,12 @@ Overriding the style when generating screenshots
 }
 
 .btn.reset-quiz {
+  display: inline-flex;
+  /* display: none; */
+  visibility: hidden; /* hide the button by default, show when quiz completed */
   font-size: 1.125rem;
   /* margin-left: -2rem; */
   margin-right: 2rem;
-  display: inline-flex;
   justify-content: end;
   align-self: center;
   align-items: center;

@@ -1,14 +1,16 @@
 import { ListTodoIcon, RefreshCcwIcon } from "lucide-react";
 import "./index.css";
 import "./icons.css";
-import { ButtonIcon } from "@radix-ui/react-icons";
 
 export default function QuizUI({ children }: any) {
   return (
-    <section className="full-section full-width">
+    <section className="full-section full-width"
+      style={{
+        "--ec-codePadInl": "0.75rem",
+      }}>
       <div className="quiz-ui">{children}</div>
 
-      <div className="score">
+      <div className="score screenshot-hidden">
         <button className="btn reset-quiz">
           <RefreshCcwIcon className="icon" />
           <span>Reset</span>

@@ -8,9 +8,10 @@
 - [x] Fine tune: crank lighthouse score
 - [x] Add Link to Category on Posts
 - [ ] Stop using REM for layout (padding)
-- [ ] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
-- [ ] Add Mastodon & Bsky links to footer.
-- [ ] Support disabling styles in `<Gist />` component.
+- [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [x] Add Mastodon & Bsky links to footer.
+- [x] Support disabling styles in `<Gist />` component.
+- [x] Add `theme-color` meta tag
 
 - Add Scroll CSS Effects:
   - [ ] Adjust Quiz box-shadow using scroll position
@@ -21,10 +22,10 @@
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
   - [x] Get rid of cliche icons abuse.
 - [ ] Add/update ld+json / JSON-LD
-- [ ] Add Quizzes to the Menu
-- [ ] Publish next batch of quizzes
+- [x] Add Quizzes to the Menu
+- [x] Publish next batch of quizzes
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
-- [ ] Disable posthog locally
+- [x] Disable posthog locally
 - [ ] Add Video page
 - [x] Add search
 - Publish:

@@ -1,4 +1,23 @@
-export const bumpAnim = {
+export interface TransitionAnimation {
+  name: string; // The name of the keyframe
+  delay?: number | string;
+  duration?: number | string;
+  easing?: string;
+  fillMode?: string;
+  direction?: string;
+}
+
+export interface TransitionAnimationPair {
+  old: TransitionAnimation | TransitionAnimation[];
+  new: TransitionAnimation | TransitionAnimation[];
+}
+
+export interface TransitionDirectionalAnimations {
+  forwards: TransitionAnimationPair;
+  backwards: TransitionAnimationPair;
+}
+
+export const bumpAnim: TransitionAnimationPair = {
   old: {
     name: 'bump',
     duration: '0.5s',
@@ -12,12 +31,12 @@ export const bumpAnim = {
   },
 };
 
-export const bumpTransition = {
+export const bumpTransition: TransitionDirectionalAnimations = {
   forwards: bumpAnim,
   backwards: bumpAnim,
 };
 
-export const slideUpAnim = {
+export const slideUpAnim: TransitionAnimationPair = {
   old: {
     name: 'slideUp',
     duration: '0.75s',
@@ -31,12 +50,12 @@ export const slideUpAnim = {
   },
 };
 
-export const slideUpTransition = {
+export const slideUpTransition: TransitionDirectionalAnimations = {
   forwards: slideUpAnim,
   backwards: slideUpAnim,
 };
 
-export const moveInOutAnim = {
+export const moveInOutAnim: TransitionAnimationPair = {
   old: {
     name: 'move-in',
     duration: '0.35s',
@@ -50,7 +69,7 @@ export const moveInOutAnim = {
   },
 };
 
-export const moveInOutTransition = {
+export const moveInOutTransition: TransitionDirectionalAnimations = {
   forwards: moveInOutAnim,
   backwards: moveInOutAnim,
 };

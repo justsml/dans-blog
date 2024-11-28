@@ -4,9 +4,10 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
+// import partytown from "@astrojs/partytown";
 
 import expressiveCode from "astro-expressive-code";
-import { pluginLineNumbers } from '@expressive-code/plugin-line-numbers'
+import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 
 // https://astro.build/config
 export default defineConfig({
@@ -22,7 +23,8 @@ export default defineConfig({
     react({}),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
-      themes: ['dracula', 'solarized-dark'],
+      themes: ["dracula"],
+      plugins: ["line-numbers"],
     }),
     mdx(),
     sitemap(),
@@ -30,6 +32,7 @@ export default defineConfig({
       applyBaseStyles: false,
       nesting: true,
     }),
+    // partytown(),
   ],
   plugins: [pluginLineNumbers()],
   image: {

@@ -9,7 +9,6 @@ interface LoadGistOptions {
   secretToken: string;
   truncate: boolean;
   includeDefaultCss: boolean;
-  ignoreErrors?: boolean;
 }
 
 type PluginOptions = {
@@ -27,6 +26,8 @@ type PluginOptions = {
   gistDefaultCssInclude?: boolean;
   /* flag indicating whether the github default gist css should be preloaded */
   gistCssPreload?: boolean;
+  /* opt out of error handling, may fail to load external content */
+  ignoreErrors?: boolean;
 };
 
 const baseUrl = "https://gist.github.com";
@@ -41,10 +42,8 @@ export const getGist = async (
     includeDefaultCss: true,
   },
 ) => {
-  let loadedFromCache = true;
   let gist: unknown = await diskCache.get(fullUrl);
   if (!gist) {
-    loadedFromCache = false;
     gist = await loadGist(fullUrl, {
       username,
       secretToken,
@@ -89,7 +88,12 @@ async function loadGist(path: string, options: PluginOptions = {}) {
       // "application/vnd.github.v3.html+json",
       Authorization: `Bearer ${options.secretToken ?? GITHUB_TOKEN}`,
     },
-  }).catch(handleError(url));
+  })
+  .then((response) => response.ok ? response : Promise.reject(response))
+  .catch(err => {
+    handleError(url)(err);
+    return options.ignoreErrors ? null : Promise.reject(`Failed to Get GIST: ${url}`);
+  });
   const content = response ? await response.json() : {};
   const disableStyles = options.includeDefaultCss === false;
   console.warn("content", content.div);

@@ -1,5 +1,12 @@
-"use client";
-import { useContext, useEffect, useRef, useState, type ReactNode } from "react";
+import { navigate } from 'astro:transitions/client';
+import {
+  MouseEvent,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { QuizContext } from "./QuizContext";
 import type { Option } from "./types";
 import classNames from "classnames";
@@ -8,8 +15,15 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
+// import { autoFit, reduceFontSizeOnOverflow } from "../../shared/autoFit.ts";
 
 const global = getGlobal();
+
+// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
+// const updateCodeBlocks = () => {
+//   const blocks = getPreBlocks();
+//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
+// }
 
 /**
  * Challenge component
@@ -34,7 +48,7 @@ export default function Challenge({
   // hints?: string[];
 }) {
   let questionStore: ReturnType<typeof QuestionStore> | null = null;
-  const siteDomain = `danlevy.net`;
+  const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
@@ -65,12 +79,25 @@ export default function Challenge({
   //   setShowExplanation(false);
   // };
 
+  // useEffect(() => {
+
+  //   document.addEventListener("dblclick", updateCodeBlocks);
+
+  //   return () => document.removeEventListener("dblclick", updateCodeBlocks);
+  // }, []);
+
   useEffect(() => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
-    const link = global?.location?.pathname ?? "";
+    // if (global?.location?.pathname)
+    //   autoFit(`.challenge .expressive-code pre:has(code)`, {
+    //     fontMax: "2.05rem",
+    //     step: 0.1,
+    //     stepLimit: 25,
+    //   });
 
+    const link = global?.location?.pathname ?? "";
     setPageLink(siteDomain + link);
   }, [global?.location?.pathname]);
 
@@ -79,7 +106,8 @@ export default function Challenge({
       questionStore = QuestionStore(global?.location.pathname);
 
     if (questionStore) {
-      const idx = questionStore.addQuestion({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const _idx = questionStore.addQuestion({
         title,
         group,
         question,
@@ -87,11 +115,12 @@ export default function Challenge({
       });
       // console.log("Added question to store:", questionIndex, group, title);
       const isCorrect =
-      questionStore?.isCorrect({
-        index: questionIndex,
-      }) ?? undefined;
+        questionStore?.isCorrect({
+          index: questionIndex,
+        }) ?? undefined;
 
-      const tries = questionStore?.getTries({
+      const tries =
+        questionStore?.getTries({
           index: questionIndex,
         }) ?? 0;
 
@@ -104,7 +133,6 @@ export default function Challenge({
       console.error("QuestionStore is not initialized");
     }
   }, [questionStore, title, group, question, options, explanation]);
-
 
   const logEvent = (name: string, data: unknown) => {
     // @ts-ignore
@@ -266,10 +294,120 @@ export default function Challenge({
           <p
             className="help-box"
             dangerouslySetInnerHTML={{ __html: explanationText }}
-            onClick={() => setShowExplanation(false)}
+            onClick={(ev: MouseEvent<HTMLParagraphElement>) => {
+              ev.preventDefault();
+              const {clientX, clientY} = ev;
+              const target: HTMLElement = ev.target as HTMLElement;
+              console.log(
+                "Clicked on explanation",
+                {clientX, clientY},
+                target.tagName,
+                target.getAttributeNames(),
+              );
+
+              // const isAbs = isAbsoluteElement({target});
+
+              const link: HTMLAnchorElement | null =
+                target.tagName === "A"
+                  ? (target as HTMLAnchorElement)
+                  : target?.parentElement?.tagName === "A"
+                    ? (target.parentElement as HTMLAnchorElement)
+                    : null;
+              const isTopRight = isTopRightCorner({target}, 48); 
+              const isInCodeBlock = target.closest("code, pre");
+              const isInParagraph = target.closest("p");
+              if (isTopRight) {
+                console.log("TOP RIGHT CLOSE")
+                setShowExplanation(false);
+                return false
+              }
+
+              if (isInParagraph) {
+                console.log("Clicked in paragraph %o", target);
+                return false;
+              }
+              if (isInCodeBlock) {
+                console.log("Clicked in code block %o", target);
+                return false;
+              }
+
+              if (link) {
+                navigate(link.href, {sourceElement: link});
+                console.log("Clicked on link", link, link?.href);
+                return true;
+              }
+            }}
           ></p>
         </section>
       </section>
     </div>
   );
 }
+
+function isTopRightCorner({target}: {
+  target: HTMLElement | null;
+  clientX?: number;
+  clientY?: number;
+}, hitBox = 48) {
+  if (!target) return false;
+  const before = getComputedStyle(target as HTMLElement, "::before");
+  const {scrollY, scrollX} = global;
+  
+
+  if (before) {
+    const top = Number(before.getPropertyValue("top").slice(0, -2));
+    const right = Number(before.getPropertyValue("right").slice(0, -2));
+    const left = Number(before.getPropertyValue("left").slice(0, -2));
+
+    if (Number.isNaN(right) || Number.isNaN(top)) {
+      return false;
+    }
+    console.log("isBefore %o %o", {top, right, left, scrollX, scrollY});
+    if (top <= hitBox && right <= hitBox) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// function isAbsoluteElement({
+//   target,
+//   pseudo = "::before",
+// }: {
+//   target: EventTarget | null;
+//   pseudo?: string;
+// }) {
+//   if (!target) return false;
+
+//   const before = getComputedStyle(target as HTMLElement, pseudo);
+//   if (before) {
+//     // Then we parse out the dimensions
+//     const top = Number(before.getPropertyValue("top").slice(0, -2));
+//     const bottom = Number(before.getPropertyValue("bottom").slice(0, -2));
+//     const left = Number(before.getPropertyValue("left").slice(0, -2));
+//     const right = Number(before.getPropertyValue("right").slice(0, -2));
+
+//     const width = Number(before.getPropertyValue("width").slice(0, -2));
+//     const height = Number(before.getPropertyValue("height").slice(0, -2));
+//     console.log("isAbsolute %o", {
+//       top,
+//       bottom,
+//       left,
+//       right,
+//       width,
+//       height,
+//     });
+//     // And get the mouse position (layerX and layerY are relative to the target)
+//     // Finally we do a bounds check (Is the mouse inside of the before element)
+//     if (
+//       Number.isNaN(left) ||
+//       Number.isNaN(top) ||
+//       Number.isNaN(bottom) ||
+//       Number.isNaN(right)
+//     ) {
+//       return false;
+//     }
+
+//   }
+//   return true;
+// }

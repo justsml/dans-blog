@@ -1,7 +1,7 @@
 .additional-reading {
   margin-block: 2rem;
   margin-inline: auto;
-  max-width: 580px;
+  max-width: 610px;
   h2 {
     margin-left: .25rem;
     font-size: 1.75rem;
@@ -16,7 +16,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(220px, 280px));
   grid-auto-flow: row dense;
-  gap: 1.25rem;
+  gap: 2rem;
   justify-content: center;
 
   .tile {
@@ -28,13 +28,13 @@
     max-width: 280px;
 
     /* margin-inline: 0.75rem; */
-    grid-template-rows: auto auto auto 1fr auto;
+    grid-template-rows: 0 auto auto 1fr auto;
     /* gap: 1rem; */
     /* padding: 1rem; */
     border-radius: 1rem;
     box-shadow: 0 0 .5rem 0.125rem hsl(var(--card-foreground));
     transition: box-shadow 0.1s ease-in-out, color 0.1s ease-in-out;
-    color: var(--clr-muted-200);
+    color: var(--clr-muted-300);
   
     &:hover {
       box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
@@ -43,22 +43,31 @@
       .small-label {
         color: unset;
       }
+      img {
+        border-top: .75px solid var(--clr-muted-400);
+        border-right: .5px solid var(--clr-muted-400);
+      }
     }
   
     .small-label {
+      visibility: hidden;
       order: 1;
-      padding-inline: 0.5rem;
-      padding-block: 0.25rem;
+      padding-inline: 0.85rem;
+      padding-block: 0.85rem;
+      font-weight: 200;
       text-align: right;
       font-size: var(--fs-200);
-      color: var(--clr-muted-400);
+      color: var(--clr-muted-300);
     }
 
     img {
       order: 2;
-      border-top: 1px solid var(--clr-muted-200);
-      border-bottom: 1px solid var(--clr-muted-200);
+      /* border-top: 0.1px solid var(--clr-muted-200); */
+      border-bottom: 1px solid var(--clr-muted-400);
+      border-right: .5px solid var(--clr-muted-400);
       border-radius: 0;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
       width: 100%;
       max-height: 80px;
       min-height: 80px;
@@ -79,20 +88,24 @@
       margin-left: 0;
       margin-right: 0;
       line-height: 1.25;
+      padding: 0.25rem .5rem;
       /* color: var(--neon-cyan); */
     }
 
     p {
-      padding-inline: 0.5rem;
+      /* padding-inline: 0.5rem; */
       order: 4;
       /* font-size: 0.9rem; */
       font-weight: 200;
+      padding: 0.25rem 1rem;
     }
 
     .info-grid {
-      padding-inline: 0.5rem;
-      padding-block: 0.25rem;
+      /* padding-inline: 0.5rem;
+      padding-block: 0.25rem; */
       order: 5;
+      font-weight: 200 !important;
+      padding: 0.25rem 1rem 1rem 1rem;
     }
   }
 }

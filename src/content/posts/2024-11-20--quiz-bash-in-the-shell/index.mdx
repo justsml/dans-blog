@@ -556,7 +556,7 @@ Sharpen (or prove) your shell scripting **skills**!
 >
   <slot name="question">
   <div className="question">
-    Which syntax executes a `ls -l` while also making its output available for later use?
+    Which option will execute the command `ls -l` and return the output?
   </div>
   </slot>
 
@@ -565,9 +565,10 @@ Sharpen (or prove) your shell scripting **skills**!
     The `$(ls -l)` syntax executes the command inside the **parentheses** and substitutes the output. For example:
     ```bash
     echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
     ```
 
-    The 1st option uses Single quotes `'`, not backticks. This prevents expansion, so `'$(date +%F)'` would simply print the literal string `$(date +%F)`.
+    The 1st option uses Single quotes `'`, **not backticks.** This prevents expansion, so `'$(date +%F)'` would simply print the literal string `$(date +%F)`.
 
     While it's still supported to use backticks (`` `ls -l` ``) for command execution, it's recently become somewhat of an anti-pattern (in some contexts.) Most recommend using `$(command)` for better readability & consistency with different shells & versions.
 

@@ -4,10 +4,11 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import socialBanner from '../assets/social-banner.webp';
-import { moveInOutTransition } from "../components/TransitionAnimations.ts";
+import { fade } from 'astro:transitions';
+// import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
-const url = Astro.url.pathname;
+// const url = Astro.url.pathname;
 
 // console.log("Astro.props", Astro.props);
 type Props = {
@@ -21,7 +22,7 @@ type Props = {
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />
   </head>
-  <body transition:animate={moveInOutTransition}>
+  <body transition:animate={fade({ duration: '0.285s' })}>
     <Header className="content-grid" />
     <main class="content-grid">
       <slot name="default"></slot>
