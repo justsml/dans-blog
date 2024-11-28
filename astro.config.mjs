@@ -23,6 +23,8 @@ export default defineConfig({
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
       themes: ['dracula'],
+      plugins: ['line-numbers'],
+
     }),
     mdx(),
     sitemap(),
