@@ -666,6 +666,7 @@ Overriding the style when generating screenshots
       color: var(--neon-pink-subtle);
       font-weight: 900;
     }
+    .reset-quiz { visibility: visible; }
   }
 }
 
@@ -674,6 +675,7 @@ Overriding the style when generating screenshots
   .score-wrapper {
     display: none;
   }
+  .reset-quiz { visibility: visible; }
 }
 .score-wrapper {
   /* display: inline-flex; */
@@ -683,10 +685,12 @@ Overriding the style when generating screenshots
 }
 
 .btn.reset-quiz {
+  display: inline-flex;
+  /* display: none; */
+  visibility: hidden; /* hide the button by default, show when quiz completed */
   font-size: 1.125rem;
   /* margin-left: -2rem; */
   margin-right: 2rem;
-  display: inline-flex;
   justify-content: end;
   align-self: center;
   align-items: center;
