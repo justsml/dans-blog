@@ -5,7 +5,6 @@ import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import socialBanner from "../assets/social-banner.webp";
 // import { selfieUrl } from "astro-selfie";
-
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import "@/styles/nav.css";
@@ -18,12 +17,13 @@ interface Props {
   image?: string | ImageMetadata | undefined;
 }
 
-const slug = Astro.url.pathname.replace(/^\/*|\/*$/g, "");
+// const slug = Astro.url.pathname.replace(/^\/*|\/*$/g, "");
+// const isHomePage = slug === "/" || slug.length < 2;
+
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 let { title, description, image } = Astro.props;
 
-const isHomePage = slug === "/" || slug.length < 2;
 
 if (description === "undefined") description = undefined;
 
@@ -31,14 +31,6 @@ if (
   !image ||
   (typeof image === "string" ? image.length <= 1 : !("src" in image))
 ) {
-  // console.log("Using selfieUrl");
-  // image = {
-  //   format: "webp",
-  //   src: selfieUrl(Astro).toString(),
-  //   width: 1200,
-  //   height: 600,
-  // };
-  // console.log("image %o", image);
   image = socialBanner;
 }
 
@@ -135,18 +127,41 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   href="/icons/icon-512x512.webp"
 />
 
-{
-  isHomePage && (
-    <script
-      is:inline
-      defer
-      async
-      src="https://unpkg.com/htmx.org@2.0.2"
-      integrity="sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
-      crossorigin="anonymous"
-    />
-  )
-}
+
+<script>
+  import globalSafe from "globalthis";
+
+  const global = globalSafe();
+  const isHomePage = global.location.pathname === "/";
+  if (global.document && !global.document.querySelector("script[data-x-htmx-tag]") ) {
+    // add script here
+    const scriptEl = document.createElement("script");
+    scriptEl.setAttribute("is", "inline");
+    scriptEl.setAttribute("data-x-htmx-tag", "");
+    scriptEl.setAttribute("defer", "");
+    scriptEl.setAttribute("async", "");
+    scriptEl.setAttribute(
+      "src",
+      "https://unpkg.com/htmx.org@2.0.2"
+    );
+    scriptEl.setAttribute(
+      "integrity",
+      "sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+    );
+    scriptEl.setAttribute("crossorigin", "anonymous");
+
+    document.addEventListener("astro:page-load", function () {
+      console.log("Adding htmx script to page", global.location.pathname);
+      setTimeout(() => {
+        document.body.appendChild(scriptEl);
+      }, isHomePage ? 3 : 1000);
+
+      // refresh htmx on page load
+      // @ts-expect-error - htmx is a global
+      global.htmx && global.htmx.process(document.body);
+    });
+  }
+</script>
 
 <ViewTransitions fallback="none" />
 
