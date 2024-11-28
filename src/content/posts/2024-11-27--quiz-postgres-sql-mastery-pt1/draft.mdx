@@ -27,10 +27,30 @@ Ready to test your PostgreSQL knowledge? We'll cover identity columns, timestamp
   group="SQL Internals"
   title="Hash Join Triggers"
   options={[
-    {text: 'WHERE A = 1 AND B = 2', isAnswer: true},
-    {text: 'WHERE A = 1 OR B = 2'},
-    {text: 'WHERE A = 1 AND B > 2'},
-    {text: 'WHERE A = 1 HASH JOIN ON ...'}
+    {text: 'ON a.id = b.id', isAnswer: true},
+    {text: 'ON a.id > b.id'},
+    {text: 'ON a.id >= b.id'},
+    {text: 'HASH JOIN students a ... ON a.id = b.id ...'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which `ON` condition triggers a hash join in PostgreSQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    A hash join is triggered by an equality (`=`) condition in the `ON` clause.
+
+    - `=` is the most common hash join trigger
+    - `>` and `>=` trigger a merge join
+    - `HASH JOIN` is not a valid syntax in PostgreSQL
+
+    Hash joins are efficient for large tables, but require enough memory to build the hash table.
+  </div>
+  </slot>
+</Challenge>
 
 
 <Challenge
@@ -327,131 +347,6 @@ Ready to test your PostgreSQL knowledge? We'll cover identity columns, timestamp
   </slot>
 </Challenge>
 
-<Challenge
-  client:load
-  index={7}
-  group="Type Casting"
-  title="Cast Syntax Variations"
-  options={[
-    {text: 'All are valid', isAnswer: true},
-    {text: 'Only CAST() is valid'},
-    {text: 'Only :: is valid'},
-    {text: 'Only type() is valid'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    Which of these grade conversion syntaxes are valid?
-    ```sql
-    SELECT 
-      CAST('95' AS INTEGER) as grade1,
-      '95'::INTEGER as grade2,
-      INTEGER '95' as grade3;
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    PostgreSQL supports three casting syntaxes:
-
-    1. ANSI SQL: `CAST(expression AS type)`
-    2. PostgreSQL: `expression::type`
-    3. Type function: `type 'literal'`
-
-    All are functionally equivalent, but:
-    - `CAST()` is most portable
-    - `::` is PostgreSQL-specific but commonly used
-    - Type function style is least common
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={8}
-  group="ANSI SQL"
-  title="Standards Compliance"
-  options={[
-    {text: 'ILIKE'},
-    {text: 'RETURNING', isAnswer: true},
-    {text: 'WITH'},
-    {text: 'LATERAL'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    Which of these PostgreSQL features is NOT part of the ANSI SQL standard?
-    ```sql
-    WITH new_student AS (
-      INSERT INTO students (name, grade)
-      VALUES ('Marcus Aurelius', 12)
-      RETURNING *
-    )
-    SELECT * FROM new_student
-    WHERE name ILIKE 'marc%';
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    PostgreSQL extensions to ANSI SQL:
-    - `RETURNING` clause
-    - `ILIKE` for case-insensitive matching
-    - Array types and operations
-    - JSON/JSONB types
-    
-    ANSI SQL standard includes:
-    - `WITH` (Common Table Expressions)
-    - `LATERAL` joins
-    - Window functions
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={9}
-  group="Aggregate Functions"
-  title="Built-in Aggregates"
-  options={[
-    {text: 'MIN'},
-    {text: 'MAX'},
-    {text: 'AVG'},
-    {text: 'MEDIAN', isAnswer: true}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    Which is NOT a built-in aggregate function in PostgreSQL?
-    ```sql
-    SELECT 
-      MIN(grade) as lowest,
-      MAX(grade) as highest,
-      AVG(grade) as average,
-      MEDIAN(grade) as middle
-    FROM grades;
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    `MEDIAN` is not built-in! You need:
-    ```sql
-    PERCENTILE_CONT(0.5) 
-    WITHIN GROUP (ORDER BY grade)
-    ```
-
-    Common built-in aggregates:
-    - `MIN`, `MAX`, `COUNT`
-    - `AVG`, `SUM`
-    - `ARRAY_AGG`, `STRING_AGG`
-    - Various statistical functions
-  </div>
-  </slot>
-</Challenge>
 
 <Challenge
   client:load
