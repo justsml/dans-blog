@@ -1,8 +1,8 @@
-import {
+import type {
   PredictionResult,
   StreamablePromise,
-  type ChatHistoryLike,
-  type LLMPredictionOpts,
+  ChatHistoryLike,
+  LLMPredictionOpts,
 } from "@lmstudio/sdk";
 import lmStudio from "@lmstudio/sdk";
 
@@ -44,7 +44,6 @@ function loadModel(path: string = "lmstudio-community/Meta-Llama-3-8B-Instruct-G
       },
       // @ts-expect-error
       noHup: true,
-  
     },
   );
 }
