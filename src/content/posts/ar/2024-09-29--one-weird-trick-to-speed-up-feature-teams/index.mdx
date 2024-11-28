@@ -1,144 +1,136 @@
---- 
-title: واقعة غريبة لتعجيل فرق الميزات!
-subTitle: يحب مهندسي الموارد هذا!
+---
+lang: العربية
+title: تricks الوهمية لسرعة تشغيل فرق الميزات!
+subTitle: المهندسين في الاستaffen يdetest هذا!
 date: 2024-09-29
 modified: 2024-09-30
 tags: [agile, teams]
 category: Engineering
 
-cover_full_width: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_ full_width: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/wide_danny-howe-98KlbUsOO_w-unsplash.webp
 cover: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w300.webp
 cover_mobile: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
 cover_icon: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
 cover_credit: صورة بواسطة <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> على <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+
 ---
 
 <details>
-<summary>جدول المحتويات</summary>
+<summary>مقتطفات الكتاب</summary>
 
-- [التفكير في المفاتيح](#thinking-in-keys)
-  - [تصميم باستخدام المفاتيح](#designing-with-keys)
-  - [KVs كرسوم واشجار؟](#kvs-as-graphs--trees)
-  - [متى تستخدم أنماط KV؟](#when-to-use-kv-patterns)
-  - [متى تجنب أنماط KV؟](#when-to-avoid-kv-patterns)
-  - [متى تحتاج إلى أكثر من أنماط KV؟](#when-you-need-more-than-kv)
-- [خطوات التاليه](#next-steps)
-  - [خدمة الحقائق - مشروع مرجعي](#fact-service---reference-project)
-- [النهاية](#conclusion)
-  - [قراءة إضافية](#further-reading)
+- [Thinking in Keys](#thinking-in-keys)
+   - [Designing with Keys](#designing-with-keys)
+   - [KVs as Graphs &amp; Trees?](#kvs-as-graphs-&amp;-trees)
+   - [When to Use KV Patterns](#when-to-use-kv-patterns)
+   - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+   - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+   - [Fact Service  - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+   - [Further Reading](#further-reading)
 
 </details>
 
-عند تصميم نظام جديد أو ميزة، يمكن أن يصعب عليك التغلب على التصميم الشمولي. في هذا المقال سأแบحك طريقة مفيدة قمت بها خلال مسيرتي المهنية.
+ عندما تออกแบบ نظامًا جديدًا أو ميزة، يمكن أن يصعب عليك الوقوف على التصميمات الأساسية. في هذا المقال سأشارك تركيبة رائعة دفعتني النجاح في حياتي المهنية.
 
 <section class="breakout">
-  _حاول_ استخدام الحفظ البسيط للبيانات عند تصميم نظام جديد أو ميزة.
+_try_ الأسهل من حيثما تذهب تصميمات البيانات في نظام جديد أو ميزة.
 </section>
 
-في كثير من الأحيان، أرى فرقًا تستخدم SQL أو MongoDB كاختيار وحيد لstorage البيانات. بالتأكيد، لا أحد سيتم إقالته بسبب اختيار SQL. لكن ماذا لو قلت لك أن هناك طريقة أبسط وأسرع وأرخص للبدء؟
+الناس كثيراً ما يصلون إلى خزانات بيانات مثل SQL أو MongoDB كأول خيارهم ل.storage. نعم، لا أحد يخسر العمل بسبب اختياره SQL. ولكن ما لو told you أن هناك أبسط طريقاً أقل تكلفة وسرعة أكبر؟
 
-مخزن مفاتيح (Key-value store) قد يكون كل ما تحتاجه. مثل Redis أو S3.
+المستودع (KV) أو المستودع الключي- القيمة قد يكون كل ما تحتاج إليه. شيء مثل Redis أو S3.
 
-ليس دائمًا الخيار الصحيح، ولكن ربما **أكثر مما تعتقد**.
+لا يكن دائماً الخيار الأفضل، ولكن ربما أكثر من ما ترهب. المستودع يمكن أن يساعد في السرعةModerate في مرحلة التطوير المبكرة من خلال إعادة استخدام رمز layer البيانات وال avoidance من تكاليف تغيير التصميمات الأساسية والمهاجرة. سوف تحدث التغييرات دائماً، لذا ابقى кодك يتعامل معه مثلًا.
 
-层 الحفظ البسيط يمكن أن يسرع التنمية المبكرة بشكل معتدل عن طريق استعادة رمز طبقة البيانات وتجنب تكاليف متغيرات التصميم الشمولي والتحديثات. سيحدث المتغيرات بالتأكيد؛ لكن يجب على الكود التعامل معها طالما يمكنه ذلك. أفضل أن تجنب التعامل مع التغييرات في مكانين.
-
-يمكن أن يزيد الأداء من حيث أنه يتم البحث عن المفاتيح بسرعة، ويمكن للكتابة أن يفيد من تحديثات المجموعة.
+الانتاجات السريعة هي لأن lookups الключي highly optimized، والكتابة يمكن أن تتفوق من خلال updates batched.
 
 <figure>
-![رسومة لجذر user/123](./KVsCanBeGraphs.webp)
-<figcaption>رسومة لجذر user/123</figcaption>
+![Graph of user/123](../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
 </figure>
 
-## التفكير في المفاتيح
+### Thinking in Keys
 
-يمكن أن يشعر التصميم باستخدام أنماط مفاتيح غريبًا، خاصة إذا كنت معتادًا على تصميم الأنظمة مع هراريات الأجسام أو مخططات العلاقات وتنفيذها مباشرةً في SQL.
+يمكن أن يصعب عليك التصميم باستخدام نمط Key-Value أولاً، خاصة إذا كنت معتادًا علىتصميمات النظام مع هرمية المObjectName أو diagrams العلاقية DIRECTLYImplementingها في SQL.
 
-ربما **استخدمت** أنماط مفاتيح قبل ذلك! هم متواجدون في كل مكان، من الإعدادات والعناوين إلى تخزين الملفات على S3-style! كل مرة تتعامل فيها مع البيانات عبر قيمة `ID` فنتيجة، فأنتم تعملون ببعض أنماط مفاتيح أخرى! (ولكن ليس بالضرورة مخزن مفاتيح.)
+لقد قدما  ***used*** نمط Key-Value قبل ذلك! هم أين، من configs والURLs إلى S3-style Object Storage! كل مرة تتعامل مع بيانات بواسطة قيمة فريدة من نوعها، تخيل ما؟ أخرى نمط Key-Value! (ولكن ليس نecessarily KV Store.)
 
-### تصميم باستخدام المفاتيح
+### Designing with Keys
 
-يمكن تمثيل كل البيانات تقريبًا باستخدام أنماط مفاتيح. (في الحقيقة، العديد من قواعد البيانات العليا تعتمد على أنماط مفاتيح الأقل ترتيبًا.) دعونا نلقي نظرة على بعض الأمثلة:
+معظم البيانات  _can_ يمكن أن تتم представتها باستخدام نمط Key-Value. (في حقيقة، الكثير من قواعد البيانات العليا建ت على مستودعات Key-Value lower-level.) دعونا ننظر إلى بعض الأمثلة:
 
 ```markdown
-user/123          {id: 123, ...}
-user/123/block    ['user/456', 'user/789']
-user/123/groups   ['admin', 'staff']
-user/420/friends  ['user/456', 'user/789']
-
-group/admin       {user: '*:rw'}
-group/default     {user: '*:r'}
-
-product/42/discount/<UUID>	{percentOff: '10%'}
-product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+user/123           {id: 123, ...}
+user/123/block     ['user/456', 'user/789']
+user/123/groups    ['admin', 'staff']
+user/420/friends   ['user/456', 'user/789']
+group/admin        {user: '*:rw'}
+group/default      {user: '*:r'}
+product/42/discount/<UUID>  {percentOff: '10%'}
+product/42/discount/<UUID>  {percentOff: '20%', minTotal: 100.0}
 ```
 
-قد تكون قد لاحظت، ولكن المفتاح هو غالبًا مفتاح في نفسه! هذا نمط شائع في مخازن مفاتيح. يحتوي المفتاح غالبًا على تركيبة من نوع الملف والمعرف الفريد. (مثل `user/123` أو `user:456`)
+قد لاحظت، ولكن ID هو قيمة فريدة من نوعها! هذا هو نمط.common في مستودعات Key-Value. القيمة هي أحيانًا مكونcomposite من النوع الموجود والعنوان الفريد. (مثلاً `user/123`، `user:456`)
 
-### KVs كرسوم واشجار؟
+### KVs as Graphs &amp; Trees?
 
-يمكن أن يكون مفيدًا تمثيل البيانات المعقدة مثل رسوم الأشجار باستخدام أنماط مفاتيح. (مرة أخرى، عناوين الويب REST هي مثال جيد على ذلك.)
+يمكن أن يكون مفيدrepresenting Structures بيانات مثل Graphs أو Trees باستخدام نمط Key-Value. (مرة أخرى، URLs REST are a great example of this.)
 
-ترتيب المفاتيح (`user/420` -> `user/420/friends`) يؤكد علاقة الجذر بين `user` و `friends`.
+هيئات البيانات  ( user/420 -> user/420/friends) Natural encode graph relationship بين المользоват و FRIENDS.
+هذا هو طريق سريع وفعال لserialization Structures بيانات Graph. خاصة إذا لم يكن لديك_complexity من قاعدة بيانات Graph (مثل Neo4j).
 
-هذا طريقة سريعة وميسورة التكلفة لتمثيل البيانات الرسومية. خاصة إذا لم تحتاج إلى تعقيد قاعدة البيانات الرسومية (مثل Neo4j).
+### When to Use KV Patterns
 
-### متى تستخدم أنماط KV؟
+- عندما تحتاج إلى مقياس كبير. (الbillions أو حتى trillions من KV pairs.)
+- عندما تحتاج إلى access بيانات بواسطة قيمة فريدة من نوعها.
+- عندما تحتاج إلى Structures بيانات بسيطة.
+- عندما تحتاج إلى البيانات التي بها هرمية، graph أو Structure Tree.
 
-- عندما تحتاج إلى مقياس كبير. (بليونات أو حتى تريليونات من أزواج المفاتيح.)
-- عندما يتعين عليك الوصول إلى البيانات عبر مفتاح فريد.
-- عندما تحتاج إلى بنية بيانات بسيطة.
-- عندما لديك بيانات مع هراريات، رسوم أو أشجار.
+### When to Avoid KV Patterns
 
-### متى تجنب أنماط KV؟
+لا ت.store الأشياء مثل التعليقات على المدونات في KV pair واحد. مثل `post/666  -> {comments: [...too many...]}`. بدلاً من ذلك قد ت 使用 `post/666/comments/1`، أو `post/666/comments/<UUID>`, etc. Or go for a SQL table.
 
-لا تخزن الأمور مثل تعليقات المدونة في **مجموعة** واحدة من أزواج المفاتيح. على سبيل المثال `post/666 -> {comments: [...way too many...]}`. بدلًا من ذلك قد تستخدم `post/666/comments/1` أو `post/666/comments/<UUID>`, الخ. أو استخدم قاعدة بيانات SQL.
-
-- عندما تحتاج إلى البحث عن خصائص البيانات (ليست مفتاح أو ID) في مجموعة البيانات.
-- عندما تحتاج إلى الاندماج بين البيانات عبر عدة كيانات.
+- عندما تحتاج إلى بحث بواسطة الخصائص (لا قيمة فريدة من نوعها) في بياناتك.
+- عندما تحتاج إلى JOIN البيانات عبر.Entities متعددة.
 - عندما تحتاج إلى فرض قيود معقدة أو علاقات.
 
-### متى تحتاج إلى أكثر من أنماط KV؟
+### When you need more than KV
 
-كلما تطورت متطلبات المشروع، قد تحتاج إلى القيام بأكثر مما يمكن أن يقدمه مخزن مفاتيح. في هذه الحالة ستحتاج إلى النظر في تحويل المخزن إلى قاعدة بيانات أكثر تعقيدًا.
+كما أنت проектاً يطور طبيعة، قد تحتاج إلى أكثر مما يدعم مستودع KV. في هذه الحالة سوف تحتاج إلى البحث عن مهاجرة إلى مستودع بيانات أكثر تعقيدا.
 
-<figure>
-![رسومة لجذر user/123](./KVsCanBeGraphs.webp)
-<figcaption>رسومة لجذر user/123</figcaption>
-</figure>
+{/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo- spatial, Streams, and Sorted Sets) that can help you meet some requirements.*/}
 
-الخبر الجيد هو أنك يمكنك بدء استخدام مخزن مفاتيح ثم تحويله إلى قاعدة بيانات أكثر تعقيدًا عندما تحتاج إلى ذلك. (مع العديد من الطاولات والفهرس والقيود الخ.) قمت بذلك العديد من المرات باستخدام 50 سطرًا فقط.
+الخبر الجيد هو أن مهاجرة مستودع KV واحد إلى SQL relative ease من مهاجرة قاعدة بيانات SQL kompleks إلى مستودع KV. (مع 여러 جداول، indexes، constraints، etc.) لقد فعلت هذا كثيراً مع سكريبت 50- خط.
 
-من الناحية الشخصية، وجدت أن جودة التصميمات SQL أعلى إذا بدأت باستخدام مخزن مفاتيح أولاً. يضطرك إلى التفكير في البيانات بطريقة مختلفة، ويعلمك بشكل أفضل ما تحتاج إليه من SQL.
+وعنكياً، لقد وجدت أن جودة التصميمات الأساسية هي عالية إذا بدأتم باستخدام نمط Key-Value أولاً. فهو ي迫ك للاهتمام بالبيانات في مختلف الطرق، ويحسن من فهمك _ exactly what you really need from SQL.
 
-## خطوات التاليه
+## Next Steps
 
-أفضل طريقة للتعلم هي تجربتها! إذا كنت مهتمًا بمعرفة المزيد عن هذا النمط، فاقترح عليك **بناء الأشياء** باستخدام Redis أو DynamoDB أو S3.
-جميعهم مخازن مفاتيح رائعة مع اختلافات مختلفة.
+أفضل طريقة للتعلم هي試 it out! إذا كنت مهتماً في استكشاف هذا النمط بشكل أعمق،Recommend trying to build things with Redis, DynamoDB or S3. All are excellent KV stores with different trade-offs.
 
-### خدمة الحقائق - مشروع مرجعي
+### Fact Service  - Reference Project
 
-تحقق من مشروع "خدمة الحقائق" على GitHub، وهو مشروع مفتوح المصدر.
+Check out my Open Source ["Fact Service," a reference project on GitHub](https://github.com/justsml/fact-service).
 
-هو API REST المستقل الذي يimplement خادم بيانات KV.
+It's a stand-alone RESTful API that implements a KV data service.
 
-يتضمن العديد من [مستعرضي البيانات](https://github.com/justsml/fact-service/tree/main/lib/providers).
-بما في ذلك Postgres و Redis و DynamoDB و Firestore و Cassandra! (مع أوامر Docker لبدء العمل بسرعة.)
+It features many [data adapters](https://github.com/justsml/fact-service/tree/main/lib/providers). Including for Postgres, Redis, DynamoDB, Firestore, and Cassandra! (Complete with [Docker commands](https://github.com/justsml/fact-service/tree/main/lib/providers) to get started quickly.)
 
-خدمة الحقائق مصمم كمشروع تعليمي، فكركها وتحديها!
+Fact Service is meant to be a starter & learning project, fork it and build your own KV data service!
 
-## النهاية
+## Conclusion
 
-أمل أن وجدت هذا المقال مفيدًا! إذا كان لديك أي أسئلة أو تعليقات، فيرجى الإشارة إليهم أو إرسال رسالة على [Twitter](https://twitter.com/justsml).
+أمل أن وجدت هذا المقال مفيدًا! إذا كان لديك أي أسئلة أو ملاحظات، من فضلك لا تتردد في التعليق أو  @ me on [Twitter](https://twitter.com/justsml).
 
-### الشكر
+### Credits
 
 - [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
 - [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
 
-### قراءة إضافية
+### Further Reading
 
-- [خدمة الحقائق](https://github.com/justsml/fact-service)
+- [Fact Service](https://github.com/justsml/fact-service)
 - [Postgres](https://www.postgresql.org/)
 - [Redis](https://redis.io/)
 - [DynamoDB](https://aws.amazon.com/dynamodb/)
@@ -146,9 +138,11 @@ product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
 - [Cassandra](https://cassandra.apache.org/)
 - [Firestore](https://firebase.google.com/docs/firestore)
 
-{/* <!-- Translated from English to Arabic -->
-<!-- Original text length: 7729 characters -->
-<!-- Translated text length: 6549 characters -->
-<!-- Translation API: http://localhost:1234/v1/chat/completions -->
-<!-- Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF -->
-<!-- Translation date: 2024-11-26T19:40:01.214Z --> */}
+
+{/* Translated from English to Arabic
+Original text length: 7729 characters
+Translated text length: 7445 characters
+Translation API: http://localhost:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF
+Translation date: 2024-11-26T22:10:39.977Z */}
+

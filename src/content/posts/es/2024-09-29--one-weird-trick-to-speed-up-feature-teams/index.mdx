@@ -1,32 +1,31 @@
 ---
 
-title: Una trampa extraña para acelerar a los equipos de características!
-subTitle: Los ingenieros de staff odian esto!
+title: Una trampa extraña para acelerar a los equipos de características
+subTitle: Los ingenieros de personal lo odian!
 date: 2024-09-29
 modified: 2024-09-30
 tags: [agile, equipos]
 category: Ingeniería
 
-cover_full_width: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/wide_danny-howe-98KlbUsOO_w-unsplash.webp
-cover: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w300.webp
-cover_mobile: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
-cover_icon: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
 cover_credit: Foto por <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> en <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+
 ---
 
-{/* Agregar elemento de toggle html5 */}
-
 <details>
-<summary>Índice</summary>
+<summary>Índice de contenido</summary>
 
-- [Pensar en Claves](#pensar-en-claves)
-  - [Diseñando con Claves](#diseñando-con-claves)
-  - [KV como Gráficos y Árboles?](#kv-como-gráficos-y-árboles)
+- [Pensar en claves](#pensar-en-claves)
+  - [Diseñando con claves](#diseñando-con-claves)
+  - [KV como gráficos y árboles?](#kv-como-graficos-y-arboles)
   - [Cuándo usar patrones de KV](#cuándo-usar-patrones-de-kv)
   - [Cuándo evitar patrones de KV](#cuándo-evitar-patrones-de-kv)
   - [Cuándo necesitas más que KV](#cuándo-necesitas-más-que-kv)
 - [Pasos siguientes](#pasos-siguientes)
-  - [Servicio de Hechos - Proyecto de referencia](#servicio-de-hechos---proyecto-de-referencia)
+  - [Servicio de hechos - Proyecto de referencia](#servicio-de-hechos---proyecto-de-referencia)
 - [Conclusión](#conclusión)
   - [Leer más](#leer-más)
 
@@ -38,27 +37,27 @@ Cuando se diseña un nuevo sistema o característica, es fácil quedarse atascad
   _Intenta_ utilizar la persistencia de datos más simple posible al diseñar un nuevo sistema o característica.
 </section>
 
-Demasiado a menudo, veo equipos que se dirigen hacia SQL o MongoDB como su única opción para almacenamiento de datos. Claro, nadie se despidió por elegir SQL. Pero ¿qué si te dijera que hay una forma más simple, rápida y barata para empezar?
+Demasiado a menudo, veo equipos que se dirigen hacia SQL o MongoDB como su única opción para almacenamiento de datos. ¡Claro que nadie se despidió por elegir SQL! Pero ¿qué si te dijera que hay una forma más simple, rápida y económica de empezar?
 
 Un almacén de claves (KV) o un almacenamiento de claves podría ser todo lo que necesitas. Algo como Redis o S3.
 
 No siempre es la elección correcta, pero tal vez **más a menudo de lo que crees**.
 
-Una capa de almacenamiento simple puede acelerar moderadamente el desarrollo temprano reutilizando código de la capa de datos y evitando costos relacionados con el cambio en el diseño de la estructura de datos y las migraciones. El cambio ocurrirá de cualquier manera; que el código se encargue de él siempre que sea posible. Mejor evitar manejar cambios en dos lugares.
+Una capa de almacenamiento simple puede acelerar moderadamente el desarrollo temprano reutilizando código de la capa de datos y evitando costos relacionados con el cambio en el diseño de la estructura de datos y las migraciones. El cambio ocurrirá de cualquier manera; que el código se encargue de él siempre que sea posible. Mejor evitar tratar con cambios en dos lugares.
 
-Los ganancias de rendimiento son probables ya que los _lookup_ de claves están altamente optimizados, y las escrituras pueden beneficiarse de actualizaciones en lotes.
+Los ganancias de rendimiento son probables ya que los _busquedas por clave_ están altamente optimizadas, y las escrituras pueden beneficiarse de actualizaciones en lote.
 
-{/* Evita patrones de KV si necesitas JOINs o buscar por propiedades en tu conjunto de datos. O en casos donde tienes conjuntos de datos infinitos o crecientes (Logs, Signups, etc.) */}
+{/* Evita patrones de KV si necesitas JOINs o buscar por propiedades en tu conjunto de datos. O en casos donde tienes conjuntos de datos crecientes sin fin (Logs, Signups, etc.). */}
 
-## Pensar en Claves
+## Pensar en claves
 
 Puede sentirse extraño diseñar con un patrón de claves primero, especialmente si estás acostumbrado a diseñar sistemas con jerarquías de objetos o Diagramas de Relaciones Entidad y diseñarlos directamente en SQL.
 
-Probablemente ***has utilizado*** patrones de claves antes. Están por todas partes, desde configuraciones y URLs hasta almacenamiento de objetos S3 estilo! Cada vez que manejas datos a través de un valor `ID` único, ¡otra trampa de claves! (Aunque no necesariamente un almacén de claves.)
+Probablemente ***has utilizado*** patrones de claves antes. Están por todas partes, desde configuraciones y URLs hasta almacenamiento de objetos S3 estilo! Cada vez que tratas con datos a través de un valor `ID` único, ¡adivina qué? Otro patrón de claves! (Aunque no necesariamente un almacén de claves.)
 
-### Diseñando con Claves
+### Diseñando con claves
 
-Virtually todos los datos _pueden_ representarse utilizando patrones de KV. (De hecho, muchos DBs de alto nivel se basan en patrones de KV más bajos.) Vamos a ver algunos ejemplos:
+Virtualmente todos los datos _pueden_ representarse utilizando patrones de KV. (De hecho, muchos DBs de alto nivel se basan en patrones de KV más bajos.) Vamos a ver algunos ejemplos:
 
 ```markdown
 usuario/123          {id: 123, ...}
@@ -69,17 +68,17 @@ usuario/420/amigos  ['usuario/456', 'usuario/789']
 grupo/admin       {usuario: '*:rw'}
 grupo/default     {usuario: '*:r'}
 
-producto/42/descuento/<UUID>	{porcentajeOff: '10%'}
-producto/42/descuento/<UUID>	{porcentajeOff: '20%', minTotal: 100.0}
+producto/42/recargo/<UUID>	{porcentajeDeDescuento: '10%'}
+producto/42/recargo/<UUID>	{porcentajeDeDescuento: '20%', minTotal: 100.0}
 ```
 
-Tal vez hayas notado, pero la `ID` a menudo es una clave en sí misma! Este es un patrón común en los almacenes de claves. La clave a menudo es un compuesto del tipo de entidad y el identificador único. (Ejemplo: `usuario/123`, `usuario:456`)
+Puede haber notado, pero la `ID` a menudo es una clave en sí misma. Este es un patrón común en los almacenes de claves. La clave a menudo es una composición del tipo de entidad y el identificador único. (e.g `usuario/123`, `usuario:456`)
 
-### KV como Gráficos y Árboles?
+### KV como gráficos y árboles
 
-Puede ser útil representar estructuras de datos complejas como Gráficos o Árboles utilizando patrones de claves. (Otra vez, las URLs REST son un ejemplo excelente de esto.)
+Puede ser útil representar estructuras de datos complejas como Gráficos o Árboles utilizando patrones de KV. (De nuevo, URLs REST son un ejemplo excelente de esto.)
 
-La jerarquía de la clave (`usuario/420` -> `usuario/420/amigos`) codifica naturalmente una relación gráfica entre el `usuario` y sus `amigos`.
+La jerarquía de claves (`usuario/420` -> `usuario/420/amigos`) codifica naturalmente una relación gráfica entre el `usuario` y sus `amigos`.
 
 Esto es una forma rápida y barata de serializar estructuras de datos gráficas. Especialmente si no necesitas la complejidad de un DB de gráficos (como Neo4j).
 
@@ -91,43 +90,43 @@ Esto es una forma rápida y barata de serializar estructuras de datos gráficas.
 ### Cuándo usar patrones de KV
 
 - Cuando necesitas una escala masiva. (Billones o incluso trillones de pares de claves.)
-- Cuando accedes principalmente a los datos a través de una clave única.
+- Cuando accedes principalmente a datos mediante una clave única.
 - Cuando necesitas estructuras de datos simples.
-- Cuando tienes datos con una jerarquía, gráfico o estructura de árbol.
+- Cuando tienes datos con una jerarquía, gráfico o árbol.
 
 ### Cuándo evitar patrones de KV
 
-No almacenes cosas como comentarios de blog en un _**único**_ par de claves. Por ejemplo, `post/666 -> {comentarios: [...demasiados...]}`. En su lugar podrías usar `post/666/comentarios/1`, o `post/666/comentarios/<UUID>`, etc. O opta por una tabla SQL.
+No almacenes cosas como comentarios de blog en un _**punto único**_ de claves. Por ejemplo, `post/666 -> {comentarios: [...demasiados...]}`. En su lugar podrías utilizar `post/666/comentarios/1`, o `post/666/comentarios/<UUID>`, etc. O opta por una tabla SQL.
 
-- Cuando necesitas buscar por propiedades (no la clave o ID) en tu conjunto de datos.
-- Cuando necesitas JOIN data entre varias entidades.
-- Cuando necesitas enfocar restricciones complejas o relaciones.
+- Cuando necesitas buscar por propiedades (no clave o ID) en tu conjunto de datos.
+- Cuando necesitas JOIN datos entre varias entidades.
+- Cuando necesitas enforcing restricciones complejas o relaciones.
 
 ### Cuándo necesitas más que KV
 
-A medida que las necesidades del proyecto evolucionan naturalmente, puede que necesites hacer más que lo que soporta tu almacén de claves. En este punto deberás buscar migrar a un almacenamiento de datos más complejo.
+A medida que las exigencias del proyecto evolucionan naturalmente, puede necesitar hacer más que lo que su almacén de claves admite. En este punto deberás buscar migrar a un almacenamiento de datos más complejo.
 
-{/* La buena noticia es que puedes empezar con un patrón de KV y evolucionarlo en un sistema más complejo según sea necesario. S3 tiene características más allá del almacenamiento simple, desde Athena para buscar archivos hasta Glacier y políticas de expiración hay mucho que puedes hacer con él. Además, Redis ha agregado muchas características de alto nivel (como Pub/Sub, Geo-spatial, Streams y Conjuntos ordenados) que pueden ayudarte a cumplir algunas necesidades. */}
+{/* La buena noticia es que puedes empezar con un patrón de KV y evolucionarlo en un sistema más complejo según sea necesario. S3 tiene características más allá del almacenamiento simple, desde Athena para buscar archivos hasta Glacier y políticas de expiración hay mucho que puedes hacer con él. También, Redis ha agregado muchas características de alto nivel (como Pub/Sub, Geo-spatial, Streams, y Conjuntos ordenados) que pueden ayudarte a cumplir algunas necesidades. */}
 
-La buena noticia es que migrar un almacén de claves a SQL es relativamente fácil en comparación con migrar un diseño complejo de SQL a un almacén de claves. (Con múltiples tablas, índices, restricciones, etc.) He hecho esto muchas veces con un script de 50 líneas.
+La buena noticia es que migrar un almacén de claves simple a SQL es relativamente fácil en comparación con migrar un esquema SQL complejo a un almacén de claves. (Con varias tablas, índices, restricciones, etc.) He hecho esto muchas veces con un script de 50 líneas.
 
-Anecdóticamente, he encontrado que los diseños de SQL son de mayor calidad si se comienzan con un patrón de KV primero. Esto fuerza a pensar en la data de una forma diferente y entender _exactamente_ qué necesitas de SQL.
+Anecdóticamente, he encontrado que los diseños de SQL son de mayor calidad si se comienzan con un patrón de KV primero. Fuerza a pensar en la data de una forma diferente y a entender _exactamente_ qué necesitas de SQL.
 
 ## Pasos siguientes
 
 La mejor manera de aprender es intentarlo! Si estás interesado en explorar este patrón más a fondo, te recomiendo **construir cosas** con Redis, DynamoDB o S3.
 Todos son excelentes almacenes de claves con diferentes trade-offs.
 
-### Servicio de Hechos - Proyecto de referencia
+### Servicio de hechos - Proyecto de referencia
 
 Revisa mi proyecto Open Source ["Servicio de Hechos," un proyecto de referencia en GitHub](https://github.com/justsml/fact-service).
 
-Es una API REST independiente que implementa un servicio de almacenamiento de claves.
+Es una API REST independiente que implementa un servicio de datos KV.
 
 Incluye muchos [adaptadores de datos](https://github.com/justsml/fact-service/tree/main/lib/providers).
 Incluyendo para Postgres, Redis, DynamoDB, Firestore y Cassandra! (Con comandos de Docker para empezar rápidamente.)
 
-El Servicio de Hechos está diseñado como un proyecto de inicio y aprendizaje, ¡fóralo y construye tu propio servicio de almacenamiento de claves!
+El Servicio de Hechos está diseñado para ser un proyecto inicial y de aprendizaje, ¡fórralo y construye tu propio servicio de datos KV!
 
 ## Conclusión
 
@@ -136,7 +135,7 @@ Espero que este artículo te haya sido útil. Si tienes alguna pregunta o retroa
 ### Créditos
 
 - [Modelado de datos jerárquicos en PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
-- [¿Qué hacer y qué evitar al almacenar grandes árboles en PostgreSQL?](https://leonardqmarcq.com/posts/dos-y-donts-de-modelar-arboles-jerárquicos-en-postgres)
+- [¿Qué hacer y qué evitar al almacenar grandes árboles en PostgreSQL?](https://leonardqmarcq.com/posts/dos-y-donts-de-modelar-arboles-jerarquicos-en-postgres)
 
 ### Leer más
 
@@ -147,10 +146,9 @@ Espero que este artículo te haya sido útil. Si tienes alguna pregunta o retroa
 - [S3](https://aws.amazon.com/s3/)
 - [Cassandra](https://cassandra.apache.org/)
 - [Firestore](https://firebase.google.com/docs/firestore)
-
-{/* <!-- Translated from English to Spanish -->
-<!-- Original text length: 7729 characters -->
-<!-- Translated text length: 8625 characters -->
-<!-- Translation API: http://localhost:1234/v1/chat/completions -->
-<!-- Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF -->
-<!-- Translation date: 2024-11-26T19:51:38.510Z --> */}
+{/* Translated from English to Spanish
+Original text length: 7729 characters
+Translated text length: 8574 characters
+Translation API: http://localhost:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF
+Translation date: 2024-11-26T20:13:41.006Z */}
