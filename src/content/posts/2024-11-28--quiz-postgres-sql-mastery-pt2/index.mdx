@@ -17,12 +17,9 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
 > **Part 2 of 2.** [Back to Part 1](/quiz-postgres-sql-mastery-pt1/)
 
+<p class="inset">Welcome to Part 2 of my Deep Postres Quiz!</p>
 
-<p class="inset">PostgreSQL 🐘 Is easily my favorite Database. I'm always learning new tricks and gotchas and decided to put the latest in a new Quiz!</p>
-
-{/* Over the years, I've learned a lot about its powerful features. Along the way, I've also discovered some quirks that can trip up even the most experienced developers. */}
-
-This quiz covers a mix of familiar and lesser-known PostgreSQL features and gotchas.
+This quiz covers a mix of familiar and lesser-known PostgreSQL features and gotchas: `JOIN`, `NULL`, ANSI SQL, Transactions, Internals, Indexing, Data Sampling... and more!
 
 Good luck! 🍀
 
@@ -258,11 +255,11 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    Put the most selective column first in multi-column indexes.
+    Put the most *selective* column first in multi-column indexes. `Selectivity` is _roughly_ referring to the order the columns appear in the query.
 
-    The index can be used for:
-    - All columns.
-    - Left-most columns only.
+    A B+Tree index can be used for:
+    - Any subset of columns.
+    - Right-hand-side wildcard searches (`LIKE 'Levy%'`).
 
     Consider query patterns and column cardinality when designing indexes!
   </div>
