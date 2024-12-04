@@ -10,11 +10,31 @@
 - [ ] Add AutoFit Text module [autoFit.ts](/src/shared/autoFit.ts)
 - [ ] Change inset/blockquote to have an artistic border.
 - [ ] Add 'pop-shadow' effect to `.article-card` on scroll in to view. Animate from `box-shadow: 0.0px 0.0px 0.0px hsl(0deg 0% 0% / 0.50);` and `box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);`
+- [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [x] Add Mastodon & Bsky links to footer.
+- [x] Support disabling styles in `<Gist />` component.
+- [x] Add `theme-color` meta tag
+
+- Add Scroll CSS Effects:
+  - [ ] Adjust Quiz box-shadow using scroll position
+  - [ ] Look into scroll snap for each quiz.
+
+- [x] Update Quiz UI, 
+  - [x] Make Question's Linkable
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [x] Get rid of cliche icons abuse.
 - [ ] Add/update ld+json / JSON-LD
 - [ ] Look into scroll snap for each quiz.
 
 - [ ] Publish:
   - [ ] Free Site Search (PageFind) overview
+- [x] Add Quizzes to the Menu
+- [x] Publish next batch of quizzes
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+- [x] Disable posthog locally
+- [ ] Add Video page
+- [x] Add search
+- Publish:
   - [ ] Comments Component
   - [ ] Free local search
   - [ ] Newsletter

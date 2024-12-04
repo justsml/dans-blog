@@ -1,4 +1,3 @@
-'use client';
 
 import { formatDistance } from "date-fns/formatDistance";
 import { InfoLabel } from "./ui/infoLabel";

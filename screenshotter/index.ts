@@ -1,12 +1,12 @@
 import { mkdir } from "fs/promises";
 import path, { dirname, join } from "path";
-// import { autoScreenShot } from "../src/components/Screenshots/AutoScreenShot.ts";
 import getSiteRss, { RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
 // import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
 import { ElementHandle, Page } from "playwright";
 import * as webP from "@/shared/webP.ts";
+import { rmSync } from "fs";
 
 const { SITE_URL } = process.env;
 
@@ -17,7 +17,7 @@ const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
-// rssFeed.items = rssFeed.items.filter((item) => item.categories?.includes("Quiz"));
+rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz") && item.title?.includes("Postgres"));
 
 let basePath = `/tmp/screenshots`;
 
@@ -112,7 +112,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
           classModifier: "mobile-shot",
         },
       ],
-      delayMs: 200,
+      delayMs: 250,
     },
   };
 }
@@ -174,7 +174,8 @@ async function takeScreenshot(ctx: Page | ElementHandle, fileName: string) {
     timeout: 30_000,
   });
   if (webP.isFileSupported(fileName)) {
-    const webpFile = webP.convertToWebP(fileName);
+    const webpFile = await webP.convertToWebP(fileName);
+    rmSync(fileName);
     return webpFile;
   }
   return fileName;
