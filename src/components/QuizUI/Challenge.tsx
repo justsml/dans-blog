@@ -285,8 +285,9 @@ export default function Challenge({
           "card-flip": showExplanation,
         })}
         style={{
-          height: `${80 * _options.length}px`,
+          height: `${70 * _options.length}px`,
           transition: "height 0.2s ease-in-out",
+          overflowY: "auto",
         }}
       >
         <section className="quiz-options card card-front">{_options}</section>
