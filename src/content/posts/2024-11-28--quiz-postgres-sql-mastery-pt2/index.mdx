@@ -359,7 +359,7 @@ Good luck! 🍀
     {text: '...students SAMPLE 10 PERCENT'},
     {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},
     {text: 'ORDER BY RANDOM() > 10'},
-    {text: 'WHERE RANDOM() > 0.1', isAnswer: true},
+    {text: 'WHERE RANDOM() <= 0.1', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -376,16 +376,18 @@ Good luck! 🍀
     2. Requires familiar knowledge of `TABLESAMPLE` syntax, since none of the `TABLESAMPLE` options use the correct syntax! (Sinister! I know! Keep going, I believe in you!!! ❤️)
     3. The `ROW_NUMBER() OVER (ORDER BY RAND())` and `ORDER BY RANDOM() > 10` are more red herrings. They look like they could be correct, but they're not. `RAND()` isn't a thing. And `RANDOM() > 10` is a boolean expression that will always be false since `RANDOM()` always is in the range `0.0-1.0`.
     One more problem, the `ORDER BY RANDOM() > 10` would also sort on a boolean value, not a random number. But that `> 10` sure felt like it could be a percentage, right?
-    4. `BERNOULLI` is valid, however `BERNOULLI(0.10)` is not what we want. It should be `BERNOULLI(10)` for 10% sample rate.
+    4. `BERNOULLI` is valid, however `SAMPLETABLE BERNOULLI` is not.
 
     As for the `TABLESAMPLE` method, PostgreSQL supports two sampling methods:
     - `BERNOULLI`: Each row has equal probability
     - `SYSTEM`: Block-level sampling (faster but less random)
 
+    To learn more about sampling, check out this article from [Render](https://render.com/blog/postgresql-random-samples-big-tables).
+
     Example:
     ```sql
     -- Sample 10% of rows
-    SELECT * FROM students TABLESAMPLE BERNOULLI (10);
+    SELECT * FROM students TABLESAMPLE BERNOULLI (0.1);
 
     -- For repeatable results, use REPEATABLE:
     SELECT * FROM students
