@@ -91,17 +91,19 @@ async function translateText(
   targetLanguage: string,
   extraInstructions?: string,
 ): Promise<string> {
+  
   const apiUrl =
     process.env.CHAT_API_URL || "http://192.168.0.87:1234/v1/chat/completions";
   const apiKey = process.env.CHAT_API_KEY;
   const model =
     process.env.CHAT_API_MODEL ||
-    "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF";
+    "meta-llama-3-8b-instruct:2";
 
   let authentication: Record<string, string> = apiKey
     ? { Authorization: `Bearer ${apiKey}` }
     : {};
 
+    console.log({apiUrl, apiKey, model, authentication})
   if (!apiUrl) throw new Error("API URL is required.");
   if (!text || text.length < 3)
     throw new Error("Text to translate is too short.");

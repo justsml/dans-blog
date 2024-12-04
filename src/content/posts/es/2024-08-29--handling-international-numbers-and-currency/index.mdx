@@ -1,0 +1,112 @@
+---
+lang: Spanish
+title: "Entendiendo Números Internacionales & Moneda"
+subTitle: "Moneda localizada explicada!"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [inżynieria, internacionalización, localización, moneda, números]
+category: Cómo se hace
+subCategory: Internacionalización
+cover: ../../2024-08-29--handling-international-numbers-and-currency/currency-banner-pic__w300.webp
+cover_full_width: ../../2024-08-29--handling-international-numbers-and-currency/currency-banner-wide.webp
+cover_mobile: ../../2024-08-29--handling-international-numbers-and-currency/currency-banner-pic__w300.webp
+cover_icon: ../../2024-08-29--handling-international-numbers-and-currency/currency-banner-pic__w200.webp
+---
+
+- [Dinero: Localización (L10n) y Internacionalización (i18n)](#dinero-localización-l10n-y-internacionalización-i18n)
+- [Conceptos Críticos](#conceptos-críticos)
+   - [Los Números son Locales 🏘️](#los-números-són-locales-️)
+   - [La Moneda es Global 🌎](#la-moneda-es-global-️)
+   - [Cuando Importa el Idioma](#cuando-importa-el-idioma)
+- [Una Solución](#una-solución)
+- [Pasos Siguientes](#pasos-siguientes)
+
+## Dinero: Localización (L10n) y Internacionalización (i18n)
+
+No son solo para dominar un juego de Scrabble, _localización_ & _internacionalización_ se refieren al proceso de hacer que un producto **se sienta como en casa en un país diferente**.
+
+<p class="breakout quote">Muestre una moneda en el formato local incorrecto y es un giveaway: no has invertido ningún esfuerzo.<br/>Si no puedes formatear un precio, ¿cómo podrías manejar la entrega?</p>
+
+La internacionalización es un tema grande que abarca todo, desde la traducción de texto hasta la formateo de fechas. En este post veremos cómo se pueden formatear números y moneda.
+
+Vamos a explorar el formateo entre 3 países de la zona del euro, EE.UU. e India:
+
+- `€1,234,567.89` Irlanda 🇮🇪
+- `1.234.567,89 €` Alemania 🇩🇪
+- `1 234 567,89 €` Francia 🇫🇷
+- `$1,234,567.89` EE.UU. 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+¡Desorden! ¡Cierto! Hay símbolos, espacio en blanco y puntuación volando por todos lados! Es asombroso cómo la UE puede llegar a un acuerdo sobre algo!
+
+## Conceptos Críticos
+
+Antes de sumergirnos en soluciones, ¿qué entendemos por "Los Números son Locales"?
+
+### Los Números son Locales 🏘️
+
+Cada idioma ([País según ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) define reglas para formatear números.
+
+Las reglas de formateo numérico incluyen:
+
+- Decimal: coma, punto.
+- Milares: coma, punto, espacio.
+- Posición y espaciado del símbolo de moneda.
+
+### La Moneda es Global 🌎
+
+Un `moneda` se refiere a una unidad específica de dinero. (Vea [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) para la lista.)
+
+- Especifica un símbolo: `$`, `€`, `£`, `¥`. (A menudo se reutiliza.)
+- Siempre tiene un código de tres letras: `USD`, `EUR`, `GBP`, `JPY`.
+- Se puede usar/exchange en "cualquier" país. En teoría.
+- La conversión entre monedas requiere datos de tipo cambio.
+- El valor no cambia según el idioma.
+
+### Cuando Importa el Idioma
+
+La mayoría de las API de ecommerce/pago tratan con `precio` + `codigoMoneda`. ¿Por qué no locales?
+Los idiomas son (generalmente) configurados a nivel del sistema operativo/dispositivo y los navegadores los hacen disponibles mediante `navigator.lenguaje`. Dado que cada uno de tus usuarios podría tener un idioma diferente, solo tiene sentido formatear números y moneda en el lado del cliente.
+
+## Una Solución
+
+¡Buenas noticias! Los lenguajes de programación modernos tienen soporte incorporado para este tema. En JavaScript, tenemos la clase `Intl` y `Intl.NumberFormat`!
+Vamos a echar un vistazo al código:
+```
+const número = 1_234_567.89;
+
+/**
+* Formatea un número en moneda local.
+* @param {number} cantidad - La cantidad a formatear.
+* @param {string} moneda - El código de tres letras de la moneda.
+* @param [string] idioma - El string del idioma del usuario.
+*/
+const formatoMoneda = (cantidad, moneda, idioma = navigator.lenguaje) =>
+  new Intl.NumberFormat(idioma, { moneda, estilo: 'moneda' })
+    .format(cantidad);
+console.log('🇩🇪 ' + formatoMoneda(número, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatoMoneda(número, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatoMoneda(número, 'EUR', 'fr-FR'));
+```
+Si necesita hacer cosas más complicadas, como calcular impuestos, aplicar descuentos o convertir entre monedas, quiere usar una biblioteca como [dinero.js](https://v2.dinerojs.com/).
+
+## Pasos Siguientes
+
+Dependiendo de tus necesidades específicas, podrías querer explorar conceptos relacionados:
+
+- Buenas prácticas con el idioma del usuario. Detecte y permita overrides. (Ejemplo: un selector de país.)
+- Persistir enteros completos (almacene centavos, no dólares).
+- Matemáticas de dinero. (Ejemplo: aplicar un descuento del 20%, calcular `subTotal + impuestos`, etc.)
+- Tipo cambio en vivo. (Para compras al detal y exchanges de forex/monedas.)
+
+<p class="breakout quote">¿Me gustaría ver un futuro artículo sobre estos temas?</p>
+
+
+{/* Translated from English to Spanish
+Original text length: 4904 characters
+Translated text length: 5437 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-04T02:57:37.180Z */}
+
