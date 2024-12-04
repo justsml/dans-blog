@@ -23,7 +23,7 @@ export default defineConfig({
     react({}),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
-      themes: ["dracula"],
+      themes: ['dracula'],
       plugins: ["line-numbers"],
     }),
     mdx(),

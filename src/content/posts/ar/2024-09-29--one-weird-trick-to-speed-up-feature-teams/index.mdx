@@ -1,0 +1,148 @@
+---
+lang: العربية
+title: تricks الوهمية لسرعة تشغيل فرق الميزات!
+subTitle: المهندسين في الاستaffen يdetest هذا!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+
+cover_ full_width: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: صورة بواسطة <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> على <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+
+---
+
+<details>
+<summary>مقتطفات الكتاب</summary>
+
+- [Thinking in Keys](#thinking-in-keys)
+   - [Designing with Keys](#designing-with-keys)
+   - [KVs as Graphs &amp; Trees?](#kvs-as-graphs-&amp;-trees)
+   - [When to Use KV Patterns](#when-to-use-kv-patterns)
+   - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+   - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+   - [Fact Service  - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+   - [Further Reading](#further-reading)
+
+</details>
+
+ عندما تออกแบบ نظامًا جديدًا أو ميزة، يمكن أن يصعب عليك الوقوف على التصميمات الأساسية. في هذا المقال سأشارك تركيبة رائعة دفعتني النجاح في حياتي المهنية.
+
+<section class="breakout">
+_try_ الأسهل من حيثما تذهب تصميمات البيانات في نظام جديد أو ميزة.
+</section>
+
+الناس كثيراً ما يصلون إلى خزانات بيانات مثل SQL أو MongoDB كأول خيارهم ل.storage. نعم، لا أحد يخسر العمل بسبب اختياره SQL. ولكن ما لو told you أن هناك أبسط طريقاً أقل تكلفة وسرعة أكبر؟
+
+المستودع (KV) أو المستودع الключي- القيمة قد يكون كل ما تحتاج إليه. شيء مثل Redis أو S3.
+
+لا يكن دائماً الخيار الأفضل، ولكن ربما أكثر من ما ترهب. المستودع يمكن أن يساعد في السرعةModerate في مرحلة التطوير المبكرة من خلال إعادة استخدام رمز layer البيانات وال avoidance من تكاليف تغيير التصميمات الأساسية والمهاجرة. سوف تحدث التغييرات دائماً، لذا ابقى кодك يتعامل معه مثلًا.
+
+الانتاجات السريعة هي لأن lookups الключي highly optimized، والكتابة يمكن أن تتفوق من خلال updates batched.
+
+<figure>
+![Graph of user/123](../../2024-09-29--one-weird-trick-to-speed-up-feature-teams/KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
+</figure>
+
+### Thinking in Keys
+
+يمكن أن يصعب عليك التصميم باستخدام نمط Key-Value أولاً، خاصة إذا كنت معتادًا علىتصميمات النظام مع هرمية المObjectName أو diagrams العلاقية DIRECTLYImplementingها في SQL.
+
+لقد قدما  ***used*** نمط Key-Value قبل ذلك! هم أين، من configs والURLs إلى S3-style Object Storage! كل مرة تتعامل مع بيانات بواسطة قيمة فريدة من نوعها، تخيل ما؟ أخرى نمط Key-Value! (ولكن ليس نecessarily KV Store.)
+
+### Designing with Keys
+
+معظم البيانات  _can_ يمكن أن تتم представتها باستخدام نمط Key-Value. (في حقيقة، الكثير من قواعد البيانات العليا建ت على مستودعات Key-Value lower-level.) دعونا ننظر إلى بعض الأمثلة:
+
+```markdown
+user/123           {id: 123, ...}
+user/123/block     ['user/456', 'user/789']
+user/123/groups    ['admin', 'staff']
+user/420/friends   ['user/456', 'user/789']
+group/admin        {user: '*:rw'}
+group/default      {user: '*:r'}
+product/42/discount/<UUID>  {percentOff: '10%'}
+product/42/discount/<UUID>  {percentOff: '20%', minTotal: 100.0}
+```
+
+قد لاحظت، ولكن ID هو قيمة فريدة من نوعها! هذا هو نمط.common في مستودعات Key-Value. القيمة هي أحيانًا مكونcomposite من النوع الموجود والعنوان الفريد. (مثلاً `user/123`، `user:456`)
+
+### KVs as Graphs &amp; Trees?
+
+يمكن أن يكون مفيدrepresenting Structures بيانات مثل Graphs أو Trees باستخدام نمط Key-Value. (مرة أخرى، URLs REST are a great example of this.)
+
+هيئات البيانات  ( user/420 -> user/420/friends) Natural encode graph relationship بين المользоват و FRIENDS.
+هذا هو طريق سريع وفعال لserialization Structures بيانات Graph. خاصة إذا لم يكن لديك_complexity من قاعدة بيانات Graph (مثل Neo4j).
+
+### When to Use KV Patterns
+
+- عندما تحتاج إلى مقياس كبير. (الbillions أو حتى trillions من KV pairs.)
+- عندما تحتاج إلى access بيانات بواسطة قيمة فريدة من نوعها.
+- عندما تحتاج إلى Structures بيانات بسيطة.
+- عندما تحتاج إلى البيانات التي بها هرمية، graph أو Structure Tree.
+
+### When to Avoid KV Patterns
+
+لا ت.store الأشياء مثل التعليقات على المدونات في KV pair واحد. مثل `post/666  -> {comments: [...too many...]}`. بدلاً من ذلك قد ت 使用 `post/666/comments/1`، أو `post/666/comments/<UUID>`, etc. Or go for a SQL table.
+
+- عندما تحتاج إلى بحث بواسطة الخصائص (لا قيمة فريدة من نوعها) في بياناتك.
+- عندما تحتاج إلى JOIN البيانات عبر.Entities متعددة.
+- عندما تحتاج إلى فرض قيود معقدة أو علاقات.
+
+### When you need more than KV
+
+كما أنت проектاً يطور طبيعة، قد تحتاج إلى أكثر مما يدعم مستودع KV. في هذه الحالة سوف تحتاج إلى البحث عن مهاجرة إلى مستودع بيانات أكثر تعقيدا.
+
+{/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo- spatial, Streams, and Sorted Sets) that can help you meet some requirements.*/}
+
+الخبر الجيد هو أن مهاجرة مستودع KV واحد إلى SQL relative ease من مهاجرة قاعدة بيانات SQL kompleks إلى مستودع KV. (مع 여러 جداول، indexes، constraints، etc.) لقد فعلت هذا كثيراً مع سكريبت 50- خط.
+
+وعنكياً، لقد وجدت أن جودة التصميمات الأساسية هي عالية إذا بدأتم باستخدام نمط Key-Value أولاً. فهو ي迫ك للاهتمام بالبيانات في مختلف الطرق، ويحسن من فهمك _ exactly what you really need from SQL.
+
+## Next Steps
+
+أفضل طريقة للتعلم هي試 it out! إذا كنت مهتماً في استكشاف هذا النمط بشكل أعمق،Recommend trying to build things with Redis, DynamoDB or S3. All are excellent KV stores with different trade-offs.
+
+### Fact Service  - Reference Project
+
+Check out my Open Source ["Fact Service," a reference project on GitHub](https://github.com/justsml/fact-service).
+
+It's a stand-alone RESTful API that implements a KV data service.
+
+It features many [data adapters](https://github.com/justsml/fact-service/tree/main/lib/providers). Including for Postgres, Redis, DynamoDB, Firestore, and Cassandra! (Complete with [Docker commands](https://github.com/justsml/fact-service/tree/main/lib/providers) to get started quickly.)
+
+Fact Service is meant to be a starter & learning project, fork it and build your own KV data service!
+
+## Conclusion
+
+أمل أن وجدت هذا المقال مفيدًا! إذا كان لديك أي أسئلة أو ملاحظات، من فضلك لا تتردد في التعليق أو  @ me on [Twitter](https://twitter.com/justsml).
+
+### Credits
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Further Reading
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+
+{/* Translated from English to Arabic
+Original text length: 7729 characters
+Translated text length: 7445 characters
+Translation API: http://localhost:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF
+Translation date: 2024-11-26T22:10:39.977Z */}
+

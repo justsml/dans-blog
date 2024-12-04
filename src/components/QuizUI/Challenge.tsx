@@ -344,6 +344,73 @@ export default function Challenge({
   );
 }
 
+// function isTopRightCorner({target}: {
+//   target: HTMLElement | null;
+//   clientX?: number;
+//   clientY?: number;
+// }, hitBox = 48) {
+//   if (!target) return false;
+//   const before = getComputedStyle(target as HTMLElement, "::before");
+//   const {scrollY, scrollX} = global;
+  
+
+//   if (before) {
+//     const top = Number(before.getPropertyValue("top").slice(0, -2));
+//     const right = Number(before.getPropertyValue("right").slice(0, -2));
+//     const left = Number(before.getPropertyValue("left").slice(0, -2));
+
+//     if (Number.isNaN(right) || Number.isNaN(top)) {
+//       return false;
+//     }
+//     console.log("isBefore %o %o", {top, right, left, scrollX, scrollY});
+//     if (top <= hitBox && right <= hitBox) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
+function isAbsoluteElement({
+  target,
+  pseudo = "::before",
+}: {
+  target: EventTarget | null;
+  pseudo?: string;
+}) {
+  if (!target) return false;
+
+  const before = getComputedStyle(target as HTMLElement, pseudo);
+  if (before) {
+    // Then we parse out the dimensions
+    const top = Number(before.getPropertyValue("top").slice(0, -2));
+    const bottom = Number(before.getPropertyValue("bottom").slice(0, -2));
+    const left = Number(before.getPropertyValue("left").slice(0, -2));
+    const right = Number(before.getPropertyValue("right").slice(0, -2));
+
+    const width = Number(before.getPropertyValue("width").slice(0, -2));
+    const height = Number(before.getPropertyValue("height").slice(0, -2));
+    console.log("isAbsolute %o", {
+      top,
+      bottom,
+      left,
+      right,
+      width,
+      height,
+    });
+    // And get the mouse position (layerX and layerY are relative to the target)
+    // Finally we do a bounds check (Is the mouse inside of the before element)
+    if (
+      Number.isNaN(left) ||
+      Number.isNaN(top) ||
+      Number.isNaN(bottom) ||
+      Number.isNaN(right)
+    ) {
+      return false;
+    }
+
+  }
+  return true;
+}
+
 function isTopRightCorner({target}: {
   target: HTMLElement | null;
   clientX?: number;

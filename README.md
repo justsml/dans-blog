@@ -4,10 +4,12 @@
 
 ## TODO
 
-- [x] Add comments
-- [x] Fine tune: crank lighthouse score
-- [x] Add Link to Category on Posts
 - [ ] Stop using REM for layout (padding)
+- [ ] Add list of OSS projects (see last site for starting list). Add postgis, turf.js, react native video?
+- [ ] Add `<lastPubDate>` to RSS feed.
+- [ ] Add AutoFit Text module [autoFit.ts](/src/shared/autoFit.ts)
+- [ ] Change inset/blockquote to have an artistic border.
+- [ ] Add 'pop-shadow' effect to `.article-card` on scroll in to view. Animate from `box-shadow: 0.0px 0.0px 0.0px hsl(0deg 0% 0% / 0.50);` and `box-shadow: 8.0px 16.0px 16.0px hsl(0deg 0% 0% / 0.25);`
 - [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
 - [x] Add Mastodon & Bsky links to footer.
 - [x] Support disabling styles in `<Gist />` component.
@@ -22,6 +24,10 @@
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
   - [x] Get rid of cliche icons abuse.
 - [ ] Add/update ld+json / JSON-LD
+- [ ] Look into scroll snap for each quiz.
+
+- [ ] Publish:
+  - [ ] Free Site Search (PageFind) overview
 - [x] Add Quizzes to the Menu
 - [x] Publish next batch of quizzes
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
@@ -32,11 +38,31 @@
   - [ ] Comments Component
   - [ ] Free local search
   - [ ] Newsletter
+- [ ] Add Video page?
+- [ ] Add newsletter?
 
-## Features
+## Done
 
+- [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [x] Add comments
+- [x] Fine tune: crank lighthouse score
+- [x] Add Link to Category on Posts
+- [x] Add Mastodon & Bsky links to footer.
+- [x] Add LinkedIn link to footer.
+- [x] Support inlining `<Gist />` with owned syntax highlighting.
+- [x] Add Scroll CSS Effects:
+  - [x] Adjust Quiz box-shadow using scroll position
+- [x] Update Quiz UI
+  - [x] Make Question's Linkable
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [x] Get rid of cliche icons abuse.
+- [x] Add Quizzes to the Menu
+- [x] Publish next batch of quizzes
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+- [x] Disable posthog locally
+- [x] Add search
 - [x] Add new nav
-  - [ ] Add tags
+  - [ ] Add tags?
   - [x] Add categories
   - [x] Add Popular/Related posts
 - [x] Convert Quiz UI to MDX/Astro
@@ -48,9 +74,7 @@
 - [x] Add about page
 - [x] Add OSS project list (in menu)
 - [x] Add contact page
-- [ ] Add Video page
-- [ ] Add search
-- [ ] Add newsletter
+- [x] Add search
 
 Features:
 

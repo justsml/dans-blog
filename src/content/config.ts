@@ -20,6 +20,7 @@ const posts = defineCollection({
       subTitle: z.string().optional().default(""),
       label: z.string().optional(),
 
+      lang: z.string().optional(),
       social_image: image().optional(),
       /** To override utteranc.es lookup string */
       commentsKeyOverride: z.string().optional(),

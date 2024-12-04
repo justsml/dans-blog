@@ -2,6 +2,7 @@ import { mkdir } from "fs/promises";
 import path, { dirname, join } from "path";
 import getSiteRss, { RssishItem } from "./get-site.ts";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";
+// import { RSSFeedItem } from "@astrojs/rss";
 import { makeLogs } from "../src/components/LogHelper.ts";
 import { ElementHandle, Page } from "playwright";
 import * as webP from "@/shared/webP.ts";
