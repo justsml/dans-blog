@@ -447,12 +447,14 @@ Good luck! 🍀
     {text: '100'},
     {text: '90'},
     {text: '10'},
-    {text: '0', isAnswer: true},
+    {text: '1', isAnswer: true},
+    {text: '0'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    How many rows will this return?
+    How many *rows* will this return?
+
     ```sql
     SELECT COUNT(*)
     FROM students
@@ -463,15 +465,31 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    This returns 0 because:
-    1. `NULL = NULL` is never true
-    2. Use `IS NULL` or `IS NOT NULL` to check for NULL values
+    Ok, this was a little tricky. The gotcha is that `x = NULL` will never match any rows, and it will ALWAYS return one row with a count of `0`.
 
-    Correct query would be:
+    Since `NULL` is an unknown value, it can't be compared to anything, not even itself.
+    
+    The correct way to check for `NULL` values is with `IS NULL`.
+
+    Example:
+
     ```sql
-    SELECT COUNT(*)
-    FROM students
-    WHERE grade IS NULL;
+    postgres=# SELECT count(*)
+      FROM students
+      WHERE age = null;
+    count 
+    -------
+        0
+    (1 row)
+
+    postgres=# 
+    postgres=# SELECT count(*)
+      FROM students
+      WHERE age is null;
+    count 
+    -------
+        3
+    (1 row)
     ```
   </div>
   </slot>
@@ -492,6 +510,7 @@ Good luck! 🍀
   <slot name="question">
   <div className="question">
     What does `EXPLAIN ANALYZE` do for `UPDATE` statements?
+
     ```sql
     EXPLAIN ANALYZE
     UPDATE students
@@ -503,7 +522,7 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    `EXPLAIN ANALYZE` actually executes the query! Be careful analyzing a write operation, specifically `UPDATE`, `DELETE`, and `INSERT` statements.
+    `EXPLAIN ANALYZE` actually executes the query! Be careful analyzing a write operation, specifically `UPDATE`, `DELETE`, and `INSERT` statements. You may have to run cleanup operations after each `EXPLAIN ANALYZE` to get repeatable results.
 
     Best practices:
     - Use `EXPLAIN` (without ANALYZE) for UPDATE/DELETE/INSERT
