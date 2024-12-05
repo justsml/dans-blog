@@ -1,0 +1,143 @@
+---
+title: "¿Sabes tus ES2015 de ES2022?"
+subTitle: "Muestra tus habilidades de JavaScript!"
+label: "ES2015+"
+category: Quiz
+subCategory: JavaScript
+date: 2024-10-31
+modified: 2024-11-08
+tags: [quiz, javascript, intro, esnext, features, intermediate]
+cover_full_width: christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+### ¿Sabes tus ES2015 de ES2022?
+
+* **Muestra tus habilidades de JavaScript!** 🚀
+* No se requiere iniciar sesión ni registrarse. ✨
+* Elección múltiple. 🤖  ... ¡Cómo difícil puede ser, eh?!
+
+<QuizUI>
+<Challenge
+  client:load
+  index={0}
+  group="ES2020"
+  title="Anulación nula"
+  options={[
+
+     {text: '42'},
+     {text: null},
+     {text: undefined},
+     {text: 100, isAnswer: true}
+
+   ]}
+>
+  <slot name="pregunta">
+    <div className="pregunta">
+      ¿Cuál es el valor de `result`?
+      ```js
+      const a = null;
+      const b = 100;
+      const result = a ?? b;
+      console.log(result);
+      ```
+    </div>
+  </slot>
+
+  <slot name='hintas'>
+  </slot>
+
+  <slot name='explicación'>
+    <div className="explicación">
+      El operador de anulación nula (`??`) devuelve el lado derecho ( `b` ) si el lado izquierdo ( `a` ) es `nulo` o `undefined`. En este caso, `a` es `nulo`, por lo que `result` es `100`.
+    </div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="ES2020"
+  title="Anulación nula"
+  options={[
+
+     {text: 'false', isAnswer: true},
+     {text: 42},
+     {text: null},
+     {text: undefined},
+     {text: 100}
+
+   ]}
+>
+  <slot name="pregunta">
+    <div className="pregunta">
+      ¿Qué será el resultado del siguiente código?
+      ```js
+      const value = false;
+      const defaultVal = 42;
+      console.log(value ?? defaultVal);
+      ```
+    </div>
+  </slot>
+
+  <slot name='hintas'>
+  </slot>
+
+  <slot name='explicación'>
+    <div className="explicación">
+      El operador de anulación nula (`??`) trata los valores falsos como válidos. Como `value` es `false`, se considera un valor válido y se devuelve.
+    </div>
+  </slot>
+
+</Challenge> ...
+
+<Challenge
+  client:load
+  index={10}
+  group="WeakRef"
+  title="Uso de WeakRef"
+  options={[
+
+     {text: 'ReferenceError'},
+     {text: 'Referencia débil al objeto', isAnswer: true},
+     {text: null},
+     {text: undefined}
+
+   ]}
+>
+  <slot name="pregunta">
+    <div className="pregunta">
+      ¿Qué proporciona `WeakRef`?
+      ```js
+      const obj = { data: 'importante' };
+      const ref = new WeakRef(obj);
+      console.log(ref.deref());
+      ```
+    </div>
+  </slot>
+
+  <slot name='hintas'>
+  </slot>
+
+  <slot name='explicación'>
+    <div className="explicación">
+      `WeakRef` proporciona una referencia débil a un objeto, lo que permite que el objeto se elimine mediante recolección de basura si no existen otras referencias. El método `deref()` devuelve el objeto original si todavía está disponible, en caso contrario `undefined`.
+    </div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>
+
+{/* Translated from English to Spanish
+Original text length: 9421 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:25:56.184Z */}
+
+

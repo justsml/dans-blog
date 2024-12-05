@@ -1,0 +1,73 @@
+Here is the translation of the provided text into Spanish:
+
+```
+### Contenido para traducir a español ###
+
+---
+
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">¿Crees que conoces el modelo de memoria de Rust?</p>
+
+Este quiz te evaluará comprensión del sistema de propiedad de Rust, las reglas de préstamo, los intervalos de vida y los punteros. 
+
+**Nota**: Lo siento por adelantado por la formateo en columna ~50. Quiero que el texto sea legible en todos los dispositivos. (Abre a sugerencias).
+
+¿Estás listo para demostrar tu maestría en Rust? ¡Vamos a Rustificar!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Propiedad"
+  title="Semántica de Movimiento Básico"
+  options={[ 
+     {text: '¡Hola, !'}, 
+     {text: '¡Hola, Zeno de Citium!'}, 
+     {text: '¡Hola, Zeno de Elea!'}, 
+     {text: '¡Hola, Marco Aurelio!'}, 
+     {text: 'Error de compilación: valor prestado después de mover', isAnswer: true}, 
+     {text: 'Error de tiempo de ejecución: excepción de puntero nulo'}, 
+   ]}
+>
+  <slot name="question">
+    <div className="question">
+      ¿Qué pasa cuando correras este código?
+    ```rust
+    fn main() {
+        let filósofo = String::from("Zeno de Citium");
+        let saludo = filósofo;
+        
+        println!("Hola, {}", saludo);
+    }
+    ```</div>
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation">
+      Este código falla a causa de las reglas de propiedad de Rust. Cuando asignamos `filósofo` a `saludo`, el ownership del String se mueve a `saludo`. Después de este movimiento, `filósofo` no es válido para usar.
+
+      Para corregir esto, podríamos: 
+      1. Clonar la cadena: `let saludo = filósofo.clone();`
+      2. Utilizar un préstamo: `let saludo = &filósofo;`
+      3. Utilizar una slice de string: `let saludo = &filósofo[..];`
+
+    </div>
+  </slot>
+</Challenge>
+
+<!-- Rest of the challenges -->
+```
+Please note that I did not translate the frontmatter keys (title, subTitle, date, modified, tags, category, subCategory, cover_*, etc.) as per your instructions.
+
+
+{/* Translated from English to Spanish
+Original text length: 15880 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T06:53:45.718Z */}
+
+

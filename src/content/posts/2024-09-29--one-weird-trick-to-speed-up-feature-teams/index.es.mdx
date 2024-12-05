@@ -1,0 +1,149 @@
+---
+unlisted: true
+title: Un truco extraño para acelerar los equipos de características!
+subTitle: Los ingenieros de personal no lo aman!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, equipos]
+category: Ingeniería
+cover_full_width: ancho_danny-howe-98KlbUsOO_ w-unsplash.webp
+cover: danny-howe-98KlbUsOO_ w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_ w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_ w-unsplash__w200.webp
+credit_cover: Foto de [Danny Howe](https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) en [Unsplash](https://unsplash.com/photos/red-and-white-neon-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+---
+
+<details>
+    <summary>Tabla de Contenido</summary>
+
+    - [Pensando en Claves](#thinking-in-keys)
+      - [Diseñar con Claves](#designing-with-keys)
+      - [KVs como Gráficos y Árboles?](#kvs-as-graphs--trees)
+      - [Cuándo usar patrones de KV](#when-to-use-kv-patterns)
+      - [Cuándo evitar patrones de KV](#when-to-avoid-kv-patterns)
+      - [Cuándo necesitas más que KV](#when-you-need-more-than-kv)
+    - [Pasos siguientes](#next-steps)
+      - [Servicio de Hechos - Proyecto de Referencia](#fact-service---reference-project)
+    - [Conclusión](#conclusion)
+      - [Lecturas Adicionales](#further-reading)
+
+</details>
+
+Cuando se está diseñando un nuevo sistema o función, es fácil verse atrapado en el diseño de la capa de datos. En este artículo compartiré un truco que ha tenido un impacto positivo en mi carrera.
+
+<section class="breakout">
+    _Intente_ el almacenamiento de datos más simple posible al diseñar un nuevo sistema o función.
+</section>
+
+Muy a menudo, veo equipos llegando a SQL o MongoDB como su única opción para la almacenamiento de datos. ¡Claro que nadie se enfada por elegir SQL! Pero ¿qué pasa si le digo que hay una manera más simple, rápida y barata para comenzar?
+
+Un almacén de clave-valor (KV) puede ser todo lo que necesitas. Algo como Redis o S3.
+
+No siempre es la elección correcta, pero tal vez **más a menudo de lo que piensas**.
+
+Un simple capa de almacenamiento puede acelerar moderadamente el desarrollo temprano al reutilizar código de capa de datos y evitar costos relacionados con cambios en el diseño de schema y migraciones. El cambio ocurrirá de todos modos; déjale que el código se encargue de él mientras sea posible. Mejor evitar manejar cambios en dos lugares.
+
+Los beneficios en cuanto a rendimiento son probablemente porque los lookups de clave están muy optimizados, y las escrituras pueden beneficiarse de actualizaciones agrupadas.
+
+## Pensando en Claves
+
+Puede sentirse raro diseñar con un patrón de clave-valor primero, especialmente si estás acostumbrado a diseñar sistemas con jerarquías de objetos o diagramas de relación y directamente implementarlos en SQL.
+
+Has probablemente **usado** patrones de clave-valor antes! Están por todas partes, desde configs y URLs hasta almacenamiento de objetos S3! Cada vez que tratas de manejar datos mediante un valor único `ID`, ¡apuesto que otro patrón de clave-valor!
+
+### Diseñar con Claves
+
+Virtuamente todos los datos **pueden** ser representados utilizando patrones de clave-valor. (De hecho, muchos bases de datos de orden superior se construyen sobre patrones de clave-valor inferiores.) Veamos algunos ejemplos:
+
+```markdown
+user/123           {id: 123, ...}
+user/123/block     ['user/456', 'user/789']
+user/123/groups    ['admin', 'staff']
+user/420/friends   ['user/456', 'user/789']
+
+group/admin        {user: '*:rw'}
+group/default      {user: '*:r'}
+
+product/42/discount/<UUID>  {percentOff: '10%'}
+product/42/discount/<UUID>  {percentOff: '20%', minTotal: 100.0}
+```
+
+Puede haber notado que la clave es a menudo un valor compuesto en sí mismo! Esto es un patrón común en almacenes de clave-valor. La clave es a menudo un compuesto del tipo de entidad y el identificador único. (e.g `user/123`, `user:456`)
+
+### KVs como Gráficos y Árboles?
+
+Puede ser útil representar estructuras de datos complejas como gráficos o árboles utilizando patrones de clave-valor. (Otra vez, URLs REST son un excelente ejemplo de esto.)
+
+La jerarquía de clave ( `user/420` -> `user/420/friends`) codifica naturalmente una relación de grafo entre el `user` y sus `friends`.
+
+Esto es un método rápido y barato para serializar estructuras de datos de grafo. Especialmente si no necesitas la complejidad de una base de datos de grafo (como Neo4j).
+
+<figure>
+    ![Grafo del usuario/123](./KVsCanBeGraphs.webp)
+    <figcaption>Grafo del usuario/123</figcaption>
+</figure>
+
+### Cuándo usar patrones de KV
+
+- Cuando necesitas una escala masiva. (Billones o incluso trillones de pares de clave-valor.)
+- Cuando accedes a datos principalmente mediante una clave única.
+- Cuando necesitas estructuras de datos simples.
+- Cuando tienes datos con una jerarquía, grafo o árbol.
+
+### Cuándo evitar patrones de KV
+
+No almacenes cosas como comentarios de blog en un **_solo_** par de clave-valor. Por ejemplo, `post/666  -> {comments: [...too many...]}`. En su lugar, podrías usar `post/666/comments/1`, o `post/666/comments/<UUID>`, etc. O ve al SQL.
+
+- Cuando necesitas buscar por propiedades (no clave o ID) en tu conjunto de datos.
+- Cuando necesitas unir datos a través de múltiples entidades.
+- Cuando necesitas aplicar restricciones complejas o relaciones.
+
+### Cuándo necesitas más que KV
+
+Al desarrollar los requisitos del proyecto, puede que debas hacer más que lo que admiten tus almacenes de clave-valor. En este punto, necesitarás mirar a la migración a una base de datos más compleja.
+
+El buen noticias es que puedes empezar con un patrón de KV y evolucionarlo hacia un sistema más complejo según sea necesario. S3 tiene características más altas (como Athena para buscar archivos, Glacier y políticas de caducidad) que te permiten hacer muchas cosas. También Redis ha agregado muchas características de alto nivel (como Pub/Sub, Geo-spacial, Streams y Conjuntos Ordenados) que pueden ayudarte a cumplir con algunos requisitos.
+
+La buena noticia es que migrar un almacén de clave-valor a SQL es relativamente fácil que migrar un schema SQL complejo a un almacén de clave-valor. (Con múltiples tablas, índices, restricciones, etc.) He hecho esto muchas veces con un script de 50 líneas.
+
+Anecdotalmemente, he encontrado la calidad del diseño de SQL más alta si comienzas con un patrón de KV primero. Esto te fuerza a realmente pensar en los datos de manera diferente y a entender exactamente lo que necesitas de SQL.
+
+## Pasos siguientes
+
+La mejor manera de aprender es intentarlo! Si estás interesado en explorar este patrón más a fondo, recomiendo **construyendo cosas** con Redis, DynamoDB o S3. Todos son excelentes almacenes de clave-valor con diferentes trade-offs.
+
+### Servicio de Hechos - Proyecto de Referencia
+
+Verifica mi proyecto Open Source ["Fact Service," un servicio RESTful de KV](https://github.com/justsml/fact-service).
+Es un API de punto de conexión que implementa un servicio de KV.
+Incluye muchos [adaptadores de datos](https://github.com/justsml/fact-service/tree/main/lib/providers).
+Incluyendo para Postgres, Redis, DynamoDB, Firestore y Cassandra! (Con comandos de Docker para empezar rápidamente.) Fact Service es destinado a ser un proyecto de aprendizaje y referencia, forkalo y construye tu propio servicio KV!
+
+## Conclusión
+
+Espero que hayas encontrado este artículo útil. Si tienes alguna pregunta o retroalimentación, no dudes en comentar o `@` me en [Twitter](https://twitter.com/justsml).
+
+### Créditos
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Lecturas Adicionales
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+```
+
+
+{/* Translated from English to Spanish
+Original text length: 7729 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T06:42:40.706Z */}
+
+

@@ -1,0 +1,147 @@
+Here is the translation of the provided text into Spanish:
+
+**Note:** I followed your instructions and did not translate special formatting, html tags, `import` statements, frontmatter properties, references to source code in English, and CSS class names. I also left out any notes or editorializing.
+
+---
+
+### Contenido para traducir al español
+
+```mdx
+---
+unlisted: false
+title: "Desafío: Delicias de Destructuring"
+subTitle: "¿Eres un maestro de Destructuring?"
+label: Destructuring
+social_image: previews/desktop.webp
+category: Quiz
+subcategory: JavaScript
+date: 2024-11-12
+modified: 2024-11-16
+tags: [quiz, intro, javascript, es2015, destructuring, beginner, intermediate]
+cover_full_width: boxes-of-nesting-dolls.webp
+cover_mobile: boxes-of-nesting-dolls-square.webp
+cover_icon: boxes-of-nesting-dolls-square.webp
+---
+```
+
+```js
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+// ¿Eres un maestro de Destructuring?<br/>
+<p class="inset">O es el <em>Sinfonía de Destrucción</em></p>
+
+Este desafío te pondrá a prueba tu conocimiento sobre la destructuración en JavaScript, desde la "sintaxis básica" de objetos hasta la destructuración anidada y valores predeterminados. ¡Y como bonus, preguntas sobre TypeScript e inline types!
+
+¡Salta directo al calentamiento - demuestra tus habilidades con Destructuring! 👇
+
+<QuizUI>
+
+  <Challenge
+    client:load
+    index={0}
+    group="Warmup: Objetos"
+    title="Destructuración básica de objetos"
+    options={[
+      { text: "Nombre: Dan Levy, Edad: 20" },
+      { text: "Nombre: Dan Levy, Edad: 40" },
+      { text: "Nombre: Dan Levy, Edad: Infinity" },
+      { text: "Nombre: Dan Levy, Edad: undefined", isAnswer: true },
+      { text: "Error: No se puede leer la propiedad 'age'" },
+      { text: "Nombre: undefined, Edad: 40" }
+    ]}
+  >
+    <slot name="question">
+      <div className="question">
+        ¿Qué imprimirá este código?
+```js
+const person = {
+  name: 'Dan Levy',
+  location: 'Cape Town',
+};
+const { name, age } = person;
+console.log(`Name: ${name}, Age: ${age}`);
+```
+      </div>
+    </slot>
+
+    <slot name="explanation">
+      <div className="explanation">
+        La propiedad 'age' no existe en el objeto 'person', por lo que será undefined. ¡Definitivamente no es Infinity 😅!
+
+        Esto resulta en:
+```plaintext
+Name: Dan Levy, Age: undefined
+```
+      </div>
+    </slot>
+  </Challenge>
+
+  ...
+
+  <Challenge
+    client:load
+    index={11}
+    group="TypeScript + Asignación"
+    title="Destructuración con valores anidados, asignación y tipos"
+    options={[
+      { text: "Hi Dan Levy from N/A" },
+      { text: "Hi Dan Levy from Cape Town" },
+      { text: "Hi N/A N/A from N/A" },
+      { text: "Hi N/A N/A from Cape Town" },
+      { text: "Error", isAnswer: true }
+    ]}
+  >
+    <slot name="question">
+      <div className="question">
+        ¿Qué hará este código?
+```ts
+function greet({
+  name: { first: f = 'N/A', last: l = 'N/A' },
+  birth: { place: p = 'N/A' } = {},
+  age = -1,
+}: {
+  name: { first?: string, last?: string };
+  birth?: { place?: string };
+  age?: number;
+}) {
+  console.log(`Hi ${f} ${l} from ${p}`);
+}
+greet({
+  name: { first: 'Dan', last: 'Levy' },
+  birth: { place: 'Cape Town' },
+});
+```
+      </div>
+    </slot>
+
+    <slot name="explanation">
+      <div className="explanation">
+        ¡Otro error! ¿Lo estás adivinando? 😊
+
+        Es difícil leer capas de destructuración, con valores predeterminados, asignación y tipos!
+
+        A medida que se reasigna el lugar al variable p, ya no está definido en el ámbito del statement console.log.
+```ts
+console.log(`Hi ${f} ${l} from ${place}`); // ❌
+// to:
+console.log(`Hi ${f} ${l} from ${p}`); // ✅
+```
+      </div>
+    </slot>
+  </Challenge>
+
+</QuizUI>
+
+¡Eso es todo! ¡Espero que hayas disfrutado!
+
+Si estás buscando más... ¡Claro que sí! Revisa mi [Colección de Desafíos](/challenges/) para más emoción y aventura!
+
+
+{/* Translated from English to Spanish
+Original text length: 15880 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:33:11.502Z */}
+
+

@@ -1,0 +1,83 @@
+---
+unlisted: true
+title: "La trampa del desplegable de prioridad"
+subTitle: ¿Es el múltiple elección la mejor opción?
+category: Pensamientos
+subCategory: Agilidad
+date: 2024-10-23
+modified: 2024-10-24
+tags: [agilidad, liderazgo, prioridad, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: Foto por [Filip Mroz](https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) en [Unsplash](https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+---
+
+# La trampa del desplegable de prioridad
+
+<aside className="breakout">
+💡 A medida que una organización crece, inevitablemente tendrá un backlog en constante expansión. Finalmente, el tamaño de la lista demandará priorización.
+</aside>
+
+## Una historia de startups
+Sin fallar, tus administradores de Jira tendrán una solución: ¡mira el campo desplegable de prioridad! (Consejo empresarial: posiblemente llamado "Priority2" o "P-nivel".)
+
+Curiosamente, el 100% de las empresas eligen entre `P1`, `P2`, `P3` y `P4`, o "Bajo", "Medio" y "Alto" y "Crítico".
+
+Un lista rígida de cuatro opciones? Ok. ¡Vamos a intentarlo durante algunas semanas...
+
+### 2 días después
+En un giro que no sorprende a nadie, la organización descubrió un ticket con una nueva prioridad más alta, lo que requirió una pequeña hack: agregar `P0` o "Crítico Max+".
+
+### 3 días más
+Nuestro valiente jefe tuvo algunas reuniones emocionantes y descubrimientos en el congreso!
+De alguna manera, encontraron un prioridad aún más alta que `P0`.
+Desde entonces, el equipo ha estado investigando cómo etiquetar esta nueva prioridad.
+
+Quizás `-1`? No, no. Eso es demasiado confuso (`P-1` vs `P1`). Ok, ¿cómo sobre `P0.5`, no?
+
+<p className="breakout">En un momento "inspirado", el equipo inventó una prioridad aún más alta: el cero doble!<br />Ahora conocido como la Prioridad `P00`.</p>
+
+{/* *Finalmente, podemos etiquetar todo en el mundo con nuestras Prioridades desplegables!* (…risa mala…)* */}
+
+### Antes del diluvio
+Antes de que alguien se dé cuenta, tu equipo está alguna vez anegado en tickets `P00`!
+
+<b>¿Cómo podemos evitar este juego de teatro de ingeniería?</b>
+
+## ¿Y si la prioridad no fuera múltiple elección?
+¿Cómo podríamos representar un concepto humano como "prioridad" que cambia constantemente y evoluciona con nueva información, cambios del mercado y objetivos organizativos?
+
+- En el mundo real, las prioridades constantemente cambian y evolucionan en función de la nueva información, los cambios del mercado y los objetivos organizativos.
+- Hay una interacción compleja entre la urgencia, la importancia, la disponibilidad de recursos y el análisis de costo y riesgo que un desplegable sencillo no puede capturar, especialmente con el tiempo. (Rotura de tickets.)
+- Los stakeholders pueden tener opiniones conflictivas sobre qué constituye una prioridad alta, lo que hace que un enfoque de un tamaño para todos sea inapropiado.
+
+## ¿Y qué sucede después?
+Hay varios enfoques alternativos merecedores de exploración, desde bajo a alto esfuerzo:
+
+- Proporcionar más espacio y cabeza, elegir un valor neutral inicial, por ejemplo, 100 o 1,000. Puedes aumentar o disminuir el número siempre.
+     - O bien, mantener con cero para empezar, donde los números más altos tienen prioridad más alta.
+- Implementar un sistema de priorización multidimensional que considere factores como valor empresarial, urgencia y esfuerzo requerido. (Crear una puntuación compuesta para hacer que el ordenado y filtrado sea más fácil.)
+- Adoptar un método de priorización dinámica, como la técnica MoSCoW (Debe tener, Debería tener, Puede tener, No tendrá), lo que permite una reevaluación regular. (Vea también el modelo Kano.)
+
+## Resumen
+Muchas cosas se ponen en prioridad a pesar de su tasa de decadencia rapida. Ayer's `CRITICAL` tickets no son probablemente los next quarter `CRITICAL` tickets.
+Con el tiempo, las tickets más antiguas con prioridad alta se convierten en resistentes al mantenimiento y la limpieza. Después de todo, quién quiere bajar la prioridad de algo una vez declarado ***esencial***? ¡Jamás eliminar tickets irrelevantes! (Gasp! ¡Piensa en el backlog!)
+He visto a varias empresas mezclar `Severity` & `Priority`. `Severity` describe ***urgencia*** (o sensibilidad temporal.)
+`Priority ≠ Severity`. Puede hacer sentido definir 3-5 niveles de severidad (a menudo utilizados para mantener Acuerdos de Nivel de Servicio.)
+Los niveles de urgencia ayudan a comunicar `zero customer impact` a `partial/complete service outage`.
+
+## Una palabra de advertencia
+Desplegar un campo de prioridad no limitado requiere un poco de planificación y disciplina!
+Si eres familiarizado con el desarrollo frontal, podrías haber experimentado una guerra de `z-índice`.
+Essencialmente, `z-índice` permite a los diseñadores establecer *cualquier* número positivo para asegurarse de que sus widgets se muestren "arriba" del contenido inferior con un `z-índice` más bajo.
+
+
+{/* Translated from English to Spanish
+Original text length: 6218 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T06:47:32.570Z */}
+
+

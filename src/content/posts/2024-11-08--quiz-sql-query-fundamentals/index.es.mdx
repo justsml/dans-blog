@@ -1,0 +1,115 @@
+Here is the translation of the blog post to Spanish:
+
+```
+--- 
+unlisted: true
+title: "Prueba tus habilidades en SQL"
+subTitle: "¿Eres parte del equipo SQL? ¿O noSQL?"
+label: "SQL 101"
+social_image: previews/desктоп.webp
+category: Quiz
+subCategory: Database
+date: 2024-11-08
+modified: 2024-11-08
+tags: [quiz, intro, sql, core, fundamentals, beginner, intermediate]
+cover_full_width: peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+
+# Prueba tus habilidades en consultas de SQL
+¿Has estado utilizando un ORM y has estado suavizando en el departamento de habilidades? ¡No te preocupes, les pasa a muchos desarrolladores!
+
+¡Saltar directamente para probar tus habilidades en consultas de SQL! 👇
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="SQL Básicos"
+  title="Cláusula WHERE básica"
+  options={[ 
+     {text: 'SELECT * FROM usuarios WHERE nombre LIKE (John);'}, 
+     {text: 'SELECT * FROM usuarios WHERE nombre = \'John\';', isAnswer: true }, 
+     {text: 'SELECT * FROM usuarios WHERE nombre == "John";'}, 
+     {text: 'SELECT * FROM usuarios WHERE nombre === "John";'}, 
+   ]}>
+  <slot name="question">
+    <div className="pregunta">
+      ¿Qué consulta SQL correctamente recupera filas donde el nombre es "John"?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explicación">
+      En SQL, se utiliza un signo igual ( `=` ) para verificar la igualdad en la cláusula WHERE, no `==` o `===`, que son operadores de JavaScript.
+      La sintaxis correcta es `SELECT * FROM usuarios WHERE nombre = 'John';`.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="SQL Básicos"
+  title="Función Contar"
+  options={[ 
+     {text: 'Cuenta todas las filas, incluyendo valores NULL'}, 
+     {text: 'Cuenta solo los valores no nulos en una columna', isAnswer: true }, 
+     {text: 'Cuenta valores NULL como uno valor único'}, 
+     {text: 'Trata cada valor NULL como único, similar a NaN !== NaN'} 
+   ]}>
+  <slot name="question">
+    <div className="pregunta">
+      ¿Qué hace la función COUNT en SQL?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explicación">
+      La función COUNT cuenta el número de valores no nulos en una columna especificada. Para contar todas las filas, incluyendo valores NULL, se utiliza COUNT(*).
+      También puedes utilizar COALESCE para asegurarte de que los valores NULL se conviertan en un valor no nulo por defecto.
+    </div>
+  </slot>
+</Challenge>
+
+...
+
+<Challenge
+  client:load
+  index={10}
+  group="SQL Joins"
+  title="JOIN FULL OUTER Básico"
+  options={[ 
+     {text: 'Devuelve solo filas coincidentes'}, 
+     {text: 'Devuelve solo filas con valores no nulos'}, 
+     {text: 'Devuelve filas no coincidentes de la tabla izquierda'}, 
+     {text: 'Devuelve filas no coincidentes de la tabla derecha'}, 
+     {text: 'Devuelve todas las filas de ambas tablas, con NULLs para filas no coincidentes', isAnswer: true } 
+   ]}>
+  <slot name="question">
+    <div className="pregunta">
+      ¿Qué hace un JOIN FULL OUTER en SQL?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explicación">
+      Un JOIN FULL OUTER devuelve todas las filas de ambas tablas, llenando filas no coincidentes con NULLs para valores faltantes.
+      Esto es útil para comparar dos tablas y encontrar diferencias entre ellas.
+    </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+```
+
+
+{/* Translated from English to Spanish
+Original text length: 9479 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:09:47.702Z */}
+
+

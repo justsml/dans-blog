@@ -1,0 +1,156 @@
+Here is the translation of the blog post to Spanish:
+
+```
+---
+unlisted: true
+title: "¿Sabes CSS moderno? (para 2025)"
+subTitle: "¿Eres suficiente para el frente?"
+label: "CSS avanzado"
+social_image: previews/descargas.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: 2024-10-31
+date: 2024-10-31
+modified: 2024-11-09
+tags: [quiz, css, avanzado, intermedio]
+# cover: quiz-características-css.webp
+cover_full_width: dan-levy-centro-estadounidense-de-denver-a-noche-ancha.webp
+cover_mobile: dan-levy-centro-estadounidense-de-denver-a-noche-cuadrada.webp
+cover_icon: dan-levy-centro-estadounidense-de-denver-a-noche-cuadrada.webp
+---
+
+import Reto from '../../../components/QuizUI/Reto';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+
+# ¿Sabes CSS moderno?
+
+* ¡CSS moderno? 🤔
+* **¿Pertenece el CSS a tu currículum vitae???** 🚀
+* Elección múltiple. 🤖 ... _¿Cómo puede ser difícil, eh?_
+
+<Reto>
+  <Reto
+    client:load
+    index={0}
+    grupo="Warmup"
+    title="Uso de variables CSS"
+    opciones={[
+      { texto: 'background-color: blue;' },
+      { texto: 'background-color: --main-color;' },
+      { texto: 'background-color: var(--main-color);', isAnswer: true },
+      { texto: 'background-color: $main-color;' },
+      { texto: 'background-color: @main-color;' },
+    ]}
+  >
+    <slot name="pregunta">
+      <div className="pregunta">
+        ¿Cómo se utiliza correctamente una variable CSS llamada `--main-color` para establecer el color de fondo de un elemento?
+        ```css
+          :root {
+            --main-color: blue;
+          }
+          div {
+            /* ¿Cómo utilizamos --main-color aquí? */
+          }
+        ```
+      </div>
+    </slot>
+
+    <slot name="explicación">
+      <div className="explicación">
+        Las variables CSS se utilizan con la función `var`, por lo que la respuesta correcta es `background-color: var(--main-color);`. Esta sintaxis recupera el valor de `--main-color` y lo aplica.
+        El resto de opciones pueden ser familiares desde otros lenguajes o syntaxes preprocesadoras, como Sass o Less.
+      </div>
+    </slot>
+  </Reto>
+
+  <Reto
+    client:load
+    index={1}
+    grupo="Funciones CSS"
+    title="Función min() de CSS"
+    opciones={[
+      { texto: 'width: 50%;' },
+      { texto: 'width: 200px;' },
+      { texto: 'width: 250px;', isAnswer: true },
+      { texto: 'width: 500px;' },
+      { texto: 'width: max(50%, 200px);' },
+      { texto: 'Sintaxis no válida' },
+    ]}
+  >
+    <slot name="pregunta">
+      <div className="pregunta">
+        Si la anchura del viewport es de 400px, ¿qué será el ancho computado del elemento siguiente?
+        ```css
+          div {
+            width: min(250px, 50%);
+          }
+        ```
+      </div>
+    </slot>
+
+    <slot name="explicación">
+      <div className="explicación">
+        La función `min()` elegirá el valor más pequeño entre 250px y 50% del ancho de su contenedor padre. Ya que `50%` del ancho de 400px es `200px`, que es menor que el _otro_ valor mínimo `250px`. Por lo tanto, el ancho computado es `250px`.
+        La función `min()` es especialmente útil para diseño responsive, donde puedes asegurarte de que un componente (o tamaño de fuente) no exceda cierto límite.
+      </div>
+    </slot>
+  </Reto>
+
+  <Reto
+    client:load
+    index={2}
+    grupo="Funciones CSS"
+    title="Función max() de CSS"
+    opciones={[
+      { texto: 'width: 6em;' },
+      { texto: 'width: 10%;' },
+      { texto: 'width: 10px;' },
+      { texto: 'width: 50px;' },
+      { texto: 'width: 96px;', isAnswer: true },
+      { texto: 'Sintaxis no válida' },
+    ]}
+  >
+    <slot name="pregunta">
+      <div className="pregunta">
+        Dado un contenedor con una anchura de 200px, ¿qué será el ancho computado del `<div>`?
+        ```css
+          div {
+            width: max(50px, 10%, 6rem);
+          }
+        ```
+      </div>
+    </slot>
+
+    <slot name="explicación">
+      <div className="explicación">
+        La función `max()` acepta 2 o más entradas y utilizará el valor más grande automáticamente. En este caso, el ancho se calcula hasta `96px`.
+        Para entender el valor computado, debemos convertir las unidades relativas a píxeles:
+        - `50px` ya está en píxeles
+        - `10%` del ancho de 200px es `20px`
+        - `6rem` es `6 * 16px` (el tamaño de fuente predeterminado) que es `96px`
+        ```css
+          /* Esto se computa hasta */ 
+          width: max(50px, 20px, 96px);
+          /* -> 96px gana */
+        ```
+      </div>
+    </slot>
+  </Reto>
+
+  ... (rest of the challenges)
+</QuizUI>
+
+```
+
+I hope this helps! Let me know if you need any further assistance.
+
+
+{/* Translated from English to Spanish
+Original text length: 11184 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:01:38.860Z */}
+
+

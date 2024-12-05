@@ -1,0 +1,134 @@
+---
+title: "Entendiendo Números y Divisas Internacionales"
+subTitle: "Explicación de dinero localizado!"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [ingeniería, internacionalización, localización, divisa, números]
+category: Cómo Hacer
+subCategory: Internacionalización
+cover: currency-banner-pic__w300.webp
+cover_full_width: currency-banner-wide.webp
+cover_mobile: currency-banner-pic__w300.webp
+cover_icon: currency-banner-pic__w200.webp
+---
+
+- [Dinero: Localización (L10n) y Internacionalización (i18n)](#dinero-localización-l10n-y-internacionalización-i18n)
+- [Conceptos Críticos](#conceptos-críticos)
+   - [Los números son locales 🏘️](#los-números-son-locales-️)
+   - [La divisa es global 🌎](#la-divisa-es-global-️)
+   - [Cuando importa el lugar](#cuando-importa-el-lugar)
+- [Una Solución](#una-solución)
+- [Pasos Siguientes](#pasos-siguientes)
+
+
+## Dinero: Localización (L10n) y Internacionalización (i18n)
+
+No se refieren solo a dominar un juego de Scrabble, _localización_  & _internacionalización_ se refieren al proceso de hacer que un producto **se sienta en casa en un país diferente**.
+
+<p class="breakout quote">Mostrar una divisa en el formato local incorrecto es un indicio claro: no has puesto ningún esfuerzo. <br/> Si no puedes formatear un precio, ¿cómo podrías manejar la envío?</p>
+
+La internacionalización es un tema grande que cubre todo, desde la traducción de texto hasta la formateo de fechas. En este post nos centraremos en un subtema particular, **formateando números y divisa**.
+
+Vamos a explorar el formato entre 3 países de la zona del euro, EE. UU. e India:
+
+- `€1,234,567.89` Irlanda 🇮🇪
+- `1.234.567,89 €` Alemania 🇩🇪
+- `1 234 567,89 €` Francia 🇫🇷
+- `$1,234,567.89` EE. UU. 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+¡Chaos! ¡Es increíble cómo la UE puede acordar cualquier cosa! 😅
+
+
+## Conceptos Críticos
+
+
+Antes de sumergirnos en soluciones, ¿qué queremos decir con "Los números son locales"?
+
+### Los números son locales 🏘️
+
+Cada lugar ([País según ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) define reglas para formatear números.
+
+
+Las reglas de formato de números incluyen:
+
+- Decimal: coma, punto.
+- Miles: coma, punto, espacio.
+- Simbolo de divisa y posiciónamiento.
+
+### La divisa es global 🌎
+
+Un `divisa` se refiere a una unidad específica de dinero. (Vea [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) para la lista.)
+
+- Define un símbolo: `$`, `€`, `£`, `¥`. (A menudo reutilizado.)
+- Siempre tiene un código de 3 letras: `USD`, `EUR`, `GBP`, `JPY`.
+- Puede ser utilizado o intercambiado en "cualquier" país. En teoría.
+- La conversión entre divisas requiere datos de tipo cambio.
+- El valor no cambia según el lugar.
+
+### Cuando importa el lugar
+
+La mayoría de las APIs de comercio electrónico/pago manejan `precio` + `codigoDeDivisa`. ¿Por qué no locales?
+Los lugares son (generalmente) establecidos en el nivel del sistema operativo/dispositivo y los navegadores lo hacen disponible a través de `navigator. idioma`. Como cada uno de tus usuarios podría tener un lugar diferente, solo tiene sentido formatear números y divisa en el lado del cliente.
+
+## Una Solución
+
+
+¡Buenas noticias! Los lenguajes de programación modernos tienen soporte incorporado para esto. En JavaScript, tenemos la clase [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) y `Intl.NumberFormat`!
+Vamos a echar un vistazo al código:
+```javascript
+const number = 1_234_567.89;
+
+/**
+* Formatea un número en divisa local.
+* @param {number} cantidad - El monto a formatear.
+* @param {string} moneda - Código de 3 letras de la divisa.
+* @param {string} [lugar] - La cadena de lugar del usuario.
+*/
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+Si necesitas hacer cosas más complicadas, como calcular impuestos, aplicar descuentos o convertir entre divisas, desecharás usar una biblioteca como [dinero. js](https://v2.dinerojs.com/).
+
+## Pasos Siguientes
+
+
+Dependiendo de tus necesidades específicas, podrías querer explorar conceptos relacionados:
+
+- Buenas prácticas con el lugar del usuario. Detecta + permite overrides. (Ejemplo: un selector de país.)
+- Persistir enteros enteros (almacenar centavos, no dólares.)
+- Matemáticas de dinero. (Ejemplo: aplicar un descuento del 20%, calcular `subTotal + impuestos`, etc.)
+- Tipos de cambio en vivo. (Para compras al detal, intercambio de divisas.)
+
+<p class="breakout quote">¡Espero ver un futuro artículo sobre estos temas!</p>
+
+/*## Recomendaciones
+Algunas bibliotecas pueden ayudarte con estas tareas: 
+
+**JavaScript / TypeScript**
+
+- [dinero. js](https://v2.dinerojs.com/) admite matemáticas de dinero, tipos de cambio, formateo y análisis! 
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) es mi biblioteca preferida en Rust.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) es mi elección actual en Golang.
+*/```
+
+
+{/* Translated from English to Spanish
+Original text length: 4904 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:04:38.686Z */}
+
+

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import yargs from "yargs";
-import ISO6391 from "iso-639-1";
+import langs, { type Language } from "langs";
 import { glob } from "glob";
 import { hideBin } from "yargs/helpers";
 import { getPrediction } from "../shared/gptAPI.ts";
@@ -11,19 +11,25 @@ interface TranslatorOptions {
   outputPath: string;
   language: string[];
 }
-type LangCodes = ReturnType<(typeof ISO6391)["getAllCodes"]>;
-type LangNames = ReturnType<(typeof ISO6391)["getAllNames"]>;
+// type LanguageCodes = ReturnType<(typeof ISO6391)["getAllCodes"]>;
+// type LangNames = ReturnType<(typeof ISO6391)["getAllNames"]>;
+
+const OVERWRITE_MODE = process.argv.includes("--overwrite");
 
 export async function Translator(options: TranslatorOptions) {
   let { sourceFiles, outputPath, language } = options;
 
-  const languages: Record<string, string> = Object.fromEntries(
-    language
-      .map((l) => [l, l.length <= 3 ? ISO6391.getName(l) : l])
-      .filter(Boolean),
-  );
+  const languages: Language[] = language
+    .map((l): Language | undefined =>
+      l.length <= 2
+        ? langs.where("1", l) || langs.where("2", l)
+        : l.length <= 3
+          ? langs.where("3", l)
+          : undefined,
+    )
+    .filter(Boolean) as Language[];
 
-  // console.log("language", languages);
+  console.log("language", languages);
   // Retrieve files based on the glob pattern
   const files = glob.sync(sourceFiles);
 
@@ -33,42 +39,65 @@ export async function Translator(options: TranslatorOptions) {
   }
 
   // Ensure output directory exists
-  if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath, { recursive: true });
+  // if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath, { recursive: true });
 
   for (const filePath of files) {
     const fileContent = fs.readFileSync(filePath, "utf-8");
 
-    for (const [code, langName] of Object.entries(languages)) {
+    for (const lang of languages) {
+      const {
+        local: localLanguageName,
+        name: standardLanguageName,
+        "2": languageCode,
+        "1": languageCodeShort,
+        // "3": languageCodeLong,
+      } = lang;
+      const targetFilePath = filePath.replace(
+        /\.mdx?$/,
+        `.${languageCodeShort ?? languageCode}.mdx`,
+      );
+
+      // Check if we should overwrite any existing file
+      if (!args.overwrite && fs.existsSync(targetFilePath)) {
+        console.warn(
+          `Target file exists! Use --overwrite to overwrite ${targetFilePath}`,
+        );
+        continue;
+      }
+
+      const targetStream = fs.createWriteStream(targetFilePath, {
+        flags: OVERWRITE_MODE ? "w" : "wx",
+        encoding: "utf-8",
+      });
       try {
-        const outputPath = options.outputPath;
-        const parts = filePath.split(path.sep);
-        const fileName = path.basename(filePath);
-
-        const subDir = parts.slice(parts.length - 2, parts.length - 1)[0];
-        const translatedPath = path.join(outputPath, code, subDir);
-
-        if (!fs.existsSync(translatedPath))
-          fs.mkdirSync(translatedPath, { recursive: true });
-
-        const extraInstructions = `Prefix all \`.webp\` and \`.gif\` images with prefix: ../../${subDir}.
-ALSO, prefix markdown image paths with: ../../${subDir}/.
-ALSO, prefix markdown links with: /${code}/.`;
+        const handleWriteFn = (text: string | null) => {
+          targetStream.write(text);
+        }
+        //const extraInstructions = `Prefix all \`.webp\` and \`.gif\` images with prefix: ../../${subDir}.
+        // ALSO, prefix markdown image paths with: ../../${subDir}/.
+        // ALSO, prefix markdown links with: /${code}/.`;
 
         // `This file was translated from English to ${langName} using a machine translation API. The translation may not be perfect, so please review and correct any errors.`;
-        const translatedFilePath = path.join(translatedPath, fileName);
-        const translatedContent = await translateText(fileContent, langName, extraInstructions);
-
-        console.log(`Translating ${filePath} to ${langName} ${code}...`, {
-          outputPath,
-          fileName,
-          translatedFilePath,
+        const translatedContent = await translateText({
+          text: fileContent,
+          languageCode: languageCode,
+          localLanguageName,
+          standardLanguageName,
+          handleWriteFn,
+          // extraInstructions,
         });
 
-        fs.writeFileSync(translatedFilePath, translatedContent, "utf-8");
+        console.log(`Translated ${filePath} to ${standardLanguageName} ${languageCode}...`, {
+          outputPath,
+          targetFilePath,
+          localLanguageName,
+        });
 
-        console.log(`Translated file saved: ${translatedFilePath}`);
+        console.log(`Translated file saved: ${targetFilePath}`);
       } catch (error) {
-        console.error(`Failed to translate ${filePath} to ${code}:`, error);
+        console.error(`Failed to translate ${filePath} to ${languageCode}:`, error);
+      } finally {
+        targetStream?.end();
       }
     }
   }
@@ -86,37 +115,52 @@ ALSO, prefix markdown links with: /${code}/.`;
     "stream": false
 }
 */
-async function translateText(
-  text: string,
-  targetLanguage: string,
-  extraInstructions?: string,
-): Promise<string> {
-  
+async function translateText({
+  text,
+  languageCode,
+  localLanguageName,
+  standardLanguageName,
+  extraInstructions,
+  handleWriteFn,
+}: {
+  text: string;
+  languageCode: string;
+  localLanguageName: string;
+  standardLanguageName: string;
+  extraInstructions?: string;
+  handleWriteFn?: (text: string) => void;
+}): Promise<boolean> {
   const apiUrl =
     process.env.CHAT_API_URL || "http://192.168.0.87:1234/v1/chat/completions";
   const apiKey = process.env.CHAT_API_KEY;
-  const model =
-    process.env.CHAT_API_MODEL ||
-    "meta-llama-3-8b-instruct:2";
+  const model = process.env.CHAT_API_MODEL || "meta-llama-3-8b-instruct:2";
 
   let authentication: Record<string, string> = apiKey
     ? { Authorization: `Bearer ${apiKey}` }
     : {};
 
-    console.log({apiUrl, apiKey, model, authentication})
+  console.log({ apiUrl, apiKey, model, authentication });
   if (!apiUrl) throw new Error("API URL is required.");
   if (!text || text.length < 3)
     throw new Error("Text to translate is too short.");
-  if (!targetLanguage) throw new Error("Target language code is required.");
+  if (!languageCode) throw new Error("Target language code is required.");
 
   try {
-    const prompt = `### Instruction ###
-Translate the following blog post to ${targetLanguage}.
+    const prompt = `
+### Content to Translate to ${standardLanguageName} ###
+\n\`\`\`mdx\n${text}\n\`\`\``;
+
+    // console.log("Submitting Prompt:", prompt);
+    const stream = getPrediction([
+      {
+        role: "system",
+        content: `You are an exceptional technical writer and translator of english to any language.
+        ### Instruction ###
+Translate the following blog post to ${standardLanguageName}, language code ${languageCode}.
 
 DO NOT TRANSLATE: special formatting, html tags, \`import\` statements, frontmatter properties, references to source code in English, and CSS class names.
-DO NOT TRANSLATE the key strings: title, subTitle, date, modified, tags, category, subCategory, cover_full_width, cover, cover_mobile, cover_icon, cover_credit.
-
-Add a \`lang: ${targetLanguage}\` property before the \`title\` field.
+DO NOT TRANSLATE frontmatter keys: title, subTitle, date, modified, tags, category, subCategory, cover_full_width, cover, cover_mobile, cover_icon, cover_credit.
+DO NOT TRANSLATE the code blocks and inline code snippets.
 
 ${extraInstructions || ""}
 
@@ -126,42 +170,7 @@ ALSO, UPDATE TRANSLATED HEADER ID LINKS.
 Output the document starting with \`---\`. Omit any notes or editorializing.
 DO NOT ADD ANY TEXT BEFORE OR AFTER OUTPUT.
 DO NOT PREPEND, APPEND OR INCLUDE ANY COMMENTS OR NOTES IN THE TRANSLATION.
-ENSURE \`---\` is included to mark end of frontmatter.
-
-### Content to Translate ###
-\n\`\`\`mdx\n${text}\n\`\`\``;
-
-    console.log("Submitting Prompt:", prompt);
-    // const response = await axios.post(
-    //   apiUrl,
-    //   {
-    //     model,
-    //     messages: [
-    //       {
-    //         role: "system",
-    //         content: `You are an exceptional technical writer and translator of english to any language.`,
-    //       },
-    //       {
-    //         role: "user",
-    //         content: prompt,
-    //       },
-    //     ],
-    //     temperature: 0.1,
-    //     max_tokens: -1,
-    //     stream: false,
-    //   },
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       ...authentication,
-    //     },
-    //   },
-    // );
-
-    const stream = getPrediction([
-      {
-        role: "system",
-        content: `You are an exceptional technical writer and translator of english to any language.`,
+ENSURE \`---\` is included to mark end of frontmatter.`,
       },
       {
         role: "user",
@@ -170,51 +179,31 @@ ENSURE \`---\` is included to mark end of frontmatter.
     ]);
 
     // const readable = Readable.from(stream);
-    let translatedText = "";
-    for await (const response of stream) {
-      translatedText += response;
-      process.stdout.write(`${response}`)
-      // process.stdout.write(`\r${response.slice(0, Math.min(response.length - 1, 100))}...`);
-    }
-
-    let translatedTextContent = "";
-    // const translatedText = response.data.choices[0].message.content;
-
-    if (!translatedText)
-      throw new Error("No translation returned from the API.");
-
-    let codeBlockIndex = translatedText.indexOf("```mdx");
-    let startIndex =
-      codeBlockIndex >= 1 ? codeBlockIndex + 6 : translatedText.indexOf("---");
-    const endIndex = translatedText.length;
-    if (endIndex > 0) {
-      const remainingTextAfterCodeBlock = translatedText.slice(endIndex);
-      if (remainingTextAfterCodeBlock.length > 5) {
-        console.error(
-          "Translation contains extra content after code block.",
-          remainingTextAfterCodeBlock,
-        );
-        throw new Error("Translation contains extra content after code block.");
+    try {
+      for await (let response of stream) {
+        if (response.startsWith("title:")) {
+          console.log("Title detected in response, patch works?");
+          response = `language_iso: ${languageCode}\nlanguage_local: ${localLanguageName}\ntitle:`;
+        }
+        if (handleWriteFn) handleWriteFn(response);
+        process.stdout.write(`${response}`);
+        // process.stdout.write(`\r${response.slice(0, Math.min(response.length - 1, 100))}...`);
       }
-      translatedTextContent = translatedText.slice(startIndex, endIndex);
-      // verify size of translated text is roughly the same as original
-      if (translatedTextContent.length < text.length * 0.6)
-        throw new Error(`Translation is too short. ${translatedTextContent.length} ${text.length}`);
-    } else {
-      console.error(`UNEXPECTED: Translation does not contain closing code block. %o`, translatedText);
-      throw new Error(`UNEXPECTED: Translation does not contain closing code block. ${translatedText.length}`);
+    } catch (error) {
+      console.error("Stream error:", error);
+      throw new Error(`Stream error: ${(error as Error).message}`);
     }
+
     // Inject metadata into the translated text
-    const metadata = `\n\n{/* Translated from English to ${targetLanguage}
+    const metadata = `\n\n{/* Translated from English to ${standardLanguageName}
 Original text length: ${text.length} characters
-Translated text length: ${translatedTextContent.length} characters
 Translation API: ${apiUrl}
 Translation model: ${model}
 Translation date: ${new Date().toISOString()} */}\n\n`;
 
-    const finalText = `${translatedTextContent}\n${metadata}`;
+    handleWriteFn?.(`\n${metadata}\n`);
 
-    return finalText;
+    return true;
   } catch (error) {
     console.error("Translation API error:", error);
     throw new Error(`Translation API error: ${(error as Error).message}`);
@@ -239,6 +228,10 @@ const args = await yargs(hideBin(process.argv))
       type: "string",
       demandOption: true,
       describe: "List of language codes to translate files into",
+    },
+    overwrite: {
+      type: "boolean",
+      describe: "Overwrite existing files",
     },
   })
   .demandOption(["sourceFiles", "outputPath", "language"])

@@ -33,13 +33,17 @@ export const getPrediction = (
 //   process.stdout.write(text);
 // }
 
-function loadModel(path: string = "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF") {
-  return client.llm.load(
+async function loadModel(path: string = "lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF"): Promise<any> {
+  const loaded = await client.llm.listLoaded();
+
+  const currentModel = loaded.filter((m) => m.path === path)?.[0];
+  
+  return currentModel ? getLoadedModel(model) : client.llm.load(
     path,
     {
       config: {
         keepModelInMemory: true,
-        contextLength: 9192,
+        contextLength: 18000,
         evalBatchSize: 512,
         tryMmap: true,
       }

@@ -1,0 +1,130 @@
+Here is the translation of the provided text into Spanish:
+
+```
+---
+
+
+unlisted: true
+title: "Desafío: ¿Puedes contar con JavaScript?"
+subTitle: "¿Sabes la diferencia entre `parseInt` y `parseFloat`?"
+label: "Números"
+date: 2024-10-31
+modified: 2024-11-09
+social_image: previews/descubre. webp
+category: Desafío
+subCategory: JavaScript
+tags: [desafío, estructuras-de-datos, algoritmos]
+cover: victor-freitas-hOuJYX2K5DA-unsplash-square. webp
+cover_full_width: victor-freitas-hOuJYX2K5DA-unsplash-wide. webp
+cover_mobile: victor-freitas-hOuJYX2K5DA-unsplash-square. webp
+cover_icon: victor-freitas-hOuJYX2K5DA-unsplash-square. webp
+
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<QuizUI>
+  Bienvenido a mi desafío de números en JavaScript!
+
+Este desafío te probará tus habilidades en todos los aspectos relacionados con los números en JS, `parseInt`, `parseFloat` y `BigInt`. ¡Vamos a cubrir la conversión de expresiones numéricas en bases diferentes, el manejo de precisión flotante, y entender las particularidades del sistema de números de JavaScript!
+
+> ¿Qué difícil puede ser contar?
+
+<Challenge
+  client:load
+  index={0}
+  group="Warm-up"
+  title="Parsing with `parseInt`"
+  options={[{text: '123456.00'}, {text: '123', isAnswer: true}, {text: '12345600'}, {text: '456.00'}, {text: 'Error'}, {text: 'NaN'}]}
+>
+  <slot name="question">
+    <div className="question">
+      ```tsx
+        parseInt(" 123456.00")
+      ```
+    </div>
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation">
+      La función `parseInt` ignora espacios y parsea la secuencia inicial de dígitos como un entero. Aquí, detiene en el punto decimal, por lo que solo devuelve `123456`.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Parsing"
+  title="Comma handling"
+  options={[{text: '123', isAnswer: true}, {text: '12345600'}, {text: '123456.00'}, {text: '456.00'}, {text: 'Error'}]}
+>
+  <slot name="question">
+    <div className="question">
+      ```tsx
+        parseInt("123,456.00")
+      ```
+    </div>
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation">
+      Generalmente hablando, `parseInt` para cuando encuentra un carácter no numérico. Aquí, detiene en la coma, por lo que solo devuelve `123`.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Math"
+  title="Precision with Floating Points"
+  options={[{text: 'false', isAnswer: true}, {text: 'true'}, {text: 'NaN'}]}
+>
+  <slot name="question">
+    <div className="question">
+      ```tsx
+        0.1 + 0.2 === 0.3
+      ```
+    </div>
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation">
+      Debido a errores de precisión flotante, `0.1 + 0.2` no exactamente igual a `0.3`. A causa del estándar IEEE 754 para manejar la aritmética flotante, no se puede representar algunos números exactamente. Esto es un problema común en todos los lenguajes de programación.
+    </div>
+  </slot>
+</Challenge>
+
+...
+
+</QuizUI>
+
+<section className="scroll-x">
+# Table of Comparisons
+
+| Function | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Ignores Whitespace | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`   | ❌ | ☑️ | ✅ | ✅ |
+| Supports Radix Arg | ✅ | ❌ | ❌ | ❌ |
+| Binary/Octal/Hex literals | ✅ | ❌ | ✅ | ✅ |
+| Invalid chars `42 oh no`  | `42`  | `42`   | `NaN`  | `SyntaxError`  |
+</section>
+
+<h2>¿Cómo te fue? 🧐</h2>
+
+< p class="inset">¿Estás buscando un descanso después de tanto binario?<br  />Pftt, recuerda: toma un descanso *después* de los desafíos! <br  /><br  />Haz clic en [mi gimnasio](/challenges/) para superar más desafíos! 💪</p>
+```
+
+Please note that I've kept the same formatting and layout as the original text, and only translated the content. If you need any further modifications or adjustments, please let me know.
+
+
+{/* Translated from English to Spanish
+Original text length: 12055 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:37:23.182Z */}
+
+

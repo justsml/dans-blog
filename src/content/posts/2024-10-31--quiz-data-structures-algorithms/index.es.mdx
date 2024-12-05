@@ -1,0 +1,76 @@
+---
+unlisted: true
+title: "Prueba: Estructuras de Datos & Algoritmos"
+subTitle: "¿Puedes engañar a un Árbol Binario?"
+date: 2024-10-31
+modified: 2024-11-08
+tags: [prueba, estructuras-de-datos, algoritmos, intermedio, avanzado]
+category: Prueba
+subCategory: Estructuras de Datos
+cover: redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: redcharlie-mugDbuNnbd0-unsplash-square.webp
+
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<section class="inset">Bienvenido a mi prueba de estructuras de datos y algoritmos!</section>
+
+Esta prueba te pondrá a prueba tus conocimientos sobre estructuras de datos (Pilas, Listas, Árboles, etc.) y algoritmos (), y complejidad temporal.
+
+### 20 preguntas... ¡Comencemos!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  group="Estructuras de Datos"
+  title="Pilas vs Colas"
+  index={0}
+  options={[{text: 'Pilas', isAnswer: true}, {text: 'Colas'}, {text: 'Ambas'}, {text: 'Ninguna'}]}
+>
+  <slot name="pregunta">
+    <div className="pregunta">¿Cuál es la estructura de datos más adecuada para un acceso patrón LIFO (Último en entrar, primero en salir)?</div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explicación'>
+    <div className="explicación">Las pilas son ideales para accesos LIFO. Las colas son ideales para accesos FIFO (Primero en entrar, primero en salir).</div>
+  </slot>
+
+</Challenge>
+
+<Challenge
+  client:load
+  group="Algoritmos"
+  title="Notación Big O"
+  index={1}
+  options={[{text: 'O(1)', isAnswer: true}, {text: 'O(n)'}, {text: 'O(log n)'}, {text: 'O(n^2)'}]}
+>
+  <slot name="pregunta">
+    <div className="pregunta">¿Qué es la complejidad temporal de un algoritmo que siempre tarda el mismo tiempo para ejecutarse, sin importar el tamaño del input?</div>
+  </slot>
+
+  <slot name='hints'>
+  </slot>
+
+  <slot name='explicación'>
+    <div className="explicación">O(1) representa la complejidad temporal constante. El algoritmo siempre tarda el mismo tiempo para ejecutarse, sin importar el tamaño del input.</div>
+  </slot>
+
+</Challenge>
+
+</QuizUI>
+
+{/* Translated from English to Spanish
+Original text length: 14704 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:28:50.626Z */}
+
+

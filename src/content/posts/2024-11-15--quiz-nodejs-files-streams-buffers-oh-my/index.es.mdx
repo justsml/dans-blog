@@ -1,0 +1,63 @@
+---
+unlisted: false
+title: "Prueba: Maestría en E/S de NodeJS"
+subTitle: "Prueba tu conocimiento de archivos, streams & buffers"
+label: NodeJS
+social_image: previews/desktop.webp
+category: Prueba
+subCategory: NodeJS
+date: 2024-11-15
+modified: 2024-11-15
+tags: [prueba, nodejs, e/s, streams, buffers, sistema de archivos, intermedio]
+cover_full_width: data-streaming-wide.webp
+cover_mobile: data-streaming-square.webp
+cover_icon: data-streaming-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">¿Listo para sumergirte en el mundo de NodeJS E/S?</p>
+
+Esta prueba te hará evaluar tu comprensión de las operaciones de E/S de Node, desde operaciones básicas del sistema de archivos hasta conceptos avanzados de streaming. Cubriremos buffers, codificación y mejores prácticas para manejar datos de manera eficiente.
+
+¿Cómo bien sabes que los streams son tuyos? ¡Vamos a ver!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Buffers"
+  title="Alcance de Buffer"
+  options={[ 
+    {text: 'Crea un Buffer de tamaño 5 con ceros', isAnswer: true}, 
+    {text: 'Crea un Buffer de tamaño 5 con datos aleatorios'}, 
+    {text: 'Lanza un error'}, 
+    {text: 'Crea un Buffer vacío'}, 
+  ]}
+>
+  <slot name="question">
+    <div className="question">¿Qué hace este código?</div>
+    ```js
+    const buf = Buffer.alloc(5);
+    console.log(buf);
+    ```
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation">`Buffer.alloc(size)` crea un nuevo Buffer de tamaño especificado lleno con ceros.</div>
+  </slot>
+</Challenge>
+
+
+</QuizUI>
+
+
+{/* Translated from English to Spanish
+Original text length: 15680 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T07:17:14.972Z */}
+
+

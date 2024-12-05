@@ -1,0 +1,81 @@
+---
+unlisted: true
+title: "Quiz: PostgreSQL Profundo: Pt. 1"
+subTitle: "¿Te hace gritar la SQL?"
+label: "PostgreSQL Profundo #1"
+category: Quiz
+subCategory: Base de datos
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, base de datos, intermedio, avanzado]
+cover_full_width: elephant-synthwave-gym-wide.webp
+cover_mobile: elephant-synthwave-gym-square.webp
+cover_icon: elephant-synthwave-gym-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+> **Parte 1 de 2.** [Vaya a Parte 2](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL ¡es mi base de datos favorita! Siempre estoy aprendiendo nuevos trucos y gotchas, así que decidí crear un quiz.</p>
+
+Este quiz cubre un mixto de características y gotchas de PostgreSQL menos conocidas: desde agregados integrados hasta casting de tipo, restricciones y más.
+
+¡Buena suerte!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="Agregados Integrados"
+  options={[ 
+    {text: 'MIN'}, 
+    {text: 'MAX'}, 
+    {text: 'AVG'}, 
+    {text: 'MEDIAN', isAnswer: true} 
+  ]}
+>
+  <slot name="question">
+    <div className="question"> 
+      ¿Cuál no es un agregado integrado en PostgreSQL?
+      ```sql
+      SELECT 
+        MIN(grade) as lowest, 
+        MAX(grade) as highest, 
+        AVG(grade) as average, 
+        MEDIAN(grade) as middle
+      FROM grades;
+      ```
+    </div>
+  </slot>
+
+  <slot name='explanation'>
+    <div className="explanation"> 
+      Las restricciones UNIQUE en PostgreSQL:
+       - Permiten múltiples valores NULL.
+       - `NULL` ≠ `NULL` en los controles de unicidad.
+
+      Para evitar valores NULL, agrega `NOT NULL`: 
+      ```sql
+      CREATE TABLE student_emails  (
+        student_id INTEGER, 
+        email VARCHAR(255) NOT NULL, 
+        UNIQUE(email)
+      );
+      ```
+    </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+{/* Translated from English to Spanish
+Original text length: 14001 characters
+Translation API: http://127.0.0.1:1234/v1/chat/completions
+Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
+Translation date: 2024-12-05T06:44:51.776Z */}
+
+
