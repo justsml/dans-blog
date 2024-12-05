@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title:  "AngularJS v2.0 and the Impending Schism"
 subTitle: "Can it be avoided?"
 date: 2015-08-05

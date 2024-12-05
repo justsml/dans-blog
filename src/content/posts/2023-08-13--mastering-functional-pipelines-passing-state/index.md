@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title: "Master of Pipelines: Passing State"
 subTitle: Hello Closure, My Old Friend.
 date: 2023-08-09

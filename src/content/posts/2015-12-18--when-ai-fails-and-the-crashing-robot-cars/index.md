@@ -1,9 +1,10 @@
 ---
+social_image: ./mobile.webp
 title:  "When AI Fails & the Crashing Robotic Cars"
 subTitle: "Google's self-driving cars are in 2x as many accidents as human drivers"
 date: 2015-12-18
 modified: 2024-07-30
-category: Leadership
+category: AI
 subCategory: machine-learning
 tags: [artificial intelligence, ai, self-driving cars, fails]
 cover: sandy-millar-749381-unsplash.webp

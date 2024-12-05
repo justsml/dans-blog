@@ -4,9 +4,6 @@ import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import socialBanner from "../assets/social-banner.webp";
-// import { selfieUrl } from "astro-selfie";
-// Import the global.css file here so that it is included on
-// all pages through the use of the <BaseHead /> component.
 import "@/styles/nav.css";
 import "@/styles/layout.css";
 import "@/styles/global.css";
@@ -153,7 +150,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     scriptEl.setAttribute("crossorigin", "anonymous");
 
     document.addEventListener("astro:page-load", function () {
-      console.log("Adding htmx script to page", global.location.pathname);
+      // console.log("Adding htmx script to page", global.location.pathname);
       setTimeout(() => {
         document.body.appendChild(scriptEl);
       }, isHomePage ? 3 : 1000);

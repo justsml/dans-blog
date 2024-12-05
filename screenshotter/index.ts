@@ -16,7 +16,7 @@ const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
-rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz"));
+// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz"));
 // rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Replacing"));
 
 
@@ -48,6 +48,7 @@ for await (let item of rssFeed.items) {
 screenshotService.close();
 
 function buildArgs(rssItem: RssishItem): ScreenshotTask {
+  let contentPath = "";
   let { slug, link, categories } = rssItem;
   link = `${siteUrlPrefix}${link}`;
 
@@ -60,9 +61,12 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
   if (rssItem.sourcePath) {
-    // basePath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
+
+    contentPath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
     basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
+    // contentPath = `${basePath}`;
     log("BASE PATH: ", basePath);
+    log("CONTENT PATH: ", contentPath);
     // process.exit(0);
   } else {
     basePath = `/tmp/screenshots/${slug}`;
@@ -97,23 +101,23 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
 
   return {
     [`${link}`]: {
-      fileName: join(`${basePath}`, `/main.jpg`),
+      fileName: join(`${contentPath}`, `/main.jpg`),
       selectorPathMap,
       sizes: [
         {
-          fileName: join(`${basePath}`, `/desktop.jpg`),
+          fileName: join(`${contentPath}`, `/desktop.jpg`),
           width: 1280,
           height: 720,
           classModifier: "desktop-shot",
         },
         {
-          fileName: join(`${basePath}`, `/mobile.jpg`),
+          fileName: join(`${contentPath}`, `/mobile.jpg`),
           width: 480,
           height: 900,
           classModifier: "mobile-shot",
         },
       ],
-      delayMs: 250,
+      delayMs: 125,
     },
   };
 }
@@ -153,12 +157,22 @@ async function applyScrollTo(page: Page, scrollTo: string) {
   }
 }
 
+const checkForAutoRefresh = async (error: Error) => {
+  if (error.message.includes("context") && error.message.includes("a navigation")) {
+    console.error(`WARNING: DONT TRY TAKE SCREENSHOTS AGAINST A LIVE DEV SERVER - INFINITE RELOAD LOOP POSSIBLE. STATICALLY BUILD SITE & SERVE IT LOCALLY!`)
+    process.exit(42);
+  }
+  return false;
+}
 async function addClassName(page: Page, overrideClassName: string) {
   if (overrideClassName) {
     const classes = await page.evaluate((overrideClassName) => {
       document.body.classList.add(overrideClassName);
       return document.body.classList.value;
-    }, overrideClassName);
+    }, overrideClassName).catch((e) => {
+      console.error(`Error adding class ${overrideClassName}: ${e?.message}`);
+      checkForAutoRefresh(e);
+    })
     console.log("Applied classes: ", classes);
   }
 }
@@ -231,24 +245,31 @@ async function generateImages(args: ScreenshotTask) {
     if (selectorPathMap) {
       if (page.isClosed()) {
         page = await screenshotService.goToUrl(url);
-        await addClassName(page, "screenshot-mode");
       }
       // if (page.)
       await page.reload().catch((e) => {
         console.error(`Error reloading page: ${e?.message}`);
       });
+      await addClassName(page, "screenshot-mode");
 
+      
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
         const newFile = fileName.startsWith("/")
-          ? fileName
-          : path.join(process.cwd(), fileName);
+        ? fileName
+        : path.join(process.cwd(), fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
         await addClassName(page, "screenshot-mode");
         const element = await page.$(selector).catch((e) => {
           console.error(`Error selecting element ${selector}: ${e?.message}`);
           return null;
+        });
+        await page.evaluate(() => {
+          if (window.__superHackFix_patchOptionsListWithActualHeight) {
+            console.log("Patching options list!");
+            window.__superHackFix_patchOptionsListWithActualHeight();
+          }
         });
 
         if (!element) {

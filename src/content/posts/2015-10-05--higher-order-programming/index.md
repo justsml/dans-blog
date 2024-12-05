@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title:  "Higher Order Programming"
 subTitle: "Exploring Array- and Set-based Pipeline Techniques"
 date: 2015-09-22

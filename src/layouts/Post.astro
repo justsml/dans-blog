@@ -14,7 +14,7 @@ import AdditionalReading from "../components/AdditionalReading.astro";
 import CategoryLink from "../components/CategoryLink.astro";
 import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
-import { fade } from 'astro:transitions';
+import { fade } from "astro:transitions";
 
 type Props = {
   sourcePath: string;
@@ -93,7 +93,7 @@ const responsiveImgSizes_breakRight = {
     {modTime && <meta property="article:modified_time" content={modTime} />}
     {pubTime && <meta property="article:published_time" content={pubTime} />}
   </head>
-  <body transition:animate={fade({ duration: '0.285s' })}>
+  <body transition:animate={fade({ duration: "0.285s" })}>
     <Header className="content-grid article" date={date} modified={modified} />
     <main
       class="content-grid article"
@@ -164,11 +164,6 @@ const responsiveImgSizes_breakRight = {
     onload="this.media='all'"
   />
   <script>
-    declare global {
-      interface Window {
-        __updateCounts: () => boolean;
-      }
-    }
     import { QuestionStore } from "../components/QuizUI/QuestionStore";
 
     let $interval: NodeJS.Timeout | null = null;
@@ -180,6 +175,8 @@ const responsiveImgSizes_breakRight = {
       const isQuizPage = quizUI.length > 0;
 
       if (!isQuizPage || questions.length <= 0) return false; // Not a quiz page
+
+      // window?.__superHackFix_patchOptionsListWithActualHeight();
 
       const scoreEls = document.querySelectorAll(".score");
       const scoreEl = scoreEls[0];
@@ -239,6 +236,7 @@ const responsiveImgSizes_breakRight = {
       const quiz = document.querySelector(".quiz-ui");
 
       if (quiz) {
+        // window?.__superHackFix_patchOptionsListWithActualHeight();
         const questionStore = getQuestionStore();
         const resetButton = document.querySelector("button.reset-quiz");
         if (resetButton) {
@@ -286,5 +284,37 @@ const responsiveImgSizes_breakRight = {
         0,
       );
     }
+
+    /**
+     * This exists to patch the height of the options list - since we added the flip card effect, not all browsers are smart enough about calculating the height of the option elements.
+     */
+    window.__superHackFix_patchOptionsListWithActualHeight =
+      function __superHackFix_patchOptionsListWithActualHeight(
+        quizOptions: HTMLElement[] | null = null,
+      ) {
+        quizOptions ??= [
+          ...document.querySelectorAll<HTMLElement>(".quiz-options"),
+        ];
+        console.log("patchRealHeight", quizOptions.length);
+
+        quizOptions.forEach(function (optionPanel) {
+          try {
+            let childHeights =
+              optionPanel &&
+              Array.from(optionPanel.querySelectorAll("a")).map(
+                function (child) {
+                  return child.getBoundingClientRect().height;
+                },
+              );
+            const sumHeight =
+              childHeights && childHeights.reduce((a, b) => a + b, 0);
+
+            if (optionPanel.parentElement)
+              optionPanel.parentElement.style.height = sumHeight + "px";
+          } catch (e) {
+            console.error("Error patching options list", e);
+          }
+        });
+      };
   </script>
 </html>

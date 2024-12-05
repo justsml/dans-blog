@@ -1,4 +1,6 @@
 ---
+social_image: ./mobile.webp
+draft: true
 title:  "MongoDB: Disable transparent huge pages"
 subTitle: A fix for Debian/Ubuntu
 date: 2015-12-22

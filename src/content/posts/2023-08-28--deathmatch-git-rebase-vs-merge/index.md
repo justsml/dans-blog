@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title: "Deathmatch: Git Rebase vs. Merge"
 subTitle: A timeless question...
 date: 2023-08-27

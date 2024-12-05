@@ -401,6 +401,16 @@ h1:first-of-type {
     font-size: 80%;
   }
 
+  img {
+    height: 1.75em;
+    width: 1.75em;
+    min-height: .85em;
+    min-width: .85em;
+    aspect-ratio: 1 / 1;
+    border-radius: 100%;
+    margin: 0.125rem 0rem .5rem 0;
+  }
+
   @screen sm {
     a { padding-left: 0; }
     column-gap: 0rem;
@@ -1044,4 +1054,111 @@ h3 + .custom-gist,
   overflow-x: auto;
   overflow-y: auto;
   background-color: #EEE2;  
+}
+
+
+
+/*
+Overriding the style when generating screenshots
+*/
+
+/* class="screenshot-mode mobile-shot" */
+.screenshot-mode {
+  h1, h2 {
+    margin-block: .75rem;
+  }
+  h1:first-of-type {
+    margin-top: 0;
+  }
+  h3, h4 {
+    margin-block: .25rem;
+  }
+  .header-nav {
+    place-self: end;
+    height: unset;
+    img {
+      /* class="screenshot-mode" */
+      margin: .5rem 1rem 0 0;
+      /* max-width: .85rem !important;
+      max-height: .85rem !important;; */
+      @screen sm {
+        margin: 1rem;
+      }
+
+    }
+
+    a:link, a:visited {
+      color: var(--clr-muted-400) !important;
+    }
+
+    .title {
+      font-size: 94%;
+      height: unset;
+      font-family: Raleway, sans-serif;
+      color: var(--clr-muted-400);
+      font-weight: 700;
+      padding: .5rem;
+      text-shadow: none;
+      width: 125px;
+      text-decoration: underline;
+
+      @screen sm {
+        font-size: 1.75rem;
+        margin: .125rem 0rem 0rem 0rem;
+      }
+    }
+  }
+
+  .quiz-ui {
+    astro-island, astro-slot {
+      margin: 150vh auto;
+    }
+  }
+  /* :target { */
+  .challenge {
+    scale: 1.35;
+    z-index: 69420;
+    margin-block: 180rem !important;
+    /* min-width: 99vw !important; */
+  }
+
+
+  .screenshot-hidden {
+    display: none !important;
+  }
+
+  .quiz-hint-toggle {
+    grid-template-columns: 1fr 7rem !important;
+    .watermark {
+      display: grid !important;
+    }
+  }
+  .score {
+    display: none !important;
+  }
+  body > header {
+    display: none !important;
+  }
+  astro-dev-toolbar {
+    display: none !important;
+  }
+}
+
+.mobile-shot {
+  main > h2 {
+    margin-block: .75rem 1.5rem;
+  }
+  .content-grid > * {
+    grid-column: 1 / -1;
+  }
+  .challenge {
+    scale: 1;
+    z-index: 69420;
+    margin-block: 2rem auto !important;
+  }
+
+  .top-header {
+    padding: 0 0.5rem;
+  }
+
 }

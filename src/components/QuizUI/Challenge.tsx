@@ -1,4 +1,4 @@
-import { navigate } from 'astro:transitions/client';
+import { navigate } from "astro:transitions/client";
 import {
   MouseEvent,
   useContext,
@@ -18,7 +18,7 @@ import getGlobal from "@stdlib/utils-global";
 // import { autoFit, reduceFontSizeOnOverflow } from "../../shared/autoFit.ts";
 
 const global = getGlobal();
-
+const SCREENSHOT_SCALE = 1.75;
 // const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
 // const updateCodeBlocks = () => {
 //   const blocks = getPreBlocks();
@@ -201,7 +201,18 @@ export default function Challenge({
         challengeRef.current.querySelector("div.explanation")?.innerHTML;
       if (e) setExplanationText(e);
     }
-  }, [explanationText]);
+
+    // apply size updates
+    requestAnimationFrame(() => {
+      const quizOptionPanel =
+        challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
+      if (!quizOptionPanel) return;
+
+      window?.__superHackFix_patchOptionsListWithActualHeight([
+        quizOptionPanel,
+      ]);
+    });
+  }, [explanationText, challengeRef]);
 
   const sequenceNum = (questionIndex ?? 0) + 1;
 
@@ -285,7 +296,7 @@ export default function Challenge({
           "card-flip": showExplanation,
         })}
         style={{
-          height: `${70 * _options.length}px`,
+          height: `${(SCREENSHOT_SCALE * 70) * _options.length}px`,
           transition: "height 0.2s ease-in-out",
           overflowY: "auto",
         }}
@@ -297,11 +308,11 @@ export default function Challenge({
             dangerouslySetInnerHTML={{ __html: explanationText }}
             onClick={(ev: MouseEvent<HTMLParagraphElement>) => {
               ev.preventDefault();
-              const {clientX, clientY} = ev;
+              const { clientX, clientY } = ev;
               const target: HTMLElement = ev.target as HTMLElement;
               console.log(
                 "Clicked on explanation",
-                {clientX, clientY},
+                { clientX, clientY },
                 target.tagName,
                 target.getAttributeNames(),
               );
@@ -314,13 +325,13 @@ export default function Challenge({
                   : target?.parentElement?.tagName === "A"
                     ? (target.parentElement as HTMLAnchorElement)
                     : null;
-              const isTopRight = isTopRightCorner({target}, 48); 
+              const isTopRight = isTopRightCorner({ target }, 48);
               const isInCodeBlock = target.closest("code, pre");
               const isInParagraph = target.closest("p");
               if (isTopRight) {
-                console.log("TOP RIGHT CLOSE")
+                // console.log("TOP RIGHT CLOSE")
                 setShowExplanation(false);
-                return false
+                return false;
               }
 
               if (isInParagraph) {
@@ -333,7 +344,7 @@ export default function Challenge({
               }
 
               if (link) {
-                navigate(link.href, {sourceElement: link});
+                navigate(link.href, { sourceElement: link });
                 console.log("Clicked on link", link, link?.href);
                 return true;
               }
@@ -345,15 +356,19 @@ export default function Challenge({
   );
 }
 
-function isTopRightCorner({target}: {
-  target: HTMLElement | null;
-  clientX?: number;
-  clientY?: number;
-}, hitBox = 48) {
+function isTopRightCorner(
+  {
+    target,
+  }: {
+    target: HTMLElement | null;
+    clientX?: number;
+    clientY?: number;
+  },
+  hitBox = 48,
+) {
   if (!target) return false;
   const before = getComputedStyle(target as HTMLElement, "::before");
-  const {scrollY, scrollX} = global;
-  
+  const { scrollY, scrollX } = global;
 
   if (before) {
     const top = Number(before.getPropertyValue("top").slice(0, -2));
@@ -363,7 +378,7 @@ function isTopRightCorner({target}: {
     if (Number.isNaN(right) || Number.isNaN(top)) {
       return false;
     }
-    console.log("isBefore %o %o", {top, right, left, scrollX, scrollY});
+    console.log("isBefore %o %o", { top, right, left, scrollX, scrollY });
     if (top <= hitBox && right <= hitBox) {
       return true;
     }

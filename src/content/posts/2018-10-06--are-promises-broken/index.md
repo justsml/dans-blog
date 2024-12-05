@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title: Broken Promises?
 subTitle: Dropping errors, losing results...
 date: 2018-10-06

@@ -1,3 +1,12 @@
+declare global {
+  interface Window {
+    __updateCounts: () => boolean;
+    __superHackFix_patchOptionsListWithActualHeight: (
+      quizOptions?: HTMLElement[] | null,
+    ) => void;
+  }
+}
+
 
 export type ArticlePost = {
   id: string;
