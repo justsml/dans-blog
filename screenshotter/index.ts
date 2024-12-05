@@ -16,7 +16,9 @@ const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
-rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz") && item.title?.includes("Postgres"));
+// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz") && item.title?.includes("Postgres"));
+rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Replacing"));
+
 
 let basePath = `/tmp/screenshots`;
 
