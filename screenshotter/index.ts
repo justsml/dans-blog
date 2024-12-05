@@ -16,8 +16,8 @@ const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
-// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz") && item.title?.includes("Postgres"));
-rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Replacing"));
+rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz"));
+// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Replacing"));
 
 
 let basePath = `/tmp/screenshots`;
@@ -220,8 +220,8 @@ async function generateImages(args: ScreenshotTask) {
 
         if (scrollTo) await applyScrollTo(page, scrollTo);
         await page.setViewportSize({ width, height });
-        await takeScreenshot(page, newFile);
-        log(`Screenshot saved to ${newFile}`);
+        const outputFile = await takeScreenshot(page, newFile);
+        log(`Screenshot saved to ${outputFile}`);
       }
     }
 
@@ -261,8 +261,8 @@ async function generateImages(args: ScreenshotTask) {
         // delay 1000ms to wait for the element to be fully loaded
         await page.waitForTimeout(delayMs ?? 1000);
         await takeScreenshot(element, newFile)
-          .then(() => {
-            console.log(`Screenshot saved to ${newFile}`);
+          .then((outputFile) => {
+            console.log(`Screenshot saved to ${outputFile}`);
           })
           .catch((e) => {
             console.error(

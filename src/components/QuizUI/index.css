@@ -7,7 +7,7 @@ html {
 Overriding the style when generating screenshots
 */
 .mobile-shot {
-  .content-grid {
+  /* .content-grid {
     grid-template-columns: [full-width-start]
         0
           [breakout-start]
@@ -19,10 +19,20 @@ Overriding the style when generating screenshots
           [breakout-end]
         0
       [full-width-end] !important;
+  } */
+  
+  .content-grid > * {
+    grid-column: 1 / -1;
   }
 }
 /* screenshot-mode mobile-shot */
 .screenshot-mode {
+  .challenge {
+    scale: 1.75;
+    margin: 38rem auto;
+  }
+
+
   .screenshot-hidden {
     display: none !important;
   }
