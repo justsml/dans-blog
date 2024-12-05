@@ -318,14 +318,11 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
   <div className="explanation">
     Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed "core" database contributor, "what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah." 😈 You're welcome.
 
-    PostgreSQL's rich set of network types do not include `ipv4`.
+    PostgreSQL's rich set of network types do not include `ipv4`. Every single time I attempt to use it without googling, I get it wrong. Perhaps `macaddr8` makes me feel there _must_ be `ipv4` and `ipv6` types. Nope, `inet` covers both. Also, `cidr` covers network masks for both.
 
-    You'd want to use the `inet` type for IP addresses, which I swear I've never had to Google. 👀
-
-    The correct network types include:
+    Valid network types include:
     - `cidr` (IPv4/IPv6 network address)
     - `inet` (IPv4/IPv6 host address)
-    - `ipv4` (IPv4 host address)
     - `macaddr` (MAC address)
     - `macaddr8` (EUI-64 MAC address)
   </div>
