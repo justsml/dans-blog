@@ -1,0 +1,93 @@
+---
+language_name: Japanese
+title: 一つの奇妙なトリックで機能チームのスピードアップ！
+subTitle: スタッフエンジニアはこれを嫌う！
+date: 2024-09-29
+modified: 2024-09-30
+tags: [アジャイル、チーム]
+category: 工学
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">ダニー・ハウ</a> さんの写真 by <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>目次</summary>
+
+- [キーを考える](#thinking-in-keys)
+  - [キーデザイン](#designing-with-keys)
+  - [KVsはグラフと木?](#kvs-as-graphs--trees)
+  - [KVパターンを使う時](#when-to-use-kv-patterns)
+  - [KVパターンを避ける時](#when-to-avoid-kv-patterns)
+  - [KV以外が必要なとき](#when-you-need-more-than-kv)
+- [次のステップ](#next-steps)
+  - [Fact Service - 参照プロジェクト](#fact-service---reference-project)
+- [結論](#conclusion)
+  - [さらなる読み物](#further-reading)
+
+</details>
+
+システムや機能を新しく設計する際、スキーマ設計に集中してしまうことがあるでしょう。この記事では、私のキャリアで何度も恩恵を受けた奇妙なトリックを共有します。
+
+<section class="breakout">
+  _試_ し、新しいシステムまたは機能を設計する際に、最も単純可能なデータ持続性を使用しましょう。
+</section>
+
+多くの場合、私はチームがSQLやMongoDBだけに頼らざるを得ないと思われているでしょう。もちろん、誰もSQLで解雇されることはありません。しかし、もっとシンプルで速い方法がありますか？
+
+キー-値ストア（RedisやS3など）があれば、もちょう
+
+```markdown
+--- 
+title: One weird trick to speed up feature teams!
+subTitle: Staff engineers hate this!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-h Howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> on <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>Table of Contents</summary>
+
+- [Thinking in Keys](#thinking-in-keys)
+  - [Designing with Keys](#designing-with-keys)
+  - [KVs as Graphs & Trees?](#kvs-as-graphs--trees)
+  - [When to Use KV Patterns](#when-to-use-kv-patterns)
+  - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+  - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+  - [Fact Service - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+  - [Further Reading](#further-reading)
+
+</details>
+
+当て、単純なデータ永続化を設計する際に使用しましょう。これにより、データレイヤーコードの再利用とスキーマ設計およびマイグレーションに関連するコストを節約できます。変更が必ずしも起こる場合、これは開発の初期段階で軽微な速度アップにつながります。
+
+パフォーマンスの向上は期待でき、`key`検索は高度に最適化されており、バッチ更新では書き込みが利益を受けます。
+
+## キーを考える
+
+キー-値パターンを使って設計することが奇妙に見える場合、特にオブジェクト階層やエンティティ関係図でシステムを直接実装していることから、データストアの選択が難しいでしょう。
+```
+
+この記事では、KVパターンを初めて使用する際に感じる不自然さについて説明します。特に、キー-値パターンを使用してデータを表現することが容易であることに注意してください。これは、設定やURLなど、どこでも見られるものです！（ただし、KVストアではありません） 
+
+
+{/* Translated from English to Japanese
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:47:26.987Z */}
+
+

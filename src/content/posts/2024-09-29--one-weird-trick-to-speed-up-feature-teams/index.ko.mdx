@@ -1,0 +1,149 @@
+---
+language_name: Korean
+title: 한 가지 이상한 방법으로 기능 팀을 가속화!
+subTitle: 스탭 엔지니어들이 이에 대해 혀를 치는군요!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [애그리일, 팀]
+category: 공학
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">다니엘 하와</a>의 사진, <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+{/* Add html5 toggle element */}
+
+<details>
+<summary>목차</summary>
+
+- [키를 중심으로 생각하기](#thinking-in-keys)
+  - [키로 설계하기](#designing-with-keys)
+  - [KVs는 그래프 및 트리인가요?](#kvs-as-graphs--trees)
+  - [KV 패턴을 언제 사용할까요?](#when-to-use-kv-patterns)
+  - [KV패턴을 피하는 경우](#when-to-avoid-kv-patterns)
+  - [KV를 넘어서는 경우](#when-you-need-more-than-kv)
+- [다음 단계](#next-steps)
+  - [Fact Service - 참고 프로젝트](#fact-service---reference-project)
+- [결론](#conclusion)
+  - [추가 자료](#further-reading)
+
+</details>
+
+새로운 시스템이나 기능을 설계할 때, 스키마 디자인에 집중하기 쉽다. 이 글에서는 제가 경력을 통해 얻은 독특한 트릭을 공유하겠습니다.
+
+<section class="breakout">
+  _새로운 시스템 또는 기능을 설계할 때 가장 단순한 데이터 지속성을 시도해보세요._
+</section>
+
+SQL 또는 MongoDB만 선택하는 것을 보는 것도 흔한 일입니다. 맞아요, 누가 SQL을 선택해도 해고되지 않습니다. 그러나 KV 저장소를 사용한다면 더 간단하고 빠른 방법이 있습니다.
+
+Redis나 S3와 같은 KV 스토리지.
+
+항상 권장되는 것은 아니지만, **적게는 실현될 수 있다**.
+
+간단한 스토리지 계층은 초기 개발을 중대한 속도로 가속화할 수 있으며, 데이터 레이어 코드 재사용과 스키마 디자인 및 마이그레이션에 관련된 비용을 줄여줄 수 있습니다. 변동성이 발생하겠지만, 가능한 한 코드가 두 가지 이상의 위치에서 변경을 처리하지 않도록 합니다. (물론 변경은 발생할 거예요!)
+
+성능 향상은 `key` 검색이高度ly 최적화되어 있을 것이고, 쓰기는 대량 업데이트를 활용해 성능 향상을 얻을 수 있습니다.
+
+{/* KV 패턴을 피해야 할 경우에는 blog comments 같은 것을 하나의 KV 쌍에 저장하지 마세요. 예를 들어, `post/666 -> {comments: [...너무 많이...]}` 와 같이 저장하지 마세요. 대신 `post/666/comments/1` 또는 `post/666/comments/<UUID>` 처럼 사용하세요. 아니면 SQL 테이블로 가야 할 경우에는... */}
+
+## 키를 중심으로 생각하기
+
+데이터를 객체 계층 구조나 Entity Relationship Diagram을 직접 SQL에서 구현하는 것과 같은 방식으로 설계하 accustomed할 수 있습니다.
+
+주어진 적이었나요? KV 패턴을 사용한 데이터 처리를 하기도 했어요! 그들은 모든 곳에 나타납니다만, configs와 URLs부터 S3 스타일의 Object Storage까지! `ID` 값을 통해 데이터를 처리하는 경우라면, Key-value pattern! (하지만 명확하게는 KV 저장소라고 말할 수는 없습니다!)
+
+### 키로 설계하기
+
+진짜 모든 데이터가 KV 패턴을 사용하여 표현될 수 있습니다. 사실, 대부분의 고급 DBMS는 낮은 레벨의 KV 패턴을 빌드한 것입니다. 예를 들어 살펴보겠습니다:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+ID 자체가 종종 키입니다! 이는 KV 저장소에서 일반적인 패턴입니다. 키는 종종 엔티티 타입과 고유 식별자로 구성된 합성입니다. (예: `user/123`, `user:456`)
+
+### KVs는 그래프 및 트리인가요?
+
+데이터 구조처럼 그래프 또는 트리를 사용하여 복잡한 구조를 나타내는 데 도움이 될 수 있습니다. (또한 REST URLs가 이에 대한 좋은 예입니다.)
+
+키 계층 (`user/420` -> `user/420/friends`)은 `user`와 그들의 `friends` 간 자연스럽게 그래프 관계를 인코딩합니다.
+
+이것은 그래프 데이터 구조를 직사각형으로 serialization할 수 있는 빠르고 비싼 방법입니다. 특히 JOIN 복잡성이나 테이블을 사용하여 그래프 데이터베이스 (예: Neo4j)를 구축할 필요가 없는 경우에 좋습니다.
+
+<figure>
+![user/123의 그래프](./KVsCanBeGraphs.webp)
+<figcaption>user/123의 그래프</figcaption>
+</figure>
+
+### KV 패턴을 언제 사용할까요?
+
+- 큰 규모에서 KV 쌍을 사용하세요. (억만 가지 또는 수십억 가지의 KV 쌍!)
+- 고유 키를 통해 데이터에 접근할 때
+- 간단한 구조의 데이터가 필요한 경우
+- 계층, 그래프 또는 트리 구조의 데이터가 있는 경우
+
+### KV패턴을 피하는 경우
+
+댓글과 같은 것을 하나의 KV 쌍에 저장하지 마세요. 예를 들어, `post/666 -> {comments: [...너무 많이...]}` 와 같이 저장하지 마세요. 대신 `post/666/comments/1` 또는 `post/666/comments/<UUID>` 처럼 사용하세요. 아니면 SQL 테이블로 가야 할 경우에는...
+
+- 데이터셋을 속성으로 검색해야 할 때
+- 여러 엔티티를 JOIN하여 데이터를 가져올 필요가 있을 때
+- 무한하게 성장하는 데이터셋 (로그, 가입 등)을 처리할 필요가 있을 때
+
+### KV를 넘어서는 경우
+
+프로젝트 요구사항이 자연스럽게 진화하면, 더 이상 KV 저장소에서 지원하지 못하는 기능이 필요할 수 있습니다. 이때 복잡한 데이터 스토어로 마이그레이션을 고려해야 할 것입니다.
+
+{/* 좋은 소식은 KV 패턴으로 시작하여 필요한 경우 더 복잡한 시스템으로 진화할 수 있다는 것입니다. S3는 단순 저장만 지원하는 것 외에도 Athena를 사용하여 파일 검색, Glacier 및 Expire 정책과 같은 다양한 기능이 있습니다. 또한 Redis에는 Pub/Sub, Geo-spatial, Streams 및 Sorted Sets와 같은 고급 기능이 추가되었습니다. */}
+
+SQL 마이그레이션은 KV 스토리지에서 SQL로 이동하는 것보다 더 쉽습니다. 여러 테이블, 인덱스, 제약 조건과 같은 복잡한 SQL 스키마를 처리할 때 이점을 얻을 수 있습니다. 제가 몇 번 해봤어요! (50줄의 스크립트와 함께)
+
+일화적으로, SQL 디자인의 품질이 KV 패턴으로 시작하면 더 높다고 느꼈어요. 데이터를 다른 방식으로 생각하도록 강요하고, 정확히 SQL에서 필요한 것에 대해 이해하는 데 도움이 됩니다.
+
+## 다음 단계
+
+이 패턴을 더 깊이 조사하려면 [JustSML의 오픈 소스 "Fact Service" 참조 프로젝트](https://github.com/justsml/fact-service)를 빌드해 보세요.
+
+리다クション에 대한 다양한 데이터 어뎁터가 포함되어 있으며, Postgres, Redis, DynamoDB, Firestore, Cassandra와 같은 여러 저장소에 대한 지원이 있습니다. (또한 [Docker 명령](https://github.com/justsml/fact-service/tree/main/lib/providers)를 사용하여 빠르게 시작할 수 있습니다.)
+
+Fact Service는 KV 데이터 서비스 구현을 학습하고 습득하기 위한 시작 및 학습 프로젝트입니다. 포크하고 여러분의 고유한 KV 데이터 서비스를 빌드하세요!
+
+## 결론
+
+이 글을 읽으시길 바랍니다! 질문이나 피드백이 있으면 댓글이나 [Twitter](https://twitter.com/justsml)에서 @나오세요.
+
+### 크레딧
+
+- [PostgreSQL에서 계층적 트리 데이터 모델링](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [데이터베이스에 대규모 트리를 저장하고 사용하는 시도와 착오](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### 추가 자료
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+{/* Translated from English to Korean
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:56:09.075Z */}
+
+

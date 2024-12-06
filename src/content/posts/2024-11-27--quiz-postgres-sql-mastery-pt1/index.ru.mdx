@@ -1,0 +1,164 @@
+---
+language_name: Russian
+title: "Квиз: Deep Postgres: Pt. 1"
+subTitle: "SQL вызывает у вас трепет?"
+label: "Deep PostgreSQL #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+social_image: mobile.webp
+unlisted: false
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+> **Часть 1 из 2.** [Перейти к Части 2](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 - это мой любимая база данных! Я всегда учу новые хаки и особенности, поэтому решил собрать их в новом Квизе!</p>
+
+Этот квиз охватываетmix обоих известных и менее популярных функций и хаков PostgreSQL: от встроенных агрегатов до кастинга, ограничений и многого другого.
+
+Удачи! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="Встроенные Агрегаты"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая функция агрегирования в PostgreSQL не встроена?
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` не встроен! Вам нужно:
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    Общие встроенные агрегаты:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Различные статистические функции
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Type Casting"
+  title="Разновидности Кастинга"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какую из этих конвертаций считать недействительной ❌?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL поддерживает три синтаксиса кастинга:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. Функция инфиксная: `type 'literal'`.
+
+    Все они взаимозаменяемы, но:
+    - `CAST()` наиболее универсальный.
+    - `::` используется только в PostgreSQL, но часто встречается.
+    - Инфиксный стиль `type 'literal'` реже используется, но все еще действителен.
+  </div>
+  </slot>
+</Challenge>
+
+...
+
+<Challenge
+  client:load
+  index={13}
+  group="Constraints"
+  title="Проверка Ограничения Времени"
+  options={[
+    {text: 'Immediately'},
+    {text: 'At transaction commit', isAnswer: true},
+    {text: 'On next query'},
+    {text: 'Never - constraints are only checked on INSERT'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Когда проверяется этот ограничение оценок?
+    ```sql
+    ALTER TABLE students 
+    ADD CONSTRAINT valid_grade 
+    CHECK (
+      (grade >= 0 AND grade <= 100) OR 
+      grade IS NULL
+    ) NOT VALID;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ограничения с `NOT VALID`:
+    - Проверяются при завершении транзакции
+    - Не проверяют существующие строки
+    - Полезны для больших таблиц
+    
+    Без `NOT VALID`:
+    - Ограничение проверяется сразу 
+    - Все существующие строки проверяются
+    - Может быть медленно на больших таблицах
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Поздравляю! Вы глубоко изучили несколько областей PostgreSQL! 🐘
+
+Надеюсь, вы узнали что-то новое или просто получили результат для хвастовства! 🏆
+
+<p class="inset">Посмотрите [Часть 2](/quiz-postgres-sql-mastery-pt2/) для еще больше fun с Postgres! 🚀</p>
+
+Хотите еще больше адреналина в жизни? Посмотрите мой коллекцию Квизов [/challenges/] (/challenges/) для бесконечных* удовольствий!
+
+{/* Translated from English to Russian
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:14:54.565Z */}
+
+

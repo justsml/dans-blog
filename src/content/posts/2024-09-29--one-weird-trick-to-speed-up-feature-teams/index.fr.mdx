@@ -1,0 +1,123 @@
+---
+language_name: French
+title: Une astuce bizarre pour accélérer les équipes de fonction !
+subTitle: Les ingénieurs en personnel détestent ça !
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, équipes]
+category: Ingénierie
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Photo par <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> sur <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+{/* Ajouter élément de tougle html5 */}
+
+<details>
+<summary>Table des matières</summary>
+
+- [Penser en Clés](#penser-en-clés)
+  - [Conception avec des Clés](#conception-avec-des-clés)
+  - [KVs comme Graphes et Arbres ?](#kvs-comme-graphes-et-arbres)
+  - [Quand utiliser les patrons de KV](#quand-utiliser-les-patrons-de-kv)
+  - [Quand éviter les patrons de KV](#quand-eviter-les-patrons-de-kv)
+  - [Lorsque vous avez besoin de plus que des K et V](#lorsque-vous-avez-besoin-de-plus-que-des-k-et-v)
+- [Étapes suivantes](#étapes-suivantes)
+  - [Service Factuel - Projet de référence](#service-factuel---projet-de-référence)
+- [Conclusion](#conclusion)
+  - [Lecture supplémentaire](#lecture-supplémentaire)
+
+</details>
+
+Quand on conçoit un nouveau système ou une nouvelle fonctionnalité, il est facile se laisser emporter par le design de schéma. Dans cet article, je partagerai une astuce qui m'a apporté des dividendes tout au long de ma carrière.
+
+<section class="breakout">
+  _Essayez_ la persistance de données la plus simple possible lors de la conception d'un nouveau système ou fonctionnalité.
+</section>
+
+Trop souvent, je vois les équipes saisir SQL ou MongoDB en tant que seule option pour le stockage des données. Ou bien, personne ne se fait renvoyer pour choisir SQL. Mais qu'en dirait-on si j'vous disais qu'il existe une autre façon simple, rapide et moins coûteuse ?
+
+Un magasin de clés-valeur comme Redis ou S3 pourrait être la solution idéale.
+
+Ce n'est pas toujours l'option la plus appropriée, mais peut-être plus souvent que vous ne le pensez.
+
+Une couche de stockage simple peut accélérer légèrement le développement initial en réutilisant du code pour la couche des données et en évitant les coûts liés à l'évolution du design de schéma et aux migrations. Les changements de schéma surviendront tout de même ; mieux vaut qu'ils soient gérés par le code aussi longtemps que possible. 
+
+Les gains de performance sont probables, car la recherche par clé est hautement optimisée et les écritures peuvent bénéficier d'updates en batch.
+
+{/* Evitez les patrons de KV si vous avez besoin de faire des jointures ou de rechercher par propriétés dans votre ensemble de données. Ou dans les cas où vous avez un dataset illimité et infini. (Logs, Inscriptions, etc.) */}
+
+## Pensant en Clés
+
+Il peut être surprenant de concevoir avec un patron clé-valeur en premier lieu, surtout si l'on est habitué à concevoir des systèmes avec des hiérarchies d'objets ou des schémas relationnels et à les implémenter directement dans SQL.
+
+Vous avez probablement **utilisé** des patrons clé-valeur avant ! Ils sont partout, des configs et URLs aux stockages en ligne de type S3 ! Chaque fois que vous manipulez des données via une valeur `ID` unique, c'est un autre patron clé-valeur ! (Bien que pas nécessairement un stockage KV.)
+
+### Conception avec des Clés
+
+Presque tous les données peuvent être représentées à l'aide de patrons K-V. En fait, la plupart des bases de données plus élevées sont construites sur des patterns K-V inférieurs. Regardez les exemples ci-dessous:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/123/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+Vous pourriez avoir remarqué qu'avec les `ID`, la clé est souvent un mélange du type d'entité et de l'identifiant unique. (e.g `user/123`, `user:456`)
+
+### KVs comme Graphes et Arbres ?
+
+Il peut être utile de représenter des structures de données complexes telles que les graphes et les arbres à l'aide de patrons de KV. (Encore une fois, les URL REST sont un excellent exemple de ceci.)
+
+L'hiérarchie clé (`user/420` -> `user/420/friends`) encorde naturellement une relation de graphe entre le `user` et ses `friends`.
+
+C'est une manière rapide et abordable de sérialiser des structures de graphes. Surtout si vous n'avez pas besoin de la complexité d'un gestionnaire de base de données graphiques (comme Neo4j).
+
+<figure>
+![Graphique de user/123](./KVsCanBeGraphs.webp)
+<figcaption>Graphique de user/123</figcaption>
+</figure>
+
+### Quand utiliser les patrons de KV
+
+- Lorsque vous avez besoin d'une échelle massive. (Des milliards ou même des trillions de paires K-V.)
+- Lorsque vous accédez principalement aux données via une clé unique.
+- Lorsque vous avez besoin de structures de données simples.
+- Lorsque vous avez des données hiérarchiques, graphiques ou en arbre.
+
+### Quand éviter les patrons de KV
+
+N' stockez pas des choses comme les commentaires sur un article dans une paire K-V **unique**. Par exemple `post/666 -> {comments: [...trop nombreux...]}`. Au lieu de ça, vous pourriez utiliser `post/666/comments/1`, ou `post/666/comments/<UUID>`, etc. Ou opter pour une table SQL.
+
+- Lorsque vous avez besoin de rechercher par propriétés (pas par clé ou ID) dans votre ensemble de données.
+- Lorsque vous avez besoin de faire des jointures entre les données de plusieurs entités.
+- Lorsque vous avez besoin d'imposer des contraintes complexes ou des relations.
+
+### Lorsque vous avez besoin de plus que des K et V
+
+Lorsque les exigences du projet évoluent naturellement, il se peut que vous deviez faire plus que ce que votre stockage KV autorise. À ce stade, vous devrez envisager de migrer vers une base de données plus complexe.
+
+{/* La bonne nouvelle est que vous pouvez souvent commencer avec un patron K-V et l'évoluer vers un système plus complexe au besoin. S3 a des fonctionnalités qui dépassent le stockage simple, comme Athena pour rechercher des fichiers, Glacier, et les politiques d'expiration; il y a beaucoup de choses que vous pouvez faire avec ça. De même, Redis ajoute de nombreuses fonctionnalités haut de gamme (comme Pub/Sub, Geo-spatial, Streams et Sorted Sets) qui peuvent vous aider à répondre à certaines exigences. */}
+
+La bonne nouvelle est que la migration d'un seul stockage KV vers SQL est relativement plus simple qu'une migration d'un schéma SQL complexe vers un stockage KV. (Avec plusieurs tables, index, contraintes, etc.) J'ai effectué cela de nombreuses fois avec un script de 50 lignes.
+
+De manière anecdotique, j'ai constaté que les designs SQL sont généralement de meilleure qualité si vous commencez par un patron K-V en premier lieu. Cela force à penser différemment aux données et à mieux comprendre exactement ce qu'il faut vraiment d'un SQL.
+
+
+{/* Translated from English to French
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:54:40.371Z */}
+
+

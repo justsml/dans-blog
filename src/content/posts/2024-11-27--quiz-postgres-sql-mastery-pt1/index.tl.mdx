@@ -1,0 +1,284 @@
+```yaml
+---
+language_name: Tagalog
+social_image: mobile.webp
+title: "Quiz: Deep Postgres: Pt. 1"
+subTitle: "Does SQL make you squeal?"
+label: "Deep PostgreSQL #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+cover_full_width: elephant-synthwave-gym-wide.webp
+cover_mobile: elephant-synthwave-gym-square.webp
+cover_icon: elephant-synthwave-gym-square.webp
+---
+
+Siyentipiko at mas mahusay na mga katanungan tungkol sa PostgreSQL 🐘
+
+Pagsasalin: Ang pahina ng blog na ito ay binago mula sa wikang Ingles sa Tagalog.
+
+Ang quiz na ito ay isasaalang-alang ang iba't ibang mga feature at gotcha ng PostgreSQL: mula sa mga built-in aggregate na walang katapusan, type casting, constraint, at mas lalo pang kakaibang bagong paglalagay.
+
+Mabuhay! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="Built-in Aggregates"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Anong hindi built-in na aggregate function sa PostgreSQL?
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` hindi built-in! Kailangan mong gamitin ang:
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    Mga comon na built-in aggregates:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Divers na mga statistical functions
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Type Casting"
+  title="Cast Syntax Variations"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Anong invalid na konbersyon ng type ang ito? ❌
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ang PostgreSQL ay suportado sa tatlong syntax ng konpersyon:
+    
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. Type function: `type 'literal'`.
+
+    Lahat ay may katumbas na kahalagahan, ngunit:
+    - `CAST()` ang pinaka portable.
+    - `::` ay mas lumaki sa postgres-specific pero madalang gamitin.
+    - Infix-style `type 'literal'` ay mas bawas lalo't mas legal pa rin
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Constraints"
+  title="UNIQUE Constraints at NULL"
+  options={[
+    {text: 'Hindi pwede ang NULL'},
+    {text: 'Isa pang NULL pwede'},
+    {text: 'Dalawang NULL pwede', isAnswer: true},
+    {text: 'Depende sa version ng PostgreSQL'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Kailan lang pwedeng ilagay ang parehas na mga NULL dito?
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ang mga constraints ng UNIQUE sa PostgreSQL:
+    - Pwedeng iilagay ang parehas na mga NULL.
+    - `NULL` ≠ `NULL` sa pagsusuri ng kapanapanabik.
+
+    Upang mapigilan ang ilagay ng `NULL`, ilagay ang `NOT NULL`:
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Date/Time"
+  title="Date Arithmetic"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'Error: invalid time'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Anong ito ang lalabas?
+    ```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ang mga intervals ay isang mahusay na kasangkapan para sa pagpapalawak ng operasyon ng range ng petsa!
+
+    Ang aritmetika ng petsa sa PostgreSQL:
+    - `+ interval '24 hours'` ay nagdaragat ng 24 oras
+    - `+ interval '1 day'` ay nagdadaglat ng 1 araw
+    - `+ interval '1 month'` ay nagdadaglat ng 1 buwan
+    - `+ interval '1 year'` ay nagdadaglat ng 1 taon
+
+    Ang resulta ay `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Timestamps"
+  title="timestamptz vs timestamp"
+  options={[
+    {text: 'Naglalaman sila ng parehong datos nang iba't ibsa'},
+    {text: 'timestamptz ay may timezone', isAnswer: true},
+    {text: 'timestamptz ay mas matandang uri ng data'},
+    {text: 'Silang lahat ay mga alias nang isa't isa'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Anong pagkakatulad at pagkakaiba sa pagitan ng `timestamptz` at `timestamp`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ang `timestamp` ay naglalaman ng petsa/hinio na walang impormasyon tungkol sa timezone.
+    Ang `timestamptz` ay naglalaman ng petsa/hinio kasama ang impormasyon ng timezone.
+
+    - Ang `timestamp` ay walang koneksyon sa timezone
+    - Ang `timestamptz` ay may offset ng oras
+
+    Gamitin ang `timestamptz` kung kinakailangan mong isahin ang impormasyon ng timezone. (Hindi palaging kino-consider.)
+
+    Sa pangkalahatan, inirerekomenda ko na normalisahin ang lahat ng oras sa UTC at gamitin ang `timestamp` upang maiwasan ang maramihang mga problema ng timezone.
+  </div>
+  </slot>
+</Challenge>
+
+# Ang Mga Ibang Uri
+
+Sige, sigurado ka bang ginamit mo na ang *maraming* uri sa PostgreSQL, di ba?
+
+Ang susunod na katanungan ay tungkol sa native types ng Postgres v17. 🤯
+
+Para sa bawat tanong, tukuyin ang **invalid na type**. 🕵️‍♂️
+
+<p class="inset">Pumapalo!</p>
+
+<Challenge
+  client:load
+  index={5}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Anong hindi valid na uri ❌ sa PostgreSQL?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ang `STRING(100)` ay hindi isa sa mga valid na uri ng PostgreSQL.
+
+    Mga tamang string types:
+    - `VARCHAR(100)` (variable-length string)
+    - `CHAR(100)` (fixed-length string)
+    - `TEXT` (hindi limitadong haba)
+    - `CHARACTER VARYING(100)` (pareho sa `VARCHAR(100)`)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className
+
+{/* Translated from English to Tagalog
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:04:46.762Z */}
+
+

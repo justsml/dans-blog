@@ -1,74 +1,512 @@
-Here is the translation of the provided content to Spanish:
-
-**Quiz: Masterización de Bash**
-
-```
---- 
+---
+language_name: Spanish
 unlisted: false
-title: "Quiz: Masterización de Bash"
-subTitle: "¿Puedes comunicarte con los ordenadores? ¡Como si dijera!"
+title: "Quiz: Bash & Shell Mastery"
+subTitle: "Puedes hablar con computadoras? ¿Como, bueno?"
 label: Bash
 category: Quiz
 subCategory: Bash
 date: 2024-11-20
 modified: 2024-11-21
-tags: [quiz, bash, scripting, shell, linux, beginner, intermediate, advanced]
+tags: [quiz, bash, scripting, shell, linux, principiante, intermedio, avanzado]
 social_image: previews/desktop.webp
 cover_full_width: psychedelic-shell-wide.webp
 cover_mobile: psychedelic-shell-square.webp
 cover_icon: psychedelic-shell-square.webp
---- 
-```
-
-**Importar desafíos**
-```bash
+---
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
-<Challenges>
-    <slot name="question">
-        <div className="question">¿Qué hará este script?</div>
-    </slot>
+<p className="inset">Prueba tus habilidades de scripting de Bash con estas 16 preguntas!</p>
 
-    <slot name="explanation">
-        <div className="explanation">
-            La sintaxis `echo ${var:offset}` extrae una subcadena a partir del índice `offset`. Aquí, el resultado es:
-            ```plaintext
-            good cat
-            ```
+Cubriendo variables, bucles, condicionales, manipulación de cadenas, funciones y sintaxis de Bash gotchas.
 
-            Para extraer una subcadena de un largo específico, utiliza `${var:offset:length}`.
+¡Asegúrate de (o prueba) tu shell scripting **habilidades**!
 
-            Para extraer desde el final de la cadena, utiliza `${var:-offset}`. (Nota el espacio antes del `-`!)
-        </div>
-    </slot>
-</Challenges>
-```
+<QuizUI>
 
-**Desafío**
-```bash
 <Challenge
   client:load
   index={0}
+  group="Calentamiento"
+  title="Declaración de la variable"
+  options={[
+    { text: "$name=Dan" },
+    { text: "name=Dan", isAnswer: true },
+    { text: "name =Dan" },
+    { text: "name == Dan" },
+    { text: "name : Dan" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo se definen las variables en Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Las variables en Bash se declaran sin espacios alrededor del signo `=`. Por ejemplo:
+    ```bash
+    name=Alice
+    ```
+
+    Este asigna el valor `"Alice"` a la variable `name`.
+
+    Nota: `$name` se utiliza para **referenciar** o leer el valor de la variable.
+
+    Agregar espacios causa que el shell interprete el comando como un programa que se ejecuta, lo cual no es lo que quieres cuando estás definiendo una variable.
+
+    También, Bash es sensible a mayúsculas y minúsculas, por lo que `name`, `NAME` y `Name` son diferentes variables.
+
+    Finalmente, las variables no pueden tener espacios o dashes (`-`) en sus nombres. Use Underscores (`_`) o camelCase.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Calentamiento: Escaping"
+  title="Escaping de comillas"
+  options={[
+    { text: `echo 'Es hora de hacer algo ¡F*cking'!`, isAnswer: true },
+    { text: `echo 'Es hora de hacer algo ¡F**king'!'''`, isAnswer: true },
+    { text: `echo 'Es hora de hacer algo'\"`},
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    _¿Qué imprimirá lo siguiente?_
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    ¡Sabía que escapar las comillas era salvaje! Las comillas son un lenguaje de programación difícil de parsear. Imagina escapar otros idiomas en Bash strings - con todas esas comillas, comillas de apertura y cierre, y `$` símbolos. 🫠
+
+    Las comillas simples necesitan ser escapadas dentro de cadenas simples. La barra invertida `\` escapa el carácter de la coma dentro de las comillas:
+    ```bash
+    echo 'Es hora de hacer algo ¡F*cking!'
+    ```
+
+    Hay otras formas de manejar esto, pero esta es la más común.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Calentamiento: Expansión"
+  title="Echo Command"
+  options={[
+    { text: "cat cab", isAnswer: true },
+    { text: "cat cbt" },
+    { text: "ca bt" },
+    { text: "cat" },
+    { text: "cbd" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué imprimirá lo siguiente?
+    ```bash
+    echo c{a,b}t
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Las llaves `` {} `` en la expansión de plantilla generan múltiples versiones de su contexto, uno (o más) para cada coma-separada valor o patrón.
+
+    Aquí, `a{b,c}d` expande a:
+    ```plaintext
+    abd acd
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
   group="Variables"
-  title="Declaración de variables"
-  options={[...]}
->...</Challenge>
-```
-**Traducción**
+  title="Escaping Characters"
+  options={[
+    { text: "Coste: $$100", isAnswer: true },
+    { text: "Coste: $100" },
+    { text: "Coste: 100" },
+    { text: "Coste: 00", isAnswer: true },
+    { text: "Coste:" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ahora, ¿qué imprimirá lo siguiente?
+    ```bash
+    echo "Es hora de hacer algo $price"
+    ```
+  </div>
+  </slot>
 
-1. **Quiz: Masterización de Bash**
-2. **Importar desafíos**
-3. **Desafío**
-4. **Traducción**
+  <slot name="explanation">
+  <div className="explanation">
+    El número de variables tiene un significado especial. En este caso, `$1` es una variable especial que contiene el primer argumento pasado al script o función. 
 
-Espero que esto te sea útil!
+    Como estamos ejecutando el script en la REPL, no hay argumentos, por lo que `$1` está vacío. El texto restante `00` se imprime como-es.
 
+    Para imprimir un carácter `$` literal, use comillas simples, o escape con una barra invertida:
+
+    ```bash
+    echo "Es hora de hacer algo $"
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Reemplazo de subcadenas"
+  title="Reemplazar subcadena"
+  options={[
+    { text: "Meow meow", isAnswer: true },
+    { text: "Meow meow" },
+    { text: "Bark meow", isAnswer: true },
+    { text: "Bark bark" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué está sucediendo aquí?
+    ```bash
+    str="Bark bark"
+    echo ${str/bark/meow}
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    La sintaxis `${var/pattern/replacement}` reemplaza la primera ocurrencia de `pattern` con `replacement`. Aquí, la salida es:
+    ```plaintext
+    Bark meow
+    ```
+
+    Es caso-sensible. Para hacer que sea insensible al caso, use `${var^pattern/replacement}`.
+
+    Para reemplazar todas las ocurrencias, use `${var//pattern/replacement}`.
+
+    Para reemplazar desde el inicio de la cadena, use `${var/#pattern/replacement}`.
+
+    Para reemplazar desde el final de la cadena, use `${var/%pattern/replacement}`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Longitud de cadena"
+  title="Longitud de cadena"
+  options={[
+    { text: "$#username", isAnswer: true },
+    { text: "#$username" },
+    { text: "${#username}", isAnswer: true },
+    { text: "${username#}" },
+    { text: "echo $username | wc -c" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo puedes obtener la longitud de una variable en Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    La sintaxis `${#username}` devuelve la longitud de `username`.
+
+    Por ejemplo:
+    ```bash
+    username="@justsml"
+    echo ${#username} # => 8
+    ```
+
+    Mientras que `wc` sería técnicamente correcto, no es parte de Bash.
+
+    El comando `wc` se refiere a "word count", y puede contar líneas, palabras y caracteres en un archivo o flujo de entrada.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Condicionales"
+  title="Condicionales básicos"
+  options={[
+    { text: "El archivo `cats.txt` existe", isAnswer: true },
+    { text: "El archivo `cats.txt` no existe", isAnswer: true },
+    { text: "Error", isAnswer: false },
+    { text: "Faltan doble corchetes" },
+    { text: "No está vacío" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué salida dará el siguiente script si existe el archivo `cats.txt`?
+
+    ```bash
+    if [ -e cats.txt ]; then
+      echo "El archivo existe"
+    else
+      echo "No existe el archivo"
+    fi
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    ¡Faltó un espacio antes del corchete de cierre! ¡Bash es muy sensible a los espacios!
+
+    La sintaxis correcta es:
+    ```bash
+    if [ -e example.txt ]; then
+      echo "El archivo existe"
+    else
+      echo "No existe el archivo"
+    fi
+    ```
+
+    Nota: Los doble corchetes `[[ ]]` se recomiendan para condicionales de expresiones. [Vea BashFAQ.](https://mywiki.wooledge.org/BashFAQ/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Condicionales"
+  title="Comparación de cadenas"
+  options={[
+    { text: "Las mismas gatitas", isAnswer: true },
+    { text: "Gatitos diferentes", isAnswer: false },
+    { text: "Zalgo" },
+    { text: "Error", isAnswer: false },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cómo podemos comparar cadenas en Bash?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    ¡Otro error! 🚨
+
+    ¿Por qué estás usando `===` para comparación?
+
+    Eso es para comparaciones de igualdad.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Funciones"
+  title="Declaración de función"
+  options={[
+    { text: "Hola", isAnswer: false },
+    { text: "Dan" },
+    { text: "Hola Dan", isAnswer: true },
+    { text: "saludo" },
+    { text: "Error", isAnswer: false },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué saldrá lo siguiente?
+
+    ```bash
+   function greet () {
+      echo "$1"
+    }
+    greet Hola Dan
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Las funciones en Bash pueden aceptar argumentos. El primer argumento pasado a la función se almacena en `$0`, el segundo en `$1`, y así sucesivamente. **Espacios separan los argumentos**. Por lo tanto, `greet Hola Dan` pasa `"Hola"` como el primer argumento. Para pasar `"Hola Dan"` como un solo argumento, debe citarlo: `greet "Hola Dan"`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Composición"
+  title="Uso de tubería"
+  options={[
+    { text: ">" },
+    { text: ">>" },
+    { text: "|", isAnswer: true },
+    { text: "|" },
+    { text: ">>" },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué operador conecta la **salida** de un comando a la **entrada** del siguiente comando?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    El operador `|` conecta la salida de un comando a la entrada del siguiente comando:
+    ```bash
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
+    ``` 
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Matemáticas básicas"
+  title="Matemáticas básicas"
+  options={[
+    { text: "echo 2 + 2", isAnswer: true },
+    { text: "echo ${2 + 2}" },
+    { text: "echo %(2 + 2)" },
+    { text: "echo $(( 2 + 2 ))" },
+    { text: "echo '10 * 0.5' | bc", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál de estas opciones multiplica correctamente 10 y 0.5, imprimiendo 5?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    El operador `(( ))` realiza matemáticas enteras en Bash.
+
+    Puede ser usado para cálculos simples:
+    ```bash
+    echo $(( 10 * 0.5 ))
+    # => 5
+    ```
+
+    También puede usarse para condicionales matemáticos:
+    ```bash
+
+    if $(( 2 > 1 )); then
+      echo "2 es mayor que 1"
+    fi
+    ```
+    
+    Para matemáticas de punto flotante, considere usar herramientas como `bc` o `awk`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Multiplicación básica"
+  title="Matemáticas básicas"
+  options={[
+    { text: "echo 10 * 0.5", isAnswer: true },
+    { text: "echo (10 * 0.5)" },
+    { text: "echo ${ 10 * 0.5 }" },
+    { text: "echo %( 10 * 0.5 )" },
+    { text: "echo $(( 10 * 0.5 ))" },
+    { text: "echo '10 * 0.5' | bc", isAnswer: true },
+    { text: "Error" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál es la opción que multiplica correctamente 10 y 0.5, imprimiendo 5?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    El operador `(( ))` solo realiza **matemáticas enteras**. ¡Espero que eso no te sorprenda!
+
+    Bash (sorprendentemente) carece de soporte **flotante** para matemáticas.
+
+    La forma recomendada es usar `$(command)`, ya que es más legible y consistente con diferentes versiones de shells & versiones de Bash.
+
+    Las llaves `${}` se utilizan para expansión, no para sustitución.
+
+    El carácter `+` es utilizado para suma, pero requiere espacios antes y después del signo `+`.
+
+    `` $ls -l `` es un ejemplo de uso de comillas dobles para ejecutar un comando.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Manipulación de cadenas"
+  title="Extracción de subcadena"
+  options={[
+    { text: "Gato" },
+    { text: "Gato, buen gato:9", isAnswer: false },
+    { text: "buen gato", isAnswer: false },
+    { text: "Error", isAnswer: false },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué hará el siguiente script?
+
+    ```bash
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    La sintaxis `${var:offset}` extrae una subcadena que comienza en `offset` desde la variable. Aquí, la salida es:
+    ```plaintext
+    buen gato
+    ```
+
+    También se puede usar con un desplazamiento de longitud: `${var:offset:length}`.
+
+    Para extraer desde el final de la cadena, use `-offset`. (Nota el espacio antes del `-`)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
 
 {/* Translated from English to Spanish
 Original text length: 16516 characters
-Translation API: http://127.0.0.1:1234/v1/chat/completions
-Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
-Translation date: 2024-12-05T06:49:30.329Z */}
-
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: lmstudio-community/aya-23-8B-GGUF
+Translation date: 2024-12-06T06:35:13.229Z */}
 

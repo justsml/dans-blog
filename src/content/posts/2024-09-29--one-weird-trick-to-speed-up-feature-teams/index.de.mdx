@@ -1,0 +1,162 @@
+---
+language_name: German
+title: Ein merkwürdiges Trick, um Feature-Teams zu beschleunigen!
+subTitle: Staff Engineers hassen das!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agil, Teams]
+category: Engineering
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Foto von <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> auf <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>Tabelle der Inhalte</summary>
+
+- [Nachdenken in Schlüsseln](#thinking-in-keys)
+  - [Entwerfen mit Schlüsseln](#designing-with-keys)
+  - [KVs als Graphen & Bäume?](#kvs-as-graphs--trees)
+  - [Wann KV-Muster nutzen](#when-to-use-kv-patterns)
+  - [Wann KV-Muster vermeiden](#when-to-avoid-kv-patterns)
+  - [Wenn Sie mehr als KV benötigen](#when-you-need-more-than-kv)
+- [Nächste Schritte](#next-steps)
+  - [Tatsachen-Dienst - Referenz-Projekt](#fact-service---reference-project)
+- [Fazit](#conclusion)
+  - [Weiterführende Literatur](#further-reading)
+
+</details>
+
+Als Sie ein neues System oder eine Feature entwerfen, ist es einfach, sich in den Schema-Designs zu verlieren. In diesem Artikel werde ich einen nützlichen Trick teilen, der mir im Laufe meiner Karriere gute Dienste geleistet hat.
+
+<section class="breakout">
+  _Versuchen Sie_ , die einfachste mögliche Datenspeicherung bei der Gestaltung eines neuen Systems oder einer Funktion zu verwenden.
+</section>
+
+Zu oft sehe ich Teams, die sich für SQL oder MongoDB als einzige Option für den Datenspeicher entscheiden. Natürlich wird hier keiner entlassen. Aber was, wenn ich Ihnen erzähle, dass es eine einfache, schnelle und günstigere Methode gibt, loszulegen?
+
+Ein KV- oder Schlüssel-Wert-Speicher könnte genug sein. Etwas wie Redis oder S3.
+
+Es ist nicht immer die richtige Wahl, aber vielleicht **öfter als Sie denken**.
+
+Eine einfache Speicherschicht kann die frühe Entwicklung leicht beschleunigen, indem sie Datenbankschichten-Code wieder verwendet und Kosten im Zusammenhang mit Änderungen in Schema-Design und Migrationsvorgängen vermeidet. Die Änderungen werden ohnehin aufgetreten; lassen Sie das Code damit fertigwerden. Besser, als in zwei Orten umzugehen.
+
+Leistungsverluste sind wahrscheinlich, da `Schlüssel`-Abfragen stark optimiert sind und Schreibvorgänge von batched Updates profitieren können.
+
+
+
+
+
+Performance gains are likely since `key` lookups are highly optimized, and writes can benefit from batched updates.
+
+{/* Avoid KV patterns if you need JOINs or to query by properties in your dataset. Or in cases where you have an unbounded/infinitely growing datasets. (`Logs`, `Signups`, etc.) */}
+
+## Thinking in Keys
+
+It can feel strange to design with a Key-Value pattern first, especially if you're used to designing systems with object hierarchies or Entity Relationship Diagrams and directly implementing them in SQL.
+
+You've probably ***used*** key-value patterns before! They are everywhere, from configs and URLs to S3-style Object Storage! Every time you deal with data via a unique `ID` value, guess what? Another Key-value pattern! (Though not necessarily a KV Store.)
+
+### Designing with Keys
+
+Virtually all data _can_ be represented using KV patterns. (In fact, many higher-order DBs build on lower-level KV patterns.) Let's look at some examples:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+You may have noticed, but the `ID` is often a key in itself! This is a common pattern in KV stores. The key is often a composite of the entity type and the unique identifier. (e.g `user/123`, `user:456`)
+
+### KVs as Graphs & Trees?
+
+It can be helpful to represent complex data structures like Graphs or Trees using KV patterns. (Again, REST URLs are a great example of this.)
+
+The key hierarchy (`user/420` -> `user/420/friends`) naturally encodes a graph relationship between the `user` and their `friends`.
+
+This is a quick & cheap way to serialize graph data structures. Especially if you don't need the complexity of a graph database (like Neo4j).
+
+<figure>
+![Graph of user/123](./KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
+</figure>
+
+### When to Use KV Patterns
+
+- When you need massive scale. (Billions or even trillions of KV pairs.)
+- When you primarily access data via a unique key.
+- When you need simple data structures.
+- When you have data with a hierarchy, graph, or tree structure.
+
+### When to Avoid KV Patterns
+
+Don't store things like blog comments in a _**single**_ KV pair. For example, `post/666 -> {comments: [...too many...]}`. Instead you might use `post/666/comments/1`, or `post/666/comments/<UUID>`, etc. Or go for a SQL table.
+
+- When you need to search by properties (not Key or ID) in your dataset.
+- When you need to JOIN data across multiple entities.
+- When you need to enforce complex constraints or relationships.
+
+### When you need more than KV
+
+As project requirements naturally evolve, you may need to do more than your KV store supports. At this point you'll need to look at migrating to a more complex data store.
+
+{/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo-spatial, Streams, and Sorted Sets) that can help you meet some requirements. */}
+
+The good news is that migrating a single KV store to SQL is relatively easier than migrating a complex SQL schema into a KV store. (With multiple tables, indexes, constraints, etc.) I've done this many times with a 50-line script.
+
+Anecdotally, I've found the quality of SQL designs is higher if you start with a KV pattern first. It forces you to really think about the data in a different way, and better understand _exactly_ what you really need from SQL.
+
+## Next Steps
+
+The best way to learn is to try it out! If you're interested in exploring this pattern further, I recommend **building things** with Redis, DynamoDB or S3.
+All are excellent KV stores with different trade-offs.
+
+### Fact Service - Reference Project
+
+Check out my Open Source ["Fact Service," a reference project on GitHub](https://github.com/justsml/fact-service).
+
+It's a stand-alone RESTful API that implements a KV data service.
+
+It features many [data adapters](https://github.com/justsml/fact-service/tree/main/lib/providers).
+Including for Postgres, Redis, DynamoDB, Firestore, and Cassandra! (Complete with [Docker commands](https://github.com/justsml/fact-service/tree/main/lib/providers) to get started quickly.)
+
+Fact Service is meant to be a starter & learning project, fork it and build your own KV data service!
+
+## Conclusion
+
+I hope you found this article helpful! If you have any questions or feedback, please feel free to comment or `@` me on [Twitter](https://twitter.com/justsml).
+
+### Credits
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Further Reading
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+
+{/* Translated from English to German
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:58:25.412Z */}
+
+

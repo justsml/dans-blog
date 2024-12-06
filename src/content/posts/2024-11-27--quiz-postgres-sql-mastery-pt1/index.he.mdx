@@ -1,0 +1,236 @@
+---
+language_name: Hebrew
+title: "משחק תרגילים: Deep Postgres: חלק 1"
+subTitle: "האם SQL מרגיז אותך?"
+label: "Deep PostgreSQL #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+cover_full_width: elephant-synthwave-gym-wide.webp
+cover_mobile: elephant-synthwave-gym-square.webp
+cover_icon: elephant-synthwave-gym-square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+> **חלק 1 מתוך 2.** [עבור חלק שני](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 היא ברובה אוהבת מאוד משתמש! תמיד לומד לך חיתוכים ו"gottchas", כך שחלקת אותם במשחק תרגילים חדש!</p>
+
+סוף השבוע! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="Aggregates מבנים"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה פונקציית מרוכב (aggregate) ב-PostgreSQL אינו תקני?
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` אינו בנייה מבוצעת! צריך:
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    מרוכבים נפוצים:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - שונות רבה של פונקציות
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Type Casting"
+  title="שיטות שונות של Casting"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    איזה תרגום למספר שלא הוא חוקי ❌?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL מתמיד עובד עם שלושה מנגנוני casting:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. מנגנון בינארי: `type 'literal'`.
+
+    כולם שווים במהלך התפעול, אבל:
+    - `CAST()` הוא המקומי ביותר
+    - `::` הוא מ-PostgreSQL אבל נפוץ
+    - `type 'literal'` פחות נפוץ אבל עדיין חוקי
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Constraints"
+  title="UNIQUE Constraints ו-NULL"
+  options={[
+    {text: 'No NULLs allowed'},
+    {text: 'One NULL allowed', },
+    {text: 'Two NULLs allowed', isAnswer: true},
+    {text: 'Depends on PostgreSQL version'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    כמה ערכים של NULL מותרים כאן?
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Constraints אל-UNIQUE ב-PostgreSQL:
+    - מורשעים מספרי NULL רבים
+    - `NULL` ≠ `NULL` בבדיקות האוניברסיטה
+
+    למניעת ערכים של `NULL`, הוסף `NOT NULL`:
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Date/Time"
+  title="חישוב תאריכים"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'Error: invalid time'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה זה מחזיר?
+    ```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    ארון המוצק של מתמט התאריכים ב-PostgreSQL:
+    - `+ interval '24 hours'` מוסיף 24 שעות
+    - `+ interval '1 day'` מוסיף יום אחד
+    - `+ interval '1 month'` מוסיף חודש
+    - `+ interval '1 year'` מוסיף שנה
+
+    התוצאה היא `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Timestamps"
+  title="'timestamptz' vs 'timestamp'"
+  options={[
+    {text: 'They store the same data differently'},
+    {text: 'timestamptz includes a timezone', isAnswer: true},
+    {text: 'timestamptz is a more modern date type'},
+    {text: 'They are aliases of each other'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    מה ההבדל בין `timestamptz` ו-`timestamp`?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `timestamp` שומר על תאריך/זמן ללא מידע על תזמית.
+    `timestamptz` שומר על תאריך/זמן עם מידע על פיצול הזמן.
+
+    - `timestamp` הוא חסר תזמית
+    - `timestamptz` שומר על קישור עם פיצול הזמן
+
+    אני ממליץ להגיד לכל זמן שבו ניתן לאחד את כל הזמנים ב-UTC ולהשתמש ב-`timestamp` כדי למנוע קושי של זמן.
+  </div>
+  </slot>
+</Challenge>
+
+# סוגים מרגשים
+
+אני בטוח שתפסת את הכל לגבי סוגים אחרים ב-Postgres, נכון?
+
+השאריות הבאות במשחק הם על סוגים מובנים בעדיפות 17 של Postgres. 🤯
+
+לכל שאלה, אפשר לזהות את הסוג שאינו חוקי. 🕵️‍♂️
+
+<p class="inset">נכון!</p>
+
+<Challenge
+  client:load
+  index={5}
+  group="Postgres Types"
+  title="זהות סוגים שקויים"
+
+
+
+{/* Translated from English to Hebrew
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:01:50.202Z */}
+
+

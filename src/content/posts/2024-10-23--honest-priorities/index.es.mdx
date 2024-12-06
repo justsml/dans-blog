@@ -1,83 +1,124 @@
 ---
-unlisted: true
-title: "La trampa del desplegable de prioridad"
-subTitle: ¿Es el múltiple elección la mejor opción?
+language_name: Spanish
+title: "La trampa de la selección múltiple"
+subTitle: ¿¿La selección múltiple es la mejor opción?"
 category: Pensamientos
-subCategory: Agilidad
+subCategory: Agile
 date: 2024-10-23
 modified: 2024-10-24
-tags: [agilidad, liderazgo, prioridad, backlog, jira]
+tags: [agile, liderazgo, prioridad, backlog, jira]
 cover: new-priority-city.webp
 cover_full_width: new-priority-city.webp
 cover_mobile: new-priority-city-w300.webp
 cover_icon: new-priority-city-w200.webp
-cover_credit: Foto por [Filip Mroz](https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash) en [Unsplash](https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash)
+cover_credit: Foto de <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> en <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
 ---
 
-# La trampa del desplegable de prioridad
+# La trampa de la selección múltiple
 
 <aside className="breakout">
-💡 A medida que una organización crece, inevitablemente tendrá un backlog en constante expansión. Finalmente, el tamaño de la lista demandará priorización.
+¡Como una organización crezca, es inevitable que su lista de tareas pendientes también crezca! Con el tiempo, la tamaño de la lista *requerirá priorización*.
 </aside>
 
-## Una historia de startups
-Sin fallar, tus administradores de Jira tendrán una solución: ¡mira el campo desplegable de prioridad! (Consejo empresarial: posiblemente llamado "Priority2" o "P-nivel".)
+## Una historia de startup
 
-Curiosamente, el 100% de las empresas eligen entre `P1`, `P2`, `P3` y `P4`, o "Bajo", "Medio" y "Alto" y "Crítico".
+Sin fallar, tus administradores de Jira tendrán una solución: ¡miren la selección múltiple de "Prioridad"! (Consejo para desarrolladores empresariales: posiblemente nombrado "Prioridad2" o "P-level".)
 
-Un lista rígida de cuatro opciones? Ok. ¡Vamos a intentarlo durante algunas semanas...
+Curiosamente, el 100% de las empresas eligen entre "P1, P2, P3, P4" o "Bajo, Medio, Alto y Crítico" — aparentemente no hay otras opciones.
 
-### 2 días después
-En un giro que no sorprende a nadie, la organización descubrió un ticket con una nueva prioridad más alta, lo que requirió una pequeña hack: agregar `P0` o "Crítico Max+".
+¿Una lista codificada de cuatro opciones? Bien. Vamos a intentarlo durante unas pocas semanas...
+
+### 2 días más tarde
+
+En un *sorprendente giro de los acontecimientos*, la organización descubrió una entrada con una nueva prioridad más alta, lo que requirió un pequeño truco: agregar "P0", o "Crítico Max+".
 
 ### 3 días más
-Nuestro valiente jefe tuvo algunas reuniones emocionantes y descubrimientos en el congreso!
-De alguna manera, encontraron un prioridad aún más alta que `P0`.
-Desde entonces, el equipo ha estado investigando cómo etiquetar esta nueva prioridad.
 
-Quizás `-1`? No, no. Eso es demasiado confuso (`P-1` vs `P1`). Ok, ¿cómo sobre `P0.5`, no?
+*Nuestro intrépido jefe tuvo algunas reuniones fascinantes y descubrimientos en la conferencia!*
 
-<p className="breakout">En un momento "inspirado", el equipo inventó una prioridad aún más alta: el cero doble!<br />Ahora conocido como la Prioridad `P00`.</p>
+De alguna manera, ellos han descubierto una nueva prioridad aún más alta que "P0"!
 
-{/* *Finalmente, podemos etiquetar todo en el mundo con nuestras Prioridades desplegables!* (…risa mala…)* */}
+Desde entonces, el equipo ha estado trabajando a fondo investigando cómo etiquetar adecuadamente esta nueva prioridad.
 
-### Antes del diluvio
-Antes de que alguien se dé cuenta, tu equipo está alguna vez anegado en tickets `P00`!
+¿-1? ¿No? Eso sería demasiado confuso ("P-1" vs. "P1"). ¿Qué tal "P0.5"? No, no.
+
+<p className="breakout">En un momento de inspiración, el equipo inventó una prioridad aún más alta: la "P00"</p>
+
+{/* *Finalmente, podemos etiquetar adecuadamente todo en el mundo en nuestro menú desplegable de prioridades! (…maldita risa)… */}
+
+## Antes del anegado
+
+Antes de que nadie lo sepa, su equipo está sumergido en entradas con prioridad "P00"!
 
 <b>¿Cómo podemos evitar este juego de teatro de ingeniería?</b>
 
-## ¿Y si la prioridad no fuera múltiple elección?
-¿Cómo podríamos representar un concepto humano como "prioridad" que cambia constantemente y evoluciona con nueva información, cambios del mercado y objetivos organizativos?
+## ¿Qué pasaría si la prioridad no fuera una opción múltiple?
 
-- En el mundo real, las prioridades constantemente cambian y evolucionan en función de la nueva información, los cambios del mercado y los objetivos organizativos.
-- Hay una interacción compleja entre la urgencia, la importancia, la disponibilidad de recursos y el análisis de costo y riesgo que un desplegable sencillo no puede capturar, especialmente con el tiempo. (Rotura de tickets.)
-- Los stakeholders pueden tener opiniones conflictivas sobre qué constituye una prioridad alta, lo que hace que un enfoque de un tamaño para todos sea inapropiado.
+¿Cómo podríamos representar mejor un concepto humano cambiante e inestable como "Prioridad"?
 
-## ¿Y qué sucede después?
-Hay varios enfoques alternativos merecedores de exploración, desde bajo a alto esfuerzo:
+- En el mundo real, las prioridades cambian y evolucionan constantemente según nueva información, cambios en el mercado y objetivos organizacionales.
+- Hay una interacción compleja entre la urgencia, la importancia, la disponibilidad de recursos y el análisis de costo/riesgo que un menú desplegable simple no puede capturar, especialmente con el tiempo (rotura de entradas).
+- Los diferentes interesados pueden tener visiones conflictivas sobre qué constituye una alta prioridad, lo que hace que un enfoque de "talla única" sea incompatible.
 
-- Proporcionar más espacio y cabeza, elegir un valor neutral inicial, por ejemplo, 100 o 1,000. Puedes aumentar o disminuir el número siempre.
-     - O bien, mantener con cero para empezar, donde los números más altos tienen prioridad más alta.
-- Implementar un sistema de priorización multidimensional que considere factores como valor empresarial, urgencia y esfuerzo requerido. (Crear una puntuación compuesta para hacer que el ordenado y filtrado sea más fácil.)
-- Adoptar un método de priorización dinámica, como la técnica MoSCoW (Debe tener, Debería tener, Puede tener, No tendrá), lo que permite una reevaluación regular. (Vea también el modelo Kano.)
+## Entonces, ¿qué sigue?
+
+Hay varios enfoques alternativos merecedores de exploración, desde bajo hasta alto esfuerzo:
+
+- Para proporcionar más espacio y cabeza, comience con un valor "neutro", digamos 100 o 1,000. Siempre puedes aumentar o disminuir el número.
+    - O pegue con cero para comenzar, donde los números más altos tienen una prioridad más alta.
+- Implemente un sistema de priorización multidimensional que tenga en cuenta factores como el valor comercial, la urgencia y el esfuerzo requerido. (Cree una "puntuación compuesta" para facilitar la clasificación y filtrado.)
+- Adopte un método de priorización dinámico, como la técnica MoSCoW (Must have, Should have, Could have, Won't have), que permita la reevaluación regular. (Vea también el Modelo Kano.)
 
 ## Resumen
-Muchas cosas se ponen en prioridad a pesar de su tasa de decadencia rapida. Ayer's `CRITICAL` tickets no son probablemente los next quarter `CRITICAL` tickets.
-Con el tiempo, las tickets más antiguas con prioridad alta se convierten en resistentes al mantenimiento y la limpieza. Después de todo, quién quiere bajar la prioridad de algo una vez declarado ***esencial***? ¡Jamás eliminar tickets irrelevantes! (Gasp! ¡Piensa en el backlog!)
-He visto a varias empresas mezclar `Severity` & `Priority`. `Severity` describe ***urgencia*** (o sensibilidad temporal.)
-`Priority ≠ Severity`. Puede hacer sentido definir 3-5 niveles de severidad (a menudo utilizados para mantener Acuerdos de Nivel de Servicio.)
-Los niveles de urgencia ayudan a comunicar `zero customer impact` a `partial/complete service outage`.
 
-## Una palabra de advertencia
-Desplegar un campo de prioridad no limitado requiere un poco de planificación y disciplina!
-Si eres familiarizado con el desarrollo frontal, podrías haber experimentado una guerra de `z-índice`.
-Essencialmente, `z-índice` permite a los diseñadores establecer *cualquier* número positivo para asegurarse de que sus widgets se muestren "arriba" del contenido inferior con un `z-índice` más bajo.
+La prioridad es tan cambiante como su tasa de decadencia. Las entradas con prioridad "Crítico" de ayer pueden no ser relevantes para las necesidades comerciales del próximo trimestre.
+
+Con el tiempo, las entradas de alta prioridad más antiguas se vuelven resistentes a la limpieza y mantenimiento. Después de todo, ¿quién querría reducir la prioridad de algo que una vez se declaró "esencial"? ¡Ni siquiera hablar de eliminar entradas irrelevantes! (Gasp! Piense en la lista de tareas pendientes.)
+
+He visto múltiples empresas confundir "Severidad" con "Prioridad". La severidad describe ***la urgencia*** (o sensibilidad al tiempo).
+
+`Prioridad ≠ Severidad`. Es posible definir 3-5 niveles de gravedad para mantener acuerdos de nivel de servicio (SLA, por sus siglas en inglés). 
+
+Los niveles de urgencia ayudan a comunicar que una interrupción total del servicio no es necesaria, mientras que un servicio completo o parcial está afectado.
+
+## Una palabra de precaución
+
+La implementación de un campo de prioridad sin límite requiere un poco de planificación y disciplina!
+
+Si estás familiarizado con el desarrollo front-end, es posible que hayas experimentado una "guerra de z-index".
+
+Básicamente, "z-index" permite a los diseñadores establecer cualquier número positivo para garantizar que sus widgets aparezcan "arriba" de otros componentes con un orden z-index más bajo.
+
+Incluso una actualización menor en un componente menor podría introducir un cambio en el z-index en su `<Dialog />`, haciendo que desaparezca. Estas situaciones podrían volverse caóticas a medida que los terceros, las características y las contribuciones de otros equipos intentan superponerse entre sí.
+
+"z-index" una vez se limitó a ~32,000. Pero recientemente vi un fragmento con un z-index de 1,000,000,000!
+
+La inflación debe estar afectando los z-index.
+
+## Discusión
+
+- ¿Es esta una valiosa experiencia de pensamiento?
+- ¿La idea de una prioridad cada vez mayor es espantosa? ¿Induce ansiedad?
+- ¿Es inevitable que este enfoque exceda los límites de un entero de 64 bits?
+- ¿Pueden otros campos (más allá de "Severidad" o "Urgencia") agregar a esta conversación?
+- ¿Cuánta culpa o crédito le corresponde a Jira?
+
+Podríamos gritar en internet: "¿Quién va a limpiar todas estas entradas 'P00'?
+
+O, puedes *ser realista* sobre tu lista de tareas pendientes.
+
+- Acepta que el 90% de tus 1,000 entradas nunca se completarán. Está bien.
+- Archivar entradas que no han sido tocadas durante meses. Cualquier prioridad o urgencia inicial ya no es aplicable. De todos modos, las entradas archivadas pueden ser recuperadas fácilmente.
+- Cuando una entrada reaparece, ¡es genial! Simplemente aumentó su prioridad.
+- Anecdóticamente, he encontrado que no hay daño en descartar entradas antiguas e incompletas.
+- Al eliminar entradas incompletas de la lista de tareas pendientes, se libera tiempo y energía para centrarse en lo que realmente importa. (Cosas por las que vale la pena luchar.)
+- Una lista de tareas pendientes profunda se asemeja a una habitación de trofeos invertida, celebrando cosas que nunca se enviarán.
 
 
 {/* Translated from English to Spanish
 Original text length: 6218 characters
-Translation API: http://127.0.0.1:1234/v1/chat/completions
-Translation model: lmstudio-community/Meta-Llama-3-8B-Instruct-GGUF
-Translation date: 2024-12-05T06:47:32.570Z */}
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: lmstudio-community/aya-23-8B-GGUF
+Translation date: 2024-12-06T06:30:47.434Z */}
 
 

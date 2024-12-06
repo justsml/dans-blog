@@ -1,0 +1,218 @@
+---
+language_name: Arabic
+title: "نقاش: PostgreSQL العميقة: الجزء الأول"
+subTitle: "هل تجعل SQLك يصرخ؟"
+label: "الpostgresql العميقة #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+cover_full_width: elephant-synthwave-gym-wide.webp
+cover_mobile: elephant-synthwave-gym-square.webp
+cover_icon: elephant-synthwave-gym-square.webp
+---
+
+تغطي هذه المرحلة المختبرة مزيجًا من الميزات والخدوش المعروفة وغير المعروفة في PostgreSQL، من مجموعات العامل إلى نوعية الإشارة والتقييد وغيرها.
+
+حظاً موفقاً! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="مجموعة العامل الموجودة قبل الصنع"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أيها ليس مجموعًا عيارًا مكتشفت في PostgreSQL؟
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` ليس مكتشفت بالجاهزية! تحتاج إلى:
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    مجموعات العيار الشائعة:
+    - `MIN`، `MAX`، `COUNT`
+    - `AVG`، `SUM`
+    - `ARRAY_AGG`، `STRING_AGG`
+    - الوظائف الإحصائية المختلفة
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Type Casting"
+  title="تناوب أنماط التحويل"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    أي من هذه التحويلات غير صالحة ❌؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    تقبل PostgreSQL ثلاث أنماط للتحويل:
+
+    1. SQL القياسي: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. دالة التحويل: `type 'literal'`.
+
+    جميعها متطابقة في الوظيفة، لكن:
+    - `CAST()` هي أكثر قابلية للتنقل.
+    - `::` هو خاص بPostgreSQL ولكنه شائع الاستخدام.
+    - التعبير المترادف `type 'literal'` أقل شيوعًا ولكن لا يزال صحيحًا.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Constraints"
+  title="تقييد UNIQUE وNULL"
+  options={[
+    {text: 'لا يسمح بـ NULLs'},
+    {text: 'واحد من NULLs'},
+    {text: 'ثلاثة NULLs', isAnswer: true},
+    {text: 'تعتمد على إصدار PostgreSQL'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    كم عدد قيم NULL المسموح بها هنا؟
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    قيود `UNIQUE` في PostgreSQL:
+    - تسمح بعدة قيم NULL.
+    - `NULL` ≠ `NULL` في تقييمات الفوائد.
+
+    للحظر القيم `NULL`، أضف `NOT NULL`:
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Date/Time"
+  title="الحسابات الزمنية"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'خطأ: وقت غير صحيح'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما الذي يعود به هذا؟
+    ```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    حساب المدار الزمنية في PostgreSQL:
+    - `+ interval '24 hours'` يضيف 24 ساعة
+    - `+ interval '1 day'` يقدر ببضع أيام
+    - `+ interval '1 month'` يقوم بتقدير الشهر التالي
+    - `+ interval '1 year'` يقدم تقدير لمدة عام
+
+    الناتج هو `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Timestamps"
+  title="timestamptz مقابل timestamp"
+  options={[
+    {text: 'يخزن البيانات بنفس الطريقة'},
+    {text: 'timestamptz يشمل منطقة الزمن', isAnswer: true},
+    {text: 'timestamptz هو نوع بيانات أكثر حديثاً'},
+    {text: 'هما مشتقان من بعضهما البطء'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ما هي الفروق بين `timestamptz` و `timestamp`؟
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `timestamp` يخزن الوقت والمكان بدون معلومات المنطقة الزمنية. `timestamptz` يحتفظ بالوقت والمكان مع معلومات منطقة الزمن.
+
+    - `timestamp` لا يتخذ موقفًا من المنطقة الزمنية
+    - `timestamptz` يحمل تنسيق المنطقة الزمنية
+
+    استخدم `timestamptz` عندما تحتاج إلى تخزين معلومات المنطقة الزمنية. (عادة لا يحدث ذلك.)
+
+    بشكل عام، أعتقد أنه يجب تطبيير جميع الأوقات إلى UTC وتحويلها إلى `timestamp` لإبعاد الكثير من المشاكل المتعلقة بالمناطق الزمنية.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+
+{/* Translated from English to Arabic
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:10:17.576Z */}
+
+

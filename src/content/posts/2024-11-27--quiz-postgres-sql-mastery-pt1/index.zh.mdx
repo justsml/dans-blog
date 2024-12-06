@@ -1,0 +1,211 @@
+```yaml
+language_name: Chinese
+title: "Quiz: Deep Postgres: Pt. 1"
+subTitle: "Does SQL make you squeal?"
+label: "Deep PostgreSQL #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+social_image: mobile.webp
+unlisted: false
+```
+
+---
+
+```markdown
+
+> **Part 1 of 2.** [Go to Part 2](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 Is easily my favorite Database! I'm always learning new tricks and gotchas, so I decided to put them in a new Quiz!</p>
+
+This quiz covers a mix of familiar and lesser-known PostgreSQL features and gotchas: from built-in aggregates to type casting, constraints, and more.
+
+Good luck! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup: Functions"
+  title="Built-in Aggregates"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which is NOT a built-in aggregate function in PostgreSQL?
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` is not built-in! You need:
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    Common built-in aggregates:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Various statistical functions
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup: Type Casting"
+  title="Cast Syntax Variations"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these type conversions is **invalid** ❌?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL supports three casting syntaxes:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. Type function: `type 'literal'`.
+
+    All are functionally equivalent, but:
+    - `CAST()` is most portable.
+    - `::` is PostgreSQL-specific but commonly used.
+    - Infix-style `type 'literal'` is less common but still valid.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Constraints"
+  title="UNIQUE Constraints and NULL"
+  options={[
+    {text: 'No NULLs allowed'},
+    {text: 'One NULL allowed', },
+    {text: 'Two NULLs allowed', isAnswer: true},
+    {text: 'Depends on PostgreSQL version'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How many NULL values are allowed here?
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    UNIQUE constraints in PostgreSQL:
+    - Allow multiple NULL values.
+    - `NULL` ≠ `NULL` in uniqueness checks.
+
+    To prevent `NULL` values, add `NOT NULL`:
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Date/Time"
+  title="Date Arithmetic"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'Error: invalid time'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this return?
+    ```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Intervals are a powerful tool for simplifying date range operations!
+
+    Date arithmetic in PostgreSQL:
+    - `+ interval '24 hours'` adds 24 hours
+    - `+ interval '1 day'` adds 1 day
+    - `+ interval '1 month'` adds 1 month
+    - `+ interval '1 year'` adds 1 year
+
+    The result is `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Timestamps"
+  title="timestamptz vs timestamp"
+  options={[
+    {text: 'They store the same data differently'},
+    {text: 'timestamptz includes a timezone', isAnswer: true},
+    {text: 'timestamptz is a more modern date type'},
+    {text: 'They are aliases of each other'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the diff between `timestamptz` and `timestamp`?
+  </div>
+</
+
+
+{/* Translated from English to Chinese
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:02:57.481Z */}
+
+

@@ -1,0 +1,103 @@
+---
+language_name: Chinese
+title: "优先级下陷"
+subTitle: 多选题是最佳选择吗?
+category: 思考
+subCategory: 敏捷
+date: 2024-10-23
+modified: 2024-10-24
+tags: [敏捷,领导力,优先级, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> 的照片，来自 <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+# `优先级`下陷陷阱
+
+<aside className="breakout">
+💡 随着组织的成长，它会不可避免地拥有一个不断膨胀的待办列表。最终，列表的大小将对优先级施加压力。
+</aside>
+
+## 创业故事
+
+毫无疑问，您的Jira管理员都有一个解决方案：欣赏Priority字段下拉菜单！（企业开发者小贴士：可能名为`Priority2`或`P-level`。）
+
+好奇的是，100%的公司都会选择 `P1, P2, P3, P4` 或 `Low, Med, High, 和 Critical`——似乎没有其他选项。
+
+一个固定的四个选项列表？好的，让我们尝试几周……
+
+### 两天后
+
+在令人惊讶于无人的转折中，组织发现了一份新高优先级的票据，迫使团队进行一次微小的修改：添加`P0`或`Critical Max+`！
+
+### 三个更多的日子
+
+*我们的勇敢的老板在会议和发现了激动人心的发现！*
+
+他们 somehow 发现了一种比`P0`更高的优先级。
+
+从那时起，团队一直专注于研究如何标记这个新的优先级。
+
+也许是 `-1`？不，不太迷惑 (`P-1` vs. `P1`)。好吧，要怎么办`P0.5`，不是呢？
+
+<p className="breakout">在一个"启发性的"时刻，团队发明了一种更高的优先级：双零！</p>
+
+{/* *终于，我们可以用优先级下拉菜单恭敬地标定这个世界上的所有事物！（…邪恶的笑声…)* */}
+
+### 在洪水泛滥之前
+
+在任何人意识到之前，您的团队会不知何故地陷入`P00`票据沼泽！
+
+<b>我们如何避免这一场工程表演中的愚蠢游戏？</b>
+
+## 如果优先级不是多选题？
+
+我们如何更好地表示一个不断变化、在市场变动、新信息和组织目标的推动下不断演进的现实世界概念？
+
+- 在真实生活中，优先级根据新信息、市场变化和组织目标的更改而持续不断地发生变化。
+- 由于简单的下拉菜单无法捕捉紧急性、重要性、资源可用性和成本/风险分析之间的复杂互动，以及时间的推移，.ticket rot.可能会产生问题。（
+- 不同利益相关者对高优先级的看法可能存在冲突，使得一种适用于所有的方法不合适。）
+
+## 接下来，我们应该怎么办？
+
+从低到高 effort，值得探索的一些备选方案包括：
+
+- 为了提供更多腿部和头部空间，请选择一个“中性”的初始值，例如100或1,000。你可以随时增加或减少这个数字。
+    - 或者，从零开始，然后更高的数值表示更高的优先级。
+- 实施考虑业务价值、紧迫性和所需努力的多维优先排序系统。 (创建一个复合分数，以便在排序和过滤中使其更容易。）
+- 采用动态优先排序方法，例如[MoSCoW技术](https://en.wikipedia.org/wiki/MoSCoW\_method)（必须有，应该有，可能有，不会有的），允许定期回顾。 (另见[Kano模型](https://en.wikipedia.org/wiki/Kano\_model).)
+
+## 摘要
+
+尽管优先级的衰减速度非常快，但人们仍将大量依赖于优先级。昨天的`CRITICAL`票据不太可能成为下季度的`CRITICAL`票据。
+
+随着时间的推移，较旧的高优先级票据变得对清理和维护排他性。毕竟谁愿意降低曾经宣称为***关键***的事项的`Priority`？再说了，怎么可能删除这些无关紧要的票据…（惊呼！考虑到回收站！）
+
+我已经看到过多家公司将`Severity`与`Priority`混淆起来。`Severity`描述的是 ***紧迫性*** （或时效性）。
+
+`Priority ≠ Severity`。它可以使定义3-5严重级别（通常用于维护服务级别协议。）
+
+紧急级别的层次有助于传达零客户影响到部分/完整性服务中断。
+
+## 一句话警示
+
+如果您熟悉前端开发，您可能已经经历了`z-index`战争。
+
+实际上，`z-index`允许设计师为确保他们的控件显示“在”其他较低 `z-index` 内容上的任何正整数。
+
+即使是轻微的组件更新也可能导致对 `<Dialog />` 的更改，导致它突然变成不可见。这些情况可能会变得混乱，因为我们的第三方组件、功能工作和其他团队贡献尝试着超过 `z-index`。
+
+在过去，这个`z-index`被限制为~32,000。在最近，我已经看到过一个百万元数值的 `z-index: 1000000000`！
+
+通货膨胀对 `z-index` 进行了大幅度波动。
+
+
+{/* Translated from English to Chinese
+Original text length: 6218 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:19:20.092Z */}
+
+

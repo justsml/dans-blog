@@ -1,0 +1,390 @@
+---
+language_name: Spanish
+unlisted: true
+title: "Quiz: Maîtriser les expressions régulières"
+subTitle: "Vous êtes prêts à dompter les sauvages expressions régulières ?"
+label: Expresiones regulares
+social_image: previews/desktop.webp
+category: Quiz
+subCategory: Expresiones regulares
+date: 2024-11-15
+modified: 2024-11-16
+tags: [quiz, regex, javascript, intermedio, patrones]
+cover_full_width: dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp
+cover_icon: dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Préparez-vous à affronter les expressions régulières ! 🤼‍♂️</p>
+
+Testez vos connaissances en expressions régulières avec des questions couvrant les modèles de base, les quantificateurs, les groupes et ceux difficiles à gérer avec les assertions. De simples correspondances de chaînes à des validations de modèles complexes - pouvez-vous repérer les bonnes expressions regex ?
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Warmup"
+  title="Le drapeau i"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle correspondance ?
+    ```js
+    'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+    Le drapeau i rend le modèle de cas insensible :
+    - g recherche toutes les correspondances
+    - i ignore la différence de casse
+
+  Sans le drapeau i, "cat" ne correspondrait qu'à "CAT".
+
+    C'est particulièrement utile lorsque vous traitez des données ou du HTML où la casse peut varier.
+
+    [En savoir plus sur les drapeaux d'expression régulière](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Warmup"
+  title="Caractères simples de correspondance"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ce code retournera-t-il ?
+    ```js
+    const mots = ['chat', 'chapeau', 'ce qui'];
+    mots.filter(mot => mot.match(/^[ch]at/))
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Le modèle `/^[ch]at/` correspond à :
+    - ^ : commence (`^`) avec
+    - [ch] : correspond à 'c' ou 'h' (cette classe de caractères)
+    - $ : jusqu'à la fin
+
+    Par conséquent, seuls "chat" et "chapeau" correspondent à ce modèle. Le filtre `filter()` conserve uniquement les correspondances.
+
+    [En savoir plus sur les classes de caractères](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Basic Matching"
+  title="Greedy vs Non-Greedy"
+  options={[
+    {text: '["<div>Hello</div>"]'},
+    {text: '["<div>", "</div>"]'},
+    {text: '["<div>Hello</div><div>World</div>"]'},
+    {text: '["<div>Hello</div>", "<div>World</div>"]', isAnswer: true},
+    {text: '["Hello", "World"]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Ce modèle correspondra-t-il ?
+    ```js
+    '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Le modèle `/<div>.*?<\/div>/g` utilise un mode non-greedy avec `*?`. Cela signifie :
+    - Match `<div>`
+    - Tout caractère (`.*`) mais autant que possible (`?`)
+    - Jusqu'à ce qui suit `</div>`
+
+    Sans le `?`, le mode greedy (`.*`) correspondrait à tout entre les balises `<div>` et `<\/div>`, donnant une correspondance unique. Avec `?`, il correspond à chaque paire séparément.
+
+    [En savoir plus sur les modes greedy vs non-greedy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Common Gotchas"
+  title="Le caractère d'échappement"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle sera la valeur renvoyée ?
+    ```js
+    'hello\nworld'.match(/\w+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Le modèle `/\d+` correspond à un ou plusieurs caractères numériques. Même si il y a une nouvelle ligne dans la chaîne, `\w` correspond :
+    - Lettres (a-z, A-Z)
+    - Chiffres (0-9)
+    - Sous-lignes (_)
+
+    Ainsi, la nouvelle ligne agit comme un délimiteur de mots, et nous obtenons deux correspondances. Si vous utilisez `.*`, il ne correspondrait pas à la nouvelle ligne (il doit être échappé avec `\`).
+
+    [En savoir plus sur les caractères d'échappement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Look-ahead"
+  title="Positive Look-ahead"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: '', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat ?
+    ```js
+    '$100 et €50'.match(/\d+(?=[\$€])/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Ce modèle ne correspond pas car l'assertion positive est à l'envers ! Le modèle correct serait `/(?=[\$€])\d+/g`.
+
+    Les assertions positives vérifient ce qui suit le modèle. Dans ce cas, nous voulons que les chiffres soient suivis soit de '$' soit de '€', mais le modèle ne le spécifie pas.
+
+    [En savoir plus sur les assertions positives](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Basic Matching"
+  title="Word Boundaries"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel modèle correspondra ?
+    ```js
+    'cat cats category'.match(/\bcat\b/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `\b` représente une limite de mot, qui correspond :
+    - Entre un caractère word (mot) et un non-word (non-mot)
+    - Au début/fin de la chaîne si le caractère est un mot
+
+    Ainsi `/\bcat\b/` ne correspond qu'à "cat" lorsqu'il est un mot complet, pas en tant que partie d'un autre mot.
+    - ✅ "cat" (entouré d'espaces)
+    - ❌ "cats" (pas de limite après "cat")
+    - ❌ "category" (pas de limite après "cat")
+
+    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Common Gotchas"
+  title="Le drapeau global"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat ?
+    ```js
+    'banana'.match(/a/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div class="explanation">
+    Le drapeau `g` (global) change le comportement de `match()` :
+    - Sans `g` : renvoie la première correspondance avec capture groups
+    - Avec `g` : renvoie toutes les correspondances
+
+    Dans ce cas, il trouve toutes les occurrences de "a" dans "banana".
+
+    Remarque : Pour récupérer à la fois toutes les correspondances et les groupes capturés, utilisez `matchAll()` ou la méthode d'exécution dans une boucle.
+
+    [En savoir plus sur le drapeau global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Look-behind"
+  title="Negative Look-behind"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel modèle correspondra ?
+    ```js
+    '123 abc'.match(/(?<!abc)\d+/g)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div class="explanation">
+    L'assertion négative look-behind `(?<!abc)` garantit que les chiffres ne sont pas précédés par "abc" :
+    - ❌ "123" (précédé par "abc")
+    - ✅ "23" (précédé par "abc1")
+    - ✅ "456" (précédé par "def")
+
+    Les assertions look-behind doivent être fixées en nombre dans certains navigateurs plus anciens (comme Internet Explorer). Vérifiez [la compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) pour les affirmations look-behind.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Basic Matching"
+  title="Capturing Groups"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["20", "29", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le retour ?
+    ```js
+    '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div class="explanation">
+    Le modèle utilise trois groupes de capture :
+    1. `(\d{4})` capture l'année
+    2. `(\d{2})` capture le mois
+    3. `(\d{2})` capture le jour
+
+    `match()` sans le drapeau `g` renvoie :
+    - Index 0 : Full match
+    - Index 1+ : Groupes capturés
+
+    `slice(1)` est un raccour pour obtenir simplement les groupes capturés.
+
+    [En savoir plus sur les groupes et la capture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#groups_and_captures)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Look-behind"
+  title="Negative Look-ahead"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]', isAnswer: true},
+    {text: '["123aBC"]'},
+    {text: '["123aBC", "1a23BC"]'},
+    {text: '["123aB, "1a23C"]'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat ?
+    ```js
+    /^\d+(?![a-z])/.match("123abc")
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div class="explanation">
+    L'assertion look-ahead négative `(?![a-z])` garantit qu'il n'y a pas de lettres minuscules avant les chiffres. Comme "123abc" correspond, mais "123ABC" ne correspond pas.
+
+    [En savoir plus sur les assertions look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/Flags#g)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+
+{/* Translated from English to Spanish
+Original text length: 17362 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: lmstudio-community/aya-23-8B-GGUF
+Translation date: 2024-12-06T06:39:09.942Z */}
+
+

@@ -1,0 +1,132 @@
+---
+title: Isang Di-nakakaalamang Pamamaraan upang Palitan ang Paglalakbay ng mga Tindig na Team!
+subTitle: Ang mga inhenyerong tauhan ay galit dito!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Inhenyerya
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Larawan ni <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> sa <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+language_name: Tagalog
+---
+
+Maaaring madaling maligawan sa pagdisenyo ng bagong sistema o feature ang disenyo ng schema. Sa artikulong ito, magtuturo ako ng isang matipunang pamamaraan na nagtagal na binayad sa aking karera.
+
+<section class="breakout">
+  _Subukan_ ang pinakamababang mahinahong pagsasalin kapag disenyo ng bagong sistema o feature.
+</section>
+
+Madalas kong nakikita, ang mga tao ay kumukuha ng SQL o MongoDB bilang kanilang lamang pagpipilian para sa data storage. Tama nga ba walang sinoman kayang mawalan ng trabaho sa pagsamantalahan ng SQL. Subukan mong malaman ang isang mas simpleng, mas mabilis na, at mas murang paraan upang simulan?
+
+Isang KV o Key-value store ay maaaring lahat ng iyong kailangan. Halimbawa, Redis o S3.
+
+Hindi ito palaging tamang pagpipilian, ngunit baka **higit sa kanyang inaasahan sa maraming okasyon.**
+
+Isang simple na layer ng storage ay madalas magbigay ng mahusay na tibay sa maagang paggawa ng development sa pamamagitan ng pag-reuse ng code sa data-layer at pagpapawala ng mga gastos na may kaugnayan sa pagtatalaga sa mabagal na disenyo ng schema at migrasyon. Ang pagtalaga ay magkakaroon naman ng pagbabago kaya buksan mo ang code sa ganitong paraan. Mas mahusay na makapagtayo ng dalawang lugar.
+
+Ang mga ginhawa sa performace ay malamang dahil sa highly optimized na `key` lookups at maaaring makuha ang pagtibay mula sa batched na naitaas.
+
+## Pag-iisip sa Keys
+
+Maaaring magduda ka kung paano disenyo ng isang Key-Value na mga pamamaraan unang, lalo na kung ginagawa mong katulad ng disenyo ng mga sistema na may mga hierarchy ng objekto o Entity Relationship Diagrams at diretang implementasyon sa SQL.
+
+Nakakakuha ka ba ng `Key-value` patterns bago? Sila ay lahat-lahat, mula sa configs at URLs hanggang S3-style Object Storage! Bawat oras na kayo nakikipag-ugnay sa data sa pamamagitan ng isang unique `ID` value, ano bang? isa pang Key-value pattern! (Bagaman hindi nangangahulugan ng palaging isang KV Store.)
+
+### Disenyo gamit ang Keys
+
+Mabubuo ang lahat ng datos gamit ang KV patterns. (Sa katunayan, marami sa mas mataas na oras DBs ay naglalakbay sa mas mas mababang-level na KV patterns.) Tingnan ang ilang halimbawa:
+
+```markdown
+user/123 {id: 123, ...}
+user/123/block ['user/456', 'user/789']
+user/123/groups ['admin', 'staff']
+user/420/friends ['user/456', 'user/789']
+
+group/admin {user: '*:rw'}
+group/default {user: '*:r'}
+
+product/42/discount/<UUID> {percentOff: '10%'}
+product/42/discount/<UUID> {percentOff: '20%', minTotal: 100.0}
+```
+
+Maaaring masubukan, ngunit ang `ID` ay madalas na key sa sarili! Ito ay isang karaniwang pattern sa KV stores. Ang key ay maaaring makuha bilang isang komposisyon ng uri ng entidad at ang unikong identifier. (e.g `user/123`, `user:456`)
+
+### KVs bilang Graphs & Trees?
+
+Maaaring matutulungan ka na mapanatili ang mga kompleks na data structures tulad ng Graphs o Trees gamit ang KV patterns. (Narito sa pagkakaroon ng REST URLs na halimbawa ng ito.)
+
+Ang hierarchy ng key (`user/420`-> `user/420/friends`) ay natural na inilalahad ng isang graph relationship sa pagitan ng `user` at kanila `friends`.
+
+Ito ay isang mabilis at mura na paraan upang serializahin ang data structures ng graheng. Lalo na kung hindi mo kinakailangan ang kompleksidad ng isang graph database (tulad ng Neo4j).
+
+<figure>
+![Graph ng user/123](./KVsCanBeGraphs.webp)
+</figure>
+
+### Kailan Gamitin ang Patterns ng KV
+
+- Kapag nangangailangan ka ng mas malaking saklaw. (Milyong mga pair na KV o maaaring trilyon.)
+- Kapag kailangan mong ma-access ang data sa pamamagitan ng isang unique key.
+- Kapag kinakailangan ng simple na data structures.
+- Kapag mayroong datos na may hierarchy, graheng, o tree structure.
+
+### Kailan Hindi Gamitin ang Patterns ng KV
+
+Huwag magdala ng mga bagay tulad ng mga comment sa blog sa isang **single** KV pair. Halimbawa, `post/666 -> {comments: [...masyado]}`. Sa halip na gamitin ang `post/666/comments/1`, o `post/666/comments/<UUID>`, etc. O pumunta para sa isang SQL table.
+
+- Kapag kailangan mong maghanap ng mga property (hindi key o ID) sa iyong dataset.
+- Kapag kinakailangan mong isama ang dataacross sa iba pang mga entidad.
+- Kapag kailangan mong i-apply ang mahusay na mga constraint o relasyon.
+
+### Kapag Kailangang Mas Malaking KV
+
+Sa sandaling mag-evolve ang mga hinatid ng mga pangangailangan, maaaring kinakailangan mo na gumawa ng higit sa iyong KV store ay makapagtayo. {/* Ang masama ay naka-start ka sa isang KV pattern at mas madali mong itaguyod ang isang mas kumplikadong sistema habang nangyayari */}
+
+Ang magandang balita ay na maaaring magmigrate ng isang single KV store sa SQL ay katumbas ng mabilis na pagsusulit. (Sa pamamagitan ng mga mahabang script ng 50-linggo.) Sa personal na karanasan ko, mas mataas ang quality ng mga designs ng SQL kung nagsimula ka sa isang KV pattern unang una. Itinuturo ito na maging mas tunay na katangian ng datos sa iba't ibang paraan at mag-isip isang bagong paraan.
+
+## Susunod Na Hakbang
+
+Ang pinakamabuting paraan upang matutmunan ay subukan ito! Kung naintindihan mong interesado sa pagaarang ang pamamaraan na ito, maaari mong subukan ang mga bagong systema o feature gamit ang Redis, DynamoDB o S3.
+Lahat ay magandang KV stores ng may iba't ibang trade-offs.
+
+### Mga Pagbabago at Proyekto
+
+Tignan ang aking Open Source ["Fact Service," isang pangunahing proyekto sa GitHub](https://github.com/justsml/fact-service).
+
+Ito ay isang stand-alone RESTful API na nag-implement ng isang KV data service.
+
+Nagbibigay ito ng maraming [data adapters](https://github.com/justsml/fact-service/tree/main/lib/providers).
+Inklusivong para sa Postgres, Redis, DynamoDB, Firestore, at Cassandra! (Complete with [Docker commands](https://github.com/justsml/fact-service/tree/main/lib/providers) upang magsimula nang madali.)
+
+Fact Service ay nilayon bilang isang starter & learning project, copyo raw at gawin ang iyong sarili na KV data service!
+
+## Mga Huling Paratang
+
+Ako ay nagtataka kung nakita mong matutulungan ng artikulong ito! Kung mayroong tanong o feedback, maaaring libreng mag-comment o `@` ako sa [Twitter](https://twitter.com/justsml).
+
+### Mga Credits
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Mga Pagbabasa Pa
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+{/* Translated from English to Tagalog
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:51:54.235Z */}
+
+

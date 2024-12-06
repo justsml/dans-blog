@@ -1,0 +1,154 @@
+---
+language_name: Chinese
+title: 一种古怪的窍门，能让特性团队加速！
+subTitle: 工程师们都讨厌这个！
+date: 2024-09-29
+modified: 2024-09-30
+tags:
+  - agile
+  - teams
+category: Engineering
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a>的照片，来自<a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>目录</summary>
+
+- [以键值对思维](#thinking-in-keys)
+  - [使用键值对设计](#designing-with-keys)
+  - [KVs作为图和树吗？](#kvs-as-graphs--trees)
+  - [何时使用KV模式](#when-to-use-kv-patterns)
+  - [何时避免KV模式](#when-to-avoid-kv-patterns)
+  - [当你需要更多的KV](#when-you-need-more-than-kv)
+- [接下来](#next-steps)
+  - [Fact Service - 参考项目](#fact-service---reference-project)
+- [结论](#conclusion)
+  - [进一步阅读](#further-reading)
+
+</details>
+
+当设计一个新的系统或功能时，很容易陷入数据持久性方案设计。以下我将分享一项让我在职业生涯中获得好处的窍门。
+
+<section class="breakout">
+试用最简单可能的数据持久性设计，当设计一个新系统或功能。
+</section>
+
+太多时候，我看到团队只剩SQL或MongoDB作为唯一的数据存储选择。没错，没有人因为选择SQL而丢掉工作。但是我告诉你，有一种更简单、更快，更便宜的方法来开始。
+
+一个KV或键值对仓库也许就是您所需要的。比如Redis或S3。
+
+这并不是总是正确的选择，但实际上可能比您想象的多。
+
+一个简单的存储层可以在早期开发中实现中等速度提高，因为数据层代码重用，避免与模式设计和迁移相关的成本。无论如何，模式变化会发生两次。在代码之间处理两个地方的更改。
+
+性能提升可能是因为`key`查询优化，并且写入可以从批量更新中受益。
+
+## 以键值对思维
+
+用键值对模式首先设计可能让人感到奇怪，特别是如果您习惯了使用对象层次结构或直接在SQL中实现实体关系图。
+
+您以前可能已经***使用过***关键值模式！它们无处不在，从配置和URL到S3样式的对象存储！每当您通过唯一的`ID`值处理数据，那么另一个键值对模式！（尽管这不是必要的KV Store。）
+
+### 使用键值对设计
+
+几乎所有数据都可以使用KV模式表示。实际上，许多高级DB基于低级别的KV模式构建。让我们来看一些示例：
+
+```markdown
+user/123 {id: 123, ...}
+user/123/block ['user/456', 'user/789']
+user/123/groups ['admin', 'staff'] 
+user/420/friends ['user/456', 'user/789']
+
+group/admin {user: '*:rw'}
+group/default {user: '*:r'}
+
+product/42/discount/<UUID> {percentOff: '10%'}
+product/42/discount/<UUID> {percentOff: '20%', minTotal: 100.0}
+```
+
+您可能已经注意到了，但`ID`通常本身就是一个密钥！这是KV存储中非常常见的模式。这里的关键通常是实体类型和唯一标识符的组合。（例如 `user/123`，`user:456`）
+
+### KVs作为图和树吗？
+
+将复杂数据结构，如图或树使用KV模式表示可能会很有帮助。(再次，这个REST URL是一个很好的例子。)
+
+关键层次结构（`user/420` -> `user/420/friends`）自然地在`user`及其`friends`之间编码了一个关系。
+
+这对于序列化图数据结构非常快捷和便宜，特别是如果您不需要图数据库的复杂性（如Neo4j）。
+
+<figure>
+![Graph of user/123](./KVsCanBeGraphs.webp)
+<figcaption>user/123的图</figcaption>
+</figure>
+
+### 何时使用KV模式
+
+- 当您需要大规模扩展。几十亿甚至数十亿个KV对。
+- 当您主要通过唯一键访问数据。
+- 当您需要简单的数据结构。
+- 当您的数据具有层次结构、图或树结构。
+
+### 何时避免KV模式
+
+不要将类似博客评论存储在**单个**KV对中。例如，`post/666 -> {comments: [...太多...]}`。相反，您可能需要使用 `post/666/comments/1` 或者是 `post/666/comments/<UUID>` 等。或者采用SQL表。
+
+- 当您需要按数据集的属性搜索时。
+- 当您需要在多个实体之间关联数据时。
+- 当您需要强制执行复杂约束或关系时。
+
+### 当你需要更多的KV
+
+随着项目需求的自然演变，您可能需要做更多的事情超出您的KV存储所支持。这种情况下，您可能需要考虑迁移到更复杂的数据存储。
+
+{/* 好消息是您可以将一个KV模式作为更复杂系统的进化起点。当S3具有搜索文件的Athena、Glacier和失效策略时，它们有很多功能。而且Redis添加了许多高级功能（如Pub/Sub，Geo-spatial，Streams和Sorted Sets）以满足一些需求。*/}
+
+好消息是从一个KV存储迁移到SQL相对而言比将复杂的SQL模式迁移到KV存储更容易。（具有多个表、索引、约束等。）我已经使用50行脚本完成过这种操作。
+
+基于我的经验，采用KV模式进行设计后，SQL设计质量通常会更高。这迫使您以一种不同的方式思考数据，并更好地了解您实际上从SQL中需要什么。
+
+## 接下来
+
+学习最好的方法是尝试！如果您对这个模式感兴趣，请使用Redis、DynamoDB或S3来构建事物。
+
+### Fact Service - 参考项目
+
+请查看我的开源项目["Fact Service"](https://github.com/justsml/fact-service)。
+
+这是一款独立的RESTful API，实现了一个KV数据服务。 
+
+它具有许多[数据适配器](https://github.com/justsml/fact-service/tree/main/lib/providers)，包括Postgres、Redis、DynamoDB、Firestore和Cassandra！（具有[快速开始的Docker命令](https://github.com/justsml/fact-service/tree/main/lib/providers)。）
+
+Fact Service是一个入门项目和学习项目，欢迎fork并根据自己的需求构建您自己的KV数据服务！
+
+## 结论
+
+希望这个文章对您有所帮助！如果您有任何问题或反馈，请随时在[Twitter](https://twitter.com/justsml)上评论或者私信我。
+
+### 致谢
+
+- [使用PostgreSQL建模树形层次结构](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [关于存储大型树形数据在PostgreSQL中的dos和donts](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### 进一步阅读
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+
+{/* Translated from English to Chinese
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:50:24.305Z */}
+
+

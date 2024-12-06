@@ -1,0 +1,272 @@
+```yaml
+language_name: French
+
+title: "Quiz : Profondeur PostgreSQL : Pt. 1"
+subTitle: "SQL vous fait-il hésiter?"
+label: "Deep PostgreSQL #1"
+category: Quiz
+subCategory: Database
+date: 2024-11-27
+modified: 2024-12-03
+tags: [quiz, postgresql, sql, database, intermediate, advanced]
+cover_full_width: elephant-synthwave-gym-wide.webp
+cover_mobile: elephant-synthwave-gym-square.webp
+cover_icon: elephant-synthwave-gym-square.webp
+```
+
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+> **Partie 1 sur 2.** [Allez à la partie 2](/quiz-postgres-mastere-sql-pt2/)
+
+<p class="inset">PostgreSQL 🐘 Est facilement ma base de données préférée ! Je suis toujours en train d'apprendre de nouvelles astuces et gotchas, alors je les ai mis dans un nouveau Quiz !</p>
+
+Ce quiz couvre une variété de fonctionnalités et d'astuces PostgreSQL moins connues : des agrégats intégrés aux types casting, en passant par les contraintes et bien plus.
+
+Bon courage ! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Réchauffement : Fonctions"
+  title="Agrégats Intégrés"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel fonctionnement agrégat intégré de PostgreSQL n'est PAS ?
+    ```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` n'est pas intégré ! Vous devez utiliser :
+    ```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+    ```
+
+    Agrégats intégrés courants :
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Plusieurs fonctions statistiques
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Réchauffement : Type Casting"
+  title="Variations de Syntaxe de Casting"
+  options={[
+    {text: `'95'::INTEGER`},
+    {text: `INTEGER '95'`},
+    {text: `CAST('95', INTEGER)`, isAnswer: true},
+    {text: `CAST('95' AS INTEGER)`},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle conversion de type est INVALIDE ❌ ?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL supporte trois syntaxes de casting :
+    
+    1. ANSI SQL : `CAST(expression AS type)`.
+    2. PostgreSQL : `expression::type`.
+    3. Fonction de type : `type 'literal'`.
+
+    Toutes sont fonctionnellement équivalentes, mais :
+    - `CAST()` est le plus portable.
+    - `::` est spécifique à PostgreSQL mais souvent utilisé.
+    - Infix-style `type 'literal'` est moins courant mais encore valide.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Contraintes"
+  title="Contraintes UNIQUE et NULL"
+  options={[
+    {text: 'Aucun NULL autorisé'},
+    {text: 'Un NULL autorisé', },
+    {text: 'Deux NULLs autorisés', isAnswer: true},
+    {text: 'Dépend des versions PostgreSQL'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Combien de valeurs NULL sont autorisées ici ?
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Les contraintes UNIQUE PostgreSQL :
+    - Autorisent plusieurs valeurs NULL.
+    - `NULL` ≠ `NULL` dans les vérifications d'unicité.
+
+    Pour empêcher les valeurs `NULL`, ajoutez `NOT NULL` :
+    ```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Date/Heure"
+  title="Arithmétique des Dates"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'Erreur : heure invalide'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel retourne cette instruction ?
+    ```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    L'arithmétique des dates de PostgreSQL :
+    - `+ interval '24 heures'` ajoute 24 heures
+    - `+ interval '1 jour'` ajoute 1 jour 
+    - `+ interval '1 mois'` ajoute 1 mois
+    - `+ interval '1 an'` ajoute 1 an
+
+    Le résultat est `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Heures marquées"
+  title="timestamptz vs timestamp"
+  options={[
+    {text: 'Ils stockent les mêmes données différemment'},
+    {text: 'timestamptz inclut une zone horaire', isAnswer: true},
+    {text: 'timestamptz est un type de date plus moderne'},
+    {text: 'Ils sont des alias l'un de l'autre'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la différence entre `timestamptz` et `timestamp` ?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `timestamp` stocke la date/heure sans informations de zone.
+    `timestamptz` stocke la date/heure avec les informations d'offset de zone.
+
+    - `timestamp` est agnostique en matière de zone
+    - `timestamptz` stocke l'offset de la zone
+
+    Utilisez `timestamptz` lorsque vous avez besoin de stocker des informations de zone. (Ce qui n'est pas souvent le cas.)
+
+    En général, je recommande normaliser toutes les heures vers UTC et utiliser `timestamp` pour éviter plusieurs problèmes de zone.
+  </div>
+  </slot>
+</Challenge>
+
+# Types éblouissants
+
+Je suis sûr que vous avez utilisé *beaucoup* de types dans PostgreSQL, n'est-ce pas ?
+
+Les quelques questions suivantes portent sur les types natifs v17 de Postgres. 🤯
+
+Pour chaque question, identifiez le **type invalide**. 🕵️‍♂️
+
+<p class="inset">En avant !</p>
+
+<Challenge
+  client:load
+  index={5}
+  group="Types PostgreSQL"
+  title="Identifiez les Types Invalides"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel de ces éléments n'est PAS ❌ un type PostgreSQL valide ?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL possède une riche gamme de types de données, mais `STRING(100)` n'en fait pas partie.
+
+    Les types de chaînes corrects incluent :
+    - `VARCHAR(100)` (chaîne variable)
+    - `CHAR(100)` (chaîne fixe) 
+    - `TEXT` (longueur illimitée)
+    - `CHARACTER VARYING(100)` (même chose que `VARCHAR(100)`)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Types PostgreSQL"
+
+{/* Translated from English to French
+Original text length: 14001 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T10:06:48.955Z */}
+
+

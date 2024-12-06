@@ -1,0 +1,154 @@
+---
+title: Một mẹo kỳ quặc để tăng tốc độ các nhóm tính năng!
+subTitle: Kỹ sư đội ngũ này ghét điều này!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover: danny-howe-98KlbUsOO_w-unsplash__w300.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Ảnh bởi <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> trên <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+{/* Add html5 toggle element */}
+
+<details>
+<summary>Mục lục</summary>
+
+- [Đthink in Keys](#thinking-in-keys)
+  - [Designing with Keys](#designing-with-keys)
+  - [KVs as Graphs & Trees?](#kvs-as-graphs--trees)
+  - [When to Use KV Patterns](#when-to-use-kv-patterns)
+  - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+  - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+  - [Fact Service - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+  - [Further Reading](#further-reading)
+
+</details>
+
+Khi thiết kế một hệ thống mới hoặc tính năng, dễ dàng bị bế tắc trong việc thiết kế cơ sở dữ liệu. Trong bài viết này tôi sẽ chia sẻ một mẹo hay mà tôi đã áp dụng trong sự nghiệp của mình.
+
+<section class="breakout">
+  _Thử_ sử dụng dữ liệu persistence đơn giản nhất khi thiết kế hệ thống mới hoặc tính năng.
+</section>
+
+Rất nhiều lần, tôi thấy các đội nhóm đầu hàng SQL hoặc MongoDB như là lựa chọn duy nhất cho việc lưu trữ dữ liệu. Chắc hẳn không có ai bị sa thải vì chọn SQL. Nhưng nếu tôi nói với bạn có một cách đơn giản, nhanh chóng và tiết kiệm hơn để bắt đầu?
+
+Mẹo: Một bộ nhớ KV (Key-value) như Redis hoặc S3 có thể là tất cả những gì bạn cần.
+
+Không phải lúc nào cũng là lựa chọn đúng đắn nhưng có lẽ **hơn cả những gì chúng ta nghĩ.**
+
+Một lớp lưu trữ đơn giản có thể tăng tốc phát triển *sớm* bằng cách tái sử dụng mã tầng dữ liệu và tránh chi phí liên quan đến thay đổi trong thiết kế cơ sở dữ liệu và các lệnh INSERT/UPDATE. Thay đổi sẽ xảy ra một lần nào đó; tốt hơn là nên để mã lo việc này trong thời gian dài nhất có thể. Hoạt động hiệu suất có thể cao hơn vì `key` tìm kiếm được tối ưu hóa, và viết có thể hưởng lợi từ các bản cập nhật đợt.
+
+{/* Không sử dụng mẫu KV nếu bạn cần thực hiện JOIN hoặc truy vấn dựa trên tính chất của dataset. Hoặc trong trường hợp bạn có một bộ dữ liệu không giới hạn/vô hạn mỏng. (`Logs`, `Signups`, v.v.) */}
+
+## Thinking in Keys
+
+Có vẻ lạ khi thiết kế với mô hình Key-Value đầu tiên, đặc biệt nếu bạn đã quen với việc thiết kế các hệ thống dựa trên các hierarchy đối tượng hoặc Entity Relationship Diagrams và thực hiện trực tiếp trong SQL.
+
+Bạn có từng **sử dụng** các mẫu Key-value trước đây! Chúng xuất hiện ở khắp mọi nơi, từ cấu hình và URL đến Object Storage của S3! Mỗi khi bạn xử lý dữ liệu thông qua một giá trị `ID` duy nhất thì guess what? Một mẫu Key-value khác! (Tuy nhiên, không phải lúc nào cũng là bộ nhớ KV.)
+
+### Designing with Keys
+
+Hầu hết các dữ liệu _có thể_ được đại diện bằng các mẫu Key-Value. (Thực tế, rất nhiều cơ sở dữ liệu cao cấp hơn dựa trên các mô hình Key-Value thấp cấp hơn.) Chúng ta hãy xem một số ví dụ:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>    {percentOff: '10%'}
+product/42/discount/<UUID>    {percentOff: '20%', minTotal: 100.0}
+```
+
+Bạn có nhận thấy không, nhưng `ID` thường là một key cho chính nó! Đây là một mẫu phổ biến trong bộ nhớ KV. Key thường là một phần tử hỗn hợp của loại đối tượng và định danh duy nhất. (ví dụ `user/123`, `user:456`)
+
+### KVs as Graphs & Trees?
+
+Có thể hữu ích khi đại diện các cấu trúc dữ liệu phức tạp như Graphs hoặc Trees bằng các mẫu Key-Value. (Lại một lần nữa, các URL REST là ví dụ tuyệt vời về điều này.)
+
+Cấu trúc hierarchy (`user/420` -> `user/420/friends`) tự nhiên mã hóa mối quan hệ graph giữa `user` và `friends`.
+
+Này là một cách nhanh chóng & rẻ tiền để serializa cấu trúc dữ liệu graph. Đặc biệt nếu bạn không cần sự phức tạp của một graph database (như Neo4j).
+
+<figure>
+![Graph of user/123](./KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
+</figure>
+
+### When to Use KV Patterns
+
+- Khi bạn cần quy mô khổng lồ. (Tỉ lệ hoặc thậm chí vạn tỉ cặp Key-Value.)
+- Khi bạn chủ yếu truy cập dữ liệu thông qua một key duy nhất.
+- Khi bạn cần các cấu trúc dữ liệu đơn giản.
+- Khi bạn có một bộ dữ liệu với hierarchy, graph hoặc tree structure.
+
+### When to Avoid KV Patterns
+
+Không nên lưu những thứ như bình luận trên bài viết trong một _**sINGLE**_ cặp Key-Value. Ví dụ `post/666 -> {comments: [...đi quá nhiều...]}`. Thay vào đó bạn có thể sử dụng `post/666/comments/1`, hoặc `post/666/comments/<UUID>`, v.v. Hoặc bạn nên dùng một bảng SQL.
+
+- Khi bạn cần tìm kiếm dựa trên thuộc tính (không phải Key hoặc ID) trong dataset của mình.
+- Khi bạn cần JOIN dữ liệu qua các đối tượng khác nhau.
+- Khi bạn cần tuân theo ràng buộc phức tạp hoặc mối quan hệ.
+
+### When you need more than KV
+
+Khi yêu cầu dự án ngày một phát triển, bạn có thể cần làm nhiều hơn là những gì bộ nhớ KV hỗ trợ. Lúc này, bạn sẽ cần xem xét di chuyển sang một hệ thống dữ liệu phức tạp hơn.
+
+{/* Tin tốt là bạn có thể bắt đầu với một mẫu Key-Value và tiến hóa nó thành một hệ thống phức tạp hơn nếu cần thiết. S3 có các tính năng vượt quá việc lưu trữ đơn giản từ Athena cho tìm kiếm files, Glacier, và chính sách Hết hạn có rất nhiều điều bạn có thể làm với nó. Cũng như Redis đã thêm nhiều tính năng cao cấp (như Pub/Sub, Geo-spatial, Streams, và Sorted Sets) có thể giúp bạn đáp ứng một số yêu cầu. */}
+
+Tin tốt là việc di chuyển từ một bộ nhớ KV thành SQL dễ dàng hơn nhiều so với việc di chuyển một cơ sở dữ liệu SQL phức tạp hơn vào một bộ nhớ KV (với các bảng, index, ràng buộc,...). Tôi đã làm điều này rất nhiều lần với 1 script có 50 dòng.
+
+Anecdotal, tôi tìm thấy chất lượng thiết kế SQL cao hơn nếu bạn bắt đầu với một mẫu Key-Value đầu tiên. Điều này giúp bạn hiểu rõ hơn về dữ liệu và cách tiếp cận vấn đề một cách khác nhau.
+
+## Next Steps
+
+Cố gắng học hỏi thông qua hành động! Nếu bạn quan tâm đến việc khám phá thêm về mô hình này, tôi khuyến khích bạn **tạo ra** với Redis, DynamoDB hoặc S3.
+Tất cả đều là các bộ nhớ KV xuất sắc có đặc điểm kỹ thuật khác nhau.
+
+### Fact Service - Reference Project
+
+Kiểm tra dự án Mở nguồn ["Fact Service" của tôi](https://github.com/justsml/fact-service).
+
+Nó là một API REST độc lập mà thực thi dịch vụ dữ liệu Key-value.
+
+Chứa nhiều [adapter dữ liệu](https://github.com/justsml/fact-service/tree/main/lib/providers).
+bao gồm cho Postgres, Redis, DynamoDB, Firestore và Cassandra! (Có các lệnh [Docker](https://github.com/justsml/fact-service/tree/main/lib/providers) để bắt đầu nhanh chóng.)
+
+Fact Service là một dự án học tập và dự án tham khảo, fork nó và tạo ra KV data service của riêng bạn!
+
+## Conclusion
+
+Tôi hy vọng bài viết này đã hữu ích! Nếu có bất kỳ câu hỏi nào hoặc phản hồi, vui lòng cảm ơn tôi qua bình luận hoặc `@` tôi trên [Twitter](https://twitter.com/justsml).
+
+### Credits
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Further Reading
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+
+{/* Translated from English to Vietnamese
+Original text length: 7729 characters
+Translation API: http://192.168.0.87:1234/v1/chat/completions
+Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
+Translation date: 2024-12-06T09:53:21.529Z */}
+
+
