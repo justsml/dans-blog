@@ -3,6 +3,7 @@ import type {
   StreamablePromise,
   ChatHistoryLike,
   LLMPredictionOpts,
+  ChatHistoryData,
 } from "@lmstudio/sdk";
 import lmStudio from "@lmstudio/sdk";
 
@@ -19,7 +20,7 @@ const model = await loadModel(CHAT_API_MODEL ?? 'mistral-7b-instruct-v0.3'); // 
 // Load a model
 
 export const getPrediction = (
-  text: string | ChatHistoryLike,
+  text: ChatHistoryData['messages'],
   opts?: LLMPredictionOpts,
 ): StreamablePromise<string, PredictionResult> => {
   // console.log("getPrediction", model.getModelInfo());

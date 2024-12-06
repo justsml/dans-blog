@@ -1,11 +1,23 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs, { rmSync } from "node:fs";
+// import path from "node:path";
 import yargs from "yargs";
 import langs, { type Language } from "langs";
 import { glob } from "glob";
 import { hideBin } from "yargs/helpers";
-import { getPrediction } from "../shared/gptAPI.ts";
+import { makeLogs } from "../components/LogHelper.ts";
+import * as lmStudio from "../shared/gpt/lmStudio.ts";
+import { anthropicApi } from "../shared/gpt/anthropic.ts";
+import { ChatMessageData } from "@lmstudio/sdk";
 // import { Readable } from "node:stream";
+const log = makeLogs("translator");
+
+const CHAT_SDK = process.env.CHAT_SDK || "Anthropic";
+
+const getPrediction =
+  (messages: Array<ChatMessageData>) => CHAT_SDK === "Anthropic"
+    ? anthropicApi.getPrediction(messages) 
+    : lmStudio.getPrediction(messages);
+
 interface TranslatorOptions {
   sourceFiles: string;
   outputPath: string;
@@ -13,8 +25,6 @@ interface TranslatorOptions {
 }
 // type LanguageCodes = ReturnType<(typeof ISO6391)["getAllCodes"]>;
 // type LangNames = ReturnType<(typeof ISO6391)["getAllNames"]>;
-
-const OVERWRITE_MODE = process.argv.includes("--overwrite");
 
 export async function Translator(options: TranslatorOptions) {
   let { sourceFiles, outputPath, language } = options;
@@ -58,21 +68,26 @@ export async function Translator(options: TranslatorOptions) {
       );
 
       // Check if we should overwrite any existing file
-      if (!args.overwrite && fs.existsSync(targetFilePath)) {
-        console.warn(
-          `Target file exists! Use --overwrite to overwrite ${targetFilePath}`,
-        );
-        continue;
+      if (fs.existsSync(targetFilePath)) {
+        if (args.overwrite) {
+          log(`Overwriting existing file: ${targetFilePath}`);
+          rmSync(targetFilePath);
+        } else {
+          console.warn(
+            `Target file exists! Use --overwrite to overwrite ${targetFilePath}`,
+          );
+          continue;
+        }
       }
 
       const targetStream = fs.createWriteStream(targetFilePath, {
-        flags: OVERWRITE_MODE ? "w" : "wx",
+        flags: "w",
         encoding: "utf-8",
       });
       try {
         const handleWriteFn = (text: string | null) => {
           targetStream.write(text);
-        }
+        };
         //const extraInstructions = `Prefix all \`.webp\` and \`.gif\` images with prefix: ../../${subDir}.
         // ALSO, prefix markdown image paths with: ../../${subDir}/.
         // ALSO, prefix markdown links with: /${code}/.`;
@@ -87,15 +102,24 @@ export async function Translator(options: TranslatorOptions) {
           // extraInstructions,
         });
 
-        console.log(`Translated ${filePath} to ${standardLanguageName} ${languageCode}...`, {
-          outputPath,
-          targetFilePath,
-          localLanguageName,
-        });
+        log(
+          `Translated ${filePath} to ${standardLanguageName} ${languageCode}...`,
+          {
+            outputPath,
+            targetFilePath,
+            localLanguageName,
+          },
+        );
 
-        console.log(`Translated file saved: ${targetFilePath}`);
+        console.log(
+          `Translated file saved: ${targetFilePath} ${localLanguageName}`,
+        );
       } catch (error) {
-        console.error(`Failed to translate ${filePath} to ${languageCode}:`, error);
+        console.error(
+          `Failed to translate ${filePath} to ${standardLanguageName}:`,
+          error,
+        );
+        process.exit(1);
       } finally {
         targetStream?.end();
       }
@@ -139,7 +163,7 @@ async function translateText({
     ? { Authorization: `Bearer ${apiKey}` }
     : {};
 
-  console.log({ apiUrl, apiKey, model, authentication });
+  log("%j", { apiUrl, apiKey, model, authentication });
   if (!apiUrl) throw new Error("API URL is required.");
   if (!text || text.length < 3)
     throw new Error("Text to translate is too short.");
@@ -151,30 +175,31 @@ async function translateText({
 \n\`\`\`mdx\n${text}\n\`\`\``;
 
     // console.log("Submitting Prompt:", prompt);
-    const stream = getPrediction([
+    const stream = await getPrediction([
       {
         role: "system",
-        content: `You are an exceptional technical writer and translator of english to any language.
-        ### Instruction ###
-Translate the following blog post to ${standardLanguageName}, language code ${languageCode}.
-
-DO NOT TRANSLATE: special formatting, html tags, \`import\` statements, frontmatter properties, references to source code in English, and CSS class names.
-DO NOT TRANSLATE frontmatter keys: title, subTitle, date, modified, tags, category, subCategory, cover_full_width, cover, cover_mobile, cover_icon, cover_credit.
-DO NOT TRANSLATE the code blocks and inline code snippets.
-
-${extraInstructions || ""}
-
-DO NOT MODIFY LINKS STARTING WITH \`https://\` or \`http://\`.
-ALSO, UPDATE TRANSLATED HEADER ID LINKS.
-
-Output the document starting with \`---\`. Omit any notes or editorializing.
-DO NOT ADD ANY TEXT BEFORE OR AFTER OUTPUT.
-DO NOT PREPEND, APPEND OR INCLUDE ANY COMMENTS OR NOTES IN THE TRANSLATION.
-ENSURE \`---\` is included to mark end of frontmatter.`,
+        // @ts-expect-error
+        content: `You are the worlds best translator! Capable of translating english blog articles into any requested language!`,
       },
       {
         role: "user",
-        content: prompt,
+        // @ts-expect-error
+        content: `Your primary task: Translate the below blog post to ${standardLanguageName}.
+
+        DO NOT TRANSLATE: special formatting, html tags, \`import\` statements, front-matter properties, references to source code in English, and CSS class names.
+        DO NOT TRANSLATE the key strings: title, subTitle, date, modified, tags, category, subCategory, cover_full_width, cover, cover_mobile, cover_icon, cover_credit.
+        Output the document starting with \`---\`. Omit any notes or editorializing. DO NOT APPEND OR INCLUDE ANYTHING OTHER THAN THE TRANSLATED DOCUMENT.
+
+        Add a \`language_name: ${standardLanguageName}\` property before the \`title:\` field.
+
+        DO NOT ADD ANY TEXT BEFORE OR AFTER OUTPUT.
+        DO NOT MODIFY LINKS STARTING WITH \`https://\` or \`http://\`.
+        ALSO, UPDATE TRANSLATED HEADER ID LINKS.
+
+        ENSURE \`---\` is included to mark end of frontmatter.
+        
+        ${prompt}
+\n`,
       },
     ]);
 
@@ -182,7 +207,7 @@ ENSURE \`---\` is included to mark end of frontmatter.`,
     try {
       for await (let response of stream) {
         if (response.startsWith("title:")) {
-          console.log("Title detected in response, patch works?");
+          log("Title detected in response, patch works?");
           response = `language_iso: ${languageCode}\nlanguage_local: ${localLanguageName}\ntitle:`;
         }
         if (handleWriteFn) handleWriteFn(response);
