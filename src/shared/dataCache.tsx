@@ -6,11 +6,23 @@ import type { ArticlePost } from "../types";
 const getBaseName = (path: string) => {
   const parts = path.split("/");
   return parts.slice(parts.length - 2, parts.length).join("/");
-}
+};
 
-const _postsCollection: ArticlePost[] = (
-  (await getCollection("posts")) as unknown as ArticlePost[]
-).filter((post) => !post.data.hidden);
+const _completeCollection: ArticlePost[] = (await getCollection(
+  "posts",
+)) as unknown as ArticlePost[];
+
+const _postsCollection: ArticlePost[] = _completeCollection.filter(
+  (post) => !post.data.hidden && !post.id.match(/\.[a-z]{2,3}\.mdx?$/i),
+);
+
+console.log(
+  `ALL vs. _postsCollection`,
+  _completeCollection.length,
+  _postsCollection.length,
+);
+
+console.log(_postsCollection.map((post) => post.id));
 
 // console.log(
 //   "postsCollection",

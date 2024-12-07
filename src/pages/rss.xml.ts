@@ -3,14 +3,14 @@ import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import { fixSlugPrefix } from "../shared/pathHelpers";
 import type { APIContext } from 'astro';
+import { PostCollections } from "../shared/dataCache.tsx";
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection("posts")).filter(
-    (post: any) => !post.data.hidden
-    // (post: any) => !post.data.hidden && post.data?.title?.includes("Bash"),
-  );
+  const posts = PostCollections._posts;
 
-  return rss({
+  // (post: any) => !post.data.hidden && post.data?.title?.includes("Bash"),
+  
+  const rawRss = {
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,
     site: context.site!,
@@ -23,8 +23,16 @@ export async function GET(context: APIContext) {
       cover: post.data?.cover?.src,
       link: `/${fixSlugPrefix(post.slug)}/`,
     })),
-  });
+  };
+
+  try {
+    return rss(rawRss);
+  } catch (e) {
+    console.error("RSS Error ", e, rawRss);
+    throw e;
+  }
 }
+
 
 // import rss from "@astrojs/rss";
 // import { getCollection } from "astro:content";

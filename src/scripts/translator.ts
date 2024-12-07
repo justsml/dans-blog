@@ -175,7 +175,7 @@ async function translateText({
 \n\`\`\`mdx\n${text}\n\`\`\``;
 
     // console.log("Submitting Prompt:", prompt);
-    const stream = await getPrediction([
+    const stream = lmStudio.getPrediction([
       {
         role: "system",
         // @ts-expect-error
@@ -206,10 +206,10 @@ async function translateText({
     // const readable = Readable.from(stream);
     try {
       for await (let response of stream) {
-        if (response.startsWith("title:")) {
-          log("Title detected in response, patch works?");
-          response = `language_iso: ${languageCode}\nlanguage_local: ${localLanguageName}\ntitle:`;
-        }
+        // if (response.startsWith("title:")) {
+        //   log("Title detected in response, patch works?");
+        //   response = `language_iso: ${languageCode}\nlanguage_local: ${localLanguageName}\ntitle:`;
+        // }
         if (handleWriteFn) handleWriteFn(response);
         process.stdout.write(`${response}`);
         // process.stdout.write(`\r${response.slice(0, Math.min(response.length - 1, 100))}...`);
