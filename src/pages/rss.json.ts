@@ -1,11 +1,10 @@
-import { getCollection } from "astro:content";
+// import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import { fixSlugPrefix } from "../shared/pathHelpers";
+import { PostCollections } from "../shared/dataCache.tsx";
 
 export async function GET(context: any) {
-  const posts = (await getCollection("posts")).filter(
-    (post: any) => !post.data.hidden,
-  ).reverse();
+  const posts = PostCollections._posts;
 
   return new Response(JSON.stringify({
     title: SITE_TITLE,

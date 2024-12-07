@@ -223,7 +223,330 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   client:load
   index={5}
   group="Postgres Types"
-  title="זהות סוגים שקויים"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL has a rich set of data types, but `STRING(100)` is not one of them.
+
+    The correct string types include:
+    - `VARCHAR(100)` (variable-length string)
+    - `CHAR(100)` (fixed-length string)
+    - `TEXT` (unlimited length)
+    - `CHARACTER VARYING(100)` (same as `VARCHAR(100)`)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    It may seem familiar since `decimal128` is a type in many places (including Mongo and Java.) It's not a valid PostgreSQL type, `decimal` is.
+
+    The correct numeric types include:
+    - `int` (4-byte integer)
+    - `bigint` (8-byte integer)
+    - `real` (4-byte floating-point)
+    - `double precision` (8-byte floating-point)
+    - `bigserial` (auto-incrementing 8-byte integer)
+    - `smallserial` (auto-incrementing 2-byte integer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'cidr'},
+    {text: 'inet'},
+    {text: 'ipv4', isAnswer: true},
+    {text: 'macaddr'},
+    {text: 'macaddr8'},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed "core" database contributor, "what the hell, Dan?! I crashed on the type questions! Thats violent sir! Not sharing my score, hah." 😈 You're welcome.
+
+    PostgreSQL's rich set of network types do not include `ipv4`.
+
+    You'd want to use the `inet` type for IP addresses, which I swear I've never had to Google. 👀
+
+    The correct network types include:
+    - `cidr` (IPv4/IPv6 network address)
+    - `inet` (IPv4/IPv6 host address)
+    - `ipv4` (IPv4 host address)
+    - `macaddr` (MAC address)
+    - `macaddr8` (EUI-64 MAC address)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'xml'},
+    {text: 'uuid'},
+    {text: 'money'},
+    {text: 'currency', isAnswer: true},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL has a rich set of specialized types, but `triangle` is not one of them.
+
+    The correct specialized types include:
+    - `xml` (XML data)
+    - `uuid` (UUID)
+    - `money` (currency amount)
+    - `interval` (time interval)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'box'},
+    {text: 'line'},
+    {text: 'point'},
+    {text: 'circle'},
+    {text: 'polygon'},
+    {text: 'triangle', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL has a rich set of specialized types, but `triangle` is not one of them.
+
+    The correct specialized types include:
+    - `box` (rectangular box)
+    - `line` (infinite line)
+    - `point` (2D point)
+    - `circle` (2D circle)
+    - `polygon` (2D polygon)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Integer Arithmetic"
+  title="Integer Overflow"
+  options={[
+    {text: '4294967296'},
+    {text: 'Error: integer out of range', isAnswer: true},
+    {text: '0'},
+    {text: '2147483647'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens when calculating total possible student IDs?
+    ```sql
+    SELECT 256 * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL's `integer` type is 32-bit signed, ranging from `-2,147,483,648` to `2,147,483,647`.
+
+    The calculation `256^4` = `4,294,967,296` exceeds this range.
+
+    To handle larger numbers:
+    ```sql
+    -- Use BIGINT
+    SELECT 256::bigint * 256 * 256 * 256;
+
+    -- Or numeric for arbitrary precision
+    SELECT 256::numeric * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Date/Time"
+  title="Timestamp Precision"
+  options={[
+    {text: '2024-01-08 13:30:00+00'},
+    {text: '2024-01-08 13:30:00.123456+00'},
+    {text: '2024-01-08 13:30:00.123456789+00'},
+    {text: '2024-01-08 13:30:00.1234567', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which is the smallest `timestamp` literal to exceed the maximum `time` precision in Postgres?
+    ```sql
+    CREATE TABLE class_sessions (
+      id INT GENERATED BY DEFAULT AS IDENTITY,
+      start_time timestamptz,
+      end_time timestamptz
+    );
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL timestamps have microsecond (6 decimal places) precision.
+
+    - Maximum: `.123456` (6 digits)
+    - Nanoseconds (9 digits) are truncated
+    - Timezone offset required for `timestamptz`
+
+    **Not-so-common gotcha:** Some languages/frameworks send nanosecond precision that gets silently truncated!
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Postgres Types"
+  title="Identify Invalid Types"
+  options={[
+    {text: 'lseg'},
+    {text: 'bytea'},
+    {text: 'tsquery'},
+    {text: 'tsvector'},
+    {text: 'tsrank', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these is not ❌ a valid PostgreSQL type?
+
+    (Seriously, these are (mostly) real types.)
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL has several geometric and text search types built-in, but `tsrank` is not one of them.
+
+    The correct geometric and text search types include:
+    - `lseg` (line segment)
+    - `txid` (transaction ID)
+    - `bytea` (binary data)
+    - `tsquery` (text search query)
+    - `tsvector` (text search document)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={13}
+  group="Constraints"
+  title="Check Constraint Timing"
+  options={[
+    {text: 'Immediately'},
+    {text: 'At transaction commit', isAnswer: true},
+    {text: 'On next query'},
+    {text: 'Never - constraints are only checked on INSERT'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    When is this grade constraint checked?
+    ```sql
+    ALTER TABLE students 
+    ADD CONSTRAINT valid_grade 
+    CHECK (
+      (grade >= 0 AND grade <= 100) OR 
+      grade IS NULL
+    ) NOT VALID;
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `NOT VALID` constraints:
+    - Are checked at transaction commit
+    - Don't validate existing rows
+    - Useful for large tables
+    
+    Without `NOT VALID`:
+    - Constraint is checked immediately
+    - All existing rows are validated
+    - Can be slow on large tables
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Well done! You went deep on several areas of PostgreSQL! 🐘
 
 
 

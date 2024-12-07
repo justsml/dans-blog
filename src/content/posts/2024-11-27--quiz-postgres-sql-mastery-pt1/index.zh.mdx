@@ -1,4 +1,4 @@
-```yaml
+---
 language_name: Chinese
 title: "Quiz: Deep Postgres: Pt. 1"
 subTitle: "Does SQL make you squeal?"
@@ -10,11 +10,9 @@ modified: 2024-12-03
 tags: [quiz, postgresql, sql, database, intermediate, advanced]
 social_image: mobile.webp
 unlisted: false
-```
-
 ---
-
-```markdown
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
 
 > **Part 1 of 2.** [Go to Part 2](/quiz-postgres-sql-mastery-pt2/)
 
@@ -183,29 +181,10 @@ Good luck! 🍀
   </slot>
 </Challenge>
 
-<Challenge
-  client:load
-  index={4}
-  group="Timestamps"
-  title="timestamptz vs timestamp"
-  options={[
-    {text: 'They store the same data differently'},
-    {text: 'timestamptz includes a timezone', isAnswer: true},
-    {text: 'timestamptz is a more modern date type'},
-    {text: 'They are aliases of each other'},
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's the diff between `timestamptz` and `timestamp`?
-  </div>
-</
-
+</QuizUI>
 
 {/* Translated from English to Chinese
 Original text length: 14001 characters
 Translation API: http://192.168.0.87:1234/v1/chat/completions
 Translation model: NousResearch/Hermes-3-Llama-3.1-8B-GGUF
 Translation date: 2024-12-06T10:02:57.481Z */}
-
-

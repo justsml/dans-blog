@@ -1,0 +1,115 @@
+---
+language_name: Tiếng Việt
+title: "Bẫy Ưu Tiên"
+subTitle: Liệu Lựa Chọn Nhiều Lựa Chọn Là Lựa Chọn Tốt Nhất?
+category: Thoughts
+subCategory: Agile
+date: 2024-10-23
+modified: 2024-10-24
+tags: [agile, leadership, priority, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: Ảnh của <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> trên <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+
+<aside className="breakout">
+💡 Khi một tổ chức phát triển, nó sẽ không thể tránh khỏi việc có một danh sách công việc đang chờ xử lý ngày càng tăng. Cuối cùng, kích thước của danh sách sẽ *yêu cầu* việc ưu tiên hóa.
+</aside>
+
+## Một Câu Chuyện Khởi Nghiệp
+
+Không sai lầm, các quản trị viên Jira của bạn sẽ có một giải pháp: hãy xem xét trường `Priority`! (Mẹo cho các nhà phát triển doanh nghiệp: có thể được đặt tên là `Priority2` hoặc `P-level`.)
+
+Thật kỳ lạ, 100% các công ty chọn giữa `P1, P2, P3, P4` hoặc `Thấp, Trung bình, Cao, và then chốt` — dường như không có lựa chọn nào khác.
+
+Một danh sách cố định gồm bốn lựa chọn? Được rồi. Hãy thử nó trong vài tuần...
+
+### 2 Ngày Sau
+
+Trong một sự kiện *không gây ngạc nhiên cho bất kỳ ai*, tổ chức đã phát hiện ra một vé có mức độ ưu tiên cao hơn, đòi hỏi một bản hack nhỏ: thêm `P0`, hoặc `then chốt Max+`!
+
+### 3 Ngày Tiếp Theo
+
+*Người sếp của chúng tôi đã có một số cuộc họp và khám phá thú vị tại hội nghị!* 
+
+Một cách nào đó, họ đã khám phá ra một mức độ ưu tiên cao hơn `P0`!
+
+Kể từ đó, nhóm đã nghiên cứu cách đặt tên cho mức độ ưu tiên mới này.
+
+Có lẽ `-1`? Không, không. Điều đó quá khó hiểu (`P-1` so với `P1`). Ok, làm thế nào về `P0.5`, không?
+
+<p className="breakout">Trong một khoảnh khắc "được truyền cảm hứng", nhóm đã phát minh ra một mức độ ưu tiên cao hơn: double-zero!<br />Bây giờ được biết đến với mức độ ưu tiên `P00`.</p>
+
+{/* *Cuối cùng, chúng ta có thể dán nhãn mọi thứ trong thế giới vào danh sách lựa chọn ưu tiên của chúng ta! (…cười ác ý…)* */}
+
+### Trước Lũ
+
+Trước khi bất kỳ ai nhận ra điều đó, nhóm của bạn đang chìm trong vé `P00`!
+
+<b>Làm thế nào chúng ta có thể tránh trò chơi nhà hát kỹ thuật này?</b>
+
+## Nếu Ưu Tiên Không Phải Là Lựa Chọn Nhiều Lựa Chọn?
+
+Làm thế nào chúng ta có thể đại diện tốt hơn cho một khái niệm con người luôn thay đổi và linh hoạt như `Priority`?
+
+- Trong thế giới thực, các ưu tiên luôn thay đổi và phát triển dựa trên thông tin mới, thay đổi thị trường và mục tiêu tổ chức.
+- Có một sự tương tác phức tạp giữa sự khẩn cấp, tầm quan trọng, sự sẵn có của nguồn lực và phân tích chi phí/rủi ro mà một danh sách lựa chọn đơn giản không thể nắm bắt, đặc biệt là theo thời gian. (Vé bị lỗi.)
+- Các bên liên quan khác nhau có thể có quan điểm mâu thuẫn về những gì cấu thành một mức độ ưu tiên cao, khiến cho một phương pháp một kích thước phù hợp với tất cả không phù hợp.
+
+## Vậy thì tiếp theo?
+
+Có một số phương pháp thay thế đáng để khám phá, từ thấp đến cao nỗ lực:
+
+- Để cung cấp thêm chân và đầu, hãy chọn một giá trị "trung lập" ban đầu, chẳng hạn như 100 hoặc 1.000. Bạn luôn có thể tăng hoặc giảm số đó.
+    - Hoặc hãy bắt đầu bằng số 0, nơi các số cao hơn có mức độ ưu tiên cao hơn.
+- Thực hiện một hệ thống ưu tiên đa chiều xem xét các yếu tố như giá trị kinh doanh, sự khẩn cấp và nỗ lực cần thiết. (Tạo một điểm số `composite` để làm cho việc sắp xếp và lọc dễ dàng hơn.)
+- Áp dụng một phương pháp ưu tiên động, chẳng hạn như kỹ thuật [MoSCoW](https://en.wikipedia.org/wiki/MoSCoW_method) (Phải có, Nên có, Có thể có, Không có), cho phép đánh giá lại thường xuyên. (Xem thêm [Mô hình Kano](https://en.wikipedia.org/wiki/Kano_model).)
+
+## Tóm Tắt
+
+Rất nhiều thứ được đặt vào Ưu Tiên mặc dù nó có tốc độ suy giảm nhanh chóng. Các vé `CRITICAL` của ngày hôm qua không có khả năng là vé `CRITICAL` của quý tới.
+
+Theo thời gian, các vé ưu tiên cao hơn cũ trở nên kháng cự với việc dọn dẹp và bảo trì. Sau tất cả, ai muốn giảm mức độ `Priority` của một thứ gì đó đã được tuyên bố là ***quan trọng***? Quên việc xóa vé không liên quan đi… (Gasp! Hãy nghĩ về danh sách công việc đang chờ xử lý!)
+
+Tôi đã thấy nhiều công ty trộn lẫn `Severity` và `Priority`. `Severity` mô tả ***sự khẩn cấp*** (hoặc độ nhạy thời gian.)
+
+`Priority ≠ Severity`. Nó có thể có ý nghĩa khi xác định 3-5 mức độ nghiêm trọng (thường được sử dụng để duy trì Thỏa thuận Cấp độ Dịch vụ.)
+
+Các mức độ nghiêm trọng giúp truyền đạt `không có tác động đến khách hàng` đến `sự cố dịch vụ một phần/hoàn toàn`.
+
+## Một Lời Cảnh Báo
+
+Triển khai một trường Ưu tiên không giới hạn đòi hỏi một chút lập kế hoạch và kỷ luật!
+
+Nếu bạn quen thuộc với phát triển front-end, bạn có thể đã trải qua một cuộc chiến `z-index`.
+
+Về cơ bản, `z-index` cho phép các nhà thiết kế đặt *bất kỳ* số nguyên dương để đảm bảo các widget của họ hiển thị “trên” nội dung có `z-index` thấp hơn.
+
+Ngay cả một bản cập nhật nhỏ cho một thành phần cũng có thể giới thiệu một thay đổi về `z-index` trên `<Dialog />` của họ - khiến nó trở nên vô hình. Những tình huống này có thể trở nên lộn xộn khi các thành phần của bên thứ ba, công việc tính năng và các đóng góp của nhóm khác cố gắng vượt qua `z-index` của nhau.
+
+`Z-index` từng bị giới hạn ở ~32.000. Tuy nhiên, tôi gần đây đã thấy một đoạn mã có `z-index: 1000000000`!
+
+Lạm phát phải đang ảnh hưởng đến `z-index`.
+
+## Thảo Luận
+
+- Liệu đây có phải là một thí nghiệm tư duy đáng giá?
+- Liệu ý tưởng về một mức độ Ưu tiên tăng lên mãi có đáng sợ? Gây lo lắng?
+- Liệu nó có phải là điều không thể tránh khỏi rằng phương pháp này cuối cùng sẽ vượt quá giới hạn số nguyên 64 bit?
+- Liệu các trường khác (beyond `Severity` hoặc `Urgency`) có thể thêm vào cuộc trò chuyện này?
+- Jira có đáng trách hay đáng khen?
+
+Chúng ta có thể hét vào internet, “Ai sẽ dọn dẹp tất cả các vé `P00` này?”
+
+Hoặc, bạn có thể trở nên ***thực sự*** về danh sách công việc đang chờ xử lý của mình.
+
+- Chấp nhận rằng 90% trong số 1.000 vé của bạn sẽ không bao giờ được thực hiện. Điều đó ổn.
+- Lưu trữ vé đã không được chạm trong nhiều tháng. Mức độ ưu tiên/urgency ban đầu không còn áp dụng được nữa. Dù sao, các vấn đề đã lưu trữ thường có thể được lấy lại.
+- Khi một vấn đề trở lại, điều đó ổn. Nó chỉ tăng mức độ ưu tiên của nó.
+- Theo kinh nghiệm, tôi đã nhận thấy không có tác hại nào khi loại bỏ vé cũ và không hoàn chỉnh.
+- Việc thêm mãi vào danh sách công việc đang chờ xử lý sẽ bỏ lỡ cơ hội tập trung nhóm và tổ chức của bạn vào những gì quan trọng. (Những thứ phía trước chúng ta. Trong khi danh sách công việc đang chờ xử lý vốn nhìn ngược lại.)
+- Một danh sách công việc đang chờ xử lý sâu sắc sẽ giống như một Phòng Tượng Bizarro, kỷ niệm những thứ bạn sẽ không bao giờ vận chuyển.
+
