@@ -130,16 +130,18 @@ export const PostCollections = {
 
   /** Popular posts according to google analytics. 2024/Q2 */
   getPopularPosts() {
+    // "one-weird-trick-to-speed-up-feature-teams",
+    // "js-quiz-14-date-time-questions-test-your-knowledge",
+    // "javascript-promises-quiz",
+    // "contribute-to-open-source-the-easy-way",
+    // "naming-things-real-good",
     return [
       "quiz-bash-in-the-shell",
+      "quiz-postgres-sql-mastery-pt2",
+      "quiz-postgres-sql-mastery-pt1",
       "quiz-destructuring-delights",
       "breaking-unicorns",
-      "one-weird-trick-to-speed-up-feature-teams",
-      // "js-quiz-14-date-time-questions-test-your-knowledge",
-      // "javascript-promises-quiz",
-      // "contribute-to-open-source-the-easy-way",
       "you-may-not-need-axios",
-      "naming-things-real-good",
       "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
