@@ -30,6 +30,8 @@ let _posts = _postsCollection
   )
   .reverse() as unknown as ArticlePost[];
 
+const ignoredCategories = ["Quiz", "Snippet", "Draft"];
+
 /**
  * PostCollections provides access to posts' data, pre-.
  */
@@ -49,6 +51,7 @@ export const PostCollections = {
   _categories: _posts.reduce(
     (acc, post) => {
       const { category } = post.data;
+      if (ignoredCategories.includes(category)) return acc;
       acc[category] = acc[category] == null ? 1 : acc[category] + 1;
       return acc;
     },

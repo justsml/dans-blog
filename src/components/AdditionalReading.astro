@@ -1,4 +1,5 @@
 ---
+import SocialLinks from "./SocialLinks.astro";
 import { ArticleCard } from "./ArticleCard.tsx";
 import { PostCollections } from "../shared/dataCache.tsx";
 import type { ArticlePost } from "../types.ts";
@@ -60,7 +61,8 @@ const posts = _posts.map((p) => p as ArticlePost);
 ---
 
 <div class={`additional-reading default-links ${className}`}>
-  <h2>Read More Shit (by Dan Levy)</h2>
+  <SocialLinks />
+  <h2>Read More Shit, by Dan Levy ✨</h2>
   <section class="article-tiles">
     {posts.map((article) => <ArticleCard article={article} className="tile" />)}
   </section>

@@ -1,65 +1,73 @@
 ---
-import { SOCIAL_GITHUB } from "../consts";
-import { SOCIAL_TWITTER } from "../consts";
+import { RssIcon } from "lucide-react";
 import { COPYRIGHT } from "../consts";
 
 const today = new Date();
-
 ---
 
 <footer class="content-grid">
-	<p>&copy; 2008-{today.getFullYear()} {COPYRIGHT}</p>
-	<p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸</p>
-	<div class="social-links">
-		<a rel="me" href={`https://github.com/${SOCIAL_GITHUB}`} target="_blank">
-			<span class="sr-only">Go to Dan's GitHub</span>
-			<img class="icon" src="/icons/github.svg" alt="GitHub" />
+  <p class="copyright">&copy; 2008-{today.getFullYear()} <a href="https://danlevy.net/">Dan Levy</a> - All rights rebased.</p>
+  <p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸</p>
+  <section class="center syndication">
+    <a href="/rss.xml" title="For the grey beards ❤️">
+			<RssIcon size="1.5em" />
+			Need that sweet sweet `RSS`?
 		</a>
-		<a rel="me" href={`https://twitter.com/${SOCIAL_TWITTER}`} target="_blank">
-			<span class="sr-only">Follow me on Twitter</span>
-			<img class="icon" src="/icons/twitter.svg" alt="Twitter" />
-		</a>
-		<a rel="me" href={`https://mastodon.social/@${SOCIAL_TWITTER}`} target="_blank">
-			<span class="sr-only">Follow me on Mastodon</span>
-			<img class="icon" src="/icons/mastodon.svg" alt="Mastodon" />
-		</a>
-		<a rel="me" href={`https://bsky.app/profile/danlevy.net`} target="_blank">
-			<span class="sr-only">Follow me on Bluesky</span>
-			<img class="icon" src="/icons/bluesky.svg" alt="Bluesky" />
-		</a>
-		<a rel="me" href={`https://www.linkedin.com/in/realdanlevy/`} target="_blank">
-			<span class="sr-only">Connect with me on LinkedIn</span>
-			<img class="icon" src="/icons/linkedin.svg" alt="LinkedIn" />
-		</a>
-	</div>
+  </section>
 </footer>
 <style>
-	footer {
-		padding: 8em .5em 6em .5em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
-		font-size: .9em;
-	}
-	footer .locations {
-		margin: .125em 0;
-	}
-	footer p {
-		margin: 0;
-		padding: 0;
+  footer {
+    padding: 8em 0.5em 6em 0.5em;
+    background: linear-gradient(var(--gray-gradient)) no-repeat;
+    color: rgb(var(--gray));
+    text-align: center;
+    font-size: 0.9em;
+    .locations {
+			padding-block: .5em 1em;
+	  }
+
+		/* p {
+			margin: 0;
+			padding: 0;
+		} */
 	}
 
-	.social-links {
-		display: flex;
-		justify-content: center;
-		gap: 1em;
-		margin-top: 1em;
+	.locations {
+		font-size: 1.5em;
+		margin-block: 2em 1em;
 	}
-	.social-links a {
-		text-decoration: none;
-		color: rgb(var(--gray));
-	}
-	.social-links a:hover {
-		color: rgb(var(--gray-dark));
-	}
+
+  section.syndication {
+    margin-block: 5em 0.5em;
+    text-align: center;
+    font-size: 0.9em;
+    /* font-style: italic; */
+		font-family: 'Noto Sans Mono', 'Courier New', Courier, monospace;
+		transition: transform 0.25s ease-in-out, scale 0.25s ease-in;
+
+		svg {
+			display: inline-block;
+			color: var(--clr-muted-400) !important;
+		}
+		&:has(a:hover) {
+			scale: 1.075;
+		}
+
+    a,
+    a:visited,
+    a:active,
+    a:focus {
+			transition: color 0.25s ease-in, text-shadow 0.25s ease-in, transform 0.25s ease-in-out;
+      text-decoration: none;
+      color: rgb(var(--clr-muted-400));
+      font-size: 0.825rem;
+      font-weight: 300;
+      letter-spacing: 0.025rem;
+    }
+    a:hover {
+      color: var(--neon-pink);
+      text-decoration: underline;
+			transform: scale(1.05);
+    }
+  }
 </style>
