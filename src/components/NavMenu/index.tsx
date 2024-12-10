@@ -74,6 +74,7 @@ const NavMenu = ({
       delayDuration={300}
       onClick={safeDetectViewportOffset}
       onMouseMove={safeDetectViewportOffset}
+
     >
       <NavigationMenu.List className="NavigationMenuList">
         <NavigationMenu.Item value="#search" className="searchToggle">
