@@ -1,10 +1,11 @@
 ---
+import SocialLinks from "../components/SocialLinks.astro";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
-import socialBanner from '../assets/social-banner.webp';
-import { fade } from 'astro:transitions';
+import socialBanner from "../assets/social-banner.webp";
+import { fade } from "astro:transitions";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
@@ -15,18 +16,19 @@ type Props = {
   title?: string;
   subTitle?: string;
   frontmatter?: Record<string, any>;
-}
+};
 ---
 
 <html lang="en" transition:name="root">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />
   </head>
-  <body transition:animate={fade({ duration: '0.285s' })}>
+  <body transition:animate={fade({ duration: "0.285s" })}>
     <Header className="content-grid" />
     <main class="content-grid">
-      <slot name="default"></slot>
+      <slot name="default" />
     </main>
+    <SocialLinks />
     <Footer />
     <AnalyticsTag />
   </body>
