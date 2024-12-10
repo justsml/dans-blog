@@ -22,9 +22,9 @@ export function EditOnGitHubLink({
         alignItems: "center",
         justifyContent: "center",
         gap: "0.5rem",
-        fontSize: "0.65rem",
+        fontSize: "0.895rem",
         // color: "var(--color-text-muted)",
-        padding: "0.25rem 0.5rem",
+        padding: "0.5rem 0.5rem",
       }}
       href={url}
       target="_blank"
