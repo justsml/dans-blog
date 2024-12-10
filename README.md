@@ -4,9 +4,6 @@
 
 ## TODO
 
-- [x] Add comments
-- [x] Fine tune: crank lighthouse score
-- [x] Add Link to Category on Posts
 - [ ] Stop using REM for layout (padding)
 - [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
 - [x] Add Mastodon & Bsky links to footer.
@@ -32,11 +29,31 @@
   - [ ] Comments Component
   - [ ] Free local search
   - [ ] Newsletter
+- [ ] Add Video page?
+- [ ] Add newsletter?
 
-## Features
+## Done
 
+- [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [x] Add comments
+- [x] Fine tune: crank lighthouse score
+- [x] Add Link to Category on Posts
+- [x] Add Mastodon & Bsky links to footer.
+- [x] Add LinkedIn link to footer.
+- [x] Support inlining `<Gist />` with owned syntax highlighting.
+- [x] Add Scroll CSS Effects:
+  - [x] Adjust Quiz box-shadow using scroll position
+- [x] Update Quiz UI
+  - [x] Make Question's Linkable
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [x] Get rid of cliche icons abuse.
+- [x] Add Quizzes to the Menu
+- [x] Publish next batch of quizzes
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+- [x] Disable posthog locally
+- [x] Add search
 - [x] Add new nav
-  - [ ] Add tags
+  - [ ] Add tags?
   - [x] Add categories
   - [x] Add Popular/Related posts
 - [x] Convert Quiz UI to MDX/Astro
@@ -48,9 +65,7 @@
 - [x] Add about page
 - [x] Add OSS project list (in menu)
 - [x] Add contact page
-- [ ] Add Video page
-- [ ] Add search
-- [ ] Add newsletter
+- [x] Add search
 
 Features:
 

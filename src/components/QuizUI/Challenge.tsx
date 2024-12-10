@@ -25,6 +25,12 @@ const SCREENSHOT_SCALE = 1.75;
 //   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
 // }
 
+// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
+// const updateCodeBlocks = () => {
+//   const blocks = getPreBlocks();
+//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
+// }
+
 /**
  * Challenge component
  */
