@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title:  "Linux Server Benchmarking Scripts"
 subTitle: "Quickly Benchmark CPU & HDD"
 date: 2017-05-01

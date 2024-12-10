@@ -3,47 +3,6 @@ html {
   scroll-behavior: smooth;
 }
 
-/*
-Overriding the style when generating screenshots
-*/
-.mobile-shot {
-  .content-grid {
-    grid-template-columns: [full-width-start]
-        0
-          [breakout-start]
-            0
-              [content-start]
-                100vw
-              [content-end]
-            0
-          [breakout-end]
-        0
-      [full-width-end] !important;
-  }
-}
-/* screenshot-mode mobile-shot */
-.screenshot-mode {
-  .screenshot-hidden {
-    display: none !important;
-  }
-
-  .quiz-hint-toggle {
-    grid-template-columns: 1fr 7rem !important;
-    .watermark {
-      display: grid !important;
-    }
-  }
-  .score {
-    display: none !important;
-  }
-  body > header {
-    display: none !important;
-  }
-  astro-dev-toolbar {
-    display: none !important;
-  }
-}
-
 .quiz-ui {
   padding: 1rem 0;
   max-width: 550px;
@@ -60,7 +19,7 @@ Overriding the style when generating screenshots
   .card {
     background-color: var(--quiz-bg);
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     position: relative;
     transition: transform 0.39s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
@@ -68,10 +27,11 @@ Overriding the style when generating screenshots
   /* Toggle flip effect */
   .card-container:not(.card-flip) {
     .card-front {
-      transform: rotateY(0deg);
+      /* transform: rotateY(0deg); */
     }
     .card-back {
       transform: rotateY(180deg);
+      height: 0;
     }
   }
 
@@ -89,12 +49,12 @@ Overriding the style when generating screenshots
   /* Front and back faces of the card */
   .card-front,
   .card-back {
-    overflow-y: auto;
+    /* overflow-y: auto; */
 
     background-color: var(--quiz-bg);
     position: absolute;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
     backface-visibility: hidden; /* Hides the back when not visible */
   }
   /* .correct .card-front,
@@ -666,6 +626,7 @@ Overriding the style when generating screenshots
       color: var(--neon-pink-subtle);
       font-weight: 900;
     }
+    .reset-quiz { visibility: visible; }
   }
 }
 
@@ -674,6 +635,7 @@ Overriding the style when generating screenshots
   .score-wrapper {
     display: none;
   }
+  .reset-quiz { visibility: visible; }
 }
 .score-wrapper {
   /* display: inline-flex; */
@@ -683,10 +645,12 @@ Overriding the style when generating screenshots
 }
 
 .btn.reset-quiz {
+  display: inline-flex;
+  /* display: none; */
+  visibility: hidden; /* hide the button by default, show when quiz completed */
   font-size: 1.125rem;
   /* margin-left: -2rem; */
   margin-right: 2rem;
-  display: inline-flex;
   justify-content: end;
   align-self: center;
   align-items: center;

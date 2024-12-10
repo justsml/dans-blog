@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title:  "AngularJS Tricks"
 subTitle: AngularJS CAN BE Fun!
 date: 2015-02-26

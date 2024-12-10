@@ -2,6 +2,8 @@
 // cwebp -q 90 "$file" -o "${file%.*}.webp"
 
 import { exec } from "child_process";
+import { rmSync } from "fs";
+import { rm } from "fs/promises";
 import { promisify } from "util";
 
 const execAsync = promisify(exec);
@@ -13,6 +15,8 @@ export async function convertToWebP(file: string) {
     );
   try {
     const newFileName = file.replace(/\.[^.]+$/, ".webp");
+
+    await rm(newFileName, { force: true }).catch(() => {});
 
     await execAsync(`cwebp -q 90 "${file}" -o "${newFileName}"`);
     return newFileName;

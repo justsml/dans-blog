@@ -3,7 +3,7 @@ unlisted: true
 title: "Quiz: Do You know Modern CSS? (for 2025)"
 subTitle: "Are you front-end enough?"
 label: "Advanced CSS"
-social_image: previews/desktop.webp
+social_image: ./mobile.webp
 category: Quiz
 subCategory: CSS
 minReleaseDate: 2024-10-31
@@ -70,8 +70,8 @@ The other options may be familiar from other languages or preprocessor syntaxes,
   title="CSS min() function"
   options={[
     {text: 'width: 50%;'},
-    {text: 'width: 200px;'},
-    {text: 'width: 250px;', isAnswer: true},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
     {text: 'width: 500px;'},
     {text: 'width: max(50%, 200px);'},
     {text: 'Invalid syntax'},
@@ -90,7 +90,18 @@ The other options may be familiar from other languages or preprocessor syntaxes,
 
   <slot name="explanation">
   <div className="explanation">
-The `min()` function will choose the smallest value between 250px and 50% of its parents width. Since `50%` of `400px` is `200px`, which is smaller than the _other_ minimum value `250px`. So, the computed width is `250px`.
+The `min()` function will choose the smallest value between 250px and 50% of its parents width.
+
+To understand the computed value, we need to convert the relative units to pixels:
+
+- `50%` of `400px` is `200px`
+- `250px` is already in pixels
+
+```css
+/* This gets computed to */
+width: min(250px, 200px);
+/* -> 200px wins */
+```
 
 The `min()` function is especially useful for responsive design, where you can ensure a component (or font size) doesn't exceed a certain limit.
   </div>

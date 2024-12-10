@@ -3,14 +3,14 @@
 // import posthog from "posthog-js/dist/module.no-external.js";
 ---
 <script>
-  import isLocalhost from "local-hostname";
   import globalSafe from "globalthis";
   const globalThis = globalSafe();
 
   if (!isLocalhost(globalThis?.location?.hostname)) initStats();
 
   async function initStats() {
-    const { posthog } = (await import("posthog-js/dist/module.no-external.js"));
+    // const { posthog } = (await import("posthog-js/dist/module.no-external.js"));
+    const { posthog } = (await import("posthog-js/dist/module.full.no-external.js"));
     // @ts-ignore
     globalThis._posthog = posthog.init(
       "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9",
@@ -19,5 +19,10 @@
         person_profiles: "always",
       },
     );
+  }
+  // from `local-hostname`
+  function isLocalhost(hostname: string) {
+    const RGX = /^(::1?|(.*\.)?localhost|((0|10|127)(\.(\d|[1-8]\d|9\d|1\d{2}|2[0-4]\d|25[0-5])){3})|((192\.168|169\.254|(172\.(1[6-9]|2\d|3[01])))(\.(\d|[1-8]\d|9\d|1\d{2}|2[0-4]\d|25[0-5])){2}))$/i;
+    return RGX.test(hostname);
   }
 </script>

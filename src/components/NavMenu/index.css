@@ -309,6 +309,8 @@ pre {
     align-self: unset;
     height: unset;
     padding-right: 0rem;
+    width: 2.4rem;
+    place-self: end;
   }
 
 }
@@ -333,9 +335,13 @@ pre {
   font-weight: 500;
   line-height: 1;
   border-radius: 0.25rem;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: var(--gray-11);
   cursor: pointer;
+
+  @screen sm {
+    font-size: 1.35rem;
+  }
 }
 .NavigationMenuTrigger:focus,
 .NavigationMenuLink:focus {
@@ -670,7 +676,7 @@ pre {
   .CalloutText {
     display: grid;
 
-    grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
     text-wrap: nowrap;
   }
 }

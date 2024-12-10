@@ -1,4 +1,5 @@
 ---
+social_image: ./mobile.webp
 title:  "Promise Gotchas"
 subTitle: Avoiding common mistakes
 date: 2018-09-26
