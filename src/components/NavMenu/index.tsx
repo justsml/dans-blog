@@ -15,7 +15,7 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SearchButton } from "../search/SearchButton";
 import "./index.css";
 
@@ -28,8 +28,11 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
+  const [currentPanel, setCurrentPanel] = useState<string>("");
+  const isMenuOpen = currentPanel.length >= 1;
+
   const safeDetectViewportOffset = useCallback(
-    throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
+    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
     [],
   );
 
@@ -67,20 +70,97 @@ const NavMenu = ({
     };
   }, []);
 
+  const handleMenuPageClick = (lbl: string, e: Event) => {
+    const target = e.target as HTMLElement;
+    // const currentTarget = e.currentTarget as HTMLElement;
+    const hasLink = target.closest("a");
+    const hasButton = target.closest("button");
+    const isInsideMenu = target.closest(".NavigationMenuRoot");
+    const isInsideViewPort = target.closest(".ViewportPosition");
+    const isInsideHeader = target.closest("header");
+    const isInsideMain = target.closest("main");
+
+    // const currClasses = [...currentTarget.classList.values()].sort().join(", ");
+    const targetClasses = [...target.classList.values()].sort().join(", ");
+    const clickedViewportBackground = isInsideViewPort && targetClasses.includes("Viewport");
+    // console.log(`${lbl} %o`, {targetClasses, clickedViewportBackground, hasLink, isInsideMenu, isInsideViewPort, isInsideHeader, isInsideMain, target});
+
+    if (isInsideMenu) return true;
+    // direct click into ViewportPosition bg element
+    if (clickedViewportBackground) return setCurrentPanel("");
+    
+    if (!isInsideViewPort) {
+      // close it
+      return setCurrentPanel("");
+    } else {
+      if (hasLink || hasButton) {
+        // console.log("Clicked Link", target.tagName, target.className, target, lbl);
+        // let the link handle the click
+        return true;
+      } else {
+        // no link, prevent the default behavior (closing the panel)
+        // console.log("Clicked NON-Link", target.tagName, target.className, target, lbl);
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }
+    // if we didn't click a link, prevent the default behavior (closing the panel)
+    // if (!hasLink) {
+    //   console.log("Prevented Click", target.tagName, target.className, target, lbl);
+    //   setCurrentPanel("");
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    // } else {
+    //   console.log("Clicked Link", target.tagName, target.className, target, lbl);
+    // }
+
+    // check if we clicked directly on the ViewportPosition element
+    //   (which is a background container and should not trigger a panel close)
+  }
+  
+  useEffect(() => {
+    const handleViewPortClick = (e: Event) => handleMenuPageClick("ViewportPosition", e);
+    const handleBodyClick = (e: Event) => handleMenuPageClick("Body", e);
+    const vPort = document.querySelector(".ViewportPosition");
+
+    if (isMenuOpen) {
+      vPort?.addEventListener("click", handleViewPortClick);
+      document.body.addEventListener("click", handleBodyClick);
+    } else {
+      // console.error("Alert: closed menu");
+    }
+
+    return () => {
+      vPort?.removeEventListener("click", handleViewPortClick);
+      document.body.removeEventListener("click", handleBodyClick);
+    }
+  }, [currentPanel]);
+
+
+  const togglePanel = (panel: string) => {
+    setCurrentPanel(currentPanel === panel ? "" : panel);
+  }
+
+  const noOpChange = (value: string) => {
+    // NO OP - don't let component change panel open/close state!!!
+    // console.log("noOpChange", value);
+  };
+
   return (
     <NavigationMenu.Root
       className="NavigationMenuRoot"
       suppressHydrationWarning={true}
       delayDuration={300}
       onClick={safeDetectViewportOffset}
-      onMouseMove={safeDetectViewportOffset}
+      value={currentPanel}
     >
       <NavigationMenu.List className="NavigationMenuList">
         <NavigationMenu.Item value="#search" className="searchToggle">
           <SearchButton />
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="/">
+        <NavigationMenu.Item value="home" onClick={() => togglePanel("home")}>
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -89,7 +169,10 @@ const NavMenu = ({
               <li className="item-quizzes">
                 <NavigationMenu.Link asChild>
                   <a href="/challenges" className="CalloutItem">
-                    <div className="Callout" style={{background: 'var(--neon-gg-bg)'}}>
+                    <div
+                      className="Callout"
+                      style={{ background: "var(--neon-gg-bg)" }}
+                    >
                       <div className="CalloutHeading">Quizzes</div>
                       <p className="CalloutText">Try Dan's 10+ challenges!</p>
                     </div>
@@ -183,7 +266,7 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item>
+        <NavigationMenu.Item value="projects" onClick={() => togglePanel("projects")}>
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Projects <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -263,9 +346,9 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item>
+        <NavigationMenu.Item value="about"  onClick={() => togglePanel("about")}>
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
-            Contact <CaretDownIcon className="CaretDown" aria-hidden />
+            About <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
           <NavigationMenu.Content className="NavigationMenuContent">
             <ul className="List two contact-info-list">

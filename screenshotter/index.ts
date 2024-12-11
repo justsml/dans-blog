@@ -107,14 +107,14 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
       sizes: [
         {
           fileName: join(`${contentPath}`, `/desktop.jpg`),
-          width: 1280,
+          width: 820,
           height: 720,
           classModifier: "desktop-shot",
         },
         {
           fileName: join(`${contentPath}`, `/mobile.jpg`),
           width: 480,
-          height: 900,
+          height: 960,
           classModifier: "mobile-shot",
         },
       ],
