@@ -24,6 +24,7 @@ export async function convertToWebP(file: string) {
     // @ts-ignore
     console.error(`Error converting ${file} to webP: ${error.message}`);
     console.error(`🚨 Make sure cwebp is installed and in your PATH.`);
+    throw error;
   }
 }
 

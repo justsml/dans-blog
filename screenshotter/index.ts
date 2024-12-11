@@ -6,6 +6,7 @@ import { makeLogs } from "../src/components/LogHelper.ts";
 import { ElementHandle, Page } from "playwright";
 import * as webP from "@/shared/webP.ts";
 import { rmSync } from "fs";
+import { resizeAndCrop } from "../src/shared/socialBanner.ts";
 
 const { SITE_URL } = process.env;
 
@@ -16,10 +17,19 @@ const screenshotService = new ScreenshotService();
 const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
-// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Myself"));
-// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Quiz"));
-// rssFeed.items = rssFeed.items.filter((item) => item.title?.includes("Replacing"));
-
+// get --filter=arg
+let filterArg = process.argv.find((arg) => arg.startsWith("--filter="));
+filterArg = filterArg?.split("=")[1];
+if (filterArg) {
+  log(`Filtering RSS feed (${rssFeed.items.length}) for: ${filterArg}. `);
+  rssFeed.items = rssFeed.items.filter(
+    (item) =>
+      item.categories?.includes(filterArg) ||
+      item.title?.includes(filterArg) ||
+      item.slug?.includes(filterArg),
+  );
+  log(`Filtered feed from ${rssFeed.items.length} to ${rssFeed.items.length} items`);
+}
 
 let basePath = `/tmp/screenshots`;
 
@@ -62,7 +72,6 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
   const isQuiz = categories?.includes("Quiz") || categories?.includes("quiz");
 
   if (rssItem.sourcePath) {
-
     contentPath = `${process.cwd()}/src/content/posts/${dirname(rssItem.sourcePath)}`;
     basePath = `${process.cwd()}/public/previews/${dirname(rssItem.sourcePath)}`;
     // contentPath = `${basePath}`;
@@ -107,9 +116,10 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
       sizes: [
         {
           fileName: join(`${contentPath}`, `/desktop.jpg`),
-          width: 820,
+          width: 800,
           height: 720,
           classModifier: "desktop-shot",
+          postProcess: "resizeAndCrop",
         },
         {
           fileName: join(`${contentPath}`, `/mobile.jpg`),
@@ -118,7 +128,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
           classModifier: "mobile-shot",
         },
       ],
-      delayMs: 125,
+      delayMs: 75,
     },
   };
 }
@@ -141,6 +151,7 @@ type Dimension = {
   width: number;
   height: number;
   classModifier?: string;
+  postProcess?: undefined | 'resizeAndCrop';
 };
 
 // const isPathComplete = (s: string) =>
@@ -159,21 +170,28 @@ async function applyScrollTo(page: Page, scrollTo: string) {
 }
 
 const checkForAutoRefresh = async (error: Error) => {
-  if (error.message.includes("context") && error.message.includes("a navigation")) {
-    console.error(`WARNING: DONT TRY TAKE SCREENSHOTS AGAINST A LIVE DEV SERVER - INFINITE RELOAD LOOP POSSIBLE. STATICALLY BUILD SITE & SERVE IT LOCALLY!`)
+  if (
+    error.message.includes("context") &&
+    error.message.includes("a navigation")
+  ) {
+    console.error(
+      `WARNING: DONT TRY TAKE SCREENSHOTS AGAINST A LIVE DEV SERVER - INFINITE RELOAD LOOP POSSIBLE. STATICALLY BUILD SITE & SERVE IT LOCALLY!`,
+    );
     process.exit(42);
   }
   return false;
-}
+};
 async function addClassName(page: Page, overrideClassName: string) {
   if (overrideClassName) {
-    const classes = await page.evaluate((overrideClassName) => {
-      document.body.classList.add(overrideClassName);
-      return document.body.classList.value;
-    }, overrideClassName).catch((e) => {
-      console.error(`Error adding class ${overrideClassName}: ${e?.message}`);
-      checkForAutoRefresh(e);
-    })
+    const classes = await page
+      .evaluate((overrideClassName) => {
+        document.body.classList.add(overrideClassName);
+        return document.body.classList.value;
+      }, overrideClassName)
+      .catch((e) => {
+        console.error(`Error adding class ${overrideClassName}: ${e?.message}`);
+        checkForAutoRefresh(e);
+      });
     console.log("Applied classes: ", classes);
   }
 }
@@ -190,9 +208,15 @@ async function takeScreenshot(ctx: Page | ElementHandle, fileName: string) {
     timeout: 30_000,
   });
   if (webP.isFileSupported(fileName)) {
-    const webpFile = await webP.convertToWebP(fileName);
-    rmSync(fileName);
-    return webpFile;
+    try {
+      const webpFile = await webP.convertToWebP(fileName);
+      rmSync(fileName);
+      return webpFile;
+    } catch (error) {
+      // @ts-ignore
+      console.error(`🚨🚨 Error! Converting ${fileName} to webP: ${error?.message}`);
+      return fileName;
+    }
   }
   return fileName;
 }
@@ -222,7 +246,7 @@ async function generateImages(args: ScreenshotTask) {
 
     // Get main screenshots based on sizes
     if (sizes) {
-      for await (const { fileName, width, height, classModifier } of sizes) {
+      for await (const { fileName, width, height, classModifier, postProcess } of sizes) {
         const newFile = fileName.startsWith("/")
           ? fileName
           : path.join(process.cwd(), fileName);
@@ -236,6 +260,13 @@ async function generateImages(args: ScreenshotTask) {
         if (scrollTo) await applyScrollTo(page, scrollTo);
         await page.setViewportSize({ width, height });
         const outputFile = await takeScreenshot(page, newFile);
+        if (postProcess === "resizeAndCrop") {
+          const socialBannerPath = outputFile.replace(".jpg", "-social.jpg").replace(".webp", "-social.webp");
+          await resizeAndCrop(outputFile, socialBannerPath, {
+            width: 1200,
+            height: 628,
+          });
+        }
         log(`Screenshot saved to ${outputFile}`);
       }
     }
@@ -253,13 +284,12 @@ async function generateImages(args: ScreenshotTask) {
       });
       await addClassName(page, "screenshot-mode");
 
-      
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
         const newFile = fileName.startsWith("/")
-        ? fileName
-        : path.join(process.cwd(), fileName);
+          ? fileName
+          : path.join(process.cwd(), fileName);
         log(`Screenshot for ${selector}: ${newFile}`);
         await addClassName(page, "screenshot-mode");
         const element = await page.$(selector).catch((e) => {

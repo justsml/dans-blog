@@ -59,7 +59,10 @@ class ScreenshotService {
       throw new Error("Browser is not initialized. Please call init() first.");
     }
 
-    const page: Page = await this.browser.newPage();
+    const page: Page = await this.browser.newPage({
+      viewport: { width: 1024, height: 720 },
+      deviceScaleFactor: 4,
+    });
     this.pages.push(page);
     await page.goto(url);
     log(`Navigated to ${url}`);
