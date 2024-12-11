@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title:  "Docker rocks & now works on OSX"
 subTitle: "Docker is amazing, fast, and flexible"
 date: 2015-06-11

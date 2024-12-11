@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Protecting Your Tokens, API Keys and Secrets"
 subTitle: Public? Private? Wat?
 date: 2018-10-27

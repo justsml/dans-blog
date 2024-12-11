@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Creating Collaborative Culture"
 subTitle: Unlock your teams' creativity!
 date: 2021-01-01

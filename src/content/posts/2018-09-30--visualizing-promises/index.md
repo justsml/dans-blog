@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title:  "Visualizing Promises"
 subTitle: Break on through...
 date: 2018-09-30

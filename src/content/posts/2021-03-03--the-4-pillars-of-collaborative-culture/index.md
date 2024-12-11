@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "The 4 Pillars of Collaborative Culture"
 subTitle: Safety, Speed, Clarity and Commitment.
 date: 2021-04-03

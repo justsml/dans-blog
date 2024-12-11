@@ -126,6 +126,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
           width: 480,
           height: 960,
           classModifier: "mobile-shot",
+          postProcess: "resizeAndCrop",
         },
       ],
       delayMs: 75,
