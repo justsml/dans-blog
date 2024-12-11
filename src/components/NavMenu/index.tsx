@@ -70,57 +70,58 @@ const NavMenu = ({
     };
   }, []);
 
-  const preventLogIt = (lbl: string, e: Event) => {
+  const handleMenuPageClick = (lbl: string, e: Event) => {
     const target = e.target as HTMLElement;
-    const currentTarget = e.currentTarget as HTMLElement;
-    const hasLink = target.closest("a, button");
+    // const currentTarget = e.currentTarget as HTMLElement;
+    const hasLink = target.closest("a");
+    const hasButton = target.closest("button");
     const isInsideMenu = target.closest(".NavigationMenuRoot");
     const isInsideViewPort = target.closest(".ViewportPosition");
     const isInsideHeader = target.closest("header");
     const isInsideMain = target.closest("main");
 
-    const currClasses = [...currentTarget.classList.values()].sort().join(", ");
+    // const currClasses = [...currentTarget.classList.values()].sort().join(", ");
     const targetClasses = [...target.classList.values()].sort().join(", ");
-    if (isInsideMenu) {
-      return true;
-    }
-    const shouldCloseMenu = isInsideViewPort && targetClasses.includes("Viewport");
+    const clickedViewportBackground = isInsideViewPort && targetClasses.includes("Viewport");
+    // console.log(`${lbl} %o`, {targetClasses, clickedViewportBackground, hasLink, isInsideMenu, isInsideViewPort, isInsideHeader, isInsideMain, target});
 
-    console.log(`${lbl} %o`, {currClasses, targetClasses, shouldCloseMenu, hasLink, isInsideMenu, isInsideViewPort, isInsideHeader, isInsideMain, target});
-    if (shouldCloseMenu) {
-      // direct click into ViewportPosition bg element
-      return setCurrentPanel("");
-    }
+    if (isInsideMenu) return true;
+    // direct click into ViewportPosition bg element
+    if (clickedViewportBackground) return setCurrentPanel("");
+    
     if (!isInsideViewPort) {
       // close it
       return setCurrentPanel("");
     } else {
-      if (hasLink) {
-        console.log("Clicked Link", target.tagName, target.className, target, lbl);
+      if (hasLink || hasButton) {
+        // console.log("Clicked Link", target.tagName, target.className, target, lbl);
+        // let the link handle the click
+        return true;
       } else {
-        console.log("Clicked NON-Link", target.tagName, target.className, target, lbl);
+        // no link, prevent the default behavior (closing the panel)
+        // console.log("Clicked NON-Link", target.tagName, target.className, target, lbl);
         e.preventDefault();
         e.stopPropagation();
         return;
       }
     }
     // if we didn't click a link, prevent the default behavior (closing the panel)
-    if (!hasLink) {
-      console.log("Prevented Click", target.tagName, target.className, target, lbl);
-      setCurrentPanel("");
-      e.preventDefault();
-      e.stopPropagation();
-    } else {
-      console.log("Clicked Link", target.tagName, target.className, target, lbl);
-    }
+    // if (!hasLink) {
+    //   console.log("Prevented Click", target.tagName, target.className, target, lbl);
+    //   setCurrentPanel("");
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    // } else {
+    //   console.log("Clicked Link", target.tagName, target.className, target, lbl);
+    // }
 
     // check if we clicked directly on the ViewportPosition element
     //   (which is a background container and should not trigger a panel close)
   }
   
   useEffect(() => {
-    const handleViewPortClick = (e: Event) => preventLogIt("ViewportPosition", e);
-    const handleBodyClick = (e: Event) => preventLogIt("Body", e);
+    const handleViewPortClick = (e: Event) => handleMenuPageClick("ViewportPosition", e);
+    const handleBodyClick = (e: Event) => handleMenuPageClick("Body", e);
     const vPort = document.querySelector(".ViewportPosition");
 
     if (isMenuOpen) {
