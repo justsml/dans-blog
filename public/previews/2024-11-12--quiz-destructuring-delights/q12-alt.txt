@@ -1,0 +1,32 @@
+# 12. TypeScript + Assignment
+
+Now with assignment (note the f, l and p variables)
+
+'use strict';
+function greet(
+  {
+    name: {first: f = "N/A", last: l = "N/A"},
+    birth: {place: p = "N/A"} = {},
+    age = -1,
+  }: {
+    name: {first?: string, last?: string};
+    birth?: {place?: string};
+    age?: number;
+  }
+) {
+  console.log(`Hi ${f} ${l} from ${place}`);
+  // What will 👆 do?
+}
+greet({
+  name: {first: 'Dan', last: 'Levy'},
+  birth: {place: 'Cape Town'},
+});
+------
+
+1. Hi Dan Levy from N/A
+2. Hi Dan Levy from Cape Town
+3. Hi N/A N/A from N/A
+4. Hi N/A N/A from Cape Town
+5. Error
+
+[credit](https://danlevy.net/)

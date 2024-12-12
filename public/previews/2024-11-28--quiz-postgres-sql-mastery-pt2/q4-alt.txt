@@ -1,0 +1,22 @@
+# 4. Transactions
+
+Except for “Depends on side effects” What happens after an error?
+
+BEGIN;
+UPDATE students
+  SET status = 'alumni'
+  WHERE grade = 12;
+UPDATE students
+  SET graduation_date = CURRENT_DATE
+  WHERE grade = 12;
+UPDATE students
+  SET grade = 'GRADUATED'; -- 🚨 Error: type mismatch
+COMMIT;
+------
+
+1. Depends on side effects
+2. Rolls back all statements
+3. Commits first statement only
+4. Commits all successful statements
+
+[credit](https://danlevy.net/)

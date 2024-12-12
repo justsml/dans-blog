@@ -1,0 +1,26 @@
+# 3. Nested Destructuring
+
+How about some nested destructuring?
+
+'use strict';
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first },
+  address: { city },
+  birth: { place },
+} = person;
+console.log(
+  `First: ${first}, City: ${place}`,
+);
+------
+
+1. First: Dan, City: Denver
+2. First: undefined, City: Denver
+3. Error: Cannot read property 'first'
+4. First: Dan, City: undefined
+5. Error
+
+[credit](https://danlevy.net/)
