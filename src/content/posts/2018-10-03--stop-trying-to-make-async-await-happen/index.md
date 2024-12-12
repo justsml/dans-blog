@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Stop trying to make async/await happen"
 subTitle: Promises are so fetch right now
 date: 2018-10-03

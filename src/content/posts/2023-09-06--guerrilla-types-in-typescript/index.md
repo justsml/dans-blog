@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Guerrilla Types in TypeScript"
 subTitle: Renegade Type Design
 date: 2023-09-05

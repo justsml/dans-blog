@@ -477,7 +477,7 @@ main pre {
     background-color: hsl(var(--secondary));
     border-radius: 1.5rem;
     box-shadow: 0 0 1rem .25rem hsl(var(--card-foreground));
-    color: var(--clr-muted-400);
+    color: var(--clr-muted-300);
     display: grid;
     grid-template-rows: auto 210px auto max-content;
     line-height: 1.5;
@@ -500,11 +500,11 @@ main pre {
   border-radius: 1.5rem;
   box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
   transition: box-shadow 0.175s ease-in-out, color 0.175s ease-in-out;
-  color: var(--clr-muted-400);
+  color: var(--clr-muted-100);
 
 
   &.draft {
-    border: 2.5px dashed var(--clr-muted-400);
+    border: 2.5px dashed var(--clr-muted-300);
     filter: grayscale(1);
     transition: border 0.3s ease-in, filter 0.3s ease-in;
   }
@@ -525,7 +525,7 @@ main pre {
   .small-label {
     
     font-size: var(--fs-200);
-    color: var(--clr-muted-400);
+    color: var(--clr-muted-100);
     position: absolute;
     right: 0.75rem;
     top: 0.65rem;
@@ -534,10 +534,11 @@ main pre {
 
   &:hover {
     box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
-    color: unset;
+    color: var(--clr-muted-100);
     scale: 1.02;
     .small-label {
-      color: unset;
+    color: var(--clr-muted-100);
+    /* color: unset; */
     }
   }
 
@@ -948,7 +949,7 @@ h2, h3, h4, h5, h6 {
     font-size: 175%;
   }
   h5 {
-    color: var(--clr-muted-400);
+    color: var(--clr-muted-200);
     font-size: 80%;
   }
 
@@ -1094,14 +1095,14 @@ Overriding the style when generating screenshots
     }
 
     a:link, a:visited {
-      color: var(--clr-muted-400) !important;
+      color: var(--clr-muted-300) !important;
     }
 
     .title {
       font-size: 94%;
       height: unset;
       font-family: Raleway, sans-serif;
-      color: var(--clr-muted-400);
+      color: var(--clr-muted-300);
       font-weight: 700;
       padding: .5rem;
       text-shadow: none;
@@ -1172,7 +1173,7 @@ Overriding the style when generating screenshots
 .social-links {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   height: 3rem;
   gap: 1.25em;
   padding-block: 1.5em;

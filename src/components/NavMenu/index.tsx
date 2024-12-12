@@ -77,18 +77,19 @@ const NavMenu = ({
     const hasButton = target.closest("button");
     const isInsideMenu = target.closest(".NavigationMenuRoot");
     const isInsideViewPort = target.closest(".ViewportPosition");
-    const isInsideHeader = target.closest("header");
-    const isInsideMain = target.closest("main");
+    // const isInsideHeader = target.closest("header");
+    // const isInsideMain = target.closest("main");
 
     // const currClasses = [...currentTarget.classList.values()].sort().join(", ");
     const targetClasses = [...target.classList.values()].sort().join(", ");
-    const clickedViewportBackground = isInsideViewPort && targetClasses.includes("Viewport");
+    const clickedViewportBackground =
+      isInsideViewPort && targetClasses.includes("Viewport");
     // console.log(`${lbl} %o`, {targetClasses, clickedViewportBackground, hasLink, isInsideMenu, isInsideViewPort, isInsideHeader, isInsideMain, target});
 
     if (isInsideMenu) return true;
     // direct click into ViewportPosition bg element
     if (clickedViewportBackground) return setCurrentPanel("");
-    
+
     if (!isInsideViewPort) {
       // close it
       return setCurrentPanel("");
@@ -117,10 +118,11 @@ const NavMenu = ({
 
     // check if we clicked directly on the ViewportPosition element
     //   (which is a background container and should not trigger a panel close)
-  }
-  
+  };
+
   useEffect(() => {
-    const handleViewPortClick = (e: Event) => handleMenuPageClick("ViewportPosition", e);
+    const handleViewPortClick = (e: Event) =>
+      handleMenuPageClick("ViewportPosition", e);
     const handleBodyClick = (e: Event) => handleMenuPageClick("Body", e);
     const vPort = document.querySelector(".ViewportPosition");
 
@@ -134,13 +136,24 @@ const NavMenu = ({
     return () => {
       vPort?.removeEventListener("click", handleViewPortClick);
       document.body.removeEventListener("click", handleBodyClick);
-    }
+    };
   }, [currentPanel]);
-
 
   const togglePanel = (panel: string) => {
     setCurrentPanel(currentPanel === panel ? "" : panel);
-  }
+  };
+
+  const _changeToPanel = (panel: string) => {
+    if (currentPanel === panel) return;
+    if (currentPanel.length >= 1) {
+      setCurrentPanel(panel);
+    }
+  };
+  const changeToPanel = throttle(_changeToPanel, 50, {
+    leading: false,
+    trailing: true,
+  });
+  //    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
 
   const noOpChange = (value: string) => {
     // NO OP - don't let component change panel open/close state!!!
@@ -154,13 +167,22 @@ const NavMenu = ({
       delayDuration={300}
       onClick={safeDetectViewportOffset}
       value={currentPanel}
+      onMouseEnter={(e) => console.log("MouseEnter", e.currentTarget, e.target)}
     >
       <NavigationMenu.List className="NavigationMenuList">
-        <NavigationMenu.Item value="#search" className="searchToggle">
+        <NavigationMenu.Item
+          value="#search"
+          className="searchToggle"
+          onClick={() => togglePanel("")}
+        >
           <SearchButton />
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="home" onClick={() => togglePanel("home")}>
+        <NavigationMenu.Item
+          value="home"
+          onClick={() => togglePanel("home")}
+          onMouseEnter={() => changeToPanel("home")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -266,7 +288,11 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="projects" onClick={() => togglePanel("projects")}>
+        <NavigationMenu.Item
+          value="projects"
+          onClick={() => togglePanel("projects")}
+          onMouseEnter={() => changeToPanel("projects")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Projects <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -346,7 +372,11 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="about"  onClick={() => togglePanel("about")}>
+        <NavigationMenu.Item
+          value="about"
+          onClick={() => togglePanel("about")}
+          onMouseEnter={() => changeToPanel("about")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             About <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>

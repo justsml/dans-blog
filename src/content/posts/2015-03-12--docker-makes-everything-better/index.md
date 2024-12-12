@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Docker === Love"
 subTitle: Docker can do :allthethings:!
 date: 2015-02-26

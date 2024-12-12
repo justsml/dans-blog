@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title: "Using Environment Variables in NodeJS"
 subTitle: Using `dotenv`
 date: 2018-11-13

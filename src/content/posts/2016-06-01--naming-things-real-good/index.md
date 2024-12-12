@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title:  "Naming things good"
 subTitle: "Naming stuff: Object Oriented Basics"
 date: 2016-06-01
