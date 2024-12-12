@@ -16,7 +16,7 @@ cover_icon: aws-cloud--city-focus-square.webp
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
-<p class="inset">Ready to become a cloud storage wizard? ☁️🧙‍♂️</p>
+<p class="inset">Are you down to cloud?!</p>
 
 Dive deep into AWS Storage Services! This quiz will test your knowledge of S3, DynamoDB, Aurora, RDS, ElastiCache, and more. From best practices to tricky gotchas, we'll explore the cloud storage landscape.
 
@@ -196,32 +196,32 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={5}
-  group="DynamoDB"
+  group="DynamoDB: Batch!"
   title="Batch Operations"
   options={[
-    { text: "BatchGetItem", isAnswer: true },
-    { text: "BatchPutItem" },
-    { text: "BatchUpdateItem" },
-    { text: "BatchDeleteItem" },
-    { text: "BatchWriteItem" },
+    { text: "1", isAnswer: true },
+    { text: "10" },
+    { text: "25", hint: "Close..." },
+    { text: "50" },
+    { text: "100", hint: "Thinking of GetItem limit?" },
+    { text: "Unlimited when streaming" },
     { text: "None of the above" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    Which of these operations reduces # of network round trips?
+    What's the maximum number of documents the DynamoDB SDK can send per HTTP `PUT` request?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-  DynamoDB supports **BatchGetItem** for retrieving multiple items in a single request. This operation is useful for reducing the number of round trips to the database.
+  The DynamoDB Clients are essentially all wrappers for the REST API.
+  
+  
 
-  **BatchPutItem** is used for inserting multiple items in a single request.
+  will accept **25** documents per HTTP `PUT` request. This is the default limit for batch operations.
 
-  **BatchUpdateItem** and **BatchDeleteItem** are not supported by DynamoDB. To update or delete multiple items, you must make individual requests for each item.
-
-  [DynamoDB Batch Operations](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/batch-operation.html)
   </div>
   </slot>
 </Challenge>
