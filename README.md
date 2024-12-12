@@ -4,36 +4,83 @@
 
 ## TODO
 
+### Design & Improvements
+
+- [x] Fix the color scheme: make darker.
+- [x] Update style of social media icons in footer.
+- [ ] Stop using REM for layout (padding)
+- [ ] Experiment: Use Astro's `client:load` to lazy load Quiz `<Challenge>`'s past the first `X`.
+- [ ] Add sign-up form to footer.
+
+### Performance & LightHouse Scores
+
+- [ ] Re-organize CSS to reduce unused styles.
+- [ ] Minimize JS not needed on load.
+- [ ] Revisit lazy-loading nav menu.
+
+### Content
+
+- [ ] Add page listing my OSS contributions over the years.
+- [ ] HOW TO: Comments Component
+- [ ] HOW TO: Free local search
+
+### Quizzes
+
+- [ ] Add AWS Content
+  - [ ] Storage
+  - [ ] Compute
+  - [ ] Networking
+  - [ ] Security
+  - [ ] Best practices, gotchas & trivia
+- [ ] Add GCP Content
+- [ ] Add Terraform Content
+- [ ] Add Kubernetes Content
+- [ ] Add Docker Content
+- [ ] Add Git Actions Content
+
+### Features
+
+- [ ] Link headers
+- [ ] rehype-mermaid
+- [ ] [Build an interactive "Favorite Tech Explorer"](https://www.notion.so/dansthoughts/My-Favorite-Tech-Stacks-Solutions-13108c5949488056aac1cecbe0a306a7?pvs=4)
+- [ ] Add WebMentions support
+- [ ] Add an "About Author" on Posts?
+
+### Screenshots
+
+- [ ] Add "social-banner" scaled output of question cards.
+- [ ] Capture Full Home Page screens to compare in a later design article.
+- [ ] Investigate recording animated gifs of the quizzes in action.
+
+### Misc
+
+- [ ] Add/update ld+json / JSON-LD
+- [ ] Add Video page
+
 - [x] Add comments
 - [x] Fine tune: crank lighthouse score
 - [x] Add Link to Category on Posts
-- [ ] Stop using REM for layout (padding)
 - [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
 - [x] Add Mastodon & Bsky links to footer.
 - [x] Support disabling styles in `<Gist />` component.
 - [x] Add `theme-color` meta tag
 
-- Add Scroll CSS Effects:
-  - [ ] Adjust Quiz box-shadow using scroll position
+- Add CSS Effects:
+  - [x] Adjust Quiz box-shadow using scroll position
   - [ ] Look into scroll snap for each quiz.
+  - [ ] Change the article card hover effect: https://codepen.io/thebabydino/pen/WNVPdJg?editors=0100
 
 - [x] Update Quiz UI, 
   - [x] Make Question's Linkable
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
   - [x] Get rid of cliche icons abuse.
-- [ ] Add/update ld+json / JSON-LD
 - [x] Add Quizzes to the Menu
 - [x] Publish next batch of quizzes
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
 - [x] Disable posthog locally
-- [ ] Add Video page
 - [x] Add search
-- Publish:
-  - [ ] Comments Component
-  - [ ] Free local search
-  - [ ] Newsletter
 
-## Features
+## UI/UX
 
 - [x] Add new nav
   - [ ] Add tags
@@ -48,9 +95,6 @@
 - [x] Add about page
 - [x] Add OSS project list (in menu)
 - [x] Add contact page
-- [ ] Add Video page
-- [ ] Add search
-- [ ] Add newsletter
 
 Features:
 
