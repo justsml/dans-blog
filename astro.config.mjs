@@ -15,13 +15,18 @@ export default defineConfig({
   output: "static",
   trailingSlash: "ignore",
   build: {
+    
     format: "directory",
   },
   cacheDir: ".cache",
   site: "https://danlevy.net",
   markdown: {
   },
-  
+  vite: {
+    build: {
+      assetsInlineLimit: 2048, // 2kb - default is 4096
+    }
+  },
   integrations: [
     pagefind(),
     react({}),
@@ -32,7 +37,6 @@ export default defineConfig({
     }),
     mdx({
       // rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
-
     }),
     sitemap(),
     tailwind({

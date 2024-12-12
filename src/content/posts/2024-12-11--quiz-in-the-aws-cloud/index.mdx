@@ -1,10 +1,10 @@
 ---
 unlisted: false
-title: "Quiz: AWS Storage Services Deep Dive"
-subTitle: "Can you navigate the cloud storage maze?"
+title: "Quiz: 15 Questions on AWS Storage!"
+subTitle: "Can you navigate the cloud storage labyrinth?"
 label: AWS Storage
 category: Quiz
-subCategory: Cloud Computing
+subCategory: Cloud
 date: 2024-02-15
 modified: 2024-02-15
 tags: [quiz, aws, cloud, storage, databases, s3, dynamodb, rds, elasticache]
@@ -82,6 +82,42 @@ Get ready to prove your cloud expertise! 🚀
   Bad partition keys (like sequential IDs) can cause uneven data distribution and performance bottlenecks.
 
   [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Data Querying"
+  title="Searchability"
+  options={[
+    { text: "S3" },
+    { text: "RDS" },
+    { text: "Aurora" },
+    { text: "Neptune", isAnswer: true },
+    { text: "DynamoDB" },
+    { text: "CloudWatch" },
+    { text: "CloudTrail" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these real services CANNOT ❌ perform **row-level column** queries?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  This one is a little tricky.
+  
+  1. Not many folks know S3 objects can be queried (w/ Athena.) Supports several formats, including CSV, JSON+LD, and Parquet.
+  2. RDS, Aurora, and DynamoDB are traditional databases that support SQL-like queries.
+  3. CloudWatch and CloudTrail are monitoring services, however they both support querying logs. Output logs in JSON to get granular column-level filtering.
+
+  Graph Databases like Neptune and Neo4j would be pointless if you couldn't search their data using logical expressions. So, why is it the answer?
+  
+  In the world of Graph Databases, you're **not querying rows and columns**, you're querying **vertices and edges.** This hints at a fundamentally different way of thinking about data. Using a term like "row" instead of "vertex" in the wrong context _could_ reveal your lack of experience to an expert or interviewer. 😅
   </div>
   </slot>
 </Challenge>
@@ -175,6 +211,10 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
+  In virtually ALL systems, embracing a "least privilege" design is a key way to harden & future proof. Trying to lock down an existing system is about as difficult as moving an entire office building to a new foundation.
+  
+  S3 buckets are no exception. To apply the principle of least privilege, start with no permissions and grant only the necessary access. Use IAM roles and policies to control access and regularly audit bucket permissions.
+  
   Security best practices:
   - Apply least privilege principle
   - Start with no permissions
