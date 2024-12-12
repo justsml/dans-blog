@@ -1,15 +1,17 @@
 ---
 unlisted: false
-title: "Quiz: 15 Questions on AWS Storage!"
-subTitle: "Can you navigate the cloud storage labyrinth?"
+title: "Quiz: AWS Storage: 20 Questions!"
+subTitle: "Can you navigate the labyrinth?"
 label: AWS Storage
 category: Quiz
 subCategory: Cloud
-date: 2024-02-15
-modified: 2024-02-15
+date: 2024-12-11
+modified: 2024-12-13
 tags: [quiz, aws, cloud, storage, databases, s3, dynamodb, rds, elasticache]
-cover_full_width: aws-services-landscape.webp
-cover_mobile: aws-services-storage-square.webp
+
+cover_full_width: aws-cloud--city-focus-wide.webp
+cover_mobile: aws-cloud--city-focus-square.webp
+cover_icon: aws-cloud--city-focus-square.webp
 ---
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
@@ -25,23 +27,25 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={0}
-  group="S3 Basics"
-  title="S3 Storage Classes"
+  group="Warmup"
+  title="S3 Trivia"
   options={[
-    { text: "Standard, Infrequent Access, Glacier", isAnswer: true },
-    { text: "Hot, Warm, Cold" },
-    { text: "Primary, Secondary, Backup" },
-    { text: "Read, Write, Archive" }
+    { text: "Server Storage v3" },
+    { text: "Sassy Storage Service" },
+    { text: "Simple Storage Service", isAnswer: true },
+    { text: "Simple Synchronized Store" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    What are the primary AWS S3 storage classes?
+    What does the name `S3` mean?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
+  S3 stands for **Simple Storage Service**. It's a scalable object storage service designed for large-scale data storage.
+
   AWS S3 offers multiple storage classes:
   - Standard: For frequently accessed data
   - Infrequent Access (IA): Lower cost for less frequent access
@@ -57,29 +61,24 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={1}
-  group="DynamoDB"
-  title="DynamoDB Partition Key Gotcha"
+  group="Schema less"
+  title="DynamoDB"
   options={[
-    { text: "Always use a unique identifier" },
-    { text: "Distribute data evenly", isAnswer: true },
-    { text: "Minimize number of keys" },
-    { text: "Use sequential numbers" }
+    { text: "Dynamic partition keys" },
+    { text: "All columns are untyped" },
+    { text: "Store arbitrary properties", isAnswer: true },
+    { text: "Relies on RDS for schema support" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    What's the primary consideration when choosing a DynamoDB partition key?
+    What does it mean when DynamoDB is described as "schema-less"?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-  The partition key should distribute data evenly across partitions to:
-  - Prevent "hot" partitions
-  - Optimize read/write performance
-  - Avoid throttling
-
-  Bad partition keys (like sequential IDs) can cause uneven data distribution and performance bottlenecks.
+  DynamoDB is considered "schema-less" because it allows you to store arbitrary properties in items without a predefined schema.
 
   [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
   </div>
@@ -88,7 +87,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={1}
+  index={2}
   group="Data Querying"
   title="Searchability"
   options={[
@@ -109,14 +108,12 @@ Get ready to prove your cloud expertise! 🚀
 
   <slot name="explanation">
   <div className="explanation">
-  This one is a little tricky.
-  
+  This one is a little tricky. It assumes you've got operator-level experience with some of these services.
+
   1. Not many folks know S3 objects can be queried (w/ Athena.) Supports several formats, including CSV, JSON+LD, and Parquet.
   2. RDS, Aurora, and DynamoDB are traditional databases that support SQL-like queries.
   3. CloudWatch and CloudTrail are monitoring services, however they both support querying logs. Output logs in JSON to get granular column-level filtering.
 
-  Graph Databases like Neptune and Neo4j would be pointless if you couldn't search their data using logical expressions. So, why is it the answer?
-  
   In the world of Graph Databases, you're **not querying rows and columns**, you're querying **vertices and edges.** This hints at a fundamentally different way of thinking about data. Using a term like "row" instead of "vertex" in the wrong context _could_ reveal your lack of experience to an expert or interviewer. 😅
   </div>
   </slot>
@@ -124,69 +121,36 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={2}
+  index={3}
   group="RDS"
   title="Multi-AZ Deployment"
   options={[
+    { text: "Reduces storage costs" },
+    { text: "Solves the Egress Problem" },
     { text: "Increases read performance" },
     { text: "Provides automatic failover", isAnswer: true },
-    { text: "Reduces storage costs" },
-    { text: "Improves network latency" }
+    { text: "Improves geo-distributed traffic" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    What is the primary benefit of RDS Multi-AZ deployment?
+    What is the **primary** benefit of RDS Multi-AZ deployment?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
+  Availability Zones (AZs) are distinct data centers **within a region.** RDS Multi-AZ deployment provides automatic failover to a standby replica in a *nearby* AZ.
+
   Multi-AZ deployment:
   - Provides automatic failover
-  - Creates a synchronous standby replica
   - Increases database availability
+  - Creates a synchronous standby replica
   - Minimizes downtime during infrastructure failures
 
-  It's different from read replicas, which are used for scaling read operations.
+  Don't confuse Multi-AZ deployment with Read Replicas, which are used for scaling read operations.
 
-  [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/)
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={3}
-  group="ElastiCache"
-  title="Caching Strategy"
-  options={[
-    { text: "Always cache everything" },
-    { text: "Never use caching" },
-    { text: "Cache frequently accessed, rarely changing data", isAnswer: true },
-    { text: "Cache only large datasets" }
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's the best practice for using ElastiCache?
-  </div>
-  </slot>
-
-  <slot name="explanation">
-  <div className="explanation">
-  Optimal caching strategy:
-  - Cache frequently accessed data
-  - Prefer data that doesn't change often
-  - Consider cache invalidation strategies
-  - Monitor cache hit/miss rates
-
-  Avoid caching:
-  - Rapidly changing data
-  - Rarely accessed information
-  - Large, infrequently used datasets
-
-  [ElastiCache Best Practices](https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/BestPractices.html)
+  {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
   </div>
   </slot>
 </Challenge>
@@ -194,6 +158,78 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={4}
+  group="Spatial Awareness"
+  title="DB Capabilities"
+  options={[
+    { text: "RDS" },
+    { text: "Aurora" },
+    { text: "DynamoDB" },
+    { text: "ElastiCache" },
+    { text: "OpenSearch" },
+    { text: "Redshift" },
+    { text: "Neptune", isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which data service DOES NOT ❌ support **geo spatial/proximity** searches?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  DynamoDB supports limited **geo spatial** queries using its `Geohash` indexing.
+  
+  RDS and Aurora support **geo spatial** queries using the `ST_Geometry`/`ST_Geography` data type.
+
+  OpenSearch (formerly Elasticsearch) is primarily a textual search engine, but it can be used for **geo spatial** queries using the `geo_point` data type.
+
+  Neptune is a graph database, so it technically supports **geo spatial** data - as long as its modeled using graph vertices and edges. It lacks native **PROXIMITY** queries, though it can usually be achieved by syncing to a GIS capable database where you can perform the queries.
+
+  If you guessed ElastiCache, it's based on Redis which added support for **geo spatial** queries in v3.2 (2016).
+  </div>
+  </slot>
+</Challenge>
+
+{/* Add question about Dynamo Batch operations */}
+
+<Challenge
+  client:load
+  index={5}
+  group="DynamoDB"
+  title="Batch Operations"
+  options={[
+    { text: "BatchGetItem", isAnswer: true },
+    { text: "BatchPutItem" },
+    { text: "BatchUpdateItem" },
+    { text: "BatchDeleteItem" },
+    { text: "BatchWriteItem" },
+    { text: "None of the above" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of these operations reduces # of network round trips?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  DynamoDB supports **BatchGetItem** for retrieving multiple items in a single request. This operation is useful for reducing the number of round trips to the database.
+
+  **BatchPutItem** is used for inserting multiple items in a single request.
+
+  **BatchUpdateItem** and **BatchDeleteItem** are not supported by DynamoDB. To update or delete multiple items, you must make individual requests for each item.
+
+  [DynamoDB Batch Operations](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/batch-operation.html)
+  </div>
+  </slot>
+</Challenge>
+  
+  
+<Challenge
+  client:load
+  index={5}
   group="S3 Security"
   title="S3 Bucket Policy"
   options={[
@@ -212,9 +248,9 @@ Get ready to prove your cloud expertise! 🚀
   <slot name="explanation">
   <div className="explanation">
   In virtually ALL systems, embracing a "least privilege" design is a key way to harden & future proof. Trying to lock down an existing system is about as difficult as moving an entire office building to a new foundation.
-  
+
   S3 buckets are no exception. To apply the principle of least privilege, start with no permissions and grant only the necessary access. Use IAM roles and policies to control access and regularly audit bucket permissions.
-  
+
   Security best practices:
   - Apply least privilege principle
   - Start with no permissions
@@ -231,7 +267,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={5}
+  index={6}
   group="Aurora"
   title="Aurora Serverless"
   options={[
@@ -264,7 +300,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={6}
+  index={7}
   group="DynamoDB"
   title="Provisioned vs On-Demand Capacity"
   options={[
@@ -300,7 +336,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={7}
+  index={8}
   group="S3 Performance"
   title="S3 Performance Optimization"
   options={[
@@ -333,7 +369,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={8}
+  index={9}
   group="RDS Backup"
   title="RDS Backup Strategy"
   options={[
@@ -369,7 +405,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={9}
+  index={10}
   group="ElastiCache"
   title="Redis vs Memcached"
   options={[
@@ -405,7 +441,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={10}
+  index={11}
   group="DynamoDB Indexes"
   title="Global Secondary Index"
   options={[
@@ -438,7 +474,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={11}
+  index={12}
   group="S3 Lifecycle"
   title="S3 Lifecycle Management"
   options={[
@@ -470,7 +506,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={12}
+  index={13}
   group="Aurora Scaling"
   title="Aurora Read Scaling"
   options={[
@@ -503,7 +539,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={13}
+  index={14}
   group="RDS Security"
   title="RDS Encryption"
   options={[
@@ -535,7 +571,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={14}
+  index={15}
   group="DynamoDB Streams"
   title="DynamoDB Streams Purpose"
   options={[
@@ -567,7 +603,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={15}
+  index={16}
   group="S3 Transfer"
   title="Large File Transfer"
   options={[
