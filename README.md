@@ -6,11 +6,14 @@
 
 ### Design & Improvements
 
+- [ ] Stop using REM for layout (padding)
+
 - [x] Fix the color scheme: make darker.
 - [x] Update style of social media icons in footer.
-- [ ] Stop using REM for layout (padding)
+- [ ] Add LMS-style data fields to `<QuizUI>` or `<Challenge>`: Learning Objective(s), Prerequisites, Estimated Time, Difficulty Level, Standards Alignment, Learning Outcomes, etc.
 - [ ] Experiment: Use Astro's `client:load` to lazy load Quiz `<Challenge>`'s past the first `X`.
 - [ ] Add sign-up form to footer.
+- [ ] [Animate Nav Link Underline on Hover](https://css-irl.info/animating-underlines/)
 
 ### Performance & LightHouse Scores
 
@@ -82,6 +85,7 @@
 
 ### Screenshots
 
+- [ ] Capture Question 'raw' Text for ALT text. (Save alongside the question's image.)
 - [ ] Add "social-banner" scaled output of question cards.
 - [ ] Capture Full Home Page screens to compare in a later design article.
 - [ ] Investigate recording animated gifs of the quizzes in action.
