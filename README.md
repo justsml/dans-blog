@@ -66,7 +66,7 @@
 - [x] Add `theme-color` meta tag
 
 - Add CSS Effects:
-  - [ ] Adjust Quiz box-shadow using scroll position
+  - [x] Adjust Quiz box-shadow using scroll position
   - [ ] Look into scroll snap for each quiz.
   - [ ] Change the article card hover effect: https://codepen.io/thebabydino/pen/WNVPdJg?editors=0100
 
