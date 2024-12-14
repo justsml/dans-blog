@@ -7,6 +7,21 @@ declare global {
   }
 }
 
+export type OssContribution = {
+  repo: string;
+  renamed?: string;
+  descriptionOverride: string;
+  notes: string;
+  date_created?: Date;
+  date_updated?: Date;
+  pull_request_url?: string;
+  issue_url?: string;
+  reaction_count?: number;
+  star_count?: number;
+  comment_count?: number;
+
+};
+
 
 export type ArticlePost = {
   id: string;

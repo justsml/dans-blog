@@ -1,5 +1,5 @@
 // autoFit.ts
-const REM_TO_PX = 16;
+// const REM_TO_PX = 16;
 export const reduceFontSizeOnOverflow = (
   el: HTMLElement,
   reduceByFraction: number = 0.9,
@@ -38,7 +38,7 @@ export interface AutoFitOptions {
   scrollParent?: HTMLElement | string;
 }
 
-function getLongestLineSize(code: HTMLPreElement | HTMLElement) {
+function _getLongestLineSize(code: HTMLPreElement | HTMLElement) {
   if (code.tagName !== "PRE")
     throw new Error("AutoFit: Element must be a <pre> tag");
   const lines: HTMLElement[] = [
@@ -127,7 +127,7 @@ export function autoFit(
     const widthDiff = getWidthDiff(el);
     const heightDiff = getHeightDiff(el);
 
-    const fits = (el = scrollContainer!): boolean =>
+    const fits = (_el = scrollContainer!): boolean =>
       steps < stepLimit && heightDiff.value === 0 && widthDiff.value === 0;
     // if (widthDiff.percent > 100 || getHeightDiff(el).percent > 100) {
     //   console.log("Element too large:", getWidthDiff(el), getHeightDiff(el));

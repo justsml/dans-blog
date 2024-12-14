@@ -16,7 +16,7 @@ import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import { useCallback, useEffect, useState } from "react";
-import { SearchButton } from "../search/SearchButton";
+import { SearchButton } from "../Search/SearchButton";
 import "./index.css";
 
 const NavMenu = ({

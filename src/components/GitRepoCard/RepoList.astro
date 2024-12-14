@@ -1,0 +1,24 @@
+---
+import { ossContributions } from "../../shared/ossData.ts";
+import { RepoCard } from "./RepoCard.tsx";
+import { GITHUB_HANDLE } from "../../consts.ts";
+import { makeLogs } from "../LogHelper.ts";
+import "./GitContribution.css";
+
+const log = makeLogs("ossContributions");
+
+log("ossContributions", ossContributions.length);
+---
+
+<h3>My Open Source Contributions ({ossContributions.length})</h3>
+<section class="contrib-grid">
+  {
+    ossContributions.map((contrib) => (
+      <RepoCard
+        contribution={contrib}
+        author={GITHUB_HANDLE}
+        client:idle
+      />
+    ))
+  };
+</section>

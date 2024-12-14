@@ -2,7 +2,6 @@
 // cwebp -q 90 "$file" -o "${file%.*}.webp"
 
 import { exec } from "child_process";
-import { rmSync } from "fs";
 import { rm } from "fs/promises";
 import { promisify } from "util";
 
