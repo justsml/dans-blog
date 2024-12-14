@@ -5,8 +5,8 @@ import { ossContributions } from "../../shared/ossData.ts";
 import { RepoCard } from "./RepoCard.tsx";
 import { GITHUB_HANDLE } from "../../consts.ts";
 import { makeLogs } from "../LogHelper.ts";
-import { GithubSearch } from "../../shared/githubSearch.ts";
-import ms from "ms";
+import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
+import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
 
 const { GITHUB_TOKEN } = process.env;
@@ -16,13 +16,6 @@ if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
 
 const log = makeLogs("ossContributions");
 
-const stats = new GithubSearch({
-  api_key: GITHUB_TOKEN!,
-  per_page: 100,
-  ttl_seconds: ms(`2d`),
-  exit_on_error: true,
-});
-
 log("ossContributions", ossContributions.length);
 ---
 
@@ -30,12 +23,16 @@ log("ossContributions", ossContributions.length);
 <section class="contrib-grid">
   {
     ossContributions.map(async (contrib) => {
-      const pr = await stats
-        .pullRequests(contrib.repo, `author:${GITHUB_HANDLE}`)
-        .catch((err) => {
-          console.error("Failed to pull requests: err", err);
-          return { items: [] } as unknown as SearchIssuesResponse;
-        });
+      const targetRepo = contrib.renamed ?? contrib.repo;
+      log("targetRepo", targetRepo);
+      if (!_isValidRepo(targetRepo)) {
+        log("Invalid Repo", targetRepo);
+        return null;
+      }
+      const pr = await fetchUserPullRequests(
+        targetRepo,
+        GITHUB_HANDLE,
+      );
       log("pr", pr);
 
       return (

@@ -12,6 +12,7 @@ const log = makeLogs(`ghSearch`);
 
 /**
  * Note: Constructor Wrapper
+ * @deprecated
  */
 export default function _githubSearch(
   this: GithubSearch,
@@ -30,6 +31,10 @@ type GitHubCardOptions = {
   queue_timeout?: number;
 };
 
+/**
+ * Note: Class Wrapper
+ * @deprecated
+ */
 export class GithubSearch {
   private octokit: Octokit;
   private localCache: LocalCache | null = null;

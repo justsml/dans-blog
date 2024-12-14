@@ -1,6 +1,7 @@
-import createLocalCache from "./localCache.ts";
 import { graphql } from "@octokit/graphql";
+import createLocalCache from "./localCache.ts";
 import { makeLogs } from "../components/LogHelper.ts";
+import { UserPullRequestData } from "../types.ts";
 
 const log = makeLogs(`gitQlApi`);
 
@@ -8,7 +9,8 @@ const DEFAULT_TTL_MS = 1000 * 60 * 60 * 24 * 1; // 1 day
 
 let cache: ReturnType<typeof createLocalCache>;
 
-const makeCacheKey = (repo: string, username: string) => `pr:${repo}:${username}`;
+const makeCacheKey = (repo: string, username: string) =>
+  `pr:${repo}:${username}`;
 
 /**
  * Call to ensure cache is initialized
@@ -16,32 +18,35 @@ const makeCacheKey = (repo: string, username: string) => `pr:${repo}:${username}
 const initCache = async () => {
   if (!cache) cache = createLocalCache(".data/github-repo-cache.db");
   return cache;
-}
+};
 
-export const isValidRepo = (repo: string) =>
+export const _isValidRepo = (repo: string) =>
   /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}\/[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(
     repo,
   );
 function validateArgs(repo: string, username: string) {
-  if (!isValidRepo(repo)) throw new Error("Invalid repository name");
+  if (!_isValidRepo(repo)) throw new Error("Invalid repository name");
   if (!username) throw new Error("Invalid username");
   return { repo, username };
 }
 
-async function fetchUserPullRequests(repo: `${string}/${string}`, username: string) {
+export async function fetchUserPullRequests(
+  repo: string,
+  username: string,
+): Promise<UserPullRequestData> {
   // start Cache code
   if (!cache) cache = await initCache();
   const key = makeCacheKey(repo, username);
   const cached = await cache.get(key);
-  if (cached) return cached;
+  if (cached) return cached as UserPullRequestData;
   // end Cache code
 
-  validateArgs(repo, username);  
+  validateArgs(repo, username);
 
   const [owner, name] = repo.split("/");
   const searchQuery = `repo:${owner}/${name} is:pr author:${username}`;
 
-  const result = await graphql({
+  const result = (await graphql({
     query: `
       query ($owner: String!, $name: String!, $searchQuery: String!) {
         repository(owner: $owner, name: $name) {
@@ -104,21 +109,23 @@ async function fetchUserPullRequests(repo: `${string}/${string}`, username: stri
     headers: {
       authorization: `token ${process.env.GITHUB_TOKEN}`,
     },
-  }) as unknown;
+  })) as unknown;
 
-  log('gql result: %o', result);
-  if (!result || typeof result !== 'object') throw new Error("No data returned from GitHub API");
-  if (!("repository" in result)) throw new Error("No repository data returned from GitHub API");
-  if (!("search" in result)) throw new Error("No search data returned from GitHub API");
+  log("gql result: %o", result);
+  if (!result || typeof result !== "object")
+    throw new Error("No data returned from GitHub API");
+  if (!("repository" in result))
+    throw new Error("No repository data returned from GitHub API");
+  if (!("search" in result))
+    throw new Error("No search data returned from GitHub API");
 
   const data = simplifyPullsResponse(result);
-  if (cache)
-    await cache.set(key, data, { ttlMs: DEFAULT_TTL_MS });
+  if (cache) await cache.set(key, data, { ttlMs: DEFAULT_TTL_MS });
 
   return data;
 }
 
-function simplifyPullsResponse(response: any) {
+function simplifyPullsResponse(response: any): UserPullRequestData {
   const { repository, search } = response;
 
   // Flatten repository details
@@ -149,20 +156,20 @@ function simplifyPullsResponse(response: any) {
     reviews: pr.reviews.totalCount,
     mergedBy: pr.mergedBy?.login || null,
     reviewRequests: pr.reviewRequests.nodes.map((req: any) => ({
-      reviewer: req.requestedReviewer?.login || req.requestedReviewer?.name || null,
+      reviewer:
+        req.requestedReviewer?.login || req.requestedReviewer?.name || null,
     })),
   }));
 
   return {
     repository: repoDetails,
+    pullCount: pullRequests.length,
     pullRequests,
   };
 }
 
-
-console.log("pr: moby/moby %o", await fetchUserPullRequests("moby/moby", "justsml"));
-console.log("pr: remix-run/react-router %o", await fetchUserPullRequests("remix-run/react-router", "justsml"));
-
+// console.log("pr: moby/moby %o", await fetchUserPullRequests("moby/moby", "justsml"));
+// console.log("pr: remix-run/react-router %o", await fetchUserPullRequests("remix-run/react-router", "justsml"));
 
 // console.log("commits: moby/moby %o", await fetchUserCommits("moby/moby", "justsml@gmail.com"));
 // console.log("commits: remix-run/react-router %o", await fetchUserCommits("remix-run/react-router", "justsml@gmail.com"));

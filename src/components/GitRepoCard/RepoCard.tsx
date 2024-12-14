@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Contribution, SearchIssuesResponse } from "../../types.ts";
+import type { Contribution, UserPullRequestData } from "../../types.ts";
 
 // const githubSearch = new GithubSearch({
 //   per_page: 40,
@@ -12,12 +12,12 @@ export const RepoCard = ({
 }: {
   author: string;
   contribution: Contribution;
-  defaultPullData?: SearchIssuesResponse 
+  defaultPullData?: UserPullRequestData 
 }) => {
   const { repo } = c;
 
   // const [contributions, setContributions] = useState(null);
-  const prList = pr?.items ?? [];
+  const prList = pr?.pullRequests ?? [];
 
   // const [repoName, setRepoName] = useState<string>(c.repo);
   // const [description, setDescription] = useState<string>(c.description_override);
@@ -26,7 +26,7 @@ export const RepoCard = ({
   // const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
   
   // Client side
-  const [repoData, _setRepoData] = useState<SearchIssuesResponse | undefined>(pr);
+  const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(pr);
   // useEffect(() => {
   //   // Client-side
   //   githubSearch
@@ -47,7 +47,7 @@ export const RepoCard = ({
   return (
     <article style={styles.card} className="repo-card">
       <h2 style={styles.repoName} className="repo-name">
-      <span className="icon-github-octacat w-2 h-2"></span>
+        <span className="icon-github-octacat w-2 h-2"></span>
         <a
           href={`https://github.com/${repo}`}
           target="_blank"
@@ -57,7 +57,8 @@ export const RepoCard = ({
           {repo}
         </a>
       </h2>
-      <p style={styles.description}>{c.description_override ?? `[could not load description for ${repo}]`}</p>
+      <p style={styles.description} className="repo-inner-card">{c.description_override ?? `[could not load description for ${repo}]`}</p>
+      <p style={styles.description} className="repo-inner-card">{c.notes}</p>
       <div style={styles.stats}>
         <span style={styles.stat}>
           <span className="icon-count"></span>

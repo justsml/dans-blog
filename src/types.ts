@@ -44,6 +44,39 @@ export type LocalCache<TData = unknown> = {
   close: () => void;
 };
 
+export type UserPullRequestData = {
+  repository: {
+    name: string;
+    description: string;
+    owner: string;
+    forks: number;
+    stars: number;
+    watchers: number;
+    openIssues: number;
+    primaryLanguage: string | null;
+  };
+  pullCount: number;
+  pullRequests: Array<{
+    title: string;
+    url: string;
+    state: string;
+    number: number;
+    author: string;
+    createdAt: string;
+    mergedAt: string | null;
+    additions: number;
+    deletions: number;
+    changedFiles: number;
+    comments: number;
+    reviews: number;
+    mergedBy: string | null;
+    reviewRequests: Array<{
+      reviewer: string | null;
+    }>;
+  }>;
+};
+
+
 export type ArticlePost = {
   id: string;
   body?: string;
