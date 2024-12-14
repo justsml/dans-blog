@@ -70,7 +70,7 @@ const NavMenu = ({
     };
   }, []);
 
-  const handleMenuPageClick = (lbl: string, e: Event) => {
+  const handleMenuPageClick = (_lbl: string, e: Event) => {
     const target = e.target as HTMLElement;
     // const currentTarget = e.currentTarget as HTMLElement;
     const hasLink = target.closest("a");
@@ -154,11 +154,6 @@ const NavMenu = ({
     trailing: true,
   });
   //    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
-
-  const noOpChange = (value: string) => {
-    // NO OP - don't let component change panel open/close state!!!
-    // console.log("noOpChange", value);
-  };
 
   return (
     <NavigationMenu.Root

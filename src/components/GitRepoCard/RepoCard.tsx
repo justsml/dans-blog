@@ -1,40 +1,44 @@
-import { useState, useEffect } from "react";
-import { GithubSearch } from "../../shared/githubSearch.ts";
-import { Contribution } from "../../types.ts";
+import { useState } from "react";
+import { Contribution, SearchIssuesResponse } from "../../types.ts";
+
+// const githubSearch = new GithubSearch({
+//   per_page: 40,
+// });
 
 export const RepoCard = ({
   contribution: c,
-  author,
+  defaultPullData: pr,
+  // author,
 }: {
-  contribution: Contribution;
   author: string;
+  contribution: Contribution;
+  defaultPullData?: SearchIssuesResponse 
 }) => {
   const { repo } = c;
 
   // const [contributions, setContributions] = useState(null);
-  // 
-  const [repoName, setRepoName] = useState<string>(c.repo);
-  const [description, setDescription] = useState<string>(c.description_override);
-  const [starCount, setStarCount] = useState<number>(c.star_count ?? 0);
-  const [forkCount, setForkCount] = useState<number>(c.reaction_count ?? 0);
-  const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
+  const prList = pr?.items ?? [];
+
+  // const [repoName, setRepoName] = useState<string>(c.repo);
+  // const [description, setDescription] = useState<string>(c.description_override);
+  // const [starCount, setStarCount] = useState<number>(c.star_count ?? 0);
+  // const [forkCount, setForkCount] = useState<number>(c.reaction_count ?? 0);
+  // const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
   
   // Client side
-  const [repoData, setRepoData] = useState<any>({});
-  useEffect(() => {
-      // GITHUB_TOKEN
-    // Client-side
-    const githubSearch = new GithubSearch(undefined);
-    githubSearch
-      .pullRequests(repo, `is:pull-request is:open author:${author}`)
-      .then((data) => {
-        setRepoData(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error("Error searching repo:", error);
-      });
-  }, [repo]);
+  const [repoData, _setRepoData] = useState<SearchIssuesResponse | undefined>(pr);
+  // useEffect(() => {
+  //   // Client-side
+  //   githubSearch
+  //     .pullRequests(repo, `is:pull-request is:closed author:${author}`)
+  //     .then((data) => {
+  //       setRepoData(data);
+  //       return data;
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error searching repo:", error);
+  //     });
+  // }, [repo]);
 
   if (!repoData) {
     return <div>Loading...</div>;
@@ -43,24 +47,37 @@ export const RepoCard = ({
   return (
     <article style={styles.card} className="repo-card">
       <h2 style={styles.repoName} className="repo-name">
+      <span className="icon-github-octacat w-2 h-2"></span>
         <a
           href={`https://github.com/${repo}`}
           target="_blank"
           rel="noopener noreferrer"
           style={styles.link}
         >
-          {repo ?? repoData.title}
+          {repo}
         </a>
       </h2>
-      <p style={styles.description}>{repoData.description}</p>
+      <p style={styles.description}>{c.description_override ?? `[could not load description for ${repo}]`}</p>
       <div style={styles.stats}>
         <span style={styles.stat}>
+          <span className="icon-count"></span>
+          {prList?.length}
+        </span>
+        <span style={styles.stat}>
+          <span className="icon-calendar"></span>
+          {c.date_created instanceof Date ? c.date_created.toDateString() : c.date_created}
+        </span>
+        <span style={styles.stat}>
+          <span className="icon-comment"></span>
+          {c.comment_count}
+        </span>
+        <span style={styles.stat}>
           <span className="icon-github-star"></span>
-          {repoData.stargazers_count}
+          {c.star_count}
         </span>
         <span style={styles.stat}>
           <span className="icon-github-octacat"></span>
-          {repoData.forks_count}
+          {c.reaction_count}
         </span>
       </div>
     </article>

@@ -1,3 +1,5 @@
+import type { Endpoints } from "@octokit/types";
+
 declare global {
   interface Window {
     __updateCounts: () => boolean;
@@ -6,6 +8,11 @@ declare global {
     ) => void;
   }
 }
+
+export type SearchCommitsResponse =
+  Endpoints["GET /search/commits"]["response"]["data"];
+export type SearchIssuesResponse = Endpoints["GET /search/issues"]["response"]["data"];
+
 
 /**
  * A repo which has been contributed to... By me.

@@ -1,12 +1,15 @@
 ---
+import type { SearchIssuesResponse } from "../../types.ts";
+
 import { ossContributions } from "../../shared/ossData.ts";
 import { RepoCard } from "./RepoCard.tsx";
 import { GITHUB_HANDLE } from "../../consts.ts";
 import { makeLogs } from "../LogHelper.ts";
-import "./GitContribution.css";
 import { GithubSearch } from "../../shared/githubSearch.ts";
 import ms from "ms";
-const {GITHUB_TOKEN} = process.env;
+import "./GitContribution.css";
+
+const { GITHUB_TOKEN } = process.env;
 
 if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
   throw new Error("GITHUB_TOKEN is required to fetch GitHub data");
@@ -27,16 +30,22 @@ log("ossContributions", ossContributions.length);
 <section class="contrib-grid">
   {
     ossContributions.map(async (contrib) => {
-      const pr = await stats.pullRequests(contrib.repo, `author:${GITHUB_HANDLE}`);
-      
-      
+      const pr = await stats
+        .pullRequests(contrib.repo, `author:${GITHUB_HANDLE}`)
+        .catch((err) => {
+          console.error("Failed to pull requests: err", err);
+          return { items: [] } as unknown as SearchIssuesResponse;
+        });
+      log("pr", pr);
+
       return (
         <RepoCard
           client:idle
+          defaultPullData={pr}
           contribution={contrib}
           author={GITHUB_HANDLE}
         />
-      )
+      );
     })
   };
 </section>

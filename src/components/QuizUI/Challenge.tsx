@@ -107,7 +107,7 @@ export default function Challenge({
 
     if (questionStore) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const _idx = questionStore.addQuestion({
+      questionStore.addQuestion({
         title,
         group,
         question,

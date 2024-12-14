@@ -68,7 +68,7 @@ async function autoScreenShot({
   url,
   fileName,
   // maxAgeSeconds = ms("3 months") / 1000,
-  maxAgeSeconds = 86_400 * 7, // 1 week
+  // maxAgeSeconds = 86_400 * 7, // 1 week
   failOnMissing,
   width = 880,
   height = 2650,

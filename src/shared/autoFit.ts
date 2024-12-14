@@ -38,21 +38,21 @@ export interface AutoFitOptions {
   scrollParent?: HTMLElement | string;
 }
 
-function _getLongestLineSize(code: HTMLPreElement | HTMLElement) {
-  if (code.tagName !== "PRE")
-    throw new Error("AutoFit: Element must be a <pre> tag");
-  const lines: HTMLElement[] = [
-    ...code.querySelectorAll(".ec-line"),
-  ] as HTMLElement[];
-  const longestLine = Array.from(lines).reduce(
-    (currentHigh, el) =>
-      el.innerText.length > currentHigh ? el.innerText.length : currentHigh,
-    0,
-  );
-  // const lines = code.innerText.split("\n");
-  // const longestLine = lines.reduce((a, b) => (a.length > b.length ? a : b));
-  return longestLine;
-}
+// function _getLongestLineSize(code: HTMLPreElement | HTMLElement) {
+//   if (code.tagName !== "PRE")
+//     throw new Error("AutoFit: Element must be a <pre> tag");
+//   const lines: HTMLElement[] = [
+//     ...code.querySelectorAll(".ec-line"),
+//   ] as HTMLElement[];
+//   const longestLine = Array.from(lines).reduce(
+//     (currentHigh, el) =>
+//       el.innerText.length > currentHigh ? el.innerText.length : currentHigh,
+//     0,
+//   );
+//   // const lines = code.innerText.split("\n");
+//   // const longestLine = lines.reduce((a, b) => (a.length > b.length ? a : b));
+//   return longestLine;
+// }
 
 const getWidthDiff = (el: HTMLElement) => ({
   value: el.scrollWidth - el.clientWidth,

@@ -20,12 +20,12 @@ describe("SqliteCache", () => {
       fs.unlinkSync(testDbPath);
     }
     db = new Database(`${testDbPath}`);
-    cache = await _createLocalCache(db);
+    cache = _createLocalCache(db);
   });
 
   afterAll(async () => {
     log("Closing test database & cleaning up");
-    await cache.close();
+    cache.close();
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);
     }
@@ -60,7 +60,7 @@ describe("SqliteCache", () => {
   test("clear should remove all keys", async () => {
     await cache.set("clear-key1", "val1");
     await cache.set("clear-key2", "val2");
-    await cache.clear();
+    cache.clear();
     const result1 = await cache.get("clear-key1");
     const result2 = await cache.get("clear-key2");
     expect(result1).toBeUndefined();

@@ -26,6 +26,10 @@ export function _createLocalCache<TData = any>(db: Database) {
     compress INTEGER
   );`);
 
+  const stat = db.prepare("SELECT COUNT(*) as count FROM cache").get() as any;
+log
+  console.log(`Cache started with ${stat.count} entries`);
+
   return {
     async get<T = TData>(key: string): Promise<T | undefined> {
       const row: any = db
