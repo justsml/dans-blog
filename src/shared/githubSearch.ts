@@ -18,17 +18,24 @@ export default function _githubSearch(
   }
 }
 
+type GitHubCardOptions = {
+  per_page: number;
+  exit_on_error: boolean;
+  abort_controller?: AbortController;
+};
+
 /**
  * githubSearch - A factory function to create a new GitHubSearch instance.
  */
 export class GithubSearch {
-  private apiKey?: string;
-  private options: { per_page: number };
   private axiosInstance: AxiosInstance;
 
   constructor(
-    apiKey?: string | undefined,
-    options: { per_page: number } = { per_page: 100 },
+    private apiKey?: string | undefined,
+    private options: GitHubCardOptions = {
+      per_page: 100,
+      exit_on_error: true,
+    },
   ) {
     this.apiKey = apiKey;
     this.options = options;
@@ -37,6 +44,7 @@ export class GithubSearch {
       headers: {
         Authorization: `token ${this.apiKey}`,
       },
+      signal: this.options?.abort_controller?.signal,
     });
   }
 
@@ -50,13 +58,17 @@ export class GithubSearch {
       });
       if (response.data.incomplete_results === true) {
         console.warn(
-          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " + repo + ": " + query,
+          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
+            repo +
+            ": " +
+            query,
         );
       }
-      
+
       return response.data.items;
     } catch (error) {
       console.error("Error searching pull requests:", error);
+      if (exit_on_error) process.exit(42);
       throw error;
     }
   }
@@ -74,7 +86,10 @@ export class GithubSearch {
       });
       if (response.data.incomplete_results === true) {
         console.warn(
-          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " + repo + ": " + query,
+          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
+            repo +
+            ": " +
+            query,
         );
       }
       return response.data.items;
@@ -94,7 +109,10 @@ export class GithubSearch {
       });
       if (response.data.incomplete_results === true) {
         console.warn(
-          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " + repo + ": " + query,
+          "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
+            repo +
+            ": " +
+            query,
         );
       }
       return response.data.items;

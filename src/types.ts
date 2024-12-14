@@ -10,7 +10,7 @@ declare global {
 export type OssContribution = {
   repo: string;
   renamed?: string;
-  descriptionOverride: string;
+  description_override: string;
   notes: string;
   date_created?: Date;
   date_updated?: Date;

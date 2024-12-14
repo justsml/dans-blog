@@ -4,6 +4,7 @@ import { RepoCard } from "./RepoCard.tsx";
 import { GITHUB_HANDLE } from "../../consts.ts";
 import { makeLogs } from "../LogHelper.ts";
 import "./GitContribution.css";
+import { GithubSearch } from "../../shared/githubSearch.ts";
 
 const log = makeLogs("ossContributions");
 
@@ -13,12 +14,17 @@ log("ossContributions", ossContributions.length);
 <h3>My Open Source Contributions ({ossContributions.length})</h3>
 <section class="contrib-grid">
   {
-    ossContributions.map((contrib) => (
-      <RepoCard
-        contribution={contrib}
-        author={GITHUB_HANDLE}
-        client:idle
-      />
-    ))
+    ossContributions.map((contrib) => {
+      const stats = new GithubSearch(contrib.repo);
+      stats.pullRequests(contrib.repo, `author:${GITHUB_HANDLE}`);
+      
+      return (
+        <RepoCard
+          client:idle
+          contribution={contrib}
+          author={GITHUB_HANDLE}
+        />
+      )
+    })
   };
 </section>

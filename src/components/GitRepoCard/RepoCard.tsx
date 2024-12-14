@@ -1,31 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { GithubSearch } from "../../shared/githubSearch.ts";
 import { OssContribution } from "../../types.ts";
-const { GITHUB_TOKEN } = process.env;
 
 export const RepoCard = ({
-  contribution,
+  contribution: c,
   author,
 }: {
   contribution: OssContribution;
   author: string;
 }) => {
-  const { repo, renamed, star_count, reaction_count, descriptionOverride, pull_request_url } = contribution;
+  const { repo } = c;
 
   // const [contributions, setContributions] = useState(null);
+  // 
+  const [repoName, setRepoName] = useState<string>(c.repo);
+  const [description, setDescription] = useState<string>(c.description_override);
+  const [starCount, setStarCount] = useState<number>(c.star_count ?? 0);
+  const [forkCount, setForkCount] = useState<number>(c.reaction_count ?? 0);
+  const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
+  
+  // Client side
   const [repoData, setRepoData] = useState<any>({});
-
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // make sure we DON'T have a key
-      if (GITHUB_TOKEN && GITHUB_TOKEN.length >= 1) {
-        console.error("Missing GITHUB_TOKEN");
-        throw new Error("GITHUB_TOKEN shouldn't be in the client bundle");
-      }
-    }
       // GITHUB_TOKEN
     // Client-side
-    const githubSearch = new GithubSearch(GITHUB_TOKEN);
+    const githubSearch = new GithubSearch(undefined);
     githubSearch
       .pullRequests(repo, `is:pull-request is:open author:${author}`)
       .then((data) => {
@@ -42,8 +41,8 @@ export const RepoCard = ({
   }
 
   return (
-    <div style={styles.card}>
-      <h2 style={styles.repoName}>
+    <article style={styles.card} className="repo-card">
+      <h2 style={styles.repoName} className="repo-name">
         <a
           href={`https://github.com/${repo}`}
           target="_blank"
@@ -56,15 +55,15 @@ export const RepoCard = ({
       <p style={styles.description}>{repoData.description}</p>
       <div style={styles.stats}>
         <span style={styles.stat}>
-          <span style={styles.icon}>🌟</span>
+          <span className="icon-github-star"></span>
           {repoData.stargazers_count}
         </span>
         <span style={styles.stat}>
-          <span className="icon-github-stars"></span>
+          <span className="icon-github-octacat"></span>
           {repoData.forks_count}
         </span>
       </div>
-    </div>
+    </article>
   );
 };
 
