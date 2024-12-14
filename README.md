@@ -6,15 +6,16 @@
 
 ### Design & Improvements
 
+- [ ] Stop using REM for layout (padding)
 - [x] Fix the color scheme: make darker.
 - [x] Update style of social media icons in footer.
-- [ ] Stop using REM for layout (padding)
 - [ ] Experiment: Use Astro's `client:load` to lazy load Quiz `<Challenge>`'s past the first `X`.
 - [ ] Add sign-up form to footer.
+- [x] Archived Screenshots of site for posterity [`./.screens/`](`./.screens/`).
 
 ### Performance & LightHouse Scores
 
-- [ ] Re-organize CSS to reduce unused styles.
+- [ ] Re-organize CSS to reduce initial page load.
 - [ ] Minimize JS not needed on load.
 - [ ] Revisit lazy-loading nav menu.
 
