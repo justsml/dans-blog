@@ -31,7 +31,7 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
   );`);
 
   const stat = db.prepare("SELECT COUNT(*) as count FROM cache").get() as any;
-log
+
   console.log(`Cache started with ${stat.count} entries`);
 
   return {
@@ -39,7 +39,10 @@ log
       const row: any = db
         .prepare("SELECT value, expiresAt, compress FROM cache WHERE key = ?")
         .get(key);
-      if (!row) return undefined;
+      if (!row) {
+        log(`Cache miss for key "${key}"`);
+        return undefined;
+      }
       if (row.expiresAt && Date.now() > row.expiresAt) {
         log(`Cache key "${key}" expired`);
         db.prepare("DELETE FROM cache WHERE key = ?").run(key);
@@ -47,8 +50,10 @@ log
       }
       let data = row.value;
       if (row.compress) {
+        log(`Decompressing data for key "${key}"`);
         data = await gunzip(data);
       }
+      log(`Cache HIT for key "${key}"`);
       return JSON.parse(data.toString()) as T;
     },
 
@@ -61,9 +66,11 @@ log
       let data = Buffer.from(JSON.stringify(value));
       let compressFlag = 0;
       if (opts?.compress) {
+        log(`Compressing data for key "${key}"`);
         data = await gzip(data);
         compressFlag = 1;
       }
+      log(`Setting cache key "${key}" with expiresAt ${expiresAt}`);
       return void db
         .prepare(`
           INSERT
@@ -81,13 +88,17 @@ log
     },
 
     clear() {
+      log(`WARNING: Clearing ALL cache in ${db.name}`);
       return void db.prepare("DELETE FROM cache").run();
     },
 
     close() {
       try {
+        log(`Closing database ${db.name}`);
         return void db.close();
       } catch (e) {
+        // @ts-expect-error
+        log(`Error closing database %o %o`, e.message, e.stack);
         // Ignore so we can try re-peat calls in a failure situation
         console.error("Error closing database", e);
       }
