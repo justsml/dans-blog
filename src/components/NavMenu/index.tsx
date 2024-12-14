@@ -18,6 +18,7 @@ import { Badge } from "../ui/badge";
 import { useCallback, useEffect, useState } from "react";
 import { SearchButton } from "../Search/SearchButton";
 import "./index.css";
+import { NotepadText } from "lucide-react";
 
 const NavMenu = ({
   categories,
@@ -445,6 +446,18 @@ const NavMenu = ({
                           />
                         </span>
                         <label>LinkedIn</label>
+                      </a>
+
+                      <a
+                        href="/open-source-journal">
+                        <span className="Icon">
+                          <NotepadText
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>OSS Log</label>
                       </a>
 
                       <a href="/docs/resume.pdf" target="_blank">

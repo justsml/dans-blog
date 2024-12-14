@@ -20,10 +20,10 @@ const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const imgPaths = ["data.cover", "data.cover_icon", "data.cover_mobile"];
 const categories = getCategoryCounts();
 const popularPosts = (getPopularPosts() as MyPost[]).map((p) =>
-  getMinimalPostData(p, ["data.body", ...imgPaths])
+  getMinimalPostData(p, ["data.body", ...imgPaths]),
 );
 const recentPosts = (getRecentPosts() as MyPost[]).map((p) =>
-  getMinimalPostData(p, ["data.body", ...imgPaths])
+  getMinimalPostData(p, ["data.body", ...imgPaths]),
 );
 // const tagCounts = getTagCounts();
 // console.log("popularPosts", popularPosts[0]);
@@ -37,10 +37,10 @@ type Post<TData extends Record<string, any> = any> = {
 };
 type MyPost = Post<ArticlePost["data"]>;
 
-function getMinimalPostData(
-  { body: _body, ...data }: MyPost,
-  omitFields = ["body"]
-) {
+function getMinimalPostData(payload: unknown, omitFields = ["body"]) {
+  if (!payload || typeof payload !== "object" || !("body" in payload))
+    return {};
+  const { body: _body, ...data } = payload;
   return omit(data, omitFields);
 }
 ---
@@ -49,10 +49,7 @@ function getMinimalPostData(
   <div class:list={["header-nav"]}>
     <h2>
       <a href="/" aria-label="Return Home">
-        <img
-          src={avatarImage.src}
-          alt="Dan Levy's Avatar"
-        />
+        <img src={avatarImage.src} alt="Dan Levy's Avatar" />
         <span class="title">{SITE_TITLE}</span>
       </a>
     </h2>

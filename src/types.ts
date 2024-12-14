@@ -39,9 +39,9 @@ export type LocalCache<TData = unknown> = {
     opts?: { ttlMs?: number; compress?: boolean },
   ) => Promise<void>;
   get: <T = TData>(key: string) => Promise<T | undefined>;
-  delete: (key: string) => Promise<void>;
-  clear: () => Promise<void>;
-  close: () => Promise<void>;
+  delete: (key: string) => void;
+  clear: () => void;
+  close: () => void;
 };
 
 export type ArticlePost = {

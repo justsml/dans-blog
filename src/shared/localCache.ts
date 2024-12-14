@@ -2,6 +2,10 @@ import * as zlib from "zlib";
 import { promisify } from "util";
 import { makeLogs } from "@/components/LogHelper.ts";
 import Database from "libsql";
+import type { LocalCache } from "../types.ts";
+import ms from "ms";
+
+const DEFAULT_TTL_MS = ms("1d");
 
 type Database = ReturnType<typeof Database>;
 
@@ -10,13 +14,13 @@ const log = makeLogs(`localCache`);
 const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
 
-export default function createLocalCache<TData = unknown>(dbFilePath: string) {
+export default function createLocalCache<TData = unknown>(dbFilePath: string): LocalCache {
   log(`Creating local cache at ${dbFilePath}`);
   const db = new Database(dbFilePath);
   return _createLocalCache<TData>(db);
 }
 
-export function _createLocalCache<TData = any>(db: Database) {
+export function _createLocalCache<TData = any>(db: Database): LocalCache {
   // Initialize schema if not exists
   db.exec(`
   CREATE TABLE IF NOT EXISTS cache (
@@ -53,14 +57,14 @@ log
       value: T,
       opts?: { ttlMs?: number; compress?: boolean },
     ) {
-      const expiresAt = opts?.ttlMs ? Date.now() + opts.ttlMs : null;
+      const expiresAt = opts?.ttlMs ? Date.now() + opts.ttlMs : DEFAULT_TTL_MS;
       let data = Buffer.from(JSON.stringify(value));
       let compressFlag = 0;
       if (opts?.compress) {
         data = await gzip(data);
         compressFlag = 1;
       }
-      return db
+      return void db
         .prepare(`
           INSERT
             INTO cache (key, value, expiresAt, compress) VALUES (?, ?, ?, ?)
