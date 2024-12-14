@@ -1,16 +1,16 @@
-import { _createLocalCache } from "./localCache.ts"; // Update with the actual path
+import { describe, beforeAll, afterAll, test, expect } from "bun:test";
 import Database from "libsql";
+import { _createLocalCache } from "./localCache.ts"; // Update with the actual path
+import { makeLogs } from "../components/LogHelper.ts";
 import * as fs from "fs";
 import * as path from "path";
-import { describe, beforeAll, afterAll, test, expect } from "bun:test";
-import { makeLogs } from "../components/LogHelper.ts";
 
 const log = makeLogs(`SqliteCache`);
 
 type Database = ReturnType<typeof Database>;
 
 describe("SqliteCache", () => {
-  const testDbPath = path.join(__dirname, "test-db.sqlite");
+  const testDbPath = path.join(__dirname, "../../node_modules/.cache/test-db.sqlite");
   let db: Database;
   let cache: Awaited<ReturnType<typeof _createLocalCache>>;
 
@@ -24,6 +24,7 @@ describe("SqliteCache", () => {
   });
 
   afterAll(async () => {
+    log("Closing test database & cleaning up");
     await cache.close();
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);
@@ -36,20 +37,10 @@ describe("SqliteCache", () => {
   });
 
   test("set and get should store and retrieve data", async () => {
-    await cache.set("test-key", { foo: "bar" });
+    await cache.set("test-key", { foo: "answer" });
 
     const result = await cache.get("test-key");
-    expect(result).toEqual({ foo: "bar" });
-  });
-
-  test("ttl should expire keys properly", async () => {
-    await cache.set("expiring-key", { data: true }, { ttlMs: 10 });
-    const immediate = await cache.get("expiring-key");
-    expect(immediate).toEqual({ data: true });
-    // wait for expiry
-    await new Promise((r) => setTimeout(r, 20));
-    const expired = await cache.get("expiring-key");
-    expect(expired).toBeUndefined();
+    expect(result).toEqual({ foo: "answer" });
   });
 
   test("compression should store and retrieve compressed data", async () => {
@@ -61,7 +52,7 @@ describe("SqliteCache", () => {
 
   test("delete should remove keys", async () => {
     await cache.set("delete-key", "value");
-    await cache.delete("delete-key");
+    cache.delete("delete-key");
     const result = await cache.get("delete-key");
     expect(result).toBeUndefined();
   });
@@ -77,13 +68,17 @@ describe("SqliteCache", () => {
   });
 
   test("keys should expire after the specified TTL", async () => {
-    await cache.set("ttl-key", { foo: "bar" }, { ttlMs: 50 });
-    const immediateResult = await cache.get("ttl-key");
-    expect(immediateResult).toEqual({ foo: "bar" });
-
+    const key = "ttl-key";
+    const longTermKey = "long-term-key";
+    await cache.set(key, { foo: "answer" }, { ttlMs: 2 });
+    await cache.set(longTermKey, { foo: "answer" }, { ttlMs: 5_000 });
+    const immediateResult = await cache.get(key);
+    expect(immediateResult).toEqual({ foo: "answer" });
     // wait for expiry
-    await new Promise((r) => setTimeout(r, 60));
-    const expiredResult = await cache.get("ttl-key");
+    await new Promise((r) => setTimeout(r, 10));
+    const expiredResult = await cache.get(key);
+    const longTermResult = await cache.get(longTermKey);
     expect(expiredResult).toBeUndefined();
+    expect(longTermResult).toEqual({ foo: "answer" });
   });
 });

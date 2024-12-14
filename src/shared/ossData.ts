@@ -1,7 +1,7 @@
-import { OssContribution } from "../types.ts";
+import { Contribution } from "../types.ts";
 
 
-export const ossContributions: OssContribution[] = [
+export const ossContributions: Contribution[] = [
   // TODO: Add recent PostGIS, Turf, Shadcn/ui, and other contributions
 
   {

@@ -1,4 +1,13 @@
 import axios, { AxiosInstance } from "axios";
+import type { LocalCache } from "../types.ts";
+import type { Endpoints } from "@octokit/types";
+import { makeLogs } from "@/components/LogHelper.ts";
+
+const log = makeLogs(`ghSearch`);
+
+type SearchCommitsResponse =
+  Endpoints["GET /search/commits"]["response"]["data"];
+type SearchIssuesResponse = Endpoints["GET /search/issues"]["response"]["data"];
 
 /**
  * Note: Constructor Wrapper
@@ -10,17 +19,16 @@ import axios, { AxiosInstance } from "axios";
  */
 export default function _githubSearch(
   this: GithubSearch,
-  apiKey: string,
-  options: { per_page: number } = { per_page: 100 },
+  options: GitHubCardOptions,
 ) {
-  if (this instanceof GithubSearch === false) {
-    return new GithubSearch(apiKey, options);
-  }
+  if (this instanceof GithubSearch === false) return new GithubSearch(options);
 }
 
 type GitHubCardOptions = {
+  api_key: string;
   per_page: number;
-  exit_on_error: boolean;
+  ttl_seconds?: number;
+  exit_on_error?: boolean;
   abort_controller?: AbortController;
 };
 
@@ -29,51 +37,78 @@ type GitHubCardOptions = {
  */
 export class GithubSearch {
   private axiosInstance: AxiosInstance;
+  private localCache: LocalCache | null = null;
 
-  constructor(
-    private apiKey?: string | undefined,
-    private options: GitHubCardOptions = {
-      per_page: 100,
-      exit_on_error: true,
-    },
-  ) {
-    this.apiKey = apiKey;
+  constructor(private options: GitHubCardOptions) {
     this.options = options;
     this.axiosInstance = axios.create({
       baseURL: "https://api.github.com",
       headers: {
-        Authorization: `token ${this.apiKey}`,
+        Authorization: `token ${this.options.api_key}`,
       },
       signal: this.options?.abort_controller?.signal,
     });
+    this.axiosInstance.interceptors.request.use((config) => {
+      const cacheKey = `${config.url}?${new URLSearchParams(config.params).toString()}&body=${JSON.stringify(config.data)}`;
+      log(`Checking cache for ${cacheKey}`);
+      if (this.localCache) {
+        const cached = this.localCache.get(cacheKey);
+        config.adapter = async () => {
+          return {
+            data: cached,
+            status: 200,
+            statusText: "OK",
+            headers: {},
+            config,
+            request: {},
+          };
+        };
+      }
+      return config;
+    });
+
+    this.axiosInstance.interceptors.response.use((response) => {
+      const config = response.config;
+      const cacheKey = `${config.url}?${new URLSearchParams(config.params).toString()}&body=${JSON.stringify(config.data)}`;
+      log(`Caching response for ${cacheKey}`);
+      // const cacheKey = `${response.config.url}?${new URLSearchParams(response.config.params).toString()}`;
+      if (this.localCache)
+        this.localCache.set(cacheKey, response.data);
+
+      return response;
+    });
   }
 
-  async pullRequests(repo: string, query: string) {
+  async pullRequests(
+    repo: string,
+    query: string,
+  ): Promise<SearchIssuesResponse> {
     try {
-      const response = await this.axiosInstance.get(`/search/issues`, {
-        params: {
-          q: `repo:${repo} is:pr ${query}`,
-          per_page: this.options.per_page,
-        },
-      });
-      if (response.data.incomplete_results === true) {
+      const response = (
+        await this.axiosInstance.get(`/search/issues`, {
+          params: {
+            q: `repo:${repo} is:pr ${query}`,
+            per_page: this.options.per_page,
+          },
+        })
+      ).data as SearchIssuesResponse;
+      if (response.incomplete_results === true)
         console.warn(
           "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
             repo +
             ": " +
             query,
         );
-      }
 
-      return response.data.items;
+      return response;
     } catch (error) {
       console.error("Error searching pull requests:", error);
-      if (exit_on_error) process.exit(42);
+      if (this.options.exit_on_error) process.exit(42);
       throw error;
     }
   }
 
-  async commits(repo: string, query: string) {
+  async commits(repo: string, query: string): Promise<SearchCommitsResponse> {
     try {
       const response = await this.axiosInstance.get(`/search/commits`, {
         params: {
@@ -84,7 +119,8 @@ export class GithubSearch {
           Accept: "application/vnd.github.cloak-preview",
         },
       });
-      if (response.data.incomplete_results === true) {
+      const data = response.data as SearchCommitsResponse;
+      if (data.incomplete_results === true) {
         console.warn(
           "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
             repo +
@@ -92,14 +128,15 @@ export class GithubSearch {
             query,
         );
       }
-      return response.data.items;
+      return data;
     } catch (error) {
       console.error("Error searching commits:", error);
+      if (this.options.exit_on_error) process.exit(42);
       throw error;
     }
   }
 
-  async issues(repo: string, query: string) {
+  async issues(repo: string, query: string): Promise<SearchIssuesResponse> {
     try {
       const response = await this.axiosInstance.get(`/search/issues`, {
         params: {
@@ -107,7 +144,9 @@ export class GithubSearch {
           per_page: this.options.per_page,
         },
       });
-      if (response.data.incomplete_results === true) {
+      const data = response.data as SearchIssuesResponse;
+
+      if (data.incomplete_results === true) {
         console.warn(
           "Incomplete results for pull requests search. Consider increasing the per_page parameter. " +
             repo +
@@ -115,9 +154,10 @@ export class GithubSearch {
             query,
         );
       }
-      return response.data.items;
+      return data;
     } catch (error) {
       console.error("Error searching issues:", error);
+      if (this.options.exit_on_error) process.exit(42);
       throw error;
     }
   }

@@ -7,7 +7,11 @@ declare global {
   }
 }
 
-export type OssContribution = {
+/**
+ * A repo which has been contributed to... By me.
+ * With extra data, like notes and a description override.
+ */
+export type Contribution = {
   repo: string;
   renamed?: string;
   description_override: string;
@@ -19,16 +23,26 @@ export type OssContribution = {
   reaction_count?: number;
   star_count?: number;
   comment_count?: number;
-
 };
 
+export type LocalCache<TData = unknown> = {
+  set: <T = TData>(
+    key: string,
+    value: T,
+    opts?: { ttlMs?: number; compress?: boolean },
+  ) => Promise<void>;
+  get: <T = TData>(key: string) => Promise<T | undefined>;
+  delete: (key: string) => Promise<void>;
+  clear: () => Promise<void>;
+  close: () => Promise<void>;
+};
 
 export type ArticlePost = {
   id: string;
   body?: string;
   slug: string;
   collection?: string;
-  
+
   data: {
     title: string;
     subTitle: string;
@@ -96,12 +110,12 @@ export interface Page<T = any> {
 
 export type PagePath = {
   params: {
-    page: string
-  },
+    page: string;
+  };
   props: {
     [key: string]: unknown;
-    page: Page<ArticlePost>
-  }
+    page: Page<ArticlePost>;
+  };
 };
 
 // ref: https://docs.astro.build/en/guides/routing/#the-page-prop

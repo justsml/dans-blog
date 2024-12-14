@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { GithubSearch } from "../../shared/githubSearch.ts";
-import { OssContribution } from "../../types.ts";
+import { Contribution } from "../../types.ts";
 
 export const RepoCard = ({
   contribution: c,
   author,
 }: {
-  contribution: OssContribution;
+  contribution: Contribution;
   author: string;
 }) => {
   const { repo } = c;
