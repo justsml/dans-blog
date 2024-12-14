@@ -3,8 +3,7 @@ import PropTypes from "prop-types";
 
 import Main from "../components/Main";
 import Article from "../components/Main/Article";
-import PageHeader from "../components/Page/PageHeader";
-import Search from "../components/Search";
+// import PageHeader from "../components/Page/PageHeader";
 
 const SearchPage = props => {
   const { data } = props;
@@ -27,4 +26,3 @@ SearchPage.propTypes = {
 };
 
 export default SearchPage;
-

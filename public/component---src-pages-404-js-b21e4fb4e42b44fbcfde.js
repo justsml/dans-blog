@@ -1,0 +1,2 @@
+webpackJsonp([0x9427c64ab85d],{819:function(e,t,l){"use strict";function u(e){return e&&e.__esModule?e:{default:e}}t.__esModule=!0;var a=l(2),d=u(a),n=l(3),f=u(n),r=l(60),c=u(r),o=l(59),s=u(o),i=function(e){e.data;return d.default.createElement("div",{style:{width:"760px"}},d.default.createElement(c.default,null,d.default.createElement(s.default,null,d.default.createElement("h1",null,"Page not found"))))};i.propTypes={data:f.default.object.isRequired},t.default=i,e.exports=t.default}});
+//# sourceMappingURL=component---src-pages-404-js-b21e4fb4e42b44fbcfde.js.map
