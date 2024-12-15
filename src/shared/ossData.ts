@@ -75,10 +75,10 @@ export const ossContributions: Contribution[] = [
       "Dan worked with Dave Methvin to improve the user experience around the console output & 3rd party tools."
   },
   {
-    renamed: "nodejitsu/node-http-proxy",
-    repo: "http-party/node-http-proxy",
+    repo: "nodejitsu/node-http-proxy",
+    renamed: "http-party/node-http-proxy",
     description_override: `Nodejitsu's popular HTTP Proxy library is used in 100's of libraries on NPM.`,
-    notes: `Nodejitsu's founder, Charlie Robbins, worked with Dan (and others) addressing documentation omissions.`
+    notes: `Nodejitsu's founder, Charlie Robbins, worked with Dan to improve documentation of key examples.`
   },
   {
     repo: "lodash/lodash",
@@ -134,7 +134,18 @@ export const ossContributions: Contribution[] = [
     repo: "thomaspark/bootswatch",
     description_override: `Bootswatch is a collection of themes for Bootstrap.`,
     notes: `Dan added missing NPM setup instructions.`,
+  },
+  {
+    repo: "hapijs/joi",
+    description_override: `Joi is a powerful schema description language and data validator for JavaScript.`,
+    notes: `Dan added a new example to the official documentation.`,
+
+  }, {
+    repo: "TheWidlarzGroup/react-native-video",
+    description_override: `React Native Video is a video component for React Native.`,
+    notes: `Dan fixed a volume amplification glitch which could damage both audio equipment and hearing.`
   }
+
 
 
 ];

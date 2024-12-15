@@ -61,7 +61,7 @@ export const RepoCard = ({
       data-repo-owner={pr?.repository.owner}
     >
       <h2 style={styles.repoName} className="repo-name">
-        <span className="icon-github-octocat w-2 h-2"></span>
+        <span className="gh-icon icon-github-octocat w-2 h-2"></span>
         <a
           href={`https://github.com/${repo}`}
           target="_blank"
@@ -78,29 +78,47 @@ export const RepoCard = ({
       <p style={styles.description} className="repo-inner-card">
         {c.notes}
       </p>
-      <div style={styles.stats}>
+      <div style={styles.stats} className="repo-stats">
         <span style={styles.stat}>
-          <span className="icon-count"></span>
+          <span className="gh-icon icon-github-pull-request"></span>
           {prList?.length}: #{prList?.map((pr) => pr.number).join(", #")}
         </span>
         <span style={styles.stat}>
-          <span className="icon-calendar"></span>
-          {c.date_created instanceof Date
-            ? c.date_created.toDateString()
-            : c.date_created}
-        </span>
-        <span style={styles.stat}>
-          <span className="icon-comment"></span>
+          <span className="gh-icon icon-github-issue"></span>
           {pr?.repository.openIssues.toLocaleString()}
         </span>
         <span style={styles.stat}>
-          <span className="icon-github-star"></span>
+          <span className="gh-icon icon-github-star"></span>
           {pr?.repository.stars.toLocaleString()}
         </span>
         <span style={styles.stat}>
-          <span className="icon-eye"></span>
+          <span className="gh-icon icon-github-eye"></span>
           {pr?.repository.watchers.toLocaleString()}
         </span>
+      </div>
+      <div style={styles.stats} className="pull-stats">
+        <aside style={styles.stat}>
+          <span className="gh-icon icon-github-green"
+          data-additions={pr?.pullStats.additions} ></span>
+          {pr?.pullStats.additions}
+        </aside>
+        <aside style={styles.stat}>
+          <span className="gh-icon icon-github-red"
+          data-deletions={pr?.pullStats.deletions} ></span>
+          {pr?.pullStats.deletions}
+          </aside>
+        <aside style={styles.stat}>
+          <span className="gh-icon icon-github-file"></span>
+          {pr?.pullStats.changedFiles}
+        </aside>
+        <aside style={styles.stat}>
+          <span className="gh-icon icon-github-comment"></span>
+          {pr?.pullStats.comments}
+        </aside>
+        <aside style={styles.stat}>
+          <span className="gh-icon icon-github-comment"></span>
+          {pr?.pullStats.reviews}
+        </aside>
       </div>
     </article>
   );

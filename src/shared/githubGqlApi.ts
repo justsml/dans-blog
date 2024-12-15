@@ -129,7 +129,7 @@ const extractLastUrlParam = (url: string) => {
   if (url.includes("?")) url = url.split("?")[0];
   const parts = url.split("/");
   return parts[parts.length - 1];
-}
+};
 function simplifyPullsResponse(response: any): UserPullRequestData {
   const { repository, search } = response;
 
@@ -166,9 +166,22 @@ function simplifyPullsResponse(response: any): UserPullRequestData {
     })),
   }));
 
+  const pullStats = pullRequests.reduce(
+    (acc: Record<string, number>, pr: any) => {
+      acc.additions += pr.additions ?? 0;
+      acc.deletions += pr.deletions ?? 0;
+      acc.changedFiles += pr.changedFiles ?? 0;
+      acc.comments += pr.comments ?? 0;
+      acc.reviews += pr.reviews ?? 0;
+      return acc;
+    },
+    { additions: 0, deletions: 0, changedFiles: 0, comments: 0, reviews: 0 },
+  );
+
   return {
     repository: repoDetails,
     pullCount: pullRequests.length,
+    pullStats,
     pullRequests,
   };
 }

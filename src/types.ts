@@ -56,6 +56,13 @@ export type UserPullRequestData = {
     primaryLanguage: string | null;
   };
   pullCount: number;
+  pullStats: {
+    additions: number;
+    deletions: number;
+    changedFiles: number;
+    comments: number;
+    reviews?: number;
+  },
   pullRequests: Array<{
     title: string;
     url: string;
