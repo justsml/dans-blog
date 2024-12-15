@@ -125,6 +125,11 @@ export async function fetchUserPullRequests(
   return data;
 }
 
+const extractLastUrlParam = (url: string) => {
+  if (url.includes("?")) url = url.split("?")[0];
+  const parts = url.split("/");
+  return parts[parts.length - 1];
+}
 function simplifyPullsResponse(response: any): UserPullRequestData {
   const { repository, search } = response;
 
@@ -145,7 +150,7 @@ function simplifyPullsResponse(response: any): UserPullRequestData {
     title: pr.title,
     url: pr.url,
     state: pr.state,
-    number: pr.number,
+    number: pr.number ?? extractLastUrlParam(pr.url),
     author: pr.author.login,
     createdAt: pr.createdAt,
     mergedAt: pr.mergedAt,

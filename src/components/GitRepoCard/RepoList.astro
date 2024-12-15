@@ -1,5 +1,4 @@
 ---
-import type { SearchIssuesResponse } from "../../types.ts";
 
 import { ossContributions } from "../../shared/ossData.ts";
 import { RepoCard } from "./RepoCard.tsx";
@@ -20,6 +19,10 @@ log("ossContributions", ossContributions.length);
 ---
 
 <h3>My Open Source Contributions ({ossContributions.length})</h3>
+
+<p>This data is statically generated only on a fresh build & deploy.</p>
+<p>Last build was: {new Date().toLocaleDateString()}</p>
+
 <section class="contrib-grid">
   {
     ossContributions.map(async (contrib) => {
@@ -44,5 +47,5 @@ log("ossContributions", ossContributions.length);
         />
       );
     })
-  };
+  }
 </section>

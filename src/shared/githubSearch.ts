@@ -100,7 +100,7 @@ export class GithubSearch {
   ): Promise<SearchIssuesResponse> {
     return this.semaphore.runExclusive(async () => {
       try {
-        const [owner, repoName] = repo.split("/");
+        // const [owner, repoName] = repo.split("/");
         const response = await this.octokit.search.issuesAndPullRequests({
           q: `repo:${repo} is:pr ${query}`,
           headers: {

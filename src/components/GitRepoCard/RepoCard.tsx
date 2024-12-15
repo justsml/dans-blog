@@ -12,7 +12,7 @@ export const RepoCard = ({
 }: {
   author: string;
   contribution: Contribution;
-  defaultPullData?: UserPullRequestData 
+  defaultPullData?: UserPullRequestData;
 }) => {
   const { repo } = c;
 
@@ -24,9 +24,11 @@ export const RepoCard = ({
   // const [starCount, setStarCount] = useState<number>(c.star_count ?? 0);
   // const [forkCount, setForkCount] = useState<number>(c.reaction_count ?? 0);
   // const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
-  
+
   // Client side
-  const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(pr);
+  const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(
+    pr,
+  );
   // useEffect(() => {
   //   // Client-side
   //   githubSearch
@@ -45,40 +47,59 @@ export const RepoCard = ({
   }
 
   return (
-    <article style={styles.card} className="repo-card">
+    <article
+      style={styles.card}
+      className="repo-card"
+      data-pull-count={prList?.length}
+      data-star-count={pr?.repository.stars}
+      data-open-issues={pr?.repository.openIssues}
+      data-watchers={pr?.repository.watchers}
+      data-forks={pr?.repository.forks}
+      data-primary-language={pr?.repository.primaryLanguage}
+      data-repo-name={pr?.repository.name}
+      data-repo-description={pr?.repository.description}
+      data-repo-owner={pr?.repository.owner}
+    >
       <h2 style={styles.repoName} className="repo-name">
-        <span className="icon-github-octacat w-2 h-2"></span>
+        <span className="icon-github-octocat w-2 h-2"></span>
         <a
           href={`https://github.com/${repo}`}
           target="_blank"
           rel="noopener noreferrer"
+          title={c.renamed ? `MOVED: ${c.renamed}` : repo}
           style={styles.link}
         >
           {repo}
         </a>
       </h2>
-      <p style={styles.description} className="repo-inner-card">{c.description_override ?? `[could not load description for ${repo}]`}</p>
-      <p style={styles.description} className="repo-inner-card">{c.notes}</p>
+      <p style={styles.description} className="repo-inner-card">
+        {c.description_override ?? `[could not load description for ${repo}]`}
+      </p>
+      <p style={styles.description} className="repo-inner-card">
+        {c.notes}
+      </p>
       <div style={styles.stats}>
         <span style={styles.stat}>
           <span className="icon-count"></span>
-          {prList?.length}
+          {prList?.length}: #{prList?.map((pr) => pr.number).join(", #")}
         </span>
         <span style={styles.stat}>
           <span className="icon-calendar"></span>
-          {c.date_created instanceof Date ? c.date_created.toDateString() : c.date_created}
+          {c.date_created instanceof Date
+            ? c.date_created.toDateString()
+            : c.date_created}
         </span>
         <span style={styles.stat}>
           <span className="icon-comment"></span>
-          {c.comment_count}
+          {pr?.repository.openIssues.toLocaleString()}
         </span>
         <span style={styles.stat}>
           <span className="icon-github-star"></span>
-          {c.star_count}
+          {pr?.repository.stars.toLocaleString()}
         </span>
         <span style={styles.stat}>
-          <span className="icon-github-octacat"></span>
-          {c.reaction_count}
+          <span className="icon-eye"></span>
+          {pr?.repository.watchers.toLocaleString()}
         </span>
       </div>
     </article>
