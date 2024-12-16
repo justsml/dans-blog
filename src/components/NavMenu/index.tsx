@@ -192,7 +192,7 @@ const NavMenu = ({
                       style={{ background: "var(--neon-gg-bg)" }}
                     >
                       <div className="CalloutHeading">Quizzes</div>
-                      <p className="CalloutText">Try Dan's 10+ challenges!</p>
+                      <p className="CalloutText">Try Dan's Challenges!</p>
                     </div>
                   </a>
                 </NavigationMenu.Link>
@@ -376,7 +376,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             About <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="NavigationMenuContent">
+          <NavigationMenu.Content className="NavigationMenuContent h-card">
             <ul className="List two contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>
@@ -386,6 +386,7 @@ const NavMenu = ({
                         src={avatarImage.src}
                         width={avatarImage.width}
                         height={avatarImage.height}
+                        className="u-photo p"
                       />
                     </a>
                     <div className="CalloutHeading">Dan Levy</div>
@@ -414,7 +415,7 @@ const NavMenu = ({
                         </label>
                       </a>
 
-                      <a href="http://twitter.com/justsml" target="_blank">
+                      <a rel="me" href="http://twitter.com/justsml" target="_blank">
                         <span className="Icon">
                           <TwitterLogoIcon
                             className="svg-icon"
@@ -424,7 +425,7 @@ const NavMenu = ({
                         </span>
                         <label>Twitter</label>
                       </a>
-                      <a href="https://github.com/justsml" target="_blank">
+                      <a rel="me" href="https://github.com/justsml" target="_blank">
                         <span className="Icon">
                           <GitHubLogoIcon
                             className="svg-icon"
@@ -435,6 +436,7 @@ const NavMenu = ({
                         <label>GitHub</label>
                       </a>
                       <a
+                        rel="me"
                         href="https://linkedin.com/in/realdaniellevy"
                         target="_blank"
                       >
@@ -449,6 +451,7 @@ const NavMenu = ({
                       </a>
 
                       <a
+                        rel="me"
                         href="/open-source-journal">
                         <span className="Icon">
                           <NotepadText
@@ -460,7 +463,7 @@ const NavMenu = ({
                         <label>OSS Log</label>
                       </a>
 
-                      <a href="/docs/resume.pdf" target="_blank">
+                      <a rel="me" href="/docs/resume.pdf" target="_blank">
                         <span className="Icon">
                           <RocketIcon
                             className="svg-icon"

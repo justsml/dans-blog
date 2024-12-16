@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Contribution, UserPullRequestData } from "../../types.ts";
+import clsx from "clsx";
 
 // const githubSearch = new GithubSearch({
 //   per_page: 40,
@@ -49,7 +50,7 @@ export const RepoCard = ({
   return (
     <article
       style={styles.card}
-      className="repo-card"
+      className={clsx("repo-card", "p-experience")}
       data-pull-count={prList?.length}
       data-star-count={pr?.repository.stars}
       data-open-issues={pr?.repository.openIssues}

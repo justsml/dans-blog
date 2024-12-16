@@ -46,11 +46,11 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta name="site-version" content={version ?? "0.0.0"} />
 <link rel="preconnect" href="https://unpkg.com" />
 <link rel="preconnect" href="https://posthog.com" />
-<link rel="canonical" href={canonicalURL} />
+<link rel="canonical" class="p-url" href={canonicalURL} />
 
 {/*Primary Meta Tags*/}
 <slot name="title">
-  <title>{title ?? siteTitle}</title>
+  <title class="p-name">{title ?? siteTitle}</title>
   <meta name="title" content={title ?? siteTitle} />
   <meta property="twitter:title" content={title ?? siteTitle} />
   <meta property="og:title" content={title ?? siteTitle} />

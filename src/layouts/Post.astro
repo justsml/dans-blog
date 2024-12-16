@@ -96,18 +96,18 @@ const responsiveImgSizes_breakRight = {
   <body transition:animate={fade({ duration: "0.285s" })}>
     <Header className="content-grid article" date={date} modified={modified} />
     <main
-      class="content-grid article"
+      class="content-grid article h-entry h-recipe"
       style={{
         viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
       }}
     >
-      {title && <h1 transition:name="page.h1">{title}</h1>}
-      {subTitle && <h2 transition:name="page.h2">{subTitle}</h2>}
+      {title && <h1 class="p-name" transition:name="page.h1">{title}</h1>}
+      {subTitle && <h2 class="p-summary" transition:name="page.h2">{subTitle}</h2>}
 
       <aside class="skinny screenshot-hidden">
         <div class="info">
           <CreatedModifiedLabel client:idle date={date} modified={modified} />
-          <CategoryLink category={category} />
+          <CategoryLink category={category} class:list={"p-category"} />
         </div>
       </aside>
 
@@ -116,7 +116,7 @@ const responsiveImgSizes_breakRight = {
         typeof cover_full_width === "object" &&
         "src" in cover_full_width ? (
           <Image
-            class="full-width flow"
+            class="full-width flow u-photo"
             src={cover_full_width as ImageMetadata}
             alt={title}
             format="webp"
@@ -129,6 +129,7 @@ const responsiveImgSizes_breakRight = {
             <div class="hero-image">
               <div class="hero-image-wrapper">
                 <Image
+                  class="u-photo"
                   src={cover as ImageMetadata}
                   alt={title}
                   {...responsiveImgSizes_breakRight}
@@ -138,7 +139,9 @@ const responsiveImgSizes_breakRight = {
           )
         )
       }
-      <slot />
+      <div class="e-content">
+        <slot />
+      </div>
     </main>
 
     <EditOnGitHubLink
@@ -157,7 +160,8 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body><link
+  </body>
+  <link
     rel="stylesheet"
     href="/files/fonts.css"
     media="print"

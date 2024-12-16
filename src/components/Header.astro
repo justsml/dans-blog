@@ -46,15 +46,15 @@ function getMinimalPostData(payload: unknown, omitFields = ["body"]) {
 ---
 
 <header class:list={["top-header", "default-links", className]}>
-  <div class:list={["header-nav"]}>
+  <div class:list={["header-nav", "h-card"]}>
     <h2>
       <a href="/" aria-label="Return Home">
-        <img src={avatarImage.src} alt="Dan Levy's Avatar" />
+        <img src={avatarImage.src} alt="Dan Levy's Avatar" class:list="u-logo"/>
         <span class="title">{SITE_TITLE}</span>
       </a>
     </h2>
     <div class="nav-box screenshot-hidden">
-      <NavMenu
+      <NavMenu  
         client:only="react"
         categories={categories}
         popularPosts={popularPosts}
