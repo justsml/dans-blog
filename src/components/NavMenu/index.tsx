@@ -310,6 +310,12 @@ const NavMenu = ({
                 </NavigationMenu.Link>
               </li>
               <ListItem
+                href="/open-source-journal"
+                title="Open Source Journal"
+              >
+                A journal of my open source contributions, projects, and experiments.
+              </ListItem>
+              <ListItem
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
               >
