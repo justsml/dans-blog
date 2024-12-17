@@ -15,7 +15,7 @@ const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
 
 export default function createLocalCache<TData = unknown>(dbFilePath: string): LocalCache {
-  log(`Creating local cache at ${dbFilePath}`);
+  log(`Creating local local_cache at ${dbFilePath}`);
   const db = new Database(dbFilePath);
   return _createLocalCache<TData>(db);
 }
@@ -23,10 +23,10 @@ export default function createLocalCache<TData = unknown>(dbFilePath: string): L
 export function _createLocalCache<TData = any>(db: Database): LocalCache {
   // Initialize schema if not exists
   db.exec(`
-  CREATE TABLE IF NOT EXISTS cache (
+  CREATE TABLE IF NOT EXISTS local_cache (
     key TEXT PRIMARY KEY,
     value BLOB,
-    expiresAt INTEGER,
+    expires INTEGER,
     compress INTEGER
   );`);
 
@@ -37,15 +37,15 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
   return {
     async get<T = TData>(key: string): Promise<T | undefined> {
       const row: any = db
-        .prepare("SELECT value, expiresAt, compress FROM cache WHERE key = ?")
+        .prepare("SELECT value, expires, compress FROM local_cache WHERE key = ?")
         .get(key);
       if (!row) {
         log(`Cache miss for key "${key}"`);
         return undefined;
       }
-      if (row.expiresAt && Date.now() > row.expiresAt) {
+      if (row.expires && Date.now() > row.expires) {
         log(`Cache key "${key}" expired`);
-        db.prepare("DELETE FROM cache WHERE key = ?").run(key);
+        db.prepare("DELETE FROM local_cache WHERE key = ?").run(key);
         return undefined;
       }
       let data = row.value;
@@ -62,7 +62,7 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
       value: T,
       opts?: { ttlMs?: number; compress?: boolean },
     ) {
-      const expiresAt = opts?.ttlMs ? Date.now() + opts.ttlMs : DEFAULT_TTL_MS;
+      const expires = opts?.ttlMs ? Date.now() + opts.ttlMs : DEFAULT_TTL_MS;
       let data = Buffer.from(JSON.stringify(value));
       let compressFlag = 0;
       if (opts?.compress) {
@@ -70,25 +70,25 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
         data = await gzip(data);
         compressFlag = 1;
       }
-      log(`Setting cache key "${key}" with expiresAt ${expiresAt}`);
+      log(`Setting local_cache key "${key}" with expires ${expires}`);
       return void db
         .prepare(`
           INSERT
-            INTO cache (key, value, expiresAt, compress) VALUES (?, ?, ?, ?)
+            INTO local_cache (key, value, expires, compress) VALUES (?, ?, ?, ?)
           ON CONFLICT(key)
             DO UPDATE SET value=excluded.value, 
-              expiresAt=excluded.expiresAt, 
+              expires=excluded.expires, 
               compress=excluded.compress`,
         )
-        .run(key, data, expiresAt, compressFlag);
+        .run(key, data, expires, compressFlag);
     },
 
     delete(key: string) {
-      return void db.prepare("DELETE FROM cache WHERE key = ?").run(key);
+      return void db.prepare("DELETE FROM local_cache WHERE key = ?").run(key);
     },
 
     clear() {
-      log(`WARNING: Clearing ALL cache in ${db.name}`);
+      log(`WARNING: Clearing ALL local_cache in ${db.name}`);
       return void db.prepare("DELETE FROM cache").run();
     },
 
