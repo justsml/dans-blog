@@ -10,7 +10,7 @@ export const ossContributions: Contribution[] = [
   {
     repo: "Netflix/pollyjs",
     description_override: `Polly.JS is a standalone, framework-agnostic JavaScript library that enables recording, replaying, and stubbing HTTP interactions.`,
-    notes: `Dan added a couple complete TypeScript examples, with .`,
+    notes: `Dan added the first complete TypeScript example.`,
   },
   {
     repo: "turfjs/turf",
