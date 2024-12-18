@@ -7,6 +7,29 @@ export async function GET(context: any) {
     (post: any) => !post.data.hidden,
   ).reverse();
 
+  posts.unshift({
+    // @ts-expect-error
+    id: "open-source-journal",
+    // @ts-expect-error
+    slug: "open-source-journal",
+    // @ts-expect-error
+    collection: "pages",
+    data: {
+      title: "Open Source Journal",
+      subTitle: "A collection of open-source projects I've worked on.",
+      category: "Projects",
+      date: "2024-12-16",
+      modified: "2024-12-18",
+      tags: ["open-source", "projects"],
+      cover: {
+        src: "../../images/social-banner.webp",
+        format: "webp",
+        width: 1200,
+        height: 628,
+      },
+    }
+  });
+
   return new Response(JSON.stringify({
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,
