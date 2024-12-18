@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { Contribution, UserPullRequestData } from "../../types.ts";
 import clsx from "clsx";
 import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
+import { Button } from "../ui/button.tsx";
 
 // const githubSearch = new GithubSearch({
 //   per_page: 40,
@@ -21,12 +22,7 @@ export const RepoCard = ({
   // const [contributions, setContributions] = useState(null);
   const prList = pr?.pullRequests ?? [];
 
-  // const [repoName, setRepoName] = useState<string>(c.repo);
-  // const [description, setDescription] = useState<string>(c.description_override);
-  // const [starCount, setStarCount] = useState<number>(c.star_count ?? 0);
-  // const [forkCount, setForkCount] = useState<number>(c.reaction_count ?? 0);
-  // const [commentCount, setCommentCount] = useState<number>(c.comment_count ?? 0);
-
+  const [showNotes, setShowNotes] = useState(false);
   // Client side
   const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(
     pr,
@@ -63,11 +59,10 @@ export const RepoCard = ({
       data-repo-owner={pr?.repository.owner}
     >
       <aside className="corner-stats">
-        <div style={styles.stat} className="repo-stars-box button-ish-box">
+        <div className="repo-stars-box button-ish-box">
           <span className="gh-icon icon-github-star"></span>
           {pr?.repository.stars.toLocaleString()}
         </div>
-        <LineChangeIndicator additions={pr?.pullStats.additions} deletions={pr?.pullStats.deletions} />
       </aside>
         
 
@@ -78,18 +73,34 @@ export const RepoCard = ({
           target="_blank"
           rel="noopener noreferrer"
           title={c.renamed ? `MOVED: ${c.renamed}` : repo}
-          style={styles.link}
+          // style={styles.link}
           className="p-org"
         >
           {repo}
         </a>
       </h2>
-      <p style={styles.description} className="repo-inner-card description">
+      <p className="s-description repo-inner-card description">
         {c.description_override ?? `[could not load description for ${repo}]`}
       </p>
-      <p style={styles.description} className="repo-inner-card dan-notes p-experience" dangerouslySetInnerHTML={{ __html: c.notes }} />
-      <div style={styles.stats} className="repo-stats">
-        <span style={styles.stat} className="pull-requests-list">
+
+      {/* <Button
+        variant={showNotes ? "default" : "outline"}
+        className="s-button"
+        onClick={() => setShowNotes(!showNotes)}
+        aria-expanded={showNotes}
+        aria-controls=".dan-notes"
+      >
+        {showNotes ? "Hide" : "Show"} my notes
+      </Button>
+
+      <p className={clsx("s-description repo-inner-card dan-notes p-experience border-[1px] bg-slate-200 drop-shadow-sm py-2 px-1 rounded-md", {
+        'animate-card-stretch': !showNotes,
+      })} dangerouslySetInnerHTML={{ __html: c.notes }} /> */}
+      
+      <div className="s-stats repo-stats">
+        {/* <LineChangeIndicator additions={pr?.pullStats.additions} deletions={pr?.pullStats.deletions} /> */}
+
+        <span className="s-stat pull-requests-list">
           <span className="gh-icon icon-github-pull-request"></span>
           {prList?.length >= 2 ?  prList?.length + " PRs" : "PR"}: {prList?.map((pr) => {
             return <a key={pr.number} href={pr.url} target="_blank" rel="noopener noreferrer" title={pr.title}><code>#{pr.number}</code></a>;
@@ -104,16 +115,16 @@ export const RepoCard = ({
           {pr?.repository.watchers.toLocaleString()}
         </span> */}
       </div>
-      <div style={styles.stats} className="pull-stats">
-        <aside style={styles.stat} title="Changed files">
+      <div className="pull-stats stats">
+        <aside title="Changed files" className="stat">
           <span className="gh-icon icon-github-file"></span>
           {pr?.pullStats.changedFiles}
         </aside>
-        <aside style={styles.stat} title="Comments">
+        <aside title="Comments" className="stat">
           <span className="gh-icon icon-github-comment"></span>
           {pr?.pullStats.comments}
         </aside>
-        <aside style={styles.stat} title="Reviews">
+        <aside title="Reviews" className="stat">
           <span className="gh-icon icon-github-reviews"></span>
           {pr?.pullStats.reviews}
         </aside>
@@ -125,8 +136,8 @@ export const RepoCard = ({
 const styles = {
   card: {
     border: "1px solid #e1e4e8",
-    borderRadius: "6px",
-    padding: "16px",
+    borderRadius: ".3rem",
+    padding: "1em",
     backgroundColor: "#fff",
     boxShadow: "0 1px 3px rgba(27,31,35,0.12), 0 1px 2px rgba(27,31,35,0.24)",
     fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"`,
@@ -137,27 +148,27 @@ const styles = {
     fontWeight: "300",
     margin: "0 0 8px",
   },
-  link: {
-    textDecoration: "none",
-    color: "#0366d6",
-  },
-  description: {
-    fontSize: "14px",
-    color: "#586069",
-    margin: "0 0 16px",
-  },
-  stats: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  stat: {
-    display: "flex",
-    alignItems: "center",
-    marginRight: "16px",
-    fontSize: "12px",
-    color: "#586069",
-  },
+  // link: {
+  //   textDecoration: "none",
+  //   color: "#0366d6",
+  // },
+  // description: {
+  //   fontSize: "14px",
+  //   color: "#586069",
+  //   margin: "0 0 16px",
+  // },
+  // stats: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   justifyContent: "space-between",
+  // },
+  // stat: {
+  //   display: "flex",
+  //   alignItems: "center",
+  //   marginRight: "16px",
+  //   fontSize: "12px",
+  //   color: "#586069",
+  // },
   icon: {
     marginRight: "4px",
     width: "16px",
