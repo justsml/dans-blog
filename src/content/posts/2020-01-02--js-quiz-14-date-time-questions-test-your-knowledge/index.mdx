@@ -6,7 +6,7 @@ label: "Dates & Times"
 date: 2020-01-02
 modified: 2024-11-27
 tags: [quiz, javascript, date, date class, gotchas, challenge, intermediate]
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 category: Quiz
 subCategory: JavaScript
 cover: pocket-watch.webp
@@ -244,10 +244,10 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
   group="Handling Dates"
   title="Formatting Part 1"
   options={[
-    {text: 'date.toLocaleFormat(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })', isAnswer: true },
-    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
-    {text: 'date.toLocaleTimeString(\'en-GB\', { timeZone: \'UTC\' })'},
     {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
     
@@ -263,12 +263,9 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
 
       <slot name='explanation'>
       <div className="explanation">
-
-        It can be hard to remember what to use when both `toLocaleDateString` and `toLocaleTimeString` exist. I feel `toLocaleFormat` _should_ exist. 
-        The method [`Date.toLocaleFormat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleFormat) is not standard. It's not supported in any browser, and should not be used.
+        The method `toLocaleFormat()` isn't standard! It may look familiar since it's from an ancient 3rd party library.
 
         Check out the [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) method. It's behavior is documented under [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat).
-
       </div>
       </slot>
 

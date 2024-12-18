@@ -96,7 +96,7 @@ async function loadGist(path: string, options: PluginOptions = {}) {
   });
   const content = response ? await response.json() : {};
   const disableStyles = options.includeDefaultCss === false;
-  console.warn("content", content.div);
+  // console.warn("content", content.div);
   // let html = content.div;
   // const truncate = Boolean(query.truncate) || Boolean(options.truncate);
   // const hasLines = query.lines.length > 0;

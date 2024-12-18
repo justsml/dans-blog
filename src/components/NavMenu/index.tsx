@@ -15,9 +15,10 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
-import { useCallback, useEffect } from "react";
-import { SearchButton } from "../search/SearchButton";
+import { useCallback, useEffect, useState } from "react";
+import { SearchButton } from "../SearchUI/SearchButton";
 import "./index.css";
+import { NotepadText } from "lucide-react";
 
 const NavMenu = ({
   categories,
@@ -28,8 +29,11 @@ const NavMenu = ({
   popularPosts: any[];
   recentPosts: any[];
 }) => {
+  const [currentPanel, setCurrentPanel] = useState<string>("");
+  const isMenuOpen = currentPanel.length >= 1;
+
   const safeDetectViewportOffset = useCallback(
-    throttle(detectViewportOffset, 100, { leading: true, trailing: true }),
+    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
     [],
   );
 
@@ -67,20 +71,114 @@ const NavMenu = ({
     };
   }, []);
 
+  const handleMenuPageClick = (_lbl: string, e: Event) => {
+    const target = e.target as HTMLElement;
+    // const currentTarget = e.currentTarget as HTMLElement;
+    const hasLink = target.closest("a");
+    const hasButton = target.closest("button");
+    const isInsideMenu = target.closest(".NavigationMenuRoot");
+    const isInsideViewPort = target.closest(".ViewportPosition");
+    // const isInsideHeader = target.closest("header");
+    // const isInsideMain = target.closest("main");
+
+    // const currClasses = [...currentTarget.classList.values()].sort().join(", ");
+    const targetClasses = [...target.classList.values()].sort().join(", ");
+    const clickedViewportBackground =
+      isInsideViewPort && targetClasses.includes("Viewport");
+    // console.log(`${lbl} %o`, {targetClasses, clickedViewportBackground, hasLink, isInsideMenu, isInsideViewPort, isInsideHeader, isInsideMain, target});
+
+    if (isInsideMenu) return true;
+    // direct click into ViewportPosition bg element
+    if (clickedViewportBackground) return setCurrentPanel("");
+
+    if (!isInsideViewPort) {
+      // close it
+      return setCurrentPanel("");
+    } else {
+      if (hasLink || hasButton) {
+        // console.log("Clicked Link", target.tagName, target.className, target, lbl);
+        // let the link handle the click
+        return true;
+      } else {
+        // no link, prevent the default behavior (closing the panel)
+        // console.log("Clicked NON-Link", target.tagName, target.className, target, lbl);
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }
+    // if we didn't click a link, prevent the default behavior (closing the panel)
+    // if (!hasLink) {
+    //   console.log("Prevented Click", target.tagName, target.className, target, lbl);
+    //   setCurrentPanel("");
+    //   e.preventDefault();
+    //   e.stopPropagation();
+    // } else {
+    //   console.log("Clicked Link", target.tagName, target.className, target, lbl);
+    // }
+
+    // check if we clicked directly on the ViewportPosition element
+    //   (which is a background container and should not trigger a panel close)
+  };
+
+  useEffect(() => {
+    const handleViewPortClick = (e: Event) =>
+      handleMenuPageClick("ViewportPosition", e);
+    const handleBodyClick = (e: Event) => handleMenuPageClick("Body", e);
+    const vPort = document.querySelector(".ViewportPosition");
+
+    if (isMenuOpen) {
+      vPort?.addEventListener("click", handleViewPortClick);
+      document.body.addEventListener("click", handleBodyClick);
+    } else {
+      // console.error("Alert: closed menu");
+    }
+
+    return () => {
+      vPort?.removeEventListener("click", handleViewPortClick);
+      document.body.removeEventListener("click", handleBodyClick);
+    };
+  }, [currentPanel]);
+
+  const togglePanel = (panel: string) => {
+    setCurrentPanel(currentPanel === panel ? "" : panel);
+  };
+
+  const _changeToPanel = (panel: string) => {
+    if (currentPanel === panel) return;
+    if (currentPanel.length >= 1) {
+      setCurrentPanel(panel);
+    }
+  };
+  const changeToPanel = throttle(_changeToPanel, 50, {
+    leading: false,
+    trailing: true,
+  });
+  //    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
+
   return (
     <NavigationMenu.Root
       className="NavigationMenuRoot"
       suppressHydrationWarning={true}
       delayDuration={300}
       onClick={safeDetectViewportOffset}
-      onMouseMove={safeDetectViewportOffset}
+      value={currentPanel}
+      onMouseEnter={(e) => console.log("MouseEnter", e.currentTarget, e.target)}
     >
       <NavigationMenu.List className="NavigationMenuList">
-        <NavigationMenu.Item value="#search" className="searchToggle">
+        <NavigationMenu.Item
+          value="#search"
+          className="searchToggle"
+          onClick={() => togglePanel("")}
+        >
           <SearchButton />
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item value="/">
+        <NavigationMenu.Item
+          value="home"
+          onClick={() => togglePanel("home")}
+          onMouseEnter={() => changeToPanel("home")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Articles <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -89,9 +187,12 @@ const NavMenu = ({
               <li className="item-quizzes">
                 <NavigationMenu.Link asChild>
                   <a href="/challenges" className="CalloutItem">
-                    <div className="Callout" style={{background: 'var(--neon-gg-bg)'}}>
+                    <div
+                      className="Callout"
+                      style={{ background: "var(--neon-gg-bg)" }}
+                    >
                       <div className="CalloutHeading">Quizzes</div>
-                      <p className="CalloutText">Try Dan's 10+ challenges!</p>
+                      <p className="CalloutText">Try Dan's Challenges!</p>
                     </div>
                   </a>
                 </NavigationMenu.Link>
@@ -183,7 +284,11 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item>
+        <NavigationMenu.Item
+          value="projects"
+          onClick={() => togglePanel("projects")}
+          onMouseEnter={() => changeToPanel("projects")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             Projects <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
@@ -204,6 +309,12 @@ const NavMenu = ({
                   </a>
                 </NavigationMenu.Link>
               </li>
+              <ListItem
+                href="/open-source-journal"
+                title="Open Source Journal"
+              >
+                A journal of my open source contributions, projects, and experiments.
+              </ListItem>
               <ListItem
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
@@ -263,11 +374,15 @@ const NavMenu = ({
           </NavigationMenu.Content>
         </NavigationMenu.Item>
 
-        <NavigationMenu.Item>
+        <NavigationMenu.Item
+          value="about"
+          onClick={() => togglePanel("about")}
+          onMouseEnter={() => changeToPanel("about")}
+        >
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
-            Contact <CaretDownIcon className="CaretDown" aria-hidden />
+            About <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="NavigationMenuContent">
+          <NavigationMenu.Content className="NavigationMenuContent h-card">
             <ul className="List two contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>
@@ -277,6 +392,7 @@ const NavMenu = ({
                         src={avatarImage.src}
                         width={avatarImage.width}
                         height={avatarImage.height}
+                        className="u-photo p"
                       />
                     </a>
                     <div className="CalloutHeading">Dan Levy</div>
@@ -305,7 +421,7 @@ const NavMenu = ({
                         </label>
                       </a>
 
-                      <a href="http://twitter.com/justsml" target="_blank">
+                      <a rel="me" href="http://twitter.com/justsml" target="_blank">
                         <span className="Icon">
                           <TwitterLogoIcon
                             className="svg-icon"
@@ -315,7 +431,7 @@ const NavMenu = ({
                         </span>
                         <label>Twitter</label>
                       </a>
-                      <a href="https://github.com/justsml" target="_blank">
+                      <a rel="me" href="https://github.com/justsml" target="_blank">
                         <span className="Icon">
                           <GitHubLogoIcon
                             className="svg-icon"
@@ -326,6 +442,7 @@ const NavMenu = ({
                         <label>GitHub</label>
                       </a>
                       <a
+                        rel="me"
                         href="https://linkedin.com/in/realdaniellevy"
                         target="_blank"
                       >
@@ -339,7 +456,20 @@ const NavMenu = ({
                         <label>LinkedIn</label>
                       </a>
 
-                      <a href="/docs/resume.pdf" target="_blank">
+                      <a
+                        rel="me"
+                        href="/open-source-journal">
+                        <span className="Icon">
+                          <NotepadText
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>OSS Log</label>
+                      </a>
+
+                      <a rel="me" href="/docs/resume.pdf" target="_blank">
                         <span className="Icon">
                           <RocketIcon
                             className="svg-icon"

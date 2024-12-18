@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title:  "When AI Fails & the Crashing Robotic Cars"
 subTitle: "Google's self-driving cars are in 2x as many accidents as human drivers"
 date: 2015-12-18

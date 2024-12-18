@@ -1,13 +1,18 @@
+
+import dotenv from "dotenv";
+dotenv.config();
+
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
-// import partytown from "@astrojs/partytown";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+// import { rehypeHeadingIds } from '@astrojs/markdown-remark'
+// import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,6 +23,9 @@ export default defineConfig({
   },
   cacheDir: ".cache",
   site: "https://danlevy.net",
+  markdown: {
+  },
+  
   integrations: [
     pagefind(),
     react({}),
@@ -26,7 +34,10 @@ export default defineConfig({
       themes: ["dracula"],
       plugins: ["line-numbers"],
     }),
-    mdx(),
+    mdx({
+      // rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
+
+    }),
     sitemap(),
     tailwind({
       applyBaseStyles: false,

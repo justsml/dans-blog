@@ -2,7 +2,6 @@
 // cwebp -q 90 "$file" -o "${file%.*}.webp"
 
 import { exec } from "child_process";
-import { rmSync } from "fs";
 import { rm } from "fs/promises";
 import { promisify } from "util";
 
@@ -24,6 +23,7 @@ export async function convertToWebP(file: string) {
     // @ts-ignore
     console.error(`Error converting ${file} to webP: ${error.message}`);
     console.error(`🚨 Make sure cwebp is installed and in your PATH.`);
+    throw error;
   }
 }
 

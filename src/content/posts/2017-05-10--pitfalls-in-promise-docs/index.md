@@ -1,5 +1,5 @@
 ---
-social_image: ./mobile.webp
+social_image: ./desktop-social.webp
 title:  "Pitfalls in Promise Docs"
 subTitle: Avoiding issues from popular docs
 date: 2017-05-10

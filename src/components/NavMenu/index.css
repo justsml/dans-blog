@@ -330,7 +330,7 @@ pre {
 .NavigationMenuTrigger,
 .NavigationMenuLink {
   padding: 0.25rem 0.5rem;
-  outline: none;
+  /* outline: none; */
   user-select: none;
   font-weight: 500;
   line-height: 1;
@@ -582,7 +582,7 @@ pre {
 }
 .ListItemLink {
   display: block;
-  outline: none;
+  /* outline: none; */
   text-decoration: none;
   user-select: none;
   padding: .75rem;
@@ -621,13 +621,14 @@ pre {
   border-radius: .5rem;
   padding: 1.5rem;
   text-decoration: none;
-  outline: none;
+  /* outline: none; */
   user-select: none;
 
   a {
     color: #ffffff;
   }
 }
+
 .Callout:focus {
   box-shadow: 0 0 0 2px var(--neon-pink);
 }
@@ -830,4 +831,24 @@ pre {
   to {
     opacity: 0;
   }
+}
+
+:focus {
+  outline: 2px solid var(--neon-pink) !important;
+  /* box-shadow: 0 0 0 3px var(--neon-pink); */
+}
+
+button:focus {
+  outline: 2px solid var(--neon-pink) !important;
+  /* box-shadow: 0 0 0 3px var(--neon-pink); */
+}
+
+span.icon-link {
+  display: inline-block;
+  color: var(--fs);
+  /* background-image: var(--icon-link-svg); */
+  background-image: var(--icon-external-link-svg);
+  
+  width: 1.5rem;
+  height: 1.5rem;
 }

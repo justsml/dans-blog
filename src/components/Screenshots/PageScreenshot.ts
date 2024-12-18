@@ -8,10 +8,10 @@ type ScreenshotOptions = {
   outputPath?: string;
   width?: number;
   height?: number;
-  selector?: string;
   scrollTo?: string;
   zoom?: number;
   delayMs?: number;
+  selector?: string;
   selectorPathMap?: Record<string, string>;
 };
 
@@ -59,7 +59,10 @@ class ScreenshotService {
       throw new Error("Browser is not initialized. Please call init() first.");
     }
 
-    const page: Page = await this.browser.newPage();
+    const page: Page = await this.browser.newPage({
+      viewport: { width: 1024, height: 720 },
+      deviceScaleFactor: 4,
+    });
     this.pages.push(page);
     await page.goto(url);
     log(`Navigated to ${url}`);
@@ -82,12 +85,17 @@ class ScreenshotService {
     scrollTo,
     zoom,
     delayMs,
-  }: ScreenshotOptions) {
+    overrideClassName = this.overrideClassName,
+  }: ScreenshotOptions & {
+    overrideClassName?: string;
+  }): Promise<Buffer | null> {
     if (!this.browser) {
       throw new Error("Browser is not initialized. Please call init() first.");
     }
 
-    const page: Page = await this.browser.newPage();
+    const page: Page = await this.browser.newPage({
+      deviceScaleFactor: 4,
+    });
 
     if (width && height) {
       await page.setViewportSize({ width: width, height: height });
@@ -108,10 +116,10 @@ class ScreenshotService {
 
     if (delayMs) await page.waitForTimeout(delayMs);
 
-    if (this.overrideClassName) {
+    if (overrideClassName) {
       await page.evaluate((overrideClassName) => {
         document.body.classList.add(overrideClassName);
-      }, this.overrideClassName);
+      }, overrideClassName);
     }
 
     if (zoom && zoom > 0 && zoom < 10)
@@ -147,7 +155,7 @@ class ScreenshotService {
       console.log(`Screenshot saved to ${outputPath}`);
     } else {
       await page.evaluate(() => {
-        document.body.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
       });
       screenshotBuffer = await page.screenshot({
         path: outputPath,

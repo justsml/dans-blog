@@ -1,17 +1,32 @@
 ---
+import clsx from "clsx";
 import { PostCollections } from "../shared/dataCache.tsx";
 import { slugify } from "../shared/pathHelpers.ts";
 
 type Props = {
   category?: string;
+  className?: string;
 };
 
-const { category } = Astro.props;
-const posts = PostCollections.getPostsByCategory(category ?? '');
+const { category, className } = Astro.props;
+const posts = PostCollections.getPostsByCategory(category ?? "");
 const count = posts.length;
 
+// HACK: Check if we are in "quiz" land, and instead link to the challenges page
+const getHref = (category: string) =>
+  category.toLowerCase() === "quiz"
+    ? `/challenges/`
+    : `/category/${slugify(category)}`;
 ---
 
-{category && <label class="category-link" title={count >= 2 ? `${count} posts` : `${count} post`}>
-  {count > 2 ? <a href={`/category/${slugify(category)}`}>{category}</a> : category} ({count})
-</label>}
+{
+  category && (
+    <label
+      class={clsx("category-link", className)}
+      title={count >= 2 ? `${count} posts` : `${count} post`}
+    >
+      {count > 2 ? <a href={getHref(category)}>{category}</a> : category} (
+      {count})
+    </label>
+  )
+}
