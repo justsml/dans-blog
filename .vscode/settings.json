@@ -1,3 +1,23 @@
 {
-  "cssVarColorDecorator.supportedLanguages": ["css", "scss", "tailwindcss", "html"]
+  "cssVarColorDecorator.supportedLanguages": [
+    "css",
+    "scss",
+    "tailwindcss",
+    "html"
+  ],
+  "sqltools.useNodeRuntime": true,
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "cache",
+      "database": "${workspaceFolder:dans-blog}/.data/github-repo-cache.sqlite"
+    },
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "database": ".data/github-repo-cache.db",
+      "name": "cachedb"
+    }
+  ]
 }

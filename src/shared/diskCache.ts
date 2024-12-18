@@ -1,6 +1,6 @@
-import { SqliteCache } from "cache-sqlite-lru-ttl";
 import fs from "fs/promises";
 import ms from "ms";
+import createLocalCache from "./localCache.ts";
 
 const IS_PRODUCTION = import.meta.env.NODE_ENV !== "development";
 const GIST_TTL_DAYS = import.meta.env.GIST_TTL_DAYS ?? 31;
@@ -8,12 +8,15 @@ const ttl = Number(GIST_TTL_DAYS) < 1 ? 10 : Number(GIST_TTL_DAYS);
 
 const dbFilePath = ".data/danlevy-net-cache.db";
 
-const cache = new SqliteCache({
-  database: dbFilePath,
-  defaultTtlMs: ms(ttl + "d"),
-  maxItems: 10000,
-  // compress: true,
-});
+const cache = createLocalCache(dbFilePath);
+
+// const cache = new SqliteCache({
+//   database: dbFilePath,
+//   defaultTtlMs: ms(ttl + "d"),
+//   maxItems: 10000,
+//   // compress: true,
+// });
+// cache.
 
 if (IS_PRODUCTION) {
   const info = await getDbInfo();
@@ -22,7 +25,7 @@ if (IS_PRODUCTION) {
 
 export const diskCache = {
   async get(key: string): Promise<Record<string, unknown> | null> {
-    const data = await cache.get(key);
+    const data = await cache.get(key) as unknown as string;
     if (!data) return null;
     return JSON.parse(data);
   },
@@ -32,7 +35,10 @@ export const diskCache = {
     opts: {
       ttlMs?: number;
       compress?: boolean;
-    } = {}
+    } = {
+      ttlMs: ms(ttl + "d"),
+      compress: false
+    }
   ) {
     cache.set(key, JSON.stringify(value), opts);
     return value;

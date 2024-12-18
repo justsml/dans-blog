@@ -16,8 +16,9 @@ import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
 import { useCallback, useEffect, useState } from "react";
-import { SearchButton } from "../search/SearchButton";
+import { SearchButton } from "../SearchUI/SearchButton";
 import "./index.css";
+import { NotepadText } from "lucide-react";
 
 const NavMenu = ({
   categories,
@@ -70,7 +71,7 @@ const NavMenu = ({
     };
   }, []);
 
-  const handleMenuPageClick = (lbl: string, e: Event) => {
+  const handleMenuPageClick = (_lbl: string, e: Event) => {
     const target = e.target as HTMLElement;
     // const currentTarget = e.currentTarget as HTMLElement;
     const hasLink = target.closest("a");
@@ -155,11 +156,6 @@ const NavMenu = ({
   });
   //    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
 
-  const noOpChange = (value: string) => {
-    // NO OP - don't let component change panel open/close state!!!
-    // console.log("noOpChange", value);
-  };
-
   return (
     <NavigationMenu.Root
       className="NavigationMenuRoot"
@@ -196,7 +192,7 @@ const NavMenu = ({
                       style={{ background: "var(--neon-gg-bg)" }}
                     >
                       <div className="CalloutHeading">Quizzes</div>
-                      <p className="CalloutText">Try Dan's 10+ challenges!</p>
+                      <p className="CalloutText">Try Dan's Challenges!</p>
                     </div>
                   </a>
                 </NavigationMenu.Link>
@@ -314,6 +310,12 @@ const NavMenu = ({
                 </NavigationMenu.Link>
               </li>
               <ListItem
+                href="/open-source-journal"
+                title="Open Source Journal"
+              >
+                A journal of my open source contributions, projects, and experiments.
+              </ListItem>
+              <ListItem
                 href="https://dataanalyzer.app/"
                 title="DataAnalyzer.app"
               >
@@ -380,7 +382,7 @@ const NavMenu = ({
           <NavigationMenu.Trigger className="NavigationMenuTrigger">
             About <CaretDownIcon className="CaretDown" aria-hidden />
           </NavigationMenu.Trigger>
-          <NavigationMenu.Content className="NavigationMenuContent">
+          <NavigationMenu.Content className="NavigationMenuContent h-card">
             <ul className="List two contact-info-list">
               <li className="row-span-2">
                 <NavigationMenu.Link asChild>
@@ -390,6 +392,7 @@ const NavMenu = ({
                         src={avatarImage.src}
                         width={avatarImage.width}
                         height={avatarImage.height}
+                        className="u-photo p"
                       />
                     </a>
                     <div className="CalloutHeading">Dan Levy</div>
@@ -418,7 +421,7 @@ const NavMenu = ({
                         </label>
                       </a>
 
-                      <a href="http://twitter.com/justsml" target="_blank">
+                      <a rel="me" href="http://twitter.com/justsml" target="_blank">
                         <span className="Icon">
                           <TwitterLogoIcon
                             className="svg-icon"
@@ -428,7 +431,7 @@ const NavMenu = ({
                         </span>
                         <label>Twitter</label>
                       </a>
-                      <a href="https://github.com/justsml" target="_blank">
+                      <a rel="me" href="https://github.com/justsml" target="_blank">
                         <span className="Icon">
                           <GitHubLogoIcon
                             className="svg-icon"
@@ -439,6 +442,7 @@ const NavMenu = ({
                         <label>GitHub</label>
                       </a>
                       <a
+                        rel="me"
                         href="https://linkedin.com/in/realdaniellevy"
                         target="_blank"
                       >
@@ -452,7 +456,20 @@ const NavMenu = ({
                         <label>LinkedIn</label>
                       </a>
 
-                      <a href="/docs/resume.pdf" target="_blank">
+                      <a
+                        rel="me"
+                        href="/open-source-journal">
+                        <span className="Icon">
+                          <NotepadText
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>OSS Log</label>
+                      </a>
+
+                      <a rel="me" href="/docs/resume.pdf" target="_blank">
                         <span className="Icon">
                           <RocketIcon
                             className="svg-icon"

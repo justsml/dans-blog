@@ -1,3 +1,5 @@
+import type { Endpoints } from "@octokit/types";
+
 declare global {
   interface Window {
     __updateCounts: () => boolean;
@@ -7,13 +9,87 @@ declare global {
   }
 }
 
+export type SearchCommitsResponse =
+  Endpoints["GET /search/commits"]["response"]["data"];
+export type SearchIssuesResponse = Endpoints["GET /search/issues"]["response"]["data"];
+
+
+/**
+ * A repo which has been contributed to... By me.
+ * With extra data, like notes and a description override.
+ */
+export type Contribution = {
+  repo: string;
+  renamed?: string;
+  description_override: string;
+  notes: string;
+  date_created?: Date;
+  date_updated?: Date;
+  pull_request_url?: string;
+  issue_url?: string;
+  reaction_count?: number;
+  star_count?: number;
+  comment_count?: number;
+};
+
+export type LocalCache<TData = unknown> = {
+  set: <T = TData>(
+    key: string,
+    value: T,
+    opts?: { ttlMs?: number; compress?: boolean },
+  ) => Promise<void>;
+  get: <T = TData>(key: string) => Promise<T | undefined>;
+  delete: (key: string) => void;
+  clear: () => void;
+  close: () => void;
+};
+
+export type UserPullRequestData = {
+  repository: {
+    name: string;
+    description: string;
+    owner: string;
+    forks: number;
+    stars: number;
+    watchers: number;
+    openIssues: number;
+    primaryLanguage: string | null;
+  };
+  pullCount: number;
+  pullStats: {
+    additions: number;
+    deletions: number;
+    changedFiles: number;
+    comments: number;
+    reviews?: number;
+  },
+  pullRequests: Array<{
+    title: string;
+    url: string;
+    state: string;
+    number: number;
+    author: string;
+    createdAt: string;
+    mergedAt: string | null;
+    additions: number;
+    deletions: number;
+    changedFiles: number;
+    comments: number;
+    reviews: number;
+    mergedBy: string | null;
+    reviewRequests: Array<{
+      reviewer: string | null;
+    }>;
+  }>;
+};
+
 
 export type ArticlePost = {
   id: string;
   body?: string;
   slug: string;
   collection?: string;
-  
+
   data: {
     title: string;
     subTitle: string;
@@ -81,12 +157,12 @@ export interface Page<T = any> {
 
 export type PagePath = {
   params: {
-    page: string
-  },
+    page: string;
+  };
   props: {
     [key: string]: unknown;
-    page: Page<ArticlePost>
-  }
+    page: Page<ArticlePost>;
+  };
 };
 
 // ref: https://docs.astro.build/en/guides/routing/#the-page-prop

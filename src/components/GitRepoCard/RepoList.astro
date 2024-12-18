@@ -1,0 +1,56 @@
+---
+import { ossContributions } from "../../shared/ossData.ts";
+import { RepoCard } from "./RepoCard.tsx";
+import { GITHUB_HANDLE } from "../../consts.ts";
+import { makeLogs } from "../LogHelper.ts";
+import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
+import { _isValidRepo } from "../../shared/githubGqlApi.ts";
+import "./GitContribution.css";
+import clsx from "clsx";
+
+const { GITHUB_TOKEN } = process.env;
+
+type Props = {
+  className?: string;
+
+}
+
+if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
+  throw new Error("GITHUB_TOKEN is required to fetch GitHub data");
+
+const log = makeLogs("ossContributions");
+
+log("ossContributions", ossContributions.length);
+---
+
+<h3>My Open Source Contributions ({ossContributions.length})</h3>
+
+<p>This data is statically generated on each deploy.</p>
+<p>Last built: {new Date().toLocaleDateString()}</p>
+
+<section class={clsx("contrib-grid", Astro.props.className)}>
+  {
+    ossContributions.map(async (contrib) => {
+      const targetRepo = contrib.renamed ?? contrib.repo;
+      log("targetRepo", targetRepo);
+      if (!_isValidRepo(targetRepo)) {
+        log("Invalid Repo", targetRepo);
+        return null;
+      }
+      const pr = await fetchUserPullRequests(
+        targetRepo,
+        GITHUB_HANDLE,
+      );
+      log("pr", pr);
+
+      return (
+        <RepoCard
+          client:load
+          defaultPullData={pr}
+          contribution={contrib}
+          author={GITHUB_HANDLE}
+        />
+      );
+    })
+  }
+</section>

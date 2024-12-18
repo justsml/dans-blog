@@ -17,7 +17,7 @@
 
 ### Performance & LightHouse Scores
 
-- [ ] Re-organize CSS to reduce unused styles.
+- [ ] Re-organize CSS to reduce initial page load.
 - [ ] Minimize JS not needed on load.
 - [ ] Revisit lazy-loading nav menu.
 
@@ -145,6 +145,23 @@ Features:
 ## Helpers
 
 Browser snippets to run in console to better understand the main factors in your generated site's size in bytes.
+
+## Screenshot Related Stuff
+
+### Generate Quiz Question Screenshots
+
+```sh
+# Generate Screenshots for posts with "Quiz" in the title.
+bun run screenshots --filter=Quiz
+# All Posts
+bun run screenshots
+```
+
+```sh
+bun run ./screenshotter/basic.ts \
+  --output ./.screens \
+  --url https://danlevy.net/should-you-use-named-or-default-exports/,https://danlevy.net/protect-your-tokens/,https://danlevy.net/securely-using-environment-variables-in-nodejs/,https://danlevy.net/naming-things-real-good/,https://danlevy.net/amazing-resources/,https://danlevy.net/deathmatch-git-rebase-vs-merge/,https://danlevy.net/guerrilla-types-in-typescript/,https://danlevy.net/you-may-not-need-axios/,https://danlevy.net/docker-server-setup-notes/,https://danlevy.net/javascript-promises-quiz/,https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/
+```
 
 ### Misc DOM Helpers
 
