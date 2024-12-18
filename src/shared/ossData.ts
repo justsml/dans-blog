@@ -61,19 +61,19 @@ export const ossContributions: Contribution[] = [
     repo: "lord/slate",
     renamed: "slatedocs/slate",
     description_override: `Slate is a tool to generate modern documentation for libraries, SDKs, and APIs.`,
-    notes: `Fixed an issue around securely encoding HTML. Currently slate is used to <a href='https://fpromises.io' target='_blank'>document Dan's Functional Promises library at https://fpromises.io</a>`
+    notes: `Fixed an issue around securely encoding HTML. Currently slate is used to <a href='https://fpromises.io' target='_blank'>document Dan's Functional Promises library at fpromises.io</a>`
   },
   {
     repo: "gatsbyjs/gatsby",
     description_override: `Gatsby is a modern Static Site Generator for blazing fast websites.`,
     notes: `Fixed error handling in one of the built-in plugins. Dan's also a member of their GitHub team.`
   },
-  {
-    repo: "gruntjs/grunt",
-    description_override: `Grunt is one of the most successful build tools in the NodeJS ecosystem.`,
-    notes:
-      "Dan worked with Dave Methvin to improve the user experience around the console output & 3rd party tools."
-  },
+  // {
+  //   repo: "gruntjs/grunt",
+  //   description_override: `Grunt is one of the most successful build tools in the NodeJS ecosystem.`,
+  //   notes:
+  //     "Dan worked with Dave Methvin to improve the user experience around the console output & 3rd party tools."
+  // },
   {
     repo: "nodejitsu/node-http-proxy",
     renamed: "http-party/node-http-proxy",
