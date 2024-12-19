@@ -1,0 +1,22 @@
+# 6. Function Arguments
+
+Now as function parameters, what will this do?
+
+'use strict';
+function displayUser({
+  name = "Unknown",
+  age = -1,
+} = { place: "Unknown" }) {
+  console.log(`Hi ${name} from ${place}`);
+}
+displayUser({ name: "Dan" });
+------
+
+1. Hi Dan from undefined
+2. Hi Dan from Unknown
+3. Hi Dan from Denver
+4. Hi Unknown from Unknown
+5. Hi Unknown from Denver
+6. Error
+
+[credit](https://danlevy.net/)

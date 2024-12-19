@@ -1,0 +1,27 @@
+# 7. Function Arguments
+
+How are undefined values handled?
+
+'use strict';
+function displayPlace({
+  name = "N/A",
+  place = "N/A",
+  age = -1,
+} = { place: "Unknown" }) {
+  console.log(`${place}`);
+}
+displayPlace({ name: "Dan" });
+displayPlace({ name: "Dan", place: undefined });
+displayPlace({ name: "Dan", place: "Joburg" });
+------
+
+1. Unknown, Unknown, Joburg
+2. Unknown, Unknown, Unknown
+3. Unknown, `undefined`, Joburg
+4. N/A, `undefined`, Joburg
+5. N/A, Unknown, Joburg
+6. N/A, N/A, Joburg
+7. Unknown, N/A, Joburg
+8. Error
+
+[credit](https://danlevy.net/)

@@ -1,0 +1,17 @@
+# 9. File System
+
+How many times will the callback fire when a file is modified?
+
+import fs from 'fs';
+fs.watch('test.txt', (eventType, filename) => {
+  console.log(`${filename} was changed`);
+});
+// Then modify test.txt once
+------
+
+1. Once per file change
+2. Twice per file change
+3. Never
+4. Only on file deletion
+
+[credit](https://danlevy.net/)

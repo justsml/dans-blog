@@ -1,0 +1,16 @@
+# 6. Indexing
+
+Which index is better for this query?
+
+-- Query:
+SELECT * FROM students
+WHERE grade_level = 42
+  AND last_name IN ('Levy', 'Smith');
+------
+
+1. CREATE INDEX ON students.grade_level; CREATE ... students.last_name;
+2. CREATE INDEX ON students(grade_level);
+3. CREATE INDEX ON students(last_name, age);
+4. CREATE INDEX ON students(first_name, last_name, grade_level);
+
+[credit](https://danlevy.net/)
