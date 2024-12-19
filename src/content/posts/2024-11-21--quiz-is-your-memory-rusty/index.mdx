@@ -178,6 +178,60 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
 <Challenge
   client:load
+  index={0}
+  group="Reference Counting"
+  title="Rc (Reference Counting)"
+  options={[
+    { text: "Rc is used for single-threaded environments" },
+    { text: "Rc is used for multi-threaded environments", isAnswer: true },
+    { text: "Rc is only used for immutable data" },
+    { text: "Rc is only used for mutable data" },
+    { text: "Rc is not used in Rust" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the primary use case for Rc (Reference Counting) in Rust?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Rc is used in multi-threaded environments where multiple threads need to access the same data. It's a form of garbage collection that allows multiple owners of the same data.
+    Check out the <a href="https://doc.rust-lang.org/std/rc/index.html">Rc documentation</a> for more information.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="RefCell"
+  title="RefCells and Rw"
+  options={[
+    { text: "RefCell is used for mutable borrows, Rw for immutable" },
+    { text: "Rw is used for mutable borrows, RefCell for immutable" },
+    { text: "RefCell and Rw are used for the same purpose" },
+    { text: "RefCell is only used for single-threaded environments", isAnswer: true },
+    { text: "Rw is only used for multi-threaded environments" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the primary difference between RefCell and Rw in Rust?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    RefCell is used for single-threaded environments where you need to mutate data behind a shared reference. Rw, on the other hand, is used for read-write locks in multi-threaded environments.
+    Check out the <a href="https://doc.rust-lang.org/std/cell/index.html">RefCell documentation</a> and <a href="https://doc.rust-lang.org/std/sync/struct.RwLock.html">RwLock documentation</a> for more information.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
   index={3}
   group="Smart Pointers"
   title="Box Smart Pointer"
