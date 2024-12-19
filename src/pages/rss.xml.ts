@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
   const posts = (await getCollection("posts")).filter(
     (post: any) => !post.data.hidden
     // (post: any) => !post.data.hidden && post.data?.title?.includes("Bash"),
-  );
+  ).reverse();
 
   return rss({
     title: SITE_TITLE,
