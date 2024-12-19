@@ -1,5 +1,6 @@
 ---
-unlisted: false
+unlisted: true
+draft: false
 title: "Quiz: Essential Rust Memory Management"
 subTitle: "(Borrow) check yo self before you wreck yo self! 🦀"
 label: Memory, man
@@ -15,20 +16,20 @@ cover_icon: fade-to-clouds-square.webp
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
-<p class="inset">Think you know Rust's memory model? 🦀</p>
+<p class="inset">Ready to test your Rust memory management skills? 🦀</p>
 
-This quiz will test your understanding of Rust's ownership system, borrowing rules, lifetimes, and pointers.
+This quiz will challenge your understanding of Rust's ownership system, borrowing rules, lifetimes, and smart pointers.
 
-**Note:** Apologies in advance for the ~50-column formatting. I want the text to be readable on all devices.&#160;😅&#160;&#160;(Open to suggestions.)
+**Note:** The questions are formatted in ~50-column width to ensure readability across all devices. (Suggestions for improvement are welcome!)
 
-So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just kidding, let's Rust! 🦀
+Whether you're a seasoned Rustacean or just getting started with memory management, this quiz will help reinforce your knowledge. **Let's dive in!** 🦀
 
 <QuizUI>
 
 <Challenge
   client:load
   index={0}
-  group="Ownership Basics"
+  group="Warmup"
   title="Basic Move Semantics"
   options={[
     {text: 'Hello, !'},
@@ -63,6 +64,64 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     1. Clone the string: `let greeting = philosopher.clone();`
     2. Use a reference: `let greeting = &philosopher;`
     3. Use a string slice: `let greeting = &philosopher[..]`
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Ownership"
+  title="Move Semantics with Functions"
+  options={[
+    {text: 'Prints both lines'},
+    {text: 'Prints first line only'},
+    {text: 'Compilation Error', isAnswer: true},
+    {text: 'Runtime Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    fn take_ownership(text: String) {
+        println!("Inside: {}", text);
+    }
+
+    fn main() {
+        let wisdom = String::from("Know thyself");
+        take_ownership(wisdom);
+        println!("Outside: {}", wisdom);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
+
+    To fix, we have several options:
+    1. Pass by reference:
+    ```rust
+    fn borrow_it(text: &String) {
+        println!("Inside: {}", text);
+    }
+    borrow_it(&wisdom);
+    ```
+
+    2. Clone the value:
+    ```rust
+    take_ownership(wisdom.clone());
+    ```
+
+    3. Return ownership:
+    ```rust
+    fn take_and_return(text: String) -> String {
+        println!("Inside: {}", text);
+        text
+    }
+    let wisdom = take_and_return(wisdom);
+    ```
   </div>
   </slot>
 </Challenge>
@@ -112,6 +171,218 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
     } // ref1 goes out of scope here
     let ref2 = &mut wisdom;
     ref2.push_str(" out of things to laugh at.");
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Lifetime Elision"
+  title="Implicit Lifetimes"
+  options={[
+    {text: 'Compiles successfully', isAnswer: true},
+    {text: 'Error: missing lifetime specifier'},
+    {text: 'Error: explicit lifetime required'},
+    {text: 'Error: lifetime mismatch'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    This one is about Lifetime Elision rules. (`Lifetime Elision Rules` sounds like a dope band name, doesn't it?)
+    ```rust
+    fn first_word(
+      s: &str
+    ) -> &str {
+        match s.find(' ') {
+            Some(pos) => &s[0..pos],
+            None => s,
+        }
+    }
+    fn main() {
+      let name = String::from("Seneca the Younger");
+      let first = first_word(&name);
+      println!("Hello, {}", first);
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This compiles due to Rust's lifetime elision rules. The compiler automatically assigns lifetimes in simple cases.
+
+    The above is equivalent to:
+    ```rust
+    fn first_cat<'a>(
+        s: &'a str
+    ) -> &'a str {
+        // ...
+    }
+    ```
+
+    Elision rules:
+    1. Each parameter gets its own lifetime
+    2. If there's exactly one input lifetime, it's assigned to all outputs
+    3. If there's a `&self` parameter, its lifetime is assigned to all outputs
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Smart Pointers"
+  title="Box Smart Pointer"
+  options={[
+    {text: '5'},
+    {text: 'null'},
+    {text: 'Compilation Error'},
+    {text: 'Stack overflow', isAnswer: true}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens when you try to run this code?
+    ```rust
+    #[derive(Debug)]
+    enum CatList {
+        Cons(i32, CatList),
+        Nil,
+    }
+
+    fn main() {
+        let catlist = CatList::Cons(1,
+            CatList::Cons(2,
+                CatList::Cons(3,
+                    CatList::Nil)));
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    _Oh no, infinite cat `Box\<\>`!_
+    
+    This recursive type has infinite size at compile time. Rust needs to know the size of types at compile time, but `CatList` contains itself, creating an infinite cycle.
+
+    Fix using `Box<T>`:
+    ```rust
+    #[derive(Debug)]
+    enum CatList {
+        Cons(i32, Box<CatList>),
+        Nil,
+    }
+    ```
+
+    `Box<T>` provides a known-size pointer to heap-allocated data.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Reference Counting"
+  title="Rc Smart Pointer"
+  options={[
+    {text: 'Reference count: 1'},
+    {text: 'Reference count: 2'},
+    {text: 'Reference count: 3', isAnswer: true},
+    {text: 'Compilation Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    use std::rc::Rc;
+
+    fn main() {
+        let text = 
+            Rc::new(
+                String::from("Meditations")
+            );
+        let marcus = Rc::clone(&text);
+        let aurelius = Rc::clone(&text);
+        println!(
+            "Reference count: {}",
+            Rc::strong_count(&text)
+        );
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    `Rc<T>` (Reference Counting) allows multiple ownership by tracking the number of references to a value.
+
+    In this code:
+    1. Initial creation: count = 1
+    2. `marcus` clone: count = 2
+    3. `aurelius` clone: count = 3
+
+    Note that `Rc::clone` doesn't make a (deep) copy - it just increments the reference count.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Lifetimes"
+  title="Struct Lifetimes"
+  options={[
+    {text: 'Compiles successfully'},
+    {text: 'Error: missing lifetime specifier', isAnswer: true},
+    {text: 'Error: lifetime mismatch'},
+    {text: 'Error: invalid reference'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    struct Philosopher {
+        name: &str,
+        quote: &str,
+    }
+
+    fn main() {
+        let phil = Philosopher {
+            name: "Seneca",
+            quote: "Luck happens \
+                    when preparation \
+                    meets opportunity",
+        };
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Structs containing references must specify lifetimes:
+
+    ```rust
+    struct Philosopher<'a> {
+        name: &'a str,
+        quote: &'a str,
+    }
+    ```
+
+    This tells the compiler:
+    - Both references live at least as long as 'a
+    - The struct cannot outlive the referenced data
+    - All fields with references must use the same lifetime or specify different ones
+
+    Alternative: Own the data instead:
+    ```rust
+    struct Philosopher {
+        name: String,
+        quote: String,
+    }
     ```
   </div>
   </slot>
@@ -178,160 +449,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
 <Challenge
   client:load
-  index={0}
-  group="Reference Counting"
-  title="Rc (Reference Counting)"
-  options={[
-    { text: "Rc is used for single-threaded environments" },
-    { text: "Rc is used for multi-threaded environments", isAnswer: true },
-    { text: "Rc is only used for immutable data" },
-    { text: "Rc is only used for mutable data" },
-    { text: "Rc is not used in Rust" },
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What is the primary use case for Rc (Reference Counting) in Rust?
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    Rc is used in multi-threaded environments where multiple threads need to access the same data. It's a form of garbage collection that allows multiple owners of the same data.
-    Check out the <a href="https://doc.rust-lang.org/std/rc/index.html">Rc documentation</a> for more information.
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={1}
-  group="RefCell"
-  title="RefCells and Rw"
-  options={[
-    { text: "RefCell is used for mutable borrows, Rw for immutable" },
-    { text: "Rw is used for mutable borrows, RefCell for immutable" },
-    { text: "RefCell and Rw are used for the same purpose" },
-    { text: "RefCell is only used for single-threaded environments", isAnswer: true },
-    { text: "Rw is only used for multi-threaded environments" },
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What is the primary difference between RefCell and Rw in Rust?
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    RefCell is used for single-threaded environments where you need to mutate data behind a shared reference. Rw, on the other hand, is used for read-write locks in multi-threaded environments.
-    Check out the <a href="https://doc.rust-lang.org/std/cell/index.html">RefCell documentation</a> and <a href="https://doc.rust-lang.org/std/sync/struct.RwLock.html">RwLock documentation</a> for more information.
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={3}
-  group="Smart Pointers"
-  title="Box Smart Pointer"
-  options={[
-    {text: '5'},
-    {text: 'null'},
-    {text: 'Compilation Error'},
-    {text: 'Stack overflow', isAnswer: true}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What happens when you try to run this code?
-    ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, CatList),
-        Nil,
-    }
-
-    fn main() {
-        let catlist = CatList::Cons(1,
-            CatList::Cons(2,
-                CatList::Cons(3,
-                    CatList::Nil)));
-    }
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    _Oh no, infinite cat `Box\<\>`!_
-    
-    This recursive type has infinite size at compile time. Rust needs to know the size of types at compile time, but `CatList` contains itself, creating an infinite cycle.
-
-    Fix using `Box<T>`:
-    ```rust
-    #[derive(Debug)]
-    enum CatList {
-        Cons(i32, Box<CatList>),
-        Nil,
-    }
-    ```
-
-    `Box<T>` provides a known-size pointer to heap-allocated data.
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={4}
-  group="Reference Counting"
-  title="Rc Smart Pointer"
-  options={[
-    {text: 'Reference count: 1'},
-    {text: 'Reference count: 2'},
-    {text: 'Reference count: 3', isAnswer: true},
-    {text: 'Compilation Error'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    ```rust
-    use std::rc::Rc;
-
-    fn main() {
-        let text = 
-            Rc::new(
-                String::from("Meditations")
-            );
-        let marcus = Rc::clone(&text);
-        let aurelius = Rc::clone(&text);
-        println!(
-            "Reference count: {}",
-            Rc::strong_count(&text)
-        );
-    }
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    `Rc<T>` (Reference Counting) allows multiple ownership by tracking the number of references to a value.
-
-    In this code:
-    1. Initial creation: count = 1
-    2. `marcus` clone: count = 2
-    3. `aurelius` clone: count = 3
-
-    Note that `Rc::clone` doesn't make a (deep) copy - it just increments the reference count.
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={5}
+  index={7}
   group="RefCells"
   title="RefCell Behavior"
   options={[
@@ -379,32 +497,27 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
 <Challenge
   client:load
-  index={6}
-  group="Lifetime Elision"
-  title="Implicit Lifetimes"
+  index={11}
+  group="Mutability"
+  title="Cell vs RefCell"
   options={[
-    {text: 'Compiles successfully', isAnswer: true},
-    {text: 'Error: missing lifetime specifier'},
-    {text: 'Error: explicit lifetime required'},
-    {text: 'Error: lifetime mismatch'}
+    {text: 'Prints: 42, 43', isAnswer: true},
+    {text: 'Prints: 43, 43'},
+    {text: 'Compilation Error'},
+    {text: 'Runtime Panic'}
   ]}
 >
   <slot name="question">
   <div className="question">
-    This one is about Lifetime Elision rules. (`Lifetime Elision Rules` sounds like a dope band name, doesn't it?)
     ```rust
-    fn first_word(
-      s: &str
-    ) -> &str {
-        match s.find(' ') {
-            Some(pos) => &s[0..pos],
-            None => s,
-        }
-    }
+    use std::cell::Cell;
+
     fn main() {
-      let name = String::from("Seneca the Younger");
-      let first = first_word(&name);
-      println!("Hello, {}", first);
+        let life = Cell::new(42);
+        let meaning = &life;
+        println!("{}", life.get());
+        meaning.set(43);
+        println!("{}", life.get());
     }
     ```
   </div>
@@ -412,28 +525,79 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
   <slot name='explanation'>
   <div className="explanation">
-    This compiles due to Rust's lifetime elision rules. The compiler automatically assigns lifetimes in simple cases.
+    `Cell<T>` provides "interior mutability" but:
+    - Only works with Copy types or by moving values
+    - No borrowing API (unlike `RefCell`)
+    - Get/set operations always copy or move
 
-    The above is equivalent to:
-    ```rust
-    fn first_cat<'a>(
-        s: &'a str
-    ) -> &'a str {
-        // ...
-    }
-    ```
+    Key differences from `RefCell`:
+    - `Cell`: Simple values, no borrowing
+    - `RefCell`: Complex values, runtime borrowing checks
 
-    Elision rules:
-    1. Each parameter gets its own lifetime
-    2. If there's exactly one input lifetime, it's assigned to all outputs
-    3. If there's a `&self` parameter, its lifetime is assigned to all outputs
+    When to use each:
+    - `Cell`: Simple types that implement Copy
+    - `RefCell`: When you need to mutate through a shared reference
   </div>
   </slot>
 </Challenge>
 
 <Challenge
   client:load
-  index={7}
+  index={3}
+  group="Ref, see?"
+  title="Rc (Reference Counting)"
+  options={[
+    { text: "Rc is used for single-threaded environments" },
+    { text: "Rc is used for multi-threaded environments", isAnswer: true },
+    { text: "Rc is only used for immutable data" },
+    { text: "Rc is only used for mutable data" },
+    { text: "Rc is for remote control" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the primary use case for Rc (Reference Counting) in Rust?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Rc is used in multi-threaded environments where multiple threads need to access the same data. It's a form of garbage collection that allows multiple owners of the same data.
+    Check out the <a href="https://doc.rust-lang.org/std/rc/index.html">Rc documentation</a> for more information.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="RefCell"
+  title="RefCells and Rw"
+  options={[
+    { text: "RefCell is used for mutable borrows, Rw for immutable" },
+    { text: "Rw is used for mutable borrows, RefCell for immutable" },
+    { text: "RefCell and Rw are used for the same purpose" },
+    { text: "RefCell is only used for single-threaded environments", isAnswer: true },
+    { text: "Rw is only used for multi-threaded environments" },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the primary difference between RefCell and Rw in Rust?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    RefCell is used for single-threaded environments where you need to mutate data behind a shared reference. Rw, on the other hand, is used for read-write locks in multi-threaded environments.
+    Check out the <a href="https://doc.rust-lang.org/std/cell/index.html">RefCell documentation</a> and <a href="https://doc.rust-lang.org/std/sync/struct.RwLock.html">RwLock documentation</a> for more information.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
   group="Smart Pointers"
   title="Arc and Mutex"
   options={[
@@ -485,170 +649,7 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
 
 <Challenge
   client:load
-  index={8}
-  group="Ownership"
-  title="Move Semantics with Functions"
-  options={[
-    {text: 'Prints both lines'},
-    {text: 'Prints first line only'},
-    {text: 'Compilation Error', isAnswer: true},
-    {text: 'Runtime Error'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    ```rust
-    fn take_ownership(text: String) {
-        println!("Inside: {}", text);
-    }
-
-    fn main() {
-        let wisdom = String::from("Know thyself");
-        take_ownership(wisdom);
-        println!("Outside: {}", wisdom);
-    }
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
-
-    To fix, we have several options:
-    1. Pass by reference:
-    ```rust
-    fn borrow_it(text: &String) {
-        println!("Inside: {}", text);
-    }
-    borrow_it(&wisdom);
-    ```
-
-    2. Clone the value:
-    ```rust
-    take_ownership(wisdom.clone());
-    ```
-
-    3. Return ownership:
-    ```rust
-    fn take_and_return(text: String) -> String {
-        println!("Inside: {}", text);
-        text
-    }
-    let wisdom = take_and_return(wisdom);
-    ```
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={9}
-  group="Mutability"
-  title="Cell vs RefCell"
-  options={[
-    {text: 'Prints: 42, 43', isAnswer: true},
-    {text: 'Prints: 43, 43'},
-    {text: 'Compilation Error'},
-    {text: 'Runtime Panic'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    ```rust
-    use std::cell::Cell;
-
-    fn main() {
-        let life = Cell::new(42);
-        let meaning = &life;
-        println!("{}", life.get());
-        meaning.set(43);
-        println!("{}", life.get());
-    }
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    `Cell<T>` provides "interior mutability" but:
-    - Only works with Copy types or by moving values
-    - No borrowing API (unlike `RefCell`)
-    - Get/set operations always copy or move
-
-    Key differences from `RefCell`:
-    - `Cell`: Simple values, no borrowing
-    - `RefCell`: Complex values, runtime borrowing checks
-
-    When to use each:
-    - `Cell`: Simple types that implement Copy
-    - `RefCell`: When you need to mutate through a shared reference
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={10}
-  group="Lifetimes"
-  title="Struct Lifetimes"
-  options={[
-    {text: 'Compiles successfully'},
-    {text: 'Error: missing lifetime specifier', isAnswer: true},
-    {text: 'Error: lifetime mismatch'},
-    {text: 'Error: invalid reference'}
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    ```rust
-    struct Philosopher {
-        name: &str,
-        quote: &str,
-    }
-
-    fn main() {
-        let phil = Philosopher {
-            name: "Seneca",
-            quote: "Luck happens \
-                    when preparation \
-                    meets opportunity",
-        };
-    }
-    ```
-  </div>
-  </slot>
-
-  <slot name='explanation'>
-  <div className="explanation">
-    Structs containing references must specify lifetimes:
-
-    ```rust
-    struct Philosopher<'a> {
-        name: &'a str,
-        quote: &'a str,
-    }
-    ```
-
-    This tells the compiler:
-    - Both references live at least as long as 'a
-    - The struct cannot outlive the referenced data
-    - All fields with references must use the same lifetime or specify different ones
-
-    Alternative: Own the data instead:
-    ```rust
-    struct Philosopher {
-        name: String,
-        quote: String,
-    }
-    ```
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={11}
+  index={13}
   group="Smart Pointers"
   title="Weak References"
   options={[
@@ -695,8 +696,167 @@ So, are you ready to prove your Rust mastery? **Let's f*cking golang...** Just k
   </slot>
 </Challenge>
 
+<Challenge
+  client:load
+  index={14}
+  group="Memory Patterns"
+  title="RAII Pattern"
+  options={[
+    {text: 'Resource is freed after scope'},
+    {text: 'Resource leaks', isAnswer: true},
+    {text: 'Compilation Error'},
+    {text: 'Runtime Error'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What happens to the file handle in this code?
+    ```rust
+    use std::fs::File;
+    
+    struct FileWrapper {
+        file: File,
+    }
+    
+    fn main() {
+        let file = File::create("test.txt").unwrap();
+        let wrapper = FileWrapper { file };
+        // ... use wrapper ...
+        // No Drop implementation
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This demonstrates RAII (Resource Acquisition Is Initialization) in Rust. 
+    The `File` type implements `Drop`, so it's automatically closed when `wrapper` 
+    goes out of scope.
+
+    You could also implement custom cleanup:
+    ```rust
+    impl Drop for FileWrapper {
+        fn drop(&mut self) {
+            // Additional cleanup if needed
+        }
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={15}
+  group="Design Patterns"
+  title="Copy vs Clone"
+  options={[
+    {text: 'Compilation Error'},
+    {text: 'Deep copy created', isAnswer: true},
+    {text: 'Shallow copy created'},
+    {text: 'Move semantics applied'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```rust
+    #[derive(Clone)]
+    struct Philosophy {
+        school: String,
+        founder: String,
+    }
+
+    fn main() {
+        let stoicism = Philosophy {
+            school: String::from("Stoicism"),
+            founder: String::from("Zeno of Citium")
+        };
+        let new_school = stoicism.clone();
+        // Both still accessible
+        println!("{} - {}", 
+            stoicism.school, new_school.school);
+    }
+    ```
+    What happens when we clone the Philosophy struct?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This demonstrates the difference between Copy and Clone:
+    - `Copy` is implicit, bitwise, and for stack-only data
+    - `Clone` is explicit, can be customized, and works with heap data
+    
+    When to use each:
+    ```rust
+    // Use Copy for small, stack-only types
+    #[derive(Copy, Clone)]
+    struct Point(i32, i32);
+
+    // Use Clone for types with heap data
+    #[derive(Clone)]
+    struct Text {
+        content: String, // heap-allocated
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={16}
+  group="Best Practices"
+  title="Memory Optimization"
+  options={[
+    {text: '16 bytes'},
+    {text: '24 bytes', isAnswer: true},
+    {text: '32 bytes'},
+    {text: 'Depends on platform'}
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the size of this struct on a 64-bit system?
+    ```rust
+    struct Metadata {
+        id: u32,
+        name: String,
+        active: bool
+    }
+    ```
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Memory layout optimization is crucial for performance:
+    
+    ```rust
+    // Optimized version - 16 bytes
+    struct Metadata {
+        name: String,  // 8 bytes
+        id: u32,      // 4 bytes
+        active: bool  // 1 byte + 3 padding
+    }
+    ```
+
+    Key points:
+    - Field ordering affects size due to alignment
+    - String is just a pointer (8 bytes) on stack
+    - Padding is added for alignment requirements
+  </div>
+  </slot>
+</Challenge>
+
 </QuizUI>
 
-I hope you enjoyed it as much as I enjoyed writing it! 🦀
+Thanks for taking the quiz! If you enjoyed testing your Rust knowledge, check out my other [programming challenges](/challenges/)! 🧠
 
-Find more [via my Quiz Collection](/challenges/)! 🧠
+**Want to level up your Rust skills?** Here are some recommended resources:
+
+- [Rust Book - Chapter 4: Ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+- [Rust By Example - Memory Management](https://doc.rust-lang.org/rust-by-example/scope.html)
+- [Rust Reference - Memory Model](https://doc.rust-lang.org/reference/memory-model.html)
+

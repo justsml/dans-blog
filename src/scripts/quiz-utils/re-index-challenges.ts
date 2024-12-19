@@ -19,7 +19,10 @@ export async function reIndexChallenges(input = stdin, output = stdout) {
     output.write(updatedLine + "\n");
     // console.log(updatedLine);
   })
-  .on;
+  // .on("close", () => {
+  //   // output.w
+  // });
+  return output;
 }
 
 
