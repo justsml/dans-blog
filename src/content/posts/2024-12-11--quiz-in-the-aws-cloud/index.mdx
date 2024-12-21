@@ -6,7 +6,7 @@ label: AWS Storage
 category: Quiz
 subCategory: Cloud
 date: 2024-12-11
-modified: 2024-12-13
+modified: 2024-12-20
 tags: [quiz, aws, cloud, storage, databases, s3, dynamodb, rds, elasticache]
 
 cover_full_width: aws-cloud--city-focus-wide.webp
@@ -31,8 +31,9 @@ Get ready to prove your cloud expertise! 🚀
   title="S3 Trivia"
   options={[
     { text: "Server Storage v3" },
-    { text: "Sassy Storage Service" },
+    { text: "Storage as a Service" },
     { text: "Simple Storage Service", isAnswer: true },
+    { text: "Sassy Storage Service" },
     { text: "Simple Synchronized Store" },
   ]}
 >
@@ -64,9 +65,10 @@ Get ready to prove your cloud expertise! 🚀
   group="Schema less"
   title="DynamoDB"
   options={[
+    { text: "Columns are untyped" },
     { text: "Dynamic partition keys" },
-    { text: "All columns are untyped" },
     { text: "Store arbitrary properties", isAnswer: true },
+    { text: "Automatically managed JSON schema" },
     { text: "Relies on RDS for schema support" },
   ]}
 >
@@ -88,21 +90,61 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={2}
+  group="Schema less"
+  title="DynamoDB"
+  options={[
+    { text: "PutItem", hint: "Creates a new item, or replaces an old item with a new item." },
+    { text: "UpdateItem", isAnswer: true },
+    { text: "BatchWriteItem", hint: "Puts (inserts) OR deletes multiple items in a single call."  },
+    { text: "BatchUpdateItem", hint: "Does not exist." },
+    { text: "BatchUpsertItem", hint: "In DynamoDB?" },
+    { text: "TransactWriteItems", hint: "Combines multiple PutItem, UpdateItem, DeleteItem, and ConditionCheck operations into a single call." },
+    ]}
+>
+  <slot name="question">
+  <div className="question">
+    Most scalable way to handle many UPDATES to DynamoDB? (for example, backfilling a `status=active` column.)
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The key here is <b>updates</b>, not inserts or PUTs. If you're doing inserts, you can use `BatchWriteItem` or `TransactWriteItems`.
+
+  While `BatchWriteItem` can handle multiple operations, it's limited to PUTs and DELETES. `TransactWriteItems` is more powerful, but it's a bit of a sledgehammer for simple updates.
+  For simple updates, `UpdateItem` is the best choice. It allows you to UPDATE, or modify one or more attributes in an existing item.
+
+  The `UpdateItem` operation is the best way to handle multiple updates. It allows you to modify one or more attributes in an existing item.
+
+  The `UpdateItem` operation:
+  - Updates an existing item's attributes.
+  - Adds new attributes to an existing item.
+  - Removes attributes from an existing item.
+  - Conditionally performs the update if the item exists or meets certain conditions.
+
+  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
   group="Data Querying"
   title="Searchability"
   options={[
-    { text: "S3" },
-    { text: "RDS" },
-    { text: "Aurora" },
-    { text: "Neptune", isAnswer: true },
-    { text: "DynamoDB" },
-    { text: "CloudWatch" },
-    { text: "CloudTrail" },
+    { text: "S3", hint: "S3+Athena let's you query S3 objects!" },
+    { text: "RDS", hint: "SQL service..." },
+    { text: "Aurora", hint: "SQL service..." },
+    { text: "Snorlax", isAnswer: true },
+    { text: "DynamoDB", hint: "NoSQL can support SQL-style queries." },
+    { text: "CloudWatch", hint: "Monitoring service..." },
+    { text: "CloudTrail", hint: "Supports querying logs, often slowly." },
   ]}
 >
   <slot name="question">
   <div className="question">
-    Which of these real services CANNOT ❌ perform **row-level column** queries?
+    Which of these services CANNOT ❌ perform **SQL-style** queries?
   </div>
   </slot>
 
@@ -121,7 +163,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={3}
+  index={4}
   group="RDS"
   title="Multi-AZ Deployment"
   options={[
@@ -157,45 +199,45 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={4}
-  group="Spatial Awareness"
-  title="DB Capabilities"
+  index={3}
+  group="Data Querying"
+  title="Searchability"
+  difficulty="medium"
+  learningObjectives={[
+    "Get familiar with the query powers of different AWS services",
+    "Know which services support SQL-style queries",
+  ]}
   options={[
-    { text: "RDS" },
-    { text: "Aurora" },
-    { text: "DynamoDB" },
-    { text: "ElastiCache" },
-    { text: "OpenSearch" },
-    { text: "Redshift" },
-    { text: "Neptune", isAnswer: true },
+    { text: "S3", hint: "S3+Athena = query magic" },
+    { text: "RDS", hint: "SQL all the way" },
+    { text: "Aurora", hint: "Another SQL superstar" },
+    { text: "Simple Notification Service", isAnswer: true },
+    { text: "DynamoDB", hint: "NoSQL with a SQL twist" },
+    { text: "CloudWatch", hint: "Query those logs like a pro" },
+    { text: "CloudTrail", hint: "Logs, but slower" },
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Which data service DOES NOT ❌ support **geo spatial/proximity** searches?
-  </div>
+    <div className="question">
+      Which AWS service is **not** capable of performing SQL-style queries?
+    </div>
   </slot>
 
   <slot name="explanation">
-  <div className="explanation">
-  DynamoDB supports limited **geo spatial** queries using its `Geohash` indexing.
-  
-  RDS and Aurora support **geo spatial** queries using the `ST_Geometry`/`ST_Geography` data type.
-
-  OpenSearch (formerly Elasticsearch) is primarily a textual search engine, but it can be used for **geo spatial** queries using the `geo_point` data type.
-
-  Neptune is a graph database, so it technically supports **geo spatial** data - as long as its modeled using graph vertices and edges. It lacks native **PROXIMITY** queries, though it can usually be achieved by syncing to a GIS capable database where you can perform the queries.
-
-  If you guessed ElastiCache, it's based on Redis which added support for **geo spatial** queries in v3.2 (2016).
-  </div>
+    <div className="explanation">
+      <p>
+        So, you wanna know which AWS service doesn't do SQL-style queries? Well, let's break it down. S3 + Athena is a query powerhouse, and RDS, Aurora, and DynamoDB are all about SQL-like queries. CloudWatch and CloudTrail, yeah, they're all about logging, but you can still query those logs in clever ways.
+      </p>
+      <p>
+        Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. It's not designed for querying data, so it's the correct answer! 😉
+      </p>
+    </div>
   </slot>
 </Challenge>
 
-{/* Add question about Dynamo Batch operations */}
-
 <Challenge
   client:load
-  index={5}
+  index={6}
   group="DynamoDB: Batch!"
   title="Batch Operations"
   options={[
@@ -218,9 +260,8 @@ Get ready to prove your cloud expertise! 🚀
   <div className="explanation">
   The DynamoDB Clients are essentially all wrappers for the REST API.
   
-  
-
-  will accept **25** documents per HTTP `PUT` request. This is the default limit for batch operations.
+  The DynamoDB SDK can send **25** documents per HTTP `PUT` request. This is the default limit for batch operations.
+  {/* will accept **25** documents per HTTP `PUT` request. This is the default limit for batch operations. */}
 
   </div>
   </slot>
@@ -229,7 +270,7 @@ Get ready to prove your cloud expertise! 🚀
   
 <Challenge
   client:load
-  index={5}
+  index={7}
   group="S3 Security"
   title="S3 Bucket Policy"
   options={[
@@ -267,7 +308,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={6}
+  index={8}
   group="Aurora"
   title="Aurora Serverless"
   options={[
@@ -300,7 +341,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={7}
+  index={9}
   group="DynamoDB"
   title="Provisioned vs On-Demand Capacity"
   options={[
@@ -336,7 +377,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={8}
+  index={10}
   group="S3 Performance"
   title="S3 Performance Optimization"
   options={[
@@ -369,7 +410,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={9}
+  index={11}
   group="RDS Backup"
   title="RDS Backup Strategy"
   options={[
@@ -405,7 +446,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={10}
+  index={12}
   group="ElastiCache"
   title="Redis vs Memcached"
   options={[
@@ -441,7 +482,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={11}
+  index={13}
   group="DynamoDB Indexes"
   title="Global Secondary Index"
   options={[
@@ -474,7 +515,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={12}
+  index={14}
   group="S3 Lifecycle"
   title="S3 Lifecycle Management"
   options={[
@@ -506,7 +547,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={13}
+  index={15}
   group="Aurora Scaling"
   title="Aurora Read Scaling"
   options={[
@@ -539,7 +580,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={14}
+  index={16}
   group="RDS Security"
   title="RDS Encryption"
   options={[
@@ -571,7 +612,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={15}
+  index={17}
   group="DynamoDB Streams"
   title="DynamoDB Streams Purpose"
   options={[
@@ -603,7 +644,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={16}
+  index={18}
   group="S3 Transfer"
   title="Large File Transfer"
   options={[
