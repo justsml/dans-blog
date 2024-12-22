@@ -132,32 +132,33 @@ Get ready to prove your cloud expertise! 🚀
   index={3}
   group="Data Querying"
   title="Searchability"
+  difficulty="medium"
+  learningObjectives={[
+    "Get familiar with the query powers of different AWS services",
+    "Know which services support SQL-style queries",
+  ]}
   options={[
-    { text: "S3", hint: "S3+Athena let's you query S3 objects!" },
-    { text: "RDS", hint: "SQL service..." },
-    { text: "Aurora", hint: "SQL service..." },
-    { text: "Snorlax", isAnswer: true },
-    { text: "DynamoDB", hint: "NoSQL can support SQL-style queries." },
-    { text: "CloudWatch", hint: "Monitoring service..." },
-    { text: "CloudTrail", hint: "Supports querying logs, often slowly." },
+    { text: "S3", hint: "S3+Athena = query magic" },
+    { text: "RDS", hint: "SQL all the way" },
+    { text: "Aurora", hint: "Another SQL superstar" },
+    { text: "SNS", isAnswer: true },
+    { text: "DynamoDB", hint: "NoSQL with a SQL twist" },
+    { text: "CloudWatch", hint: "Query those logs like a pro" },
+    { text: "CloudTrail", hint: "Slow Logs as a Service" },
   ]}
 >
   <slot name="question">
-  <div className="question">
-    Which of these services CANNOT ❌ perform **SQL-style** queries?
-  </div>
+    <div className="question">
+      Which AWS service is **not** capable of performing SQL-style queries?
+    </div>
   </slot>
 
   <slot name="explanation">
-  <div className="explanation">
-  This one is a little tricky. It assumes you've got operator-level experience with some of these services.
+    <div className="explanation">
+      <p>So, you wanna know which AWS service doesn't do SQL-style queries? Well, let's break it down. S3 + Athena is a query powerhouse, and RDS, Aurora, and DynamoDB are all about SQL-like queries. CloudWatch and CloudTrail, yeah, they're all about logging, but you can still query those logs in clever ways.</p>
 
-  1. Not many folks know S3 objects can be queried (w/ Athena.) Supports several formats, including CSV, JSON+LD, and Parquet.
-  2. RDS, Aurora, and DynamoDB are traditional databases that support SQL-like queries.
-  3. CloudWatch and CloudTrail are monitoring services, however they both support querying logs. Output logs in JSON to get granular column-level filtering.
-
-  In the world of Graph Databases, you're **not querying rows and columns**, you're querying **vertices and edges.** This hints at a fundamentally different way of thinking about data. Using a term like "row" instead of "vertex" in the wrong context _could_ reveal your lack of experience to an expert or interviewer. 😅
-  </div>
+      <p>Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. It's not designed for querying data, so it's the correct answer! 😉</p>
+    </div>
   </slot>
 </Challenge>
 

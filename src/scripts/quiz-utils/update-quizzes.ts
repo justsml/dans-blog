@@ -5,7 +5,7 @@ let quizzes = globSync("./src/content/posts/*quiz*/index.mdx", {onlyFiles: true,
 
 // quizzes = quizzes.filter((quiz) => quiz.includes('rusty'));
 
-quizzes.forEach((quiz) => {
+quizzes.forEach((quiz: string) => {
   const re = /index=\{(\d+)\}/g;
   const originalContent  = readFileSync(quiz, 'utf-8');
   let content = originalContent;
