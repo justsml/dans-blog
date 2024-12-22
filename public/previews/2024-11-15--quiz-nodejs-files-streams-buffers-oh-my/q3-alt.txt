@@ -1,0 +1,17 @@
+# 3. Warmup: File System
+
+What’s the output order?
+
+import fs from 'fs';
+fs.readFile('test.txt', 'utf8', (err, data) => {
+  console.log(data);
+});
+console.log('Done');
+------
+
+1. Prints file content then "Done"
+2. Prints "Done" then file content
+3. Only prints file content
+4. Throws an error
+
+[credit](https://danlevy.net/)

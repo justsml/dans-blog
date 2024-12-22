@@ -1,0 +1,17 @@
+# 2. Handling Errors
+
+What will the output be for the following code?
+
+var p = new Promise((resolve, reject) => {
+  return Promise.reject(Error('The Fails!'))
+})
+p.catch(error => console.log(error.message))
+p.catch(error => console.log(error.message))
+------
+
+1. print message once
+2. print message twice
+3. UnhandledPromiseRejectionWarning
+4. process exits
+
+[credit](https://danlevy.net/)

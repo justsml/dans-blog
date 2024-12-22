@@ -1,0 +1,26 @@
+# 11. Nested Destructuring in TS
+
+Spot the type error:
+
+function greet({
+  name: {first = "N/A", last = "N/A"},
+  birth: {place = "N/A"} = {},
+  age = -1,
+}: {
+  name: {first?: string, last?: string};
+  birth: {place?: string};
+  age: number;
+}) {
+  console.log(`Hi ${first} ${last} from ${place}`);
+}
+greet({ name: {first: 'Dan'} });
+------
+
+1. Error: Property 'first' is missing
+2. Error: Property 'last' is missing
+3. Error: Property 'birth' is missing
+4. Error: Property 'age' is missing
+5. Error: Property 'place' is missing
+6. Error: 'string' has no properties in {...}
+
+[credit](https://danlevy.net/)

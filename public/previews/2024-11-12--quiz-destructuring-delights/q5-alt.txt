@@ -1,0 +1,27 @@
+# 5. Defaults
+
+What will this do?
+
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first = 'Unknown' },
+  birth: { place = 'Unknown' } = {},
+} = person;
+
+
+console.log(
+  `Hi ${first} from ${place}`,
+);
+------
+
+1. Hi Dan from Denver
+2. Hi Dan from Johannesburg
+3. Hi Dan from Unknown
+4. Hi Unknown from Unknown
+5. Hi Unknown from Denver
+6. Error
+
+[credit](https://danlevy.net/)

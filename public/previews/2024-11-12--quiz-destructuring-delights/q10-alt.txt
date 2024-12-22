@@ -1,0 +1,28 @@
+# 10. TypeScript: With Assignment
+
+Let’s try some renaming/assignment…
+
+'use strict';
+function displayPlace({
+  name = 'N/A',
+  place: location = 'N/A',
+}: {
+  name: string;
+  place: string;
+  age?: number;
+}) {
+  console.log(`${location}`);
+}
+displayPlace({ name: 'Dan', place: 'Denver' });
+------
+
+1. undefined
+2. null
+3. N/A
+4. Unknown
+5. Denver
+6. SyntaxError
+7. Error: Invalid type
+8. Error: Invalid Arguments
+
+[credit](https://danlevy.net/)

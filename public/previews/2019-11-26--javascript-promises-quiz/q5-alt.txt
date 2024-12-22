@@ -1,0 +1,22 @@
+# 5. Handling Errors
+
+What will the output be for the following code?
+
+new Promise((resolve, reject) => {
+    resolve('Success!')
+  })
+  .then(() => {
+    throw Error('Oh noes!')
+  })
+  .catch(error => {
+    return "actually, that worked"
+  })
+  .catch(error => console.log(error.message))
+------
+
+1. print message once
+2. print message twice
+3. UnhandledPromiseRejectionWarning
+4. nothing prints
+
+[credit](https://danlevy.net/)

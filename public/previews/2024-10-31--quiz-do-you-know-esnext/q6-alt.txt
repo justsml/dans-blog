@@ -1,0 +1,19 @@
+# 6. Promise.allSettled
+
+What will be the result of the following code?
+
+const promises = [
+  Promise.resolve('success'),
+  Promise.reject('error')
+];
+Promise.allSettled(promises).then(results => {
+  console.log(results[0].status + ': ' + results[0].value);
+});
+------
+
+1. Fulfilled: success
+2. Rejected: error
+3. Pending
+4. null
+
+[credit](https://danlevy.net/)

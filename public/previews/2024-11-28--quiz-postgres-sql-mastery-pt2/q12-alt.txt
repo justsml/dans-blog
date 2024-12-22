@@ -1,0 +1,16 @@
+# 12. Performance
+
+What does EXPLAIN ANALYZE do for UPDATE statements?
+
+EXPLAIN ANALYZE
+UPDATE students
+SET grade = grade + 1
+WHERE status = 'active';
+------
+
+1. Lite plan estimate
+2. Only works on SELECT
+3. Modifies data & emits plan
+4. Simulates execution to get a plan
+
+[credit](https://danlevy.net/)
