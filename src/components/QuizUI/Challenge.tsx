@@ -148,7 +148,9 @@ export default function Challenge({
     }
   };
 
+  const IGNORE_HINTS = 1;
   const [showHint, setShowHint] = useState<string | false>(false);
+  const [ignoreHintBy, setIgnoreHintBy] = useState<number>(IGNORE_HINTS);
 
   const handleAnswer = (option: Option) => {
     // console.log("Answering question:", title, question, option);
@@ -179,7 +181,16 @@ export default function Challenge({
     } else {
       setChallengeClass("incorrect shake");
       setIsCorrect(false);
-      if (option.hint) setShowHint(option.hint);
+      // decrement ignoreHintBy
+      if (ignoreHintBy > 0) {
+        console.log("Decrementing ignoreHintBy", ignoreHintBy);
+        setIgnoreHintBy(ignoreHintBy - 1);
+      }
+      if (option.hint && ignoreHintBy < 1) {
+        // check if we should ignore hints - 
+        setShowHint(option.hint);
+
+      }
     }
     logEvent("QuizAnswer", {
       isCorrect: option.isAnswer,
@@ -257,10 +268,14 @@ export default function Challenge({
       return (
         <a
           key={option.text}
-          className={classNames("option", {
-            "correct-answer": isCurrentOptionCorrectAnswer,
-            // "slideOutRight": isCorrect && !option.isAnswer,
-          }, 'mx-auto')}
+          className={classNames(
+            "option",
+            {
+              "correct-answer": isCurrentOptionCorrectAnswer,
+              // "slideOutRight": isCorrect && !option.isAnswer,
+            },
+            "mx-auto",
+          )}
           onClick={() => !isCorrect && handleAnswer(option)}
           // onTransitionEnd={(e) => {
           //   if (isCorrect && !option.isAnswer) {
@@ -275,7 +290,11 @@ export default function Challenge({
               title={`💡 Hint`}
               hint={_showHint}
               showHint={true}
-              onClose={() => setShowHint(false)}
+              onClose={(ignoreHintBy) => {
+                if (ignoreHintBy && !isNaN(ignoreHintBy) && ignoreHintBy >= 1)
+                  setIgnoreHintBy(ignoreHintBy);
+                setShowHint(false);
+              }}
             />
           )}
         </a>
@@ -297,7 +316,7 @@ export default function Challenge({
           &#160;
         </div>
         <h2 className="quiz-title" id={slugify(title)}>
-        <a href={`#qq-${sequenceNum}`}>{group}</a>
+          <a href={`#qq-${sequenceNum}`}>{group}</a>
         </h2>
       </div>
 

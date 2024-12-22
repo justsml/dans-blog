@@ -17,34 +17,42 @@ export function HintTooltip({
   className?: string;
   title?: string;
   showHint?: boolean;
-  onClose?: () => void;
+  onClose?: (ignoreForCount?: number | undefined) => void;
 }) {
   if (showHint) console.log(`Showing Hint: ${hint}`);
   return (
     <Popover
+      data-align="end"
       open={showHint}
       onOpenChange={(isOpen: boolean) => {
-        console.log("Popover.open", isOpen);
+        // console.log("Popover.open", isOpen);
         if (!isOpen) onClose?.();
       }}
     >
-      <PopoverTrigger />
-      <PopoverContent className={cx("w-80 hint-tooltip", className)}>
+      <PopoverTrigger>
+      </PopoverTrigger>
+      <PopoverContent className={cx("w-80 opacity-90 hint-tooltip", className)}>
         <div
           className="grid gap-4"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
-            console.log("PopoverContent.onClick", onClose);
             onClose?.();
-
           }}
         >
-          <div className="inner-tooltip">
+          <div className="inner-tooltip grid">
             {title && (
               <h4 className="font-medium leading-none my-2">{title}</h4>
             )}
             <p className="text-sm text-muted-foreground my-0">{hint}</p>
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button onClick={() => onClose?.()} variant="outline">
+              Hide
+            </Button>
+            <Button onClick={() => onClose?.(5)} variant="outline">
+              Hide next 5 Hints
+            </Button>
           </div>
         </div>
       </PopoverContent>
