@@ -48,7 +48,7 @@ export function HintTooltip({
           </div>
           <div className="flex justify-end gap-2">
             <Button onClick={() => onClose?.()} variant="outline">
-              Hide
+              Dismiss
             </Button>
             <Button onClick={() => onClose?.(5)} variant="outline">
               Hide next 5 Hints

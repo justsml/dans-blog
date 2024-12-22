@@ -187,9 +187,8 @@ export default function Challenge({
         setIgnoreHintBy(ignoreHintBy - 1);
       }
       if (option.hint && ignoreHintBy < 1) {
-        // check if we should ignore hints - 
+        // check if we should ignore hints -
         setShowHint(option.hint);
-
       }
     }
     logEvent("QuizAnswer", {
@@ -285,18 +284,16 @@ export default function Challenge({
           // }}
         >
           <label>{option.text}</label>
-          {_showHint && (
-            <HintTooltip
-              title={`💡 Hint`}
-              hint={_showHint}
-              showHint={true}
-              onClose={(ignoreHintBy) => {
-                if (ignoreHintBy && !isNaN(ignoreHintBy) && ignoreHintBy >= 1)
-                  setIgnoreHintBy(ignoreHintBy);
-                setShowHint(false);
-              }}
-            />
-          )}
+          <HintTooltip
+            title={`💡 Hint`}
+            hint={_showHint ? _showHint : ""}
+            showHint={_showHint ? true : false}
+            onClose={(ignoreHintBy) => {
+              if (ignoreHintBy && !isNaN(ignoreHintBy) && ignoreHintBy >= 1)
+                setIgnoreHintBy(ignoreHintBy);
+              setShowHint(false);
+            }}
+          />
         </a>
       );
     })

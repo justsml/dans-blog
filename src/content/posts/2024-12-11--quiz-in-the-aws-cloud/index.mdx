@@ -1,6 +1,6 @@
 ---
 unlisted: false
-title: "Quiz: AWS Storage: 20 Questions!"
+title: "Quiz: AWS Storage: 20+ Questions!"
 subTitle: "Can you navigate the labyrinth?"
 label: AWS Storage
 category: Quiz
@@ -200,7 +200,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={3}
+  index={5}
   group="Data Querying"
   title="Searchability"
   difficulty="medium"
@@ -209,13 +209,13 @@ Get ready to prove your cloud expertise! 🚀
     "Know which services support SQL-style queries",
   ]}
   options={[
-    { text: "S3", hint: "S3+Athena = query magic" },
-    { text: "RDS", hint: "SQL all the way" },
-    { text: "Aurora", hint: "Another SQL superstar" },
+    { text: "RDS", hint: "SQLing since 2009" },
+    { text: "Aurora", hint: "A SQL service introduced in 2015" },
+    { text: "S3/Athena", hint: "S3+Athena is sql-ish!" },
+    { text: "DynamoDB", hint: "That *query language* is awful SQL-like" },
+    { text: "CloudTrail", hint: "Audit logs are queryable" },
+    { text: "CloudWatch", hint: "CloudWatch supports log queries" },
     { text: "Simple Notification Service", isAnswer: true },
-    { text: "DynamoDB", hint: "NoSQL with a SQL twist" },
-    { text: "CloudWatch", hint: "Query those logs like a pro" },
-    { text: "CloudTrail", hint: "Logs, but slower" },
   ]}
 >
   <slot name="question">
@@ -227,10 +227,11 @@ Get ready to prove your cloud expertise! 🚀
   <slot name="explanation">
     <div className="explanation">
       <p>
-        So, you wanna know which AWS service doesn't do SQL-style queries? Well, let's break it down. S3 + Athena is a query powerhouse, and RDS, Aurora, and DynamoDB are all about SQL-like queries. CloudWatch and CloudTrail, yeah, they're all about logging, but you can still query those logs in clever ways.
+        So, can S3 really do query tricks? Definitely... With a little help from Athena. And RDS, Aurora, and DynamoDB are all about SQL-like queries.
+        CloudWatch and CloudTrail, yeah, they're all about logging and auditing events, but you can still query those logs.
       </p>
       <p>
-        Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. It's not designed for querying data, so it's the correct answer! 😉
+        Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. The closest thing SNS has to querying might be when combined with CloudWatch, or when you're debugging your message delivery.
       </p>
     </div>
   </slot>
@@ -239,39 +240,120 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={6}
-  group="DynamoDB: Batch!"
+  group="Batches!"
   title="Batch Operations"
   options={[
     { text: "1", isAnswer: true },
     { text: "10" },
-    { text: "25", hint: "Close..." },
+    { text: "25", hint: "Good guess..." },
     { text: "50" },
     { text: "100", hint: "Thinking of GetItem limit?" },
-    { text: "Unlimited when streaming" },
+    { text: "100 when streaming", hint: "If only there were better 'streaming' options..." },
     { text: "None of the above" },
   ]}
 >
   <slot name="question">
   <div className="question">
-    What's the maximum number of documents the DynamoDB SDK can send per HTTP `PUT` request?
+    What's the maximum number of documents DynamoDB can `UPDATE` per batch?
   </div>
   </slot>
 
   <slot name="explanation">
   <div className="explanation">
-  The DynamoDB Clients are essentially all wrappers for the REST API.
-  
-  The DynamoDB SDK can send **25** documents per HTTP `PUT` request. This is the default limit for batch operations.
-  {/* will accept **25** documents per HTTP `PUT` request. This is the default limit for batch operations. */}
+  The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
+
+  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation. 
 
   </div>
   </slot>
 </Challenge>
-  
-  
+
 <Challenge
   client:load
   index={7}
+  group="Again, batch!"
+  title="BatchGetItem Limits"
+  difficulty={2}
+  objectives={[
+    "Recall the maximum number of items allowed in a DynamoDB `BatchGetItem` request",
+    "Differentiate between `BatchWriteItem` and `BatchGetItem` operations",
+  ]}
+  options={[
+    { text: "25", hint: "That's the limit for `BatchWriteItem`." },
+    { text: "50", hint: "A bit higher for `BatchGetItem`." },
+    { text: "75", hint: "Close, but there's a round number." },
+    { text: "100", isAnswer: true },
+    { text: "200", hint: "A bit too high. Think smaller." },
+    { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      One more DynamoDB batch question!<br />
+      What's the maximum number of items you can retrieve using a single DynamoDB `BatchGetItem` request?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      The DynamoDB SDK allows you to retrieve up to **100** items in a single `BatchGetItem` request. This is higher than the limit for `BatchWriteItem`, which is 25 items.
+
+      Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="WebSockets"
+  title="WebSocket Wizardry"
+  difficulty={3}
+  objectives={[
+    "Understand WebSocket support across AWS services",
+    "Identify limitations of API Gateway with WebSockets",
+    "Compare WebSocket capabilities between different AWS compute services"
+  ]}
+  options={[
+    { text: "EC2" },
+    { text: "EKS" },
+    { text: "Lightsail" },
+    { text: "App Runner" },
+    { text: "API Gateway", isAnswer: true },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      Hey there! 👋 Time for a tricky one: Which AWS service says "nope" to 
+      full-featured WebSockets? (Hint: One of these doesn't play nice with 
+      stateful, direct connections! 🔌)
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      Gotcha! API Gateway is the odd one out here. While it does support WebSockets, 
+      it's more like "WebSockets with a twist" 🤔
+
+      Here's the scoop:
+      
+      - API Gateway only supports WebSockets with some limitations - no direct stateful 
+        connections and no binary data (you'll need to use base64 encoding instead)
+      
+      The others are much more WebSocket-friendly:
+      - Lightsail: Perfect for simple WebSocket setups 👌
+      - App Runner: Handles WebSockets like a champ
+      - EC2: Your classic "do whatever you want" option for WebSockets
+      - EKS: Great for running scalable WebSocket clusters
+
+      Pro tip: If you need raw WebSocket power, stick with the compute services!
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
   group="S3 Security"
   title="S3 Bucket Policy"
   options={[
@@ -309,7 +391,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={8}
+  index={10}
   group="Aurora"
   title="Aurora Serverless"
   options={[
@@ -342,7 +424,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={9}
+  index={11}
   group="DynamoDB"
   title="Provisioned vs On-Demand Capacity"
   options={[
@@ -378,7 +460,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={10}
+  index={12}
   group="S3 Performance"
   title="S3 Performance Optimization"
   options={[
@@ -411,7 +493,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={11}
+  index={13}
   group="RDS Backup"
   title="RDS Backup Strategy"
   options={[
@@ -447,19 +529,19 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={12}
+  index={14}
   group="ElastiCache"
   title="Redis vs Memcached"
   options={[
+    { text: "API-level compatibility" },
     { text: "Identical in all aspects" },
     { text: "Redis supports complex data structures", isAnswer: true },
     { text: "Memcached is always faster" },
-    { text: "No significant differences" }
   ]}
 >
   <slot name="question">
   <div className="question">
-    Key difference between Redis and Memcached in ElastiCache?
+    Key difference between `Redis` and `Memcached` in `ElastiCache`?
   </div>
   </slot>
 
@@ -483,7 +565,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={13}
+  index={15}
   group="DynamoDB Indexes"
   title="Global Secondary Index"
   options={[
@@ -516,7 +598,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={14}
+  index={16}
   group="S3 Lifecycle"
   title="S3 Lifecycle Management"
   options={[
@@ -548,40 +630,45 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={15}
+  index={17}
   group="Aurora Scaling"
-  title="Aurora Read Scaling"
+  title="Scaling Reads with Amazon Aurora"
+  difficulty={2}
+  objectives={[
+    "Recall the maximum number of read replicas supported by Amazon Aurora",
+    "Understand how read replicas enhance read scalability in Aurora"
+  ]}
   options={[
-    { text: "Limited to single read replica" },
-    { text: "Support up to 15 read replicas", isAnswer: true },
-    { text: "No read scaling possible" },
-    { text: "Unlimited read replicas" }
+    { text: "Limited to a single read replica", hint: "Think about Aurora's scalability features." },
+    { text: "Supports up to 15 read replicas", isAnswer: true },
+    { text: "No read scaling possible", hint: "Does that align with Aurora's capabilities?" },
+    { text: "Unlimited read replicas", hint: "There's a practical limit to consider." }
   ]}
 >
   <slot name="question">
-  <div className="question">
-    How many read replicas can Aurora support?
-  </div>
+    <div className="question">
+      What's the maximum number of read replicas Amazon Aurora supports?
+    </div>
   </slot>
 
   <slot name="explanation">
-  <div className="explanation">
-  Aurora Read Replica Capabilities:
-  - Up to 15 read replicas
-  - Near-instantaneous replication
-  - Minimal performance impact
-  - Helps distribute read workloads
+    <div className="explanation">
+      Amazon Aurora supports **up to 15 read replicas**, allowing you to significantly scale your read operations. These replicas benefit from:
 
-  Enables horizontal scaling for read-heavy applications.
+      - **Near-instantaneous replication** across replicas
+      - **Minimal performance impact** on the primary instance
+      - **Efficient distribution** of read workloads
 
-  [Aurora Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
-  </div>
+      This setup enables horizontal scaling for applications with heavy read demands.
+
+      [Learn more about Aurora Read Replicas](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
+    </div>
   </slot>
 </Challenge>
 
 <Challenge
   client:load
-  index={16}
+  index={18}
   group="RDS Security"
   title="RDS Encryption"
   options={[
@@ -613,7 +700,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={17}
+  index={19}
   group="DynamoDB Streams"
   title="DynamoDB Streams Purpose"
   options={[
@@ -645,7 +732,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={18}
+  index={20}
   group="S3 Transfer"
   title="Large File Transfer"
   options={[
@@ -682,3 +769,5 @@ Wow, that was quite a cloud storage adventure! 🚀☁️
 Think you've mastered AWS Storage Services? Keep learning and exploring!
 
 Check out more challenges at [Cloud Mastery](/challenges/)
+
+Legal: This quiz is for educational purposes only. All trademarks are property of their respective owners, especially the big guys.
