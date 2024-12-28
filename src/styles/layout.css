@@ -49,7 +49,7 @@
 
   .full-section {
     --padding-inline: 0;
-    width: 100vw;
+    /* width: 100vw; */
     grid-column: full-width;
   }
 
@@ -65,6 +65,11 @@
 
   > * {
     padding-inline: var(--padding-inline);
+  }
+
+  .e-content {
+    grid-template-columns: subgrid;
+    /* grid-template-rows: subgrid; */
   }
 }
 
@@ -90,7 +95,7 @@ article.content-grid {
   grid-column: content;
 }
 
-.content-grid>.breakout {
+.content-grid>.breakout, .content-grid>.e-content>.breakout {
   grid-column: breakout;
   border-left: .5rem solid var(--neon-pink);
   padding-left: 1rem;
@@ -98,7 +103,7 @@ article.content-grid {
   font-size: 120%;
 }
 
-.content-grid>.inset {
+.content-grid>.inset, .content-grid>.e-content>.inset {
   border-left: .25rem solid var(--neon-pink);
   margin-inline: 3rem;
   margin-block: 4rem 2rem;
@@ -110,7 +115,7 @@ article.content-grid {
   --gutter-size: 20vw;
 }
 
-.content-grid>.skinny {
+.content-grid>.skinny, .content-grid>.e-content>.skinny {
   grid-column: content;
   width: 100%;
   margin-block: 1.5rem;
@@ -132,7 +137,7 @@ article.content-grid {
 }
 
 /* a narrow "inlay"/"inset" section */
-.content-grid>.narrow {
+.content-grid>.narrow, .content-grid>.e-content>.narrow {
   grid-column: content;
   display: grid;
   justify-self: center;
@@ -142,7 +147,10 @@ article.content-grid {
 }
 
 .content-grid>.full-width,
-.content-grid> :where(astro-island, astro-slot)>.full-width {
+.content-grid> :where(astro-island, astro-slot)>.full-width,
+.content-grid>.e-content>.full-width,
+.content-grid>.e-content> :where(astro-island, astro-slot)>.full-width
+ {
   grid-column: full-width;
   display: grid;
   grid-template-columns: inherit;
