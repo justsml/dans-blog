@@ -1,6 +1,4 @@
 ---
-# hidden: true
-unlisted: false
 title: "From Zero to Regex Hero"
 subTitle: "Extract & Parse URL-like Strings with Regex"
 # social_image: mobile.webp
@@ -9,27 +7,20 @@ subCategory: Data Extraction
 date: 2024-12-27
 modified: 2024-12-28
 tags: [regex, url, data-extraction, data-processing]
-
+cover_full_width: regex-url-parsing-wide.webp
+cover_mobile: regex-url-parsing-square.webp
+cover_icon: regex-url-parsing-square.webp
 ---
 
 Extracting URL-like strings from raw text can feel like a never-ending game of whack-a-mole: punctuation, parenthetical wrappers, and ambiguous formatting all conspire to break your best-laid regular expressions. In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **vacuum up** suspicious URL-ish text first, and then handle validation in a subsequent pipeline.
 
 *(Original inspiration and discussion can be found here: [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727))*
 
-[TL;DR: Check out regex101.com for a live demo of the regex in action.](https://regex101.com/r/jO8bC4/62)
+TL;DR: Check out [a live demo of the regex](https://regex101.com/r/jO8bC4/62) in action.
 
 ---
 
 ## 1. Overview: Two Steps to URL Extraction
-
-```mermaid
-flowchart LR
-    A((Start)) --> B{Hoover URL-like Strings}
-    B --> C[Apply Step 1 Regex]
-    B --> D[Collect All Matches]
-    C --> E(End of Step 1)
-    D --> E
-```
 
 1. **Hoover Up Everything**
    Cast a wide net to grab all strings that *could* be URLs. This is where our "intimidating" regex flexes its muscles.
@@ -43,23 +34,17 @@ flowchart LR
 
 Below is a one-line regex designed to catch a variety of protocols, domains, paths, and optional query/fragment sections:
 
-```regex
-/([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~\+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/
+```regex frame="code" title="URL-like String Extractor"
+/([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/
 ```
 
 ### How It Works, Step-by-Step
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Regex
-    User->>Regex: Provide raw text
-    Regex->>Regex: 1) Capture protocol ([a-z0-9-]+://+)
-    Regex->>Regex: 2) Capture domain/host ([^/\s]+)
-    Regex->>Regex: 3) Capture path ([a-z0-9\-@\^=%&;\/~\+]*)
-    Regex->>Regex: 4) Optionally capture query ([\?]?([^ \#\r\n]*))
-    Regex->>Regex: 5) Optionally capture fragment (#?([^ \#\r\n]*))
-    Regex-->>User: Return matched URLs
+```text
+1) Capture protocol ([a-z0-9-]+://+)
+2) Capture domain/host ([^/\s]+)
+4) Optionally capture query ([\?]?([^ \#\r\n]*))
+5) Optionally capture fragment (#?([^ \#\r\n]*))
 ```
 
 - **Group 1** `([a-z0-9-]+\:\/+)`
@@ -85,7 +70,7 @@ This pattern is **NOT meant to be a perfect RFC-compliant** solution—it's deli
 
 Here's a short JavaScript example that uses this regex to capture URL-like strings from a sample input:
 
-```js
+```js frame="code" title="js-example.js"
 const text = `
 Check this out: https://example.com/path?query=123#section
 And also (ftp://files.server.org/index).
@@ -99,7 +84,7 @@ const matches = [...text.matchAll(urlRegex)].map(match => match[0]);
 console.log(matches);
 ```
 
-Result (depending on your text input):
+Result (depending on your input):
 
 ```json
 [
@@ -109,7 +94,6 @@ Result (depending on your text input):
 ]
 ```
 
----
 
 ## Next Steps
 
