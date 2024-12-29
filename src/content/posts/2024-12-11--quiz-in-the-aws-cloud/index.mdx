@@ -129,35 +129,37 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={3}
-  group="Data Querying"
-  title="Searchability"
-  difficulty="medium"
-  learningObjectives={[
-    "Get familiar with the query powers of different AWS services",
-    "Know which services support SQL-style queries",
+  group="Query Capabilities"
+  title="Advanced Search Features"
+  difficulty={3}
+  objectives={[
+    "Understand advanced query capabilities across AWS services",
+    "Compare full-text search features"
   ]}
   options={[
-    { text: "S3", hint: "S3+Athena = query magic" },
-    { text: "RDS", hint: "SQL all the way" },
-    { text: "Aurora", hint: "Another SQL superstar" },
-    { text: "SNS", isAnswer: true },
-    { text: "DynamoDB", hint: "NoSQL with a SQL twist" },
-    { text: "CloudWatch", hint: "Query those logs like a pro" },
-    { text: "CloudTrail", hint: "Slow Logs as a Service" },
+    { text: "ElastiCache", isAnswer: true },
+    { text: "OpenSearch", hint: "Powerful full-text search engine" },
+    { text: "Neptune", hint: "Graph database with advanced query capabilities" },
+    { text: "Redshift", hint: "Complex analytical queries" },
+    { text: "DocumentDB", hint: "MongoDB-compatible queries" }
   ]}
 >
   <slot name="question">
     <div className="question">
-      Which AWS service is **not** capable of performing SQL-style queries?
+      Which AWS database service does NOT support full-text search capabilities out of the box?
     </div>
   </slot>
 
   <slot name="explanation">
     <div className="explanation">
-      <p>So, you wanna know which AWS service doesn't do SQL-style queries? Well, let's break it down. S3 + Athena is a query powerhouse, and RDS, Aurora, and DynamoDB are all about SQL-like queries. CloudWatch and CloudTrail, yeah, they're all about logging, but you can still query those logs in clever ways.</p>
-
-      <p>Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. It's not designed for querying data, so it's the correct answer! 😉</p>
+      While many AWS database services offer rich query capabilities:
+      
+      - OpenSearch: Built specifically for full-text search
+      - Neptune: Graph queries + full-text search capabilities
+      - Redshift: SQL with full-text search functions
+      - DocumentDB: Text search through MongoDB compatibility
+      
+      ElastiCache (Redis/Memcached) is primarily for caching and doesn't include built-in full-text search capabilities.
     </div>
   </slot>
 </Challenge>
@@ -195,45 +197,6 @@ Get ready to prove your cloud expertise! 🚀
 
   {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
   </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={5}
-  group="Data Querying"
-  title="Searchability"
-  difficulty="medium"
-  learningObjectives={[
-    "Get familiar with the query powers of different AWS services",
-    "Know which services support SQL-style queries",
-  ]}
-  options={[
-    { text: "RDS", hint: "SQLing since 2009" },
-    { text: "Aurora", hint: "A SQL service introduced in 2015" },
-    { text: "S3/Athena", hint: "S3+Athena is sql-ish!" },
-    { text: "DynamoDB", hint: "That *query language* is awful SQL-like" },
-    { text: "CloudTrail", hint: "Audit logs are queryable" },
-    { text: "CloudWatch", hint: "CloudWatch supports log queries" },
-    { text: "Simple Notification Service", isAnswer: true },
-  ]}
->
-  <slot name="question">
-    <div className="question">
-      Which AWS service is **not** capable of performing SQL-style queries?
-    </div>
-  </slot>
-
-  <slot name="explanation">
-    <div className="explanation">
-      <p>
-        So, can S3 really do query tricks? Definitely... With a little help from Athena. And RDS, Aurora, and DynamoDB are all about SQL-like queries.
-        CloudWatch and CloudTrail, yeah, they're all about logging and auditing events, but you can still query those logs.
-      </p>
-      <p>
-        Simple Notification Service, on the other hand, is a messaging service that enables fan-out messaging and EventBus. The closest thing SNS has to querying might be when combined with CloudWatch, or when you're debugging your message delivery.
-      </p>
-    </div>
   </slot>
 </Challenge>
 
