@@ -170,12 +170,12 @@ Get ready to prove your cloud expertise! 🚀
   <slot name="explanation">
     <div className="explanation">
       While many AWS database services offer rich query capabilities:
-      
+
       - OpenSearch: Built specifically for full-text search
       - Neptune: Graph queries + full-text search capabilities
       - Redshift: SQL with full-text search functions
       - DocumentDB: Text search through MongoDB compatibility
-      
+
       ElastiCache (Redis/Memcached) is primarily for caching and **doesn't include built-in full-text search capabilities.** (As of late 2024.)
 
       Redis has recently added [full-text search modules](https://redis.io/docs/latest/develop/interact/search-and-query/query/full-text/) under their `Redis Source Available License`, or RSAL. This license prevents AWS from freely copying the Redis' folks work into the ElastiCache product.
@@ -293,7 +293,7 @@ Get ready to prove your cloud expertise! 🚀
   <div className="explanation">
   The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
 
-  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation. 
+  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
 
   </div>
   </slot>
@@ -314,31 +314,29 @@ Get ready to prove your cloud expertise! 🚀
     { text: "EC2", hint: "EC2 directly connects to public nets" },
     { text: "EKS", hint: "EKS offers multiple WebSocket options" },
     { text: "Lightsail", hint: "Limited, still offers persistent WebSockets" },
-    { text: "App Runner", hint: "App Runner can jam on some WebSockets" },
+    { text: "AppSync", hint: "Syncing happens via WebSockets" },
     { text: "API Gateway", isAnswer: true },
   ]}
 >
   <slot name="question">
     <div className="question">
-      Hey there! 👋 Time for a tricky one: Which AWS service says "nope" to 
-      full-featured WebSockets? (Hint: One of these doesn't play nice with 
-      stateful, direct connections! 🔌)
+      👋 I hope you're having fun so far!
+
+      Time for a tricky one...
+
+      Which AWS service does NOT support stateful, direct, full-duplex WebSocket connections?
     </div>
   </slot>
 
   <slot name="explanation">
     <div className="explanation">
-      Gotcha! API Gateway is the odd one out here. While it does support WebSockets, 
-      it's more like "WebSockets with a twist" 🤔
+      API Gateway largely supports WebSockets, however the implementation is a bit different.
+      Instead of full-duplex direct connections, it's got a more "stateless" approach. This means you can't maintain a direct connection between clients and servers.
+      Events are sent via the API Gateway, which dispatches message(s) to the appropriate Lambda function or other service. Messages are relayed back to the client in a similar manner.
 
-      Here's the scoop:
-      
-      - API Gateway only supports WebSockets with some limitations - no direct stateful 
-        connections and no binary data (you'll need to use base64 encoding instead)
-      
       The others are much more WebSocket-friendly:
       - Lightsail: Perfect for simple WebSocket setups 👌
-      - App Runner: Handles WebSockets like a champ
+      - App Sync: Uses Web Sockets for real-time data sync
       - EC2: Your classic "do whatever you want" option for WebSockets
       - EKS: Great for running scalable WebSocket clusters
 
@@ -757,8 +755,9 @@ Get ready to prove your cloud expertise! 🚀
   options={[
     { text: "Store additional data copies" },
     { text: "Capture item-level changes for event-driven architectures", isAnswer: true },
-    { text: "Increase write performance" },
-    { text: "Replace primary tables" }
+    { text: "Increase write performance", hint: "Streams are " },
+    { text: "DynamoDB credits for Green Vendors", hint: "Really?" },
+    { text: "Alternative to Global Secondary Indexes", hint: "Are you guessing?" },
   ]}
 >
   <slot name="question">
@@ -848,9 +847,9 @@ Get ready to prove your cloud expertise! 🚀
   - 20% in S3 Standard for daily access
   - 30% in S3 Standard-IA for monthly access
   - 50% in Glacier for yearly access
-  
+
   This approach optimizes costs while maintaining appropriate access patterns.
-  
+
   Cost Considerations:
   - Storage pricing per GB
   - Retrieval costs
@@ -890,11 +889,11 @@ Get ready to prove your cloud expertise! 🚀
 
       - 1 RCU = 1 strongly consistent read/second for items up to 4KB
       - 1 RCU = 2 eventually consistent reads/second for items up to 4KB
-      
+
       Therefore:
       - 100 RCUs = 100 strongly consistent 4KB reads/second
       - 100 RCUs = 200 eventually consistent 4KB reads/second
-      
+
       Choose consistency models based on:
       - Application requirements
       - Cost considerations
@@ -935,7 +934,7 @@ Get ready to prove your cloud expertise! 🚀
       2. Evaluates replica lag for all replicas
       3. Promotes replica with lowest replication lag
       4. Updates cluster endpoint automatically
-      
+
       Best Practices:
       - Maintain multiple replicas across AZs
       - Monitor replication lag
@@ -976,7 +975,7 @@ Get ready to prove your cloud expertise! 🚀
       - Applies to PUTs and DELETEs
       - No need for workarounds previously used
       - No additional cost
-      
+
       Impact:
       - Simplified application logic
       - No need for consistency checks
@@ -1017,7 +1016,7 @@ Get ready to prove your cloud expertise! 🚀
       - Items deleted within 48 hours of expiration
       - No additional cost for TTL
       - Deleted items appear in streams
-      
+
       Use Cases:
       - Session management
       - Log expiration
@@ -1058,7 +1057,7 @@ Get ready to prove your cloud expertise! 🚀
       - Creates new capacity optimized for workload
       - May pause during very low activity
       - Billing per-second based on ACUs
-      
+
       Best Practices:
       - Set minimum capacity for critical workloads
       - Monitor scaling events
