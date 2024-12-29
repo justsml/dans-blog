@@ -6,8 +6,8 @@ subTitle: "(Borrow) check yo self before you wreck yo self! 🦀"
 label: Memory, man
 category: Quiz
 subCategory: Rust
-date: 2024-11-21
-modified: 2024-11-23
+date: 2024-12-28
+modified: 2024-12-29
 tags: [quiz, rust, memory-management, ownership, borrowing, lifetimes, intermediate, advanced]
 cover_full_width: fade-to-clouds-wide.webp
 cover_mobile: fade-to-clouds-square.webp
@@ -67,10 +67,12 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   <slot name="question">
     <div className="question">
       What happens when you run this code? Try to predict the output or error:
+
       ```rust
       fn main() {
-          let philosopher = String::from("Zeno of Citium");
-          let greeting = philosopher;  // What happens here?
+          let philosopher =
+              String::from("Zeno of Citium");
+          let greeting = philosopher;
 
           println!("Hello, {}!", philosopher);
       }
@@ -137,15 +139,17 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   <slot name="question">
     <div className="question">
       What happens when you run this code? Think about ownership transfer:
+
       ```rust
-      fn take_ownership(text: String) {  // What happens to ownership here?
-          println!("Inside: {}", text);
+      fn take_knowledge(knowledge: String) {
+          println!("Knowledge: {}", knowledge);
       }
 
       fn main() {
-          let wisdom = String::from("Know thyself");
-          take_ownership(wisdom);  // What happens to wisdom here?
-          println!("Outside: {}", wisdom);
+          let wisdom = String::from("know thyself");
+          take_knowledge(wisdom);
+          // What happens to our wisdom?
+          println!("Do you {}", wisdom);
       }
       ```
     </div>
@@ -153,7 +157,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
 
   <slot name='explanation'>
     <div className="explanation">
-      The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
+      The code fails to compile because `wisdom`'s ownership moved to `take_knowledge` and therefore can't be used afterward.
 
       Here are three ways to fix this issue:
 
@@ -167,7 +171,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
 
       2. Clone the value (create a new copy):
       ```rust
-      take_ownership(wisdom.clone());  // Original wisdom remains valid
+      take_knowledge(wisdom.clone());  // Original wisdom remains valid
       ```
 
       3. Return ownership from the function:
@@ -222,6 +226,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   <slot name="question">
     <div className="question">
       What happens with multiple mutable references?
+
       ```rust
       fn main() {
           let mut wisdom = String::from("He who laughs at");
@@ -475,6 +480,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   <slot name="question">
     <div className="question">
       What will this code print? Count carefully!
+
       ```rust
       use std::rc::Rc;
 

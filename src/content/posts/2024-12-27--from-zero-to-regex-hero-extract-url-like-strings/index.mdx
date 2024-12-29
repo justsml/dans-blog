@@ -14,13 +14,13 @@ cover_icon: regex-url-parsing-square-200.webp
 
 Extracting URL-like strings from raw text can feel like a never-ending game of whack-a-mole: punctuation, parenthetical wrappers, and ambiguous formatting all conspire to break your best-laid regular expressions. In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **vacuum up** suspicious URL-ish text first, and then handle validation in a subsequent pipeline.
 
-<p class="breakout">Do not use this to validate URLs; it's meant for data extraction.</p>
+<p class="breakout">Do not use this pattern for <b>validating</b> URLs; it's meant for rough data <b>extraction</b>.</p>
 
-*(Original inspiration and discussion can be found here: [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727))*
+{/* *(Original inspiration and discussion can be found here: [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727))*
 
 TL;DR: Check out [a live demo of the regex](https://regex101.com/r/jO8bC4/62) in action.
 
----
+--- */}
 
 ## 1. Overview: Two Steps to URL Extraction
 
@@ -30,14 +30,17 @@ TL;DR: Check out [a live demo of the regex](https://regex101.com/r/jO8bC4/62) in
 2. **Validate**
    Once you've captured these candidates, you can pass them through a rigorous check (DNS resolution, comparison against known domains, etc.) to weed out duds. That part will be left for the pipeline in step two.
 
----
+**Disclaimer:** This is not meant to be perfect regex. This is work-horse Regex. It has a job to do: Extract & parse anything URL-shaped from raw text.
 
 ## 2. The "Intimidating" Regex
 
-Below is a one-line regex designed to catch a variety of protocols, domains, paths, and optional query/fragment sections:
+Below is a one-line regex designed to parse a large variety of protocols, domains, paths, and optional query/fragment sections:
 
-Note: It may be difficult to read on mobile screens (for reference, this Regex exceeds the "standard" 80 column width).
-Try rotating your device, or viewing it on a larger screen.
+<p class="breakout">Don't worry, we're going to break it down step-by-step in a moment!</p>
+
+**Note:** If the pattern gets cut off, don't worry; I'll [break it down in the next section.](#how-it-works-step-by-step)
+
+### The 80+ Char Pattern
 
 ```js frame="code" title="URL-like String Extractor"
 const re = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/gi
@@ -45,20 +48,16 @@ const re = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*
 // Length: 84 characters
 ```
 
-For completeness, here's a more robust version that handles some edge cases better:
-
-```js frame="code" title="More Advanced ES2018 Version"
-const re = /(\b[\.\w-]+:\/{2,3})(?!\.)(?!.*\.{2})(?!-)(?!.*-\.)(?!.*@\.)([\w\-@\^=%&:;~\+\.]+(?<!-))(\/+[\w\-@\^=%&:;\/~\+\.]+(?<!\.))?\??([\w=\-&@$!|~+_]+)*#?([\w=\-&@$!|~+_]+)*/gi
-// (Compatibility: ES2018+, Node.js 12+)
-// Better handling of edge cases
-// Length: 166 characters
-```
-
 We're going to break down the simpler (1st version) for now:
 
 ### How It Works, Step-by-Step
 
-When doing data extraction (as opposed to strict validation) I often combine negated character classes `[^a-z]` with `?` or `*`. This lets me easily grab `at least one`, or `zero or more` matches. If you think about the parts of URLs, say, the query string, it begins with a `?` and then follows with non-`?` characters. Same with the fragment identifier (`#` followed by non-`#` characters). Note how we get the hash: by using `[^ \#\r\n]*` to capture everything until we hit any spaces, `#`, or newlines.
+When performing **data extraction** (as opposed to **data validation**), I often combine **negated character classes** `[^a-z]` with either a `+` or `*`.
+
+You might recognize this trick from matching HTML/XML tags. The pattern `<[^>]*>` captures anything between `<` and `>`, while `<[^>]+>` captures at least one character between the brackets. It relies on the fact that we can match "anything but a closing angle bracket" to grab an entire tag. 
+{/* (Side note: there are safer methods for parsing HTML/XML. Avoid RegEx when there's safer native interfaces available. Trust me, hackers love sneaking `>` in the middle of another tag to see if your validation missed the script tag they injected.) */}
+
+Now, consider parts of a URL: A query string, follows a similar pattern where `?` is followed by one-or-more **non-`?`** characters. Similarly, the fragment identifier begins with a `#` followed by **non-`#`** characters. (There's a bit more to it, since we capture the hash using `[^ \#\r\n]*`, which matches everything until encountering spaces, `#`, or newlines.)
 
 
 ```text
@@ -69,22 +68,25 @@ When doing data extraction (as opposed to strict validation) I often combine neg
 5) Optionally capture `fragment`: `(#?([^ \#\r\n]*))`
 ```
 
-- **Group 1** `([a-z0-9-]+\:\/+)`
-  Looks for the protocol (e.g., `http://`, `https://`, `ftp://`) by matching `[a-z0-9-]+:` followed by `//+`.
+- `Protocol` **Group 1** `([a-z0-9-]+\:\/+)`
+  1. Looks for an alpha-numeric-dasherized protocol (e.g., `http://`, `https://`, `ftp://`, `mailto://`) by matching `[a-z0-9-]+`
+  2. The `\:\/+` part ensures we have one or more slashes after the colon, to capture possible typos. To make this more strict, you could replace `+` with `{2,3}` to allow two OR three slashes. This change would catch `file:///` but not `file:/`.
 
-- **Group 2** `([^\/\s]+)`
-  Captures the immediate domain or authority part (e.g., `example.com`, `localhost:8080`) until the next slash or whitespace.
+- `Host` **Group 2** `([^\/\s]+)`
+  Captures the domain (e.g., `example.com`, `localhost:8080`.) Again, we use a similar strategy, since it's easier to list what is not permitted in a domain. In this case, slashes `\/` and whitespace `\s`. Then we use `+` to capture at least one (or more) characters.  
 
-- **Group 3** `([a-z0-9\-@\^=%&;\/~\+]*)`
-  Matches path or parameter characters, allowing letters, numbers, common URL-safe symbols—enough to catch all sorts of oddities.
+- `Path` **Group 3** `([a-z0-9\-@\^=%&;\/~\+]*)`
+  Just when you are getting used to inverted logical matching, I throw a regular character class expression at you!   Matches path or parameter characters, allowing letters, numbers, common URL-safe symbols—enough to catch all sorts of oddities.
 
-- **Group 4** `[\?]?([^ \#\r\n]*)`
-  Optionally looks for a `?` and then captures whatever might represent a query string.
+- `Query` **Group 4** `[\?]?([^ \#\r\n]*)`
+  The bit at the beginning, `[\?]?`, matches zero-or-one `?` - marking the start of a querystring. In my use case, I simplified my secondary processing by excluding the `?` symbol itself from the match groups. The rest of the query string is captured by `([^ \#\r\n]*)`, which matches anything that's not a space, `#`, or newline.
 
-- **Group 5** `#?([^ \#\r\n]*)`
-  Optionally captures any fragment identifier introduced by `#`.
+- `Hash` **Group 5** `#?([^ \#\r\n]*)`
+  Captures any fragment identifier starting with `#`. Similar to the query string, it matches anything that's not a space, `#`, or newline.
 
-This pattern is **NOT meant to be a perfect RFC-compliant** solution—it's deliberately broad to sweep up all plausible URL-like strings. Once captured, you can sort out the real URLs from the duds in the next step.
+{/* **NOTE:** This pattern is **NOT meant to be an RFC-compliant** solution—it's deliberately broad to sweep up all plausible URL-like strings. Once captured, you can sort out the real URLs from the duds in post processing - based on your needs. */}
+
+<p class="breakout inset">To my CS nerds: Calm your tokenizers! Before you dequeue your stack! I know there's several solutions in this space. Some even "proper" ones. Out of scope, for now...</p>
 
 ## 3. Parsing Example
 
@@ -179,7 +181,9 @@ Once you've gathered everything that looks remotely like a URL, you can run them
 - **Custom Rules**
   Restrict TLDs, reject known malicious patterns, limit length, or anything else needed for your use case.
 
-## Final Thoughts
+## Summary
+
+When extracting URL-like strings from raw text, remember these key points:
 
 - **Keep it simple for extraction;** make your life easier by casting a wide net, then refine afterward.
 - **Regex is powerful but not omnipotent.** Don't expect it to be a perfect judge of URL correctness.
@@ -187,8 +191,24 @@ Once you've gathered everything that looks remotely like a URL, you can run them
 
 By following these steps, you can quickly and effectively extract URL-like strings from raw text, setting the stage for further processing and validation.
 
+### Further Learning
+
+For completeness, here's a more robust version that handles some edge cases better.
+
+```js frame="code" title="More Advanced ES2018 Version"
+const re = /(\b[\.\w-]+:\/{2,3})(?!\.)(?!.*\.{2})(?!-)(?!.*-\.)(?!.*@\.)([\w\-@\^=%&:;~\+\.]+(?<!-))(\/+[\w\-@\^=%&:;\/~\+\.]+(?<!\.))?\??([\w=\-&@$!|~+_]+)*#?([\w=\-&@$!|~+_]+)*/gi
+// (Compatibility: ES2018+, Node.js 12+)
+// Better handling of edge cases
+// Length: 166 characters
+```
+
+Dear reader, compare the ES2018 pattern above to the [first pattern](#the-80-char-pattern) we discussed earlier.
+
+| How many differences can you describe & explain? Did you see unfamiliar or completely new symbols?
+
+
 ### References
 
-- [StackOverflow Answer (Original Inspiration)](https://stackoverflow.com/a/34669019/369727)
+- My original [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727)
 - [MDN Docs on Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
