@@ -21,7 +21,8 @@ format_rust_code() {
   
   /```rust/ {
     in_rust_block = 1;
-    print > temp_file;
+    code = ""; # Start capturing code for this block
+    print "```rust" >> temp_file;
     next;
   }
   
@@ -39,7 +40,6 @@ format_rust_code() {
         close("temp.formatted");
       } else {
         # On error, leave the block unchanged
-        print "```rust" >> temp_file;
         print code >> temp_file;
       }
       print "```" >> temp_file;
@@ -76,3 +76,4 @@ format_rust_code() {
 
 # Call the function with the input file and leftPad spaces
 format_rust_code "/Users/dan/code/oss/dans-blog/src/content/posts/2024-12-28--quiz-is-your-memory-rusty/index.mdx" 6
+
