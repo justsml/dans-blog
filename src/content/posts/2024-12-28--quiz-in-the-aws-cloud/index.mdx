@@ -228,6 +228,45 @@ Get ready to prove your cloud expertise! 🚀
   client:load
   index={5}
   group="Batches, part 1!"
+  title="BatchGetItem Limits"
+  difficulty={2}
+  objectives={[
+    "Recall DynamoDB BatchGetItem limits",
+    "Compare BatchGetItem with other batch operations"
+  ]}
+  options={[
+    { text: "1", hint: "... I insist on batching." },
+    { text: "25", hint: "That's the limit for `BatchWriteItem`." },
+    { text: "50", hint: "A bit higher for `BatchGetItem`." },
+    { text: "75", hint: "Close, but there's a round number." },
+    { text: "100", isAnswer: true },
+    { text: "200", hint: "A bit too high..." },
+    { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      One more DynamoDB batch question!<br />
+      What's the maximum number of items you can retrieve using a single DynamoDB `BatchGetItem` request?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      The DynamoDB SDK allows you to retrieve up to **100** items in a single `BatchGetItem` request. This is higher than the limit for `BatchWriteItem`, which is 25 items.
+      Additionally, there are limits on the total payload size, document size, and request rate.
+
+      Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
+
+      **Note:** It is possible to exceed _some_ of these limits - if you can sweet-talk your AWS account manager. 😎
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Batches, part 2!"
   title="Batch Operations"
   difficulty={4}
   objectives={[
@@ -262,41 +301,6 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={6}
-  group="Batches, part 2!"
-  title="BatchGetItem Limits"
-  difficulty={2}
-  objectives={[
-    "Recall DynamoDB BatchGetItem limits",
-    "Compare BatchGetItem with other batch operations"
-  ]}
-  options={[
-    { text: "25", hint: "That's the limit for `BatchWriteItem`." },
-    { text: "50", hint: "A bit higher for `BatchGetItem`." },
-    { text: "75", hint: "Close, but there's a round number." },
-    { text: "100", isAnswer: true },
-    { text: "200", hint: "A bit too high. Think smaller." },
-    { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
-  ]}
->
-  <slot name="question">
-    <div className="question">
-      One more DynamoDB batch question!<br />
-      What's the maximum number of items you can retrieve using a single DynamoDB `BatchGetItem` request?
-    </div>
-  </slot>
-
-  <slot name="explanation">
-    <div className="explanation">
-      The DynamoDB SDK allows you to retrieve up to **100** items in a single `BatchGetItem` request. This is higher than the limit for `BatchWriteItem`, which is 25 items.
-
-      Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
-    </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
   index={7}
   group="WebSockets"
   title="WebSocket Wizardry"
@@ -307,10 +311,10 @@ Get ready to prove your cloud expertise! 🚀
     "Evaluate WebSocket implementation options"
   ]}
   options={[
-    { text: "EC2" },
-    { text: "EKS" },
-    { text: "Lightsail" },
-    { text: "App Runner" },
+    { text: "EC2", hint: "EC2 directly connects to public nets" },
+    { text: "EKS", hint: "EKS offers multiple WebSocket options" },
+    { text: "Lightsail", hint: "Limited, still offers persistent WebSockets" },
+    { text: "App Runner", hint: "App Runner can jam on some WebSockets" },
     { text: "API Gateway", isAnswer: true },
   ]}
 >
@@ -354,11 +358,11 @@ Get ready to prove your cloud expertise! 🚀
     "Implement principle of least privilege"
   ]}
   options={[
-    { text: "Always make buckets public", hint: "Think about security risks..." },
+    { text: "Make new buckets public", hint: "Least privilege, first." },
     { text: "Use least privilege principle", isAnswer: true },
-    { text: "Disable all security", hint: "This would be dangerous!" },
+    { text: "Move data to private blockchain", hint: "Kidding, right?" },
     { text: "Move S3 on-premises to fully control ACLs" },
-    { text: "Move key data to private blockchain", hint: "Kidding, right?" },
+    { text: "Use policy wildcards to ensure necessary access", hint: "😯 No!" },
   ]}
 >
   <slot name="question">
