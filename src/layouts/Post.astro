@@ -102,8 +102,20 @@ const responsiveImgSizes_breakRight = {
         viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
       }}
     >
-      {title && <h1 class="p-name" transition:name="page.h1">{title}</h1>}
-      {subTitle && <h2 class="p-summary" transition:name="page.h2">{subTitle}</h2>}
+      {
+        title && (
+          <h1 class="p-name" transition:name="page.h1">
+            {title}
+          </h1>
+        )
+      }
+      {
+        subTitle && (
+          <h2 class="p-summary" transition:name="page.h2">
+            {subTitle}
+          </h2>
+        )
+      }
 
       <aside class="skinny screenshot-hidden">
         <div class="info">
@@ -143,13 +155,8 @@ const responsiveImgSizes_breakRight = {
 
       <slot />
 
-      <ShareCounters
-        url={Astro.request.url}
-        className="share-counter-links"
-      />
-
+      <ShareCounters client:only="react" url={Astro.request.url} className="share-counter-links" />
     </main>
-
 
     <EditOnGitHubLink
       sourcePath={Astro.props.sourcePath}
@@ -167,8 +174,7 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body>
-  <link
+  </body><link
     rel="stylesheet"
     href="/files/fonts.css"
     media="print"
@@ -308,7 +314,6 @@ const responsiveImgSizes_breakRight = {
           ...document.querySelectorAll<HTMLElement>(".quiz-options"),
         ];
         console.log("patchRealHeight", quizOptions.length);
-
         quizOptions.forEach(function (optionPanel) {
           try {
             let childHeights =
@@ -320,28 +325,29 @@ const responsiveImgSizes_breakRight = {
               );
             const sumHeight =
               childHeights && childHeights.reduce((a, b) => a + b, 0);
-
+            console.log("sumHeight", sumHeight);
             if (optionPanel.parentElement)
               optionPanel.parentElement.style.height = sumHeight + "px";
           } catch (e) {
             console.error("Error patching options list", e);
           }
         });
+        return quizOptions;
       };
 
-      function __checkForEmptyShareCounts() {
-        const shareCounters = document.querySelector(".share-counters");
-        const emptySpans = shareCounters?.querySelectorAll("span:empty");
+    function __checkForEmptyShareCounts() {
+      const shareCounters = document.querySelector(".share-counters");
+      const emptySpans = shareCounters?.querySelectorAll("span:empty");
 
-        if (emptySpans && emptySpans.length >= 4) {
-          shareCounters?.classList.add("hidden", "empty", "no-share-counts");
-        }
-        return {
-          shareCounters,
-          emptySpans,
-        };
+      if (emptySpans && emptySpans.length >= 4) {
+        shareCounters?.classList.add("hidden", "empty", "no-share-counts");
       }
-      // @ts-ignore
-      window.__checkForEmptyShareCounts = __checkForEmptyShareCounts;
+      return {
+        shareCounters,
+        emptySpans,
+      };
+    }
+    // @ts-ignore
+    window.__checkForEmptyShareCounts = __checkForEmptyShareCounts;
   </script>
 </html>

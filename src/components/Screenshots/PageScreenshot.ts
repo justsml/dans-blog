@@ -134,7 +134,7 @@ class ScreenshotService {
           throw new Error(`Element with selector '${selector}' not found`);
         }
         // delay 1000ms to wait for the element to be fully loaded
-        await page.waitForTimeout(1000);
+        await page.waitForTimeout(delayMs ?? 1000);
         screenshotBuffer = await element.screenshot({
           path: path,
           quality: 100,
@@ -165,7 +165,7 @@ class ScreenshotService {
       console.log(`Screenshot saved to ${outputPath}`);
     }
 
-    await page.close();
+    // TADA await page.close();
     return screenshotBuffer;
   }
 

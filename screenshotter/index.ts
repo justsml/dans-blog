@@ -300,6 +300,15 @@ async function generateImages(args: ScreenshotTask) {
       });
       await addClassName(page, "screenshot-mode");
 
+      await page.evaluate(() => {
+        if (window.__superHackFix_patchOptionsListWithActualHeight) {
+          console.log("Patching options list!");
+          const scriptResult = window.__superHackFix_patchOptionsListWithActualHeight();
+          console.log("Patched options list!", scriptResult);
+        }
+      });
+
+      
       for await (const [selector, fileName] of Object.entries(
         selectorPathMap,
       )) {
@@ -312,13 +321,7 @@ async function generateImages(args: ScreenshotTask) {
           console.error(`Error selecting element ${selector}: ${e?.message}`);
           return null;
         });
-        await page.evaluate(() => {
-          if (window.__superHackFix_patchOptionsListWithActualHeight) {
-            console.log("Patching options list!");
-            window.__superHackFix_patchOptionsListWithActualHeight();
-          }
-        });
-
+        
         if (!element) {
           console.warn(
             `Element with selector '${selector}' not found. Skipping.`,
@@ -346,7 +349,7 @@ async function generateImages(args: ScreenshotTask) {
       }
     }
     try {
-      await page.waitForTimeout(1000);
+      await page.waitForTimeout(50);
       // close page
       await page.close();
     } catch (e) {
