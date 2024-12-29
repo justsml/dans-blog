@@ -1,12 +1,12 @@
 ---
 unlisted: false
 title: "Quiz: AWS Storage: 20+ Questions!"
-subTitle: "Can you navigate the labyrinth?"
+subTitle: "Can you navigate the cloud labyrinth?"
 label: AWS Storage
 category: Quiz
 subCategory: Cloud
-date: 2024-12-11
-modified: 2024-12-20
+date: 2024-12-28
+modified: 2024-12-29
 tags: [quiz, aws, cloud, storage, databases, s3, dynamodb, rds, elasticache]
 
 cover_full_width: aws-cloud--city-focus-wide.webp
@@ -810,6 +810,256 @@ Get ready to prove your cloud expertise! 🚀
 
   [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
   </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={20}
+  group="Cost Optimization"
+  title="Storage Cost Analysis"
+  difficulty={4}
+  objectives={[
+    "Compare storage costs across AWS services",
+    "Evaluate cost implications of storage choices",
+    "Apply cost optimization strategies"
+  ]}
+  options={[
+    { text: "S3 Standard for all data" },
+    { text: "Mix storage classes based on access patterns", isAnswer: true },
+    { text: "Always use the cheapest storage" },
+    { text: "Store everything in Glacier" }
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the most cost-effective approach for storing 1PB of data with 20% accessed daily, 30% monthly, and 50% yearly?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  Optimal Storage Strategy:
+  - 20% in S3 Standard for daily access
+  - 30% in S3 Standard-IA for monthly access
+  - 50% in Glacier for yearly access
+  
+  This approach optimizes costs while maintaining appropriate access patterns.
+  
+  Cost Considerations:
+  - Storage pricing per GB
+  - Retrieval costs
+  - Access patterns
+  - Transition costs
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={21}
+  group="DynamoDB Consistency"
+  title="Consistency Models"
+  difficulty={4}
+  objectives={[
+    "Understand DynamoDB consistency models",
+    "Evaluate trade-offs between consistency levels",
+    "Apply consistency models to real-world scenarios"
+  ]}
+  options={[
+    { text: "Eventually consistent reads are always slower" },
+    { text: "Strongly consistent reads provide fresher data but consume more capacity", isAnswer: true },
+    { text: "Eventually consistent reads are more expensive" },
+    { text: "Consistency models don't affect capacity consumption" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      A DynamoDB table has a provisioned read capacity of 100 RCUs. How many strongly consistent reads of 4KB items can be performed per second?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      Understanding DynamoDB consistency models is crucial:
+
+      - 1 RCU = 1 strongly consistent read/second for items up to 4KB
+      - 1 RCU = 2 eventually consistent reads/second for items up to 4KB
+      
+      Therefore:
+      - 100 RCUs = 100 strongly consistent 4KB reads/second
+      - 100 RCUs = 200 eventually consistent 4KB reads/second
+      
+      Choose consistency models based on:
+      - Application requirements
+      - Cost considerations
+      - Performance needs
+      - Data freshness requirements
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={22}
+  group="Aurora High Availability"
+  title="Aurora Failover Mechanism"
+  difficulty={3}
+  objectives={[
+    "Understand Aurora failover process",
+    "Identify high availability configurations",
+    "Apply disaster recovery best practices"
+  ]}
+  options={[
+    { text: "Manual intervention required" },
+    { text: "Automatic promotion of replica with lowest lag", isAnswer: true },
+    { text: "Always fails over to oldest replica" },
+    { text: "Requires application reconfiguration" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      In an Aurora cluster with multiple read replicas, what happens during an automatic failover when the primary instance fails?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      Aurora Failover Process:
+      1. Detects primary instance failure
+      2. Evaluates replica lag for all replicas
+      3. Promotes replica with lowest replication lag
+      4. Updates cluster endpoint automatically
+      
+      Best Practices:
+      - Maintain multiple replicas across AZs
+      - Monitor replication lag
+      - Use cluster endpoint in applications
+      - Test failover scenarios regularly
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={23}
+  group="S3 Consistency"
+  title="S3 Strong Consistency"
+  difficulty={3}
+  objectives={[
+    "Understand S3 consistency model",
+    "Identify S3 operation guarantees",
+    "Apply consistency knowledge to application design"
+  ]}
+  options={[
+    { text: "Only for new objects" },
+    { text: "Strong consistency for all operations", isAnswer: true },
+    { text: "Eventually consistent for updates" },
+    { text: "Depends on region" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      As of late 2020, what consistency model does S3 provide for all operations?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      S3 Consistency Model:
+      - Strong read-after-write consistency for all operations
+      - Applies to PUTs and DELETEs
+      - No need for workarounds previously used
+      - No additional cost
+      
+      Impact:
+      - Simplified application logic
+      - No need for consistency checks
+      - Reliable immediate reads after writes
+      - Improved application reliability
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={24}
+  group="DynamoDB Features"
+  title="Time To Live (TTL)"
+  difficulty={3}
+  objectives={[
+    "Understand DynamoDB TTL feature",
+    "Apply TTL for data lifecycle management",
+    "Design efficient data expiration strategies"
+  ]}
+  options={[
+    { text: "Deletes items immediately at expiration" },
+    { text: "Background deletion with best-effort timing", isAnswer: true },
+    { text: "Requires manual deletion trigger" },
+    { text: "Expires items but keeps them stored" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      How does DynamoDB's TTL feature handle item deletion?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      DynamoDB TTL Characteristics:
+      - Background process monitors TTL attribute
+      - Items deleted within 48 hours of expiration
+      - No additional cost for TTL
+      - Deleted items appear in streams
+      
+      Use Cases:
+      - Session management
+      - Log expiration
+      - Temporary data cleanup
+      - Regulatory compliance
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={25}
+  group="Aurora Serverless"
+  title="Scaling Behavior"
+  difficulty={4}
+  objectives={[
+    "Understand Aurora Serverless scaling",
+    "Identify scaling triggers",
+    "Optimize cost for variable workloads"
+  ]}
+  options={[
+    { text: "Scales instantly on demand" },
+    { text: "Requires warm-up period for scaling", isAnswer: true },
+    { text: "Only scales at preset intervals" },
+    { text: "Manual scaling only" }
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      What's the key consideration when relying on Aurora Serverless for handling sudden traffic spikes?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      Aurora Serverless Scaling:
+      - Requires 15-60 seconds for scaling
+      - Creates new capacity optimized for workload
+      - May pause during very low activity
+      - Billing per-second based on ACUs
+      
+      Best Practices:
+      - Set minimum capacity for critical workloads
+      - Monitor scaling events
+      - Configure timeout actions
+      - Use proper connection management
+    </div>
   </slot>
 </Challenge>
 
