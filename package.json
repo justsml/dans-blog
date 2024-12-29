@@ -1,12 +1,13 @@
 {
   "name": "dans-blog-v3",
   "type": "module",
-  "version": "2024.12.28",
+  "version": "2024.12.29",
   "repository": {
     "type": "git",
     "url": "https://github.com/justsml/dans-blog"
   },
   "scripts": {
+    "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "static": "PORT=4444 bunx serve dist",
     "screenshots": "bun ./screenshotter/index.ts",
     "dev": "astro check && astro dev",
@@ -20,7 +21,7 @@
   },
   "engines": {
     "node": ">=20.0.0",
-    "bun": ">=1.1.0"
+    "bun": ">=1.1.30"
   },
   "packageManager": "bun@1.*",
   "dependencies": {
@@ -44,6 +45,7 @@
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.4",
+    "@radix-ui/react-tooltip": "^1.1.6",
     "@react-spring/web": "^9.7.5",
     "@stdlib/utils-global": "^0.2.2",
     "astro": "^4.16.13",
@@ -93,8 +95,11 @@
     "globby": "^14.0.2",
     "libsql": "^0.5.0-pre.4",
     "playwright": "^1.49.1",
+    "postcss": "^8.4.49",
     "prettier": "^3.4.2",
+    "react-share": "^5.1.1",
     "sharp": "^0.33.5",
+    "tinyglobby": "^0.2.10",
     "yargs": "^17.7.2"
   },
   "resolutions": {

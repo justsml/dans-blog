@@ -1,0 +1,20 @@
+# 6. Advanced Interfaces
+
+Will the Symbol-keyed property be listed during a for...in iteration?
+
+const sym = Symbol('uniqueKey');
+const obj = {
+  [sym]: 'symbol value',
+  regularKey: 'regular value'
+};
+for (let key in obj) {
+  console.log(key);
+}
+------
+
+1. No, it won't be listed
+2. Yes, it will be listed
+3. Depends on the iteration method
+4. Throws an error
+
+[credit](https://danlevy.net/)

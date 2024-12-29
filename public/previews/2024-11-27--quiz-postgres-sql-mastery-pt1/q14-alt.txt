@@ -1,0 +1,18 @@
+# 14. Constraints
+
+When is this grade constraint checked?
+
+ALTER TABLE students
+ADD CONSTRAINT valid_grade
+CHECK (
+  (grade >= 0 AND grade <= 100) OR
+  grade IS NULL
+) NOT VALID;
+------
+
+1. Immediately
+2. At transaction commit
+3. On next query
+4. Never - constraints are only checked on INSERT
+
+[credit](https://danlevy.net/)

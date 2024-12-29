@@ -1,0 +1,20 @@
+# 3. Advanced Interfaces
+
+Will the property age be listed during a for...in iteration?
+
+const person = {};
+Object.defineProperty(person, 'age', {
+  value: 25,
+  enumerable: true
+});
+for (let key in person) {
+  console.log(key);
+}
+------
+
+1. Yes, it will be listed
+2. No, it won't be listed
+3. It depends on the value type
+4. Throws an error
+
+[credit](https://danlevy.net/)

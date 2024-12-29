@@ -7,18 +7,26 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { QuizContext } from "./QuizContext";
 import type { Option } from "./types";
+import { QuizContext } from "./QuizContext";
 import classNames from "classnames";
 
 import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
+import { HintTooltip } from "./HintTooltip.tsx";
+
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
 // import { autoFit, reduceFontSizeOnOverflow } from "../../shared/autoFit.ts";
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
+// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
+// const updateCodeBlocks = () => {
+//   const blocks = getPreBlocks();
+//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
+// }
+
 // const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
 // const updateCodeBlocks = () => {
 //   const blocks = getPreBlocks();
@@ -39,12 +47,16 @@ export default function Challenge({
   // hints = [],
 }: {
   children: ReactNode[] | ReactNode;
+  index: number;
   title: string;
   group: string;
   question: string;
   options: Option[];
   explanation?: string;
-  index: number;
+  difficulty?: "easy" | "medium" | "hard" | "expert" | string;
+  objectives?: string[];
+  standards?: string[];
+  // prerequisites?: string[];
   // hints?: string[];
 }) {
   let questionStore: ReturnType<typeof QuestionStore> | null = null;
@@ -142,6 +154,10 @@ export default function Challenge({
     }
   };
 
+  const IGNORE_HINTS = 1;
+  const [showHint, setShowHint] = useState<string | false>(false);
+  const [ignoreHintBy, setIgnoreHintBy] = useState<number>(IGNORE_HINTS);
+
   const handleAnswer = (option: Option) => {
     // console.log("Answering question:", title, question, option);
     if (!questionStore)
@@ -164,12 +180,22 @@ export default function Challenge({
     // questionStore.total();
     setTries(questionStore.sumOfTries());
 
+    setShowHint(false);
     if (option.isAnswer) {
-      setIsCorrect(true);
       setChallengeClass("correct pulse");
+      setIsCorrect(true);
     } else {
-      setIsCorrect(false);
       setChallengeClass("incorrect shake");
+      setIsCorrect(false);
+      // decrement ignoreHintBy
+      if (ignoreHintBy > 0) {
+        console.log("Decrementing ignoreHintBy", ignoreHintBy);
+        setIgnoreHintBy(ignoreHintBy - 1);
+      }
+      if (option.hint && ignoreHintBy < 1) {
+        // check if we should ignore hints -
+        setShowHint(option.hint);
+      }
     }
     logEvent("QuizAnswer", {
       isCorrect: option.isAnswer,
@@ -242,13 +268,19 @@ export default function Challenge({
       // Bail out of wrong answers once answered
       if (isCorrect && !option.isAnswer) return null;
 
+      const _showHint = option.hint === showHint ? showHint : false;
+      // console.log("Option", option, _showHint)
       return (
         <a
           key={option.text}
-          className={classNames("option", {
-            "correct-answer": isCurrentOptionCorrectAnswer,
-            // "slideOutRight": isCorrect && !option.isAnswer,
-          })}
+          className={classNames(
+            "option",
+            {
+              "correct-answer": isCurrentOptionCorrectAnswer,
+              // "slideOutRight": isCorrect && !option.isAnswer,
+            },
+            "mx-auto",
+          )}
           onClick={() => !isCorrect && handleAnswer(option)}
           // onTransitionEnd={(e) => {
           //   if (isCorrect && !option.isAnswer) {
@@ -258,6 +290,16 @@ export default function Challenge({
           // }}
         >
           <label>{option.text}</label>
+          <HintTooltip
+            title={`💡 Hint`}
+            hint={_showHint ? _showHint : ""}
+            showHint={_showHint ? true : false}
+            onClose={(ignoreHintBy) => {
+              if (ignoreHintBy && !isNaN(ignoreHintBy) && ignoreHintBy >= 1)
+                setIgnoreHintBy(ignoreHintBy);
+              setShowHint(false);
+            }}
+          />
         </a>
       );
     })
@@ -277,7 +319,7 @@ export default function Challenge({
           &#160;
         </div>
         <h2 className="quiz-title" id={slugify(title)}>
-          {group}
+          <a href={`#qq-${sequenceNum}`}>{group}</a>
         </h2>
       </div>
 
@@ -296,7 +338,7 @@ export default function Challenge({
           "card-flip": showExplanation,
         })}
         style={{
-          height: `${(SCREENSHOT_SCALE * 70) * _options.length}px`,
+          height: `${SCREENSHOT_SCALE * 70 * _options.length}px`,
           transition: "height 0.2s ease-in-out",
           overflowY: "auto",
         }}

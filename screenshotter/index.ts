@@ -7,6 +7,7 @@ import { ElementHandle, Page } from "playwright";
 import * as webP from "@/shared/webP.ts";
 import { rmSync } from "fs";
 import { resizeAndCrop } from "../src/shared/socialBanner.ts";
+import { saveAltText } from "./siteHelpers.ts";
 
 const { SITE_URL } = process.env;
 
@@ -28,7 +29,9 @@ if (filterArg) {
       item.title?.includes(filterArg) ||
       item.slug?.includes(filterArg),
   );
-  log(`Filtered feed from ${rssFeed.items.length} to ${rssFeed.items.length} items`);
+  log(
+    `Filtered feed from ${rssFeed.items.length} to ${rssFeed.items.length} items`,
+  );
 }
 
 let basePath = `/tmp/screenshots`;
@@ -106,7 +109,8 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
         "#qq-20": join(`${basePath}`, `/q20.jpg`),
       }
     : {
-        "main.article": join(`${basePath}`, `/main.jpg`),
+        // TODO: Re-enable this when we can control the height of the page/viewport
+        // "main.article": join(`${basePath}`, `/main.jpg`),
       };
 
   return {
@@ -152,7 +156,7 @@ type Dimension = {
   width: number;
   height: number;
   classModifier?: string;
-  postProcess?: undefined | 'resizeAndCrop';
+  postProcess?: undefined | "resizeAndCrop";
 };
 
 // const isPathComplete = (s: string) =>
@@ -193,7 +197,7 @@ async function addClassName(page: Page, overrideClassName: string) {
         console.error(`Error adding class ${overrideClassName}: ${e?.message}`);
         checkForAutoRefresh(e);
       });
-    console.log("Applied classes: ", classes);
+    // console.log("Applied classes: ", classes);
   }
 }
 
@@ -215,7 +219,10 @@ async function takeScreenshot(ctx: Page | ElementHandle, fileName: string) {
       return webpFile;
     } catch (error) {
       // @ts-ignore
-      console.error(`🚨🚨 Error! Converting ${fileName} to webP: ${error?.message}`);
+      console.error(
+        // @ts-ignore
+        `🚨🚨 Error! Converting ${fileName} to webP: ${error?.message}`,
+      );
       return fileName;
     }
   }
@@ -247,7 +254,13 @@ async function generateImages(args: ScreenshotTask) {
 
     // Get main screenshots based on sizes
     if (sizes) {
-      for await (const { fileName, width, height, classModifier, postProcess } of sizes) {
+      for await (const {
+        fileName,
+        width,
+        height,
+        classModifier,
+        postProcess,
+      } of sizes) {
         const newFile = fileName.startsWith("/")
           ? fileName
           : path.join(process.cwd(), fileName);
@@ -262,7 +275,9 @@ async function generateImages(args: ScreenshotTask) {
         await page.setViewportSize({ width, height });
         const outputFile = await takeScreenshot(page, newFile);
         if (postProcess === "resizeAndCrop") {
-          const socialBannerPath = outputFile.replace(".jpg", "-social.jpg").replace(".webp", "-social.webp");
+          const socialBannerPath = outputFile
+            .replace(".jpg", "-social.jpg")
+            .replace(".webp", "-social.webp");
           await resizeAndCrop(outputFile, socialBannerPath, {
             width: 1200,
             height: 628,
@@ -313,9 +328,15 @@ async function generateImages(args: ScreenshotTask) {
         }
         // delay 1000ms to wait for the element to be fully loaded
         await page.waitForTimeout(delayMs ?? 1000);
+        // await Promise.resolve(newFile)
         await takeScreenshot(element, newFile)
           .then((outputFile) => {
+            const altTxtPath = outputFile
+              .replace(/\.[a-z]{3,4}$/i, "-alt.txt")
+              .replace(".webp", "-alt.txt")
+              .replace(".png", "-alt.txt");
             console.log(`Screenshot saved to ${outputFile}`);
+            return saveAltText(element, altTxtPath);
           })
           .catch((e) => {
             console.error(
@@ -324,8 +345,14 @@ async function generateImages(args: ScreenshotTask) {
           });
       }
     }
-    // close page
-    page.close();
+    try {
+      await page.waitForTimeout(1000);
+      // close page
+      await page.close();
+    } catch (e) {
+      // @ts-ignore
+      console.error(`Error waiting for page to load: ${e?.message}`);
+    }
   }
   const endTime = Date.now();
   console.log(`Screenshots generated in ${endTime - startTime}ms`);

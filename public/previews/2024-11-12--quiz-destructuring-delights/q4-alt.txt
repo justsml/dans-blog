@@ -1,0 +1,25 @@
+# 4. Defaults
+
+Now with some defaults, what will this do?
+
+'use strict';
+const person = {
+  name: { first: 'Dan' },
+  address: { city: 'Denver' },
+};
+const {
+  name: { first = 'Unknown' },
+  birth: { place = 'Unknown' },
+} = person;
+console.log(
+  `Hi ${first} from ${place}`,
+);
+------
+
+1. Hi Dan from Unknown
+2. Hi Dan from Denver
+3. Hi Unknown from Unknown
+4. Hi Unknown from Denver
+5. Error
+
+[credit](https://danlevy.net/)
