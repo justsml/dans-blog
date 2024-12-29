@@ -7,6 +7,7 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { default as defaultSocialBanner } from "../assets/social-banner.webp";
 import { fade } from "astro:transitions";
 import clsx from "clsx";
+import SiteLinkedData from "../components/Seo/SiteLinkedData.astro";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
@@ -36,5 +37,6 @@ const socialBanner = Astro.props.socialImage || defaultSocialBanner;
     <SocialLinks />
     <Footer />
     <AnalyticsTag />
+    <SiteLinkedData />
   </body>
 </html>

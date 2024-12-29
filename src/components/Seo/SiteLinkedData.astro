@@ -1,0 +1,20 @@
+---
+import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../../consts";
+import { SiteAuthors } from "../../components/Seo/SchemaData";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_TITLE,
+  description: SITE_SEO_DESCRIPTION,
+  url: "https://danlevy.net/",
+  author: SiteAuthors.justsml,
+};
+
+const isProduction = process.env.NODE_ENV === "production";
+const generatedSchema = isProduction
+  ? JSON.stringify(schema)
+  : JSON.stringify(schema, null, 2);
+---
+
+<script type="application/ld+json" set:html={generatedSchema}></script>

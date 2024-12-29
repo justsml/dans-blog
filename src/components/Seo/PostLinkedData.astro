@@ -1,0 +1,54 @@
+---
+import { SiteAuthors } from "../../components/Seo/SchemaData";
+
+type Props = {
+  locale?: string;
+  title: string;
+  description: string;
+  date: string;
+  modified: string;
+  slug: string;
+  tags: string;
+  imageUrl?: string | ImageMetadata;
+};
+
+let {
+  locale = "en-US",
+  title,
+  description,
+  date,
+  modified,
+  slug,
+  tags,
+  imageUrl,
+} = Astro.props as Props;
+
+imageUrl = typeof imageUrl === "string" ? imageUrl : (imageUrl?.src ?? "");
+
+let schema = {
+  "@context": "https://schema.org/",
+  "@type": "BlogPosting",
+  headline: title,
+  author: SiteAuthors.justsml,
+  copyrightYear: getYear(date),
+  datePublished: date,
+  dateCreated: date,
+  dateModified: modified,
+  description: description,
+  url: `https://danlevy.net/${slug}`,
+  inLanguage: locale,
+  image: imageUrl,
+  keywords: tags,
+};
+
+function getYear(date: string) {
+  return new Date(date).getFullYear();
+}
+
+const isProduction = process.env.NODE_ENV === "production";
+const generatedSchema = isProduction
+  ? JSON.stringify(schema)
+  : JSON.stringify(schema, null, 2);
+---
+
+<script type="application/ld+json" set:html={generatedSchema} />

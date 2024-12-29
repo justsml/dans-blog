@@ -15,7 +15,8 @@ import CategoryLink from "../components/CategoryLink.astro";
 import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 import { fade } from "astro:transitions";
-import { ShareCounters } from "../components/ShareUI.tsx";
+import { ShareCounters } from "../components/ShareUI";
+import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 
 type Props = {
   sourcePath: string;
@@ -174,7 +175,17 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body><link
+  </body>
+  <PostLinkedData
+    title={title}
+    description={subTitle!}
+    date={pubTime}
+    modified={modTime}
+    slug={slug}
+    tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
+    imageUrl={coverUrl}
+  />
+  <link
     rel="stylesheet"
     href="/files/fonts.css"
     media="print"
