@@ -227,81 +227,6 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={5}
-  group="Batches, part 1!"
-  title="BatchGetItem Limits"
-  difficulty={2}
-  objectives={[
-    "Recall DynamoDB BatchGetItem limits",
-    "Compare BatchGetItem with other batch operations"
-  ]}
-  options={[
-    { text: "1", hint: "... I insist on batching." },
-    { text: "25", hint: "That's the limit for `BatchWriteItem`." },
-    { text: "50", hint: "A bit higher for `BatchGetItem`." },
-    { text: "75", hint: "Close, but there's a round number." },
-    { text: "100", isAnswer: true },
-    { text: "200", hint: "A bit too high..." },
-    { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
-  ]}
->
-  <slot name="question">
-    <div className="question">
-      One more DynamoDB batch question!<br />
-      What's the maximum number of items you can retrieve using a single DynamoDB `BatchGetItem` request?
-    </div>
-  </slot>
-
-  <slot name="explanation">
-    <div className="explanation">
-      The DynamoDB SDK allows you to retrieve up to **100** items in a single `BatchGetItem` request. This is higher than the limit for `BatchWriteItem`, which is 25 items.
-      Additionally, there are limits on the total payload size, document size, and request rate.
-
-      Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
-
-      **Note:** It is possible to exceed _some_ of these limits - if you can sweet-talk your AWS account manager. 😎
-    </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={6}
-  group="Batches, part 2!"
-  title="Batch Operations"
-  difficulty={4}
-  objectives={[
-    "Understand DynamoDB batch operation limits",
-    "Differentiate between single and batch operations"
-  ]}
-  options={[
-    { text: "1", isAnswer: true },
-    { text: "10" },
-    { text: "25", hint: "Good guess..." },
-    { text: "50" },
-    { text: "100", hint: "Thinking of GetItem limit?" },
-    { text: "100 when streaming" },
-    { text: "None of the above", hint: "This is a bit tricky..." },
-  ]}
->
-  <slot name="question">
-  <div className="question">
-    What's the maximum number of documents DynamoDB can `UPDATE` per batch?
-  </div>
-  </slot>
-
-  <slot name="explanation">
-  <div className="explanation">
-  The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
-
-  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
-
-  </div>
-  </slot>
-</Challenge>
-
-<Challenge
-  client:load
-  index={7}
   group="WebSockets"
   title="WebSocket Wizardry"
   difficulty={3}
@@ -347,7 +272,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={8}
+  index={6}
   group="S3 Security"
   title="S3 Bucket Policy"
   difficulty={2}
@@ -391,7 +316,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={9}
+  index={7}
   group="Aurora"
   title="Aurora Serverless"
   difficulty={2}
@@ -423,6 +348,81 @@ Get ready to prove your cloud expertise! 🚀
   Great for applications with variable traffic patterns.
 
   [Aurora Serverless Overview](https://aws.amazon.com/rds/aurora/serverless/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Batches, part 1!"
+  title="BatchGetItem Limits"
+  difficulty={2}
+  objectives={[
+    "Recall DynamoDB BatchGetItem limits",
+    "Compare BatchGetItem with other batch operations"
+  ]}
+  options={[
+    { text: "1", hint: "... I insist on batching." },
+    { text: "25", hint: "That's the limit for `BatchWriteItem`." },
+    { text: "50", hint: "A bit higher for `BatchGetItem`." },
+    { text: "75", hint: "Close, but there's a round number." },
+    { text: "100", isAnswer: true },
+    { text: "200", hint: "A bit too high..." },
+    { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
+  ]}
+>
+  <slot name="question">
+    <div className="question">
+      One more DynamoDB batch question!<br />
+      What's the maximum number of items you can retrieve using a single DynamoDB `BatchGetItem` request?
+    </div>
+  </slot>
+
+  <slot name="explanation">
+    <div className="explanation">
+      The DynamoDB SDK allows you to retrieve up to **100** items in a single `BatchGetItem` request. This is higher than the limit for `BatchWriteItem`, which is 25 items.
+      Additionally, there are limits on the total payload size, document size, and request rate.
+
+      Understanding these limits is crucial for optimizing your application's performance and ensuring efficient data operations.
+
+      **Note:** It is possible to exceed _some_ of these limits - if you can sweet-talk your AWS account manager. 😎
+    </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Batches, part 2!"
+  title="Batch Operations"
+  difficulty={4}
+  objectives={[
+    "Understand DynamoDB batch operation limits",
+    "Differentiate between single and batch operations"
+  ]}
+  options={[
+    { text: "1", isAnswer: true },
+    { text: "10" },
+    { text: "25", hint: "Good guess..." },
+    { text: "50" },
+    { text: "100", hint: "Thinking of GetItem limit?" },
+    { text: "100 when streaming" },
+    { text: "None of the above", hint: "This is a bit tricky..." },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the maximum number of documents DynamoDB can `UPDATE` per batch?
+  </div>
+  </slot>
+
+  <slot name="explanation">
+  <div className="explanation">
+  The DynamoDB Clients are essentially all wrappers for its HTTP API. The `BatchWriteItem` operation can `PUT` or `DELETE` up to **25** documents per HTTP request, but it cannot `UPDATE` multiple documents.
+
+  While DynamoDB can `INSERT` up to **25** documents per HTTP request, it can `UPDATE` only **1** document per request using the `UpdateItem` operation.
+
   </div>
   </slot>
 </Challenge>
