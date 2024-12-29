@@ -15,6 +15,7 @@ import CategoryLink from "../components/CategoryLink.astro";
 import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 import { fade } from "astro:transitions";
+import { ShareCounters } from "../components/ShareUI.tsx";
 
 type Props = {
   sourcePath: string;
@@ -142,7 +143,13 @@ const responsiveImgSizes_breakRight = {
 
       <slot />
 
+      <ShareCounters
+        url={Astro.request.url}
+        className="share-counter-links"
+      />
+
     </main>
+
 
     <EditOnGitHubLink
       sourcePath={Astro.props.sourcePath}
@@ -238,7 +245,7 @@ const responsiveImgSizes_breakRight = {
 
     document.addEventListener("astro:page-load", function () {
       const quiz = document.querySelector(".quiz-ui");
-
+      __checkForEmptyShareCounts();
       if (quiz) {
         // window?.__superHackFix_patchOptionsListWithActualHeight();
         const questionStore = getQuestionStore();
@@ -321,5 +328,20 @@ const responsiveImgSizes_breakRight = {
           }
         });
       };
+
+      function __checkForEmptyShareCounts() {
+        const shareCounters = document.querySelector(".share-counters");
+        const emptySpans = shareCounters?.querySelectorAll("span:empty");
+
+        if (emptySpans && emptySpans.length >= 4) {
+          shareCounters?.classList.add("hidden", "empty", "no-share-counts");
+        }
+        return {
+          shareCounters,
+          emptySpans,
+        };
+      }
+      // @ts-ignore
+      window.__checkForEmptyShareCounts = __checkForEmptyShareCounts;
   </script>
 </html>
