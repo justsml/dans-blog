@@ -11,6 +11,8 @@ import pagefind from "astro-pagefind";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+// import remarkMermaid from 'remark-mermaidjs'
+
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 
@@ -24,6 +26,7 @@ export default defineConfig({
   cacheDir: ".cache",
   site: "https://danlevy.net",
   markdown: {
+    // remarkPlugins: [remarkMermaid],
   },
   
   integrations: [
