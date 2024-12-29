@@ -1,5 +1,5 @@
 ---
-unlisted: true
+unlisted: false
 draft: false
 title: "Quiz: Essential Rust Memory Management"
 subTitle: "(Borrow) check yo self before you wreck yo self! 🦀"
@@ -29,42 +29,78 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
 <Challenge
   client:load
   index={0}
-  group="Warmup"
+  group="Ownership"
   title="Basic Move Semantics"
+  difficulty={2}
+  objectives={[
+    "Explain Rust's ownership rules and move semantics",
+    "Identify compilation errors related to moved values",
+    "Apply solutions to fix move-related compilation errors"
+  ]}
   options={[
-    {text: 'Hello, !'},
-    {text: 'Hello, Zeno of Citium!'},
-    {text: 'Hello, Zeno of Elea!'},
-    {text: 'Hello, Marcus Aurelius'},
-    {text: 'Compilation Error: value borrowed after move', isAnswer: true},
-    {text: 'Runtime Error: null pointer exception'},
+    {
+      text: 'Hello, !',
+      hint: "Think about what happens to 'philosopher' after it's moved"
+    },
+    {
+      text: 'Hello, Zeno of Citium!',
+      hint: "Once a value is moved, can we still use it?"
+    },
+    {
+      text: 'Hello, Zeno of Elea!',
+      hint: "The string contains 'Citium', not 'Elea'"
+    },
+    {
+      text: 'Hello, Marcus Aurelius',
+      hint: "Check if this matches the string content"
+    },
+    {
+      text: 'Compilation Error: value borrowed after move',
+      isAnswer: true
+    },
+    {
+      text: 'Runtime Error: null pointer exception',
+      hint: "Rust catches these issues at compile time"
+    }
   ]}
 >
   <slot name="question">
-  <div className="question">
-    What happens when you run this code?
-    ```rust
-    fn main() {
-        let philosopher =
-            String::from("Zeno of Citium");
-        let greeting = philosopher;
+    <div className="question">
+      What happens when you run this code? Try to predict the output or error:
+      ```rust
+      fn main() {
+          let philosopher = String::from("Zeno of Citium");
+          let greeting = philosopher;  // What happens here?
 
-        println!("Hello, {}!", 
-            philosopher);
-    }
-    ```
-  </div>
+          println!("Hello, {}!", philosopher);
+      }
+      ```
+    </div>
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    This code fails to compile because of Rust's ownership rules. When we assign `philosopher` to `greeting`, the ownership of the String is moved to `greeting`. After this move, `philosopher` is no longer valid to use.
+    <div className="explanation">
+      This code fails to compile because of Rust's ownership rules. When we assign `philosopher` to `greeting`, the ownership of the String is moved to `greeting`. After this move, `philosopher` is no longer valid to use.
 
-    To fix this, we could either:
-    1. Clone the string: `let greeting = philosopher.clone();`
-    2. Use a reference: `let greeting = &philosopher;`
-    3. Use a string slice: `let greeting = &philosopher[..]`
-  </div>
+      Here are three ways to fix this:
+
+      1. Clone the string (creates a new copy):
+      ```rust
+      let greeting = philosopher.clone();
+      ```
+
+      2. Use a reference (borrows the value):
+      ```rust
+      let greeting = &philosopher;
+      ```
+
+      3. Use a string slice (borrows part of the string):
+      ```rust
+      let greeting = &philosopher[..];
+      ```
+
+      Each solution has different use cases and performance implications. Cloning is more expensive but gives you ownership, while references are cheaper but have lifetime constraints.
+    </div>
   </slot>
 </Challenge>
 
@@ -73,56 +109,83 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   index={1}
   group="Ownership"
   title="Move Semantics with Functions"
+  difficulty={2}
+  objectives={[
+    "Understand how ownership transfers when passing values to functions",
+    "Recognize ownership-related compilation errors in function calls",
+    "Apply different strategies to handle value ownership in functions"
+  ]}
   options={[
-    {text: 'Prints both lines'},
-    {text: 'Prints first line only'},
-    {text: 'Compilation Error', isAnswer: true},
-    {text: 'Runtime Error'}
+    {
+      text: 'Prints both lines',
+      hint: "Consider what happens to 'wisdom' after it's passed to the function"
+    },
+    {
+      text: 'Prints first line only',
+      hint: "The code won't even compile to reach runtime"
+    },
+    {
+      text: 'Compilation Error',
+      isAnswer: true
+    },
+    {
+      text: 'Runtime Error',
+      hint: "Rust's ownership rules are enforced at compile time"
+    }
   ]}
 >
   <slot name="question">
-  <div className="question">
-    ```rust
-    fn take_ownership(text: String) {
-        println!("Inside: {}", text);
-    }
+    <div className="question">
+      What happens when you run this code? Think about ownership transfer:
+      ```rust
+      fn take_ownership(text: String) {  // What happens to ownership here?
+          println!("Inside: {}", text);
+      }
 
-    fn main() {
-        let wisdom = String::from("Know thyself");
-        take_ownership(wisdom);
-        println!("Outside: {}", wisdom);
-    }
-    ```
-  </div>
+      fn main() {
+          let wisdom = String::from("Know thyself");
+          take_ownership(wisdom);  // What happens to wisdom here?
+          println!("Outside: {}", wisdom);
+      }
+      ```
+    </div>
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
+    <div className="explanation">
+      The code fails to compile because `wisdom` is moved into `take_ownership` and can't be used afterward.
 
-    To fix, we have several options:
-    1. Pass by reference:
-    ```rust
-    fn borrow_it(text: &String) {
-        println!("Inside: {}", text);
-    }
-    borrow_it(&wisdom);
-    ```
+      Here are three ways to fix this issue:
 
-    2. Clone the value:
-    ```rust
-    take_ownership(wisdom.clone());
-    ```
+      1. Pass by reference (borrow the value):
+      ```rust
+      fn borrow_it(text: &String) {
+          println!("Inside: {}", text);
+      }
+      borrow_it(&wisdom);  // Now wisdom can be used after
+      ```
 
-    3. Return ownership:
-    ```rust
-    fn take_and_return(text: String) -> String {
-        println!("Inside: {}", text);
-        text
-    }
-    let wisdom = take_and_return(wisdom);
-    ```
-  </div>
+      2. Clone the value (create a new copy):
+      ```rust
+      take_ownership(wisdom.clone());  // Original wisdom remains valid
+      ```
+
+      3. Return ownership from the function:
+      ```rust
+      fn take_and_return(text: String) -> String {
+          println!("Inside: {}", text);
+          text  // Return ownership back
+      }
+      let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+      ```
+
+      Each approach has different use cases:
+      - References: Most efficient, but need lifetime management
+      - Cloning: Simple but potentially expensive
+      - Returning ownership: Useful for transforming values
+
+      Best practice: Use references unless you need ownership transfer.
+    </div>
   </slot>
 </Challenge>
 
@@ -131,48 +194,79 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   index={2}
   group="Borrowing"
   title="Mutable References"
+  difficulty={3}
+  objectives={[
+    "Understand Rust's rules for mutable references",
+    "Identify violations of Rust's borrowing rules",
+    "Apply proper scoping to handle multiple mutable references"
+  ]}
   options={[
-    {text: 'Compiles successfully'},
-    {text: 'Error: cannot borrow `wisdom` as mutable more than once', isAnswer: true},
-    {text: 'Error: missing lifetime specifier'},
-    {text: 'Runtime panic'}
+    {
+      text: 'Compiles successfully',
+      hint: "Can we have multiple mutable references at the same time?"
+    },
+    {
+      text: 'Error: cannot borrow `wisdom` as mutable more than once',
+      isAnswer: true
+    },
+    {
+      text: 'Error: missing lifetime specifier',
+      hint: "The issue isn't about lifetimes here"
+    },
+    {
+      text: 'Runtime panic',
+      hint: "Rust catches these issues at compile time"
+    }
   ]}
 >
   <slot name="question">
-  <div className="question">
-    ```rust
-    fn main() {
-        let mut wisdom =
-            String::from("He who laughs at");
-        let ref1 = &mut wisdom;
-        let ref2 = &mut wisdom;
-        ref1.push_str(" himself never runs");
-        ref2.push_str(" out of things to laugh at.");
-    }
-    ```
-  </div>
+    <div className="question">
+      What happens with multiple mutable references?
+      ```rust
+      fn main() {
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;  // First mutable borrow
+          let ref2 = &mut wisdom;  // Second mutable borrow
+          ref1.push_str(" himself never runs");
+          ref2.push_str(" out of things to laugh at.");
+      }
+      ```
+      Think about Rust's rules for mutable references.
+    </div>
   </slot>
 
   <slot name='explanation'>
-  <div className="explanation">
-    Rust only allows one mutable reference to a value at a time. This prevents data races at compile time.
+    <div className="explanation">
+      This code violates Rust's fundamental borrowing rules:
+      - Only ONE mutable reference to a value at a time
+      - OR any number of immutable references
+      - References cannot outlive their referent
 
-    The rules are:
-    - You can have either one mutable reference OR any number of immutable references
-    - References must always be valid
-    - References cannot outlive their referent
+      Here's how to fix the code:
 
-    To fix this, we would need to scope the mutable references so they don't overlap:
-    ```rust
-    let mut wisdom = String::from("He who laughs at");
-    {
-        let ref1 = &mut wisdom;
-        ref1.push_str(" himself never runs");
-    } // ref1 goes out of scope here
-    let ref2 = &mut wisdom;
-    ref2.push_str(" out of things to laugh at.");
-    ```
-  </div>
+      1. Use sequential scoping:
+      ```rust
+      let mut wisdom = String::from("He who laughs at");
+      {
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs");
+      }  // ref1 goes out of scope
+      let ref2 = &mut wisdom;  // Now this is valid
+      ref2.push_str(" out of things to laugh at.");
+      ```
+
+      2. Or modify the string in a single borrow:
+      ```rust
+      let mut wisdom = String::from("He who laughs at");
+      let ref1 = &mut wisdom;
+      ref1.push_str(" himself never runs out of things to laugh at.");
+      ```
+
+      These rules prevent data races at compile time, making Rust thread-safe by default.
+
+      Common pitfall: Trying to use multiple mutable references to avoid cloning or
+      to modify different parts of the same value simultaneously.
+    </div>
   </slot>
 </Challenge>
 
