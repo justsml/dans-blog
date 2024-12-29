@@ -6,11 +6,11 @@
   import globalSafe from "globalthis";
   const globalThis = globalSafe();
 
-  if (!isLocalhost(globalThis?.location?.hostname)) initStats();
+  if (!isLocalhost(globalThis?.location?.hostname)) setTimeout(initStats, 750);
 
   async function initStats() {
     // const { posthog } = (await import("posthog-js/dist/module.no-external.js"));
-    const { posthog } = (await import("posthog-js/dist/module.full.no-external.js"));
+    const { posthog } = (await import("./PostHogEntry.tsx"));
     // @ts-ignore
     globalThis._posthog = posthog.init(
       "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9",
