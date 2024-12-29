@@ -227,7 +227,7 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={5}
-  group="Batches!"
+  group="Batches, part 1!"
   title="Batch Operations"
   difficulty={4}
   objectives={[
@@ -240,8 +240,8 @@ Get ready to prove your cloud expertise! 🚀
     { text: "25", hint: "Good guess..." },
     { text: "50" },
     { text: "100", hint: "Thinking of GetItem limit?" },
-    { text: "100 when streaming", hint: "If only there were better 'streaming' options..." },
-    { text: "None of the above" },
+    { text: "100 when streaming" },
+    { text: "None of the above", hint: "This is a bit tricky..." },
   ]}
 >
   <slot name="question">
@@ -263,7 +263,7 @@ Get ready to prove your cloud expertise! 🚀
 <Challenge
   client:load
   index={6}
-  group="Again, batch!"
+  group="Batches, part 2!"
   title="BatchGetItem Limits"
   difficulty={2}
   objectives={[
@@ -354,10 +354,11 @@ Get ready to prove your cloud expertise! 🚀
     "Implement principle of least privilege"
   ]}
   options={[
-    { text: "Always make buckets public" },
+    { text: "Always make buckets public", hint: "Think about security risks..." },
     { text: "Use least privilege principle", isAnswer: true },
-    { text: "Disable all security" },
-    { text: "Use maximum permissions" }
+    { text: "Disable all security", hint: "This would be dangerous!" },
+    { text: "Move S3 on-premises to fully control ACLs" },
+    { text: "Move key data to private blockchain", hint: "Kidding, right?" },
   ]}
 >
   <slot name="question">
@@ -1065,10 +1066,9 @@ Get ready to prove your cloud expertise! 🚀
 
 </QuizUI>
 
-Wow, that was quite a cloud storage adventure! 🚀☁️
+Wow, that adventure got deep in the weeds! 🚀☁️
+I hope you enjoyed the journey, and maybe even learned a thing or two about AWS Storage Services.
 
-Think you've mastered AWS Storage Services? Keep learning and exploring!
+Check out more of [Dan's challenges](/challenges/)! 🧠
 
-Check out more challenges at [Cloud Mastery](/challenges/)
-
-Legal: This quiz is for educational purposes only. All trademarks are property of their respective owners, especially the big guys.
+Legal: This quiz is for educational purposes only. All trademarks & copyrights are property of their respective owners, especially the big guys.
