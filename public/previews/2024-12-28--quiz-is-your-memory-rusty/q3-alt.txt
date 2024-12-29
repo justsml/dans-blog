@@ -1,0 +1,21 @@
+# 3. Borrowing
+
+What happens with multiple mutable references?
+
+fn main() {
+    let mut wisdom = String::from("He who laughs at");
+    let ref1 = &mut wisdom;  // First mutable borrow
+    let ref2 = &mut wisdom;  // Second mutable borrow
+    ref1.push_str(" himself never runs");
+    ref2.push_str(" out of things to laugh at.");
+}
+
+Think about Rust’s rules for mutable references.
+------
+
+1. Compiles successfully
+2. Error: cannot borrow `wisdom` as mutable more than once
+3. Error: missing lifetime specifier
+4. Runtime panic
+
+[credit](https://danlevy.net/)

@@ -1,11 +1,13 @@
 # 5. Timestamps
 
-What’s the diff between timestamptz and timestamp?
+What is the most accurate statement about timestamptz and timestamp?
 ------
 
-1. They store the same data differently
-2. timestamptz includes a timezone
-3. timestamptz is a more modern date type
-4. They are aliases of each other
+1. They're exactly 8-bytes
+2. They're interchangeable since Pg v10
+3. timestamptz preserves any input timezone
+4. timestamptz adjusts based on the server timezone
+5. timestamptz stores a 2-byte value for TZ
+6. timestamptz is the successor to timestamp
 
 [credit](https://danlevy.net/)

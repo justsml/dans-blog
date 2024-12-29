@@ -1,0 +1,27 @@
+# 8. Lifetimes
+
+What happens with this function that returns the longer of two string slices?
+
+fn longest(text1: &str, text2: &str) -> &str {
+    if text1.len() > text2.len() {
+        text1    // Returning a reference, but which lifetime?
+    } else {
+        text2    // Could be this reference instead
+    }
+}
+
+
+fn main() {
+    println!("{}", longest(
+        "Seneca the Younger",
+        "Marcus Aurelius"
+    ));
+}
+------
+
+1. Result: Seneca the Younger
+2. Error: missing lifetime specifier
+3. Error: cannot return reference to local variable
+4. Error: lifetime mismatch
+
+[credit](https://danlevy.net/)

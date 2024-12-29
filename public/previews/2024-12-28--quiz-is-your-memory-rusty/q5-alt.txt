@@ -1,0 +1,25 @@
+# 5. Smart Pointers
+
+What’s wrong with this recursive type definition?
+
+#[derive(Debug)]
+enum CatList {
+    Cons(i32, CatList),  // Recursive without indirection
+    Nil,
+}
+
+
+fn main() {
+    let catlist = CatList::Cons(1,
+        CatList::Cons(2,
+            CatList::Cons(3,
+                CatList::Nil)));
+}
+------
+
+1. 5
+2. null
+3. Compilation Error
+4. Stack overflow
+
+[credit](https://danlevy.net/)

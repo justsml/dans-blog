@@ -1,0 +1,22 @@
+# 1. Ownership
+
+What happens when you run this code? Try to predict the output or error:
+
+fn main() {
+    let philosopher =
+        String::from("Zeno of Citium");
+    let greeting = philosopher;
+
+
+    println!("Hello, {}!", philosopher);
+}
+------
+
+1. Hello, !
+2. Hello, Zeno of Citium!
+3. Hello, Zeno of Elea!
+4. Hello, Marcus Aurelius
+5. Compilation Error: value borrowed after move
+6. Runtime Error: null pointer exception
+
+[credit](https://danlevy.net/)

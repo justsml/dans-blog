@@ -1,0 +1,25 @@
+# 4. Lifetime Elision
+
+Will this code compile? If so, why? If not, what’s wrong?
+
+fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+    match s.find(' ') {
+        Some(pos) => &s[0..pos],
+        None => s,
+    }
+}
+
+
+fn main() {
+    let name = String::from("Seneca the Younger");
+    let first = first_word(&name);
+    println!("Hello, {}", first);
+}
+------
+
+1. Compiles successfully
+2. Error: missing lifetime specifier
+3. Error: explicit lifetime required
+4. Error: lifetime mismatch
+
+[credit](https://danlevy.net/)

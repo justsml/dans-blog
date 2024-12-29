@@ -7,7 +7,7 @@
 ### Design & Improvements
 
 - [ ] Stop using REM for layout (padding)
-
+- [ ] Use Code Block Line Highlighting
 - [x] Fix the color scheme: make darker.
 - [x] Update style of social media icons in footer.
 - [ ] Add LMS-style data fields to `<QuizUI>` or `<Challenge>`: Learning Objective(s), Prerequisites, Estimated Time, Difficulty Level, Standards Alignment, Learning Outcomes, etc.

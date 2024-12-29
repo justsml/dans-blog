@@ -1,0 +1,26 @@
+# 18. Advanced Patterns
+
+How does the performance of these two implementations compare?
+
+// Implementation A: Iterator
+fn sum_iterator(v: &[i32]) -> i32 {
+    v.iter().fold(0, |acc, &x| acc + x)
+}
+
+
+// Implementation B: Raw loop
+fn sum_loop(v: &[i32]) -> i32 {
+    let mut sum = 0;
+    for i in 0..v.len() {
+        sum += v[i];
+    }
+    sum
+}
+------
+
+1. Runtime overhead from Iterator
+2. Same performance as raw loop
+3. Slower but more readable
+4. Depends on optimization level
+
+[credit](https://danlevy.net/)

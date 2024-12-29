@@ -1,0 +1,24 @@
+# 7. Lifetimes
+
+Will this struct definition compile? Why or why not?
+
+struct Philosopher {
+    name: &str,    // Reference without lifetime
+    quote: &str,   // Another reference without lifetime
+}
+
+
+fn main() {
+    let phil = Philosopher {
+        name: "Seneca",
+        quote: "Luck happens when preparation meets opportunity",
+    };
+}
+------
+
+1. Compiles successfully
+2. Error: missing lifetime specifier
+3. Error: lifetime mismatch
+4. Error: invalid reference
+
+[credit](https://danlevy.net/)

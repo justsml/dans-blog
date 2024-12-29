@@ -1,0 +1,26 @@
+# 15. Memory Patterns
+
+What happens to the file handle in this RAII example?
+
+use std::fs::File;
+
+
+struct FileWrapper {
+    file: File,
+}
+
+
+fn main() {
+    let file = File::create("test.txt").unwrap();
+    let wrapper = FileWrapper { file };
+    // ... use wrapper ...
+    // No Drop implementation
+}
+------
+
+1. Resource is freed after scope
+2. Resource leaks
+3. Compilation Error
+4. Runtime Error
+
+[credit](https://danlevy.net/)

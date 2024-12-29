@@ -1,0 +1,22 @@
+# 10. Mutability
+
+What will this code print?
+
+use std::cell::Cell;
+
+
+fn main() {
+    let life = Cell::new(42);
+    let meaning = &life;        // Shared reference
+    println!("{}", life.get()); // What prints here?
+    meaning.set(43);            // Mutation through shared ref
+    println!("{}", life.get()); // And here?
+}
+------
+
+1. Prints: 42, 43
+2. Prints: 43, 43
+3. Compilation Error
+4. Runtime Panic
+
+[credit](https://danlevy.net/)

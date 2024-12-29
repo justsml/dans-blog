@@ -1,0 +1,24 @@
+# 6. Reference Counting
+
+What will this code print? Count carefully!
+
+use std::rc::Rc;
+
+
+fn main() {
+    let text = Rc::new(String::from("Meditations"));  // Count: 1
+    let marcus = Rc::clone(&text);    // What happens here?
+    let aurelius = Rc::clone(&text);  // And here?
+    println!(
+        "Reference count: {}",
+        Rc::strong_count(&text)
+    );
+}
+------
+
+1. Reference count: 1
+2. Reference count: 2
+3. Reference count: 3
+4. Compilation Error
+
+[credit](https://danlevy.net/)

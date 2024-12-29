@@ -1,0 +1,23 @@
+# 2. Ownership
+
+What happens when you run this code? Think about ownership transfer:
+
+fn take_knowledge(knowledge: String) {
+    println!("Knowledge: {}", knowledge);
+}
+
+
+fn main() {
+    let wisdom = String::from("know thyself");
+    take_knowledge(wisdom);
+    // What happens to our wisdom?
+    println!("Do you {}", wisdom);
+}
+------
+
+1. Prints both lines
+2. Prints first line only
+3. Compilation Error
+4. Runtime Error
+
+[credit](https://danlevy.net/)

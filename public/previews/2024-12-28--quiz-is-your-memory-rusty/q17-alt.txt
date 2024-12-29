@@ -1,0 +1,17 @@
+# 17. Best Practices
+
+On a 64-bit system, what’s the size of this struct?
+
+struct Metadata {
+    id: u32,        // How many bytes?
+    name: String,   // How many bytes?
+    active: bool    // How many bytes + padding?
+}
+------
+
+1. 16 bytes
+2. 24 bytes
+3. 32 bytes
+4. Depends on platform
+
+[credit](https://danlevy.net/)

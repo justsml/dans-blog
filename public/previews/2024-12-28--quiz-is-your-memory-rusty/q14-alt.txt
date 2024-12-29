@@ -1,0 +1,24 @@
+# 14. Smart Pointers
+
+What happens when you run this code with weak references?
+
+use std::rc::{Rc, Weak};
+
+
+fn main() {
+    let data = Rc::new(String::from("Wisdom"));
+    let weak = Rc::downgrade(&data);  // Create weak reference
+    drop(data);                       // Drop strong reference
+
+
+    println!("Value: {:?}", weak.upgrade());
+}
+------
+
+1. Prints: Some("Wisdom")
+2. Prints: None
+3. Compilation Error
+4. Runtime Panic
+5. Existential Panic
+
+[credit](https://danlevy.net/)

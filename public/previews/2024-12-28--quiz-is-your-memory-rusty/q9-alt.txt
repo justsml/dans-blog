@@ -1,0 +1,21 @@
+# 9. RefCells
+
+What happens when this code runs?
+
+use std::cell::RefCell;
+
+
+fn main() {
+    let data = RefCell::new(42);
+    let _borrow1 = data.borrow_mut();  // First mutable borrow
+    let _borrow2 = data.borrow_mut();  // Second mutable borrow
+    println!("Value: {}", _borrow2);
+}
+------
+
+1. Prints: 42
+2. Already borrowed: BorrowError
+3. Compilation Error
+4. Runtime Panic: different message
+
+[credit](https://danlevy.net/)

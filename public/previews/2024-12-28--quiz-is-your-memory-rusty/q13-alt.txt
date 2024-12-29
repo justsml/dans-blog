@@ -1,0 +1,27 @@
+# 13. Smart Pointers
+
+What happens when this code runs?
+
+use std::sync::{Arc, Mutex};
+
+
+fn main() {
+    let lock = Arc::new(Mutex::new(42));
+    let lock2 = Arc::clone(&lock);
+
+
+    let _guard1 = lock.lock().unwrap();   // First lock
+    let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+
+
+    println!("Value: {}", _guard2);
+}
+------
+
+1. Prints: 42
+2. Prints: 43
+3. Compilation Error
+4. Runtime Panic
+5. Deadlock
+
+[credit](https://danlevy.net/)

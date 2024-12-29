@@ -1,0 +1,28 @@
+# 16. Design Patterns
+
+What happens when we clone this Philosophy struct?
+
+#[derive(Clone)]
+struct Philosophy {
+    school: String,
+    founder: String,
+}
+
+
+fn main() {
+    let stoicism = Philosophy {
+        school: String::from("Stoicism"),
+        founder: String::from("Zeno of Citium")
+    };
+    let new_school = stoicism.clone();
+    println!("{} - {}",
+        stoicism.school, new_school.school);
+}
+------
+
+1. Compilation Error
+2. Deep copy created
+3. Shallow copy created
+4. Move semantics applied
+
+[credit](https://danlevy.net/)
