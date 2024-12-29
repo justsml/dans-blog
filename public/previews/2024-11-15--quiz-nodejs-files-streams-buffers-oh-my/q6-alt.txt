@@ -1,0 +1,16 @@
+# 6. Streams
+
+What does this code do?
+
+import fs from 'fs';
+const readable = fs.createReadStream('source.txt');
+const writable = fs.createWriteStream('dest.txt');
+readable.pipe(writable);
+------
+
+1. Copies file with compression
+2. Copies file without memory buffering
+3. Loads entire file into memory
+4. Creates a symbolic link
+
+[credit](https://danlevy.net/)

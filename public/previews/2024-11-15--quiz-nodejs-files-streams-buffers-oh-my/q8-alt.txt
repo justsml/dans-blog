@@ -1,0 +1,22 @@
+# 8. Streams
+
+What will this output?
+
+import { Transform } from 'stream';
+const upperCase = new Transform({
+  transform(chunk, encoding, callback) {
+    callback(null, chunk.toString().toUpperCase());
+  }
+});
+process.stdin
+  .pipe(upperCase)
+  .pipe(process.stdout);
+// Input: "hello world"
+------
+
+1. hello world
+2. HELLO WORLD
+3. Error
+4. undefined
+
+[credit](https://danlevy.net/)

@@ -189,29 +189,36 @@ Good luck! 🍀
   group="Timestamps"
   title="timestamptz vs timestamp"
   options={[
-    {text: 'They store the same data differently'},
-    {text: 'timestamptz includes a timezone', isAnswer: true},
-    {text: 'timestamptz is a more modern date type'},
-    {text: 'They are aliases of each other'},
+    {text: 'They\'re exactly 8-bytes', isAnswer: true},
+    {text: 'They\'re interchangeable since Pg v10'},
+    {text: 'timestamptz preserves any input timezone'},
+    {text: 'timestamptz adjusts based on the server timezone'},
+    {text: 'timestamptz stores a 2-byte value for TZ'},
+    {text: 'timestamptz is the successor to timestamp'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    What's the diff between `timestamptz` and `timestamp`?
+    What is the **most accurate** statement about `timestamptz` and `timestamp`?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    `timestamp` stores date/time without timezone information.
-    `timestamptz` stores date/time with timezone information.
+    They both are the same size (8 bytes) and store the same UTC-based date & time!
 
-    - `timestamp` is timezone agnostic
-    - `timestamptz` stores the timezone offset
+    So what's the difference? It's in the input parsing.
 
-    Use `timestamptz` when you need to store timezone information. (You usually don't.)
+    **`timestamptz`**
+    - let's you convert dates between timezones.
+    - Takes into account the server/connection `timezone` setting. (See TZ environment variable.)
+    
+    
+    **`timestamp`**
 
-    Generally I recommended to normalize all times to UTC and use `timestamp` to avoid plenty of timezone issues.
+    - Stores the date & time without timezone information.
+    - Useful for explicitly storing standardized dates, either in UTC or a specific timezone.
+
   </div>
   </slot>
 </Challenge>

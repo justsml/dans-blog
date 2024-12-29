@@ -1,0 +1,24 @@
+# 9. Handling Data
+
+What will the output be for the following code?
+
+Promise.resolve('Success!')
+  .then(() => {
+    throw Error('Oh noes!')
+  })
+  .catch(error => {
+    return 'actually, that worked'
+  })
+  .then(data => {
+    throw Error('The fails!')
+  })
+  .catch(error => console.log(error.message))
+------
+
+1. print "Oh noes!" and "The fails!"
+2. print "Oh noes!"
+3. print "The fails!"
+4. print "actually, that worked"
+5. nothing prints
+
+[credit](https://danlevy.net/)

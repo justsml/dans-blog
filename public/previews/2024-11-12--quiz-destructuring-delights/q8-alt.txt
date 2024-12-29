@@ -1,0 +1,26 @@
+# 8. Function Arguments
+
+Similar to the previous one… how is null handled?_
+
+function displayPlace({
+  name = "N/A",
+  place = "N/A",
+  age = -1,
+} = { place: "Unknown" }) {
+  console.log(`${place}`);
+}
+displayPlace({ name: "Dan", place: null });
+displayPlace({ name: "Dan", place: undefined });
+------
+
+1. N/A, N/A
+2. N/A, undefined
+3. Unknown, N/A
+4. Unknown, Unknown
+5. Unknown, undefined
+6. null, N/A
+7. null, Unknown
+8. null, undefined
+9. Error
+
+[credit](https://danlevy.net/)

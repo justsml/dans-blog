@@ -7,11 +7,13 @@
 ### Design & Improvements
 
 - [ ] Stop using REM for layout (padding)
+
 - [x] Fix the color scheme: make darker.
 - [x] Update style of social media icons in footer.
+- [ ] Add LMS-style data fields to `<QuizUI>` or `<Challenge>`: Learning Objective(s), Prerequisites, Estimated Time, Difficulty Level, Standards Alignment, Learning Outcomes, etc.
 - [ ] Experiment: Use Astro's `client:load` to lazy load Quiz `<Challenge>`'s past the first `X`.
 - [ ] Add sign-up form to footer.
-- [x] Archived Screenshots of site for posterity [`./.screens/`](`./.screens/`).
+- [ ] [Animate Nav Link Underline on Hover](https://css-irl.info/animating-underlines/)
 
 ### Performance & LightHouse Scores
 
@@ -24,20 +26,54 @@
 - [ ] Add page listing my OSS contributions over the years.
 - [ ] HOW TO: Comments Component
 - [ ] HOW TO: Free local search
+- [ ] Change the article card hover effect: https://codepen.io/thebabydino/pen/WNVPdJg?editors=0100
 
 ### Quizzes
 
 - [ ] Add AWS Content
-  - [ ] Storage
-  - [ ] Compute
-  - [ ] Networking
-  - [ ] Security
-  - [ ] Best practices, gotchas & trivia
-- [ ] Add GCP Content
+  - [ ] events, data streams, and triggers. (Kinesis, SQS, SNS, EventBridge, Lambda)
+  - [ ] RDS, Aurora, ElastiCache, Redshift, Neptune, DocumentDB, QLDB
+  - [ ] S3, Glacier, Storage Gateway, Snowball, FSx, EFS, EBS
+  - [ ] networking, VPC, Direct Connect, Route 53, CloudFront, API Gateway, Transit Gateway
+  - [ ] security, IAM, Cognito, Secrets Manager, KMS, Shield, WAF, Macie, GuardDuty
+  - [ ] monitoring, CloudWatch, CloudTrail, X-Ray, Config, Trusted Advisor, Health Dashboard
+  - [ ] deployment, CloudFormation, CDK, OpsWorks, Elastic Beanstalk, CodeDeploy, CodePipeline
+  - [ ] management tools, Systems Manager, CloudWatch Logs, CloudWatch Events, Personal Health Dashboard
+  - [ ] analytics, EMR, Athena, Redshift, QuickSight, Glue, Data Pipeline, Lake Formation
+  - [ ] machine learning, SageMaker, Comprehend, Polly, Rekognition, Lex, Translate, Transcribe
+  - [ ] developer tools, CodeCommit, CodeBuild, CodeDeploy, CodePipeline, Cloud9, X-Ray
+  - [ ] serverless, Lambda, API Gateway, Step Functions, SAM, AppSync, Amplify
+  - [ ] containers, ECS, EKS, Fargate, ECR, App Runner, Batch
 - [ ] Add Terraform Content
-- [ ] Add Kubernetes Content
+  - [ ] Concepts, Modules, Providers, State
+  - [ ] Advanced Topics, Supporting Large Teams, Gotchas, Best Practices
+  - [ ] Integrations/providers: AWS, Azure, GCP, Kubernetes, LDAP, Docker, GitHub, GitLab, Bitbucket, etc.
+  
 - [ ] Add Docker Content
+- [ ] Add GCP Content?
+- [ ] Add Kubernetes Content
 - [ ] Add Git Actions Content
+- [ ] Add AI/ML Content
+  - [ ] NLP (Natural Language Processing)
+  - [ ] Complex Decision Trees
+  - [ ] Boost abilities w/ RAG
+  - [ ] Computer Vision
+  - [ ] Speech Recognition
+  - [ ] Reinforcement Learning
+  - [ ] Generative Adversarial Networks
+  - [ ] Transfer Learning
+  - [ ] AutoML
+  - [ ] Explainable AI
+  - [ ] Transformers
+  - [ ] Attention Mechanisms
+  - [ ] Recurrent Neural Networks
+  - [ ] Convolutional Neural Networks
+
+- Math-ey Topics
+  - [ ] Statistics
+  - [ ] Linear Algebra
+  - [ ] Calculus
+  - [ ] Probability
 
 ### Features
 
@@ -49,6 +85,7 @@
 
 ### Screenshots
 
+- [ ] Capture Question 'raw' Text for ALT text. (Save alongside the question's image.)
 - [ ] Add "social-banner" scaled output of question cards.
 - [ ] Capture Full Home Page screens to compare in a later design article.
 - [ ] Investigate recording animated gifs of the quizzes in action.
@@ -67,9 +104,8 @@
 - [x] Add `theme-color` meta tag
 
 - Add CSS Effects:
-  - [ ] Adjust Quiz box-shadow using scroll position
+  - [x] Adjust Quiz box-shadow using scroll position
   - [ ] Look into scroll snap for each quiz.
-  - [ ] Change the article card hover effect: https://codepen.io/thebabydino/pen/WNVPdJg?editors=0100
 
 - [x] Update Quiz UI, 
   - [x] Make Question's Linkable
@@ -80,11 +116,35 @@
   - [x] Add `Group` to Question Title/Banner. Auto-count / number.
 - [x] Disable posthog locally
 - [x] Add search
+- Publish:
+  - [ ] Comments Component
+  - [ ] Free local search
+  - [ ] Newsletter
+- [ ] Add Video page?
+- [ ] Add newsletter?
 
-## UI/UX
+## Done
 
+- [x] Add highlight to apply to all posts from same category when hovering over a an `.article-card`.
+- [x] Add comments
+- [x] Fine tune: crank lighthouse score
+- [x] Add Link to Category on Posts
+- [x] Add Mastodon & Bsky links to footer.
+- [x] Add LinkedIn link to footer.
+- [x] Support inlining `<Gist />` with owned syntax highlighting.
+- [x] Add Scroll CSS Effects:
+  - [x] Adjust Quiz box-shadow using scroll position
+- [x] Update Quiz UI
+  - [x] Make Question's Linkable
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+  - [x] Get rid of cliche icons abuse.
+- [x] Add Quizzes to the Menu
+- [x] Publish next batch of quizzes
+  - [x] Add `Group` to Question Title/Banner. Auto-count / number.
+- [x] Disable posthog locally
+- [x] Add search
 - [x] Add new nav
-  - [ ] Add tags
+  - [ ] Add tags?
   - [x] Add categories
   - [x] Add Popular/Related posts
 - [x] Convert Quiz UI to MDX/Astro
@@ -96,6 +156,7 @@
 - [x] Add about page
 - [x] Add OSS project list (in menu)
 - [x] Add contact page
+- [x] Add search
 
 Features:
 

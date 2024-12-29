@@ -1,0 +1,27 @@
+# 9. TypeScript Inline Types
+
+Now in TypeScript… what will this do?
+
+'use strict';
+function displayPlace(
+  {
+    name = 'N/A',
+    place = 'N/A',
+  }: {
+    name: string;
+    place: string;
+    age: number;
+  },
+) {
+  console.log(`${place}`);
+}
+displayPlace({ name: 'Dan', place: null });
+------
+
+1. N/A
+2. undefined
+3. Unknown
+4. 'null'
+5. Error
+
+[credit](https://danlevy.net/)

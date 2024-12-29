@@ -1,9 +1,10 @@
 ---
 social_image: ./desktop-social.webp
 title: Broken Promises?
+unlisted: true
 subTitle: Dropping errors, losing results...
 date: 2018-10-06
-modified: 2024-07-30
+modified: 2024-12-11
 tags: [promises, javascript, errors, programming]
 category: Code
 subCategory: promises
@@ -28,7 +29,7 @@ And sadly, some didn't notice.
 
 ### The Now Times
 
-The myth still persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](https://dzone.com/articles/), and [many](https://medium.com/@avaq/broken-promises-2ae92780f33) other sources.
+The myth still persists, I see it everywhere: [popular articles on medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [on dzone](#redacted), and [many](https://medium.com/@avaq/broken-promises-2ae92780f33) other sources.
 
 I'll admit, even "official" resources and documentation offer mostly [flimsy examples and bad habits](/promise-gotchas/). These are often used to "prove" the case against Promises. Some even suggest "cures" which make things so much worse. (note: link removed)
 
