@@ -29,6 +29,11 @@ Get ready to prove your cloud expertise! 🚀
   index={0}
   group="Warmup"
   title="S3 Trivia"
+  difficulty={1}
+  objectives={[
+    "Recall the meaning of AWS S3 service name",
+    "Identify fundamental AWS storage services"
+  ]}
   options={[
     { text: "Server Storage v3" },
     { text: "Storage as a Service" },
@@ -64,6 +69,11 @@ Get ready to prove your cloud expertise! 🚀
   index={1}
   group="Schema less"
   title="DynamoDB"
+  difficulty={2}
+  objectives={[
+    "Define schema-less database characteristics",
+    "Explain DynamoDB's flexible data model"
+  ]}
   options={[
     { text: "Columns are untyped" },
     { text: "Dynamic partition keys" },
@@ -92,6 +102,12 @@ Get ready to prove your cloud expertise! 🚀
   index={2}
   group="Schema less"
   title="DynamoDB"
+  difficulty={4}
+  objectives={[
+    "Compare DynamoDB batch operation capabilities",
+    "Optimize DynamoDB update operations",
+    "Evaluate scaling considerations for updates"
+  ]}
   options={[
     { text: "PutItem", hint: "Creates a new item, or replaces an old item with a new item." },
     { text: "UpdateItem", isAnswer: true },
@@ -129,6 +145,7 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
+  index={3}
   group="Query Capabilities"
   title="Advanced Search Features"
   difficulty={3}
@@ -159,7 +176,9 @@ Get ready to prove your cloud expertise! 🚀
       - Redshift: SQL with full-text search functions
       - DocumentDB: Text search through MongoDB compatibility
       
-      ElastiCache (Redis/Memcached) is primarily for caching and doesn't include built-in full-text search capabilities.
+      ElastiCache (Redis/Memcached) is primarily for caching and **doesn't include built-in full-text search capabilities.** (As of late 2024.)
+
+      Redis has recently added [full-text search modules](https://redis.io/docs/latest/develop/interact/search-and-query/query/full-text/) under their `Redis Source Available License`, or RSAL. This license prevents AWS from freely copying the Redis' folks work into the ElastiCache product.
     </div>
   </slot>
 </Challenge>
@@ -169,6 +188,11 @@ Get ready to prove your cloud expertise! 🚀
   index={4}
   group="RDS"
   title="Multi-AZ Deployment"
+  difficulty={2}
+  objectives={[
+    "Identify the primary purpose of Multi-AZ deployments",
+    "Differentiate between high availability and read scaling"
+  ]}
   options={[
     { text: "Reduces storage costs" },
     { text: "Solves the Egress Problem" },
@@ -202,9 +226,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={6}
+  index={5}
   group="Batches!"
   title="Batch Operations"
+  difficulty={4}
+  objectives={[
+    "Understand DynamoDB batch operation limits",
+    "Differentiate between single and batch operations"
+  ]}
   options={[
     { text: "1", isAnswer: true },
     { text: "10" },
@@ -233,13 +262,13 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={7}
+  index={6}
   group="Again, batch!"
   title="BatchGetItem Limits"
   difficulty={2}
   objectives={[
-    "Recall the maximum number of items allowed in a DynamoDB `BatchGetItem` request",
-    "Differentiate between `BatchWriteItem` and `BatchGetItem` operations",
+    "Recall DynamoDB BatchGetItem limits",
+    "Compare BatchGetItem with other batch operations"
   ]}
   options={[
     { text: "25", hint: "That's the limit for `BatchWriteItem`." },
@@ -268,14 +297,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={8}
+  index={7}
   group="WebSockets"
   title="WebSocket Wizardry"
   difficulty={3}
   objectives={[
-    "Understand WebSocket support across AWS services",
-    "Identify limitations of API Gateway with WebSockets",
-    "Compare WebSocket capabilities between different AWS compute services"
+    "Compare WebSocket support across AWS services",
+    "Identify architectural limitations in AWS services",
+    "Evaluate WebSocket implementation options"
   ]}
   options={[
     { text: "EC2" },
@@ -316,9 +345,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={9}
+  index={8}
   group="S3 Security"
   title="S3 Bucket Policy"
+  difficulty={2}
+  objectives={[
+    "Apply security best practices to S3",
+    "Implement principle of least privilege"
+  ]}
   options={[
     { text: "Always make buckets public" },
     { text: "Use least privilege principle", isAnswer: true },
@@ -354,9 +388,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={10}
+  index={9}
   group="Aurora"
   title="Aurora Serverless"
+  difficulty={2}
+  objectives={[
+    "Identify key features of Aurora Serverless",
+    "Distinguish between serverless and provisioned databases"
+  ]}
   options={[
     { text: "Always cheaper than provisioned" },
     { text: "Automatically scales compute capacity", isAnswer: true },
@@ -387,9 +426,15 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={11}
+  index={10}
   group="DynamoDB"
   title="Provisioned vs On-Demand Capacity"
+  difficulty={3}
+  objectives={[
+    "Compare DynamoDB capacity modes",
+    "Select appropriate capacity mode based on workload",
+    "Evaluate cost implications of capacity choices"
+  ]}
   options={[
     { text: "Provisioned is always better" },
     { text: "On-demand is cheaper for unpredictable workloads", isAnswer: true },
@@ -423,9 +468,15 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={12}
+  index={11}
   group="S3 Performance"
   title="S3 Performance Optimization"
+  difficulty={3}
+  objectives={[
+    "Optimize S3 performance for high request rates",
+    "Apply S3 key naming best practices",
+    "Design for S3 partition distribution"
+  ]}
   options={[
     { text: "Use sequential prefixes" },
     { text: "Use random/hash prefixes", isAnswer: true },
@@ -456,9 +507,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={13}
+  index={12}
   group="RDS Backup"
   title="RDS Backup Strategy"
+  difficulty={2}
+  objectives={[
+    "Identify best practices for RDS backup strategies",
+    "Understand point-in-time recovery capabilities"
+  ]}
   options={[
     { text: "Manual snapshots only" },
     { text: "Automated backups with point-in-time recovery", isAnswer: true },
@@ -492,13 +548,18 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={14}
+  index={13}
   group="ElastiCache"
   title="Redis vs Memcached"
+  difficulty={2}
+  objectives={[
+    "Compare Redis and Memcached capabilities",
+    "Differentiate between caching engine features"
+  ]}
   options={[
     { text: "API-level compatibility" },
     { text: "Identical in all aspects" },
-    { text: "Redis supports complex data structures", isAnswer: true },
+    { text: "Redis supports more data structures & operations", isAnswer: true },
     { text: "Memcached is always faster" },
   ]}
 >
@@ -528,9 +589,15 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={15}
+  index={14}
   group="DynamoDB Indexes"
   title="Global Secondary Index"
+  difficulty={3}
+  objectives={[
+    "Understand Global Secondary Index purpose",
+    "Evaluate access patterns in DynamoDB",
+    "Design efficient query strategies"
+  ]}
   options={[
     { text: "Identical to primary key" },
     { text: "Allows querying on non-primary attributes", isAnswer: true },
@@ -561,9 +628,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={16}
+  index={15}
   group="S3 Lifecycle"
   title="S3 Lifecycle Management"
+  difficulty={2}
+  objectives={[
+    "Understand S3 lifecycle management capabilities",
+    "Apply cost optimization strategies for S3"
+  ]}
   options={[
     { text: "Manually move objects" },
     { text: "Automatically transition objects between storage classes", isAnswer: true },
@@ -593,13 +665,13 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={17}
+  index={16}
   group="Aurora Scaling"
   title="Scaling Reads with Amazon Aurora"
   difficulty={2}
   objectives={[
-    "Recall the maximum number of read replicas supported by Amazon Aurora",
-    "Understand how read replicas enhance read scalability in Aurora"
+    "Recall Aurora read replica limits",
+    "Understand Aurora's read scaling capabilities"
   ]}
   options={[
     { text: "Limited to a single read replica", hint: "Think about Aurora's scalability features." },
@@ -631,9 +703,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={18}
+  index={17}
   group="RDS Security"
   title="RDS Encryption"
+  difficulty={2}
+  objectives={[
+    "Identify RDS encryption capabilities",
+    "Understand data protection mechanisms in RDS"
+  ]}
   options={[
     { text: "Encryption is optional" },
     { text: "Encrypt data at rest and in transit", isAnswer: true },
@@ -663,9 +740,15 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={19}
+  index={18}
   group="DynamoDB Streams"
   title="DynamoDB Streams Purpose"
+  difficulty={3}
+  objectives={[
+    "Understand DynamoDB Streams use cases",
+    "Design event-driven architectures with DynamoDB",
+    "Evaluate stream-based data processing patterns"
+  ]}
   options={[
     { text: "Store additional data copies" },
     { text: "Capture item-level changes for event-driven architectures", isAnswer: true },
@@ -695,9 +778,14 @@ Get ready to prove your cloud expertise! 🚀
 
 <Challenge
   client:load
-  index={20}
+  index={19}
   group="S3 Transfer"
   title="Large File Transfer"
+  difficulty={2}
+  objectives={[
+    "Identify best practices for large file uploads",
+    "Understand multipart upload benefits"
+  ]}
   options={[
     { text: "Always use single PUT request" },
     { text: "Use Multipart Upload for large files", isAnswer: true },
