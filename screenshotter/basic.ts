@@ -1,3 +1,17 @@
+/**
+ * Run this script to take screenshots of a list of URLs
+ * 
+ * ```bash
+ * bun run ./screenshotter/basic.ts \
+ *   --output ./.screens \
+ *   --url https://danlevy.net/javascript-promises-quiz/,https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/
+ * ```
+ * 
+ * @packageDocumentation
+ * @module ScreenshotterBasic
+ * @category Scripts
+ * 
+ */
 import fs from "node:fs";
 import path from "node:path";
 import ScreenshotService from "../src/components/Screenshots/PageScreenshot.ts";

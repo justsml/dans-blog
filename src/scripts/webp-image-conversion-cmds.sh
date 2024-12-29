@@ -32,8 +32,9 @@ function find_old_image_formats () {
     -o -iname \*.tiff \) \
     \( \
     -not -iregex ".*/dist/.*" \
-    -and -not -iregex ".*/node_modules/.*" \
     -and -not -iregex ".*/.cache/.*" \
+    -and -not -iregex ".*/.screens/.*" \
+    -and -not -iregex ".*/node_modules/.*" \
     -and -not -iregex ".*/public/icons/.*" \
     -and -not -iregex ".*/public/apple/.*" \
     -and -not -iregex ".*/public/apple.*" \)
@@ -41,6 +42,10 @@ function find_old_image_formats () {
 
 
 function convert_images_to_webp () {
+  set +e
+
+  AUTO_REMOVE_OLD_IMAGES="$1"
+
   # Convert images with `cwebp` (w/ 90 quality)
   for file in $(find_old_image_formats); do
     if [[ $file == *.gif ]]; then
@@ -48,6 +53,15 @@ function convert_images_to_webp () {
       gif2webp -q 90 -mt "$file" -o "${file%.*}.webp"
     else
       cwebp -q 90 "$file" -o "${file%.*}.webp"
+    fi
+
+    # Ensure no errors occurred, optionally remove the old image
+    if [[ $? -ne 0 ]]; then
+      printf "\n❌ Error converting %s\n" "$file"
+    else
+      if [[ $AUTO_REMOVE_OLD_IMAGES == true ]]; then
+        rm "$file"
+      fi
     fi
   done
   printf "\n✅ Completed converting images to webp!\n\n"
@@ -66,8 +80,8 @@ function generate_rm_cmds () {
 }
 
 function convert_and_cleanup_images () {
-  convert_images_to_webp
-  for file in $(find_old_image_formats); do rm "$file"; done
+  convert_images_to_webp true
+  # for file in $(find_old_image_formats); do rm "$file"; done
 }
 
 # print cmds to remove original images

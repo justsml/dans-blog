@@ -148,6 +148,22 @@ Browser snippets to run in console to better understand the main factors in your
 
 ## Screenshot Related Stuff
 
+### Resize Thumbnails to 200x200
+
+```sh
+cwebp -q 90 -resize 300 \
+  src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/icon_logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp \
+  -o src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/icon_300.webp
+
+cwebp -q 90 -resize 200 200 \
+  src/content/posts/2024-12-27--from-zero-to-regex-hero-extract-url-like-strings/regex-url-parsing-square.webp \
+  -o src/content/posts/2024-12-27--from-zero-to-regex-hero-extract-url-like-strings/regex-url-parsing-square-200.webp
+
+cwebp -q 90 -resize 200 200 \
+  src/content/posts/2024-11-15--quiz-regex-or-wreckage/dan-lounsbury-uHZ2-nzYuIs-unsplash-square.webp \
+  -o src/content/posts/2024-11-15--quiz-regex-or-wreckage/dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+```
+
 ### Generate Quiz Question Screenshots
 
 ```sh
