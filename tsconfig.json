@@ -2,8 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "strictNullChecks": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "moduleResolution": "bundler",
     "verbatimModuleSyntax": false,
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
@@ -14,10 +15,10 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
       "@/screenshotter/*": ["./screenshotter/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/utils": ["./src/utils.ts", "./src/utils/*"],
-      "@/components/*": ["./src/components/*"],
 
     },
   },

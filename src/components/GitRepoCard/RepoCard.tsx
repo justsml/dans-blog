@@ -62,32 +62,24 @@ export const RepoCard = ({
           {repo}
         </a>
       </h2>
-      <aside className="corner-stats">
-        <div className="repo-stars-box button-ish-box">
-          <span className="gh-icon icon-github-star"></span>
+      <section className="corner-stats">
+        <aside title="Stars" className="stat">
           {pr?.repository.stars.toLocaleString()}
-        </div>
-
-        <div className="pull-stats stats">
-          <aside title="Stars" className="stat">
-            <span className="gh-icon icon-github-star"></span>
-            {pr?.repository.stars.toLocaleString()}
-          </aside>
-          <aside title="Changed files" className="stat">
-            <span className="gh-icon icon-github-file"></span>
-            {pr?.pullStats.changedFiles}
-          </aside>
-          <aside title="Comments" className="stat">
-            <span className="gh-icon icon-github-comment"></span>
-            {pr?.pullStats.comments}
-          </aside>
-          <aside title="Reviews" className="stat">
-            <span className="gh-icon icon-github-reviews"></span>
-            {pr?.pullStats.reviews}
-          </aside>
-        </div>
-
-      </aside>
+          <span className="gh-icon icon-github-star"></span>
+        </aside>
+        <aside title="Changed files" className="stat">
+          {pr?.pullStats.changedFiles}
+          <span className="gh-icon icon-github-file"></span>
+        </aside>
+        <aside title="Comments" className="stat">
+          {pr?.pullStats.comments}
+          <span className="gh-icon icon-github-comment"></span>
+        </aside>
+        <aside title="Reviews" className="stat">
+          {pr?.pullStats.reviews}
+          <span className="gh-icon icon-github-reviews"></span>
+        </aside>
+      </section>
       <p className="s-description repo-inner-card description">
         {c.description_override ?? `[could not load description for ${repo}]`}
       </p>

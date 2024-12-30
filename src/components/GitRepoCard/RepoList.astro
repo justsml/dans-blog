@@ -7,7 +7,6 @@ import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
 import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
 import clsx from "clsx";
-import type { ReactNode } from "react";
 
 const { GITHUB_TOKEN } = process.env;
 
@@ -28,26 +27,27 @@ log("ossContributions", ossContributions.length);
 <p>This data is statically generated on each deploy.</p>
 <p>Last built: {new Date().toLocaleDateString()}</p>
 
-<section class={clsx("contrib-grid", Astro.props.className)}>
+<section className={clsx("contrib-grid", Astro.props.className)}>
   {
-    ossContributions.map(async (contrib) => {
-      const targetRepo = contrib.renamed ?? contrib.repo;
-      log("targetRepo", targetRepo);
-      if (!_isValidRepo(targetRepo)) {
-        log("Invalid Repo", targetRepo);
-        return;
-      }
-      const pr = await fetchUserPullRequests(targetRepo, GITHUB_HANDLE);
-      log("pr", pr);
+    await Promise.all(
+      ossContributions.map(async (contrib) => {
+        const targetRepo = contrib.renamed ?? contrib.repo;
+        log("targetRepo", targetRepo);
+        if (!_isValidRepo(targetRepo)) {
+          log("Invalid Repo", targetRepo);
+          return <div />;
+        }
+        const pr = await fetchUserPullRequests(targetRepo, GITHUB_HANDLE);
+        log("pr", pr);
 
-      return (
-        <RepoCard
-          client:load
-          defaultPullData={pr}
-          contribution={contrib}
-          author={GITHUB_HANDLE}
-        />
-      ) as unknown as ReactNode;
-    })
+        return (
+          <RepoCard
+            defaultPullData={pr}
+            contribution={contrib}
+            author={GITHUB_HANDLE}
+          />
+        );
+      }),
+    )
   }
 </section>

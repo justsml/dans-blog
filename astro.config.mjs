@@ -33,15 +33,16 @@ export default defineConfig({
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },
   },
-  experimental: {
-    contentIntellisense: true,
-    svg: true,
-    responsiveImages: true,
-  },
+  // experimental: {
+  //   contentIntellisense: true,
+  //   svg: true,
+  //   responsiveImages: true,
+  // },
 
   integrations: [
     pagefind(),
-    react({}),
+    react({
+    }),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
       themes: ["dracula"],
@@ -50,7 +51,10 @@ export default defineConfig({
     mdx({
       // rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
     }),
-    sitemap(),
+    sitemap({
+      lastmod: new Date(),
+      entryLimit: 50000,
+    }),
     tailwind({
       applyBaseStyles: false,
       nesting: true,
