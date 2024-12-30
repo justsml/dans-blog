@@ -47,7 +47,7 @@ let loadedRepos: RepoData[] = (await Promise.all(
 loadedRepos = loadedRepos.sort(
   (a, b) => b.pr.repository.stars! - a.pr.repository.stars!,
 );
-console.log("loadedRepos", JSON.stringify(loadedRepos, null, 2));
+log("loadedRepos %o", loadedRepos);
 ---
 
 <p class="text-muted-foreground">This page was last updated {new Date().toLocaleDateString()}</p>
