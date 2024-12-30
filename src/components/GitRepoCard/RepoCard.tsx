@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Contribution, UserPullRequestData } from "../../types.ts";
 import clsx from "clsx";
-import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
-import { Button } from "../ui/button.tsx";
+// import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
+// import { Button } from "../ui/button.tsx";
 
 // const githubSearch = new GithubSearch({
 //   per_page: 40,
@@ -45,7 +45,7 @@ export const RepoCard = ({
   }
 
   return (
-    <article
+    <section
       style={styles.card}
       className={clsx("repo-card", "h-card")}
       data-pull-count={prList?.length}
@@ -129,7 +129,7 @@ export const RepoCard = ({
           {pr?.pullStats.reviews}
         </aside>
       </div>
-    </article>
+    </section>
   );
 };
 
