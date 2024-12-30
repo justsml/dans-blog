@@ -12,35 +12,50 @@ cover_mobile: regex-url-parsing-square-200.webp
 cover_icon: regex-url-parsing-square-200.webp
 ---
 
-Extracting URL-like strings from raw text can feel like a never-ending game of whack-a-mole: punctuation, parenthetical wrappers, and ambiguous formatting all conspire to break your best-laid regular expressions. In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **vacuum up** suspicious URL-ish text first, and then handle validation in a subsequent pipeline.
+**Table of Contents**
+- [Extracting URLs from Text](#extracting-urls-from-text)
+- [The ~100 Byte Regex](#the-100-byte-regex)
+  - [How It Works, Step-by-Step](#how-it-works-step-by-step)
+  - [Parsing Example](#parsing-example)
+- [Next Steps](#next-steps)
+  - [Different Projects, Different Needs](#different-projects-different-needs)
+  - [Post-Processing & Validation](#post-processing--validation)
+- [Summary](#summary)
+- [Further Learning](#further-learning)
+  - [The 160+ Char Pattern 🤯](#the-160-char-pattern-)
+- [References](#references)
 
-<p class="breakout">Do not use this pattern for <b>validating</b> URLs; it's meant for rough data <b>extraction</b>.</p>
+## Extracting URLs from Text
+
+Extracting URL-like strings from raw text can sometimes feel like a tedious game of whack-a-mole: punctuation, parenthetical wrappers, and ambiguous formatting all conspire to frustrate your customers or clients.
+
+In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **vacuum up** suspicious URL-ish text first, and then handle validation in a subsequent process.
+
+<p class="breakout">💡 This pattern is not for <b>validating</b> URLs! It's permissive by design, this allows for fine-tuning match rules for each part of the URL.</p>
 
 {/* *(Original inspiration and discussion can be found here: [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727))*
 
 TL;DR: Check out [a live demo of the regex](https://regex101.com/r/jO8bC4/62) in action.
-
 --- */}
 
-## 1. Overview: Two Steps to URL Extraction
+
+When extracting URLs from raw text, I recommend a two-step approach:
 
 1. **Hoover Up Everything**
-   Cast a wide net to grab all strings that *could* be URLs. This is where our "intimidating" regex flexes its muscles.
+   Cast a wide net to grab all strings that *could* be URLs. This is where our '100 point' regex flexes its muscles.
 
 2. **Validate**
    Once you've captured these candidates, you can pass them through a rigorous check (DNS resolution, comparison against known domains, etc.) to weed out duds. That part will be left for the pipeline in step two.
 
-**Disclaimer:** This is not meant to be perfect regex. This is work-horse Regex. It has a job to do: Extract & parse anything URL-shaped from raw text.
+## The 100+ Byte Regex
 
-## 2. The "Intimidating" Regex
+Below is my one-line regex designed to extract AND parse URLs in a single shot.
 
-Below is a one-line regex designed to parse a large variety of protocols, domains, paths, and optional query/fragment sections:
+It supports a large variety of protocols, domains, paths, and optional query/fragment sections:
 
 <p class="breakout">Don't worry, we're going to break it down step-by-step in a moment!</p>
 
 **Note:** If the pattern gets cut off, don't worry; I'll [break it down in the next section.](#how-it-works-step-by-step)
-
-### The 80+ Char Pattern
 
 ```js frame="code" title="URL-like String Extractor"
 const re = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/gi
@@ -48,16 +63,22 @@ const re = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*
 // Length: 84 characters
 ```
 
-We're going to break down the simpler (1st version) for now:
+### Regex, turned to 11
 
-### How It Works, Step-by-Step
+Before we can begin to take apart & re-assemble the pattern, let me outline my unwritten "strategy" and we'll consider whether it's a good fit for the task at hand.
 
-When performing **data extraction** (as opposed to **data validation**), I often combine **negated character classes** `[^a-z]` with either a `+` or `*`.
+1. Build small, one matching group at a time. (1st match the protocol, then the domain, then the path, and so on.)
+1. In each match group, combine an 'anchor' symbol with negated character classes to capture just the right parts. (Unpacked below.)
+1. Control how eagerly or demanding we want our matching to behave by using `?`, `+`, or `*`.
 
-You might recognize this trick from matching HTML/XML tags. The pattern `<[^>]*>` captures anything between `<` and `>`, while `<[^>]+>` captures at least one character between the brackets. It relies on the fact that we can match "anything but a closing angle bracket" to grab an entire tag. 
+#### A few key concepts to keep in mind:
+
+Negated character classes: `[^...]` matches anything that's not in the brackets. This is a powerful tool for capturing everything except a specific character or set of characters.
+
+You might recognize the technique I'll be using from HTML/XML patterns. The pattern `<[^>]*>` captures anything between `<` and `>`, while `<[^>]+>` captures at least one character between the brackets. It relies on the fact that we can match "anything but a closing angle bracket" to grab an entire tag. 
 {/* (Side note: there are safer methods for parsing HTML/XML. Avoid RegEx when there's safer native interfaces available. Trust me, hackers love sneaking `>` in the middle of another tag to see if your validation missed the script tag they injected.) */}
 
-Now, consider parts of a URL: A query string, follows a similar pattern where `?` is followed by one-or-more **non-`?`** characters. Similarly, the fragment identifier begins with a `#` followed by **non-`#`** characters. (There's a bit more to it, since we capture the hash using `[^ \#\r\n]*`, which matches everything until encountering spaces, `#`, or newlines.)
+Now, consider the parts of a URL. A query string follows a similar pattern where `?` is followed by one-or-more **non-`?`** characters. Similarly, the fragment identifier begins with a `#` followed by **non-`#`** characters. (There's a bit more to it, since we capture the hash using `[^ \#\r\n]*`, which matches everything until encountering spaces, `#`, or newlines.)
 
 
 ```text
@@ -86,11 +107,11 @@ Now, consider parts of a URL: A query string, follows a similar pattern where `?
 
 {/* **NOTE:** This pattern is **NOT meant to be an RFC-compliant** solution—it's deliberately broad to sweep up all plausible URL-like strings. Once captured, you can sort out the real URLs from the duds in post processing - based on your needs. */}
 
-<p class="breakout inset">To my CS nerds: Calm your tokenizers! Before you dequeue your stack! I know there's several solutions in this space. Some even "proper" ones. Out of scope, for now...</p>
+{/* <p class="breakout inset">To my CS nerds: Calm your tokenizers! Before you dequeue your stack! I know there's several solutions in this space. Some even "proper" ones. Out of scope, for now...</p> */}
 
-## 3. Parsing Example
+### Parsing Example
 
-Here's a short JavaScript example that uses this regex to extract & (optionally) parse URL-like strings from a given input:
+Here's a couple lines of JavaScript that uses this regex to extract & (optionally) parse URL-like strings from a given input:
 
 ```js frame="code" title="js-example.js"
 const text = `
@@ -113,7 +134,7 @@ console.log(matches, parts);
 ```
 
 
-### Extracted (Whole) URLs
+#### Extracted (Whole) URLs
 
 
 ```json
@@ -124,7 +145,7 @@ console.log(matches, parts);
 ]
 ```
 
-### Extracted Parts
+#### Extracted Parts
 
 ```json
 [
@@ -193,16 +214,17 @@ By following these steps, you can quickly and effectively extract URL-like strin
 
 ### Further Learning
 
-For completeness, here's a more robust version that handles some edge cases better.
+#### The 160+ Char Pattern 🤯
+
+For completeness, here's a more robust version that handles a few more edge cases.
 
 ```js frame="code" title="More Advanced ES2018 Version"
 const re = /(\b[\.\w-]+:\/{2,3})(?!\.)(?!.*\.{2})(?!-)(?!.*-\.)(?!.*@\.)([\w\-@\^=%&:;~\+\.]+(?<!-))(\/+[\w\-@\^=%&:;\/~\+\.]+(?<!\.))?\??([\w=\-&@$!|~+_]+)*#?([\w=\-&@$!|~+_]+)*/gi
-// (Compatibility: ES2018+, Node.js 12+)
-// Better handling of edge cases
+// (Compatibility: ES2018+, Node.js 14+)
 // Length: 166 characters
 ```
 
-Dear reader, compare the ES2018 pattern above to the [first pattern](#the-80-char-pattern) we discussed earlier.
+Dear reader, compare the pattern above to the [first pattern](#the-80-char-pattern) we discussed earlier.
 
 | How many differences can you describe & explain? Did you see unfamiliar or completely new symbols?
 

@@ -49,6 +49,12 @@ const posts = defineCollection({
       // `related` is a list of post slugs
       related: z.array(z.string()).optional(),
 
+      /**
+       * `redirects` is a list of URLs to redirect to this post.
+       * See the file `src/scripts/redirectManager.tsx` for more info.
+       */
+      redirects: z.array(z.string()).optional(),
+
     }),
 });
 

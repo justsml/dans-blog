@@ -2,6 +2,7 @@
 import Post from "../layouts/Post.astro";
 import { type CollectionEntry } from "astro:content";
 import { PostCollections } from "../shared/dataCache";
+import { autoRegisterRedirects } from "../scripts/redirectManager";
 
 export async function getStaticPaths() {
   return PostCollections.getStaticPaths();
@@ -12,6 +13,8 @@ type Props = CollectionEntry<"posts">;
 const post = Astro.props;
 const results = await post.render();
 const { Content } = results;
+
+autoRegisterRedirects(post);
 ---
 
 <Post sourcePath={post.id} slug={post.slug} frontmatter={{ ...post.data }}>

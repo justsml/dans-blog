@@ -6,6 +6,7 @@
 
 ### Design & Improvements
 
+- [x] Add support for frontmatter configurable redirects / page aliases, [`autoRegisterRedirects(post)`](src/scripts/redirectManager.tsx)
 - [ ] Stop using REM for layout (padding)
 - [ ] Use Code Block Line Highlighting
 - [x] Fix the color scheme: make darker.
