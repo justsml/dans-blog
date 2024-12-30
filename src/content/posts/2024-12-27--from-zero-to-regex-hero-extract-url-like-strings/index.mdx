@@ -33,12 +33,6 @@ In this post, we'll tackle the problem head-on with a flexible, two-step approac
 
 <p class="breakout">💡 This pattern is not for <b>validating</b> URLs! It's permissive by design, this allows for fine-tuning match rules for each part of the URL.</p>
 
-{/* *(Original inspiration and discussion can be found here: [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727))*
-
-TL;DR: Check out [a live demo of the regex](https://regex101.com/r/jO8bC4/62) in action.
---- */}
-
-
 When extracting URLs from raw text, I recommend a two-step approach:
 
 1. **Hoover Up Everything**
@@ -58,20 +52,20 @@ It supports a large variety of protocols, domains, paths, and optional query/fra
 **Note:** If the pattern gets cut off, don't worry; I'll [break it down in the next section.](#how-it-works-step-by-step)
 
 ```js frame="code" title="URL-like String Extractor"
-const re = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/gi
-// (Compatibility: ES2015+)
-// Length: 84 characters
+const re = /([-.a-z0-9]+:\/{1,3})([^-/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.]*)/gi
+// (Compatibility: ES5, ES6, ES2015, ES2018, Node.js 0.12+)
+// Length: 100+ characters
 ```
 
 ### Regex, turned to 11
 
-Before we can begin to take apart & re-assemble the pattern, let me outline my unwritten "strategy" and we'll consider whether it's a good fit for the task at hand.
+Before we can begin to take apart & re-assemble the pattern, let me outline my rough "strategy" and we'll consider whether it's a good fit for the task at hand.
 
 1. Build small, one matching group at a time. (1st match the protocol, then the domain, then the path, and so on.)
 1. In each match group, combine an 'anchor' symbol with negated character classes to capture just the right parts. (Unpacked below.)
 1. Control how eagerly or demanding we want our matching to behave by using `?`, `+`, or `*`.
 
-#### A few key concepts to keep in mind:
+#### The main technique: selecting by using negative matches
 
 Negated character classes: `[^...]` matches anything that's not in the brackets. This is a powerful tool for capturing everything except a specific character or set of characters.
 
@@ -80,6 +74,9 @@ You might recognize the technique I'll be using from HTML/XML patterns. The patt
 
 Now, consider the parts of a URL. A query string follows a similar pattern where `?` is followed by one-or-more **non-`?`** characters. Similarly, the fragment identifier begins with a `#` followed by **non-`#`** characters. (There's a bit more to it, since we capture the hash using `[^ \#\r\n]*`, which matches everything until encountering spaces, `#`, or newlines.)
 
+Next we'll want to break down the regex into its constituent parts, so we can understand how it works and how to modify it for our needs.
+
+[URL parts, visualized](WhatUrlsAreMadeOf-ColorMatched.svg "URL parts, visualized")
 
 ```text
 1) Capture `protocol`: `([a-z0-9-]+\:\/+)`
@@ -120,7 +117,7 @@ And also (ftp://files.server.org/index).
 Plus a weird one: custom-scheme://host/param;weird^stuff
 `;
 
-const urlRegex = /([a-z0-9-]+\:\/+)([^\/\s]+)([a-z0-9\-@\^=%&;\/~\+]*)[\?]?([^ \#\r\n]*)#?([^ \#\r\n]*)/gi;
+const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.]*)/gi;
 
 // 🚨 IMPORTANT: `match[0]` returns the entire match.
 //    Use `match.slice(1)` to get the parts.
@@ -214,23 +211,23 @@ By following these steps, you can quickly and effectively extract URL-like strin
 
 ### Further Learning
 
-#### The 160+ Char Pattern 🤯
+#### The 150+ Char Pattern 🤯
 
 For completeness, here's a more robust version that handles a few more edge cases.
 
 ```js frame="code" title="More Advanced ES2018 Version"
-const re = /(\b[\.\w-]+:\/{2,3})(?!\.)(?!.*\.{2})(?!-)(?!.*-\.)(?!.*@\.)([\w\-@\^=%&:;~\+\.]+(?<!-))(\/+[\w\-@\^=%&:;\/~\+\.]+(?<!\.))?\??([\w=\-&@$!|~+_]+)*#?([\w=\-&@$!|~+_]+)*/gi
+const re = /([-\.\w]+:\/{2,3})(?!.*[.]{2})(?![-.*\.])((?!.*@\.)[-_\w@^=%&:;~+\.]+(?<![-\.]))(\/[-_\w@^=%&$:;/~+\.]+(?<!\.))?[?]?([-_\w=&@$!|~+]+)*[#]?([-_\w=&@$!|~+]+)*/gi
 // (Compatibility: ES2018+, Node.js 14+)
-// Length: 166 characters
+// Length: 150+ characters
 ```
 
-Dear reader, compare the pattern above to the [first pattern](#the-80-char-pattern) we discussed earlier.
+Dear reader, compare the pattern above to the [first pattern](#the-100-char-pattern) we discussed earlier.
 
 | How many differences can you describe & explain? Did you see unfamiliar or completely new symbols?
 
-
 ### References
 
-- My original [StackOverflow Answer](https://stackoverflow.com/a/34669019/369727)
+- Try [a live demo of the regex](https://regex101.com/r/jO8bC4/69) in action.
+- Original SO question, and a [link to my answer is right here](https://stackoverflow.com/a/34669019/369727).
 - [MDN Docs on Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
