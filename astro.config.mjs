@@ -1,7 +1,7 @@
-
 import dotenv from "dotenv";
 dotenv.config();
 
+import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
@@ -21,7 +21,6 @@ export default defineConfig({
   output: "static",
   trailingSlash: "ignore",
   build: {
-    
     format: "directory",
   },
   cacheDir: ".cache",
@@ -32,7 +31,7 @@ export default defineConfig({
   vite: {
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
-    }
+    },
   },
   integrations: [
     pagefind(),
@@ -52,7 +51,13 @@ export default defineConfig({
     }),
     // partytown(),
   ],
-  plugins: [pluginLineNumbers()],
+  plugins: [
+    pluginLineNumbers(),
+    visualizer({
+      emitFile: true,
+      filename: ".bundle-stats.html",
+    }),
+  ],
   image: {
     service: {
       config: {

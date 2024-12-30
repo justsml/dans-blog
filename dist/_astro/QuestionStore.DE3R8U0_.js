@@ -1,4 +1,4 @@
-import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
+import{g as ve}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * @license Apache-2.0
 *
 * Copyright (c) 2021 The Stdlib Authors.
@@ -14,7 +14,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var X=typeof Object.defineProperty=="function"?Object.defineProperty:null,W=X;/**
+*/var _,pr;function pe(){if(pr)return _;pr=1;var r=typeof Object.defineProperty=="function"?Object.defineProperty:null;return _=r,_}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2021 The Stdlib Authors.
@@ -30,7 +30,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var M=W;function Q(){try{return M({},"x",{}),!0}catch{return!1}}var U=Q;/**
+*/var q,dr;function de(){if(dr)return q;dr=1;var r=pe();function i(){try{return r({},"x",{}),!0}catch{return!1}}return q=i,q}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -46,7 +46,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var J=Object.defineProperty,Y=J;/**
+*/var $,gr;function ge(){if(gr)return $;gr=1;var r=Object.defineProperty;return $=r,$}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -62,7 +62,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function H(r){return typeof r=="number"}var j=H;/**
+*/var w,hr;function te(){if(hr)return w;hr=1;function r(i){return typeof i=="number"}return w=r,w}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -78,7 +78,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function K(r){return r[0]==="-"}function y(r){var i="",a;for(a=0;a<r;a++)i+="0";return i}function q(r,i,a){var e=!1,t=i-r.length;return t<0||(K(r)&&(e=!0,r=r.substr(1)),r=a?r+y(t):y(t)+r,e&&(r="-"+r)),r}var F=q;/**
+*/var R,br;function ue(){if(br)return R;br=1;function r(n){return n[0]==="-"}function i(n){var a="",t;for(t=0;t<n;t++)a+="0";return a}function u(n,a,t){var s=!1,o=a-n.length;return o<0||(r(n)&&(s=!0,n=n.substr(1)),n=t?n+i(o):i(o)+n,s&&(n="-"+n)),n}return R=u,R}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -94,7 +94,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var k=j,w=F,rr=String.prototype.toLowerCase,_=String.prototype.toUpperCase;function er(r){var i,a,e;switch(r.specifier){case"b":i=2;break;case"o":i=8;break;case"x":case"X":i=16;break;case"d":case"i":case"u":default:i=10;break}if(a=r.arg,e=parseInt(a,10),!isFinite(e)){if(!k(a))throw new Error("invalid integer. Value: "+a);e=0}return e<0&&(r.specifier==="u"||i!==10)&&(e=4294967295+e+1),e<0?(a=(-e).toString(i),r.precision&&(a=w(a,r.precision,r.padRight)),a="-"+a):(a=e.toString(i),!e&&!r.precision?a="":r.precision&&(a=w(a,r.precision,r.padRight)),r.sign&&(a=r.sign+a)),i===16&&(r.alternate&&(a="0x"+a),a=r.specifier===_.call(r.specifier)?_.call(a):rr.call(a)),i===8&&r.alternate&&a.charAt(0)!=="0"&&(a="0"+a),a}var ar=er;/**
+*/var S,mr;function he(){if(mr)return S;mr=1;var r=te(),i=ue(),u=String.prototype.toLowerCase,n=String.prototype.toUpperCase;function a(t){var s,o,f;switch(t.specifier){case"b":s=2;break;case"o":s=8;break;case"x":case"X":s=16;break;case"d":case"i":case"u":default:s=10;break}if(o=t.arg,f=parseInt(o,10),!isFinite(f)){if(!r(o))throw new Error("invalid integer. Value: "+o);f=0}return f<0&&(t.specifier==="u"||s!==10)&&(f=4294967295+f+1),f<0?(o=(-f).toString(s),t.precision&&(o=i(o,t.precision,t.padRight)),o="-"+o):(o=f.toString(s),!f&&!t.precision?o="":t.precision&&(o=i(o,t.precision,t.padRight)),t.sign&&(o=t.sign+o)),s===16&&(t.alternate&&(o="0x"+o),o=t.specifier===n.call(t.specifier)?n.call(o):u.call(o)),s===8&&t.alternate&&o.charAt(0)!=="0"&&(o="0"+o),o}return S=a,S}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -110,7 +110,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function ir(r){return typeof r=="string"}var tr=ir;/**
+*/var E,yr;function be(){if(yr)return E;yr=1;function r(i){return typeof i=="string"}return E=r,E}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -126,7 +126,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var nr=j,or=Math.abs,sr=String.prototype.toLowerCase,S=String.prototype.toUpperCase,l=String.prototype.replace,lr=/e\+(\d)$/,fr=/e-(\d)$/,cr=/^(\d+)$/,vr=/^(\d+)e/,ur=/\.0$/,pr=/\.0*e/,gr=/(\..*[^0])0*e/;function dr(r){var i,a,e=parseFloat(r.arg);if(!isFinite(e)){if(!nr(r.arg))throw new Error("invalid floating-point number. Value: "+a);e=r.arg}switch(r.specifier){case"e":case"E":a=e.toExponential(r.precision);break;case"f":case"F":a=e.toFixed(r.precision);break;case"g":case"G":or(e)<1e-4?(i=r.precision,i>0&&(i-=1),a=e.toExponential(i)):a=e.toPrecision(r.precision),r.alternate||(a=l.call(a,gr,"$1e"),a=l.call(a,pr,"e"),a=l.call(a,ur,""));break;default:throw new Error("invalid double notation. Value: "+r.specifier)}return a=l.call(a,lr,"e+0$1"),a=l.call(a,fr,"e-0$1"),r.alternate&&(a=l.call(a,cr,"$1."),a=l.call(a,vr,"$1.e")),e>=0&&r.sign&&(a=r.sign+a),a=r.specifier===S.call(r.specifier)?S.call(a):sr.call(a),a}var mr=dr;/**
+*/var P,_r;function me(){if(_r)return P;_r=1;var r=te(),i=Math.abs,u=String.prototype.toLowerCase,n=String.prototype.toUpperCase,a=String.prototype.replace,t=/e\+(\d)$/,s=/e-(\d)$/,o=/^(\d+)$/,f=/^(\d+)e/,g=/\.0$/,c=/\.0*e/,v=/(\..*[^0])0*e/;function h(e){var d,l,p=parseFloat(e.arg);if(!isFinite(p)){if(!r(e.arg))throw new Error("invalid floating-point number. Value: "+l);p=e.arg}switch(e.specifier){case"e":case"E":l=p.toExponential(e.precision);break;case"f":case"F":l=p.toFixed(e.precision);break;case"g":case"G":i(p)<1e-4?(d=e.precision,d>0&&(d-=1),l=p.toExponential(d)):l=p.toPrecision(e.precision),e.alternate||(l=a.call(l,v,"$1e"),l=a.call(l,c,"e"),l=a.call(l,g,""));break;default:throw new Error("invalid double notation. Value: "+e.specifier)}return l=a.call(l,t,"e+0$1"),l=a.call(l,s,"e-0$1"),e.alternate&&(l=a.call(l,o,"$1."),l=a.call(l,f,"$1.e")),p>=0&&e.sign&&(l=e.sign+l),l=e.specifier===n.call(e.specifier)?n.call(l):u.call(l),l}return P=h,P}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -142,7 +142,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function E(r){var i="",a;for(a=0;a<r;a++)i+=" ";return i}function br(r,i,a){var e=i-r.length;return e<0||(r=a?r+E(e):E(e)+r),r}var hr=br;/**
+*/var T,qr;function ye(){if(qr)return T;qr=1;function r(u){var n="",a;for(a=0;a<u;a++)n+=" ";return n}function i(u,n,a){var t=n-u.length;return t<0||(u=a?u+r(t):r(t)+u),u}return T=i,T}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -158,7 +158,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var $r=ar,yr=tr,wr=mr,_r=hr,Sr=F,Er=String.fromCharCode,Pr=Array.isArray;function p(r){return r!==r}function Tr(r){var i={};return i.specifier=r.specifier,i.precision=r.precision===void 0?1:r.precision,i.width=r.width,i.flags=r.flags||"",i.mapping=r.mapping,i}function xr(r){var i,a,e,t,n,o,s,c,u;if(!Pr(r))throw new TypeError("invalid argument. First argument must be an array. Value: `"+r+"`.");for(o="",s=1,c=0;c<r.length;c++)if(e=r[c],yr(e))o+=e;else{if(i=e.precision!==void 0,e=Tr(e),!e.specifier)throw new TypeError("invalid argument. Token is missing `specifier` property. Index: `"+c+"`. Value: `"+e+"`.");for(e.mapping&&(s=e.mapping),a=e.flags,u=0;u<a.length;u++)switch(t=a.charAt(u),t){case" ":e.sign=" ";break;case"+":e.sign="+";break;case"-":e.padRight=!0,e.padZeros=!1;break;case"0":e.padZeros=a.indexOf("-")<0;break;case"#":e.alternate=!0;break;default:throw new Error("invalid flag: "+t)}if(e.width==="*"){if(e.width=parseInt(arguments[s],10),s+=1,p(e.width))throw new TypeError("the argument for * width at position "+s+" is not a number. Value: `"+e.width+"`.");e.width<0&&(e.padRight=!0,e.width=-e.width)}if(i&&e.precision==="*"){if(e.precision=parseInt(arguments[s],10),s+=1,p(e.precision))throw new TypeError("the argument for * precision at position "+s+" is not a number. Value: `"+e.precision+"`.");e.precision<0&&(e.precision=1,i=!1)}switch(e.arg=arguments[s],e.specifier){case"b":case"o":case"x":case"X":case"d":case"i":case"u":i&&(e.padZeros=!1),e.arg=$r(e);break;case"s":e.maxWidth=i?e.precision:-1,e.arg=String(e.arg);break;case"c":if(!p(e.arg)){if(n=parseInt(e.arg,10),n<0||n>127)throw new Error("invalid character code. Value: "+e.arg);e.arg=p(n)?String(e.arg):Er(n)}break;case"e":case"E":case"f":case"F":case"g":case"G":i||(e.precision=6),e.arg=wr(e);break;default:throw new Error("invalid specifier: "+e.specifier)}e.maxWidth>=0&&e.arg.length>e.maxWidth&&(e.arg=e.arg.substring(0,e.maxWidth)),e.padZeros?e.arg=Sr(e.arg,e.width||e.precision,e.padRight):e.width&&(e.arg=_r(e.arg,e.width,e.padRight)),o+=e.arg||"",s+=1}return o}var Or=xr;/**
+*/var I,$r;function _e(){if($r)return I;$r=1;var r=he(),i=be(),u=me(),n=ye(),a=ue(),t=String.fromCharCode,s=Array.isArray;function o(c){return c!==c}function f(c){var v={};return v.specifier=c.specifier,v.precision=c.precision===void 0?1:c.precision,v.width=c.width,v.flags=c.flags||"",v.mapping=c.mapping,v}function g(c){var v,h,e,d,l,p,b,m,y;if(!s(c))throw new TypeError("invalid argument. First argument must be an array. Value: `"+c+"`.");for(p="",b=1,m=0;m<c.length;m++)if(e=c[m],i(e))p+=e;else{if(v=e.precision!==void 0,e=f(e),!e.specifier)throw new TypeError("invalid argument. Token is missing `specifier` property. Index: `"+m+"`. Value: `"+e+"`.");for(e.mapping&&(b=e.mapping),h=e.flags,y=0;y<h.length;y++)switch(d=h.charAt(y),d){case" ":e.sign=" ";break;case"+":e.sign="+";break;case"-":e.padRight=!0,e.padZeros=!1;break;case"0":e.padZeros=h.indexOf("-")<0;break;case"#":e.alternate=!0;break;default:throw new Error("invalid flag: "+d)}if(e.width==="*"){if(e.width=parseInt(arguments[b],10),b+=1,o(e.width))throw new TypeError("the argument for * width at position "+b+" is not a number. Value: `"+e.width+"`.");e.width<0&&(e.padRight=!0,e.width=-e.width)}if(v&&e.precision==="*"){if(e.precision=parseInt(arguments[b],10),b+=1,o(e.precision))throw new TypeError("the argument for * precision at position "+b+" is not a number. Value: `"+e.precision+"`.");e.precision<0&&(e.precision=1,v=!1)}switch(e.arg=arguments[b],e.specifier){case"b":case"o":case"x":case"X":case"d":case"i":case"u":v&&(e.padZeros=!1),e.arg=r(e);break;case"s":e.maxWidth=v?e.precision:-1,e.arg=String(e.arg);break;case"c":if(!o(e.arg)){if(l=parseInt(e.arg,10),l<0||l>127)throw new Error("invalid character code. Value: "+e.arg);e.arg=o(l)?String(e.arg):t(l)}break;case"e":case"E":case"f":case"F":case"g":case"G":v||(e.precision=6),e.arg=u(e);break;default:throw new Error("invalid specifier: "+e.specifier)}e.maxWidth>=0&&e.arg.length>e.maxWidth&&(e.arg=e.arg.substring(0,e.maxWidth)),e.padZeros?e.arg=a(e.arg,e.width||e.precision,e.padRight):e.width&&(e.arg=n(e.arg,e.width,e.padRight)),p+=e.arg||"",b+=1}return p}return I=g,I}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -174,7 +174,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Ir=Or,Rr=Ir;/**
+*/var x,wr;function qe(){if(wr)return x;wr=1;var r=_e();return x=r,x}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -190,7 +190,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var g=/%(?:([1-9]\d*)\$)?([0 +\-#]*)(\*|\d+)?(?:(\.)(\*|\d+)?)?[hlL]?([%A-Za-z])/g;function Cr(r){var i={mapping:r[1]?parseInt(r[1],10):void 0,flags:r[2],width:r[3],precision:r[5],specifier:r[6]};return r[4]==="."&&r[5]===void 0&&(i.precision="1"),i}function Gr(r){var i,a,e,t;for(a=[],t=0,e=g.exec(r);e;)i=r.slice(t,g.lastIndex-e[0].length),i.length&&a.push(i),a.push(Cr(e)),t=g.lastIndex,e=g.exec(r);return i=r.slice(t),i.length&&a.push(i),a}var jr=Gr;/**
+*/var L,Rr;function $e(){if(Rr)return L;Rr=1;var r=/%(?:([1-9]\d*)\$)?([0 +\-#]*)(\*|\d+)?(?:(\.)(\*|\d+)?)?[hlL]?([%A-Za-z])/g;function i(n){var a={mapping:n[1]?parseInt(n[1],10):void 0,flags:n[2],width:n[3],precision:n[5],specifier:n[6]};return n[4]==="."&&n[5]===void 0&&(a.precision="1"),a}function u(n){var a,t,s,o;for(t=[],o=0,s=r.exec(n);s;)a=n.slice(o,r.lastIndex-s[0].length),a.length&&t.push(a),t.push(i(s)),o=r.lastIndex,s=r.exec(n);return a=n.slice(o),a.length&&t.push(a),t}return L=u,L}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -206,7 +206,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Fr=jr,Vr=Fr;/**
+*/var O,Sr;function we(){if(Sr)return O;Sr=1;var r=$e();return O=r,O}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -222,7 +222,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function Ar(r){return typeof r=="string"}var Br=Ar;/**
+*/var M,Er;function Re(){if(Er)return M;Er=1;function r(i){return typeof i=="string"}return M=r,M}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -238,7 +238,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Dr=Rr,zr=Vr,Nr=Br;function V(r){var i,a;if(!Nr(r))throw new TypeError(V("invalid argument. First argument must be a string. Value: `%s`.",r));for(i=[zr(r)],a=1;a<arguments.length;a++)i.push(arguments[a]);return Dr.apply(null,i)}var Zr=V;/**
+*/var C,Pr;function Se(){if(Pr)return C;Pr=1;var r=qe(),i=we(),u=Re();function n(a){var t,s;if(!u(a))throw new TypeError(n("invalid argument. First argument must be a string. Value: `%s`.",a));for(t=[i(a)],s=1;s<arguments.length;s++)t.push(arguments[s]);return r.apply(null,t)}return C=n,C}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -254,7 +254,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Lr=Zr,A=Lr;/**
+*/var G,Tr;function oe(){if(Tr)return G;Tr=1;var r=Se();return G=r,G}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -270,7 +270,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var P=A,f=Object.prototype,T=f.toString,x=f.__defineGetter__,O=f.__defineSetter__,Xr=f.__lookupGetter__,Wr=f.__lookupSetter__;function Mr(r,i,a){var e,t,n,o;if(typeof r!="object"||r===null||T.call(r)==="[object Array]")throw new TypeError(P("invalid argument. First argument must be an object. Value: `%s`.",r));if(typeof a!="object"||a===null||T.call(a)==="[object Array]")throw new TypeError(P("invalid argument. Property descriptor must be an object. Value: `%s`.",a));if(t="value"in a,t&&(Xr.call(r,i)||Wr.call(r,i)?(e=r.__proto__,r.__proto__=f,delete r[i],r[i]=a.value,r.__proto__=e):r[i]=a.value),n="get"in a,o="set"in a,t&&(n||o))throw new Error("invalid argument. Cannot specify one or more accessors and a value or writable attribute in the property descriptor.");return n&&x&&x.call(r,i,a.get),o&&O&&O.call(r,i,a.set),r}var Qr=Mr;/**
+*/var F,Ir;function Ee(){if(Ir)return F;Ir=1;var r=oe(),i=Object.prototype,u=i.toString,n=i.__defineGetter__,a=i.__defineSetter__,t=i.__lookupGetter__,s=i.__lookupSetter__;function o(f,g,c){var v,h,e,d;if(typeof f!="object"||f===null||u.call(f)==="[object Array]")throw new TypeError(r("invalid argument. First argument must be an object. Value: `%s`.",f));if(typeof c!="object"||c===null||u.call(c)==="[object Array]")throw new TypeError(r("invalid argument. Property descriptor must be an object. Value: `%s`.",c));if(h="value"in c,h&&(t.call(f,g)||s.call(f,g)?(v=f.__proto__,f.__proto__=i,delete f[g],f[g]=c.value,f.__proto__=v):f[g]=c.value),e="get"in c,d="set"in c,h&&(e||d))throw new Error("invalid argument. Cannot specify one or more accessors and a value or writable attribute in the property descriptor.");return e&&n&&n.call(f,g,c.get),d&&a&&a.call(f,g,c.set),f}return F=o,F}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -286,7 +286,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Ur=U,Jr=Y,Yr=Qr,b;Ur()?b=Jr:b=Yr;var Hr=b;/**
+*/var j,xr;function Pe(){if(xr)return j;xr=1;var r=de(),i=ge(),u=Ee(),n;return r()?n=i:n=u,j=n,j}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -302,7 +302,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Kr=Hr;function qr(r,i,a){Kr(r,i,{configurable:!1,enumerable:!1,writable:!1,value:a})}var kr=qr;/**
+*/var B,Lr;function Te(){if(Lr)return B;Lr=1;var r=Pe();function i(u,n,a){r(u,n,{configurable:!1,enumerable:!1,writable:!1,value:a})}return B=i,B}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -318,7 +318,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var re=kr,ee=re;/**
+*/var D,Or;function Ie(){if(Or)return D;Or=1;var r=Te();return D=r,D}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -334,7 +334,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function ae(r){return typeof r=="boolean"}var B=ae;/**
+*/var V,Mr;function se(){if(Mr)return V;Mr=1;function r(i){return typeof i=="boolean"}return V=r,V}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -350,7 +350,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function ie(){return typeof Symbol=="function"&&typeof Symbol("foo")=="symbol"}var te=ie;/**
+*/var z,Cr;function xe(){if(Cr)return z;Cr=1;function r(){return typeof Symbol=="function"&&typeof Symbol("foo")=="symbol"}return z=r,z}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -366,7 +366,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var ne=te,oe=ne;/**
+*/var A,Gr;function Le(){if(Gr)return A;Gr=1;var r=xe();return A=r,A}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -382,7 +382,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var se=oe,le=se();function fe(){return le&&typeof Symbol.toStringTag=="symbol"}var ce=fe;/**
+*/var Z,Fr;function Oe(){if(Fr)return Z;Fr=1;var r=Le(),i=r();function u(){return i&&typeof Symbol.toStringTag=="symbol"}return Z=u,Z}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -398,7 +398,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var ve=ce,D=ve;/**
+*/var N,jr;function fe(){if(jr)return N;jr=1;var r=Oe();return N=r,N}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -414,7 +414,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var ue=Object.prototype.toString,z=ue;/**
+*/var W,Br;function le(){if(Br)return W;Br=1;var r=Object.prototype.toString;return W=r,W}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -430,7 +430,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var pe=z;function ge(r){return pe.call(r)}var de=ge;/**
+*/var X,Dr;function Me(){if(Dr)return X;Dr=1;var r=le();function i(u){return r.call(u)}return X=i,X}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -446,7 +446,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var me=Object.prototype.hasOwnProperty;function be(r,i){return r==null?!1:me.call(r,i)}var he=be;/**
+*/var Q,Vr;function Ce(){if(Vr)return Q;Vr=1;var r=Object.prototype.hasOwnProperty;function i(u,n){return u==null?!1:r.call(u,n)}return Q=i,Q}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -462,7 +462,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var $e=he,ye=$e;/**
+*/var U,zr;function Ge(){if(zr)return U;zr=1;var r=Ce();return U=r,U}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -478,7 +478,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var we=typeof Symbol=="function"?Symbol:void 0,_e=we;/**
+*/var H,Ar;function Fe(){if(Ar)return H;Ar=1;var r=typeof Symbol=="function"?Symbol:void 0;return H=r,H}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -494,7 +494,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Se=_e,Ee=Se;/**
+*/var J,Zr;function je(){if(Zr)return J;Zr=1;var r=Fe();return J=r,J}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -510,7 +510,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var I=Ee,Pe=typeof I=="function"?I.toStringTag:"",Te=Pe;/**
+*/var Y,Nr;function Be(){if(Nr)return Y;Nr=1;var r=je(),i=typeof r=="function"?r.toStringTag:"";return Y=i,Y}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -526,7 +526,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var xe=ye,v=Te,d=z;function Oe(r){var i,a,e;if(r==null)return d.call(r);a=r[v],i=xe(r,v);try{r[v]=void 0}catch{return d.call(r)}return e=d.call(r),i?r[v]=a:delete r[v],e}var Ie=Oe;/**
+*/var K,Wr;function De(){if(Wr)return K;Wr=1;var r=Ge(),i=Be(),u=le();function n(a){var t,s,o;if(a==null)return u.call(a);s=a[i],t=r(a,i);try{a[i]=void 0}catch{return u.call(a)}return o=u.call(a),t?a[i]=s:delete a[i],o}return K=n,K}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -542,7 +542,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Re=D,Ce=de,Ge=Ie,h;Re()?h=Ge:h=Ce;var je=h;/**
+*/var k,Xr;function Ve(){if(Xr)return k;Xr=1;var r=fe(),i=Me(),u=De(),n;return r()?n=u:n=i,k=n,k}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -558,7 +558,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Fe=Boolean,Ve=Fe;/**
+*/var rr,Qr;function ze(){if(Qr)return rr;Qr=1;var r=Boolean;return rr=r,rr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -574,7 +574,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Ae=Ve,Be=Ae;/**
+*/var er,Ur;function Ae(){if(Ur)return er;Ur=1;var r=ze();return er=r,er}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -590,7 +590,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var De=Boolean.prototype.toString,ze=De;/**
+*/var ir,Hr;function Ze(){if(Hr)return ir;Hr=1;var r=Boolean.prototype.toString;return ir=r,ir}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -606,7 +606,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Ne=ze;function Ze(r){try{return Ne.call(r),!0}catch{return!1}}var Le=Ze;/**
+*/var ar,Jr;function Ne(){if(Jr)return ar;Jr=1;var r=Ze();function i(u){try{return r.call(u),!0}catch{return!1}}return ar=i,ar}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -622,7 +622,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Xe=D,We=je,Me=Be,Qe=Le,Ue=Xe();function Je(r){return typeof r=="object"?r instanceof Me?!0:Ue?Qe(r):We(r)==="[object Boolean]":!1}var N=Je;/**
+*/var nr,Yr;function ce(){if(Yr)return nr;Yr=1;var r=fe(),i=Ve(),u=Ae(),n=Ne(),a=r();function t(s){return typeof s=="object"?s instanceof u?!0:a?n(s):i(s)==="[object Boolean]":!1}return nr=t,nr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -638,7 +638,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Ye=B,He=N;function Ke(r){return Ye(r)||He(r)}var qe=Ke;/**
+*/var tr,Kr;function We(){if(Kr)return tr;Kr=1;var r=se(),i=ce();function u(n){return r(n)||i(n)}return tr=u,tr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -654,7 +654,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var Z=ee,$=qe,ke=B,ra=N;Z($,"isPrimitive",ke);Z($,"isObject",ra);var ea=$;/**
+*/var ur,kr;function Xe(){if(kr)return ur;kr=1;var r=Ie(),i=We(),u=se(),n=ce();return r(i,"isPrimitive",u),r(i,"isObject",n),ur=i,ur}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -670,7 +670,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/function aa(){return new Function("return this;")()}var ia=aa;/**
+*/var or,re;function Qe(){if(re)return or;re=1;function r(){return new Function("return this;")()}return or=r,or}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -686,7 +686,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var ta=typeof self=="object"?self:null,na=ta;/**
+*/var sr,ee;function Ue(){if(ee)return sr;ee=1;var r=typeof self=="object"?self:null;return sr=r,sr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2018 The Stdlib Authors.
@@ -702,7 +702,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var oa=typeof window=="object"?window:null,sa=oa;/**
+*/var fr,ie;function He(){if(ie)return fr;ie=1;var r=typeof window=="object"?window:null;return fr=r,fr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -718,7 +718,7 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var la=typeof globalThis=="object"?globalThis:null,fa=la;/**
+*/var lr,ae;function Je(){if(ae)return lr;ae=1;var r=typeof globalThis=="object"?globalThis:null;return lr=r,lr}/**
 * @license Apache-2.0
 *
 * Copyright (c) 2022 The Stdlib Authors.
@@ -734,4 +734,4 @@ import{g as L}from"./_commonjsHelpers.Cpj98o6Y.js";/**
 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 * See the License for the specific language governing permissions and
 * limitations under the License.
-*/var ca=ea.isPrimitive,va=A,ua=ia,R=na,C=sa,G=fa;function pa(r){if(arguments.length){if(!ca(r))throw new TypeError(va("invalid argument. Must provide a boolean. Value: `%s`.",r));if(r)return ua()}if(G)return G;if(R)return R;if(C)return C;throw new Error("unexpected error. Unable to resolve global object.")}var ga=pa;const da=L(ga),m=da(),ba=r=>{r=r.replace(/^\/|\/$/gm,"");const i=JSON.parse(m?.localStorage?.getItem(r)??"[]"),a=()=>m?.localStorage.setItem(r,JSON.stringify(i));return{__slug:r,__questions:i,total:()=>i.length,correct:()=>i.filter(t=>t.isCorrect).length,sumOfTries:()=>i.reduce((t,n)=>t+(n?.tries??0),0),reset:()=>m?.localStorage.setItem(r,"[]"),addQuestion:t=>(t.index==null,i[t.index]||(i[t.index]={...t,isCorrect:void 0,tries:0},a()),i.length),isCorrect:({index:t})=>i?.[t].isCorrect,getTries:({index:t})=>i?.[t]?.tries,answerQuestion:(t,n)=>{if(!t||!n)throw Error("Missing question and/or option args");if(t.index==null)throw Error("Missing question.index");if(!i[t.index])throw Error(`Question ${t.index} not found`);const o=n.isAnswer;return i[t.index].isCorrect=o,i[t.index].tries++,a(),n.isAnswer}}};export{ba as Q,da as g};
+*/var cr,ne;function Ye(){if(ne)return cr;ne=1;var r=Xe().isPrimitive,i=oe(),u=Qe(),n=Ue(),a=He(),t=Je();function s(o){if(arguments.length){if(!r(o))throw new TypeError(i("invalid argument. Must provide a boolean. Value: `%s`.",o));if(o)return u()}if(t)return t;if(n)return n;if(a)return a;throw new Error("unexpected error. Unable to resolve global object.")}return cr=s,cr}var Ke=Ye();const ke=ve(Ke),vr=ke(),ei=r=>{r=r.replace(/^\/|\/$/gm,"");const i=JSON.parse(vr?.localStorage?.getItem(r)??"[]"),u=()=>vr?.localStorage.setItem(r,JSON.stringify(i));return{__slug:r,__questions:i,total:()=>i.length,correct:()=>i.filter(a=>a.isCorrect).length,sumOfTries:()=>i.reduce((a,t)=>a+(t?.tries??0),0),reset:()=>vr?.localStorage.setItem(r,"[]"),addQuestion:a=>(a.index==null,i[a.index]||(i[a.index]={...a,isCorrect:void 0,tries:0},u()),i.length),isCorrect:({index:a})=>i?.[a].isCorrect,getTries:({index:a})=>i?.[a]?.tries,answerQuestion:(a,t)=>{if(!a||!t)throw Error("Missing question and/or option args");if(a.index==null)throw Error("Missing question.index");if(!i[a.index])throw Error(`Question ${a.index} not found`);const s=t.isAnswer;return i[a.index].isCorrect=s,i[a.index].tries++,u(),t.isAnswer}}};export{ei as Q,ke as g};
