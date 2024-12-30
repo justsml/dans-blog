@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React from "react";
+// import { useState } from "react";
 import type { Contribution, UserPullRequestData } from "../../types.ts";
 import clsx from "clsx";
 // import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
@@ -22,23 +23,13 @@ export const RepoCard = ({
   // const [contributions, setContributions] = useState(null);
   const prList = pr?.pullRequests ?? [];
 
-  const [showNotes, setShowNotes] = useState(false);
-  // Client side
-  const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(
-    pr,
-  );
-  // useEffect(() => {
-  //   // Client-side
-  //   githubSearch
-  //     .pullRequests(repo, `is:pull-request is:closed author:${author}`)
-  //     .then((data) => {
-  //       setRepoData(data);
-  //       return data;
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error searching repo:", error);
-  //     });
-  // }, [repo]);
+  // const [showNotes, setShowNotes] = useState(false);
+  // // Client side
+  // const [repoData, _setRepoData] = useState<UserPullRequestData | undefined>(
+  //   pr,
+  // );
+
+  const repoData: UserPullRequestData | undefined = pr;
 
   if (!repoData) {
     return <div>Loading...</div>;
@@ -58,14 +49,6 @@ export const RepoCard = ({
       data-repo-description={pr?.repository.description}
       data-repo-owner={pr?.repository.owner}
     >
-      <aside className="corner-stats">
-        <div className="repo-stars-box button-ish-box">
-          <span className="gh-icon icon-github-star"></span>
-          {pr?.repository.stars.toLocaleString()}
-        </div>
-      </aside>
-        
-
       <h2 style={styles.repoName} className="repo-name">
         <span className="gh-icon icon-github-octocat w-2 h-2"></span>
         <a
@@ -79,6 +62,32 @@ export const RepoCard = ({
           {repo}
         </a>
       </h2>
+      <aside className="corner-stats">
+        <div className="repo-stars-box button-ish-box">
+          <span className="gh-icon icon-github-star"></span>
+          {pr?.repository.stars.toLocaleString()}
+        </div>
+
+        <div className="pull-stats stats">
+          <aside title="Stars" className="stat">
+            <span className="gh-icon icon-github-star"></span>
+            {pr?.repository.stars.toLocaleString()}
+          </aside>
+          <aside title="Changed files" className="stat">
+            <span className="gh-icon icon-github-file"></span>
+            {pr?.pullStats.changedFiles}
+          </aside>
+          <aside title="Comments" className="stat">
+            <span className="gh-icon icon-github-comment"></span>
+            {pr?.pullStats.comments}
+          </aside>
+          <aside title="Reviews" className="stat">
+            <span className="gh-icon icon-github-reviews"></span>
+            {pr?.pullStats.reviews}
+          </aside>
+        </div>
+
+      </aside>
       <p className="s-description repo-inner-card description">
         {c.description_override ?? `[could not load description for ${repo}]`}
       </p>
@@ -96,14 +105,25 @@ export const RepoCard = ({
       <p className={clsx("s-description repo-inner-card dan-notes p-experience border-[1px] bg-slate-200 drop-shadow-sm py-2 px-1 rounded-md", {
         'animate-card-stretch': !showNotes,
       })} dangerouslySetInnerHTML={{ __html: c.notes }} /> */}
-      
+
       <div className="s-stats repo-stats">
         {/* <LineChangeIndicator additions={pr?.pullStats.additions} deletions={pr?.pullStats.deletions} /> */}
 
         <span className="s-stat pull-requests-list">
           <span className="gh-icon icon-github-pull-request"></span>
-          {prList?.length >= 2 ?  prList?.length + " PRs" : "PR"}: {prList?.map((pr) => {
-            return <a key={pr.number} href={pr.url} target="_blank" rel="noopener noreferrer" title={pr.title}><code>#{pr.number}</code></a>;
+          {prList?.length >= 2 ? prList?.length + " PRs" : "PR"}:{" "}
+          {prList?.map((pr) => {
+            return (
+              <a
+                key={pr.number}
+                href={pr.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={pr.title}
+              >
+                <code>#{pr.number}</code>
+              </a>
+            );
           })}
         </span>
         {/* <span style={styles.stat}>
@@ -114,20 +134,6 @@ export const RepoCard = ({
           <span className="gh-icon icon-github-eye"></span>
           {pr?.repository.watchers.toLocaleString()}
         </span> */}
-      </div>
-      <div className="pull-stats stats">
-        <aside title="Changed files" className="stat">
-          <span className="gh-icon icon-github-file"></span>
-          {pr?.pullStats.changedFiles}
-        </aside>
-        <aside title="Comments" className="stat">
-          <span className="gh-icon icon-github-comment"></span>
-          {pr?.pullStats.comments}
-        </aside>
-        <aside title="Reviews" className="stat">
-          <span className="gh-icon icon-github-reviews"></span>
-          {pr?.pullStats.reviews}
-        </aside>
       </div>
     </section>
   );

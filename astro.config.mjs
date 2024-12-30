@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { visualizer } from "rollup-plugin-visualizer";
+// import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
@@ -33,6 +33,12 @@ export default defineConfig({
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },
   },
+  experimental: {
+    contentIntellisense: true,
+    svg: true,
+    responsiveImages: true,
+  },
+
   integrations: [
     pagefind(),
     react({}),
@@ -53,10 +59,15 @@ export default defineConfig({
   ],
   plugins: [
     pluginLineNumbers(),
-    visualizer({
-      emitFile: true,
-      filename: ".bundle-stats.html",
-    }),
+    // visualizer({
+    //   brotliSize: true,
+    //   gzipSize: true,
+    //   template: "treemap",
+    //   // open: true,
+    //   title: "Bundle Stats",
+    //   emitFile: true,
+    //   filename: "bundle-stats.html",
+    // }),
   ],
   image: {
     service: {

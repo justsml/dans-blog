@@ -7,13 +7,13 @@ import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
 import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
 import clsx from "clsx";
+import type { ReactNode } from "react";
 
 const { GITHUB_TOKEN } = process.env;
 
 type Props = {
   className?: string;
-
-}
+};
 
 if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
   throw new Error("GITHUB_TOKEN is required to fetch GitHub data");
@@ -35,12 +35,9 @@ log("ossContributions", ossContributions.length);
       log("targetRepo", targetRepo);
       if (!_isValidRepo(targetRepo)) {
         log("Invalid Repo", targetRepo);
-        return null;
+        return;
       }
-      const pr = await fetchUserPullRequests(
-        targetRepo,
-        GITHUB_HANDLE,
-      );
+      const pr = await fetchUserPullRequests(targetRepo, GITHUB_HANDLE);
       log("pr", pr);
 
       return (
@@ -50,7 +47,7 @@ log("ossContributions", ossContributions.length);
           contribution={contrib}
           author={GITHUB_HANDLE}
         />
-      );
+      ) as unknown as ReactNode;
     })
   }
 </section>

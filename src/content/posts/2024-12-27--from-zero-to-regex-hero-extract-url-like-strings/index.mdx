@@ -42,6 +42,18 @@ When extracting URLs from raw text, a two-step approach is effective:
 
 ### Visualizing the Challenge
 
+Let me clarify some terms I'm using with intention:
+
+- `Extract`: To remove a smaller part from a larger whole. For example, extracting URLs from BlueSky posts.
+- `Parse`: To analyze a string and extract meaningful information.
+
+<figure>
+  <figcaption>The 5 Parts of all URLs</figcaption>
+![URL anatomy, visualized](WhatUrlsAreMadeOf-ColorMatched.svg "URL anatomy, visualized")
+</figure>
+
+
+
 Before we get too deep into the regex, let's use a visual tool to understand the challenge better.
 
 <figure>
@@ -60,11 +72,6 @@ const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9
 // Compatibility: ES5+
 // Length: 100+ characters
 ```
-
-<figure>
-  <figcaption>URL parts - visualized</figcaption>
-![URL parts, visualized](WhatUrlsAreMadeOf-ColorMatched.svg "URL parts, visualized")
-</figure>
 
 ### Breaking It Down Step by Step
 

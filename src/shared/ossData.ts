@@ -126,11 +126,11 @@ export const ossContributions: Contribution[] = [
     description_override: `ES6 for Humans is a welcoming tour of new JavaScript features. This book is published by Apress and available on Amazon and other bookstores.`,
     notes: `Improved Promises section. Added examples for Spread and Rest operations.`,
   },
-  {
-    repo: "ReactiveX/IxJS",
-    description_override: `IxJS is a set of libraries for composing asynchronous and event-based programs using observable collections and Array#extras style operators.`,
-    notes: `Dan fixed a 1-byte typo here. Doing the big work!`,
-  },
+  // {
+  //   repo: "ReactiveX/IxJS",
+  //   description_override: `IxJS is a set of libraries for composing asynchronous and event-based programs using observable collections and Array#extras style operators.`,
+  //   notes: `Dan fixed a 1-byte typo here. Doing the big work!`,
+  // },
   {
     repo: "thomaspark/bootswatch",
     description_override: `Bootswatch is a collection of themes for Bootstrap.`,

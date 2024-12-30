@@ -1,6 +1,6 @@
 .contrib-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(265px,375px));
+  grid-template-columns: repeat(auto-fill, minmax(265px, 375px));
   grid-auto-flow: dense row;
   justify-content: space-around;
   grid-auto-rows: auto;
@@ -33,7 +33,7 @@
     background-color: #a6a6a6;
   }
   100% {
-    transform: scaleY(1.0)  translateY(0);
+    transform: scaleY(1) translateY(0);
     height: auto;
     overflow: auto;
     opacity: 1;
@@ -44,8 +44,8 @@
 .animate-card-stretch {
   /* transition-behavior: allow-discrete; */
   animation-name: stretch;
-  animation-duration: .5s; 
-  animation-timing-function: ease-in-out; 
+  animation-duration: 0.5s;
+  animation-timing-function: ease-in-out;
   animation-delay: 0s;
   animation-direction: f;
   /* animation-iteration-count: infinite; */
@@ -70,16 +70,18 @@
   h2 {
     color: #4493f8;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 2rem 1fr;
+    grid-auto-rows: auto;
     align-items: center;
+
+    line-height: 1.25;
+
     :any-link {
       font-weight: 600;
       color: #4493f8;
     }
   }
 }
-
-
 
 .gh-icon {
   display: inline-block;
@@ -98,9 +100,10 @@
 }
 
 .button-ish-box {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 0.987rem;
-  font-weight: 600;
+  font-weight: 400;
   /* line-height: 1.25; */
   display: inline-block;
   .gh-icon {
@@ -109,44 +112,43 @@
     height: 1rem;
     /* margin-inline-end: 0.5rem; */
   }
-
 }
 
 .corner-stats {
-  position: absolute;
-  right: .125rem;
-  top: .25rem;
+  width: 100%;
+  /* position: absolute; */
+  /* right: .125rem;
+  top: .25rem; */
   display: grid;
-  grid-template-rows: auto auto;
+  /* grid-column: 1 / -1; */
+  grid-template-columns: minmax(140px, 160px) auto;
   align-content: center;
-  justify-content: end;
-
+  justify-content: space-between;
 }
 .repo-stars-box {
-  display: grid;
-  grid-template-columns: auto auto;
-  border: 1px solid var(--color-border, #e1e4e8);
-  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
-  border-radius: .5em;
-  padding: .25em .5em;
+  /* display: grid; */
+  grid-template-columns: 1.5rem 1fr;
+  /* border: 1px solid var(--color-border, #e1e4e8);
+  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%); */
+  /* border-radius: 0.5em; */
+  padding: 0.25em 0.5em;
   margin-block: 0.5rem;
   align-items: center;
 }
 .pull-requests-list {
   color: var(--clr-muted-500, #a6a6a6);
   a {
-    margin-inline: .25rem;
-    ;
+    margin-inline: 0.25rem;
   }
 }
 .pull-stats {
   display: grid;
-  width: 100%;;
-  margin-top: 1.25rem;
-  grid-template-columns: auto auto auto;
+  width: 100%;
+  /* margin-top: 1.25rem; */
+  grid-template-columns: auto auto auto auto;
   align-items: center;
   justify-content: space-evenly;
-  grid-gap: 0.25rem;
+  grid-gap: 0.5rem;
   font-size: 0.85rem;
   .stat {
     display: flex;
@@ -154,7 +156,6 @@
     justify-content: center;
     font-size: 0.85rem;
     color: var(--clr-muted-500, #a6a6a6);
-
   }
 }
 
@@ -183,7 +184,6 @@
 /* .icon-github-fork {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-forked mr-2"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z"></path></svg>');
 } */
-
 
 .icon-github-pull-request {
   background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-pull-request UnderlineNav-octicon d-none d-sm-inline"><path d="M1.5 3.25a2.25 2.25 0 1 1 3 2.122v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.25 2.25 0 0 1 1.5 3.25Zm5.677-.177L9.573.677A.25.25 0 0 1 10 .854V2.5h1A2.5 2.5 0 0 1 13.5 5v5.628a2.251 2.251 0 1 1-1.5 0V5a1 1 0 0 0-1-1h-1v1.646a.25.25 0 0 1-.427.177L7.177 3.427a.25.25 0 0 1 0-.354ZM3.75 2.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm0 9.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm8.25.75a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Z"></path></svg>');

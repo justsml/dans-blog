@@ -8,18 +8,15 @@ export async function GET(context: any) {
   ).reverse();
 
   posts.unshift({
-    // @ts-expect-error
     id: "open-source-journal",
-    // @ts-expect-error
     slug: "open-source-journal",
-    // @ts-expect-error
     collection: "pages",
     data: {
       title: "Open Source Journal",
       subTitle: "A collection of open-source projects I've worked on.",
       category: "Projects",
       date: "2024-12-16",
-      modified: "2024-12-18",
+      modified: "2024-12-28",
       tags: ["open-source", "projects"],
       cover: {
         src: "../../images/social-banner.webp",
