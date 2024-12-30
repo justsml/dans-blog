@@ -30,7 +30,7 @@ type RepoData = {
   contrib: Contribution;
 };
 
-const loadedRepos: RepoData[] = (await Promise.all(
+let loadedRepos: RepoData[] = (await Promise.all(
   ossContributions.flatMap(async (contrib) => {
     const targetRepo = contrib.renamed ?? contrib.repo;
     if (!_isValidRepo(targetRepo)) return [];
@@ -43,7 +43,11 @@ const loadedRepos: RepoData[] = (await Promise.all(
     };
   }),
 )) as RepoData[];
-console.log("loadedRepos", loadedRepos);
+
+loadedRepos = loadedRepos.sort(
+  (a, b) => b.pr.repository.stars! - a.pr.repository.stars!,
+);
+console.log("loadedRepos", JSON.stringify(loadedRepos, null, 2));
 ---
 
 <h3>My Open Source Contributions ({ossContributions.length})</h3>
@@ -56,7 +60,7 @@ console.log("loadedRepos", loadedRepos);
     loadedRepos.map(async ({ contrib, pr }) => {
       const targetRepo = contrib.renamed ?? contrib.repo;
       if (!_isValidRepo(targetRepo)) return <div />;
-      
+
       log("pr", pr);
 
       return (

@@ -18,42 +18,13 @@ import RepoList from "../components/GitRepoCard/RepoList.astro";
     spirit—but really, it's just FDD: <b>Frustration-Driven Development.</b>
   </blockquote>
   <p>
-    Let's face it: nothing lights a fire under me like a piece of software
-    that's determined to ruin my day. Sure, I like the idea of giving back to
-    the community, but it's usually less “paying it forward” and more “oh, for
-    the love of all that is good, why hasn't anyone fixed this yet?”
+    The urge to fix `upstream` becomes harder to ignore as I realize I've seen the issue before... Yet cannot recall any solution.
+    
+    It feels worse still when Google taunts you with purple visited links! <em>Who's been using my machine?!?</em>
   </p>
   <p>
-    The urge becomes hard to ignore when I've been using the software long
-    enough to develop Stockholm Syndrome. And don't even get me started on
-    repeat offenders. You know the ones: you Google a weird new error, only to
-    find a sea of purple visited links. <em>Who's been using my machine?!?</em>
-  </p>
-  <p>
-    Sometimes, it's less about fixing the problem and more about exorcising the
-    ghost of every poor soul who's Googled their way into an ancient, abandoned
-    repo full of outdated <code>log4j</code> install instructions.
-  </p>
-  <p>
-    Anyway, here's a list of contributions I could recall from my 15+ years of
-    open-source escapades. It's by no means comprehensive—just the ones that
-    didn't get lost in the chaos of FDD. Enjoy!
+    Without further ado, here's my digital journal of select open source contributions.
   </p>
 
   <RepoList className="h-resume" />
-
-  <script>
-    document?.addEventListener("astro:page-load", () => {
-      var cardList = document.querySelectorAll<HTMLDivElement>("[data-star-count]");
-      return [...cardList]
-        .sort(
-          (a, b) =>
-            Number(b.getAttribute("data-star-count")) -
-            Number(a.getAttribute("data-star-count")),
-        )
-        .map((el, idx) => {
-          el.style.order = idx.toString();
-        });
-    });
-  </script>
 </Page>
