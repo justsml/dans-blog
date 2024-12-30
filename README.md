@@ -4,6 +4,15 @@
 
 ## TODO
 
+- [ ] Add custom image processing service to override resizing images on the fly.
+- [ ] Add scripts to [support 'local' netlify builds](https://www.emgoto.com/astro-blog-images/#building-locally-and-then-deploying-via-netlify-cli) - perhaps even using GitHub Actions...
+
+```sh
+netlify build
+netlify deploy # deploys to a test URL
+netlify deploy --prod
+```
+
 ### Design & Improvements
 
 - [x] Add support for frontmatter configurable redirects / page aliases, [`autoRegisterRedirects(post)`](src/scripts/redirectManager.tsx)
