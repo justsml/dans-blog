@@ -2,6 +2,7 @@ import React from "react";
 // import { useState } from "react";
 import type { Contribution, UserPullRequestData } from "../../types.ts";
 import clsx from "clsx";
+import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
 // import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
 // import { Button } from "../ui/button.tsx";
 
@@ -48,6 +49,8 @@ export const RepoCard = ({
       data-repo-name={pr?.repository.name}
       data-repo-description={pr?.repository.description}
       data-repo-owner={pr?.repository.owner}
+      data-additions={pr?.pullStats.additions}
+      data-deletions={pr?.pullStats.deletions}
     >
       <h2 style={styles.repoName} className="repo-name">
         <span className="gh-icon icon-github-octocat w-2 h-2"></span>
@@ -64,8 +67,8 @@ export const RepoCard = ({
       </h2>
       <section className="corner-stats">
         <aside title="Stars" className="stat">
-          {pr?.repository.stars.toLocaleString()}
           <span className="gh-icon icon-github-star"></span>
+          {pr?.repository.stars.toLocaleString()}
         </aside>
         <aside title="Changed files" className="stat">
           {pr?.pullStats.changedFiles}
@@ -99,8 +102,6 @@ export const RepoCard = ({
       })} dangerouslySetInnerHTML={{ __html: c.notes }} /> */}
 
       <div className="s-stats repo-stats">
-        {/* <LineChangeIndicator additions={pr?.pullStats.additions} deletions={pr?.pullStats.deletions} /> */}
-
         <span className="s-stat pull-requests-list">
           <span className="gh-icon icon-github-pull-request"></span>
           {prList?.length >= 2 ? prList?.length + " PRs" : "PR"}:{" "}
@@ -126,6 +127,12 @@ export const RepoCard = ({
           <span className="gh-icon icon-github-eye"></span>
           {pr?.repository.watchers.toLocaleString()}
         </span> */}
+      </div>
+      <div className="s-stats pr-diff-stats">
+        <LineChangeIndicator
+          additions={pr?.pullStats.additions}
+          deletions={pr?.pullStats.deletions}
+        />
       </div>
     </section>
   );

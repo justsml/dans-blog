@@ -10,6 +10,7 @@ export async function GET(context: any) {
   posts.unshift({
     id: "open-source-journal",
     slug: "open-source-journal",
+    // @ts-ignore
     collection: "pages",
     data: {
       title: "Open Source Journal",

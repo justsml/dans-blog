@@ -24,10 +24,10 @@ import RepoList from "../components/GitRepoCard/RepoList.astro";
     the love of all that is good, why hasn't anyone fixed this yet?”
   </p>
   <p>
-    The urge becomes hard to ignore when I've been using the software long enough
-    to develop Stockholm Syndrome. And don't even get me started on repeat
-    offenders. You know the ones: you Google a weird new error, only to find a
-    sea of purple visited links. <em>Who's been using my machine?!?</em> 
+    The urge becomes hard to ignore when I've been using the software long
+    enough to develop Stockholm Syndrome. And don't even get me started on
+    repeat offenders. You know the ones: you Google a weird new error, only to
+    find a sea of purple visited links. <em>Who's been using my machine?!?</em>
   </p>
   <p>
     Sometimes, it's less about fixing the problem and more about exorcising the
@@ -41,4 +41,19 @@ import RepoList from "../components/GitRepoCard/RepoList.astro";
   </p>
 
   <RepoList className="h-resume" />
+
+  <script>
+    document?.addEventListener("astro:page-load", () => {
+      var cardList = document.querySelectorAll<HTMLDivElement>("[data-star-count]");
+      return [...cardList]
+        .sort(
+          (a, b) =>
+            Number(b.getAttribute("data-star-count")) -
+            Number(a.getAttribute("data-star-count")),
+        )
+        .map((el, idx) => {
+          el.style.order = idx.toString();
+        });
+    });
+  </script>
 </Page>

@@ -1,12 +1,15 @@
 ---
 import { ossContributions } from "../../shared/ossData.ts";
+import { JSX } from "astro/jsx-runtime";
 import { RepoCard } from "./RepoCard.tsx";
 import { GITHUB_HANDLE } from "../../consts.ts";
 import { makeLogs } from "../LogHelper.ts";
 import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
 import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
-import clsx from "clsx";
+// import clsx from "clsx";
+import { cx } from "class-variance-authority";
+import { Contribution, UserPullRequestData } from "../../types.ts";
 
 const { GITHUB_TOKEN } = process.env;
 
@@ -20,6 +23,27 @@ if (!GITHUB_TOKEN || GITHUB_TOKEN.length < 1)
 const log = makeLogs("ossContributions");
 
 log("ossContributions", ossContributions.length);
+const className = cx("contrib-grid", Astro.props.className);
+
+type RepoData = {
+  pr: UserPullRequestData;
+  contrib: Contribution;
+};
+
+const loadedRepos: RepoData[] = (await Promise.all(
+  ossContributions.flatMap(async (contrib) => {
+    const targetRepo = contrib.renamed ?? contrib.repo;
+    if (!_isValidRepo(targetRepo)) return [];
+    const pr = await fetchUserPullRequests(targetRepo, GITHUB_HANDLE);
+    log("pr", pr);
+
+    return {
+      pr,
+      contrib,
+    };
+  }),
+)) as RepoData[];
+console.log("loadedRepos", loadedRepos);
 ---
 
 <h3>My Open Source Contributions ({ossContributions.length})</h3>
@@ -27,27 +51,21 @@ log("ossContributions", ossContributions.length);
 <p>This data is statically generated on each deploy.</p>
 <p>Last built: {new Date().toLocaleDateString()}</p>
 
-<section className={clsx("contrib-grid", Astro.props.className)}>
+<div {...{ className }}>
   {
-    await Promise.all(
-      ossContributions.map(async (contrib) => {
-        const targetRepo = contrib.renamed ?? contrib.repo;
-        log("targetRepo", targetRepo);
-        if (!_isValidRepo(targetRepo)) {
-          log("Invalid Repo", targetRepo);
-          return <div />;
-        }
-        const pr = await fetchUserPullRequests(targetRepo, GITHUB_HANDLE);
-        log("pr", pr);
+    loadedRepos.map(async ({ contrib, pr }) => {
+      const targetRepo = contrib.renamed ?? contrib.repo;
+      if (!_isValidRepo(targetRepo)) return <div />;
+      
+      log("pr", pr);
 
-        return (
-          <RepoCard
-            defaultPullData={pr}
-            contribution={contrib}
-            author={GITHUB_HANDLE}
-          />
-        );
-      }),
-    )
+      return (
+        <RepoCard
+          defaultPullData={pr}
+          contribution={contrib}
+          author={GITHUB_HANDLE}
+        />
+      );
+    })
   }
-</section>
+</div>

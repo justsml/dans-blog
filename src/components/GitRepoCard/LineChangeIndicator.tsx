@@ -1,3 +1,4 @@
+import React from "react";
 import "./LineChangeIndicator.css";
 
 export const LineChangeIndicator = ({
@@ -12,18 +13,11 @@ export const LineChangeIndicator = ({
       <div
         className="gh-activity added"
         data-additions={additions}
-        style={
-          {
-            // width: "1.5rem",
-            // height: "1.5rem",
-            // backgroundColor: "green",
-            // marginRight: "2px",
-            // borderRadius: "2px",
-          }
-        }
       >
-        <span className="lines added">{additions != null && additions > 0 ? `+${additions}` : ""}</span>
-        <aside className="activity-box added" />
+        <span className="activity-line added">
+          {additions != null && additions > 0 ? `+${additions}` : ""}
+        </span>
+        {/* <aside className="activity-box added" /> */}
       </div>
       <div
         className="gh-activity removed"
@@ -32,8 +26,8 @@ export const LineChangeIndicator = ({
           "--activity-bg-color": "#f85149",
         }}
       >
-        <aside className="activity-box removed" />
-        <span className="lines removed">{`${deletions != null && deletions > 0 ? ` -${deletions}` : ""}`}</span>
+        {/* <aside className="activity-box removed" /> */}
+        <span className="activity-line removed">{`${deletions != null && deletions > 0 ? ` -${deletions}` : ""}`}</span>
       </div>
     </div>
   );
