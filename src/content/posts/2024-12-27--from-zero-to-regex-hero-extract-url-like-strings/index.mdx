@@ -40,21 +40,20 @@ When extracting URLs from raw text, a two-step approach is effective:
 1. **Capture Everything**: Cast a wide net to grab all strings that *could* be URLs. This is where our "100+ byte regex" shines.
 2. **Validate**: Once you've captured these candidates, pass them through rigorous checks (e.g., DNS resolution, comparison against known domains) to weed out invalid entries.
 
+**TL;DR:** Jump to the [100+ Byte Regex](#the-100-byte-regex) if you're in a hurry!
+
 ### Visualizing the Challenge
 
-Let me clarify some terms I'm using with intention:
+Terms like `extract` and `parse` are often used interchangeably, however they refer to distinct processes. Extracting URLs involves identifying and capturing potential URLs from a larger body of text. Parsing, on the other hand, involves breaking down these URLs into their constituent parts.
 
-- `Extract`: To remove a smaller part from a larger whole. For example, extracting URLs from BlueSky posts.
-- `Parse`: To analyze an input and label its well-known parts (e.g. parts of Addresses, URLs, etc.)
-
-When we talk about URLs, we're referring to the following parts:
+When I mention parsing or 'URL parts', I'm referring to the following components:
 
 <figure>
   <figcaption>The 5 Parts of all URLs</figcaption>
 ![URL anatomy, visualized](WhatUrlsAreMadeOf-ColorMatched.svg "URL anatomy, visualized")
 </figure>
 
-Before we get too deep into the regex, let's use a visual tool to understand the challenge better.
+Before we get too deep into the regex, let's use a visual tool to see how well my pattern captures many matches:
 
 <figure>
   <figcaption>Using [RegEx101.com](https://regex101.com/r/jO8bC4/69) to visualize multi-line matches</figcaption>
