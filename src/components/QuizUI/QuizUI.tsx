@@ -1,6 +1,7 @@
 import { ListTodoIcon, RefreshCcwIcon } from "lucide-react";
 import "./index.css";
 import "./icons.css";
+import React from "react";
 
 export default function QuizUI({ children }: any) {
   return (
