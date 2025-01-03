@@ -67,7 +67,7 @@ export default defineConfig({
         // use tinyglobby to get the file modified date
         const files = globSync(`**/*${slug}*/**/index.md*`, { cwd: "src", absolute: true });
 
-        const initialLastmod = item.lastmod;
+        // const initialLastmod = item.lastmod;
 
         if (files.length > 0) {
           const file = files[0];
