@@ -75,7 +75,7 @@ export default defineConfig({
           item.lastmod = stats.mtime;
         }
 
-        console.log(item.url, item.lastmod, initialLastmod);
+        // console.log(item.url, item.lastmod, initialLastmod);
 
         return item;
       },
