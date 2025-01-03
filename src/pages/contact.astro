@@ -16,14 +16,16 @@ const reCaptchaSiteKey =
 <script is:inline src="https://www.google.com/recaptcha/api.js?render=explicit"
 ></script>
 
-
 <Layout
   frontmatter={{
     title: "Contact Dan!",
     subTitle: SITE_DESCRIPTION,
   }}
+  className="article"
 >
-  <ContactForm reCaptchaSiteKey={reCaptchaSiteKey} />
+  <ContactForm reCaptchaSiteKey={reCaptchaSiteKey}>
+    <h1>Contact Dan!</h1>
+  </ContactForm>
 </Layout>
 
 <script>
@@ -36,16 +38,15 @@ const reCaptchaSiteKey =
   // on DOMDontentLoaded, render the reCaptcha widget
   document.addEventListener("astro:page-load", async () => {
     const $reCaptchaSiteKey: HTMLDivElement | null = document.querySelector(
-      "[data-recaptcha-site-key]"
+      "[data-recaptcha-site-key]",
     );
     $form = document.querySelector('form[name="contact"]');
     $gRecaptchaResponse = document.querySelector(
-      '[name="g-recaptcha-response"]'
+      '[name="g-recaptcha-response"]',
     );
 
     if (!$form) return console.error("No form found");
-    if (!$reCaptchaSiteKey)
-      return console.error("No reCaptcha Site Key found");
+    if (!$reCaptchaSiteKey) return console.error("No reCaptcha Site Key found");
     reCaptchaSiteKey =
       // @ts-ignore
       $reCaptchaSiteKey?.dataset?.recaptchaSiteKey ||
@@ -71,7 +72,7 @@ const reCaptchaSiteKey =
     window.$hideBotRetries = window.$hideBotRetries || 0;
     // @ts-ignore
     window.$hideBotRetries++;
-    
+
     if ($hideBotRetries > BOT_CLEAR_RETRY_LIMIT && $hideBotInterval) {
       console.warn("Failed to hide bot food");
       // @ts-ignore
@@ -97,7 +98,8 @@ const reCaptchaSiteKey =
       theme: "light",
       // size: "compact",
       callback: (response: unknown) => {
-        if ($gRecaptchaResponse) $gRecaptchaResponse!.value = response as string;
+        if ($gRecaptchaResponse)
+          $gRecaptchaResponse!.value = response as string;
         console.log("reCaptcha response:", response);
       },
     });

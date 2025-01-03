@@ -16,3 +16,10 @@ export const getComputedDates = ({
 
   return { createdAgo, modifiedAgo };
 };
+
+export function toDate(date: unknown) {
+  if (typeof date === "string") return new Date(date);
+  if (date instanceof Date) return date;
+  console.trace("Invalid date", date);
+  return date;
+}

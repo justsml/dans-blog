@@ -9,6 +9,7 @@ import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
 import "@/styles/nav.css";
 import "@/styles/global.css";
+import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
 // import ArticleFilterLinks from "../components/ArticleFilterLinks.astro";
 
 let posts = PostCollections.getPosts().map((p) =>
@@ -41,9 +42,11 @@ const nextPageAttrs = defaultNextUrl
   : {};
 // 
 posts = posts.slice(0, pageSize - 1);
+
+const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 ---
 
-<Page>
+<Page title={defaultFullTitle} subTitle={SITE_SEO_DESCRIPTION}>
   <div class="filter-toolbar">
     {/* <ArticleFilterLinks /> */}
     <Combobox

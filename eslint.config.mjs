@@ -9,4 +9,11 @@ export default [
   {languageOptions: { globals: globals.browser }},
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    rules: {
+      '@typescript-eslint/promise-function-async': 'error',
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/await-thenable': 'error',
+    },
+  },
 ];

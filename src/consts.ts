@@ -2,6 +2,8 @@
 export const SITE_TITLE = 'DanLevy.net';
 export const SITE_DESCRIPTION = 'Coder | Leader | Thinker | Tinker';
 
+export const AUTHOR_ROLES = ['Engineer', 'Entrepreneur', 'Educator', 'Leader'];
+
 export const SITE_SEO_DESCRIPTION = 'Come for the code, stay for the cats.';
 
 export const COPYRIGHT = `Dan Levy - All rights rebased`;

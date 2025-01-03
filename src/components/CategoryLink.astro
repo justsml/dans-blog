@@ -23,9 +23,12 @@ const getHref = (category: string) =>
   category && (
     <label
       class={clsx("category-link", className)}
-      title={count >= 2 ? `${count} posts` : `${count} post`}
+      title={
+        count >= 2 ? `${count} posts in category` : `${count} post in category`
+      }
     >
-      {count > 2 ? <a href={getHref(category)}>{category}</a> : category}&#160;{`(${count})`}
+      {count > 2 ? <a href={getHref(category)}>{category}</a> : category}&#160;
+      {count > 2 ? `(${count})` : ""}
     </label>
   )
 }
