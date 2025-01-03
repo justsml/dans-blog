@@ -4,6 +4,7 @@
 
 ## TODO
 
+- [ ] Use Google's Quiz JSON+LD? Maybe just 1-3 questions per page?
 - [ ] Add custom image processing service to override resizing images on the fly.
 - [ ] Add scripts to [support 'local' netlify builds](https://www.emgoto.com/astro-blog-images/#building-locally-and-then-deploying-via-netlify-cli) - perhaps even using GitHub Actions...
 

@@ -31,6 +31,11 @@ export const ossContributions: Contribution[] = [
       "Dan added helpful contextual links to parts of the official website. Dan also worked closely with relevant stakeholders at both TC39 and the NodeJS foundation to provide input & support on several signifigant features added to JavaScript. Notably these include ES6 Classes, Promises, Async/Await, and the URL parser.",
   },
   {
+    repo: "angular/angular",
+    description_override: `Angular is a platform and framework for building single-page client applications using HTML and TypeScript.`,
+    notes: `Dan added property binding examples to the official documentation.`,
+  },
+  {
     repo: "lodash/lodash",
     description_override:
       "A modern JavaScript utility library delivering modularity, performance, & extras. Lodash is one of the most successful JavaScript libraries ever. It's enjoyed several years at #1 on the 'Top 10' most depended on libraries NPM ranking.",
