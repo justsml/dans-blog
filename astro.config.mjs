@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
+import { globSync } from "tinyglobby";
 
 // import { visualizer } from "rollup-plugin-visualizer";
 import { defineConfig } from "astro/config";
@@ -11,10 +12,15 @@ import pagefind from "astro-pagefind";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+// import { PostCollections } from "./src/shared/dataCache";
+// import { toDate } from "./src/shared/dateUtils";
+import { statSync } from "fs";
 // import remarkMermaid from 'remark-mermaidjs'
 
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+const siteUrl = "https://danlevy.net";
+const ignorePaths = ["/404", "/404.html", "/500", "/500.html", "/pages/", "/category/"];
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,7 +30,7 @@ export default defineConfig({
     format: "directory",
   },
   cacheDir: ".cache",
-  site: "https://danlevy.net",
+  site: siteUrl,
   markdown: {
     // remarkPlugins: [remarkMermaid],
   },
@@ -53,7 +59,35 @@ export default defineConfig({
     }),
     sitemap({
       lastmod: new Date(),
-      entryLimit: 50000,
+      entryLimit: 10000,
+      serialize: (item) => {
+        const slug = getSlugFromUrl(item.url);
+        // const post = PostCollections.getPostsBySlugs([slug])[0];
+        // const modified = toDate(post?.data?.modified ?? post?.data?.date ?? new Date());
+        // use tinyglobby to get the file modified date
+        const files = globSync(`**/*${slug}*/**/index.md*`, { cwd: "src", absolute: true });
+
+        const initialLastmod = item.lastmod;
+
+        if (files.length > 0) {
+          const file = files[0];
+          const stats = statSync(file);
+          item.lastmod = stats.mtime;
+        }
+
+        console.log(item.url, item.lastmod, initialLastmod);
+
+        return item;
+      },
+      filter: (page) => {
+        
+
+        const isIgnoredPath = ignorePaths.every((path) => {
+          return !page.includes(path);
+        });
+
+        return isIgnoredPath;
+      },
     }),
     tailwind({
       applyBaseStyles: false,
@@ -81,3 +115,7 @@ export default defineConfig({
     },
   },
 });
+
+function getSlugFromUrl(url) {
+  return url?.split(/\/+/).filter(Boolean).pop();
+}

@@ -2,6 +2,7 @@ import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import { fixSlugPrefix, slugify } from "../shared/pathHelpers";
 import type { ArticlePost } from "../types";
+import { toDate } from "./dateUtils.ts";
 
 const getBaseName = (path: string) => {
   const parts = path.split("/");
@@ -10,8 +11,21 @@ const getBaseName = (path: string) => {
 
 const _postsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
-).filter((post) => !post.data.hidden);
+).filter((post) => !post.data.hidden)
+  .sort(
+    // @ts-expect-error - data is not always defined
+    (a, b) => toDate(a.data?.date) - toDate(b.data?.date),
+  )
+  .reverse() as unknown as ArticlePost[];
 
+
+// const _slugAndDateModified = _postsCollection.map((post) => ({
+//   slug: post.slug,
+//   date: post.data.date,
+//   modified: post.data.modified,
+// }));
+
+// console.log('_slugAndDateModified', JSON.stringify(_slugAndDateModified.slice(0,5), null, 2));
 // console.log(
 //   "postsCollection",
 //   JSON.stringify(_postsCollection[_postsCollection.length - 1]),
@@ -19,16 +33,11 @@ const _postsCollection: ArticlePost[] = (
 //   2,
 // );
 
-let _posts = _postsCollection
+const _posts = _postsCollection
   .map((post) => ({
     ...post,
     slug: fixSlugPrefix(post.slug),
   }))
-  .sort(
-    // @ts-ignore
-    (a, b) => a.data?.date - b.data?.date,
-  )
-  .reverse() as unknown as ArticlePost[];
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
 
@@ -85,11 +94,12 @@ export const PostCollections = {
   getCategoryCounts() {
     return Object.entries(PostCollections._categories)
       .sort((a, b) => (a[1] === b[1] ? 0 : a[1] > b[1] ? -1 : 1))
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .filter(([_, count]) => count > 1);
   },
 
   getPosts() {
-    let posts = PostCollections._posts;
+    const posts = PostCollections._posts;
     return posts;
   },
 
@@ -137,15 +147,15 @@ export const PostCollections = {
     // "js-quiz-14-date-time-questions-test-your-knowledge",
     // "javascript-promises-quiz",
     // "contribute-to-open-source-the-easy-way",
-    // "naming-things-real-good",
+    // "quiz-postgres-sql-mastery-pt2",
     return [
+      "you-may-not-need-axios",
       "quiz-bash-in-the-shell",
-      "quiz-postgres-sql-mastery-pt2",
+      "should-you-use-named-or-default-exports",
+      "naming-things-real-good",
       "quiz-postgres-sql-mastery-pt1",
       "quiz-destructuring-delights",
       "breaking-unicorns",
-      "you-may-not-need-axios",
-      "should-you-use-named-or-default-exports",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
 
@@ -216,7 +226,7 @@ export type ResponsiveImagesType = {
   large: ImageMetadata | Promise<ImageMetadata>;
 };
 
-let responsiveImages:
+const responsiveImages:
   | Record<string, ResponsiveImagesType>
   | [string, ResponsiveImagesType][] = (await Promise.all(
   Object.entries(images).map(async ([path, image]) => {

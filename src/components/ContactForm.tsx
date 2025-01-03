@@ -32,8 +32,10 @@ const FormSchema = z.object({
 
 export function ContactForm({
   reCaptchaSiteKey,
+  children,
 }: {
   reCaptchaSiteKey?: string;
+  children?: React.ReactNode;
 }) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -58,6 +60,7 @@ export function ContactForm({
 
   return (
     <Form {...form}>
+      {children}
       <form
         name="contact"
         onSubmit={form.handleSubmit(onSubmit)}

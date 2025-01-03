@@ -5,6 +5,8 @@ import Database from "libsql";
 import type { LocalCache } from "../types.ts";
 import ms from "ms";
 
+const TABLE_NAME = "local_cache";
+
 const DEFAULT_TTL_MS = ms("1d");
 
 type Database = ReturnType<typeof Database>;
@@ -30,7 +32,7 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
     compress INTEGER
   );`);
 
-  const stat = db.prepare("SELECT COUNT(*) as count FROM cache").get() as any;
+  const stat = db.prepare(`SELECT COUNT(*) as count FROM local_cache`).get() as any;
 
   console.log(`Cache started with ${stat.count} entries`);
 

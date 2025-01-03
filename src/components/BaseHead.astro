@@ -21,7 +21,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 let { title, description, image } = Astro.props;
 
-
 if (description === "undefined") description = undefined;
 
 if (
@@ -30,8 +29,9 @@ if (
 ) {
   image = socialBanner;
 }
-
-const siteTitle = title || SITE_TITLE;
+const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
+const siteTitle =
+  title === "DanLevy.net" ? defaultFullTitle : `${title} | ${SITE_TITLE}`;
 const siteDescription = description || SITE_SEO_DESCRIPTION;
 
 const version = pkg.version;
@@ -47,7 +47,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <link rel="preconnect" href="https://unpkg.com" />
 <link rel="preconnect" href="https://posthog.com" />
 <link rel="canonical" class="p-url" href={canonicalURL} />
-
+<link rel="sitemap" href="/sitemap-index.xml" />
 {/*Primary Meta Tags*/}
 <slot name="title">
   <title class="p-name">{title ?? siteTitle}</title>
@@ -73,8 +73,16 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   }
 </slot>
 
-<meta name="theme-color" content="#12283a" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#12283a" media="(prefers-color-scheme: dark)">
+<meta
+  name="theme-color"
+  content="#12283a"
+  media="(prefers-color-scheme: light)"
+/>
+<meta
+  name="theme-color"
+  content="#12283a"
+  media="(prefers-color-scheme: dark)"
+/>
 {/*Open Graph / Facebook*/}
 <meta name="fediverse:creator" content="@justsml@mastodon.social" />
 <meta name="bsky:creator" content="@justsml.bsky.social" />
@@ -126,34 +134,36 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   href="/icons/icon-512x512.webp"
 />
 
-
 <script>
   import globalSafe from "globalthis";
 
   const global = globalSafe();
   const isHomePage = global.location.pathname === "/";
-  if (global.document && !global.document.querySelector("script[data-x-htmx-tag]") ) {
+  if (
+    global.document &&
+    !global.document.querySelector("script[data-x-htmx-tag]")
+  ) {
     // add script here
     const scriptEl = document.createElement("script");
     scriptEl.setAttribute("is", "inline");
     scriptEl.setAttribute("data-x-htmx-tag", "");
     scriptEl.setAttribute("defer", "");
     scriptEl.setAttribute("async", "");
-    scriptEl.setAttribute(
-      "src",
-      "https://unpkg.com/htmx.org@2.0.2"
-    );
+    scriptEl.setAttribute("src", "https://unpkg.com/htmx.org@2.0.2");
     scriptEl.setAttribute(
       "integrity",
-      "sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ"
+      "sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ",
     );
     scriptEl.setAttribute("crossorigin", "anonymous");
 
     document.addEventListener("astro:page-load", function () {
       // console.log("Adding htmx script to page", global.location.pathname);
-      setTimeout(() => {
-        document.body.appendChild(scriptEl);
-      }, isHomePage ? 3 : 1000);
+      setTimeout(
+        () => {
+          document.body.appendChild(scriptEl);
+        },
+        isHomePage ? 3 : 1000,
+      );
 
       // refresh htmx on page load
       // @ts-expect-error - htmx is a global
