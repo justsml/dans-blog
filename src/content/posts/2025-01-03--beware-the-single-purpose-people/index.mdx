@@ -1,0 +1,98 @@
+---
+language: English
+title: "The Single-Purpose People"
+subTitle: "And the Single-Purpose Extremists"
+category: Code
+subCategory: Best Practices
+date: 2025-01-03
+modified: 2025-01-03
+tags: [software development, code organization, maintainability, testing]
+---
+
+# A million little pieces
+
+In the realm of software development, it's not uncommon for projects to grow much like ancient roman cities, layer by layer, century by century. Atop the ruins of yesterday, new structures are built. each with purpose, to be better than the last. (If not better, perhaps taller.) It turns out, as a city grows, so does the **complexity of its infrastructure and its resistance to changes.** The same is true for software projects.
+Cities, much like software projects, must begin with a plan. A plan that outlines the streets, the buildings, the parks, and the infrastructure. This plan must be flexible and adaptable, able to accommodate the changing needs of its inhabitants. However, as the city grows, the plan becomes less flexible, less adaptable. The streets & transit become more saturated, the buildings crowded, and the infrastructure strained.
+
+{/* TODO: Add roman roundabout photo */}
+
+In software we are actually quite fortunate. We can refactor our projects, reorganize our code, and restructure our architecture. We can tear down the old and build anew. But, as with cities, the larger the project, the more difficult it becomes to make changes. You cannot move an airport without affecting everything from trade, roads, public transit, businesses, and locals. The more successfully integrated (sold) a system is, the more difficult it becomes to change it.
+
+Similarly, you cannot refactor a large codebase without affecting the tests, the dependencies, the integrations, and the people.
+
+<p class="inset">This situation inevitably invites the Single-Purpose People, for they have a solution!</p>
+
+Since the dawn of software development, the Single-Purpose People have been advocating for splitting code into little pieces. Where each file should `do one thing and one thing only.` Which is a pretty ambiguous thing to say, because it's often a fuzzy concept when you ask engineers. Requirements change, perspectives shift.
+
+Soon someone will point out their favorite linux utilities as the gold standard, claiming they were so "perfectly _single in purpose_ that they haven't changed since the 1970s."" Well, the `ls` command is a great example of a single-purpose utility. It lists files. That's it, right? If you look closer, you'll find that `ls` is actually a wrapper around some system calls, `opendir`, `readdir`, `closedir`, and `stat`. And, if you go even deeper, you'll find that those `system calls` call the OS' `kernel`, which has freedom to store . So, is `ls` really single purpose? Sure. In a totally practical sense.
+
+
+
+
+<p class="inset">Single-purpose is about finding a short & useful .</p>
+
+
+Is the network port scanner `nmap` single purpose? It scans ports. But, it also does OS detection, service detection, and even vulnerability detection. Is the `grep` command single purpose? It searches for patterns. But, it also does line numbering, file name printing, and recursive searching. Is the `find` command single purpose? It finds files. But, it also can execute commands, and apply filters. The point is, even the most seemingly single-purpose utilities are part of a larger ecosystem, a larger system, a larger purpose.
+
+<p class="inset">The value of Single-purpose is .</p>
+
+
+
+
+
+This approach is often seen as a way to manage complexity, to make code more modular, more testable, and more maintainable. However, the Single-Purpose People often take this approach to the extreme, splitting code into a million little pieces, each with its own purpose, its own tests, and its own dependencies.
+<details>
+<summary>Single Purpose</summary>
+
+Single purpose of responsibility is a core tenet of software development. Each class, each function, each module should have a single purpose, a single responsibility. This principle is often referred to as the Single Responsibility Principle (SRP) and is a cornerstone of clean code. By adhering to this principle, developers can create code that is easier to understand, test, and maintain. However, the Single-Purpose People often take this principle to the extreme, splitting code into a million little pieces, each with its own purpose, its own tests, and its own dependencies. This approach can lead to a maintenance nightmare, brittle tests, and scalability challenges. To strike the right balance, developers should aim for a modular structure that promotes cohesion and abstraction while avoiding unnecessary fragmentation. By incorporating these principles, developers can create codebases that are more maintainable, scalable, and adaptable to changing requirements.
+
+</details>
+
+
+However, the Single-Purpose People often take their approach to the extreme, splitting code into a million little pieces, avoiding "hiding" any otherwise private code. 
+
+each with its own purpose, its own tests, and its own dependencies.
+
+
+po intentions. However, the Single-Purpose People often take their approach to the extreme, splitting code into a million little pieces, each with its own purpose, its own tests, and its own dependencies.
+
+The Single-Purpose People are those who believe that the best way to manage complexity is to split everything into single-purpose files. Each file should do one thing and one thing only. This approach is often seen as a way to manage complexity, to make code more modular, more testable, and more maintainable. However, the Single-Purpose People often take this approach to the extreme, splitting code into a million little pieces, each with its own purpose, its own tests, and its own dependencies.
+
+
+## The Illusion of Testability
+
+One of the primary appeals of splitting code into numerous single-purpose files is the sense of testability they bring. Each file becomes a self-contained unit that can be easily tested in isolation. However, this approach often leads to deeply brittle tests as feature pull requests (PRs) regularly intersect with and modify other code's tests.
+
+### The Problem with Brittle Tests
+
+Tests that are overly dependent on the specifics of implementation details become fragile. Even minor changes, such as renaming a function or adjusting a variable name, can cause these tests to fail. This fragility necessitates constant maintenance, diverting time and effort away from developing new features or improving existing ones.
+
+## The Maintenance Nightmare
+
+As projects grow with an excessive number of single-purpose files, maintaining them becomes a daunting task. Refactoring efforts often require sweeping changes across multiple files, increasing the likelihood of introducing bugs and slowing down development. This constant need for refactoring not only extends the time to market but also strains the development team's resources.
+
+### The Impact on Team Productivity
+
+Frequent refactoring and the associated risk of breakage take a toll on team morale and productivity. Developers may hesitate to make necessary changes for fear of disrupting other parts of the system, leading to a stagnant codebase that fails to adapt to evolving requirements.
+
+## Scalability Challenges
+
+As your application grows, the sheer number of files can make it challenging to navigate and understand the codebase. This complexity hinders scalability efforts, making it difficult to add new features or integrate with external systems. The cognitive overhead required to comprehend a project's structure and dependencies can significantly slow down development cycles.
+
+### The Need for Structure and Abstraction
+
+To mitigate these challenges, developers should strive for a balance between keeping files focused on single purposes and creating more cohesive modules that abstract away common functionality. This approach promotes maintainability, scalability, and reduces the brittleness of tests.
+
+## Conclusion
+
+While splitting code into numerous single-purpose files may seem like a straightforward way to manage complexity, it can inadvertently introduce hidden costs that impede development efforts. By recognizing these challenges early on, developers can take proactive steps toward structuring their projects in a way that enhances maintainability and scalability while reducing the brittleness of tests.
+
+Incorporating principles of code organization and abstraction, developers can strike the right balance between keeping files focused and promoting cohesion across modules. This approach not only improves the quality of the codebase but also fosters a more productive development environment where teams can focus on building features rather than contending with the complexities of an overly fragmented codebase.
+
+---
+
+In this article, we explored the hidden costs associated with over-splitting code in software projects and the detrimental effects it can have on maintainability, test brittleness, and team productivity. By understanding these challenges, developers can make informed decisions to structure their projects effectively, paving the way for more scalable, maintainable, and robust applications.
+
+If you're interested in learning more about best practices for managing codebases or need guidance on refactoring your project's architecture, consider exploring resources on software design patterns, clean code principles, and modular programming concepts. These strategies can help you navigate the complexities of modern software development and ensure that your projects remain adaptable and maintainable over time.
+
+Whether you're just starting out with a new project or looking to revitalize an existing one, taking proactive steps to organize your codebase effectively can yield significant benefits in terms of efficiency, scalability, and ultimately, the success of your applications.
