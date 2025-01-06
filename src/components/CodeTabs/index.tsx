@@ -1,11 +1,11 @@
 import { cx } from "class-variance-authority";
 import { slugify } from "../../shared/pathHelpers.ts";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./codeTabs.css";
 
 type CodeTabsProps = {
   tabs: string[] | Array<{ label: string; value: string }>;
-  onTabChange: (tab: string) => void;
+  onTabChange: (tab: string, index: number) => void;
   children: React.ReactNode;
 };
 
@@ -16,35 +16,32 @@ export function CodeTabs({
 }: CodeTabsProps) {
   const codeTabsRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const codeTabsEl$ = codeTabsRef.current;
-    if (!codeTabsEl$ || !codeTabsEl$.children) {
-      console.error("No children found in codeTabsEl$");
-      return;
-    }
-    // get all the `.expressive-code` children - do not hold a reference to the children
-    // log clicks
-    const handleClick = (e) => {
-      const target = e.target as HTMLElement;
-      if (target.classList.contains("title")) {
-        console.log("Clicked on tab", target.textContent);
-      }
-    }
-    codeTabsEl$.addEventListener("click", handleClick);
+  // useEffect(() => {
+  //   const codeTabsEl$ = codeTabsRef.current;
+  //   if (!codeTabsEl$ || !codeTabsEl$.children) {
+  //     console.error("No children found in codeTabsEl$");
+  //     return;
+  //   }
+  //   // get all the `.expressive-code` children - do not hold a reference to the children
+  //   // log clicks
+  //   const handleClick = (e: MouseEvent) => {
+  //     const target = e.target as HTMLElement;
+  //     if (target.classList.contains("title")) {
+  //       console.log("Clicked on tab", target.textContent);
+  //     }
+  //   }
+  //   codeTabsEl$.addEventListener("click", handleClick);
 
-    return () => codeTabsEl$.removeEventListener("click", handleClick);
+  //   return () => codeTabsEl$.removeEventListener("click", handleClick);
     
-  }, [codeTabsRef]);
-  // Add basic index-based selection of `.expressive-code` children
-  const handleTabClick = (_event: unknown, tabValue: string) => {
-    // event.preventDefault();
-    onTabChange?.(tabValue);
-    const tabIndex = tabs.findIndex((tab) => {
-      return typeof tab === "object"
-        ? tab.value === tabValue
-        : tab === tabValue;
-    });
+  // }, [codeTabsRef]);
+  const [activeTab, setActiveTab] = useState<number>(0);
 
+  const handleTabClick = (_event: unknown, tabValue: string, tabIndex: number) => {
+    setActiveTab(tabIndex);
+    // event.preventDefault();
+    onTabChange?.(tabValue, tabIndex);
+    
     const codeTabsEl$ = codeTabsRef.current;
 
     if (!codeTabsEl$ || !codeTabsEl$.children) {
@@ -56,8 +53,12 @@ export function CodeTabs({
 
     // hide all the `.expressive-code` children
     codeBlocks.forEach((codeBlock, idx) => {
-      if (tabIndex === idx) codeBlock.classList.remove("hidden", "active");
-      else codeBlock.classList.add("hidden");
+      if (tabIndex === idx) {
+        codeBlock.classList.add("active");
+        codeBlock.classList.remove("hidden");
+      } else {
+        codeBlock.classList.add("hidden");
+      }
     });
     console.log("Selected: tabIndex", tabIndex, codeBlocks.length);
   };
@@ -66,15 +67,17 @@ export function CodeTabs({
     <section className="codeTabs expressive-code" ref={codeTabsRef}>
       <figure className="tabBar hasTitle notContent">
         <figcaption className="header">
-          {tabs.map((tab) => {
+          {tabs.map((tab, idx) => {
             const tabLabel = typeof tab === "object" ? tab.label : tab;
             const tabValue = typeof tab === "object" ? tab.value : tab;
             return (
               <span
                 key={tabValue}
                 aria-roledescription="tab"
-                onClick={(e) => handleTabClick(e, tabValue)}
-                className={cx("title", `tab-${slugify(tabValue)}`)}
+                onClick={(e) => handleTabClick(e, tabValue, idx)}
+                className={cx("title", `tab-${slugify(tabValue)}`, {
+                  active: activeTab === idx,
+                })}
               >
                 {tabLabel}
               </span>

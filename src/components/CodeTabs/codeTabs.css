@@ -18,14 +18,14 @@
   display: none
 }
 
-/* 
+/*
 This is the inner tab bar that contains the title and the frame.
 */
 .codeTabs div.expressive-code {
   .frame {
     border-radius: 0 !important;
     border-top: none;
-    
+
   }
   .header {
     border-radius: 0 !important;
@@ -35,7 +35,7 @@ This is the inner tab bar that contains the title and the frame.
 
       &::after {
         opacity: 1;
-        border-top: 0px !important; 
+        border-top: 0px !important;
       }
     }
   }
@@ -46,7 +46,7 @@ This is the inner tab bar that contains the title and the frame.
 
 }
 .codeTabs .tabBar .header {
-
+  padding-top: .5rem !important;
   column-gap: .5rem !important;
   padding-left: .5rem !important;
   display: none;
@@ -159,4 +159,22 @@ This is the inner tab bar that contains the title and the frame.
 }
 .codeTabs .expressive-code:nth-of-type(1) {
   display: block;
+}
+
+.codeTabs .title {
+  background-color: var(--ec-frm-edActTabBg) !important;
+  &::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid #ff79c620 !important;
+  }
+  &.active::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol) !important;
+
+  }
+
+  &:hover, &.active {
+    background-color: var(--ec-frm-trmTtbBrdBtmCol) !important;
+    &::after {
+      border-top: var(--ec-frm-edActTabIndHt) solid var(--neon-pink) !important;
+    }
+  }
 }
