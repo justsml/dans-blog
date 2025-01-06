@@ -1,0 +1,155 @@
+.codeTabs {
+  grid-column: content;
+}
+
+.codeTabs .tabBar {
+  all: unset;
+  position: relative;
+  display: block;
+  --header-border-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
+  --tab-border-radius: calc(var(--ec-frm-edTabBrdRad) + var(--ec-brdWd));
+  --button-spacing: 0.4rem;
+  --code-background: var(--ec-frm-edBg);
+  border-radius: var(--header-border-radius);
+  box-shadow: var(--ec-frm-frameBoxShdCssVal)
+}
+
+.codeTabs .hidden {
+  display: none
+}
+
+/* 
+This is the inner tab bar that contains the title and the frame.
+*/
+.codeTabs div.expressive-code {
+  .frame {
+    border-radius: var(--header-border-radius) var(--header-border-radius) 0 0;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+  .header {
+    justify-content: end;
+    .title {
+      opacity: 0.85;;
+
+      &::after {
+        opacity: 1;
+        border-top: 0px !important; 
+      }
+    }
+  }
+}
+
+.codeTabs .tabBar .header {
+  display: none;
+  z-index: 1;
+  position: relative;
+  border-radius: var(--header-border-radius) var(--header-border-radius) 0 0
+}
+
+.codeTabs .tabBar.hasTitle pre,.codeTabs .tabBar.hasTitle code,.codeTabs .tabBar.isTerminal pre,.codeTabs .tabBar.isTerminal code {
+  border-top: none;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0
+}
+
+.codeTabs .tabBar .title:empty:before {
+  content: '\a0'
+}
+
+.codeTabs .tabBar.hasTitle:not(.isTerminal) {
+  --button-spacing: calc(1.9rem + 2 * (var(--ec-uiPadBlk) + var(--ec-frm-edActTabIndHt)))
+}
+
+.codeTabs .tabBar.hasTitle:not(.isTerminal) .title {
+  position: relative;
+  color: var(--ec-frm-edActTabFg);
+  background: var(--ec-frm-edActTabBg);
+  background-clip: padding-box;
+  margin-block-start:var(--ec-frm-edTabsMargBlkStart);padding: calc(var(--ec-uiPadBlk) + var(--ec-frm-edActTabIndHt)) var(--ec-uiPadInl);
+  border: var(--ec-brdWd) solid var(--ec-frm-edActTabBrdCol);
+  border-radius: var(--tab-border-radius) var(--tab-border-radius) 0 0;
+  border-bottom: none;
+  overflow: hidden
+}
+
+.codeTabs .tabBar.hasTitle:not(.isTerminal) .title::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol);
+  border-bottom: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndBtmCol)
+}
+
+.codeTabs .tabBar.hasTitle:not(.isTerminal) .header {
+  display: flex;
+  background: linear-gradient(to top, var(--ec-frm-edTabBarBrdBtmCol) var(--ec-brdWd), transparent var(--ec-brdWd)),linear-gradient(var(--ec-frm-edTabBarBg), var(--ec-frm-edTabBarBg));
+  background-repeat: no-repeat;
+  padding-inline-start:var(--ec-frm-edTabsMargInlStart)}
+
+.codeTabs .tabBar.hasTitle:not(.isTerminal) .header::before {
+  content:'';
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  border: var(--ec-brdWd) solid var(--ec-frm-edTabBarBrdCol);
+  border-radius: inherit;
+  border-bottom: none
+}
+
+.codeTabs .tabBar.isTerminal {
+  --button-spacing: calc(1.9rem + var(--ec-brdWd) + 2 * var(--ec-uiPadBlk));
+  --code-background: var(--ec-frm-trmBg)
+}
+
+.codeTabs .tabBar.isTerminal .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block:var(--ec-uiPadBlk);padding-block-end: calc(var(--ec-uiPadBlk) + var(--ec-brdWd));
+  position: relative;
+  font-weight: 500;
+  letter-spacing: 0.025ch;
+  color: var(--ec-frm-trmTtbFg);
+  background: var(--ec-frm-trmTtbBg);
+  border: var(--ec-brdWd) solid var(--ec-brdCol);
+  border-bottom: none
+}
+
+.codeTabs .tabBar.isTerminal .header::before {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  left: var(--ec-uiPadInl);
+  width: 2.1rem;
+  height: 0.56rem;
+  line-height: 0;
+  background-color: var(--ec-frm-trmTtbDotsFg);
+  opacity: var(--ec-frm-trmTtbDotsOpa);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 16' preserveAspectRatio='xMidYMid meet'%3E%3Ccircle cx='8' cy='8' r='8'/%3E%3Ccircle cx='30' cy='8' r='8'/%3E%3Ccircle cx='52' cy='8' r='8'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 16' preserveAspectRatio='xMidYMid meet'%3E%3Ccircle cx='8' cy='8' r='8'/%3E%3Ccircle cx='30' cy='8' r='8'/%3E%3Ccircle cx='52' cy='8' r='8'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat
+}
+
+.codeTabs .tabBar.isTerminal .header::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  inset: 0;
+  border-bottom: var(--ec-brdWd) solid var(--ec-frm-trmTtbBrdBtmCol)
+}
+
+.codeTabs .tabBar pre {
+  background: var(--code-background)
+}
+
+/* Hide all but 1st .expressive-code */
+.codeTabs > .expressive-code {
+  display: none
+}
+.codeTabs > .expressive-code:nth-of-type(1) {
+  display: block
+}
