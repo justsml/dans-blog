@@ -35,33 +35,40 @@ export function CodeTabs({
   //   return () => codeTabsEl$.removeEventListener("click", handleClick);
     
   // }, [codeTabsRef]);
+  useEffect(() => {
+    if (codeTabsRef.current) updateActiveTab(0);
+  }, []);
   const [activeTab, setActiveTab] = useState<number>(0);
 
   const handleTabClick = (_event: unknown, tabValue: string, tabIndex: number) => {
     setActiveTab(tabIndex);
     // event.preventDefault();
     onTabChange?.(tabValue, tabIndex);
-    
+    updateActiveTab(tabIndex);
+  };
+
+  function updateActiveTab(tabIndex: number) {
     const codeTabsEl$ = codeTabsRef.current;
 
     if (!codeTabsEl$ || !codeTabsEl$.children) {
       console.error("No children found in codeTabsEl$");
       return;
     }
-    // get all the `.expressive-code` children - do not hold a reference to the children
+    // get all the `.expressive-code` children
     const codeBlocks = codeTabsEl$.querySelectorAll(".expressive-code");
 
     // hide all the `.expressive-code` children
     codeBlocks.forEach((codeBlock, idx) => {
       if (tabIndex === idx) {
-        codeBlock.classList.add("active");
-        codeBlock.classList.remove("hidden");
+        codeBlock.classList.remove("hidden", "slideOutRight", "fadeInFast");
+        codeBlock.classList.add("active", "fadeInFast");
       } else {
-        codeBlock.classList.add("hidden");
+        codeBlock.classList.remove("active", "fadeInFast", "slideOutRight");
+        codeBlock.classList.add("hidden", "slideOutRight");
       }
     });
-    console.log("Selected: tabIndex", tabIndex, codeBlocks.length);
-  };
+    // return codeBlocks;
+  }
 
   return (
     <section className="codeTabs expressive-code" ref={codeTabsRef}>

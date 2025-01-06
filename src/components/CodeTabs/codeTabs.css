@@ -15,7 +15,7 @@
 }
 
 .codeTabs .hidden {
-  display: none
+  display: none !important;
 }
 
 /*
@@ -154,27 +154,78 @@ This is the inner tab bar that contains the title and the frame.
 }
 
 /* Hide all but 1st .expressive-code */
-.codeTabs .expressive-code {
+/* .codeTabs .expressive-code {
   display: none;
-}
-.codeTabs .expressive-code:nth-of-type(1) {
-  display: block;
-}
 
-.codeTabs .title {
+  
+  &:nth-of-type(1) {
+    display: block;
+  }
+} */
+.codeTabs .tabBar .title {
+  transition: background-color 0.2s ease-in, color 0.2s ease-in, border-color 0.2s ease-in, border-top-color 0.2s ease-in;
+
   background-color: var(--ec-frm-edActTabBg) !important;
   &::after {
-    border-top: var(--ec-frm-edActTabIndHt) solid #ff79c620 !important;
-  }
-  &.active::after {
     border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol) !important;
-
+  }
+  &:hover::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--neon-cyan) !important;
   }
 
-  &:hover, &.active {
+  /* &.active::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--ec-frm-edActTabIndTopCol) !important;
+  } */
+
+  &.active {
     background-color: var(--ec-frm-trmTtbBrdBtmCol) !important;
     &::after {
       border-top: var(--ec-frm-edActTabIndHt) solid var(--neon-pink) !important;
     }
+
+    &:hover {
+      background-color: var(--ec-frm-edActTabBg) !important;
+      &::after {
+        border-top: var(--ec-frm-edActTabIndHt) solid var(--neon-pink) !important;
+      }
+    }
+  }
+}
+
+.codeTabs .tabBar .title.active:hover {
+  background-color: var(--ec-frm-edActTabBg) !important;
+  &::after {
+    border-top: var(--ec-frm-edActTabIndHt) solid var(--neon-cyan) !important;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInFast {
+  from {
+    /* transform: translateX(100%); */
+    opacity: .5;
+  }
+  to {
+    /* transform: translateX(0); */
+    opacity: 1;
+  }
+}
+
+.codeTabs .expressive-code {
+  &.slideOutRight {
+    animation: slideOutRight 0.5s forwards;
+  }
+  &.fadeInFast {
+    animation: fadeInFast 0.5s forwards;
   }
 }
