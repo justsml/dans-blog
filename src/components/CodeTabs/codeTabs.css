@@ -6,6 +6,8 @@
   all: unset;
   position: relative;
   display: block;
+  /* --ec-uiFontFml: var(--ec-frm-edFntFml); */
+  --ec-uiFntFml: 'Noto Sans Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;
   --header-border-radius: calc(var(--ec-brdRad) + var(--ec-brdWd));
   --tab-border-radius: calc(var(--ec-frm-edTabBrdRad) + var(--ec-brdWd));
   --button-spacing: 0.4rem;
@@ -31,6 +33,8 @@ This is the inner tab bar that contains the title and the frame.
     border-radius: 0 !important;
     justify-content: end;
     .title {
+      border-radius: 0 !important;
+      font-family: var(--ec-uiFntFml);
       opacity: 0.85;;
 
       &::after {

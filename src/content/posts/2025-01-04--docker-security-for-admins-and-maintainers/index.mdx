@@ -45,6 +45,14 @@ Let’s be honest, we’ve all done it. You’ve connected to a random coffee sh
 
 ### UFW with Docker (Ubuntu)
 
+> ⚠️ **Warning:** By default Docker on Ubuntu/Debian will bypass UFW/iptables rules, potentially exposing your system to attacks.
+> It doesn't matter if you bind ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`.)
+
+#### Best Practice
+
+> ✅ **Use Docker Networks:** to isolate your containers from your local networks and other containers.
+
+
 One of the common issues with Docker and UFW is that Docker modifies iptables rules, potentially bypassing your UFW configurations.
 
 To mitigate this, download and install `ufw-docker`:
