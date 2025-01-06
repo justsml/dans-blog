@@ -13,7 +13,12 @@
 - [ ] Add scripts to [support 'local' netlify builds](https://www.emgoto.com/astro-blog-images/#building-locally-and-then-deploying-via-netlify-cli) - perhaps even using GitHub Actions...
 
 ```sh
+# To setup in a directory, run:
+netlify init
+
+# Deploy a branch:
 netlify build && netlify deploy
+# Go live:
 netlify build && netlify deploy --prod
 ```
 
