@@ -1,46 +1,46 @@
 ---
 title: "From Zero to Regex Hero"
-subTitle: "Extract & Parse URL-like Strings with Regex"
-social_image: desktop-social.webp
+subTitle: "Extract & Parse URL-like Strings with a Single Regex"
 category: Regex
 subCategory: Data Extraction
 date: 2024-12-29
-modified: 2024-12-30
+modified: 2025-01-06
 tags: [regex, url, data-extraction, data-processing]
+
+social_image: desktop-social.webp
 cover_full_width: regex-url-parsing-wide.webp
 cover_mobile: regex-url-parsing-square-200.webp
 cover_icon: regex-url-parsing-square-200.webp
 ---
+import { CodeTabs } from '../../../components/CodeTabs';
 
 **Table of Contents**
 
-- [Introduction](#introduction)
-- [Extracting URLs from Text](#extracting-urls-from-text)
-- [The 100+ Byte Regex](#the-100-byte-regex)
-  - [Breaking It Down Step by Step](#breaking-it-down-step-by-step)
-  - [Parsing Example](#parsing-example)
-- [Next Steps](#next-steps)
-  - [Different Projects, Different Needs](#different-projects-different-needs)
-  - [Post-Processing and Validation](#post-processing-and-validation)
-- [Summary](#summary)
-- [Further Learning](#further-learning)
+- 🚀 [Introduction](#-introduction)
+- 🔍 [Extracting URLs from Text](#-extracting-urls-from-text)
+- 🛳️ [The 120+ Byte Regex](#️-the-120-byte-regex)
+- 🧩 [Breaking It Down Step by Step](#-breaking-it-down-step-by-step)
+- 🛠️ [Parsing Example](#-pa)
+- ☑️ [Next Steps](#-next-steps)
+- 📝 [Summary](#-summary)
+- 📚 [Further Learning](#-further-learning)
 
-## Introduction
+**TL;DR:** Jump ahead to the [120+ Byte Regex](#️-the-120-byte-regex).
+
+## 🚀 Introduction
 
 Extracting URLs from raw text can sometimes feel like playing a tedious game of whack-a-mole. Punctuation, parenthetical wrappers, and ambiguous formatting all conspire to frustrate your efforts. Whether you're building a web scraper, data analyzer, or a chat application, accurately extracting URLs is essential.
 
-In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **capture all potential URL-like strings first** and then handle validation in a subsequent process.
+In this post, we'll tackle the problem head-on with a flexible, two-step approach. Our goal is to **capture all _potential_ URL-like strings first** and then handle validation in a subsequent process.
 
-> 💡 **Note:** This pattern is not for **validating** URLs! It's intentionally permissive, allowing for fine-tuning match rules for each part of the URL.
+> 💡 **Note:** This pattern is not for **_validating_** URLs! It's intentionally permissive with punctuation and bad spelling.
 
-## Extracting URLs from Text
+## 🔍 Goal: Extract URLs from Text
 
 When extracting URLs from raw text, a two-step approach is effective:
 
-1. **Capture Everything**: Cast a wide net to grab all strings that *could* be URLs. This is where our "100+ byte regex" shines.
-2. **Validate**: Once you've captured these candidates, pass them through rigorous checks (e.g., DNS resolution, comparison against known domains) to weed out invalid entries.
-
-**TL;DR:** Jump to the [100+ Byte Regex](#the-100-byte-regex) if you're in a hurry!
+1. **Capture Everything URL-like**: Cast a wide net to grab all strings that *could* be URLs. This is where our "120+ byte regex" shines.
+2. **Validate**: Once you've captured these candidates, use secondary checks (e.g., DNS resolution, comparison against known domains) to weed out invalid entries.
 
 ### Visualizing the Challenge
 
@@ -53,30 +53,44 @@ When I mention parsing or 'URL parts', I'm referring to the following components
 ![URL anatomy, visualized](WhatUrlsAreMadeOf-ColorMatched.svg "URL anatomy, visualized")
 </figure>
 
-Before we get too deep into the regex, let's use a visual tool to see how well my pattern captures many matches:
+<details class="inset breakout">
+  <summary>Click to see a screenshot of RegEx101's substring matching.</summary>
 
-<figure>
-  <figcaption>Using [RegEx101.com](https://regex101.com/r/jO8bC4/69) to visualize multi-line matches</figcaption>
-![Preview 'bulk' multi-line matches](RegEx101-Matches-Screenshot.webp "Preview 'bulk' multi-line results")
-</figure>
+  Before we get too deep into the regex, let's use a visual tool to see how well my pattern captures many matches:
 
-## The 100+ Byte Regex
+  <figure>
+    <figcaption>Using [RegEx101.com](https://regex101.com/r/jO8bC4/69) to visualize multi-line matches</figcaption>
+    ![Preview 'bulk' multi-line matches](RegEx101-Matches-Screenshot.webp "Preview 'bulk' multi-line results")
+  </figure>
+</details>
+
+
+# 🛳️ The 120+ Byte Regex
 
 Below is a concise regex designed to extract and parse URLs in a single shot. It supports various protocols, domains, paths, and optional query/fragment sections.
 
 Don't worry—we'll break it down step by step!
 
-```js title="100+ Byte URL Regex" frame="code"
+```js title="120+ Byte URL Regex" frame="code"
 const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
 // Compatibility: ES5+
-// Length: 100+ characters
+
+// Same pattern, split on newlines for readability:
+([-.a-z0-9]+:\/{1,3})
+([^-\/\.[\](|)\s?][^`\/\s\]?]+)
+([-_a-z0-9!@$%^&*()=+;/~\.]*)
+[?]?([^#\s`?]*)
+[#]?([^#\s'"`\.,!]*)
 ```
 
-## Breaking It Down Step by Step
+<blockquote class="inset">Share the wildest regex's you've encountered (OR authored) in the <a href="#post-comments">comments below!</a> 🚀</blockquote>
+
+
+## 🧩 Breaking It Down Step by Step
 
 Let's dissect the regex into its components to understand how it works:
 
-<h3>1. Protocol (Group 1): <code>([-.a-z0-9]+:\/{1,3})</code></h3>
+<h3>1. Protocol (Group 1): <code>{`([-.a-z0-9]+:\/{1,3})`}</code></h3>
 
 <ul>
   <li>**Purpose:** Matches the Protocol part of the URL (e.g., `http://`, `ftp://`, `custom-scheme://`).</li>
@@ -84,12 +98,12 @@ Let's dissect the regex into its components to understand how it works:
     **Explanation:**
     <ul>
       <li><code>[-.a-z0-9]+</code>: Matches one or more lowercase letters, digits, hyphens, or periods (common in protocol schemes).</li>
-      <li><code>:\/{1,3}</code>: Matches a colon followed by one to three slashes (<code>:/</code>, <code>://</code>, or <code>:///</code>).</li>
+      <li><code>{`:\/{1,3}`}</code>: Matches a colon followed by one to three slashes (<code>:/</code>, <code>://</code>, or <code>:///</code>).</li>
     </ul>
   </li>
 </ul>
 
-<h3>2. Domain (Group 2): <code>([^-\/\.[\](|)\s?][^`\/\s\]?]+)</code></h3>
+<h3>2. Domain (Group 2): <code>{`([^-\/\.[\](|)\s?][^\`\/\s\]?]+)`}</code></h3>
 
 <ul>
   <li>**Purpose:** Captures the domain or host part of the URL.</li>
@@ -102,7 +116,7 @@ Let's dissect the regex into its components to understand how it works:
   </li>
 </ul>
 
-<h3>3. Path (Group 3): <code>([-_a-z0-9!@$%^&*()=+;/~\.]*)</code></h3>
+<h3>3. Path (Group 3): <code>{`([-_a-z0-9!@$%^&*()=+;/~\\.]*)`}</code></h3>
 
 <ul>
   <li>**Purpose:** Matches the path component of the URL.</li>
@@ -141,11 +155,17 @@ Let's dissect the regex into its components to understand how it works:
 </ul>
 
 
-## Parsing Example
+## 🛠️ Parsing Example
 
-Here's how you can use this regex to extract and parse URLs from a given input:
+Here's how you can put this monster regex to work, with a bit of JavaScript:
 
-```js title="Example: Extract & Parse URLs" frame="code"
+<CodeTabs client:only
+ tabs={[
+    "Code: Extract URLs",
+    "Results: Extracted URLs",
+    "Results: URL Parts",
+  ]} >
+```js title="extract-urls.js" frame="code"
 const text = `
 Check this out: https://example.com/path?query=123#section
 And also (ftp://files.server.org/index).
@@ -166,9 +186,7 @@ const parts = [
 console.log("Extracted Parts:", parts);
 ```
 
-**Extracted URLs:**
-
-```json title="Extracted-URLs.json"
+```json title="extracted-urls.json"
 [
   "https://example.com/path?query=123#section",
   "ftp://files.server.org/index",
@@ -176,9 +194,7 @@ console.log("Extracted Parts:", parts);
 ]
 ```
 
-**Extracted Parts:**
-
-```json title="Extracted URL Parts"
+```json title="urls-parts.json"
 [
   [
     "https://",    // Protocol
@@ -204,7 +220,9 @@ console.log("Extracted Parts:", parts);
 ]
 ```
 
-## Next Steps
+</CodeTabs>
+
+## ☑️ Next Steps
 
 Depending on your use case, you might need to refine this regex or add more validation and post-processing steps.
 
@@ -225,26 +243,23 @@ After gathering potential URLs, apply additional checks:
 - **Safety Checks**: Use services to check for malicious or phishing sites.
 - **Custom Rules**: Apply project-specific filters (e.g., allowed TLDs, maximum URL length).
 
-## Summary
+## 📝 Summary
 
-Extracting URL-like strings from raw text gets easier with a well-crafted regex pattern.
+Extracting semi-structured string data just might be the most satisfying part of regex mastery.
 
 Here's a recap of the key takeaways:
 
 - **Use a visual tool to write, test** & understand your [Regex patterns.](https://regex101.com/r/jO8bC4/69)
-- **Use 'loose' match expressions, avoid strict spec conformance** when doing data ingestion.
 - **Break down challenge into parts** solve each part separately. In a sense, capture groups provide us figurative 'trail markers' for our regex.
+- **Use 'loose' match expressions, avoid strict spec conformance** when doing data ingestion.
 - **Applying validation steps** after the initial extraction is essential—always consider your project's security and specific needs.
 
-By following these steps, you can effectively extract URL-like strings, setting the foundation for further processing and validation.
+By following these steps, you can effectively extract any semi-structured string data, setting the foundation for further processing and validation.
 
-## Further Learning
+## 📚 Further Learning
 
 - Remember to play with a [live demo on RegEx101.com](https://regex101.com/r/jO8bC4/69)!
 - Original StackOverflow question, and a [link to my answer right here](https://stackoverflow.com/a/34669019/369727).
 - [MDN Docs on Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Advanced Regex Techniques](https://www.regular-expressions.info/): Explore lookaheads, lookbehinds, and other advanced patterns for more precise matching.
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
-
-
-Let me know if you have any questions or need further assistance!
