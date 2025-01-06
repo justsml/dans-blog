@@ -48,23 +48,36 @@ Let’s be honest, we’ve all done it. You’ve connected to a random coffee sh
 > ⚠️ **Warning:** By default Docker on Ubuntu/Debian will bypass UFW/iptables rules, potentially exposing your system to attacks.
 > It doesn't matter if you bind ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`.)
 
-#### Best Practice
+### Best Practice
 
-> ✅ **Use Docker Networks:** to isolate your containers from your local networks and other containers.
+1. 🥇 **Use Docker Networks** to isolate and control what can connect to each container or network.
+2. 🥈 **Update iptables** if you must use a `host` network, or cannot use custom networks, you can mitigate the risk by configuring iptables. Not for the faint-hearted, [check out utility below.](#uf)
 
-
-One of the common issues with Docker and UFW is that Docker modifies iptables rules, potentially bypassing your UFW configurations.
-
-To mitigate this, download and install `ufw-docker`:
+#### Docker Network Isolation
 
 ```bash
-# Download `ufw-docker` script
+# Create a new Docker network
+docker network create my-network
+
+# Run your container with the new network
+docker run --network my-network my-container
+```
+
+#### UFW Configuration (for `host` networks)
+
+There's a lot of bad advice on fixing this out there. configure UFW to work with Docker using UFW largely like you might expect.
+
+I've used `ufw-docker` to configure a self hosted system and it seems to works well.
+
+```bash title="install-ufw-docker.sh"
+# Install binary as root (needs root permissions anyway)
 sudo wget -O /usr/local/bin/ufw-docker \
    https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
 sudo chmod +x /usr/local/bin/ufw-docker
-
 # Install and modify the `after.rules` file of `ufw`
 ufw-docker install
+
+ufw-docker help
 ```
 
 This command performs the following:
@@ -118,47 +131,20 @@ ufw enable  # Enable firewall
 
 ## 🔐 Secrets Management for Local Development
 
-### Generating and Storing Secrets
-
-<p class="inset">Never hardcode secrets in your codebase. Prefer environment variables and secure vaults.</p>
-
-Instead of `.env.example`, use `.env.generate.sh` to make it easy for users to get a `.env` file with secure "defaults."
-
-#### Example `.env.generate.sh`
-
-```bash title=".env.generate.sh" frame="code"
-#!/bin/bash
-# Generates a secure .env file for local development
-
-generate_secret() {
-    local length=${1:-30}
-    openssl rand -base64 "$length" | tr -d '+=/\n' | cut -c1-"$length"
-}
-
-# Bail out if .env file already exists
-[ -f .env ] && { echo ".env file already exists!"; exit 1; }
-
-cat <<EOL > .env
-DB_USER=app_user
-DB_PASSWORD=$(generate_secret 32)
-REDIS_PASSWORD=$(generate_secret 32)
-JWT_SECRET=$(generate_secret 32)
-SESSION_KEY=$(generate_secret 32)
-EOL
-
-echo "New .env file generated!"
-```
-
 ### Proactive Placeholder Validation
 
-<p>Ensure your secrets are replaced with real values before running your application.</p>
+<p>💡 Ensure secrets are properly setup with real values before running your application.</p>
+
+If you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, greaet, maybe someone will notice. Just in case, you can also add a little validation to provide safety at runtime.
+
+You wouldn't believe how easy it is to completely hack (modify & re-sign) a JWT token when attackers can guess the secret!
 
 <CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
 
 ```javascript
 // validateSecrets.js
 const validateSecrets = () => {
-  const unsafePlaceholder = /PLACEHOLDER/;
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
   const missingSecrets = Object.entries(process.env).filter(
     ([key, value]) => unsafePlaceholder.test(value)
   );
@@ -177,7 +163,7 @@ validateSecrets();
 use std::env;
 
 fn validate_secrets() {
-    let unsafe_placeholder = "PLACEHOLDER";
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
     for (key, value) in env::vars() {
         if value.contains(unsafe_placeholder) {
             panic!("Unsafe secret in {}", key);
@@ -201,7 +187,7 @@ import (
 )
 
 func validateSecrets() {
-	placeholder := "PLACEHOLDER"
+	placeholder := "__WARNING_REPLACE_ME__"
 	for _, env := range os.Environ() {
 		pair := strings.SplitN(env, "=", 2)
 		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
@@ -217,6 +203,41 @@ func main() {
 
 </CodeTabs>
 
+
+### Generating and Storing Secrets
+
+<p class="inset">Never hardcode secrets in your codebase. Prefer environment variables and secure vaults.</p>
+
+Instead of `.env.example`, use `.env.generate.sh` to make it easy for users to get a `.env` file with secure "defaults."
+
+#### Example `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# Generates a secure .env file for local development
+
+generate_secret() {
+    local length=${1:-30}
+    # add 4 bytes to account for padding
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# Database settings & secrets
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# Session secrets
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
 {/* 
 ```zig
 // validate_secrets.zig
@@ -224,7 +245,7 @@ const std = @import("std");
 
 pub fn main() void {
     var env = std.os.getenv_map();
-    const placeholder = "PLACEHOLDER";
+    const placeholder = "__WARNING_REPLACE_ME__";
 
     for (env.items()) |entry| {
         if (std.mem.contains(u8, entry.value, placeholder)) {
@@ -248,7 +269,8 @@ nmap -sT localhost
 nmap -sV 192.168.1.10
 
 # Detect devices on your network
-nmap -sn 192.168.1.0/24
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
 ```
 
 #### Testing Outside Your Network
@@ -258,11 +280,19 @@ To can lookup your current (public) IP easily with services like `ifconfig.me`: 
 Use an external network or remote server to test your public IPs:
 
 ```bash
-# Scan public-facing services
-nmap -Pn your-public-ip
+print_current_ip() {
+  curl https://ifconfig.me
+}
 
-# Check for specific open ports
-nmap -p 80,443 your-public-ip
+print_current_ip
+# --> 123.456.789.012
+
+# Change target_host to your public ip or hostname
+# Check host using advanced techniques
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
 ```
 
 **Why Test Both?**
