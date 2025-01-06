@@ -64,7 +64,7 @@ export function CodeTabs({
 
   return (
     <section className="codeTabs expressive-code" ref={codeTabsRef}>
-      <figure className="frame has-title not-content">
+      <figure className="tabBar hasTitle notContent">
         <figcaption className="header">
           {tabs.map((tab) => {
             const tabLabel = typeof tab === "object" ? tab.label : tab;

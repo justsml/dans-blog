@@ -23,12 +23,12 @@ This is the inner tab bar that contains the title and the frame.
 */
 .codeTabs div.expressive-code {
   .frame {
-    border-radius: var(--header-border-radius) var(--header-border-radius) 0 0;
+    border-radius: 0 !important;
     border-top: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    
   }
   .header {
+    border-radius: 0 !important;
     justify-content: end;
     .title {
       opacity: 0.85;;
@@ -41,7 +41,14 @@ This is the inner tab bar that contains the title and the frame.
   }
 }
 
+.codeTabs .tabBar .title {
+  cursor: pointer;
+
+}
 .codeTabs .tabBar .header {
+
+  column-gap: .5rem !important;
+  padding-left: .5rem !important;
   display: none;
   z-index: 1;
   position: relative;
@@ -147,9 +154,9 @@ This is the inner tab bar that contains the title and the frame.
 }
 
 /* Hide all but 1st .expressive-code */
-.codeTabs > .expressive-code {
-  display: none
+.codeTabs .expressive-code {
+  display: none;
 }
-.codeTabs > .expressive-code:nth-of-type(1) {
-  display: block
+.codeTabs .expressive-code:nth-of-type(1) {
+  display: block;
 }
