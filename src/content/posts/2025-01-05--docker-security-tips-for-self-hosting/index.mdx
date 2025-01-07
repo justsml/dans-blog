@@ -2,7 +2,7 @@
 title: "Essential Docker Security Tips for Self-Hosting"
 subTitle: "Tips for securing your Self-hosted Docker services - from network security to monitoring!"
 date: 2025-01-04
-modified: 2025-01-05
+modified: 2025-01-06
 tags: [docker, security, devops, containers, best-practices]
 category: Security
 
@@ -17,18 +17,13 @@ import {CodeTabs} from '../../../components/CodeTabs';
 
 **Table of Contents**
 
-1. [Introduction](#-introduction)
-2. [The `:latest` Dance](#-the-latest-dance)
-3. [Secrets Management: The Right Way](#-secrets-management-the-right-way)
-4. [Network Security: The Devil’s in the Details](#-network-security-the-devils-in-the-details)
-5. [Access Control Layers](#️-access-control-layers)
-6. [Monitoring & Verification](#-monitoring--verification)
-7. [Self-Hosting Security Tips](#-self-hosting-security-tips)
-8. [Production Checklist](#-production-checklist)
-9. [Further Reading](#-further-reading)
+- 🧗‍♀️ [For the brave](#-for-the-brave)
+- 🔄 [The `:latest` Dance](#-the-latest-dance)
+- 🔐 [Secrets Management: The Right Way](#-secrets-management)
+- 🌐 [Network Hazard](#-network-hazard)
 
 
-## 🏠 For the Brave
+## 🧗‍♀️ For the brave
 
 If you’re self-hosting Docker services, security is your responsibility from top to bottom—no cloud provider to shield you from port scans or sloppy config. Whether you’re spinning up apps on your home network or renting VPSes from providers like Vultr, DigitalOcean, Linode, AWS, Azure, or Google Cloud, you’ll need to lock things down - and verify you did it right.
 
@@ -74,7 +69,7 @@ Use [Dependabot](https://github.com/features/security) or [Renovate](https://git
 
 _Let me know about your favorite tools for keeping Docker images up-to-date!_
 
-## 🔐 Secrets Management: The Right Way
+## 🔐 Secrets Management
 
 Never bake your secrets (API tokens, passwords, keys) into Docker images **_OR_** commit them to git.
 
@@ -180,7 +175,7 @@ func main() {
 
 </CodeTabs>
 
-## 🌐 Network Security: The Devil’s in the Details
+## 🌐 Network Hazard
 
 ### Custom Networks & Internal Ports
 
@@ -203,7 +198,20 @@ services:
 
 Properly isolating services with Docker networks can reduce your attack surface. Services on a private or “internal” network won’t be accessible from the public internet.
 
-### Auditing Docker Socket Access
+### Docker Socket Access
+
+#### ⚠️ Warning: This is extremely powerful and dangerous dark magic!
+
+<blockquote class="inset">⚠️ An \`:ro\` option doesn't affect I/O sent over the socket!</blockquote>
+
+It merely ensures the file (a Unix socket, not a file in the traditional sense) itself is `read-only`.
+
+{/* Any process that can "open" the socket can (probably) gain root access on the host. */}
+
+#### Socket Best Practice
+
+- 🥇 **Never do it!** (_Maybe_ in very **high-trust**, **low-risk** environments.)
+- 🫣 If you must, **use a Reverse Proxy** to limit what API commands are available. Check out Tecnativa's [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy).
 
 Access to the Docker socket (`/var/run/docker.sock`) is effectively root on the host. Only give it to services that absolutely need it (monitoring or specialized orchestration).
 
@@ -219,7 +227,7 @@ Notice the `:ro` to keep it read-only if possible, though many tools need write 
 
 ---
 
-## 🛡️ Access Control Options
+## 🛡️ Access Controls
 
 Of all the ways it might seem you can limit access to your services, too many are entirely ineffective!
 
@@ -466,8 +474,9 @@ Install with `brew install fswatch`
 fswatch -r /path/to/directory
 ```
 
+## ⏰ Parting Thoughts
 
-## 🏠 Self-Hosting Security Tips
+### Often Overlooked Tips
 
 1. **Place Canary Tokens** in sensitive directories. If triggered, you’ll know instantly that something has gone wrong.
    *Try [Canarytokens.org](https://canarytokens.org/)*
@@ -489,7 +498,7 @@ fswatch -r /path/to/directory
 5. **Beware of WiFi Riff-Raff**
    On a home network, we never let strangers join our network. Well, except friends. Or family. Or that neighbor who always asks for the password. Actually… maybe that’s you. If so, please check your firewall.
 
-## 🏡 Home Network vs Public Providers
+### Comparing Home Network vs Public Providers
 
 1. **Virtual Isolation/DMZ**: For home servers, put them on a separate VLAN or DMZ if possible. This keeps your internal devices off-limits to potential compromise from the server side.
    - **Direct Internet-Facing**: Easiest route but highest risk.
@@ -499,7 +508,7 @@ fswatch -r /path/to/directory
    - Typically, these providers block all ports except what you explicitly open.
    - They also offer advanced monitoring and threat detection tools.
 
-3. **Hardening Against Internal Lateral Attacks**: Even on a home network, an infected device can pivot across local IP addresses. Segmenting Docker services on custom networks, using UFW rules, and blocking unneeded ports helps reduce risk.
+3. **Hardening Against Internal/Lateral Attacks**: One infected device can expose the entire network. Segmenting Docker services on custom networks, using UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.)
 
 ## 🚀 Production Checklist
 
@@ -521,7 +530,11 @@ fswatch -r /path/to/directory
 - [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
 - [Canarytokens.org for Canary Tokens](https://canarytokens.org/)
 
-
 ## Thanks
+
+A shout-out to some keen Redditors:
+
+- <em className="cite">Thanks [u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [credit](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+
 
 Thanks for reading! I hope you found this guide helpful. If you have any questions or suggestions, feel free to reach out on my social icon links below, or click the `Edit on GitHub` link to create a PR!
