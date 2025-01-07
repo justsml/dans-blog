@@ -21,6 +21,12 @@ import {CodeTabs} from '../../../components/CodeTabs';
 - 🔄 [The `:latest` Dance](#-the-latest-dance)
 - 🔐 [Secrets Management: The Right Way](#-secrets-management)
 - 🌐 [Network Hazard](#-network-hazard)
+- 🛡️ [Access Controls](#-access-controls)
+- 🔍 [Monitoring & Verification](#-monitoring--verification)
+- ⏰ [Parting Thoughts](#-parting-thoughts)
+- 🚀 [Production Checklist](#-production-checklist)
+- 📚 [Further Reading](#-further-reading)
+- 🙏 [Thanks](#thanks)
 
 
 ## 🧗‍♀️ For the brave
@@ -200,9 +206,9 @@ Properly isolating services with Docker networks can reduce your attack surface.
 
 ### Docker Socket Access
 
-#### ⚠️ Warning: This is extremely powerful and dangerous dark magic!
+#### ⚠️ Warning: `docker.socket` is extremely powerful and dangerous dark magic!
 
-<blockquote class="inset">⚠️ An \`:ro\` option doesn't affect I/O sent over the socket!</blockquote>
+<blockquote class="inset">⚠️ The \`:ro\` option doesn't affect I/O sent over the socket!</blockquote>
 
 It merely ensures the file (a Unix socket, not a file in the traditional sense) itself is `read-only`.
 
@@ -210,37 +216,26 @@ It merely ensures the file (a Unix socket, not a file in the traditional sense) 
 
 #### Socket Best Practice
 
-- 🥇 **Never do it!** (_Maybe_ in very **high-trust**, **low-risk** environments.)
+- 🥇 **Never do it!**
 - 🫣 If you must, **use a Reverse Proxy** to limit what API commands are available. Check out Tecnativa's [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy).
+- 🤢 Okay, _maybe_ in a very **high-trust**, **low-risk** environment.
 
-Access to the Docker socket (`/var/run/docker.sock`) is effectively root on the host. Only give it to services that absolutely need it (monitoring or specialized orchestration).
-
-```bash
-# Example snippet in a docker-compose.yml
-services:
-  my_service:
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-```
-
-Notice the `:ro` to keep it read-only if possible, though many tools need write privileges. Always audit who has this volume.
-
----
+Access to the Docker socket (`/var/run/docker.sock`) tends to lead to total root access. Be careful!
 
 ## 🛡️ Access Controls
 
-Of all the ways it might seem you can limit access to your services, too many are entirely ineffective!
+When it comes to limiting access to your services, many methods might seem effective but often fall short in practice.
 
-Here are some common pitfalls and better alternatives.
+Let's take a look at some common pitfalls and best practices for limiting access to your Docker services.
 
 ### Docker on Ubuntu
 
 A very popular setup, with 2 very common pitfalls:
 
-> ⚠️ **Warning #1:** By default [Docker on Ubuntu/Debian will bypass UFW](https://github.com/moby/moby/issues/4737)/iptables rules, rendering **your firewall useless.**
-> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`) won't help either!
+> ⚠️ **Warning #1:** By default [Docker on Ubuntu/Debian will bypass UFW](https://github.com/moby/moby/issues/777)/iptables rules, rendering **your firewall useless.**
+> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`) may only offer limited protection as well. See also [issue: #690 - Docker bypasses ufw firewall rules](https://github.com/docker/for-linux/issues/690)
 
-<p class="inset">This surprises me every time I learn about it!</p>
+<p class="inset">This surprises me every time I run right into it. 😅</p>
 
 So, instead of thinking of your firewall as your primary defense, embrace Docker Networks. They provide **isolation** and **segmentation** at the network layer - without requiring everyone become a master at `iptables`.
 
@@ -285,19 +280,20 @@ services:
     # ... other settings
   db-admin:
     image: dpage/pgadmin4:4.1
-    networks: [ db-network ]
+    networks: [ db-network, auto-net ]
     # ... other settings
     ports:
       - "8081:80"
 
 networks:
   db-network:
-    external: false
+    external: true # created with `docker network create db-network`
+  auto-net: # auto-created network
 ```
 
-Now your services can communicate with each other via the `db-network` network.
+Now your services can communicate with each other via the `db-network` network. The `auto-net` network will be created automatically by Docker Compose.
 
-The `--external` flag can be used to control external access to the network.
+Use the `--external` flag to join a **pre-existing network.** Ommitting it will create a new network.
 
 #### Blocking Country!
 
@@ -478,10 +474,14 @@ fswatch -r /path/to/directory
 
 ### Often Overlooked Tips
 
-1. **Place Canary Tokens** in sensitive directories. If triggered, you’ll know instantly that something has gone wrong.
-   *Try [Canarytokens.org](https://canarytokens.org/)*
+1. Place [**Canary Tokens**](https://canarytokens.org/) in every sensitive `.env` file, CI platform, and "secrets manager" you can find! You have types of canary's from [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, AWS keys, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
 
-2. **Rate Limiting** for authentication attempts. Whether via Nginx’s `limit_req` module or fail2ban, throttling brute-force attempts goes a long way.
+If someone tries to use them, you’ll know right away. You may not know when or how... but you just might get a chance to stop some damage.
+
+create an AWS profile ddz If triggered, you’ll get an email (or slack ping) and know instantly that something has gone wrong.
+   *Try [Canarytokens.org]()*
+
+2. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban`, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
 
 3. **Use Read-Only Volumes** wherever possible:
    ```yaml
