@@ -23,7 +23,7 @@ import {CodeTabs} from '../../../components/CodeTabs';
 - 🌐 [Network Hazard](#-network-hazard)
 - 🛡️ [Access Controls](#-access-controls)
 - 🔍 [Monitoring & Verification](#-monitoring--verification)
-- ⏰ [Parting Thoughts](#-parting-thoughts)
+- ⏰ [Late Night Thoughts](#-late-night-thoughts)
 - 🚀 [Production Checklist](#-production-checklist)
 - 📚 [Further Reading](#-further-reading)
 - 🙏 [Thanks](#thanks)
@@ -33,11 +33,11 @@ import {CodeTabs} from '../../../components/CodeTabs';
 
 If you’re self-hosting Docker services, security is your responsibility from top to bottom—no cloud provider to shield you from port scans or sloppy config. Whether you’re spinning up apps on your home network or renting VPSes from providers like Vultr, DigitalOcean, Linode, AWS, Azure, or Google Cloud, you’ll need to lock things down - and verify you did it right.
 
-In this guide, we’ll walk through Docker security essentials—covering canary tokens, read-only volumes, firewall rules, network segmentation, and everything in between. We’ll also compare home networks to public cloud setups and show you how to set up a basic auth proxy with Nginx. By the end, you’ll have several options to keep out the riff-raff (friends, family, or your own suspicious self).
+In this guide, we’ll walk through Docker security—from some `lesser-known` to other `difficult-to-get-right` techniques; we'll explore canary tokens, read-only volumes, firewall rules, network segmentation & hardening, adding authenticated proxies, and more.
 
-Let’s dive in!
+We’ll also compare home networks to public cloud setups and show you how to set up a basic auth proxy with Nginx. By the end, you’ll have several options to keep out the riff-raff (friends, family, and sometimes even yourself...)
 
----
+That's a ton of stuff! But much of it relates, and you can pick and choose what's most relevant to your setup. 🍀
 
 ## 🔄 The `:latest` Dance
 
@@ -470,16 +470,14 @@ Install with `brew install fswatch`
 fswatch -r /path/to/directory
 ```
 
-## ⏰ Parting Thoughts
+## ⏰ Late Night Thoughts
+
+
 
 ### Often Overlooked Tips
 
-1. Place [**Canary Tokens**](https://canarytokens.org/) in every sensitive `.env` file, CI platform, and "secrets manager" you can find! You have types of canary's from [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, AWS keys, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
-
-If someone tries to use them, you’ll know right away. You may not know when or how... but you just might get a chance to stop some damage.
-
-create an AWS profile ddz If triggered, you’ll get an email (or slack ping) and know instantly that something has gone wrong.
-   *Try [Canarytokens.org]()*
+1. Place [**Canary Tokens**](https://canarytokens.org/) in every sensitive `.env` file, CI platform, and "secrets manager" you can find! You have types of types of canary tokens to chose from, [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, AWS keys, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
+   If someone tries to use them, you’ll know there was a breach _right away_. That's pretty cool, even if it sends you on a wild goose chase every now and then.
 
 2. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban`, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
 
@@ -490,13 +488,13 @@ create an AWS profile ddz If triggered, you’ll get an email (or slack ping) an
        volumes:
          - ./config:/config:ro
    ```
-   This prevents accidental (or malicious) changes to critical files.
+   Combined with other best practices (non-root users, minimal folder permissions), the \`:ro\` volume mount option provides additional safe-guards against accidental (or malicious) changes to critical files.
 
-4. **Audit Docker Socket Access** regularly.
-   If a container doesn’t need it, remove the mount.
+4. **Audit Container Access** regularly.
+   If a container doesn’t need it a secret, port or mount, remove it!
 
 5. **Beware of WiFi Riff-Raff**
-   On a home network, we never let strangers join our network. Well, except friends. Or family. Or that neighbor who always asks for the password. Actually… maybe that’s you. If so, please check your firewall.
+   I'm sure you'd never give out your WiFi password, especially to any weirdos, right? Well, except some friends... Okay, maybe family too.
 
 ### Comparing Home Network vs Public Providers
 
