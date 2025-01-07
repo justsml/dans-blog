@@ -2,7 +2,7 @@
 title: "Essential Docker Security Tips for Self-Hosting"
 subTitle: "Tips for securing your Self-hosted Docker services - from network security to monitoring!"
 date: 2025-01-04
-modified: 2025-01-06
+modified: 2025-01-07
 tags: [docker, security, devops, containers, best-practices]
 category: Security
 
@@ -21,7 +21,7 @@ import {CodeTabs} from '../../../components/CodeTabs';
 - 🔄 [The `:latest` Dance](#-the-latest-dance)
 - 🔐 [Secrets Management: The Right Way](#-secrets-management)
 - 🌐 [Network Hazard](#-network-hazard)
-- 🛡️ [Access Controls](#-access-controls)
+- 🛡️ [Access Controls](#️-access-controls)
 - 🔍 [Monitoring & Verification](#-monitoring--verification)
 - ⏰ [Late Night Thoughts](#-late-night-thoughts)
 - 🚀 [Production Checklist](#-production-checklist)
@@ -188,7 +188,8 @@ func main() {
 ```yaml
 networks:
   backend:
-    internal: true  # No external traffic allowed
+# Existing "external" named network
+    internal: true 
 
 services:
   webapp:
@@ -202,7 +203,97 @@ services:
     # No published ports, only accessible inside backend network
 ```
 
-Properly isolating services with Docker networks can reduce your attack surface. Services on a private or “internal” network won’t be accessible from the public internet.
+Properly isolating services with Docker networks can reduce your attack surface. Services on a private or internal network won’t be accessible from the public internet.
+
+### Docker on LAN
+
+Whether you're a developer running dev servers locally, or self-hosting services from your local network, assumptions about docker's network model can lead to trouble.
+
+Devs are often surprised to find the 'traditional' methods to secure linux servers (`iptables`, restricting tcp/ip sysctl options) can **fail silently** on Docker hosts! This is especially the case when **self-hosting-or running on a typical home network.** (For the people in the back: This can allow access to dev containers on your MacBook!!!)
+
+<p class="inset">If you're surprised to hear this, same. I was too!</p>
+
+> ⚠️ **Warning #1:** By default, Docker (on Ubuntu/Debian) will bypass UFW/iptables rules, rendering **your firewall useless.** [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
+
+> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer only limited protection. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
+
+**Binding to local IPs is still a good practice** and has a meaningful impact in **managed cloud environments and specially configured networks.** 
+
+<details>
+<summary>Why is this the case?</summary>
+Most home network setups allow MAC-based Layer 2 (L2) routing to take precedence over IP-based Layer 3 (L3) routing. This means that the local IP binding may not be as effective as you might expect.
+</details>
+
+Don't think of your firewall or private network as your main defense, embrace Docker Networks for better **isolation**, and always consider if you need to expose ports at all.
+
+#### Network Best Practices
+
+- 🏆 **Don't Publish ANY Ports** Recently I learned this is more useful than you might expect! When using a bridge network, containers have unfiltered access to each other. They behave as though they are behind a local network (NAT gateway.)
+  - While not possible in all use cases, this may be useful for containers running batch jobs, or mostly accessed via `attach` or `exec`.
+- 🥇 **Use Docker Networks** to isolate and control which containers can talk to each other.
+- 🥉 **Use Localhost Binding**: While [sometimes easy to bypass](https://github.com/moby/moby/issues/45610), you're generally better off binding ports with a local or loopback address (e.g., `127.0.0.1:8080:80`). Just know of the risk in certain contexts.
+
+#### Test & Verify
+
+As with all security measures, it's critical that you **test and verify** your network setup.
+
+While network security & auditing is a full-time responsibility in most companies, most self-host folks don't spend ANY time on it!
+
+Look, I get it, it can be intimidating. _(Subnets, net masks, CIDR, VLANs, and routing tables, oh my! If that made no sense, that's ok, you're in the right place. Also, we don't need to worry about any of that for now.)_
+
+Knowing just a handful of commands-or where to look them up-can mean all the difference in preventing a breach. The extra peace of mind, plus the low-key feeling of being a hacker, is all a bonus.
+
+> For details and examples, jump ahead to the [Monitoring & Verification](#-monitoring--verification) section.
+
+**Cross-linked Resources:**
+- [Blocking Traffic by Country](#blocking-country) 
+
+## 🛡️ Access Controls
+
+### Limiting Container Capabilities
+
+Another solid access control practice is to limit the capabilities of your containers. This can prevent several threats, from privilege escalation, data theft/exfiltration, traffic hijacking, and more.
+
+**What are capabilities?** Linux kernel-defined, named permissions or abilities. (The [`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) man page has a full list.) They include things like `CAP_CHOWN` (change file ownership), `CAP_NET_ADMIN` (configure network interfaces), `CAP_KILL` (kill any process), and many more.
+
+The two ways to determine needed capabilities are:
+
+1. **Trial and Error**: This slower-but-effective method has you start with no capabilities, then add them back one by one until your app works.
+2. **Find prior work**: Search for "`project-name` `cap_drop` Dockerfile", or "`project-name` `cap_drop` docker-compose.yml" to see if others have already done the work for you. Sometimes ChatGPT can conjure up the right configuration for you, too!
+
+#### Capabilities Best Practice
+
+- **Drop All Capabilities**: Use `cap_drop: [ ALL ]` to drop all Linux capabilities from the container.
+- **No New Privileges**: Use `security_opt: [ no-new-privileges=true ]` to prevent the container from gaining new privileges.
+
+```yaml title="Example: Drop/Limit Capabilities" {5-14}
+services:
+  database:
+    image: postgres:17.1
+    networks: [ db-network ]
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+  db-admin:
+    image: dpage/pgadmin4:4.1
+    networks: [ db-network ]
+    ports:
+      - "8081:80"
+    # ... other settings
+networks:
+  db-network:
+```
+
+Now your services can communicate with each other via the `db-network` network. The `auto-net` network will be created automatically by Docker Compose.
+
+Use the `--external`/`external:` option to join a **pre-existing network.** Omit it to create a new network.
 
 ### Docker Socket Access
 
@@ -216,84 +307,9 @@ It merely ensures the file (a Unix socket, not a file in the traditional sense) 
 
 #### Socket Best Practice
 
-- 🥇 **Never do it!**
-- 🫣 If you must, **use a Reverse Proxy** to limit what API commands are available. Check out Tecnativa's [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy).
-- 🤢 Okay, _maybe_ in a very **high-trust**, **low-risk** environment.
-
-Access to the Docker socket (`/var/run/docker.sock`) tends to lead to total root access. Be careful!
-
-## 🛡️ Access Controls
-
-When it comes to limiting access to your services, many methods might seem effective but often fall short in practice.
-
-Let's take a look at some common pitfalls and best practices for limiting access to your Docker services.
-
-### Docker on Ubuntu
-
-A very popular setup, with 2 very common pitfalls:
-
-> ⚠️ **Warning #1:** By default [Docker on Ubuntu/Debian will bypass UFW](https://github.com/moby/moby/issues/777)/iptables rules, rendering **your firewall useless.**
-> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`) may only offer limited protection as well. See also [issue: #690 - Docker bypasses ufw firewall rules](https://github.com/docker/for-linux/issues/690)
-
-<p class="inset">This surprises me every time I run right into it. 😅</p>
-
-So, instead of thinking of your firewall as your primary defense, embrace Docker Networks. They provide **isolation** and **segmentation** at the network layer - without requiring everyone become a master at `iptables`.
-
-### Network Best Practice
-
-1. 🥇 **Use Docker Networks** to isolate and control which containers can talk to each other.
-2. 🥉 If you really must use containers on a `host` or `bridge` network, you can get UFW and iptables to work with most docker setups. I recommend checking out this utility to make life easier: [ufw-docker](https://github.com/chaifeng/ufw-docker).
-
-#### Docker Network Isolation
-
-```bash
-# Create a new Docker network
-docker network create db-network
-
-docker run -d --name postgres \
- -e POSTGRES_PASSWORD=${POSTGRES_PASSWORD} \
- -e POSTGRES_USER=${POSTGRES_USER} \
- -e POSTGRES_DB=${POSTGRES_DB} \
- --network db-network \
- postgres:17.1
-
-docker run -d --name pg-admin \
- -p 8081:80 \
- -e PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL} \
- -e PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD} \
- --network db-network \
- dpage/pgadmin4:4.1
-```
-
-Here's an (abbreviated) example `docker-compose.yml` using a shared network, `db-network`:
-
-```yaml
-services:
-  webapp:
-    build: .
-    ports:
-      - "8080:80"
-    networks: [ db-network ]
-  database:
-    image: postgres:17.1
-    networks: [ db-network ]
-    # ... other settings
-  db-admin:
-    image: dpage/pgadmin4:4.1
-    networks: [ db-network, auto-net ]
-    # ... other settings
-    ports:
-      - "8081:80"
-
-networks:
-  db-network:
-    external: true # created with `docker network create db-network`
-  auto-net: # auto-created network
-```
-
-Now your services can communicate with each other via the `db-network` network. The `auto-net` network will be created automatically by Docker Compose.
-
-Use the `--external` flag to join a **pre-existing network.** Ommitting it will create a new network.
+- 🥇 **Avoid mounting a docker socket,** there's likely a better alternative!
+- 🫣 If you must, **use a Reverse Proxy** to limit what API commands are available. Check out the `docker-socket-proxy` project originally from Tecnativa, [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy).
+- 🤢 Okay, _maybe_ sharing it is okay in a very **high-trust**, **low-risk** test environment.
 
 #### Blocking Country!
 
@@ -312,9 +328,9 @@ wget -O- https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
 
 #### Hardening CloudFlare Proxy Host
 
-If your home server is protected behind a CloudFlare IP (proxy,) you can restrict access to only CloudFlare IPs and your local subnet.
+If your home server is protected behind a CloudFlare IP (proxy,) you can restrict access to only CloudFlare IPs, and your local network.
 
-This is a little similar to Country blocking above, but with much tighter control.
+This is a bit similar to [Country blocking](#blocking-country) above, but with much tighter control.
 
 ```bash title="whitelist-ingress-from-cloudflare.sh"
 ufw default deny incoming # Block all incoming!!!
@@ -332,11 +348,15 @@ wget -O- https://www.cloudflare.com/ips-v4 | \
   # while read line; do ufw allow from $line to any port 443; done
 ```
 
-### Protecting Access
+### App Layer Security
 
-Once your network and host are security hardened. We need to worry about the services themselves. Do they all automate HTTPS with Let's Encrypt? Do they have built-in auth?
+Once your [network and host are security hardened,](#-network-hazard) you may find there's more to do.
 
-Since many self-hosted projects were not designed to be exposed to the internet, with default user credentials, or wide open signup pages, it can lead to a disaster.
+Now we need to think about the "application" layer of our services themselves.
+
+<p class="inset">Does that database have a valid password? Does this container automate HTTPS/certs? Does the app include built-in auth? Are there limits on which emails can signup? Are there default credentials or environment variable to change?</p>
+
+The only way to _know_ is to check. In this case, read the README and any other key files like `docker-compose.yml`, `Dockerfile`, and `.env.*`. In both the project, and ideally its supporting services as well. (e.g. Postgres, Redis, etc.)
 
 #### Reverse Proxy
 
@@ -479,9 +499,9 @@ fswatch -r /path/to/directory
 1. Place [**Canary Tokens**](https://canarytokens.org/) in every sensitive `.env` file, CI platform, and "secrets manager" you can find! You have types of types of canary tokens to chose from, [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, AWS keys, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
    If someone tries to use them, you’ll know there was a breach _right away_. That's pretty cool, even if it sends you on a wild goose chase every now and then.
 
-2. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban`, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
+2. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban` for SSH access, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
 
-3. **Use Read-Only Volumes** wherever possible:
+3. **Use Read-Only Volumes** where possible:
    ```yaml
    services:
      webapp:
@@ -506,7 +526,7 @@ fswatch -r /path/to/directory
    - Typically, these providers block all ports except what you explicitly open.
    - They also offer advanced monitoring and threat detection tools.
 
-3. **Hardening Against Internal/Lateral Attacks**: One infected device can expose the entire network. Segmenting Docker services on custom networks, using UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.)
+3. **Hardening Against Internal/Lateral Attacks**: One infected device can compromise an entire network. Segmenting Docker services on custom networks, using UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.)
 
 ## 🚀 Production Checklist
 
@@ -532,7 +552,9 @@ fswatch -r /path/to/directory
 
 A shout-out to some keen Redditors:
 
-- <em className="cite">Thanks [u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [credit](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">Thanks [u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [thread](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
+- <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
+- <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
 
-
-Thanks for reading! I hope you found this guide helpful. If you have any questions or suggestions, feel free to reach out on my social icon links below, or click the `Edit on GitHub` link to create a PR!
+Thanks for reading! I hope you found this guide helpful. If you have any questions or suggestions, feel free to reach out on my socials below, or feel free to click the `Edit on GitHub` link to create a PR! ❤️

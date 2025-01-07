@@ -52,13 +52,13 @@ This article features 1-line commands to start some of the most popular database
 mkdir -p $HOME/.postgres-data
 
 docker run \
-  --name pg-server \
-  -v $HOME/.postgres-data:/var/lib/postgresql/data \
+  --name pg-localhost \
   -p 127.0.0.1:5432:5432 \
-  --restart on-failure:5 \
-  --detach \
+  -e POSTGRES_PASSWORD=password \
+  --restart unless-stopped \
+  -it \
   --shm-size=256mb \
-  postgres:12-alpine \
+  postgres:16-alpine \
   postgres -c 'listen_addresses=*' \
     -c 'password_encryption=scram-sha-256' \
     -c 'shared_memory_type=sysv' \
@@ -66,7 +66,7 @@ docker run \
     -c 'max_connections=200'
 ```
 
-> Adjust the command line options as needed. (The postgres daemon arguments start following the docker image name `postgres:12-alpine`. See `postgres -c 'listen_addresses=*'...`)
+> Adjust the command line options as needed. (The postgres daemon arguments start following the docker image name `postgres:16-alpine`. See `postgres -c 'listen_addresses=*'...`)
 
 > Access the `psql` prompt as postgres user
 
@@ -94,7 +94,8 @@ docker run -d \
   --restart on-failure:5 \
   -p 127.0.0.1:27017:27017 \
   -v $HOME/.mongodb:/data \
-  mongo:4 bash -c 'mongod --bind_ip 0.0.0.0 --storageEngine=wiredTiger'
+  mongo:latest \
+  bash -c 'mongod --bind_ip 0.0.0.0'
 ```
 
 Now that your server is setup, verify your data is at `$HOME/.mongodb` with:
@@ -114,7 +115,7 @@ And you should see something like this:
 
 ![Preview of mongo shell output](mongo-shell-screenshot.webp)
 
-#### Setup mongo CLI tools
+#### Setup Mongo CLI tools
 
 ##### Using brew & OSX
 
