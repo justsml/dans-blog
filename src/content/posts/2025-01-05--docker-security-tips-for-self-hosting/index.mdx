@@ -2,7 +2,7 @@
 title: "Essential Docker Security Tips for Self-Hosting"
 subTitle: "Tips for securing your Self-hosted Docker services - from network security to monitoring!"
 date: 2025-01-04
-modified: 2025-01-07
+modified: 2025-01-09
 tags: [docker, security, devops, containers, best-practices]
 category: Security
 
@@ -23,10 +23,9 @@ import {CodeTabs} from '../../../components/CodeTabs';
 - 🌐 [Network Hazard](#-network-hazard)
 - 🛡️ [Access Controls](#️-access-controls)
 - 🔍 [Monitoring & Verification](#-monitoring--verification)
-- ⏰ [Late Night Thoughts](#-late-night-thoughts)
+- ⏰ [Often Overlooked Tips](#-often-overlooked-tips)
 - 🚀 [Production Checklist](#-production-checklist)
 - 📚 [Further Reading](#-further-reading)
-- 🙏 [Thanks](#thanks)
 
 
 ## 🧗‍♀️ For the brave
@@ -49,8 +48,7 @@ Keeping images updated is crucial for security. However, relying blindly on `:la
 #!/bin/bash
 # update-and-run.sh
 docker compose pull && \
-docker compose down && \
-docker compose up -d
+  docker compose up -d
 ```
 
 ### Version Pinning vs Latest
@@ -77,37 +75,22 @@ _Let me know about your favorite tools for keeping Docker images up-to-date!_
 
 ## 🔐 Secrets Management
 
-Never bake your secrets (API tokens, passwords, keys) into Docker images **_OR_** commit them to git.
+- [Generate Strong Secrets](#generate-strong-secrets)
+- [Canary Tokens](#canary-tokens)
+- [Upgrade from `.env` to MacOS Keychain](#upgrade-from-env-to-macos-keychain)
+{/* - [Placeholder Validation](#placeholder-validation) */}
 
-Keep secrets out of your repos & containers - and rotate them periodically!
+There are many ways to manage secrets, but one of the most important rules to stick to is: **never hard-code secrets into your docker images or commit them to git.** It's one of the most common security mistakes, it presents a long-term risk, and it's a pain to fix.
 
-### Generate Strong Secrets
+Securely storing secrets is a substantial topic with many options, from `.env` files, [Docker secrets](https://docs.docker.com/compose/how-tos/use-secrets/), [1Password](https://1password.com/downloads/command-line)/[Bitwarden](https://bitwarden.com/developers/), or a secrets manager like [HashiCorp Vault](https://www.vaultproject.io/) or AWS Secrets Manager.
 
-```bash
-#!/bin/bash
-# generate-secrets.sh
+You'll have to choose the "right" level of effort & security for your use case.
 
-generate_secret() {
-    local length=${1:-30}
-    local generate_length=$((length + 4))
-    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
-}
+{/*
+TODO: Move to Maintainer's Guide
+// TODO: Move to Maintainer's Guide
 
-[ -f .env ] && { echo ".env file already exists!"; exit 1; }
-
-cat > .env << EOL
-POSTGRES_PASSWORD=$(generate_secret)
-JWT_SECRET=$(generate_secret 64)
-SESSION_KEY=$(generate_secret 24)
-REDIS_PASSWORD=$(generate_secret 20)
-UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
-EOL
-
-echo "New .env file generated with secure random values!"
-```
-
-
-### Defensive Placeholder Validation
+### Placeholder Validation
 
 <blockquote>You wouldn't believe how easy it is to hack a JWT token when the secret isn't secret!</blockquote>
 
@@ -178,75 +161,178 @@ func main() {
 	validateSecrets()
 }
 ```
-
 </CodeTabs>
+*/}
+
+### Generate Strong Secrets
+
+Here's a small script to generate new secrets for an `.env` file:
+
+```bash
+#!/bin/bash
+# generate-secrets.sh
+
+generate_secret() {
+    local length=${1:-30}
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat > .env << EOL
+POSTGRES_PASSWORD=$(generate_secret)
+JWT_SECRET=$(generate_secret 64)
+SESSION_KEY=$(generate_secret 24)
+REDIS_PASSWORD=$(generate_secret 20)
+UNSAFE_PLACEHOLDER=__WARNING_REPLACE_RANDOM_TEXT__
+EOL
+
+echo "New .env file generated with secure random values!"
+```
+
+### Canary Tokens
+
+[**Canary Tokens**](https://canarytokens.org/) are a great way to detect if your secrets have been compromised (and used.) They're like a tripwire you can add to any sensitive files, urls, and tokens.
+
+Put them in every `.env` file, CI platform, password and secrets manager you use!
+
+There are many types of canary "tokens" to chose, from AWS tokens, [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
+
+#### Canary Token Best Practices
+
+- **Place Everywhere**: In every `.env` file, CI/CD pipeline, and "secrets manager" you can think of.
+  - Place a `passwords.xlsx` or `passwords.docx` file in your home directory.
+  - Add an AWS profile `billing_prod` with a canary token as the secret.
+  - Generate a `private.key` file for your `~/.ssh` directory.
+  - Create a Canary SQL dump `all_credit_cards.sql` for your `~/backups` directory.
+- **Monitor**: Set up email rules/alerts to catch when a canary token is triggered.
+
+### Upgrade from `.env` to MacOS Keychain
+
+For Mac folks, one of the simplest options is to use Keychain.
+
+Here's a simple way to automate loading secrets from the OSX keychain, supports `TouchID`, and is a bit more secure than `.env` files.
+
+The original <cite>credit goes to [Brian Hetfield](https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd) and [Jan Schaumann](https://www.netmeister.org/)</cite>
+
+<CodeTabs client:load tabs={[
+  "Helper commands",
+  "Persist secrets in environment",
+  "Use secrets per command"]
+}>
+```bash title="keychain-secrets.sh"
+### Functions for setting and getting environment variables from the OSX keychain ###
+### Adapted from: https://www.netmeister.org/blog/keychain-passwords.html and 
+### https://gist.github.com/bmhatfield/f613c10e360b4f27033761bbee4404fd
+
+# Use: get-keychain-secret SECRET_ENV_VAR
+function get-keychain-secret () {
+    security find-generic-password -w -a ${USER} -D "environment variable" -s "${1}"
+}
+
+# Use: set-keychain-secret SECRET_ENV_VAR
+# You will be prompted to enter the secret value!
+function set-keychain-secret () {
+    [ -n "$1" ] || print "Missing environment variable name"
+    
+    # prompt user for secret
+    echo -n "Enter secret for ${1}"
+    read secret
+    [ -n "$secret" ] || return 1
+
+    ( [ -n "$1" ] || [ -n "$secret" ] ) || return 1
+    security add-generic-password -U -a ${USER} -D "environment variable" -s "${1}" -w "${secret}"
+}
+```
+
+```bash title="~/code/app/.env-secrets.sh"
+source ~/keychain-secrets.sh
+
+# Load Env vars into the current shell
+export AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID);
+export AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY);
+# Note: If an attack can run `env` in your shell, then these secrets could be exposed!
+```
+
+```bash title="~/code/app/scripts/env-run.sh"
+#!/usr/bin/env bash
+source ~/keychain-secrets.sh
+
+# Specify all secrets for this project
+AWS_ACCESS_KEY_ID=$(get-keychain-secret AWS_ACCESS_KEY_ID) \
+AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
+  "$@"
+
+# Note: Using a shell wrapper helps prevent secrets from staying
+# around in the environment. And it's safe to commit.
+
+# Usage:
+# ./scripts/env-run.sh docker compose up -d
+# ./scripts/env-run.sh docker run -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS ...
+```
+</CodeTabs>
+
 
 ## 🌐 Network Hazard
 
 ### Custom Networks & Internal Ports
 
-```yaml
+Properly isolating services with Docker networks is an important way to reduce your attack surface area.
+
+```yaml title="docker-compose.yml"
 networks:
   backend:
-# Existing "external" named network
-    internal: true 
 
 services:
-  webapp:
+  app:
     networks:
       - backend
     ports:
-      - "127.0.0.1:8080:8080" # Expose locally only
+      # Bind to localhost if possible
+      - "127.0.0.1:8080:8080"
+    # ... other settings
   database:
+    image: postgres:17.1
+    # No ports needed; accessible inside backend network.
     networks:
       - backend
-    # No published ports, only accessible inside backend network
 ```
 
-Properly isolating services with Docker networks can reduce your attack surface. Services on a private or internal network won’t be accessible from the public internet.
+By default, services on a private LAN won’t be exposed to the internet-you have to explicitly forward ports from your router.
+
+Be careful poking holes in your network! One misconfigured port forward can end very badly.
 
 ### Docker on LAN
 
-Whether you're a developer running dev servers locally, or self-hosting services from your local network, assumptions about docker's network model can lead to trouble.
+Whether you're a developer running dev servers locally, or self-hosting services from your local network, **assumptions about docker's network model can lead to trouble.**
 
 Devs are often surprised to find the 'traditional' methods to secure linux servers (`iptables`, restricting tcp/ip sysctl options) can **fail silently** on Docker hosts! This is especially the case when **self-hosting-or running on a typical home network.** (For the people in the back: This can allow access to dev containers on your MacBook!!!)
 
-<p class="inset">If you're surprised to hear this, same. I was too!</p>
-
 > ⚠️ **Warning #1:** By default, Docker (on Ubuntu/Debian) will bypass UFW/iptables rules, rendering **your firewall useless.** [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
 
-> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer only limited protection. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
+> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer limited protection in certain cases. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
+
+<p class="inset">If you're surprised to learn this, same!</p>
 
 **Binding to local IPs is still a good practice** and has a meaningful impact in **managed cloud environments and specially configured networks.** 
-
-<details>
-<summary>Why is this the case?</summary>
-Most home network setups allow MAC-based Layer 2 (L2) routing to take precedence over IP-based Layer 3 (L3) routing. This means that the local IP binding may not be as effective as you might expect.
-</details>
-
-Don't think of your firewall or private network as your main defense, embrace Docker Networks for better **isolation**, and always consider if you need to expose ports at all.
+{/* Don't think of your firewall or private network as your main or only defense, add Docker Networks to the mix for better **isolation**, and always consider if you need to expose ports at all. */}
 
 #### Network Best Practices
 
-- 🏆 **Don't Publish ANY Ports** Recently I learned this is more useful than you might expect! When using a bridge network, containers have unfiltered access to each other. They behave as though they are behind a local network (NAT gateway.)
-  - While not possible in all use cases, this may be useful for containers running batch jobs, or mostly accessed via `attach` or `exec`.
+- 🏆 **Don't Publish ANY Ports** Recently I learned this is more useful than you might expect! When using a named (bridge) network, containers have unfiltered access to each other. They behave as though they are behind a local network (NAT gateway.)
+  - While not possible in all use cases, this may be useful for containers running batch jobs, or primarily accessed via `attach` or `exec`.
 - 🥇 **Use Docker Networks** to isolate and control which containers can talk to each other.
-- 🥉 **Use Localhost Binding**: While [sometimes easy to bypass](https://github.com/moby/moby/issues/45610), you're generally better off binding ports with a local or loopback address (e.g., `127.0.0.1:8080:80`). Just know of the risk in certain contexts.
+- 🥉 **Use Localhost Binding**: While [imperfect](https://github.com/moby/moby/issues/45610), you're generally better off binding ports to a loopback address (e.g., `127.0.0.1:8080:80`). Just make sure you [verify your setup.](#-monitoring--verification)
 
-#### Test & Verify
+{/* #### Test & Verify
 
-As with all security measures, it's critical that you **test and verify** your network setup.
+As with all security measures, it's critical that you **test and verify** your network setup. */}
 
-While network security & auditing is a full-time responsibility in most companies, most self-host folks don't spend ANY time on it!
+{/* While network security & auditing is a full-time responsibility in most companies, most self-host folks don't spend ANY time on it! */}
 
-Look, I get it, it can be intimidating. _(Subnets, net masks, CIDR, VLANs, and routing tables, oh my! If that made no sense, that's ok, you're in the right place. Also, we don't need to worry about any of that for now.)_
+{/* Look, I get it, it can be intimidating. _(Subnets, net masks, CIDR, VLANs, and routing tables, oh my! If that made no sense, that's ok, you're in the right place. Also, we don't need to worry about any of that for now.)_ */}
 
-Knowing just a handful of commands-or where to look them up-can mean all the difference in preventing a breach. The extra peace of mind, plus the low-key feeling of being a hacker, is all a bonus.
-
-> For details and examples, jump ahead to the [Monitoring & Verification](#-monitoring--verification) section.
-
-**Cross-linked Resources:**
-- [Blocking Traffic by Country](#blocking-country) 
 
 ## 🛡️ Access Controls
 
@@ -319,11 +405,18 @@ _Talking about the geopolitical entity, not the music..._
 
 If you are hosting apps mostly for your local family & friends, you can block traffic from countries you don't expect to receive traffic from. Or only allow traffic from countries you do expect.
 
-Check out this script to block all traffic from China:
+Check out this script to block all traffic from China (sorry, China):
 
 ```bash title="block-china.sh"
-wget -O- https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
   while read line; do ufw deny from $line to any; done
+```
+
+Similarly, you can allow only traffic from the US:
+
+```bash title="allow-usa.sh"
+curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/us.zone | \
+  while read line; do ufw allow from $line to any; done
 ```
 
 #### Hardening CloudFlare Proxy Host
@@ -337,16 +430,18 @@ ufw default deny incoming # Block all incoming!!!
 ufw default allow outgoing # Allow all outgoing
 ufw allow ssh # Allow SSH
 
-# Allow access for local subnet (preferably dedicated subnet for hosted services)
+# Allow access for local subnet (preferably dedicated DMZ/VLAN for hosted services)
 ufw allow from 10.0.0.0/8 to any port 443
 
 # Allow CloudFlare IPs
-wget -O- https://www.cloudflare.com/ips-v4 | \
+curl -fsSL https://www.cloudflare.com/ips-v4 | \
   while read line; do ufw allow from $line to any port 443; done
 # Add IPv6 support
-# wget -O- https://www.cloudflare.com/ips-v6 | \
-  # while read line; do ufw allow from $line to any port 443; done
+# curl -fsSL https://www.cloudflare.com/ips-v6 | \
+#   while read line; do ufw allow from $line to any port 443; done
 ```
+
+To test geo-based changes a VPN with locations in the desired country can be useful. See more in [Monitoring & Verification](#-monitoring--verification) section.
 
 ### App Layer Security
 
@@ -356,11 +451,11 @@ Now we need to think about the "application" layer of our services themselves.
 
 <p class="inset">Does that database have a valid password? Does this container automate HTTPS/certs? Does the app include built-in auth? Are there limits on which emails can signup? Are there default credentials or environment variable to change?</p>
 
-The only way to _know_ is to check. In this case, read the README and any other key files like `docker-compose.yml`, `Dockerfile`, and `.env.*`. In both the project, and ideally its supporting services as well. (e.g. Postgres, Redis, etc.)
+The only way to _know_ is to check. In this case, start with the `README` and other key files like `docker-compose.yml`, `Dockerfile`, and `.env.*`. In both the project, and ideally its supporting services as well. (e.g. Postgres, Redis, etc.)
 
 #### Reverse Proxy
 
-Another layer of defense is basic auth. I know it's dangerous to use without HTTPS, but sometimes it's the best you can do, and it's often enough to stop automated Cross-Site-Request-Forgery attacks.
+Another layer of defense is basic auth. I know it's dangerous to use without HTTPS, but sometimes it's the best you can do (legacy services), and it's often enough to stop automated Cross-Site-Request-Forgery attacks.
 
 ```nginx
 # /etc/nginx/conf.d/secure-admin.conf
@@ -382,27 +477,63 @@ With a basic auth proxy, attackers have an extra hurdle—username and password�
 
 Another option is to use a service like [Traefik](https://traefik.io/) or [Caddy](https://caddyserver.com/) that can automate HTTPS and basic auth for you.
 
-If you want to manage many domains & services, I'd recommend [Nginx Proxy Manager](https://nginxproxymanager.com/).
+If you want to manage many domains & services with a GUI, I'd recommend [Nginx Proxy Manager](https://nginxproxymanager.com/).
 
 ## 🔍 Monitoring & Verification
 
+- [Check Your Ports](#check-your-ports)
+- [View Open Ports](#view-open-ports)
+- [File Monitoring](#file-monitoring)
+
+
 This is the **most important & most overlooked step.** You can have the best firewall, the best network, and the best practices, but if you don't verify, you have no idea if it's working.
+
+Plus, knowing just a handful of commands-or where to look them up-can mean the difference in preventing a breach. The feeling of being a hacker is just a bonus. (For details and examples, jump ahead to the [Monitoring & Verification](#-monitoring--verification) section.)
 
 <p class="inset">Don’t Trust, Verify Twice</p>
 
-### Checking for Exposed Ports
+### Check Your Ports
+
+Whether you’re on a home network or a VPS, you will want to know what ports are open to the world.
+
+There are 2 ways to do this:
+
+- Check the Network (`nmap`, `masscan`)
+- Ask the Operating System (`lsof`, `netstat`, `ss`)
+
+#### Testing Outside Your Network
+
+You'll need your current (public) IP, easily with services like `ifconfig.me`: `curl https://ifconfig.me`. Or look it up in your hosting provider's dashboard.
+
+```bash title="Get Public IP"
+curl -fsSL https://ifconfig.me
+# --> CURRENT PUBLIC IP
+```
+
+Once you have your public IP, you now need to **connect to an external network.** You can use a friend's computer, a phone/5G hot spot, or a dedicated server host.
+
+```bash title="nmap External Scan"
+target_host="$(curl -fsSL https://ifconfig.me)"
+
+# Note: Ensure `target_host` is the desired IP
+
+# Scan specific ports:
+nmap -A -p 80,443,8080 --open --reason $target_host
+# Top 100 ports:
+nmap -A --top-ports 100 --open --reason $target_host
+# All ports
+nmap -A -p1-65535 --open --reason $target_host
+```
 
 #### Test Inside Your Network
 
-Whether you’re on a home network or a VPS, you can use `nmap` to scan for open ports. It's quite handy to know how to check for open ports.
-
 Practice using `nmap`, scan your local network or one of your servers, check your router, printer, smart fridge.
 
-<p class="inset">⚠️ Alert: Do not scan hosts you do not own. (Like `google.com`.)</p>
+<p class="inset">⚠️ Alert: Do not scan hosts you do not own.</p>
 
-While port scans are a constant fact of life, it's possibly a violation of the CFAA (Computer Fraud and Abuse Act) in the US. So, don't do it without permission.
+{/* While port scans are a constant fact of life, it might be a violation of the CFAA (Computer Fraud and Abuse Act) in the US. So, only scan things you own. */}
 
-#### Examples Scan Commands
+#### Example Scan Commands
 
 ```bash
 # Scan your localhost for all open ports
@@ -411,43 +542,43 @@ nmap -sT localhost
 # Scan your machine’s private IP for services
 nmap -sV 192.168.1.10
 
-# Detect devices on your network
+# Find service details on your network
 nmap -sn 192.168.0.0/24
 nmap -sn 10.0.0.0/24
+# Or on a docker 172.18.0.1/16
+nmap -sn 172.18.0.1/16
 ```
 
-#### Testing Outside Your Network
+```bash title="nmap Scan" frame="terminal"
+% nmap -A --open --reason 192.168.0.87
 
-You'll need your current (public) IP easily with services like `ifconfig.me`: `curl https://ifconfig.me`. Or look it up in your hosting provider's dashboard.
+Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
+Nmap scan report for dev02.local (192.168.0.87)
+Host is up, received syn-ack (0.0067s latency).
+Not shown: 995 closed tcp ports (conn-refused)
+PORT     STATE SERVICE     REASON  VERSION
+22/tcp   open  ssh         syn-ack OpenSSH 9.6p1 Ubuntu 3ubuntu13.5 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey:
+|_  256 {FINGERPRINT} (ED25519)
+80/tcp   open  http        syn-ack Caddy httpd
+|_http-server-header: Caddy
+|_http-title: Dev02.DanLevy.net
+443/tcp  open  ssl/https   syn-ack
+|_http-title: Dev02.DanLevy.net
+1234/tcp open  http        syn-ack Node.js Express framework
+|_http-cors: GET POST PUT DELETE PATCH
+|_http-title: Dev02.DanLevy.net (application/json; charset=utf-8).
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
-Test from a different network, cell hot-spot, or another remote server to test your public IPs:
-
-```bash
-print_current_ip() {
-  curl https://ifconfig.me
-}
-
-print_current_ip
-# --> 123.456.789.012
-
-# Change target_host to your public ip or hostname
-# Check host using advanced techniques
-nmap -A --open --reason $target_host
-nmap -A -F --open --reason $target_host
-nmap -A -p1-65535 --open --reason $target_host
-
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
 ```
 
-**Why Test Both?**
+### View Open Ports 
 
-Testing from inside reveals internal exposure, while external tests identify services accessible to attackers.
+Get familiar with `lsof` - it's available on MacOS & Linux. It shows granular network state and disk activity.
 
-### View Connections with `lsof`
-
-```bash
-# Monitor all network connections
-sudo watch -n1 "lsof -i -Pn"
-
+```bash title="lsof Commands"
 # Monitor specific port
 sudo lsof -i:80 -Pn
 
@@ -459,18 +590,20 @@ sudo lsof -i -Pn | grep LISTEN
 # to see network names instead of IP addresses (can be very slow to do reverse DNS lookups)
 sudo lsof -i -P | grep LISTEN
 
+# Monitor all network connections
+sudo watch -n1 "lsof -i -Pn"
 ```
 
 #### Example Output
 
-![nmap scan for listeners](nmap-scan-listen.webp)
+![nmap scan for listeners](lsof-scan-listen.webp)
 
 ### File monitoring
 
-To identify which **processes are using the most hard drive bandwidth**, you can use `iotop`:
+To identify which **processes** are using the most **hard drive bandwidth**, you can use `iotop`:
 
 ```bash
-sudo iotop -o
+sudo iotop
 ```
 
 To see individual file changes, you can use `inotifywait` on Linux or `fswatch` on MacOS:
@@ -490,18 +623,11 @@ Install with `brew install fswatch`
 fswatch -r /path/to/directory
 ```
 
-## ⏰ Late Night Thoughts
+## ⏰ Often Overlooked Tips
 
+1. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban` for SSH access, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
 
-
-### Often Overlooked Tips
-
-1. Place [**Canary Tokens**](https://canarytokens.org/) in every sensitive `.env` file, CI platform, and "secrets manager" you can find! You have types of types of canary tokens to chose from, [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, AWS keys, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
-   If someone tries to use them, you’ll know there was a breach _right away_. That's pretty cool, even if it sends you on a wild goose chase every now and then.
-
-2. **Rate Limiting** for authentication attempts & any other key endpoints. Whether via Nginx’s `limit_req` module or `fail2ban` for SSH access, throttling brute-force is _probably_ a good idea. I say _probably_ because in the age of IPv6 and botnets-for-cheap, well, it's not what it used to be.
-
-3. **Use Read-Only Volumes** where possible:
+2. **Use Read-Only Volumes** where possible:
    ```yaml
    services:
      webapp:
@@ -510,35 +636,40 @@ fswatch -r /path/to/directory
    ```
    Combined with other best practices (non-root users, minimal folder permissions), the \`:ro\` volume mount option provides additional safe-guards against accidental (or malicious) changes to critical files.
 
-4. **Audit Container Access** regularly.
+3. **Audit Container Access** regularly.
    If a container doesn’t need it a secret, port or mount, remove it!
 
-5. **Beware of WiFi Riff-Raff**
-   I'm sure you'd never give out your WiFi password, especially to any weirdos, right? Well, except some friends... Okay, maybe family too.
+4. **Beware of WiFi Riff-Raff**
+   I'm sure you'd never give out your WiFi password, especially to any weirdos, right? Well, except some friends... Okay, maybe family too. You never know what apps they have on their phones, or what they're doing on their laptops.
 
-### Comparing Home Network vs Public Providers
+### Home Network vs. Public Provider vs. Tunneling
 
 1. **Virtual Isolation/DMZ**: For home servers, put them on a separate VLAN or DMZ if possible. This keeps your internal devices off-limits to potential compromise from the server side.
-   - **Direct Internet-Facing**: Easiest route but highest risk.
-   - **Gatewayed Networks**: Traffic is filtered, requires NAT/port forwarding.
+   - Use a separate router or VLAN for your home server.
+   - Use a separate WiFi network for your home server.
+   - Use a separate subnet for your home server.
 
-2. **Cloud Providers**: Vultr, DigitalOcean, Linode, AWS, Azure, and Google Cloud all provide out-of-the-box firewall/security group features.
-   - Typically, these providers block all ports except what you explicitly open.
-   - They also offer advanced monitoring and threat detection tools.
+2. **Cloud Providers**: Hetzner, Vultr, DigitalOcean, Linode, AWS, Azure, and Google Cloud all provide different firewall features.
+   - Some providers & services block ports by default. Some offer opt-ins or add-ons. Check your service provider's documentation.
+   - Many providers offer advanced monitoring and threat detection services.
 
-3. **Hardening Against Internal/Lateral Attacks**: One infected device can compromise an entire network. Segmenting Docker services on custom networks, using UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.)
+3. **VPNs & Tunneling**: Consider using a VPN-like option or tunneling service to securely connect services across the internet without exposing them to the public internet.
+   - TailScale, ngrok, ZeroTier.
+   - WireGuard, OpenVPN.
+
+{/* 3. **Hardening Against Internal/Lateral Attacks**: One infected device can compromise an entire network. Segmenting Docker services on custom networks, using hardware, UFW rules, and blocking unneeded ports can all help reduce risk (when properly configured.) */}
 
 ## 🚀 Production Checklist
 
 - [ ] **Secrets**: All secrets randomly generated and securely stored
-- [ ] **Updates**: Container update strategy documented and automated
-- [ ] **Network**: Only necessary ports exposed, internal networks set up
-- [ ] **Firewall Rules**: Default deny, explicit allows, country blocks if needed
+- [ ] **Updates**: Container update strategy documented and automated. (Okay if it's just a few commands in a text file.)
+- [ ] **Network**: Only necessary ports exposed, internal networks set up.
+- [ ] **Firewall Rules**: Default deny, explicit allows, country blocks if needed.
 - [ ] **Reverse Proxy**: Nginx, Caddy or Traefik can add a layer of basic auth
 - [ ] **Canary Tokens**: Place them alongside all sensitive keys. In every `.env` you have floating around.
-- [ ] **Monitoring**: `nmap`, `lsof`, `inotifywait`, and `glances` set up
-- [ ] **Backup Strategy**: Tested and automated
-- [ ] **Least Privilege**: Non-root container users, read-only volumes
+- [ ] **Monitoring** Know thy systems with `nmap`, `lsof`, `inotifywait`, `glances`, etc.
+- [ ] **Backup Strategy**: Tested, preferably automated, and off-site.
+- [ ] **Least Privilege**: Non-root container users, read-only volumes.
 
 
 ## 📚 Further Reading
@@ -552,9 +683,10 @@ fswatch -r /path/to/directory
 
 A shout-out to some keen Redditors:
 
-- <em className="cite">Thanks [u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [thread](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
+- <em className="cite">[u/JCBird1012](https://www.reddit.com/user/JCBird1012/) - [thread](https://www.reddit.com/r/selfhosted/comments/1hv8jn6/comment/m5rvlzi/).</em>
 - <em className="cite">[u/Salzig](https://www.reddit.com/user/Salzig/)</em>
 - <em className="cite">[u/Myelrond](https://www.reddit.com/user/myelrond/)</em>
 - <em className="cite">[u/shrimpdiddle](https://www.reddit.com/user/shrimpdiddle/)</em>
+- <em className="cite">[u/troeberry](https://www.reddit.com/user/troeberry/)</em>
 
 Thanks for reading! I hope you found this guide helpful. If you have any questions or suggestions, feel free to reach out on my socials below, or feel free to click the `Edit on GitHub` link to create a PR! ❤️
