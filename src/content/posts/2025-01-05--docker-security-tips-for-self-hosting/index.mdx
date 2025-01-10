@@ -39,9 +39,11 @@ That's a ton of stuff! But much of it relates, and you can pick and choose what'
 
 ## 🔄 The `:latest` Dance
 
-Keeping images updated is crucial for security. However, relying blindly on `:latest` can lead to breaking changes or vulnerabilities creeping in unnoticed.
+Keeping images updated is crucial for security. However, relying on `:latest` can lead to breaking changes or vulnerabilities creeping in unnoticed.
 
 ### The Safe Way to Update
+
+Combine startup commands with `pull` or `build` to ensure you’re always running the latest image.
 
 ```bash
 #!/bin/bash
@@ -51,6 +53,8 @@ docker compose pull && \
 ```
 
 ### Version Pinning vs Latest
+
+Choosing the right version to pin to is a balancing act between stability and security. Here are some common strategies:
 
 ```yaml
 # docker-compose.yml
@@ -279,7 +283,30 @@ AWS_SECRET_ACCESS_KEY=$(get-keychain-secret AWS_SECRET_ACCESS_KEY) \
 
 Properly isolating services with Docker networks is an important way to reduce your attack surface area.
 
-```yaml title="docker-compose.yml" {8-10,14}
+Be careful poking holes in your network! One misconfigured port forward can end very badly.
+
+By default, services on a private LAN won’t be exposed to the internet-you have to explicitly forward ports from your router.
+
+### Docker on LAN
+
+Whether you're a developer running dev servers locally, or self-hosting services from your local network, **assumptions about docker's network model can lead to trouble.**
+
+Devs are often surprised to find the 'traditional' methods to secure linux servers (`iptables`, restricting tcp/ip sysctl options) can **fail silently** on Docker hosts! This is especially the case when **self-hosting-or running on a typical home network.** (For the people in the back: This can allow access to dev containers on your MacBook!!!)
+
+> ⚠️ **Warning #1:** By default, Docker (on Ubuntu/Debian) will bypass UFW/iptables rules, rendering **your firewall useless.** [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
+
+> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer limited protection in certain cases. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
+
+<p class="inset">If you're surprised to learn this, same!</p>
+
+**Binding to local IPs is still a good practice** and has a meaningful impact in **managed cloud environments and specially configured networks.** 
+{/* Don't think of your firewall or private network as your main or only defense, add Docker Networks to the mix for better **isolation**, and always consider if you need to expose ports at all. */}
+
+### Example Docker Compose
+
+Here's an example `docker-compose.yml` file that binds the `app` service to `127.0.0.1:8080` and connects both containers to the `backend` custom network.
+
+```yaml title="docker-compose.yml" {6-10,14-17}
 networks:
   backend:
 
@@ -298,32 +325,6 @@ services:
       - backend
 ```
 
-By default, services on a private LAN won’t be exposed to the internet-you have to explicitly forward ports from your router.
-
-Be careful poking holes in your network! One misconfigured port forward can end very badly.
-
-### Docker on LAN
-
-Whether you're a developer running dev servers locally, or self-hosting services from your local network, **assumptions about docker's network model can lead to trouble.**
-
-Devs are often surprised to find the 'traditional' methods to secure linux servers (`iptables`, restricting tcp/ip sysctl options) can **fail silently** on Docker hosts! This is especially the case when **self-hosting-or running on a typical home network.** (For the people in the back: This can allow access to dev containers on your MacBook!!!)
-
-> ⚠️ **Warning #1:** By default, Docker (on Ubuntu/Debian) will bypass UFW/iptables rules, rendering **your firewall useless.** [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
-
-> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer limited protection in certain cases. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
-
-<p class="inset">If you're surprised to learn this, same!</p>
-
-**Binding to local IPs is still a good practice** and has a meaningful impact in **managed cloud environments and specially configured networks.** 
-{/* Don't think of your firewall or private network as your main or only defense, add Docker Networks to the mix for better **isolation**, and always consider if you need to expose ports at all. */}
-
-#### Network Best Practices
-
-- 🏆 **Don't Publish ANY Ports** Recently I learned this is more useful than you might expect! When using a named (bridge) network, containers have unfiltered access to each other. They behave as though they are behind a local network (NAT gateway.)
-  - While not possible in all use cases, this may be useful for containers running batch jobs, or primarily accessed via `attach` or `exec`.
-- 🥇 **Use Docker Networks** to isolate and control which containers can talk to each other.
-- 🥉 **Use Localhost Binding**: While [imperfect](https://github.com/moby/moby/issues/45610), you're generally better off binding ports to a loopback address (e.g., `127.0.0.1:8080:80`). Just make sure you [verify your setup.](#-monitoring--verification)
-
 {/* #### Test & Verify
 
 As with all security measures, it's critical that you **test and verify** your network setup. */}
@@ -332,8 +333,21 @@ As with all security measures, it's critical that you **test and verify** your n
 
 {/* Look, I get it, it can be intimidating. _(Subnets, net masks, CIDR, VLANs, and routing tables, oh my! If that made no sense, that's ok, you're in the right place. Also, we don't need to worry about any of that for now.)_ */}
 
+### Network Best Practices
+
+- 🏆 **Don't Publish ANY Ports** Recently I learned this is more useful than you might expect! When using a named (bridge) network, containers have unfiltered access to each other. They behave as though they are behind a local network (NAT gateway.)
+  - While not possible in all use cases, this may be useful for containers running batch jobs, or primarily accessed via `attach` or `exec`.
+- 🥇 **Use Docker Networks** to isolate and control which containers can talk to each other.
+- 🥉 **Use Localhost Binding**: While [imperfect](https://github.com/moby/moby/issues/45610), you're generally better off binding ports to a loopback address (e.g., `127.0.0.1:8080:80`). Just make sure you [verify your setup.](#-monitoring--verification)
 
 ## 🛡️ Access Controls
+
+Access controls are a critical part of securing your Docker services. This includes limiting container capabilities & permissions, restricting access to the Docker socket, and more.
+
+- [Limiting Container Capabilities](#limiting-container-capabilities)
+- [Docker Socket Access](#docker-socket-access)
+- [Blocking Country!](#blocking-country)
+- [Hardening CloudFlare Proxy Host](#hardening-cloudflare-proxy-host)
 
 ### Limiting Container Capabilities
 
@@ -493,6 +507,8 @@ Plus, knowing just a handful of commands-or where to look them up-can mean the d
 
 ### Check Your Ports
 
+<p class="inset">⚠️ IMPORTANT: Do not scan hosts you do not own.</p>
+
 Whether you’re on a home network or a VPS, you will want to know what ports are open to the world.
 
 There are 2 ways to do this:
@@ -528,8 +544,6 @@ nmap -A -p1-65535 --open --reason $target_host
 
 Practice using `nmap`, scan your local network or one of your servers, check your router, printer, smart fridge.
 
-<p class="inset">⚠️ Alert: Do not scan hosts you do not own.</p>
-
 {/* While port scans are a constant fact of life, it might be a violation of the CFAA (Computer Fraud and Abuse Act) in the US. So, only scan things you own. */}
 
 #### Example Scan Commands
@@ -548,7 +562,7 @@ nmap -sn 10.0.0.0/24
 nmap -sn 172.18.0.1/16
 ```
 
-```bash title="nmap Scan" frame="terminal"
+```text title="nmap Scan" frame="terminal"
 % nmap -A --open --reason 192.168.0.87
 
 Starting Nmap 7.95 ( https://nmap.org ) at 2025-01-06 13:51 MST
@@ -639,7 +653,7 @@ fswatch -r /path/to/directory
    If a container doesn’t need it a secret, port or mount, remove it!
 
 4. **Beware of WiFi Riff-Raff**
-   I'm sure you'd never give out your WiFi password, especially to any weirdos, right? Well, except some friends... Okay, maybe family too. You never know what apps they have on their phones, or what they're doing on their laptops.
+   I'm sure you'd never give out your WiFi password, especially to any weirdos, right? Well, except some friends... Okay, maybe family too. You never know what apps they have and which might share your SSID & password with the world.
 
 ### Home Network vs. Public Provider vs. Tunneling
 
