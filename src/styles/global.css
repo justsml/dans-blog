@@ -277,7 +277,7 @@
     @apply bg-card p-4 rounded;
   }
   code {
-    @apply bg-card-foreground text-primary-foreground p-1 rounded text-nowrap;
+    @apply bg-card-foreground text-primary-foreground p-1 rounded;
     
   }
 
@@ -311,10 +311,13 @@
 }
 
 html {
+  max-width: 100vw;
+  overflow-x: hidden;
   scroll-behavior: smooth;
-  overflow-x: clip;
+  /* overflow-x: clip; */
 }
 body {
+  overflow-x: hidden;
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
