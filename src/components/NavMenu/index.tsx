@@ -32,6 +32,10 @@ const NavMenu = ({
   const [currentPanel, setCurrentPanel] = useState<string>("");
   const isMenuOpen = currentPanel.length >= 1;
 
+  // make sure we only get the first 6 categories
+  if (categories.length > 6)
+    categories = categories.slice(0, 6);
+
   const safeDetectViewportOffset = useCallback(
     throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
     [],
