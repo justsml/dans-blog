@@ -10,80 +10,56 @@ cover_credit: © 2025 Dan Levy
 
 # Cry me a "free" tier
 
-Remember when deploying infrastructure required a PhD in System Architecture and the blessing of three senior ops engineers? Those were the days. Now, thanks to the miracle of modern cloud platforms, anyone with a credit card and a pulse can spin up a global fleet of servers—and an equally impressive hosting bill—without breaking a sweat.
+## An Irreverent Guide to Navigating Cloud Vendor Cost Controls
 
-But fear not! The cloud vendors, in their infinite wisdom, have provided us with an arsenal of cost control tools so intuitive and straightforward, you'll wonder why you ever worried about accidentally racking up a six-figure tab. So let's dive into this foolproof guide on how to set spending limits in the cloud—because who doesn't love a good adventure in bureaucracy?
+Remember the days when deploying infrastructure required a PhD in System Architecture and the blessing of three senior ops engineers? That's so 2009. Now, thanks to cloud platforms, any dingus with a credit card can summon a $100,000 hosting bill faster than you can say "budget overrun."
 
-## Step 1: Embrace the Labyrinth of AWS Budgets
+Welcome to our handy guide on how to painstakingly implement cost controls in the cloud—or rather, how each vendor makes it an Olympic sport in tedium.
 
-First up, the ever-affordable Amazon Web Services. Setting a cost limit in AWS is as simple as navigating a choose-your-own-adventure novel written in Klingon.
+## Step 1: Understand the "Generosity" of the Free Tier
 
-1. **Navigate to AWS Budgets:** Just hop into the AWS Management Console—after multi-factor authenticating, of course—and find the AWS Budgets section. It's tucked somewhere between the 200 other services you never knew existed.
+Cloud vendors, bless their infinitely scalable hearts, are oh-so-generous with their free tiers. They're thrilled to help you scale to millions of customers! Churn out that blog for an audience of 14 people, and aim big—one might be a billionaire! They're not evil—just *supportive*. So supportive, they'll ensure your bills soar by 5,000%, but hey, at least your dreams (and costs) are limitless.
 
-2. **Create a Budget:** Click on "Create a budget" and choose from options like Cost, Usage, Reservations, or Savings Plans. For spending limits, Cost Budget is your friend—or so they say.
+## Step 2: Set Cost Limits (Theoretically)
 
-3. **Set Your Limitations:** Input your budgeted amount, say $100. Choose whether this is monthly, quarterly, or whenever Mercury is in retrograde.
+Here's a radical thought: what if cloud spending had limits? *gasp* It seems tech giants find spending limits less appealing than not building that house on Mars, but for kicks, let's try:
 
-4. **Configure Notifications:** Here's the fun part. Set up email alerts for when your spend reaches 80%, 90%, 100%, or any percent you like. Just remember, these are alerts—not actual caps.
+```markdown
+Dear Big Cloud,
+My blog costs $5/month.
+If it hits $500, something's wrong.
 
-5. **Implement Actions (Sort Of):** AWS lets you configure "budget actions" to shut down resources—well, some resources—when thresholds are crossed. Oh, but you'll need to set up AWS Identity and Access Management (IAM) roles, policies, and maybe sacrifice a goat under a full moon.
+Need I say more?
+XOXO,
+Your Frustrated Customer
+```
 
-6. **Pray to the Cloud Gods:** You've done it! Now sit back and relax, secure in the knowledge that nothing can possibly go wrong—except for the services that aren't covered by budget actions, or if someone with higher permissions overrides your settings.
+Now, attempt to *actually* enforce this. Enjoy navigating labyrinthine billing dashboards, followed by interpreting daily emails that rival philosophical essays in complexity.
 
-## Step 2: Get Cozy with Google Cloud's Billing Alerts
+## Step 3: The "Simple" Pay-As-You-Go Lie
 
-Next, we venture into the minimalist utopia of Google Cloud Platform (GCP), where simplicity reigns supreme—unless you're trying to set a hard cap on spending.
+You might think managing cloud costs is like pay-as-you-go parking meters. Reality check: cloud pricing is more akin to a high-stakes poker game with cost-control features buried like treasure islands. Prepare for a sales pitch worthy of a time-share presentation, while glossing over the fact you'll be paying until the end of days.
 
-1. **Access Billing:** In the GCP Console, navigate to the Billing section. Marvel at how clean and user-friendly it all looks.
+## User Stories Cloud Vendors Ignore
 
-2. **Set Up Budgets and Alerts:** Click on "Budgets & alerts" and create a new budget. Define your scope and amount. Easy, right?
-
-3. **Configure Notifications:** Decide at what percentages of your budget you'd like to receive email alerts. Feeling adventurous? Set one at 50%, 90%, and 100%.
-
-4. **Discover the Hard Cap Isn't Hard:** Wait, what's this fine print? GCP's budgets and alerts won't actually prevent overages—they'll just notify you as you blissfully sail past your intended spending limit.
-
-5. **Consider Programmatic Solutions:** You could write scripts using GCP's API to shut down resources when budgets are exceeded. Just brush up on your programming skills, set up Cloud Functions, and hope nothing goes awry.
-
-6. **Accept Your Fate:** Realize that despite your best efforts, there's no built-in way to enforce a strict spending limit. But hey, at least you'll get a polite email after the fact!
-
-## Step 3: Adventure into Azure's Cost Management
-
-Finally, we arrive at Microsoft Azure—the cloud platform that promises enterprise-grade solutions with consumer-grade confusion.
-
-1. **Dive into Cost Management:** In the Azure Portal, head over to Cost Management + Billing. So far, so good.
-
-2. **Create a Budget:** Select "Budgets" and create a new one. Define your budget amount, say $100, and set the time period.
-
-3. **Set Up Alerts:** Configure alerts for when you reach certain percentages of your budget. Déjà vu, anyone?
-
-4. **Implement Spending Limits?** Ah, but here's a twist—Azure does offer a spending limit, but only for certain subscription types, like Azure free accounts or some MSDN subscriptions. For pay-as-you-go accounts, you're out of luck.
-
-5. **Explore Azure Policy:** If you're feeling particularly masochistic, you can delve into Azure Policy to restrict resource creation. Of course, this requires intimate knowledge of JSON policy definitions and a tolerance for pain.
-
-6. **Resign to Monitoring Spending Manually:** At the end of the day, you'll need to keep a vigilant eye on your spending because Azure's got places to be, and babysitting your budget isn't one of them.
-
-## The User Stories They Can't Solve
-
-For all their AI prowess and engineering might, the tech giants of the world still haven't cracked these basic user stories:
+Despite all their AI wonder and engineering might, tech giants still can't solve basic user stories:
 
 - "As a student, I'd like to learn cloud computing without risking bankruptcy."
 - "As a CTO, I'd like to not have to explain to the board why it's challenging to prevent a 5,000% jump in our monthly cloud bill."
-- "As a small business owner, I'd like a simple way to ensure my side project doesn't cost me my life savings."
 
-## The Illusion of Control
+## Why Set Limits When You Can Just Cry?
 
-"But this is a complex engineering problem!" they cry, as if implementing spending limits is harder than building a self-driving car that can also make a decent cup of coffee. Somehow, my mobile carrier can cut off data when I exceed my plan, but these trillion-dollar companies can't figure out how to stop charging my credit card after a pre-set limit.
+"But this is a complex engineering challenge!" vendors cry—yet my local gas station stops charging after $50. While building a globally distributed database that can survive nuclear fallout, limiting spend apparently remains the unsolvable Gordian Knot of cloud computing.
 
-## Conclusion: Tales from the Trenches
+## A Shamefully Funny Conclusion
 
-Consider the story of a modest developer who, after deploying a simple function on a serverless platform, woke up to a bill larger than their student loans. Or the tale of a startup that, due to a misconfiguration, incurred costs so high they needed venture capital just to pay them off. These aren't ghost stories told around a campfire—they're real scenarios from sites like [serverlesshorrors.com](https://serverlesshorrors.com/).
+In the end, I love the cloud. It's magnificent and revolutionary, allowing me to deploy globally while still sporting yesterday's sweatpants. But maybe—just spitballing here—we could couple power with, say, responsible guardrails?
 
-In one harrowing account, an unsuspecting user accidentally left debug mode on. The result? A $72,000 invoice for log storage. Another poor soul invoked an infinite loop in their code, leading to an exponential increase in compute costs before they even realized something was wrong.
+Let me leave you with real horror stories from [Serverless Horrors](https://serverlesshorrors.com/):
 
-Look, I love the cloud. It's magnificent. Revolutionary. The fact that I can spin up resources across the globe while binge-watching cat videos is nothing short of miraculous. But perhaps—with great power should come great responsibility from our cloud overlords.
+- One startup faced a cloud bill rising to $10,000 overnight because a developer accidentally enabled logging on everything—oops.
+- A developer learning architecture designs racked a $5,500 bill after leaving his VMs running during a week's vacation.
 
-Until then, I'll be here, obsessively checking my billing dashboards, setting up countless alerts that won't actually stop the hemorrhaging, and praying that the next surprise isn't lurking in some overlooked service. Because in the end, the cloud isn't a gentle mist—it's a torrential downpour waiting to flood your budget.
+The truth? In cloud computing, the house always wins, making every startup their next jackpot. So, go ahead, keep that Kubernetes cluster running—just maybe not while you're "just testing."
 
-Now, if you'll excuse me, I need to double-check that I didn't accidentally provision a fleet of GPUs for that "Hello World" app I was tinkering with.
-
-
+Happy cloud computing—may your keys be debugged and your bills, surprisingly low!
