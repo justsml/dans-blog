@@ -14,7 +14,7 @@ const _postsCollection: ArticlePost[] = (
 ).filter((post) => !post.data.hidden)
   .sort(
     // @ts-expect-error - data is not always defined
-    (a, b) => toDate(a.data?.date) - toDate(b.data?.date),
+    (a, b) => toDate(a?.data?.date) - toDate(b?.data?.date),
   )
   .reverse() as unknown as ArticlePost[];
 
@@ -75,7 +75,7 @@ export const PostCollections = {
         data: { tags },
       } = post;
 
-      tags.forEach((tag) => {
+      tags?.forEach((tag) => {
         acc[tag] = acc[tag] == null ? [slug] : [...acc[tag], slug];
       });
       return acc;

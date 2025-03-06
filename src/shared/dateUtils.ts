@@ -18,6 +18,7 @@ export const getComputedDates = ({
 };
 
 export function toDate(date: unknown) {
+  if (date == null) return date;
   if (typeof date === "string") return new Date(date);
   if (date instanceof Date) return date;
   console.trace("Invalid date", date);

@@ -1,5 +1,6 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from 'astro:transitions';
+
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
@@ -172,7 +173,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   }
 </script>
 
-<ViewTransitions fallback="none" />
+<ClientRouter fallback="swap" />
 
 <style is:global>
   @keyframes slideUp {
