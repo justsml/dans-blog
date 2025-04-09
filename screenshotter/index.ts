@@ -188,7 +188,7 @@ const checkForAutoRefresh = async (error: Error) => {
 };
 async function addClassName(page: Page, overrideClassName: string) {
   if (overrideClassName) {
-    const classes = await page
+    const _classes = await page
       .evaluate((overrideClassName) => {
         document.body.classList.add(overrideClassName);
         return document.body.classList.value;
