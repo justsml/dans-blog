@@ -13,11 +13,16 @@ In the grand, often baffling circus of software development principles, the Sing
 
 But like finding out your respected college professor spends his weekends LARPing as a particularly aggressive badger, good ideas in the wrong hands can get weird. Fast.
 
-<p class="inset">And thus we confront the Single-Purpose People, the Component Cultists, the Purity Police, for whom every function must be shaved down to atomic size, every file stripped bare, every abstraction so pure it gleams with terrifying sterility.</p>
+<p class="inset">And thus we confront the Single-Purpose People, the Single Purpose People, the Purity Police, for whom every function must be shaved down to atomic size, every file stripped bare, every abstraction so pure it gleams with terrifying sterility.</p>
 
 What the hell is going on with these people splitting everything into microscopic chunks?
 
-## I. The Inheritance
+<figure class="inset-right">
+  <figcaption>Violence in Software Architecture</figcaption>
+![Components, components everywhere](software-patterns__the-dismembered-architecture.webp "Components, components everywhere")
+</figure>
+
+## I. Inheritance and Its Unintended Consequences
 
 > Adding a single checkbox to a form should ideally only affect one file. Not 8 files across 5 directories... I'm looking at you, React/Redux.
 
@@ -27,16 +32,21 @@ Even the sainted Unix greybeards and their command-line tools get trotted out as
 
 The Single-Purpose People conveniently forget this part.
 
-## II. When Abstraction Becomes Annihilation
+## II. Over-Abstraction: When Simplicity Turns to Chaos
 
-> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of ozone and desperation.
-> — A reader, currently updating their resume
+> Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.
 
 My old dog Chloe was, perhaps, the original Single-Purpose Purist. Her One Thing was decomposition. Toys, shoes, the occasional sofa cushion – all meticulously reduced to their smallest constituent parts, their fundamental essence revealed. Then buried. Functionally pure, you might say. Useless for anything else, but pure.
 
-This is disturbingly similar to how the Component Cultists approach a codebase. Armed with SRP like a holy text, they embark on a righteous crusade of refactoring, splitting, and "simplifying" until the project structure resembles the aftermath of a fragmentation grenade attack in a filing cabinet factory.
+This is disturbingly similar to how the Single Purpose People approach a codebase. Armed with SRP like a holy text, they embark on a righteous crusade of refactoring, splitting, and "simplifying" until the project structure resembles the aftermath of a fragmentation grenade attack in a filing cabinet factory.
 
-What plague hath they wrought?
+
+<figure class="inset-right">
+  <figcaption>There's no escaping thjs architecture</figcaption>
+![Components, components everywhere](software-patterns__the-mc-escher-stack.webp "The MC Escher Pattern")
+</figure>
+
+What chaos hath they wrought?
 
 -   **File System Shrapnel:** Source directories blooming into nightmarish landscapes of countless tiny files, often containing a single, tragically lonely function. Navigation becomes an exercise in spelunking.
 -   **Dependency Hellraiser:** A tangled web of imports and exports so dense that tracing the execution flow requires clairvoyance, a large whiteboard, and possibly animal sacrifice. Files imported exactly once, mocking you from their solitary confinement.
@@ -45,10 +55,14 @@ What plague hath they wrought?
 
 I’ve stared into the abyss of codebases where a straightforward 100-line feature was vivisected across 15+ files, each a "pure" little angel containing maybe one or two functions. The cognitive blast radius of trying to hold that mess in your head utterly negated any theoretical win from the separation. It wasn't simpler; it was just scattered.
 
-## III. The Human Cost of Purity
+## III. The Toll of Perfection: Impact on Developers
 
 > We spend more time debating file structure and naming conventions than actually shipping features. Is this Agile?
-> — A reader asking the wrong questions
+
+<figure class="inset-right">
+  <figcaption>So messy it borders on art</figcaption>
+![So messy it borders on art](software-patterns__the-rube-goldberg-architecture.webp "The Rube Goldberg Pattern")
+</figure>
 
 This pathological fragmentation isn't just an aesthetic crime; it actively sabotages the poor bastards² trying to get work done:
 
@@ -58,7 +72,7 @@ This pathological fragmentation isn't just an aesthetic crime; it actively sabot
 
 **The Cognitive Catastrophe:** There's a hard limit on how many disconnected pieces of information a human brain can juggle. Forcing developers to constantly piece together program flow from a dozen scattered files is like asking them to assemble a ship in a bottle during an earthquake. It actively hinders understanding and makes confident changes nearly impossible.
 
-## IV. Pragmatism: The Unfashionable Antidote
+## IV. Embracing Pragmatism: A Practical Alternative
 
 > I suggested we put two related functions in the same file. You'd think I'd suggested sacrificing the Scrum Master to the Old Gods based on the looks I got.
 > — A recovering purist reader
@@ -83,7 +97,7 @@ Stay relentlessly focused on the practical questions:
 - Does this test actually tell me if the feature works?
 - Are we shipping value, or just rearranging deck chairs on the SS Abstraction?
 
-## V. Conclusion: Put Down the Scalpel
+## V. Conclusion: Fostering Cohesive and Maintainable Code
 
 The Single Responsibility Principle is a useful chisel in the toolbox. It is not a chainsaw, nor a holy mandate to pulverize your codebase into atomic dust. Like any tool, its value lies entirely in the skill and judgment of the wielder.
 
