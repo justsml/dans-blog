@@ -10,6 +10,27 @@ export async function GET(context: APIContext) {
     // (post: any) => !post.data.hidden && post.data?.title?.includes("Bash"),
   ).reverse();
 
+  posts.unshift({
+    id: "open-source-journal",
+    slug: "open-source-journal",
+    // @ts-ignore
+    collection: "pages",
+    data: {
+      title: "Open Source Journal",
+      subTitle: "A collection of open-source projects I've worked on.",
+      category: "Projects",
+      date: "2024-12-16",
+      modified: "2024-12-28",
+      tags: ["open-source", "projects"],
+      cover: {
+        src: "../../images/social-banner.webp",
+        format: "webp",
+        width: 1200,
+        height: 628,
+      },
+    }
+  });
+
   return rss({
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,

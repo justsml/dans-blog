@@ -1,0 +1,39 @@
+networks:
+  an-existing-network:
+    external: yes
+  created-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: created-network
+    # ipam:
+    #   driver: default
+    #   config:
+    #     - subnet: 1
+volumes:
+  db-data:
+
+name: pg-caps-test1
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db
+    ports:
+      - 5467:5432
+    networks:
+      - an-existing-network
+      - created-network
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - DAC_READ_SEARCH
+      - FOWNER
+      - SETGID
+      - SETUID
+

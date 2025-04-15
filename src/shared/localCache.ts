@@ -65,10 +65,11 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
       opts?: { ttlMs?: number; compress?: boolean },
     ) {
       const expires = opts?.ttlMs ? Date.now() + opts.ttlMs : DEFAULT_TTL_MS;
-      let data: Buffer<ArrayBufferLike> = Buffer.from(JSON.stringify(value));
+      let data = Buffer.from(JSON.stringify(value));
       let compressFlag = 0;
       if (opts?.compress) {
         log(`Compressing data for key "${key}"`);
+        // @ts-expect-error TS be like this sometimes
         data = await gzip(data);
         compressFlag = 1;
       }

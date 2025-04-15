@@ -1,0 +1,319 @@
+---
+unlisted: true
+draft: true
+hidden: true
+title: "Docker Security: The Lost Guide for Developers"
+subTitle: "Learn how to protect your network from threats and dangerous configuration!"
+date: 2025-01-04
+modified: 2025-01-13
+tags: [local development, security, devops, best-practices]
+category: Security
+
+cover_full_width: flame-whale-wide.webp
+cover_mobile: flame-whale-head-square.webp
+cover_icon: flame-whale-head-square.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+
+import {CodeTabs} from '../../../components/CodeTabs';
+
+<h1>Work-in-progress</h1>
+
+**Table of Contents**
+
+1. [⚠️ Local Networks at Risk](#-local-networks-at-risk)
+2. [🛡️ Firewall Configuration](#-firewall-configuration)
+3. [🔐 Secrets Management for Local Development](#-secrets-management-for-local-development)
+4. [🕵️‍ Credential Leaks and Side-Channel Attacks](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 Monitoring & Canary Tokens](#-monitoring--canary-tokens)
+6. [❌ Common Misconceptions](#-common-misconceptions)
+
+
+<p class="inset"></p>
+
+## ⚠️ Local Networks at Risk
+
+Let’s be honest, we’ve all done it. You’ve connected to a random coffee shop Wi-Fi or let someone use your home network without a second thought. Maybe you even trust your smart fridge not to compromise your network. The reality? These casual decisions can expose your local development setup to unnecessary risks. Attackers don’t just target production systems—local environments are often softer targets, offering a way to access sensitive projects.
+
+### Attack Scenarios
+
+1. **Intercepted Traffic:** Unencrypted traffic can easily be captured and read.
+2. **Unprotected Services:** Local databases or APIs exposed on `0.0.0.0`.
+3. **Network Spoofing:** Redirects traffic to an attacker’s device.
+
+### Quick Fixes
+
+- Prefer private docker networks over firewalls to limit network exposure.
+- Avoid public or shared Wi-Fi; prefer using your phone's hotspot.
+- Monitor your local network for unknown devices using tools like `arp-scan` and `nmap`.
+
+## 🛡️ Firewall Configuration
+
+### UFW with Docker (Ubuntu)
+
+> ⚠️ **Warning:** By default Docker on Ubuntu/Debian will bypass UFW/iptables rules, potentially exposing your system to attacks.
+> It doesn't matter if you bind ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`.)
+
+This surprises me every time I learn about it! [Docker bypasses UFW rules by default](https://github.com/moby/moby/issues/4737), allowing containers to communicate with the host and other containers without restriction.
+
+### Best Practice
+
+1. 🥇 **Use Docker Networks** to isolate and control what can connect to each container or network.
+
+###
+2. 🥉 **Update iptables** if you must use a `host` network, or cannot use custom networks, you can mitigate the risk by configuring iptables. Not for the faint-hearted, [check out utility below.](#uf)
+
+#### Docker Network Isolation
+
+```bash
+# Create a new Docker network
+docker network create my-network
+
+# Run your container with the new network
+docker run --network my-network my-container
+```
+
+#### UFW Configuration (for `host` networks)
+
+There's a lot of bad advice on fixing this out there. configure UFW to work with Docker using UFW largely like you might expect.
+
+I've used `ufw-docker` to configure a self hosted system and it seems to works well.
+
+```bash title="install-ufw-docker.sh"
+# Install binary as root (needs root permissions anyway)
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# Install and modify the `after.rules` file of `ufw`
+ufw-docker install
+
+ufw-docker help
+```
+
+This command performs the following:
+
+- Backs up the file `/etc/ufw/after.rules`.
+- Appends Docker-related rules at the end of the file to integrate properly with UFW.
+
+**Source:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**Example Usage:**
+
+```bash
+# Allow Docker container on port 8080
+ufw-docker allow <container_name> 8080/tcp
+
+# Manage rules safely alongside your UFW configuration
+ufw-docker status
+```
+
+**Note:** Most "fixes" for Docker-UFW conflicts involve manual iptables rules, which can be error-prone and fragile during updates.
+
+### macOS Firewall
+
+1. Go to **System Preferences > Security & Privacy > Firewall**.
+2. Enable the firewall and click "Firewall Options."
+3. Block all incoming connections except essential services.
+
+**Note:** You may need to lookup configuration for your firewall to allow certain smart devices you use - e.g. Google Cast/AirPlay and other services.
+
+### Commands for Advanced Users (macOS and Linux)
+
+#### macOS:
+
+```bash
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # Block all
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # Allow specific app
+```
+
+#### Linux (ufw):
+
+```bash
+ufw default deny incoming  # Block all incoming
+ufw allow ssh  # Allow SSH
+# allow 443 and 80 for web traffic
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable  # Enable firewall
+```
+
+**Pro Tip:** Use tools like [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html) on macOS and [ufw](https://help.ubuntu.com/community/UFW) on Linux for more user-friendly configurations.
+
+## 🔐 Secrets Management for Local Development
+
+### Proactive Placeholder Validation
+
+<p>💡 Ensure secrets are properly setup with real values before running your application.</p>
+
+If you use placeholders like `__WARNING_REPLACE_ME__` in your secrets, greaet, maybe someone will notice. Just in case, you can also add a little validation to provide safety at runtime.
+
+You wouldn't believe how easy it is to completely hack (modify & re-sign) a JWT token when attackers can guess the secret!
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+
+</CodeTabs>
+
+
+### Generating and Storing Secrets
+
+<p class="inset">Never hardcode secrets in your codebase. Prefer environment variables and secure vaults.</p>
+
+Instead of `.env.example`, use `.env.generate.sh` to make it easy for users to get a `.env` file with secure "defaults."
+
+#### Example `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# Generates a secure .env file for local development
+
+generate_secret() {
+    local length=${1:-30}
+    # add 4 bytes to account for padding
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# Bail out if .env file already exists
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# Database settings & secrets
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# Session secrets
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
+{/* 
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ Monitoring & Double-checking
+
+### `nmap` Examples
+
+#### Testing Inside Your Network
+
+```bash
+# Scan your localhost for all open ports
+nmap -sT localhost
+
+# Scan your machine’s private IP for services
+nmap -sV 192.168.1.10
+
+# Detect devices on your network
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+```
+
+#### Testing Outside Your Network
+
+To can lookup your current (public) IP easily with services like `ifconfig.me`: `curl https://ifconfig.me`.
+
+Use an external network or remote server to test your public IPs:
+
+```bash
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# Change target_host to your public ip or hostname
+# Check host using advanced techniques
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**Why Test Both?**
+Testing from inside reveals internal exposure, while external tests identify services accessible to attackers.
+
+## 🛡️ Common Misconceptions
+
+1. **My local environment isn’t a target.**
+   - Fact: Attackers can pivot from your machine to your production systems.
+2. **Firewalls block everything.**
+   - Fact: They only block what you configure them to.
+3. **Private IPs are secure.**
+   - Fact: Exploits like NAT bypasses can still affect your network.
+

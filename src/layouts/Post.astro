@@ -98,6 +98,7 @@ const responsiveImgSizes_breakRight = {
   <body transition:animate={fade({ duration: "0.285s" })}>
     <Header className="content-grid article" date={date} modified={modified} />
     <main
+      data-pagefind-body
       class="content-grid article h-entry h-recipe"
       style={{
         viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
@@ -105,7 +106,11 @@ const responsiveImgSizes_breakRight = {
     >
       {
         title && (
-          <h1 class="p-name" transition:name="page.h1">
+          <h1
+            class="p-name"
+            transition:name="page.h1"
+            data-pagefind-meta="title"
+          >
             {title}
           </h1>
         )
@@ -156,7 +161,11 @@ const responsiveImgSizes_breakRight = {
 
       <slot />
 
-      <ShareCounters client:only="react" url={Astro.request.url} className="share-counter-links" />
+      <ShareCounters
+        client:only="react"
+        url={Astro.request.url}
+        className="share-counter-links"
+      />
     </main>
 
     <EditOnGitHubLink
@@ -175,8 +184,7 @@ const responsiveImgSizes_breakRight = {
     </div>
     <Footer />
     <AnalyticsTag />
-  </body>
-  <PostLinkedData
+  </body><PostLinkedData
     title={title}
     description={subTitle!}
     date={pubTime}

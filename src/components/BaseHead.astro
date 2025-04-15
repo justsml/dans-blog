@@ -1,5 +1,6 @@
 ---
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from 'astro:transitions';
+
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
@@ -47,7 +48,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <link rel="preconnect" href="https://unpkg.com" />
 <link rel="preconnect" href="https://posthog.com" />
 <link rel="canonical" class="p-url" href={canonicalURL} />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href="/sitemap-0.xml" />
 {/*Primary Meta Tags*/}
 <slot name="title">
   <title class="p-name">{title ?? siteTitle}</title>
@@ -172,7 +173,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   }
 </script>
 
-<ViewTransitions fallback="none" />
+<ClientRouter fallback="swap" />
 
 <style is:global>
   @keyframes slideUp {
