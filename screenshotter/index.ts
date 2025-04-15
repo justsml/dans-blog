@@ -133,7 +133,7 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
           postProcess: "resizeAndCrop",
         },
       ],
-      delayMs: 75,
+      delayMs: 150,
     },
   };
 }
