@@ -149,13 +149,14 @@ export const PostCollections = {
     // "contribute-to-open-source-the-easy-way",
     // "quiz-postgres-sql-mastery-pt2",
     return [
+      "beware-the-single-purpose-people",
       "you-may-not-need-axios",
-      "quiz-bash-in-the-shell",
       "should-you-use-named-or-default-exports",
+      "breaking-unicorns",
+      "quiz-bash-in-the-shell",
       "naming-things-real-good",
       "quiz-postgres-sql-mastery-pt1",
       "quiz-destructuring-delights",
-      "breaking-unicorns",
     ].map((slug) => PostCollections._postsBySlug[slug]);
   },
 

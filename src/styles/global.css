@@ -902,7 +902,7 @@ table {
 figure {
   transition: border .5s ease-in-out 0s;
   padding: .25rem;
-  border: .25px solid #dedede;
+  border: 0.25px solid var(--neon-pink);
   border-radius: .125rem;
   margin-block: 2.25rem;
   margin-left: -1.25rem;
@@ -912,18 +912,21 @@ figure {
     margin: 2.25rem auto;
   }
 
-  &:hover {
-    border: .25px solid var(--neon-cyan);
-    /* box-shadow: 0 0 .2rem 0.25rem hsl(var(--primary-foreground)); */
-  }
+  /* &:hover {
+    border: 0.25px solid var(--neon-cyan);
+  } */
 
   figcaption {
-    font-size: .95rem;
+    font-size: 1.475rem;
     font-weight: 200;
     color: var(--secondary);
     background-color: #3d3d3d;
     text-align: left;
-    padding: .25rem;
+    padding: .75rem;
+  }
+
+  img {
+    margin-block: 0 !important;
   }
 
   p:last-child:empty {

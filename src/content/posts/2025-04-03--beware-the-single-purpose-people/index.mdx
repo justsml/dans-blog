@@ -7,13 +7,24 @@ subCategory: Best Practices
 date: 2025-04-03
 modified: 2025-04-08
 tags: [software development, code organization, maintainability, testing, dogma, pragmatism]
+
+cover_full_width: endless-little-boxes.webp
+cover_mobile: endless-little-boxes-square.webp
+cover_icon: endless-little-boxes-square.webp
+
 ---
 
-In the grand, often baffling circus of software development principles, the Single Responsibility Principle (SRP) lumbers onto the stage, clad in respectable tweed, promising order and maintainability. The seductive whisper of "do one thing and do it well" has, admittedly, saved some projects from collapsing into an unholy mess of spaghetti code. It's one of those ideas that sounds so sensible, so *adult*.
+In the grand, often baffling circus of software development principles, the `Single Responsibility Principle` (SRP) is frequently injected into architecture sessions, promising order and maintainability. The seductive whisper of "do one thing and do it well" has, admittedly, saved some projects from collapsing into an unholy mess of spaghetti code. It's one of those ideas that sounds so sensible, so *adult*.
 
-<p class="inset">And thus we confront the Single-Purpose People, or SPP, aka the Purity Police, for whom every function must be shaved down to atomic size, every file stripped bare, every abstraction so pure it gleams with terrifying sterility.</p>
+<p class="inset">Inevitably you'll likely' confront the Single-Purpose People, or SPP, aka the Purity Police. These folks love to bring up "first principles," which is funny because they seem to only have one principle: "Make everything as small and atomic as possible."</p>
 
-What is going on? Why split everything into microscopic parts?
+Until you hear their proclaimations about how **"any function over 5 lines** is a code smell" and that every file must contain **only one function.**
+
+But why? Is this generally beneficial?
+
+<blockquote>
+In this post I'm going to explore the dark side of the Single Responsibility Principle, the unintended consequences of over-abstraction, and how the quest for purity can lead to chaos. We'll also discuss how to embrace a more pragmatic approach to code organization that prioritizes maintainability and developer sanity.
+</blockquote>
 
 <figure class="inset-right">
   <figcaption>Violence in Software Architecture</figcaption>
@@ -24,9 +35,11 @@ What is going on? Why split everything into microscopic parts?
 
 > Adding a single checkbox to a form should ideally only affect one file. Not 8 files across 5 directories... I'm looking at you, React/Redux.
 
-When SRP is wielded by someone not actively trying to punish their future selves, it can offer a useful guiding idea: Code units focused on a single conceptual task *are* generally easier to wrap your head around. Testing becomes less like wrestling an octopus in a phone booth. Clear boundaries *can* help you pretend you understand the eldritch complexity you've actually summoned. Modularity! Reusability! All the buzzwords that look great on a slide deck.
+When SRP is wielded by someone not actively trying to punish their future selves, it can offer a useful guiding idea: Code units focused on a single conceptual task *are* generally easier to wrap your head around. Testing becomes less like wrangling with an octopus. Clear boundaries *can* help you pretend you understand the eldritch complexity you've actually summoned. "Modularity! Reusability! Who dares argue such virtues?!"
 
-Even the sainted Unix greybeards and their command-line tools get trotted out as exemplars. `ls` just lists files, right? Simple! Pure! Except, oops, lift the rug and `ls` is frantically orchestrating system calls like `opendir`, `readdir`, `closedir`, and `stat`, which themselves are whispering sweet nothings to the kernel's filesystem monstrosities¹. "Single purpose" was never about achieving molecular purity; it was about drawing a line somewhere vaguely practical so you could go home at a reasonable hour.
+Even the sainted Unix greybeards and their command-line tools get trotted out as exemplars. `ls` just lists files, right? Simple! Pure! Except, oops, lift the rug and `ls` is frantically orchestrating system calls like `opendir`, `readdir`, `closedir`, and `stat`, which themselves are whispering sweet nothings to the kernel's filesystem monstrosities¹. "Single purpose" was never about achieving molecular purity; it was about drawing a pragmatic line somewhere that made sense for the task at hand.
+
+<p class="inset">The original Unix philosophy was about *composition* and *simplicity*, **not about reducing everything** to a single function or file.</p>
 
 The Single-Purpose People conveniently forget this part.
 
@@ -39,8 +52,8 @@ My old dog Chloe was, perhaps, the original Single-Purpose Purist. Her One Thing
 This is disturbingly similar to how the Single Purpose People approach a codebase. Armed with SRP like a holy text, they embark on a righteous crusade of refactoring, splitting, and "simplifying" until the project structure resembles the aftermath of a fragmentation grenade attack in a filing cabinet factory.
 
 
-<figure class="inset-right">
-  <figcaption>There's no escaping thjs architecture</figcaption>
+<figure class="inset-left">
+  <figcaption>No escape for this infinite work pattern</figcaption>
 ![Components, components everywhere](software-patterns__the-mc-escher-stack.webp "The MC Escher Pattern")
 </figure>
 
@@ -57,7 +70,7 @@ I’ve stared into the abyss of codebases where a straightforward 100-line featu
 
 > We spend more time debating file structure and naming conventions than actually shipping features. Is this Agile?
 
-<figure class="inset-right">
+<figure class="inset-left">
   <figcaption>So messy it borders on art</figcaption>
 ![So messy it borders on art](software-patterns__the-rube-goldberg-architecture.webp "The Rube Goldberg Pattern")
 </figure>
