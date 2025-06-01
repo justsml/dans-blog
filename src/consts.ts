@@ -1,6 +1,6 @@
 
 export const SITE_TITLE = 'DanLevy.net';
-export const SITE_DESCRIPTION = 'Coder | Leader | Thinker | Tinker';
+export const SITE_DESCRIPTION = 'Coder | Leader | Thinker | Tinkerer';
 
 export const AUTHOR_ROLES = ['Engineer', 'Entrepreneur', 'Educator', 'Leader'];
 

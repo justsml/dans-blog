@@ -402,7 +402,7 @@ const NavMenu = ({
                     <div className="CalloutHeading">Dan Levy</div>
                     <p className="CalloutText" style={{ textWrap: "nowrap" }}>
                       Coder | Leader
-                      <br /> Thinker | Tinker
+                      <br /> Thinker | Tinkerer
                     </p>
                   </div>
                 </NavigationMenu.Link>

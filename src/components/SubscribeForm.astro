@@ -1,0 +1,193 @@
+---
+
+---
+<section class="relative subscribe-form">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    <div class="py-12 md:py-20">
+      <div
+        class="max-w-3xl mx-auto text-center p-6 rounded-md shadow-xl dark:shadow-none"
+      >
+        <h2
+          class="text-4xl md:text-4xl font-bold leading-tighter tracking-tighter mb-4 font-heading"
+        >
+          Subscribe for more
+        </h2>
+        <p class="text-xl text-gray-600 dark:text-slate-400">
+          My (almost) monthly newsletter is overflowing with the best articles, plus any I wrote myself. No spam, unsubscribe any time.
+        </p>
+
+        <div class="mt-6">
+          <script
+            defer
+            src="https://unpkg.com/@tryghost/portal@latest/umd/portal.min.js"
+            data-ghost="https://cms.ignoreallpreviousinstructions.ai/"
+            data-api="https://cms.ignoreallpreviousinstructions.ai/ghost/api/content/"
+            data-key="fb511f7995fd31bbb68177cf0c"></script>
+          <form class="text-center" data-members-form>
+            <input
+              class="mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-sm shadow-sm dark:placeholder-slate-700 dark:text-slate-900 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+              placeholder="Your email address..."
+              type="email"
+              required
+              data-members-email
+            />
+            <button
+              class="mt-3 btn text-white bg-primary-600 hover:bg-primary-800 mb-4 sm:mb-0"
+              type="submit">Subscribe</button
+            >
+            <strong class="feedback"
+              >Thanks for signing up! Please check your inbox to confirm your
+              singup.</strong
+            >
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style id="subscribe-form-styles">
+  .subscribe-form {
+    section {
+      position: relative;
+    }
+
+    .max-w-6xl {
+      max-width: 72rem;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .max-w-6xl {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+    }
+
+    .py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .py-12 {
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+      }
+    }
+
+    .max-w-3xl {
+      max-width: 48rem;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: 0.375rem;
+      box-shadow:
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .max-w-3xl {
+        box-shadow: none;
+      }
+    }
+
+    h2 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      margin-bottom: 1rem;
+      font-family: var(--font-heading, inherit);
+    }
+
+    .text-xl {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+      color: #4b5563;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .text-xl {
+        color: #94a3b8;
+      }
+    }
+
+    .mt-6 {
+      margin-top: 1.5rem;
+    }
+
+    form {
+      text-align: center;
+    }
+
+    input[data-members-email] {
+      margin-top: 0.25rem;
+      display: block;
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      background-color: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      input[data-members-email]::placeholder {
+        color: #334155;
+      }
+
+      input[data-members-email] {
+        color: #0f172a;
+      }
+    }
+
+    input[data-members-email]:focus {
+      outline: none;
+      border-color: #0ea5e9;
+      box-shadow: 0 0 0 1px #0ea5e9;
+    }
+
+    button[type="submit"] {
+      margin-top: 0.75rem;
+      margin-bottom: 1rem;
+      padding: 0.5rem 1rem;
+      color: white;
+      background-color: var(--color-primary-600);
+      border-radius: 0.375rem;
+      font-weight: 500;
+    }
+
+    button[type="submit"]:hover {
+      background-color: var(--color-primary-800);
+    }
+
+    @media (min-width: 640px) {
+      button[type="submit"] {
+        margin-bottom: 0;
+      }
+    }
+
+    /* Existing feedback styles */
+    form .feedback {
+      display: none;
+			align-self: center;
+    }
+
+    form.success input,
+    form.success button {
+      display: none !important;
+    }
+
+    form.success .feedback {
+      display: unset;
+    }
+  }
+</style>
