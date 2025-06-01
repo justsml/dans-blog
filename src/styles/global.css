@@ -362,6 +362,8 @@ h1:first-of-type {
   line-height: 1.75;
   margin-block: 2rem;
   color: #fff;
+  padding: 0 !important;
+
   /* // add glow/shadow effect */
   text-shadow: 
     /* White glow */
@@ -1109,6 +1111,7 @@ Overriding the style when generating screenshots
   }
   h1:first-of-type {
     margin-top: 0;
+    padding: 0 !important;
   }
   h3, h4 {
     margin-block: .25rem;
@@ -1125,6 +1128,10 @@ Overriding the style when generating screenshots
         margin: 1rem;
       }
 
+    }
+
+    .banner-image {
+      margin-bottom: 2rem;
     }
 
     a:link, a:visited {
@@ -1233,5 +1240,48 @@ Overriding the style when generating screenshots
   padding-inline: 0;
   p:empty {
     display: none;
+  }
+}
+
+.quotable {
+  margin: 2rem auto;
+  max-width: 85%;
+  position: relative;
+  font-style: italic;
+  color: var(--clr-muted-300, #ccc);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .quote-mark {
+    color: var(--neon-pink, #ff00c3);
+    font-size: 2.25em;
+    font-weight: bold;
+  }
+
+  p {
+    margin-bottom: 0.5rem;
+  }
+
+  footer {
+    text-align: right;
+    font-size: 0.9em;
+    font-weight: 300;
+  }
+
+  cite {
+    font-style: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quotable {
+    transition: none;
   }
 }
