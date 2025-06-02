@@ -19,8 +19,9 @@
             data-ghost="https://cms.ignoreallpreviousinstructions.ai/"
             data-api="https://cms.ignoreallpreviousinstructions.ai/ghost/api/content/"
             data-key="fb511f7995fd31bbb68177cf0c"></script>
-          <form data-members-form>
+          <form data-members-form class="subscribe-form">
             <input
+              name="email"
               placeholder="Your email address..."
               type="email"
               autocomplete="email"
@@ -41,6 +42,15 @@
   </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.querySelector('form.subscribe-form');
+    form?.addEventListener('submit', function (event) {
+      event.preventDefault();
+      console.log('Form submitted', event.target);
+    });
+  });
+</script>
 <style id="subscribe-form-styles">
   .subscribe-form {
     position: relative;
