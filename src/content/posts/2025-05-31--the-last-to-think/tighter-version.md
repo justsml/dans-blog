@@ -1,19 +1,15 @@
 ---
 language: English
 title: "The Last to Think"
-subTitle: Human or Machine?
+subTitle: "Every Generation's Tech Panic"
 category: AI
 subCategory: Policy
 date: 2025-05-31
 modified: 2025-06-01
 tags: [ edtech, education, technology, history ]
-# social_image: desktop-social.webp
-cover_full_width: banner-thinking-decay-wide.webp
-cover_mobile: banner-thinking-decay-square-300.webp
-cover_icon: banner-thinking-decay-square-300.webp
 ---
 
-Every generation discovers its technological bogeyman. Some new device emerges, and suddenly civilization teeters on the brink of idiocy. You could set your Apple Watch by these panics—assuming it has a charge. Lest we resort to analog timekeeping.
+Every generation discovers its technological bogeyman. Some new device emerges, and suddenly civilization teeters on the brink of idiocy. You could set your Apple Watch by these panics—assuming it has a charge, we shouldn't have to resort to analog timekeeping, after all.
 
 Today's panic centers on AI, but before we hyperventilate about 12-year-olds who couldn't write an analog 'thank you' note yet can "write" a deep philosophical paper on the themes of justice and redemption in *The Brothers Karamazov*, let's check our historical receipts.
 
