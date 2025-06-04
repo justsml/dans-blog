@@ -234,9 +234,13 @@ export default function Challenge({
         challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
       if (!quizOptionPanel) return;
 
-      window?.__superHackFix_patchOptionsListWithActualHeight([
-        quizOptionPanel,
-      ]);
+      if (
+        quizOptionPanel &&
+        window?.__superHackFix_patchOptionsListWithActualHeight
+      )
+        window?.__superHackFix_patchOptionsListWithActualHeight([
+          quizOptionPanel,
+        ]);
     });
   }, [explanationText, challengeRef]);
 

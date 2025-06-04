@@ -101,7 +101,7 @@ const responsiveImgSizes_breakRight = {
       data-pagefind-body
       class="content-grid article h-entry h-recipe"
       style={{
-        viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
+        
       }}
     >
       {
@@ -110,6 +110,10 @@ const responsiveImgSizes_breakRight = {
             class="p-name"
             transition:name="page.h1"
             data-pagefind-meta="title"
+            transition:persist
+            style={{
+              viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
+            }}
           >
             {title}
           </h1>

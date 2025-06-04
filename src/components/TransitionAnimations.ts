@@ -19,13 +19,13 @@ export interface TransitionDirectionalAnimations {
 
 export const bumpAnim: TransitionAnimationPair = {
   old: {
-    name: 'bump',
+    name: 'slideUp',
     duration: '0.5s',
     easing: 'ease-in',
     direction: 'reverse',
   },
   new: {
-    name: 'bump',
+    name: 'slideUp',
     duration: '0.5s',
     easing: 'ease-in-out',
   },
@@ -39,14 +39,14 @@ export const bumpTransition: TransitionDirectionalAnimations = {
 export const slideUpAnim: TransitionAnimationPair = {
   old: {
     name: 'slideUp',
-    duration: '0.75s',
+    duration: '1.75s',
     easing: 'ease-in',
     direction: 'reverse',
   },
   new: {
     name: 'slideUp',
-    duration: '0.75s',
-    easing: 'ease-in-out',
+    duration: '1.75s',
+    easing: 'ease-out',
   },
 };
 

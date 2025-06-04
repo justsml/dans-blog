@@ -525,7 +525,7 @@ main pre {
 
   width: clamp(220px, 80vw, 100%);
   /* margin-inline: 0.75rem; */
-  grid-template-rows: auto 210px auto max-content;
+  grid-template-rows: max-content minmax(1fr, min-content) 120px max-content;
   /* gap: 1rem; */
   padding: 1rem;
   border-radius: 1.5rem;
@@ -545,6 +545,7 @@ main pre {
   }
   
   img {
+    align-self: flex-end;
     border-radius: 100%;
     margin: 0.75rem auto;
     /* object-fit: contain; */
@@ -561,6 +562,8 @@ main pre {
     right: 0.75rem;
     top: 0.65rem;
     transition: color 0.125s ease-in-out, scale 0.125s ease-in-out;
+    grid-row:  1 / 1;
+    grid-column: 1 / 1;
   }
 
   &:hover {
@@ -576,17 +579,25 @@ main pre {
   p {
     line-height: 1.5;
     font-weight: 100;
-    align-self: center;
-    padding-block: 1rem;
+    align-self: flex-start;
+    padding: 0;
+    margin: .5em;
   }
   h2, h4 {
+    grid-row:  1 / 1;
+    grid-column: 1 / 1;
+    align-self: flex-start;
     font-size: 1.4rem;
     font-family: "Raleway", sans-serif;
-    margin-top: 1.5rem 0 0 0;
+    margin: 1.75rem 0 0 0;
     line-height: 1.25;
     /* color: var(--neon-cyan); */
   }
 
+  .info-grid {
+    align-self: flex-end;
+    align-content: flex-end;
+  }
 }
 
 div.separator {
@@ -657,7 +668,7 @@ main .info {
   }
 
   height: 135px;
-  width: 9rem;
+  /* width: 9rem; */
   margin-left: -1em;
   max-height: 135px;
   overflow: visible;

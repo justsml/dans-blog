@@ -8,6 +8,7 @@ import socialBanner from "../assets/social-banner.webp";
 import "@/styles/nav.css";
 import "@/styles/layout.css";
 import "@/styles/global.css";
+import { slideUpAnim, slideUpTransition } from './TransitionAnimations';
 
 interface Props {
   title: string;
@@ -173,13 +174,13 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   }
 </script>
 
-<ClientRouter fallback="swap" />
+<ClientRouter fallback="swap" transition:animate={slideUpTransition} />
 
 <style is:global>
   @keyframes slideUp {
     0% {
       opacity: 0;
-      transform: translateY(-100px), scale(1.25);
+      transform: translateY(calc(-1 * 50vh)), scale(1);
     }
     100% {
       opacity: 1;
@@ -187,9 +188,9 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     }
   }
 
-  @view-transition {
+  /* @view-transition {
     navigation: auto;
-  }
+  } */
 
   /* Customize the default animation behavior */
 
