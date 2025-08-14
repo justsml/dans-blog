@@ -1,0 +1,170 @@
+---
+title: "Reciprocal Rank Fusion and Hybrid Vector Serverless Search"
+subTitle: "In Rust & TypeScript!"
+tags: ["search", "reciprocal-rank-fusion", "vector-search", "rust", "typescript", "serverless"]
+date: 2025-07-07
+modified: 2025-07-07
+category: Code
+subCategory: Search
+cover_full_width: search-fusion-wide.webp
+cover_mobile: search-fusion-mobile.webp
+cover_icon: search-fusion-icon.webp
+# social_image: search-fusion-social.webp
+---
+
+# What is this nonsense?
+
+"Reciprocal Rank Fusion," "Hybrid Vector Search," "Serverless," "Rust & TypeScript"—sounds like an AI generated Y-Combinator pitch! *Words. With meaning. Assembled together!*
+
+Have faith, fair reader! I would never ply you with a cheap pile of words!
+
+This article is about:
+
+- A robust full-text search option.
+- An alternative to heavier text search options like Algolia, ElasticSearch/OpenSearch, or Pinecone.
+- Sub 10ms search, up to 100,000-1M documents.
+- Zero classical server service. Almost no cost at rest. (CDNs are cheap!)
+- Advanced search capabilities that combine keyword and semantic search.
+- A simple, elegant implementation that can be deployed anywhere static files can be hosted.
+- Built with Rust, WASM and TypeScript! So you can feel both smug and inadequate at the same time!
+
+## Ok, cool. What's the catch?
+
+
+
+{/* ## What Even Is This Nonsense?
+
+Let's break down this alphabet soup:
+
+- **Reciprocal Rank Fusion (RRF)**: A fancy way of saying "let's combine search results from different sources without completely messing things up"
+- **Hybrid Vector Search**: When you're too indecisive to choose between keyword search and semantic search, so you use both
+- **Serverless**: Because managing servers is *so* 2010
+- **Rust & TypeScript**: The peanut butter and chocolate of modern programming—a delightful combination that somehow works
+
+Taken together, we're talking about combining different search algorithms and result sets without needing to manage infrastructure, all implemented with two languages that make developers feel simultaneously smug and inadequate.
+
+## Enter Reciprocal Rank Fusion
+
+[Reciprocal Rank Fusion](https://plg.uwaterloo.ca/%7Egvcormac/cormacksigir09-rrf.pdf) is a surprisingly simple algorithm with a fancy name.
+
+Here's how it works:
+
+1. Run your query through multiple search systems
+2. For each result in each system, calculate: `1 / (rank + k)` where `k` is usually 60
+3. Sum these scores for duplicate results across systems
+4. Sort by the final score
+
+That's it. No neural networks. No transformers. No quantum computing. Just simple math that effectively balances the strengths of different search approaches.
+
+## The Hybrid Part: Keyword + Vector Search
+
+When searching for content, there are broadly two approaches:
+
+1. **Lexical search**: Finding exact word matches (and variations)
+2. **Semantic search**: Finding content with similar meaning, even if the words differ
+
+Traditionally, these were separate worlds. You either had a great keyword search system (like Elasticsearch) or a fancy vector search (like Pinecone or Weaviate). Combining them was a complex infrastructure problem.
+
+But with tools like PageFind, you can have both—without the headache. */}
+
+## Let's Build This Thing (The Surprisingly Easy Part)
+
+PageFind isn't just for simple site search anymore. It's evolved to support multiple indexes, custom scoring, and even vector search—all deployable to any static host or CDN.
+
+Here's a simplified example in TypeScript that ties everything together:
+
+```typescript
+import { PagefindClient } from '@pagefind/client';
+
+// Initialize clients for different search indexes
+const keywordIndex = new PagefindClient({
+  bundlePath: "/pagefind"
+});
+
+const semanticIndex = new PagefindClient({
+  bundlePath: "/pagefind-vectors"
+});
+
+async function searchEverything(query: string) {
+  // Run searches in parallel
+  const [keywordResults, vectorResults] = await Promise.all([
+    keywordIndex.search(query),
+    semanticIndex.search(query, { sort: "semantic" })
+  ]);
+  
+  // Track all results with their sources and ranks
+  const allResults = new Map();
+  const k = 60; // RRF constant
+  
+  // Process keyword results
+  keywordResults.results?.forEach((result, i) => {
+    const id = result.id;
+    const score = 1 / (i + 1 + k);
+    allResults.set(id, { 
+      item: result, 
+      score: score,
+      sources: ['keyword']
+    });
+  });
+  
+  // Process vector results and merge with existing
+  vectorResults.results?.forEach((result, i) => {
+    const id = result.id;
+    const score = 1 / (i + 1 + k);
+    
+    if (allResults.has(id)) {
+      // Merge with existing result
+      const existing = allResults.get(id);
+      existing.score += score;
+      existing.sources.push('vector');
+    } else {
+      // New result
+      allResults.set(id, { 
+        item: result, 
+        score: score,
+        sources: ['vector']
+      });
+    }
+  });
+  
+  // Sort by final RRF score
+  return Array.from(allResults.values())
+    .sort((a, b) => b.score - a.score);
+}
+```
+
+That's it. Seriously. About 50 lines of TypeScript gives you a hybrid search system with RRF that would have required thousands of lines of code and a complex infrastructure stack just a few years ago.
+
+## Rust? You Promised Rust!
+
+Oh right, I mentioned Rust in the title. Well, PageFind itself is built in Rust, providing incredible performance with minimal resource consumption. Its WebAssembly build means it runs at near-native speed even in the browser.
+
+If you want to get fancy, you could even extend PageFind with custom Rust plugins compiled to WASM. But for most use cases, you can just leverage the Rust-powered performance without writing a single line of unsafe code yourself.
+
+## The Real-World Impact
+
+The approach outlined above isn't just theoretical—it works remarkably well in practice:
+
+- **Better recall**: Finds both exact matches and conceptually related content
+- **Improved precision**: Ranks the most relevant results higher
+- **Resiliency**: If one search approach fails, others can compensate
+- **Cost-effective**: No need for expensive search infrastructure
+
+For a concrete example, when searching for "React hooks state management":
+
+- Keyword search might return exact tutorials on React hooks
+- Vector search might return articles on state management patterns
+- RRF combines them to prioritize content specifically about state management with hooks
+
+## In Conclusion: Less Complex Than It Sounds
+
+Despite the intimidating title that sounds like it was generated by a machine learning model trained exclusively on tech conference speaker bios, this approach is surprisingly accessible:
+
+1. Use PageFind to create multiple indexes (keyword and vector)
+2. Query both in parallel 
+3. Combine results using a simple RRF algorithm
+4. Deploy anywhere static files can be hosted
+
+No database. No search servers. No infrastructure headaches. Just better search results.
+
+And really, isn't that worth wading through a few buzzwords?
