@@ -1,0 +1,423 @@
+---
+unlisted: false
+title: "Quiz: From Algebra Basics to Intermediate Mathematics"
+subTitle: "Test Your Skills from Simple Equations to Functions"
+label: "Algebra to Intermediate Math"
+category: Quiz
+subCategory: Mathematics
+date: 2025-08-22
+tags: [quiz, mathematics, algebra, quadratic-equations, functions, systems-of-equations]
+---
+
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+Mathematics is the language of the universe, and algebra is its grammar. This quiz is designed to test your fluency, starting with the foundational rules of algebra and progressing to the more complex sentences of intermediate mathematics. You'll navigate through linear equations, untangle quadratic expressions, and explore the elegant world of functions.
+
+Whether you're a student brushing up on core concepts or a professional who enjoys a good mental workout, this quiz offers a comprehensive review of essential mathematical skills. Let's see how well you recall the principles that underpin so much of science, technology, and engineering.
+
+### 16 Questions on Algebra and Intermediate Math... Begin!
+
+<QuizUI>
+
+<Challenge
+  client:load
+  index={0}
+  group="Algebraic Foundations"
+  title="Solving a Linear Equation"
+  options={[
+    {text: 'x = 5', isAnswer: true },
+    {text: 'x = 3'},
+    {text: 'x = -2'},
+    {text: 'x = 7'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Solve for x in the equation: 3x - 7 = 8
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To solve for x, first add 7 to both sides: 3x = 15. Then, divide by 3: x = 5. This is a fundamental skill in isolating variables.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={1}
+  group="Algebraic Foundations"
+  title="Simplifying Expressions"
+  options={[
+    {text: '5x² - 2x - 3'},
+    {text: 'x² + 4x + 3'},
+    {text: '5x² + 2x + 3', isAnswer: true },
+    {text: 'x² - 4x - 3'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Simplify the expression: (3x² + 4x - 1) + (2x² - 2x + 4)
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To simplify, combine like terms: (3x² + 2x²) + (4x - 2x) + (-1 + 4). This results in 5x² + 2x + 3.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={2}
+  group="Algebraic Foundations"
+  title="Exponent Rules"
+  options={[
+    {text: 'x⁶'},
+    {text: 'x⁸', isAnswer: true },
+    {text: 'x²'},
+    {text: '2x⁴'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the simplified form of (x⁴)²?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    When raising a power to a power, you multiply the exponents. So, (x⁴)² = x⁴*² = x⁸.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={3}
+  group="Algebraic Foundations"
+  title="Factoring Polynomials"
+  options={[
+    {text: '(x - 3)(x - 2)'},
+    {text: '(x + 6)(x - 1)'},
+    {text: '(x + 3)(x + 2)', isAnswer: true },
+    {text: '(x - 6)(x + 1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Factor the quadratic expression: x² + 5x + 6
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    You need two numbers that multiply to 6 and add to 5. Those numbers are 3 and 2. Therefore, the factored form is (x + 3)(x + 2).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={4}
+  group="Algebraic Foundations"
+  title="Solving an Inequality"
+  options={[
+    {text: 'x < 4'},
+    {text: 'x > 4', isAnswer: true },
+    {text: 'x < -4'},
+    {text: 'x > -4'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Solve the inequality: 2x - 5 > 3
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Treat it like a linear equation. Add 5 to both sides to get 2x > 8. Then, divide by 2 to get x > 4. The inequality sign does not flip since we did not divide by a negative number.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={5}
+  group="Intermediate Algebra"
+  title="Quadratic Formula"
+  options={[
+    {text: 'x = 1, x = -5'},
+    {text: 'x = -1, x = 5'},
+    {text: 'x = 2, x = 3'},
+    {text: 'x = -1, x = -4', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Solve the equation x² + 5x + 4 = 0 using the quadratic formula or factoring.
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    This can be factored into (x + 1)(x + 4) = 0. The solutions are the values of x that make each factor zero, which are x = -1 and x = -4.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={6}
+  group="Intermediate Algebra"
+  title="Systems of Equations"
+  options={[
+    {text: 'x = 2, y = 1', isAnswer: true },
+    {text: 'x = 1, y = 2'},
+    {text: 'x = 3, y = 0'},
+    {text: 'x = 0, y = 3'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Solve the system of linear equations: x + y = 3 and 2x - y = 3
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Using the elimination method, add the two equations together: (x + y) + (2x - y) = 3 + 3, which simplifies to 3x = 6, so x = 2. Substitute x = 2 into the first equation: 2 + y = 3, which gives y = 1.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={7}
+  group="Intermediate Algebra"
+  title="Simplifying Radicals"
+  options={[
+    {text: '4√5'},
+    {text: '5√4'},
+    {text: '2√20'},
+    {text: '4√5', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Simplify the radical: √80
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To simplify √80, find the largest perfect square factor of 80. Here, 80 = 16 * 5. So, √80 = √16 * √5 = 4√5.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={8}
+  group="Intermediate Algebra"
+  title="Logarithm Basics"
+  options={[
+    {text: 'x = 2'},
+    {text: 'x = 3', isAnswer: true },
+    {text: 'x = 4'},
+    {text: 'x = 10'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the value of x if log₂(8) = x?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The expression log₂(8) asks: "To what power must we raise 2 to get 8?" Since 2³ = 8, the value of x is 3.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={9}
+  group="Intermediate Algebra"
+  title="Rational Expressions"
+  options={[
+    {text: 'x + 2'},
+    {text: '1 / (x + 2)'},
+    {text: '(x - 2) / (x + 2)'},
+    {text: '(x + 2) / (x - 2)', isAnswer: true },
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Simplify the rational expression: (x² - 4) / (x² - 4x + 4)
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    Factor the numerator and the denominator. The numerator x² - 4 is a difference of squares: (x - 2)(x + 2). The denominator x² - 4x + 4 is a perfect square trinomial: (x - 2)². The expression becomes [(x - 2)(x + 2)] / [(x - 2)(x - 2)]. Cancel one (x - 2) term to get (x + 2) / (x - 2).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={10}
+  group="Functions and Concepts"
+  title="Definition of a Function"
+  options={[
+    {text: 'A relation where each input has exactly one output.', isAnswer: true },
+    {text: 'A relation where each output has exactly one input.'},
+    {text: 'Any set of ordered pairs.'},
+    {text: 'An equation with two variables.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Which of the following best describes a function in mathematics?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    A function is a special type of relation where every input value (from the domain) is associated with exactly one output value (from the range). This is often tested with the "vertical line test" on a graph.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={11}
+  group="Functions and Concepts"
+  title="Evaluating a Function"
+  options={[
+    {text: '13', isAnswer: true },
+    {text: '9'},
+    {text: '5'},
+    {text: '1'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    If f(x) = 2x² + 5, what is the value of f(2)?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To evaluate f(2), substitute 2 for x in the expression: f(2) = 2(2)² + 5 = 2(4) + 5 = 8 + 5 = 13.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={12}
+  group="Functions and Concepts"
+  title="Domain of a Function"
+  options={[
+    {text: 'All real numbers except x = 3'},
+    {text: 'All real numbers except x = -3', isAnswer: true },
+    {text: 'All real numbers'},
+    {text: 'Only positive real numbers'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the domain of the function f(x) = 1 / (x + 3)?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The domain of a function is the set of all possible input values. For this rational function, the denominator cannot be zero. Set x + 3 = 0 to find the excluded value, which is x = -3. Therefore, the domain is all real numbers except -3.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={13}
+  group="Functions and Concepts"
+  title="Slope-Intercept Form"
+  options={[
+    {text: 'Slope = 2, y-intercept = -3', isAnswer: true },
+    {text: 'Slope = -3, y-intercept = 2'},
+    {text: 'Slope = 3, y-intercept = -2'},
+    {text: 'Slope = 1, y-intercept = -3'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    In the linear equation y = 2x - 3, what are the slope and y-intercept?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The equation is in slope-intercept form, y = mx + b, where 'm' is the slope and 'b' is the y-intercept. In this case, the slope (m) is 2 and the y-intercept (b) is -3.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={14}
+  group="Functions and Concepts"
+  title="Function Composition"
+  options={[
+    {text: '4x + 3'},
+    {text: '4x + 2'},
+    {text: '4x + 9', isAnswer: true },
+    {text: '2x + 6'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    If f(x) = 2x + 3 and g(x) = 2x + 3, what is f(g(x))?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    To find f(g(x)), substitute the entire expression for g(x) into f(x) wherever you see x. So, f(g(x)) = 2(g(x)) + 3 = 2(2x + 3) + 3 = 4x + 6 + 3 = 4x + 9.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:load
+  index={15}
+  group="Functions and Concepts"
+  title="Vertex of a Parabola"
+  options={[
+    {text: '(2, -1)', isAnswer: true },
+    {text: '(-2, 1)'},
+    {text: '(2, 1)'},
+    {text: '(-2, -1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the vertex of the parabola given by the equation y = (x - 2)² - 1?
+  </div>
+  </slot>
+
+  <slot name='explanation'>
+  <div className="explanation">
+    The equation is in vertex form, y = a(x - h)² + k, where the vertex is at the point (h, k). In this equation, h = 2 and k = -1, so the vertex is (2, -1).
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
