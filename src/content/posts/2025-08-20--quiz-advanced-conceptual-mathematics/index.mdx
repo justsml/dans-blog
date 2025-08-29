@@ -6,7 +6,9 @@ label: "Advanced Math"
 category: Quiz
 subCategory: Mathematics
 date: 2025-08-22
+modified: 2025-08-28
 tags: [quiz, mathematics, abstract-algebra, real-analysis, linear-algebra, number-theory, topology, logic, proofs]
+
 ---
 
 import Challenge from '../../../components/QuizUI/Challenge';
@@ -180,4 +182,13 @@ Prepare to delve into the foundational concepts that power fields from cryptogra
     {text: 'a² + b² = c²'},
     {text: 'xⁿ + yⁿ = zⁿ has no integer solutions for n > 2'},
     {text: 'Every even integer greater than 2 is the sum of two primes'},
-  
+  ]}
+  >
+  <slot name='explanation'>
+  <div className="explanation">
+    Fermat's Little Theorem states that if p is a prime number and a is an integer not divisible by p, then a^(p-1) ≡ 1 (mod p). This theorem is fundamental in number theory and has important implications for fields such as cryptography.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
