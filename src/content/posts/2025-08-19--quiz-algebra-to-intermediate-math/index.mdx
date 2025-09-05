@@ -19,11 +19,13 @@ cover_credit: Photo by <a href="https://unsplash.com/@tyleranderson_?utm_content
 import Challenge from '../../../components/QuizUI/Challenge';
 import QuizUI from '../../../components/QuizUI/QuizUI';
 
-Mathematics is the language of the universe, and algebra is its grammar. This quiz is designed to test your fluency, starting with the foundational rules of algebra and progressing to the more complex sentences of intermediate mathematics. You'll navigate through linear equations, untangle quadratic expressions, and explore the elegant world of functions.
+Ready to flex those math muscles? This isn't your high school teacher's boring algebra quiz – we're serving up 16 questions that'll test whether you actually remember how to wrangle equations or if you've been faking it this whole time.
 
-Whether you're a student brushing up on core concepts or a professional who enjoys a good mental workout, this quiz offers a comprehensive review of essential mathematical skills. Let's see how well you recall the principles that underpin so much of science, technology, and engineering.
+From basic "solve for x" problems (spoiler: it's probably not 42 this time) to funkier function composition that'll make your brain do backflips, we're covering the greatest hits of algebra through intermediate math. Think of it as a mathematical obstacle course, but with less mud and more variables.
 
-### 16 Questions on Algebra and Intermediate Math... Begin!
+Fair warning: some questions have extra wrong answers thrown in just to keep you on your toes. Because why make it easy when we can make it *interesting*?
+
+### 16 Questions That'll Either Boost Your Ego or Humble You Real Quick
 
 <QuizUI>
 
@@ -31,12 +33,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={0}
   group="Algebraic Foundations"
-  title="Solving a Linear Equation"
+  title="X Marks the Spot (But Which Spot?)"
   options={[
     {text: 'x = 5', isAnswer: true },
     {text: 'x = 3'},
     {text: 'x = -2'},
     {text: 'x = 7'},
+    {text: 'x = 42'},
+    {text: 'x = 0'},
   ]}
 >
   <slot name="question">
@@ -47,21 +51,22 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    To solve for x, first add 7 to both sides: 3x = 15. Then, divide by 3: x = 5. This is a fundamental skill in isolating variables.
+    Classic isolation technique! Add 7 to both sides (3x = 15), then divide by 3 to get x = 5. Sorry folks, it's not 42 this time – that's the answer to life, the universe, and everything, not this equation.
   </div>
   </slot>
 </Challenge>
-
 <Challenge
   client:load
   index={1}
   group="Algebraic Foundations"
-  title="Simplifying Expressions"
+  title="Like Terms: The Mathematical Matching Game"
   options={[
     {text: '5x² - 2x - 3'},
     {text: 'x² + 4x + 3'},
     {text: '5x² + 2x + 3', isAnswer: true },
     {text: 'x² - 4x - 3'},
+    {text: '7x² + 6x + 1'},
+    {text: '3x² + 2x + 4'},
   ]}
 >
   <slot name="question">
@@ -72,7 +77,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    To simplify, combine like terms: (3x² + 2x²) + (4x - 2x) + (-1 + 4). This results in 5x² + 2x + 3.
+    Time to play matchmaker with your terms! Group the x² terms (3x² + 2x² = 5x²), the x terms (4x - 2x = 2x), and the constants (-1 + 4 = 3). Result: 5x² + 2x + 3. It's like organizing your sock drawer, but with algebra.
   </div>
   </slot>
 </Challenge>
@@ -81,12 +86,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={2}
   group="Algebraic Foundations"
-  title="Exponent Rules"
+  title="Power Trip: When Exponents Get Exponential"
   options={[
     {text: 'x⁶'},
     {text: 'x⁸', isAnswer: true },
     {text: 'x²'},
     {text: '2x⁴'},
+    {text: 'x¹⁶'},
+    {text: '4x⁴'},
   ]}
 >
   <slot name="question">
@@ -97,7 +104,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    When raising a power to a power, you multiply the exponents. So, (x⁴)² = x⁴*² = x⁸.
+    Power to a power means multiply those exponents! (x⁴)² = x⁴ˣ² = x⁸. Don't overthink it – this rule is simpler than your last relationship.
   </div>
   </slot>
 </Challenge>
@@ -106,12 +113,15 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={3}
   group="Algebraic Foundations"
-  title="Factoring Polynomials"
+  title="Factoring: Breaking Things Down (In a Good Way)"
   options={[
     {text: '(x - 3)(x - 2)'},
     {text: '(x + 6)(x - 1)'},
     {text: '(x + 3)(x + 2)', isAnswer: true },
     {text: '(x - 6)(x + 1)'},
+    {text: '(x + 1)(x + 6)'},
+    {text: '(x - 1)(x - 6)'},
+    {text: '(2x + 3)(x + 2)'},
   ]}
 >
   <slot name="question">
@@ -122,21 +132,24 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    You need two numbers that multiply to 6 and add to 5. Those numbers are 3 and 2. Therefore, the factored form is (x + 3)(x + 2).
+    Think of two numbers that are best friends: they multiply to give you 6 and add up to 5. That's 3 and 2! So we get (x + 3)(x + 2). Pro tip: when both signs in the original are positive, both factors will be positive too.
   </div>
   </slot>
+</Challenge>
 </Challenge>
 
 <Challenge
   client:load
   index={4}
   group="Algebraic Foundations"
-  title="Solving an Inequality"
+  title="Inequality Street: Where Signs Matter"
   options={[
     {text: 'x < 4'},
     {text: 'x > 4', isAnswer: true },
     {text: 'x < -4'},
     {text: 'x > -4'},
+    {text: 'x ≥ 4'},
+    {text: 'x ≤ 4'},
   ]}
 >
   <slot name="question">
@@ -147,21 +160,22 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    Treat it like a linear equation. Add 5 to both sides to get 2x > 8. Then, divide by 2 to get x > 4. The inequality sign does not flip since we did not divide by a negative number.
+    Just like solving equations, but with attitude! Add 5 to both sides (2x > 8), then divide by 2 to get x > 4. The inequality sign stays put because we're dividing by a positive number. Remember: only flip the sign when dividing by negatives!
   </div>
   </slot>
 </Challenge>
-
 <Challenge
   client:load
   index={5}
   group="Intermediate Algebra"
-  title="Quadratic Formula"
+  title="Quadratic Drama: When ax² + bx + c = Chaos"
   options={[
     {text: 'x = 1, x = -5'},
     {text: 'x = -1, x = 5'},
     {text: 'x = 2, x = 3'},
     {text: 'x = -1, x = -4', isAnswer: true },
+    {text: 'x = 4, x = 1'},
+    {text: 'x = -2, x = -2'},
   ]}
 >
   <slot name="question">
@@ -172,7 +186,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    This can be factored into (x + 1)(x + 4) = 0. The solutions are the values of x that make each factor zero, which are x = -1 and x = -4.
+    This one's actually friendly enough to factor! Looking for two numbers that multiply to 4 and add to 5... that's 1 and 4. So we get (x + 1)(x + 4) = 0. Set each factor to zero: x = -1 and x = -4. Sometimes the quadratic formula is overkill – like using a sledgehammer to crack a nut.
   </div>
   </slot>
 </Challenge>
@@ -181,12 +195,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={6}
   group="Intermediate Algebra"
-  title="Systems of Equations"
+  title="Systems of Equations: The Mathematical Puzzle"
   options={[
     {text: 'x = 2, y = 1', isAnswer: true },
     {text: 'x = 1, y = 2'},
     {text: 'x = 3, y = 0'},
     {text: 'x = 0, y = 3'},
+    {text: 'x = 69, y = -66'},
+    {text: 'No solution exists'},
   ]}
 >
   <slot name="question">
@@ -197,7 +213,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    Using the elimination method, add the two equations together: (x + y) + (2x - y) = 3 + 3, which simplifies to 3x = 6, so x = 2. Substitute x = 2 into the first equation: 2 + y = 3, which gives y = 1.
+    Time for some elimination magic! Add the equations: (x + y) + (2x - y) = 6. The y's cancel out (elimination at work!), leaving 3x = 6, so x = 2. Substitute back: 2 + y = 3, so y = 1. Two equations, two unknowns, one solution – perfectly balanced.
   </div>
   </slot>
 </Challenge>
@@ -206,12 +222,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={7}
   group="Intermediate Algebra"
-  title="Simplifying Radicals"
+  title="Radical Simplification (Not the Political Kind)"
   options={[
     {text: '2√10'},
     {text: '5√4'},
     {text: '2√20'},
     {text: '4√5', isAnswer: true },
+    {text: '√80 (it stays complicated)'},
+    {text: '8√10'},
   ]}
 >
   <slot name="question">
@@ -222,21 +240,25 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    To simplify √80, find the largest perfect square factor of 80. Here, 80 = 16 * 5. So, √80 = √16 * √5 = 4√5.
+    Unlike free radicals that damage your cells, these mathematical radicals just need some organization! Find the largest perfect square that divides 80. That's 16, since 80 = 16 × 5. So √80 = √(16 × 5) = √16 × √5 = 4√5. Much cleaner than those complicating radicals!
   </div>
   </slot>
+</Challenge>
 </Challenge>
 
 <Challenge
   client:load
   index={8}
   group="Intermediate Algebra"
-  title="Logarithm Basics"
+  title="Logarithms: The Opposite of Exponential Problems"
   options={[
     {text: 'x = 2'},
     {text: 'x = 3', isAnswer: true },
     {text: 'x = 4'},
     {text: 'x = 10'},
+    {text: 'x = 42'},
+    {text: 'x = 8'},
+    {text: 'x = 16'},
   ]}
 >
   <slot name="question">
@@ -247,7 +269,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    The expression log₂(8) asks: "To what power must we raise 2 to get 8?" Since 2³ = 8, the value of x is 3.
+    Logarithms are just exponents in disguise! This is asking "2 to the what power equals 8?" Since 2³ = 8, x = 3. Think of logs as the mathematical equivalent of "working backwards" – very zen.
   </div>
   </slot>
 </Challenge>
@@ -256,12 +278,15 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={9}
   group="Intermediate Algebra"
-  title="Rational Expressions"
+  title="Rational Expressions: When Fractions Get Fancy"
   options={[
     {text: 'x + 2'},
     {text: '1 / (x + 2)'},
     {text: '(x - 2) / (x + 2)'},
     {text: '(x + 2) / (x - 2)', isAnswer: true },
+    {text: '(x² - 4) / (x² - 4x + 4)'},
+    {text: '1'},
+    {text: 'x² - 4x + 4'},
   ]}
 >
   <slot name="question">
@@ -272,7 +297,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    Factor the numerator and the denominator. The numerator x² - 4 is a difference of squares: (x - 2)(x + 2). The denominator x² - 4x + 4 is a perfect square trinomial: (x - 2)². The expression becomes [(x - 2)(x + 2)] / [(x - 2)(x - 2)]. Cancel one (x - 2) term to get (x + 2) / (x - 2).
+    Time to factor like a boss! The numerator x² - 4 is a difference of squares: (x - 2)(x + 2). The denominator x² - 4x + 4 is a perfect square trinomial: (x - 2)². After canceling the common (x - 2) factor, we get (x + 2)/(x - 2). Remember: we're assuming x ≠ 2, because division by zero is mathematically illegal.
   </div>
   </slot>
 </Challenge>
@@ -281,12 +306,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={10}
   group="Functions and Concepts"
-  title="Definition of a Function"
+  title="Function Junction: What's Your Function?"
   options={[
     {text: 'A relation where each input has exactly one output.', isAnswer: true },
     {text: 'A relation where each output has exactly one input.'},
     {text: 'Any set of ordered pairs.'},
     {text: 'An equation with two variables.'},
+    {text: 'Something that makes coffee in the morning.'},
+    {text: 'A mathematical relationship with trust issues.'},
   ]}
 >
   <slot name="question">
@@ -297,7 +324,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    A function is a special type of relation where every input value (from the domain) is associated with exactly one output value (from the range). This is often tested with the "vertical line test" on a graph.
+    A function is like a very reliable friend – give it one input, and it always gives you exactly one output. No surprises, no drama. This is the "one-to-one correspondence" rule, often tested with the vertical line test on graphs. If any vertical line crosses the graph more than once, it's not a function!
   </div>
   </slot>
 </Challenge>
@@ -306,12 +333,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={11}
   group="Functions and Concepts"
-  title="Evaluating a Function"
+  title="Function Evaluation: Plug and Chug"
   options={[
     {text: '13', isAnswer: true },
     {text: '9'},
     {text: '5'},
     {text: '1'},
+    {text: '42'},
+    {text: '420'},
   ]}
 >
   <slot name="question">
@@ -322,7 +351,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    To evaluate f(2), substitute 2 for x in the expression: f(2) = 2(2)² + 5 = 2(4) + 5 = 8 + 5 = 13.
+    Time for some substitution therapy! Replace every x with 2: f(2) = 2(2)² + 5 = 2(4) + 5 = 8 + 5 = 13. It's like following a recipe – just swap the ingredients and calculate. No need to overthink it!
   </div>
   </slot>
 </Challenge>
@@ -331,12 +360,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={12}
   group="Functions and Concepts"
-  title="Domain of a Function"
+  title="Domain Drama: Where Functions Fear to Tread"
   options={[
     {text: 'All real numbers except x = 3'},
     {text: 'All real numbers except x = -3', isAnswer: true },
     {text: 'All real numbers'},
     {text: 'Only positive real numbers'},
+    {text: 'All numbers except 420'},
+    {text: 'x must be greater than -3'},
   ]}
 >
   <slot name="question">
@@ -347,7 +378,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    The domain of a function is the set of all possible input values. For this rational function, the denominator cannot be zero. Set x + 3 = 0 to find the excluded value, which is x = -3. Therefore, the domain is all real numbers except -3.
+    Domain is basically "what values of x won't break this function?" For rational functions, the denominator can't be zero (division by zero is mathematically forbidden). Set x + 3 = 0, so x = -3 is our troublemaker. Domain: all real numbers except x = -3. Think of -3 as the function's kryptonite.
   </div>
   </slot>
 </Challenge>
@@ -356,12 +387,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={13}
   group="Functions and Concepts"
-  title="Slope-Intercept Form"
+  title="Slope-Intercept: The Line's Personal Profile"
   options={[
     {text: 'Slope = 2, y-intercept = -3', isAnswer: true },
     {text: 'Slope = -3, y-intercept = 2'},
     {text: 'Slope = 3, y-intercept = -2'},
     {text: 'Slope = 1, y-intercept = -3'},
+    {text: 'Slope = 69, y-intercept = 420'},
+    {text: 'Slope = 42, y-intercept = 0'},
   ]}
 >
   <slot name="question">
@@ -372,7 +405,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    The equation is in slope-intercept form, y = mx + b, where 'm' is the slope and 'b' is the y-intercept. In this case, the slope (m) is 2 and the y-intercept (b) is -3.
+    The classic y = mx + b format! Here, m = 2 (the slope) and b = -3 (the y-intercept). The slope tells you how steep the line is, and the y-intercept is where it crosses the y-axis. Easy pattern recognition – no detective work required.
   </div>
   </slot>
 </Challenge>
@@ -381,12 +414,15 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={14}
   group="Functions and Concepts"
-  title="Function Composition"
+  title="Function Composition: Inception for Math Nerds"
   options={[
     {text: '4x + 3'},
     {text: '4x + 2'},
     {text: '4x + 9', isAnswer: true },
     {text: '2x + 6'},
+    {text: '8x + 12'},
+    {text: '2x + 9'},
+    {text: '6x + 6'},
   ]}
 >
   <slot name="question">
@@ -397,7 +433,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    To find f(g(x)), substitute the entire expression for g(x) into f(x) wherever you see x. So, f(g(x)) = 2(g(x)) + 3 = 2(2x + 3) + 3 = 4x + 6 + 3 = 4x + 9.
+    Function inception time! Replace every x in f(x) with the entire g(x). So f(g(x)) = 2(2x + 3) + 3 = 4x + 6 + 3 = 4x + 9. It's like Russian nesting dolls, but with algebra. Pro tip: work from the inside out!
   </div>
   </slot>
 </Challenge>
@@ -406,12 +442,14 @@ Whether you're a student brushing up on core concepts or a professional who enjo
   client:load
   index={15}
   group="Functions and Concepts"
-  title="Vertex of a Parabola"
+  title="Vertex Hunting: Finding the Parabola's Sweet Spot"
   options={[
     {text: '(2, -1)', isAnswer: true },
     {text: '(-2, 1)'},
     {text: '(2, 1)'},
     {text: '(-2, -1)'},
+    {text: '(0, -5)'},
+    {text: '(1, -2)'},
   ]}
 >
   <slot name="question">
@@ -422,7 +460,7 @@ Whether you're a student brushing up on core concepts or a professional who enjo
 
   <slot name='explanation'>
   <div className="explanation">
-    The equation is in vertex form, y = a(x - h)² + k, where the vertex is at the point (h, k). In this equation, h = 2 and k = -1, so the vertex is (2, -1).
+    This parabola is already dressed up in vertex form: y = a(x - h)² + k, where (h, k) is the vertex. The signs can be tricky – with (x - 2), h = +2, and with the -1 at the end, k = -1. So the vertex is (2, -1). It's like reading coordinates off a treasure map!
   </div>
   </slot>
 </Challenge>

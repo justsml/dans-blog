@@ -2,6 +2,12 @@ import { Contribution } from "../types.ts";
 
 export const ossContributions: Contribution[] = [
   {
+    repo: "ReactTraining/react-router",
+    renamed: "remix-run/react-router",
+    description_override: `React Router is an extremely popular routing solution for React. It features a collection of navigational components that work flexibly with your application.`,
+    notes: `Dan helped improve the official documentation (several examples) and search engine visibility. "A lot of people are going to benefit from the improvements you're making." - project co-creator Michael Jackson.`,
+  },
+  {
     repo: "postgis/postgis",
     description_override: `PostGIS is a spatial database extender for PostgreSQL object-relational database. It adds support for geographic objects allowing location queries to be run in SQL.`,
     notes: `Dan helped improve the K-Means clustering documentation.`,
@@ -10,12 +16,6 @@ export const ossContributions: Contribution[] = [
     repo: "Netflix/pollyjs",
     description_override: `Polly.JS is a standalone, framework-agnostic JavaScript library that enables recording, replaying, and stubbing HTTP interactions.`,
     notes: `Dan added the first complete TypeScript example.`,
-  },
-  {
-    repo: "ReactTraining/react-router",
-    renamed: "remix-run/react-router",
-    description_override: `React Router is an extremely popular routing solution for React. It features a collection of navigational components that work flexibly with your application.`,
-    notes: `Dan helped improve the official documentation (several examples) and search engine visibility. "A lot of people are going to benefit from the improvements you're making." - project co-creator Michael Jackson.`,
   },
   {
     repo: "docker/docker",
@@ -46,6 +46,11 @@ export const ossContributions: Contribution[] = [
     repo: "Automattic/mongoose",
     description_override: `Mongoose is one of the most popular Object Data Model libraries for MongoDB.`,
     notes: `Working with project leaders, Dan used github.com to discuss and identify desired API specification for extending the base classes Model and Query. He worked with Valeri Karpov (from MongoDB) and others.`,
+  },
+  {
+    repo: "Pagefind/pagefind",
+    description_override: `Pagefind is a search library for static sites.`,
+    notes: `Added Searching support for NodeJS, Deno, & Bun.`,
   },
   {
     repo: "m-radzikowski/aws-sdk-client-mock",
@@ -114,7 +119,7 @@ export const ossContributions: Contribution[] = [
   {
     repo: "petkaantonov/bluebird",
     description_override: `Bluebird is a very common Promise-enhancement library. It's also one of the 'Top 10' most depended on libraries.`,
-    notes: `Dan has submitted several PRs over the years, and is a huge fan of this popular library. It was the inspiration behind <a href='https://fpromises.io' target='_blank'>functional-promises.</a>`,
+    notes: `Dan has submitted several PRs over the years. It was the inspiration behind <a href='https://fpromises.io' target='_blank'>functional-promises.</a>`,
   },
   {
     repo: "jsonresume/resume-cli",
