@@ -1,5 +1,5 @@
 ---
-import { ClientRouter } from 'astro:transitions';
+import { ClientRouter } from "astro:transitions";
 
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
@@ -8,7 +8,7 @@ import socialBanner from "../assets/social-banner.webp";
 import "@/styles/nav.css";
 import "@/styles/layout.css";
 import "@/styles/global.css";
-import { slideUpAnim, slideUpTransition } from './TransitionAnimations';
+import { slideUpAnim, slideUpTransition } from "./TransitionAnimations";
 
 interface Props {
   title: string;
@@ -235,3 +235,9 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     animation: 0.35s ease-in both move-out;
   } */
 </style>
+
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css"
+  crossorigin="anonymous"
+/>

@@ -15,6 +15,9 @@ import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
 // import { PostCollections } from "./src/shared/dataCache";
 // import { toDate } from "./src/shared/dateUtils";
 import { statSync } from "fs";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+
 // import remarkMermaid from 'remark-mermaidjs'
 
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
@@ -32,6 +35,9 @@ export default defineConfig({
   cacheDir: ".cache",
   site: siteUrl,
   markdown: {
+  //   syntaxHighlight: "prism",
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
     // remarkPlugins: [remarkMermaid],
   },
   vite: {
