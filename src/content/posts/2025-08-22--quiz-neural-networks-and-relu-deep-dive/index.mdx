@@ -132,7 +132,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   <div className="explanation">
     ReLU has a constant gradient of 1 for positive inputs, unlike sigmoid whose gradient approaches 0 at the extremes. This prevents gradients from vanishing as they propagate backward through deep networks, enabling training of much deeper architectures.
 
-    **The vanishing gradient problem:** In deep networks with sigmoid activations, gradients get multiplied by many small values (σ'(x) ≤ 0.25), causing them to approach zero in early layers.
+    ![Activation Functions Comparison](./activation-functions-diagram.png)
+    *Visual comparison: ReLU maintains unit gradients (green) while sigmoid gradients diminish exponentially through layers (red). This multiplicative effect makes early layers impossible to train with sigmoid in deep networks.*
+
+    **The vanishing gradient problem:** In deep networks with sigmoid activations, gradients get multiplied by many small values (σ'(x) ≤ 0.25), causing them to approach zero in early layers. With a 10-layer network, gradients can shrink by (0.25)^10 ≈ 0.000001!
+
+    **Historical impact:** This problem limited neural networks to ~2-3 layers before ReLU. The "deep learning revolution" was largely enabled by ReLU allowing networks with 10s or 100s of layers.
 
     **Why other explanations are wrong:**
     - ReLU doesn't amplify gradients—it preserves them (gradient = 1, not > 1)

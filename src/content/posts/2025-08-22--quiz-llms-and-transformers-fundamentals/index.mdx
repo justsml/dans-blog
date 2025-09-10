@@ -134,7 +134,12 @@ This comprehensive quiz dives deep into Large Language Models and Transformer ar
   <div className="explanation">
     Self-attention computes three matrices: Query (Q), Key (K), and Value (V). The attention weights are calculated as softmax(QK^T/√d_k), which are then used to weight the Value matrix. This allows the model to determine which parts of the input to focus on.
 
+    ![Self-Attention Mechanism Diagram](./self-attention-diagram.png)
+    *Visual breakdown: Input tokens flow through linear transformations to create Q, K, V matrices. The attention weights (shown as heatmap) determine how much each token should focus on every other token.*
+
     **Database analogy:** Query is "what you're looking for," Key is "what to match against," and Value is "what to retrieve" when there's a match.
+
+    **Key insight:** Unlike RNNs that process sequentially, self-attention allows every token to directly interact with every other token in parallel, enabling much more efficient training and better capture of long-range dependencies.
   </div>
   </slot>
 
