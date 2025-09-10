@@ -21,6 +21,62 @@ import getGlobal from "@stdlib/utils-global";
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
+
+// Helper function to render text with KaTex math expressions using KaTex API directly
+const renderMathText = (text: string): string => {
+  // @ts-ignore - katex is loaded via CDN
+  const katex = global?.katex;
+
+  if (!katex || !text) {
+    return text;
+  }
+
+  // Check if the text contains math expressions
+  const hasBlockMath = /\$\$[\s\S]*?\$\$/.test(text);
+  const hasInlineMath = /\$[^$\n]*?\$/.test(text);
+
+  if (!hasBlockMath && !hasInlineMath) {
+    // No math expressions, return plain text
+    return text;
+  }
+
+  let result = text;
+
+  try {
+    // Process block math first ($$...$$)
+    result = result.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+      try {
+        return katex.renderToString(math.trim(), {
+          displayMode: true,
+          throwOnError: false,
+          strict: "warn",
+        });
+      } catch (e) {
+        console.warn("KaTex block math render error:", e);
+        return match; // Return original if render fails
+      }
+    });
+
+    // Process inline math ($...$)
+    result = result.replace(/\$([^$\n]*?)\$/g, (match, math) => {
+      try {
+        return katex.renderToString(math.trim(), {
+          displayMode: false,
+          strict: "warn",
+          throwOnError: false,
+        });
+      } catch (e) {
+        console.warn("KaTex inline math render error:", e);
+        return match; // Return original if render fails
+      }
+    });
+  } catch (e) {
+    console.warn("KaTex rendering error:", e);
+    return text; // Return original text if any error occurs
+  }
+
+  return result;
+};
 // const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
 // const updateCodeBlocks = () => {
 //   const blocks = getPreBlocks();
@@ -293,7 +349,9 @@ export default function Challenge({
           //   }
           // }}
         >
-          <label>{option.text}</label>
+          <label
+            dangerouslySetInnerHTML={{ __html: renderMathText(option.text) }}
+          ></label>
           <HintTooltip
             title={`💡 Hint`}
             hint={_showHint ? _showHint : ""}

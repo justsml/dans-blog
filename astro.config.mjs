@@ -23,7 +23,15 @@ import rehypeKatex from "rehype-katex";
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 const siteUrl = "https://danlevy.net";
-const ignorePaths = ["/404", "/404.html", "/500", "/500.html", "/pages/", "/category/"];
+const ignorePaths = [
+  "/404",
+  "/404.html",
+  "/500",
+  "/500.html",
+  "/pages/",
+  "/category/",
+  "/.well-known/appspecific/com.chrome.devtools.json",
+];
 
 // https://astro.build/config
 export default defineConfig({
@@ -35,9 +43,9 @@ export default defineConfig({
   cacheDir: ".cache",
   site: siteUrl,
   markdown: {
-  //   syntaxHighlight: "prism",
+    //   syntaxHighlight: "prism",
     remarkPlugins: [remarkMath],
-    rehypePlugins: [rehypeKatex],
+    rehypePlugins: [[rehypeKatex, { strict: false }]],
     // remarkPlugins: [remarkMermaid],
   },
   vite: {
@@ -53,8 +61,7 @@ export default defineConfig({
 
   integrations: [
     pagefind(),
-    react({
-    }),
+    react({}),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
       themes: ["dracula"],
@@ -62,6 +69,8 @@ export default defineConfig({
     }),
     mdx({
       // rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
     }),
     sitemap({
       lastmod: new Date(),
@@ -71,7 +80,10 @@ export default defineConfig({
         // const post = PostCollections.getPostsBySlugs([slug])[0];
         // const modified = toDate(post?.data?.modified ?? post?.data?.date ?? new Date());
         // use tinyglobby to get the file modified date
-        const files = globSync(`**/*${slug}*/**/index.md*`, { cwd: "src", absolute: true });
+        const files = globSync(`**/*${slug}*/**/index.md*`, {
+          cwd: "src",
+          absolute: true,
+        });
 
         // const initialLastmod = item.lastmod;
 
@@ -86,8 +98,6 @@ export default defineConfig({
         return item;
       },
       filter: (page) => {
-        
-
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);
         });
