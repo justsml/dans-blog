@@ -32,12 +32,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Activation Fundamentals"
   title="ReLU Mathematical Definition"
   options={[
-    {text: 'ReLU(x) = x/(1 + e^(-x))'},
-    {text: 'ReLU(x) = |x|'},
-    {text: 'ReLU(x) = max(0, x)', isAnswer: true },
-    {text: 'ReLU(x) = (e^x - e^(-x))/(e^x + e^(-x))'},
-    {text: 'ReLU(x) = min(0, x)'},
-    {text: 'ReLU(x) = x if x > 0, -x if x < 0'},
+    {text: '$\\text{ReLU}(x) = \\frac{x}{1 + e^{-x}}$'},
+    {text: '$\\text{ReLU}(x) = |x|$'},
+    {text: '$\\text{ReLU}(x) = \\max(0, x)$', isAnswer: true },
+    {text: '$\\text{ReLU}(x) = \\frac{e^x - e^{-x}}{e^x + e^{-x}}$'},
+    {text: '$\\text{ReLU}(x) = \\min(0, x)$'},
+    {text: '$\\text{ReLU}(x) = x$ if $x > 0$, $-x$ if $x < 0$'},
   ]}
 >
   <slot name="question">
@@ -52,14 +52,14 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    ReLU(x) = max(0, x) is the standard definition. It outputs the input directly if positive, otherwise zero. This simple piecewise linear function is computationally efficient and helps mitigate the vanishing gradient problem in deep networks.
+    $\\text{ReLU}(x) = \\max(0, x)$ is the standard definition. It outputs the input directly if positive, otherwise zero. This simple piecewise linear function is computationally efficient and helps mitigate the vanishing gradient problem in deep networks.
 
     **Why other options are wrong:**
-    - min(0, x) would give negative values for negative inputs and zero for positive inputs—opposite behavior
-    - x/(1 + e^(-x)) is the sigmoid function, not ReLU
-    - (e^x - e^(-x))/(e^x + e^(-x)) is the tanh function
-    - x if x > 0, -x if x < 0 is the absolute value function
-    - |x| would preserve magnitude but lose sign information that ReLU specifically zeros out
+    - $\\min(0, x)$ would give negative values for negative inputs and zero for positive inputs—opposite behavior
+    - $x/(1 + e^{-x})$ is the sigmoid function, not ReLU
+    - $(e^x - e^{-x})/(e^x + e^{-x})$ is the tanh function
+    - $x$ if $x > 0$, $-x$ if $x < 0$ is the absolute value function
+    - $|x|$ would preserve magnitude but lose sign information that ReLU specifically zeros out
   </div>
   </slot>
 </Challenge>
@@ -70,36 +70,36 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Activation Fundamentals"
   title="ReLU Derivative"
   options={[
-    {text: '0 if x > 0, 1 if x < 0'},
-    {text: '1 if x > 0, 0 if x < 0, undefined at x = 0', isAnswer: true },
-    {text: 'e^x / (1 + e^x)^2'},
-    {text: 'Always 1 regardless of input value'},
-    {text: '1 if x ≥ 0, 0 if x < 0'},
-    {text: 'x if x > 0, 0 otherwise'},
+    {text: '$0$ if $x > 0$, $1$ if $x < 0$'},
+    {text: '$1$ if $x > 0$, $0$ if $x < 0$, undefined at $x = 0$', isAnswer: true },
+    {text: '$\\frac{e^x}{(1 + e^x)^2}$'},
+    {text: 'Always $1$ regardless of input value'},
+    {text: '$1$ if $x \\geq 0$, $0$ if $x < 0$'},
+    {text: '$x$ if $x > 0$, $0$ otherwise'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    What is the derivative of ReLU(x) = max(0, x)?
+    What is the derivative of $\\text{ReLU}(x) = \\max(0, x)$?
   </div>
   </slot>
 
   <slot name='hints'>
-    The derivative tells you the slope. What's the slope of y = x when x > 0? What about when x < 0?
+    The derivative tells you the slope. What's the slope of $y = x$ when $x > 0$? What about when $x < 0$?
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    The derivative of ReLU is 1 for x > 0, 0 for x < 0, and technically undefined at x = 0 (though often treated as 0 or 1 in practice). This derivative enables efficient backpropagation since it's either 0 or 1, avoiding the exponential computations needed for sigmoid/tanh derivatives.
+    The derivative of ReLU is $1$ for $x > 0$, $0$ for $x < 0$, and technically undefined at $x = 0$ (though often treated as $0$ or $1$ in practice). This derivative enables efficient backpropagation since it's either $0$ or $1$, avoiding the exponential computations needed for sigmoid/tanh derivatives.
 
     **Why other options are incorrect:**
-    - "Always 1" ignores the zero region where slope is actually 0
-    - "x if x > 0" would be the derivative of x²/2, not ReLU
-    - "e^x / (1 + e^x)²" is the derivative of sigmoid
-    - "1 if x ≥ 0" incorrectly includes x = 0 where derivative is undefined
-    - "0 if x > 0, 1 if x < 0" has the regions exactly backwards
+    - "Always $1$" ignores the zero region where slope is actually $0$
+    - "$x$ if $x > 0$" would be the derivative of $x^2/2$, not ReLU
+    - "$e^x / (1 + e^x)^2$" is the derivative of sigmoid
+    - "$1$ if $x \\geq 0$" incorrectly includes $x = 0$ where derivative is undefined
+    - "$0$ if $x > 0$, $1$ if $x < 0$" has the regions exactly backwards
 
-    **Practical note:** The undefined derivative at x = 0 rarely matters since exact zero inputs are uncommon with floating-point arithmetic.
+    **Practical note:** The undefined derivative at $x = 0$ rarely matters since exact zero inputs are uncommon with floating-point arithmetic.
   </div>
   </slot>
 </Challenge>
@@ -135,12 +135,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
     ![Activation Functions Comparison](./activation-functions-diagram.png)
     *Visual comparison: ReLU maintains unit gradients (green) while sigmoid gradients diminish exponentially through layers (red). This multiplicative effect makes early layers impossible to train with sigmoid in deep networks.*
 
-    **The vanishing gradient problem:** In deep networks with sigmoid activations, gradients get multiplied by many small values (σ'(x) ≤ 0.25), causing them to approach zero in early layers. With a 10-layer network, gradients can shrink by (0.25)^10 ≈ 0.000001!
+    **The vanishing gradient problem:** In deep networks with sigmoid activations, gradients get multiplied by many small values ($\\sigma'(x) \\leq 0.25$), causing them to approach zero in early layers. With a 10-layer network, gradients can shrink by $(0.25)^{10} \\approx 0.000001$!
 
     **Historical impact:** This problem limited neural networks to ~2-3 layers before ReLU. The "deep learning revolution" was largely enabled by ReLU allowing networks with 10s or 100s of layers.
 
     **Why other explanations are wrong:**
-    - ReLU doesn't amplify gradients—it preserves them (gradient = 1, not > 1)
+    - ReLU doesn't amplify gradients—it preserves them (gradient $= 1$, not $> 1$)
     - ReLU significantly improves gradient flow compared to sigmoid
     - Gradient explosion is a separate problem, not caused by ReLU
     - While ReLU zeros gradients for negative inputs, this is the "dead neuron" problem, not vanishing gradients
@@ -175,7 +175,7 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    Dead neurons occur when a ReLU unit consistently receives negative inputs, causing it to output zero. Since the gradient is also zero for negative inputs, these neurons stop learning entirely. Leaky ReLU with α = 0.01 provides a small but non-zero gradient (0.01) for negative inputs, allowing "dead" neurons to potentially recover.
+    Dead neurons occur when a ReLU unit consistently receives negative inputs, causing it to output zero. Since the gradient is also zero for negative inputs, these neurons stop learning entirely. Leaky ReLU with $\\alpha = 0.01$ provides a small but non-zero gradient $(0.01)$ for negative inputs, allowing "dead" neurons to potentially recover.
 
     **Why other solutions are less direct:**
     - Lower learning rate might help but doesn't address the fundamental issue
@@ -196,12 +196,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="ReLU Deep Dive"
   title="Leaky ReLU Definition"
   options={[
-    {text: 'LeakyReLU(x) = x + α * max(0, -x)'},
-    {text: 'LeakyReLU(x) = sigmoid(x) + αx'},
-    {text: 'LeakyReLU(x) = max(αx, x) where α is a small positive constant (e.g., 0.01)', isAnswer: true },
-    {text: 'LeakyReLU(x) = x * α if x < 0, 0 otherwise'},
-    {text: 'LeakyReLU(x) = ReLU(x) + α * ReLU(-x)'},
-    {text: 'LeakyReLU(x) = max(0, x) + α for small positive α'},
+    {text: '$\\text{LeakyReLU}(x) = x + \\alpha \\cdot \\max(0, -x)$'},
+    {text: '$\\text{LeakyReLU}(x) = \\text{sigmoid}(x) + \\alpha x$'},
+    {text: '$\\text{LeakyReLU}(x) = \\max(\\alpha x, x)$ where $\\alpha$ is a small positive constant (e.g., $0.01$)', isAnswer: true },
+    {text: '$\\text{LeakyReLU}(x) = x \\cdot \\alpha$ if $x < 0$, $0$ otherwise'},
+    {text: '$\\text{LeakyReLU}(x) = \\text{ReLU}(x) + \\alpha \\cdot \\text{ReLU}(-x)$'},
+    {text: '$\\text{LeakyReLU}(x) = \\max(0, x) + \\alpha$ for small positive $\\alpha$'},
   ]}
 >
   <slot name="question">
@@ -216,20 +216,20 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    Leaky ReLU is defined as max(αx, x) where α is typically 0.01. For negative inputs, it outputs αx instead of 0, providing a small but non-zero gradient that allows "dead" neurons to potentially recover during training.
+    Leaky ReLU is defined as $\\max(\\alpha x, x)$ where $\\alpha$ is typically $0.01$. For negative inputs, it outputs $\\alpha x$ instead of $0$, providing a small but non-zero gradient that allows "dead" neurons to potentially recover during training.
 
     **Equivalent formulations:**
-    - LeakyReLU(x) = x if x > 0, αx if x ≤ 0  
-    - LeakyReLU(x) = max(αx, x) (most compact)
+    - $\\text{LeakyReLU}(x) = x$ if $x > 0$, $\\alpha x$ if $x \\leq 0$
+    - $\\text{LeakyReLU}(x) = \\max(\\alpha x, x)$ (most compact)
 
     **Why other definitions are wrong:**
-    - max(0, x) + α adds a constant shift, not a leaky negative region
-    - "x * α if x < 0, x otherwise" is correct behavior but less elegant notation
-    - sigmoid(x) + αx combines two different activation paradigms incorrectly
-    - ReLU(x) + α * ReLU(-x) is mathematically equivalent but unnecessarily complex
-    - x + α * max(0, -x) is also equivalent but the max(αx, x) form is standard
+    - $\\max(0, x) + \\alpha$ adds a constant shift, not a leaky negative region
+    - "$x \\cdot \\alpha$ if $x < 0$, $x$ otherwise" is correct behavior but less elegant notation
+    - $\\text{sigmoid}(x) + \\alpha x$ combines two different activation paradigms incorrectly
+    - $\\text{ReLU}(x) + \\alpha \\cdot \\text{ReLU}(-x)$ is mathematically equivalent but unnecessarily complex
+    - $x + \\alpha \\cdot \\max(0, -x)$ is also equivalent but the $\\max(\\alpha x, x)$ form is standard
 
-    **Key insight:** The "leak" allows a small gradient (α) to flow through for negative inputs, preventing complete neuron death.
+    **Key insight:** The "leak" allows a small gradient ($\\alpha$) to flow through for negative inputs, preventing complete neuron death.
   </div>
   </slot>
 </Challenge>
@@ -250,7 +250,7 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 >
   <slot name="question">
   <div className="question">
-    What is the computational complexity of evaluating ReLU(x) = max(0, x) for a **single input**?
+    What is the computational complexity of evaluating $\\text{ReLU}(x) = \\max(0, x)$ for a **single input**?
   </div>
   </slot>
 
@@ -260,7 +260,7 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    ReLU has O(1) complexity—it requires only a simple comparison (x > 0) and conditional assignment. This is much more efficient than sigmoid or tanh which require expensive exponential computations, making ReLU ideal for large-scale neural networks.
+    ReLU has $O(1)$ complexity—it requires only a simple comparison ($x > 0$) and conditional assignment. This is much more efficient than sigmoid or tanh which require expensive exponential computations, making ReLU ideal for large-scale neural networks.
 
     **Detailed comparison:**
     - **ReLU:** Single comparison + conditional assignment
@@ -269,10 +269,10 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
     - **Swish:** Exponential + division + multiplication
 
     **Why other complexities don't apply:**
-    - O(log n) or O(n) would suggest the operation scales with input size, but ReLU processes each element independently
-    - O(e^n) vastly overestimates—even sigmoid is just O(1) per element
-    - O(n²) would imply pairwise operations between inputs
-    - O(√n) has no basis in the simple max operation
+    - $O(\\log n)$ or $O(n)$ would suggest the operation scales with input size, but ReLU processes each element independently
+    - $O(e^n)$ vastly overestimates—even sigmoid is just $O(1)$ per element
+    - $O(n^2)$ would imply pairwise operations between inputs
+    - $O(\\sqrt{n})$ has no basis in the simple max operation
 
     **Practical impact:** This efficiency allows ReLU networks to train and infer much faster than networks using transcendental activation functions.
   </div>
@@ -285,12 +285,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Mathematical Foundations"
   title="He Initialization with ReLU"
   options={[
-    {text: 'Weights ~ U[-1/√n_in, 1/√n_in] - uniform distribution'},
-    {text: 'Weights ~ N(0, 6/(n_in + n_out)) - Xavier for ReLU'},
-    {text: 'Weights ~ N(0, 1/√n_in) - normalized Gaussian'},
-    {text: 'Weights ~ N(0, 2/n_in) where n_in is the number of input units', isAnswer: true },
-    {text: 'Weights ~ N(0, 1/(n_in + n_out)) - symmetric Xavier'},
-    {text: 'Weights ~ N(0, 1/n_in) - standard Xavier initialization'},
+    {text: 'Weights $\\sim U[-1/\\sqrt{n_{\\text{in}}}, 1/\\sqrt{n_{\\text{in}}}]$ - uniform distribution'},
+    {text: 'Weights $\\sim N(0, 6/(n_{\\text{in}} + n_{\\text{out}}))$ - Xavier for ReLU'},
+    {text: 'Weights $\\sim N(0, 1/\\sqrt{n_{\\text{in}}})$ - normalized Gaussian'},
+    {text: 'Weights $\\sim N(0, 2/n_{\\text{in}})$ where $n_{\\text{in}}$ is the number of input units', isAnswer: true },
+    {text: 'Weights $\\sim N(0, 1/(n_{\\text{in}} + n_{\\text{out}}))$ - symmetric Xavier'},
+    {text: 'Weights $\\sim N(0, 1/n_{\\text{in}})$ - standard Xavier initialization'},
   ]}
 >
   <slot name="question">
@@ -300,25 +300,25 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   </slot>
 
   <slot name='hints'>
-    ReLU zeros out negative values. How does this affect the variance of activations compared to symmetric functions like tanh?
+    ReLU zeros out negative values. How does this affect the variance of activations compared to symmetric functions like $\\tanh$?
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    He initialization uses weights drawn from N(0, 2/n_in), where n_in is the number of input connections. The factor of 2 accounts for ReLU's property of zeroing out negative inputs, maintaining proper variance propagation through the network and preventing activation collapse.
+    He initialization uses weights drawn from $N(0, 2/n)$, where $n$ is the number of input connections. The factor of $2$ accounts for ReLU's property of zeroing out negative inputs, maintaining proper variance propagation through the network and preventing activation collapse.
 
     **The math behind it:**
-    - ReLU zeros ~half the inputs, effectively halving the variance
-    - To maintain unit variance through layers, we need to compensate with 2x larger initialization
-    - For symmetric activations like tanh, Xavier uses variance 1/n_in
-    - For ReLU, He uses variance 2/n_in to account for the lost negative half
+    - ReLU zeros $\\sim$half the inputs, effectively halving the variance
+    - To maintain unit variance through layers, we need to compensate with $2\\times$ larger initialization
+    - For symmetric activations like $\\tanh$, Xavier uses variance $1/n$
+    - For ReLU, He uses variance $2/n$ to account for the lost negative half
 
     **Why other initializations fall short:**
-    - Standard Xavier (1/n_in) doesn't account for ReLU's asymmetry
-    - Symmetric Xavier (1/(n_in + n_out)) is designed for symmetric activations
+    - Standard Xavier $(1/n)$ doesn't account for ReLU's asymmetry
+    - Symmetric Xavier $(1/(n + m))$ is designed for symmetric activations
     - Uniform distributions can work but Gaussian is more principled
-    - 1/√n_in gives wrong scaling (standard deviation vs variance)
-    - 6/(n_in + n_out) is Xavier for symmetric functions, wrong for ReLU
+    - $1/\\sqrt{n}$ gives wrong scaling (standard deviation vs variance)
+    - $6/(n + m)$ is Xavier for symmetric functions, wrong for ReLU
   </div>
   </slot>
 </Challenge>
@@ -333,8 +333,8 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
     {text: 'Exponential distribution with rate parameter λ'},
     {text: 'Half-normal distribution (truncated normal at zero)', isAnswer: true },
     {text: 'Rayleigh distribution for non-negative values'},
-    {text: 'Standard normal distribution N(0,1)'},
-    {text: 'Uniform distribution over [0, ∞)'},
+    {text: 'Standard normal distribution $N(0,1)$'},
+    {text: 'Uniform distribution over $[0, \\infty)$'},
   ]}
 >
   <slot name="question">
@@ -352,11 +352,11 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
     When ReLU is applied to normally distributed inputs with zero mean, the output follows a half-normal distribution—essentially a normal distribution truncated at zero. This asymmetric distribution affects the statistics of subsequent layers and influences batch normalization behavior.
 
     **Mathematical details:**
-    - Input: X ~ N(0, σ²)  
-    - Output: Y = max(0, X)
-    - Y follows half-normal distribution with same σ
-    - Mean of Y = σ√(2/π) ≈ 0.8σ (no longer zero!)
-    - Variance of Y = σ²(1 - 2/π) ≈ 0.36σ²
+    - Input: $X \\sim N(0, \\sigma^2)$
+    - Output: $Y = \\max(0, X)$
+    - $Y$ follows half-normal distribution with same $\\sigma$
+    - Mean of $Y = \\sigma \\cdot 0.8$ (no longer zero!)
+    - Variance of $Y = \\sigma^2 \\cdot 0.36$
 
     **Why other distributions are incorrect:**
     - Uniform distribution would require uniform inputs, not normal
@@ -376,37 +376,37 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Mathematical Foundations"
   title="Gradient Flow Mathematics"
   options={[
-    {text: '∂L/∂x = |∂L/∂y| (absolute value of upstream gradient)'},
-    {text: '∂L/∂x = max(0, ∂L/∂y) (ReLU applied to gradient)'},
-    {text: '∂L/∂x = ∂L/∂y for all x (gradient passes through unchanged)'},
-    {text: '∂L/∂x = ∂L/∂y if x > 0, 0 if x ≤ 0', isAnswer: true },
-    {text: '∂L/∂x = x * ∂L/∂y (input-weighted gradient)'},
-    {text: '∂L/∂x = sigmoid(∂L/∂y) (sigmoid-gated gradient)'},
+    {text: '$\\partial L/\\partial x = |\\partial L/\\partial y|$ (absolute value of upstream gradient)'},
+    {text: '$\\partial L/\\partial x = \\max(0, \\partial L/\\partial y)$ (ReLU applied to gradient)'},
+    {text: '$\\partial L/\\partial x = \\partial L/\\partial y$ for all $x$ (gradient passes through unchanged)'},
+    {text: '$\\partial L/\\partial x = \\partial L/\\partial y$ if $x > 0$, $0$ if $x \\leq 0$', isAnswer: true },
+    {text: '$\\partial L/\\partial x = x \\cdot \\partial L/\\partial y$ (input-weighted gradient)'},
+    {text: '$\\partial L/\\partial x = \\text{sigmoid}(\\partial L/\\partial y)$ (sigmoid-gated gradient)'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    In backpropagation through a ReLU layer, how is the gradient ∂L/∂x computed from the upstream gradient ∂L/∂y?
+    In backpropagation through a ReLU layer, how is the gradient $\\partial L/\\partial x$ computed from the upstream gradient $\\partial L/\\partial y$?
   </div>
   </slot>
 
   <slot name='hints'>
-    Chain rule says: local gradient × upstream gradient. What's the local gradient of ReLU?
+    Chain rule says: local gradient $\\times$ upstream gradient. What's the local gradient of ReLU?
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-    The gradient through ReLU is ∂L/∂x = ∂L/∂y if x > 0, and 0 if x ≤ 0. This implements the chain rule where the local gradient of ReLU (1 or 0) is multiplied by the upstream gradient, creating a "gate" that either passes or blocks gradient flow.
+    The gradient through ReLU is $\\partial L/\\partial x = \\partial L/\\partial y$ if $x > 0$, and $0$ if $x \\leq 0$. This implements the chain rule where the local gradient of ReLU ($1$ or $0$) is multiplied by the upstream gradient, creating a "gate" that either passes or blocks gradient flow.
 
     **Chain rule breakdown:**
-    - ∂L/∂x = (∂L/∂y) × (∂y/∂x)
-    - ∂y/∂x = 1 if x > 0, 0 if x ≤ 0 (ReLU derivative)
-    - Therefore: ∂L/∂x = ∂L/∂y × 1 = ∂L/∂y when x > 0
-    - And: ∂L/∂x = ∂L/∂y × 0 = 0 when x ≤ 0
+    - $\\partial L/\\partial x = (\\partial L/\\partial y) \\times (\\partial y/\\partial x)$
+    - $\\partial y/\\partial x = 1$ if $x > 0$, $0$ if $x \\leq 0$ (ReLU derivative)
+    - Therefore: $\\partial L/\\partial x = \\partial L/\\partial y \\times 1 = \\partial L/\\partial y$ when $x > 0$
+    - And: $\\partial L/\\partial x = \\partial L/\\partial y \\times 0 = 0$ when $x \\leq 0$
 
     **Why other formulations are wrong:**
     - Gradient doesn't pass through unchanged—it gets blocked for negative inputs
-    - Input-weighting (x * ∂L/∂y) would be wrong dimensionally and mathematically
+    - Input-weighting ($x \\cdot \\partial L/\\partial y$) would be wrong dimensionally and mathematically
     - Sigmoid gating would introduce nonlinearity that doesn't exist in ReLU backprop
     - Applying ReLU to gradients isn't how backprop works
     - Taking absolute value ignores the sign information in gradients
@@ -467,12 +467,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Advanced Networks"
   title="Swish Activation Function"
   options={[
-    {text: 'Swish(x) = sigmoid(x) × ReLU(x)'},
-    {text: 'Swish(x) = x × (1 + e^(-x))'},
-    {text: 'Swish(x) = x × sigmoid(x) = x / (1 + e^(-x))', isAnswer: true },
-    {text: 'Swish(x) = x × tanh(x)'},
-    {text: 'Swish(x) = x × softmax(x)'},
-    {text: 'Swish(x) = max(0, x) × sigmoid(x)'},
+    {text: '$\\text{Swish}(x) = \\text{sigmoid}(x) \\times \\text{ReLU}(x)$'},
+    {text: '$\\text{Swish}(x) = x \\times (1 + e^{-x})$'},
+    {text: '$\\text{Swish}(x) = x \\times \\text{sigmoid}(x) = x / (1 + e^{-x})$', isAnswer: true },
+    {text: '$\\text{Swish}(x) = x \\times \\tanh(x)$'},
+    {text: '$\\text{Swish}(x) = x \\times \\text{softmax}(x)$'},
+    {text: '$\\text{Swish}(x) = \\max(0, x) \\times \\text{sigmoid}(x)$'},
   ]}
 >
   <slot name="question">
@@ -487,20 +487,20 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    Swish(x) = x × sigmoid(x) = x / (1 + e^(-x)). Unlike ReLU, Swish is smooth and differentiable everywhere, with a small negative region that can help with gradient flow. It often achieves better performance than ReLU in very deep networks, particularly in vision tasks.
+    $\\text{Swish}(x) = x \\times \\text{sigmoid}(x) = x / (1 + e^{-x})$. Unlike ReLU, Swish is smooth and differentiable everywhere, with a small negative region that can help with gradient flow. It often achieves better performance than ReLU in very deep networks, particularly in vision tasks.
 
     **Key properties of Swish:**
-    - **Smooth:** No sharp corner at x = 0 like ReLU
+    - **Smooth:** No sharp corner at $x = 0$ like ReLU
     - **Self-gated:** Uses the input to gate itself via sigmoid
-    - **Bounded below:** Approaches -0.28x for large negative x
-    - **Unbounded above:** Linear growth for large positive x
-    - **Non-monotonic:** Slightly decreases for small negative x before increasing
+    - **Bounded below:** Approaches $-0.28x$ for large negative $x$
+    - **Unbounded above:** Linear growth for large positive $x$
+    - **Non-monotonic:** Slightly decreases for small negative $x$ before increasing
 
     **Why other definitions are wrong:**
-    - max(0, x) × sigmoid(x) would zero out negative values, losing Swish's key property
-    - x × tanh(x) is a different function (though also sometimes used)
-    - x × (1 + e^(-x)) grows exponentially for negative x
-    - sigmoid(x) × ReLU(x) zeros negative values like ReLU
+    - $\\max(0, x) \\times \\text{sigmoid}(x)$ would zero out negative values, losing Swish's key property
+    - $x \\times \\tanh(x)$ is a different function (though also sometimes used)
+    - $x \\times (1 + e^{-x})$ grows exponentially for negative $x$
+    - $\\text{sigmoid}(x) \\times \\text{ReLU}(x)$ zeros negative values like ReLU
     - softmax requires a vector input, not scalar
 
     **Performance insight:** Swish's smooth negative region helps gradient flow while maintaining ReLU-like behavior for positive values.
@@ -514,12 +514,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Advanced Networks"
   title="GELU Activation Function"
   options={[
-    {text: 'GELU(x) = x × sigmoid(1.702 × x)'},
-    {text: 'GELU(x) = x × erf(x/√2)'},
-    {text: 'GELU(x) = x × (1 + tanh(√(2/π) × x))'},
-    {text: 'GELU(x) = max(0, x) × Φ(x)'},
-    {text: 'GELU(x) = x × Φ(x) where Φ is the standard normal CDF', isAnswer: true },
-    {text: 'GELU(x) = x × exp(-x²/2)'},
+    {text: '$\\text{GELU}(x) = x \\times \\text{sigmoid}(1.702 \\times x)$'},
+    {text: '$\\text{GELU}(x) = x \\times \\text{erf}(x/\\sqrt{2})$'},
+    {text: '$\\text{GELU}(x) = x \\times (1 + \\tanh(\\sqrt{2/\\pi} \\times x))$'},
+    {text: '$\\text{GELU}(x) = \\max(0, x) \\times \\Phi(x)$'},
+    {text: '$\\text{GELU}(x) = x \\times \\Phi(x)$ where $\\Phi$ is the standard normal CDF', isAnswer: true },
+    {text: '$\\text{GELU}(x) = x \\times \\exp(-x^2/2)$'},
   ]}
 >
   <slot name="question">
@@ -534,18 +534,18 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    GELU(x) = x × Φ(x) where Φ is the standard normal cumulative distribution function. It can be approximated as GELU(x) ≈ 0.5x(1 + tanh(√(2/π)(x + 0.044715x³))). GELU provides a probabilistic interpretation: it's the expected output when input is randomly set to zero with probability 1-Φ(x).
+    $\\text{GELU}(x) = x \\times \\Phi(x)$ where $\\Phi$ is the standard normal cumulative distribution function. It can be approximated using a $\\tanh$-based formula. GELU provides a probabilistic interpretation: it's the expected output when input is randomly set to zero with probability $1-\\Phi(x)$.
 
     **Probabilistic intuition:**
-    - Φ(x) = probability that standard normal random variable ≤ x
-    - GELU(x) = x × P(N(0,1) ≤ x)
-    - Larger x values are more likely to "survive" the stochastic zeroing
+    - $\\Phi(x) =$ probability that standard normal random variable $\\leq x$
+    - $\\text{GELU}(x) = x \\times P(N(0,1) \\leq x)$
+    - Larger $x$ values are more likely to "survive" the stochastic zeroing
 
     **Why other formulations are close but not exact:**
-    - max(0, x) × Φ(x) loses the smooth negative region
-    - x × exp(-x²/2) is the Gaussian PDF times x, not CDF
-    - x × erf(x/√2) is related but erf ≠ Φ (different normalization)
-    - The tanh approximation in option 5 is actually a common GELU approximation!
+    - $\\max(0, x) \\times \\Phi(x)$ loses the smooth negative region
+    - $x \\times \\exp(-x^2/2)$ is the Gaussian PDF times $x$, not CDF
+    - $x \\times \\text{erf}(x/\\sqrt{2})$ is related but $\\text{erf} \\neq \\Phi$ (different normalization)
+    - The $\\tanh$ approximation in option 5 is actually a common GELU approximation!
     - The sigmoid approximation is another fast approximation but not exact
 
     **Transformer connection:** GELU is preferred in transformers because it provides smoother gradients than ReLU while maintaining computational tractability.
@@ -605,10 +605,10 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   title="ReLU Performance Analysis"
   options={[
     {text: 'Activation patterns are completely random and unpredictable'},
-    {text: 'More than 90% of neurons are typically active'},
+    {text: 'More than $90\\%$ of neurons are typically active'},
     {text: 'All neurons are always active for any given input'},
-    {text: 'Approximately 50% of neurons are active (sparse activation)', isAnswer: true },
-    {text: 'Less than 10% of neurons are typically active'},
+    {text: 'Approximately $50\\%$ of neurons are active (sparse activation)', isAnswer: true },
+    {text: 'Less than $10\\%$ of neurons are typically active'},
     {text: 'Activation sparsity varies dramatically with input magnitude'},
   ]}
 >
@@ -624,11 +624,11 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
 
   <slot name='explanation'>
   <div className="explanation">
-    ReLU networks typically exhibit approximately 50% sparsity—about half the neurons output zero for any given input. This sparse activation pattern reduces computational requirements during inference and provides a form of implicit regularization, contributing to ReLU's effectiveness in deep learning.
+    ReLU networks typically exhibit approximately $50\\%$ sparsity—about half the neurons output zero for any given input. This sparse activation pattern reduces computational requirements during inference and provides a form of implicit regularization, contributing to ReLU's effectiveness in deep learning.
 
-    **Why ~50% sparsity:**
+    **Why $\\sim 50\\%$ sparsity:**
     - With proper initialization and training, pre-activations tend to be roughly zero-centered
-    - ReLU zeros out negative values, which is ~50% of a symmetric distribution
+    - ReLU zeros out negative values, which is $\\sim 50\\%$ of a symmetric distribution
     - This creates natural feature selection—only relevant neurons activate
 
     **Benefits of sparsity:**
@@ -638,10 +638,10 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
     - **Biological plausibility:** Real neurons also exhibit sparse firing patterns
 
     **Why other percentages are less typical:**
-    - 100% active would suggest no selectivity (poor ReLU behavior)
-    - Less than 10% would indicate severe dead neuron problems
-    - More than 90% would suggest the network isn't learning discriminative features
-    - While sparsity can vary with input, ~50% is the healthy baseline
+    - $100\\%$ active would suggest no selectivity (poor ReLU behavior)
+    - Less than $10\\%$ would indicate severe dead neuron problems
+    - More than $90\\%$ would suggest the network isn't learning discriminative features
+    - While sparsity can vary with input, $\\sim 50\\%$ is the healthy baseline
   </div>
   </slot>
 
