@@ -32,12 +32,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Activation Fundamentals"
   title="ReLU Mathematical Definition"
   options={[
-    {text: 'ReLU(x) = max(0, x)', isAnswer: true },
-    {text: 'ReLU(x) = min(0, x)'},
     {text: 'ReLU(x) = x/(1 + e^(-x))'},
-    {text: 'ReLU(x) = (e^x - e^(-x))/(e^x + e^(-x))'},
-    {text: 'ReLU(x) = x if x > 0, -x if x < 0'},
     {text: 'ReLU(x) = |x|'},
+    {text: 'ReLU(x) = max(0, x)', isAnswer: true },
+    {text: 'ReLU(x) = (e^x - e^(-x))/(e^x + e^(-x))'},
+    {text: 'ReLU(x) = min(0, x)'},
+    {text: 'ReLU(x) = x if x > 0, -x if x < 0'},
   ]}
 >
   <slot name="question">
@@ -70,12 +70,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Activation Fundamentals"
   title="ReLU Derivative"
   options={[
-    {text: '1 if x > 0, 0 if x < 0, undefined at x = 0', isAnswer: true },
-    {text: 'Always 1 regardless of input value'},
-    {text: 'x if x > 0, 0 otherwise'},
-    {text: 'e^x / (1 + e^x)^2'},
-    {text: '1 if x ≥ 0, 0 if x < 0'},
     {text: '0 if x > 0, 1 if x < 0'},
+    {text: '1 if x > 0, 0 if x < 0, undefined at x = 0', isAnswer: true },
+    {text: 'e^x / (1 + e^x)^2'},
+    {text: 'Always 1 regardless of input value'},
+    {text: '1 if x ≥ 0, 0 if x < 0'},
+    {text: 'x if x > 0, 0 otherwise'},
   ]}
 >
   <slot name="question">
@@ -110,12 +110,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Activation Fundamentals"
   title="Vanishing Gradient Problem"
   options={[
-    {text: 'ReLU maintains constant gradients for positive inputs', isAnswer: true },
-    {text: 'ReLU amplifies gradients exponentially for large inputs'},
-    {text: 'ReLU has no effect on gradient flow compared to sigmoid'},
-    {text: 'ReLU causes gradients to explode in deep networks'},
-    {text: 'ReLU eliminates gradients entirely for all negative inputs'},
     {text: 'ReLU provides adaptive gradients based on input magnitude'},
+    {text: 'ReLU eliminates gradients entirely for all negative inputs'},
+    {text: 'ReLU maintains constant gradients for positive inputs', isAnswer: true },
+    {text: 'ReLU has no effect on gradient flow compared to sigmoid'},
+    {text: 'ReLU amplifies gradients exponentially for large inputs'},
+    {text: 'ReLU causes gradients to explode in deep networks'},
   ]}
 >
   <slot name="question">
@@ -155,12 +155,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="ReLU Deep Dive"
   title="Dead Neuron Problem"
   options={[
+    {text: 'Use gradient clipping to prevent large updates'},
+    {text: 'Apply stronger L2 regularization'},
     {text: 'Lower learning rate and check weight initialization'},
     {text: 'Switch to Leaky ReLU with α = 0.01', isAnswer: true},
-    {text: 'Add more layers to increase network capacity'},
     {text: 'Increase batch size to stabilize training'},
-    {text: 'Apply stronger L2 regularization'},
-    {text: 'Use gradient clipping to prevent large updates'},
+    {text: 'Add more layers to increase network capacity'},
   ]}
 >
   <slot name="question">
@@ -196,12 +196,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="ReLU Deep Dive"
   title="Leaky ReLU Definition"
   options={[
-    {text: 'LeakyReLU(x) = max(αx, x) where α is a small positive constant (e.g., 0.01)', isAnswer: true },
-    {text: 'LeakyReLU(x) = max(0, x) + α for small positive α'},
-    {text: 'LeakyReLU(x) = x * α if x < 0, 0 otherwise'},
-    {text: 'LeakyReLU(x) = sigmoid(x) + αx'},
-    {text: 'LeakyReLU(x) = ReLU(x) + α * ReLU(-x)'},
     {text: 'LeakyReLU(x) = x + α * max(0, -x)'},
+    {text: 'LeakyReLU(x) = sigmoid(x) + αx'},
+    {text: 'LeakyReLU(x) = max(αx, x) where α is a small positive constant (e.g., 0.01)', isAnswer: true },
+    {text: 'LeakyReLU(x) = x * α if x < 0, 0 otherwise'},
+    {text: 'LeakyReLU(x) = ReLU(x) + α * ReLU(-x)'},
+    {text: 'LeakyReLU(x) = max(0, x) + α for small positive α'},
   ]}
 >
   <slot name="question">
@@ -240,12 +240,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="ReLU Deep Dive"
   title="ReLU Computational Efficiency"
   options={[
+    {text: 'O(n²) - quadratic due to matrix operations'},
     {text: 'O(1) - constant time comparison and assignment', isAnswer: true },
+    {text: 'O(√n) - square root scaling for numerical stability'},
+    {text: 'O(e^n) - exponential due to gradient computation'},
     {text: 'O(log n) - logarithmic in the input dimensionality'},
     {text: 'O(n) - linear in the size of input tensor'},
-    {text: 'O(e^n) - exponential due to gradient computation'},
-    {text: 'O(n²) - quadratic due to matrix operations'},
-    {text: 'O(√n) - square root scaling for numerical stability'},
   ]}
 >
   <slot name="question">
@@ -285,12 +285,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Mathematical Foundations"
   title="He Initialization with ReLU"
   options={[
-    {text: 'Weights ~ N(0, 2/n_in) where n_in is the number of input units', isAnswer: true },
-    {text: 'Weights ~ N(0, 1/n_in) - standard Xavier initialization'},
-    {text: 'Weights ~ N(0, 1/(n_in + n_out)) - symmetric Xavier'},
     {text: 'Weights ~ U[-1/√n_in, 1/√n_in] - uniform distribution'},
-    {text: 'Weights ~ N(0, 1/√n_in) - normalized Gaussian'},
     {text: 'Weights ~ N(0, 6/(n_in + n_out)) - Xavier for ReLU'},
+    {text: 'Weights ~ N(0, 1/√n_in) - normalized Gaussian'},
+    {text: 'Weights ~ N(0, 2/n_in) where n_in is the number of input units', isAnswer: true },
+    {text: 'Weights ~ N(0, 1/(n_in + n_out)) - symmetric Xavier'},
+    {text: 'Weights ~ N(0, 1/n_in) - standard Xavier initialization'},
   ]}
 >
   <slot name="question">
@@ -329,12 +329,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Mathematical Foundations"
   title="ReLU Output Distribution"
   options={[
-    {text: 'Half-normal distribution (truncated normal at zero)', isAnswer: true },
-    {text: 'Uniform distribution over [0, ∞)'},
-    {text: 'Exponential distribution with rate parameter λ'},
-    {text: 'Standard normal distribution N(0,1)'},
     {text: 'Chi-squared distribution with 1 degree of freedom'},
+    {text: 'Exponential distribution with rate parameter λ'},
+    {text: 'Half-normal distribution (truncated normal at zero)', isAnswer: true },
     {text: 'Rayleigh distribution for non-negative values'},
+    {text: 'Standard normal distribution N(0,1)'},
+    {text: 'Uniform distribution over [0, ∞)'},
   ]}
 >
   <slot name="question">
@@ -376,12 +376,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Mathematical Foundations"
   title="Gradient Flow Mathematics"
   options={[
-    {text: '∂L/∂x = ∂L/∂y if x > 0, 0 if x ≤ 0', isAnswer: true },
+    {text: '∂L/∂x = |∂L/∂y| (absolute value of upstream gradient)'},
+    {text: '∂L/∂x = max(0, ∂L/∂y) (ReLU applied to gradient)'},
     {text: '∂L/∂x = ∂L/∂y for all x (gradient passes through unchanged)'},
+    {text: '∂L/∂x = ∂L/∂y if x > 0, 0 if x ≤ 0', isAnswer: true },
     {text: '∂L/∂x = x * ∂L/∂y (input-weighted gradient)'},
     {text: '∂L/∂x = sigmoid(∂L/∂y) (sigmoid-gated gradient)'},
-    {text: '∂L/∂x = max(0, ∂L/∂y) (ReLU applied to gradient)'},
-    {text: '∂L/∂x = |∂L/∂y| (absolute value of upstream gradient)'},
   ]}
 >
   <slot name="question">
@@ -422,12 +422,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Advanced Networks"
   title="ReLU in Convolutional Networks"
   options={[
-    {text: 'Applied element-wise to each feature map independently', isAnswer: true },
-    {text: 'Applied across channels at each spatial location'},
-    {text: 'Applied only to the final fully connected layer'},
-    {text: 'Applied as a global pooling operation across spatial dimensions'},
-    {text: 'Applied to the concatenated feature maps before spatial pooling'},
     {text: 'Applied channel-wise with learned per-channel thresholds'},
+    {text: 'Applied as a global pooling operation across spatial dimensions'},
+    {text: 'Applied element-wise to each feature map independently', isAnswer: true },
+    {text: 'Applied only to the final fully connected layer'},
+    {text: 'Applied to the concatenated feature maps before spatial pooling'},
+    {text: 'Applied across channels at each spatial location'},
   ]}
 >
   <slot name="question">
@@ -467,12 +467,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Advanced Networks"
   title="Swish Activation Function"
   options={[
-    {text: 'Swish(x) = x × sigmoid(x) = x / (1 + e^(-x))', isAnswer: true },
-    {text: 'Swish(x) = max(0, x) × sigmoid(x)'},
-    {text: 'Swish(x) = x × tanh(x)'},
-    {text: 'Swish(x) = x × (1 + e^(-x))'},
     {text: 'Swish(x) = sigmoid(x) × ReLU(x)'},
+    {text: 'Swish(x) = x × (1 + e^(-x))'},
+    {text: 'Swish(x) = x × sigmoid(x) = x / (1 + e^(-x))', isAnswer: true },
+    {text: 'Swish(x) = x × tanh(x)'},
     {text: 'Swish(x) = x × softmax(x)'},
+    {text: 'Swish(x) = max(0, x) × sigmoid(x)'},
   ]}
 >
   <slot name="question">
@@ -514,12 +514,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Advanced Networks"
   title="GELU Activation Function"
   options={[
-    {text: 'GELU(x) = x × Φ(x) where Φ is the standard normal CDF', isAnswer: true },
-    {text: 'GELU(x) = max(0, x) × Φ(x)'},
-    {text: 'GELU(x) = x × exp(-x²/2)'},
+    {text: 'GELU(x) = x × sigmoid(1.702 × x)'},
     {text: 'GELU(x) = x × erf(x/√2)'},
     {text: 'GELU(x) = x × (1 + tanh(√(2/π) × x))'},
-    {text: 'GELU(x) = x × sigmoid(1.702 × x)'},
+    {text: 'GELU(x) = max(0, x) × Φ(x)'},
+    {text: 'GELU(x) = x × Φ(x) where Φ is the standard normal CDF', isAnswer: true },
+    {text: 'GELU(x) = x × exp(-x²/2)'},
   ]}
 >
   <slot name="question">
@@ -559,12 +559,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Practical Applications"
   title="ReLU in Batch Normalization"
   options={[
-    {text: 'Conv → Batch Normalization → ReLU', isAnswer: true },
-    {text: 'Conv → ReLU → Batch Normalization'},
-    {text: 'Batch Normalization → Conv → ReLU'},
     {text: 'ReLU → Conv → Batch Normalization'},
     {text: 'Conv → ReLU → Batch Normalization → ReLU'},
+    {text: 'Conv → Batch Normalization → ReLU', isAnswer: true },
     {text: 'Batch normalization replaces the need for ReLU entirely'},
+    {text: 'Batch Normalization → Conv → ReLU'},
+    {text: 'Conv → ReLU → Batch Normalization'},
   ]}
 >
   <slot name="question">
@@ -604,12 +604,12 @@ From the basic mathematical definition to cutting-edge alternatives like Swish a
   group="Practical Applications"
   title="ReLU Performance Analysis"
   options={[
-    {text: 'Approximately 50% of neurons are active (sparse activation)', isAnswer: true },
-    {text: 'All neurons are always active for any given input'},
-    {text: 'Less than 10% of neurons are typically active'},
-    {text: 'More than 90% of neurons are typically active'},
-    {text: 'Activation sparsity varies dramatically with input magnitude'},
     {text: 'Activation patterns are completely random and unpredictable'},
+    {text: 'More than 90% of neurons are typically active'},
+    {text: 'All neurons are always active for any given input'},
+    {text: 'Approximately 50% of neurons are active (sparse activation)', isAnswer: true },
+    {text: 'Less than 10% of neurons are typically active'},
+    {text: 'Activation sparsity varies dramatically with input magnitude'},
   ]}
 >
   <slot name="question">

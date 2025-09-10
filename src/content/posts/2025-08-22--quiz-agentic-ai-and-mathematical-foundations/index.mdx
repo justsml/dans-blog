@@ -36,13 +36,13 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="AI Agent Definition"
   index={0}
   options={[
+    {text: 'Data, Model, Training, Inference'},
     {text: 'Performance measure, Environment, Actuators, Sensors', isAnswer: true },
+    {text: 'Perception, Action, Environment, Goals'},
+    {text: 'Planning, Execution, Monitoring, Adaptation'},
     {text: 'Neural Networks, Backpropagation, Loss Function'},
     {text: 'Input, Processing, Output, Feedback'},
-    {text: 'Data, Model, Training, Inference'},
     {text: 'Sensors, Actuators, Memory, Learning'},
-    {text: 'Planning, Execution, Monitoring, Adaptation'},
-    {text: 'Perception, Action, Environment, Goals'},
   ]}
 >
 
@@ -76,12 +76,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Bellman Optimality Equation"
   index={1}
   options={[
-    {text: 'V*(s) = max_a Σ P(s\'|s,a)[R(s,a,s\') + γV*(s\')]', isAnswer: true },
-    {text: 'V*(s) = Σ P(s\')V*(s\') + R(s)'},
-    {text: 'V*(s) = R(s) + γ max_a Q(s,a)'},
     {text: 'V*(s) = E[R_t + γR_{t+1} + γ²R_{t+2} + ...]'},
-    {text: 'V*(s) = max_a Σ P(s\'|s,a)R(s,a,s\') + γV(s\')'},
     {text: 'V*(s) = argmax_a Q*(s,a)'},
+    {text: 'V*(s) = max_a Σ P(s\'|s,a)[R(s,a,s\') + γV*(s\')]', isAnswer: true },
+    {text: 'V*(s) = R(s) + γ max_a Q(s,a)'},
+    {text: 'V*(s) = Σ P(s\')V*(s\') + R(s)'},
+    {text: 'V*(s) = max_a Σ P(s\'|s,a)R(s,a,s\') + γV(s\')'},
   ]}
 >
 
@@ -121,12 +121,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="ReAct Paradigm"
   index={2}
   options={[
+    {text: 'Relational Agent Context Threading'},
+    {text: 'Real-time Action Computation'},
     {text: 'Reasoning and Acting in language models', isAnswer: true},
+    {text: 'Recursive Agent Communication Transactions'},
     {text: 'Reactive Agent Control Theory'},
     {text: 'Reinforcement and Adversarial Training'},
-    {text: 'Real-time Action Computation'},
-    {text: 'Recursive Agent Communication Transactions'},
-    {text: 'Relational Agent Context Threading'},
   ]}
 >
 
@@ -156,12 +156,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Information Theory"
   index={3}
   options={[
-    {text: 'H(X) = -Σ p(x) log p(x)', isAnswer: true },
-    {text: 'H(X) = Σ p(x)² log p(x)'},
-    {text: 'H(X) = log(|X|) - Σ p(x)'},
-    {text: 'H(X) = E[p(x)] / Var[p(x)]'},
-    {text: 'H(X) = -Σ p(x) log₂(1-p(x))'},
     {text: 'H(X) = max_x p(x) × log |X|'},
+    {text: 'H(X) = -Σ p(x) log p(x)', isAnswer: true },
+    {text: 'H(X) = E[p(x)] / Var[p(x)]'},
+    {text: 'H(X) = log(|X|) - Σ p(x)'},
+    {text: 'H(X) = -Σ p(x) log₂(1-p(x))'},
+    {text: 'H(X) = Σ p(x)² log p(x)'},
   ]}
 >
 
@@ -196,12 +196,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Nash Equilibrium"
   index={4}
   options={[
-    {text: 'No player can unilaterally improve their payoff', isAnswer: true },
-    {text: 'All players achieve their maximum possible individual payoffs'},
     {text: 'The strategy profile maximizes total welfare across all players'},
-    {text: 'Players cooperatively negotiate to reach optimal outcomes'},
     {text: 'All players use identical strategies in the equilibrium'},
+    {text: 'No player can unilaterally improve their payoff', isAnswer: true },
+    {text: 'Players cooperatively negotiate to reach optimal outcomes'},
     {text: 'The equilibrium always leads to Pareto efficient outcomes'},
+    {text: 'All players achieve their maximum possible individual payoffs'},
   ]}
 >
 
@@ -238,12 +238,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="POMDP Belief State"
   index={5}
   options={[
+    {text: 'The likelihood of achieving the agent\'s goals'},
     {text: 'A probability distribution over possible world states', isAnswer: true },
+    {text: 'A summary of the agent\'s past action history'},
     {text: 'The agent\'s confidence in its current action selection'},
     {text: 'A vector of observable features from the environment'},
     {text: 'The expected reward for following the optimal policy'},
-    {text: 'A summary of the agent\'s past action history'},
-    {text: 'The likelihood of achieving the agent\'s goals'},
   ]}
 >
 
@@ -278,12 +278,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Gradient Descent Convergence"
   index={6}
   options={[
+    {text: 'Smooth function with positive definite Hessian everywhere'},
+    {text: 'Differentiable function with finite domain'},
     {text: 'Convex function with Lipschitz continuous gradients', isAnswer: true},
+    {text: 'Monotonic function with bounded gradients'},
     {text: 'Non-convex function with bounded second derivatives'},
     {text: 'Strictly concave function with continuous first derivatives'},
-    {text: 'Differentiable function with finite domain'},
-    {text: 'Smooth function with positive definite Hessian everywhere'},
-    {text: 'Monotonic function with bounded gradients'},
   ]}
 >
 
@@ -320,12 +320,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="A* Algorithm Properties"
   index={7}
   options={[
-    {text: 'Admissible heuristic (never overestimates)', isAnswer: true },
-    {text: 'Consistent heuristic (satisfies triangle inequality)', isAnswer: true },
-    {text: 'Strictly positive heuristic values for all non-goal nodes'},
-    {text: 'Heuristic that depends on current search tree structure'},
-    {text: 'Perfect heuristic that gives exact remaining cost'},
     {text: 'Greedy heuristic that always chooses steepest descent'},
+    {text: 'Admissible heuristic (never overestimates)', isAnswer: true },
+    {text: 'Perfect heuristic that gives exact remaining cost'},
+    {text: 'Consistent heuristic (satisfies triangle inequality)', isAnswer: true },
+    {text: 'Heuristic that depends on current search tree structure'},
+    {text: 'Strictly positive heuristic values for all non-goal nodes'},
   ]}
 >
 
@@ -363,12 +363,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="KL Divergence"
   index={8}
   options={[
+    {text: 'D_KL(P||Q) = ||P - Q||²'},
+    {text: 'D_KL(P||Q) = max_x |P(x) - Q(x)|'},
+    {text: 'D_KL(P||Q) = H(P,Q) - H(P)'},
     {text: 'D_KL(P||Q) = Σ P(x) log(P(x)/Q(x))', isAnswer: true },
     {text: 'D_KL(P||Q) = Σ |P(x) - Q(x)|'},
-    {text: 'D_KL(P||Q) = ||P - Q||²'},
-    {text: 'D_KL(P||Q) = H(P,Q) - H(P)'},
     {text: 'D_KL(P||Q) = Σ Q(x) log(P(x)/Q(x))'},
-    {text: 'D_KL(P||Q) = max_x |P(x) - Q(x)|'},
   ]}
 >
 
@@ -408,12 +408,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Multi-Agent Reinforcement Learning"
   index={9}
   options={[
-    {text: 'Non-stationarity due to learning agents changing their policies', isAnswer: true },
-    {text: 'Increased computational complexity of neural network training'},
-    {text: 'Limited observation space in partially observable environments'},
-    {text: 'Difficulty in defining appropriate reward functions'},
     {text: 'Communication bandwidth limitations between agents'},
+    {text: 'Limited observation space in partially observable environments'},
+    {text: 'Non-stationarity due to learning agents changing their policies', isAnswer: true },
     {text: 'Synchronization problems in distributed training'},
+    {text: 'Increased computational complexity of neural network training'},
+    {text: 'Difficulty in defining appropriate reward functions'},
   ]}
 >
 
@@ -458,12 +458,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="FIPA Agent Communication"
   index={10}
   options={[
-    {text: 'Foundation for Intelligent Physical Agents', isAnswer: true},
-    {text: 'Formal Interface Protocol Architecture'},
-    {text: 'Federated Information Processing Association'},
-    {text: 'Framework for Interoperable Planning Algorithms'},
     {text: 'Functional Integration Platform for Agents'},
+    {text: 'Framework for Interoperable Planning Algorithms'},
+    {text: 'Foundation for Intelligent Physical Agents', isAnswer: true},
     {text: 'Fast Inter-Process Agent communication'},
+    {text: 'Federated Information Processing Association'},
+    {text: 'Formal Interface Protocol Architecture'},
   ]}
 >
 
@@ -498,12 +498,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Eigenvalue Applications"
   index={11}
   options={[
-    {text: 'PageRank algorithm and Markov chain stationary distributions', isAnswer: true },
-    {text: 'Gradient computation in backpropagation algorithms'},
-    {text: 'Loss function optimization in neural network training'},
     {text: 'Feature selection in supervised learning tasks'},
     {text: 'Activation function design in deep networks'},
+    {text: 'PageRank algorithm and Markov chain stationary distributions', isAnswer: true },
     {text: 'Batch normalization in convolutional layers'},
+    {text: 'Gradient computation in backpropagation algorithms'},
+    {text: 'Loss function optimization in neural network training'},
   ]}
 >
 
@@ -545,10 +545,10 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Environment Classifications"
   index={12}
   options={[
-    {text: 'Deterministic, fully observable, static, discrete'},
-    {text: 'Stochastic, partially observable, dynamic, continuous', isAnswer: true },
-    {text: 'Episodic, single-agent, known, accessible'},
     {text: 'Sequential, competitive, unknown, inaccessible'},
+    {text: 'Stochastic, partially observable, dynamic, continuous', isAnswer: true },
+    {text: 'Deterministic, fully observable, static, discrete'},
+    {text: 'Episodic, single-agent, known, accessible'},
   ]}
 >
 
@@ -587,12 +587,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Monte Carlo Tree Search"
   index={13}
   options={[
-    {text: 'Selection, Expansion, Simulation, Backpropagation', isAnswer: true },
-    {text: 'Initialize, Evaluate, Mutate, Select'},
-    {text: 'Explore, Exploit, Update, Converge'},
-    {text: 'Sample, Estimate, Optimize, Validate'},
     {text: 'Plan, Act, Observe, Learn'},
     {text: 'Generate, Test, Refine, Execute'},
+    {text: 'Explore, Exploit, Update, Converge'},
+    {text: 'Selection, Expansion, Simulation, Backpropagation', isAnswer: true },
+    {text: 'Sample, Estimate, Optimize, Validate'},
+    {text: 'Initialize, Evaluate, Mutate, Select'},
   ]}
 >
 
@@ -628,12 +628,12 @@ From Markov Decision Processes to multi-agent coordination, from information the
   title="Variational Inference"
   index={14}
   options={[
+    {text: 'Estimate gradients using finite differences'},
+    {text: 'Approximate integrals using importance sampling'},
     {text: 'Minimize KL(q(z)||p(z|x)) by maximizing ELBO', isAnswer: true },
-    {text: 'Maximize likelihood using EM algorithm iterations'},
     {text: 'Sample from posterior using MCMC chains'},
     {text: 'Optimize hyperparameters using grid search'},
-    {text: 'Approximate integrals using importance sampling'},
-    {text: 'Estimate gradients using finite differences'},
+    {text: 'Maximize likelihood using EM algorithm iterations'},
   ]}
 >
 
