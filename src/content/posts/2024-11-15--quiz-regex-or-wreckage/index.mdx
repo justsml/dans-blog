@@ -124,7 +124,14 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - Until finding `</div>`
     - The `g` flag makes it match all occurrences
 
-    Without the `?`, the greedy `.*` would match everything from the first `<div>` to the last `</div>`, giving one big match. With `?`, it matches each pair separately.
+    ![Regex Pattern Matching Process](./regex-matching-diagram.png)
+    *Visual breakdown: Each regex component has a specific role in the matching process. The `?` quantifier makes `.*` "lazy" - it stops as soon as it finds the first `</div>`, rather than greedily consuming everything until the last one.*
+
+    **Greedy vs Non-Greedy in action:**
+    - **Greedy `.*`:** Matches `<div>Hello</div><div>World</div>` as ONE match
+    - **Non-greedy `.*?`:** Matches `<div>Hello</div>` and `<div>World</div>` as TWO separate matches
+
+    This distinction is crucial when parsing structured text like HTML, XML, or any nested content.
 
     [Learn more about greedy vs lazy matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>

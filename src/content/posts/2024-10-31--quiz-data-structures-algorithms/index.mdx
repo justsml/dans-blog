@@ -83,6 +83,17 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   <slot name='explanation'>
   <div className="explanation">
     O(1) represents constant time complexity. It means the algorithm always takes the same amount of time to run, regardless of the input size.
+
+    ![Big O Complexity Comparison](./big-o-complexity-chart.png)
+    *Visual comparison: O(1) remains flat while other complexities grow dramatically with input size. This makes O(1) operations incredibly valuable for performance-critical applications.*
+
+    **Real-world examples of O(1) operations:**
+    - Array access by index: `arr[5]`
+    - Hash table lookup (average case)
+    - Stack push/pop operations
+    - Getting the first element of a linked list
+
+    **Why this matters:** As your data grows from 1,000 to 1,000,000 items, O(1) operations still take the same time, while O(n²) operations become 1 trillion times slower!
   </div>
   </slot>
 
@@ -579,6 +590,18 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   <slot name='explanation'>
   <div className="explanation">
     In-order, Pre-order, and Post-order are the three common techniques to traverse binary trees, each with a different order of visiting nodes.
+
+    ![Binary Tree Structure and Traversals](./binary-tree-diagram.png)
+    *Visual demonstration: Each traversal method visits nodes in a specific order. The colored arrows show the path taken for each traversal type, revealing different sequences from the same tree structure.*
+
+    **Traversal patterns explained:**
+    - **In-order (Left-Root-Right):** 20, 30, 40, 50, 60, 70, 80 → Results in sorted order for BSTs!
+    - **Pre-order (Root-Left-Right):** 50, 30, 20, 40, 70, 60, 80 → Useful for copying tree structure
+    - **Post-order (Left-Right-Root):** 20, 40, 30, 60, 80, 70, 50 → Used for safe deletion operations
+
+    **Memory trick:** "In-order gives you sorted data, Pre-order builds the tree, Post-order tears it down safely."
+
+    **Note:** Breadth-First and Depth-First are general graph traversal strategies, not specific binary tree traversal orders.
   </div>
   </slot>
 

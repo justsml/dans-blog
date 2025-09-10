@@ -321,6 +321,14 @@ There are also several units that have always been around but are rarely used, l
 
       The `align-items` and `justify-content` properties are used for flexbox and grid layouts, but not flow.
 
+      ![Flexbox Layout Behavior](./flexbox-layout-diagram.png)
+      *Visual comparison: Flexbox properties like `justify-content` and `align-items` control positioning along main and cross axes. In contrast, flow layout now supports `align-content` for vertical centering without changing the layout method.*
+
+      **Layout context matters:**
+      - **Flow layout:** Use `align-content` for vertical centering (CSS 2024)
+      - **Flexbox:** Use `justify-content` (main axis) and `align-items` (cross axis)
+      - **Grid:** Similar flex properties plus `place-items` shorthand
+      
       Both `margin: 0 auto;` and `margin: auto;` center a block element horizontally, but not vertically.
     </div>
   </slot>

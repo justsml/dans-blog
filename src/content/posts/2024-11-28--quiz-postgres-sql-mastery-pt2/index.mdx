@@ -53,12 +53,17 @@ Good luck! 🍀
 
     The answer here is `JOIN ALL` ❌.
 
+    ![SQL JOIN Types Diagram](./sql-joins-diagram.png)
+    *Visual guide: Each JOIN type returns different combinations of data from two tables. The Venn diagrams show which records are included in the result set.*
+
     The correct JOIN types are:
-    - `INNER JOIN` (default JOIN)
-    - `LEFT JOIN` (or `LEFT OUTER JOIN`)
-    - `RIGHT JOIN` (or `RIGHT OUTER JOIN`)
-    - `FULL JOIN` (or `FULL OUTER JOIN`)
-    - `CROSS JOIN` (aka "The Self Join," aka "The Lonely JOIN," famously known-at-parties as the `Cartesian product`!)
+    - **`INNER JOIN`** (default JOIN) - Only matching records from both tables
+    - **`LEFT JOIN`** (or `LEFT OUTER JOIN`) - All records from left table + matches from right
+    - **`RIGHT JOIN`** (or `RIGHT OUTER JOIN`) - All records from right table + matches from left
+    - **`FULL JOIN`** (or `FULL OUTER JOIN`) - All records from both tables, matched where possible
+    - **`CROSS JOIN`** (aka "The Self Join," aka "The Lonely JOIN," famously known-at-parties as the `Cartesian product`!) - Every row from left table paired with every row from right table
+
+    **Memory tip:** Think of JOINs as different ways of combining puzzle pieces - some need perfect matches, others are more forgiving about missing pieces.
   </div>
   </slot>
 </Challenge>
