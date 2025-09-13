@@ -7,14 +7,15 @@ import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
+import tailwindcss from "@tailwindcss/vite";
 // import { PostCollections } from "./src/shared/dataCache";
 // import { toDate } from "./src/shared/dateUtils";
 import { statSync } from "fs";
+
 // import remarkMermaid from 'remark-mermaidjs'
 
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
@@ -34,9 +35,12 @@ export default defineConfig({
   markdown: {
     // remarkPlugins: [remarkMermaid],
   },
+  
   vite: {
+    plugins: [tailwindcss()],
     build: {
-      assetsInlineLimit: 2048, // 2kb - default is 4096
+      assetsInlineLimit: 4096,
+      // assetsInlineLimit: 2048, // 2kb - default is 4096
     },
   },
   // experimental: {
