@@ -3,8 +3,7 @@ module.exports = {
    * @type {import('postcss').Plugin[]}
    */
   plugins: [
-    require('tailwindcss/nesting'),
-    require('tailwindcss'),
+    require('@tailwindcss/postcss'),
     require('autoprefixer'),
     require('cssnano'),
   ],

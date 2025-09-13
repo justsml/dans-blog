@@ -396,6 +396,8 @@ const NavMenu = ({
                         src={avatarImage.src}
                         width={avatarImage.width}
                         height={avatarImage.height}
+                        loading="lazy"
+                        decoding="async"
                         className="u-photo p"
                       />
                     </a>

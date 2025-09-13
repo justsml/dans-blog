@@ -46,7 +46,6 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<link rel="preconnect" href="https://unpkg.com" />
 <link rel="preconnect" href="https://posthog.com" />
 <link rel="canonical" class="p-url" href={canonicalURL} />
 <link rel="sitemap" href="/sitemap-0.xml" />
@@ -151,12 +150,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     scriptEl.setAttribute("data-x-htmx-tag", "");
     scriptEl.setAttribute("defer", "");
     scriptEl.setAttribute("async", "");
-    scriptEl.setAttribute("src", "https://unpkg.com/htmx.org@2.0.2");
-    scriptEl.setAttribute(
-      "integrity",
-      "sha384-Y7hw+L/jvKeWIRRkqWYfPcvVxHzVzn5REgzbawhxAuQGwX1XWe70vji+VSeHOThJ",
-    );
-    scriptEl.setAttribute("crossorigin", "anonymous");
+    scriptEl.setAttribute("src", "/js/htmx.min.js");
 
     document.addEventListener("astro:page-load", function () {
       // console.log("Adding htmx script to page", global.location.pathname);

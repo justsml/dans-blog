@@ -37,7 +37,9 @@ export default defineConfig({
   },
   
   vite: {
-    plugins: [tailwindcss()],
+    plugins: [tailwindcss({
+      
+    })],
     build: {
       assetsInlineLimit: 4096,
       // assetsInlineLimit: 2048, // 2kb - default is 4096
