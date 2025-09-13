@@ -11,7 +11,7 @@ import pagefind from "astro-pagefind";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
-import tailwindcss from "@tailwindcss/vite";
+// import tailwindcss from "@tailwindcss/vite";
 // import { PostCollections } from "./src/shared/dataCache";
 // import { toDate } from "./src/shared/dateUtils";
 import { statSync } from "fs";
@@ -37,9 +37,7 @@ export default defineConfig({
   },
   
   vite: {
-    plugins: [tailwindcss({
-      
-    })],
+    // plugins: [tailwindcss({})],
     build: {
       assetsInlineLimit: 4096,
       // assetsInlineLimit: 2048, // 2kb - default is 4096
