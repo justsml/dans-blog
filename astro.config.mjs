@@ -93,10 +93,6 @@ export default defineConfig({
         return isIgnoredPath;
       },
     }),
-    tailwind({
-      applyBaseStyles: false,
-      nesting: true,
-    }),
     // partytown(),
   ],
   plugins: [
