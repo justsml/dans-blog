@@ -12,14 +12,14 @@ const loadAnalytics = async () => {
     const { default: posthog } = await import('posthog-js/dist/module.no-external');
     
     // Load additional modules only after user interaction
-    await Promise.all([
+    await Promise.allSettled([
       // @ts-expect-error
       import('posthog-js/dist/exception-autocapture') as any,
       // @ts-expect-error
       import('posthog-js/dist/tracing-headers') as any,
       // @ts-expect-error
       import('posthog-js/dist/web-vitals') as any
-    ]);
+    ]).catch(console.warn);
     
     // Defer session recording - heavy feature, load separately
     setTimeout(() => {

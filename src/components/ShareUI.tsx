@@ -28,7 +28,7 @@ import {
   TwitterShareButton,
   WhatsappShareButton,
   RedditShareCount,
-  TumblrShareCount,
+  // TumblrShareCount,
   FacebookShareCount,
   PinterestShareCount,
 } from "react-share";
@@ -56,9 +56,9 @@ export function ShareCounters({ url, className }: { url: string, className?: str
       <RedditShareCount url={url}>
         {(count) => <span className="shareCount reddit">{count}</span>}
       </RedditShareCount>
-      <TumblrShareCount url={url}>
+      {/* <TumblrShareCount url={url}>
         {(count) => <span className="shareCount tumblr">{count}</span>}
-      </TumblrShareCount>
+      </TumblrShareCount> */}
       <PinterestShareCount url={url}>
         {(count) => <span className="shareCount pin">{count}</span>}
       </PinterestShareCount>
@@ -103,10 +103,10 @@ export function ShareMenu(props: Props) {
         <TelegramShareButton {...props}>Share on Telegram</TelegramShareButton>
       ),
     },
-    {
-      value: "tumblr",
-      label: <TumblrShareButton {...props}>Share on Tumblr</TumblrShareButton>,
-    },
+    // {
+    //   value: "tumblr",
+    //   label: <TumblrShareButton {...props}>Share on Tumblr</TumblrShareButton>,
+    // },
     {
       value: "whatsapp",
       label: (
