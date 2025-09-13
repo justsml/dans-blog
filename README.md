@@ -208,6 +208,17 @@ cwebp -q 90 -resize 200 200 \
   -o src/content/posts/2024-11-15--quiz-regex-or-wreckage/dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ```
 
+```sh resizer.sh
+#!/bin/bash
+
+TARGET_SIZE="$1"
+INPUT_FILE="$2"
+
+TARGET_FILE="$(dirname "$INPUT_FILE")/$(basename "$INPUT_FILE" .webp)-$TARGET_SIZE.webp"
+cwebp -q 90 -resize "$TARGET_SIZE" "$TARGET_SIZE" "$INPUT_FILE" -o "$TARGET_FILE"
+
+```
+
 ### Generate Quiz Question Screenshots
 
 ```sh
