@@ -39,9 +39,84 @@ export default defineConfig({
   vite: {
     // plugins: [tailwindcss({})],
     build: {
+      target: 'es2020',
       assetsInlineLimit: 4096,
       // assetsInlineLimit: 2048, // 2kb - default is 4096
+      rollupOptions: {
+        treeshake: {
+          moduleSideEffects: false,
+          propertyReadSideEffects: false,
+          unknownGlobalSideEffects: false
+        },
+        output: {
+          manualChunks: (id) => {
+            // Quiz components - only load on quiz pages
+            if (id.includes('QuizUI/') ||
+                id.includes('QuizGrid') ||
+                id.includes('QuizCard') ||
+                id.includes('Challenge.tsx') ||
+                id.includes('QuizFilter') ||
+                id.includes('QuizContext') ||
+                id.includes('HintTooltip') ||
+                id.includes('QuestionStore')) {
+              return 'quiz';
+            }
+            
+            // Analytics - deferred loading
+            if (id.includes('posthog-js')) {
+              return 'analytics';
+            }
+            
+            // Heavy UI libraries
+            if (id.includes('lucide-react') ||
+                id.includes('framer-motion') ||
+                id.includes('@radix-ui/react-dialog') ||
+                id.includes('@radix-ui/react-tooltip') ||
+                id.includes('@radix-ui/react-popover') ||
+                id.includes('embla-carousel')) {
+              return 'ui-libs';
+            }
+            
+            // React and core libs
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react';
+            }
+            
+            // Astro core
+            if (id.includes('astro')) {
+              return 'astro-core';
+            }
+            
+            // Lodash utilities
+            if (id.includes('lodash')) {
+              return 'utils';
+            }
+            
+            // Node modules that are large
+            if (id.includes('node_modules')) {
+              return 'vendor';
+            }
+          },
+          chunkFileNames: (chunkInfo) => {
+            const facadeModuleId = chunkInfo.facadeModuleId ? chunkInfo.facadeModuleId.split('/').pop() : 'chunk';
+            return `[name]-[hash].js`;
+          }
+        }
+      }
     },
+    optimizeDeps: {
+      exclude: [
+        // Exclude quiz components from pre-bundling for better splitting
+        '@/components/QuizUI/QuizUI',
+        '@/components/QuizUI/QuizGrid',
+        '@/components/QuizUI/Challenge',
+        // Exclude analytics for deferred loading
+        'posthog-js/dist/recorder',
+        'posthog-js/dist/exception-autocapture',
+        'posthog-js/dist/tracing-headers',
+        'posthog-js/dist/web-vitals'
+      ]
+    }
   },
   // experimental: {
   //   contentIntellisense: true,

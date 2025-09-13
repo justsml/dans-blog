@@ -14,6 +14,7 @@ import classNames from "classnames";
 import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import { HintTooltip } from "./HintTooltip.tsx";
+import { usePostHog } from "../PostHogEntry.tsx";
 
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
@@ -146,9 +147,9 @@ export default function Challenge({
     }
   }, [questionStore, title, group, question, options, explanation]);
 
+  const { posthog } = usePostHog();
+  
   const logEvent = (name: string, data: unknown) => {
-    // @ts-ignore
-    const posthog = global?.posthog;
     if (posthog) {
       posthog.capture(name, data);
     }
