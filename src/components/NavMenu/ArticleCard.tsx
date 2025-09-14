@@ -24,6 +24,8 @@ export const ArticleCard = ({post}: any) => {
       <img
         src={cover.src}
         alt={post.data.title}
+        loading="lazy"
+        decoding="async"
         width={50}
         height={50}
       />
