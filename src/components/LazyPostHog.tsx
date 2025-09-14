@@ -32,6 +32,7 @@ export function LazyPostHog({ apiKey, host, children }: LazyPostHogProps) {
           api_host: host || 'https://app.posthog.com',
           // Defer heavy features
           disable_session_recording: true,
+          // @ts-ignore
           disable_web_vitals: true,
           disable_exception_autocapture: true,
           // Enable basic tracking
@@ -43,7 +44,9 @@ export function LazyPostHog({ apiKey, host, children }: LazyPostHogProps) {
         setTimeout(async () => {
           try {
             await Promise.all([
+              // @ts-expect-error - ts & posthog not friends
               import('posthog-js/dist/exception-autocapture'),
+              // @ts-expect-error - ts & posthog not friends
               import('posthog-js/dist/web-vitals')
             ]);
             
@@ -57,6 +60,7 @@ export function LazyPostHog({ apiKey, host, children }: LazyPostHogProps) {
         // Load session recording even later (heavy feature)
         setTimeout(async () => {
           try {
+              // @ts-expect-error - ts & posthog not friends
             await import('posthog-js/dist/recorder');
             posthogLib.startSessionRecording();
           } catch (error) {
