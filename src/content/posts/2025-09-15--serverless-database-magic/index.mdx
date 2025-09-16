@@ -1,6 +1,6 @@
 ---
-title: "Serverless Databases are Coming!"
-subTitle: "Blame AI for a wave of database innovation"
+title: "There's a wave of database innovation in 2025"
+subTitle: "And you can blame AI."
 date: 2025-09-10
 modified: 2025-09-15
 tags: [serverless, databases, AI, innovation, chroma, lanceDB, pagefind, orama]
@@ -13,7 +13,7 @@ cover_icon: data-city-square-200.webp
 cover_credit: "©️ 2025 Dan Levy"
 ---
 
-# Edge-Native Search: Modern Datastores That Punch Above Their Weight
+# Not another article about Vector DBs
 
 The database landscape has fundamentally shifted. Largely driven by the needs of AI applications, from vector-based RAG (Retrieval-Augmented Generation) to multi-modal (audio & video) searching. Sure, Postgres/PGVector, Sqlite, and Elasticsearch remain the backbone of enterprise search. But they come with significant operational overhead and complexity. Only the most important business use cases justify the extra engineering effort. (That's why you can always search for new products and never run out of results to buy, but good luck finding a specific order you placed years ago. Order history just doesn't bring in the $$$. Try any ecom site, go ahead, I'll wait.)
 
@@ -21,13 +21,21 @@ Before you deploy that massive Elasticsearch or Postgres cluster, or decide agai
 
 ## A database by any other name...
 
-> I don't know if there's a good name for these DB tools. Since NoSQL was taken, maybe, `Edge-Native Search`? How about `NoOps`? Idk, NoIDEA.
+> I don't know if there's a good name for these DB tools. Since `NoSQL` was taken, maybe `Client Only`? `Edge Search`? Not sure about the SEO on those actually. How about `NoOps`? I got NoIDEA. Anyway, I have an article to return to...
 
-Anyway, whatever they are called, **these serverless and CDN-capable datastores are transforming how I think about search for smaller- to mid-scale use cases**. Specifically, anything involving **1,000-1,000,000 records (or up to several GBs)** that previously didn't justify the engineering overhead of building costly search experiences.
+Whatever they are called, **these serverless and CDN-capable datastores** are transforming how I think about search-based features for smaller- to mid-scale use cases. Including anything with roughly **1,000-1,000,000 records (or up to several GBs)** that previously didn't justify the engineering overhead of building costly search experiences.
 
-## Four Approaches: Pagefind, Orama, Chroma, and LanceDB
+## With neighbors like these, who needs AWS RDS?
 
-What makes these tools revolutionary isn't just their technical capabilities, but their deployment philosophy. They **cost close to nothing** when at rest. They run closer to the edge, **eliminate infrastructure** complexity, support **advanced indexes**, and enable developers to ship search features that feel magical without managing traditional services, clusters, or query plans.
+One of the most overlooked aspects of these new datastores is their ability to provide multi-tenant isolation. This likely improves your security posture, reduces costs, and provides stable performance & reliability.
+
+For example, you can create a separate database per customer, and store each in its own S3 bucket and path. This avoids the complexity of multi-tenant databases, and allows for easier data compliance.
+
+## The grand tour: Pagefind, Orama, Chroma, and LanceDB
+
+Each of these tools emphasizes a different aspect of the serverless search paradigm, but they all share a common goal: making search and data retrieval portable, faster, easier, and more flexible.
+
+What makes these tools intriguing isn't just a few technical capabilities, but their deployment philosophy. They **cost close to nothing** when at rest. They run closer to the edge, **eliminate infrastructure**, support **advanced indexes**, and enable developers to ship modern search features that feel magical.
 
 {/* Whether you're building a documentation site that needs instant search, an e-commerce store requiring semantic product discovery, or an AI application demanding vector similarity matching, these tools deliver enterprise-grade search with static site simplicity. */}
 
@@ -38,11 +46,9 @@ What makes these tools revolutionary isn't just their technical capabilities, bu
 - **Chroma** dominates the AI-native space, purpose-built for RAG applications with 22.9K GitHub stars and massive developer adoption.
 - **LanceDB** brings enterprise-grade multimodal (multi-media) capabilities with a disk-based architecture that scales beyond memory limits.
 
-> **Disclaimer:** I've used Pagefind for several years, and my danlevy.net site features a [pagefind article and uses it for site search](https://danlevy.net/you-might-not-need-algolia/). In 2025, I also contributed my first PR! I've experimented with Orama and Chroma for smaller projects, and I'm currently exploring LanceDB for a larger AI application. I have no financial ties to any of these projects, just a keen interest in the evolving database landscape.
+To appreciate how far we've come, consider **fuse.js** - the old guard of client-side search that requires downloading entire datasets to browsers and struggles beyond basic fuzzy matching. The contrast illuminates just how sophisticated these modern alternatives have become.
 
-To understand how far we've come, consider **fuse.js** - the old guard of client-side search that requires downloading entire datasets to browsers and struggles beyond basic fuzzy matching. The contrast illuminates just how sophisticated these modern alternatives have become.
-
-## Feature comparison: The technical breakdown
+### Battle of the Checkboxes
 
 | Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [Fuse.js](https://fusejs.io) |
 |---------|----------|--------|---------|----------|---------|
@@ -61,14 +67,14 @@ To understand how far we've come, consider **fuse.js** - the old guard of client
 | **Hybrid Indexing** | ❌ | ✅ **Auto-optimization** | ✅ **Vector + metadata + FTS** | ✅ **Multimodal indexes** | ❌ |
 | **Multilingual** | **40+ languages** | **30 languages, 8 alphabets** | Embedding model dependent | UTF-8, multilingual FTS | Basic Unicode |
 | **Write Performance** | Fast build (2k pages/2s) | Near-instant | Optimized incremental | **Hundreds of TPS** | Synchronous blocking |
-| **Query Performance** | Sub-100ms | **21ms - 181ms** | Low-latency HNSW | **3-5ms vector search** | 200-500ms (10k records) |
+| **Query Performance** | Sub-100ms | **0.001ms - 181ms** | Sub-100ms | **3-5ms vector search** | 200-500ms (10k records) |
 | **AI/RAG Integration** | None | ✅ **Built-in RAG pipeline** | ✅ **LangChain, LlamaIndex** | ✅ **Advanced RAG + reranking** | None |
 
-## Code comparison: Implementation approaches
+### Code comparison: Implementation approaches
 
 The syntax differences reveal each tool's philosophy and target use case:
 
-### Static site search with Pagefind
+#### Static site search with Pagefind
 ```html
 <!-- Zero-config setup for static sites -->
 <link href="/pagefind/pagefind-ui.css" rel="stylesheet">
@@ -79,7 +85,7 @@ The syntax differences reveal each tool's philosophy and target use case:
 </script>
 ```
 
-### Universal search with Orama
+#### Universal search with Orama
 ```javascript
 import { create, insert, search } from '@orama/orama'
 
@@ -103,7 +109,7 @@ const results = await search(db, {
 })
 ```
 
-### AI-native search with Chroma  
+#### AI-native search with Chroma  
 ```typescript
 import { ChromaClient } from "chromadb";
 
@@ -128,7 +134,7 @@ const results = await collection.query({
 });
 ```
 
-### Enterprise-grade multimodal with LanceDB
+#### Enterprise-grade multimodal with LanceDB
 ```typescript
 import * as lancedb from "@lancedb/lancedb";
 import "@lancedb/lancedb/embedding/openai";
@@ -160,7 +166,7 @@ const results = await table.search("machine learning concepts")
   .toArray();
 ```
 
-## AI and RAG integrations take center stage
+## RAG for the rest of us
 
 The standout feature differentiating modern tools from legacy solutions is their **native AI integration**. Three of these tools have built specifically for the AI application era:
 
@@ -170,23 +176,17 @@ The standout feature differentiating modern tools from legacy solutions is their
 
 **LanceDB** brings enterprise-grade AI capabilities with **sophisticated reranking**, cross-encoder support, and multimodal embedding management. Its disk-based architecture scales to billions of vectors while maintaining 3-5ms vector search performance.
 
-## Performance characteristics reveal design philosophies
+### Performance Priority & Philosophy
 
-Each tool optimizes for different performance profiles. **Orama** achieves sub-microsecond query times (21ms-181ms) through aggressive in-memory optimization and smart data structures. **Pagefind** prioritizes bandwidth efficiency, splitting indexes into chunks that load on-demand, making even large documentation sites feel instant.
+Each tool optimizes for different performance profiles. **Orama** achieves sub-microsecond query times (0.001ms-181ms) through aggressive in-memory optimization and smart data structures. **Pagefind** prioritizes bandwidth efficiency, splitting indexes into chunks that load on-demand, making even large documentation sites feel instant.
 
 **Chroma** focuses on RAG workload optimization, with incremental index updates and thread-safe concurrent operations. **LanceDB** takes a unique disk-first approach, delivering enterprise performance while scaling beyond memory limits - crucial for applications handling massive datasets.
 
 The performance gap with legacy tools is stark. While fuse.js struggles with 200-500ms search times on 10K records, these modern alternatives consistently deliver sub-100ms experiences even on much larger datasets.
 
-## Deployment strategies match modern development workflows
+> If only Sqlite (with Vectors & FTS) weren't such a pain to get setup over a CDN...
 
-**Pagefind** represents the JAMstack ideal - build once, deploy everywhere, with perfect CDN compatibility and zero runtime dependencies. It's particularly compelling for documentation sites and static blogs where content changes infrequently but search quality matters enormously.
-
-**Orama** shines in serverless environments, running efficiently in Cloudflare Workers, AWS Lambda, or directly in browsers. Its sub-2KB bundle size and runtime flexibility make it ideal for applications requiring search across multiple environments.
-
-**Chroma and LanceDB** offer more traditional database deployment patterns but with modern cloud-native architecture. Both provide managed cloud services alongside self-hosted options, giving developers flexibility as applications scale.
-
-## Choosing your search strategy: A practical decision framework
+## Choosing your Search Weapon
 
 The decision comes down to three key factors: **data characteristics, deployment constraints, and AI requirements**. But let's get concrete about when to choose what.
 
@@ -220,35 +220,34 @@ The decision comes down to three key factors: **data characteristics, deployment
 - Budget allows for more sophisticated infrastructure
 - *Example: A media platform enabling semantic search across millions of videos and transcripts*
 
-### The migration path consideration
+## Executive Summary
 
-Remember: you're not locked in forever. **Pagefind** → **Orama** → **Chroma/LanceDB** represents a natural evolution path as applications grow in complexity. Start simple, scale when needed.
+In summary, the rise of serverless databases and edge-native search tools is reshaping the landscape of data retrieval and management. By leveraging modern architectures and eliminating operational overhead, these solutions empower developers to build sophisticated search experiences with unprecedented ease.
 
-## The bigger picture: Search as a competitive advantage
+### The bigger picture: Search as a competitive advantage
 
-These tools represent something more significant than incremental database improvements. They're **democratizing capabilities that were previously exclusive to tech giants**.
+These tools represent something more significant than incremental database improvements. They're **democratizing capabilities that were previously exclusive to tech giants, or limited to only the most critical app features**.
 
-Consider the timeline: In 2020, implementing semantic search required a dedicated ML team, GPU clusters, and months of infrastructure work. Today, it's three lines of JavaScript and a $5/month hosting bill.
+Consider the timeline: In 2020, implementing semantic search required a dedicated ML team, GPU clusters, and months of infrastructure work. Today, it's a trivial amount of code and less than a $5/month hosting bill.
+
+### (Database) Objects May Be Closer Than They Appear
 
 This isn't just about technical convenience—it's about **competitive dynamics**. Small teams can now ship search experiences that rival products built by hundred-person engineering teams. The moat around "sophisticated search" is evaporating.
 
-### What this means for your next project
+That "nice-to-have" search feature you've been postponing? It's probably easier to implement than your login system now. The question isn't whether to build great search—it's which approach matches your current constraints and growth trajectory.
 
-The old calculus is broken. That "nice-to-have" search feature you've been postponing? It's probably easier to implement than your login system now. The question isn't whether to build great search—it's which approach matches your current constraints and growth trajectory.
+> Importantly, **user expectations have shifted**. Every search box is now compared to Google, GitHub, or Notion. Users expect instant results, typo tolerance, and semantic understanding. These tools make those expectations achievable without enterprise budgets.
 
-More importantly, **user expectations have shifted**. Every search box is now compared to Google, GitHub, or Notion. Users expect instant results, typo tolerance, and semantic understanding. These tools make those expectations achievable without enterprise budgets.
+### For those about to learn...
 
-## Your next steps
-
-1. **Experiment this weekend**: Pick the tool that matches your current project and build a prototype. Most of these can be running in under an hour.
-
+1. **Experiment this weekend**: Pick the tool that matches your current project and build a prototype. Most of these can be running in under an hour or two. (Feel free to check out my demo [Emoji Search example](https://github.com/justsml/emoji-brain/tree/main) using Pagefind.)
 2. **Think beyond text search**: If you're building anything involving user-generated content, consider how semantic search might unlock new user experiences.
-
 3. **Start simple, plan for growth**: Begin with static approaches like Pagefind, but architect your data layer to support future migration to more dynamic solutions.
 
-The database landscape will continue evolving, but the trend is clear: **sophisticated search is becoming a commodity**. The competitive advantage lies not in *having* great search, but in *how creatively you apply it* to solve real user problems.
+{/* The database landscape will continue evolving, but the trend is clear: **sophisticated search is becoming a commodity**. The competitive advantage lies not in *having* great search, but in *how creatively you apply it* to solve real user problems. */}
 
 *Want to dive deeper? Check out my [practical guide to implementing Pagefind][1] for a hands-on starting point, or explore the growing ecosystem of edge-native databases that are reshaping how we think about data at scale.*
 
+> **Disclaimer:** I've used Pagefind for several years. And in 2025, I also became a contributor! I've [experimented with](https://emoji-brain.netlify.app/) Orama and Chroma for [smaller projects](https://emoji-brain.vercel.app/), and I'm currently exploring LanceDB for a larger AI application. I have no financial ties to any of these projects, just a keen interest in the evolving database landscape.
+
 [1]: https://danlevy.net/you-might-not-need-algolia/
-[2]: https://en.wikipedia.org/wiki/A_rose_by_any_other_name_would_smell_as_sweet
