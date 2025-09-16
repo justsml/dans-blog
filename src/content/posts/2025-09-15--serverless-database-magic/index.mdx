@@ -15,9 +15,11 @@ cover_credit: "©️ 2025 Dan Levy"
 
 # Not another Vector DB article
 
-The database landscape has fundamentally shifted. Largely driven by the needs of AI applications, from vector-based RAG (Retrieval-Augmented Generation) to multi-modal (audio & video) searching. Sure, Postgres/PGVector, Sqlite, and Elasticsearch remain the backbone of enterprise search. But they come with significant operational overhead and complexity. Only the most important business use cases justify the extra engineering effort. (That's why you can always search for new products and never run out of results to buy, but good luck finding a specific order you placed years ago. Order history just doesn't bring in the $$$. Try any ecom site, go ahead, I'll wait.)
+The database landscape has fundamentally shifted. Largely driven by the needs of AI applications, from vector-based RAG (Retrieval-Augmented Generation) to multi-modal (audio & video) searching. Sure, Postgres/PGVector, Sqlite, and Elasticsearch remain the backbone of enterprise search. But they come with significant operational overhead and complexity. Only the most important business use cases justify the extra engineering effort. (That's why you can always search for new products and never run out of results to buy, but good luck finding a specific order you placed years ago. Order history just doesn't bring in the $$$.)
 
-Before you deploy that massive Elasticsearch or Postgres cluster, or decide against a search feature due to classic DB costs, read this article to explore a fascinating newer class of DBs: **built on top of object-based storage & HTTP!** (like AWS S3, Cloudflare's R2, Backblaze B2, etc.)
+What if you could get **enterprise-grade search features** without using all your engineering time & resources? **_It is more possible than ever before!_** With zero servers? **_Yes, yes I say!_** With only a plain old S3 bucket to store it all?!? **_Absolutely!_**
+
+So, before you deploy that soon-to-be-massive Elasticsearch or Postgres cluster, or decide _against_ a search feature due to traditional DB costs, read this article to explore a fascinating newer class of DBs, **built specially for object-based storage over HTTP!** (like AWS S3, Cloudflare's R2, Backblaze B2, etc.)
 
 ## A database by any other name...
 
@@ -46,28 +48,51 @@ What makes these tools intriguing isn't just a few technical capabilities, but t
 - **Chroma** dominates the AI-native space, purpose-built for RAG applications with 22.9K GitHub stars and massive developer adoption.
 - **LanceDB** brings enterprise-grade multimodal (multi-media) capabilities with a disk-based architecture that scales beyond memory limits.
 
-To appreciate how far we've come, consider **fuse.js** - the old guard of client-side search that requires downloading entire datasets to browsers and struggles beyond basic fuzzy matching. The contrast illuminates just how sophisticated these modern alternatives have become.
+## In the shadow of reused words
+
+These services didn't make the cut: `Typesense`, `Qdrant`, `Algolia`, `Meilisearch`, `ElasticSearch`, `PGVector`.
+
+Why? They require servers, with layers of code for bespoke authZ/authN, network protocols & storage code. By switching over to pure S3 API calls (over HTTP), you can eliminate the network & custom binary protocols, simplifying your operating complexity.
+
+They may appear to have some similarities, however these "serverless search" tools are different: they will never ask for a bunch of multi-AZ & -zone EC2 boxes. No traditional servers, no strange ports to bother with, and 100% Kubernetes free. With only client libraries, your authentication & authorization is handled by IAM & AWS S3 Policies, not separate _database_ user credentials.
+
+{/* To appreciate how far we've come, consider **fuse.js** - the old guard of client-side search that requires downloading entire datasets to browsers and struggles beyond basic fuzzy matching. The contrast illuminates just how sophisticated these modern alternatives have become. */}
 
 ### Battle of the Checkboxes
+
+#### Project Overview & Community
 
 | Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [Fuse.js](https://fusejs.io) |
 |---------|----------|--------|---------|----------|---------|
 | **OpenSource Status** | MIT (100% open) | Apache 2.0 (open core) | Apache 2.0 (100% open) | Apache 2.0 (open core) | Apache 2.0 (100% open) |
-| **Hosting Options** | Self-hosted, Static only | Self-hosted + Cloud | Self-hosted + Cloud | Self-hosted + Cloud | Client-side only |
-| **GitHub Stars** | Active (CloudCannon) | **8K stars** | **22.9K stars**, 5M+ downloads | **8K stars** | **19K stars** |
-| **Last Update** | v1.4.0 (active) | Continuous releases | Weekly releases | Bi-weekly releases | v7.1.0 (Feb 2025) |
+| **Hosting Options** | Static only/Self-hosted | Self-hosted + Cloud | Self-hosted + Cloud | Self-hosted + Cloud | Client-side only |
+| **GitHub Stars** | **4.5K** | **8K** | **22.9K** | **8K** | **19K** |
+| **Maintenance** | v1.4.0 (active) | Continuous releases | Weekly releases | Bi-weekly releases | v7.1.0 (Feb 2025) |
+
+#### Core Architecture & Operations
+
+| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [Fuse.js](https://fusejs.io) |
+|---------|----------|--------|---------|----------|---------|
 | **Storage Type** | Static JSON/WASM | Memory + plugins | SQLite + Parquet | Lance columnar format | In-memory only |
-| **Write Support** | Build-time only | **Full CRUD** | **Full CRUD** | **Full CRUD** | Read-only |
-| **Update Operations** | Full rebuild | Remove + insert | Native update/upsert | **Advanced CRUD + versioning** | Collection replacement |
+| **Write Support** | Build-time only | **Full CRUD** | **Full CRUD** | **Full CRUD** | Write-once, read-only |
 | **Query Languages** | String + filters | JavaScript API | Python/JS/REST + **SQL** | **SQL + vector + REST APIs** | Basic fuzzy search |
-| **Scalar Indexing** | ✅ Metadata fields | ✅ All types | ✅ Metadata | ✅ **BTREE + BITMAP** | ✅ Basic fields |
+| **Multilingual** | **40+ languages** | **30 languages** | Embedding model dependent | UTF-8, multilingual FTS | Basic Unicode |
+
+#### Search & Indexing Capabilities
+
+| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [Fuse.js](https://fusejs.io) |
+|---------|----------|--------|---------|----------|---------|
 | **Full-Text Search** | ✅ **Advanced stemming** | ✅ **BM25, 30 languages** | ✅ SQLite FTS | ✅ **Tantivy** and **Native** | ✅ Fuzzy only |
 | **Vector/ANN Search** | ❌ | ✅ **Cosine similarity** | ✅ **HNSW** | ✅ **IVF_PQ, HNSW, GPU** | ❌ |
 | **Spatial Indexing** | ❌ | ✅ **Geosearch** | ❌ | ✅ **Point clouds** | ❌ |
 | **Hybrid Indexing** | ❌ | ✅ **Auto-optimization** | ✅ **Vector + metadata + FTS** | ✅ **Multimodal indexes** | ❌ |
-| **Multilingual** | **40+ languages** | **30 languages, 8 alphabets** | Embedding model dependent | UTF-8, multilingual FTS | Basic Unicode |
-| **Write Performance** | Fast build (2k pages/2s) | Near-instant | Optimized incremental | **Hundreds of TPS** | Synchronous blocking |
+
+#### Performance & AI Integration
+
+| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [Fuse.js](https://fusejs.io) |
+|---------|----------|--------|---------|----------|---------|
 | **Query Performance** | Sub-100ms | **0.001ms - 181ms** | Sub-100ms | **3-5ms vector search** | 200-500ms (10k records) |
+| **Write Performance** | Fast build (2k pages/2s) | Near-instant | Optimized incremental | **Hundreds of TPS** | Synchronous blocking |
 | **AI/RAG Integration** | None | ✅ **Built-in RAG pipeline** | ✅ **LangChain, LlamaIndex** | ✅ **Advanced RAG + reranking** | None |
 
 ### Code comparison: Implementation approaches
