@@ -98,11 +98,15 @@ export default defineConfig({
       // We can generate more than one DB, with different configurations
       danlevy_db: {
         // Required. Only pages matching this path regex will be indexed
-        pathMatcher: /[^\w-]+/,
+        pathMatcher: /.+/,
 
         // Optional. 'english' by default
-        language: 'english',
-
+        // language: 'english',
+        searchOptions: {
+          mode: "fulltext",
+          // Add more options here: https://docs.orama-search.com/guides/usage/initialization#searchoptions
+        },
+        caseSensitive: false,
         // Optional. ['body'] by default. Use it to constraint what is used to
         // index a page.
         contentSelectors: ['h1', 'main'],
