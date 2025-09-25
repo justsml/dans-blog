@@ -9,6 +9,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
+import orama from '@orama/plugin-astro'
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -93,6 +94,21 @@ export default defineConfig({
       applyBaseStyles: false,
       nesting: true,
     }),
+    orama({
+      // We can generate more than one DB, with different configurations
+      danlevy_db: {
+        // Required. Only pages matching this path regex will be indexed
+        pathMatcher: /[^\w-]+/,
+
+        // Optional. 'english' by default
+        language: 'english',
+
+        // Optional. ['body'] by default. Use it to constraint what is used to
+        // index a page.
+        contentSelectors: ['h1', 'main'],
+      }
+    })
+
     // partytown(),
   ],
   plugins: [
