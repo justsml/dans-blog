@@ -144,6 +144,19 @@ const NavMenu = ({
     };
   }, [currentPanel]);
 
+  // Listen for custom event to close nav panels when search opens
+  useEffect(() => {
+    const handleCloseNavPanels = () => {
+      setCurrentPanel("");
+    };
+
+    document.addEventListener('closeNavPanels', handleCloseNavPanels);
+
+    return () => {
+      document.removeEventListener('closeNavPanels', handleCloseNavPanels);
+    };
+  }, []);
+
   const togglePanel = (panel: string) => {
     setCurrentPanel(currentPanel === panel ? "" : panel);
   };

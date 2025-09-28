@@ -348,6 +348,11 @@ body {
   font-size: 1.125rem;
 }
 
+/* Prevent background scrolling when search panel is open */
+body.search-panel-open {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -1026,9 +1031,9 @@ pre.astro-code {
     font-size: 1.125rem !important;
     font-weight: 400 !important;
     line-height: 1.5 !important;
-    padding: 0 0 0 0.5rem !important;
+    padding: 0 0 0 1rem !important;
     width: 100% !important;
-    height: auto !important;
+    height: 1.5rem !important;
     flex: 1 !important;
     min-width: 0 !important;
     cursor: text !important;
