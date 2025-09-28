@@ -7,17 +7,17 @@ import { toDate } from "./dateUtils.ts";
 const getBaseName = (path: string) => {
   const parts = path.split("/");
   return parts.slice(parts.length - 2, parts.length).join("/");
-}
+};
 
 const _postsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
-).filter((post) => !post.data.hidden)
+)
+  .filter((post) => !post.data.hidden)
   .sort(
     // @ts-expect-error - data is not always defined
     (a, b) => toDate(a?.data?.date) - toDate(b?.data?.date),
   )
   .reverse() as unknown as ArticlePost[];
-
 
 // const _slugAndDateModified = _postsCollection.map((post) => ({
 //   slug: post.slug,
@@ -33,11 +33,10 @@ const _postsCollection: ArticlePost[] = (
 //   2,
 // );
 
-const _posts = _postsCollection
-  .map((post) => ({
-    ...post,
-    slug: fixSlugPrefix(post.slug),
-  }))
+const _posts = _postsCollection.map((post) => ({
+  ...post,
+  slug: fixSlugPrefix(post.slug),
+}));
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
 
@@ -92,10 +91,12 @@ export const PostCollections = {
 
   /** `getCategoryCounts` returns a sorted list of categories and their counts. */
   getCategoryCounts() {
-    return Object.entries(PostCollections._categories)
-      .sort((a, b) => (a[1] === b[1] ? 0 : a[1] > b[1] ? -1 : 1))
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .filter(([_, count]) => count > 1);
+    return (
+      Object.entries(PostCollections._categories)
+        .sort((a, b) => (a[1] === b[1] ? 0 : a[1] > b[1] ? -1 : 1))
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([_, count]) => count > 1)
+    );
   },
 
   getPosts() {
