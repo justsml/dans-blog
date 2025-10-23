@@ -137,7 +137,7 @@ netlify build && netlify deploy --prod
 - [x] Add search
 - Publish:
   - [ ] Comments Component
-  - [ ] Free local search
+  - [x] Free local search
   - [ ] Newsletter
 - [ ] Add Video page?
 - [ ] Add newsletter?
@@ -208,6 +208,17 @@ cwebp -q 90 -resize 200 200 \
   -o src/content/posts/2024-11-15--quiz-regex-or-wreckage/dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ```
 
+```sh resizer.sh
+#!/bin/bash
+
+TARGET_SIZE="$1"
+INPUT_FILE="$2"
+
+TARGET_FILE="$(dirname "$INPUT_FILE")/$(basename "$INPUT_FILE" .webp)-$TARGET_SIZE.webp"
+cwebp -q 90 -resize "$TARGET_SIZE" "$TARGET_SIZE" "$INPUT_FILE" -o "$TARGET_FILE"
+
+```
+
 ### Generate Quiz Question Screenshots
 
 ```sh
@@ -218,9 +229,10 @@ bun run screenshots
 ```
 
 ```sh
-bun run ./screenshotter/basic.ts \
-  --output ./.screens \
-  --url https://danlevy.net/should-you-use-named-or-default-exports/,https://danlevy.net/protect-your-tokens/,https://danlevy.net/securely-using-environment-variables-in-nodejs/,https://danlevy.net/naming-things-real-good/,https://danlevy.net/amazing-resources/,https://danlevy.net/deathmatch-git-rebase-vs-merge/,https://danlevy.net/guerrilla-types-in-typescript/,https://danlevy.net/you-may-not-need-axios/,https://danlevy.net/docker-server-setup-notes/,https://danlevy.net/javascript-promises-quiz/,https://danlevy.net/js-quiz-14-date-time-questions-test-your-knowledge/
+SITE_URL=https://danlevy.net/ \
+  bun run ./screenshotter/basic.ts \
+    --output ~/.screens \
+    --filter tokens
 ```
 
 ### Misc DOM Helpers

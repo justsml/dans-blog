@@ -31,11 +31,18 @@ export function EditOnGitHubLink({
       rel="noopener noreferrer"
     >
       <span style={{color: 'var(--muted)'}}>Edit on GitHub</span>
-      <img className="icon" src="/icons/github.svg" alt="GitHub" style={{
-        width: ".8rem",
-        height: ".8rem",
-        // filter: "invert(0.5)",
-      }} />
+      <img
+        className="icon"
+        src="/icons/github.svg"
+        alt="GitHub"
+        loading="lazy"
+        decoding="async"
+        style={{
+          width: ".8rem",
+          height: ".8rem",
+          // filter: "invert(0.5)",
+        }}
+      />
     </a>
   );
 }

@@ -39,12 +39,21 @@ export const ArticleCard = ({
   // console.log(cover_icon);
   const image =
     typeof icon === "string" ? (
-      <img src={icon} alt={title} width={width} height={width} />
+      <img
+        src={icon}
+        alt={title}
+        loading="lazy"
+        decoding="async"
+        width={width}
+        height={width}
+      />
     ) : (
       icon && (
         <img
           src={icon.src}
           alt={title}
+          loading="lazy"
+          decoding="async"
           width={icon.width}
           height={icon.height}
         />

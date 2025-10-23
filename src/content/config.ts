@@ -11,7 +11,7 @@ const category = defineCollection({
     })
 });
 
-const posts = defineCollection({
+export const posts = defineCollection({
   type: "content",
   // Type-check frontmatter using a schema
   schema: ({ image }) =>

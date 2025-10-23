@@ -255,64 +255,123 @@ pre {
   display: flex;
   justify-content: center;
   width: 100%;
-  z-index: 1;
+  z-index: 100;
 }
 
 .NavigationMenuList {
   display: grid;
   justify-content: center;
-  padding: 0.25rem;
-  border-radius: 0.26666rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
   margin: 0;
-
   text-wrap: nowrap;
+  gap: 0.5rem;
 
-  /* 2x2 square (small screens) */
+  /* Mobile layout */
   grid-template-rows: 1fr 1fr 1fr;
-  grid-template-columns: 2rem 1fr;
+  grid-template-columns: 2.5rem 1fr;
 
-  margin-top: -.75rem;
-  margin-left: -1.75rem;
   @media only screen and (min-width: 350px) {
     grid-template-columns: 3rem 1fr;
-    margin-left: 0;
-    margin-top: 0;
   }
-
 }
 
 .searchToggle {
   grid-row: 1 / -1;
   grid-column: 1;
-  justify-self: stretch;
-  align-self: stretch;
+  justify-self: center;
+  align-self: center;
   height: auto;
+  
+  button {
+    border-radius: 0.75rem;
+    background: rgba(21, 32, 40, 0.7);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 255, 0.2);
+    padding: 0.5rem;
+    box-shadow:
+      0 0 20px rgba(0, 255, 255, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg,
+        transparent,
+        rgba(0, 255, 255, 0.1),
+        transparent
+      );
+      transition: left 0.6s ease;
+    }
+    
+    &:hover {
+      background: rgba(21, 32, 40, 0.9);
+      border-color: rgba(0, 255, 255, 0.5);
+      box-shadow:
+        0 0 40px rgba(0, 255, 255, 0.3),
+        0 0 20px rgba(255, 0, 204, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px) scale(1.05);
+      
+      &::before {
+        left: 100%;
+      }
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow:
+        0 0 0 2px rgba(0, 255, 255, 0.6),
+        0 0 30px rgba(0, 255, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      border-color: rgba(0, 255, 255, 0.5);
+    }
+
+    @screen sm {
+      padding: 0.6rem;
+    }
+  }
 
   svg {
     max-width: 1.5rem;
+    color: var(--neon-cyan);
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.5));
+    
+    @screen sm {
+      max-width: 1.75rem;
+    }
   }
 }
 
 @media only screen and (min-width: 580px) {
   .NavigationMenuList {
     align-items: center;
-    grid-template-columns: 4rem repeat(3, minmax(5rem, 1fr));
+    grid-template-columns: 3.5rem repeat(3, minmax(5rem, 1fr));
     grid-template-rows: 1fr;
+    gap: 1rem;
+    
     li {
       grid-column: unset;
     }
   }
+  
   .searchToggle {
     grid-row: unset;
     grid-column: 1;
-    justify-self: unset;
-    align-self: unset;
+    justify-self: center;
+    align-self: center;
     height: unset;
-    padding-right: 0rem;
-    width: 2.4rem;
-    place-self: end;
+    width: auto;
   }
-
 }
 
 .ViewportPosition {
@@ -329,35 +388,97 @@ pre {
 
 .NavigationMenuTrigger,
 .NavigationMenuLink {
-  padding: 0.25rem 0.5rem;
-  /* outline: none; */
+  padding: 0.5rem 0.75rem;
   user-select: none;
   font-weight: 500;
   line-height: 1;
-  border-radius: 0.25rem;
-  font-size: 1.6rem;
-  color: var(--gray-11);
+  border-radius: 0.75rem;
+  font-size: 1.125rem;
+  color: var(--text-color);
   cursor: pointer;
+  background: rgba(21, 32, 40, 0.7);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  box-shadow:
+    0 0 20px rgba(0, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 
   @screen sm {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
+    padding: 0.6rem 1rem;
+  }
+
+  /* Subtle neon glow animation */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(0, 255, 255, 0.1),
+      transparent
+    );
+    transition: left 0.6s ease;
   }
 }
+
 .NavigationMenuTrigger:focus,
 .NavigationMenuLink:focus {
-  box-shadow: 0 0 0 2px var(--white-7);
+  outline: none;
+  box-shadow:
+    0 0 0 2px rgba(0, 255, 255, 0.6),
+    0 0 30px rgba(0, 255, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(0, 255, 255, 0.5);
 }
+
 .NavigationMenuTrigger:hover,
 .NavigationMenuLink:hover {
-  background-color: var(--gray-3);
+  background: rgba(21, 32, 40, 0.9);
+  border-color: rgba(0, 255, 255, 0.5);
+  box-shadow:
+    0 0 40px rgba(0, 255, 255, 0.3),
+    0 0 20px rgba(255, 0, 204, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px) scale(1.02);
+  color: #fff;
+  
+  &::before {
+    left: 100%;
+  }
 }
 
 .NavigationMenuTrigger {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.125rem;
+  gap: 0.25rem;
   margin: 0 auto;
+}
+
+.CaretDown {
+  transition: transform 0.2s ease;
+}
+
+.NavigationMenuTrigger[data-state="open"] {
+  background: rgba(21, 32, 40, 0.95);
+  border-color: rgba(0, 255, 255, 0.6);
+  box-shadow:
+    0 0 30px rgba(0, 255, 255, 0.4),
+    0 0 15px rgba(255, 0, 204, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.NavigationMenuTrigger[data-state="open"] .CaretDown {
+  transform: rotate(180deg);
+  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.6));
 }
 
 .NavigationMenuLink {
@@ -372,12 +493,8 @@ pre {
   top: 0;
   left: 0;
   width: 100%;
-  
-  /* max-height: calc(100vh - 10rem); */
-  /* overflow-y: auto; */
-  
-  animation-duration: 250ms;
-  animation-timing-function: ease;
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   padding: 1rem;
 }
 .NavigationMenuContent[data-motion="from-start"] {
@@ -438,30 +555,77 @@ pre {
   margin-top: 0.75rem;
   margin-bottom: 3rem;
   width: 100%;
-  background-color: white;
-  border-radius: 0.5rem;
-  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
-    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  background: rgba(21, 32, 40, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04),
+    0 0 40px rgba(0, 255, 255, 0.1);
   height: var(--radix-navigation-menu-viewport-height);
-  transition: width, height, 300ms ease;
-
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   max-height: 75vh;
   overflow-y: auto;
-  overflow-x: clip;
+  overflow-x: hidden;
+  
+  /* Custom scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.3);
+    border-radius: 4px;
+    
+    &:hover {
+      background: rgba(0, 255, 255, 0.5);
+    }
+  }
   
   h4 {
-    mix-blend-mode: darken;
-    color: var(--neon-pink);
-    filter: brightness(160%);
-    opacity: 70%;
+    color: var(--neon-cyan);
+    opacity: 0.8;
     margin: 0 1rem;
   }
 }
+
 .NavigationMenuViewport[data-state="open"] {
-  animation: scaleIn 200ms ease;
+  animation: menuSlideDown 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .NavigationMenuViewport[data-state="closed"] {
-  animation: scaleOut 200ms ease;
+  animation: menuSlideUp 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes menuSlideDown {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes menuSlideUp {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
 }
 @media only screen and (min-width: 600px) {
   .NavigationMenuViewport {

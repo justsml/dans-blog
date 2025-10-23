@@ -2,7 +2,7 @@
 import Page from "../../layouts/Page.astro";
 
 import omit from "lodash/omit";
-import { PostCollections } from "../../shared/dataCache";
+import { PostCollections } from "../../shared/postsCache";
 import { QuizGrid } from "../../components/QuizUI/QuizGrid";
 
 import type { ArticlePost, QuizPost } from "../../types";
@@ -88,8 +88,9 @@ const styleString = subCategoryList
 <div class="two-col"><p class="top-text">From HTML & CSS to Node.js & SQL, these quizzes are filled with gems inspired by real <strike>trauma</strike> experiences from my career.</p><p class="top-text">They are designed to be <strike>hurtful</strike> challenging at times, and may indeed test your <strike>sanity</strike> knowledge of the quirks and edge cases of various technologies.</p></div>
 
 <section class="full-width">
+  <!-- Use client:idle for better performance - loads after page is interactive -->
   <QuizGrid
-    client:load
+    client:idle
     quizList={quizList}
   />
 </section>
