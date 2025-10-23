@@ -4,15 +4,16 @@ import Search from "astro-pagefind/components/Search";
 type Props = {
   className?: string;
   showImages?: boolean;
+  pageSize?: number;
 }
 
-const { showImages = false, className } = Astro.props;
+const { showImages = false, pageSize = 25, className } = Astro.props;
 ---
 
 <div class:list={["searchBar", "collapsed", className]}>
   <Search
     id="search"
     class:list="pagefind-ui"
-    uiOptions={{ showImages }}
+    uiOptions={{ showImages, pageSize }}
   />
 </div>
