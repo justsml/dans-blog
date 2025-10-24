@@ -15,6 +15,7 @@ import { slugify } from "../../shared/pathHelpers.ts";
 import { QuestionStore } from "./QuestionStore.ts";
 import { HintTooltip } from "./HintTooltip.tsx";
 import { usePostHog } from "../PostHogEntry.tsx";
+import TextWithMath from "../TextWithMath.tsx";
 
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
@@ -294,7 +295,9 @@ export default function Challenge({
           //   }
           // }}
         >
-          <label>{option.text}</label>
+          <label>
+            <TextWithMath text={option.text} />
+          </label>
           <HintTooltip
             title={`💡 Hint`}
             hint={_showHint ? _showHint : ""}
@@ -328,7 +331,9 @@ export default function Challenge({
         </h2>
       </div>
 
-      <div className="quiz-question">{question || children}</div>
+      <div className="quiz-question">
+        {question ? <TextWithMath text={question} /> : children}
+      </div>
       <aside className="quiz-hint-toggle">
         <div className="watermark">{pageLink}</div>
         <button
