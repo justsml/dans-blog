@@ -51,6 +51,8 @@ export default defineConfig({
       plugins: ["line-numbers"],
     }),
     mdx({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
       // rehypePlugins: [rehypeHeadingIds, rehypeAutolinkHeadings],
     }),
     sitemap({
