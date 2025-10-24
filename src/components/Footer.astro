@@ -2,6 +2,12 @@
 import { RssIcon } from "lucide-react";
 import SubscribeForm from "./SubscribeForm.astro";
 
+type Props = {
+  showSubscribeForm?: boolean;
+}
+
+const { showSubscribeForm = false } = Astro.props;
+
 const today = new Date();
 ---
 
@@ -11,7 +17,7 @@ const today = new Date();
     <a href="https://danlevy.net/">Dan Levy</a> - All rights rebased.
   </p>
 
-  <p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸</p>
+  <p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸 🏳️‍🌈</p>
 
   <section class="quotable" aria-labelledby="quote-attribution">
     <p>
@@ -24,7 +30,7 @@ const today = new Date();
     </p>
   </section>
 
-  <SubscribeForm />
+  {showSubscribeForm && <SubscribeForm />}
 
   <section class="center syndication">
     <a href="/rss.xml" title="Need that sweet sweet RSS?">
