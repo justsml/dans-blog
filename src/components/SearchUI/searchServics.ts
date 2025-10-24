@@ -18,7 +18,7 @@ export const search = async (query: string) => {
     hash: "",
     href: "https://danlevy.net/",
   };
-  const pagefind = await import("https://danlevy.net/pagefind/pagefind.js");
+  const { default: pagefind } = await import("https://danlevy.net/pagefind/pagefind.js");
 
   pagefind.init({
     baseUrl: "https://danlevy.net/",
@@ -26,7 +26,6 @@ export const search = async (query: string) => {
 
   const search = await pagefind.search(query, {
     limit: 20,
-
   });
 
   // for await (const result of search.results) {
