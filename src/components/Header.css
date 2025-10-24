@@ -1,19 +1,22 @@
 .top-header {
   padding-inline: 1rem;
-  padding-block: 1.5rem;
+  padding-block: 1rem;
   background: linear-gradient(180deg,
     rgba(21, 32, 40, 0.95) 0%,
     rgba(21, 32, 40, 0.8) 50%,
     rgba(21, 32, 40, 0) 100%
   );
   backdrop-filter: blur(10px);
-  position: relative;
-  z-index: 50;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
   transition: all 0.3s ease;
 
   @screen sm {
     padding-inline: 2rem;
-    padding-block: 1.5rem;
+    padding-block: 1rem;
   }
 
   nav {
@@ -33,6 +36,15 @@
     }
   }
 
+  .header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   h2 {
     margin: 0;
     font-size: 1.6rem;
@@ -42,6 +54,10 @@
       0 0 20px rgba(0, 255, 255, 0.5),
       0 0 40px rgba(0, 255, 255, 0.3);
     transition: all 0.3s ease;
+  }
+
+  .nav-box {
+    flex-shrink: 0;
   }
 
   nav h2 a {
