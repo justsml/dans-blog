@@ -72,5 +72,7 @@ export async function searchText(query: string, options: SearchOptions = {}): Pr
   } catch (error) {
     console.error('Error executing search:', error);
     return [];
+  } finally {
+    await connection.close();
   }
 }

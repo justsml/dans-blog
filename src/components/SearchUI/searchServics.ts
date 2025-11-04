@@ -24,7 +24,7 @@ export const search = async (query: string) => {
 
   pagefind.init({
     baseUrl: "https://danlevy.net/",
-  })
+  });
 
   const search = await pagefind.search(query, {
     limit: 20,
