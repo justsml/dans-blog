@@ -14,6 +14,12 @@
   z-index: 100;
   transition: all 0.3s ease;
 
+  /* Override article page narrower width for consistent header */
+  &.article {
+    --content-max-width: min(1200px, 100vw);
+    --breakout-max-width: min(1300px, 100vw);
+  }
+
   @screen sm {
     padding-inline: 2rem;
     padding-block: 1rem;

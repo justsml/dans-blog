@@ -65,16 +65,7 @@ const quizList = posts.map((p, idx): QuizPost => {
 });
 
 
-const styleString = subCategoryList
-  .map((key) => `:has(.cat-${slugify(key)}:hover:not(.completed)) .cat-${slugify(key)} {
-  animation: wobble 1s 1 forwards 0.75s;
-  .quiz-card-inner {background-color: #111;}
-}`)
-  .join("\n");
-
-// console.log("QuizList %o", quizList);
 ---
-<style set:html={styleString}></style>
 
 <Page
   frontmatter={{

@@ -32,8 +32,6 @@ strike {
   grid-template-columns: repeat(auto-fit, minmax(14em, 1fr));
   grid-auto-flow: dense;
   gap: 2rem;
-  perspective: 2000px;
-  transform-style: preserve-3d;
 
   h2 {
     font-size: 2rem;
@@ -133,15 +131,13 @@ strike {
 }
 
 .tilt-effect:not(.completed) {
-  /* perspective: 1000px; */
-  transition: all 0.25s ease-in-out;
-  object-fit: contain;
-  /* border-radius: 10px; */
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+  transform: translateZ(0);
+  will-change: transform;
+  
   &:hover {
-    transform: perspective(400px) rotate3d(1, -1, 0, 5deg);
-    /* rotateX(-5deg) rotateY(0) rotateZ(0deg) skewX(-5deg) translateX(-5px) translateY(-5px) rotate3d(1, 1, 1, 10deg); */
-    box-shadow: 0.5rem 0.5rem 0.125rem rgba(0, 0, 0, 0.5);
-    /* animation: wobble3d 5s infinite alternate .05s ; */
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
   }
 }
 

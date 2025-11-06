@@ -18,7 +18,9 @@ export const search = async (query: string) => {
     hash: "",
     href: "https://danlevy.net/",
   };
-  const { default: pagefind } = await import("https://danlevy.net/pagefind/pagefind.js");
+
+  // @ts-expect-error - dynamic import
+  const pagefind = await import("https://danlevy.net/pagefind/pagefind.js");
 
   pagefind.init({
     baseUrl: "https://danlevy.net/",

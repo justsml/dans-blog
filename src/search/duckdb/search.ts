@@ -24,9 +24,15 @@ export async function searchText(query: string, options: SearchOptions = {}): Pr
   if (!query.trim()) {
     return [];
   }
+  let connection: Awaited<ReturnType<typeof db.connect>>;
+  try {
+    connection = await db.connect();
+  } catch (error) {
+    console.error('Error connecting to database:', error);
+    return [];
+  }
 
   try {
-    const connection = await db.connect();
     
     let sql = `
       SELECT
@@ -72,5 +78,7 @@ export async function searchText(query: string, options: SearchOptions = {}): Pr
   } catch (error) {
     console.error('Error executing search:', error);
     return [];
+  } finally {
+    await connection.close();
   }
 }
