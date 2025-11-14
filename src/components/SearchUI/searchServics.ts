@@ -28,7 +28,6 @@ export const search = async (query: string) => {
 
   const search = await pagefind.search(query, {
     limit: 20,
-
   });
 
   // for await (const result of search.results) {

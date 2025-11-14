@@ -1,8 +1,8 @@
+@import "katex/dist/katex.min.css";
+
 @tailwind base;
 @tailwind utilities;
-/*
-@tailwind components;
-*/
+/* @tailwind components; */
 
 /* From @fontsource/raleway */
 @font-face {
@@ -264,11 +264,11 @@
 
   article {
     & ul {
-      @apply list-item list-disc my-4 mx-4;
+      @apply list-item mx-4 my-4 list-disc;
     }
 
     & ol {
-      @apply list-outside list-decimal my-4 mx-4;
+      @apply mx-4 my-4 list-decimal list-outside;
     }
 
     h2 {
@@ -285,7 +285,7 @@
   }
 
   blockquote {
-    @apply border-l-4 border-primary-foreground pl-4;
+    @apply border-primary-foreground pl-4 border-l-4;
   }
 
   p {
@@ -328,7 +328,7 @@
   }
 
   /* main {
-    @apply mx-auto max-w-3xl p-4;
+    @apply max-w-3xl p-4 mx-auto;
   } */
 }
 
@@ -346,6 +346,8 @@ body {
   font-optical-sizing: auto;
   line-height: 1.7;
   font-size: 1.125rem;
+  /* Add top padding to account for fixed header */
+  padding-top: 8rem;
 }
 
 /* Prevent background scrolling when search panel is open */
@@ -1718,4 +1720,8 @@ article {
       background-color: var(--clr-muted-700, #333);
     }
   }
+}
+
+.MathJax svg {
+	display: inline !important;
 }
