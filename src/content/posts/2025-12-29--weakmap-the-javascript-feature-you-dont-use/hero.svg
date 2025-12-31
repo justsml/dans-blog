@@ -1,0 +1,48 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="spotlight" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#1f2937;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1f2937" />
+  
+  <!-- Spotlight Effect -->
+  <circle cx="600" cy="315" r="400" fill="url(#spotlight)" />
+  
+  <!-- Objects -->
+  <g transform="translate(600, 315)">
+    <!-- WeakMap Object (Center, Bright) -->
+    <g transform="translate(-60, -60)">
+      <rect width="120" height="120" rx="20" fill="#10b981" />
+      <text x="60" y="75" font-family="sans-serif" font-weight="bold" font-size="40" fill="white" text-anchor="middle">WM</text>
+      <!-- Key/Value connection -->
+      <circle cx="120" cy="0" r="10" fill="#34d399" />
+      <path d="M120,0 L160,-40" stroke="#34d399" stroke-width="2" stroke-dasharray="4,4" />
+      <rect x="150" y="-80" width="40" height="40" rx="5" fill="none" stroke="#34d399" stroke-width="2" />
+    </g>
+    
+    <!-- Other Objects (Faded/Ghosted) -->
+    <g transform="translate(-250, -100)" opacity="0.2">
+      <rect width="100" height="100" rx="10" fill="#9ca3af" />
+      <text x="50" y="60" font-family="sans-serif" font-size="30" fill="#374151" text-anchor="middle">Map</text>
+    </g>
+    
+    <g transform="translate(200, 50)" opacity="0.2">
+      <rect width="100" height="100" rx="10" fill="#9ca3af" />
+      <text x="50" y="60" font-family="sans-serif" font-size="30" fill="#374151" text-anchor="middle">Obj</text>
+    </g>
+    
+    <g transform="translate(-200, 150)" opacity="0.2">
+      <rect width="100" height="100" rx="10" fill="#9ca3af" />
+      <text x="50" y="60" font-family="sans-serif" font-size="30" fill="#374151" text-anchor="middle">Set</text>
+    </g>
+  </g>
+  
+  <!-- Garbage Collection Hint -->
+  <path d="M750 250 Q 800 200 850 250" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrow)" opacity="0.5"/>
+  <text x="800" y="200" font-family="sans-serif" font-size="14" fill="#10b981" text-anchor="middle" opacity="0.8">Auto GC</text>
+
+</svg>
