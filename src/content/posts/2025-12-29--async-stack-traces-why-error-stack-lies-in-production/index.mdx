@@ -123,11 +123,11 @@ The Promise callback defers to the microtask queue, which processes after the cu
 
 Google's V8 team has written extensively about this in their post *"Faster async functions and promises"* (2018), where they explain that "every `await` effectively suspends the current function and schedules it to continue later." The key phrase here is "schedules it to continue later"—not "pauses the call stack" but "nukes your debugging context."
 
-### The Data: How Bad Is It Really?
+### The Reality of Debugging
 
-According to the [2024 Node.js State of Developer Productivity Report](https://nodejs.org), **73% of production debugging time in async-heavy codebases is spent reconstructing causal chains that would have been trivial in synchronous code.** Teams running Node.js services with heavy async workloads report spending 40% more time on incident response compared to equivalent synchronous architectures.
+While exact industry stats are hard to pin down, any Node.js developer will tell you the same story: **debugging async production issues takes significantly longer than synchronous ones.** You're not just debugging logic; you're debugging time.
 
-Let that sink in. We're spending nearly half again as much time debugging because we wanted nicer syntax.
+Teams running Node.js services with heavy async workloads often report spending significantly more time on incident response simply because they have to mentally reconstruct causal chains that the runtime threw away. We're spending more time debugging because we wanted nicer syntax.
 
 ## V8's Error.captureStackTrace Limitations
 

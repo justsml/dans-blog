@@ -68,7 +68,7 @@ Pop quiz: does that element get garbage collected?
 
 Spoiler: **No.** That Map is holding a reference to it. The element is gone from the DOM, but it lives on in your cache, along with all its event listeners, its backing data structures, everything. Welcome to the memory leak club. Membership is involuntary.
 
-According to Chrome's DevTools team, **improper Map usage is the #3 cause of memory leaks in production JavaScript applications**, right behind forgotten event listeners and unclosed observers. ([Source: Chrome DevTools Memory Profiling Guide](https://developer.chrome.com/docs/devtools/memory-problems/))
+**Improper Map usage is a leading cause of memory leaks in production JavaScript applications**, right alongside forgotten event listeners and unclosed observers.
 
 ## What Even Is a WeakMap?
 
@@ -207,7 +207,7 @@ document.getElementById("button").remove();
 // Automatically cleaned up! ✨
 ```
 
-jQuery got this wrong for *years*. They used a regular object to store element data, keyed by incrementing IDs. This caused massive memory leaks in long-running SPAs. They eventually switched to a WeakMap-based approach in jQuery 3.0 (2016), though they were late to the party.
+jQuery got this wrong for *years*. They used a regular object to store element data, keyed by incrementing IDs. This caused massive memory leaks in long-running SPAs. They eventually fixed this in jQuery 3.0 (2016) by changing their data model to attach data directly to the DOM element, effectively mimicking WeakMap behavior before it was widely available.
 
 ## Real-World Use Case #2: Private Data Without Closures
 
