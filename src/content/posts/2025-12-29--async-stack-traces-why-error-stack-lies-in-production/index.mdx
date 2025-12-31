@@ -12,8 +12,6 @@ cover_icon: ./square.webp
 # social_image: desktop-social.webp
 ---
 
-<details>
-<summary>Table of Contents</summary>
 
 - [The Promise That Broke Everything](#the-promise-that-broke-everything)
 - [How Stack Traces Actually Work](#how-stack-traces-actually-work)
@@ -21,7 +19,7 @@ cover_icon: ./square.webp
   - [Enter Async/Await: The Stack Trace Destroyer](#enter-asyncawait-the-stack-trace-destroyer)
 - [The Microtask Queue: Where Causality Goes to Die](#the-microtask-queue-where-causality-goes-to-die)
   - [Promise Resolution Timing](#promise-resolution-timing)
-  - [The Data: How Bad Is It Really?](#the-data-how-bad-is-it-really)
+  - [The Reality of Debugging](#the-reality-of-debugging)
 - [V8's Error.captureStackTrace Limitations](#v8s-errorcapturestacktrace-limitations)
 - [Node.js --async-stack-traces: The Expensive Band-Aid](#nodejs---async-stack-traces-the-expensive-band-aid)
   - [The Performance Cost](#the-performance-cost)
@@ -34,7 +32,6 @@ cover_icon: ./square.webp
 - [Conclusion](#conclusion)
 - [Further Reading](#further-reading)
 
-</details>
 
 You've seen it before. A production error notification lights up your phone at 2 AM. You drag yourself to your laptop, pull up the logs, and find... nothing useful. The stack trace points to some Promise resolution handler three layers deep in your framework code. The actual cause? Somewhere in the quantum foam of the microtask queue, lost forever.
 
@@ -125,7 +122,7 @@ Google's V8 team has written extensively about this in their post *"Faster async
 
 ### The Reality of Debugging
 
-While exact industry stats are hard to pin down, any Node.js developer will tell you the same story: **debugging async production issues takes significantly longer than synchronous ones.** You're not just debugging logic; you're debugging time.
+While exact industry stats are hard to pin down, any Node.js developer will tell you the same story: **debugging async production issues takes significantly longer than synchronous ones.** You're not just debugging logic; **you're debugging time.**
 
 Teams running Node.js services with heavy async workloads often report spending significantly more time on incident response simply because they have to mentally reconstruct causal chains that the runtime threw away. We're spending more time debugging because we wanted nicer syntax.
 

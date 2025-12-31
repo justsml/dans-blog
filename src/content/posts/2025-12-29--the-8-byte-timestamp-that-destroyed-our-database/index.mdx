@@ -60,9 +60,11 @@ PostgreSQL has two timestamp types: [`TIMESTAMP`](https://www.postgresql.org/doc
 - Converts back to your session's timezone when reading
 - The actual value stored updates based on your session timezone setting
 
-As Markus Winand explains in _SQL Performance Explained_ (2012), **"The WITH TIME ZONE types automatically convert timestamps to UTC for storage and back to the local time zone for display... a feature that saves developers from timezone hell."** 
+As Markus Winand explains in _SQL Performance Explained_ (2012), **"The WITH TIME ZONE types automatically convert timestamps to UTC for storage and back to the local time zone for display... a feature that saves developers from timezone hell."**
 
 We'd skipped the feature that would have saved us.
+
+> **Cross-database reality check:** MySQL's `DATETIME` vs `TIMESTAMP` distinction is *similar* but not identical—MySQL's `TIMESTAMP` converts to UTC but has a narrower range (1970-2038). Oracle uses `TIMESTAMP WITH TIME ZONE` but actually stores the timezone offset rather than converting to UTC. SQL Server's `DATETIMEOFFSET` stores the offset explicitly. The lesson is universal: know your database's timestamp semantics before you're debugging production at 3 AM.
 
 ## The Microsecond Problem
 
@@ -233,8 +235,8 @@ Store UTC in databases. Convert to local timezones only when displaying to users
 **4. Test around DST boundaries**  
 March and November aren't just months—they're edge-case gold mines. Write tests that specifically check DST transitions.
 
-**5. Never trust `DEFAULT NOW()`**  
-Application servers can have clock skew. Use `DEFAULT NOW()` in Postgres so the timestamp reflects the database server's canonical time, not some server halfway around the world.
+**5. Let the database set timestamps**
+Application servers can have clock skew. Use `DEFAULT NOW()` in Postgres so the timestamp reflects the database server's canonical time, not some app server halfway around the world.
 
 **6. Consider application-level timestamps for distributed systems**  
 In microservices, sometimes you want to know _when the event occurred in the originating service_, not when it hit the database. Use both: `occurred_at` (app timestamp) and `recorded_at` (DB timestamp).

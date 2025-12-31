@@ -255,7 +255,7 @@ c1.increment(); // 1
 
 Methods are shared on the prototype (better memory efficiency), and the private data is truly inaccessible from outside. When the instance is GC'd, so is its private data.
 
-Douglas Crockford, the JavaScript luminary, covered this pattern in his post *"Private Members in JavaScript"* (2001), though he was predicting WeakMaps before they existed. He wrote: "We would like a way to store private state that doesn't require closures and doesn't leak memory." WeakMap is that way.
+Douglas Crockford explored this problem in his essay *"Private Members in JavaScript"* (2001), years before WeakMaps existed. His closure-based solutions worked, but they came with memory costs. WeakMap finally gives us what developers wanted all along: private state without the overhead.
 
 ## Real-World Use Case #3: Memoization Without Bloat
 

@@ -20,6 +20,8 @@ The other 85%? That "temporary" JSONB column is still there three years later, n
 
 JSONB is one of PostgreSQL's most seductive features. It promises flexibility without sacrifice: keep your relational guarantees, but opt out of schema rigidity when you need to. The catch? You almost never need to as much as you think you do—and when you _think_ you need to, you're often creating future problems to solve present laziness.
 
+> **For MySQL and SQL Server folks:** PostgreSQL's JSONB has equivalents in other databases—MySQL's `JSON` type (since 5.7) and SQL Server's `JSON` functions (since 2016). The performance characteristics differ: MySQL's JSON is stored as binary but with different indexing options; SQL Server stores JSON as text without native indexing (you use computed columns). The tradeoffs discussed here apply broadly, but the specific benchmark numbers are PostgreSQL-centric.
+
 Let's talk about the JSONB seduction, what it costs you, and how to escape when you've gone too far.
 
 ## The Appeal: Why JSONB Feels So Right

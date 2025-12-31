@@ -43,6 +43,8 @@ Simple enough. Now every time you:
 
 That's three extra checks. Three extra locks. Three opportunities for contention.
 
+> **A note on other databases:** This article focuses on PostgreSQL, but the fundamentals apply broadly. MySQL/InnoDB has similar FK behavior with slightly different locking semantics (it uses shared locks on child rows during parent updates). Oracle takes a more aggressive locking approach and can escalate to table locks more readily if indexes are missing. SQL Server's behavior falls somewhere in between. The key takeaway—that FKs add overhead and require proper indexing—is universal.
+
 ## The Hidden Costs
 
 ### 1. Locking on Referenced Tables
@@ -72,27 +74,26 @@ At 10K inserts/sec, those milliseconds stack up _fast_. We went from handling pe
 
 As highlighted in _High Performance PostgreSQL_ by Gregory Smith (2010), **"Every foreign key check is a SELECT against the referenced table. At high concurrency, these checks create lock contention that can dominate query time."**
 
+### 2. The Missing Index Trap
+
+Here's a gotcha that bites teams constantly: PostgreSQL requires an index on the **referenced** column (the parent table's primary key—which exists automatically). But it does *not* create an index on the **referencing** column (the child table's foreign key).
+
+Why does this matter? When you delete a row from the parent `users` table, Postgres must scan the `orders` table to ensure no orphans remain. Without an index on `orders.user_id`, that's a **sequential scan** of the entire table. For *every* user you delete.
 
 ```sql
 -- Every INSERT into orders now maintains:
 -- 1. The primary key index on orders.id
--- 2. The foreign key index on orders.user_id
--- Plus any other indices you've added
+-- 2. Any index you've (hopefully) added on orders.user_id
+-- Plus any other indices
 
 -- Benchmark: 1 million inserts
 -- Without FK: 45 seconds
--- With FK and required index: 68 seconds (51% slower)
+-- With FK and proper index: 68 seconds (51% slower)
 ```
 
 That's _just_ the index maintenance. The actual constraint checking adds another layer of overhead.
 
-### 2. Index Maintenance Overhead (and the "Referencing" Trap)
-
-PostgreSQL requires an index on the **referenced** column (usually the parent's primary key). However, it does *not* automatically create an index on the **referencing** column (the child table's foreign key column).
-
-If you delete a row from the parent `users` table, Postgres must check the `orders` table to ensure no orphans are left. If `orders.user_id` isn't indexed, Postgres has to perform a **sequential scan** on the entire `orders` table. For *every* user you delete.
-
-Baron Schwartz, author of _High Performance MySQL_ (2012) notes: **"Indexes speed up reads but slow down writes. Each index is a data structure that must be updated with every INSERT, UPDATE, or DELETE."** Foreign keys force you to have these indexes whether you want them or not.
+Baron Schwartz, author of _High Performance MySQL_ (2012), puts it well: **"Indexes speed up reads but slow down writes. Each index is a data structure that must be updated with every INSERT, UPDATE, or DELETE."** Foreign keys often force you to add indexes you wouldn't otherwise need.
 
 ### 3. Cascade Operations Can Explode
 
