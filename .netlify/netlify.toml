@@ -1,0 +1,137 @@
+[functions]
+
+[functions."*"]
+
+[[plugins]]
+origin = "ui"
+package = "@netlify/plugin-lighthouse"
+pinned_version = "6"
+
+[plugins.inputs]
+
+[build]
+publish = "/Users/dan/code/oss/dans-blog/dist"
+publishOrigin = "ui"
+commandOrigin = "ui"
+command = "bun run build"
+
+[build.environment]
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+X-Frame-Options = "DENY"
+X-XSS-Protection = "1; mode=block"
+
+[[headers]]
+for = "/fonts/*"
+
+[headers.values]
+Cache-Control = "public, max-age=604800, stale-while-revalidate=1209600"
+
+[[headers]]
+for = "/.astro/*"
+
+[headers.values]
+Cache-Control = "public, max-age=302400, immutable"
+
+[[headers]]
+for = "/_astro/*"
+
+[headers.values]
+Cache-Control = "public, max-age=302400, stale-while-revalidate=604800"
+
+[[headers]]
+for = "/pagefind/*"
+
+[headers.values]
+Cache-Control = "public, max-age=86400, stale-while-revalidate=172800"
+Access-Control-Allow-Origin = "*"
+Access-Control-Allow-Methods = "GET, OPTIONS"
+Access-Control-Allow-Headers = "Content-Type, Authorization, X-Requested-With, Range, If-Range, If-None-Match"
+Access-Control-Max-Age = "86400"
+
+[[redirects]]
+from = "/horizontal-scroller/"
+to = "/?404=horizontal-scroller"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/404.html"
+to = "/404/"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/2017/03/10/*"
+to = "/mastering-functional-pipelines-passing-state/"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/members/*"
+to = "/?404=:splat"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/tags/*"
+to = "/?tags=:splat"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]
+
+[[redirects]]
+from = "/quiz/rust/memory/"
+to = "/quiz-is-your-memory-rusty"
+status = 301.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

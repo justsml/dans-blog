@@ -17,7 +17,11 @@
     "rebuild": "astro build --force",
     "preview": "astro preview",
     "astro": "astro",
-    "clean": "rm -rf .astro .cache dist node_modules"
+    "clean": "rm -rf .astro .cache dist node_modules",
+    "test:e2e": "playwright test -x",
+    "test:e2e:ui": "playwright test --ui -x",
+    "test:e2e:headed": "playwright test --headed -x",
+    "test:e2e:debug": "playwright test --debug -x"
   },
   "engines": {
     "node": ">=20.0.0",
@@ -88,6 +92,7 @@
     "@octokit/rest": "^21.0.2",
     "@octokit/types": "^13.6.2",
     "@orama/plugin-astro": "^3.1.14",
+    "@playwright/test": "^1.56.1",
     "@types/bun": "^1.1.14",
     "@types/globalthis": "^1.0.4",
     "@types/lodash": "^4.17.13",

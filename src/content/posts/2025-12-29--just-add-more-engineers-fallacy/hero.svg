@@ -1,0 +1,50 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f172a;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)" />
+  
+  <!-- Graph Area -->
+  <g transform="translate(150, 50)">
+    <!-- Axes -->
+    <line x1="0" y1="0" x2="0" y2="450" stroke="#94a3b8" stroke-width="2" />
+    <line x1="0" y1="450" x2="900" y2="450" stroke="#94a3b8" stroke-width="2" />
+    
+    <!-- Labels -->
+    <text x="-20" y="225" font-family="sans-serif" font-size="20" fill="#94a3b8" text-anchor="middle" transform="rotate(-90, -20, 225)">PRODUCTIVITY</text>
+    <text x="450" y="500" font-family="sans-serif" font-size="20" fill="#94a3b8" text-anchor="middle">TEAM SIZE</text>
+    
+    <!-- The Curve -->
+    <path d="M0,450 Q 200,100 400,200 T 800,400" fill="none" stroke="#38bdf8" stroke-width="6" />
+    
+    <!-- Points -->
+    <circle cx="0" cy="450" r="6" fill="#38bdf8" />
+    <circle cx="200" cy="200" r="6" fill="#38bdf8" /> <!-- Peak -->
+    <circle cx="400" cy="250" r="6" fill="#38bdf8" /> <!-- Dip starts -->
+    <circle cx="800" cy="400" r="6" fill="#ef4444" /> <!-- Low -->
+    
+    <!-- Annotations -->
+    <text x="200" y="170" font-family="sans-serif" font-size="16" fill="#38bdf8" text-anchor="middle">Optimal</text>
+    <text x="800" y="370" font-family="sans-serif" font-size="16" fill="#ef4444" text-anchor="middle">Chaos</text>
+    
+    <!-- People Icons (Abstract) -->
+    <g transform="translate(50, 400)" fill="#94a3b8" opacity="0.5">
+       <circle cx="0" cy="0" r="10" />
+       <circle cx="30" cy="0" r="10" />
+    </g>
+    
+    <g transform="translate(750, 400)" fill="#94a3b8" opacity="0.5">
+       <circle cx="0" cy="0" r="10" />
+       <circle cx="20" cy="0" r="10" />
+       <circle cx="40" cy="0" r="10" />
+       <circle cx="10" cy="20" r="10" />
+       <circle cx="30" cy="20" r="10" />
+    </g>
+  </g>
+
+</svg>
