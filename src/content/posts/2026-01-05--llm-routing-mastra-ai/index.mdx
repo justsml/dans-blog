@@ -1,0 +1,173 @@
+---
+title: "Making Models Compete: Intelligent LLM Routing with Mastra.ai"
+subTitle: "Dynamically route tasks to GPT-5.2, Claude Opus, and Gemini 3 Pro"
+date: 2026-01-02
+modified: 2026-01-05
+tags: [AI, LLM, TypeScript, Mastra, Agent Orchestration]
+category: AI
+subCategory: Engineering
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+In the rapidly evolving landscape of AI, one truth has become clear: no single model is the best at everything. **GPT-5.2** is a reasoning powerhouse, **Claude Sonnet 4.5** dominates in coding tasks, and **Gemini 3 Pro** excels in long-context understanding.
+
+As developers, we shouldn't have to choose just one. **LLM Routing** is the pattern of dynamically selecting the best model for a specific task. By routing user queries to the most capable model, we can build applications that are smarter, faster, and more cost-effective.
+
+## Enter Mastra.ai
+
+[Mastra.ai](https://mastra.ai) is a new TypeScript agent framework designed to make building complex AI systems simple. Unlike other frameworks that can be overly opinionated or heavy, Mastra provides just the right primitives for agents, workflows, and tools.
+
+One of its most powerful features is how easily it enables **Agent Orchestration**. You can create a "Router Agent" whose sole job is to understand intent and delegate work to specialized sub-agents.
+
+## The Demo: A Multi-Model Orchestrator
+
+Reflecting the need for specialized intelligence, we built a demo that routes queries to three specialized agents:
+- **The Coder**: Claude Sonnet 4.5 (via [Anthropic](https://www.anthropic.com/))
+- **The Creative**: Gemini 3 Pro (via [Google](https://deepmind.google/technologies/gemini/))
+- **The Generalist**: GPT-5.2 (via [OpenAI](https://openai.com/))
+
+### The Architecture
+
+We use a top-level **Router Agent** powered by GPT-5-Mini. This agent doesn't answer questions directly. Instead, it has access to three custom agents: `claudeAgent`, `geminiAgent`, and `gptAgent`.
+
+When a user asks "Write a bubble sort in Python," the Router Agent reasons: "This is a coding task. I should ask the Coder." It then invokes the `askClaude` tool.
+
+### Code Walkthrough
+
+Here is how simple it is to set up in Mastra.
+
+**1. Configure the Sub-Agents**
+
+First, we define our specialists. Note how we give them specific instructions:
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/dist/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  name: 'Claude Coder',
+  instructions: 'You are an expert software engineer. Provide high-quality, bug-free code snippets.',
+  model: anthropic('claude-sonnet-4.5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  name: 'Gemini Creative',
+  instructions: 'You are a creative writer. Generate engaging and imaginative content.',
+  model: google('gemini-3-pro'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  name: 'GPT-5.2 Generalist',
+  instructions: 'You are a helpful generalist assistant. Answer questions directly and concisely.',
+  model: openai('gpt-5.2'),
+});
+
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'Orchestrator',
+  instructions: `You are an intelligent router. Your job is to analyze the user's request and delegate it to the most appropriate specialist agent.
+  - For coding tasks, use the "Claude Coder" agent.
+  - For creative writing, use the "Gemini Creative" agent.
+  - For general questions, use the "GPT-5.2 Generalist" agent.
+  
+  Do not answer the user directly unless you cannot find a suitable agent.
+  Return the response from the agent you selected.`,
+  model: openai('gpt-5-mini'),
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { gptAgent, claudeAgent, geminiAgent, routerAgent },
+});
+```
+
+**2. The Router Agent**
+
+The router is just another agent, but we configure it with `agents` so it can delegate tasks:
+
+```typescript
+
+// snippet from ./src/mastra/index.ts
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'Orchestrator',
+  instructions: `You are an intelligent router. Your job is to analyze the user's request and delegate it to the most appropriate specialist agent.
+  - For coding tasks, use the "Claude Coder" agent.
+  - For creative writing, use the "Gemini Creative" agent.
+  - For general questions, use the "GPT-5.2 Generalist" agent.
+  
+  Do not answer the user directly unless you cannot find a suitable agent.
+  Return the response from the agent you selected.`,
+  model: openai('gpt-5-mini'),
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+```
+
+**3. Running the Routing**
+
+In our application, we just talk to the router:
+
+```typescript
+// src/index.ts
+import { mastra } from './agents.js';
+
+async function main() {
+  const router = mastra.getAgent('routerAgent');
+  
+  const queries = [
+    "Write a bubble sort algorithm in Python.",
+    "Write a short poem about a robot learning to love.",
+    "What is the capital of France?"
+  ];
+
+  for (const query of queries) {
+    console.log(`\n👤 User: ${query}`);
+    const result = await router.generate(query);
+    console.log(`🤖 Response: ${result.text}`);
+  }
+}
+
+main().catch(console.error);
+```
+
+## Why This Matters
+
+This pattern unlocks significant potential:
+
+1. **Quality**: Use the SOTA model for each specific domain.
+2. **Cost**: Route simple queries to cheaper, faster models (like GPT-5.2-Flash or Gemini 3 Flash) and reserve heavy hitters for complex reasoning.
+3. **Reliability**: If one provider goes down, your router can failover to another model.
+
+Mastra.ai makes implementing this pattern type-safe and intuitive. It handles the complexity of different API providers (OpenAI, Anthropic, Google) so you can focus on the orchestration logic.
+
+## Conclusion
+
+LLM routing is moving from a nice-to-have to a necessity for production-grade AI applications. With frameworks like [Mastra](https://mastra.ai), building these intelligent networks is easier than ever.
+
+The full code for this demo is available in the [mastra-routing-demo](https://github.com/justsml/dans-blog/tree/main/mastra-routing-demo) folder. Try it yourself and experience the power of intelligent model routing!
+
+### Resources
+
+- [Mastra.ai Documentation](https://mastra.ai/docs)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+- [AI SDK by Vercel](https://sdk.vercel.ai/docs)
+- [OpenAI Platform](https://platform.openai.com/)
+- [Anthropic Claude](https://www.anthropic.com/claude)
+- [Google Gemini](https://deepmind.google/technologies/gemini/)
