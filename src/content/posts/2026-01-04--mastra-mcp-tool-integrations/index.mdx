@@ -1,0 +1,514 @@
+---
+title: "Beyond Chatbots: MCP & Tool Integrations in Mastra.ai"
+subTitle: "Connect your AI agents to Salesforce, HubSpot, and thousands of enterprise tools"
+date: 2026-01-07
+modified: 2026-01-07
+tags: [AI, MCP, Tools, Integrations, Mastra, Salesforce, APIs]
+category: AI
+subCategory: Integration
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+We've covered [LLM routing](/llm-routing-mastra-ai) and [security guardrails](/mastra-security-guardrails) in previous posts. Today, we explore what transforms AI agents from impressive demos into indispensable business tools: **connecting them to real-world systems and data**.
+
+The challenge? Every API has its own authentication, data model, and quirks. Building custom integrations for each tool is time-consuming and error-prone. Enter the **Model Context Protocol (MCP)**—an open standard that's rapidly becoming the "USB-C port" for AI applications.
+
+## The Integration Problem
+
+Imagine you're building an AI sales assistant. You need it to:
+
+- Look up customer data in Salesforce
+- Check email history in Gmail
+- Pull analytics from HubSpot
+- Reference documentation from Confluence
+- Create calendar events in Google Calendar
+
+The traditional approach? Write custom code for each integration. Five APIs means five different authentication flows, five different data models, and five potential points of failure.
+
+With MCP, you write the integration once, and any MCP-compatible agent can use it.
+
+---
+
+## What is MCP?
+
+The Model Context Protocol, introduced by Anthropic in late 2024, defines a standardized way for AI models to interact with external tools, databases, and services. Think of it as a universal adapter that lets agents access:
+
+- **Resources**: Files, database records, API responses
+- **Tools**: Executable functions with defined inputs/outputs
+- **Prompts**: Reusable templates for common tasks
+
+> "MCP is revolutionizing how AI applications connect with tools and data." — Salesforce Developer Blog, June 2025
+
+In 2025, MCP adoption exploded across the industry:
+
+- **Salesforce** launched native MCP support in Agentforce
+- **HubSpot**, **Stripe**, and **AWS** publish official MCP servers
+- The [MCP Registry](https://registry.modelcontextprotocol.io) now hosts **thousands** of pre-built integrations
+- Major platforms like Cursor, Windsurf, and Claude Desktop are MCP-native
+
+---
+
+## Custom Tools: The Weather Example
+
+Before diving into MCP, let's understand how Mastra handles tools in general. Here's a simple weather tool that chains two API calls:
+
+```typescript
+// src/mastra/tools/weather-tool.ts
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
+
+export const weatherTool = createTool({
+  id: 'get-weather',
+  description: 'Get current weather for a location',
+  inputSchema: z.object({
+    location: z.string().describe('City name'),
+  }),
+  outputSchema: z.object({
+    temperature: z.number(),
+    feelsLike: z.number(),
+    humidity: z.number(),
+    windSpeed: z.number(),
+    conditions: z.string(),
+    location: z.string(),
+  }),
+  execute: async ({ context }) => {
+    // First, geocode the location
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(context.location)}&count=1`;
+    const geocodingResponse = await fetch(geocodingUrl);
+    const geocodingData = await geocodingResponse.json();
+
+    if (!geocodingData.results?.[0]) {
+      throw new Error(`Location '${context.location}' not found`);
+    }
+
+    const { latitude, longitude, name } = geocodingData.results[0];
+
+    // Then, fetch weather data
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code`;
+    const response = await fetch(weatherUrl);
+    const data = await response.json();
+
+    return {
+      temperature: data.current.temperature_2m,
+      feelsLike: data.current.apparent_temperature,
+      humidity: data.current.relative_humidity_2m,
+      windSpeed: data.current.wind_speed_10m,
+      conditions: getWeatherCondition(data.current.weather_code),
+      location: name,
+    };
+  },
+});
+
+function getWeatherCondition(code: number): string {
+  const conditions: Record<number, string> = {
+    0: 'Clear sky',
+    1: 'Mainly clear',
+    2: 'Partly cloudy',
+    3: 'Overcast',
+    45: 'Foggy',
+    61: 'Slight rain',
+    63: 'Moderate rain',
+    65: 'Heavy rain',
+    // ... more conditions
+  };
+  return conditions[code] || 'Unknown';
+}
+```
+
+### Using the Tool in an Agent
+
+```typescript
+// src/mastra/agents/weather-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { weatherTool } from '../tools/weather-tool';
+
+export const weatherAgent = new Agent({
+  name: 'Weather Agent',
+  instructions: `You are a helpful weather assistant that provides accurate weather information.
+    - Always ask for a location if none is provided
+    - Use the weatherTool to fetch current weather data
+    - Include relevant details like humidity, wind conditions, and precipitation
+    - Keep responses concise but informative`,
+  model: openai('gpt-4o'),
+  tools: { weatherTool },
+});
+```
+
+Now when you ask "What's the weather in Tokyo?", the agent:
+1. Recognizes it needs weather data
+2. Calls the `weatherTool` with `{ location: "Tokyo" }`
+3. Receives structured weather data
+4. Generates a natural language response
+
+No hallucinations. No stale training data. Just real, live API calls.
+
+---
+
+## Connecting to MCP Servers
+
+With Mastra's `MCPClient`, you can connect to external MCP servers using two transport methods:
+
+- **Stdio**: For local npm packages (invoked with `npx`)
+- **HTTP/SSE**: For remote servers (hosted MCP services)
+
+### Example: Multiple MCP Servers
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // Local Wikipedia server (stdio transport)
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // Salesforce MCP server (HTTP transport)
+    salesforce: {
+      url: new URL(process.env.SALESFORCE_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.SALESFORCE_TOKEN}`,
+        },
+      },
+    },
+    // Weather service via Smithery registry
+    weather: {
+      url: new URL(`https://server.smithery.ai/@smithery-ai/weather-service/mcp?api_key=${process.env.SMITHERY_API_KEY}`),
+    },
+    // HubSpot via Composio
+    hubspot: {
+      url: new URL('https://mcp.composio.dev/hubspot/[your-private-path]'),
+    },
+  },
+});
+```
+
+### Using MCP Tools in Agents
+
+Once connected, MCP tools integrate seamlessly:
+
+```typescript
+// src/mastra/agents/crm-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const crmAgent = new Agent({
+  name: 'CRM Assistant',
+  instructions: `You are a CRM assistant that helps sales teams manage their contacts and opportunities.
+    - Use the Salesforce tools to look up customer information
+    - Always verify customer data before making updates
+    - Provide concise summaries of account activity`,
+  model: openai('gpt-4o'),
+  tools: await mcpClient.getTools(),
+});
+```
+
+The agent now has access to **all tools** from **all configured MCP servers**. When a user asks "Show me opportunities for Acme Corp", the agent automatically:
+
+1. Identifies the need to query Salesforce
+2. Calls the appropriate Salesforce MCP tool
+3. Processes the results
+4. Presents them in natural language
+
+---
+
+## The MCP Ecosystem in 2025
+
+The MCP ecosystem has grown explosively. Here are some key players:
+
+### Enterprise SaaS
+
+- **Salesforce**: Official hosted MCP servers for CRM operations
+- **HubSpot**: Marketing, sales, and service hub integrations
+- **Stripe**: Payments, subscriptions, and billing
+- **Zendesk**: Customer support and ticketing
+
+### Developer Tools
+
+- **GitHub**: Repository management, issues, pull requests
+- **Docker**: Container operations
+- **Kubernetes**: Cluster management
+- **Terraform**: Infrastructure as code
+
+### Productivity
+
+- **Google Workspace**: Gmail, Calendar, Drive, Docs
+- **Microsoft 365**: Outlook, Teams, SharePoint
+- **Slack**: Messaging and workflow automation
+- **Notion**: Documentation and knowledge bases
+
+### Registries
+
+Several platforms aggregate and host MCP servers:
+
+1. **[Klavis AI](https://klavis.ai)**: Enterprise-authenticated MCP servers with SOC2 compliance
+2. **[mcp.run](https://www.mcp.run/)**: Pre-authenticated managed servers grouped into "Profiles"
+3. **[Composio](https://mcp.composio.dev)**: 150+ integrations with interactive auth
+4. **[Smithery](https://smithery.ai)**: Community registry accessible via CLI
+5. **[Ampersand](https://withampersand.com)**: 150+ SaaS integrations with unified API
+
+---
+
+## Dynamic Toolsets for Multi-Tenant SaaS
+
+Here's where things get interesting. In a multi-tenant application, each user brings their own credentials. You can't use a single static MCP configuration for everyone.
+
+Mastra solves this with **dynamic toolsets**:
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // Create user-specific MCP client
+  const userMcp = new MCPClient({
+    servers: {
+      salesforce: {
+        url: new URL(process.env.SALESFORCE_MCP_URL!),
+        requestInit: {
+          headers: {
+            Authorization: `Bearer ${userCredentials.salesforceToken}`,
+          },
+        },
+      },
+      hubspot: {
+        url: new URL(process.env.HUBSPOT_MCP_URL!),
+        requestInit: {
+          headers: {
+            Authorization: `Bearer ${userCredentials.hubspotToken}`,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('crmAgent');
+  
+  // Pass tools dynamically at request time
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  await userMcp.disconnect();
+  return response;
+}
+```
+
+Each user gets an isolated MCP client with their own credentials. When they ask "Create an opportunity in Salesforce for the ABC Corp deal", the agent uses **their** Salesforce account—not a shared system account.
+
+---
+
+## Advanced: Tool Composition
+
+You can combine MCP tools with custom tools and even use tools within tools:
+
+```typescript
+// src/mastra/tools/enrichment-tool.ts
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
+import { mcpClient } from '../mcp';
+
+export const enrichmentTool = createTool({
+  id: 'enrich-contact',
+  description: 'Enriches contact data from multiple sources',
+  inputSchema: z.object({
+    email: z.string().email(),
+  }),
+  outputSchema: z.object({
+    name: z.string(),
+    company: z.string(),
+    title: z.string(),
+    linkedIn: z.string().optional(),
+    twitter: z.string().optional(),
+  }),
+  execute: async ({ context, mastra }) => {
+    // Get tools from MCP servers
+    const salesforceTool = (await mcpClient.getTools()).salesforce_lookupContact;
+    const linkedInTool = (await mcpClient.getTools()).linkedin_profileLookup;
+    
+    // Call Salesforce first
+    const sfData = await salesforceTool.execute({ 
+      context: { email: context.email } 
+    });
+    
+    // Then enrich with LinkedIn data
+    const linkedInData = await linkedInTool.execute({
+      context: { name: sfData.name }
+    });
+    
+    return {
+      name: sfData.name,
+      company: sfData.company,
+      title: sfData.title,
+      linkedIn: linkedInData.profileUrl,
+      twitter: linkedInData.twitterHandle,
+    };
+  },
+});
+```
+
+This tool orchestrates multiple MCP tools to build a comprehensive contact profile.
+
+---
+
+## Real-World Use Case: Sales Intelligence Agent
+
+Let's put it all together. Here's a production-grade sales assistant that combines routing, security, and MCP integrations:
+
+```typescript
+// src/mastra/agents/sales-assistant.ts
+import { Agent } from '@mastra/core/agent';
+import { PIIDetector, ModerationProcessor } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const salesAssistant = new Agent({
+  name: 'Sales Intelligence Assistant',
+  instructions: `You are an AI sales assistant with access to CRM, email, and analytics tools.
+    
+    Your capabilities:
+    - Look up customer data in Salesforce
+    - Search email history in Gmail
+    - Create calendar events
+    - Research prospects on LinkedIn
+    - Generate personalized outreach
+    
+    Guidelines:
+    - Always verify data before acting
+    - Respect user privacy and data policies
+    - Provide sources for any statistics or claims
+    - Ask for clarification rather than making assumptions`,
+  model: openai('gpt-4o'),
+  tools: await mcpClient.getTools(),
+  
+  // Security: Protect sensitive customer data
+  inputProcessors: [
+    new PIIDetector({
+      model: openai('gpt-4.1-nano'),
+      detectionTypes: ['email', 'phone', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',
+    }),
+  ],
+  
+  outputProcessors: [
+    new ModerationProcessor({
+      model: openai('gpt-4.1-nano'),
+      categories: ['hate', 'harassment'],
+      threshold: 0.8,
+      strategy: 'warn',
+    }),
+  ],
+});
+```
+
+Now your sales team can ask:
+
+- "Show me all opportunities closing this quarter"
+- "Draft a follow-up email for the Acme Corp deal"
+- "Schedule a demo with the decision-maker at Widgets Inc"
+- "What's the renewal status for our top 10 accounts?"
+
+The agent handles the complexity of:
+- Authenticating with multiple services
+- Querying the right data sources
+- Combining information from different systems
+- Presenting results in natural language
+
+---
+
+## Performance & Best Practices
+
+### Tool Selection
+
+Agents can be overzealous about calling tools. Guide them with clear instructions:
+
+```typescript
+instructions: `You have access to the following tools:
+  - salesforce_lookupAccount: Use for customer/account data
+  - gmail_search: Use for email history (last resort—respect privacy)
+  - calendar_create: Use when explicitly asked to schedule
+  
+  Always ask yourself: "Do I really need to call a tool, or can I answer from memory?"
+  Only call tools when the user's query clearly requires external data.`
+```
+
+### Error Handling
+
+MCP servers can fail. Handle errors gracefully:
+
+```typescript
+export const resilientAgent = new Agent({
+  name: 'resilient-agent',
+  instructions: `If a tool fails, try these steps:
+    1. Check if you can use an alternative tool
+    2. Explain the limitation to the user
+    3. Offer to try again or take a different approach
+    
+    Never claim a tool worked when it failed.`,
+  model: openai('gpt-4o'),
+  tools: await mcpClient.getTools(),
+  maxRetries: 3,  // Retry failed tool calls
+});
+```
+
+### Caching
+
+For expensive or slow MCP calls, consider caching results:
+
+```typescript
+const cache = new Map<string, any>();
+
+export const cachedTool = createTool({
+  id: 'cached-lookup',
+  execute: async ({ context }) => {
+    const cacheKey = JSON.stringify(context);
+    
+    if (cache.has(cacheKey)) {
+      return cache.get(cacheKey);
+    }
+    
+    const result = await expensiveApiCall(context);
+    cache.set(cacheKey, result);
+    return result;
+  },
+});
+```
+
+---
+
+## What's Next
+
+Tomorrow, we'll close out this series with **Workflows & Memory**: building complex multi-step processes with persistent context. We'll explore:
+
+- Workflow orchestration for deterministic pipelines
+- Agent memory for long-running conversations
+- Agent networks for dynamic collaboration
+
+---
+
+## Conclusion
+
+Tools and MCP integrations transform AI agents from impressive demos into practical business applications. With Mastra, you get:
+
+- **Standardized interface**: One client, thousands of integrations
+- **Type safety**: Zod schemas for inputs and outputs
+- **Dynamic credentials**: Per-user tool access
+- **Built-in security**: Guardrails protect your data
+- **Production-ready**: Enterprise auth, error handling, retries
+
+The MCP ecosystem is growing rapidly. By building on this standard today, you're future-proofing your AI applications for the integrations of tomorrow.
+
+### Resources
+
+- [Mastra MCP Documentation](https://mastra.ai/docs/mcp/overview)
+- [MCP Registry](https://registry.modelcontextprotocol.io)
+- [Model Context Protocol Spec](https://modelcontextprotocol.io)
+- [Klavis AI (Enterprise MCP)](https://klavis.ai)
+- [Composio MCP Servers](https://mcp.composio.dev)
+- [Smithery Registry](https://smithery.ai)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
