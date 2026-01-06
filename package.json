@@ -7,6 +7,7 @@
     "url": "https://github.com/justsml/dans-blog"
   },
   "scripts": {
+    "webp-images": "sh -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images'",
     "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "static": "PORT=4444 bunx serve dist",
     "screenshots": "bun ./screenshotter/index.ts",
