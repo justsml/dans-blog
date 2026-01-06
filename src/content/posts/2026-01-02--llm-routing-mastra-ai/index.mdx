@@ -1,0 +1,638 @@
+---
+title: "Competing Models: LLM Routing with Mastra.ai"
+subTitle: "Dynamically select the best AI model for each task"
+date: 2026-01-02
+modified: 2026-01-06
+tags: [AI, LLM, TypeScript, Mastra, Agent Orchestration, MCP, Guardrails]
+category: AI
+subCategory: Engineering
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+In the rapidly evolving landscape of AI, one truth has become clear: no single model is the best at everything. **GPT-5.2** is a ~reasoning powerhouse~ bigger version than GPT-5.1, **Claude Sonnet 4.5** dominates in coding tasks, and **Gemini 3 Pro** excels in long-context understanding.
+
+As developers, we shouldn't have to choose just one. **LLM Routing** is the pattern of dynamically selecting the best model for a specific task. By routing user queries to the most capable model, we can build applications that are smarter, faster, and more cost-effective.
+
+## Enter Mastra.ai
+
+[Mastra.ai](https://mastra.ai) is a new TypeScript agent framework designed to make building complex AI systems simple. Unlike other frameworks that can be overly opinionated or heavy, Mastra provides just the right primitives for agents, workflows, and tools.
+
+One of its most powerful features is how easily it enables **Agent Orchestration**. You can create a "Router Agent" whose sole job is to understand intent and delegate work to specialized sub-agents.
+
+## The Demo: A Multi-Model Orchestrator
+
+Reflecting the need for specialized intelligence, I've built a demo that routes queries to three specialized agents:
+
+- **The Coder**: Claude Sonnet 4.5 (via [Anthropic](https://www.anthropic.com/))
+- **The Creative**: Gemini 3 Pro (via [Google](https://deepmind.google/technologies/gemini/))
+- **The Generalist**: GPT-5.2 (via [OpenAI](https://openai.com/))
+
+### The Architecture
+
+We use a top-level **Router Agent** powered by GPT-5-Mini. This agent doesn't answer questions directly. Instead, it has access to three custom agents: `claudeAgent`, `geminiAgent`, and `gptAgent`.
+
+When a user asks "Write a bubble sort in Python," the Router Agent reasons: "This is a coding task. I should ask the Coder." It then delegates the interaction to `claudeAgent`.
+
+### Code Walkthrough
+
+Here is how simple it is to set up in Mastra.
+
+**1. Configure the Sub-Agents**
+
+First, we define our specialists. Note how we give them specific instructions:
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  name: 'Claude Coder',
+  instructions: 'You are an expert software engineer. Provide high-quality, bug-free code snippets.',
+  model: anthropic('claude-sonnet-4.5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  name: 'Gemini Creative',
+  instructions: 'You are a creative writer. Generate engaging and imaginative content.',
+  model: google('gemini-3-pro'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  name: 'GPT-5.2 Generalist',
+  instructions: 'You are a helpful generalist assistant. Answer questions directly and concisely.',
+  model: openai('gpt-5.2'),
+});
+```
+
+**2. The Router Agent**
+
+The router is just another agent, but we configure it with `agents` so it can delegate tasks. This pattern is cleaner than defining custom tools for each interaction:
+
+```typescript
+// src/agents.ts continued
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'Orchestrator',
+  instructions: `You are an intelligent router. Your job is to analyze the user's request and delegate it to the most appropriate specialist agent.
+  - For coding tasks, use the "Claude Coder" agent.
+  - For creative writing, use the "Gemini Creative" agent.
+  - For general questions, use the "GPT-5.2 Generalist" agent.
+  
+  Do not answer the user directly unless you cannot find a suitable agent.
+  Return the response from the agent you selected.`,
+  model: openai('gpt-5-mini'),
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { gptAgent, claudeAgent, geminiAgent, routerAgent },
+});
+```
+
+**3. Running the Routing**
+
+In our application, we just talk to the router:
+
+```typescript
+// src/index.ts
+import { mastra } from './mastra';
+
+async function main() {
+  const router = mastra.getAgent('routerAgent');
+  
+  const queries = [
+    "Write a bubble sort algorithm in Python.",
+    "Write a short poem about a robot learning to love.",
+    "What is the capital of France?"
+  ];
+
+  for (const query of queries) {
+    console.log(`\n👤 User: ${query}`);
+    const result = await router.generate(query);
+    console.log(`🤖 Response: ${result.text}`);
+  }
+}
+
+main().catch(console.error);
+```
+
+## Alternate Approach: Tool-Based Routing
+
+While `agents` is the preferred way to delegate work to other LLMs, you can also use **Tools** for routing. This is useful when:
+
+- You need to execute code or call external APIs (not just LLMs).
+- You require strict structured output validation before delegation.
+- You have a complex multi-step workflow that needs to be orchestrated via a state machine.
+
+In that case, you would define `tools` on your agent, where each tool's `execute` function performs the necessary logic.
+
+---
+
+## Advanced Scenario: External Tools and Real-World APIs
+
+The routing pattern becomes even more powerful when combined with **external tools**. Mastra makes it trivial to create tools that call real-world APIs—turning your agents from chatbots into genuine autonomous systems.
+
+### The Weather + Activity Planner
+
+Here's a compelling example: an agent that checks the weather via a geocoding API, then suggests activities based on conditions. This demonstrates how agents can chain multiple API calls to solve complex, real-world problems.
+
+```typescript
+// src/mastra/tools/weather-tool.ts
+import { createTool } from '@mastra/core/tools';
+import { z } from 'zod';
+
+export const weatherTool = createTool({
+  id: 'get-weather',
+  description: 'Get current weather for a location',
+  inputSchema: z.object({
+    location: z.string().describe('City name'),
+  }),
+  outputSchema: z.object({
+    temperature: z.number(),
+    feelsLike: z.number(),
+    humidity: z.number(),
+    windSpeed: z.number(),
+    conditions: z.string(),
+    location: z.string(),
+  }),
+  execute: async ({ context }) => {
+    // First, geocode the location
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(context.location)}&count=1`;
+    const geocodingResponse = await fetch(geocodingUrl);
+    const geocodingData = await geocodingResponse.json();
+
+    if (!geocodingData.results?.[0]) {
+      throw new Error(`Location '${context.location}' not found`);
+    }
+
+    const { latitude, longitude, name } = geocodingData.results[0];
+
+    // Then, fetch weather data
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code`;
+    const response = await fetch(weatherUrl);
+    const data = await response.json();
+
+    return {
+      temperature: data.current.temperature_2m,
+      feelsLike: data.current.apparent_temperature,
+      humidity: data.current.relative_humidity_2m,
+      windSpeed: data.current.wind_speed_10m,
+      conditions: getWeatherCondition(data.current.weather_code),
+      location: name,
+    };
+  },
+});
+```
+
+Now our agent can answer questions like "What's the weather in Tokyo?" by actually fetching live data—not hallucinating based on training data.
+
+### Agent with Tools
+
+```typescript
+// src/mastra/agents/weather-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { weatherTool } from '../tools/weather-tool';
+
+export const weatherAgent = new Agent({
+  name: 'Weather Agent',
+  instructions: `You are a helpful weather assistant that provides accurate weather information.
+    - Always ask for a location if none is provided
+    - Use the weatherTool to fetch current weather data
+    - Include relevant details like humidity, wind conditions, and precipitation
+    - Keep responses concise but informative`,
+  model: openai('gpt-4o'),
+  tools: { weatherTool },
+});
+```
+
+---
+
+## The MCP Ecosystem: A Universal Tool Interface
+
+One of Mastra's killer features is its native support for the **Model Context Protocol (MCP)**—an open standard that's rapidly becoming the "USB-C port" for AI applications.
+
+> "MCP is revolutionizing how AI applications connect with tools and data." — Salesforce Developer Blog, June 2025
+
+In 2025, MCP adoption exploded. Salesforce launched native MCP support in Agentforce. HubSpot, Stripe, and AWS all publish MCP servers. The ecosystem has grown to **thousands of pre-built integrations** that any MCP-compatible agent can plug into.
+
+### Connecting to MCP Servers
+
+With Mastra's `MCPClient`, connecting to external MCP servers is dead simple:
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // Connect to a Wikipedia MCP server (stdio transport)
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // Connect to a Salesforce MCP server (HTTP transport)
+    salesforce: {
+      url: new URL(process.env.SALESFORCE_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.SALESFORCE_TOKEN}`,
+        },
+      },
+    },
+    // Connect to a weather service via Smithery registry
+    weather: {
+      url: new URL(`https://server.smithery.ai/@smithery-ai/weather-service/mcp?api_key=${process.env.SMITHERY_API_KEY}`),
+    },
+  },
+});
+```
+
+### Using MCP Tools in Agents
+
+Once connected, MCP tools integrate seamlessly with your agents:
+
+```typescript
+// src/mastra/agents/crm-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const crmAgent = new Agent({
+  name: 'CRM Assistant',
+  instructions: `You are a CRM assistant that helps sales teams manage their contacts and opportunities.
+    - Use the Salesforce tools to look up customer information
+    - Always verify customer data before making updates
+    - Provide concise summaries of account activity`,
+  model: openai('gpt-4o'),
+  tools: await mcpClient.getTools(),
+});
+```
+
+### Dynamic Toolsets for Multi-Tenant Apps
+
+For SaaS applications where each user brings their own credentials, Mastra supports dynamic toolsets:
+
+```typescript
+async function handleUserRequest(userPrompt: string, userSalesforceToken: string) {
+  // Create user-specific MCP client
+  const userMcp = new MCPClient({
+    servers: {
+      salesforce: {
+        url: new URL(process.env.SALESFORCE_MCP_URL!),
+        requestInit: {
+          headers: {
+            Authorization: `Bearer ${userSalesforceToken}`,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('crmAgent');
+  
+  // Pass tools dynamically at request time
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  await userMcp.disconnect();
+  return response;
+}
+```
+
+---
+
+## Production-Ready: Guardrails and Security
+
+Here's where many AI frameworks fall short: they make the "hello world" easy but leave you on your own for production concerns. Mastra ships with **built-in processors** for content moderation, PII protection, and prompt injection defense.
+
+### Content Moderation
+
+Prevent harmful content from reaching your model or being shown to users:
+
+```typescript
+// src/mastra/agents/moderated-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { ModerationProcessor } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const moderatedAgent = new Agent({
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant.',
+  model: openai('gpt-4o'),
+  inputProcessors: [
+    new ModerationProcessor({
+      model: openai('gpt-4.1-nano'),  // Fast, cheap model for classification
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,
+      strategy: 'block',  // Block the request if flagged
+    }),
+  ],
+  outputProcessors: [
+    new ModerationProcessor({
+      model: openai('gpt-4.1-nano'),
+      categories: ['hate', 'harassment'],
+      threshold: 0.8,
+      strategy: 'warn',  // Log a warning but allow the response
+    }),
+  ],
+});
+```
+
+### PII Detection and Redaction
+
+Automatically detect and redact sensitive information like emails, phone numbers, and credit card numbers:
+
+```typescript
+// src/mastra/agents/private-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PIIDetector } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const privateAgent = new Agent({
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: openai('gpt-4o'),
+  inputProcessors: [
+    new PIIDetector({
+      model: openai('gpt-4.1-nano'),
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',  // Replace with [REDACTED]
+    }),
+  ],
+});
+```
+
+### Prompt Injection Defense
+
+Protect against adversarial inputs designed to override system instructions:
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const secureAgent = new Agent({
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant for financial queries.',
+  model: openai('gpt-4o'),
+  inputProcessors: [
+    // First, normalize unicode to catch evasion attempts
+    new UnicodeNormalizer({
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // Then, detect injection attempts
+    new PromptInjectionDetector({
+      model: openai('gpt-4.1-nano'),
+      threshold: 0.8,
+      strategy: 'block',
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+    }),
+  ],
+});
+```
+
+### Handling Blocked Requests
+
+When a processor blocks a request, Mastra provides clear feedback:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions and...');
+
+if (result.tripwire) {
+  console.error('Request blocked:', result.tripwireReason);
+  // "Prompt injection detected. Types: injection, system-override"
+} else {
+  console.log(result.text);
+}
+```
+
+---
+
+## Workflows: Complex Multi-Step Orchestration
+
+Sometimes you need more than a single agent call. Mastra's **workflow system** lets you define deterministic pipelines that combine API calls, data transformations, and agent interactions.
+
+### Weather Activity Planner Workflow
+
+Here's a workflow that fetches weather data, then uses an agent to suggest activities:
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // Geocode and fetch weather (same as our tool above)
+    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(inputData.city)}&count=1`;
+    const geo = await fetch(geocodingUrl).then(r => r.json());
+    
+    if (!geo.results?.[0]) throw new Error(`Location not found: ${inputData.city}`);
+    
+    const { latitude, longitude, name } = geo.results[0];
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&daily=precipitation_probability_mean`;
+    const weather = await fetch(weatherUrl).then(r => r.json());
+    
+    return {
+      location: name,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities
+const activityPlanner = new Agent({
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-4o'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C, ${inputData.conditions}, ${inputData.precipitationChance}% chance of rain. Suggest activities.`;
+    
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// Compose the workflow
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+### Running Workflows
+
+```typescript
+const workflow = mastra.getWorkflow('activity-planner');
+const run = await workflow.createRunAsync();
+const result = await run.start({ inputData: { city: 'Tokyo' } });
+
+console.log(result.activities);
+// "🌸 Tokyo Activity Suggestions (22°C, Partly Cloudy)..."
+```
+
+---
+
+## Agent Networks: The Ultimate Orchestration
+
+For truly complex scenarios—like research tasks that require multiple specialists collaborating—Mastra provides **Agent Networks**. Unlike simple routing, networks allow agents to dynamically call each other, workflows, and tools based on LLM reasoning.
+
+```typescript
+// src/mastra/agents/research-network.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+import { openai } from '@ai-sdk/openai';
+
+import { researchAgent } from './research-agent';
+import { writingAgent } from './writing-agent';
+import { weatherTool } from '../tools/weather-tool';
+import { activityPlannerWorkflow } from '../workflows/activity-planner';
+
+export const coordinatorAgent = new Agent({
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-4o'),
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  memory: new Memory({
+    storage: new LibSQLStore({ url: 'file:../network.db' }),
+  }),
+});
+```
+
+Now when you call `coordinatorAgent.network("Plan a weekend trip to Seattle")`, the agent will:
+
+1. Check the weather using `weatherTool`
+2. Run `activityPlannerWorkflow` to get activity suggestions
+3. Use `researchAgent` to gather facts about Seattle
+4. Use `writingAgent` to compose the final itinerary
+
+All orchestrated dynamically by the LLM.
+
+---
+
+## Why This Matters
+
+This pattern unlocks significant potential:
+
+1. **Quality**: Use the SOTA model for each specific domain.
+2. **Cost**: Route simple queries to cheaper, faster models (like Haiku, GPT-5-Mini or Gemini 3 Flash) and reserve heavy hitters for complex reasoning.
+3. **Reliability**: If one provider goes down, your router can failover to another model.
+4. **Security**: Built-in guardrails protect against harmful content, PII leaks, and prompt injection.
+5. **Extensibility**: The MCP ecosystem gives you access to thousands of pre-built integrations.
+6. **Maintainability**: Type-safe workflows and clear separation of concerns make the system easier to debug and extend.
+
+Mastra.ai makes implementing these patterns type-safe and intuitive. It handles the complexity of different API providers (OpenAI, Anthropic, Google) so you can focus on the orchestration logic.
+
+---
+
+## Real-World Use Cases
+
+The patterns we've covered enable a wide range of production applications:
+
+### 1. Customer Support Automation
+Route customer inquiries to specialized agents: billing questions to a CRM-connected agent, technical issues to a knowledge-base specialist, general queries to a fast generalist.
+
+### 2. Content Pipeline
+Orchestrate research, writing, and editing across specialized models. Use Claude for the first draft, GPT for editing, and Gemini for fact-checking against source documents.
+
+### 3. Sales Intelligence
+Connect agents to Salesforce, HubSpot, and LinkedIn via MCP servers. Let the agent research prospects, update CRM records, and draft personalized outreach—all in one conversation.
+
+### 4. Compliance & Risk
+Use guardrails to ensure all AI interactions comply with regulations. Automatically redact PII, detect unauthorized data access attempts, and maintain audit logs.
+
+### 5. Multi-Modal Assistants
+Combine text, voice, and vision capabilities. Mastra supports multiple voice providers (OpenAI, ElevenLabs, Google) alongside text models.
+
+---
+
+## Conclusion
+
+LLM routing is moving from a nice-to-have to a necessity for production-grade AI applications. But it's just the beginning. The real power comes from combining routing with:
+
+- **Tools** that connect to real-world APIs and services
+- **Guardrails** that keep your application safe and compliant
+- **Workflows** that orchestrate complex multi-step processes
+- **MCP integrations** that tap into a growing ecosystem of enterprise tools
+- **Agent networks** that enable sophisticated collaboration between specialists
+
+With frameworks like [Mastra](https://mastra.ai), building these intelligent networks is easier than ever.
+
+The full code for this demo is available in the [mastra-routing-demo](https://github.com/justsml/dans-blog/tree/main/mastra-routing-demo) folder. Try it yourself and experience the power of intelligent model routing!
+
+### Resources
+
+- [Mastra.ai Documentation](https://mastra.ai/docs)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+- [AI SDK by Vercel](https://sdk.vercel.ai/docs)
+- [Model Context Protocol (MCP)](https://modelcontextprotocol.io)
+- [MCP Registry](https://registry.modelcontextprotocol.io)
+- [OpenAI Platform](https://platform.openai.com/)
+- [Anthropic Claude](https://www.anthropic.com/claude)
+- [Google Gemini](https://deepmind.google/technologies/gemini/)
