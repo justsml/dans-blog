@@ -1,0 +1,124 @@
+---
+title: "Solving the LLM Math Problem: AI SDK v5 Tool Calling"
+subTitle: "Give your agents a proper calculator so they stop hallucinating numbers"
+date: 2026-01-06
+modified: 2026-01-06
+tags: [AI, AI SDK, TypeScript, Math, Tools, Patterns]
+category: AI
+subCategory: Engineering
+cover_full_width: ./wide.png
+cover_mobile: ./square.png
+cover_icon: ./square.png
+---
+
+We've all seen it. You ask an LLM a simple arithmetic question, and it confidently gives you an answer that is *almost* right. Or worse, you ask for a complex calculation, and it hallucinates a result that looks plausible but is comprised entirely of vibes.
+
+LLMs are probabilistic token predictors, not calculators. They don't "do" math; they predict the next most likely number in a sequence. For creative writing, this is a feature. For financial calculations or engineering physics, it's a critical bug.
+
+The solution isn't a bigger model. It's giving the model the right tool for the job.
+
+Today, we're going to fix this using **AI SDK v5's tool calling** and a powerful symbolic math engine.
+
+---
+
+## The Stack
+
+We're using two key libraries:
+
+1.  **AI SDK v5**: Vercel's TypeScript-first SDK for building AI applications.
+2.  **CortexJS Compute Engine**: A symbolic math engine that handles everything from basic arithmetic to calculus.
+
+```bash
+npm install ai @cortex-js/compute-engine zod
+```
+
+## The Implementation
+
+The goal is to create a tool that the LLM *must* use when it encounters a math problem. We're not just giving it `eval()`; we're giving it a structured interface to a symbolic engine.
+
+Here is the complete implementation of a robust math tool:
+
+```typescript
+import { generateText, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// Initialize the engine once
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // Process all expressions in parallel (or detailed batch)
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+### Usage Example
+
+Now, let's see it in action. We'll ask a multi-step question that would typically trip up a raw model (or at least result in a lack of precision).
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-3-5-sonnet-20240620'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { math: mathTool },
+  maxSteps: 5, // Allow the model to use the tool and then explain the result
+});
+
+console.log(text);
+```
+
+---
+
+## Why This Implementation Works
+
+There are a few subtle but important patterns in this code that make it production-grade:
+
+1.  **Mandatory Usage Instruction**: The description explicitly says "MUST be used... do not attempt mental math." Prompt engineering inside tool definitions is a powerful way to enforce behavior.
+2.  **Batch Processing**: The tool accepts an `expressions` array. This allows the LLM to solve systems of equations or perform multiple independent calculations in a single round-trip, saving latency and cost.
+3.  **Symbolic Processing**: By using `@cortex-js/compute-engine`, we support far more than just `2+2`. We can handle LaTeX inputs, integrals, derivatives, and algebraic simplification.
+4.  **Structured Error Handling**: If one expression fails, the whole tool call doesn't crash. We return the error for that specific expression, allowing the agent to self-correct in the next turn.
+
+## Beyond Arithmetic
+
+Because we're using a symbolic engine, we can handle queries that "calculator tools" often miss.
+
+**Algebra:**
+> "Solve these equations: 3x + 7 = 22 and 2y - 5 = 13"
+
+**Calculus:**
+> "Find the derivative of x^3 + 2x^2 and evaluate it at x = 2"
+
+**Unit Conversion & LaTeX:**
+The engine inherently understands LaTeX, making this perfect for educational apps where you need to render the output nicely on the frontend.
+
+---
+
+## Summary
+
+Stop hoping your LLMs will get better at math. They are language models, not logic gates. By binding a specialized math engine via AI SDK's tool system, you get the best of both worlds: the reasoning and natural language understanding of the LLM, and the rigorous precision of a computer algebra system.
+
+Don't settle for "probably right" when "provably right" is just an `npm install` away.
