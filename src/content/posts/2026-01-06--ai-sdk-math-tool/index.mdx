@@ -1,6 +1,6 @@
 ---
-title: "Solving the LLM Math Problem: AI SDK v5 Tool Calling"
-subTitle: "Give your agents a proper calculator so they stop hallucinating numbers"
+title: "LLMs can do Math!"
+subTitle: "Only if you give them the right tools!"
 date: 2026-01-06
 modified: 2026-01-06
 tags: [AI, AI SDK, TypeScript, Math, Tools, Patterns]
@@ -13,7 +13,7 @@ cover_icon: ./square.webp
 
 We've all seen it. You ask an LLM a simple arithmetic question, and it confidently gives you an answer that is *almost* right. Or worse, you ask for a complex calculation, and it hallucinates a result that looks plausible but is comprised entirely of vibes.
 
-LLMs are probabilistic token predictors, not calculators. They don't "do" math; they predict the next most likely number in a sequence. For creative writing, this is a feature. For financial calculations or engineering physics, it's a critical bug.
+LLMs are probabilistic token predictors, not calculators. While modern engines like GPT-5 and Gemini 3 have significantly improved their internal arithmetic capabilities through chain-of-thought fine-tuning, they still fundamentally predict the next most likely number in a sequence rather than computing it. For creative writing, this is a feature. For financial calculations or engineering physics, it's a remaining critical risk.
 
 The solution isn't a bigger model. It's giving the model the right tool for the job.
 
@@ -82,7 +82,7 @@ Now, let's see it in action. We'll ask a multi-step question that would typicall
 import { anthropic } from '@ai-sdk/anthropic';
 
 const { text } = await generateText({
-  model: anthropic('claude-3-5-sonnet-20240620'),
+  model: anthropic('claude-4-5-sonnet-20251115'),
   prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
   tools: { math: mathTool },
   maxSteps: 5, // Allow the model to use the tool and then explain the result

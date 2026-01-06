@@ -1,6 +1,6 @@
 ---
-title: "Orchestrating Intelligence: Workflows & Memory in Mastra.ai"
-subTitle: "Build complex multi-step processes with context that persists across conversations"
+title: "Orchestrating Workflows & Memory in Mastra.ai"
+subTitle: "Find out how chat memory enables multi-step workflows over time"
 date: 2026-01-08
 modified: 2026-01-08
 tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestration]
@@ -91,7 +91,7 @@ const activityPlanner = new Agent({
     - For rain (>50% precipitation), prioritize indoor activities
     - For extreme temperatures, consider climate-appropriate options
     - Always include one adventurous and one relaxing option`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
 });
 
 const planActivities = createStep({
@@ -242,7 +242,7 @@ try {
 
 ## Memory: Stateful Conversations
 
-LLMs are stateless—they don't remember previous interactions. If you want an agent to recall what was discussed yesterday, you need **memory**.
+LLMs are stateless—they don't remember previous interactions. While 2026-era models boast million-token context windows that *can* fit entire history, relying on raw context is expensive and messy. If you want an agent to efficiently recall specific details from weeks ago without burning through tokens, you need **structured memory**.
 
 Mastra provides two types:
 
@@ -269,7 +269,7 @@ import { openai } from '@ai-sdk/openai';
 export const memoryAgent = new Agent({
   name: 'Memory Agent',
   instructions: 'You are a helpful assistant with perfect recall of our conversations.',
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   memory: new Memory({
     storage: new LibSQLStore({
       url: 'file:../mastra.db',
@@ -348,7 +348,7 @@ Working memory keeps recent messages, but what about something discussed weeks a
 export const recallAgent = new Agent({
   name: 'Recall Agent',
   instructions: 'You have access to all past conversations with this user.',
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   memory: new Memory({
     storage: new LibSQLStore({
       url: 'file:../mastra.db',
@@ -395,7 +395,7 @@ const standardMemory = new Memory({
 export const tieredAgent = new Agent({
   name: 'Tiered Agent',
   instructions: 'You are a helpful assistant.',
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   memory: ({ runtimeContext }) => {
     const tier = runtimeContext.get("user-tier") as UserTier["user-tier"];
     return tier === "enterprise" ? premiumMemory : standardMemory;
@@ -440,7 +440,7 @@ export const coordinatorAgent = new Agent({
     - Use activityPlannerWorkflow for location-based planning
     
     Always produce comprehensive, well-structured responses.`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   
   // Available primitives
   agents: { researchAgent, writingAgent },
@@ -675,3 +675,10 @@ The era of toy demos is over. With frameworks like Mastra, we can build AI syste
 - [Agent Networks Guide](https://mastra.ai/docs/agents/networks)
 - [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 - [Full Demo Code](https://github.com/justsml/dans-blog/tree/main/mastra-routing-demo)
+
+## Read the Series
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
+4. **Workflows & Memory** (This Post)

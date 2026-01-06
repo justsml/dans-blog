@@ -132,7 +132,7 @@ export const weatherAgent = new Agent({
     - Use the weatherTool to fetch current weather data
     - Include relevant details like humidity, wind conditions, and precipitation
     - Keep responses concise but informative`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   tools: { weatherTool },
 });
 ```
@@ -143,7 +143,7 @@ Now when you ask "What's the weather in Tokyo?", the agent:
 3. Receives structured weather data
 4. Generates a natural language response
 
-No hallucinations. No stale training data. Just real, live API calls.
+Drastically reduced hallucinations. No stale training data. Just real, live API calls.
 
 ---
 
@@ -204,7 +204,7 @@ export const crmAgent = new Agent({
     - Use the Salesforce tools to look up customer information
     - Always verify customer data before making updates
     - Provide concise summaries of account activity`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   tools: await mcpClient.getTools(),
 });
 ```
@@ -381,13 +381,13 @@ export const salesAssistant = new Agent({
     - Respect user privacy and data policies
     - Provide sources for any statistics or claims
     - Ask for clarification rather than making assumptions`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   tools: await mcpClient.getTools(),
   
   // Security: Protect sensitive customer data
   inputProcessors: [
     new PIIDetector({
-      model: openai('gpt-4.1-nano'),
+      model: openai('gpt-5-nano'),
       detectionTypes: ['email', 'phone', 'ssn'],
       threshold: 0.6,
       strategy: 'redact',
@@ -397,7 +397,7 @@ export const salesAssistant = new Agent({
   
   outputProcessors: [
     new ModerationProcessor({
-      model: openai('gpt-4.1-nano'),
+      model: openai('gpt-5-nano'),
       categories: ['hate', 'harassment'],
       threshold: 0.8,
       strategy: 'warn',
@@ -450,7 +450,7 @@ export const resilientAgent = new Agent({
     3. Offer to try again or take a different approach
     
     Never claim a tool worked when it failed.`,
-  model: openai('gpt-4o'),
+  model: openai('gpt-5'),
   tools: await mcpClient.getTools(),
   maxRetries: 3,  // Retry failed tool calls
 });
@@ -483,7 +483,7 @@ export const cachedTool = createTool({
 
 ## What's Next
 
-Tomorrow, we'll close out this series with **Workflows & Memory**: building complex multi-step processes with persistent context. We'll explore:
+Tomorrow, we'll close out this series with [**Workflows & Memory**](/mastra-workflows-memory): building complex multi-step processes with persistent context. We'll explore:
 
 - Workflow orchestration for deterministic pipelines
 - Agent memory for long-running conversations
@@ -512,3 +512,10 @@ The MCP ecosystem is growing rapidly. By building on this standard today, you're
 - [Composio MCP Servers](https://mcp.composio.dev)
 - [Smithery Registry](https://smithery.ai)
 - [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## Read the Series
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. **MCP & Tool Integrations** (This Post)
+4. [Workflows & Memory](/mastra-workflows-memory)
