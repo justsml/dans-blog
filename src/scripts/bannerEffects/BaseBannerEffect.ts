@@ -9,7 +9,11 @@ export abstract class BaseBannerEffect {
     protected gl: WebGLRenderingContext;
     protected image: HTMLImageElement;
     protected program!: WebGLProgram;
+    protected vertexShader!: WebGLShader;
+    protected fragmentShader!: WebGLShader;
     protected texture!: WebGLTexture;
+    protected positionBuffer!: WebGLBuffer;
+    protected texCoordBuffer!: WebGLBuffer;
     protected animationFrame: number | null = null;
 
     protected startTime: number;
@@ -78,12 +82,12 @@ export abstract class BaseBannerEffect {
     protected abstract getFragmentShader(): string;
 
     protected createShaderProgram(): void {
-        const vertexShader = this.compileShader(this.getVertexShader(), this.gl.VERTEX_SHADER);
-        const fragmentShader = this.compileShader(this.getFragmentShader(), this.gl.FRAGMENT_SHADER);
+        this.vertexShader = this.compileShader(this.getVertexShader(), this.gl.VERTEX_SHADER);
+        this.fragmentShader = this.compileShader(this.getFragmentShader(), this.gl.FRAGMENT_SHADER);
 
         this.program = this.gl.createProgram()!;
-        this.gl.attachShader(this.program, vertexShader);
-        this.gl.attachShader(this.program, fragmentShader);
+        this.gl.attachShader(this.program, this.vertexShader);
+        this.gl.attachShader(this.program, this.fragmentShader);
         this.gl.linkProgram(this.program);
 
         if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
@@ -112,16 +116,18 @@ export abstract class BaseBannerEffect {
         const positions = new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]);
         const texCoords = new Float32Array([0, 1, 1, 1, 0, 0, 1, 0]);
 
-        const positionBuffer = this.gl.createBuffer();
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, positionBuffer);
+        this.positionBuffer = this.gl.createBuffer()!;
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW);
 
         const positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
         this.gl.enableVertexAttribArray(positionLocation);
         this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
 
-        const texCoordBuffer = this.gl.createBuffer();
-        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, texCoordBuffer);
+        this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
+
+        this.texCoordBuffer = this.gl.createBuffer()!;
+        this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.texCoordBuffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, texCoords, this.gl.STATIC_DRAW);
 
         const texCoordLocation = this.gl.getAttribLocation(this.program, 'a_texCoord');
@@ -214,6 +220,8 @@ export abstract class BaseBannerEffect {
         observer.observe(this.canvas);
     }
 
+    protected resizeTimeout: number | null = null;
+
     protected insertCanvas(): void {
         const parent = this.image.parentElement;
         if (!parent) return;
@@ -224,7 +232,13 @@ export abstract class BaseBannerEffect {
 
         parent.insertBefore(this.canvas, this.image);
 
-        this.resizeObserver = new ResizeObserver(() => this.resize());
+        // Debounce resize to prevent excessive GL context changes
+        this.resizeObserver = new ResizeObserver(() => {
+            if (this.resizeTimeout) {
+                window.clearTimeout(this.resizeTimeout);
+            }
+            this.resizeTimeout = window.setTimeout(() => this.resize(), 100);
+        });
         this.resizeObserver.observe(parent);
     }
 
@@ -257,8 +271,22 @@ export abstract class BaseBannerEffect {
 
     public destroy(): void {
         this.stopAnimation();
+
         if (this.resizeObserver) {
             this.resizeObserver.disconnect();
+        }
+        if (this.resizeTimeout) {
+            window.clearTimeout(this.resizeTimeout);
+        }
+
+        // Clean up WebGL resources
+        if (this.gl && this.program) {
+            this.gl.deleteProgram(this.program);
+            this.gl.deleteShader(this.vertexShader);
+            this.gl.deleteShader(this.fragmentShader);
+            this.gl.deleteTexture(this.texture);
+            this.gl.deleteBuffer(this.positionBuffer);
+            this.gl.deleteBuffer(this.texCoordBuffer);
         }
     }
 }

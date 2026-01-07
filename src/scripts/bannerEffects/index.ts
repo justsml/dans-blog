@@ -31,7 +31,14 @@ export function createBannerEffect(
     options: BannerEffectOptions = {}
 ): BaseBannerEffect | null {
     const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
+    // Optimize context creation
+    const gl = canvas.getContext('webgl', {
+        alpha: true,
+        depth: false, // No depth buffer needed for 2D quad (saves memory)
+        stencil: false, // No stencil buffer needed (saves memory)
+        antialias: false, // Pixelated effects don't need AA (saves perf)
+        powerPreference: 'default'
+    });
 
     if (!gl) {
         console.error('WebGL not supported');
