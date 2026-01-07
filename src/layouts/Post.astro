@@ -137,13 +137,24 @@ const responsiveImgSizes_breakRight = {
         cover_full_width &&
         typeof cover_full_width === "object" &&
         "src" in cover_full_width ? (
-          <Image
-            class="full-width flow u-photo banner-image"
-            src={cover_full_width as ImageMetadata}
-            alt={title}
-            format="webp"
-            {...responsiveImgSizes_fullWidth}
-          />
+          <div class="banner-wrapper full-width">
+            {/* Ghost image maintains aspect ratio */}
+            <Image
+              class="ghost-image"
+              src={cover_full_width as ImageMetadata}
+              alt=""
+              aria-hidden="true"
+              {...responsiveImgSizes_fullWidth}
+            />
+            {/* Target image for WebGL */}
+            <Image
+              class="flow u-photo banner-image"
+              src={cover_full_width as ImageMetadata}
+              alt={title}
+              format="webp"
+              {...responsiveImgSizes_fullWidth}
+            />
+          </div>
         ) : (
           cover &&
           typeof cover === "object" &&
@@ -180,6 +191,9 @@ const responsiveImgSizes_breakRight = {
       slugs={related}
       excludeSlugs={[slug]}
       className="default-links"
+      currentSlug={slug}
+      tags={Astro.props.frontmatter?.tags}
+      category={category}
     />
 
     <div class="comments-wrapper full-width default-links">
@@ -203,6 +217,7 @@ const responsiveImgSizes_breakRight = {
     onload="this.media='all'"
   />
   <script>
+    import { initBannerWebGLEffects } from "../scripts/bannerWebGLEffect";
     import { QuestionStore } from "../components/QuizUI/QuestionStore";
 
     let $interval: NodeJS.Timeout | null = null;
@@ -272,6 +287,13 @@ const responsiveImgSizes_breakRight = {
     }
 
     document.addEventListener("astro:page-load", function () {
+      // Initialize WebGL effects on banner images
+      initBannerWebGLEffects({
+        distortionStrength: 0.15,
+        revealDuration: 2000,
+        scrollSensitivity: 0.5,
+      });
+
       const quiz = document.querySelector(".quiz-ui");
       __checkForEmptyShareCounts();
       if (quiz) {
@@ -326,6 +348,18 @@ const responsiveImgSizes_breakRight = {
     }
 
     /**
+     * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
+     * - Removed conflicting auto-initialization code.
+     * - **Final Window Reveal Logic**:
+     *     - **Fixed 200px Window**: The banner stays exactly 200px tall with `overflow: hidden`.
+     *     - **Native Scale (Un-resized)**: The shader now uses aspect-correct logic (similar to `object-fit: cover`). The image is NOT stretched or zoomed to fit the 200px height.
+     *     - **Interactive Pan**: As you scroll, the "window" pans over the full-scale image, revealing what was hidden.
+     *     - **Premium Polish & Accessibility**:
+     *         - **Subtle Distortion**: The liquid effects have been toned down for a more professional, sophisticated look.
+     *         - **Mouse Velocity**: The distortion now reacts to both scroll speed and **how fast you move your mouse** over the banner.
+     *         - **Reduced Motion Support**: Respects the `prefers-reduced-motion` system setting by disabling animations for an accessible experience.
+     *
+     * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
      * This exists to patch the height of the options list - since we added the flip card effect, not all browsers are smart enough about calculating the height of the option elements.
      */
     window.__superHackFix_patchOptionsListWithActualHeight =
@@ -372,4 +406,108 @@ const responsiveImgSizes_breakRight = {
     // @ts-ignore
     window.__checkForEmptyShareCounts = __checkForEmptyShareCounts;
   </script>
+
+  <style is:global>
+    /* WebGL Banner Effect Styles */
+    .banner-webgl-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      position: relative;
+      z-index: 1;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      transform: translateZ(0);
+      will-change: transform, opacity;
+      opacity: 1;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .full-width.banner-image,
+    .hero-image-wrapper {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .banner-image[style*="opacity: 0"],
+    .hero-image img[style*="opacity: 0"] {
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .full-width {
+      contain: layout style paint;
+    }
+
+    .hero-image {
+      contain: layout style paint;
+    }
+
+    @media (max-width: 768px) {
+      .banner-webgl-canvas {
+        image-rendering: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .banner-webgl-canvas {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .banner-webgl-canvas {
+        filter: brightness(0.95) contrast(1.05);
+      }
+    }
+
+    @media print {
+      .banner-webgl-canvas {
+        display: none !important;
+      }
+      
+      .banner-image[style*="opacity: 0"],
+      .hero-image img[style*="opacity: 0"] {
+        opacity: 1 !important;
+        position: static !important;
+        pointer-events: auto !important;
+      }
+    }
+
+    .banner-webgl-canvas,
+    .full-width.banner-image,
+    .hero-image-wrapper {
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    /* WebGL Wrapper Layout */
+    .banner-wrapper.full-width {
+      display: block; /* Override grid */
+      margin-bottom: 2rem;
+      position: relative;
+      isolation: isolate;
+      height: 200px; /* Fixed height requested */
+      overflow: hidden; /* Ensure crop */
+    }
+
+    /* Ghost image props open the container */
+    .ghost-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      visibility: hidden; /* Takes up space but invisible */
+      pointer-events: none;
+    }
+
+    /* Canvas is absolute overlay */
+    .banner-webgl-canvas {
+      position: absolute !important;
+      inset: 0;
+      width: 100% !important; 
+      height: 100% !important;
+      z-index: 10;
+    }
+  </style>
 </html>
