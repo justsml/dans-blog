@@ -40,6 +40,7 @@ class BannerWebGLEffect {
     scrollVelocity?: WebGLUniformLocation | null;
     mouseVelocity?: WebGLUniformLocation | null;
     imageRatio?: WebGLUniformLocation | null;
+    opacity?: WebGLUniformLocation | null;
   } = {};
 
   constructor(
@@ -87,6 +88,9 @@ class BannerWebGLEffect {
     this.setupVisibilityObserver();
     this.insertCanvas();
     this.resize();
+
+    // Set initial scroll progress immediately to prevent jump
+    this.scrollProgress = this.targetScrollProgress;
   }
 
   private setupCanvas(): void {
@@ -141,6 +145,7 @@ class BannerWebGLEffect {
       scrollVelocity: this.gl.getUniformLocation(this.program, 'u_scrollVelocity'),
       mouseVelocity: this.gl.getUniformLocation(this.program, 'u_mouseVelocity'),
       imageRatio: this.gl.getUniformLocation(this.program, 'u_imageRatio'),
+      opacity: this.gl.getUniformLocation(this.program, 'u_opacity'),
     };
   }
 
@@ -185,6 +190,7 @@ class BannerWebGLEffect {
       uniform float u_scrollVelocity;
       uniform float u_mouseVelocity;
       uniform float u_imageRatio;
+      uniform float u_opacity;
       
       varying vec2 v_texCoord;
       
@@ -284,7 +290,7 @@ class BannerWebGLEffect {
         vignette *= 1.0 - smoothstep(0.48, 0.5, abs(v_texCoord.x - 0.5));
         color *= mix(0.95, 1.0, vignette);
         
-        gl_FragColor = vec4(color, 1.0);
+        gl_FragColor = vec4(color, u_opacity);
       }
     `;
   }
@@ -490,6 +496,8 @@ class BannerWebGLEffect {
     this.gl.blendFunc(this.gl.SRC_ALPHA, this.gl.ONE_MINUS_SRC_ALPHA);
 
     // Update uniforms
+    const revealOpacity = this.prefersReducedMotion ? 1.0 : Math.min(1.0, currentTime / 800);
+
     if (this.uniforms.time) {
       this.gl.uniform1f(this.uniforms.time, this.prefersReducedMotion ? 0 : currentTime);
     }
@@ -510,6 +518,9 @@ class BannerWebGLEffect {
     }
     if (this.uniforms.imageRatio) {
       this.gl.uniform1f(this.uniforms.imageRatio, this.image.naturalWidth / this.image.naturalHeight);
+    }
+    if (this.uniforms.opacity) {
+      this.gl.uniform1f(this.uniforms.opacity, revealOpacity);
     }
 
     // Draw

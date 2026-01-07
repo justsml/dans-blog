@@ -217,7 +217,7 @@ const responsiveImgSizes_breakRight = {
     onload="this.media='all'"
   />
   <script>
-    import { initBannerWebGLEffects } from "../scripts/bannerWebGLEffect";
+    import { initBannerEffects } from "../scripts/bannerEffects";
     import { QuestionStore } from "../components/QuizUI/QuestionStore";
 
     let $interval: NodeJS.Timeout | null = null;
@@ -287,12 +287,15 @@ const responsiveImgSizes_breakRight = {
     }
 
     document.addEventListener("astro:page-load", function () {
-      // Initialize WebGL effects on banner images
-      initBannerWebGLEffects({
-        distortionStrength: 0.15,
-        revealDuration: 2000,
-        scrollSensitivity: 0.5,
-      });
+      // Initialize WebGL banner effects
+      // Available effects: 'pixelated', 'scanline', 'ripple', 'glitch', 'gradient'
+      // Change the effect type below to test different effects
+      if (typeof window !== "undefined") {
+        initBannerEffects('ripple', {
+          distortionStrength: 0.0005,
+          scrollSensitivity: 0.125,
+        });
+      }
 
       const quiz = document.querySelector(".quiz-ui");
       __checkForEmptyShareCounts();
@@ -358,6 +361,10 @@ const responsiveImgSizes_breakRight = {
      *         - **Subtle Distortion**: The liquid effects have been toned down for a more professional, sophisticated look.
      *         - **Mouse Velocity**: The distortion now reacts to both scroll speed and **how fast you move your mouse** over the banner.
      *         - **Reduced Motion Support**: Respects the `prefers-reduced-motion` system setting by disabling animations for an accessible experience.
+     * -   **Load & Style Polish**:
+     *     -   **Neon Borders**: Added top and bottom 1px neon pink borders (`--primary`) with a subtle glow.
+     *     -   **Jump-Free Load**: The banner now initializes its scroll position immediately, eliminating the "sliding into place" behavior on refresh.
+     *     -   **Smooth Reveal**: The effect now fades in over 800ms for a more cinematic entrance.
      *
      * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
      * This exists to patch the height of the options list - since we added the flip card effect, not all browsers are smart enough about calculating the height of the option elements.
@@ -366,7 +373,7 @@ const responsiveImgSizes_breakRight = {
       function __superHackFix_patchOptionsListWithActualHeight(
         quizOptions: HTMLElement[] | null = null,
       ) {
-        quizOptions ??= [
+        quizOptions = quizOptions ?? [
           ...document.querySelectorAll<HTMLElement>(".quiz-options"),
         ];
         console.log("patchRealHeight", quizOptions.length);
@@ -490,6 +497,9 @@ const responsiveImgSizes_breakRight = {
       isolation: isolate;
       height: 200px; /* Fixed height requested */
       overflow: hidden; /* Ensure crop */
+      border-top: 1px solid var(--primary);
+      border-bottom: 1px solid var(--primary);
+      box-shadow: inset 0 0 15px rgba(255, 0, 153, 0.1); /* Subtle neon glow */
     }
 
     /* Ghost image props open the container */
