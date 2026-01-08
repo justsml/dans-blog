@@ -124,7 +124,6 @@ export abstract class BaseBannerEffect {
         this.gl.enableVertexAttribArray(positionLocation);
         this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
 
-        this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
 
         this.texCoordBuffer = this.gl.createBuffer()!;
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.texCoordBuffer);
