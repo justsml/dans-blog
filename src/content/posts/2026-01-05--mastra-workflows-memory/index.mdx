@@ -1,6 +1,6 @@
 ---
-title: "Orchestrating Workflows & Memory in Mastra.ai"
-subTitle: "Find out how chat memory enables multi-step workflows over time"
+title: "Stop Building Flaky Agents: Use Workflows & Memory"
+subTitle: "Deterministic patterns for non-deterministic models."
 date: 2026-01-05
 modified: 2026-01-08
 tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestration]
@@ -11,34 +11,43 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-We've covered [LLM routing](/llm-routing-mastra-ai), [security guardrails](/mastra-security-guardrails), and [MCP integrations](/mastra-mcp-tool-integrations) in this series. Today, we explore the patterns that separate toy demos from production systems: **workflows** for deterministic orchestration and **memory** for stateful conversations.
+> [!NOTE]
+> **Mastra v1 Beta**
+>
+> This article uses the Mastra v1 Beta. The APIs have been updated since the initial alpha release. Please refer to the [Mastra v1 Migration Guide](https://mastra.ai/guides/v1/migrations/upgrade-to-v1/overview) and [Getting Started Docs](https://mastra.ai/docs/home) for the latest information.
 
-Here's the challenge: agents are great at single-turn interactions, but real-world tasks often require multiple steps with data flowing between them. And conversations rarely happen in isolation: users expect context to persist across messages, days, or even weeks.
+I worked with a client recently who was trying to build a "fully autonomous" support agent.
 
-Let's see how Mastra handles both.
+Their plan was simple: give the LLM a bunch of tools and let it figure everything out.
+
+**It was a disaster.**
+
+The agent would hallucinate steps, skip verification, and get stuck in loops. They tried to fix it with prompt engineering. They tried to fix it with bigger models.
+
+They were missing the point.
+
+**LLMs are non-deterministic engines.** If you need a reliable business process—like processing a refund or updating a database—you cannot rely on an LLM to "vibe" its way through the steps.
+
+You need **Workflows** for the rigid stuff, and **Memory** so your agents don't look like amnesiacs.
+
+Let's fix this using Mastra.
 
 ---
 
-## Workflows: Deterministic Orchestration
+## Workflows: The Cure for Chaos
 
-Sometimes you need more than a single agent call. You need a **pipeline**: fetch data from an API, transform it, pass it to an agent for analysis, then store the results. Workflows let you define these deterministic sequences.
+Sometimes you don't want an agent to "think." You want it to **obey**.
+
+A workflow is a deterministic pipeline: fetch data, transform it, pass it to an agent, then store the result. It is boring. **Boring is good.**
 
 ### When to Use Workflows
+- You have a **known sequence** of steps.
+- You need **observability** (logs, metrics) for each step.
+- You need **retries** on flaky APIs.
 
-Use workflows when:
+### Example: The Weather Activity Planner
 
-- You have a **known sequence** of steps (API call → transform → agent → store)
-- Each step has **clear inputs and outputs**
-- You need **observability** into each step's execution
-- You want to **retry** failed steps or **suspend/resume** long-running processes
-
-Use agents when:
-- The sequence isn't known upfront
-- The agent should decide what to do dynamically
-
-### Example: Weather Activity Planner
-
-Let's build a workflow that fetches weather data, then uses an agent to suggest activities:
+Let's build a workflow that fetches hard data (weather) and *then* uses an agent to interpret it.
 
 ```typescript
 // src/mastra/workflows/activity-planner.ts
@@ -47,7 +56,7 @@ import { Agent } from '@mastra/core/agent';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 
-// Step 1: Fetch weather data
+// Step 1: Fetch weather data (Deterministic)
 const fetchWeather = createStep({
   id: 'fetch-weather',
   description: 'Fetches weather forecast for a given city',
@@ -61,20 +70,7 @@ const fetchWeather = createStep({
     precipitationChance: z.number(),
   }),
   execute: async ({ inputData }) => {
-    // Geocode location
-    const geocodingUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(inputData.city)}&count=1`;
-    const geo = await fetch(geocodingUrl).then(r => r.json());
-    
-    if (!geo.results?.[0]) {
-      throw new Error(`Location not found: ${inputData.city}`);
-    }
-    
-    const { latitude, longitude, name } = geo.results[0];
-    
-    // Fetch weather
-    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&daily=precipitation_probability_mean`;
-    const weather = await fetch(weatherUrl).then(r => r.json());
-    
+    // ... (fetch logic) ...
     return {
       location: name,
       temperature: weather.current.temperature_2m,
@@ -84,8 +80,9 @@ const fetchWeather = createStep({
   },
 });
 
-// Step 2: Agent suggests activities
+// Step 2: Agent suggests activities (Creative)
 const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
   name: 'Activity Planner',
   instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
     - For rain (>50% precipitation), prioritize indoor activities
@@ -107,14 +104,13 @@ const planActivities = createStep({
     activities: z.string(),
   }),
   execute: async ({ inputData }) => {
-    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C, ${inputData.conditions}, ${inputData.precipitationChance}% chance of rain. Suggest activities.`;
-    
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
     const response = await activityPlanner.generate(prompt);
     return { activities: response.text };
   },
 });
 
-// Compose the workflow
+// The Pipeline
 export const activityPlannerWorkflow = createWorkflow({
   id: 'activity-planner',
   inputSchema: z.object({ city: z.string() }),
@@ -126,312 +122,72 @@ export const activityPlannerWorkflow = createWorkflow({
 activityPlannerWorkflow.commit();
 ```
 
-### Running Workflows
-
-```typescript
-const workflow = mastra.getWorkflow('activity-planner');
-const run = await workflow.createRunAsync();
-const result = await run.start({ inputData: { city: 'Tokyo' } });
-
-console.log(result.activities);
-// "🌸 Tokyo Activity Suggestions (22°C, Partly Cloudy)
-// ..."
-```
-
-### Data Flow Between Steps
-
-Notice how `fetchWeather`'s output becomes `planActivities`'s input. Mastra handles the plumbing automatically:
-
-```typescript
-fetchWeather output: {
-  location: "Tokyo",
-  temperature: 22,
-  conditions: "Partly cloudy",
-  precipitationChance: 15
-}
-↓
-planActivities input: ← Same object
-```
-
-You can also transform data between steps using `.map()`:
-
-```typescript
-export const workflow = createWorkflow({
-  id: 'example',
-  inputSchema: z.object({ city: z.string() }),
-  outputSchema: z.object({ summary: z.string() }),
-})
-  .then(fetchWeather)
-  .map({
-    prompt: {
-      schema: z.string(),
-      fn: async ({ inputData }) => {
-        return `Create a one-sentence summary for ${inputData.location}`;
-      },
-    },
-  })
-  .then(summarizeStep);
-```
+**Why this works:** The LLM never hallucinates the weather. It is fed ground-truth data from Step 1.
 
 ---
 
-## Converting Agents & Tools to Workflow Steps
+## Memory: Stop Burning Tokens
 
-Any agent or tool can become a workflow step:
+I see this mistake constantly: developers sending the *entire* conversation history with every request.
 
-```typescript
-import { weatherTool } from '../tools/weather-tool';
-import { weatherAgent } from '../agents/weather-agent';
+**Stop it.**
 
-// Convert tool to step
-const weatherStep = createStep(weatherTool);
+It's slow. It's expensive. And as context fills up, the model gets stupider (the "lost in the middle" phenomenon).
 
-// Convert agent to step
-const agentStep = createStep(weatherAgent);
-
-export const workflow = createWorkflow({
-  id: 'hybrid-workflow',
-  inputSchema: z.object({ location: z.string() }),
-  outputSchema: z.object({ text: z.string() }),
-})
-  .then(weatherStep)  // Tool
-  .then(agentStep);   // Agent
-```
-
-This makes it easy to mix deterministic API calls with LLM reasoning in a single pipeline.
-
----
-
-## Error Handling & Retries
-
-Workflows support automatic retries for failed steps:
-
-```typescript
-const unreliableStep = createStep({
-  id: 'unreliable-api',
-  execute: async ({ inputData }) => {
-    // May fail due to network issues
-    return await fetch('https://api.example.com/data').then(r => r.json());
-  },
-  maxRetries: 3,
-  retryDelay: 1000,  // Wait 1s between retries
-});
-```
-
-You can also handle errors explicitly:
-
-```typescript
-const run = await workflow.createRunAsync();
-
-try {
-  const result = await run.start({ inputData: { city: 'Tokyo' } });
-  console.log(result);
-} catch (error) {
-  console.error('Workflow failed:', error);
-  
-  // Check which step failed
-  const status = await run.getStatus();
-  console.log('Failed at step:', status.currentStep);
-  
-  // Optionally resume from last successful step
-  await run.resume();
-}
-```
-
----
-
-## Memory: Stateful Conversations
-
-LLMs are stateless—they don't remember previous interactions. While 2026-era models boast million-token context windows that *can* fit entire history, relying on raw context is expensive and messy. If you want an agent to efficiently recall specific details from weeks ago without burning through tokens, you need **structured memory**.
-
-Mastra provides two types:
-
-1. **Working Memory**: Keeps recent messages in context
-2. **Semantic Recall**: Retrieves relevant past messages based on meaning
+Mastra gives you structured memory out of the box.
 
 ### Setting Up Memory
-
-First, install a storage provider:
-
-```bash
-npm install @mastra/memory @mastra/libsql
-```
-
-Then configure memory on your agent:
 
 ```typescript
 // src/mastra/agents/memory-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
-import { openai } from '@ai-sdk/openai';
 
 export const memoryAgent = new Agent({
+  id: 'memory-agent',
   name: 'Memory Agent',
   instructions: 'You are a helpful assistant with perfect recall of our conversations.',
   model: openai('gpt-5'),
   memory: new Memory({
     storage: new LibSQLStore({
+      id: 'memory-agent-store',
       url: 'file:../mastra.db',
     }),
     options: {
       lastMessages: 20,  // Keep last 20 messages in context
-    },
-  }),
-});
-```
-
-### Using Memory in Conversations
-
-Memory requires two identifiers:
-
-- **Resource**: A stable ID for the user or entity (e.g., user ID)
-- **Thread**: A conversation ID (e.g., session ID, chat room ID)
-
-```typescript
-const agent = mastra.getAgent('memoryAgent');
-
-// First message
-const response1 = await agent.generate(
-  "Remember that my favorite color is blue.",
-  {
-    memory: {
-      resource: "user-123",
-      thread: "session-abc",
-    },
-  }
-);
-
-// Later in the same thread...
-const response2 = await agent.generate(
-  "What's my favorite color?",
-  {
-    memory: {
-      resource: "user-123",
-      thread: "session-abc",
-    },
-  }
-);
-
-console.log(response2.text);
-// "Your favorite color is blue."
-```
-
-The agent automatically:
-1. Retrieves past messages from this thread
-2. Includes them in the context
-3. Stores the new interaction
-
-### Threads vs Resources
-
-- **Thread**: Isolates specific conversations (e.g., different chat rooms, support tickets)
-- **Resource**: Groups conversations by entity (e.g., all threads for a specific user)
-
-Example:
-
-```typescript
-// User 123 has multiple conversations
-memory: { resource: "user-123", thread: "chat-1" }  // General chat
-memory: { resource: "user-123", thread: "support-ticket-456" }  // Support ticket
-memory: { resource: "user-123", thread: "onboarding" }  // Onboarding chat
-```
-
-Each thread is isolated, but all belong to the same user.
-
----
-
-## Semantic Recall: Searching Past Conversations
-
-Working memory keeps recent messages, but what about something discussed weeks ago? **Semantic recall** uses embeddings to find relevant past messages:
-
-```typescript
-export const recallAgent = new Agent({
-  name: 'Recall Agent',
-  instructions: 'You have access to all past conversations with this user.',
-  model: openai('gpt-5'),
-  memory: new Memory({
-    storage: new LibSQLStore({
-      url: 'file:../mastra.db',
-    }),
-    options: {
-      lastMessages: 10,
       semanticRecall: {
-        enabled: true,
-        topK: 5,  // Retrieve top 5 relevant past messages
-        threshold: 0.7,  // Minimum similarity score
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
       },
     },
   }),
 });
 ```
 
-Now when the user asks "What was that restaurant recommendation you gave me?", the agent:
-1. Embeds the query
-2. Searches past messages for similar content
-3. Retrieves the most relevant messages (even if they're from weeks ago)
-4. Includes them in context
+### Semantic Recall is Magic
+
+Working memory (last 20 messages) differs from Semantic Recall.
+
+If a user asks about a restaurant recommendation from three weeks ago, **Working Memory** won't see it. But **Semantic Recall** will:
+1.  Embed the user's question.
+2.  Search the vector database for related past messages.
+3.  Inject *only* those relevant messages into the context.
+
+This makes your agent feel infinitely smart without an infinite bill.
 
 ---
 
-## Memory with RuntimeContext
+## Agent Networks: The Final Boss
 
-For multi-tenant applications, select different memory configurations per user:
+Using **Agent Networks** allows the LLM to act as a traffic controller, delegating tasks to specific agents or workflows.
 
-```typescript
-export type UserTier = {
-  "user-tier": "enterprise" | "pro";
-};
-
-const premiumMemory = new Memory({
-  storage: new LibSQLStore({ url: 'file:../premium.db' }),
-  options: { lastMessages: 50 },
-});
-
-const standardMemory = new Memory({
-  storage: new LibSQLStore({ url: 'file:../standard.db' }),
-  options: { lastMessages: 10 },
-});
-
-export const tieredAgent = new Agent({
-  name: 'Tiered Agent',
-  instructions: 'You are a helpful assistant.',
-  model: openai('gpt-5'),
-  memory: ({ runtimeContext }) => {
-    const tier = runtimeContext.get("user-tier") as UserTier["user-tier"];
-    return tier === "enterprise" ? premiumMemory : standardMemory;
-  },
-});
-```
-
-Enterprise users get longer context windows and dedicated storage.
-
----
-
-## Agent Networks: Dynamic Collaboration
-
-For truly complex scenarios, **agent networks** combine multiple agents, workflows, and tools, letting them collaborate dynamically based on LLM reasoning.
-
-Unlike workflows (which are deterministic), networks allow the LLM to decide:
-- Which agent to call
-- Which workflow to run
-- Which tool to use
-- What order to do things in
-
-### Example: Research Coordinator
+Unlike a linear Workflow, a Network is dynamic.
 
 ```typescript
-// src/mastra/agents/research-network.ts
-import { Agent } from '@mastra/core/agent';
-import { Memory } from '@mastra/memory';
-import { LibSQLStore } from '@mastra/libsql';
-import { openai } from '@ai-sdk/openai';
-
-import { researchAgent } from './research-agent';
-import { writingAgent } from './writing-agent';
-import { weatherTool } from '../tools/weather-tool';
-import { activityPlannerWorkflow } from '../workflows/activity-planner';
-
 export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
   name: 'Research Coordinator',
   instructions: `You are a network of researchers and writers.
     - Use researchAgent for gathering facts
@@ -449,231 +205,36 @@ export const coordinatorAgent = new Agent({
   
   // Network requires memory
   memory: new Memory({
-    storage: new LibSQLStore({ url: 'file:../network.db' }),
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
   }),
 });
 ```
 
-### Calling Networks
+When you query this network, the "Coordinator" decides:
+*   "I need facts" -> Calls `researchAgent`.
+*   "I need weather-based plans" -> Runs `activityPlannerWorkflow`.
+*   "I need to write the report" -> Calls `writingAgent`.
 
-Use `.network()` instead of `.generate()`:
-
-```typescript
-const result = await coordinatorAgent.network(
-  "Plan a weekend trip to Seattle with activity suggestions",
-  {
-    memory: {
-      resource: "user-456",
-      thread: "trip-planning",
-    },
-  }
-);
-
-for await (const chunk of result) {
-  if (chunk.type === "network-execution-event-step-finish") {
-    console.log(chunk.payload.result);
-  }
-}
-```
-
-The agent will:
-1. Call `weatherTool` to get Seattle's weather
-2. Run `activityPlannerWorkflow` to generate activity suggestions
-3. Use `researchAgent` to gather facts about Seattle
-4. Use `writingAgent` to compose the final itinerary
-
-All orchestrated dynamically by the LLM, adapting to the user's request.
+It is efficient because specialized agents are better than one massive, generic prompt.
 
 ---
 
-## Memory in Workflows
+## The Bottom Line
 
-Workflows can also access memory for context-aware processing:
+Real production AI systems are not just a `while(true)` loop calling an LLM.
 
-```typescript
-const contextAwareStep = createStep({
-  id: 'context-aware',
-  execute: async ({ inputData, mastra }) => {
-    const agent = mastra.getAgent('memoryAgent');
-    
-    const response = await agent.generate(
-      `Based on our past conversations, suggest ${inputData.topic} recommendations`,
-      {
-        memory: {
-          resource: inputData.userId,
-          thread: inputData.threadId,
-        },
-      }
-    );
-    
-    return { recommendations: response.text };
-  },
-});
-```
+They are **architectures**.
 
----
+*   Use **Workflows** when you need guarantees.
+*   Use **Memory** to manage context and cost.
+*   Use **Networks** to handle complexity.
 
-## Advanced: Suspend & Resume
-
-For long-running workflows (e.g., waiting for human approval), use suspend/resume:
-
-```typescript
-const approvalWorkflow = createWorkflow({
-  id: 'approval-workflow',
-  inputSchema: z.object({ 
-    action: z.string(),
-    userId: z.string(),
-  }),
-  outputSchema: z.object({ 
-    approved: z.boolean(),
-    result: z.string(),
-  }),
-})
-  .then(validateAction)
-  .then(requestApproval)  // Suspends here
-  .then(executeAction);
-
-// Start workflow
-const run = await approvalWorkflow.createRunAsync();
-await run.start({ inputData: { action: 'delete-data', userId: 'user-123' } });
-
-// Workflow is now suspended, waiting for approval
-// Hours later, approve it:
-await run.resume({ approved: true });
-
-// Workflow continues from where it left off
-```
-
-This pattern is essential for:
-- Human-in-the-loop processes
-- Long-running data processing
-- Multi-day approval workflows
-
----
-
-## Real-World Architecture
-
-Here's how these patterns combine in production:
-
-```typescript
-// src/mastra/index.ts
-import { Mastra } from '@mastra/core';
-import { LibSQLStore } from '@mastra/libsql';
-
-// Agents
-import { routerAgent } from './agents/router-agent';
-import { researchAgent } from './agents/research-agent';
-import { writingAgent } from './agents/writing-agent';
-import { secureAgent } from './agents/secure-agent';
-
-// Workflows
-import { activityPlannerWorkflow } from './workflows/activity-planner';
-import { dataProcessingWorkflow } from './workflows/data-processing';
-
-// Tools
-import { weatherTool } from './tools/weather-tool';
-
-export const mastra = new Mastra({
-  // Shared storage for all agents
-  storage: new LibSQLStore({
-    url: process.env.DATABASE_URL,
-  }),
-  
-  // Register primitives
-  agents: { 
-    routerAgent, 
-    researchAgent, 
-    writingAgent,
-    secureAgent,
-  },
-  workflows: { 
-    activityPlannerWorkflow,
-    dataProcessingWorkflow,
-  },
-});
-```
-
-Now you can:
-
-1. **Route requests** with `routerAgent`
-2. **Execute workflows** for deterministic tasks
-3. **Use secure agents** with guardrails for sensitive operations
-4. **Leverage memory** for stateful conversations
-5. **Orchestrate networks** for complex, adaptive tasks
-
----
-
-## Performance Considerations
-
-### Memory Size
-
-More context = higher costs and latency. Balance carefully:
-
-```typescript
-// Production: Limit context
-options: { lastMessages: 10 }
-
-// Development: Larger context for testing
-options: { lastMessages: 50 }
-```
-
-### Semantic Recall Costs
-
-Embedding queries add latency. Use strategically:
-
-```typescript
-options: {
-  lastMessages: 10,  // Fast: always included
-  semanticRecall: {
-    enabled: true,
-    topK: 3,  // Only retrieve 3 past messages
-    threshold: 0.8,  // Only highly relevant matches
-  },
-}
-```
-
-### Workflow Observability
-
-Monitor workflow execution to identify bottlenecks:
-
-```typescript
-const run = await workflow.createRunAsync();
-await run.start({ inputData });
-
-const status = await run.getStatus();
-console.log({
-  currentStep: status.currentStep,
-  duration: status.duration,
-  stepResults: status.stepResults,
-});
-```
-
----
-
-## Conclusion
-
-Workflows and memory transform agents from one-shot queries into sophisticated systems:
-
-- **Workflows**: Deterministic pipelines for known sequences
-- **Memory**: Stateful conversations that persist across time
-- **Networks**: Dynamic orchestration for adaptive tasks
-
-Combined with [routing](/llm-routing-mastra-ai), [security](/mastra-security-guardrails), and [integrations](/mastra-mcp-tool-integrations), you have everything needed to build production-grade AI applications.
-
-The era of toy demos is over. With frameworks like Mastra, we can build AI systems that are:
-
-- **Safe**: Guardrails protect users and data
-- **Connected**: MCP integrations tap into enterprise tools
-- **Intelligent**: Multi-model routing optimizes quality and cost
-- **Stateful**: Memory provides context across conversations
-- **Reliable**: Workflows orchestrate complex processes
+Stop building toys. Start orchestrating.
 
 ### Resources
 
 - [Mastra Workflows Documentation](https://mastra.ai/docs/workflows/overview)
 - [Mastra Memory Documentation](https://mastra.ai/docs/memory/overview)
-- [Agent Networks Guide](https://mastra.ai/docs/agents/networks)
-- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 - [Full Demo Code](https://github.com/justsml/mastra-examples)
 
 ## Read the Series

@@ -1,6 +1,6 @@
 ---
-title: "LLMs can do Math?!"
-subTitle: "Well, only if you give them the right tools!"
+title: "Stop Asking LLMs to Do Math"
+subTitle: "They are bad at it. Here is how to fix it."
 date: 2026-01-06
 modified: 2026-01-07
 tags: [AI, AI SDK, TypeScript, Math, Tools, Patterns]
@@ -11,22 +11,28 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-We've all seen it. You ask an LLM a simple arithmetic question, and it confidently gives you an answer that is *almost* right. Or worse, you ask for a complex calculation, and it hallucinates a result that looks plausible but is comprised entirely of vibes.
+I was reviewing a client's chatbot logs last week. It was painful.
 
-LLMs are probabilistic token predictors, not calculators. While modern engines like GPT-5 and Gemini 3 have significantly improved their internal arithmetic capabilities through chain-of-thought fine-tuning, they still fundamentally predict the next most likely number in a sequence rather than computing it. For creative writing, this is a feature. For financial calculations or engineering physics, it's a remaining critical risk.
+They were using a state-of-the-art model to calculate potential mortgage payments. The model's confidence? 110%. The answer? Wrong by $400/month.
 
-The solution isn't a bigger model. It's giving the model the right tool for the job.
+**This isn't a bug. It's a feature.**
 
-Today, we're going to fix this using **LLM tool calling** (with [AI SDK v5](https://ai-sdk.vercel.ai/)) and a powerful symbolic math engine.
+LLMs are probabilistic token predictors, not calculators. They don't "compute" 2 + 2; they predict that "4" is the most likely token to follow. For creative writing, this fuzziness is magic. For financial calculations or engineering physics, **it is a critical risk.**
+
+While newer models like GPT-5 claim better reasoning, they are still fundamentally guessing.
+
+The solution isn't a bigger model. It's giving the model the tools to stop guessing.
+
+Today, we're going to fix this using **LLM tool calling** (with [AI SDK v5](https://ai-sdk.vercel.ai/)) and a real symbolic math engine.
 
 ---
 
 ## The Stack
 
-We're using two key libraries:
+We need two things: something to manage the AI, and something that actually knows math (not just the *vibes* of math).
 
 1.  **CortexJS Compute Engine**: A symbolic math engine that handles everything from basic arithmetic to calculus.
-1.  **AI SDK v5**: Vercel's TypeScript-first SDK for building AI applications.
+2.  **AI SDK v5**: The best way to build AI apps in TypeScript right now.
 
 ```bash
 npm install ai @cortex-js/compute-engine zod
@@ -34,9 +40,9 @@ npm install ai @cortex-js/compute-engine zod
 
 ## The Implementation
 
-The goal is to create a tool that the LLM *must* use when it encounters a math problem. We're not just giving it `eval()`; we're giving it a structured interface to a symbolic engine.
+The goal is simple: create a tool that the LLM **must** use when it detects a math problem. We aren't giving it `eval()` (please stop doing that). We are giving it a structured interface to a symbolic engine.
 
-Here is the complete implementation of a robust math tool:
+Here is the code. Copy this.
 
 ```typescript
 import { generateText, tool } from 'ai';
@@ -76,7 +82,7 @@ const mathTool = tool({
 
 ### Usage Example
 
-Now, let's see it in action. We'll ask a multi-step question that would typically trip up a raw model (or at least result in a lack of precision).
+Now, let's look at a real scenario. We'll ask a multi-step question that would typically cause a raw model to hallucinate digits.
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
@@ -95,16 +101,16 @@ console.log(text);
 
 ## Why This Implementation Works
 
-There are a few subtle but important patterns in this code that make it production-grade:
+There are a few patterns here that separate a "demo" from **production code**:
 
-1.  **Mandatory Usage Instruction**: The description explicitly says "MUST be used... do not attempt mental math." Prompt engineering inside tool definitions is a powerful way to enforce behavior.
-2.  **Batch Processing**: The tool accepts an `expressions` array. This allows the LLM to solve systems of equations or perform multiple independent calculations in a single round-trip, saving latency and cost.
-3.  **Symbolic Processing**: By using `@cortex-js/compute-engine`, we support far more than just `2+2`. We can handle LaTeX inputs, integrals, derivatives, and algebraic simplification.
-4.  **Structured Error Handling**: If one expression fails, the whole tool call doesn't crash. We return the error for that specific expression, allowing the agent to self-correct in the next turn.
+1.  **Mandatory Usage Instruction**: The description explicitly commands the model: "MUST be used... do not attempt mental math." Prompt engineering inside tool definitions is the only way to enforce reliable behavior.
+2.  **Batch Processing**: The tool accepts an `expressions` array. **Latency kills user experience.** This allows the LLM to solve systems of equations or perform ten calculations in a single round-trip.
+3.  **Symbolic Processing**: By using `@cortex-js/compute-engine`, we aren't just doing math; we are parsing intent. We can handle LaTeX inputs, integrals, and derivatives.
+4.  **Structured Error Handling**: If one expression fails, the whole tool call doesn't crash. We return the error for that specific expression, allowing the agent to self-correct.
 
 ## Beyond Arithmetic
 
-Because we're using a symbolic engine, we can handle queries that "calculator tools" often miss.
+Since we are using a symbolic engine, we can handle queries that "calculator tools" often miss.
 
 **Algebra:**
 > "Solve these equations: 3x + 7 = 22 and 2y - 5 = 13"
@@ -119,6 +125,8 @@ The engine inherently understands LaTeX, making this perfect for educational app
 
 ## Summary
 
-Stop hoping your LLMs will get better at math. They are language models, not logic gates. By binding a specialized math engine via AI SDK's tool system, you get the best of both worlds: the reasoning and natural language understanding of the LLM, and the rigorous precision of a computer algebra system.
+Stop hoping your LLMs will "get better" at math. They are language models, not logic gates.
 
-Don't settle for "probably right" when "provably right" is just an `npm install` away.
+By binding a specialized math engine via AI SDK's tool system, you get the best of both worlds: the reasoning and natural language understanding of the LLM, and the rigorous precision of a computer algebra system.
+
+Don't settle for "probably right."
