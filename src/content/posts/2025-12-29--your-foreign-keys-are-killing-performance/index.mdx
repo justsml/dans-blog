@@ -1,121 +1,125 @@
 ---
 title: "Foreign Keys Are Slow. You Need Them Anyway."
-subTitle: "The hidden cost of referential integrity—and why you should pay it anyway."
+subTitle: "The hidden cost of referential integrity—and when to pay it."
 date: 2025-12-29
-modified: 2025-12-30
+modified: 2026-01-08
 tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
 category: Code
 subCategory: Databases
 cover_full_width: ./wide.webp
 cover_mobile: ./square.webp
 cover_icon: ./square.webp
-# social_image: desktop-social.webp
 ---
 
-I consulted for a startup once that removed all foreign keys (FKs) to "scale to web scale."
+I consulted for a startup once that removed all foreign keys (FKs) from their database. The CTO told me they were "optimizing for write throughput" and "planning to run at web scale."
 
 Six months later, they had 2.3 million orphaned records pointing to deleted users.
 
-Their billing system crashed because it tried to charge a user who didn't exist. Their analytics were wrong by 40%. The cleanup took **weeks**.
+Their billing system crashed because it tried to charge a `user_id` that didn't exist. Their analytics were wrong by 40%. The cleanup took **weeks** of forensic SQL.
 
 **Foreign Keys prevent your database from becoming a dumpster fire.**
 
-Yes, they are slow. Let's talk about how slow.
+But... (and you knew there was a but coming)... they aren't free. And blindly adding them to every relationship is arguably just as dangerous as removing them.
 
 ---
 
 ## The Cost of Sanity
 
-In one of my benchmarks, adding foreign key architecture increased write latency by **300%**.
+Foreign Keys impose a tax on every single write. 
+
+In one of my benchmarks, adding foreign keys increased insert latency by **300%**.
 
 Why?
 
-1.  **Locking**: When you insert an `order`, Postgres locks the `user` row to make sure it doesn't vanish.
-2.  **Read Overhead**: Every insert becomes a `SELECT` on the parent table.
-3.  **Indexing**: You *must* index the FK column, or deletes become table scans.
+1.  **Locking**: When you insert an `order`, Postgres locks the `user` row to make sure it doesn't vanish mid-transaction.
+2.  **Read Overhead**: Every insert becomes a hidden `SELECT` on the parent table.
+3.  **Indexing**: You *must* index the FK column on the child table (Postgres doesn't do this for you), or every `DELETE` on the parent becomes a full table scan on the child.
 
-### Converting "It Depends" into Numbers
 
-Here is a benchmark from a system handling 10,000 writes/second:
 
-```sql
--- Without foreign key
-INSERT INTO orders (user_id, amount) VALUES (12345, 99.99);
--- Average: 1.2ms
-
--- With foreign key
-INSERT INTO orders (user_id, amount) VALUES (12345, 99.99);
--- Average: 3.8ms (216% slower)
-```
-
-At scale, this matters. **But data corruption matters more.**
+At scale, this matters. **But data corruption usually matters more.**
 
 ---
 
-## The "Hyper Scale" Exception (Read: You Are Not Google)
+## The "Purist" Trap (Or: Join Hell)
 
-There is a ceiling. If you are dealing with **billions or trillions of rows**, you simply cannot entangle tables with Foreign Keys.
+We teach junior engineers to "Normalize Everything." Avoid duplication at all costs! 3rd Normal Form or death!
 
-At that scale, a `DELETE` operation cascading through a trillion-row table isn't a query; it's an outage.
+So you end up with a schema like this:
+
+`Orders` -> `OrderItems` -> `Products` -> `Variants` -> `Colors`
+
+To render a single "Order History" page, you are now writing a query with **4 `JOIN`s**.
+
+This creates two massive problems:
+1.  **Read Latency**: The database has to perform a jagged dance across 5 tables just to tell you "It was a Blue T-Shirt."
+2.  **Cognitive Overhead**: You have to hold the entire ERD in your head to write a basic `SELECT`.
+
+This is where "Normalization" becomes "Academic Masturbation."
+
+Sometimes, you don't need a Foreign Key. **You need a JSONB column.**
+
+Instead of joining strictly to a `Colors` table, maybe you just store `{"color": "blue", "hex": "#0000FF"}` right on the `OrderItem`.
+
+> "But wait!" you cry. "What if the hex code for Blue changes?!"
+
+It won't. And if it does, do you really want to change the history of an order placed 3 years ago?
+
+**Duplication is better than wrong abstractions.**
+
+(If you are tempted by the JSONB route, read my other post: [The JSONB Seduction](/the-jsonb-seduction)).
+
+---
+
+## The "Hyper Scale" Limit (Martin Kleppmann's Warning)
+
+There is a ceiling where Foreign Keys physically stop working.
+
+If you are building the next Google or Netflix, you will eventually shard your database. You will have `Users` on Shard A and `Orders` on Shard B.
+
+You cannot have a Foreign Key across physical servers.
 
 Martin Kleppmann, author of the data engineering bible *Designing Data-Intensive Applications*, puts it bluntly:
 
 > "Document databases sacrifice foreign keys and joins for flexibility... In practice, this means your application code must maintain referential integrity."
 
-When you shard your database across 50 nodes, Foreign Keys physically stop working. You can't enforce a constraint when `User:123` is on Server A and `Order:999` is on Server B.
+When you hit this scale, you trade **Database Constraints** for **Application Complexity**. You write background jobs to sweep for orphans. You implement "Eventual Consistency."
 
-At Hyper Scale, **Application-Level Validation** replaces Database Constraints. But unless you have a dedicated infrastructure team of 50 engineers, you probably aren't at Hyper Scale.
+**But be honest with yourself: You are probabaly not at this scale.**
 
----
-
-## When to Actually Skip Them
-
-I am about to commit heresy. There are valid reasons to skip FKs.
-
-1.  **Append-Only Analytics**: If you are loading immutable logs into a warehouse, validate them in the ETL pipeline. FKs here are just friction.
-2.  **Extreme Throughput Logging**: If you are ingesting 1 million audit logs/sec, you cannot afford the read overhead. But your app better calculate that `user_id` correctly.
-3.  **Sharding**: If User A is on DB 1 and Order B is on DB 2, you *technically* can't have an FK. (Distributed systems are fun, aren't they?)
+Do not optimize for a problem you might have in 5 years by creating a data integrity problem you *will* have today.
 
 ---
 
-## The Foreign Key Survival Guide
+## The "Hybrid" Strategy
 
-If you keep them (and you should), follow these rules:
+The best architecture is usually a mix.
 
-### 1. Index Both Sides
-Postgres indexes the Primary Key automatically. It does **NOT** index the Foreign Key column.
+1.  **Critical Data (Money/Auth): Use Foreign Keys.**
+    *   Do not mess around with payments. If an Invoice references a User, that User better exist. Pay the performance tax.
 
-If you miss this index, `DELETE FROM users` will scan the entire `orders` table.
+2.  **High-Volume/Ephemeral Data (Logs/Events): Skip Them.**
+    *   If you are ingesting 1 million clickstream events per minute, don't check the `Users` table for every single one. If 0.1% of clicks point to a deleted user, nobody cares.
 
-### 2. Monitor Lock Contention
-If you see high `LockWait` events, check your FKs. Highly engaged users (referencing the same rows) can become hotspots.
-
-```sql
-SELECT relation::regclass, mode, count(*) 
-FROM pg_locks WHERE granted = false 
-GROUP BY 1, 2 ORDER BY 3 DESC;
-```
-
-### 3. Use Deferrable Constraints (Maybe)
-You can tell Postgres to check FKs at `COMMIT` time, not Statement time.
-
-```sql
-ALTER TABLE orders 
-  ADD CONSTRAINT fk_user 
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  DEFERRABLE INITIALLY DEFERRED;
-```
-
-This helps with circular dependencies, but it doesn't reduce the total cost. It just moves the bill to the end of the transaction.
+3.  **Historical Data: Denormalize.**
+    *   Don't rely on FKs for "Order History." Snapshot the data at the time of purchase. Store it as JSONB or flat text. This protects you from future changes to your `Products` table.
 
 ---
+
+## The Survival Guide
+
+If you use FKs (and for 95% of your tables, you should), follow these rules to survive:
+
+1.  **Index the Child Column**: I repeat: Postgres does not do this for you. `CREATE INDEX ON orders(user_id)`.
+2.  **Monitor Lock Wait**: If `INSERTs` are slow, check if you have long-running transactions on the parent table.
+3.  **Use `ON DELETE RESTRICT`**: Default to preventing deletion of parents. `CASCADE` is a footgun that can accidentally delete your entire database.
 
 ## Conclusion
 
-Foreign Keys are expensive taxes.
+Foreign Keys are expensive. They slow down writes. They introduce locking.
 
-But the alternative is **data corruption**.
+But the alternative—writing application code to manually check references, handle race conditions, and clean up orphans—is infinitely more expensive.
 
-Unless you are Google (you aren't) or running a log firehose (you probably aren't), just pay the tax.
+**Pay the tax. Keep your data sane.**
 
-Your future self—debugging a `NullPointerException` on a "guaranteed" record at 3 AM—will thank you.
+(Unless you are Google. Then you are on your own.)
