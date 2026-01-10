@@ -71,23 +71,50 @@ It won't. And if it does, do you really want to change the history of an order p
 
 ---
 
-## The "Hyper Scale" Limit (Martin Kleppmann's Warning)
+## When Foreign Keys Actually Hurt
 
-There is a ceiling where Foreign Keys physically stop working.
+Here's the uncomfortable truth: "Scale" isn't just about being Google.
 
-If you are building the next Google or Netflix, you will eventually shard your database. You will have `Users` on Shard A and `Orders` on Shard B.
+**Scale is relative to your environment.**
 
-You cannot have a Foreign Key across physical servers.
+A Raspberry Pi running a weather station with 10,000 sensor readings per minute? That's "high scale" for a 4-core ARM chip with a microSD card.
 
-Martin Kleppmann, author of the data engineering bible *Designing Data-Intensive Applications*, puts it bluntly:
+A local dev database on your laptop with 100 concurrent test runs? Foreign Key checks can turn your test suite from 30 seconds to 5 minutes.
+
+AWS Aurora with provisioned IOPS and read replicas? You can handle FKs on tables with hundreds of millions of rows without breaking a sweat.
+
+### The Sharding Ceiling
+
+Martin Kleppmann, author of *Designing Data-Intensive Applications*, identifies the hard limit:
 
 > "Document databases sacrifice foreign keys and joins for flexibility... In practice, this means your application code must maintain referential integrity."
 
-When you hit this scale, you trade **Database Constraints** for **Application Complexity**. You write background jobs to sweep for orphans. You implement "Eventual Consistency."
+When you shard across physical servers—`Users` on Shard A, `Orders` on Shard B—Foreign Keys physically cannot work. The database has no way to enforce a constraint across network boundaries.
 
-**But be honest with yourself: You are probabaly not at this scale.**
+But this isn't just a "Google problem." You hit this ceiling when:
 
-Do not optimize for a problem you might have in 5 years by creating a data integrity problem you *will* have today.
+*   **Your IoT fleet** has 50,000 edge devices each running SQLite, syncing to a central Postgres instance.
+*   **Your multi-tenant SaaS** isolates each customer into their own database for compliance reasons.
+*   **Your analytics pipeline** splits hot data (last 30 days) from cold storage (everything older).
+
+### The Performance Ceiling
+
+Even on a single server, FKs can become a bottleneck if you architect poorly:
+
+**Bad**: A `users` table referenced by 47 different tables. Every user deletion triggers 47 FK checks. If any of those child tables are missing indexes, you're doing 47 sequential scans.
+
+**Good**: Partition your data by access patterns. Hot transactional tables get FKs. Cold analytical tables don't. Use read replicas for reporting queries so FK overhead doesn't impact production writes.
+
+**Better**: Use deferred constraints for bulk operations:
+
+```sql
+SET CONSTRAINTS ALL DEFERRED;
+-- Bulk insert 100k rows
+-- FK checks happen once at COMMIT, not 100k times
+COMMIT;
+```
+
+The point: **Architecture matters more than absolute scale.** A well-designed schema with FKs on AWS Aurora will outperform a poorly-designed schema without FKs on the same hardware.
 
 ---
 
