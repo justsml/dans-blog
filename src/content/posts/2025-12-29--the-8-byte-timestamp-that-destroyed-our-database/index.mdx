@@ -74,3 +74,11 @@ We also stopped accepting date strings from clients unless they include timezone
 The last piece was making sure every service sets the Postgres session timezone explicitly. Most Postgres drivers support this, but you have to actually configure it. A `SET TIME ZONE 'America/New_York';` at the start of each connection, or configuring your connection pool to do it automatically. This ensures that when Postgres converts your `TIMESTAMPTZ` values back from UTC, it converts them to the right local time.
 
 I wish I could say we figured all this out before the $40,000 incident, but sometimes the only way to really learn a lesson is to pay for it. Time is genuinely hard to get right in distributed systems, and the fact that Postgres gives you two timestamp types that look almost identical but behave completely differently doesn't help. At least now our database won't let us make the mistake again.
+
+## Resources
+
+- [PostgreSQL Date/Time Types Documentation](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [PostgreSQL Timestamp Best Practices](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
+- [ISO 8601 Date and Time Format](https://en.wikipedia.org/wiki/ISO_8601)
+- [Time Zone Database (IANA)](https://www.iana.org/time-zones)
+- [Dealing with Timestamps in Distributed Systems](https://www.postgresql.org/docs/current/functions-datetime.html)
