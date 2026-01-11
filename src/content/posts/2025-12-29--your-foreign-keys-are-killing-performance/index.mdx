@@ -1,8 +1,8 @@
 ---
-title: "Foreign Keys: The Debate Nobody Wins"
-subTitle: "Both sides are wrong. Here's why."
+title: "Foreign Keys: Stop Asking If They're Fast"
+subTitle: "Ask what you're actually optimizing for."
 date: 2025-12-29
-modified: 2026-01-09
+modified: 2026-01-10
 tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
 category: Code
 subCategory: Databases
@@ -13,101 +13,194 @@ cover_icon: ./square.webp
 
 A startup CTO once told me they removed all Foreign Keys to "optimize for web scale."
 
-Six months later: 2.3 million orphaned records. Billing system charging deleted users. Analytics off by 40%.
+Six months later: 2b+ orphaned records. Billing system charging deleted users. Analytics off by 40%.
 
 **"But Foreign Keys are slow!"** they protested.
 
-Sure. And seatbelts slow down your car. Should you remove those too?
+Sure. And the weight of safety glass, seatbelts, and airbags might slow down your car. Should you remove those too?
 
 ---
 
-## The "Performance" Myth
+## The Wrong Question
 
-Yes, Foreign Keys add overhead. Every insert triggers a lookup. Every delete scans for references.
+Everyone asks: "Are Foreign Keys fast or slow?"
 
-**The lie**: "This overhead matters."
+Nobody asks: "What am I actually trying to prevent?"
 
-**The truth**: Your application code doing the same validation is 10x slower and 100x buggier.
+If you're building a billing system, orphaned invoices pointing to deleted users is a lawsuit waiting to happen. Pay the FK tax.
 
-I've seen teams spend weeks building "application-level referential integrity" that:
-- Misses edge cases (race conditions, anyone?)
-- Breaks during deployments
-- Gets bypassed by admin tools, scripts, and "temporary" fixes
+If you're logging weather sensor data at 10,000 readings per minute on a Raspberry Pi, maybe you don't need to validate that `sensor_id` exists in the `sensors` table on every single insert. The sensor exists. You just talked to it.
 
-All to save 2ms per insert.
-
-Meanwhile, one missing index on a Foreign Key column costs you 2 *seconds* per delete. But nobody talks about that.
+The performance cost is real. But it's not the point.
 
 ---
 
-## The "Normalization" Cult
+## When Constraints Actually Matter
 
-The other extreme: Database purists who normalize everything into oblivion.
+Let's get specific. You're building a weather monitoring system.
 
-Let's say you want to find out if you ordered the Red or the Blue T-Shirt?
+You have tables: `weather_stations`, `sensor_devices`, `sensor_readings`, `us_states`.
 
-**Their schema**: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+Do you FK everything together?
 
-Six table joins. For a T-shirt.
+**Think about what changes and what doesn't:**
+
+- US States? Those aren't changing. Wyoming isn't getting renamed. You don't need a FK to validate state codes on every insert.
+- Weather stations? These get added, moved, decommissioned. But do you want historical readings to "lose" their station if someone fat-fingers a deletion? Maybe you want the data to stay intact even if the station record is gone.
+- Sensor readings? You're inserting thousands per minute. Every FK check is a lookup. Every lookup is contention on your tables.
+
+**The question isn't "should I use FKs?"**
+
+The question is: "What breaks if this reference is wrong, and what breaks if validation is slow?"
+
+If wrong references mean corrupted billing, use FKs.
+
+If slow validation means your insert queue backs up and you lose real-time data, skip them.
+
+---
+
+## The Append-Only Escape Hatch
+
+You need max speed inserts. Your queue is piling up. Transactions are timing out.
+
+You have options:
+
+1. **Change your isolation level** - `READ COMMITTED` is faster than `SERIALIZABLE`. But now you're trading consistency for speed.
+2. **Batch your commits** - Insert 1000 rows per transaction instead of 1. Amortize the FK overhead.
+3. **Denormalize into an append-only log** - No FKs. Just shove the data together in JSONB and write it once.
+
+That third option? It's not "wrong." It's a tradeoff.
+
+```sql
+CREATE TABLE sensor_log (
+  id BIGSERIAL PRIMARY KEY,
+  recorded_at TIMESTAMPTZ NOT NULL,
+  data JSONB NOT NULL  -- { station_id, sensor_id, temp, humidity, ... }
+);
+
+CREATE INDEX ON sensor_log USING GIN (data);
+CREATE INDEX ON sensor_log (recorded_at);
+```
+
+No joins. No FK checks. Just append. Query by time range or GIN index on the JSONB blob.
+
+Is this "best practice"? No.
+
+Does it work when you're inserting 50,000 rows per minute on a ~$35~ $100 Raspberry Pi? Yes.
+
+**Go ahead, FK it, or don't. I won't tell mom.**
+
+---
+
+## The Normalization Trap
+
+Database textbooks teach you to normalize everything. Avoid duplication. 3rd Normal Form or bust.
+
+So you end up with this:
+
+`Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+
+Six table joins to answer: "Did I order the red shirt or the blue one last X-Mas?"
 
 **"But what if the brand's name for Blue changes?"**
 
-If it does, do you *really* want historical orders to retroactively change color?
+If it does, do you really want historical orders to retroactively change color?
 
-This is where "3rd Normal Form" becomes "3rd Circle of Hell."
+This is the thing nobody talks about: **Some data is a snapshot, not a reference.**
 
-Sometimes you don't need a Foreign Key. **You need a JSONB column.** Store `{"color": "blue", "size": "M"}` and move on with your life.
+When you place an order, you're buying "Blue T-Shirt, Size M" as it exists *right now*. Not as it might be defined in the catalog next year.
+
+Denormalize at write time. Store `{"color": "blue", "size": "M"}` on the order. Done.
+
+### How to Spot Snapshot Data
+
+Ask yourself: "Is this a point-in-time record?"
+
+- **Orders** - Product details at purchase time
+- **Audit logs** - User state when they logged in  
+- **History tables** - Record state before update
+- **Event streams** - What happened, when, with what data
+
+If yes, stop joining. Start snapshotting.
+
+### Opaque Blobs (Not for Querying)
+
+Some data isn't even a snapshot. It's just a whole logical object you store and retrieve.
+
+- **LLM model configs** - `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` - You're not querying by temperature. You're fetching the whole config by request ID.
+- **JWT payloads** - The decoded token data. You store it. You retrieve it. You don't index it.
+- **API request/response logs** - The full JSON blob. For debugging, not querying.
+- **User preferences** - Theme settings, notification flags. Always fetched as a unit by user ID.
+
+These don't need normalization. They don't need FKs. They're opaque blobs. Shove them in JSONB and move on.
+
+The 6-table join to find out what color shirt was ordered? That's not "proper normalization." That's treating historical data like it's live data.
 
 (See: [The JSONB Seduction](/the-jsonb-seduction) for when this backfires.)
 
 ---
 
-## The "Scale" Excuse
+## Scale Is Relative
 
 **Popular opinion**: "Foreign Keys don't scale."
 
-**Reality**: Scale is relative.
+**Reality**: Scale is relative to your hardware.
 
-A Raspberry Pi weather station logging 10K sensor readings/minute? That's "high scale" for a microSD card.
+A Raspberry Pi logging 10K sensor readings per minute? That's high scale for a microSD card.
 
-AWS Aurora with provisioned IOPS? You can FK your way through billions of rows.
+AWS Aurora with provisioned IOPS? You can FK your way through billions of rows without breaking a sweat.
 
-The real limit isn't scale—it's **sharding**. When `Users` live on Server A and `Orders` live on Server B, Foreign Keys physically cannot work.
+The real limit isn't row count. It's **sharding**.
 
-But here's the kicker: If you're sharding, you've already traded database constraints for application complexity. You're running background jobs to find orphans. You're implementing "eventual consistency."
+When `Users` live on Server A and `Orders` live on Server B, Foreign Keys physically cannot work. The database has no way to enforce a constraint across network boundaries.
 
-**You're doing the hard work anyway.**
+But this isn't just a "Google problem." You hit this when:
 
-So why are you optimizing for a problem you don't have yet by creating a data integrity problem you'll have *today*?
+- Your IoT fleet has 50,000 edge devices each running SQLite, syncing to central Postgres
+- Your multi-tenant SaaS isolates each customer into their own database for compliance
+- Your analytics pipeline splits hot data (last 30 days) from cold storage (everything older)
+
+At that point, you're already doing the hard work. You're running background jobs to find orphans. You're implementing eventual consistency.
+
+So why optimize for a problem you don't have yet?
 
 ---
 
-## The Hybrid Truth
+## What to Actually Do
 
-The best engineers use blended strategies:
+Stop asking "should I use Foreign Keys?"
 
-**Use Foreign Keys for**:
+Start asking:
+
+1. **What breaks if this reference is wrong?** (Lawsuits? Or just a missing join?)
+2. **What breaks if validation is slow?** (Lost data? Or just slower queries?)
+3. **Is this data a snapshot or a reference?** (Historical record? Or live lookup?)
+
+Then decide:
+
+**Use FKs for:**
 - Money (Invoices → Users)
-- Auth (Sessions → Users)
-- Anything where corruption = lawsuits
+- Auth (Sessions → Users)  
+- Anything where corruption means lawsuits
 
-**Skip Foreign Keys for**:
+**Skip FKs for:**
 - High-volume logs (1M events/min don't need validation)
-- Historical snapshots (denormalize at write-time)
+- Append-only time-series data
 - Cross-shard references (physically impossible)
 
-**Use JSONB for**:
+**Denormalize for:**
+- Historical snapshots (orders, audit logs)
 - Data you fetch as a blob (user preferences)
 - Schemas you don't control (webhook payloads)
-- Historical records you'll never query by nested fields
 
+---
 
 ## Conclusion
 
-Foreign Keys are neither a silver bullet nor a performance killer.
+Foreign Keys aren't a performance problem. They're a tradeoff.
 
-They're a tool. Use them where corruption is expensive. Skip them where performance is critical and you have the discipline to validate in code.
+You're trading write speed for data integrity. Sometimes that's worth it. Sometimes it's not.
 
 But if you're removing FKs because you read a blog post about "web scale," you're cargo-culting Netflix's problems onto your 10-user SaaS.
 
-**Pay the tax. Or don't. But know why.**
+Know your constraints. Know your goals. Then optimize for what actually matters.
