@@ -13,17 +13,17 @@ cover_icon: ./square.webp
 
 I inherited a React app for a dashboard project once. A client complained that "Chrome crashes if I leave the tab open for lunch."
 
-First of all, close your tabs. But secondly, they were right. The heap was growing by **100MB every hour**.
+First of all, close your tabs. But secondly, they were right. The heap was growing by 100MB every hour.
 
-The culprit? A global `Map` used to store metadata about DOM nodes. Nodes were removed from the DOM, but the Map kept a "Strong Reference" to them.
+The culprit? A global `Map` used to store metadata about DOM nodes. Nodes were removed from the DOM, but the Map kept a "strong reference" to them.
 
-**The Garbage Collector couldn't touch them.**
+The Garbage Collector couldn't touch them.
 
 The fix took me 30 seconds. I changed `new Map()` to `new WeakMap()`.
 
 ---
 
-## The "Strong Reference" Trap
+## The Strong Reference Trap
 
 Here is the code that is destroying your RAM:
 
@@ -31,7 +31,7 @@ Here is the code that is destroying your RAM:
 const cache = new Map();
 
 function trackClick(element) {
-  // 💀 DEADLY: This reference prevents 'element' from being GC'd
+  // This reference prevents 'element' from being GC'd
   cache.set(element, { clicks: 0 });
 }
 
@@ -39,15 +39,15 @@ document.body.removeChild(element);
 // Result: 'element' is still in memory forever.
 ```
 
-Because `Map` keys are **Strong References**, the Garbage Collector sees `cache` holding onto `element` and says, "Oh, the user still needs this!"
+Because `Map` keys are strong references, the Garbage Collector sees `cache` holding onto `element` and says, "Oh, the user still needs this!"
 
 It doesn't matter if the element is removed from the DOM. It lives forever in your Map.
 
 ---
 
-## Enter WeakMap (The Savior)
+## WeakMap to the Rescue
 
-A `WeakMap` has one job: **It holds keys weakly.**
+A `WeakMap` has one job: it holds keys weakly.
 
 If the *only* thing holding onto an object is a WeakMap, the Garbage Collector ignores it. The object is deleted. The WeakMap entry vanishes.
 
@@ -55,7 +55,7 @@ If the *only* thing holding onto an object is a WeakMap, the Garbage Collector i
 const cache = new WeakMap();
 
 function trackClick(element) {
-  // ✅ SAFE: This reference does NOT prevent GC
+  // This reference does NOT prevent GC
   cache.set(element, { clicks: 0 });
 }
 
@@ -64,7 +64,7 @@ document.body.removeChild(element);
 // The entry in 'cache' is automatically removed.
 ```
 
-**It is self-cleaning code.**
+It's self-cleaning code.
 
 ---
 
@@ -123,11 +123,11 @@ If `obj` is deleted later, your cache doesn't hold onto it.
 
 WeakMap has limits that scare people.
 
-1.  **Not Iterable**: You cannot loop over keys. (Because they might disappear mid-loop).
-2.  **No .size**: You can't ask "how many items?".
-3.  **Keys must be Objects**: You can't use strings as keys.
+1.  Not Iterable: You cannot loop over keys. (Because they might disappear mid-loop).
+2.  No .size: You can't ask "how many items?".
+3.  Keys must be Objects: You can't use strings as keys.
 
-**These are feature, not bugs.** They force you to use WeakMap *only* for metadata association.
+These are features, not bugs. They force you to use WeakMap *only* for metadata association.
 
 ---
 
@@ -135,8 +135,8 @@ WeakMap has limits that scare people.
 
 Memory leaks in Single Page Apps (SPAs) are usually caused by stale references.
 
-If you are associating data with DOM nodes, objects, or anything temporary: **Use WeakMap.**
+If you're associating data with DOM nodes, objects, or anything temporary: use WeakMap.
 
-If you are caching data forever: **Use Map.**
+If you're caching data forever: use Map.
 
 It is that simple. Stop leaking memory.

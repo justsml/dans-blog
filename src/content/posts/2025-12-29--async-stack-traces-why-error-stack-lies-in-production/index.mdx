@@ -13,28 +13,28 @@ cover_icon: ./square.webp
 
 It is 2 AM. The PagerDuty alarm is blaring.
 
-You open the logs. You see this:
+You open the logs and see this:
 
 ```
 Error: Cannot read properties of undefined (reading 'id')
     at processTicksAndRejections (node:internal/process/task_queues:96:5)
 ```
 
-**That is it.** No function name. No line number. No file path. Just "processTicksAndRejections".
+That's it. No function name. No line number. No file path. Just "processTicksAndRejections".
 
-Welcome to Async JavaScript, where the stack traces are made up and the line numbers don't matter.
+Welcome to async JavaScript, where the stack traces are made up and the line numbers don't matter.
 
 ---
 
-## The "Stack" is a Lie
+## Why Stack Traces Break
 
 In synchronous code, the Call Stack is a beautiful genealogy. A called B, B called C. When C crashes, you can see exactly how you got there.
 
-In Async code (`async/await`), every `await` keyword is a **suspension point**.
+In async code (`async/await`), every `await` keyword is a suspension point.
 
-When you `await`, your function is torn off the stack. It is put into a cryogenic freezer called the **Microtask Queue**. The stack is now empty (or doing something else).
+When you `await`, your function is torn off the stack. It's put into a cryogenic freezer called the Microtask Queue. The stack is now empty (or doing something else).
 
-When the Promise resolves, your function is thawed out and tossed back onto the stack. **But the history is gone.**
+When the Promise resolves, your function is thawed out and tossed back onto the stack. But the history is gone.
 
 The engine has no idea who called `await` 500 milliseconds ago. It just knows it has a task to run.
 
@@ -46,14 +46,14 @@ Node.js tries to help. We have:
 
 1.  `Error.captureStackTrace()`: Captures the stack *at creation*. Useless if the error is thrown later.
 2.  `--async-stack-traces`: A flag that makes Node.js keep a "shadow stack" of promise chains.
-    *   **The Cost**: It makes your app **30% slower**.
-    *   **The Result**: It helps, but it gets noisy fast.
+    *   The Cost: It makes your app 30% slower.
+    *   The Result: It helps, but it gets noisy fast.
 
 ---
 
 ## The Real Solution: AsyncLocalStorage
 
-If you want to survive production, stop looking at stack traces. Look at **Causality**.
+If you want to survive production, stop looking at stack traces. Look at causality.
 
 We need to attach context (User ID, Request ID) to the "thread" of execution, even as it jumps between the Stack and the Microtask Queue.
 
@@ -86,8 +86,8 @@ It doesn't matter how many `await`s happen in between. The context survives.
 
 ## Production Playbook
 
-1.  **Stop trusting `err.stack`**. It is incomplete by design.
-2.  **Use Structured Logging**. Attach `requestId` to every single log line using `AsyncLocalStorage`.
-3.  **Trace, Don't Stack**. Use OpenTelemetry. It visualizes the causal chain across services, which is what you actually care about.
+1.  Stop trusting `err.stack`. It's incomplete by design.
+2.  Use structured logging. Attach `requestId` to every single log line using `AsyncLocalStorage`.
+3.  Trace, don't stack. Use OpenTelemetry. It visualizes the causal chain across services, which is what you actually care about.
 
 Your code is async. Your debugging context shouldn't be.

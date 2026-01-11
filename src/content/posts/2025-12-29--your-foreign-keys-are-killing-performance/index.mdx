@@ -15,9 +15,9 @@ A startup CTO once told me they removed all Foreign Keys to "optimize for web sc
 
 Six months later: 2b+ orphaned records. Billing system charging deleted users. Analytics off by 40%.
 
-**"But Foreign Keys are slow!"** they protested.
+"But Foreign Keys are slow!" they protested.
 
-Sure. And the weight of safety glass, seatbelts, and airbags might slow down your car. Should you remove those too?
+Sure. And safety glass, seatbelts, and airbags add weight to your car. Should you remove those too?
 
 ---
 
@@ -43,13 +43,13 @@ You have tables: `weather_stations`, `sensor_devices`, `sensor_readings`, `us_st
 
 Do you FK everything together?
 
-**Think about what changes and what doesn't:**
+Think about what changes and what doesn't:
 
 - US States? Those aren't changing. Wyoming isn't getting renamed. You don't need a FK to validate state codes on every insert.
 - Weather stations? These get added, moved, decommissioned. But do you want historical readings to "lose" their station if someone fat-fingers a deletion? Maybe you want the data to stay intact even if the station record is gone.
 - Sensor readings? You're inserting thousands per minute. Every FK check is a lookup. Every lookup is contention on your tables.
 
-**The question isn't "should I use FKs?"**
+The question isn't "should I use FKs?"
 
 The question is: "What breaks if this reference is wrong, and what breaks if validation is slow?"
 
@@ -65,9 +65,9 @@ You need max speed inserts. Your queue is piling up. Transactions are timing out
 
 You have options:
 
-1. **Change your isolation level** - `READ COMMITTED` is faster than `SERIALIZABLE`. But now you're trading consistency for speed.
-2. **Batch your commits** - Insert 1000 rows per transaction instead of 1. Amortize the FK overhead.
-3. **Denormalize into an append-only log** - No FKs. Just shove the data together in JSONB and write it once.
+1. Change your isolation level - `READ COMMITTED` is faster than `SERIALIZABLE`. But now you're trading consistency for speed.
+2. Batch your commits - Insert 1000 rows per transaction instead of 1. Amortize the FK overhead.
+3. Denormalize into an append-only log - No FKs. Just leave chunks of data together in JSONB and write it once.
 
 That third option? It's not "wrong." It's a tradeoff.
 
@@ -88,7 +88,7 @@ Is this "best practice"? No.
 
 Does it work when you're inserting 50,000 rows per minute on a ~$35~ $100 Raspberry Pi? Yes.
 
-**Go ahead, FK it, or don't. I won't tell mom.**
+Go ahead, FK it, or don't. I won't tell mom.
 
 ---
 
@@ -102,11 +102,11 @@ So you end up with this:
 
 Six table joins to answer: "Did I order the red shirt or the blue one last X-Mas?"
 
-**"But what if the brand's name for Blue changes?"**
+"But what if the brand's name for Blue changes?"
 
 If it does, do you really want historical orders to retroactively change color?
 
-This is the thing nobody talks about: **Some data is a snapshot, not a reference.**
+This is the thing nobody talks about: some data is a snapshot, not a reference.
 
 When you place an order, you're buying "Blue T-Shirt, Size M" as it exists *right now*. Not as it might be defined in the catalog next year.
 
@@ -116,10 +116,10 @@ Denormalize at write time. Store `{"color": "blue", "size": "M"}` on the order. 
 
 Ask yourself: "Is this a point-in-time record?"
 
-- **Orders** - Product details at purchase time
-- **Audit logs** - User state when they logged in  
-- **History tables** - Record state before update
-- **Event streams** - What happened, when, with what data
+- Orders - Product details at purchase time
+- Audit logs - User state when they logged in  
+- History tables - Record state before update
+- Event streams - What happened, when, with what data
 
 If yes, stop joining. Start snapshotting.
 
@@ -127,10 +127,10 @@ If yes, stop joining. Start snapshotting.
 
 Some data isn't even a snapshot. It's just a whole logical object you store and retrieve.
 
-- **LLM model configs** - `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` - You're not querying by temperature. You're fetching the whole config by request ID.
-- **JWT payloads** - The decoded token data. You store it. You retrieve it. You don't index it.
-- **API request/response logs** - The full JSON blob. For debugging, not querying.
-- **User preferences** - Theme settings, notification flags. Always fetched as a unit by user ID.
+- LLM model configs - `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` - You're not querying by temperature. You're fetching the whole config by request ID.
+- JWT payloads - The decoded token data. You store it. You retrieve it. You don't index it.
+- API request/response logs - The full JSON blob. For debugging, not querying.
+- User preferences - Theme settings, notification flags. Always fetched as a unit by user ID.
 
 These don't need normalization. They don't need FKs. They're opaque blobs. Shove them in JSONB and move on.
 
@@ -142,27 +142,19 @@ The 6-table join to find out what color shirt was ordered? That's not "proper no
 
 ## Scale Is Relative
 
-**Popular opinion**: "Foreign Keys don't scale."
+Popular opinion: "Foreign Keys don't scale."
 
-**Reality**: Scale is relative to your hardware.
+Reality: Scale is relative to your hardware.
 
-A Raspberry Pi logging 10K sensor readings per minute? That's high scale for a microSD card.
+A Raspberry Pi logging 10K sensor readings per minute? That's high scale for a microSD card. AWS Aurora with provisioned IOPS? You can FK your way through billions of rows without breaking a sweat.
 
-AWS Aurora with provisioned IOPS? You can FK your way through billions of rows without breaking a sweat.
-
-The real limit isn't row count. It's **sharding**.
+The real limit isn't row count. It's sharding.
 
 When `Users` live on Server A and `Orders` live on Server B, Foreign Keys physically cannot work. The database has no way to enforce a constraint across network boundaries.
 
-But this isn't just a "Google problem." You hit this when:
+You hit this when your IoT fleet has 50,000 edge devices each running SQLite, or your multi-tenant SaaS isolates each customer into their own database for compliance.
 
-- Your IoT fleet has 50,000 edge devices each running SQLite, syncing to central Postgres
-- Your multi-tenant SaaS isolates each customer into their own database for compliance
-- Your analytics pipeline splits hot data (last 30 days) from cold storage (everything older)
-
-At that point, you're already doing the hard work. You're running background jobs to find orphans. You're implementing eventual consistency.
-
-So why optimize for a problem you don't have yet?
+At that point, you're already running background jobs to find orphans and implementing eventual consistency. So why optimize for a problem you don't have yet?
 
 ---
 
@@ -172,23 +164,23 @@ Stop asking "should I use Foreign Keys?"
 
 Start asking:
 
-1. **What breaks if this reference is wrong?** (Lawsuits? Or just a missing join?)
-2. **What breaks if validation is slow?** (Lost data? Or just slower queries?)
-3. **Is this data a snapshot or a reference?** (Historical record? Or live lookup?)
+1. What breaks if this reference is wrong? (Lawsuits? Or just a missing join?)
+2. What breaks if validation is slow? (Lost data? Or just slower queries?)
+3. Is this data a snapshot or a reference? (Historical record? Or live lookup?)
 
 Then decide:
 
-**Use FKs for:**
+Use FKs for:
 - Money (Invoices → Users)
 - Auth (Sessions → Users)  
 - Anything where corruption means lawsuits
 
-**Skip FKs for:**
+Skip FKs for:
 - High-volume logs (1M events/min don't need validation)
 - Append-only time-series data
 - Cross-shard references (physically impossible)
 
-**Denormalize for:**
+Denormalize for:
 - Historical snapshots (orders, audit logs)
 - Data you fetch as a blob (user preferences)
 - Schemas you don't control (webhook payloads)

@@ -16,19 +16,19 @@ cover_icon: ./square.webp
 >
 > This article uses the Mastra v1 Beta. The APIs have been updated since the initial alpha release. Please refer to the [Mastra v1 Migration Guide](https://mastra.ai/guides/v1/migrations/upgrade-to-v1/overview) and [Getting Started Docs](https://mastra.ai/docs/home) for the latest information.
 
-I worked with a client recently who was trying to build a "fully autonomous" support agent.
+A client was trying to build a "fully autonomous" support agent.
 
 Their plan was simple: give the LLM a bunch of tools and let it figure everything out.
 
-**It was a disaster.**
+It was a disaster.
 
 The agent would hallucinate steps, skip verification, and get stuck in loops. They tried to fix it with prompt engineering. They tried to fix it with bigger models.
 
 They were missing the point.
 
-**LLMs are non-deterministic engines.** If you need a reliable business process—like processing a refund or updating a database—you cannot rely on an LLM to "vibe" its way through the steps.
+LLMs are non-deterministic engines. If you need a reliable business process—like processing a refund or updating a database—you cannot rely on an LLM to "vibe" its way through the steps.
 
-You need **Workflows** for the rigid stuff, and **Memory** so your agents don't look like amnesiacs.
+You need Workflows for the rigid stuff, and Memory so your agents don't look like amnesiacs.
 
 Let's fix this using Mastra.
 
@@ -36,9 +36,9 @@ Let's fix this using Mastra.
 
 ## Workflows: The Cure for Chaos
 
-Sometimes you don't want an agent to "think." You want it to **obey**.
+Sometimes you don't want an agent to "think." You want it to obey.
 
-A workflow is a deterministic pipeline: fetch data, transform it, pass it to an agent, then store the result. It is boring. **Boring is good.**
+A workflow is a deterministic pipeline: fetch data, transform it, pass it to an agent, then store the result. It's boring. Boring is good.
 
 ### When to Use Workflows
 - You have a **known sequence** of steps.

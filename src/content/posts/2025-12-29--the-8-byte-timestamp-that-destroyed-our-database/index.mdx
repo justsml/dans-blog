@@ -13,18 +13,18 @@ cover_icon: ./square.webp
 
 It was 3:47 AM.
 
-The **Payment Service** in Dublin logged a successful checkout at `14:00`.
-The **Order Service** in New York logged the order creation at `09:00`.
+The Payment Service in Dublin logged a successful checkout at `14:00`.
+The Order Service in New York logged the order creation at `09:00`.
 
 Our fraud detection system looked at the difference, saw that the payment happened 5 hours "after" the order (or before? I can't even remember the math), and flagged every single transaction as fraudulent.
 
-**We lost $40,000 in revenue in 20 minutes.**
+We lost $40,000 in revenue in 20 minutes.
 
 The culprit? `TIMESTAMP WITHOUT TIME ZONE`.
 
 ---
 
-## The 8-Byte Mirage
+## Understanding the Storage
 
 Consider this: Postgres gives you two ways to store time:
 
@@ -37,9 +37,9 @@ If they have the same precision (microseconds) and the same storage size (8 byte
 
 #### Answer: None of that.
 
-The TZ version **auto-converts the time to UTC on storage and back on retrieval**.
+The TZ version auto-converts the time to UTC on storage and back on retrieval.
 
-To take advantage of that, each query should tell Postgres the **local timezone**.
+To take advantage of that, each query should tell Postgres the local timezone.
 
 ### How?
 
@@ -47,10 +47,10 @@ To take advantage of that, each query should tell Postgres the **local timezone*
 2.  Use `SET TIME ZONE 'America/New_York';` at the start of each connection, query, or transaction.
 3.  Let the Postgres driver handle it (if it supports it).
 
-**`TIMESTAMP` is a sticky note.**
+`TIMESTAMP` is a sticky note.
 If you store `2025-01-01 10:00:00`, Postgres stores exactly that. It doesn't know if that's 10 AM in Tokyo or 10 AM in London.
 
-**`TIMESTAMPTZ` is a universal anchor.**
+`TIMESTAMPTZ` is a universal anchor.
 It converts your input to UTC before storing it. It converts it back to your local time when you query it.
 
 We were using the first one.
@@ -61,10 +61,10 @@ Because our servers were in different timezones (Dublin uses IST/GMT, New York u
 
 ## The Microsecond Precision Lie
 
-Even if you tackle Timezones, you crash into **Precision**.
+Even if you tackle timezones, you crash into precision issues.
 
-*   Postgres stores **Microseconds** (`.123456`)
-*   JavaScript `Date` uses **Milliseconds** (`.123`)
+*   Postgres stores microseconds (`.123456`)
+*   JavaScript `Date` uses milliseconds (`.123`)
 
 When we compared them:
 
@@ -80,20 +80,19 @@ JavaScript: `10:00:00.123`
 
 Wait, those look the same? Nope. In some drivers, the rounding logic creates phantom mismatches.
 
-**We were implicitly truncating data and wondering why our idempotency keys were failing.**
+We were implicitly truncating data and wondering why our idempotency keys were failing.
 
 ---
 
 ## How to Fix It (The Nuclear Option)
 
-We stopped asking nicely. We implemented a Database trigger that **bans** untyped timestamps.
+We stopped asking nicely. We implemented a database trigger that bans untyped timestamps.
 
 ```sql
 CREATE OR REPLACE FUNCTION check_timestamp_tz()
 RETURNS event_trigger AS $$
 BEGIN
-  -- If you try to create a table with TIMESTAMP WITHOUT TIME ZONE
-  -- I will reject your migration and judge you.
+  -- Reject tables with TIMESTAMP WITHOUT TIME ZONE
   IF EXISTS (SELECT 1 FROM ... WHERE type = 'timestamp without time zone') THEN
       RAISE EXCEPTION 'Use TIMESTAMPTZ. Do not argue.';
   END IF;
@@ -108,8 +107,8 @@ Effective? We haven't had a timezone bug in 2 years.
 
 ## The Lessons
 
-1.  **Always use `TIMESTAMPTZ`**. There is zero performance penalty. It is the same size (8 bytes). It just works.
-2.  **Server Time is UTC**. If your servers are running on Local Time, change them. Now.
-3.  **Trust No One**. If a client sends you a date string without an offset (`2025-01-01T10:00:00`), reject it. Request ISO-8601 with an offset (`2025-01-01T10:00:00Z`).
+1.  Always use `TIMESTAMPTZ`. There is zero performance penalty. It is the same size (8 bytes). It just works.
+2.  Server time is UTC. If your servers are running on local time, change them. Now.
+3.  Trust no one. If a client sends you a date string without an offset (`2025-01-01T10:00:00`), reject it. Request ISO-8601 with an offset (`2025-01-01T10:00:00Z`).
 
 Time is hard. Don't make it harder by guessing.

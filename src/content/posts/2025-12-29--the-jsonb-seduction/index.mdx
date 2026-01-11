@@ -15,11 +15,11 @@ cover_icon: ./square.webp
 
 **Famous last words.**
 
-I have heard this ten times. I have seen it fixed zero times.
+I've heard this ten times. I've seen it fixed zero times.
 
-That "temporary" column is now three years old. It contains 40 different versions of a user profile. It is queried by 15 microservices, each assuming a different schema.
+That "temporary" column is now three years old. It contains 40 different versions of a user profile. It's queried by 15 microservices, each assuming a different schema.
 
-**JSONB is Technical Debt,** deploy it wisely-or not at all.
+JSONB can become technical debt if you're not careful.
 
 ---
 
@@ -27,12 +27,12 @@ That "temporary" column is now three years old. It contains 40 different version
 
 You are building a feature. You don't know if a User has a `twitter_handle` or a `bluesky_handle`.
 
-Instead of doing the work (Schema Design), you do this:
+Instead of doing the work (schema design), you do this:
 
 ```sql
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  profile JSONB -- "Flexible!"
+  profile JSONB  -- "Flexible!"
 );
 ```
 
@@ -49,7 +49,7 @@ You write:
 SELECT count(*) FROM users WHERE profile->>'location' = 'New York';
 ```
 
-**Postgres conducts a Full Table Scan.** Every single row.
+Postgres conducts a full table scan. Every single row.
 
 So you add a GIN index. Now your write performance tanks because GIN indexes are huge and expensive to update.
 
@@ -67,16 +67,16 @@ Your application code now looks like this:
 const city = user.location || user.city || user.address?.city || "Unknown";
 ```
 
-**You didn't remove the schema. You just moved the validation from the Database (where it belongs) to your Application (where it rots).**
+You didn't remove the schema. You just moved the validation from the database (where it belongs) to your application (where it rots).
 
 ---
 ---
 
 ## When to Actually Use JSONB
 
-I am not a luddite. JSONB has valid use cases. **Many times it's perfectly fine—even optimal.**
+I'm not a luddite. JSONB has valid use cases. Many times it's perfectly fine—even optimal.
 
-The critical distinction: **Do you need to query ad-hoc key paths, or are you storing opaque blobs?**
+The critical distinction: Do you need to query ad-hoc key paths, or are you storing opaque blobs?
 
 ### Legitimate JSONB Use Cases
 
@@ -90,11 +90,11 @@ The critical distinction: **Do you need to query ad-hoc key paths, or are you st
 
 5.  **Event Sourcing**: You're storing immutable event payloads. Your queries are always "give me all events for aggregate X" ordered by time. You never run WHERE clauses on event properties. **JSONB fits.**
 
-**Rule of Thumb:** If you put it in a `WHERE` clause with dynamic paths, it should probably be a Column. If it's always fetched as a complete blob by a known key, JSONB is fine.
+Rule of Thumb: If you put it in a `WHERE` clause with dynamic paths, it should probably be a column. If it's always fetched as a complete blob by a known key, JSONB is fine.
 
 ### At Scale: Object Versioning > Normalization
 
-Here's where it gets interesting. At sufficiently large scale, the "right" solution isn't normalization—it's **object versioning.**
+Here's where it gets interesting. At sufficiently large scale, the "right" solution isn't normalization—it's object versioning.
 
 If you have billions of rows and frequent schema evolution, migrating columns becomes expensive. Companies like Stripe, GitHub, and Netflix don't normalize everything. Instead:
 
@@ -108,20 +108,20 @@ CREATE TABLE entities (
 
 Your application knows how to read `version: 1`, `version: 2`, `version: 3`. No database migrations for new fields. Code handles backward compatibility.
 
-This is an **architectural decision**, not laziness. It trades database complexity for application complexity—a worthwhile trade at scale.
+This is an architectural decision, not laziness. It trades database complexity for application complexity—a worthwhile trade at scale.
 
-**The problem isn't JSONB. The problem is claiming it's "temporary" when you're actually building an unversioned, undocumented schema-on-read system by accident.**
+The problem isn't JSONB. The problem is claiming it's "temporary" when you're actually building an unversioned, undocumented schema-on-read system by accident.
 
 ---
 ## Escaping the Trap
 
 If you are already in this hole, stop digging.
 
-1.  **Audit**: Run `jsonb_object_keys` to see what garbage you are actually storing.
-2.  **Promote**: Identify the top 3 most used fields. Make them real columns.
-3.  **Migrate**: Write a script to backfill the columns.
-4.  **Drop**: Remove the keys from the JSONB blob.
+1.  Audit: Run `jsonb_object_keys` to see what you're actually storing.
+2.  Promote: Identify the top 3 most used fields. Make them real columns.
+3.  Migrate: Write a script to backfill the columns.
+4.  Drop: Remove the keys from the JSONB blob.
 
-Do not say "we will fix it later." **Fix it now.**
+Don't say "we'll fix it later." Fix it now.
 
 Later never comes. And your database is crying.

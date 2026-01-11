@@ -11,19 +11,19 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-I was reviewing a client's chatbot logs last week. It was painful.
+LLMs are bad at math. They're probabilistic token predictors, not calculators.
 
-They were using a state-of-the-art model to calculate potential mortgage payments. The model's confidence? 110%. The answer? Wrong by $400/month.
+A client was using a state-of-the-art model to calculate mortgage payments. The model's confidence? 110%. The answer? Wrong by $400/month.
 
-**This isn't a bug. It's a feature.**
+This isn't a bug. It's a feature.
 
-LLMs are probabilistic token predictors, not calculators. They don't "compute" 2 + 2; they predict that "4" is the most likely token to follow. For creative writing, this fuzziness is magic. For financial calculations or engineering physics, **it is a critical risk.**
+LLMs don't "compute" 2 + 2; they predict that "4" is the most likely token to follow. For creative writing, this fuzziness is magic. For financial calculations or engineering physics, it's a critical risk.
 
 While newer models like GPT-5 claim better reasoning, they are still fundamentally guessing.
 
 The solution isn't a bigger model. It's giving the model the tools to stop guessing.
 
-Today, we're going to fix this using **LLM tool calling** (with [AI SDK v5](https://ai-sdk.vercel.ai/)) and a real symbolic math engine.
+Today, we're going to fix this using LLM tool calling (with [AI SDK v5 and v6](https://ai-sdk.vercel.ai/)) and a real symbolic math engine.
 
 ---
 
@@ -31,8 +31,8 @@ Today, we're going to fix this using **LLM tool calling** (with [AI SDK v5](http
 
 We need two things: something to manage the AI, and something that actually knows math (not just the *vibes* of math).
 
-1.  **CortexJS Compute Engine**: A symbolic math engine that handles everything from basic arithmetic to calculus.
-2.  **AI SDK v5**: The best way to build AI apps in TypeScript right now.
+1.  CortexJS Compute Engine: A symbolic math engine that handles everything from basic arithmetic to calculus.
+2.  AI SDK v5: The best way to build AI apps in TypeScript right now.
 
 ```bash
 npm install ai @cortex-js/compute-engine zod
@@ -40,7 +40,7 @@ npm install ai @cortex-js/compute-engine zod
 
 ## The Implementation
 
-The goal is simple: create a tool that the LLM **must** use when it detects a math problem. We aren't giving it `eval()` (please stop doing that). We are giving it a structured interface to a symbolic engine.
+The goal is simple: create a tool that the LLM must use when it detects a math problem. We aren't giving it `eval()` (please stop doing that). We're giving it a structured interface to a symbolic engine.
 
 Here is the code. Copy this.
 
