@@ -1,8 +1,8 @@
 ---
-title: "Foreign Keys Are Slow. You Need Them Anyway."
-subTitle: "The hidden cost of referential integrity—and when to pay it."
+title: "Foreign Keys: The Debate Nobody Wins"
+subTitle: "Both sides are wrong. Here's why."
 date: 2025-12-29
-modified: 2026-01-08
+modified: 2026-01-09
 tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
 category: Code
 subCategory: Databases
@@ -11,142 +11,103 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-I consulted for a startup once that removed all foreign keys (FKs) from their database. The CTO told me they were "optimizing for write throughput" and "planning to run at web scale."
+A startup CTO once told me they removed all Foreign Keys to "optimize for web scale."
 
-Six months later, they had 2.3 million orphaned records pointing to deleted users.
+Six months later: 2.3 million orphaned records. Billing system charging deleted users. Analytics off by 40%.
 
-Their billing system crashed because it tried to charge a `user_id` that didn't exist. Their analytics were wrong by 40%. The cleanup took **weeks** of forensic SQL.
+**"But Foreign Keys are slow!"** they protested.
 
-**Foreign Keys prevent your database from becoming a dumpster fire.**
-
-But... (and you knew there was a but coming)... they aren't free. And blindly adding them to every relationship is arguably just as dangerous as removing them.
+Sure. And seatbelts slow down your car. Should you remove those too?
 
 ---
 
-## The Cost of Sanity
+## The "Performance" Myth
 
-Foreign Keys impose a tax on every single write. 
+Yes, Foreign Keys add overhead. Every insert triggers a lookup. Every delete scans for references.
 
-In one of my benchmarks, adding foreign keys increased insert latency by **300%**.
+**The lie**: "This overhead matters."
 
-Why?
+**The truth**: Your application code doing the same validation is 10x slower and 100x buggier.
 
-1.  **Locking**: When you insert an `order`, Postgres locks the `user` row to make sure it doesn't vanish mid-transaction.
-2.  **Read Overhead**: Every insert becomes a hidden `SELECT` on the parent table.
-3.  **Indexing**: You *must* index the FK column on the child table (Postgres doesn't do this for you), or every `DELETE` on the parent becomes a full table scan on the child.
+I've seen teams spend weeks building "application-level referential integrity" that:
+- Misses edge cases (race conditions, anyone?)
+- Breaks during deployments
+- Gets bypassed by admin tools, scripts, and "temporary" fixes
 
+All to save 2ms per insert.
 
-
-At scale, this matters. **But data corruption usually matters more.**
-
----
-
-## The "Purist" Trap (Or: Join Hell)
-
-We teach junior engineers to "Normalize Everything." Avoid duplication at all costs! 3rd Normal Form or death!
-
-So you end up with a schema like this:
-
-`Orders` -> `OrderItems` -> `Products` -> `Variants` -> `Colors`
-
-To render a single "Order History" page, you are now writing a query with **4 `JOIN`s**.
-
-This creates two massive problems:
-1.  **Read Latency**: The database has to perform a jagged dance across 5 tables just to tell you "It was a Blue T-Shirt."
-2.  **Cognitive Overhead**: You have to hold the entire ERD in your head to write a basic `SELECT`.
-
-This is where "Normalization" becomes "Academic Masturbation."
-
-Sometimes, you don't need a Foreign Key. **You need a JSONB column.**
-
-Instead of joining strictly to a `Colors` table, maybe you just store `{"color": "blue", "hex": "#0000FF"}` right on the `OrderItem`.
-
-> "But wait!" you cry. "What if the hex code for Blue changes?!"
-
-It won't. And if it does, do you really want to change the history of an order placed 3 years ago?
-
-**Duplication is better than wrong abstractions.**
-
-(If you are tempted by the JSONB route, read my other post: [The JSONB Seduction](/the-jsonb-seduction)).
+Meanwhile, one missing index on a Foreign Key column costs you 2 *seconds* per delete. But nobody talks about that.
 
 ---
 
-## When Foreign Keys Actually Hurt
+## The "Normalization" Cult
 
-Here's the uncomfortable truth: "Scale" isn't just about being Google.
+The other extreme: Database purists who normalize everything into oblivion.
 
-**Scale is relative to your environment.**
+Let's say you want to find out if you ordered the Red or the Blue T-Shirt?
 
-A Raspberry Pi running a weather station with 10,000 sensor readings per minute? That's "high scale" for a 4-core ARM chip with a microSD card.
+**Their schema**: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
 
-A local dev database on your laptop with 100 concurrent test runs? Foreign Key checks can turn your test suite from 30 seconds to 5 minutes.
+Six table joins. For a T-shirt.
 
-AWS Aurora with provisioned IOPS and read replicas? You can handle FKs on tables with hundreds of millions of rows without breaking a sweat.
+**"But what if the brand's name for Blue changes?"**
 
-### The Sharding Ceiling
+If it does, do you *really* want historical orders to retroactively change color?
 
-Martin Kleppmann, author of *Designing Data-Intensive Applications*, identifies the hard limit:
+This is where "3rd Normal Form" becomes "3rd Circle of Hell."
 
-> "Document databases sacrifice foreign keys and joins for flexibility... In practice, this means your application code must maintain referential integrity."
+Sometimes you don't need a Foreign Key. **You need a JSONB column.** Store `{"color": "blue", "size": "M"}` and move on with your life.
 
-When you shard across physical servers—`Users` on Shard A, `Orders` on Shard B—Foreign Keys physically cannot work. The database has no way to enforce a constraint across network boundaries.
-
-But this isn't just a "Google problem." You hit this ceiling when:
-
-*   **Your IoT fleet** has 50,000 edge devices each running SQLite, syncing to a central Postgres instance.
-*   **Your multi-tenant SaaS** isolates each customer into their own database for compliance reasons.
-*   **Your analytics pipeline** splits hot data (last 30 days) from cold storage (everything older).
-
-### The Performance Ceiling
-
-Even on a single server, FKs can become a bottleneck if you architect poorly:
-
-**Bad**: A `users` table referenced by 47 different tables. Every user deletion triggers 47 FK checks. If any of those child tables are missing indexes, you're doing 47 sequential scans.
-
-**Good**: Partition your data by access patterns. Hot transactional tables get FKs. Cold analytical tables don't. Use read replicas for reporting queries so FK overhead doesn't impact production writes.
-
-**Better**: Use deferred constraints for bulk operations:
-
-```sql
-SET CONSTRAINTS ALL DEFERRED;
--- Bulk insert 100k rows
--- FK checks happen once at COMMIT, not 100k times
-COMMIT;
-```
-
-The point: **Architecture matters more than absolute scale.** A well-designed schema with FKs on AWS Aurora will outperform a poorly-designed schema without FKs on the same hardware.
+(See: [The JSONB Seduction](/the-jsonb-seduction) for when this backfires.)
 
 ---
 
-## The "Hybrid" Strategy
+## The "Scale" Excuse
 
-The best architecture is usually a mix.
+**Popular opinion**: "Foreign Keys don't scale."
 
-1.  **Critical Data (Money/Auth): Use Foreign Keys.**
-    *   Do not mess around with payments. If an Invoice references a User, that User better exist. Pay the performance tax.
+**Reality**: Scale is relative.
 
-2.  **High-Volume/Ephemeral Data (Logs/Events): Skip Them.**
-    *   If you are ingesting 1 million clickstream events per minute, don't check the `Users` table for every single one. If 0.1% of clicks point to a deleted user, nobody cares.
+A Raspberry Pi weather station logging 10K sensor readings/minute? That's "high scale" for a microSD card.
 
-3.  **Historical Data: Denormalize.**
-    *   Don't rely on FKs for "Order History." Snapshot the data at the time of purchase. Store it as JSONB or flat text. This protects you from future changes to your `Products` table.
+AWS Aurora with provisioned IOPS? You can FK your way through billions of rows.
+
+The real limit isn't scale—it's **sharding**. When `Users` live on Server A and `Orders` live on Server B, Foreign Keys physically cannot work.
+
+But here's the kicker: If you're sharding, you've already traded database constraints for application complexity. You're running background jobs to find orphans. You're implementing "eventual consistency."
+
+**You're doing the hard work anyway.**
+
+So why are you optimizing for a problem you don't have yet by creating a data integrity problem you'll have *today*?
 
 ---
 
-## The Survival Guide
+## The Hybrid Truth
 
-If you use FKs (and for 95% of your tables, you should), follow these rules to survive:
+The best engineers use blended strategies:
 
-1.  **Index the Child Column**: I repeat: Postgres does not do this for you. `CREATE INDEX ON orders(user_id)`.
-2.  **Monitor Lock Wait**: If `INSERTs` are slow, check if you have long-running transactions on the parent table.
-3.  **Use `ON DELETE RESTRICT`**: Default to preventing deletion of parents. `CASCADE` is a footgun that can accidentally delete your entire database.
+**Use Foreign Keys for**:
+- Money (Invoices → Users)
+- Auth (Sessions → Users)
+- Anything where corruption = lawsuits
+
+**Skip Foreign Keys for**:
+- High-volume logs (1M events/min don't need validation)
+- Historical snapshots (denormalize at write-time)
+- Cross-shard references (physically impossible)
+
+**Use JSONB for**:
+- Data you fetch as a blob (user preferences)
+- Schemas you don't control (webhook payloads)
+- Historical records you'll never query by nested fields
+
 
 ## Conclusion
 
-Foreign Keys are expensive. They slow down writes. They introduce locking.
+Foreign Keys are neither a silver bullet nor a performance killer.
 
-But the alternative—writing application code to manually check references, handle race conditions, and clean up orphans—is infinitely more expensive.
+They're a tool. Use them where corruption is expensive. Skip them where performance is critical and you have the discipline to validate in code.
 
-**Pay the tax. Keep your data sane.**
+But if you're removing FKs because you read a blog post about "web scale," you're cargo-culting Netflix's problems onto your 10-user SaaS.
 
-(Unless you are Google. Then you are on your own.)
+**Pay the tax. Or don't. But know why.**
