@@ -16,44 +16,21 @@ cover_icon: ./square.webp
 >
 > This article uses the Mastra v1 Beta.
 
-A client insisted on using the most expensive model for *everything*.
+Most engineering teams pick a language model and stick with it. One provider, one model, all tasks. It's like hiring one person to do your coding, your copywriting, and your taxes because they happened to be good at the first interview.
 
-Simple sentiment analysis? $30/million tokens.
-JSON formatting? $30/million tokens.
-Calculating 2+2? $30/million tokens.
+Claude Sonnet 4.5 absolutely crushes code generation. Gemini 3 Pro has a context window that makes other models look claustrophobic. GPT-5.2 is killer at logical reasoning. But none of them excel at everything, and treating them like they do means you're either overpaying for simple tasks or getting subpar results on specialized ones.
 
-They were burning venture capital to heat the room.
+I watched a team burn through thousands of dollars running sentiment analysis through a $30-per-million-token model when a $0.50 model would've done the job just as well. Simple JSON formatting, basic classification tasks, all going through their premium provider. The only thing getting heated was their AWS bill.
 
-The truth is simple: No single model is the best at everything.
+There's a better way, and it's not particularly complicated.
 
-*   Claude Sonnet 4.5 is the coding king.
-*   Gemini 3 Pro has the context window of a god.
-*   GPT-5.2 is the reasoning engine.
-*   Haiku/Flash are for the "grunt work."
+## Delegation Over Devotion
 
-LLM Routing isn't fancy. It's just smart delegation.
+What if you could route requests to the model that's actually best suited for that specific task? Use your expensive powerhouse for the hard stuff, but drop the simple parsing and formatting down to something cheaper. Get the benefits of multiple providers without having to manually juggle them in your codebase.
 
----
+Mastra lets you build exactly this kind of system. You set up specialist agents for different types of work, then create a router agent that figures out which specialist should handle each request.
 
-## Enter the Orchestrator
-
-Mastra makes this trivial. You create a "Router Agent"—a middle manager whose only job is to delegate tasks to the experts.
-
-(Yes, middle managers are finally useful.)
-
-### The Architecture
-
-We are going to build a system with three specialists:
-
-1.  **The Coder** (Claude)
-2.  **The Creative** (Gemini)
-3.  **The Generalist** (GPT)
-
-And one **Boss** (GPT-Mini) to tell them what to do.
-
-### The Code
-
-First, hire your specialists.
+Think of it like this: you have three specialists on your team.
 
 ```typescript
 // ./src/mastra/index.ts
@@ -82,7 +59,9 @@ export const gptAgent = new Agent({
 });
 ```
 
-Now, the Router.
+Each one has its strengths. Claude's your go-to for anything involving code. Gemini handles creative work where you need that massive context window. GPT covers general reasoning and factual tasks.
+
+Here's where it gets interesting. You add a router that acts as an intelligent proxy:
 
 ```typescript
 export const routerAgent = new Agent({
@@ -107,20 +86,21 @@ export const mastra = new Mastra({
 });
 ```
 
-Now, when you talk to the Router, it acts as a proxy.
+The router itself runs on a lightweight model because it's just making decisions about where to send traffic. You're not paying premium rates to figure out which other premium model to use.
 
-*   Customer: "Write a bubble sort."
-*   Router: "That looks like code. Hey **Claude**, handle this."
-*   Claude: "Here is your python code..."
-*   Router: "Here is the result."
+When someone asks for a bubble sort implementation, the router recognizes it as code work and hands it to Claude. Creative writing prompt? That goes to Gemini. Factual question about historical events? GPT handles it.
 
-### Why This Matters
+## The Practical Benefits
 
-1.  **Cost**: Using a small model to route requests saves a fortune. You only pay for intelligence when you need it.
-2.  **Quality**: Claude is better at Code. Gemini is better at Creative. Why compromise?
-3.  **Resilience**: If OpenAI goes down (again), your router can send traffic elsewhere.
+**Cost efficiency matters more than you think.** A small routing model making delegation decisions costs a fraction of running every single request through your most expensive provider. Over time, especially at scale, this adds up to real money. You only pay for the heavy-duty intelligence when you actually need it.
 
-Stop acting like a fanboy for one specific provider. The best engineers have a toolbox, not just a hammer.
+**Quality improves when you match models to tasks.** Claude genuinely produces better code than GPT. Gemini's context window lets it handle documents and conversations that would lose coherence in shorter-windowed models. Using the right tool for the job isn't just cheaper, it's better.
+
+**Resilience becomes a side benefit.** When OpenAI has one of its periodic outages (and they do), your router can redirect traffic to other providers. You're not dead in the water waiting for one specific API to come back online.
+
+This isn't about being clever for the sake of it. It's about building systems that make sense both financially and technically. You wouldn't use the same hammer for every construction task, and you probably shouldn't use the same language model for every AI task either.
+
+The beauty of this approach is that your application code doesn't change. You still just call your router agent. The complexity of deciding which model to use for which task lives in one place, configured once, rather than scattered throughout your codebase in a bunch of conditional logic.
 
 ### Resources
 

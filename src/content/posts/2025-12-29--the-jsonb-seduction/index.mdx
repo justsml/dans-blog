@@ -11,36 +11,28 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-"We'll just put it in a JSONB column for now. We can normalize it later."
+PostgreSQL added JSONB to let you store semi-structured data without defining rigid schemas upfront. The idea was sound: sometimes you genuinely don't know what the data will look like, or it changes too frequently for traditional columns to make sense.
 
-**Famous last words.**
+But somewhere between intention and implementation, JSONB became the database equivalent of "I'll clean my room later." That temporary solution you reached for six months ago? It's still there, and it's gotten worse.
 
-I've heard this ten times. I've seen it fixed zero times.
+I keep seeing the same pattern. A team adds a JSONB column because they're unsure about requirements. They promise themselves they'll normalize it once things settle down. Three years later, that column contains forty different versions of what was supposed to be a user profile, queried by fifteen microservices that each make different assumptions about what's inside.
 
-That "temporary" column is now three years old. It contains 40 different versions of a user profile. It's queried by 15 microservices, each assuming a different schema.
+The technical debt isn't the JSONB itself. It's the gap between what you told yourself you were building and what you actually built.
 
-JSONB can become technical debt if you're not careful.
+## What Usually Happens
 
----
-
-## The Seduction
-
-You are building a feature. You don't know if a User has a `twitter_handle` or a `bluesky_handle`.
-
-Instead of doing the work (schema design), you do this:
+You're adding a feature and you're not sure whether users need a `twitter_handle` or a `bluesky_handle` or something else entirely. Rather than think through the schema, you do this:
 
 ```sql
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
-  profile JSONB  -- "Flexible!"
+  profile JSONB
 );
 ```
 
-It feels great. You ship feature A. Then feature B. Then feature C.
+It works. You ship the feature, move on to the next one, then the next one. The JSONB column grows quietly in the background.
 
-## The Hangover
-
-### Month 6: The Query From Hell
+Six months in, product asks a simple question: "How many users are in New York?"
 
 Product asks: *"How many users are in New York?"*
 

@@ -11,82 +11,43 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-It was 3:47 AM.
+There's a weird thing about Postgres timestamp types that most developers never think about until it bites them. Both `TIMESTAMP` and `TIMESTAMPTZ` take up exactly 8 bytes of storage. Same size, same microsecond precision. So where does the timezone information actually go?
 
-The Payment Service in Dublin logged a successful checkout at `14:00`.
-The Order Service in New York logged the order creation at `09:00`.
+I spent an embarrassing amount of time convinced there must be a hidden column somewhere, or maybe some lookup table Postgres maintains behind the scenes. Turns out the answer is simpler and more elegant than that, but it also explains why our Payment Service in Dublin and our Order Service in New York managed to disagree about when transactions happened enough to flag every purchase as fraudulent for 20 minutes straight.
 
-Our fraud detection system looked at the difference, saw that the payment happened 5 hours "after" the order (or before? I can't even remember the math), and flagged every single transaction as fraudulent.
+We lost $40,000 in revenue before anyone woke up to fix it.
 
-We lost $40,000 in revenue in 20 minutes.
+## What Actually Happens in Those 8 Bytes
 
-The culprit? `TIMESTAMP WITHOUT TIME ZONE`.
+The trick with `TIMESTAMPTZ` is that it doesn't store timezone information at all. What it does is convert whatever timestamp you give it to UTC before writing it to disk, then converts it back to your session's timezone when you read it. The timezone data lives in your connection settings, not in the column.
 
----
+Think of `TIMESTAMP` (without the TZ) as writing down "10:00 AM" on a sticky note. If you take that sticky note to Tokyo or London or Denver, the note still says 10:00 AM, but the actual moment in time it represents keeps changing depending on where you are. Postgres just stores what you wrote, no questions asked.
 
-## Understanding the Storage
+`TIMESTAMPTZ` is more like an anchor point in actual time. You tell it "10:00 AM in New York," it converts that to UTC (probably 3:00 PM depending on daylight saving time, which is its own nightmare), stores the UTC value, and then when someone in Dublin queries it, Postgres converts it back to Dublin time automatically. Everyone's looking at the same moment, just expressed in their local timezone.
 
-Consider this: Postgres gives you two ways to store time:
+We were using the first approach. Our Payment Service called `NOW()` on a server running in Dublin (GMT during winter, IST during summer). Our Order Service called `NOW()` on servers in New York (EST, or EDT, again depending on the season). Both services wrote these timestamps as-is into `TIMESTAMP` columns, and our fraud detection system tried to figure out which event happened first by doing timestamp math.
 
-1.  `TIMESTAMP` (8 bytes)
-2.  `TIMESTAMPTZ` (8 bytes)
+You can probably see where this is going.
 
-#### Question
+The fraud system saw payment timestamps like `14:00` and order timestamps like `09:00` and concluded, reasonably enough, that something was wrong. But those weren't actually comparable values. One was 2:00 PM in Dublin (which is 9:00 AM in New York), and the other was 9:00 AM in New York. Same moment in time, completely different numbers in the database.
 
-If they have the same precision (microseconds) and the same storage size (8 bytes)... Where does the timezone info go? Secret shadow or off-the-books column? Some magic lookup table somewhere?
+## The Precision Problem Nobody Warns You About
 
-#### Answer: None of that.
+Even after we fixed the timezone issue (by switching everything to `TIMESTAMPTZ` and setting server clocks to UTC), we hit another subtle problem. Postgres stores timestamps with microsecond precision: `10:00:00.123456`. JavaScript's `Date` object uses milliseconds: `10:00:00.123`.
 
-The TZ version auto-converts the time to UTC on storage and back on retrieval.
-
-To take advantage of that, each query should tell Postgres the local timezone.
-
-### How?
-
-1.  Set the Postgres `timezone` parameter per session.
-2.  Use `SET TIME ZONE 'America/New_York';` at the start of each connection, query, or transaction.
-3.  Let the Postgres driver handle it (if it supports it).
-
-`TIMESTAMP` is a sticky note.
-If you store `2025-01-01 10:00:00`, Postgres stores exactly that. It doesn't know if that's 10 AM in Tokyo or 10 AM in London.
-
-`TIMESTAMPTZ` is a universal anchor.
-It converts your input to UTC before storing it. It converts it back to your local time when you query it.
-
-We were using the first one.
-
-Because our servers were in different timezones (Dublin uses IST/GMT, New York uses EST), `NOW()` meant completely different things depending on which server you asked.
-
----
-
-## The Microsecond Precision Lie
-
-Even if you tackle timezones, you crash into precision issues.
-
-*   Postgres stores microseconds (`.123456`)
-*   JavaScript `Date` uses milliseconds (`.123`)
-
-When we compared them:
+We had queries like this:
 
 ```sql
 SELECT * FROM orders WHERE created_at = $1
 ```
 
-It returned 0 rows.
+They would return zero rows even though we knew the record existed. The database had `10:00:00.123000`, our JavaScript code was passing in `10:00:00.123`, and depending on how the driver handled the conversion, those wouldn't match. The extra zeros matter.
 
-Why?
-Database: `10:00:00.123000`
-JavaScript: `10:00:00.123`
+This one was particularly frustrating because it would work in development (where we were using a different Postgres driver) and fail in production. Our idempotency checks started breaking because we couldn't reliably find records by their creation timestamp.
 
-Wait, those look the same? Nope. In some drivers, the rounding logic creates phantom mismatches.
+## Making It Impossible to Get Wrong
 
-We were implicitly truncating data and wondering why our idempotency keys were failing.
-
----
-
-## How to Fix It (The Nuclear Option)
-
-We stopped asking nicely. We implemented a database trigger that bans untyped timestamps.
+At some point we got tired of playing defense. We added a database trigger that outright rejects any attempt to create a table with `TIMESTAMP WITHOUT TIME ZONE`:
 
 ```sql
 CREATE OR REPLACE FUNCTION check_timestamp_tz()
@@ -100,15 +61,16 @@ END;
 $$ LANGUAGE plpgsql;
 ```
 
-Extreme? Yes.
-Effective? We haven't had a timezone bug in 2 years.
+Is this extreme? Probably. But we haven't had a timezone-related bug in two years, and before we added it, these issues cropped up maybe once every few months. Someone would add a new column, forget to specify `TIMESTAMPTZ`, and six weeks later we'd get weird bug reports that only affected users in certain timezones or certain times of day.
 
----
+There's no performance penalty for using `TIMESTAMPTZ`. It's literally the same storage size. The conversion overhead is negligible. The only reason `TIMESTAMP` exists is for those rare cases where you actually need to store a "wall clock time" that doesn't represent a specific moment (like "the store opens at 9:00 AM" regardless of timezone). For 99% of applications tracking events, you want `TIMESTAMPTZ`.
 
-## The Lessons
+## What We Learned (The Hard Way)
 
-1.  Always use `TIMESTAMPTZ`. There is zero performance penalty. It is the same size (8 bytes). It just works.
-2.  Server time is UTC. If your servers are running on local time, change them. Now.
-3.  Trust no one. If a client sends you a date string without an offset (`2025-01-01T10:00:00`), reject it. Request ISO-8601 with an offset (`2025-01-01T10:00:00Z`).
+Setting your server timezone to UTC is non-negotiable. If your servers are running on local time, you're going to have problems the moment your application scales to multiple regions, or when daylight saving time hits, or when someone deploys to a server that happens to be configured differently.
 
-Time is hard. Don't make it harder by guessing.
+We also stopped accepting date strings from clients unless they include timezone information. If you send us `2025-01-01T10:00:00`, we reject it. We require ISO-8601 format with an offset: `2025-01-01T10:00:00Z` or `2025-01-01T10:00:00-05:00`. Letting clients send ambiguous timestamps and trying to guess what they meant is how you end up with the problems we had.
+
+The last piece was making sure every service sets the Postgres session timezone explicitly. Most Postgres drivers support this, but you have to actually configure it. A `SET TIME ZONE 'America/New_York';` at the start of each connection, or configuring your connection pool to do it automatically. This ensures that when Postgres converts your `TIMESTAMPTZ` values back from UTC, it converts them to the right local time.
+
+I wish I could say we figured all this out before the $40,000 incident, but sometimes the only way to really learn a lesson is to pay for it. Time is genuinely hard to get right in distributed systems, and the fact that Postgres gives you two timestamp types that look almost identical but behave completely differently doesn't help. At least now our database won't let us make the mistake again.
