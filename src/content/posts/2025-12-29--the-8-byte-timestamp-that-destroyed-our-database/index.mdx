@@ -13,13 +13,13 @@ cover_icon: ./square.webp
 
 There's a weird thing about Postgres timestamp types that most developers never think about until it bites them. Both `TIMESTAMP` and `TIMESTAMPTZ` take up exactly 8 bytes of storage. Same size, same microsecond precision. So where does the timezone information actually go?
 
-I spent an embarrassing amount of time convinced there must be a hidden column somewhere, or maybe some lookup table Postgres maintains behind the scenes. Turns out the answer is simpler and more elegant than that, but it also explains why our Payment Service in Dublin and our Order Service in New York managed to disagree about when transactions happened enough to flag every purchase as fraudulent for 20 minutes straight.
+I spent an embarrassing amount of time convinced there must be less precision when using the TIMESTAMPTZ type, or maybe some lookup table Postgres maintains behind the scenes. Turns out the answer is simpler and more elegant than that, but it also explains why our Payment Service in Dublin and our Order Service in New York managed to disagree about when transactions happened enough to flag every purchase as fraudulent for 20 minutes straight.
 
 We lost $40,000 in revenue before anyone woke up to fix it.
 
 ## What Actually Happens in Those 8 Bytes
 
-The trick with `TIMESTAMPTZ` is that it doesn't store timezone information at all. What it does is convert whatever timestamp you give it to UTC before writing it to disk, then converts it back to your session's timezone when you read it. The timezone data lives in your connection settings, not in the column.
+The trick with `TIMESTAMPTZ` is that it doesn't store timezone information at all. What it does is **convert** whatever timestamp you give it to UTC before writing it to disk, then converts it back to your session's timezone when you read it. The timezone data lives in your connection settings, not in the column.
 
 Think of `TIMESTAMP` (without the TZ) as writing down "10:00 AM" on a sticky note. If you take that sticky note to Tokyo or London or Denver, the note still says 10:00 AM, but the actual moment in time it represents keeps changing depending on where you are. Postgres just stores what you wrote, no questions asked.
 
