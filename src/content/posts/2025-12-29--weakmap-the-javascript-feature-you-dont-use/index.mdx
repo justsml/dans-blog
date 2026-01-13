@@ -1,8 +1,8 @@
 ---
-title: "Stop Leaking Memory: Use WeakMap"
-subTitle: "The JavaScript feature that saves your RAM from your bad code."
+title: "Stop Leaking Memory with WeakMap"
+subTitle: "Fixing weak code with weak references!"
 date: 2025-12-29
-modified: 2025-12-30
+modified: 2026-01-12
 tags: [javascript, memory, garbage-collection, performance, patterns]
 category: Code
 subCategory: Best Practices
@@ -34,7 +34,7 @@ document.body.removeChild(element);
 // The element is gone from the DOM, but cache is keeping it in memory
 ```
 
-The Garbage Collector can't clean up `element` because `cache` is still pointing at it. This is called a "strong reference," and in long-running Single Page Apps, it becomes a slow leak that eventually crashes the browser.
+The Garbage Collector can't clean up `element` because `cache` is still pointing at it. This is called a "strong reference," and in long-running Single Page Apps, it becomes a leak that eventually crashes the browser.
 
 ## WeakMap Changes the Rules
 
@@ -54,17 +54,17 @@ document.body.removeChild(element);
 // The cache entry vanishes automatically
 ```
 
-I ran a benchmark creating 100,000 DOM nodes, storing metadata about each one, then removing them all. With a Map, the browser held onto 156MB. With a WeakMap, it dropped to 81MB. Same code, same functionality, half the memory footprint.
+I ran a benchmark creating 100,000 DOM nodes, storing metadata about each one, then removing them all. With a Map, the browser held onto 150-200MB. With a WeakMap, it dropped to 70-80MB. Same code, same functionality, half the memory footprint.
 
 ## What You Give Up
 
 WeakMap has constraints that feel like limitations until you realize they're what make the magic work.
 
-You can't iterate over a WeakMap. No `forEach`, no `keys()`, no `values()`. This makes sense when you think about it: the Garbage Collector might delete an entry in the middle of your loop. Do you really want to deal with that?
+**You can't iterate over a WeakMap.** No `forEach`, no `keys()`, no `values()`. This makes sense when you think about it: the Garbage Collector might delete an entry in the middle of your loop. Do you really want to deal with that?
 
 You can't check the size. No `.size` property, no `.length`. Again, it's a moving target. The number could change between when you ask and when you get the answer.
 
-Keys must be objects. No strings, no numbers, no primitives. This is fundamental to how weak references work: primitive values don't have identity that can be tracked separately from their value.
+**Keys must be objects.** No strings, no numbers, no primitives. This is fundamental to how weak references work: primitive values don't have identity that can be tracked separately from their value.
 
 These aren't bugs. They're the design. WeakMap is built for one specific job: attaching metadata to objects without preventing those objects from being cleaned up. If you need iteration or primitive keys or a count of entries, you're probably solving a different problem and should use a regular Map.
 
@@ -108,11 +108,11 @@ The cache only lives as long as the objects being cached. Once `obj` isn't refer
 
 Memory leaks in modern web apps usually come from stale references to things that should have been cleaned up. If you're building anything long-running, a dashboard that stays open all day, a chat app that runs for hours, an admin panel that never refreshes, you need to think about what happens to old data.
 
-WeakMap is particularly useful when you're associating data with DOM nodes, component instances, or any object whose lifetime you don't control. If you're storing something based on a reference and that reference might go away, WeakMap handles the cleanup for you.
+WeakMap is particularly useful when you're associating data with DOM nodes, component instances, or any object whose lifetime you don't control. If you're storing something based on a reference and that reference might go away, WeakMap makes the cleanup much simpler.
 
 Regular Map is still the right choice when you're building an actual cache with eviction policies, when you need to iterate over entries, when you're using primitive keys, or when the data itself is what matters rather than its association with an object.
 
-The nice thing about WeakMap is that it's usually obvious when you need it. If you find yourself writing cleanup code to remove map entries when objects are destroyed, that's a sign. If you're worried about memory growing unbounded because you're not sure when to delete things, that's another sign.
+The nice thing about `WeakMap` is that it's usually obvious when you need it. If you find yourself writing cleanup code to remove map entries when objects are destroyed, that's a sign. If you're worried about memory growing unbounded because you're not sure when to delete things, that's another sign.
 
 Sometimes the best feature is one that just works without you having to think about it.
 
