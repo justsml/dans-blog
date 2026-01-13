@@ -1,8 +1,8 @@
 ---
 title: "Your Timestamp is a Lie"
-subTitle: "Understanding what you actually need to store about time"
-date: 2025-12-29
-modified: 2025-12-30
+subTitle: "What a train ticket taught me about storing time in databases"
+date: 2026-12-29
+modified: 2026-12-30
 tags: [postgres, postgresql, databases, timestamps, timezones, microservices, debugging]
 category: Code
 subCategory: Databases
@@ -11,159 +11,118 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Choosing the right timestamp type in Postgres isn't about picking the "correct" one—it's about understanding what you actually need to store. Both `TIMESTAMP` and `TIMESTAMPTZ` take up exactly 8 bytes of storage with the same microsecond precision. The difference is in what question you're trying to answer.
+I was booking a train from New York to Chicago when it hit me why timestamp types in Postgres are so confusing. The ticket showed:
 
-## The Core Question: What Are You Recording?
+- Departs: 8:00 AM EST
+- Arrives: 7:30 PM CST  
+- Duration: 11 hours 30 minutes
 
-Before reaching for a timestamp column, ask yourself: what does this data represent?
+Three different ways of talking about time, all on the same ticket. And each one needs to be stored differently in a database.
 
-**Are you recording when something happened in absolute time?** Like "when did this payment complete?" or "when did the user click this button?" You need `TIMESTAMPTZ`. These are events that occurred at a specific moment in history, regardless of where anyone was when they happened.
+## The Question Nobody Asks First
 
-**Are you recording a wall-clock time that's meaningful in itself?** Like "what time does this store open?" or "when should we send daily summary emails?" You might need `TIMESTAMP` (without timezone). These represent clock readings that should stay the same regardless of timezone conversions.
+Both `TIMESTAMP` and `TIMESTAMPTZ` in Postgres take up exactly 8 bytes with the same microsecond precision. So why have two types at all? 
 
-**Are you recording both the moment AND where/why it happened?** Like "when did the user submit this form, and from what timezone?" You need `TIMESTAMPTZ` for the moment, plus a separate text column for the timezone context. The timestamp tells you when it happened in absolute terms; the timezone field tells you where the user was.
+Because "what time is it?" depends entirely on what you're trying to tell someone.
 
-## How TIMESTAMPTZ Actually Works
+When I board that train in New York, I need to know it leaves at 8:00 AM Eastern. That's the number on the station clock I need to match. When my friend picks me up in Chicago, she needs to know I arrive at 7:30 PM Central—that's the number on *her* clock. And if I'm trying to figure out whether I'll have time to read my book, I need to know it's an 11-and-a-half-hour journey.
 
-The trick with `TIMESTAMPTZ` is right there in the name: it's not "timestamp with timezone stored." It's "timestamp with timezone **support**." The column doesn't store timezone information at all.
+Same train. Same journey. Three completely different representations of time.
 
-What it does is **convert** whatever timestamp you give it to UTC before writing it to disk, then converts it back to your session's timezone when you read it. The timezone data lives in your connection settings, not in the column.
+## What TIMESTAMPTZ Actually Does
 
-```sql
--- With session timezone set to 'America/New_York'
-INSERT INTO events (happened_at) VALUES ('2025-01-15 14:00:00');
--- Postgres stores this as 2025-01-15 19:00:00 UTC
+Here's the trick with `TIMESTAMPTZ`—and it's not what most people think. It doesn't store the timezone. The name is misleading.
 
--- Later, with session timezone set to 'Europe/Dublin'
-SELECT happened_at FROM events;
--- Returns 2025-01-15 19:00:00 (in Dublin time)
-```
+What it does is convert whatever time you give it to UTC before storing it, then converts it back to your session's timezone when you read it. The "TZ" part isn't about storage, it's about **conversion support**.
 
-Everyone querying that timestamp sees the same moment in time, just expressed in their configured timezone.
+Say you're storing that train departure. Someone in Tokyo queries your database and sees the departure in JST. Someone in London sees it in GMT. Everyone's looking at the same absolute moment, just expressed in their configured timezone. This is perfect for recording events: "when did this payment process?" or "when did this API request happen?"
 
-## When TIMESTAMP (Without TZ) Makes Sense
+But what about that train ticket? You don't want the departure time to change just because someone queries it from a different timezone. The train leaves at 8:00 AM Eastern, period. That's not an absolute moment in time—it's a promise about what the clock in Grand Central will say.
 
-Say you're building a scheduling system where businesses set their "daily report runs at 2:00 AM." If you store that as `TIMESTAMPTZ`, and the business moves from New York to Chicago, suddenly their reports start running an hour earlier by their wall clock.
+## Storing What You Actually Mean
 
-For recurring schedules, recurring local times, or UI display preferences, `TIMESTAMP` makes sense because you care about the clock reading itself, not the absolute moment in time.
+For that train journey, you need to store different things for different purposes:
 
-But be very careful: if you're ever going to compare these timestamps across records that might have been created in different timezones, you're setting yourself up for subtle bugs.
+- The absolute moments (`departs_at` and `arrives_at` as `TIMESTAMPTZ`)
+- The display context (`origin_timezone` and `destination_timezone` as text)
+- The duration (an `INTERVAL` between the two moments)
 
-## The Precision Mismatch Problem
+Now your application can do what the train ticket does: show "Departs 8:00 AM EST" by converting the absolute moment to the origin timezone, show "Arrives 7:30 PM CST" by converting to the destination timezone, and show "Duration: 11h 30m" directly from the interval.
 
-Even with the right timestamp type, precision matters. Postgres stores timestamps with microsecond precision: `10:00:00.123456`. JavaScript's `Date` object uses milliseconds: `10:00:00.123`.
+The person booking the ticket from Tokyo sees the same local times at each station. That's what they need to know.
 
-This causes problems with equality checks:
+## Why Your Flight Tracking App Got It Wrong
 
-```sql
-SELECT * FROM orders WHERE created_at = $1
-```
+Ever notice how some flight tracking apps show your timezone during the flight? Like you're over the Atlantic and it says "Current time: 4:32 PM GMT." Who cares? You're not in Greenwich, you're at 38,000 feet somewhere over the ocean.
 
-If the database has `10:00:00.123000` and your JavaScript code passes in `10:00:00.123`, they won't match. The driver might pad zeros, or it might not. This is especially problematic for idempotency checks where you're trying to find a record by its creation timestamp.
+What you actually want to see:
+- Time elapsed since takeoff
+- Time remaining to destination  
+- What time it'll be *there* when you land
 
-**Better approach:** Use range queries or dedicated ID fields for lookups:
+None of those are timezone conversions. The first two are **intervals**—durations, not moments. The last one is a timezone conversion, but to a specific place, not "your current timezone."
 
-```sql
--- Instead of exact equality
-SELECT * FROM orders 
-WHERE created_at BETWEEN $1 - INTERVAL '1 millisecond' 
-                    AND $1 + INTERVAL '1 millisecond'
+See that? Two interval calculations (`NOW() - actual_departure` and `estimated_arrival - NOW()`), one timezone conversion to a specific place (`AT TIME ZONE destination_timezone`). Your current timezone doesn't enter into it.
 
--- Or better: use a proper unique constraint
-SELECT * FROM orders WHERE idempotency_key = $1
-```
+## When Wall-Clock Time Is What You Actually Need
 
-## Storing Context Separately
+Hotels don't care about absolute moments in time. They care about clock readings at their location.
 
-Sometimes the moment something happened isn't enough—you need to know the user's context when it happened. A few scenarios:
+"Check-in is after 3:00 PM" doesn't mean "check-in is 15 hours after midnight UTC." It means "whenever the clock in our lobby says 3:00 PM, you can check in." If your servers are in Virginia but the hotel is in Paris, you still want that rule to trigger at 3:00 PM *Paris time*.
 
-**Logging user actions:** Store when they did it (`TIMESTAMPTZ`), but also store what timezone their browser reported (`TEXT` column). This helps debug issues like "why did these two events look out of order to the user?"
+The `TIME` type (without date or timezone) represents exactly this: "a reading on a clock." Pair it with a timezone text field ("Europe/Paris"), and you can enforce wall-clock policies regardless of where your servers live. But you'll also want `TIMESTAMPTZ` columns for when specific guests actually check in and out—those are absolute moments your backend needs to track.
 
-**Scheduling across timezones:** Store the target moment (`TIMESTAMPTZ`), but also store which timezone the schedule was created in (`TEXT` column). When displaying "your meeting is at 3:00 PM," you convert the absolute time back to their timezone.
+## The Calendar Problem
 
-**Audit trails:** Store when the change happened server-side (`TIMESTAMPTZ`), potentially the client timestamp they sent (`TIMESTAMPTZ`), and the clock skew between them (`INTERVAL`). Helps identify clients with incorrect system clocks.
+I have a recurring reminder set for 9:00 AM: "Review daily priorities." I want that reminder at 9:00 AM *wherever I am*. If I'm traveling, it should still fire at 9:00 AM local time.
 
-## Practical Guidelines
+But I also have a calendar event: "Team Standup at 10:00 AM EST." My teammate in Berlin needs to see "4:00 PM CET" for that same event. Same meeting, different display times, because this one is an absolute moment we're all joining.
 
-**Default to TIMESTAMPTZ.** Unless you have a specific reason not to, use `TIMESTAMPTZ` for any timestamp column. It's the same storage size and performance as `TIMESTAMP`, but it handles multi-region deployments and daylight saving time correctly.
+Two different types of events, two different storage strategies. The meeting gets a `TIMESTAMPTZ`. The reminder gets a `TIME` plus my current timezone setting. Avoid trying to force both into the same field.
 
-**Set server timezone to UTC.** Every server writing timestamps should use UTC. This eliminates an entire class of bugs around daylight saving time transitions and regional differences.
+## The Stuff That Breaks in Production
 
-**Require timezone info from clients.** Reject date strings like `2025-01-01T10:00:00`. Require ISO-8601 format with an offset: `2025-01-01T10:00:00Z` or `2025-01-01T10:00:00-05:00`. Don't guess what the client meant.
+Even with the right types, precision can bite you. Postgres stores microseconds: `10:00:00.123456`. JavaScript's `Date` object uses milliseconds: `10:00:00.123`.
 
-**Set session timezone explicitly.** Most Postgres drivers let you configure this, but you have to actually do it. A `SET TIME ZONE 'UTC';` at the start of each connection, or configuring your connection pool to do it automatically based on your needs.
-
-**Consider separate columns for different concerns.** If you need both "when it happened" and "what timezone the user was in," those are two different pieces of information. Store them separately.
-
-## Example Schema Patterns
+So this query might mysteriously return no rows:
 
 ```sql
--- Event tracking: just need the absolute moment
-CREATE TABLE user_actions (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL,
-  action TEXT NOT NULL,
-  occurred_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
--- Scheduling: need both moment and display timezone
-CREATE TABLE scheduled_tasks (
-  id SERIAL PRIMARY KEY,
-  task_name TEXT NOT NULL,
-  scheduled_for TIMESTAMPTZ NOT NULL,
-  timezone TEXT NOT NULL,  -- e.g., 'America/New_York'
-  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
--- Audit trail: capture multiple time perspectives
-CREATE TABLE audit_log (
-  id SERIAL PRIMARY KEY,
-  entity_id INTEGER NOT NULL,
-  server_timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  client_timestamp TIMESTAMPTZ,
-  client_timezone TEXT,
-  clock_skew INTERVAL GENERATED ALWAYS AS (server_timestamp - client_timestamp) STORED
-);
-
--- Recurring schedule: wall-clock time
-CREATE TABLE recurring_events (
-  id SERIAL PRIMARY KEY,
-  event_name TEXT NOT NULL,
-  recurrence_time TIME NOT NULL,  -- Just the time: 14:00:00
-  timezone TEXT NOT NULL,
-  next_occurrence TIMESTAMPTZ  -- Computed: next actual moment this will run
-);
+SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 ```
 
-## A Word on Enforcement
+The database has `10:00:00.123456` and your code passes `10:00:00.123`. Depending on how your driver handles it, those might not match.
 
-If you decide `TIMESTAMPTZ` is your default (which it should be for most apps), consider enforcing it. A database trigger that rejects `TIMESTAMP WITHOUT TIME ZONE` columns sounds extreme, but it prevents the "oops, forgot to specify TZ" bug that otherwise shows up months later:
+Don't use exact equality for timestamps. Use range queries, or—better—don't look up records by their creation timestamp at all. Use a proper unique constraint or idempotency key.
 
-```sql
-CREATE OR REPLACE FUNCTION check_timestamp_tz()
-RETURNS event_trigger AS $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM pg_attribute a
-    JOIN pg_class c ON a.attrelid = c.oid
-    WHERE a.atttypid = 'timestamp'::regtype
-  ) THEN
-    RAISE EXCEPTION 'Use TIMESTAMPTZ instead of TIMESTAMP';
-  END IF;
-END;
-$$ LANGUAGE plpgsql;
+## Practical Rules
 
-CREATE EVENT TRIGGER enforce_timestamptz 
-ON ddl_command_end 
-WHEN TAG IN ('CREATE TABLE', 'ALTER TABLE')
-EXECUTE FUNCTION check_timestamp_tz();
-```
+**Default to TIMESTAMPTZ.** When in doubt, use `TIMESTAMPTZ`. It handles multi-region deployments, daylight saving time, and future timezone changes automatically. It's the same storage size as `TIMESTAMP`, so there's no penalty.
 
-## The Real Lesson
+**Store context separately.** If you need to show "Departs 8:00 AM EST" alongside the actual moment, store both the `TIMESTAMPTZ` and the `origin_timezone` as separate columns. Don't try to encode everything into one field.
 
-Time in databases isn't hard because timestamps are complicated. It's hard because we often don't stop to ask what we're actually trying to record. "When did this happen?" is different from "what time should we do this?" which is different from "what did the clock say when the user did this?"
+**Think about intervals.** A lot of time-related requirements are actually about duration, not moments. "How long has this been pending?" "When will this expire?" Use `INTERVAL` operations, not timezone conversions.
 
-Think about your requirements first. Then pick the timestamp type (and any additional context columns) that actually answer your question. Most of the time, that's `TIMESTAMPTZ` and UTC everywhere. But when it's not, you'll know why.
+**Run everything in UTC.** Your servers should be set to UTC. Your database sessions should default to UTC. Only convert to local timezones when displaying to users, and only when you know which timezone matters.
+
+**Require timezone info from clients.** If a client sends `2026-01-15T10:00:00` without an offset, reject it. Require ISO-8601 format with either `Z` or an explicit offset like `-05:00`. Don't guess.
+
+## Enforcing Good Defaults
+
+If `TIMESTAMPTZ` is your default (and it should be), consider enforcing it at the database level. A trigger that rejects `TIMESTAMP WITHOUT TIME ZONE` columns sounds extreme, but catching "forgot to add TZ" at schema creation time is better than debugging it six months later when someone adds a new table and forgets.
+
+## What That Train Ticket Taught Me
+
+Time in databases isn't hard because timestamps are complicated. It's hard because we're usually storing multiple concerns in one field, or not thinking about what we're actually trying to show users.
+
+That train ticket had it right: departure time in the origin timezone, arrival time in the destination timezone, and duration as a separate thing entirely. Three different pieces of information, each meaningful in its own way.
+
+Your database can do the same thing. Store the absolute moments as `TIMESTAMPTZ`. Store the display context (timezones, locations) as separate columns. Use `INTERVAL` types for durations. Let Postgres do the conversions when you need them, but be explicit about which timezone matters for which purpose.
+
+Most of the time, that means `TIMESTAMPTZ` and UTC everywhere, with timezone conversions only at display time. But when you need wall-clock times or recurring schedules, `TIMESTAMP` or `TIME` types exist for exactly that reason.
+
+The key is knowing what question you're trying to answer: "When did this happen?" vs. "What time should I be there?" vs. "How long will this take?" They're all different questions about time, and they often need different storage strategies.
+
+Think about what your users need to see. Then store the data that lets you show them exactly that.
 
 ## Resources
 
