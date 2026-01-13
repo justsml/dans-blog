@@ -11,11 +11,9 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-There's a weird thing about Postgres timestamp types that most developers never think about until it bites them. Both `TIMESTAMP` and `TIMESTAMPTZ` take up exactly 8 bytes of storage. Same size, same microsecond precision. So where does the timezone information actually go?
+There's a weird thing about Postgres timestamp types that most developers never think about until it bites them. Both `TIMESTAMP` and `TIMESTAMPTZ` take up exactly 8 bytes of storage. Same size, same microsecond precision. So where is the `Z`, the timezone, actually stored?
 
-I spent an embarrassing amount of time convinced there must be less precision when using the TIMESTAMPTZ type, or maybe some lookup table Postgres maintains behind the scenes. Turns out the answer is simpler and more elegant than that, but it also explains why our Payment Service in Dublin and our Order Service in New York managed to disagree about when transactions happened enough to flag every purchase as fraudulent for 20 minutes straight.
-
-We lost $40,000 in revenue before anyone woke up to fix it.
+I spent an embarrassing amount of time convinced there must be less precision when using the TIMESTAMPTZ type, or maybe some lookup table Postgres maintains behind the scenes. Turns out the answer is simpler and more elegant than that.
 
 ## What Actually Happens in Those 8 Bytes
 

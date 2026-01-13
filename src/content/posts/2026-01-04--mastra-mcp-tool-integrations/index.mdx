@@ -46,7 +46,7 @@ The protocol handles the communication layer. You just define what your tools do
 
 Mastra has native MCP support through its [`MCPClient`](https://mastra.ai/docs/mcp/overview). You can connect both local tools (running as child processes) and remote services (running on their own infrastructure).
 
-Here's a realistic production setup connecting Wikipedia search locally, plus remote Salesforce and HubSpot instances:
+Here's a realistic production setup connecting Google Maps for routing, a weather service, and local Wikipedia search:
 
 ```typescript
 // src/mastra/mcp/index.ts
@@ -59,18 +59,23 @@ export const mcpClient = new MCPClient({
       command: 'npx',
       args: ['-y', 'wikipedia-mcp'],
     },
-    // Enterprise tool (Remote/HTTP)
-    salesforce: {
-      url: new URL(process.env.SALESFORCE_MCP_URL!),
+    // Maps & Navigation (Remote/HTTP)
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
       requestInit: {
         headers: {
-          Authorization: `Bearer ${process.env.SALESFORCE_TOKEN}`,
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
         },
       },
     },
-    // SaaS Integration
-    hubspot: {
-      url: new URL('https://mcp.composio.dev/hubspot/xyz'),
+    // Weather Service Integration
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
     },
   },
 });
@@ -85,40 +90,31 @@ The client manages the connection lifecycle, handles process spawning for local 
 Once you have your MCP client configured, giving those tools to an agent is straightforward:
 
 ```typescript
-// src/mastra/agents/crm-agent.ts
+// src/mastra/agents/navigation-agent.ts
 import { Agent } from '@mastra/core/agent';
 import { openai } from '@ai-sdk/openai';
 import { mcpClient } from '../mcp';
 
-export const weatherAgent = new Agent({
-  id: 'weather-agent',
-  name: 'Weather Agent',
-  instructions: `You are a helpful weather assistant that provides accurate weather information.
-    - Always ask for a location if none is provided
-    - Use the weatherTool to fetch current weather data
-    - Include relevant details like humidity, wind conditions, and precipitation
-    - Keep responses concise but informative`,
-  model: openai('gpt-5'),
-  tools: { weatherTool },
-});
-
-export const crmAgent = new Agent({
-  id: 'crm-agent',
-  name: 'CRM Assistant',
-  instructions: `You help sales teams manage deals.
-    - Check Salesforce before answering
-    - Verify customer data
-    - Be concise`,
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
   model: openai('gpt-5'),
   tools: await mcpClient.getTools(), // <--- This is the magic line
 });
 ```
 
-When a user asks: *"What is the status of the Acme Corp deal?"*
+When a user asks: *"What's the best route from San Francisco to Lake Tahoe, and should I be worried about weather?"*
 
-The agent reads the available tool definitions, realizes it has access to a Salesforce lookup tool, executes it with the right parameters, and answers with actual data from your CRM.
+The agent reads the available tool definitions, realizes it has access to Google Maps routing and weather forecast tools, executes them with the right parameters, and answers with an optimal route plus current weather conditions along the way.
 
-You didn't write a single line of Salesforce API code.
+You didn't write a single line of Google Maps API code or weather service integration.
 
 ---
 
@@ -126,7 +122,7 @@ You didn't write a single line of Salesforce API code.
 
 There's a security mistake that's easy to make here: hardcoding credentials.
 
-If you put one Salesforce token in your environment variables and call it a day, every user who talks to your agent is effectively acting as you. They see your data. They can modify your records. This works fine for demos. It's a liability in production.
+If you put one Google Maps API key in your environment variables and call it a day, every user shares the same quota and rate limits. More importantly, if you're using services that store user preferences (like saved locations or favorite routes), everyone would see the same data. This works fine for demos. It's a liability in production.
 
 Mastra handles this by letting you create MCP clients dynamically with user-specific credentials:
 
@@ -135,17 +131,20 @@ async function handleUserRequest(userPrompt: string, userCredentials: UserCreds)
   // Create a client for THIS specific user
   const userMcp = new MCPClient({
     servers: {
-      salesforce: {
-        url: new URL(process.env.SALESFORCE_MCP_URL!),
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
         requestInit: {
-            // User's specific token
-            Authorization: `Bearer ${userCredentials.salesforceToken}`,
+          headers: {
+            // User's specific API key or token
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
         },
       },
     },
   });
 
-  const agent = mastra.getAgent('crmAgent');
+  const agent = mastra.getAgent('navigationDirectionsAgent');
   
   // Inject tools at runtime
   const response = await agent.generate(userPrompt, {
@@ -156,36 +155,43 @@ async function handleUserRequest(userPrompt: string, userCredentials: UserCreds)
 }
 ```
 
-Each user gets their own isolated toolset with their own permissions. User A sees their deals, User B sees theirs. This is how multi-tenant SaaS agents work in practice.
+Each user gets their own isolated toolset with their own API quotas and preferences. User A's saved locations stay private, User B's route history is separate. This is how multi-tenant SaaS agents work in practice.
 
 ---
 
 ## Building Composite Tools
 
-Sometimes you need to combine multiple MCP tools into a single operation. Maybe you want to enrich a contact by pulling data from both Salesforce and LinkedIn.
+Sometimes you need to combine multiple MCP tools into a single operation. Maybe you want to plan a route that factors in both real-time traffic and weather conditions along the way.
 
 You can wrap MCP tools in custom tool definitions:
 
 ```typescript
-export const enrichmentTool = createTool({
-  id: 'enrich-contact',
-  description: 'Enriches contact data from Salesforce and LinkedIn',
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Plans optimal route considering traffic and weather conditions',
   execute: async ({ context, mastra }) => {
     // Get the raw tools
     const tools = await mcpClient.getTools();
     
-    // 1. Get base data from Salesforce
-    const sfData = await tools.salesforce_lookupContact.execute({ 
-      context: { email: context.email } 
+    // 1. Get base route from Google Maps
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
     });
     
-    // 2. Enhance with LinkedIn
-    const linkedInData = await tools.linkedin_profileLookup.execute({
-      context: { name: sfData.name }
+    // 2. Check weather along the route
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
     });
     
-    // 3. Return the mega-profile
-    return { ...sfData, ...linkedInData };
+    // 3. Return enhanced route with weather warnings
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    };
   },
 });
 ```
