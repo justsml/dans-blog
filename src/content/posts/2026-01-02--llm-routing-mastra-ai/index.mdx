@@ -1,0 +1,110 @@
+---
+title: "Don't Marry Your Model: The Case for LLM Routing"
+subTitle: "Why sticking to one provider is costing you money and quality."
+date: 2026-01-02
+modified: 2026-01-08
+tags: [AI, LLM, TypeScript, Mastra, Agent Orchestration]
+category: AI
+subCategory: Engineering
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+Most engineering teams pick a language model and stick with it. One provider, one model, all tasks. It's like hiring one person to do your coding, your copywriting, and your taxes because they happened to be good at the first interview.
+
+Claude Sonnet 4.5 absolutely crushes code generation. Gemini 3 Pro has a context window that makes other models look claustrophobic. GPT-5.2 is killer at logical reasoning. But none of them excel at everything, and treating them like they do means you're either overpaying for simple tasks or getting subpar results on specialized ones.
+
+I watched a team burn through thousands of dollars running sentiment analysis through a $30-per-million-token model when a $0.50 model would've done the job just as well. Simple JSON formatting, basic classification tasks, all going through their premium provider. The only thing getting heated was their AWS bill.
+
+There's a better way, and it's not particularly complicated.
+
+## Delegation Over Devotion
+
+What if you could route requests to the model that's actually best suited for that specific task? Use your expensive powerhouse for the hard stuff, but drop the simple parsing and formatting down to something cheaper. Get the benefits of multiple providers without having to manually juggle them in your codebase.
+
+Mastra lets you build exactly this kind of system. You set up specialist agents for different types of work, then create a router agent that figures out which specialist should handle each request.
+
+Think of it like this: you have three specialists on your team.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: anthropic('claude-sonnet-4.5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  instructions: 'You are a creative writer. Be weird.',
+  model: google('gemini-3-pro'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: openai('gpt-5.2'),
+});
+```
+
+Each one has its strengths. Claude's your go-to for anything involving code. Gemini handles creative work where you need that massive context window. GPT covers general reasoning and factual tasks.
+
+Here's where it gets interesting. You add a router that acts as an intelligent proxy:
+
+```typescript
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'The Boss',
+  instructions: `You are an intelligent router.
+  - Coding -> Claude
+  - Poetry -> Gemini
+  - Facts -> GPT
+
+  Do not do the work yourself. Delegate.`,
+  model: openai('gpt-5-mini'), // Use a cheap model for routing!
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { routerAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+The router itself runs on a lightweight model because it's just making decisions about where to send traffic. You're not paying premium rates to figure out which other premium model to use.
+
+When someone asks for a bubble sort implementation, the router recognizes it as code work and hands it to Claude. Creative writing prompt? That goes to Gemini. Factual question about historical events? GPT handles it.
+
+## The Practical Benefits
+
+**Cost efficiency matters more than you think.** A small routing model making delegation decisions costs a fraction of running every single request through your most expensive provider. Over time, especially at scale, this adds up to real money. You only pay for the heavy-duty intelligence when you actually need it.
+
+**Quality improves when you match models to tasks.** Claude genuinely produces better code than GPT. Gemini's context window lets it handle documents and conversations that would lose coherence in shorter-windowed models. Using the right tool for the job isn't just cheaper, it's better.
+
+**Resilience becomes a side benefit.** When OpenAI has one of its periodic outages (and they do), your router can redirect traffic to other providers. You're not dead in the water waiting for one specific API to come back online.
+
+This isn't about being clever for the sake of it. It's about building systems that make sense both financially and technically. You wouldn't use the same hammer for every construction task, and you probably shouldn't use the same language model for every AI task either.
+
+The beauty of this approach is that your application code doesn't change. You still just call your router agent. The complexity of deciding which model to use for which task lives in one place, configured once, rather than scattered throughout your codebase in a bunch of conditional logic.
+
+### Resources
+
+- [Mastra.ai Documentation](https://mastra.ai/docs)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## Read the Series
+
+1. **LLM Routing** (This Post)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
+4. [Workflows & Memory](/mastra-workflows-memory)

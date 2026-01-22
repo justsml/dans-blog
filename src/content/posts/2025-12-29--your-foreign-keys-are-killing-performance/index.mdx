@@ -1,419 +1,146 @@
 ---
-title: "Foreign Keys Kill Performance (You Still Need Them)"
-subTitle: "The hidden cost of referential integrity—and why you should pay it anyway."
+title: "Foreign Keys: Stop Asking If They're Fast"
+subTitle: "Ask what you're actually optimizing for."
 date: 2025-12-29
-modified: 2025-12-29
+modified: 2026-01-10
 tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
 category: Code
 subCategory: Databases
 cover_full_width: ./wide.webp
 cover_mobile: ./square.webp
 cover_icon: ./square.webp
-# social_image: desktop-social.webp
 ---
 
-Let's talk about foreign keys. You know, those constraints that keep your database from becoming a garbage fire of orphaned records and referential chaos. They're great. They're also slow.
+The most expensive database optimization I ever saw started with someone removing all the Foreign Keys.
 
-How slow? In one of our production systems, adding foreign key constraints increased write latency by 300%. Three hundred percent. For a feature that _prevents bad data_. 
+Not because they measured a bottleneck. Not because writes were actually slow. Because they read somewhere that "Foreign Keys don't scale." Six months later, they had 2 billion orphaned records, a billing system charging deleted users, and analytics that were off by 40%.
 
-Here's the uncomfortable truth: foreign keys have real performance costs. But so does maintaining data integrity at the application level—and that cost is usually higher, just harder to measure. Let's dig into the tradeoffs, the numbers, and when you _might_ (emphasis on might) skip them.
+When they tried to add the constraints back? The database ground to a halt trying to validate existing data that was already corrupted.
 
-## What Foreign Keys Actually Do
+There's this pervasive idea in web development that Foreign Keys are inherently slow, that they're training wheels you remove once you graduate to "real" systems. But that's missing the entire point of what a constraint is for. You're not choosing between fast and slow. You're choosing between different failure modes.
 
-At their core, foreign keys enforce referential integrity: if table A references table B, the database guarantees that reference points to something that exists.
+Think about it like this: safety glass, seatbelts, and airbags all add weight to your car. They absolutely make your vehicle slower and less fuel efficient. But you don't rip them out to optimize your 0-60 time, because you're optimizing for something else entirely.
 
-```sql
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email TEXT NOT NULL
-);
+The question isn't whether Foreign Keys slow you down. Of course they do. The question is what you get in return, and whether you actually need it.
 
-CREATE TABLE orders (
-  id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL,
-  amount NUMERIC(10,2),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-);
-```
+## What You're Really Trading
 
-Simple enough. Now every time you:
-- **Insert into `orders`**: Postgres checks if `user_id` exists in `users`
-- **Delete from `users`**: Postgres checks if any `orders` reference that user
-- **Update `users.id`**: Postgres updates or blocks based on cascade rules
+Let me give you a concrete example. You're building a weather monitoring system with tables for weather stations, sensor devices, sensor readings, and US states.
 
-That's three extra checks. Three extra locks. Three opportunities for contention.
+Do you Foreign Key everything together? Let's think about what actually changes and what the consequences are:
 
-> **A note on other databases:** This article focuses on PostgreSQL, but the fundamentals apply broadly. MySQL/InnoDB has similar FK behavior with slightly different locking semantics (it uses shared locks on child rows during parent updates). Oracle takes a more aggressive locking approach and can escalate to table locks more readily if indexes are missing. SQL Server's behavior falls somewhere in between. The key takeaway—that FKs add overhead and require proper indexing—is universal.
+US States probably aren't changing. Wyoming isn't getting renamed anytime soon. You don't need a Foreign Key to validate state codes on every insert when you know the reference data is static. That's pointless overhead.
 
-## The Hidden Costs
+Weather stations get added, moved, and decommissioned. But here's a question: do you want historical readings to "lose" their station if someone accidentally deletes a station record? Maybe you actually want that data to stay intact even if the station is gone. That would mean you're treating readings as a historical snapshot rather than a live reference, which changes whether a Foreign Key even makes sense.
 
-### 1. Locking on Referenced Tables
+Sensor readings are being inserted thousands of times per minute. Every Foreign Key check means a lookup. Every lookup creates contention on your tables. If slow validation means your insert queue backs up and you lose real-time data, that's a different kind of data loss than having an orphaned record.
 
-When you insert into `orders`, PostgreSQL takes a **shared lock** on the referenced row in `users`. This prevents anyone from deleting or updating that user until your transaction commits.
+You can see where this is going. The choice isn't about performance versus correctness as abstract concepts. It's about which specific failure you're more willing to tolerate given your actual constraints and actual consequences.
 
-In low-throughput systems, you'll never notice. But at scale? We saw lock contention become our primary bottleneck.
+If wrong references mean corrupted billing data or regulatory violations, you probably want Foreign Keys protecting you regardless of the performance cost. If slow validation means you lose real-time sensor data forever because your queue overflows, then maybe validation is the wrong tradeoff.
 
-Here's a benchmark from a system handling 10,000 writes/second:
+## When Fast Writes Actually Matter
+
+So you've decided you need maximum write speed. Your queue is piling up, transactions are timing out, and Foreign Key checks are legitimately causing problems you've actually measured (not just theorized about).
+
+You have a few options. You could change your transaction isolation level from `SERIALIZABLE` to `READ COMMITTED`, which is faster but trades away some consistency guarantees. You could batch your commits, inserting 1000 rows per transaction instead of one at a time to amortize the FK overhead. Or you could denormalize into an append-only log structure where you're not even trying to validate references.
+
+That third option isn't cheating, by the way. It's just a different design:
 
 ```sql
--- Without foreign key
-INSERT INTO orders (user_id, amount) VALUES (12345, 99.99);
--- Average: 1.2ms
-
--- With foreign key
-INSERT INTO orders (user_id, amount) VALUES (12345, 99.99);
--- Average: 3.8ms (216% slower)
-```
-
-Why? Because each insert now waits for:
-1. Lock acquisition on `users` table
-2. Index lookup to verify user exists
-3. Lock release after commit
-
-At 10K inserts/sec, those milliseconds stack up _fast_. We went from handling peak traffic smoothly to seeing timeout cascades during high load.
-
-As highlighted in _High Performance PostgreSQL_ by Gregory Smith (2010), **"Every foreign key check is a SELECT against the referenced table. At high concurrency, these checks create lock contention that can dominate query time."**
-
-### 2. The Missing Index Trap
-
-Here's a gotcha that bites teams constantly: PostgreSQL requires an index on the **referenced** column (the parent table's primary key—which exists automatically). But it does *not* create an index on the **referencing** column (the child table's foreign key).
-
-Why does this matter? When you delete a row from the parent `users` table, Postgres must scan the `orders` table to ensure no orphans remain. Without an index on `orders.user_id`, that's a **sequential scan** of the entire table. For *every* user you delete.
-
-```sql
--- Every INSERT into orders now maintains:
--- 1. The primary key index on orders.id
--- 2. Any index you've (hopefully) added on orders.user_id
--- Plus any other indices
-
--- Benchmark: 1 million inserts
--- Without FK: 45 seconds
--- With FK and proper index: 68 seconds (51% slower)
-```
-
-That's _just_ the index maintenance. The actual constraint checking adds another layer of overhead.
-
-Baron Schwartz, author of _High Performance MySQL_ (2012), puts it well: **"Indexes speed up reads but slow down writes. Each index is a data structure that must be updated with every INSERT, UPDATE, or DELETE."** Foreign keys often force you to add indexes you wouldn't otherwise need.
-
-### 3. Cascade Operations Can Explode
-
-Oh, you used `ON DELETE CASCADE`? Congrats, you've just turned a single-row delete into a potential table scan across multiple tables.
-
-```sql
-CREATE TABLE orders (
-  user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE order_items (
-  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE
-);
-
-CREATE TABLE shipments (
-  order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE
-);
-
--- Now deleting one user triggers:
--- 1. Find all orders for this user
--- 2. For each order, find all order_items
--- 3. For each order, find all shipments  
--- 4. Delete everything in reverse dependency order
-DELETE FROM users WHERE id = 12345;
--- This innocent query just deleted 10,000 rows across 4 tables
--- and held locks the entire time
-```
-
-We've seen single deletes take **minutes** because CASCADE operations weren't properly indexed. The database has to find all dependent rows, which means table scans if you're not careful.
-
-### 4. Deferred Constraint Checking Doesn't Help As Much As You Think
-
-PostgreSQL lets you defer foreign key checks until transaction commit:
-
-```sql
-ALTER TABLE orders 
-  ADD CONSTRAINT fk_user 
-  FOREIGN KEY (user_id) REFERENCES users(id)
-  DEFERRABLE INITIALLY DEFERRED;
-
-BEGIN;
--- These would normally fail immediately:
-INSERT INTO orders (user_id, amount) VALUES (99999, 50.00);
-INSERT INTO users (id, email) VALUES (99999, 'late@example.com');
-COMMIT; -- Checks happen here
-```
-
-Seems great! Except:
-- Locks are still held for the entire transaction
-- Bulk operations still pay the full constraint cost at commit time
-- You've just made debugging harder (violations appear at commit, not at the violating statement)
-
-Deferred constraints help with _ordering_ operations, not with _performance_.
-
-## The Real-World Numbers
-
-Let's look at actual production benchmarks. These are from a PostgreSQL 15 instance on AWS RDS (db.r5.2xlarge, 8 vCPU, 64GB RAM) handling a multi-tenant SaaS workload.
-
-### Write Performance Impact
-
-| Operation | Without FK | With FK | Overhead |
-|-----------|------------|---------|----------|
-| Single INSERT | 0.8ms | 2.1ms | +163% |
-| Bulk INSERT (10K rows) | 3.2s | 9.7s | +203% |
-| UPDATE (affecting FK) | 1.1ms | 4.3ms | +291% |
-| DELETE (with CASCADE) | 1.5ms | 24ms | +1,500% |
-
-Yeah. That DELETE number isn't a typo.
-
-### Lock Contention Analysis
-
-We used `pg_locks` and `pg_stat_activity` to measure lock wait time:
-
-```sql
--- Lock wait percentage before FKs: 2.3%
--- Lock wait percentage after FKs: 18.7%
--- Queries waiting on locks: 8x increase
-```
-
-Most of the contention was on `users` and `products` tables—the most frequently referenced tables. By the time we investigated, we were spending **18.7% of total query time waiting on locks**.
-
-### Storage Impact
-
-Foreign keys require indexes, and indexes aren't small:
-
-```sql
--- orders table: 50 million rows
--- Primary key index: 1.2 GB
--- Foreign key indexes (3 columns): 2.8 GB additional
--- Total index overhead from FKs: +233%
-```
-
-That's storage you're paying for, backups you're maintaining, and cache you're evicting real data from.
-
-## When You Might Skip Foreign Keys
-
-I'm about to commit heresy, so let me be clear: **in most cases, you should use foreign keys**. But there are legitimate exceptions.
-
-### 1. Append-Only Analytics Tables
-
-If you're loading data from external sources into a data warehouse for analytics:
-
-```sql
--- Fact table with billions of rows
-CREATE TABLE page_views (
+CREATE TABLE sensor_log (
   id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT,  -- References users, but no FK
-  page_id BIGINT,  -- References pages, but no FK
-  viewed_at TIMESTAMPTZ
+  recorded_at TIMESTAMPTZ NOT NULL,
+  data JSONB NOT NULL  -- { station_id, sensor_id, temp, humidity, ... }
 );
 
--- Instead: validate in ETL pipeline
--- Much faster bulk loading
-COPY page_views FROM 's3://bucket/data.csv';
+CREATE INDEX ON sensor_log USING GIN (data);
+CREATE INDEX ON sensor_log (recorded_at);
 ```
 
-Martin Kleppmann in _Designing Data-Intensive Applications_ (2017) supports this approach: **"In analytics databases, foreign keys are often more trouble than they're worth. The data is immutable and validated before load time."**
+No joins. No Foreign Key checks. Just append data and query by time range or GIN index on the JSONB blob. Is this "best practice"? Probably not in the sense that database textbooks teach. Does it work when you're inserting 50,000 rows per minute on a Raspberry Pi? Absolutely.
 
-### 2. High-Throughput Insert-Heavy Systems
+The disconnect happens when people treat "best practice" as a moral imperative rather than a pattern that works well in common scenarios but may not fit yours.
 
-Event logging, time-series data, audit trails—systems where you're inserting millions of rows per hour and rarely deleting.
+## The Normalization Trap
 
-```sql
--- Audit log: 10M inserts/day
-CREATE TABLE audit_log (
-  id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT,  -- Validation at app level
-  action TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
+Database courses love to teach normalization. Avoid duplication at all costs. Third Normal Form or bust.
 
--- Skip FK, use app-level checks
--- Gain: 200% insert throughput
-```
+So you end up with something like: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
 
-But—and this is critical—you **must** have validation in your application. Don't skip FKs _and_ validation. That's how you get data corruption.
+Six table joins just to answer "Did I order the red shirt or the blue one last Christmas?" And heaven forbid you need to include the product name, because that's three more joins away in the catalog hierarchy.
 
-### 3. Soft-Delete Architectures
+But wait. The justification is usually "What if the brand changes how they label Blue?" If that happens, do you really want historical orders to retroactively change color? Of course not. When someone placed that order, they bought a "Blue T-Shirt, Size M" as it existed at that moment in time, not as some abstract reference to a catalog entry that might get updated later.
 
-If you never actually delete data, cascade deletes aren't a concern:
+This is worth dwelling on because it's subtle. Some data is fundamentally a snapshot, not a reference. When you treat snapshot data as if it were a live reference, you end up with this absurd proliferation of joins to reconstruct something that should have just been denormalized at write time.
 
-```sql
-CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  email TEXT,
-  deleted_at TIMESTAMPTZ  -- NULL means active
-);
+Store `{"color": "blue", "size": "M"}` directly on the order. You're done.
 
--- No CASCADE needed, no deletion locks
--- But you still pay the insert-time FK cost
-```
+### Recognizing Snapshot Data
 
-### 4. Sharded/Partitioned Data
+How do you know when something should be a snapshot? Ask yourself whether it's a point-in-time record:
 
-When your references span different databases or partitions:
+Orders capture product details as they existed at purchase time. Audit logs record user state when they performed an action. History tables preserve record state before an update. Event streams capture what happened, when, with what data.
 
-```sql
--- User 12345 might be on shard A
--- Their orders might be on shard B
--- Foreign keys across shards: not possible
--- Solution: app-level integrity or eventual consistency
-```
+If the answer is "yes, this is recording a moment in time," stop normalizing it. Start snapshotting it.
 
-This is where distributed systems get messy. You can't have cross-database foreign keys in PostgreSQL. Your options: application-level validation, or eventual consistency with reconciliation jobs.
+### Opaque Blobs
 
-## Strategies for Having Your Cake and Eating It Too
+There's another category beyond snapshots: data you never query into. You just store it and retrieve it whole.
 
-So you want referential integrity _and_ performance? Here's how to minimize the overhead:
+LLM model configurations like `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` aren't something you query by temperature. You fetch the entire config by request ID when you need it. JWT payloads after decoding, API request/response logs for debugging, user preference objects with theme settings and notification flags. These are all opaque blobs. You don't need normalization. You don't need Foreign Keys. Shove them in JSONB and move on with your life.
 
-### 1. Use Deferrable Constraints Strategically
+The 6-table join to find out what color shirt was ordered? That's not proper normalization. That's confused thinking about whether you're storing a reference or a value.
 
-```sql
--- For bulk operations within transactions
-ALTER TABLE orders 
-  ALTER CONSTRAINT fk_user DEFERRABLE INITIALLY DEFERRED;
+(Though be careful: this can backfire spectacularly if you later need to query that data. See [The JSONB Seduction](/the-jsonb-seduction) for when this approach creates its own nightmare.)
 
-BEGIN;
--- Bulk operations here
--- Constraint checks batched at commit
-COMMIT;
-```
+## Scale Is Context
 
-Use this for ETL jobs, not OLTP workloads.
+You'll hear people say "Foreign Keys don't scale." But scale is completely relative to your hardware and architecture.
 
-### 2. Partition Hot Tables
+A Raspberry Pi logging 10,000 sensor readings per minute to a microSD card? That's legitimately high scale for that hardware. AWS Aurora with provisioned IOPS handling billions of rows? You can Foreign Key your way through that without breaking a sweat.
 
-If a few users/products dominate your traffic:
+The actual hard limit isn't about row count or write volume. It's sharding.
 
-```sql
--- Partition orders by created_at
-CREATE TABLE orders (
-  id BIGINT,
-  user_id BIGINT,
-  created_at TIMESTAMPTZ,
-  PRIMARY KEY (id, created_at)
-) PARTITION BY RANGE (created_at);
+When your `Users` table lives on Server A and your `Orders` table lives on Server B, Foreign Keys physically cannot work. The database has no mechanism to enforce a constraint across network boundaries. At that point, you're already running background jobs to find orphans and implementing eventual consistency patterns.
 
--- Foreign keys on partitioned tables (Postgres 11+)
--- Each partition maintains its own FK index
--- Reduces lock contention
-```
+This happens in multi-tenant SaaS where each tenant gets their own isolated database for compliance, or in IoT deployments where you have 50,000 edge devices each running SQLite locally. Once you're there, Foreign Keys are off the table (literally) regardless of performance considerations.
 
-### 3. Consider Trigger-Based "Soft" Foreign Keys
+But until you hit that architectural boundary, maybe don't prematurely optimize for Netflix's problems when you're building a 10-user internal tool.
 
-For append-only tables where you want validation but not deletion protection:
+## What This Actually Looks Like In Practice
 
-```sql
-CREATE FUNCTION check_user_exists() RETURNS TRIGGER AS $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM users WHERE id = NEW.user_id) THEN
-    RAISE EXCEPTION 'Invalid user_id: %', NEW.user_id;
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+Instead of asking "should I use Foreign Keys," try asking these three things:
 
-CREATE TRIGGER validate_user_id 
-  BEFORE INSERT ON orders
-  FOR EACH ROW EXECUTE FUNCTION check_user_exists();
+What breaks if this reference is wrong? Is it a lawsuit, corrupted billing, regulatory violation? Or is it just a missing join that returns null in your analytics dashboard?
 
--- Validates on insert, but no delete protection
--- No shared locks on users table
--- Trade: no CASCADE, manual cleanup needed
-```
+What breaks if validation is slow? Do you lose irreplaceable real-time data? Or do your queries just take an extra 50 milliseconds?
 
-### 4. Use Application-Level Checks with DB Fallback
+Is this data a snapshot or a reference? Are you recording what something looked like at a specific moment, or are you pointing to the authoritative current value?
 
-Best of both worlds:
+From there, the patterns emerge pretty naturally:
 
-```javascript
-// Fast path: app-level cache check
-const userExists = await cache.exists(`user:${userId}`);
-if (!userExists) {
-  throw new Error('Invalid user');
-}
+Financial transactions, authentication sessions, anything where data corruption means legal liability probably wants Foreign Keys regardless of the performance overhead.
 
-// Insert proceeds without FK validation hit
-// But FK is still there as fallback for:
-// - Direct DB access
-// - Admin operations
-// - Cache invalidation issues
-```
+High-volume logs, append-only time series data, anything where you're writing a million events per minute probably doesn't need validation overhead on every write.
 
-Your app is faster 99% of the time, but the database still guards against corruption.
+Historical snapshots like orders and audit logs, data you always fetch as a complete blob like user preferences, schemas you don't control like webhook payloads from external APIs… these often work better denormalized.
 
-### 5. Monitor and Measure
+But notice I said "probably" and "often." Because context matters, and your context is different from mine.
 
-You can't optimize what you don't measure:
+## Final Thoughts
 
-```sql
--- Find your slowest FK checks
-SELECT 
-  schemaname, 
-  tablename, 
-  indexrelname, 
-  idx_scan,
-  idx_tup_read,
-  idx_tup_fetch
-FROM pg_stat_user_indexes
-WHERE indexrelname LIKE '%fkey%'
-ORDER BY idx_tup_read DESC;
+Foreign Keys aren't a performance problem. They're a tradeoff between write speed and data integrity, and whether that tradeoff makes sense depends entirely on your specific bottlenecks and your specific consequences.
 
--- Track lock waits from FK checks
-SELECT 
-  relation::regclass,
-  mode,
-  COUNT(*)
-FROM pg_locks
-WHERE granted = false
-GROUP BY relation, mode
-ORDER BY count DESC;
-```
+The real issue is when people remove Foreign Keys because of something they read about "web scale" without actually measuring whether they have a write performance problem or considering what they're giving up. You end up cargo-culting Netflix's architecture onto a greenfield project that processes 100 transactions per day.
 
-If you can't point to metrics showing FK overhead, you probably don't have a performance problem—you have a perception problem.
+Maybe the performance cost is worth it for your use case. Maybe it isn't. But at least make that decision based on what you're actually optimizing for, not what you think you should be optimizing for.
 
-## The Bottom Line
+What are you optimizing for?
 
-Foreign keys have costs. Real, measurable costs. Our benchmarks showed:
-- 50-300% slower writes depending on operation
-- 2-8x increase in lock contention
-- Up to 233% additional storage from mandatory indexes
+## Resources
 
-But here's the thing: **data integrity violations are usually more expensive**. 
-
-We once skipped FKs on a high-throughput logging table. Six months later, we discovered 2.3 million orphaned records pointing to deleted users. The cleanup job took 14 hours and caused a partial outage. The investigation into why those records existed took _weeks_.
-
-Compare that to paying a few milliseconds per insert from the start.
-
-## The Decision Matrix
-
-**Use foreign keys when:**
-- Data correctness is critical (basically always)
-- Write volume is < 10,000 rows/second per table
-- You need automatic cascade operations
-- Your application code might bypass validation (admin tools, scripts, multiple services)
-
-**Consider skipping foreign keys when:**
-- You have proven, measured performance bottlenecks from FK overhead
-- You're doing append-only analytics with pre-validated data
-- You have robust application-level validation _and_ monitoring
-- You're okay with manual data reconciliation
-
-**Never skip foreign keys when:**
-- You're "pretty sure" the app will handle it
-- You want to save "some time" on inserts
-- You heard they're slow and assumed that applies to your scale
-- You don't have metrics proving they're the bottleneck
-
-Start with foreign keys. Remove them only when you have data showing you need to. And when you do remove them, put compensation in place—validation, monitoring, reconciliation jobs.
-
-Your database is the final line of defense against data corruption. Don't eliminate those defenses because of premature optimization.
-
-## Further Reading
-
-- Baron Schwartz, _High Performance MySQL_ (2012) - The bible of database optimization, most principles apply to PostgreSQL
-- Markus Winand, _SQL Performance Explained_ (2012) - Excellent coverage of index and constraint costs
-- Gregory Smith, _PostgreSQL 9.0 High Performance_ (2010) - Deep dive into PostgreSQL-specific optimizations
-- Martin Kleppmann, _Designing Data-Intensive Applications_ (2017) - Chapter on database internals and constraints
-- PostgreSQL Documentation: [Foreign Keys](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK) 
-- Use The Index, Luke: ["Clustering Data"](https://use-the-index-luke.com/) by Markus Winand
-- Cybertec: ["PostgreSQL Foreign Key Performance"](https://www.cybertec-postgresql.com/en/index-or-foreign-key/) by Hans-Jürgen Schönig
-
-**The TL;DR:** Foreign keys slow things down. Use them anyway. When they become a bottleneck, optimize _around_ them, not by removing them. Your future self—debugging data corruption at 3 AM—will thank you.
+- [PostgreSQL Foreign Key Constraints Documentation](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [PostgreSQL Performance Tips](https://www.postgresql.org/docs/current/performance-tips.html)
+- [Use The Index, Luke! - Foreign Keys](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [Database Normalization vs Denormalization](https://www.postgresql.org/docs/current/tutorial-concepts.html)

@@ -1,261 +1,133 @@
 ---
-title: "The Timestamp That Destroyed a Database"
-subTitle: "A post-mortem on precision and why your timestamps lie."
-date: 2025-12-29
-modified: 2025-12-29
+title: "Your Timestamp is a Lie"
+subTitle: "What a train ticket taught me about storing time in databases"
+date: 2026-12-29
+modified: 2026-01-12
 tags: [postgres, postgresql, databases, timestamps, timezones, microservices, debugging]
 category: Code
 subCategory: Databases
 cover_full_width: ./wide.webp
 cover_mobile: ./square.webp
 cover_icon: ./square.webp
-# social_image: desktop-social.webp
 ---
 
-It was 3:47 AM when the alerts started firing. Order confirmations were appearing _before_ orders were placed. Payment timestamps predated checkout. Our distributed system had somehow achieved time travel—and not the fun kind.
+I was booking a train from New York to Chicago when it hit me why timestamp types in Postgres are so confusing. The ticket showed:
 
-The culprit? An 8-byte timestamp field that we'd been using for years without a second thought. Turns out, there's a lot hiding in those 8 bytes that can absolutely wreck your database, your microservices, and your sleep schedule.
+- Departs: 8:00 AM EST
+- Arrives: 7:30 PM CST  
+- Duration: 11 hours 30 minutes
 
-## The Setup: A Tale of Two Services
+Three different ways of talking about time, all on the same ticket. And each one needs to be stored differently in a database.
 
-Our architecture was textbook 2025: order service in New York, inventory service in Dublin, analytics in Singapore. Each service wrote timestamps when recording events. We'd periodically sync data to a central warehouse for reporting.
+## The Question Nobody Asks First
 
-```sql
--- Order service schema
-CREATE TABLE orders (
-  id SERIAL PRIMARY KEY,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  user_id INTEGER NOT NULL
-);
+Both `TIMESTAMP` and `TIMESTAMPTZ` in Postgres take up exactly 8 bytes with the same microsecond precision. So why have two types at all? 
 
--- Inventory service schema  
-CREATE TABLE inventory_events (
-  id SERIAL PRIMARY KEY,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-  product_id INTEGER NOT NULL
-);
-```
+Because "what time is it?" depends entirely on what you're trying to tell someone.
 
-Looks reasonable, right? We thought so too. For 18 months.
+When I board that train in New York, I need to know it leaves at 8:00 AM Eastern. That's the number on the station clock I need to match. When my friend picks me up in Chicago, she needs to know I arrive at 7:30 PM Central—that's the number on *her* clock. And if I'm trying to figure out whether I'll have time to read my book, I need to know it's an 11-and-a-half-hour journey.
 
-## When Things Fall Apart
+Same train. Same journey. Three completely different representations of time.
 
-The first sign something was wrong came from our data team: "Why are inventory reservations happening milliseconds _after_ payment confirmation, even though the app flow is reversed?"
+## What TIMESTAMPTZ Actually Does
 
-We dug in. The timestamps weren't just slightly off—they were chaotically scrambled when events crossed service boundaries. Orders placed at "11:00 AM" in New York appeared as "4:00 PM" in our Dublin logs, but get this: _both were being stored without timezone information_.
+Here's the trick with `TIMESTAMPTZ`—and it's not what most people think. It doesn't store the timezone. The name is misleading.
 
-PostgreSQL has two timestamp types: [`TIMESTAMP`](https://www.postgresql.org/docs/current/datatype-datetime.html) and [`TIMESTAMPTZ`](https://www.postgresql.org/docs/current/datatype-datetime.html). We'd been using the former. Big mistake.
+What it does is convert whatever time you give it to UTC before storing it, then converts it back to your session's timezone when you read it. The "TZ" part isn't about storage, it's about **conversion support**.
 
-### The Difference That Matters
+Say you're storing that train departure. Someone in Tokyo queries your database and sees the departure in JST. Someone in London sees it in GMT. Everyone's looking at the same absolute moment, just expressed in their configured timezone. This is perfect for recording events: "when did this payment process?" or "when did this API request happen?"
 
-**`TIMESTAMP`** (also known as `TIMESTAMP WITHOUT TIME ZONE`):
-- Stores the literal date/time you give it
-- Makes _no assumptions_ about timezone
-- When you write "2025-12-29 14:30:00", that's exactly what gets stored
-- PostgreSQL doesn't convert it when the server timezone changes
+But what about that train ticket? You don't want the departure time to change just because someone queries it from a different timezone. The train leaves at 8:00 AM Eastern, period. That's not an absolute moment in time—it's a promise about what the clock in Grand Central will say.
 
-**`TIMESTAMPTZ`** (also known as `TIMESTAMP WITH TIME ZONE`):
-- Converts input to UTC before storage
-- _Always_ stores in UTC internally
-- Converts back to your session's timezone when reading
-- The actual value stored updates based on your session timezone setting
+## Storing What You Actually Mean
 
-As Markus Winand explains in _SQL Performance Explained_ (2012), **"The WITH TIME ZONE types automatically convert timestamps to UTC for storage and back to the local time zone for display... a feature that saves developers from timezone hell."**
+For that train journey, you need to store different things for different purposes:
 
-We'd skipped the feature that would have saved us.
+- The absolute moments (`departs_at` and `arrives_at` as `TIMESTAMPTZ`)
+- The display context (`origin_timezone` and `destination_timezone` as text)
+- The duration (an `INTERVAL` between the two moments)
 
-> **Cross-database reality check:** MySQL's `DATETIME` vs `TIMESTAMP` distinction is *similar* but not identical—MySQL's `TIMESTAMP` converts to UTC but has a narrower range (1970-2038). Oracle uses `TIMESTAMP WITH TIME ZONE` but actually stores the timezone offset rather than converting to UTC. SQL Server's `DATETIMEOFFSET` stores the offset explicitly. The lesson is universal: know your database's timestamp semantics before you're debugging production at 3 AM.
+Now your application can do what the train ticket does: show "Departs 8:00 AM EST" by converting the absolute moment to the origin timezone, show "Arrives 7:30 PM CST" by converting to the destination timezone, and show "Duration: 11h 30m" directly from the interval.
 
-## The Microsecond Problem
+The person booking the ticket from Tokyo sees the same local times at each station. That's what they need to know.
 
-But wait—there's more! Even when we started migrating to `TIMESTAMPTZ`, we ran into precision issues.
+## Why Your Flight Tracking App Got It Wrong
 
-PostgreSQL timestamps support microsecond precision (6 decimal places). JavaScript's `Date` object? Millisecond precision (3 decimal places). When our Node.js services wrote timestamps, PostgreSQL happily accepted them and padded with zeros.
+Ever notice how some flight tracking apps show your timezone during the flight? Like you're over the Atlantic and it says "Current time: 4:32 PM GMT." Who cares? You're not in Greenwich, you're at 38,000 feet somewhere over the ocean.
 
-```javascript
-// JavaScript - millisecond precision
-const now = new Date(); // 2025-12-29T14:30:00.123Z
+What you actually want to see:
+- Time elapsed since takeoff
+- Time remaining to destination  
+- What time it'll be *there* when you land
 
-// Gets stored in Postgres as:
-// 2025-12-29 14:30:00.123000
-```
+None of those are timezone conversions. The first two are **intervals**—durations, not moments. The last one is a timezone conversion, but to a specific place, not "your current timezone."
 
-Not a huge deal until we started doing timestamp arithmetic for things like rate limiting or deduplication. Events that _should_ have been different got silently truncated to identical timestamps.
+See that? Two interval calculations (`NOW() - actual_departure` and `estimated_arrival - NOW()`), one timezone conversion to a specific place (`AT TIME ZONE destination_timezone`). Your current timezone doesn't enter into it.
 
-```sql
--- These two events happened in the same millisecond
--- but different microseconds. Postgres can see it:
-SELECT 
-  '2025-12-29 14:30:00.123456'::TIMESTAMP,
-  '2025-12-29 14:30:00.123789'::TIMESTAMP;
+## When Wall-Clock Time Is What You Actually Need
 
--- But our app code couldn't distinguish them:
-WHERE created_at > '2025-12-29 14:30:00.123'
--- Matches both! Silent data corruption.
-```
+Hotels don't care about absolute moments in time. They care about clock readings at their location.
 
-Martin Kleppmann's _Designing Data-Intensive Applications_ (2017) warns about this exact scenario: **"Different systems have different notions of time... even within a single datacenter, clocks can drift by hundreds of milliseconds."**
+"Check-in is after 3:00 PM" doesn't mean "check-in is 15 hours after midnight UTC." It means "whenever the clock in our lobby says 3:00 PM, you can check in." If your servers are in Virginia but the hotel is in Paris, you still want that rule to trigger at 3:00 PM *Paris time*.
 
-We had microsecond precision in the database but were making millisecond-level decisions in code. Recipe for chaos.
+The `TIME` type (without date or timezone) represents exactly this: "a reading on a clock." Pair it with a timezone text field ("Europe/Paris"), and you can enforce wall-clock policies regardless of where your servers live. But you'll also want `TIMESTAMPTZ` columns for when specific guests actually check in and out—those are absolute moments your backend needs to track.
 
-## DST: The Gift That Keeps on Breaking
+## The Calendar Problem
 
-Then came daylight saving time.
+I have a recurring reminder set for 9:00 AM: "Review daily priorities." I want that reminder at 9:00 AM *wherever I am*. If I'm traveling, it should still fire at 9:00 AM local time.
 
-Our European services all ran with timezone-aware timestamps (`TIMESTAMPTZ`). Perfect, right? Except for the 2 AM "spring forward" hour that _doesn't exist_ in the timezone database.
+But I also have a calendar event: "Team Standup at 10:00 AM EST." My teammate in Berlin needs to see "4:00 PM CET" for that same event. Same meeting, different display times, because this one is an absolute moment we're all joining.
+
+Two different types of events, two different storage strategies. The meeting gets a `TIMESTAMPTZ`. The reminder gets a `TIME` plus my current timezone setting. Avoid trying to force both into the same field.
+
+## The Stuff That Breaks in Production
+
+Even with the right types, precision can bite you. Postgres stores microseconds: `10:00:00.123456`. JavaScript's `Date` object uses milliseconds: `10:00:00.123`.
+
+So this query might mysteriously return no rows:
 
 ```sql
--- March 9, 2025 at 2:30 AM doesn't exist in America/New_York
-SET timezone = 'America/New_York';
-SELECT '2025-03-09 02:30:00'::TIMESTAMPTZ;
--- PostgreSQL helpfully "adjusts" this to 03:30:00
--- Your app logic? Not so helpful.
+SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 ```
 
-We had scheduled jobs that were supposed to run at 2:15 AM during DST transitions. PostgreSQL silently adjusted them to 3:15 AM. Our scheduled maintenance windows? Missed. Our backup jobs? Delayed by an hour. 
+The database has `10:00:00.123456` and your code passes `10:00:00.123`. Depending on how your driver handles it, those might not match.
 
-The PostgreSQL docs [warn about this](https://www.postgresql.org/docs/current/datetime-bogus-timestamps.html): **"Input values that are ambiguous or invalid during a daylight-savings-time transition are resolved using the pre-transition offset."** Translation: Postgres guesses, and you deal with the consequences.
+Don't use exact equality for timestamps. Use range queries, or—better—don't look up records by their creation timestamp at all. Use a proper unique constraint or idempotency key.
 
-## The Migration: Fixing Our Mess
+## Practical Rules
 
-Here's what we did to fix it:
+**Default to TIMESTAMPTZ.** When in doubt, use `TIMESTAMPTZ`. It handles multi-region deployments, daylight saving time, and future timezone changes automatically. It's the same storage size as `TIMESTAMP`, so there's no penalty.
 
-### 1. Audit Every Timestamp Column
+**Store context separately.** If you need to show "Departs 8:00 AM EST" alongside the actual moment, store both the `TIMESTAMPTZ` and the `origin_timezone` as separate columns. Don't try to encode everything into one field.
 
-```sql
--- Find all TIMESTAMP columns (without timezone)
-SELECT 
-  table_name, 
-  column_name, 
-  data_type
-FROM information_schema.columns
-WHERE data_type = 'timestamp without time zone'
-  AND table_schema = 'public';
-```
+**Think about intervals.** A lot of time-related requirements are actually about duration, not moments. "How long has this been pending?" "When will this expire?" Use `INTERVAL` operations, not timezone conversions.
 
-We found 247 columns across 83 tables. Yep.
+**Run everything in UTC.** Your servers should be set to UTC. Your database sessions should default to UTC. Only convert to local timezones when displaying to users, and only when you know which timezone matters.
 
-### 2. Migrate to TIMESTAMPTZ
+**Require timezone info from clients.** If a client sends `2026-01-15T10:00:00` without an offset, reject it. Require ISO-8601 format with either `Z` or an explicit offset like `-05:00`. Don't guess.
 
-```sql
--- For each table, careful migration:
-BEGIN;
+## Enforcing Good Defaults
 
--- Add new column
-ALTER TABLE orders 
-  ADD COLUMN created_at_tz TIMESTAMPTZ;
+If `TIMESTAMPTZ` is your default (and it should be), consider enforcing it at the database level. A trigger that rejects `TIMESTAMP WITHOUT TIME ZONE` columns sounds extreme, but catching "forgot to add TZ" at schema creation time is better than debugging it six months later when someone adds a new table and forgets.
 
--- Backfill with assumed timezone
-UPDATE orders 
-SET created_at_tz = created_at AT TIME ZONE 'America/New_York';
+## What That Train Ticket Taught Me
 
--- Verify data looks correct
-SELECT created_at, created_at_tz FROM orders LIMIT 100;
+Time in databases isn't hard because timestamps are complicated. It's hard because we're usually storing multiple concerns in one field, or not thinking about what we're actually trying to show users.
 
--- Drop old, rename new
-ALTER TABLE orders DROP COLUMN created_at;
-ALTER TABLE orders RENAME COLUMN created_at_tz TO created_at;
+That train ticket had it right: departure time in the origin timezone, arrival time in the destination timezone, and duration as a separate thing entirely. Three different pieces of information, each meaningful in its own way.
 
-COMMIT;
-```
+Your database can do the same thing. Store the absolute moments as `TIMESTAMPTZ`. Store the display context (timezones, locations) as separate columns. Use `INTERVAL` types for durations. Let Postgres do the conversions when you need them, but be explicit about which timezone matters for which purpose.
 
-**Critical:** We had to _know_ what timezone each service was writing from. If you don't know, you're guessing. Guessing with production data is bad.
+Most of the time, that means `TIMESTAMPTZ` and UTC everywhere, with timezone conversions only at display time. But when you need wall-clock times or recurring schedules, `TIMESTAMP` or `TIME` types exist for exactly that reason.
 
-### 3. Standardize Application Code
+The key is knowing what question you're trying to answer: "When did this happen?" vs. "What time should I be there?" vs. "How long will this take?" They're all different questions about time, and they often need different storage strategies.
 
-All services now explicitly convert to UTC before writing:
+Think about what your users need to see. Then store the data that lets you show them exactly that.
 
-```javascript
-// Before: implicit timezone chaos
-const now = new Date();
-await db.query('INSERT INTO orders (created_at) VALUES ($1)', [now]);
+## Resources
 
-// After: explicit UTC
-const now = new Date();
-const utc = now.toISOString(); // Always UTC
-await db.query('INSERT INTO orders (created_at) VALUES ($1)', [utc]);
-```
-
-We also standardized on [Temporal](https://tc39.es/proposal-temporal/docs/) for new JavaScript code. No more `Date` confusion.
-
-```javascript
-import { Temporal } from '@js-temporal/polyfill';
-
-const now = Temporal.Now.zonedDateTimeISO('America/New_York');
-const utc = now.toInstant().toString();
-// "2025-12-29T19:30:00.123456789Z" - full precision, explicit UTC
-```
-
-### 4. Add Timezone Validation
-
-We added database constraints to prevent future mistakes:
-
-```sql
--- Ensure all new timestamp columns include timezone
-CREATE OR REPLACE FUNCTION check_timestamp_tz()
-RETURNS event_trigger AS $$
-DECLARE
-  obj record;
-BEGIN
-  FOR obj IN 
-    SELECT * FROM pg_event_trigger_ddl_commands()
-  WHERE command_tag = 'CREATE TABLE'
-  LOOP
-    -- Check for TIMESTAMP WITHOUT TIME ZONE usage
-    IF EXISTS (
-      SELECT 1 FROM information_schema.columns
-      WHERE table_name = obj.object_identity
-        AND data_type = 'timestamp without time zone'
-    ) THEN
-      RAISE EXCEPTION 'Use TIMESTAMPTZ, not TIMESTAMP';
-    END IF;
-  END LOOP;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE EVENT TRIGGER prevent_timestamp_without_tz
-  ON ddl_command_end
-  WHEN TAG IN ('CREATE TABLE', 'ALTER TABLE')
-  EXECUTE FUNCTION check_timestamp_tz();
-```
-
-Yep, we went nuclear. No more `TIMESTAMP WITHOUT TIME ZONE` allowed. Period.
-
-## Lessons from the Trenches
-
-**1. Always use `TIMESTAMPTZ` for events**  
-Unless you have a _really_ good reason (like storing user-entered birthdays that have no time component), use `TIMESTAMPTZ`. The overhead is identical—both are 8 bytes—but `TIMESTAMPTZ` saves you from yourself.
-
-**2. Be mindful of precision mismatches**  
-If your app uses millisecond precision and your database supports microseconds, make sure you're not inadvertently creating duplicates or missing events.
-
-**3. UTC everywhere, convert at the edges**  
-Store UTC in databases. Convert to local timezones only when displaying to users. This is the [standard advice](https://codeascraft.com/2014/04/14/timezone-gotchas-with-daylight-saving-time/) from teams at Etsy, Stack Overflow, and pretty much everyone who's been burned.
-
-**4. Test around DST boundaries**  
-March and November aren't just months—they're edge-case gold mines. Write tests that specifically check DST transitions.
-
-**5. Let the database set timestamps**
-Application servers can have clock skew. Use `DEFAULT NOW()` in Postgres so the timestamp reflects the database server's canonical time, not some app server halfway around the world.
-
-**6. Consider application-level timestamps for distributed systems**  
-In microservices, sometimes you want to know _when the event occurred in the originating service_, not when it hit the database. Use both: `occurred_at` (app timestamp) and `recorded_at` (DB timestamp).
-
-## The Aftermath
-
-It took us 6 weeks to fully migrate. We had to coordinate downtime windows across three continents. We developed migration scripts, tested extensively in staging, and still managed to break reporting queries for 48 hours (wrong timezone assumptions in analytics code).
-
-But the result? No more time travel bugs. No more "impossible" event orderings. No more 3 AM pages because daylight saving time did something weird.
-
-Those 8 bytes matter more than you think.
-
-## Further Reading
-
-- PostgreSQL Documentation: [Date/Time Types](https://www.postgresql.org/docs/current/datatype-datetime.html)
-- Martin Kleppmann: _Designing Data-Intensive Applications_ (2017), Chapter 8 on distributed system clocks
-- Markus Winand: _SQL Performance Explained_ (2012), Chapter on data types and timezone handling
-- Tom Scott: ["The Problem with Time & Timezones"](https://www.youtube.com/watch?v=-5wpm-gesOY) (video, 2015)
-- Stack Overflow Blog: ["Working with Time Zones"](https://stackoverflow.blog/2019/09/30/odes-to-code-stack-overflow-podcast/) 
-- Jon Skeet: [_Noda Time_](https://nodatime.org/) and various [blog posts](https://codeblog.jonskeet.uk/category/nodatime/) on time handling
-
-**The bottom line:** If you're still using `TIMESTAMP WITHOUT TIME ZONE` in production, go check your schema right now. Your future self will thank you—probably at 3 AM when something breaks.
+- [PostgreSQL Date/Time Types Documentation](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [PostgreSQL Timestamp Best Practices](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
+- [ISO 8601 Date and Time Format](https://en.wikipedia.org/wiki/ISO_8601)
+- [Time Zone Database (IANA)](https://www.iana.org/time-zones)
+- [Dealing with Timestamps in Distributed Systems](https://www.postgresql.org/docs/current/functions-datetime.html)
