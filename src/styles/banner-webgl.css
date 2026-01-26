@@ -1,0 +1,187 @@
+/**
+ * WebGL Banner Effect Styles
+ * High-tech styling for the banner image WebGL canvas
+ */
+
+.banner-webgl-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  
+  /* Smooth rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  
+  /* Hardware acceleration */
+  transform: translateZ(0);
+  will-change: transform, opacity;
+  
+  /* Initial state */
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+/* Container positioning for WebGL canvas */
+.full-width.banner-image,
+.hero-image-wrapper {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Ensure the original image is properly hidden when WebGL takes over */
+.banner-image[style*="opacity: 0"],
+.hero-image img[style*="opacity: 0"] {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Loading state optimization */
+.banner-image:not([complete]),
+.hero-image img:not([complete]) {
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite ease-in-out;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Enhance parent containers for better performance */
+.full-width {
+  /* Contain paint operations */
+  contain: layout style paint;
+}
+
+.hero-image {
+  /* Contain paint operations */
+  contain: layout style paint;
+}
+
+/* Responsive optimizations */
+@media (max-width: 768px) {
+  .banner-webgl-canvas {
+    /* Reduce quality on mobile for better performance */
+    image-rendering: auto;
+  }
+}
+
+/* High-performance device optimizations */
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  .banner-webgl-canvas {
+    /* Enhanced rendering for desktop */
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .banner-webgl-canvas {
+    /* Disable animations for accessibility */
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .banner-webgl-canvas {
+    /* Slight brightness adjustment for dark themes */
+    filter: brightness(0.95) contrast(1.05);
+  }
+}
+
+/* Print styles - fallback to original image */
+@media print {
+  .banner-webgl-canvas {
+    display: none !important;
+  }
+  
+  .banner-image[style*="opacity: 0"],
+  .hero-image img[style*="opacity: 0"] {
+    opacity: 1 !important;
+    position: static !important;
+    pointer-events: auto !important;
+  }
+}
+
+/* Focus states for accessibility */
+.banner-image:focus-visible,
+.hero-image:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Loading indicator overlay */
+.banner-webgl-canvas::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .banner-webgl-canvas {
+    filter: contrast(1.2);
+  }
+}
+
+/* GPU acceleration hints */
+.banner-webgl-canvas,
+.full-width.banner-image,
+.hero-image-wrapper {
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Prevent layout shifts during load */
+.full-width.banner-image {
+  aspect-ratio: attr(width) / attr(height);
+  min-height: 200px;
+}
+
+/* Smooth transitions between states */
+.banner-webgl-canvas.loading {
+  opacity: 0;
+}
+
+.banner-webgl-canvas.loaded {
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+}
+
+/* Error state styling */
+.banner-webgl-canvas.error {
+  display: none;
+}
+
+/* Fallback for browsers without WebGL support */
+@supports not (transform: translateZ(0)) {
+  .banner-webgl-canvas {
+    display: none;
+  }
+  
+  .banner-image[style*="opacity: 0"],
+  .hero-image img[style*="opacity: 0"] {
+    opacity: 1 !important;
+    position: static !important;
+  }
+}

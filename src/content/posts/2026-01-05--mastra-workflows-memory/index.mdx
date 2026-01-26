@@ -1,0 +1,245 @@
+---
+title: "Stop Building Flaky Agents: Use Workflows & Memory"
+subTitle: "Deterministic patterns for non-deterministic models."
+date: 2026-01-05
+modified: 2026-01-08
+tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestration]
+category: AI
+subCategory: Architecture
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+LLMs have this weird property: they're brilliant at understanding nuance but terrible at following recipes. Give GPT-4 a vague problem and it'll reason through possibilities. Give it a precise sequence of steps, and it might skip step 3 because step 5 "felt more relevant."
+
+This isn't a bug in the model. It's a fundamental characteristic of probabilistic systems trying to solve deterministic problems.
+
+I've watched teams struggle with this mismatch. They build an agent to handle customer refunds, give it a dozen tools, and expect it to reliably execute a business process. Sometimes it works perfectly. Sometimes it hallucinates approvals that never happened. Sometimes it gets stuck asking for the same information three times.
+
+The solution isn't better prompts. It's knowing when to stop asking the LLM to "think" and start telling it to "obey."
+
+---
+
+## When Deterministic Beats Creative
+
+Think about what happens when you need to process a support ticket. Real-world business logic looks something like:
+
+1. Fetch the ticket details from the database
+2. Check if the user is eligible for a refund (policy rules)
+3. Verify the transaction exists and hasn't been refunded already
+4. Calculate the refund amount
+5. Process the payment reversal
+6. Update the ticket status
+7. Send confirmation email
+
+You could hand this to an LLM as a tool-calling exercise. In my experience, that's asking for trouble. The model might decide steps 2 and 3 are "basically the same thing" and skip one. Or it might process the refund before checking eligibility because the user seemed upset.
+
+Workflows exist for exactly this scenario. They're not exciting, but that's the point.
+
+### Building a Weather Activity Planner
+
+Here's a practical example that shows the pattern. We need hard, factual weather data paired with creative activity suggestions. The weather fetch should never be creative, but the suggestions should be.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Step 1: Fetch weather data (Deterministic)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (fetch logic) ...
+    return {
+      location: name,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Step 2: Agent suggests activities (Creative)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// The Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+The LLM never touches the weather API. It gets ground-truth data as input, then does what it's actually good at: making contextual suggestions. If you flip this around and let the agent fetch weather data, you'll eventually get a sunny forecast when it's actually raining.
+
+**When to consider workflows:**
+- You have a known sequence of steps that must happen in order
+- You need observability at each stage (logs, metrics, timing)
+- You need retry logic for flaky external APIs
+- Business rules can't be "interpreted" - they must be followed exactly
+
+---
+
+## The Context Window Problem Nobody Talks About
+
+There's this pattern I keep seeing. Someone builds a chatbot. It works great during testing. Then in production, users have longer conversations and suddenly the bot gets lost.
+
+The developer looks at the logs and realizes they're sending the entire conversation history with every request. All 47 messages. They're burning through tokens and context space for information that's mostly irrelevant.
+
+Worse, there's a phenomenon researchers call "lost in the middle" where models perform worse when relevant information is buried in a long context. The model literally can't see the forest for the trees.
+
+Sending full conversation history feels safe. You're giving the model "all the information." But you're actually making it harder for the model to focus on what matters.
+
+### Working Memory vs. Long-Term Storage
+
+Mastra's memory system gives you both. Working memory keeps recent messages in the context window. Semantic recall searches historical messages when the current query seems related.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // Keep last 20 messages in context
+      semanticRecall: {
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+Here's how this plays out in practice. A user asks: "What was that Italian restaurant you recommended last month?"
+
+Without semantic recall, the agent sees the last 20 messages. The restaurant recommendation was message 487 of 506. It's gone. The agent says "I don't have that information."
+
+With semantic recall:
+1. The query gets embedded: `[0.234, -0.567, 0.891, ...]`
+2. The embedding gets compared against historical messages
+3. Message 487 ("I'd recommend Trattoria Bella - their carbonara is incredible") scores 0.89 similarity
+4. That message gets injected into the current context
+5. The agent responds: "I recommended Trattoria Bella. Their carbonara is what caught my attention."
+
+The agent appears to have perfect memory while only using a fraction of the context window. This isn't just clever engineering - it's functionally necessary once conversations extend beyond a few dozen messages.
+
+---
+
+## Coordination Through Agent Networks
+
+Sometimes you need both structure and flexibility. Pure workflows are too rigid. Pure agents are too unpredictable.
+
+Agent networks give you a coordinator that decides which specialized agent or workflow to invoke based on the task. Think of it as a smart load balancer for AI capabilities.
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Network requires memory
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+When you query this network, the coordinator analyzes the request and routes accordingly:
+- "I need facts about X" triggers the research agent
+- "Plan a weekend in Seattle" runs the activity planner workflow
+- "Write a report on Y" engages the writing agent
+
+This pattern scales better than trying to cram everything into a single mega-agent. Specialized agents develop focused expertise. The coordinator handles routing. Each piece does what it's good at.
+
+---
+
+## Putting It Together
+
+Real production AI systems need architecture, not just prompts. You're building distributed systems where some nodes happen to be LLMs.
+
+Workflows give you guarantees when you need things to happen exactly right. Memory gives you context without burning through your token budget. Agent networks let you compose complexity from simpler parts.
+
+None of this is glamorous. But after watching enough "fully autonomous agents" fail in production, I've come to appreciate boring reliability over exciting unpredictability.
+
+Your mileage may vary, but in my experience, the systems that actually ship and stay running are the ones that treat LLMs as components in a larger architecture rather than magic boxes that solve everything.
+
+### Resources
+
+- [Mastra Workflows Documentation](https://mastra.ai/docs/workflows/overview)
+- [Mastra Memory Documentation](https://mastra.ai/docs/memory/overview)
+- [Full Demo Code](https://github.com/justsml/mastra-examples)
+
+## Read the Series
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
+4. **Workflows & Memory** (This Post)

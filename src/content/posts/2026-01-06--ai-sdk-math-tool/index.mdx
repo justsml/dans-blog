@@ -1,0 +1,132 @@
+---
+title: "Stop Asking LLMs to Do Math"
+subTitle: "They are bad at it. Here is how to fix it."
+date: 2026-01-06
+modified: 2026-01-07
+tags: [AI, AI SDK, TypeScript, Math, Tools, Patterns]
+category: AI
+subCategory: Engineering
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+You know what's weird about language models? They can explain quantum mechanics, write poetry, and debug your TypeScript... but ask them to multiply 18472 by 9347 and there's a decent chance they'll confidently give you something that's off by thousands.
+
+This used to baffle me until I realized what we're actually asking them to do. We're asking a pattern-matching engine to be a calculator. That's like asking a gymnast to balance your checkbook because they understand the concept of "balance."
+
+The thing is, LLMs don't compute anything. When you ask GPT or Claude what 2 + 2 equals, they're not adding. They're predicting that "4" is the token most likely to appear after "2 + 2 =". Most of the time, this works great because these patterns exist in their training data. But push beyond simple arithmetic into multi-step calculations or anything with numbers that weren't common in training, and you're essentially rolling dice.
+
+I ran into this head-on recently while reviewing some code that used a top-tier model to calculate mortgage payments. The model answered with complete confidence. It was also wrong by $400/month. That's the kind of error that matters.
+
+Even as models get better at reasoning (GPT-5 supposedly shows improvements), they're still doing sophisticated pattern matching, not symbolic computation. For creative work and natural language tasks, this probabilistic nature is exactly what makes them magical. For math? Not so much.
+
+## What Actually Solves This?
+
+The answer isn't waiting for smarter models. It's giving the model the right tool for the job.
+
+Think about how you'd solve this problem if you were building a non-AI system. You wouldn't write custom math logic, you'd reach for a library. Same principle applies here, except now we're teaching the LLM when and how to use that library.
+
+Tool calling in modern AI SDKs lets us hand the model structured functions it can invoke. Instead of forcing the LLM to pretend it knows math, we give it something that actually does: a symbolic math engine.
+
+I've been using [AI SDK v5 and v6](https://ai-sdk.vercel.ai/) for this, paired with CortexJS Compute Engine. The SDK handles orchestration and tool routing, while CortexJS handles anything from basic arithmetic up through calculus. It's a surprisingly clean separation of concerns.
+
+```bash
+npm install ai @cortex-js/compute-engine zod
+```
+
+## Building the Math Tool
+
+The implementation is more straightforward than you might expect. What we're building is a bridge between the LLM's natural language understanding and actual mathematical computation.
+
+```typescript
+import { generateText, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// Initialize the engine once
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // Process all expressions in parallel (or detailed batch)
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+A few things worth noting about this:
+
+The description is doing heavy lifting. That "MUST be used" language might seem aggressive, but in my experience, being explicit with the model about when to use a tool is the difference between it working sometimes and working reliably. Consider it prompt engineering at the tool level.
+
+The batch processing via an `expressions` array matters more than you might think. Each model call has latency. If you're solving a system of equations or doing multi-step math, processing them individually creates a terrible user experience. Batching means one round-trip to solve ten problems.
+
+Using a symbolic engine rather than just `eval()` (please don't use `eval()`) gives us real mathematical understanding. The engine parses intent, handles LaTeX formatting, and can work with derivatives and integrals. We're not just doing calculations, we're doing mathematics.
+
+The error handling is scoped per expression. If one calculation fails, we return that error but keep going with the rest. This lets the model see what worked and what didn't, potentially self-correcting in the next step.
+
+## Putting It to Work
+
+Let's throw something at it that would typically make a raw model hallucinate:
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-4-5-sonnet-20251115'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { math: mathTool },
+  maxSteps: 5, // Allow the model to use the tool and then explain the result
+});
+
+console.log(text);
+```
+
+The model sees the math, recognizes it needs precision, calls the tool, gets the accurate result, and then explains it in natural language. Each component doing what it does best.
+
+## Beyond Basic Arithmetic
+
+Since we're using a symbolic engine, this approach handles things that simple calculator tools can't touch.
+
+Want to solve algebraic equations? "Solve these equations: 3x + 7 = 22 and 2y - 5 = 13" works fine.
+
+Need calculus? "Find the derivative of x^3 + 2x^2 and evaluate it at x = 2" is just another tool call.
+
+The LaTeX support is particularly useful if you're building educational apps. The engine inherently understands LaTeX input and can return results formatted for rendering. No additional parsing required.
+
+## The Bigger Picture
+
+I think this pattern matters beyond just math. What we're really doing is acknowledging the limitations of LLMs while leveraging their strengths. They're incredible at understanding intent, parsing natural language, and orchestrating workflows. They're not calculators or databases or file systems.
+
+Every time we try to make an LLM do something deterministic, we're fighting its nature. But when we pair that natural language understanding with specialized tools that handle the deterministic parts? That's when things get interesting.
+
+The math tool is just one example. The same principle applies to date manipulation, financial calculations, image processing, database queries... anywhere precision matters more than creativity. Let the model understand what the user wants, then hand off the actual work to something built for the job.
+
+It's a shift in how we think about building with AI. Not "can the model do this?" but "can the model orchestrate this?" Small difference in phrasing, significant difference in reliability.
+
+## Resources
+
+- [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
+- [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
+- [Tool Calling Guide](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK Examples Repository](https://github.com/vercel/ai/tree/main/examples)
