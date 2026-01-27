@@ -1,0 +1,496 @@
+---
+title: "Your AI Assistant Gave Me Shell Access"
+subTitle: "How to secure your Local or VPS ClawdBot!"
+date: 2026-01-15
+modified: 2026-01-26
+tags: [security, clawdbot, tailscale, ai, vpn, devops, ssh]
+category: Security
+subCategory: AI Infrastructure
+draft: false
+cover_full_width: ./hero_wide.webp
+cover_mobile: ./icon_square_200.webp
+cover_icon: ./icon_square_200.webp
+---
+
+ClawdBot gives you a personal AI assistant that works across every platform you use—WhatsApp, Slack, Discord, iMessage. It's genuinely useful. But the default setup exposes three ports to the public internet, and if you skip security configuration, you're giving the world shell access to your machine.
+
+This guide shows you how to deploy ClawdBot securely using Tailscale, a zero-config VPN that eliminates public exposure entirely. You'll get full remote access to your AI assistant, but only from devices you control. No exposed ports. No attack surface.
+
+**What you'll learn:**
+- How to set up ClawdBot behind Tailscale (10-15 minutes)
+- SSH hardening and firewall configuration
+- How to verify your instance isn't publicly exposed
+- What security issues Tailscale doesn't solve
+
+ClawdBot's rapid adoption revealed real security concerns: [Shodan scans found 2,847 exposed instances](https://socradar.io/blog/clawdbot-is-it-safe/) in the first few weeks, and a [security audit identified 512 issues](https://github.com/clawdbot/clawdbot/issues/1796) in the codebase. But these problems are solvable. You don't need to be a security expert—you just need to follow the right steps before you deploy.
+
+---
+
+## Table of Contents
+
+1. [What You're Actually Exposing](#what-youre-actually-exposing)
+2. [The Tailscale Solution](#the-tailscale-solution)
+   - [Should You Let ClawdBot Manage Tailscale?](#should-you-let-clawdbot-manage-tailscale)
+3. [Setting Up ClawdBot Securely](#setting-up-clawdbot-securely)
+   - [Step 1: Install Tailscale](#step-1-install-tailscale)
+   - [Step 2: Configure ClawdBot to Use Tailscale](#step-2-configure-clawdbot-to-use-tailscale)
+   - [Step 3: Lock Down SSH](#step-3-lock-down-ssh)
+   - [Step 4: Firewall Rules (Belt and Suspenders)](#step-4-firewall-rules-belt-and-suspenders)
+4. [Checking Your Exposure](#checking-your-exposure)
+   - [Check Open Ports from Outside](#check-open-ports-from-outside)
+   - [Check What's Listening Locally](#check-whats-listening-locally)
+   - [Automated Security Check Script](#automated-security-check-script)
+   - [External Scanning with Nmap](#external-scanning-with-nmap)
+   - [Built-in Security Audit](#built-in-security-audit)
+5. [What This Doesn't Solve](#what-this-doesnt-solve)
+6. [Deployment Checklist](#deployment-checklist)
+7. [Final Thoughts](#final-thoughts)
+8. [Resources](#resources)
+
+---
+
+## What You're Actually Exposing
+
+By default, a [ClawdBot deployment opens three ports](https://docs.clawd.bot/gateway/remote):
+
+- **Port 22**: SSH access (if you're on a fresh VPS)
+- **Port 18789**: Gateway dashboard and WebSocket API
+- **Port 18791**: Browser control interface
+
+The gateway port is the big one. It's a web interface that lets you control ClawdBot remotely, including executing arbitrary commands through the agent. If you can reach port 18789, you can tell the AI to run shell commands. On the host. With your user's permissions.
+
+The browser control port is almost as bad. It's designed to let ClawdBot interact with web pages on your behalf, but it also means anyone who can hit that port can use your browser session, potentially accessing anything you're logged into.
+
+SSH is SSH. If you're running with password authentication enabled, or worse, with a weak password, you're just asking for brute force attacks. And because ClawdBot is often deployed on cheap VPS instances with predictable IP ranges, you're a very easy target.
+
+---
+
+## The Tailscale Solution
+
+[Tailscale](https://tailscale.com/) is a zero-config VPN built on WireGuard. You install it, authenticate once, and suddenly all your devices are on a private network. No port forwarding. No firewall rules. No exposed services. Just encrypted point-to-point connections between machines you control.
+
+For ClawdBot, this is perfect. You want remote access, but you don't want the entire internet to have remote access. Tailscale gives you exactly that.
+
+Here's what it looks like in practice:
+
+1. Your ClawdBot instance runs on a VPS or local machine
+2. It's bound to localhost or Tailscale's IP (not 0.0.0.0)
+3. You install Tailscale on both the server and your personal devices
+4. You access ClawdBot through its Tailscale IP (something like `100.x.x.x`)
+5. Everyone else on the internet sees nothing
+
+No ports are exposed. No attack surface. The AI assistant works exactly the same, but only for you.
+
+### Should You Let ClawdBot Manage Tailscale?
+
+ClawdBot has [built-in Tailscale integration](https://docs.clawd.bot/gateway/tailscale) that can automatically configure `tailscale serve` or `tailscale funnel` to expose the gateway. This sounds convenient, and it is. But you're giving an AI agent control over your network security configuration.
+
+The integration works through two modes:
+
+**Serve mode** keeps things on your tailnet only, using automatic identity verification via `tailscale whois`. The gateway stays bound to `127.0.0.1` while Tailscale handles routing and HTTPS. It's actually designed fairly well from a security perspective.
+
+**Funnel mode** exposes the gateway publicly through Tailscale's public endpoint feature. The system refuses to start Funnel without password authentication, but you're still allowing the AI to potentially reconfigure from private to public access.
+
+Here's the thing: ClawdBot's own security documentation [explicitly acknowledges](https://docs.clawd.bot/gateway/security) that "prompt injection remains unsolved" and "there is no perfectly secure setup." You're running an agent that can be manipulated through untrusted content—web results, documents, attachments. If that agent also has permission to modify your VPN configuration, you've created a very attractive attack surface.
+
+The project does provide a `clawdbot security audit` command that checks Tailscale settings among other configurations. You can even run it with `--fix` to apply safe defaults. But this is reactive, not preventive. It tells you after a misconfiguration has happened, not before.
+
+**The middle ground**: ClawdBot supports [approval workflows](https://github.com/clawdbot/clawdbot/releases/tag/v2026.1.24) with exec approvals and in-chat `/approve` commands. If you configure ClawdBot so that any `tailscale` command requires approval, and you run `clawdbot security audit` regularly (or better yet, automatically on a schedule), then letting it manage Tailscale becomes more defensible.
+
+You'd want something like this in your workflow:
+
+```bash
+# Enable exec approvals for elevated commands
+# In your ClawdBot config, set exec approval mode to "ask"
+
+# Schedule regular audits (via cron or systemd timer)
+0 */6 * * * /usr/local/bin/clawdbot security audit --deep >> /var/log/clawdbot-audit.log
+
+# Set up alerts for audit failures
+# (Implementation depends on your monitoring stack)
+```
+
+But honestly? For most deployments, manually configuring Tailscale once is simpler, more auditable, and doesn't give an AI agent control over your network perimeter. The convenience of automatic management doesn't outweigh the risk unless you have a very specific use case that requires dynamic reconfiguration.
+
+**Recommendation**: Configure Tailscale manually as shown in the next section. Use ClawdBot's audit tool to verify your configuration, but don't let it make changes autonomously. If you do enable Tailscale management, ensure every infrastructure change requires explicit approval and is logged.
+
+---
+
+## Setting Up ClawdBot Securely
+
+### Step 1: Install Tailscale
+
+On your VPS or local server:
+
+```bash
+# Install Tailscale
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# Authenticate (opens a browser to log in)
+sudo tailscale up
+
+# Get your Tailscale IP
+tailscale ip -4
+# Output: 100.x.x.x
+```
+
+On your local machine (if you want to access the VPS):
+
+```bash
+# Same installation
+curl -fsSL https://tailscale.com/install.sh | sh
+sudo tailscale up
+```
+
+Now both machines are on the same private network. You can ping your VPS using its Tailscale IP, and it'll route through the encrypted tunnel.
+
+### Step 2: Configure ClawdBot to Use Tailscale
+
+Edit your ClawdBot configuration to bind only to Tailscale's IP:
+
+```bash
+# Get your Tailscale IP
+TAILSCALE_IP=$(tailscale ip -4)
+
+# Configure ClawdBot gateway to bind to Tailscale only
+export GATEWAY_HOST=$TAILSCALE_IP
+export GATEWAY_PORT=18789
+```
+
+If you're using the official Docker setup:
+
+```bash
+docker run -d \
+  --name clawdbot \
+  --restart unless-stopped \
+  -e GATEWAY_HOST=$TAILSCALE_IP \
+  -e GATEWAY_PORT=18789 \
+  -p $TAILSCALE_IP:18789:18789 \
+  -p $TAILSCALE_IP:18791:18791 \
+  clawdbot/clawdbot:latest
+```
+
+Notice the `-p` flags bind to your Tailscale IP, not `0.0.0.0`. This means the ports are only accessible through the VPN.
+
+### Step 3: Lock Down SSH
+
+Even with Tailscale, you should secure SSH properly:
+
+```bash
+# Disable password authentication
+sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+sudo sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+
+# Disable root login
+sudo sed -i 's/#PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+sudo sed -i 's/PermitRootLogin yes/PermitRootLogin no/' /etc/ssh/sshd_config
+
+# Only allow SSH from Tailscale network (100.x.x.x range)
+echo "ListenAddress $(tailscale ip -4)" | sudo tee -a /etc/ssh/sshd_config
+
+# Restart SSH
+sudo systemctl restart sshd
+```
+
+Now SSH only listens on your Tailscale IP. If someone tries to connect from the public internet, the connection will be refused before they even get a login prompt.
+
+### Step 4: Firewall Rules (Belt and Suspenders)
+
+Even though you've bound services to Tailscale IPs, set up a firewall as a second layer:
+
+```bash
+# Using UFW (Ubuntu/Debian)
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow Tailscale
+sudo ufw allow in on tailscale0
+
+# Enable firewall
+sudo ufw enable
+
+# Check status
+sudo ufw status verbose
+```
+
+Now the only way in is through Tailscale. Everything else is blocked at the network level.
+
+---
+
+## Checking Your Exposure
+
+Before you deploy, and regularly afterward, you should verify what's actually exposed. Here are the tools and commands you need.
+
+### Check Open Ports from Outside
+
+From a machine that's NOT on your Tailscale network:
+
+```bash
+# Check if common ports are exposed
+nmap -p 22,18789,18791 YOUR_PUBLIC_IP
+
+# Expected output for a secured instance:
+# 22/tcp   filtered ssh
+# 18789/tcp filtered unknown
+# 18791/tcp filtered unknown
+```
+
+If any of those show `open` instead of `filtered` or `closed`, you have a problem.
+
+### Check What's Listening Locally
+
+On your ClawdBot server:
+
+```bash
+# Show all listening ports and what they're bound to
+sudo ss -tulpn | grep LISTEN
+
+# Look for lines like this (good):
+# tcp   LISTEN 0   128   100.x.x.x:18789   *:*
+#
+# NOT like this (bad):
+# tcp   LISTEN 0   128   0.0.0.0:18789     *:*
+```
+
+If you see `0.0.0.0` or `:::` (IPv6 equivalent), that service is exposed to the world.
+
+### Automated Security Check Script
+
+Here's a script you can run to check everything at once:
+
+```bash
+#!/bin/bash
+# save as check-clawdbot-security.sh
+
+set -euo pipefail
+
+echo "=== ClawdBot Security Check ==="
+echo
+
+# Check if Tailscale is running
+if ! command -v tailscale &> /dev/null; then
+    echo "❌ Tailscale is not installed"
+    exit 1
+fi
+
+if ! tailscale status &> /dev/null; then
+    echo "❌ Tailscale is not running"
+    exit 1
+fi
+
+echo "✓ Tailscale is running"
+TAILSCALE_IP=$(tailscale ip -4)
+echo "  Tailscale IP: $TAILSCALE_IP"
+echo
+
+# Check listening ports
+echo "=== Listening Ports ==="
+EXPOSED_PORTS=$(sudo ss -tulpn | grep LISTEN | grep -E '(0.0.0.0|:::)' | grep -E '(18789|18791|22)' || true)
+
+if [ -z "$EXPOSED_PORTS" ]; then
+    echo "✓ No ClawdBot ports exposed to public internet"
+else
+    echo "❌ WARNING: The following ports are exposed:"
+    echo "$EXPOSED_PORTS"
+fi
+echo
+
+# Check SSH config
+echo "=== SSH Configuration ==="
+if grep -q "^PasswordAuthentication no" /etc/ssh/sshd_config; then
+    echo "✓ Password authentication is disabled"
+else
+    echo "❌ Password authentication is enabled (risky)"
+fi
+
+if grep -q "^PermitRootLogin no" /etc/ssh/sshd_config; then
+    echo "✓ Root login is disabled"
+else
+    echo "❌ Root login is enabled (risky)"
+fi
+echo
+
+# Check firewall
+echo "=== Firewall Status ==="
+if command -v ufw &> /dev/null; then
+    UFW_STATUS=$(sudo ufw status | grep "Status:" | awk '{print $2}')
+    if [ "$UFW_STATUS" = "active" ]; then
+        echo "✓ UFW firewall is active"
+    else
+        echo "❌ UFW firewall is inactive"
+    fi
+else
+    echo "⚠ UFW not installed (consider installing)"
+fi
+echo
+
+# Check for plaintext credentials
+echo "=== Credential Storage ==="
+CRED_FILES=$(find ~ -name "*.json" -o -name ".env" 2>/dev/null | xargs grep -l "token\|secret\|password" 2>/dev/null | head -5 || true)
+if [ -n "$CRED_FILES" ]; then
+    echo "⚠ Found potential credential files:"
+    echo "$CRED_FILES"
+    echo "  Ensure these have proper permissions (600) and are not world-readable"
+else
+    echo "✓ No obvious plaintext credential files found"
+fi
+echo
+
+echo "=== Summary ==="
+echo "Run this script regularly to verify your security posture."
+echo "For external scanning, use: nmap -p 22,18789,18791 YOUR_PUBLIC_IP"
+```
+
+Make it executable and run it:
+
+```bash
+chmod +x check-clawdbot-security.sh
+./check-clawdbot-security.sh
+```
+
+### External Scanning with Nmap
+
+From a different network (your phone's hotspot, a friend's house, anywhere that's not your Tailscale network):
+
+```bash
+# Basic port scan
+nmap -p 22,18789,18791 YOUR_PUBLIC_IP
+
+# More thorough scan (slower)
+nmap -sV -p 22,18789,18791 YOUR_PUBLIC_IP
+
+# Check if SSH allows password auth (from outside)
+nmap -p 22 --script ssh-auth-methods YOUR_PUBLIC_IP
+```
+
+If you see anything other than `filtered` or `closed`, investigate immediately.
+
+### Built-in Security Audit
+
+ClawdBot includes a [security audit command](https://docs.clawd.bot/gateway/security) that checks your configuration against security best practices:
+
+```bash
+# Run a comprehensive security audit
+clawdbot security audit --deep
+
+# Sample output:
+# ✓ Gateway bound to loopback or Tailscale
+# ✓ Credential files have appropriate permissions
+# ⚠ Browser control enabled without token auth
+# ✗ DM access set to "open" - allows anyone
+# ⚠ Plugin "high-risk-tool" has broad file access
+```
+
+The audit checks:
+- Gateway binding and network exposure
+- Tailscale configuration (Serve vs Funnel, auth requirements)
+- DM and group access policies
+- Tool blast radius relative to open channels
+- Browser control configuration and isolation
+- File permissions on config and credential files
+- Plugin inventory and capabilities
+
+You can run it with `--fix` to automatically apply safe defaults:
+
+```bash
+# Audit and fix common issues
+clawdbot security audit --deep --fix
+
+# This will:
+# - Tighten overly permissive access policies
+# - Enable sensitive data redaction in logs
+# - Correct filesystem permissions (config to 600, directory to 700)
+# - Apply fail-closed defaults for authentication
+```
+
+**Schedule it regularly**:
+
+```bash
+# Add to crontab (every 6 hours)
+0 */6 * * * /usr/local/bin/clawdbot security audit --deep >> /var/log/clawdbot-audit.log 2>&1
+
+# Or use systemd timer
+cat > /etc/systemd/system/clawdbot-audit.timer <<EOF
+[Unit]
+Description=ClawdBot Security Audit Timer
+
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+EOF
+
+# Enable and start the timer
+sudo systemctl enable --now clawdbot-audit.timer
+```
+
+The built-in audit complements external scanning. Nmap tells you what the world sees. The ClawdBot audit tells you what your configuration actually is. You need both perspectives.
+
+---
+
+## What This Doesn't Solve
+
+Tailscale eliminates public internet exposure—the biggest immediate risk—but some architectural concerns remain:
+
+**Credential storage**: ClawdBot stores OAuth tokens and API keys in JSON files. Ensure these have proper file permissions (`chmod 600`) and aren't in version control. The built-in audit checks for this.
+
+**Plugin sandboxing**: Plugins run with your user's full permissions. Only install plugins from sources you trust, and review what capabilities they request. The audit tool inventories installed plugins.
+
+**Device security**: If someone compromises your Tailscale account or steals a device on your tailnet, they can access your ClawdBot instance. Enable [Tailscale device authorization](https://tailscale.com/kb/1099/device-authorization/) to require approval for new devices.
+
+**Defense in depth**: This guide implements multiple security layers—network isolation via Tailscale, firewall rules, SSH hardening, and regular audits. Each layer addresses different attack vectors. Use all of them.
+
+The goal isn't perfect security (which doesn't exist), but rather appropriate security for running an AI agent with shell access. This configuration dramatically reduces your attack surface while keeping the system fully functional.
+
+---
+
+## Deployment Checklist
+
+Before you consider your ClawdBot instance production-ready:
+
+- [ ] Tailscale installed and authenticated on both server and client
+- [ ] ClawdBot bound to Tailscale IP, not `0.0.0.0`
+- [ ] SSH configured to disable password auth and root login
+- [ ] SSH bound to Tailscale IP only
+- [ ] Firewall (UFW or iptables) configured to deny all except Tailscale
+- [ ] External nmap scan shows all ports `filtered` or `closed`
+- [ ] Internal `ss -tulpn` shows services bound to Tailscale IP only
+- [ ] Credential files have 600 permissions (`chmod 600 ~/.clawdbot/*.json`)
+- [ ] Run `clawdbot security audit --deep` and address all findings
+- [ ] If using ClawdBot Tailscale management, exec approvals are enabled
+- [ ] Scheduled security audits configured (cron/systemd timer every 6-12 hours)
+- [ ] Regular backups configured (ClawdBot data + configs)
+- [ ] Monitoring in place to alert on unexpected connections
+
+Run your security check script weekly. Things drift. Packages update. Configs get overwritten. The only way to know you're still secure is to keep checking. The built-in `clawdbot security audit` command should be part of that routine.
+
+---
+
+## Final Thoughts
+
+With Tailscale configured, you get the full benefits of ClawdBot—AI assistance across all your platforms—without exposing services to the public internet. The setup takes 10-15 minutes and requires minimal ongoing maintenance.
+
+**Alternative approaches exist**: You could achieve similar security with WireGuard directly, SSH tunneling, or a reverse proxy behind Cloudflare Access. But those require more expertise and configuration. Tailscale is the fastest path to a secure deployment that actually works.
+
+**Regular maintenance matters**: Run your security checks weekly. Configs drift, packages update, settings get overridden. Schedule `clawdbot security audit --deep` to run automatically, and verify with external nmap scans monthly.
+
+**What this gives you**: An AI assistant with shell access that only responds to devices on your private network. Not perfect security—that doesn't exist—but a dramatically reduced attack surface compared to the default configuration.
+
+If you're deploying ClawdBot, following this guide should be your first step, not something you add later. The five minutes you spend on security now prevents the hours you'd spend recovering from a compromise.
+
+---
+
+## Resources
+
+- [ClawdBot Official Documentation](https://docs.clawd.bot/)
+- [ClawdBot Security Guide](https://docs.clawd.bot/gateway/security)
+- [ClawdBot Tailscale Integration](https://docs.clawd.bot/gateway/tailscale)
+- [ClawdBot v2026.1.24 Release (Approval Workflows)](https://github.com/clawdbot/clawdbot/releases/tag/v2026.1.24)
+- [Tailscale Documentation](https://tailscale.com/kb/)
+- [What Is ClawdBot and Is It Actually Safe?](https://socradar.io/blog/clawdbot-is-it-safe/)
+- [Security Audit: 512 Findings (GitHub Issue)](https://github.com/clawdbot/clawdbot/issues/1796)
+- [Deploy ClawdBot on AWS with Pulumi and Tailscale](https://www.pulumi.com/blog/deploy-clawdbot-aws-hetzner/)
+- [Nmap Network Scanning Guide](https://nmap.org/book/man.html)
+- [SSH Hardening Guide](https://www.ssh.com/academy/ssh/sshd_config)

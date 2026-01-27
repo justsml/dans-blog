@@ -95,8 +95,8 @@ import { anthropic } from '@ai-sdk/anthropic';
 const { text } = await generateText({
   model: anthropic('claude-4-5-sonnet-20251115'),
   prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
-  tools: { math: mathTool },
-  maxSteps: 5, // Allow the model to use the tool and then explain the result
+  tools: { mathTool },
+  maxSteps: 5, // Allow the model to use the tool X times if needed
 });
 
 console.log(text);
