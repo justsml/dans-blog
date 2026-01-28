@@ -1,9 +1,9 @@
 ---
 title: "Your AI Assistant Gave Me Shell Access"
-subTitle: "How to secure your Local or VPS ClawdBot!"
+subTitle: "How to secure your Local or VPS Moltbot!"
 date: 2026-01-15
-modified: 2026-01-26
-tags: [security, clawdbot, tailscale, ai, vpn, devops, ssh]
+modified: 2026-01-28
+tags: [security, moltbot, clawdbot, tailscale, ai, vpn, devops, ssh]
 category: Security
 subCategory: AI Infrastructure
 draft: false
@@ -12,17 +12,17 @@ cover_mobile: ./icon_square_200.webp
 cover_icon: ./icon_square_200.webp
 ---
 
-ClawdBot gives you a personal AI assistant that works across every platform you use—WhatsApp, Slack, Discord, iMessage. It's genuinely useful. But the default setup exposes three ports to the public internet, and if you skip security configuration, you're giving the world shell access to your machine.
+Moltbot (formerly ClawdBot) gives you a personal AI assistant that works across every platform you use—WhatsApp, Slack, Discord, iMessage. It's genuinely useful. But the default setup exposes three ports to the public internet, and if you skip security configuration, you're giving the world shell access to your machine.
 
-This guide shows you how to deploy ClawdBot securely using Tailscale, a zero-config VPN that eliminates public exposure entirely. You'll get full remote access to your AI assistant, but only from devices you control. No exposed ports. No attack surface.
+This guide shows you how to deploy Moltbot securely using Tailscale, a zero-config VPN that eliminates public exposure entirely. You'll get full remote access to your AI assistant, but only from devices you control. No exposed ports. No attack surface.
 
 **What you'll learn:**
-- How to set up ClawdBot behind Tailscale (10-15 minutes)
+- How to set up Moltbot behind Tailscale (10-15 minutes)
 - SSH hardening and firewall configuration
 - How to verify your instance isn't publicly exposed
 - What security issues Tailscale doesn't solve
 
-ClawdBot's rapid adoption revealed real security concerns: [Shodan scans found 2,847 exposed instances](https://socradar.io/blog/clawdbot-is-it-safe/) in the first few weeks, and a [security audit identified 512 issues](https://github.com/clawdbot/clawdbot/issues/1796) in the codebase. But these problems are solvable. You don't need to be a security expert—you just need to follow the right steps before you deploy.
+Moltbot's rapid adoption revealed real security concerns: [Shodan scans found 2,847 exposed instances](https://socradar.io/blog/clawdbot-is-it-safe/) in the first few weeks, and a [security audit identified 512 issues](https://github.com/moltbot/moltbot/issues/1796) in the codebase. But these problems are solvable. You don't need to be a security expert—you just need to follow the right steps before you deploy.
 
 ---
 
@@ -30,10 +30,10 @@ ClawdBot's rapid adoption revealed real security concerns: [Shodan scans found 2
 
 1. [What You're Actually Exposing](#what-youre-actually-exposing)
 2. [The Tailscale Solution](#the-tailscale-solution)
-   - [Should You Let ClawdBot Manage Tailscale?](#should-you-let-clawdbot-manage-tailscale)
-3. [Setting Up ClawdBot Securely](#setting-up-clawdbot-securely)
+   - [Should You Let Moltbot Manage Tailscale?](#should-you-let-moltbot-manage-tailscale)
+3. [Setting Up Moltbot Securely](#setting-up-moltbot-securely)
    - [Step 1: Install Tailscale](#step-1-install-tailscale)
-   - [Step 2: Configure ClawdBot to Use Tailscale](#step-2-configure-clawdbot-to-use-tailscale)
+   - [Step 2: Configure Moltbot to Use Tailscale](#step-2-configure-moltbot-to-use-tailscale)
    - [Step 3: Lock Down SSH](#step-3-lock-down-ssh)
    - [Step 4: Firewall Rules (Belt and Suspenders)](#step-4-firewall-rules-belt-and-suspenders)
 4. [Checking Your Exposure](#checking-your-exposure)
@@ -51,17 +51,17 @@ ClawdBot's rapid adoption revealed real security concerns: [Shodan scans found 2
 
 ## What You're Actually Exposing
 
-By default, a [ClawdBot deployment opens three ports](https://docs.clawd.bot/gateway/remote):
+By default, a [Moltbot deployment opens three ports](https://docs.molt.bot/gateway/remote):
 
 - **Port 22**: SSH access (if you're on a fresh VPS)
 - **Port 18789**: Gateway dashboard and WebSocket API
 - **Port 18791**: Browser control interface
 
-The gateway port is the big one. It's a web interface that lets you control ClawdBot remotely, including executing arbitrary commands through the agent. If you can reach port 18789, you can tell the AI to run shell commands. On the host. With your user's permissions.
+The gateway port is the big one. It's a web interface that lets you control Moltbot remotely, including executing arbitrary commands through the agent. If you can reach port 18789, you can tell the AI to run shell commands. On the host. With your user's permissions.
 
-The browser control port is almost as bad. It's designed to let ClawdBot interact with web pages on your behalf, but it also means anyone who can hit that port can use your browser session, potentially accessing anything you're logged into.
+The browser control port is almost as bad. It's designed to let Moltbot interact with web pages on your behalf, but it also means anyone who can hit that port can use your browser session, potentially accessing anything you're logged into.
 
-SSH is SSH. If you're running with password authentication enabled, or worse, with a weak password, you're just asking for brute force attacks. And because ClawdBot is often deployed on cheap VPS instances with predictable IP ranges, you're a very easy target.
+SSH is SSH. If you're running with password authentication enabled, or worse, with a weak password, you're just asking for brute force attacks. And because Moltbot is often deployed on cheap VPS instances with predictable IP ranges, you're a very easy target.
 
 ---
 
@@ -69,21 +69,21 @@ SSH is SSH. If you're running with password authentication enabled, or worse, wi
 
 [Tailscale](https://tailscale.com/) is a zero-config VPN built on WireGuard. You install it, authenticate once, and suddenly all your devices are on a private network. No port forwarding. No firewall rules. No exposed services. Just encrypted point-to-point connections between machines you control.
 
-For ClawdBot, this is perfect. You want remote access, but you don't want the entire internet to have remote access. Tailscale gives you exactly that.
+For Moltbot, this is perfect. You want remote access, but you don't want the entire internet to have remote access. Tailscale gives you exactly that.
 
 Here's what it looks like in practice:
 
-1. Your ClawdBot instance runs on a VPS or local machine
+1. Your Moltbot instance runs on a VPS or local machine
 2. It's bound to localhost or Tailscale's IP (not 0.0.0.0)
 3. You install Tailscale on both the server and your personal devices
-4. You access ClawdBot through its Tailscale IP (something like `100.x.x.x`)
+4. You access Moltbot through its Tailscale IP (something like `100.x.x.x`)
 5. Everyone else on the internet sees nothing
 
-No ports are exposed. No attack surface. The AI assistant works exactly the same, but only for you.
+No ports are exposed. No external attack surface. The AI assistant works exactly the same, but only for you.
 
-### Should You Let ClawdBot Manage Tailscale?
+### Should You Let Moltbot Manage Tailscale?
 
-ClawdBot has [built-in Tailscale integration](https://docs.clawd.bot/gateway/tailscale) that can automatically configure `tailscale serve` or `tailscale funnel` to expose the gateway. This sounds convenient, and it is. But you're giving an AI agent control over your network security configuration.
+Moltbot has [built-in Tailscale integration](https://docs.molt.bot/gateway/tailscale) that can automatically configure `tailscale serve` or `tailscale funnel` to expose the gateway. This sounds convenient, and it is. But you're giving an AI agent control over your network security configuration.
 
 The integration works through two modes:
 
@@ -91,20 +91,20 @@ The integration works through two modes:
 
 **Funnel mode** exposes the gateway publicly through Tailscale's public endpoint feature. The system refuses to start Funnel without password authentication, but you're still allowing the AI to potentially reconfigure from private to public access.
 
-Here's the thing: ClawdBot's own security documentation [explicitly acknowledges](https://docs.clawd.bot/gateway/security) that "prompt injection remains unsolved" and "there is no perfectly secure setup." You're running an agent that can be manipulated through untrusted content—web results, documents, attachments. If that agent also has permission to modify your VPN configuration, you've created a very attractive attack surface.
+Here's the thing: Moltbot's own security documentation [explicitly acknowledges](https://docs.molt.bot/gateway/security) that "prompt injection remains unsolved" and "there is no perfectly secure setup." You're running an agent that can be manipulated through untrusted content—web results, documents, attachments. If that agent also has permission to modify your VPN configuration, you've created a very attractive attack surface.
 
-The project does provide a `clawdbot security audit` command that checks Tailscale settings among other configurations. You can even run it with `--fix` to apply safe defaults. But this is reactive, not preventive. It tells you after a misconfiguration has happened, not before.
+The project does provide a `moltbot security audit` command that checks Tailscale settings among other configurations. You can even run it with `--fix` to apply safe defaults. But this is reactive, not preventive. It tells you after a misconfiguration has happened, not before.
 
-**The middle ground**: ClawdBot supports [approval workflows](https://github.com/clawdbot/clawdbot/releases/tag/v2026.1.24) with exec approvals and in-chat `/approve` commands. If you configure ClawdBot so that any `tailscale` command requires approval, and you run `clawdbot security audit` regularly (or better yet, automatically on a schedule), then letting it manage Tailscale becomes more defensible.
+**The middle ground**: Moltbot supports [approval workflows](https://github.com/moltbot/moltbot/releases/tag/v2026.1.24) with exec approvals and in-chat `/approve` commands. If you configure Moltbot so that any `tailscale` command requires approval, and you run `moltbot security audit` regularly (or better yet, automatically on a schedule), then letting it manage Tailscale becomes more defensible.
 
 You'd want something like this in your workflow:
 
 ```bash
 # Enable exec approvals for elevated commands
-# In your ClawdBot config, set exec approval mode to "ask"
+# In your Moltbot config, set exec approval mode to "ask"
 
 # Schedule regular audits (via cron or systemd timer)
-0 */6 * * * /usr/local/bin/clawdbot security audit --deep >> /var/log/clawdbot-audit.log
+0 */6 * * * /usr/local/bin/moltbot security audit --deep >> /var/log/moltbot-audit.log
 
 # Set up alerts for audit failures
 # (Implementation depends on your monitoring stack)
@@ -112,11 +112,11 @@ You'd want something like this in your workflow:
 
 But honestly? For most deployments, manually configuring Tailscale once is simpler, more auditable, and doesn't give an AI agent control over your network perimeter. The convenience of automatic management doesn't outweigh the risk unless you have a very specific use case that requires dynamic reconfiguration.
 
-**Recommendation**: Configure Tailscale manually as shown in the next section. Use ClawdBot's audit tool to verify your configuration, but don't let it make changes autonomously. If you do enable Tailscale management, ensure every infrastructure change requires explicit approval and is logged.
+**Recommendation**: Configure Tailscale manually as shown in the next section. Use Moltbot's audit tool to verify your configuration, but don't let it make changes autonomously. If you do enable Tailscale management, ensure every infrastructure change requires explicit approval and is logged.
 
 ---
 
-## Setting Up ClawdBot Securely
+## Setting Up Moltbot Securely
 
 ### Step 1: Install Tailscale
 
@@ -144,15 +144,15 @@ sudo tailscale up
 
 Now both machines are on the same private network. You can ping your VPS using its Tailscale IP, and it'll route through the encrypted tunnel.
 
-### Step 2: Configure ClawdBot to Use Tailscale
+### Step 2: Configure Moltbot to Use Tailscale
 
-Edit your ClawdBot configuration to bind only to Tailscale's IP:
+Edit your Moltbot configuration to bind only to Tailscale's IP:
 
 ```bash
 # Get your Tailscale IP
 TAILSCALE_IP=$(tailscale ip -4)
 
-# Configure ClawdBot gateway to bind to Tailscale only
+# Configure Moltbot gateway to bind to Tailscale only
 export GATEWAY_HOST=$TAILSCALE_IP
 export GATEWAY_PORT=18789
 ```
@@ -161,13 +161,13 @@ If you're using the official Docker setup:
 
 ```bash
 docker run -d \
-  --name clawdbot \
+  --name moltbot \
   --restart unless-stopped \
   -e GATEWAY_HOST=$TAILSCALE_IP \
   -e GATEWAY_PORT=18789 \
   -p $TAILSCALE_IP:18789:18789 \
   -p $TAILSCALE_IP:18791:18791 \
-  clawdbot/clawdbot:latest
+  moltbot/moltbot:latest
 ```
 
 Notice the `-p` flags bind to your Tailscale IP, not `0.0.0.0`. This means the ports are only accessible through the VPN.
@@ -239,7 +239,7 @@ If any of those show `open` instead of `filtered` or `closed`, you have a proble
 
 ### Check What's Listening Locally
 
-On your ClawdBot server:
+On your Moltbot server:
 
 ```bash
 # Show all listening ports and what they're bound to
@@ -260,11 +260,11 @@ Here's a script you can run to check everything at once:
 
 ```bash
 #!/bin/bash
-# save as check-clawdbot-security.sh
+# save as check-moltbot-security.sh
 
 set -euo pipefail
 
-echo "=== ClawdBot Security Check ==="
+echo "=== Moltbot Security Check ==="
 echo
 
 # Check if Tailscale is running
@@ -288,7 +288,7 @@ echo "=== Listening Ports ==="
 EXPOSED_PORTS=$(sudo ss -tulpn | grep LISTEN | grep -E '(0.0.0.0|:::)' | grep -E '(18789|18791|22)' || true)
 
 if [ -z "$EXPOSED_PORTS" ]; then
-    echo "✓ No ClawdBot ports exposed to public internet"
+    echo "✓ No Moltbot ports exposed to public internet"
 else
     echo "❌ WARNING: The following ports are exposed:"
     echo "$EXPOSED_PORTS"
@@ -344,8 +344,8 @@ echo "For external scanning, use: nmap -p 22,18789,18791 YOUR_PUBLIC_IP"
 Make it executable and run it:
 
 ```bash
-chmod +x check-clawdbot-security.sh
-./check-clawdbot-security.sh
+chmod +x check-moltbot-security.sh
+./check-moltbot-security.sh
 ```
 
 ### External Scanning with Nmap
@@ -367,11 +367,11 @@ If you see anything other than `filtered` or `closed`, investigate immediately.
 
 ### Built-in Security Audit
 
-ClawdBot includes a [security audit command](https://docs.clawd.bot/gateway/security) that checks your configuration against security best practices:
+Moltbot includes a [security audit command](https://docs.molt.bot/gateway/security) that checks your configuration against security best practices:
 
 ```bash
 # Run a comprehensive security audit
-clawdbot security audit --deep
+moltbot security audit --deep
 
 # Sample output:
 # ✓ Gateway bound to loopback or Tailscale
@@ -394,7 +394,7 @@ You can run it with `--fix` to automatically apply safe defaults:
 
 ```bash
 # Audit and fix common issues
-clawdbot security audit --deep --fix
+moltbot security audit --deep --fix
 
 # This will:
 # - Tighten overly permissive access policies
@@ -407,12 +407,12 @@ clawdbot security audit --deep --fix
 
 ```bash
 # Add to crontab (every 6 hours)
-0 */6 * * * /usr/local/bin/clawdbot security audit --deep >> /var/log/clawdbot-audit.log 2>&1
+0 */6 * * * /usr/local/bin/moltbot security audit --deep >> /var/log/moltbot-audit.log 2>&1
 
 # Or use systemd timer
-cat > /etc/systemd/system/clawdbot-audit.timer <<EOF
+cat > /etc/systemd/system/moltbot-audit.timer <<EOF
 [Unit]
-Description=ClawdBot Security Audit Timer
+Description=Moltbot Security Audit Timer
 
 [Timer]
 OnCalendar=*-*-* 00,06,12,18:00:00
@@ -423,10 +423,10 @@ WantedBy=timers.target
 EOF
 
 # Enable and start the timer
-sudo systemctl enable --now clawdbot-audit.timer
+sudo systemctl enable --now moltbot-audit.timer
 ```
 
-The built-in audit complements external scanning. Nmap tells you what the world sees. The ClawdBot audit tells you what your configuration actually is. You need both perspectives.
+The built-in audit complements external scanning. Nmap tells you what the world sees. The Moltbot audit tells you what your configuration actually is. You need both perspectives.
 
 ---
 
@@ -434,11 +434,11 @@ The built-in audit complements external scanning. Nmap tells you what the world 
 
 Tailscale eliminates public internet exposure—the biggest immediate risk—but some architectural concerns remain:
 
-**Credential storage**: ClawdBot stores OAuth tokens and API keys in JSON files. Ensure these have proper file permissions (`chmod 600`) and aren't in version control. The built-in audit checks for this.
+**Credential storage**: Moltbot stores OAuth tokens and API keys in JSON files. Ensure these have proper file permissions (`chmod 600`) and aren't in version control. The built-in audit checks for this.
 
 **Plugin sandboxing**: Plugins run with your user's full permissions. Only install plugins from sources you trust, and review what capabilities they request. The audit tool inventories installed plugins.
 
-**Device security**: If someone compromises your Tailscale account or steals a device on your tailnet, they can access your ClawdBot instance. Enable [Tailscale device authorization](https://tailscale.com/kb/1099/device-authorization/) to require approval for new devices.
+**Device security**: If someone compromises your Tailscale account or steals a device on your tailnet, they can access your Moltbot instance. Enable [Tailscale device authorization](https://tailscale.com/kb/1099/device-authorization/) to require approval for new devices.
 
 **Defense in depth**: This guide implements multiple security layers—network isolation via Tailscale, firewall rules, SSH hardening, and regular audits. Each layer addresses different attack vectors. Use all of them.
 
@@ -448,49 +448,55 @@ The goal isn't perfect security (which doesn't exist), but rather appropriate se
 
 ## Deployment Checklist
 
-Before you consider your ClawdBot instance production-ready:
+Before you consider your Moltbot instance production-ready:
 
 - [ ] Tailscale installed and authenticated on both server and client
-- [ ] ClawdBot bound to Tailscale IP, not `0.0.0.0`
+- [ ] Moltbot bound to Tailscale IP, not `0.0.0.0`
 - [ ] SSH configured to disable password auth and root login
 - [ ] SSH bound to Tailscale IP only
 - [ ] Firewall (UFW or iptables) configured to deny all except Tailscale
 - [ ] External nmap scan shows all ports `filtered` or `closed`
 - [ ] Internal `ss -tulpn` shows services bound to Tailscale IP only
 - [ ] Credential files have 600 permissions (`chmod 600 ~/.clawdbot/*.json`)
-- [ ] Run `clawdbot security audit --deep` and address all findings
-- [ ] If using ClawdBot Tailscale management, exec approvals are enabled
+- [ ] Run `moltbot security audit --deep` and address all findings
+- [ ] If using Moltbot Tailscale management, exec approvals are enabled
 - [ ] Scheduled security audits configured (cron/systemd timer every 6-12 hours)
-- [ ] Regular backups configured (ClawdBot data + configs)
+- [ ] Regular backups configured (Moltbot data + configs)
 - [ ] Monitoring in place to alert on unexpected connections
 
-Run your security check script weekly. Things drift. Packages update. Configs get overwritten. The only way to know you're still secure is to keep checking. The built-in `clawdbot security audit` command should be part of that routine.
+Run your security check script weekly. Things drift. Packages update. Configs get overwritten. The only way to know you're still secure is to keep checking. The built-in `moltbot security audit` command should be part of that routine.
 
 ---
 
 ## Final Thoughts
 
-With Tailscale configured, you get the full benefits of ClawdBot—AI assistance across all your platforms—without exposing services to the public internet. The setup takes 10-15 minutes and requires minimal ongoing maintenance.
+I run Moltbot on a dedicated mini PC with dedicated accounts, isolated behind Tailscale. I'm an enthusiastic user. The AI assistant genuinely delivers on the promise of working seamlessly across every platform I use.
+
+But here's what I learned: even with dedicated hardware, security still matters. It's tempting to think "it's just a throwaway machine" or "I don't care what happens to it." That's exactly the wrong mindset. A compromised machine on your Tailscale network isn't isolated—it's a foothold. It has access to your other devices, your credentials, your private network traffic.
+
+The mini PC approach is smart. Dedicated accounts are smart. Tailscale isolation is smart. But those architectural decisions only work if you follow through with the actual security configuration. The hardware separation gives you defense in depth, not a pass on securing the system itself.
+
+With Tailscale configured properly, you get the full benefits of Moltbot—AI assistance across all your platforms—without exposing services to the public internet. The setup takes 10-15 minutes and requires minimal ongoing maintenance.
 
 **Alternative approaches exist**: You could achieve similar security with WireGuard directly, SSH tunneling, or a reverse proxy behind Cloudflare Access. But those require more expertise and configuration. Tailscale is the fastest path to a secure deployment that actually works.
 
-**Regular maintenance matters**: Run your security checks weekly. Configs drift, packages update, settings get overridden. Schedule `clawdbot security audit --deep` to run automatically, and verify with external nmap scans monthly.
+**Regular maintenance matters**: Run your security checks weekly. Configs drift, packages update, settings get overridden. Schedule `moltbot security audit --deep` to run automatically, and verify with external nmap scans monthly.
 
 **What this gives you**: An AI assistant with shell access that only responds to devices on your private network. Not perfect security—that doesn't exist—but a dramatically reduced attack surface compared to the default configuration.
 
-If you're deploying ClawdBot, following this guide should be your first step, not something you add later. The five minutes you spend on security now prevents the hours you'd spend recovering from a compromise.
+If you're deploying Moltbot, following this guide should be your first step, not something you add later. The five minutes you spend on security now prevents the hours you'd spend recovering from a compromise.
 
 ---
 
 ## Resources
 
-- [ClawdBot Official Documentation](https://docs.clawd.bot/)
-- [ClawdBot Security Guide](https://docs.clawd.bot/gateway/security)
-- [ClawdBot Tailscale Integration](https://docs.clawd.bot/gateway/tailscale)
-- [ClawdBot v2026.1.24 Release (Approval Workflows)](https://github.com/clawdbot/clawdbot/releases/tag/v2026.1.24)
+- [Moltbot Official Documentation](https://docs.molt.bot/)
+- [Moltbot Security Guide](https://docs.molt.bot/gateway/security)
+- [Moltbot Tailscale Integration](https://docs.molt.bot/gateway/tailscale)
+- [Moltbot v2026.1.24 Release (Approval Workflows)](https://github.com/moltbot/moltbot/releases/tag/v2026.1.24)
 - [Tailscale Documentation](https://tailscale.com/kb/)
-- [What Is ClawdBot and Is It Actually Safe?](https://socradar.io/blog/clawdbot-is-it-safe/)
-- [Security Audit: 512 Findings (GitHub Issue)](https://github.com/clawdbot/clawdbot/issues/1796)
-- [Deploy ClawdBot on AWS with Pulumi and Tailscale](https://www.pulumi.com/blog/deploy-clawdbot-aws-hetzner/)
+- [What Is Moltbot and Is It Actually Safe?](https://socradar.io/blog/clawdbot-is-it-safe/)
+- [Security Audit: 512 Findings (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
+- [Deploy Moltbot on AWS with Pulumi and Tailscale](https://www.pulumi.com/blog/deploy-clawdbot-aws-hetzner/)
 - [Nmap Network Scanning Guide](https://nmap.org/book/man.html)
 - [SSH Hardening Guide](https://www.ssh.com/academy/ssh/sshd_config)
