@@ -1,0 +1,362 @@
+---
+import { SITE_DESCRIPTION } from "../consts";
+import Layout from "../layouts/Page.astro";
+import { HeroSection } from "../components/AIConsulting/HeroSection";
+import { ServiceCard } from "../components/AIConsulting/ServiceCard";
+import { Button } from "../components/ui/button";
+import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock, Sparkles } from "lucide-react";
+---
+
+<Layout
+  frontmatter={{
+    title: "AI Consulting Services | Dan Levy",
+    subTitle: "Expert AI consulting for code, operations, and organizational transformation",
+  }}
+  className="ai-consulting-page"
+>
+  <div class="full-width">
+    <HeroSection client:idle />
+  </div>
+
+  <!-- Services Section - Vertical Pillars -->
+  <section id="services" class="full-width relative overflow-hidden py-24 md:py-32">
+    <!-- Simplified background -->
+    <div class="pointer-events-none absolute inset-0 opacity-5 bg-gradient-to-br from-primary/10 to-[hsl(var(--neon-cyan))]/10"></div>
+
+    <div class="container relative z-10 mx-auto max-w-5xl px-4">
+      <!-- Bold section header -->
+      <div class="mb-20 text-center">
+        <div
+          class="mb-4 inline-block rounded-full border-2 border-primary/50 bg-primary/10 px-6 py-2 text-sm font-bold uppercase tracking-widest text-primary backdrop-blur-sm voxel-element"
+        >
+          Three Pillars of Excellence
+        </div>
+        <h2
+          class="mb-6 text-4xl font-black uppercase leading-tight md:text-6xl lg:text-7xl"
+        >
+          <span
+            class="block bg-gradient-to-r from-primary via-white to-[hsl(var(--neon-cyan))] bg-clip-text text-transparent"
+          >
+            How We'll
+          </span>
+          <span class="block text-white">Transform Your Business</span>
+        </h2>
+        <div class="mx-auto h-2 w-32 rounded-full bg-gradient-to-r from-primary via-[hsl(var(--neon-cyan))] to-primary voxel-element"></div>
+      </div>
+
+      <!-- Services - Vertical Pillars -->
+      <div class="space-y-8 lg:space-y-12">
+        <ServiceCard
+          client:visible
+          title="AI-Powered Coding"
+          description="Transform your development velocity with cutting-edge AI tools. We don't just implement tools—we revolutionize how your team builds software."
+          icon={Code2}
+          features={[
+            "AI-assisted development workflows that 10x productivity",
+            "Automated code quality systems that catch issues before they ship",
+            "Custom AI models fine-tuned for your domain",
+            "Full team onboarding on AI coding assistants",
+            "CI/CD pipelines powered by intelligent automation",
+          ]}
+          delay={0}
+          variant="primary"
+        />
+
+        <ServiceCard
+          client:visible
+          title="Operations & Automation"
+          description="Eliminate manual work and scale effortlessly with intelligent automation systems."
+          icon={Cog}
+          features={[
+            "End-to-end workflow automation",
+            "AI-powered monitoring & incident response",
+            "Intelligent chatbots for customer & internal ops",
+            "Self-healing infrastructure systems",
+          ]}
+          delay={0}
+          variant="secondary"
+        />
+
+        <ServiceCard
+          client:visible
+          title="Organizational Transform"
+          description="Build an AI-first culture that dominates your market for years to come."
+          icon={Target}
+          features={[
+            "Executive AI strategy & roadmap",
+            "Company-wide AI literacy programs",
+            "Change management for AI adoption",
+            "Responsible AI governance frameworks",
+          ]}
+          delay={0}
+          variant="tertiary"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Impact Section with Bold Stats -->
+  <section
+    class="full-width relative overflow-hidden border-y-4 border-primary/20 bg-gradient-to-br from-[hsl(var(--bg-dark))] via-[hsl(var(--background))] to-[hsl(var(--bg-dark))] py-24 md:py-32"
+  >
+
+    <div class="container mx-auto max-w-6xl px-4">
+      <div class="mb-16 text-center">
+        <h2 class="mb-4 text-5xl font-black uppercase text-white md:text-6xl">
+          Real Results
+        </h2>
+        <p class="text-xl text-foreground/80">
+          Numbers that matter. Impact you can measure.
+        </p>
+      </div>
+
+      <div class="grid gap-8 md:grid-cols-3">
+        <div
+          class="voxel-card relative overflow-hidden rounded-2xl border-4 border-primary/30 bg-gradient-to-br from-primary/10 to-transparent p-8"
+        >
+          <div class="mb-4 text-6xl font-black text-primary md:text-7xl">
+            20+
+          </div>
+          <div class="text-xl font-bold uppercase text-white">
+            Years Experience
+          </div>
+          <div class="mt-2 text-sm text-foreground/70">
+            From startups to Fortune 500s
+          </div>
+        </div>
+
+        <div
+          class="voxel-card relative overflow-hidden rounded-2xl border-4 border-[hsl(var(--neon-cyan))]/30 bg-gradient-to-br from-[hsl(var(--neon-cyan))]/10 to-transparent p-8"
+        >
+          <div
+            class="mb-4 text-6xl font-black text-[hsl(var(--neon-cyan))] md:text-7xl"
+          >
+            10x
+          </div>
+          <div class="text-xl font-bold uppercase text-white">
+            Developer Velocity
+          </div>
+          <div class="mt-2 text-sm text-foreground/70">
+            Typical productivity gains
+          </div>
+        </div>
+
+        <div
+          class="voxel-card relative overflow-hidden rounded-2xl border-4 border-primary/30 bg-gradient-to-br from-primary/10 to-transparent p-8"
+        >
+          <div class="mb-4 text-6xl font-black text-primary md:text-7xl">
+            100%
+          </div>
+          <div class="text-xl font-bold uppercase text-white">
+            Team Empowered
+          </div>
+          <div class="mt-2 text-sm text-foreground/70">
+            Not just consulting, true enablement
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Section - Diagonal Split Layout -->
+  <section class="full-width relative overflow-hidden py-24 md:py-32">
+
+    <div class="container mx-auto max-w-7xl px-4">
+      <div class="mb-20 text-center">
+        <h2
+          class="mb-6 text-5xl font-black uppercase leading-tight md:text-6xl lg:text-7xl"
+        >
+          <span class="block text-primary">Why Dan?</span>
+          <span class="block text-white">Simple.</span>
+        </h2>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2 lg:gap-16">
+        <!-- Left column -->
+        <div class="space-y-8">
+          <div
+            class="voxel-card relative overflow-hidden rounded-3xl border-4 border-primary/30 bg-gradient-to-br from-primary/20 to-transparent p-10"
+          >
+            <div class="mb-6">
+              <Flame className="h-12 w-12 text-primary" />
+            </div>
+            <h3 class="mb-4 text-3xl font-black uppercase text-white">
+              Battle-Tested
+            </h3>
+            <p class="text-lg leading-relaxed text-foreground/80">
+              20+ years in the trenches. I've built, broken, and rebuilt
+              systems at every scale. I know what works because I've done it.
+            </p>
+          </div>
+
+          <div
+            class="voxel-card relative overflow-hidden rounded-3xl border-4 border-[hsl(var(--neon-cyan))]/30 bg-gradient-to-br from-[hsl(var(--neon-cyan))]/20 to-transparent p-10"
+          >
+            <div class="mb-6">
+              <Zap className="h-12 w-12 text-[hsl(var(--neon-cyan))]" />
+            </div>
+            <h3 class="mb-4 text-3xl font-black uppercase text-white">
+              Zero BS
+            </h3>
+            <p class="text-lg leading-relaxed text-foreground/80">
+              No buzzwords. No fluff. Just practical AI solutions that deliver
+              measurable ROI. If it doesn't work, I won't sell it.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="space-y-8">
+          <div
+            class="voxel-card relative overflow-hidden rounded-3xl border-4 border-primary/30 bg-gradient-to-br from-primary/20 to-transparent p-10"
+          >
+            <div class="mb-6">
+              <GraduationCap className="h-12 w-12 text-primary" />
+            </div>
+            <h3 class="mb-4 text-3xl font-black uppercase text-white">
+              Teacher First
+            </h3>
+            <p class="text-lg leading-relaxed text-foreground/80">
+              I don't create dependencies—I create capabilities. Your team will
+              own the solution and have the skills to evolve it.
+            </p>
+          </div>
+
+          <div
+            class="voxel-card relative overflow-hidden rounded-3xl border-4 border-[hsl(var(--neon-cyan))]/30 bg-gradient-to-br from-[hsl(var(--neon-cyan))]/20 to-transparent p-10"
+          >
+            <div class="mb-6">
+              <Rocket className="h-12 w-12 text-[hsl(var(--neon-cyan))]" />
+            </div>
+            <h3 class="mb-4 text-3xl font-black uppercase text-white">
+              Move Fast
+            </h3>
+            <p class="text-lg leading-relaxed text-foreground/80">
+              No 6-month discovery phases. We start delivering value in weeks,
+              not quarters. Quick wins fuel long-term transformation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA - Full Width Dramatic -->
+  <section
+    class="full-width relative overflow-hidden border-y-8 border-primary/50 bg-gradient-to-br from-primary/20 via-[hsl(var(--neon-cyan))]/10 to-primary/20 py-32 md:py-40"
+  >
+
+    <div class="container relative z-10 mx-auto max-w-5xl px-4 text-center">
+      <div class="mb-8 inline-block">
+        <div
+          class="rounded-full border-4 border-white/30 bg-white/10 px-8 py-3 text-lg font-black uppercase tracking-widest text-white backdrop-blur-sm"
+        >
+          Ready to Lead?
+        </div>
+      </div>
+
+      <h2
+        class="mb-8 text-5xl font-black uppercase leading-tight text-white md:text-6xl lg:text-8xl"
+      >
+        Let's Build
+        <br />
+        <span
+          class="bg-gradient-to-r from-primary via-white to-[hsl(var(--neon-cyan))] bg-clip-text text-transparent"
+        >
+          Your AI Future
+        </span>
+      </h2>
+
+      <p class="mx-auto mb-12 max-w-2xl text-xl leading-relaxed text-white/90 md:text-2xl">
+        Stop watching your competitors pull ahead. Start your transformation
+        today.
+      </p>
+
+      <div class="flex flex-col items-center justify-center gap-6 sm:flex-row">
+        <Button
+          asChild
+          size="lg"
+          className="voxel-card relative border-4 border-white bg-white px-16 py-10 text-2xl font-black uppercase text-black shadow-xl transition-all duration-300 hover:shadow-white/40"
+        >
+          <a href="/contact" class="flex items-center gap-3">
+            <span>Book a Call</span>
+            <ArrowRight className="h-6 w-6" />
+          </a>
+        </Button>
+
+        <Button
+          asChild
+          size="lg"
+          variant="outline"
+          className="voxel-card border-4 border-white bg-transparent px-16 py-10 text-2xl font-black uppercase text-white transition-all duration-300 hover:bg-white/20"
+        >
+          <a href="/about">Learn More</a>
+        </Button>
+      </div>
+
+      <div
+        class="mt-16 flex flex-wrap items-center justify-center gap-8 text-white/70"
+      >
+        <div class="flex items-center gap-3 text-lg">
+          <Zap className="h-6 w-6" />
+          <span>Fast Response</span>
+        </div>
+        <div class="flex items-center gap-3 text-lg">
+          <Sparkles className="h-6 w-6" />
+          <span>Custom Solutions</span>
+        </div>
+        <div class="flex items-center gap-3 text-lg">
+          <Lock className="h-6 w-6" />
+          <span>NDA Ready</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .ai-consulting-page {
+    scroll-behavior: smooth;
+  }
+
+  /* Voxel Element - Small 3D accent */
+  .voxel-element {
+    position: relative;
+    box-shadow:
+      2px 2px 0 hsl(var(--primary) / 0.3),
+      4px 4px 0 hsl(var(--primary) / 0.2),
+      6px 6px 0 hsl(var(--primary) / 0.1);
+  }
+
+  /* Voxel Card */
+  .voxel-card {
+    position: relative;
+  }
+
+  /* Animated gradient - used in HeroSection */
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .animate-gradient {
+    animation: gradient 8s ease infinite;
+  }
+
+  /* Text shimmer - used in HeroSection */
+  @keyframes text-shimmer {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+</style>
