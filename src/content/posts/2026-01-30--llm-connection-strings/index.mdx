@@ -6,11 +6,10 @@ modified: 2026-01-31
 tags: [ai, llm, api, developer-experience, standards]
 category: AI
 draft: false
-popularity: 0.7
+popularity: 1.2
 cover_full_width: ./wide.webp
 cover_mobile: ./square.webp
 cover_icon: ./square.webp
-
 ---
 
 Remember when every database required a miscellaneous grab-bag of environment variables? `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... Or was it `PG_HOSTNAME`? No, but sometimes you had to use `PG_*` prefixes! Gotcha!
@@ -56,7 +55,9 @@ That `s` isn't a typo, it's a ~~pluralization joke~~ hint there's multiple hosts
 
 ## Alternative Formats
 
-I'm not married to `llm://`, I could imagine some use cases better met with a more provider-centric protocol format, for example, a local LLM router could spin up a local `ollama://` service:
+I'm not married to `llm://`.
+
+I could imagine some use cases better met with a more provider-centric protocol format, for example, a local LLM router could spin up a local `ollama://` service:
 
 ```sh
 ollama://localhost:11434/llama3
@@ -72,6 +73,8 @@ Regardless of the exact scheme, the core idea is the same: **one string to rule 
 
 
 <blockquote class="ai-response inset">The database world figured this out in a few decades.<br /><b>Good thing that's only half a vibed year.</b></blockquote>
+
+![a messy env var drawer](./hero-concept-8-drawers.webp)
 
 
 {/* ¹ Yes, I know that `URI` is more correct than `URL`, anyone pedantic enough to care should go touch grass. */}
