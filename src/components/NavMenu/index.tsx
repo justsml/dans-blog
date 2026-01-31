@@ -12,6 +12,7 @@ import {
   RocketIcon,
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
+import { Sparkles } from "lucide-react";
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { Badge } from "../ui/badge";
@@ -427,6 +428,17 @@ const NavMenu = ({
                   <div className="CalloutHeading">Contact Me</div>
                   <p className="CalloutText">
                     <span className="SocialLinks">
+                      <a href="/ai-consulting">
+                        <span className="Icon">
+                          <Sparkles
+                            className="svg-icon"
+                            width={30}
+                            height={30}
+                          />
+                        </span>
+                        <label>AI Consulting</label>
+                      </a>
+
                       <a href="/contact">
                         <span className="Icon">
                           <EnvelopeClosedIcon
