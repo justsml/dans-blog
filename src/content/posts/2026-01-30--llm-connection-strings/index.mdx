@@ -1,0 +1,77 @@
+---
+title: "It's Time for LLM Connection Strings"
+subTitle: "Clean your env JUNK_DRAWER and simplify model config"
+date: 2026-01-30
+modified: 2026-01-31
+tags: [ai, llm, api, developer-experience, standards]
+category: AI
+draft: false
+popularity: 0.7
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+
+---
+
+Remember when every database required a miscellaneous grab-bag of environment variables? `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... Or was it `PG_HOSTNAME`? No, but sometimes you had to use `PG_*` prefixes! Gotcha!
+
+Then someone had the brilliant idea to just use a URL¹: `postgres://user:pass@host:5432/dbname?pool_size=10`. One string. Everything you need. Universally parseable. Portable. Dare I say, beautiful even.
+
+![the parts of a URL](./inline-url-diagram-dark.svg)
+
+<blockquote class="inset">We're repeating the same mistake with LLMs.</blockquote>
+
+Right now, configuring an LLM client means juggling `ANTHROPIC_API_KEY`, `OPENAI_MODEL`, `TEMPERATURE`, `MAX_TOKENS`, `BASE_URL`, and whatever provider-specific options you need this week. It's the database dark ages all over again, except now we're doing it with AI services that have even more configuration surface area.
+
+What if we just... skipped ahead a bit?
+
+## Introducing LLM Connection Strings
+
+```sh
+llm://api.openai.com/gpt-5.2?temp=0.7&max_tokens=1500
+llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
+```
+
+Where the scheme is `llm://`, the host is the provider's API base URL, the path is the model name, and query parameters handle all the runtime options.
+
+## Need auth? Great, add it!
+
+```sh
+llm://app-name:password@api.openai.com/gpt-5.2?temp=0.7&max_tokens=1500
+```
+
+Also, be careful. Credentials in URLs can be a security risk if logged or exposed. Though the good news is they are likely to be scrubbed automatically in many hosted logging services. Verify & use with caution, etc.
+
+## Resiliency? Sure, why the hell not!
+
+Specify round-robin host CSV for failover! Many DB libraries support this today!
+
+```sh
+llms://private.gpt,gpt.example.com/gpt-4?temp=0.9
+```
+
+That `s` isn't a typo, it's a ~~pluralization joke~~ hint there's multiple hosts.
+
+<blockquote class="inset">One string with everything from your **auth** to your **endpoint**.</blockquote>
+
+## Alternative Formats
+
+I'm not married to `llm://`, I could imagine some use cases better met with a more provider-centric protocol format, for example, a local LLM router could spin up a local `ollama://` service:
+
+```sh
+ollama://localhost:11434/llama3
+vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
+bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
+```
+
+Regardless of the exact scheme, the core idea is the same: **one string to rule them all**.
+
+- You can copy & paste in and out of forms without hunting a dozen fields.
+- You can pass them as a single CLI argument. (Sure, with quoting, but still easier than a dozen env vars.)
+- You get URL parsing for 'free' in every language. Query parameters can handle complex options via namespaced keys, or JSON encoding (with URL escaping.)
+
+
+<blockquote class="ai-response">The database world figured this out in a few decades.<br /><b>Good thing that's <i>only 6 months</i> in vibe years.</b></blockquote>
+
+
+{/* ¹ Yes, I know that `URI` is more correct than `URL`, anyone pedantic enough to care should go touch grass. */}

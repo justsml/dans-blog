@@ -298,6 +298,15 @@
 
   code {
     @apply bg-card-foreground text-primary-foreground p-1 rounded;
+    code {
+      @apply bg-card-foreground text-primary-foreground p-1 rounded;
+      transition: box-shadow 0.3s ease in-out, border-color 0.3s ease in-out;
+    }
+
+    code:hover {
+      box-shadow: 0 0 8px 2px hsl(var(--neon-pink));
+      border-color: hsl(var(--neon-pink));
+    }
 
   }
 
