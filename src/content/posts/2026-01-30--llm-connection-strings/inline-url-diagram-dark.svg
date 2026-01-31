@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 110 912 220">
+  <defs>
+    <!-- Updated colors for better contrast on dark backgrounds -->
+    <!-- Orange: #ffb05c, Blue: #66b0ff, Green: #6bdc76 -->
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10" fill="#ffb05c" />
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10" fill="#66b0ff" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="5" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10" fill="#6bdc76" />
+    </marker>
+  </defs>
+
+  <!-- Dark Mode Background -->
+  <rect width="100%" height="100%" fill="#1e1e1e" rx="8" />
+
+  <!-- URL Text -->
+  <g font-family="monospace" font-size="20" fill="#e0e0e0">
+    <text x="50" y="200">llm</text>
+    <text x="86" y="200" fill="#d2a8ff" font-weight="bold">://</text>
+    <text x="122" y="200">app-name</text>
+    <text x="218" y="200" fill="#d2a8ff" font-weight="bold">:</text>
+    <text x="230" y="200">password</text>
+    <text x="326" y="200" fill="#d2a8ff" font-weight="bold">@</text>
+    <text x="338" y="200">api.openai.com</text>
+    <text x="506" y="200">/</text>
+    <text x="518" y="200">gpt-5.2</text>
+    <text x="602" y="200" fill="#d2a8ff" font-weight="bold">?</text>
+    <text x="614" y="200">temp=0.7&amp;max_tokens=1500</text>
+  </g>
+
+  <!-- Underlines -->
+  <g stroke-width="3">
+    <!-- Scheme -->
+    <line x1="50" y1="205" x2="86" y2="205" stroke="#ffb05c" />
+    <!-- Username -->
+    <line x1="122" y1="205" x2="218" y2="205" stroke="#66b0ff" />
+    <!-- Password -->
+    <line x1="230" y1="205" x2="326" y2="205" stroke="#66b0ff" />
+    <!-- Host -->
+    <line x1="338" y1="205" x2="506" y2="205" stroke="#6bdc76" />
+    <!-- Path -->
+    <line x1="506" y1="205" x2="602" y2="205" stroke="#6bdc76" />
+    <!-- Query -->
+    <line x1="614" y1="205" x2="902" y2="205" stroke="#ffb05c" />
+  </g>
+
+  <!-- Top Labels -->
+  <g font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">
+    <!-- SCHEME -->
+    <text x="68" y="160" fill="#ffb05c">SCHEME</text>
+    <line x1="50" y1="170" x2="86" y2="170" stroke="#ffb05c" stroke-width="2" />
+    <line x1="68" y1="170" x2="68" y2="185" stroke="#ffb05c" stroke-width="2" />
+
+    <!-- AUTH -->
+    <text x="224" y="140" fill="#66b0ff">AUTH</text>
+    <path d="M 122 180 L 122 150 L 326 150 L 326 180" fill="none" stroke="#66b0ff" stroke-width="1.5" />
+
+    <!-- ENDPOINT -->
+    <text x="470" y="140" fill="#6bdc76">ENDPOINT</text>
+    <path d="M 338 180 L 338 150 L 602 150 L 602 180" fill="none" stroke="#6bdc76" stroke-width="1.5" />
+
+    <!-- CONFIG -->
+    <text x="758" y="160" fill="#ffb05c">CONFIG</text>
+    <line x1="614" y1="170" x2="902" y2="170" stroke="#ffb05c" stroke-width="2" />
+    <line x1="758" y1="170" x2="758" y2="185" stroke="#ffb05c" stroke-width="2" />
+  </g>
+
+  <!-- Bottom Boxes & Arrows -->
+  <g font-family="sans-serif" font-size="12" text-anchor="middle" stroke-width="2">
+    
+    <!-- SCHEME Box -->
+    <g transform="translate(31, 280)">
+      <rect width="74" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#ffb05c" />
+      <text x="37" y="18" fill="#ffb05c">SCHEME</text>
+    </g>
+    <line x1="68" y1="280" x2="68" y2="225" stroke="#ffb05c" stroke-width="1.5" marker-end="url(#arrow-orange)" />
+
+    <g transform="translate(114, 280)">
+      <rect width="92" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#66b0ff" />
+      <text x="46" y="18" fill="#66b0ff">LABEL/USER</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 150 280 L 150 265 L 170 265 L 170 225" fill="none" stroke="#66b0ff" stroke-width="1.5" marker-end="url(#arrow-blue)" />
+
+    <!-- PASSWORD Box -->
+    <g transform="translate(252, 280)">
+      <rect width="92" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#66b0ff" />
+      <text x="46" y="18" fill="#66b0ff">PASSWORD</text>
+    </g>
+    <!-- Arrow -->
+    <path d="M 298 280 L 298 265 L 278 265 L 278 225" fill="none" stroke="#66b0ff" stroke-width="1.5" marker-end="url(#arrow-blue)" />
+
+    <!-- HOST Box -->
+    <g transform="translate(394, 280)">
+      <rect width="56" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#6bdc76" />
+      <text x="28" y="18" fill="#6bdc76">HOST</text>
+    </g>
+    <line x1="422" y1="280" x2="422" y2="225" stroke="#6bdc76" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+    <!-- PATH/MODEL Box -->
+    <g transform="translate(505, 280)">
+      <rect width="110" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#6bdc76" />
+      <text x="55" y="18" fill="#6bdc76">PATH/MODEL</text>
+    </g>
+    <line x1="560" y1="280" x2="560" y2="225" stroke="#6bdc76" stroke-width="1.5" marker-end="url(#arrow-green)" />
+
+    <!-- QUERY PARAMETERS Box -->
+    <g transform="translate(676, 280)">
+      <rect width="164" height="26" rx="4" ry="4" fill="#2d2d2d" stroke="#ffb05c" />
+      <text x="82" y="18" fill="#ffb05c">QUERY PARAMETERS</text>
+    </g>
+    <line x1="758" y1="280" x2="758" y2="225" stroke="#ffb05c" stroke-width="1.5" marker-end="url(#arrow-orange)" />
+  </g>
+</svg>

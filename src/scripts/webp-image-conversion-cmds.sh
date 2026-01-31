@@ -5,9 +5,10 @@ function webp_utils_help () {
 
   # Functions
   printf "Functions:\n"
+  printf "\tfix_erroneous_webp_extensions - fixes files with erroneous .webp.ext patterns (e.g., .webp.webp, .webp.jpg)\n"
   printf "\tfind_old_image_formats - finds .png, .jpg, .jpeg, .bmp, .tif, .tiff images in the current folder.\n"
-  printf "\tconvert_images_to_webp - \n"
-  printf "\tgenerate_rm_cmds\n\n"
+  printf "\tconvert_images_to_webp - converts images to WebP format\n"
+  printf "\tgenerate_rm_cmds - generates rm commands for old format images\n\n"
 
   printf "Usage:\n"
 
@@ -19,6 +20,47 @@ function webp_utils_help () {
 }
 
 webp_utils_help
+
+function find_erroneous_webp_extensions () {
+  # Find files with erroneous .webp.ext patterns like .webp.webp or .webp.jpg
+  find "$PWD" -type f -iname "*.webp.*" \
+    \( \
+    -not -iregex ".*/dist/.*" \
+    -and -not -iregex ".*/.cache/.*" \
+    -and -not -iregex ".*/\.screens/.*" \
+    -and -not -iregex ".*/node_modules/.*" \
+    -and -not -iregex ".*/public/icons/.*" \
+    -and -not -iregex ".*/public/apple/.*" \
+    -and -not -iregex ".*/public/apple.*" \)
+}
+
+function fix_erroneous_webp_extensions () {
+  printf "\n🔧 Checking for files with erroneous .webp.ext patterns...\n\n"
+
+  local count=0
+  for file in $(find_erroneous_webp_extensions); do
+    # Extract directory, basename, and extension
+    dir=$(dirname "$file")
+    basename=$(basename "$file")
+
+    # Remove .webp from the middle: foo.webp.jpg -> foo.jpg, bar.webp.webp -> bar.webp
+    # This removes the first occurrence of .webp from the filename
+    new_basename="${basename/.webp./.}"
+    new_file="$dir/$new_basename"
+
+    if [[ "$file" != "$new_file" ]]; then
+      printf "  Renaming: %s\n           -> %s\n" "$basename" "$new_basename"
+      mv "$file" "$new_file"
+      count=$((count + 1))
+    fi
+  done
+
+  if [[ $count -eq 0 ]]; then
+    printf "  No files with erroneous .webp extensions found.\n"
+  else
+    printf "\n✅ Fixed %d file(s) with erroneous .webp extensions.\n\n" "$count"
+  fi
+}
 
 function find_old_image_formats () {
   # Find legacy images, ignoring the `dist`, `node_modules`, `.cache` folders
@@ -80,6 +122,7 @@ function generate_rm_cmds () {
 }
 
 function convert_and_cleanup_images () {
+  fix_erroneous_webp_extensions
   convert_images_to_webp true
   # for file in $(find_old_image_formats); do rm "$file"; done
 }
