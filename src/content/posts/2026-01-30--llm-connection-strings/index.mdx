@@ -12,17 +12,21 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Remember when every database required a miscellaneous grab-bag of environment variables? `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... Or was it `PG_HOSTNAME`? No, but sometimes you had to use `PG_*` prefixes! Gotcha!
+Don't you miss when every database required a miscellaneous grab-bag of environment variables?
 
-Then someone had the brilliant idea to just use a URL¹: `postgres://user:pass@host:5432/dbname?pool_size=10`. One string. Everything you need. Universally parseable. Portable. Dare I say, beautiful even.
+| A tower of delicate config, `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... Shit, or was it `DB_USERNAME` or `DB_USER`? F*ck, is it `DB_PASS`, not `DB_PASSWORD`? When do I need those `PG_*` prefixes! And, how do I set the timeout?! Ah! 
 
-![the parts of a URL](./inline-url-diagram-dark.svg)
 
-<blockquote class="inset">We're repeating the same mistake with LLMs.</blockquote>
+Then someone had the brilliant idea to just use a URL¹:
 
-Right now, configuring an LLM client means juggling `ANTHROPIC_API_KEY`, `OPENAI_MODEL`, `TEMPERATURE`, `MAX_TOKENS`, `BASE_URL`, and whatever provider-specific options you need this week. It's the database dark ages all over again, except now we're doing it with AI services that have even more configuration surface area.
+```sh
+postgres://user:pass@host:5432/dbname
+```
 
-What if we just... skipped ahead a bit?
+One string. Everything you need. Universally parseable. Portable. Dare I say, beautiful even.
+
+What if we just... ~~stole~~ borrowed the DB URL idea?
+{/* Don't worry nobody reads this. */}
 
 ## Introducing LLM Connection Strings
 
@@ -31,7 +35,14 @@ llm://api.openai.com/gpt-5.2?temp=0.7&max_tokens=1500
 llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
 ```
 
-Where the scheme is `llm://`, the host is the provider's API base URL, the path is the model name, and query parameters handle all the runtime options.
+---
+<br />
+
+### The Parts of an LLM Connection String
+
+![the parts of a LLM connection string](./inline-url-diagram-dark.svg)
+
+{/* Where the scheme is `llm://`, the host is the provider's API base URL, the path is the model name, and query parameters handle all the runtime options. */}
 
 ## Need auth? Great, add it!
 
@@ -46,7 +57,7 @@ Also, be careful. Credentials in URLs can be a security risk if logged or expose
 Specify round-robin host CSV for failover! Many DB libraries support this today!
 
 ```sh
-llms://private.gpt,gpt.example.com/gpt-4?temp=0.9
+llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
 ```
 
 That `s` isn't a typo, it's a ~~pluralization joke~~ hint there's multiple hosts.
