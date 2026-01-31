@@ -1,5 +1,4 @@
 ---
-import { SITE_DESCRIPTION } from "../consts";
 import Layout from "../layouts/Page.astro";
 import { HeroSection } from "../components/AIConsulting/HeroSection";
 import { ServiceCard } from "../components/AIConsulting/ServiceCard";
@@ -14,6 +13,21 @@ import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock
   }}
   className="ai-consulting-page"
 >
+  <!-- Scroll-driven background effects -->
+  <div class="scroll-gradient-bg"></div>
+  <div class="clip-wave"></div>
+  <div class="scroll-grid-pattern"></div>
+
+  <!-- Particle field -->
+  <div class="particle-field">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
   <div class="full-width">
     <HeroSection client:idle />
   </div>
@@ -22,6 +36,9 @@ import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock
   <section id="services" class="full-width relative overflow-hidden py-24 md:py-32">
     <!-- Simplified background -->
     <div class="pointer-events-none absolute inset-0 opacity-5 bg-gradient-to-br from-primary/10 to-[hsl(var(--neon-cyan))]/10"></div>
+
+    <!-- Morphing shape 1 -->
+    <div class="pointer-events-none absolute left-[5%] top-[10%] scroll-morph-circle"></div>
 
     <div class="container relative z-10 mx-auto max-w-5xl px-4">
       <!-- Bold section header -->
@@ -99,6 +116,9 @@ import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock
   <section
     class="full-width relative overflow-hidden border-y-4 border-primary/20 bg-gradient-to-br from-[hsl(var(--bg-dark))] via-[hsl(var(--background))] to-[hsl(var(--bg-dark))] py-24 md:py-32"
   >
+    <!-- Scroll-reactive glow orbs -->
+    <div class="pointer-events-none absolute left-[15%] top-[20%] scroll-glow-orb"></div>
+    <div class="pointer-events-none absolute right-[20%] bottom-[25%] scroll-glow-orb-2"></div>
 
     <div class="container mx-auto max-w-6xl px-4">
       <div class="mb-16 text-center">
@@ -160,6 +180,8 @@ import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock
 
   <!-- Why Section - Diagonal Split Layout -->
   <section class="full-width relative overflow-hidden py-24 md:py-32">
+    <!-- Morphing shape 2 -->
+    <div class="pointer-events-none absolute right-[10%] top-[15%] scroll-morph-square"></div>
 
     <div class="container mx-auto max-w-7xl px-4">
       <div class="mb-20 text-center">
@@ -357,6 +379,376 @@ import { Code2, Cog, Target, Flame, Zap, GraduationCap, Rocket, ArrowRight, Lock
     }
     100% {
       background-position: 200% 50%;
+    }
+  }
+
+  /* === ANIMATED BACKGROUND EFFECTS === */
+
+  /* Floating particle field */
+  .particle-field {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    animation: linear infinite;
+  }
+
+  .particle:nth-child(1) {
+    left: 10%;
+    top: 20%;
+    width: 4px;
+    height: 4px;
+    background: hsl(var(--primary) / 0.6);
+    animation: drift-1 25s;
+  }
+
+  .particle:nth-child(2) {
+    left: 30%;
+    top: 40%;
+    width: 2px;
+    height: 2px;
+    background: hsl(var(--neon-cyan) / 0.5);
+    animation: drift-2 30s 2s;
+  }
+
+  .particle:nth-child(3) {
+    right: 15%;
+    top: 15%;
+    width: 5px;
+    height: 5px;
+    background: hsl(var(--primary) / 0.7);
+    animation: drift-3 28s 1s;
+  }
+
+  .particle:nth-child(4) {
+    right: 40%;
+    top: 60%;
+    width: 3px;
+    height: 3px;
+    background: hsl(var(--neon-cyan) / 0.6);
+    animation: drift-4 32s 3s;
+  }
+
+  .particle:nth-child(5) {
+    left: 50%;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    background: hsl(var(--primary) / 0.5);
+    animation: drift-5 27s 1.5s;
+  }
+
+  .particle:nth-child(6) {
+    left: 70%;
+    top: 25%;
+    width: 3px;
+    height: 3px;
+    background: hsl(var(--neon-cyan) / 0.7);
+    animation: drift-6 29s 2.5s;
+  }
+
+  @keyframes drift-1 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.6; }
+    50% { transform: translate(150px, 200px); opacity: 0.8; }
+    90% { opacity: 0.3; }
+  }
+
+  @keyframes drift-2 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    15% { opacity: 0.5; }
+    50% { transform: translate(-100px, 180px); opacity: 0.7; }
+    85% { opacity: 0.2; }
+  }
+
+  @keyframes drift-3 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    20% { opacity: 0.7; }
+    50% { transform: translate(-120px, 150px); opacity: 0.9; }
+    80% { opacity: 0.4; }
+  }
+
+  @keyframes drift-4 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    10% { opacity: 0.5; }
+    50% { transform: translate(80px, 170px); opacity: 0.6; }
+    90% { opacity: 0.2; }
+  }
+
+  @keyframes drift-5 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    25% { opacity: 0.8; }
+    50% { transform: translate(-50px, 160px); opacity: 0.7; }
+    75% { opacity: 0.5; }
+  }
+
+  @keyframes drift-6 {
+    0%, 100% { transform: translate(0, 0); opacity: 0; }
+    12% { opacity: 0.6; }
+    50% { transform: translate(100px, 140px); opacity: 0.75; }
+    88% { opacity: 0.3; }
+  }
+
+  /* Morphing shapes with clip-path */
+  .scroll-morph-circle {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--neon-cyan) / 0.15));
+    animation: morph-circle 20s ease-in-out infinite;
+  }
+
+  @keyframes morph-circle {
+    0%, 100% {
+      clip-path: circle(50% at 50% 50%);
+      transform: rotate(0deg);
+      opacity: 0.3;
+    }
+    25% {
+      clip-path: ellipse(60% 40% at 50% 50%);
+      transform: rotate(45deg);
+      opacity: 0.5;
+    }
+    50% {
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+      transform: rotate(90deg);
+      opacity: 0.4;
+    }
+    75% {
+      clip-path: ellipse(40% 60% at 50% 50%);
+      transform: rotate(135deg);
+      opacity: 0.6;
+    }
+  }
+
+  .scroll-morph-square {
+    position: absolute;
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(225deg, hsl(var(--neon-cyan) / 0.15), hsl(var(--primary) / 0.15));
+    animation: morph-square 25s ease-in-out infinite;
+  }
+
+  @keyframes morph-square {
+    0%, 100% {
+      clip-path: inset(0% 0% 0% 0% round 0%);
+      transform: rotate(0deg) scale(1);
+      opacity: 0.3;
+    }
+    20% {
+      clip-path: inset(0% 0% 0% 0% round 20%);
+      transform: rotate(30deg) scale(1.1);
+      opacity: 0.5;
+    }
+    40% {
+      clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+      transform: rotate(60deg) scale(0.9);
+      opacity: 0.4;
+    }
+    60% {
+      clip-path: inset(0% 0% 0% 0% round 50%);
+      transform: rotate(90deg) scale(1.2);
+      opacity: 0.6;
+    }
+    80% {
+      clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+      transform: rotate(120deg) scale(0.95);
+      opacity: 0.4;
+    }
+  }
+
+  /* Gradient background animation */
+  .scroll-gradient-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    animation: gradient-shift 30s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background: radial-gradient(
+        circle at 20% 30%,
+        hsl(var(--primary) / 0.15) 0%,
+        hsl(var(--neon-cyan) / 0.1) 30%,
+        transparent 60%
+      );
+      opacity: 0.5;
+    }
+    25% {
+      background: radial-gradient(
+        circle at 80% 20%,
+        hsl(var(--neon-cyan) / 0.2) 0%,
+        hsl(var(--primary) / 0.12) 30%,
+        transparent 60%
+      );
+      opacity: 0.7;
+    }
+    50% {
+      background: radial-gradient(
+        circle at 70% 80%,
+        hsl(var(--primary) / 0.18) 0%,
+        hsl(var(--neon-cyan) / 0.15) 30%,
+        transparent 60%
+      );
+      opacity: 0.6;
+    }
+    75% {
+      background: radial-gradient(
+        circle at 30% 70%,
+        hsl(var(--neon-cyan) / 0.16) 0%,
+        hsl(var(--primary) / 0.1) 30%,
+        transparent 60%
+      );
+      opacity: 0.8;
+    }
+  }
+
+  /* Wave effect at bottom */
+  .clip-wave {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background: linear-gradient(to top, hsl(var(--primary) / 0.1), transparent);
+    pointer-events: none;
+    z-index: 1;
+    animation: wave-flow 8s ease-in-out infinite;
+  }
+
+  @keyframes wave-flow {
+    0%, 100% {
+      clip-path: polygon(
+        0% 50%, 10% 45%, 20% 50%, 30% 48%, 40% 52%, 50% 50%,
+        60% 48%, 70% 52%, 80% 50%, 90% 48%, 100% 50%,
+        100% 100%, 0% 100%
+      );
+      opacity: 0.3;
+    }
+    50% {
+      clip-path: polygon(
+        0% 48%, 10% 52%, 20% 48%, 30% 50%, 40% 48%, 50% 52%,
+        60% 50%, 70% 48%, 80% 52%, 90% 50%, 100% 48%,
+        100% 100%, 0% 100%
+      );
+      opacity: 0.5;
+    }
+  }
+
+  /* Hero section floating shapes */
+  .hero-shape-1 {
+    animation: hero-float-1 15s ease-in-out infinite;
+  }
+
+  .hero-shape-2 {
+    animation: hero-float-2 18s ease-in-out infinite;
+  }
+
+  .hero-shape-3 {
+    animation: hero-float-3 20s ease-in-out infinite;
+  }
+
+  @keyframes hero-float-1 {
+    0%, 100% {
+      transform: translate(0, 0) scale(1);
+    }
+    50% {
+      transform: translate(30px, -20px) scale(1.15);
+    }
+  }
+
+  @keyframes hero-float-2 {
+    0%, 100% {
+      transform: rotate(45deg) translate(0, 0);
+    }
+    50% {
+      transform: rotate(65deg) translate(-25px, 25px);
+    }
+  }
+
+  @keyframes hero-float-3 {
+    0%, 100% {
+      transform: rotate(12deg) translate(0, 0);
+    }
+    50% {
+      transform: rotate(32deg) translate(-20px, -15px);
+    }
+  }
+
+  /* Glow orbs */
+  .scroll-glow-orb {
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.3) 0%, transparent 70%);
+    filter: blur(40px);
+    border-radius: 50%;
+    animation: glow-pulse-1 10s ease-in-out infinite;
+  }
+
+  .scroll-glow-orb-2 {
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, hsl(var(--neon-cyan) / 0.25) 0%, transparent 70%);
+    filter: blur(35px);
+    border-radius: 50%;
+    animation: glow-pulse-2 12s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse-1 {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.3;
+    }
+    50% {
+      transform: scale(1.3);
+      opacity: 0.6;
+    }
+  }
+
+  @keyframes glow-pulse-2 {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.25;
+    }
+    50% {
+      transform: scale(1.2);
+      opacity: 0.5;
+    }
+  }
+
+  /* Grid pattern animation */
+  .scroll-grid-pattern {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(to right, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--primary) / 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: grid-shift 40s linear infinite;
+  }
+
+  @keyframes grid-shift {
+    0% {
+      background-position: 0 0;
+      opacity: 0.3;
+    }
+    50% {
+      background-position: 60px 60px;
+      opacity: 0.5;
+    }
+    100% {
+      background-position: 120px 120px;
+      opacity: 0.3;
     }
   }
 </style>

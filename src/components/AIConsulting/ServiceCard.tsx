@@ -1,11 +1,11 @@
 import * as React from "react";
 import { cn } from "@/utils";
-import { Check } from "lucide-react";
+import { Check, type LucideIcon } from "lucide-react";
 
 export interface ServiceCardProps {
   title: string;
   description: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
   features: string[];
   delay?: number;
   variant?: "primary" | "secondary" | "tertiary";
@@ -67,13 +67,9 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({
               )}
             >
               <div className="text-primary">
-                {typeof icon === 'string' ? (
-                  <span className="text-4xl sm:text-5xl">{icon}</span>
-                ) : (
-                  React.createElement(icon as React.ComponentType<{ className?: string }>, {
-                    className: "h-8 w-8 sm:h-10 sm:w-10"
-                  })
-                )}
+                {React.createElement(icon, {
+                  className: "h-8 w-8 sm:h-10 sm:w-10"
+                })}
               </div>
             </div>
 

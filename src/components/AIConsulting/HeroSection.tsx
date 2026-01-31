@@ -21,11 +21,11 @@ export const HeroSection: React.FC = () => {
         />
       </div>
 
-      {/* Floating geometric shapes - simplified */}
+      {/* Floating geometric shapes - scroll reactive */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none opacity-20">
-        <div className="absolute left-[10%] top-[20%] h-32 w-32 rounded-full border-2 border-primary/30" />
-        <div className="absolute right-[15%] top-[40%] h-40 w-40 rotate-45 border-2 border-[hsl(var(--neon-cyan))]/30" />
-        <div className="absolute left-[60%] bottom-[30%] h-36 w-36 rotate-12 rounded-2xl border-2 border-primary/30" />
+        <div className="absolute left-[10%] top-[20%] h-32 w-32 rounded-full border-2 border-primary/30 hero-shape-1" />
+        <div className="absolute right-[15%] top-[40%] h-40 w-40 rotate-45 border-2 border-[hsl(var(--neon-cyan))]/30 hero-shape-2" />
+        <div className="absolute left-[60%] bottom-[30%] h-36 w-36 rotate-12 rounded-2xl border-2 border-primary/30 hero-shape-3" />
       </div>
 
       <div className="container relative z-10 mx-auto max-w-7xl px-4">
