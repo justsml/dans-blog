@@ -457,7 +457,7 @@ Before you consider your Moltbot instance production-ready:
 - [ ] Firewall (UFW or iptables) configured to deny all except Tailscale
 - [ ] External nmap scan shows all ports `filtered` or `closed`
 - [ ] Internal `ss -tulpn` shows services bound to Tailscale IP only
-- [ ] Credential files have 600 permissions (`chmod 600 ~/.clawdbot/*.json`)
+- [ ] Credential files have 600 permissions (`chmod 600 ~/.moltbot/*.json`)
 - [ ] Run `moltbot security audit --deep` and address all findings
 - [ ] If using Moltbot Tailscale management, exec approvals are enabled
 - [ ] Scheduled security audits configured (cron/systemd timer every 6-12 hours)

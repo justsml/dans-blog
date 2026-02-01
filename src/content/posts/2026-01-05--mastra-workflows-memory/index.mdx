@@ -63,8 +63,10 @@ const fetchWeather = createStep({
   }),
   execute: async ({ inputData }) => {
     // ... (fetch logic) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
     return {
-      location: name,
+      location: inputData.city,
       temperature: weather.current.temperature_2m,
       conditions: getWeatherCondition(weather.current.weather_code),
       precipitationChance: weather.daily.precipitation_probability_mean[0],
