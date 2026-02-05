@@ -1,0 +1,17 @@
+# 11. API Gotchas
+
+What gets sent to the client?
+
+// Express.js route
+app.get('/api/data', (req, res) => {
+  const error = new Error('Database failed');
+  res.json({ error });
+});
+------
+
+1. Sends the full error object
+2. Sends {}
+3. Throws a server error
+4. Sends the error message only
+
+[credit](https://danlevy.net/)

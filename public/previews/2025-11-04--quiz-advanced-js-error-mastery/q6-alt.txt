@@ -1,0 +1,20 @@
+# 6. Custom Errors
+
+What’s the value of err.name?
+
+class CustomError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name;
+  }
+}
+const err = new CustomError('test');
+console.log(err.name);
+------
+
+1. "Error"
+2. "CustomError"
+3. undefined
+4. Depends on the browser
+
+[credit](https://danlevy.net/)

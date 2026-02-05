@@ -69,7 +69,6 @@ export function _createLocalCache<TData = any>(db: Database): LocalCache {
       let compressFlag = 0;
       if (opts?.compress) {
         log(`Compressing data for key "${key}"`);
-        // @ts-expect-error TS be like this sometimes
         data = await gzip(data);
         compressFlag = 1;
       }

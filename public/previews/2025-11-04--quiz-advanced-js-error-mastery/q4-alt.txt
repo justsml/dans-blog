@@ -1,0 +1,16 @@
+# 4. Type Checking Tricks
+
+What happens with instanceof Error across iframes?
+
+// In iframe:
+const iframeError = new Error('test');
+// In parent window:
+console.log(iframeError instanceof Error);
+------
+
+1. Always true
+2. Always false
+3. May be false across frames
+4. Throws an error
+
+[credit](https://danlevy.net/)

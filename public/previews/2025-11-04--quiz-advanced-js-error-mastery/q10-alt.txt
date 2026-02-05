@@ -1,0 +1,24 @@
+# 10. Message Templates
+
+What’s the error message?
+
+function validate(value) {
+  if (!value) {
+    throw new Error(
+      `Value ${value} is invalid`
+    );
+  }
+}
+try {
+  validate(undefined);
+} catch (e) {
+  console.log(e.message);
+}
+------
+
+1. "Value ${value} is invalid"
+2. "Value undefined is invalid"
+3. ReferenceError: value is not defined
+4. "Value is invalid"
+
+[credit](https://danlevy.net/)

@@ -1,0 +1,19 @@
+# 13. Error Properties
+
+How reliable are error.code and error.errno?
+
+const fs = require('fs');
+fs.readFile('missing.txt', (err, data) => {
+  if (err) {
+    console.log(err.code);    // 'ENOENT'
+    console.log(err.errno);   // -2
+  }
+});
+------
+
+1. Always available
+2. May not exist in all environments
+3. Only in Node.js
+4. Deprecated and removed
+
+[credit](https://danlevy.net/)

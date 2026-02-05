@@ -1,0 +1,18 @@
+# 5. Throwing Non-Errors
+
+What happens when you throw a string?
+
+try {
+  throw "Oops!";
+} catch (e) {
+  console.log(e instanceof Error);
+  console.log(typeof e);
+}
+------
+
+1. TypeError: string is not an Error
+2. Catches with e === "Oops!"
+3. Creates an Error object automatically
+4. undefined behavior
+
+[credit](https://danlevy.net/)

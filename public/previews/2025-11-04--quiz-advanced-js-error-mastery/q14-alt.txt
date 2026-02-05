@@ -1,0 +1,23 @@
+# 14. Error Boundaries
+
+What do these checks return?
+
+const fakeError = {
+  name: 'Error',
+  message: 'Fake error',
+  stack: 'fake stack'
+};
+
+
+console.log(fakeError instanceof Error);
+console.log(Object.prototype.toString.call(
+  fakeError
+) === '[object Error]');
+------
+
+1. true, true
+2. false, false
+3. true, false
+4. false, true
+
+[credit](https://danlevy.net/)

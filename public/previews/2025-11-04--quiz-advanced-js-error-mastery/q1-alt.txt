@@ -1,0 +1,14 @@
+# 1. Serialization Surprises
+
+What does JSON.stringify(error) return?
+
+const error = new Error('Oops');
+console.log(JSON.stringify(error));
+------
+
+1. {"message":"Oops","name":"Error"}
+2. {}
+3. {"error":"Oops"}
+4. null
+
+[credit](https://danlevy.net/)

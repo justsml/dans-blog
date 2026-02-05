@@ -1,0 +1,15 @@
+# 2. Serialization Surprises
+
+What’s the difference between these two?
+
+const err = new Error('Test');
+console.log(err);
+console.log(JSON.stringify(err));
+------
+
+1. Both show the same output
+2. console.log shows more info
+3. JSON.stringify shows more info
+4. Both show empty objects
+
+[credit](https://danlevy.net/)
