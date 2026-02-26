@@ -30,6 +30,6 @@ export const ArticleCard = ({post}: any) => {
         height={50}
       />
     )}
-    <small>{post.data.subTitle}</small>
+    <small dangerouslySetInnerHTML={{ __html: post.data.subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
   </ListItem>
 )}

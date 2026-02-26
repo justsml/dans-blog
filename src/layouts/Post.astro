@@ -70,6 +70,7 @@ const coverUrl = isImageMetadata(cover)
       ? social_image
       : socialBanner;
 
+const subTitleHtml = subTitle?.replace(/`([^`]+)`/g, "<code>$1</code>");
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 
 const responsiveImgSizes_fullWidth = {
@@ -119,10 +120,8 @@ const responsiveImgSizes_breakRight = {
         )
       }
       {
-        subTitle && (
-          <h2 class="p-summary" transition:name="page.h2">
-            {subTitle}
-          </h2>
+        subTitleHtml && (
+          <h2 class="p-summary" transition:name="page.h2" set:html={subTitleHtml} />
         )
       }
 

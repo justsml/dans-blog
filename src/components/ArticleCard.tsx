@@ -97,7 +97,7 @@ export const ArticleCard = ({
           {title}
         </h2>
       )}
-      <p>{subTitle}</p>
+      <p dangerouslySetInnerHTML={{ __html: subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
       {image}
       <InfoLabel
         text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
