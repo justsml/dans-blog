@@ -6,7 +6,6 @@ import { PostCollections } from "../../shared/postsCache";
 import { QuizGrid } from "../../components/QuizUI/QuizGrid";
 
 import type { ArticlePost, QuizPost } from "../../types";
-import { slugify } from "../../shared/pathHelpers";
 
 import "@/styles/nav.css";
 import "@/styles/global.css";
@@ -21,10 +20,6 @@ let posts = PostCollections._quizPosts
     // omit(p as ArticlePost, ["data.body", "data.cover", "data.cover_icon"])
   )
   .concat() as ArticlePost[];
-
-const subCategoryList: string[] = [
-  ...new Set(posts.map((p) => p.data.subCategory)),
-].filter(Boolean) as string[];
 
 const totalQuizzes = posts.length;
 
@@ -50,7 +45,6 @@ const quizList = posts.map((p, idx): QuizPost => {
   const questionCount = p.body?.split("</Challenge>").length - 1;
   totalQuestionCount += questionCount;
 
-
   return {
     ...p,
     data: {
@@ -63,7 +57,6 @@ const quizList = posts.map((p, idx): QuizPost => {
     },
   };
 });
-
 
 ---
 
