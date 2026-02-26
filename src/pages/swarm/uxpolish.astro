@@ -1,0 +1,1470 @@
+---
+import { SITE_DESCRIPTION } from "../../consts";
+import Layout from "../../layouts/Page.astro";
+---
+
+<Layout
+  frontmatter={{
+    title: "AI Systems Engineering",
+    subTitle: "Expert AI consulting for teams building production systems",
+  }}
+  className="article"
+>
+
+  <!-- HERO SECTION -->
+  <section class="hero full-width">
+    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span class="eyebrow-text">Available for Engagements</span>
+        <span class="eyebrow-dot"></span>
+      </div>
+      <h1 class="hero-title">
+        AI Systems That<br />
+        <span class="hero-title-accent">Actually Ship</span>
+      </h1>
+      <p class="hero-subtitle">
+        20+ years of production engineering applied to AI architecture,
+        LLM integration, and the systems that make intelligent products real.
+      </p>
+      <div class="hero-rate-wrapper">
+        <div class="rate-card">
+          <div class="rate-label">Consulting Rate</div>
+          <div class="rate-amount">
+            <span class="rate-currency">$</span><span class="rate-number">900</span><span class="rate-per">/hr</span>
+          </div>
+          <div class="rate-badge">Senior Principal Level</div>
+        </div>
+      </div>
+      <a href="/contact" class="hero-cta">
+        <span class="cta-text">Start the Conversation</span>
+        <span class="cta-arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SOCIAL PROOF RIBBON -->
+  <section class="proof-ribbon full-width">
+    <div class="proof-ribbon-inner">
+      <div class="proof-stat">
+        <span class="proof-number">20<span class="proof-plus">+</span></span>
+        <span class="proof-label">Years Engineering</span>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat">
+        <span class="proof-number">50<span class="proof-plus">+</span></span>
+        <span class="proof-label">Production Systems</span>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat">
+        <span class="proof-number">OSS</span>
+        <span class="proof-label">Contributor</span>
+      </div>
+      <div class="proof-divider" aria-hidden="true"></div>
+      <div class="proof-stat">
+        <span class="proof-number">∞</span>
+        <span class="proof-label">Problems Debugged</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="services-section full-width">
+    <div class="services-inner">
+      <div class="section-header">
+        <h2 class="section-title">What I Do</h2>
+        <p class="section-subtitle">
+          Deep expertise across the full AI systems stack — from architecture decisions to day-two operations.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <article class="service-card service-card--architecture">
+          <div class="service-card-glow" aria-hidden="true"></div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+              <line x1="12" y1="2" x2="12" y2="22"/>
+              <line x1="2" y1="8.5" x2="22" y2="8.5"/>
+              <line x1="2" y1="15.5" x2="22" y2="15.5"/>
+            </svg>
+          </div>
+          <h3 class="service-title">AI Architecture &amp; Strategy</h3>
+          <p class="service-desc">
+            Design AI systems that scale, survive production, and evolve with your product.
+            Model selection, RAG pipelines, agent orchestration, and the tricky second-order
+            problems no one documents.
+          </p>
+          <ul class="service-list">
+            <li>LLM selection &amp; evaluation frameworks</li>
+            <li>RAG system design &amp; optimization</li>
+            <li>Multi-agent orchestration patterns</li>
+            <li>Cost modeling &amp; latency budgets</li>
+          </ul>
+        </article>
+
+        <article class="service-card service-card--integration">
+          <div class="service-card-glow" aria-hidden="true"></div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+            </svg>
+          </div>
+          <h3 class="service-title">LLM Integration &amp; Optimization</h3>
+          <p class="service-desc">
+            Turn proof-of-concept into production-grade. Prompt engineering at scale,
+            fine-tuning strategy, caching architectures, and the engineering discipline
+            to keep costs sane as you grow.
+          </p>
+          <ul class="service-list">
+            <li>Prompt engineering &amp; system prompts</li>
+            <li>Inference optimization &amp; caching</li>
+            <li>Fine-tuning evaluation &amp; strategy</li>
+            <li>Streaming &amp; async pipeline design</li>
+          </ul>
+        </article>
+
+        <article class="service-card service-card--security">
+          <div class="service-card-glow" aria-hidden="true"></div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="service-title">AI Security &amp; Reliability</h3>
+          <p class="service-desc">
+            Production AI has a threat model most teams haven't thought through.
+            Prompt injection, data exfiltration, hallucination guardrails,
+            and the observability to know when things go sideways.
+          </p>
+          <ul class="service-list">
+            <li>Prompt injection &amp; jailbreak hardening</li>
+            <li>Output validation &amp; guardrails</li>
+            <li>AI observability &amp; monitoring</li>
+            <li>Incident response playbooks</li>
+          </ul>
+        </article>
+
+        <article class="service-card service-card--training">
+          <div class="service-card-glow" aria-hidden="true"></div>
+          <div class="service-icon" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="service-title">Team Training &amp; Enablement</h3>
+          <p class="service-desc">
+            Uplift your entire engineering team's AI capability.
+            Hands-on workshops, architecture reviews, and the kind of mentorship
+            that builds institutional knowledge that outlasts the engagement.
+          </p>
+          <ul class="service-list">
+            <li>AI engineering workshops &amp; bootcamps</li>
+            <li>Code review &amp; architecture critiques</li>
+            <li>Internal AI tooling strategy</li>
+            <li>Engineering culture &amp; best practices</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIBILITY SECTION -->
+  <section class="credibility-section full-width">
+    <div class="credibility-inner">
+      <div class="cred-content">
+        <div class="section-header section-header--left">
+          <h2 class="section-title">Why Dan</h2>
+          <p class="section-subtitle">
+            Not a fresh bootcamp grad with a GPT wrapper.
+            Two decades of building systems that run at scale, handle edge cases, and survive the real world.
+          </p>
+        </div>
+        <div class="cred-items">
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>20+ Years Production Engineering</strong>
+              <p>Startups to enterprise. Frontend to infrastructure.
+              The breadth to spot system-level problems before they ship.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>Open Source Contributor</strong>
+              <p>Active contributor across the JavaScript &amp; AI ecosystems.
+              Reads the source, files the issues, ships the PRs.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>Security &amp; Reliability Focus</strong>
+              <p>Led security audits, accessibility reviews, and reliability
+              engineering for teams at both startups and big companies.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>Agile Team Builder</strong>
+              <p>Architectural leadership, consulting, and mentorship.
+              The rare combination of IC depth and team leadership breadth.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>Speaker &amp; Educator</strong>
+              <p>From board rooms to graduations. Known for making complex
+              systems intuitive and teams more capable.</p>
+            </div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-item-icon" aria-hidden="true">◈</div>
+            <div class="cred-item-content">
+              <strong>AI-Native Engineering</strong>
+              <p>Not retrofitting old patterns onto LLMs. Building the new
+              mental models that AI systems actually require.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cred-visual" aria-hidden="true">
+        <div class="cred-orbit">
+          <div class="orbit-ring orbit-ring--1">
+            <div class="orbit-dot"></div>
+          </div>
+          <div class="orbit-ring orbit-ring--2">
+            <div class="orbit-dot"></div>
+          </div>
+          <div class="orbit-ring orbit-ring--3">
+            <div class="orbit-dot"></div>
+          </div>
+          <div class="orbit-core">
+            <span>DL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS SECTION -->
+  <section class="process-section full-width">
+    <div class="process-inner">
+      <div class="section-header">
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-subtitle">
+          A clear, low-friction path from first contact to measurable impact.
+        </p>
+      </div>
+
+      <div class="process-steps">
+
+        <div class="process-step">
+          <div class="step-connector step-connector--right" aria-hidden="true"></div>
+          <div class="step-number-wrapper">
+            <div class="step-number">01</div>
+            <div class="step-number-glow" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Discovery Call</h3>
+            <p class="step-desc">
+              30 minutes. No pitch deck, no fluff. We talk through your
+              specific challenges, constraints, and what a successful
+              engagement actually looks like for your team.
+            </p>
+            <div class="step-tag">Free · 30 min</div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-connector step-connector--left" aria-hidden="true"></div>
+          <div class="step-connector step-connector--right" aria-hidden="true"></div>
+          <div class="step-number-wrapper">
+            <div class="step-number">02</div>
+            <div class="step-number-glow" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Technical Assessment</h3>
+            <p class="step-desc">
+              Deep-dive into your current architecture, codebase, and
+              processes. Identify the high-leverage problems worth solving
+              first. Scoped to your specific context.
+            </p>
+            <div class="step-tag">1–2 days · Fixed scope</div>
+          </div>
+        </div>
+
+        <div class="process-step">
+          <div class="step-connector step-connector--left" aria-hidden="true"></div>
+          <div class="step-number-wrapper">
+            <div class="step-number">03</div>
+            <div class="step-number-glow" aria-hidden="true"></div>
+          </div>
+          <div class="step-content">
+            <h3 class="step-title">Engagement</h3>
+            <p class="step-desc">
+              Flexible structure — retainer, project-based, or sprint
+              support. Ongoing collaboration, code reviews, architecture
+              sessions, and the tactical help your team needs to ship.
+            </p>
+            <div class="step-tag">Flexible · $900/hr</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA SECTION -->
+  <section class="cta-section full-width">
+    <div class="cta-section-glow" aria-hidden="true"></div>
+    <div class="cta-inner">
+      <div class="cta-eyebrow">Ready to build something real?</div>
+      <h2 class="cta-heading">Let's Talk AI Systems</h2>
+      <p class="cta-body">
+        Whether you're starting an AI project, scaling one, or trying to
+        understand why your current approach isn't working —
+        let's have an honest conversation.
+      </p>
+      <div class="cta-actions">
+        <a href="/contact" class="cta-primary-btn">
+          <span>Get in Touch</span>
+          <span class="btn-arrow">→</span>
+        </a>
+        <div class="cta-rate-note">$900/hr · No fluff · Real engineering</div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* ============================================================
+     ANIMATIONS
+     ============================================================ */
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  @keyframes rotate-slow {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes rotate-reverse {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+  }
+
+  @keyframes scan-line {
+    0% { transform: translateY(-100%); opacity: 0; }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+
+  @keyframes slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 1rem 0.25rem hsla(180, 100%, 50%, 0.15),
+        0 0 2rem 0.5rem hsla(180, 100%, 50%, 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 2rem 0.5rem hsla(180, 100%, 50%, 0.35),
+        0 0 4rem 1rem hsla(180, 100%, 50%, 0.1);
+    }
+  }
+
+  @keyframes rate-entrance {
+    0% {
+      opacity: 0;
+      transform: scale(0.85) translateY(16px);
+    }
+    60% {
+      transform: scale(1.03) translateY(-2px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes border-rotate {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes orbit-dot-1 {
+    from { transform: rotate(0deg) translateX(60px) rotate(0deg); }
+    to { transform: rotate(360deg) translateX(60px) rotate(-360deg); }
+  }
+
+  @keyframes orbit-dot-2 {
+    from { transform: rotate(60deg) translateX(90px) rotate(-60deg); }
+    to { transform: rotate(420deg) translateX(90px) rotate(-420deg); }
+  }
+
+  @keyframes orbit-dot-3 {
+    from { transform: rotate(120deg) translateX(120px) rotate(-120deg); }
+    to { transform: rotate(480deg) translateX(120px) rotate(-480deg); }
+  }
+
+  @keyframes step-reveal {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+  }
+
+  @keyframes cta-pulse {
+    0%, 100% {
+      box-shadow:
+        0 0 2rem 0.5rem hsla(322, 100%, 72%, 0.2),
+        0 0 4rem 1rem hsla(322, 100%, 72%, 0.08);
+    }
+    50% {
+      box-shadow:
+        0 0 3rem 1rem hsla(322, 100%, 72%, 0.4),
+        0 0 6rem 2rem hsla(322, 100%, 72%, 0.15);
+    }
+  }
+
+  /* ============================================================
+     HERO SECTION
+     ============================================================ */
+
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding-block: 5rem 4rem;
+    display: grid;
+    place-items: center;
+    min-height: 90vh;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(hsla(180, 100%, 50%, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(180, 100%, 50%, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 80%);
+    pointer-events: none;
+  }
+
+  .hero-grid-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      hsl(var(--background)) 100%
+    );
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: min(800px, 90vw);
+    margin-inline: auto;
+    padding-inline: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    animation: slide-in-up 0.7s ease-out both;
+  }
+
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--clr-muted-300);
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fade-in 0.5s ease-out 0.2s both;
+  }
+
+  .eyebrow-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--neon-cyan));
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 7vw, 5rem) !important;
+    line-height: 1.1 !important;
+    margin: 0 !important;
+    color: hsl(var(--foreground)) !important;
+    font-family: "Playwrite AU NSW", cursive !important;
+    text-shadow: none !important;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-title-accent {
+    display: block;
+    color: transparent;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--neon-cyan)) 0%,
+      hsl(var(--neon-pink)) 60%,
+      hsl(var(--neon-cyan)) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 2.5vw, 1.25rem) !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    max-width: 56ch;
+    margin: 0 !important;
+    line-height: 1.7;
+    animation: fade-in 0.6s ease-out 0.4s both;
+  }
+
+  .hero-rate-wrapper {
+    animation: rate-entrance 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.6s both;
+  }
+
+  .rate-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1.5rem 3rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      hsla(210, 50%, 8%, 0.95),
+      hsla(210, 30%, 12%, 0.9)
+    );
+    border: 1px solid hsla(180, 100%, 50%, 0.25);
+    animation: glow-pulse 3s ease-in-out infinite;
+    overflow: hidden;
+  }
+
+  .rate-card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--neon-cyan)),
+      hsl(var(--neon-pink)),
+      hsl(var(--neon-cyan))
+    );
+    background-size: 300% 300%;
+    animation: border-rotate 4s linear infinite;
+    z-index: -1;
+  }
+
+  .rate-card::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(1.5rem - 1px);
+    background: linear-gradient(
+      135deg,
+      hsla(210, 50%, 8%, 0.98),
+      hsla(210, 30%, 12%, 0.95)
+    );
+    z-index: -1;
+  }
+
+  .rate-label {
+    font-size: 0.75rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clr-muted-300);
+  }
+
+  .rate-amount {
+    display: flex;
+    align-items: baseline;
+    gap: 0.1em;
+    line-height: 1;
+  }
+
+  .rate-currency {
+    font-size: 2rem;
+    font-weight: 100;
+    color: hsl(var(--neon-cyan));
+    opacity: 0.8;
+  }
+
+  .rate-number {
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    font-weight: 100;
+    font-family: "Raleway", sans-serif;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .rate-per {
+    font-size: 1.5rem;
+    font-weight: 200;
+    color: hsl(var(--neon-cyan));
+    opacity: 0.8;
+    align-self: flex-end;
+    padding-bottom: 0.25rem;
+  }
+
+  .rate-badge {
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-pink));
+    opacity: 0.9;
+    padding: 0.2rem 0.75rem;
+    border: 1px solid hsla(322, 100%, 72%, 0.3);
+    border-radius: 2rem;
+    background: hsla(322, 100%, 72%, 0.05);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 2.5rem;
+    border-radius: 0.75rem;
+    background: hsl(var(--neon-cyan));
+    color: hsl(var(--background)) !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+    animation: fade-in 0.5s ease-out 0.9s both;
+  }
+
+  .hero-cta:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow:
+      0 0 2rem 0.5rem hsla(180, 100%, 50%, 0.35),
+      0 8px 24px hsla(180, 100%, 50%, 0.2);
+    background: hsl(var(--neon-cyan-accent));
+  }
+
+  .cta-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .hero-cta:hover .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ============================================================
+     PROOF RIBBON
+     ============================================================ */
+
+  .proof-ribbon {
+    padding-block: 1.5rem;
+    background: linear-gradient(
+      90deg,
+      hsla(180, 100%, 50%, 0.05) 0%,
+      hsla(322, 100%, 72%, 0.05) 50%,
+      hsla(180, 100%, 50%, 0.05) 100%
+    );
+    border-top: 1px solid hsla(180, 100%, 50%, 0.1);
+    border-bottom: 1px solid hsla(180, 100%, 50%, 0.1);
+  }
+
+  .proof-ribbon-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0;
+    max-width: min(900px, 90vw);
+    margin-inline: auto;
+  }
+
+  .proof-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.75rem 2.5rem;
+    transition: transform 0.2s ease;
+  }
+
+  .proof-stat:hover {
+    transform: scale(1.05);
+  }
+
+  .proof-number {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 100;
+    font-family: "Raleway", sans-serif;
+    color: hsl(var(--neon-cyan));
+    line-height: 1;
+    text-shadow:
+      0 0 1rem hsla(180, 100%, 50%, 0.5),
+      0 0 2rem hsla(180, 100%, 50%, 0.25);
+  }
+
+  .proof-plus {
+    color: hsl(var(--neon-pink));
+    font-weight: 300;
+  }
+
+  .proof-label {
+    font-size: 0.7rem;
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-muted-300);
+  }
+
+  .proof-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      hsla(180, 100%, 50%, 0.3),
+      transparent
+    );
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .proof-divider { display: none; }
+    .proof-ribbon-inner { gap: 0.5rem; }
+    .proof-stat { padding: 0.5rem 1.5rem; }
+  }
+
+  /* ============================================================
+     SERVICES SECTION
+     ============================================================ */
+
+  .services-section {
+    padding-block: 5rem;
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background)) 0%,
+      hsla(210, 30%, 8%, 1) 50%,
+      hsl(var(--background)) 100%
+    );
+  }
+
+  .services-inner {
+    max-width: min(1200px, 95vw);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .section-header--left {
+    text-align: left;
+  }
+
+  .section-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem) !important;
+    font-weight: 300 !important;
+    color: hsl(var(--neon-cyan)) !important;
+    margin-bottom: 0.75rem !important;
+    margin-top: 0 !important;
+  }
+
+  .section-subtitle {
+    font-size: 1.05rem !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    max-width: 60ch;
+    margin: 0 auto !important;
+    line-height: 1.7;
+  }
+
+  .section-header--left .section-subtitle {
+    margin-inline: 0 !important;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .service-card {
+    position: relative;
+    padding: 2rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(
+      135deg,
+      hsla(210, 50%, 8%, 0.9),
+      hsla(210, 30%, 12%, 0.85)
+    );
+    border: 1px solid hsl(var(--border));
+    overflow: hidden;
+    transition:
+      transform 0.3s ease,
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .service-card:hover {
+    transform: translateY(-4px);
+    border-color: hsla(180, 100%, 50%, 0.4);
+    box-shadow:
+      0 0 1.5rem 0.25rem hsla(180, 100%, 50%, 0.1),
+      0 16px 48px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .service-card--security:hover {
+    border-color: hsla(322, 100%, 72%, 0.4);
+    box-shadow:
+      0 0 1.5rem 0.25rem hsla(322, 100%, 72%, 0.1),
+      0 16px 48px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .service-card--training:hover {
+    border-color: hsla(120, 100%, 50%, 0.3);
+    box-shadow:
+      0 0 1.5rem 0.25rem hsla(120, 100%, 50%, 0.08),
+      0 16px 48px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .service-card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      hsla(180, 100%, 50%, 0.03) 0%,
+      transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .service-card:hover .service-card-glow {
+    opacity: 1;
+  }
+
+  .service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1rem;
+    background: hsla(180, 100%, 50%, 0.08);
+    border: 1px solid hsla(180, 100%, 50%, 0.15);
+    color: hsl(var(--neon-cyan));
+    margin-bottom: 1.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .service-card--security .service-icon {
+    background: hsla(322, 100%, 72%, 0.08);
+    border-color: hsla(322, 100%, 72%, 0.15);
+    color: hsl(var(--neon-pink));
+  }
+
+  .service-card:hover .service-icon {
+    background: hsla(180, 100%, 50%, 0.15);
+    border-color: hsla(180, 100%, 50%, 0.35);
+    box-shadow: 0 0 1rem hsla(180, 100%, 50%, 0.2);
+    transform: scale(1.05) rotate(-3deg);
+  }
+
+  .service-card--security:hover .service-icon {
+    background: hsla(322, 100%, 72%, 0.15);
+    border-color: hsla(322, 100%, 72%, 0.35);
+    box-shadow: 0 0 1rem hsla(322, 100%, 72%, 0.2);
+  }
+
+  .service-title {
+    font-size: 1.15rem !important;
+    font-weight: 400 !important;
+    color: hsl(var(--foreground)) !important;
+    margin: 0 0 0.75rem 0 !important;
+    letter-spacing: 0;
+  }
+
+  .service-desc {
+    font-size: 0.9rem !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    line-height: 1.65;
+    margin: 0 0 1.25rem 0 !important;
+  }
+
+  .service-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .service-list li {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: hsl(var(--neon-cyan));
+    opacity: 0.8;
+    padding-left: 1.2rem;
+    position: relative;
+    transition: opacity 0.2s ease, padding-left 0.2s ease;
+  }
+
+  .service-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: hsl(var(--neon-pink));
+    font-weight: 400;
+    transition: transform 0.2s ease;
+  }
+
+  .service-card:hover .service-list li {
+    opacity: 1;
+  }
+
+  .service-card:hover .service-list li::before {
+    transform: translateX(2px);
+  }
+
+  /* ============================================================
+     CREDIBILITY SECTION
+     ============================================================ */
+
+  .credibility-section {
+    padding-block: 5rem;
+    background: hsl(var(--background));
+  }
+
+  .credibility-inner {
+    max-width: min(1200px, 95vw);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .credibility-inner {
+      grid-template-columns: 1fr auto;
+      gap: 5rem;
+    }
+  }
+
+  .cred-items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 600px) {
+    .cred-items {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cred-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    background: hsla(210, 30%, 12%, 0.5);
+    border: 1px solid hsl(var(--border));
+    transition: all 0.25s ease;
+  }
+
+  .cred-item:hover {
+    border-color: hsla(180, 100%, 50%, 0.25);
+    background: hsla(210, 30%, 12%, 0.8);
+    transform: translateX(4px);
+  }
+
+  .cred-item-icon {
+    font-size: 1.25rem;
+    color: hsl(var(--neon-cyan));
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    opacity: 0.7;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .cred-item:hover .cred-item-icon {
+    opacity: 1;
+    transform: rotate(45deg);
+  }
+
+  .cred-item-content strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.01em;
+  }
+
+  .cred-item-content p {
+    font-size: 0.82rem !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    margin: 0 !important;
+    line-height: 1.55;
+  }
+
+  /* Orbital visual */
+  .cred-visual {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .cred-visual {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .cred-orbit {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    flex-shrink: 0;
+  }
+
+  .orbit-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    transform-origin: center;
+  }
+
+  .orbit-ring--1 {
+    width: 120px;
+    height: 120px;
+    margin-top: -60px;
+    margin-left: -60px;
+    border-color: hsla(180, 100%, 50%, 0.2);
+    animation: rotate-slow 8s linear infinite;
+  }
+
+  .orbit-ring--2 {
+    width: 180px;
+    height: 180px;
+    margin-top: -90px;
+    margin-left: -90px;
+    border-color: hsla(322, 100%, 72%, 0.15);
+    animation: rotate-reverse 12s linear infinite;
+  }
+
+  .orbit-ring--3 {
+    width: 240px;
+    height: 240px;
+    margin-top: -120px;
+    margin-left: -120px;
+    border-color: hsla(180, 100%, 50%, 0.08);
+    animation: rotate-slow 18s linear infinite;
+  }
+
+  .orbit-dot {
+    position: absolute;
+    top: -3px;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: hsl(var(--neon-cyan));
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px 2px hsla(180, 100%, 50%, 0.6);
+  }
+
+  .orbit-ring--2 .orbit-dot {
+    background: hsl(var(--neon-pink));
+    box-shadow: 0 0 8px 2px hsla(322, 100%, 72%, 0.6);
+  }
+
+  .orbit-ring--3 .orbit-dot {
+    background: hsl(var(--neon-cyan));
+    opacity: 0.6;
+    box-shadow: 0 0 6px 1px hsla(180, 100%, 50%, 0.4);
+  }
+
+  .orbit-core {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(
+      135deg,
+      hsla(180, 100%, 50%, 0.15),
+      hsla(322, 100%, 72%, 0.15)
+    );
+    border: 1px solid hsla(180, 100%, 50%, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 200;
+    font-family: "Raleway", sans-serif;
+    color: hsl(var(--neon-cyan));
+    letter-spacing: 0.05em;
+    animation: glow-pulse 3s ease-in-out infinite;
+    text-shadow: 0 0 1rem hsla(180, 100%, 50%, 0.8);
+  }
+
+  /* ============================================================
+     PROCESS SECTION
+     ============================================================ */
+
+  .process-section {
+    padding-block: 5rem;
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background)) 0%,
+      hsla(210, 30%, 8%, 1) 100%
+    );
+  }
+
+  .process-inner {
+    max-width: min(900px, 95vw);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+  }
+
+  .process-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: 1.5rem;
+    background: hsla(210, 30%, 10%, 0.8);
+    border: 1px solid hsl(var(--border));
+    transition: all 0.3s ease;
+    animation: slide-in-up 0.6s ease-out both;
+  }
+
+  .process-step:nth-child(2) { animation-delay: 0.15s; }
+  .process-step:nth-child(3) { animation-delay: 0.3s; }
+
+  .process-step:hover {
+    border-color: hsla(180, 100%, 50%, 0.3);
+    transform: translateY(-4px);
+    box-shadow:
+      0 0 1rem 0.25rem hsla(180, 100%, 50%, 0.08),
+      0 20px 40px hsla(0, 0%, 0%, 0.3);
+  }
+
+  .step-number-wrapper {
+    position: relative;
+    margin-bottom: 1.25rem;
+  }
+
+  .step-number {
+    font-size: 3.5rem;
+    font-weight: 100;
+    font-family: "Raleway", sans-serif;
+    color: transparent;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--neon-cyan)) 0%,
+      hsla(180, 100%, 50%, 0.4) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    line-height: 1;
+  }
+
+  .step-number-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      hsla(180, 100%, 50%, 0.08) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .step-title {
+    font-size: 1.1rem !important;
+    font-weight: 400 !important;
+    color: hsl(var(--foreground)) !important;
+    margin: 0 0 0.75rem 0 !important;
+  }
+
+  .step-desc {
+    font-size: 0.875rem !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    line-height: 1.65;
+    margin: 0 0 1.25rem 0 !important;
+    flex: 1;
+  }
+
+  .step-tag {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    background: hsla(180, 100%, 50%, 0.06);
+    border: 1px solid hsla(180, 100%, 50%, 0.2);
+    color: hsl(var(--neon-cyan));
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    margin-top: auto;
+    transition: all 0.2s ease;
+  }
+
+  .process-step:hover .step-tag {
+    background: hsla(180, 100%, 50%, 0.12);
+    border-color: hsla(180, 100%, 50%, 0.4);
+  }
+
+  /* ============================================================
+     CTA SECTION
+     ============================================================ */
+
+  .cta-section {
+    position: relative;
+    padding-block: 6rem;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      hsla(180, 100%, 50%, 0.03) 0%,
+      hsla(322, 100%, 72%, 0.05) 50%,
+      hsla(180, 100%, 50%, 0.03) 100%
+    );
+    pointer-events: none;
+  }
+
+  .cta-section-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 300px;
+    background: radial-gradient(
+      ellipse at center,
+      hsla(322, 100%, 72%, 0.08) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: cta-pulse 4s ease-in-out infinite;
+  }
+
+  .cta-inner {
+    position: relative;
+    z-index: 1;
+    max-width: min(700px, 90vw);
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .cta-eyebrow {
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-pink));
+    opacity: 0.85;
+  }
+
+  .cta-heading {
+    font-size: clamp(2rem, 5vw, 3.5rem) !important;
+    font-weight: 300 !important;
+    color: hsl(var(--foreground)) !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+    text-shadow:
+      0 0 2rem hsla(322, 100%, 72%, 0.15),
+      0 0 4rem hsla(322, 100%, 72%, 0.05);
+  }
+
+  .cta-body {
+    font-size: 1rem !important;
+    font-weight: 200 !important;
+    color: var(--clr-muted-300) !important;
+    max-width: 52ch;
+    line-height: 1.75;
+    margin: 0 !important;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 3rem;
+    border-radius: 0.75rem;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--neon-pink)),
+      hsla(322, 100%, 60%, 1)
+    );
+    color: hsl(var(--background)) !important;
+    text-decoration: none !important;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    animation: cta-pulse 4s ease-in-out infinite;
+  }
+
+  .cta-primary-btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow:
+      0 0 2.5rem 0.75rem hsla(322, 100%, 72%, 0.35),
+      0 12px 32px hsla(322, 100%, 72%, 0.25);
+    animation: none;
+  }
+
+  .btn-arrow {
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-size: 1.15rem;
+  }
+
+  .cta-primary-btn:hover .btn-arrow {
+    transform: translateX(5px);
+  }
+
+  .cta-rate-note {
+    font-size: 0.78rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--clr-muted-300);
+    opacity: 0.7;
+  }
+
+  /* ============================================================
+     REDUCED MOTION SUPPORT
+     ============================================================ */
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

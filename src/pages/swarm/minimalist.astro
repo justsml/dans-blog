@@ -1,0 +1,411 @@
+---
+import { SITE_DESCRIPTION } from "../../consts";
+import Layout from "../../layouts/Page.astro";
+---
+
+<Layout
+  frontmatter={{
+    title: "AI Systems Engineering",
+    subTitle: "Expert AI consulting for teams building production systems",
+  }}
+  className="article"
+>
+  <!-- Hero -->
+  <section class="hero">
+    <p class="eyebrow">AI Systems Engineering</p>
+    <h1 class="hero-headline">
+      Build AI systems<br />that actually work.
+    </h1>
+    <p class="hero-sub">
+      Production-grade AI architecture, LLM integration, and security
+      for engineering teams who ship.
+    </p>
+    <div class="rate-block">
+      <span class="rate">$900</span>
+      <span class="rate-unit">/ hr</span>
+    </div>
+    <a href="/contact" class="cta-primary">Start a conversation</a>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- Services -->
+  <section class="services">
+    <h2 class="section-label">What I do</h2>
+    <div class="service-grid">
+      <article class="service-card">
+        <h3>AI Architecture &amp; Strategy</h3>
+        <p>
+          System design for AI-native products. Evaluation frameworks,
+          model selection, infrastructure choices that scale without
+          accumulating irreversible debt.
+        </p>
+      </article>
+      <article class="service-card">
+        <h3>LLM Integration &amp; Optimization</h3>
+        <p>
+          From proof of concept to production. Prompt engineering, RAG
+          pipelines, fine-tuning strategy, latency and cost optimization
+          at real traffic volumes.
+        </p>
+      </article>
+      <article class="service-card">
+        <h3>AI Security &amp; Reliability</h3>
+        <p>
+          Threat modeling for AI surfaces. Prompt injection defenses,
+          output validation, observability pipelines, and failure mode
+          analysis before they hit production.
+        </p>
+      </article>
+      <article class="service-card">
+        <h3>Team Training &amp; Enablement</h3>
+        <p>
+          Uplift your engineers. Hands-on workshops, code reviews,
+          and architectural guidance so your team ships AI confidently
+          without a permanent dependency.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- Credibility -->
+  <section class="credibility">
+    <h2 class="section-label">Why it works</h2>
+    <div class="credential-list">
+      <div class="credential">
+        <span class="credential-number">20+</span>
+        <span class="credential-desc">years professional software engineering</span>
+      </div>
+      <div class="credential">
+        <span class="credential-number">Both</span>
+        <span class="credential-desc">startups and large enterprises</span>
+      </div>
+      <div class="credential">
+        <span class="credential-number">Active</span>
+        <span class="credential-desc">open source contributor &amp; maintainer</span>
+      </div>
+      <div class="credential">
+        <span class="credential-number">Deep</span>
+        <span class="credential-desc">security, architecture &amp; AI specialization</span>
+      </div>
+    </div>
+    <p class="credibility-note">
+      I've spent two decades building systems across consulting, Agile teams,
+      and architectural leadership. Now I apply that depth specifically to
+      the hard problems in production AI.
+    </p>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- How it works -->
+  <section class="process">
+    <h2 class="section-label">How we engage</h2>
+    <ol class="process-steps">
+      <li class="process-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h3>Discovery call</h3>
+          <p>
+            30 minutes. You describe the challenge; I ask the right questions.
+            No pitch, no slides — just a direct conversation to establish fit.
+          </p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h3>Assessment</h3>
+          <p>
+            A focused review of your system, codebase, or architecture.
+            Clear diagnosis of what's blocking you and a concrete path forward.
+          </p>
+        </div>
+      </li>
+      <li class="process-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h3>Engagement</h3>
+          <p>
+            Ongoing advisory, embedded work, or a defined-scope project.
+            Structured around your needs — not a retainer you won't fully use.
+          </p>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CTA -->
+  <section class="final-cta">
+    <p class="cta-pre">Ready to move?</p>
+    <h2 class="cta-headline">Let's talk about your system.</h2>
+    <a href="/contact" class="cta-primary">Get in touch</a>
+  </section>
+</Layout>
+
+<style>
+  /* ── Layout helpers ─────────────────────────────────────── */
+  section {
+    padding-block: 4rem;
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid hsl(var(--border));
+    margin-block: 0;
+  }
+
+  /* ── Eyebrow label ──────────────────────────────────────── */
+  .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-cyan));
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+    margin-top: 0;
+  }
+
+  /* ── Hero ───────────────────────────────────────────────── */
+  .hero {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    font-weight: 200;
+    line-height: 1.15;
+    color: hsl(var(--foreground));
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    /* Override global h1 glow — headline is Raleway here, cleaner */
+    font-family: "Raleway", sans-serif;
+    text-shadow: none;
+  }
+
+  .hero-sub {
+    font-size: 1.125rem;
+    font-weight: 200;
+    color: var(--clr-muted-300);
+    max-width: 52ch;
+    line-height: 1.65;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ── Rate display ───────────────────────────────────────── */
+  .rate-block {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .rate {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 100;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+
+  .rate-unit {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--clr-muted-300);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── Primary CTA button ─────────────────────────────────── */
+  .cta-primary {
+    display: inline-block;
+    padding: 0.875rem 2.25rem;
+    border: 1px solid hsl(var(--neon-cyan));
+    color: hsl(var(--neon-cyan));
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 0.25rem;
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .cta-primary:hover {
+    background-color: hsl(var(--neon-cyan) / 0.1);
+    text-decoration: none;
+  }
+
+  /* ── Section label ──────────────────────────────────────── */
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--clr-muted-300);
+    font-weight: 400;
+    font-family: "Raleway", sans-serif;
+    margin-top: 0;
+    margin-bottom: 3rem;
+  }
+
+  /* ── Service cards ──────────────────────────────────────── */
+  .service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .service-card {
+    padding: 2rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 1.5rem;
+    background-color: hsl(var(--bg-dark, 208 52% 15%));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .service-card:hover {
+    border-color: hsl(var(--neon-cyan) / 0.4);
+    box-shadow: 0 0 1.5rem 0.25rem hsl(var(--neon-cyan) / 0.06);
+  }
+
+  .service-card h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: hsl(var(--neon-cyan));
+    margin-top: 0;
+    margin-bottom: 1rem;
+    letter-spacing: 0.01em;
+  }
+
+  .service-card p {
+    font-size: 0.95rem;
+    font-weight: 200;
+    color: var(--clr-muted-300);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── Credibility ────────────────────────────────────────── */
+  .credential-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .credential {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .credential-number {
+    font-size: 1.75rem;
+    font-weight: 200;
+    color: hsl(var(--foreground));
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .credential-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    color: var(--clr-muted-300);
+    line-height: 1.4;
+  }
+
+  .credibility-note {
+    font-size: 0.95rem;
+    font-weight: 200;
+    color: var(--clr-muted-300);
+    max-width: 56ch;
+    line-height: 1.75;
+    border-left: 2px solid hsl(var(--neon-cyan) / 0.35);
+    padding-left: 1.25rem;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* ── Process steps ──────────────────────────────────────── */
+  .process-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .process-step {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1.5rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid hsl(var(--border));
+  }
+
+  .process-step:first-child {
+    border-top: 1px solid hsl(var(--border));
+  }
+
+  /* Override li::marker from global styles */
+  .process-step::marker {
+    content: none;
+  }
+
+  .step-num {
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: hsl(var(--neon-cyan) / 0.5);
+    letter-spacing: 0.1em;
+    padding-top: 0.25rem;
+  }
+
+  .step-content h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    color: hsl(var(--foreground));
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+  }
+
+  .step-content p {
+    font-size: 0.95rem;
+    font-weight: 200;
+    color: var(--clr-muted-300);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ── Final CTA ──────────────────────────────────────────── */
+  .final-cta {
+    text-align: center;
+    padding-block: 6rem;
+  }
+
+  .cta-pre {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--clr-muted-300);
+    font-weight: 300;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  .cta-headline {
+    font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+    font-weight: 200;
+    color: hsl(var(--foreground));
+    font-family: "Raleway", sans-serif;
+    letter-spacing: -0.01em;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+  }
+</style>

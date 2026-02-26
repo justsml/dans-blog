@@ -1,0 +1,1430 @@
+---
+import { SITE_DESCRIPTION } from "../../consts";
+import Layout from "../../layouts/Page.astro";
+---
+
+<Layout
+  frontmatter={{
+    title: "AI Systems Engineering",
+    subTitle: "Expert AI consulting for teams building production systems",
+  }}
+  className="article"
+>
+
+  <!-- ═══════════════════════════════════════════════
+       HERO SECTION
+  ═══════════════════════════════════════════════ -->
+  <div class="full-width hero-band">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Principal Consulting · AI Systems Engineering</div>
+      <h1 class="hero-headline">
+        Build AI Systems<br />
+        <span class="hero-headline-accent">That Actually Work</span><br />
+        <span class="hero-headline-sub">in Production</span>
+      </h1>
+      <p class="hero-subtext">
+        From architecture through deployment — battle-tested AI engineering
+        for teams who can't afford to get it wrong.
+      </p>
+      <div class="hero-rate-lockup">
+        <span class="rate-label">Consulting Rate</span>
+        <span class="rate-value">$900<span class="rate-unit">/hr</span></span>
+        <span class="rate-note">Senior-level. Results-focused. No hand-holding.</span>
+      </div>
+      <div class="hero-cta-group">
+        <a href="/contact" class="cta-primary">Schedule a Discovery Call</a>
+        <a href="#services" class="cta-secondary">Explore Services</a>
+      </div>
+    </div>
+    <div class="hero-grid-lines" aria-hidden="true">
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+      <div class="grid-line"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       CREDIBILITY BAR
+  ═══════════════════════════════════════════════ -->
+  <div class="full-width cred-bar">
+    <div class="cred-bar-inner">
+      <div class="cred-item">
+        <span class="cred-number">20<span class="cred-plus">+</span></span>
+        <span class="cred-label">Years Engineering</span>
+      </div>
+      <div class="cred-divider" aria-hidden="true"></div>
+      <div class="cred-item">
+        <span class="cred-number">50<span class="cred-plus">+</span></span>
+        <span class="cred-label">Production AI Systems</span>
+      </div>
+      <div class="cred-divider" aria-hidden="true"></div>
+      <div class="cred-item">
+        <span class="cred-number">100<span class="cred-plus">+</span></span>
+        <span class="cred-label">Open Source Contributions</span>
+      </div>
+      <div class="cred-divider" aria-hidden="true"></div>
+      <div class="cred-item">
+        <span class="cred-number">∞</span>
+        <span class="cred-label">Lessons Learned the Hard Way</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       SERVICES SECTION
+  ═══════════════════════════════════════════════ -->
+  <section id="services" class="full-width services-section">
+    <div class="section-header">
+      <span class="section-tag">// Services</span>
+      <h2 class="section-title">What I Can Do For Your Team</h2>
+      <p class="section-subtitle">
+        Precision engineering where it matters — architecture, integration,
+        security, and the humans who build it all.
+      </p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card service-card--arch">
+        <div class="service-card-glow"></div>
+        <div class="service-icon-wrap">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/>
+            <path d="M10 6.5h4M17.5 10v4M6.5 10v4M10 17.5h4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="service-title">AI Architecture &amp; Strategy</h3>
+        <p class="service-desc">
+          Design scalable AI systems from the ground up. Evaluate LLM providers,
+          embedding strategies, vector databases, and orchestration patterns.
+          Get a roadmap your engineers can actually execute.
+        </p>
+        <ul class="service-features">
+          <li>System design reviews &amp; technical audits</li>
+          <li>RAG pipeline architecture</li>
+          <li>Multi-agent workflow design</li>
+          <li>Cost &amp; latency optimization strategies</li>
+        </ul>
+        <div class="service-card-accent"></div>
+      </div>
+
+      <div class="service-card service-card--llm">
+        <div class="service-card-glow"></div>
+        <div class="service-icon-wrap">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4" stroke-linecap="round"/>
+            <path d="M7 8h2M11 8h6M7 12h10" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3 class="service-title">LLM Integration &amp; Optimization</h3>
+        <p class="service-desc">
+          Move beyond demos. Ship production LLM features with proper
+          prompt engineering, evals, streaming, caching, and graceful
+          degradation baked in from day one.
+        </p>
+        <ul class="service-features">
+          <li>Prompt engineering &amp; eval frameworks</li>
+          <li>Streaming &amp; structured output patterns</li>
+          <li>Fine-tuning strategy &amp; dataset curation</li>
+          <li>Inference cost reduction (up to 80%)</li>
+        </ul>
+        <div class="service-card-accent"></div>
+      </div>
+
+      <div class="service-card service-card--sec">
+        <div class="service-card-glow"></div>
+        <div class="service-icon-wrap">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6L12 2z"/>
+            <path d="M9 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h3 class="service-title">AI Security &amp; Reliability</h3>
+        <p class="service-desc">
+          Harden AI systems against prompt injection, data leakage, and
+          adversarial inputs. Build observability and guardrails that keep
+          your system trustworthy at scale.
+        </p>
+        <ul class="service-features">
+          <li>Prompt injection &amp; jailbreak hardening</li>
+          <li>PII detection &amp; data boundary enforcement</li>
+          <li>AI observability &amp; tracing setup</li>
+          <li>Compliance-ready AI governance patterns</li>
+        </ul>
+        <div class="service-card-accent"></div>
+      </div>
+
+      <div class="service-card service-card--training">
+        <div class="service-card-glow"></div>
+        <div class="service-icon-wrap">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="service-title">Team Training &amp; Enablement</h3>
+        <p class="service-desc">
+          Upskill your engineering team from AI-curious to AI-capable.
+          Hands-on workshops, architectural walkthroughs, and embedded
+          mentorship that sticks.
+        </p>
+        <ul class="service-features">
+          <li>AI engineering workshop series</li>
+          <li>Code review &amp; pair programming sessions</li>
+          <li>Internal tooling &amp; developer DX consulting</li>
+          <li>On-call architecture advising</li>
+        </ul>
+        <div class="service-card-accent"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       HOW IT WORKS SECTION
+  ═══════════════════════════════════════════════ -->
+  <section class="full-width process-section">
+    <div class="section-header">
+      <span class="section-tag">// Engagement Model</span>
+      <h2 class="section-title">How We Work Together</h2>
+      <p class="section-subtitle">
+        A clear, structured process — no bloated retainers, no endless discovery.
+        Just fast, focused work that ships.
+      </p>
+    </div>
+
+    <div class="process-timeline">
+
+      <div class="process-step">
+        <div class="step-connector-left" aria-hidden="true"></div>
+        <div class="step-number-wrap">
+          <span class="step-number">01</span>
+        </div>
+        <div class="step-connector-right" aria-hidden="true"></div>
+        <div class="step-content">
+          <h3 class="step-title">Discovery Call</h3>
+          <p class="step-desc">
+            A focused 30-minute conversation about your system, your team,
+            and your biggest AI engineering challenges. No pitch deck.
+            No fluff. Just diagnosis.
+          </p>
+          <div class="step-tag">Free · 30 min</div>
+        </div>
+      </div>
+
+      <div class="process-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="process-step">
+        <div class="step-connector-left" aria-hidden="true"></div>
+        <div class="step-number-wrap">
+          <span class="step-number">02</span>
+        </div>
+        <div class="step-connector-right" aria-hidden="true"></div>
+        <div class="step-content">
+          <h3 class="step-title">Technical Assessment</h3>
+          <p class="step-desc">
+            Deep-dive review of your codebase, infrastructure, and AI
+            integration points. Delivered as a prioritized action plan
+            with clear recommendations.
+          </p>
+          <div class="step-tag">Half-day to 2 days</div>
+        </div>
+      </div>
+
+      <div class="process-arrow" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="process-step">
+        <div class="step-connector-left" aria-hidden="true"></div>
+        <div class="step-number-wrap">
+          <span class="step-number">03</span>
+        </div>
+        <div class="step-connector-right" aria-hidden="true"></div>
+        <div class="step-content">
+          <h3 class="step-title">Focused Engagement</h3>
+          <p class="step-desc">
+            Hands-on work: architecture, implementation, code review, or
+            team training — whatever moves the needle fastest. Billed
+            hourly or as a fixed-scope block.
+          </p>
+          <div class="step-tag">Ongoing or project-scoped</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       SOCIAL PROOF / CREDIBILITY SECTION
+  ═══════════════════════════════════════════════ -->
+  <section class="full-width proof-section">
+    <div class="section-header">
+      <span class="section-tag">// Why Dan</span>
+      <h2 class="section-title">Credentials &amp; Track Record</h2>
+    </div>
+
+    <div class="proof-grid">
+
+      <div class="proof-card proof-card--gradient-brainblow">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">20+ Years Production Engineering</h3>
+          <p class="proof-card-body">
+            Shipped software at startups and Fortune 500s alike. Deep roots
+            in system reliability, scaling, and the painful lessons that
+            only come from real production incidents.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card--gradient-sublime">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">Open Source at Scale</h3>
+          <p class="proof-card-body">
+            Active contributor across the AI and JavaScript ecosystems.
+            Maintainer of libraries used by thousands of developers.
+            Code that earns trust by being readable and testable.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card--gradient-cold">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">Full-Stack AI Fluency</h3>
+          <p class="proof-card-body">
+            From embeddings and vector search to React UI and API design.
+            No handoff tax — I understand every layer of the systems I help
+            you build.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card--gradient-deep-purple">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">Security-First by Default</h3>
+          <p class="proof-card-body">
+            Security audits, penetration testing guidance, and OWASP-aligned
+            reviews baked into every engagement. AI systems that are robust,
+            not just functional.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card--gradient-party">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">Team Builder &amp; Educator</h3>
+          <p class="proof-card-body">
+            Speaker, mentor, and teacher. I don't just fix your code — I
+            leave your team more capable than I found it. The best engagement
+            is one where you never need me again.
+          </p>
+        </div>
+      </div>
+
+      <div class="proof-card proof-card--gradient-after-party">
+        <div class="proof-card-inner">
+          <div class="proof-icon">&#9670;</div>
+          <h3 class="proof-card-title">Agile Architecture Leadership</h3>
+          <p class="proof-card-body">
+            Architecting for teams that ship weekly, not quarterly. Lean
+            patterns, fast feedback loops, and documentation that actually
+            gets read.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════
+       RATE / VALUE PROPOSITION CALLOUT
+  ═══════════════════════════════════════════════ -->
+  <div class="full-width rate-section">
+    <div class="rate-inner">
+      <div class="rate-left">
+        <span class="rate-eyebrow">Transparent Pricing</span>
+        <div class="rate-display">
+          <span class="rate-big">$900</span>
+          <span class="rate-per">/hr</span>
+        </div>
+        <p class="rate-context">
+          Senior AI engineering expertise — no junior stand-ins, no
+          account managers. You get Dan, every session.
+        </p>
+      </div>
+      <div class="rate-right">
+        <div class="rate-feature">
+          <span class="rate-check">&#10003;</span>
+          <span>Direct access — no intermediaries</span>
+        </div>
+        <div class="rate-feature">
+          <span class="rate-check">&#10003;</span>
+          <span>Hourly or fixed-scope blocks available</span>
+        </div>
+        <div class="rate-feature">
+          <span class="rate-check">&#10003;</span>
+          <span>Async support between sessions</span>
+        </div>
+        <div class="rate-feature">
+          <span class="rate-check">&#10003;</span>
+          <span>Written deliverables on every engagement</span>
+        </div>
+        <div class="rate-feature">
+          <span class="rate-check">&#10003;</span>
+          <span>NDA available upon request</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════
+       FINAL CTA SECTION
+  ═══════════════════════════════════════════════ -->
+  <div class="full-width cta-section">
+    <div class="cta-inner">
+      <div class="cta-glow-orb cta-glow-orb--left" aria-hidden="true"></div>
+      <div class="cta-glow-orb cta-glow-orb--right" aria-hidden="true"></div>
+      <span class="cta-eyebrow">Ready to ship AI that works?</span>
+      <h2 class="cta-headline">
+        Let's Solve Your Hardest<br />
+        <span class="cta-headline-accent">AI Engineering Problems</span>
+      </h2>
+      <p class="cta-body">
+        Discovery calls are free. The first 30 minutes cost nothing and
+        you'll walk away with at least one concrete insight about your
+        AI system — regardless of whether we work together.
+      </p>
+      <a href="/contact" class="cta-button">
+        <span class="cta-button-text">Book a Discovery Call</span>
+        <svg class="cta-button-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+      <p class="cta-fine">
+        Or email directly: <a href="mailto:dan@danlevy.net" class="cta-email">dan@danlevy.net</a>
+      </p>
+    </div>
+  </div>
+
+</Layout>
+
+<style>
+  /* ══════════════════════════════════════════
+     KEYFRAMES
+  ══════════════════════════════════════════ */
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1; }
+  }
+
+  @keyframes scan-line {
+    0%   { transform: translateY(-100%); }
+    100% { transform: translateY(100vh); }
+  }
+
+  @keyframes float-up {
+    0%   { transform: translateY(12px); opacity: 0; }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+
+  @keyframes border-chase {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @keyframes neon-flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow:
+        0 0 2px #fff,
+        0 0 10px hsl(var(--neon-pink)),
+        0 0 21px hsl(var(--neon-pink)),
+        0 0 42px hsl(var(--neon-pink));
+    }
+    20%, 24%, 55% {
+      text-shadow: none;
+    }
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position:  200% 0; }
+  }
+
+  /* ══════════════════════════════════════════
+     HERO BAND
+  ══════════════════════════════════════════ */
+  .hero-band {
+    position: relative;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -10%, hsl(var(--neon-cyan) / 0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 50%, hsl(var(--neon-pink) / 0.08) 0%, transparent 60%),
+      hsl(var(--background));
+    border-bottom: 1px solid hsl(var(--border));
+    overflow: hidden;
+    padding-block: 5rem 4rem;
+  }
+
+  .hero-grid-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: space-evenly;
+    overflow: hidden;
+    opacity: 0.04;
+  }
+
+  .grid-line {
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      hsl(var(--neon-cyan)),
+      transparent
+    );
+    animation: pulse-glow 4s ease-in-out infinite;
+  }
+  .grid-line:nth-child(2) { animation-delay: 0.8s; }
+  .grid-line:nth-child(3) { animation-delay: 1.6s; }
+  .grid-line:nth-child(4) { animation-delay: 2.4s; }
+  .grid-line:nth-child(5) { animation-delay: 3.2s; }
+
+  .hero-inner {
+    grid-column: content;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    animation: float-up 0.6s ease-out both;
+  }
+
+  .hero-eyebrow {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-cyan));
+    border: 1px solid hsl(var(--neon-cyan) / 0.35);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    background: hsl(var(--neon-cyan) / 0.06);
+  }
+
+  .hero-headline {
+    font-family: "Playwrite AU NSW", cursive !important;
+    font-size: clamp(2rem, 6vw, 3.75rem) !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    color: hsl(var(--foreground)) !important;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px hsl(var(--neon-pink)),
+      0 0 21px hsl(var(--neon-pink)),
+      0 0 42px hsl(var(--neon-pink)) !important;
+  }
+
+  .hero-headline-accent {
+    color: hsl(var(--neon-cyan));
+    text-shadow:
+      0 0 2px #fff,
+      0 0 14px hsl(var(--neon-cyan)),
+      0 0 28px hsl(var(--neon-cyan)),
+      0 0 56px hsl(var(--neon-cyan));
+  }
+
+  .hero-headline-sub {
+    color: var(--clr-muted-300);
+    text-shadow: none;
+    font-size: 0.75em;
+  }
+
+  .hero-subtext {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-400);
+    color: var(--clr-muted-200);
+    max-width: 52ch;
+    margin: 0;
+    line-height: 1.65;
+  }
+
+  /* Rate lockup */
+  .hero-rate-lockup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1.25rem 1.75rem;
+    background: hsl(var(--bg-dark));
+    border: 1px solid hsl(var(--neon-cyan) / 0.3);
+    border-radius: 1rem;
+    box-shadow:
+      0 0 1rem 0.25rem hsl(var(--card-foreground)),
+      inset 0 0 1.5rem hsl(var(--neon-cyan) / 0.04);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-rate-lockup::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg,
+      transparent,
+      hsl(var(--neon-cyan)),
+      hsl(var(--neon-pink)),
+      transparent
+    );
+  }
+
+  .rate-label {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--clr-muted-300);
+  }
+
+  .rate-value {
+    font-family: "Raleway", sans-serif;
+    font-weight: 100;
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 14px hsl(var(--neon-cyan)),
+      0 0 28px hsl(var(--neon-cyan)),
+      0 0 56px hsl(var(--neon-cyan));
+    line-height: 1;
+  }
+
+  .rate-unit {
+    font-size: 0.45em;
+    color: hsl(var(--neon-cyan));
+    font-weight: 300;
+  }
+
+  .rate-note {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-200);
+    color: var(--clr-muted-300);
+    font-style: italic;
+  }
+
+  /* Hero CTAs */
+  .hero-cta-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .cta-primary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg,
+      hsl(var(--neon-cyan) / 0.15),
+      hsl(var(--neon-pink) / 0.15)
+    );
+    border: 1px solid hsl(var(--neon-cyan) / 0.6);
+    border-radius: 0.5rem;
+    color: hsl(var(--neon-cyan)) !important;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-300);
+    letter-spacing: 0.04em;
+    text-decoration: none !important;
+    transition:
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .cta-primary:hover {
+    background: linear-gradient(135deg,
+      hsl(var(--neon-cyan) / 0.25),
+      hsl(var(--neon-pink) / 0.25)
+    );
+    box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
+    border-color: hsl(var(--neon-pink) / 0.8);
+  }
+
+  .cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.875rem 1.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    color: var(--clr-muted-300) !important;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-300);
+    letter-spacing: 0.04em;
+    text-decoration: none !important;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .cta-secondary:hover {
+    border-color: hsl(var(--neon-cyan) / 0.5);
+    color: hsl(var(--neon-cyan)) !important;
+  }
+
+  /* ══════════════════════════════════════════
+     CREDIBILITY BAR
+  ══════════════════════════════════════════ */
+  .cred-bar {
+    background: hsl(var(--bg-dark));
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+    padding-block: 2rem;
+  }
+
+  .cred-bar-inner {
+    grid-column: content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .cred-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .cred-number {
+    font-family: "Raleway", sans-serif;
+    font-weight: 100;
+    font-size: var(--fs-700);
+    color: #fff;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px hsl(var(--neon-cyan)),
+      0 0 21px hsl(var(--neon-cyan));
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .cred-plus {
+    color: hsl(var(--neon-pink));
+    font-size: 0.65em;
+  }
+
+  .cred-label {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    color: var(--clr-muted-300);
+    letter-spacing: 0.06em;
+    text-align: center;
+  }
+
+  .cred-divider {
+    width: 1px;
+    height: 3rem;
+    background: hsl(var(--border));
+    opacity: 0.5;
+  }
+
+  @media (max-width: 600px) {
+    .cred-divider { display: none; }
+  }
+
+  /* ══════════════════════════════════════════
+     SECTION SHARED STYLES
+  ══════════════════════════════════════════ */
+  .services-section,
+  .process-section,
+  .proof-section {
+    padding-block: 4rem;
+  }
+
+  .section-header {
+    grid-column: content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    margin-bottom: 3rem;
+  }
+
+  .section-tag {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    letter-spacing: 0.2em;
+    color: hsl(var(--neon-pink));
+    text-shadow: 0 0 8px hsl(var(--neon-pink) / 0.6);
+  }
+
+  .section-title {
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 200 !important;
+    font-size: var(--fs-600) !important;
+    color: hsl(var(--neon-cyan)) !important;
+    margin: 0 !important;
+    letter-spacing: -0.02em;
+  }
+
+  .section-subtitle {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-300);
+    max-width: 55ch;
+    margin: 0;
+    line-height: 1.7;
+  }
+
+  /* ══════════════════════════════════════════
+     SERVICES SECTION
+  ══════════════════════════════════════════ */
+  .services-section {
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 80%, hsl(var(--neon-purple) / 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 20%, hsl(var(--neon-cyan) / 0.05) 0%, transparent 60%),
+      hsl(var(--background));
+  }
+
+  .services-grid {
+    grid-column: full-width;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding-inline: clamp(1rem, 5vw, 4rem);
+    max-width: 1200px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  /* Service cards */
+  .service-card {
+    position: relative;
+    background-color: hsl(var(--bg-dark));
+    border: 1px solid hsl(var(--border));
+    border-radius: 1.5rem;
+    padding: 2rem 1.75rem;
+    box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+    transition:
+      box-shadow 0.175s ease-in-out,
+      border-color 0.175s ease-in-out,
+      transform 0.175s ease-in-out;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .service-card-glow {
+    position: absolute;
+    top: -2rem; right: -2rem;
+    width: 8rem; height: 8rem;
+    border-radius: 50%;
+    opacity: 0;
+    filter: blur(2rem);
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .service-card:hover {
+    box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
+    transform: translateY(-3px) scale(1.01);
+    border-color: hsl(var(--neon-pink) / 0.5);
+  }
+
+  .service-card:hover .service-card-glow {
+    opacity: 1;
+  }
+
+  .service-card--arch .service-card-glow { background: hsl(var(--neon-cyan)); }
+  .service-card--llm .service-card-glow  { background: hsl(var(--neon-pink)); }
+  .service-card--sec .service-card-glow  { background: hsl(var(--neon-green)); }
+  .service-card--training .service-card-glow { background: hsl(var(--neon-purple)); }
+
+  .service-icon-wrap {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: hsl(var(--neon-cyan) / 0.1);
+    border: 1px solid hsl(var(--neon-cyan) / 0.3);
+    flex-shrink: 0;
+  }
+
+  .service-card--llm .service-icon-wrap {
+    background: hsl(var(--neon-pink) / 0.1);
+    border-color: hsl(var(--neon-pink) / 0.3);
+  }
+
+  .service-card--sec .service-icon-wrap {
+    background: hsl(var(--neon-green) / 0.1);
+    border-color: hsl(var(--neon-green) / 0.3);
+  }
+
+  .service-card--training .service-icon-wrap {
+    background: hsl(var(--neon-purple) / 0.1);
+    border-color: hsl(var(--neon-purple) / 0.3);
+  }
+
+  .service-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: hsl(var(--neon-cyan));
+  }
+
+  .service-card--llm .service-icon      { color: hsl(var(--neon-pink)); }
+  .service-card--sec .service-icon      { color: hsl(var(--neon-green)); }
+  .service-card--training .service-icon { color: hsl(var(--neon-purple)); }
+
+  .service-title {
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 300 !important;
+    font-size: var(--fs-400) !important;
+    color: hsl(var(--neon-cyan)) !important;
+    margin: 0 !important;
+  }
+
+  .service-card--llm .service-title      { color: hsl(var(--neon-pink)) !important; }
+  .service-card--sec .service-title      { color: hsl(var(--neon-green)) !important; }
+  .service-card--training .service-title { color: hsl(var(--neon-purple)) !important; }
+
+  .service-desc {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-200);
+    line-height: 1.7;
+    margin: 0;
+    flex: 1;
+  }
+
+  .service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .service-features li {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-200);
+    color: var(--clr-muted-300);
+    padding-left: 1.25rem;
+    position: relative;
+  }
+
+  .service-features li::before {
+    content: "‣";
+    position: absolute;
+    left: 0;
+    color: hsl(var(--neon-pink));
+    font-size: 1rem;
+  }
+
+  .service-card--arch .service-features li::before   { color: hsl(var(--neon-cyan)); }
+  .service-card--llm .service-features li::before    { color: hsl(var(--neon-pink)); }
+  .service-card--sec .service-features li::before    { color: hsl(var(--neon-green)); }
+  .service-card--training .service-features li::before { color: hsl(var(--neon-purple)); }
+
+  .service-card-accent {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, hsl(var(--neon-cyan)), hsl(var(--neon-pink)));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+    border-radius: 0 0 1.5rem 1.5rem;
+  }
+
+  .service-card:hover .service-card-accent { transform: scaleX(1); }
+
+  /* ══════════════════════════════════════════
+     PROCESS SECTION
+  ══════════════════════════════════════════ */
+  .process-section {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, hsl(var(--neon-blue) / 0.06) 0%, transparent 70%),
+      hsl(var(--bg-dark));
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+  }
+
+  .process-timeline {
+    grid-column: content;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .process-step {
+    flex: 1;
+    min-width: 200px;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 0 1rem;
+  }
+
+  .step-number-wrap {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 1px solid hsl(var(--neon-cyan) / 0.4);
+    background: hsl(var(--neon-cyan) / 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 0.5rem hsl(var(--neon-cyan) / 0.2),
+      inset 0 0 1rem hsl(var(--neon-cyan) / 0.06);
+    flex-shrink: 0;
+  }
+
+  .step-number {
+    font-family: "Raleway", sans-serif;
+    font-weight: 100;
+    font-size: var(--fs-400);
+    color: hsl(var(--neon-cyan));
+    letter-spacing: -0.05em;
+  }
+
+  .step-connector-left,
+  .step-connector-right {
+    display: none;
+  }
+
+  .step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .step-title {
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 300 !important;
+    font-size: var(--fs-400) !important;
+    color: hsl(var(--neon-cyan)) !important;
+    margin: 0 !important;
+  }
+
+  .step-desc {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-200);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .step-tag {
+    display: inline-block;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-100);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-pink));
+    border: 1px solid hsl(var(--neon-pink) / 0.35);
+    border-radius: 2rem;
+    padding: 0.2rem 0.65rem;
+    background: hsl(var(--neon-pink) / 0.06);
+    align-self: center;
+  }
+
+  .process-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1rem;
+    color: hsl(var(--neon-cyan) / 0.5);
+  }
+
+  .process-arrow svg {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  @media (max-width: 680px) {
+    .process-timeline {
+      flex-direction: column;
+      align-items: center;
+    }
+    .process-arrow {
+      transform: rotate(90deg);
+    }
+  }
+
+  /* ══════════════════════════════════════════
+     PROOF / CREDIBILITY SECTION
+  ══════════════════════════════════════════ */
+  .proof-section {
+    background: hsl(var(--background));
+  }
+
+  .proof-grid {
+    grid-column: full-width;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    padding-inline: clamp(1rem, 5vw, 4rem);
+    max-width: 1200px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .proof-card {
+    border-radius: 1.5rem;
+    box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+    transition:
+      box-shadow 0.175s ease-in-out,
+      transform 0.175s ease-in-out;
+    overflow: hidden;
+  }
+
+  .proof-card:hover {
+    box-shadow: 0 0 1rem 0.25rem rgb(254 164 221);
+    transform: translateY(-2px) scale(1.01);
+  }
+
+  .proof-card--gradient-brainblow   { background: var(--brainblow-bg); }
+  .proof-card--gradient-sublime     { background: var(--sublime-light-bg); }
+  .proof-card--gradient-cold        { background: var(--cold-bg); }
+  .proof-card--gradient-deep-purple { background: var(--deep-purple-bg); }
+  .proof-card--gradient-party       { background: var(--party-bg); }
+  .proof-card--gradient-after-party { background: var(--after-party-bg); }
+
+  .proof-card-inner {
+    background: hsl(var(--background) / 0.72);
+    backdrop-filter: blur(6px);
+    border-radius: 1.5rem;
+    padding: 1.75rem 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .proof-icon {
+    color: hsl(var(--neon-cyan));
+    font-size: 1.25rem;
+    text-shadow: 0 0 0.5rem hsl(var(--neon-cyan));
+  }
+
+  .proof-card-title {
+    font-family: "Raleway", sans-serif !important;
+    font-weight: 300 !important;
+    font-size: var(--fs-400) !important;
+    color: hsl(var(--neon-cyan)) !important;
+    margin: 0 !important;
+  }
+
+  .proof-card-body {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-200);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════
+     RATE SECTION
+  ══════════════════════════════════════════ */
+  .rate-section {
+    background: hsl(var(--bg-dark));
+    border-top: 1px solid hsl(var(--border));
+    border-bottom: 1px solid hsl(var(--border));
+    padding-block: 4rem;
+  }
+
+  .rate-inner {
+    grid-column: content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (max-width: 640px) {
+    .rate-inner {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .rate-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .rate-eyebrow {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-pink));
+    text-shadow: 0 0 8px hsl(var(--neon-pink) / 0.6);
+  }
+
+  .rate-display {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    line-height: 1;
+  }
+
+  .rate-big {
+    font-family: "Raleway", sans-serif;
+    font-weight: 100;
+    font-size: clamp(4rem, 12vw, 7rem);
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 14px hsl(var(--neon-cyan)),
+      0 0 28px hsl(var(--neon-cyan)),
+      0 0 56px hsl(var(--neon-cyan));
+  }
+
+  .rate-per {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: hsl(var(--neon-cyan));
+    align-self: flex-end;
+    padding-bottom: 0.5rem;
+  }
+
+  .rate-context {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-300);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  .rate-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+    background: hsl(var(--background) / 0.8);
+    border: 1px solid hsl(var(--border));
+    border-radius: 1.5rem;
+    box-shadow: 0 0 1rem 0.25rem hsl(var(--card-foreground));
+  }
+
+  .rate-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-300);
+    color: var(--clr-muted-200);
+  }
+
+  .rate-check {
+    color: hsl(var(--neon-green));
+    text-shadow: 0 0 6px hsl(var(--neon-green) / 0.7);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    line-height: 1.7;
+  }
+
+  /* ══════════════════════════════════════════
+     FINAL CTA SECTION
+  ══════════════════════════════════════════ */
+  .cta-section {
+    padding-block: 6rem;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 50%, hsl(var(--neon-cyan) / 0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 50% at 20% 30%, hsl(var(--neon-pink) / 0.06) 0%, transparent 60%),
+      hsl(var(--background));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-glow-orb {
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    border-radius: 50%;
+    filter: blur(4rem);
+    pointer-events: none;
+  }
+
+  .cta-glow-orb--left {
+    background: hsl(var(--neon-cyan) / 0.06);
+    top: -5rem;
+    left: -5rem;
+    animation: pulse-glow 5s ease-in-out infinite;
+  }
+
+  .cta-glow-orb--right {
+    background: hsl(var(--neon-pink) / 0.06);
+    bottom: -5rem;
+    right: -5rem;
+    animation: pulse-glow 5s ease-in-out infinite 2.5s;
+  }
+
+  .cta-inner {
+    grid-column: content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-eyebrow {
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-200);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: hsl(var(--neon-pink));
+    text-shadow: 0 0 8px hsl(var(--neon-pink) / 0.6);
+  }
+
+  .cta-headline {
+    font-family: "Playwrite AU NSW", cursive !important;
+    font-size: clamp(2rem, 5vw, 3.25rem) !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    color: hsl(var(--foreground)) !important;
+    text-shadow:
+      0 0 2px #fff,
+      0 0 10px hsl(var(--neon-pink)),
+      0 0 21px hsl(var(--neon-pink)) !important;
+  }
+
+  .cta-headline-accent {
+    color: hsl(var(--neon-cyan));
+    text-shadow:
+      0 0 2px #fff,
+      0 0 14px hsl(var(--neon-cyan)),
+      0 0 28px hsl(var(--neon-cyan));
+  }
+
+  .cta-body {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-400);
+    color: var(--clr-muted-200);
+    max-width: 52ch;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    background: linear-gradient(135deg,
+      hsl(var(--neon-cyan) / 0.18),
+      hsl(var(--neon-pink) / 0.18)
+    );
+    border: 1px solid hsl(var(--neon-cyan) / 0.5);
+    border-radius: 0.5rem;
+    color: hsl(var(--neon-cyan)) !important;
+    font-family: "Raleway", sans-serif;
+    font-weight: 300;
+    font-size: var(--fs-400);
+    letter-spacing: 0.05em;
+    text-decoration: none !important;
+    transition:
+      box-shadow 0.2s ease,
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .cta-button:hover {
+    background: linear-gradient(135deg,
+      hsl(var(--neon-cyan) / 0.28),
+      hsl(var(--neon-pink) / 0.28)
+    );
+    box-shadow: 0 0 1.5rem 0.5rem rgb(254 164 221);
+    border-color: hsl(var(--neon-pink) / 0.8);
+    transform: translateY(-2px);
+  }
+
+  .cta-button-text {
+    position: relative;
+  }
+
+  .cta-button-arrow {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: transform 0.2s ease;
+  }
+
+  .cta-button:hover .cta-button-arrow {
+    transform: translateX(4px);
+  }
+
+  .cta-fine {
+    font-family: "Raleway", sans-serif;
+    font-weight: 200;
+    font-size: var(--fs-200);
+    color: var(--clr-muted-300);
+    margin: 0;
+  }
+
+  .cta-email {
+    color: hsl(var(--neon-cyan)) !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid hsl(var(--neon-cyan) / 0.4);
+    transition: border-color 0.2s ease;
+  }
+
+  .cta-email:hover {
+    border-color: hsl(var(--neon-cyan));
+  }
+</style>
