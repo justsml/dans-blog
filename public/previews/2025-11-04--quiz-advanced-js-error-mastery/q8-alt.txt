@@ -1,0 +1,17 @@
+# 8. Error Cause
+
+What does wrapper.cause.message return?
+
+const original = new Error('Original error');
+const wrapper = new Error('Wrapper',
+  { cause: original }
+);
+console.log(wrapper.cause.message);
+------
+
+1. "Original error"
+2. undefined
+3. The wrapping error
+4. SyntaxError
+
+[credit](https://danlevy.net/)

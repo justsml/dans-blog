@@ -1,0 +1,19 @@
+# 3. Type Checking Tricks
+
+What are the results of these checks?
+
+class CustomError extends Error {}
+const err = new CustomError('test');
+
+
+console.log(err instanceof CustomError);
+console.log(err instanceof Error);
+console.log(err instanceof Object);
+------
+
+1. true, true, true
+2. true, false, false
+3. false, true, true
+4. true, true, false
+
+[credit](https://danlevy.net/)

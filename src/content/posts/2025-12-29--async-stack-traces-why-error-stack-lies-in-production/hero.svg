@@ -1,0 +1,42 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111111;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="fade-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#22c55e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:0" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)" />
+  
+  <!-- Terminal Window -->
+  <rect x="100" y="50" width="1000" height="530" rx="10" fill="#0a0a0a" stroke="#333" stroke-width="2" />
+  
+  <!-- Window Controls -->
+  <circle cx="130" cy="80" r="6" fill="#ef4444" />
+  <circle cx="150" cy="80" r="6" fill="#eab308" />
+  <circle cx="170" cy="80" r="6" fill="#22c55e" />
+  
+  <!-- Stack Trace Content -->
+  <g transform="translate(150, 150)" font-family="monospace" font-size="20">
+    <text x="0" y="0" fill="#ef4444" font-weight="bold">Error: Transaction failed</text>
+    
+    <g fill="url(#fade-grad)">
+      <text x="20" y="40">at processPayment (/app/services/payment.ts:42:15)</text>
+      <text x="20" y="80">at async checkout (/app/controllers/cart.ts:105:8)</text>
+      <text x="20" y="120" opacity="0.8">at async handleRequest (/app/server.ts:89:12)</text>
+      <text x="20" y="160" opacity="0.6">at async ...</text>
+      <text x="20" y="200" opacity="0.4">at [native code]</text>
+      <text x="20" y="240" opacity="0.2">at [native code]</text>
+    </g>
+    
+    <!-- Missing Link Visual -->
+    <path d="M20 280 L100 280" stroke="#333" stroke-width="2" stroke-dasharray="5,5" />
+    <text x="120" y="285" fill="#666" font-style="italic">Where did it come from?</text>
+  </g>
+
+</svg>

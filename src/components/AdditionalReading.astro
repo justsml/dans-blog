@@ -10,19 +10,35 @@ type Props = {
   excludeSlugs?: string[];
   articleLimit?: number;
   className?: string;
+  tags?: string[];
+  category?: string;
+  currentSlug?: string;
 };
 
-const className = Astro.props.className ?? "";
-const articleLimit = Astro.props.articleLimit ?? 4;
-const excludeSlugs = Astro.props.excludeSlugs ?? [];
+const {
+  className = "",
+  articleLimit = 4,
+  excludeSlugs = [],
+  tags = [],
+  category,
+  currentSlug,
+} = Astro.props;
+
 let slugs = Astro.props.slugs ?? [];
 
+// 1. Fill with related posts if we have space
+if (slugs.length < articleLimit) {
+  slugs = getRelatedArticles(slugs, articleLimit, tags, category, currentSlug);
+}
+
+// 2. Fill remainder with random posts
 slugs = addRandomArticleSlugs(slugs, articleLimit);
 
+
 const _posts = PostCollections.getPostsBySlugs(slugs);
-if (_posts.length > articleLimit) {
-  _posts.length = articleLimit;
-}
+// if (_posts.length > articleLimit) {
+//   _posts.length = articleLimit;
+// }
 
 // Get _slugs and _postsBySlug for posts from getRecentPosts
 
@@ -38,21 +54,77 @@ function getRecentPosts(limitCount = 20) {
   };
 }
 
+function getRelatedArticles(
+  currentSlugs: string[],
+  limit: number,
+  tags: string[],
+  category?: string,
+  currentSlug?: string,
+) {
+  const posts = PostCollections.getPosts() as ArticlePost[];
+  
+  // Score posts based on relevance
+  const scoredPosts = posts
+    .filter((p) => p.slug !== currentSlug && !excludeSlugs.includes(p.slug) && !currentSlugs.includes(p.slug) && !p.data.draft && !p.data.hidden)
+    .map((p) => {
+      let score = 0;
+      if (category && p.data.category === category) score += 3;
+      if (tags && p.data.tags) {
+        const matchingTags = p.data.tags.filter((t) => tags.includes(t));
+        score += matchingTags.length;
+      }
+      return { post: p, score };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  // Take top N related posts, leaving room for at least 2 random ones if possible
+  // But if we have *many* related posts, maybe we use up to limit-2?
+  // The user said: "last 2 of 4 articles are random, but the first 2 try find a matching category or tag."
+  
+  const slotsForRelated = Math.max(0, limit - 2); 
+  // If limit is 4, match up to 2.
+  
+  for (const item of scoredPosts) {
+    if (currentSlugs.length >= slotsForRelated) break;
+    if (!currentSlugs.includes(item.post.slug)) {
+      currentSlugs.push(item.post.slug);
+    }
+  }
+  
+  return currentSlugs;
+}
+
 function addRandomArticleSlugs(slugs: string[], limit: number) {
-  const {_postsBySlug, _slugs} = getRecentPosts(30);
-  // const lastPost = posts[posts.length - 1];
-  // console.log("Oldest post %s %s", lastPost.data.date, lastPost.slug);
+  const {_postsBySlug, _slugs} = getRecentPosts(50); // Look at more recent posts for random pool
   const articleCount = _slugs.length;
   let i = 0;
-  while (slugs.length < limit) {
+  // Safety break to prevent infinite loops if we can't find enough posts
+  let attempts = 0;
+  const maxAttempts = 100;
+
+  while (slugs.length < limit && attempts < maxAttempts) {
+    attempts++;
     i++;
-    if (i > articleCount) break;
+    // if (i > articleCount) break; // Not needed with random access
+    
     const rnd = Math.floor(Math.random() * articleCount);
     const randomSlug = _slugs[rnd] as string;
+    
     if (excludeSlugs.some(exclude => randomSlug.includes(exclude))) continue;
+    
     const _post = _postsBySlug[randomSlug];
-    if (!slugs.includes(randomSlug) && !_post.data.draft && !_post.data.hidden)
-      slugs.push(randomSlug);
+    // Check if valid post and not already in list
+    if (
+      !slugs.includes(randomSlug) && 
+      _post && 
+      !_post.data.draft && 
+      !_post.data.hidden
+    ) {
+        // Also ensure we don't accidentally pick the current page if it wasn't in excludeSlugs for some reason
+        if (currentSlug && randomSlug === currentSlug) continue;
+        slugs.push(randomSlug);
+    }
   }
   return slugs;
 }
@@ -62,7 +134,7 @@ const posts = _posts.map((p) => p as ArticlePost);
 
 <div class={`additional-reading default-links ${className}`} data-pagefind-ignore="all">
   <SocialLinks />
-  <h2>Read More Shit, by Dan Levy ✨</h2>
+  <h2>Read More Shit by Dan Levy ✨</h2>
   <section class="article-tiles">
     {posts.map((article) => <ArticleCard transition:persist article={article} className="tile" />)}
   </section>

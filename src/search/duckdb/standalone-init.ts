@@ -1,4 +1,4 @@
-import { DuckDBConnection, DuckDBInstance, DuckDBInstanceCache } from '@duckdb/node-api';
+import { DuckDBInstanceCache } from '@duckdb/node-api';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';

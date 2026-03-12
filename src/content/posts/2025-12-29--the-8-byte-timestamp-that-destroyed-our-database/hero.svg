@@ -1,0 +1,41 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)" />
+  
+  <!-- Grid lines for tech feel -->
+  <path d="M0 100 H1200 M0 200 H1200 M0 300 H1200 M0 400 H1200 M0 500 H1200" stroke="#333" stroke-width="1" opacity="0.2"/>
+  <path d="M200 0 V630 M400 0 V630 M600 0 V630 M800 0 V630 M1000 0 V630" stroke="#333" stroke-width="1" opacity="0.2"/>
+
+  <!-- Clock Container -->
+  <rect x="250" y="215" width="700" height="200" rx="10" fill="#111" stroke="#333" stroke-width="2" />
+
+  <!-- Digital Numbers -->
+  <g font-family="monospace" font-weight="bold" font-size="120" text-anchor="middle" letter-spacing="10">
+    <!-- Ghost numbers -->
+    <text x="600" y="350" fill="#220000">8888-88-88</text>
+    
+    <!-- Lit numbers -->
+    <text x="600" y="350" fill="#ff3333" filter="url(#glow)">9999-99-99</text>
+  </g>
+
+  <!-- Glitch elements -->
+  <rect x="260" y="250" width="680" height="5" fill="#ff3333" opacity="0.1" />
+  <rect x="260" y="300" width="680" height="2" fill="#ff3333" opacity="0.1" />
+  
+  <!-- Warning Label -->
+  <text x="600" y="450" font-family="sans-serif" font-size="20" fill="#ff3333" text-anchor="middle" letter-spacing="2" opacity="0.8">TIMESTAMP OVERFLOW DETECTED</text>
+</svg>

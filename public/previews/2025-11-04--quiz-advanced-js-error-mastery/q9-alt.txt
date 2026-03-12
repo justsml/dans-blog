@@ -1,0 +1,18 @@
+# 9. Stack Traces
+
+What does Error.captureStackTrace do?
+
+function createError(msg) {
+  const err = new Error(msg);
+  Error.captureStackTrace(err, createError);
+  return err;
+}
+const error = createError('test');
+------
+
+1. Removes createError from stack
+2. Clears the entire stack
+3. Does nothing
+4. Throws a TypeError
+
+[credit](https://danlevy.net/)

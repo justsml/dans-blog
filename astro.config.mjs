@@ -81,7 +81,7 @@ export default defineConfig({
         return item;
       },
       filter: (page) => {
-        
+
 
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);

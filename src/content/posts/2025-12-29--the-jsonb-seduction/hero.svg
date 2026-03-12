@@ -1,0 +1,41 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2e1065;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4c1d95;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="cyl-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#a78bfa;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)" />
+  
+  <!-- Abstract Shapes -->
+  <circle cx="100" cy="100" r="300" fill="#5b21b6" opacity="0.3" />
+  <circle cx="1100" cy="530" r="200" fill="#5b21b6" opacity="0.3" />
+
+  <!-- Transformation Concept -->
+  <g transform="translate(300, 315)">
+    <!-- Database Cylinder (Left) -->
+    <ellipse cx="-150" cy="-60" rx="60" ry="20" fill="#ddd6fe" />
+    <path d="M-210,-60 v120 a60,20 0 0,0 120,0 v-120" fill="url(#cyl-grad)" />
+    <ellipse cx="-150" cy="60" rx="60" ry="20" fill="#8b5cf6" />
+    
+    <!-- Arrow -->
+    <path d="M-20,0 L20,0 M10,-10 L20,0 L10,10" stroke="#ddd6fe" stroke-width="4" fill="none" />
+    
+    <!-- JSON Brackets (Right) -->
+    <text x="150" y="40" font-family="monospace" font-size="180" fill="#a78bfa" text-anchor="middle">{ }</text>
+    
+    <!-- Content inside JSON -->
+    <text x="150" y="0" font-family="monospace" font-size="24" fill="#ddd6fe" text-anchor="middle" opacity="0.8">"data": "blob"</text>
+  </g>
+  
+  <!-- Title/Theme Text -->
+  <text x="600" y="550" font-family="sans-serif" font-weight="bold" font-size="32" fill="#ddd6fe" text-anchor="middle" letter-spacing="4">SCHEMALESS</text>
+
+</svg>

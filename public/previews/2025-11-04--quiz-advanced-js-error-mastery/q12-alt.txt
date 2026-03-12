@@ -1,0 +1,21 @@
+# 12. Async Errors
+
+What can Promise.reject() accept?
+
+Promise.reject('string').catch(e =>
+  console.log(typeof e)
+);
+Promise.reject({code: 404}).catch(e =>
+  console.log(e.code)
+);
+Promise.reject(42).catch(e =>
+  console.log(e)
+);
+------
+
+1. Always Error objects
+2. Any value can be a rejection
+3. Only strings and Error objects
+4. Automatically wrapped in Error
+
+[credit](https://danlevy.net/)

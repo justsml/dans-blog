@@ -1,0 +1,94 @@
+---
+title: "Async Stack Traces: Why `Error.stack` Lies to You"
+subTitle: "The microtask queue ate my homework (and my debugging context)."
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
+category: Code
+subCategory: Best Practices
+social_image: desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+It is 2 AM. The PagerDuty alarm is blaring.
+
+You open the logs and see this:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+That's it. No function name. No line number. No file path. Just "processTicksAndRejections".
+
+Welcome to async JavaScript, where the stack traces are made up and the line numbers don't matter.
+
+---
+
+## Why Stack Traces Break
+
+In synchronous code, the Call Stack is a beautiful genealogy. A called B, B called C. When C crashes, you can see exactly how you got there.
+
+In async code (`async/await`), every `await` keyword is a suspension point.
+
+When you `await`, your function is torn off the stack. It's put into a cryogenic freezer called the Microtask Queue. The stack is now empty (or doing something else).
+
+When the Promise resolves, your function is thawed out and tossed back onto the stack. But the history is gone.
+
+The engine has no idea who called `await` 500 milliseconds ago. It just knows it has a task to run.
+
+---
+
+## V8's Attempts to Fix It
+
+Node.js tries to help. We have:
+
+1.  `Error.captureStackTrace()`: Captures the stack *at creation*. Useless if the error is thrown later.
+2.  `--async-stack-traces`: A flag that makes Node.js keep a "shadow stack" of promise chains.
+    *   The Cost: It makes your app 30% slower.
+    *   The Result: It helps, but it gets noisy fast.
+
+---
+
+## The Real Solution: AsyncLocalStorage
+
+If you want to survive production, stop looking at stack traces. Look at causality.
+
+We need to attach context (User ID, Request ID) to the "thread" of execution, even as it jumps between the Stack and the Microtask Queue.
+
+Node.js has a builtin tool for this: `AsyncLocalStorage`.
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+It doesn't matter how many `await`s happen in between. The context survives.
+
+---
+
+## Production Playbook
+
+1.  Stop trusting `err.stack`. It's incomplete by design.
+2.  Use structured logging. Attach `requestId` to every single log line using `AsyncLocalStorage`.
+3.  Trace, don't stack. Use OpenTelemetry. It visualizes the causal chain across services, which is what you actually care about.
+
+Your code is async. Your debugging context shouldn't be.

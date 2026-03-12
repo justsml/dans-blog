@@ -1,0 +1,127 @@
+---
+title: "JSONB: The Best Way to Ruin Your Database"
+subTitle: "How your 'temporary' schema-less column became permanent technical debt."
+date: 2025-12-29
+modified: 2025-12-30
+tags: [postgres, postgresql, databases, jsonb, json, schema-design, technical-debt]
+category: Code
+subCategory: Databases
+social_image: desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+PostgreSQL added JSONB to let you store semi-structured data without defining rigid schemas upfront. The idea was sound: sometimes you genuinely don't know what the data will look like, or it changes too frequently for traditional columns to make sense.
+
+But somewhere between intention and implementation, JSONB became the database equivalent of "I'll clean my room later." That temporary solution you reached for six months ago? It's still there, and it's gotten worse.
+
+I keep seeing the same pattern. A team adds a JSONB column because they're unsure about requirements. They promise themselves they'll normalize it once things settle down. Three years later, that column contains forty different versions of what was supposed to be a user profile, queried by fifteen microservices that each make different assumptions about what's inside.
+
+The technical debt isn't the JSONB itself. It's the gap between what you told yourself you were building and what you actually built.
+
+## What Usually Happens
+
+You're adding a feature and you're not sure whether users need a `twitter_handle` or a `bluesky_handle` or something else entirely. Rather than think through the schema, you do this:
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  profile JSONB
+);
+```
+
+It works. You ship the feature, move on to the next one, then the next one. The JSONB column grows quietly in the background.
+
+Six months in, product asks a simple question: "How many users are in New York?"
+
+Product asks: *"How many users are in New York?"*
+
+You write:
+```sql
+SELECT count(*) FROM users WHERE profile->>'location' = 'New York';
+```
+
+Postgres conducts a full table scan. Every single row.
+
+So you add a GIN index. Now your write performance tanks because GIN indexes are huge and expensive to update.
+
+### Year 1: Schema Drift
+
+You have three versions of data in the same column.
+
+*   Row 1: `{"city": "NYC"}`
+*   Row 1000: `{"location": "NYC"}`
+*   Row 5000: `{"address": {"city": "New York"}}`
+
+Your application code now looks like this:
+
+```javascript
+const city = user.location || user.city || user.address?.city || "Unknown";
+```
+
+You didn't remove the schema. You just moved the validation from the database (where it belongs) to your application (where it rots).
+
+---
+---
+
+## When to Actually Use JSONB
+
+I'm not a luddite. JSONB has valid use cases. Many times it's perfectly fine—even optimal.
+
+The critical distinction: Do you need to query ad-hoc key paths, or are you storing opaque blobs?
+
+### Legitimate JSONB Use Cases
+
+1.  **Webhook Payloads**: You receive data from Stripe, Slack, or GitHub. You have zero control over the schema. You may never query it. You just need to store it for debugging or replay. **Perfect for JSONB.**
+
+2.  **Logging & Event Streams**: Application logs, audit trails, error contexts. These are write-heavy, rarely queried by specific fields, and often analyzed in bulk or exported to analytics platforms. **JSONB is fine here.**
+
+3.  **User Preferences & Settings**: Settings objects where you have 100+ boolean flags, most are false, and you're always fetching the entire blob by user ID. You're not running `WHERE preferences->>'theme' = 'dark'`. **JSONB works.**
+
+4.  **API Response Caching**: You're caching entire API responses. The database is just a faster Redis. You fetch by cache key, never by nested properties. **JSONB is appropriate.**
+
+5.  **Event Sourcing**: You're storing immutable event payloads. Your queries are always "give me all events for aggregate X" ordered by time. You never run WHERE clauses on event properties. **JSONB fits.**
+
+Rule of Thumb: If you put it in a `WHERE` clause with dynamic paths, it should probably be a column. If it's always fetched as a complete blob by a known key, JSONB is fine.
+
+### At Scale: Object Versioning > Normalization
+
+Here's where it gets interesting. At sufficiently large scale, the "right" solution isn't normalization—it's object versioning.
+
+If you have billions of rows and frequent schema evolution, migrating columns becomes expensive. Companies like Stripe, GitHub, and Netflix don't normalize everything. Instead:
+
+```sql
+CREATE TABLE entities (
+  id UUID PRIMARY KEY,
+  version INT NOT NULL,
+  data JSONB NOT NULL
+);
+```
+
+Your application knows how to read `version: 1`, `version: 2`, `version: 3`. No database migrations for new fields. Code handles backward compatibility.
+
+This is an architectural decision, not laziness. It trades database complexity for application complexity—a worthwhile trade at scale.
+
+The problem isn't JSONB. The problem is claiming it's "temporary" when you're actually building an unversioned, undocumented schema-on-read system by accident.
+
+---
+## Escaping the Trap
+
+If you are already in this hole, stop digging.
+
+1.  Audit: Run `jsonb_object_keys` to see what you're actually storing.
+2.  Promote: Identify the top 3 most used fields. Make them real columns.
+3.  Migrate: Write a script to backfill the columns.
+4.  Drop: Remove the keys from the JSONB blob.
+
+Don't say "we'll fix it later." Fix it now.
+
+Later never comes. And your database is crying.
+
+## Resources
+
+- [PostgreSQL JSONB Documentation](https://www.postgresql.org/docs/current/datatype-json.html)
+- [JSONB Indexing Strategies](https://www.postgresql.org/docs/current/datatype-json.html#JSON-INDEXING)
+- [When to Use JSONB vs Relational Columns](https://www.citusdata.com/blog/2016/07/14/choosing-nosql-hstore-json-jsonb/)
+- [PostgreSQL Schema Design Best Practices](https://www.postgresql.org/docs/current/ddl.html)

@@ -36,7 +36,7 @@ export const diskCache = {
       ttlMs?: number;
       compress?: boolean;
     } = {
-      ttlMs: ms(ttl + "d"),
+      ttlMs: ms(`${ttl}d`),
       compress: false
     }
   ) {

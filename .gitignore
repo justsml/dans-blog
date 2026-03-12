@@ -1,9 +1,7 @@
-# build output
-dist/*
-!dist/_astro
-
-# generated types
-.astro/
+IDEAS.md
+strategy/
+mastra-routing-demo/
+.claude
 
 # dependencies
 node_modules/
@@ -13,7 +11,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
+# build output
+dist/
+.astro/
 
 # environment variables
 .env
@@ -22,12 +24,11 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
-# jetbrains setting folder
-.idea/
-.cache
+# cache
+.cache/
 
-.netlify
-# vercel
-.vercel
-# netlify.toml
-# vercel.json
+# test results
+test-results/
+playwright-report/
+playwright/.cache/
+playwright-report
