@@ -6,7 +6,6 @@ import { makeLogs } from "../LogHelper.ts";
 import { fetchUserPullRequests } from "../../shared/githubGqlApi.ts";
 import { _isValidRepo } from "../../shared/githubGqlApi.ts";
 import "./GitContribution.css";
-// import clsx from "clsx";
 import { cx } from "class-variance-authority";
 import { Contribution, UserPullRequestData } from "../../types.ts";
 
@@ -47,9 +46,26 @@ loadedRepos = loadedRepos.sort(
   (a, b) => b.pr.repository.stars! - a.pr.repository.stars!,
 );
 log("loadedRepos %o", loadedRepos);
+
+// Collect all unique tags across loaded repos, preserving a stable order
+const allTags = Array.from(
+  new Set(loadedRepos.flatMap(({ contrib }) => contrib.tags ?? []))
+);
 ---
 
 <p class="text-muted-foreground">This page was last updated {new Date().toLocaleDateString()}</p>
+
+<div class="oss-filter-bar" role="group" aria-label="Filter by technology">
+  <span class="oss-filter-label">Filter:</span>
+  {allTags.map((tag) => (
+    <button class="oss-filter-chip" data-filter-tag={tag} aria-pressed="false">
+      {tag}
+    </button>
+  ))}
+  <button class="oss-filter-clear" aria-label="Clear filters" hidden>
+    Clear
+  </button>
+</div>
 
 <div {...{ className }}>
   {
@@ -69,3 +85,40 @@ log("loadedRepos %o", loadedRepos);
     })
   }
 </div>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>(".oss-filter-chip");
+  const cards = document.querySelectorAll<HTMLElement>(".repo-card");
+  const clearBtn = document.querySelector<HTMLButtonElement>(".oss-filter-clear");
+
+  const active = new Set<string>();
+
+  function apply() {
+    cards.forEach((card) => {
+      const tags = (card.dataset.tags ?? "").split(",").filter(Boolean);
+      const visible = active.size === 0 || tags.some((t) => active.has(t));
+      card.style.display = visible ? "" : "none";
+    });
+    if (clearBtn) clearBtn.hidden = active.size === 0;
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const tag = chip.dataset.filterTag!;
+      if (active.has(tag)) {
+        active.delete(tag);
+        chip.setAttribute("aria-pressed", "false");
+      } else {
+        active.add(tag);
+        chip.setAttribute("aria-pressed", "true");
+      }
+      apply();
+    });
+  });
+
+  clearBtn?.addEventListener("click", () => {
+    active.clear();
+    chips.forEach((c) => c.setAttribute("aria-pressed", "false"));
+    apply();
+  });
+</script>

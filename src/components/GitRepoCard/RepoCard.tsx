@@ -71,6 +71,7 @@ export const RepoCard = ({
       data-repo-owner={pr?.repository.owner}
       data-additions={pr?.pullStats.additions}
       data-deletions={pr?.pullStats.deletions}
+      data-tags={(c.tags ?? []).join(",")}
     >
       <h2 style={styles.repoName} className="repo-name">
         <span className="gh-icon icon-github-octocat w-2 h-2"></span>
