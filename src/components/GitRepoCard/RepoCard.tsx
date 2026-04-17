@@ -1,8 +1,28 @@
 import React from "react";
 // import { useState } from "react";
-import type { Contribution, UserPullRequestData } from "../../types.ts";
+import type {
+  Contribution,
+  ContributionTag,
+  UserPullRequestData,
+} from "../../types.ts";
 import clsx from "clsx";
 import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
+
+const TAG_CONFIG: Record<
+  ContributionTag,
+  { iconClass: string; color: string }
+> = {
+  "Node.js": { iconClass: "tech-icon-nodejs", color: "#417e38" },
+  AI: { iconClass: "tech-icon-ai", color: "#7c3aed" },
+  Python: { iconClass: "tech-icon-python", color: "#2b6db5" },
+  Postgres: { iconClass: "tech-icon-postgresql", color: "#0e7490" },
+  Docker: { iconClass: "tech-icon-docker", color: "#0369a1" },
+  TypeScript: { iconClass: "tech-icon-typescript", color: "#1d4ed8" },
+  React: { iconClass: "tech-icon-react", color: "#0891b2" },
+  Testing: { iconClass: "tech-icon-testing", color: "#c17b2a" },
+  Rust: { iconClass: "tech-icon-rust", color: "#9a3412" },
+  Ruby: { iconClass: "tech-icon-ruby", color: "#be123c" },
+};
 // import { LineChangeIndicator } from "./LineChangeIndicator.tsx";
 // import { Button } from "../ui/button.tsx";
 
@@ -86,6 +106,24 @@ export const RepoCard = ({
       <p className="s-description repo-inner-card description">
         {c.description_override ?? `[could not load description for ${repo}]`}
       </p>
+      {c.tags && c.tags.length > 0 && (
+        <div className="tech-tags">
+          {c.tags.map((tag) => {
+            const cfg = TAG_CONFIG[tag];
+            if (!cfg) return null;
+            return (
+              <span
+                key={tag}
+                title={tag}
+                className="tech-tag"
+                style={{ "--tag-color": cfg.color } as React.CSSProperties}
+              >
+                <span className={`tech-tag-icon ${cfg.iconClass}`} />
+              </span>
+            );
+          })}
+        </div>
+      )}
 
       {/* <Button
         variant={showNotes ? "default" : "outline"}
