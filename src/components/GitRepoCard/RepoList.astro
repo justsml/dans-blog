@@ -47,19 +47,22 @@ loadedRepos = loadedRepos.sort(
 );
 log("loadedRepos %o", loadedRepos);
 
-// Collect all unique tags across loaded repos, preserving a stable order
-const allTags = Array.from(
-  new Set(loadedRepos.flatMap(({ contrib }) => contrib.tags ?? []))
-);
+// Collect unique tags with counts, sorted by count desc
+const tagCounts = new Map<string, number>();
+for (const { contrib } of loadedRepos) {
+  for (const tag of contrib.tags ?? []) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
 ---
 
 <p class="text-muted-foreground">This page was last updated {new Date().toLocaleDateString()}</p>
 
 <div class="oss-filter-bar" role="group" aria-label="Filter by technology">
-  <span class="oss-filter-label">Filter:</span>
-  {allTags.map((tag) => (
+  {allTags.map(([tag, count]) => (
     <button class="oss-filter-chip" data-filter-tag={tag} aria-pressed="false">
-      {tag}
+      {tag}&#160;<span class="oss-filter-count">({count})</span>
     </button>
   ))}
   <button class="oss-filter-clear" aria-label="Clear filters" hidden>
