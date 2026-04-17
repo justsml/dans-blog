@@ -61,6 +61,22 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
         )}
     />
   </div>
+  <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
+    <div class="spotlight-copy">
+      <p class="eyebrow">Work, notes, and useful trails</p>
+      <h2 id="home-link-spotlight-title">Two good doors before the article maze.</h2>
+    </div>
+    <div class="spotlight-actions" aria-label="Featured links">
+      <a class="spotlight-link consulting-link" href="/consulting/">
+        <span class="link-kicker">Consulting</span>
+        <span class="link-title">Build better AI systems</span>
+      </a>
+      <a class="spotlight-link oss-link" href="/open-source-journal/">
+        <span class="link-kicker">Open Source Log</span>
+        <span class="link-title">Follow the commits</span>
+      </a>
+    </div>
+  </section>
   <div class:list={["article-list"]}>
     {
       posts
@@ -136,3 +152,201 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   window.sortCardsByDate = sortCardsByDate;
   window.sortCardsBy = sortCardsBy;
 </script>
+
+<style>
+  .home-link-spotlight {
+    --spotlight-cyan: var(--neon-cyan);
+    --spotlight-pink: var(--neon-pink);
+    --spotlight-lime: #b8ff5f;
+    --spotlight-ink: rgba(5, 8, 10, 0.78);
+    align-items: center;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    isolation: isolate;
+    margin: 0.75rem auto 1.75rem;
+    max-width: 980px;
+    overflow: hidden;
+    position: relative;
+    width: min(100%, 980px);
+  }
+
+  .home-link-spotlight::before {
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent),
+      linear-gradient(90deg, var(--spotlight-cyan), var(--spotlight-lime), var(--spotlight-pink));
+    content: "";
+    height: 1px;
+    inset: 0 auto auto 0;
+    opacity: 0.82;
+    position: absolute;
+    width: 100%;
+  }
+
+  .spotlight-copy {
+    display: grid;
+    gap: 0.2rem;
+    padding-top: 1.4rem;
+  }
+
+  .spotlight-copy h2 {
+    color: var(--clr-muted-100);
+    font-size: 1.75rem;
+    letter-spacing: 0;
+    line-height: 1.1;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .eyebrow {
+    color: var(--spotlight-cyan);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .spotlight-actions {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: 1fr;
+  }
+
+  .spotlight-link {
+    --link-accent: var(--spotlight-cyan);
+    align-items: center;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.018)) padding-box,
+      linear-gradient(var(--spotlight-ink), var(--spotlight-ink)) padding-box,
+      conic-gradient(from var(--spin-angle, 0deg), var(--link-accent), rgba(255, 255, 255, 0.12) 34%, var(--spotlight-pink), rgba(255, 255, 255, 0.12) 68%, var(--link-accent)) border-box;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.12) inset,
+      0 0 1rem color-mix(in srgb, var(--link-accent), transparent 84%);
+    color: var(--clr-muted-100);
+    display: grid;
+    min-height: 5.6rem;
+    overflow: hidden;
+    padding: 1rem;
+    position: relative;
+    text-decoration: none;
+    transform: translateZ(0);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+
+  .spotlight-link::before {
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.22), transparent 48%);
+    content: "";
+    inset: 0;
+    position: absolute;
+    transform: translateX(-120%);
+    transition: transform 520ms ease;
+  }
+
+  .spotlight-link::after {
+    background: linear-gradient(90deg, var(--link-accent), transparent);
+    block-size: 3px;
+    content: "";
+    inset: auto 1rem 0.85rem 1rem;
+    opacity: 0.85;
+    position: absolute;
+    transform: scaleX(0.36);
+    transform-origin: left;
+    transition: transform 180ms ease;
+  }
+
+  .spotlight-link:hover,
+  .spotlight-link:focus-visible {
+    border-color: color-mix(in srgb, var(--link-accent), white 18%);
+    box-shadow:
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+      0 0 1.5rem color-mix(in srgb, var(--link-accent), transparent 68%);
+    color: white;
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .spotlight-link:hover::before,
+  .spotlight-link:focus-visible::before {
+    transform: translateX(120%);
+  }
+
+  .spotlight-link:hover::after,
+  .spotlight-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .oss-link {
+    --link-accent: var(--spotlight-lime);
+  }
+
+  .link-kicker,
+  .link-title {
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-kicker {
+    color: var(--link-accent);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .link-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.08;
+    max-width: 13ch;
+  }
+
+  @property --spin-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .spotlight-link {
+      animation: border-spin 7s linear infinite;
+    }
+
+    .oss-link {
+      animation-direction: reverse;
+      animation-duration: 8.5s;
+    }
+  }
+
+  @keyframes border-spin {
+    to {
+      --spin-angle: 360deg;
+    }
+  }
+
+  @media (min-width: 720px) {
+    .home-link-spotlight {
+      grid-template-columns: minmax(15rem, 0.72fr) minmax(25rem, 1fr);
+      margin-top: 1.25rem;
+    }
+
+    .spotlight-actions {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .spotlight-copy {
+      padding-block: 1.2rem;
+    }
+
+    .spotlight-copy h2 {
+      font-size: 2rem;
+    }
+
+    .link-title {
+      font-size: 1.42rem;
+    }
+  }
+</style>
