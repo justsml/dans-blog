@@ -1,0 +1,178 @@
+---
+title: "Implementing Beam Search in Transformers.js"
+subTitle: "A thousand lines, a months-long wait, and a deep dive into the guts of text generation"
+date: 2026-04-16
+tags: [ai, transformers, javascript, open-source, nlp, beam-search, machine-learning]
+category: AI
+subCategory: Open Source
+draft: true
+hidden: true
+publish: false
+popularity: 0.7
+
+---
+
+> CW: This post contains technical jargon. So, if you hear about `softmax` or `log probs` and immediately want to tell `Max` to stop with his `probs`, maybe skip this one.
+
+---
+
+## The Problem: `num_beams` Was a Lie
+
+Deep in `transformers.js`'s generation loop, there was a comment that had been there for a long time:
+
+```js
+// TODO: Support beam search
+```
+
+And right below it, a `break` statement that silently ejected the loop after the first token. Every model config that shipped with `num_beams > 1` — T5, BART, Whisper — was quietly getting greedy decoding instead. No warning. No error. Just... wrong output.
+
+I found this while testing a summarization pipeline and wondering why my outputs were so degraded compared to the Python reference. Traced it back to `modeling_utils.js`, saw the TODO, and made the mistake of thinking "how hard could it be?"
+
+The answer is: pretty hard, but in interesting ways.
+
+---
+
+## What Beam Search Actually Is
+
+Who hasn't 
+
+Greedy decoding picks the highest-probability token at every step. Simple, fast, frequently suboptimal — the first word that comes out of your mouth isn't always the best start to a sentence.
+
+Beam search instead keeps `num_beams` candidate sequences alive simultaneously, expanding each by the full vocabulary at every step, then pruning back to the top `num_beams` by cumulative log-probability. It's like a bounded breadth-first search through token space.
+
+The result is globally better sequences, at the cost of `num_beams`× the compute.
+
+Three flavors exist:
+
+- **Standard beam search** — deterministic, takes argmax candidates, best overall sequence
+- **Diverse beam search** — split beams into groups, penalize tokens already chosen by earlier groups so your output candidates don't all say the same thing
+- **Beam sampling** — stochastic, applies top-k + softmax + random sampling within the beam framework
+
+All three are now in the PR.
+
+---
+
+## The Architecture Decision I Actually Wrestled With
+
+The existing codebase had a `BeamSearchSampler` class. It looked relevant. But there was a subtle trap: it returned only the top `num_beams` tokens per beam. That sounds right until you realize that's not enough for actual beam search.
+
+Proper beam search needs to consider **all `num_beams × vocab_size` candidates per batch item** to find the globally best continuations. You can't just look at the top few tokens from each beam in isolation — you need to rank across all beams together.
+
+So I bypassed the existing sampler entirely. Computed `log_softmax` directly on the processed logits, added cumulative beam scores, and did a two-level sort across the combined candidate space. Cleaner math, correct semantics.
+
+The `BeamSearchSampler` class is still there, untouched, still useful for whatever it was originally doing. This is one of those cases where the "obvious" reuse path leads you somewhere wrong.
+
+---
+
+## The Most Annoying Bug: KV Cache Reordering
+
+When beam search prunes sequences, it doesn't just truncate tokens — it *reorders* which beams survive. Beam 3 might produce the best continuation and get cloned; beams 0 and 2 might get discarded.
+
+The problem is that the key-value cache from the transformer's attention mechanism is indexed along the batch dimension by beam. If you reorder the output sequences without reordering the cache, you've got mismatched state. The model is attending to the wrong past.
+
+The fix is `_reorder_cache()` — a method that calls `index_select` on every past key-value tensor to reindex them according to the new beam order, then disposes the stale tensors.
+
+For CPU this is straightforward: slice typed arrays by row. For GPU tensors it gets more annoying — you have to async-download the data (`ort_tensor.getData(true)`), reorder, and re-upload. I added both `index_select` (sync, CPU) and `index_select_async` to `tensor.js` to handle both paths.
+
+Encoder-decoder models (T5, BART) have *two* caches: encoder and decoder. Encoder PKVs don't change during decoding, so they pass through unchanged. Only decoder PKVs need reordering. Getting that distinction wrong produces very bad outputs, subtly — the kind of wrong that looks almost right until you compare to a reference.
+
+---
+
+## Diverse Beam Search: The Fun One
+
+Diverse beam search adds a `diversity_penalty` that discourages later beam groups from selecting tokens already chosen by earlier groups. The intuition is: if all your beams converge on the same output, you haven't really explored the hypothesis space.
+
+Implementation-wise, groups must be processed *sequentially* within each decoding step, not in parallel, because each group needs to see what earlier groups selected before computing its own scores.
+
+The structure I ended up with:
+
+```
+for each step:
+  token_counts = {}
+  for each group in groups:
+    extract this group's beams and logits
+    for each token selected by previous groups:
+      logits[token] -= diversity_penalty * token_counts[token]
+    score candidates, select top 2×group_size
+    group_scorer.process(...)
+    record newly selected tokens into token_counts
+```
+
+The sequential dependency here is real. If you parallelize it, you lose the diversity guarantee. I was briefly tempted to try batching this anyway and it would have been a mistake.
+
+---
+
+## The `BeamHypotheses` Priority Queue
+
+When a beam hits the EOS token before `max_length`, it's "done" — but you can't just discard it or immediately return it. You add it to a bounded priority queue called `BeamHypotheses`.
+
+The queue keeps up to `num_beams` completed sequences per batch item, scored by:
+
+```
+score = sum_logprobs / (length ^ length_penalty)
+```
+
+`length_penalty > 1.0` rewards longer outputs; `< 1.0` rewards shorter. The `early_stopping` flag controls whether the beam is considered done once the queue is full (`true`), never until `max_length` (`"never"`), or done when no remaining beam could possibly outscore the worst completed hypothesis (`false`).
+
+The `false` case is the interesting one — it requires tracking whether any live beam could still beat the current worst hypothesis given the maximum possible remaining score. It's a pruning optimization that prevents running to `max_length` when you've already got good hypotheses.
+
+This lives in `beam_search.js`, new file, ~240 lines total. Also exports `BeamSearchScorer`, which manages the `BeamHypotheses` instances across the batch and handles `finalize()`.
+
+---
+
+## Testing Against the Python Reference
+
+Every non-trivial implementation detail here has a Python counterpart in HuggingFace's `transformers` library. I leaned on that heavily.
+
+The test suite I added covers:
+
+- Standard beam search on encoder-decoder (T5) and decoder-only (LLaMA-ish)
+- Diverse beam search with `num_beam_groups=2, diversity_penalty=0.5`
+- Beam sampling with `do_sample=true, top_k=10`
+- `num_return_sequences > 1` — verifying output shape is `[N, seq_len]`
+- Correct error throws for incompatible combos: CFG + beam search, streaming + beam search, `num_return_sequences > num_beams`
+
+The "correct error throws" tests are underrated. They document the intentional limitations and prevent someone from silently getting wrong outputs when they try to combine features that can't be combined. (I know because I tried to combine CFG and beam search during development. The math doesn't work. It throws now.)
+
+---
+
+## What's Still Missing
+
+A few things I explicitly left out, marked with `throws`:
+
+- **Diverse beam sampling** (`num_beam_groups > 1` + `do_sample`): The math gets genuinely complicated here. Standard diverse beam search is sequential across groups; adding sampling to that requires careful thought about how to apply the diversity penalty in stochastic mode. It's doable, just not done.
+- **Streaming + beam search**: Streaming yields tokens as they're generated. Beam search by definition doesn't know which sequence is best until multiple steps out. These are fundamentally in tension. You could stream the best beam so far, but that's a different feature with its own design questions.
+
+---
+
+## The Part Nobody Talks About: Open Source Latency
+
+The code works. The tests pass. The existing test suite is clean. It's been sitting in review for months.
+
+This is just how it goes with large, popular open source projects. The Hugging Face team is shipping fast, the issue queue is enormous, and a ~1,000-line feature PR touching the core generation loop is a non-trivial review commitment. They've been responsive in comments and genuinely engaged when they do look at it. I'm not complaining — I'm documenting.
+
+If you're contributing to a major OSS project and expecting a quick merge: adjust your expectations. A few months is normal for something this size. The code still works on your fork the whole time.
+
+---
+
+## What I Actually Got Out of It
+
+A few things I didn't have before:
+
+1. **A real mental model of beam search** — not the textbook version, but the one with edge cases. How KV caches break. Why the two-level sort matters. What `length_penalty` actually does to scores.
+
+2. **More appreciation for typed array math in JS** — implementing `index_select` on CPU typed arrays is low-level in a way you rarely touch in web code. It's fine, but it's not what JavaScript was designed for and you feel that.
+
+3. **Renewed respect for the Python reference implementation.** The HuggingFace `transformers` library is big and sometimes gnarly, but the beam search logic is well-commented and the design decisions are clearly intentional. Reading it was the fastest way to understand what I was actually supposed to build.
+
+4. **A patch in the wild** — even if it's not merged yet, it exists, it works, and people can use it from the PR branch. That's enough.
+
+The TODO comment that started this is gone from my fork. That's satisfying in a quiet, nerdy way.
+
+If you're doing seq2seq work in JavaScript and want proper beam search today, [the PR is public](https://github.com/huggingface/transformers.js/pull/1539).
+
+---
+
+¹ Yes, I know `num_beams=1` is just greedy search. The degenerate case is well-defined.
+
+² Encoder-only models (BERT, etc.) don't generate tokens at all, so none of this applies to them. They're just vibes.

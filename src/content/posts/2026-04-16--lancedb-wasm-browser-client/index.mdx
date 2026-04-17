@@ -1,0 +1,119 @@
+---
+title: "Serverless Vector Search"
+subTitle: "Building a Vector Search Browser Client with Rust, WASM, and TypeScript"
+date: 2026-04-16
+tags: [rust, wasm, lancedb, vector-search, open-source, webassembly, typescript, ai]
+category: AI
+subCategory: Open Source
+draft: false
+hidden: false
+publish: true
+popularity: 0.75
+---
+
+## The Problem: You Can't Search a Lance Table From a Browser
+
+LanceDB is a fantastic vector database. It is vastly simpler and cheaper than traditional databases. You can publish tables with vector columns, full-text search (FTS) columns, host the files on S3 or a CDN, and query data over S3 directly from a Node.js server. No daemon required.
+
+What you *couldn't* do — before this PR — was open that table directly from a browser and run a search. You'd need a server in the middle: a Lambda, a container, *something* that could run Rust, Node.js/WASM, or Python.
+
+The goal was ambitious, but focused on a meaningful end result: **directly searchable, read-only, HTTP-hosted vector indexes.**
+
+---
+
+## The Architecture
+
+There are three layers to the implementation:
+
+### 1. Rust publish artifacts (`web_publish.rs`)
+
+Before a browser can search a Lance table, it needs to know what's safe to search. Lance's internal format has some features that are not browser-portable — delta files, external bases, index types the WASM runtime can't execute. Rather than having the browser discover this at search time (bad), the publish step produces explicit sidecar files:
+
+- `_web.json` — advertises the schema and which columns are browser-searchable (vector columns with supported distance types, FTS columns)
+- `_snapshot.json` — a point-in-time view of the dataset that the browser client can consume without understanding the full dataset evolution protocol
+- `_latest.manifest` / `_latest.version` — stable pointers the browser polls to detect staleness
+
+The `isComplete` flag in the snapshot is the safety valve. If the dataset depends on external bases or data files the browser path can't safely read, `isComplete=false` and the browser rejects it early with a clear error instead of producing subtly wrong results.
+
+This is the part I'm most glad I built into Rust rather than JavaScript. The judgment about what's browser-safe lives where the table metadata actually lives.
+
+### 2. `lancedb-wasm` Rust crate
+
+This is the WebAssembly runtime: a `fetch`-backed object store, a browser-side search engine, and an expression evaluator for filter predicates.
+
+The fetch object store (`fetch_object_store.rs`) implements Lance's `ObjectStore` trait over HTTP range requests. Lance's internal reads are already structured as ranged byte-range fetches, which maps cleanly to `Range: bytes=N-M` headers. This was the most satisfying part of the project — the existing architecture was almost perfectly designed for this, I just had to wire it up.
+
+The browser engine (`browser.rs`) handles search: vector nearest-neighbor, full-text, and hybrid (vector + FTS with RRF fusion). Filter expressions (`browser_expr.rs`) evaluate Lance filter predicates client-side in pure Rust, compiled to WASM.
+
+Feature rejection is strict and intentional. `hamming` distance? Rejected upfront with a clear message — not silently wrong, not a runtime panic. `fastSearch` on an incomplete snapshot? Rejected. Unsupported base-path layouts? Rejected. The goal was to fail closed: if the browser path can't honor the contract, it says so.
+
+### 3. `@lancedb/lancedb-web` TypeScript package
+
+The public API surface is intentionally small:
+
+```typescript
+import { searchTable } from "@lancedb/lancedb-web";
+
+const results = await searchTable("https://my-cdn.example.com/my-table", "semantic search query", {
+  select: ["title", "url", "score"],
+  limit: 10,
+});
+```
+
+Under the hood, `searchTable()` prefers a Worker-backed execution path so search doesn't block the main thread. The WASM module runs in the Worker; results flow back over a typed protocol (`worker_protocol.ts`). There's also an optional `./transformers` export that wraps `@xenova/transformers` to generate query embeddings client-side — so you can go from raw text query to vector search results without ever leaving the browser.
+
+---
+
+## The Hard Parts
+
+### Ranged reads over HTTP are not free
+
+Lance's read patterns assume an object store that can handle many small ranged fetches efficiently. S3 and GCS are designed for this. Browsers... mostly are too, but `fetch` with `Range` headers has some quirks that the existing Rust object store abstractions don't have to care about.
+
+The main issue is that browsers will sometimes buffer or re-request aggressively, and you can't control TCP connection pooling the way you can in a native process. For large vector indices this matters. The current implementation is correct; whether it's fast enough for production use on large tables is something that will shake out during review.
+
+### The sidecar generation question
+
+The PR raises this explicitly as a question for maintainers, because there's a real design tradeoff: should browser sidecar files (`_web.json`, `_snapshot.json`) be emitted *automatically* on every table commit, or should there be an explicit `publish()` call?
+
+Automatic is more ergonomic — you get browser support for free. But it means every local write has a bit of extra overhead, and it couples the browser contract to the core commit path in ways that could complicate future changes to either.
+
+Explicit publish is more correct from a contract standpoint — you're saying "this version is browser-ready" — but it's easy to forget, which means tables that *should* be browser-searchable silently aren't.
+
+I leaned toward automatic, with sidecar failures logging a warning rather than failing the commit. But I'm genuinely uncertain, and I flagged it in the PR.
+
+### What counts as "browser-safe"?
+
+The `isComplete` flag and the column filtering logic in `web_publish.rs` encode a judgment about what the browser can handle. That judgment has to stay in sync with the WASM runtime's actual capabilities. If someone adds a new index type to Lance that the browser can't execute, the publish code needs to know to exclude it — otherwise you'll advertise a capability the browser will fail to honor at search time.
+
+The right fix here is probably a capability registry that's shared between the publish path and the runtime, so they can't drift. I implemented it as parallel constants for now, which is expedient but fragile. This is probably the thing I'd want to improve next.
+
+---
+
+## The Transformers Wrapper Dilemma
+
+The `./transformers` export is a quality-of-life feature: it takes a text query, runs it through a local embedding model via `@xenova/transformers`, and hands the resulting vector to the LanceDB search engine. Zero-server semantic search from a static HTML page.
+
+It's also the thing I'm least sure belongs in this PR. It's genuinely useful and it's already implemented, but it's a dependency and an API surface that's separate from the core browser search question. The maintainers might reasonably want to land the base `searchTable()` API first and iterate on embeddings separately.
+
+I asked. We'll see.
+
+---
+
+## What I'd Do Differently
+
+**Scope earlier.** The PR is 14,500 lines. That's a lot to review in one shot. I could have landed the publish artifact format first, then the WASM runtime, then the TypeScript package. Three smaller PRs would have been easier to merge. I didn't do that because I wanted to validate the full end-to-end story before proposing any of the pieces — which made sense for confidence, but makes the review burden high.
+
+**Write the capability registry first.** The drift risk between `web_publish.rs` and `browser.rs` is real. Starting with a shared capability type that both sides reference would have been cleaner than parallel constant lists that I have to remember to keep in sync.
+
+**Name things less cleverly.** `_web.json` is a fine name for an internal format. It becomes a load-bearing name the moment anyone caches it or builds tooling around it. I should have spent more time on naming before submitting — it's one of those things that's much cheaper to change before anyone else depends on it.
+
+---
+
+## The Broader Point
+
+The thing that made this project tractable is that Lance's internal architecture was already well-structured for ranged reads. The object store abstraction is clean. The metadata format is explicit. The snapshot concept gave me a natural place to express "this is a browser-safe view of this dataset."
+
+Good abstraction boundaries don't just make internal code easier to reason about — they make it possible for someone like me to show up from outside the project and plug in a new execution environment without touching the core. That's a real design virtue, and it made the 14,000 lines feel more like filling in a shape than fighting the codebase.
+
+The PR is [here](https://github.com/lancedb/lancedb/pull/3247) if you want to see the details. Still waiting on review. The maintainers have been warm and I'm cautiously optimistic.
