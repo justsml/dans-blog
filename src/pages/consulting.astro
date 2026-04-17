@@ -1,10 +1,9 @@
 ---
 // AI Consulting Landing Page
-// Replace placeholder links with your actual Stripe Payment Links and Calendly URL
 
-const STRIPE_INTRO_CALL_LINK = "https://buy.stripe.com/REPLACE_INTRO_CALL";
-const STRIPE_RETAINER_LINK = "https://buy.stripe.com/REPLACE_RETAINER";
-const CALENDLY_LINK = "https://calendly.com/REPLACE_YOUR_HANDLE";
+const STRIPE_INTRO_CALL_LINK = import.meta.env.STRIPE_INTRO_CALL_LINK;
+const STRIPE_RETAINER_LINK = import.meta.env.STRIPE_RETAINER_LINK;
+const CAL_LINK = import.meta.env.CAL_LINK;
 
 import Layout from "../layouts/Page.astro";
 
@@ -18,21 +17,21 @@ const description =
   <!-- Hero -->
   <section class="consulting-hero full-section">
     <div class="consulting-container">
-      <div class="hero-badge">
+      <div class="hero-badge fade-in">
         <span class="hero-badge-dot"></span>
         Now accepting new clients
       </div>
-      <h1>
+      <h1 class="fade-in">
         Your AI spend is<br />
         <span class="gradient-text">leaking money.</span><br />
         I find it. You keep it.
       </h1>
-      <p class="hero-sub">
+      <p class="hero-sub fade-in">
         I audit AI infrastructure for companies spending $50K+/month and
         get paid a share of what I save you — so my incentives are perfectly
         aligned with yours. No savings, no fee.
       </p>
-      <div class="hero-actions">
+      <div class="hero-actions fade-in">
         <a href="#pricing" class="btn btn-primary btn-xl">
           See How It Works →
         </a>
@@ -40,7 +39,7 @@ const description =
           Book 30-Min Call — $500
         </a>
       </div>
-      <div class="hero-stats">
+      <div class="hero-stats fade-in">
         <div class="hero-stat">
           <div class="stat-number"><span>40</span>–70%</div>
           <div class="stat-label">Typical token cost reduction</div>
@@ -60,12 +59,12 @@ const description =
   <!-- Problem -->
   <section class="consulting-problem full-section">
     <div class="consulting-container">
-      <h2>AI costs compound fast.<br />Most teams don't notice until it hurts.</h2>
-      <p class="section-lead">
+      <h2 class="fade-in">AI costs compound fast.<br />Most teams don't notice until it hurts.</h2>
+      <p class="section-lead fade-in">
         The teams I work with aren't doing anything wrong — they're just missing
         patterns that are nearly invisible from inside the codebase.
       </p>
-      <div class="problem-grid">
+      <div class="problem-grid fade-in">
         <div class="problem-item">
           <div class="problem-icon">🔁</div>
           <h3>Redundant context on every call</h3>
@@ -103,12 +102,12 @@ const description =
   <!-- Services -->
   <section id="services" class="consulting-section full-section">
     <div class="consulting-container">
-      <h2>What I do</h2>
-      <p class="section-lead">
+      <h2 class="fade-in">What I do</h2>
+      <p class="section-lead fade-in">
         End-to-end AI consulting from strategy to implementation — wherever
         your team needs the most leverage.
       </p>
-      <div class="services-grid">
+      <div class="services-grid fade-in">
         <div class="service-card">
           <div class="service-icon">🔍</div>
           <h3>Cost &amp; Efficiency Audit</h3>
@@ -146,12 +145,12 @@ const description =
   <!-- How it Works -->
   <section class="consulting-how full-section">
     <div class="consulting-container">
-      <h2>How the savings model works</h2>
-      <p class="section-lead">
+      <h2 class="fade-in">How the savings model works</h2>
+      <p class="section-lead fade-in">
         Inspired by how cloud consultancies operate: I take a percentage of
         what I save you, so there's no risk for you to get started.
       </p>
-      <div class="steps">
+      <div class="steps fade-in">
         <div class="step">
           <div class="step-num">1</div>
           <h3>Intro Call</h3>
@@ -184,12 +183,12 @@ const description =
   <!-- Pricing -->
   <section id="pricing" class="consulting-section full-section">
     <div class="consulting-container">
-      <h2>Engagement options</h2>
-      <p class="section-lead">
+      <h2 class="fade-in">Engagement options</h2>
+      <p class="section-lead fade-in">
         Three ways to work together, depending on where you are and what you need.
       </p>
 
-      <div class="pricing-grid">
+      <div class="pricing-grid fade-in">
         <!-- Intro Call -->
         <div class="pricing-card">
           <div class="pricing-tier">First step</div>
@@ -235,7 +234,7 @@ const description =
             <li><span class="check">✓</span> Monthly check-ins for 12 months</li>
             <li><span class="check">✓</span> No savings = no fee</li>
           </ul>
-          <a href={CALENDLY_LINK} class="btn btn-primary pricing-cta" target="_blank" rel="noopener">
+          <a href={CAL_LINK} class="btn btn-primary pricing-cta" target="_blank" rel="noopener">
             Schedule Discovery Call →
           </a>
           <p class="pricing-note">Minimum qualifying spend: $50K/month on AI infrastructure</p>
@@ -269,7 +268,7 @@ const description =
       </div>
 
       <!-- Qualifying box -->
-      <div class="qualify-box">
+      <div class="qualify-box fade-in">
         <div class="qualify-icon">⚡</div>
         <div>
           <h4>Who qualifies for the savings partnership?</h4>
@@ -284,7 +283,7 @@ const description =
       </div>
 
       <!-- Savings math explainer -->
-      <div class="savings-explainer">
+      <div class="savings-explainer fade-in">
         <h3>What does 25% of savings actually look like?</h3>
         <p class="savings-sub">
           Here's a real-world scenario based on typical outcomes. Your numbers will vary —
@@ -326,7 +325,7 @@ const description =
   <!-- About -->
   <section id="about" class="consulting-about full-section">
     <div class="consulting-container">
-      <div class="about-inner">
+      <div class="about-inner fade-in">
         <div class="about-avatar">DL</div>
         <div class="about-content">
           <h2>Hi, I'm Dan Levy</h2>
@@ -364,7 +363,7 @@ const description =
 
   <!-- CTA Banner -->
   <section class="consulting-cta full-section">
-    <div class="consulting-container cta-inner">
+    <div class="consulting-container cta-inner fade-in">
       <h2>Not sure if you qualify?<br />Book the intro call.</h2>
       <p>
         30 minutes. $500. You'll leave with a clear picture of what's
@@ -379,7 +378,49 @@ const description =
 
 </Layout>
 
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  });
+</script>
+
 <style>
+  /* ── Design Tokens ── */
+  :root {
+    --consulting-bg: #000000;
+    --consulting-surface: rgba(255, 255, 255, 0.04);
+    --consulting-surface-hover: rgba(255, 255, 255, 0.06);
+    --consulting-border: rgba(255, 255, 255, 0.08);
+    --consulting-border-hover: rgba(255, 255, 255, 0.15);
+    --consulting-text-primary: #f5f5f7;
+    --consulting-text-secondary: rgba(245, 245, 247, 0.6);
+    --consulting-text-tertiary: rgba(245, 245, 247, 0.4);
+    --consulting-accent-cyan: #00d4aa;
+    --consulting-accent-pink: #ff6b9d;
+    --consulting-accent-gradient: linear-gradient(135deg, #00d4aa 0%, #00b4d8 50%, #ff6b9d 100%);
+    --consulting-accent-gradient-subtle: linear-gradient(135deg, rgba(0, 212, 170, 0.15) 0%, rgba(0, 180, 216, 0.15) 50%, rgba(255, 107, 157, 0.15) 100%);
+    --consulting-radius-sm: 12px;
+    --consulting-radius-md: 16px;
+    --consulting-radius-lg: 20px;
+    --consulting-radius-xl: 24px;
+    --consulting-radius-full: 9999px;
+    --consulting-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --consulting-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --consulting-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --consulting-shadow-glow: 0 0 40px rgba(0, 212, 170, 0.1);
+    --consulting-transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --consulting-transition-fast: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
   /* ── Full-width section override ── */
   .full-section {
     grid-column: full-width;
@@ -394,33 +435,38 @@ const description =
   }
 
   /* ── Shared typography ── */
-  h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    color: #fff;
-    margin-bottom: 0.75rem;
+  .consulting-container h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: var(--consulting-text-primary);
+    margin-bottom: 1rem;
   }
 
-  h3 {
-    font-size: 1.05rem;
-    font-weight: 700;
+  .consulting-container h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
     letter-spacing: -0.01em;
-    color: #fff;
+    color: var(--consulting-text-primary);
     margin-bottom: 0.5rem;
   }
 
   .section-lead {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 3rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+    font-weight: 400;
+    color: var(--consulting-text-secondary);
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.01em;
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, hsl(180 100% 60%), hsl(322 100% 72%));
+    background: var(--consulting-accent-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -430,235 +476,336 @@ const description =
   .btn {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.75rem;
-    font-size: 0.95rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: var(--consulting-radius-full);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.9375rem;
     font-weight: 600;
+    letter-spacing: -0.01em;
     cursor: pointer;
-    transition: all 0.18s;
+    transition: var(--consulting-transition);
     border: none;
     white-space: nowrap;
     text-decoration: none;
+    position: relative;
+    overflow: hidden;
   }
+
+  .btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
   .btn-xl {
-    padding: 1rem 2rem;
-    font-size: 1.05rem;
-    border-radius: 1rem;
+    padding: 1rem 2.25rem;
+    font-size: 1rem;
   }
+
   .btn-primary {
-    background: linear-gradient(135deg, hsl(180 100% 40%), hsl(322 100% 50%));
-    color: #fff;
-    box-shadow: 0 2px 12px rgba(0, 210, 210, 0.25);
+    background: var(--consulting-accent-gradient);
+    color: #000;
+    box-shadow: 0 2px 16px rgba(0, 212, 170, 0.25);
   }
+
   .btn-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 20px rgba(0, 210, 210, 0.35);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(0, 212, 170, 0.35);
   }
+
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+  }
+
   .btn-outline {
     background: transparent;
-    color: hsl(180 100% 65%);
-    border: 2px solid hsl(180 100% 40%);
+    color: var(--consulting-text-primary);
+    border: 1.5px solid var(--consulting-border-hover);
   }
+
   .btn-outline:hover {
-    background: hsl(180 100% 40% / 0.15);
-    transform: translateY(-1px);
+    background: var(--consulting-surface);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
   }
+
   .btn-ghost {
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(8px);
+    background: var(--consulting-surface);
+    color: var(--consulting-text-primary);
+    border: 1px solid var(--consulting-border);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
   }
+
   .btn-ghost:hover {
-    background: rgba(255, 255, 255, 0.14);
-    transform: translateY(-1px);
+    background: var(--consulting-surface-hover);
+    border-color: var(--consulting-border-hover);
+    transform: translateY(-2px);
   }
 
   /* ── Hero ── */
   .consulting-hero {
-    padding: 5rem 0 6rem;
-    background: radial-gradient(ellipse at 70% 0%, hsl(180 100% 15% / 0.4) 0%, transparent 60%),
-                radial-gradient(ellipse at 20% 80%, hsl(322 100% 20% / 0.3) 0%, transparent 60%),
-                linear-gradient(180deg, #0d1117 0%, #0a0f16 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 6rem 0 7rem;
+    background: var(--consulting-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .consulting-hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 80%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 212, 170, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .consulting-hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -10%;
+    width: 60%;
+    height: 80%;
+    background: radial-gradient(ellipse at center, rgba(255, 107, 157, 0.06) 0%, transparent 70%);
+    pointer-events: none;
   }
 
   .hero-badge {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 100px;
-    padding: 6px 16px 6px 10px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: hsl(180 100% 70%);
-    margin-bottom: 2rem;
+    background: var(--consulting-surface);
+    border: 1px solid var(--consulting-border);
+    border-radius: var(--consulting-radius-full);
+    padding: 8px 18px 8px 12px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--consulting-accent-cyan);
+    margin-bottom: 2.5rem;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
   }
 
   .hero-badge-dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: hsl(120 100% 50%);
-    animation: pulse 2s infinite;
+    background: #34d399;
+    box-shadow: 0 0 8px rgba(52, 211, 153, 0.5);
+    animation: pulse 2s ease-in-out infinite;
   }
 
   @keyframes pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.6; transform: scale(1.3); }
+    50% { opacity: 0.6; transform: scale(1.2); }
   }
 
   .consulting-hero h1 {
-    font-size: clamp(2.4rem, 5vw, 3.8rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.08;
-    color: #fff;
-    margin-bottom: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(2.75rem, 6vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.045em;
+    line-height: 1.05;
+    color: var(--consulting-text-primary);
+    margin-bottom: 1.75rem;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: rgba(255, 255, 255, 0.6);
-    max-width: 580px;
-    line-height: 1.7;
-    margin-bottom: 2.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(1.0625rem, 1.75vw, 1.3125rem);
+    font-weight: 400;
+    color: var(--consulting-text-secondary);
+    max-width: 540px;
+    line-height: 1.6;
+    margin-bottom: 2.75rem;
+    letter-spacing: -0.01em;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-actions {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 3.5rem;
+    margin-bottom: 4rem;
+    position: relative;
+    z-index: 1;
   }
 
   .hero-stats {
-    display: flex;
-    gap: 2.5rem;
-    flex-wrap: wrap;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--consulting-border);
+    border-radius: var(--consulting-radius-lg);
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-stat {
+    background: var(--consulting-bg);
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .hero-stat:first-child {
+    border-radius: var(--consulting-radius-lg) 0 0 var(--consulting-radius-lg);
+  }
+
+  .hero-stat:last-child {
+    border-radius: 0 var(--consulting-radius-lg) var(--consulting-radius-lg) 0;
   }
 
   .stat-number {
-    font-size: 2rem;
-    font-weight: 800;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-weight: 700;
     letter-spacing: -0.04em;
-    color: #fff;
+    color: var(--consulting-text-primary);
     line-height: 1;
+    margin-bottom: 0.5rem;
   }
 
   .stat-number span {
-    color: hsl(180 100% 60%);
+    color: var(--consulting-accent-cyan);
   }
 
   .stat-label {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.45);
-    font-weight: 500;
-    margin-top: 4px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--consulting-text-tertiary);
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   /* ── Problem ── */
   .consulting-problem {
-    padding: 5rem 0;
-    background: #050b14;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .consulting-problem h2 {
-    margin-bottom: 0.75rem;
+    padding: 6rem 0;
+    background: var(--consulting-bg);
+    border-top: 1px solid var(--consulting-border);
   }
 
   .problem-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 1.25rem;
+    background: var(--consulting-border);
+    border-radius: var(--consulting-radius-lg);
     overflow: hidden;
   }
 
   .problem-item {
-    background: #0a1120;
+    background: var(--consulting-bg);
     padding: 2rem;
-    transition: background 0.2s;
+    transition: var(--consulting-transition);
   }
 
   .problem-item:hover {
-    background: #0d1829;
+    background: var(--consulting-surface);
   }
 
   .problem-icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--consulting-surface);
+    border-radius: var(--consulting-radius-sm);
+    border: 1px solid var(--consulting-border);
   }
 
   .problem-item h3 {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    color: var(--consulting-text-primary);
+    margin-bottom: 0.5rem;
   }
 
   .problem-item p {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.45);
-    line-height: 1.65;
+    color: var(--consulting-text-secondary);
+    line-height: 1.6;
     margin: 0;
+    letter-spacing: -0.005em;
   }
 
   /* ── Services ── */
   .consulting-section {
-    padding: 5rem 0;
-    background: #0d1117;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6rem 0;
+    background: var(--consulting-bg);
+    border-top: 1px solid var(--consulting-border);
   }
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--consulting-border);
+    border-radius: var(--consulting-radius-lg);
+    overflow: hidden;
   }
 
   .service-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.25rem;
+    background: var(--consulting-bg);
+    border: none;
+    border-radius: 0;
     padding: 2rem;
-    transition: all 0.2s;
+    transition: var(--consulting-transition);
   }
 
   .service-card:hover {
-    border-color: hsl(180 100% 40% / 0.4);
-    background: rgba(0, 210, 210, 0.04);
-    transform: translateY(-2px);
+    background: var(--consulting-surface);
   }
 
   .service-icon {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     margin-bottom: 1rem;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--consulting-surface);
+    border-radius: var(--consulting-radius-sm);
+    border: 1px solid var(--consulting-border);
   }
 
   .service-card p {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.65;
+    color: var(--consulting-text-secondary);
+    line-height: 1.6;
     margin: 0;
+    letter-spacing: -0.005em;
   }
 
   /* ── How it Works ── */
   .consulting-how {
-    padding: 5rem 0;
-    background: #060d18;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6rem 0;
+    background: var(--consulting-bg);
+    border-top: 1px solid var(--consulting-border);
   }
 
   .steps {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(5, 1fr);
     gap: 0;
     position: relative;
   }
@@ -666,72 +813,90 @@ const description =
   .steps::before {
     content: '';
     position: absolute;
-    top: 2rem;
+    top: 2.25rem;
     left: 10%;
     right: 10%;
     height: 1px;
-    background: linear-gradient(90deg, hsl(180 100% 40%), hsl(322 100% 50%));
-    opacity: 0.2;
+    background: linear-gradient(90deg, transparent, var(--consulting-border-hover), transparent);
   }
 
   .step {
     text-align: center;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
     position: relative;
   }
 
   .step-num {
-    width: 4rem;
-    height: 4rem;
+    width: 4.5rem;
+    height: 4.5rem;
     border-radius: 50%;
-    background: #0d1829;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--consulting-bg);
+    border: 1px solid var(--consulting-border-hover);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: hsl(180 100% 60%);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--consulting-accent-cyan);
     margin: 0 auto 1.5rem;
     position: relative;
     z-index: 1;
+    transition: var(--consulting-transition);
+  }
+
+  .step:hover .step-num {
+    border-color: var(--consulting-accent-cyan);
+    box-shadow: 0 0 20px rgba(0, 212, 170, 0.15);
   }
 
   .step h3 {
-    font-size: 0.95rem;
+    font-size: 0.9375rem;
     margin-bottom: 0.5rem;
   }
 
   .step p {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.45);
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--consulting-text-secondary);
+    line-height: 1.5;
     margin: 0;
   }
 
   /* ── Pricing ── */
   .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
     align-items: start;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
 
   .pricing-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.5rem;
-    padding: 2.25rem 2rem;
+    background: var(--consulting-surface);
+    border: 1px solid var(--consulting-border);
+    border-radius: var(--consulting-radius-xl);
+    padding: 2.5rem 2rem;
     position: relative;
     overflow: hidden;
+    transition: var(--consulting-transition);
+  }
+
+  .pricing-card:hover {
+    border-color: var(--consulting-border-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--consulting-shadow-lg);
   }
 
   .pricing-card.featured {
-    border-color: hsl(180 100% 40% / 0.5);
-    background: rgba(0, 210, 210, 0.05);
-    box-shadow: 0 0 40px hsl(180 100% 40% / 0.08);
-    transform: scale(1.02);
+    border-color: rgba(0, 212, 170, 0.3);
+    background: linear-gradient(180deg, rgba(0, 212, 170, 0.08) 0%, var(--consulting-surface) 100%);
+    box-shadow: var(--consulting-shadow-glow);
+  }
+
+  .pricing-card.featured:hover {
+    border-color: rgba(0, 212, 170, 0.5);
+    box-shadow: 0 0 60px rgba(0, 212, 170, 0.15), var(--consulting-shadow-lg);
   }
 
   .pricing-card.featured::before {
@@ -741,94 +906,103 @@ const description =
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, hsl(180 100% 50%), hsl(322 100% 60%));
+    background: var(--consulting-accent-gradient);
   }
 
   .pricing-badge {
     display: inline-block;
-    background: linear-gradient(135deg, hsl(180 100% 40%), hsl(322 100% 50%));
-    color: #fff;
-    font-size: 0.7rem;
+    background: var(--consulting-accent-gradient);
+    color: #000;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.6875rem;
     font-weight: 700;
-    padding: 3px 12px;
-    border-radius: 100px;
-    margin-bottom: 1rem;
-    letter-spacing: 0.06em;
+    padding: 4px 14px;
+    border-radius: var(--consulting-radius-full);
+    margin-bottom: 1.25rem;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
   }
 
   .pricing-tier {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.08em;
+    color: var(--consulting-text-tertiary);
     margin-bottom: 0.5rem;
   }
 
   .pricing-card h3 {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #fff;
+    font-size: 1.375rem;
+    font-weight: 700;
+    color: var(--consulting-text-primary);
     margin-bottom: 0.75rem;
+    letter-spacing: -0.02em;
   }
 
   .pricing-desc {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--consulting-text-secondary);
     line-height: 1.6;
-    margin-bottom: 1.5rem;
-    min-height: 60px;
+    margin-bottom: 1.75rem;
+    min-height: 65px;
   }
 
   .price-main {
-    font-size: 2.8rem;
-    font-weight: 900;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
     letter-spacing: -0.05em;
-    color: #fff;
+    color: var(--consulting-text-primary);
     line-height: 1;
     margin-bottom: 0.25rem;
   }
 
   .price-period {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.4);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--consulting-text-secondary);
     margin-bottom: 0.25rem;
   }
 
   .price-qualifier {
-    font-size: 0.78rem;
-    color: rgba(255, 255, 255, 0.35);
-    margin-bottom: 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    color: var(--consulting-text-tertiary);
+    margin-bottom: 1.75rem;
     font-style: italic;
   }
 
   .pricing-divider {
     border: none;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    margin: 1.5rem 0;
+    border-top: 1px solid var(--consulting-border);
+    margin: 1.75rem 0;
   }
 
   .pricing-features {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.875rem;
     padding: 0;
   }
 
   .pricing-features li {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.55);
+    color: var(--consulting-text-secondary);
     line-height: 1.5;
   }
 
   .check {
-    color: hsl(180 100% 55%);
+    color: var(--consulting-accent-cyan);
     flex-shrink: 0;
     margin-top: 1px;
+    font-weight: 600;
   }
 
   .pricing-cta {
@@ -839,131 +1013,148 @@ const description =
   }
 
   .pricing-note {
-    font-size: 0.76rem;
-    color: rgba(255, 255, 255, 0.3);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    color: var(--consulting-text-tertiary);
     text-align: center;
-    margin-top: 0.75rem;
+    margin-top: 0.875rem;
   }
 
   /* ── Qualify box ── */
   .qualify-box {
-    background: rgba(245, 158, 11, 0.08);
-    border: 1px solid rgba(245, 158, 11, 0.3);
-    border-radius: 1.25rem;
-    padding: 1.75rem 2rem;
-    margin-top: 2.5rem;
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: var(--consulting-radius-lg);
+    padding: 2rem;
+    margin-top: 3rem;
     display: flex;
-    gap: 1rem;
+    gap: 1.25rem;
     align-items: flex-start;
   }
 
   .qualify-icon {
     font-size: 1.5rem;
     flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(245, 158, 11, 0.1);
+    border-radius: var(--consulting-radius-sm);
   }
 
   .qualify-box h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: hsl(38 100% 75%);
-    margin-bottom: 0.4rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fbbf24;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
   }
 
   .qualify-box p {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.875rem;
-    color: hsl(38 80% 60%);
+    color: rgba(251, 191, 36, 0.7);
     line-height: 1.6;
     margin: 0;
   }
 
   .qualify-box strong {
-    color: hsl(38 100% 75%);
+    color: #fbbf24;
   }
 
   /* ── Savings explainer ── */
   .savings-explainer {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    border-radius: 1.5rem;
+    background: var(--consulting-surface);
+    border: 1px solid var(--consulting-border);
+    border-radius: var(--consulting-radius-xl);
     padding: 3rem;
-    margin-top: 2.5rem;
+    margin-top: 3rem;
   }
 
   .savings-explainer h3 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--consulting-text-primary);
     margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
   }
 
   .savings-sub {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.5);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.9375rem;
+    color: var(--consulting-text-secondary);
     margin-bottom: 2rem;
     line-height: 1.6;
   }
 
   .savings-math {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1px;
-    background: rgba(255, 255, 255, 0.06);
-    border-radius: 0.75rem;
+    background: var(--consulting-border);
+    border-radius: var(--consulting-radius-md);
     overflow: hidden;
     margin-bottom: 2rem;
   }
 
   .savings-cell {
-    background: #0a1120;
-    padding: 1.5rem;
+    background: var(--consulting-bg);
+    padding: 1.75rem 1.25rem;
     text-align: center;
   }
 
   .cell-label {
-    font-size: 0.7rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.6875rem;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    color: var(--consulting-text-tertiary);
     margin-bottom: 0.5rem;
   }
 
   .cell-value {
-    font-size: 1.8rem;
-    font-weight: 900;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
     letter-spacing: -0.04em;
-    color: #fff;
+    color: var(--consulting-text-primary);
     line-height: 1;
   }
 
   .cell-value.green {
-    color: hsl(142 70% 55%);
+    color: #34d399;
   }
 
   .cell-value.cyan {
-    color: hsl(180 100% 60%);
+    color: var(--consulting-accent-cyan);
   }
 
   .cell-note {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.35);
-    margin-top: 0.25rem;
+    color: var(--consulting-text-tertiary);
+    margin-top: 0.375rem;
   }
 
   .savings-fine-print {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.35);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    color: var(--consulting-text-tertiary);
     line-height: 1.7;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-    padding-top: 1.5rem;
+    border-top: 1px solid var(--consulting-border);
+    padding-top: 1.75rem;
     margin: 0;
   }
 
-  /* ── About ── */
+  /* ── About ─ */
   .consulting-about {
-    padding: 5rem 0;
-    background: #060d18;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 6rem 0;
+    background: var(--consulting-bg);
+    border-top: 1px solid var(--consulting-border);
   }
 
   .about-inner {
@@ -974,36 +1165,39 @@ const description =
   }
 
   .about-avatar {
-    width: 160px;
-    height: 160px;
-    border-radius: 1.5rem;
-    background: linear-gradient(135deg, hsl(180 100% 30%), hsl(322 100% 40%));
+    width: 140px;
+    height: 140px;
+    border-radius: var(--consulting-radius-lg);
+    background: var(--consulting-accent-gradient-subtle);
+    border: 1px solid var(--consulting-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--consulting-text-primary);
     letter-spacing: -0.04em;
     flex-shrink: 0;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   }
 
   .about-content h2 {
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
   }
 
   .about-content p {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.55);
-    line-height: 1.75;
-    margin-bottom: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.9375rem;
+    color: var(--consulting-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.875rem;
   }
 
   .about-content a {
-    color: hsl(180 100% 60%);
-    font-weight: 600;
+    color: var(--consulting-accent-cyan);
+    font-weight: 500;
     text-decoration: none;
+    transition: var(--consulting-transition-fast);
   }
 
   .about-content a:hover {
@@ -1014,44 +1208,101 @@ const description =
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 1.5rem;
+    margin-top: 1.75rem;
   }
 
   .tag {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 100px;
-    padding: 4px 14px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.55);
+    background: var(--consulting-surface);
+    border: 1px solid var(--consulting-border);
+    border-radius: var(--consulting-radius-full);
+    padding: 6px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--consulting-text-secondary);
+    transition: var(--consulting-transition-fast);
+  }
+
+  .tag:hover {
+    border-color: var(--consulting-border-hover);
+    color: var(--consulting-text-primary);
   }
 
   /* ── CTA Banner ── */
   .consulting-cta {
-    padding: 6rem 0;
-    background: radial-gradient(ellipse at 50% 50%, hsl(180 100% 15% / 0.3) 0%, transparent 70%),
-                #050b14;
+    padding: 7rem 0;
+    background: var(--consulting-bg);
+    border-top: 1px solid var(--consulting-border);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .consulting-cta::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0, 212, 170, 0.06) 0%, transparent 70%);
+    pointer-events: none;
   }
 
   .cta-inner {
     max-width: 600px;
+    position: relative;
+    z-index: 1;
   }
 
   .consulting-cta h2 {
-    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: 1.25rem;
   }
 
   .consulting-cta p {
-    font-size: 1.05rem;
-    color: rgba(255, 255, 255, 0.55);
-    line-height: 1.65;
-    margin-bottom: 2.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.0625rem;
+    color: var(--consulting-text-secondary);
+    line-height: 1.6;
+    margin-bottom: 2.75rem;
   }
 
-  /* ── Responsive ── */
+  /* ── Scroll animations ── */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Responsive ─ */
+  @media (max-width: 1024px) {
+    .pricing-grid {
+      grid-template-columns: 1fr;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .steps::before {
+      display: none;
+    }
+
+    .savings-math {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (max-width: 768px) {
     .consulting-hero,
     .consulting-problem,
@@ -1059,11 +1310,16 @@ const description =
     .consulting-how,
     .consulting-about,
     .consulting-cta {
-      padding: 3.5rem 0;
+      padding: 4rem 0;
+    }
+
+    .consulting-hero {
+      padding-top: 3rem;
     }
 
     .about-inner {
       grid-template-columns: 1fr;
+      gap: 2rem;
     }
 
     .about-avatar {
@@ -1072,20 +1328,69 @@ const description =
       font-size: 1.75rem;
     }
 
-    .steps::before {
-      display: none;
+    .steps {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .step {
+      text-align: left;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .step-num {
+      margin: 0;
+      width: 3.5rem;
+      height: 3.5rem;
     }
 
     .pricing-card.featured {
       transform: none;
     }
 
+    .pricing-card.featured:hover {
+      transform: translateY(-4px);
+    }
+
     .savings-explainer {
       padding: 2rem 1.5rem;
     }
 
+    .savings-math {
+      grid-template-columns: 1fr 1fr;
+    }
+
     .hero-stats {
-      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+
+    .hero-stat:first-child,
+    .hero-stat:last-child {
+      border-radius: 0;
+    }
+
+    .hero-stat:nth-child(1) {
+      border-radius: var(--consulting-radius-lg) var(--consulting-radius-lg) 0 0;
+    }
+
+    .hero-stat:last-child {
+      border-radius: 0 0 var(--consulting-radius-lg) var(--consulting-radius-lg);
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .hero-actions .btn {
+      width: 100%;
+    }
+
+    .problem-grid,
+    .services-grid {
+      grid-template-columns: 1fr;
     }
   }
 </style>

@@ -7,6 +7,14 @@
 
 ## TODO
 
+### Stripe Public Key, Secret Key, and Link URL
+
+```
+STRIPE_PUBLIC_KEY=your_stripe_publishable_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_INTRO_CALL_LINK=https://buy.stripe.com/XXXXXXXXXXXXXXXXXXXXXXXX
+```
+
 - [ ] Add Emoji/Icons to Quiz Challenges
 - [ ] Use Google's Quiz JSON+LD? Maybe just 1-3 questions per page?
 - [ ] Add custom image processing service to override resizing images on the fly.
