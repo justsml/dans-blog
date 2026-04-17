@@ -18,11 +18,24 @@ export type SearchIssuesResponse = Endpoints["GET /search/issues"]["response"]["
  * A repo which has been contributed to... By me.
  * With extra data, like notes and a description override.
  */
+export type ContributionTag =
+  | "Node.js"
+  | "AI"
+  | "Python"
+  | "Postgres"
+  | "Docker"
+  | "TypeScript"
+  | "React"
+  | "Testing"
+  | "Rust"
+  | "Ruby";
+
 export type Contribution = {
   repo: string;
   renamed?: string;
   description_override: string;
   notes: string;
+  tags?: ContributionTag[];
   date_created?: Date;
   date_updated?: Date;
   pull_request_url?: string;

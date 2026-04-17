@@ -1,0 +1,1118 @@
+---
+// AI Consulting Landing Page
+// Replace placeholder links with your actual Stripe Payment Links and Calendly URL
+
+const STRIPE_INTRO_CALL_LINK = "https://buy.stripe.com/REPLACE_INTRO_CALL";
+const STRIPE_RETAINER_LINK = "https://buy.stripe.com/REPLACE_RETAINER";
+const CALENDLY_LINK = "https://calendly.com/REPLACE_YOUR_HANDLE";
+
+const title = "AI Cost Optimization & Architecture Consulting | Dan Levy";
+const description =
+  "Stop burning budget on AI infrastructure. I audit your stack, find the waste, and get paid when you save. Trusted by teams spending $100K+/mo on AI.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0a0a0f;
+        --ink-muted: #4a4a5a;
+        --ink-subtle: #8888a0;
+        --surface: #ffffff;
+        --surface-raised: #f7f7fb;
+        --surface-accent: #f0f0ff;
+        --brand: #4f46e5;
+        --brand-light: #818cf8;
+        --brand-dark: #3730a3;
+        --accent: #06b6d4;
+        --accent-warm: #f59e0b;
+        --success: #10b981;
+        --danger: #ef4444;
+        --border: #e5e5f0;
+        --border-strong: #c7c7e0;
+        --radius-sm: 6px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --radius-xl: 32px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
+        --shadow-md: 0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
+        --shadow-lg: 0 16px 48px rgba(0,0,0,.12), 0 4px 16px rgba(0,0,0,.06);
+        --shadow-xl: 0 32px 80px rgba(0,0,0,.16), 0 8px 24px rgba(0,0,0,.08);
+      }
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--surface);
+        color: var(--ink);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; text-decoration: none; }
+      img { max-width: 100%; display: block; }
+
+      /* ── Layout ── */
+      .container {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .container--narrow {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      section { padding: 96px 0; }
+      section.sm { padding: 64px 0; }
+
+      /* ── Nav ── */
+      nav {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(255,255,255,0.92);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .nav-logo {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--ink);
+        letter-spacing: -0.02em;
+      }
+      .nav-logo span { color: var(--brand); }
+      .nav-actions { display: flex; gap: 12px; align-items: center; }
+      .nav-link {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: var(--ink-muted);
+        transition: color .15s;
+      }
+      .nav-link:hover { color: var(--ink); }
+
+      /* ── Buttons ── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        border-radius: var(--radius-md);
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all .18s;
+        border: none;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+      .btn-primary {
+        background: var(--brand);
+        color: white;
+        box-shadow: 0 2px 8px rgba(79,70,229,.3);
+      }
+      .btn-primary:hover {
+        background: var(--brand-dark);
+        box-shadow: 0 4px 16px rgba(79,70,229,.4);
+        transform: translateY(-1px);
+      }
+      .btn-outline {
+        background: transparent;
+        color: var(--brand);
+        border: 2px solid var(--brand);
+      }
+      .btn-outline:hover {
+        background: var(--brand);
+        color: white;
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: var(--surface-raised);
+        color: var(--ink);
+        border: 1px solid var(--border);
+      }
+      .btn-ghost:hover {
+        background: var(--border);
+        transform: translateY(-1px);
+      }
+      .btn-lg {
+        padding: 16px 32px;
+        font-size: 1.05rem;
+        border-radius: var(--radius-lg);
+      }
+      .btn-xl {
+        padding: 20px 40px;
+        font-size: 1.1rem;
+        border-radius: var(--radius-lg);
+      }
+
+      /* ── Hero ── */
+      .hero {
+        padding: 80px 0 96px;
+        background: linear-gradient(160deg, #fafafa 0%, var(--surface-accent) 60%, #ede9ff 100%);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+        position: relative;
+      }
+      .hero::before {
+        content: '';
+        position: absolute;
+        top: -200px; right: -200px;
+        width: 600px; height: 600px;
+        background: radial-gradient(circle, rgba(79,70,229,.08) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero::after {
+        content: '';
+        position: absolute;
+        bottom: -100px; left: -100px;
+        width: 400px; height: 400px;
+        background: radial-gradient(circle, rgba(6,182,212,.07) 0%, transparent 70%);
+        pointer-events: none;
+      }
+      .hero-content { position: relative; z-index: 1; }
+      .hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: white;
+        border: 1px solid var(--border-strong);
+        border-radius: 100px;
+        padding: 6px 16px 6px 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--brand);
+        margin-bottom: 32px;
+        box-shadow: var(--shadow-sm);
+      }
+      .hero-badge-dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: pulse 2s infinite;
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: .6; transform: scale(1.2); }
+      }
+      h1 {
+        font-size: clamp(2.4rem, 5vw, 3.8rem);
+        font-weight: 900;
+        line-height: 1.08;
+        letter-spacing: -0.04em;
+        color: var(--ink);
+        margin-bottom: 24px;
+      }
+      h1 .highlight {
+        background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .hero-sub {
+        font-size: clamp(1.05rem, 2vw, 1.25rem);
+        color: var(--ink-muted);
+        max-width: 600px;
+        line-height: 1.7;
+        margin-bottom: 40px;
+        font-weight: 400;
+      }
+      .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 56px; }
+      .hero-stat-row {
+        display: flex;
+        gap: 40px;
+        flex-wrap: wrap;
+        padding-top: 48px;
+        border-top: 1px solid var(--border);
+      }
+      .hero-stat { }
+      .hero-stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .hero-stat-number span { color: var(--brand); }
+      .hero-stat-label {
+        font-size: 0.85rem;
+        color: var(--ink-subtle);
+        font-weight: 500;
+        margin-top: 4px;
+      }
+
+      /* ── Problem ── */
+      .problem { background: var(--ink); color: white; }
+      .problem h2 {
+        color: white;
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        margin-bottom: 16px;
+      }
+      .problem-lead {
+        font-size: 1.15rem;
+        color: rgba(255,255,255,.65);
+        max-width: 600px;
+        margin-bottom: 56px;
+        line-height: 1.7;
+      }
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 2px;
+        background: rgba(255,255,255,.06);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+      .problem-item {
+        background: rgba(255,255,255,.03);
+        padding: 36px 32px;
+      }
+      .problem-icon {
+        font-size: 2rem;
+        margin-bottom: 16px;
+      }
+      .problem-item h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 8px;
+        letter-spacing: -0.01em;
+      }
+      .problem-item p {
+        font-size: 0.9rem;
+        color: rgba(255,255,255,.55);
+        line-height: 1.65;
+      }
+
+      /* ── Services ── */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-top: 56px;
+      }
+      .service-card {
+        background: var(--surface-raised);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 36px 32px;
+        transition: all .2s;
+      }
+      .service-card:hover {
+        border-color: var(--brand-light);
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+      .service-icon {
+        width: 52px; height: 52px;
+        border-radius: var(--radius-md);
+        background: var(--surface-accent);
+        border: 1px solid rgba(79,70,229,.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      .service-card h3 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 10px;
+        letter-spacing: -0.02em;
+      }
+      .service-card p {
+        font-size: 0.92rem;
+        color: var(--ink-muted);
+        line-height: 1.65;
+      }
+
+      /* ── How it Works ── */
+      .how { background: var(--surface-raised); }
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 0;
+        margin-top: 56px;
+        position: relative;
+      }
+      .steps::before {
+        content: '';
+        position: absolute;
+        top: 32px; left: 10%; right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--brand), var(--accent));
+        opacity: .25;
+      }
+      .step {
+        text-align: center;
+        padding: 0 24px;
+        position: relative;
+      }
+      .step-num {
+        width: 64px; height: 64px;
+        border-radius: 50%;
+        background: white;
+        border: 2px solid var(--border-strong);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: var(--brand);
+        margin: 0 auto 24px;
+        position: relative;
+        z-index: 1;
+        box-shadow: var(--shadow-sm);
+      }
+      .step h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        letter-spacing: -0.01em;
+      }
+      .step p {
+        font-size: 0.88rem;
+        color: var(--ink-muted);
+        line-height: 1.6;
+      }
+
+      /* ── Pricing ── */
+      h2 {
+        font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: var(--ink);
+      }
+      .section-lead {
+        font-size: 1.1rem;
+        color: var(--ink-muted);
+        max-width: 560px;
+        line-height: 1.7;
+        margin-top: 16px;
+      }
+      .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-top: 56px;
+        align-items: start;
+      }
+      .pricing-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: 40px 36px;
+        box-shadow: var(--shadow-sm);
+        position: relative;
+        overflow: hidden;
+      }
+      .pricing-card.featured {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 1px var(--brand), var(--shadow-lg);
+        transform: scale(1.02);
+      }
+      .pricing-card.featured::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brand), var(--accent));
+      }
+      .pricing-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, var(--brand), var(--accent));
+        color: white;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 4px 12px;
+        border-radius: 100px;
+        margin-bottom: 20px;
+        letter-spacing: .04em;
+        text-transform: uppercase;
+      }
+      .pricing-tier {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        color: var(--ink-subtle);
+        margin-bottom: 8px;
+      }
+      .pricing-card h3 {
+        font-size: 1.3rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        margin-bottom: 12px;
+      }
+      .pricing-desc {
+        font-size: 0.9rem;
+        color: var(--ink-muted);
+        line-height: 1.6;
+        margin-bottom: 28px;
+        min-height: 60px;
+      }
+      .price-main {
+        font-size: 2.8rem;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        color: var(--ink);
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .price-period {
+        font-size: 0.85rem;
+        color: var(--ink-subtle);
+        margin-bottom: 4px;
+      }
+      .price-qualifier {
+        font-size: 0.8rem;
+        color: var(--ink-subtle);
+        margin-bottom: 32px;
+        font-style: italic;
+      }
+      .pricing-divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 28px 0;
+      }
+      .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+      .pricing-features li {
+        display: flex;
+        gap: 10px;
+        font-size: 0.9rem;
+        color: var(--ink-muted);
+        line-height: 1.5;
+      }
+      .pricing-features .check {
+        color: var(--success);
+        font-size: 1rem;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      .pricing-cta { margin-top: 32px; width: 100%; display: block; text-align: center; }
+      .pricing-note {
+        font-size: 0.8rem;
+        color: var(--ink-subtle);
+        text-align: center;
+        margin-top: 12px;
+      }
+      .qualify-box {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        border: 1px solid #f59e0b;
+        border-radius: var(--radius-lg);
+        padding: 28px 32px;
+        margin-top: 40px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+      }
+      .qualify-box-icon { font-size: 1.5rem; flex-shrink: 0; }
+      .qualify-box h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #92400e;
+        margin-bottom: 6px;
+      }
+      .qualify-box p {
+        font-size: 0.9rem;
+        color: #78350f;
+        line-height: 1.6;
+      }
+
+      /* ── Savings Model Explainer ── */
+      .savings-explainer {
+        background: linear-gradient(135deg, var(--surface-accent) 0%, #f0f9ff 100%);
+        border: 1px solid rgba(79,70,229,.15);
+        border-radius: var(--radius-xl);
+        padding: 56px 48px;
+        margin-top: 56px;
+      }
+      .savings-explainer h3 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 12px;
+      }
+      .savings-explainer .sub {
+        font-size: 1rem;
+        color: var(--ink-muted);
+        margin-bottom: 40px;
+        line-height: 1.6;
+      }
+      .savings-math {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 2px;
+        background: rgba(79,70,229,.1);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        margin-bottom: 32px;
+      }
+      .savings-math-cell {
+        background: white;
+        padding: 28px 24px;
+        text-align: center;
+      }
+      .savings-math-cell .label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+        font-weight: 700;
+        color: var(--ink-subtle);
+        margin-bottom: 8px;
+      }
+      .savings-math-cell .value {
+        font-size: 1.8rem;
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        color: var(--ink);
+        line-height: 1;
+      }
+      .savings-math-cell .value.green { color: var(--success); }
+      .savings-math-cell .value.brand { color: var(--brand); }
+      .savings-math-cell .note {
+        font-size: 0.8rem;
+        color: var(--ink-subtle);
+        margin-top: 4px;
+      }
+      .savings-fine-print {
+        font-size: 0.88rem;
+        color: var(--ink-muted);
+        line-height: 1.7;
+        border-top: 1px solid var(--border);
+        padding-top: 24px;
+      }
+
+      /* ── About ── */
+      .about { background: var(--surface-raised); }
+      .about-inner {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 64px;
+        align-items: start;
+      }
+      .about-avatar {
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: var(--radius-xl);
+        background: linear-gradient(135deg, var(--brand) 0%, var(--accent) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        font-weight: 900;
+        color: white;
+        letter-spacing: -0.04em;
+        box-shadow: var(--shadow-lg);
+        max-width: 220px;
+      }
+      .about-content h2 { margin-bottom: 20px; }
+      .about-content p {
+        font-size: 1rem;
+        color: var(--ink-muted);
+        line-height: 1.75;
+        margin-bottom: 16px;
+      }
+      .about-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 24px;
+      }
+      .tag {
+        background: white;
+        border: 1px solid var(--border-strong);
+        border-radius: 100px;
+        padding: 5px 14px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--ink-muted);
+      }
+
+      /* ── CTA Banner ── */
+      .cta-banner {
+        background: var(--ink);
+        color: white;
+        text-align: center;
+        padding: 96px 24px;
+      }
+      .cta-banner h2 {
+        color: white;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        letter-spacing: -0.04em;
+        margin-bottom: 16px;
+      }
+      .cta-banner p {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,.6);
+        margin-bottom: 40px;
+        max-width: 520px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.65;
+      }
+      .cta-banner .btn-primary {
+        background: white;
+        color: var(--brand);
+        font-size: 1.1rem;
+        padding: 18px 40px;
+        border-radius: var(--radius-lg);
+      }
+      .cta-banner .btn-primary:hover {
+        background: var(--surface-accent);
+        box-shadow: 0 8px 32px rgba(255,255,255,.2);
+      }
+
+      /* ── Footer ── */
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 40px 0;
+        font-size: 0.88rem;
+        color: var(--ink-subtle);
+      }
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .footer-links { display: flex; gap: 24px; }
+      .footer-links a { color: var(--ink-subtle); transition: color .15s; }
+      .footer-links a:hover { color: var(--ink); }
+
+      /* ── Responsive ── */
+      @media (max-width: 768px) {
+        section { padding: 64px 0; }
+        .about-inner { grid-template-columns: 1fr; }
+        .about-avatar { max-width: 100px; font-size: 2.5rem; }
+        .steps::before { display: none; }
+        .pricing-card.featured { transform: none; }
+        .savings-explainer { padding: 36px 28px; }
+        .hero-stat-row { gap: 24px; }
+        .nav-link { display: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Nav -->
+    <nav>
+      <div class="container">
+        <div class="nav-inner">
+          <a href="/consulting" class="nav-logo">Dan Levy<span> · AI</span></a>
+          <div class="nav-actions">
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href={STRIPE_INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
+              Book Intro Call — $500
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            Now accepting new clients
+          </div>
+          <h1>
+            Your AI spend is<br />
+            <span class="highlight">leaking money.</span><br />
+            I find it. You keep it.
+          </h1>
+          <p class="hero-sub">
+            I audit AI infrastructure for companies spending $50K+/month and
+            get paid a share of what I save you — so my incentives are perfectly
+            aligned with yours. No savings, no fee.
+          </p>
+          <div class="hero-actions">
+            <a href="#pricing" class="btn btn-primary btn-xl">
+              See How It Works →
+            </a>
+            <a href={STRIPE_INTRO_CALL_LINK} class="btn btn-ghost btn-xl" target="_blank" rel="noopener">
+              Book 30-Min Call — $500
+            </a>
+          </div>
+          <div class="hero-stat-row">
+            <div class="hero-stat">
+              <div class="hero-stat-number"><span>40</span>–70%</div>
+              <div class="hero-stat-label">Typical token cost reduction</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number">$<span>50K</span>+</div>
+              <div class="hero-stat-label">Min. monthly AI spend to qualify</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-number"><span>0</span></div>
+              <div class="hero-stat-label">Upfront risk — paid on results</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem -->
+    <section class="problem">
+      <div class="container">
+        <h2>AI costs compound fast.<br />Most teams don't notice until it hurts.</h2>
+        <p class="problem-lead">
+          The teams I work with aren't doing anything wrong — they're just missing
+          patterns that are nearly invisible from inside the codebase.
+        </p>
+        <div class="problem-grid">
+          <div class="problem-item">
+            <div class="problem-icon">🔁</div>
+            <h3>Redundant context on every call</h3>
+            <p>Sending the same system prompt, docs, or user history on every request when caching or compression would cost 90% less.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon">🧠</div>
+            <h3>Wrong model for the job</h3>
+            <p>GPT-4o or Claude Opus handling tasks that a fine-tuned small model or Claude Haiku would nail at 1/20th the price.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon">📦</div>
+            <h3>No batching or async pipeline</h3>
+            <p>Synchronous, single-shot calls where async batching would cut latency and cut costs simultaneously.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon">🏗️</div>
+            <h3>Architecture that didn't scale</h3>
+            <p>What worked at 1K calls/day breaks at 1M. Retrieval, embedding, and routing layers that made sense early become cost sinkholes.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon">📊</div>
+            <h3>No token observability</h3>
+            <p>You know your invoice total but not which endpoints, features, or users are driving 80% of your spend.</p>
+          </div>
+          <div class="problem-item">
+            <div class="problem-icon">🔐</div>
+            <h3>Security gaps in the AI layer</h3>
+            <p>Prompt injection surface, unconstrained agent loops, and data leakage vectors that most security audits miss entirely.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <h2>What I do</h2>
+        <p class="section-lead">
+          End-to-end AI consulting from strategy to implementation — wherever
+          your team needs the most leverage.
+        </p>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🔍</div>
+            <h3>Cost & Efficiency Audit</h3>
+            <p>Deep analysis of your token usage, model selection, prompt architecture, caching gaps, and vendor contracts. Delivered as a ranked savings roadmap.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🏛️</div>
+            <h3>AI Architecture Review</h3>
+            <p>Evaluate your retrieval pipelines, agent designs, context management, and scalability patterns. Identify what breaks at 10x current load.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">⚡</div>
+            <h3>Performance Optimization</h3>
+            <p>Latency reduction, throughput improvements, prompt compression, model routing, and caching layers — with measurable before/after benchmarks.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🛡️</div>
+            <h3>AI Security Assessment</h3>
+            <p>Prompt injection, data exfiltration risks, agent loop vulnerabilities, PII exposure, and model supply chain risks — reviewed against current threat models.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎓</div>
+            <h3>Team Training & Upskilling</h3>
+            <p>Hands-on workshops tailored to your stack: prompt engineering, LLM APIs, RAG patterns, agent design, evaluation frameworks, and cost management culture.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🗺️</div>
+            <h3>AI Strategy & Roadmap</h3>
+            <p>Build-vs-buy decisions, vendor evaluation, capability sequencing, and a 6–12 month roadmap your engineering and product teams can actually execute.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how">
+      <div class="container">
+        <h2>How the savings model works</h2>
+        <p class="section-lead">
+          Inspired by how cloud consultancies operate: I take a percentage of
+          what I save you, so there's no risk for you to get started.
+        </p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <h3>Intro Call</h3>
+            <p>30 minutes to understand your stack, spend, and goals. I'll tell you honestly if I can help.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <h3>Audit</h3>
+            <p>2–4 week deep dive into your codebase, usage data, invoices, and architecture. No changes yet.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <h3>Roadmap</h3>
+            <p>Prioritized list of changes with projected savings per item. You decide what to implement.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <h3>Implementation</h3>
+            <p>I work alongside your team to ship the changes, with full documentation and handoff.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">5</div>
+            <h3>Measure & Share</h3>
+            <p>30/60/90-day savings verified against baseline. You keep ~75%. I take ~25%.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing">
+      <div class="container">
+        <h2>Engagement options</h2>
+        <p class="section-lead">
+          Three ways to work together, depending on where you are and what you need.
+        </p>
+
+        <div class="pricing-grid">
+          <!-- Intro Call -->
+          <div class="pricing-card">
+            <div class="pricing-tier">First step</div>
+            <h3>Intro Call</h3>
+            <p class="pricing-desc">
+              A focused 30-minute conversation to diagnose your situation and
+              decide if we're a fit — before any commitment.
+            </p>
+            <div class="price-main">$500</div>
+            <div class="price-period">one-time / 30 minutes</div>
+            <div class="price-qualifier">Credited toward any engagement</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> Structured diagnostic session</li>
+              <li><span class="check">✓</span> Written summary & top 3 opportunities</li>
+              <li><span class="check">✓</span> Honest assessment — I'll say if I can't help</li>
+              <li><span class="check">✓</span> Secure payment via Stripe</li>
+            </ul>
+            <a href={STRIPE_INTRO_CALL_LINK} class="btn btn-outline btn-lg pricing-cta" target="_blank" rel="noopener">
+              Book via Stripe →
+            </a>
+            <p class="pricing-note">Instant confirmation. Schedule after payment.</p>
+          </div>
+
+          <!-- Cost Savings Share — Featured -->
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <div class="pricing-tier">Performance-based</div>
+            <h3>Cost Savings Partnership</h3>
+            <p class="pricing-desc">
+              I audit your stack, implement optimizations, and take 25% of
+              the annual savings I deliver. Zero upfront. Pure alignment.
+            </p>
+            <div class="price-main">25%</div>
+            <div class="price-period">of documented annual savings</div>
+            <div class="price-qualifier">Prorated monthly over 12 months</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> Full audit (2–4 weeks)</li>
+              <li><span class="check">✓</span> Prioritized savings roadmap</li>
+              <li><span class="check">✓</span> Hands-on implementation support</li>
+              <li><span class="check">✓</span> 90-day savings verification</li>
+              <li><span class="check">✓</span> Monthly check-ins for 12 months</li>
+              <li><span class="check">✓</span> No savings = no fee</li>
+            </ul>
+            <a href={CALENDLY_LINK} class="btn btn-primary btn-lg pricing-cta" target="_blank" rel="noopener">
+              Schedule Discovery Call →
+            </a>
+            <p class="pricing-note">Minimum qualifying spend: $50K/month on AI infrastructure</p>
+          </div>
+
+          <!-- Retainer -->
+          <div class="pricing-card">
+            <div class="pricing-tier">Ongoing advisory</div>
+            <h3>Monthly Retainer</h3>
+            <p class="pricing-desc">
+              Dedicated hours each month for teams that need consistent
+              strategic guidance, architecture review, and rapid-response support.
+            </p>
+            <div class="price-main">$15K</div>
+            <div class="price-period">per month</div>
+            <div class="price-qualifier">20 hours included · additional at $750/hr</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="check">✓</span> 20 hrs/month (strategy + hands-on)</li>
+              <li><span class="check">✓</span> Async Slack/email access</li>
+              <li><span class="check">✓</span> Code & architecture reviews</li>
+              <li><span class="check">✓</span> Incident response support</li>
+              <li><span class="check">✓</span> Monthly written briefing</li>
+              <li><span class="check">✓</span> 3-month minimum engagement</li>
+            </ul>
+            <a href={STRIPE_RETAINER_LINK} class="btn btn-outline btn-lg pricing-cta" target="_blank" rel="noopener">
+              Start Retainer →
+            </a>
+            <p class="pricing-note">Billed monthly via Stripe. Cancel with 30 days notice.</p>
+          </div>
+        </div>
+
+        <!-- Qualifying box -->
+        <div class="qualify-box">
+          <div class="qualify-box-icon">⚡</div>
+          <div>
+            <h4>Who qualifies for the savings partnership?</h4>
+            <p>
+              Your organization must be spending at least <strong>$50,000/month</strong> on AI
+              infrastructure (tokens, embeddings, hosting, inference) to have enough surface area
+              for a meaningful optimization engagement. Companies spending $100K+/month typically
+              see the strongest returns. If you're below that threshold, the intro call or retainer
+              are better starting points.
+            </p>
+          </div>
+        </div>
+
+        <!-- Savings math explainer -->
+        <div class="savings-explainer">
+          <h3>What does 25% of savings actually look like?</h3>
+          <p class="sub">
+            Here's a real-world scenario based on typical outcomes. Your numbers will vary —
+            this is why we audit first.
+          </p>
+          <div class="savings-math">
+            <div class="savings-math-cell">
+              <div class="label">Your current spend</div>
+              <div class="value">$120K</div>
+              <div class="note">per month</div>
+            </div>
+            <div class="savings-math-cell">
+              <div class="label">Post-optimization</div>
+              <div class="value green">$48K</div>
+              <div class="note">per month (–60%)</div>
+            </div>
+            <div class="savings-math-cell">
+              <div class="label">Annual savings</div>
+              <div class="value green">$864K</div>
+              <div class="note">you keep 75%: <strong>$648K</strong></div>
+            </div>
+            <div class="savings-math-cell">
+              <div class="label">My share (25%)</div>
+              <div class="value brand">$216K</div>
+              <div class="note">paid monthly: ~$18K/mo</div>
+            </div>
+          </div>
+          <p class="savings-fine-print">
+            Savings are calculated against a verified 90-day baseline established at engagement start.
+            Methodology is agreed upon before any work begins. Payments are prorated monthly over 12
+            months based on projected annual savings, with a true-up at the 6-month mark. You always
+            retain the right to audit the calculations. Savings include direct token costs, compute,
+            and any vendor fee reductions I negotiate on your behalf.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="about">
+      <div class="container">
+        <div class="about-inner">
+          <div class="about-avatar">DL</div>
+          <div class="about-content">
+            <h2>Hi, I'm Dan Levy</h2>
+            <p>
+              I'm a software engineer and architect who has spent the last several years
+              embedded in AI infrastructure — building, scaling, and auditing LLM-powered
+              systems across fintech, developer tooling, and enterprise SaaS.
+            </p>
+            <p>
+              I've seen what happens when AI costs get out of control, and I've built
+              the frameworks to fix it. I write about AI architecture and engineering
+              at <a href="/" style="color: var(--brand); font-weight: 600;">danlevy.net</a> and
+              work directly with a small number of companies each year.
+            </p>
+            <p>
+              I'm not a large consultancy. You get me — reviewing your code, talking
+              to your engineers, and doing the work. That's a feature, not a limitation.
+            </p>
+            <div class="about-tags">
+              <span class="tag">LLM Architecture</span>
+              <span class="tag">Token Optimization</span>
+              <span class="tag">RAG Systems</span>
+              <span class="tag">Prompt Engineering</span>
+              <span class="tag">AI Security</span>
+              <span class="tag">Cost Analysis</span>
+              <span class="tag">OpenAI / Anthropic / Google</span>
+              <span class="tag">Team Training</span>
+              <span class="tag">TypeScript / Python</span>
+              <span class="tag">Agent Design</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="cta-banner">
+      <div class="container--narrow">
+        <h2>Not sure if you qualify?<br />Book the intro call.</h2>
+        <p>
+          30 minutes. $500. You'll leave with a clear picture of what's
+          possible — or an honest answer that I'm not the right fit.
+          Either way, you win.
+        </p>
+        <a href={STRIPE_INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
+          Book Intro Call — $500 via Stripe →
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-inner">
+          <span>© {new Date().getFullYear()} Dan Levy · AI Consulting</span>
+          <div class="footer-links">
+            <a href="/">Blog</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href={CALENDLY_LINK} target="_blank" rel="noopener">Schedule</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
