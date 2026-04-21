@@ -40,6 +40,7 @@ export const PostCollections = {
     (acc, post) => {
       const { category } = post.data;
       if (ignoredCategories.includes(category)) return acc;
+      if (post.data.unlisted || post.data.draft) return acc;
       acc[category] = acc[category] == null ? 1 : acc[category] + 1;
       return acc;
     },
@@ -91,7 +92,9 @@ export const PostCollections = {
     props: Record<string, unknown>;
   }> {
     // console.log("getStaticPaths", posts);
-    posts = posts.filter((post) => !post.data.hidden);
+    posts = posts.filter(
+      (post) => !post.data.hidden && !post.data.unlisted && !post.data.draft,
+    );
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },
@@ -118,7 +121,10 @@ export const PostCollections = {
   },
   getPostsByCategory(category: string) {
     return PostCollections._posts.filter(
-      (post) => post.data.category === category,
+      (post) =>
+        post.data.category === category &&
+        !post.data.unlisted &&
+        !post.data.draft,
     );
   },
 
@@ -181,7 +187,7 @@ export const getArticleSortFn = (
   return (a: ArticlePost, b: ArticlePost) => {
     const aDate = a.data[field];
     const bDate = b.data[field];
-    if (!aDate || !bDate) return console.warn("No date found for", a, b), 0;
+    if (!aDate || !bDate) return (console.warn("No date found for", a, b), 0);
     const aTime = new Date(aDate).getTime();
     const bTime = new Date(bDate).getTime();
     return direction === "desc" ? bTime - aTime : aTime - bTime;
