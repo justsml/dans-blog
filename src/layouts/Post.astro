@@ -17,6 +17,7 @@ import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
 import { fade } from "astro:transitions";
 import { ShareCounters } from "../components/ShareUI";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
+import ConsultingCTA from "../components/ConsultingCTA.astro";
 
 type Props = {
   sourcePath: string;
@@ -171,6 +172,8 @@ const responsiveImgSizes_breakRight = {
           )
         )
       }
+
+      <ConsultingCTA category={category} />
 
       <slot />
 

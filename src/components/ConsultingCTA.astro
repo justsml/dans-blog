@@ -1,0 +1,240 @@
+---
+// @ts-nocheck
+/**
+ * ConsultingCTA — compact hire-me invite shown atop blog posts.
+ * Variant is auto-selected from the post category, or can be forced via the
+ * `variant` prop.
+ *
+ * 8 polished variants, each targeting a different reader intent.
+ */
+
+const CAL_LINK = "https://cal.com/dan-levy-net/30min?overlayCalendar=true";
+/** @typedef {keyof typeof VARIANTS} CTAVariant */
+const VARIANTS = {
+  "ai-cost": {
+    kicker: "AI Cost Consulting",
+    headline: "Your AI bill is higher than it needs to be.",
+    body: "I audit LLM infrastructure for companies spending $50K+/mo and take a share of what I save you — zero upfront risk.",
+    cta: "Book a 30-min call →",
+    accentClass: "accent-cyan",
+  },
+  "ai-arch": {
+    kicker: "AI Architecture",
+    headline: "Building AI-native systems that actually scale?",
+    body: "I have designed RAG pipelines, agent loops, and multi-model routers that cut costs 40-70% without sacrificing quality.",
+    cta: "Let's talk architecture →",
+    accentClass: "accent-cyan",
+  },
+  "js-ts": {
+    kicker: "Contract Engineering",
+    headline: "Need a senior JS/TS engineer who ships?",
+    body: "10+ years writing production JavaScript and TypeScript across fintech, developer tooling, and enterprise SaaS. Available for contract work.",
+    cta: "Get in touch →",
+    accentClass: "accent-pink",
+  },
+  security: {
+    kicker: "Security Consulting",
+    headline: "Security gaps are easier to find before they are exploited.",
+    body: "I do deep security reviews — prompt injection, auth flows, OWASP top 10, LLM-specific attack surfaces. Let us audit your stack.",
+    cta: "Book a security review →",
+    accentClass: "accent-orange",
+  },
+  infra: {
+    kicker: "Infrastructure & DevOps",
+    headline: "Infrastructure that does not wake you up at 3am.",
+    body: "Containerized deploys, production tuning, observability, and resilience patterns — I build systems that stay quiet under load.",
+    cta: "Talk infrastructure →",
+    accentClass: "accent-lime",
+  },
+  teams: {
+    kicker: "Team Training",
+    headline: "Want your team writing code like this?",
+    body: "I run hands-on workshops for engineering teams: AI patterns, prompt engineering, TypeScript, async architecture, and code quality culture.",
+    cta: "Book a team session →",
+    accentClass: "accent-purple",
+  },
+  fulltime: {
+    kicker: "Open to Full-Time",
+    headline: "Occasionally I take the right full-time role.",
+    body: "Senior engineer and architect with deep AI/LLM, TypeScript, and systems experience. If the mission is compelling, let's have a conversation.",
+    cta: "Start a conversation →",
+    accentClass: "accent-cyan",
+  },
+  contract: {
+    kicker: "Available for Contract",
+    headline: "Tight deadline? Hard problem? Extra senior hands?",
+    body: "I take short- and long-term contract engagements — full-stack, AI systems, architecture reviews, and tech-debt triage.",
+    cta: "Check availability →",
+    accentClass: "accent-pink",
+  },
+};
+
+/** @type {Record<string, CTAVariant>} */
+const CATEGORY_MAP = {
+  ai: "ai-cost",
+  llm: "ai-cost",
+  "machine learning": "ai-cost",
+  openai: "ai-cost",
+  anthropic: "ai-cost",
+  architecture: "ai-arch",
+  rag: "ai-arch",
+  agents: "ai-arch",
+  javascript: "js-ts",
+  typescript: "js-ts",
+  node: "js-ts",
+  "node.js": "js-ts",
+  quiz: "js-ts",
+  react: "js-ts",
+  security: "security",
+  auth: "security",
+  docker: "infra",
+  linux: "infra",
+  infrastructure: "infra",
+  devops: "infra",
+  "open source": "contract",
+};
+
+/**
+ * @param {string | undefined} category
+ * @param {CTAVariant | undefined} forced
+ * @returns {CTAVariant}
+ */
+function pickVariant(category, forced) {
+  if (forced) return forced;
+  const key = (category ?? "").toLowerCase().trim();
+  return CATEGORY_MAP[key] ?? "contract";
+}
+
+const variantKey = pickVariant(Astro.props.category, Astro.props.variant);
+const cta = VARIANTS[variantKey];
+---
+
+<aside class={`consulting-cta-banner ${cta.accentClass}`} aria-label="Hire Dan Levy">
+  <div class="cta-inner">
+    <div class="cta-text">
+      <p class="cta-kicker">{cta.kicker}</p>
+      <p class="cta-headline">{cta.headline}</p>
+      <p class="cta-body">{cta.body}</p>
+    </div>
+    <a
+      href={CAL_LINK}
+      class="cta-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {cta.cta}
+    </a>
+  </div>
+</aside>
+
+<style>
+  .consulting-cta-banner {
+    --cta-accent: #00d4aa;
+    --cta-accent-dim: rgba(0, 212, 170, 0.12);
+    --cta-accent-border: rgba(0, 212, 170, 0.25);
+    --cta-text: rgba(245, 245, 247, 0.92);
+    --cta-muted: rgba(245, 245, 247, 0.55);
+    --cta-bg: rgba(255, 255, 255, 0.03);
+    --cta-radius: 12px;
+
+    background: var(--cta-bg);
+    border: 1px solid var(--cta-accent-border);
+    border-left: 3px solid var(--cta-accent);
+    border-radius: var(--cta-radius);
+    margin: 0 0 2.5rem;
+    padding: 1.25rem 1.5rem;
+    container-type: inline-size;
+  }
+
+  /* ── Accent colour overrides ── */
+  .accent-pink {
+    --cta-accent: #ff6b9d;
+    --cta-accent-dim: rgba(255, 107, 157, 0.1);
+    --cta-accent-border: rgba(255, 107, 157, 0.25);
+  }
+  .accent-orange {
+    --cta-accent: #f59e0b;
+    --cta-accent-dim: rgba(245, 158, 11, 0.1);
+    --cta-accent-border: rgba(245, 158, 11, 0.25);
+  }
+  .accent-lime {
+    --cta-accent: #b8ff5f;
+    --cta-accent-dim: rgba(184, 255, 95, 0.08);
+    --cta-accent-border: rgba(184, 255, 95, 0.22);
+  }
+  .accent-purple {
+    --cta-accent: #a78bfa;
+    --cta-accent-dim: rgba(167, 139, 250, 0.1);
+    --cta-accent-border: rgba(167, 139, 250, 0.25);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cta-text {
+    flex: 1 1 16rem;
+    min-width: 0;
+  }
+
+  .cta-kicker {
+    color: var(--cta-accent);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 0.3rem;
+  }
+
+  .cta-headline {
+    color: var(--cta-text);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    margin: 0 0 0.35rem;
+  }
+
+  .cta-body {
+    color: var(--cta-muted);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: var(--cta-accent-dim);
+    border: 1px solid var(--cta-accent-border);
+    border-radius: 9999px;
+    color: var(--cta-accent);
+    flex-shrink: 0;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    padding: 0.5rem 1.125rem;
+    text-decoration: none;
+    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    white-space: nowrap;
+  }
+
+  .cta-btn:hover {
+    background: rgba(var(--cta-accent), 0.18);
+    border-color: var(--cta-accent);
+    transform: translateY(-1px);
+  }
+
+  /* Stack vertically on narrow containers */
+  @container (max-width: 480px) {
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>
