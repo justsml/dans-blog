@@ -221,6 +221,8 @@ const responsiveImgSizes_breakRight = {
   <script>
     let $interval: NodeJS.Timeout | null = null;
     let intCount = 0;
+    let questionStoreCache: any = null;
+    let questionStorePromise: Promise<any> | null = null;
     // Hackety hack to update the score-wrapper on quiz pages
     window.__updateCounts = () => {
       const quizUI = document.querySelectorAll(".quiz-ui");
@@ -279,11 +281,25 @@ const responsiveImgSizes_breakRight = {
       return true;
     };
 
-    async function getQuestionStore() {
-      const { QuestionStore } = await import("../components/QuizUI/QuestionStore");
-      const store = QuestionStore(window.location.pathname);
-      if (!store) return null;
-      return store;
+    function getQuestionStore() {
+      return questionStoreCache;
+    }
+
+    async function loadQuestionStore() {
+      if (questionStoreCache) return questionStoreCache;
+
+      if (!questionStorePromise) {
+        questionStorePromise = import("../components/QuizUI/QuestionStore")
+          .then(({ QuestionStore }) => {
+            questionStoreCache = QuestionStore(window.location.pathname);
+            return questionStoreCache;
+          })
+          .finally(() => {
+            questionStorePromise = null;
+          });
+      }
+
+      return questionStorePromise;
     }
 
     async function bootBannerEffects() {
@@ -311,6 +327,7 @@ const responsiveImgSizes_breakRight = {
     }
 
     function startQuizRefreshLoop() {
+      intCount = 0;
       // @ts-ignore fucking type errors
       $interval = setInterval(() => {
         intCount++;
@@ -324,12 +341,11 @@ const responsiveImgSizes_breakRight = {
     }
 
     async function bootQuizLogic(quiz: Element) {
-      const quiz = document.querySelector(".quiz-ui");
       __checkForEmptyShareCounts();
       if (!quiz) return;
 
       // window?.__superHackFix_patchOptionsListWithActualHeight();
-      const questionStore = await getQuestionStore();
+      const questionStore = await loadQuestionStore();
       const resetButton = document.querySelector("button.reset-quiz");
       if (resetButton) {
         resetButton.addEventListener("click", () => {
@@ -428,7 +444,7 @@ const responsiveImgSizes_breakRight = {
       const shareCounters = document.querySelector(".share-counters");
       const emptySpans = shareCounters?.querySelectorAll("span:empty");
 
-      if (emptySpans && emptySpans.length >= 4) {
+      if (emptySpans && emptySpans.length >= 3) {
         shareCounters?.classList.add("hidden", "empty", "no-share-counts");
       }
       return {
