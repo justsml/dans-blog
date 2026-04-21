@@ -98,6 +98,31 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   </div>
 </Page>
 
+<script>
+  function loadHtmx() {
+    if (document.querySelector("script[data-x-htmx-tag]")) return;
+
+    const scriptEl = document.createElement("script");
+    scriptEl.setAttribute("data-x-htmx-tag", "");
+    scriptEl.setAttribute("defer", "");
+    scriptEl.src = "/js/htmx.min.js";
+    scriptEl.onload = () => {
+      // @ts-expect-error - htmx is a global
+      window.htmx?.process(document.body);
+    };
+
+    document.body.appendChild(scriptEl);
+  }
+
+  document.addEventListener("astro:page-load", loadHtmx);
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", loadHtmx, { once: true });
+  } else {
+    loadHtmx();
+  }
+</script>
+
 <script is:inline>
   // document.addEventListener("astro:page-load", function () {});
 

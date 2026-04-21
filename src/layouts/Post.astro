@@ -178,7 +178,7 @@ const responsiveImgSizes_breakRight = {
       <slot />
 
       <ShareCounters
-        client:only="react"
+        client:visible
         url={Astro.request.url}
         className="share-counter-links"
       />
@@ -199,7 +199,7 @@ const responsiveImgSizes_breakRight = {
     />
 
     <div class="comments-wrapper full-width default-links">
-      <GitHubIssueComments client:only="react" path={commentsKey} />
+      <GitHubIssueComments client:visible path={commentsKey} />
     </div>
     <Footer />
     <AnalyticsTag />
@@ -219,9 +219,6 @@ const responsiveImgSizes_breakRight = {
     onload="this.media='all'"
   />
   <script>
-    import { initBannerEffects } from "../scripts/bannerEffects";
-    import { QuestionStore } from "../components/QuizUI/QuestionStore";
-
     let $interval: NodeJS.Timeout | null = null;
     let intCount = 0;
     // Hackety hack to update the score-wrapper on quiz pages
@@ -282,61 +279,88 @@ const responsiveImgSizes_breakRight = {
       return true;
     };
 
-    function getQuestionStore() {
+    async function getQuestionStore() {
+      const { QuestionStore } = await import("../components/QuizUI/QuestionStore");
       const store = QuestionStore(window.location.pathname);
       if (!store) return null;
       return store;
     }
 
-    document.addEventListener("astro:page-load", function () {
-      // Initialize WebGL banner effects
-      // Available effects: 'pixelated', 'scanline', 'ripple', 'glitch', 'gradient'
-      // Change the effect type below to test different effects
-      if (typeof window !== "undefined") {
-        initBannerEffects('scanline', {
-          distortionStrength: 0.5,
-          scrollSensitivity: 0.125,
+    async function bootBannerEffects() {
+      const banner = document.querySelector(".banner-wrapper, .hero-image");
+      if (!banner || typeof window === "undefined") return;
+
+      const { initBannerEffects } = await import("../scripts/bannerEffects");
+      initBannerEffects("scanline", {
+        distortionStrength: 0.5,
+        scrollSensitivity: 0.125,
+      });
+    }
+
+    function deferWork(work: () => void | Promise<void>, timeout = 1200) {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(() => {
+          void work();
+        }, { timeout });
+        return;
+      }
+
+      window.setTimeout(() => {
+        void work();
+      }, 350);
+    }
+
+    function startQuizRefreshLoop() {
+      // @ts-ignore fucking type errors
+      $interval = setInterval(() => {
+        intCount++;
+
+        window.__updateCounts();
+
+        if (intCount > 12) {
+          clearInterval($interval!);
+        }
+      }, 100);
+    }
+
+    async function bootQuizLogic(quiz: Element) {
+      const quiz = document.querySelector(".quiz-ui");
+      __checkForEmptyShareCounts();
+      if (!quiz) return;
+
+      // window?.__superHackFix_patchOptionsListWithActualHeight();
+      const questionStore = await getQuestionStore();
+      const resetButton = document.querySelector("button.reset-quiz");
+      if (resetButton) {
+        resetButton.addEventListener("click", () => {
+          questionStore?.reset();
+          location.reload();
         });
       }
 
-      const quiz = document.querySelector(".quiz-ui");
-      __checkForEmptyShareCounts();
-      if (quiz) {
-        // window?.__superHackFix_patchOptionsListWithActualHeight();
-        const questionStore = getQuestionStore();
-        const resetButton = document.querySelector("button.reset-quiz");
-        if (resetButton) {
-          resetButton.addEventListener("click", () => {
-            // console.log("Resetting quiz state for", location.pathname);
-            questionStore?.reset();
-            location.reload();
-          });
-        }
+      startQuizRefreshLoop();
 
-        // @ts-ignore fucking type errors
-        $interval = setInterval(() => {
-          intCount++;
-
-          window.__updateCounts();
-
-          if (intCount > 12) {
-            // console.warn("Too many iterations, stopping interval");
-            clearInterval($interval!);
-            return;
-          }
-        }, 100);
-
-        quiz.addEventListener(
-          "mousedown",
-          () => {
-            clearInterval($interval!);
-          },
-          { once: true },
-        );
-        quiz.addEventListener("click", () => {
+      quiz.addEventListener(
+        "mousedown",
+        () => {
           clearInterval($interval!);
-          window.__updateCounts();
-        });
+        },
+        { once: true },
+      );
+      quiz.addEventListener("click", () => {
+        clearInterval($interval!);
+        window.__updateCounts();
+      });
+    }
+
+    document.addEventListener("astro:page-load", function () {
+      __checkForEmptyShareCounts();
+
+      deferWork(bootBannerEffects, 1800);
+
+      const quiz = document.querySelector(".quiz-ui");
+      if (quiz) {
+        deferWork(() => bootQuizLogic(quiz), 900);
       }
     });
     function getAnswerCount() {

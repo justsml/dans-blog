@@ -46,7 +46,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<link rel="preconnect" href="https://posthog.com" />
+<link rel="preconnect" href="https://us.i.posthog.com" />
 <link rel="canonical" class="p-url" href={canonicalURL} />
 <link rel="sitemap" href="/sitemap-0.xml" />
 {/*Primary Meta Tags*/}
@@ -134,39 +134,6 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   sizes="512x512"
   href="/icons/icon-512x512.webp"
 />
-
-<script>
-  import globalSafe from "globalthis";
-
-  const global = globalSafe();
-  const isHomePage = global.location.pathname === "/";
-  if (
-    global.document &&
-    !global.document.querySelector("script[data-x-htmx-tag]")
-  ) {
-    // add script here
-    const scriptEl = document.createElement("script");
-    scriptEl.setAttribute("is", "inline");
-    scriptEl.setAttribute("data-x-htmx-tag", "");
-    scriptEl.setAttribute("defer", "");
-    scriptEl.setAttribute("async", "");
-    scriptEl.setAttribute("src", "/js/htmx.min.js");
-
-    document.addEventListener("astro:page-load", function () {
-      // console.log("Adding htmx script to page", global.location.pathname);
-      setTimeout(
-        () => {
-          document.body.appendChild(scriptEl);
-        },
-        isHomePage ? 3 : 1000,
-      );
-
-      // refresh htmx on page load
-      // @ts-expect-error - htmx is a global
-      global.htmx && global.htmx.process(document.body);
-    });
-  }
-</script>
 
 <ClientRouter fallback="swap" transition:animate={slideUpTransition} />
 
