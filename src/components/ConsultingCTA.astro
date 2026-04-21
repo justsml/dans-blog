@@ -1,71 +1,94 @@
 ---
 // @ts-nocheck
 /**
- * ConsultingCTA — compact hire-me invite shown atop blog posts.
+ * ConsultingCTA — elegant hire-me banner shown atop blog posts.
  * Variant is auto-selected from the post category, or can be forced via the
  * `variant` prop.
  *
- * 8 polished variants, each targeting a different reader intent.
+ * Fluent design principles: acrylic glass, subtle depth, refined typography,
+ * and smooth micro-interactions.
+ *
+ * Full-time variants link to PDF resume; contract variants link to Cal.com.
  */
 
 const CAL_LINK = "https://cal.com/dan-levy-net/30min?overlayCalendar=true";
+const RESUME_AI_LEADER = "/docs/Dan_Levy_AI_Engineering_Leader_2026.pdf";
+
 /** @typedef {keyof typeof VARIANTS} CTAVariant */
 const VARIANTS = {
   "ai-cost": {
     kicker: "AI Cost Consulting",
     headline: "Your AI bill is higher than it needs to be.",
     body: "I audit LLM infrastructure for companies spending $50K+/mo and take a share of what I save you — zero upfront risk.",
-    cta: "Book a 30-min call →",
+    cta: "Book a 30-min call",
     accentClass: "accent-cyan",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   "ai-arch": {
     kicker: "AI Architecture",
     headline: "Building AI-native systems that actually scale?",
-    body: "I have designed RAG pipelines, agent loops, and multi-model routers that cut costs 40-70% without sacrificing quality.",
-    cta: "Let's talk architecture →",
+    body: "I design RAG pipelines, agent loops, and multi-model routers that cut costs 40–70% without sacrificing quality.",
+    cta: "Let's talk architecture",
     accentClass: "accent-cyan",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   "js-ts": {
     kicker: "Contract Engineering",
     headline: "Need a senior JS/TS engineer who ships?",
-    body: "10+ years writing production JavaScript and TypeScript across fintech, developer tooling, and enterprise SaaS. Available for contract work.",
-    cta: "Get in touch →",
+    body: "10+ years writing production JavaScript and TypeScript across fintech, developer tooling, and enterprise SaaS.",
+    cta: "Check availability",
     accentClass: "accent-pink",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   security: {
     kicker: "Security Consulting",
-    headline: "Security gaps are easier to find before they are exploited.",
-    body: "I do deep security reviews — prompt injection, auth flows, OWASP top 10, LLM-specific attack surfaces. Let us audit your stack.",
-    cta: "Book a security review →",
+    headline: "Security gaps are easier to find before they're exploited.",
+    body: "Deep security reviews — prompt injection, auth flows, OWASP Top 10, and LLM-specific attack surfaces.",
+    cta: "Book a security review",
     accentClass: "accent-orange",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   infra: {
     kicker: "Infrastructure & DevOps",
-    headline: "Infrastructure that does not wake you up at 3am.",
-    body: "Containerized deploys, production tuning, observability, and resilience patterns — I build systems that stay quiet under load.",
-    cta: "Talk infrastructure →",
+    headline: "Infrastructure that doesn't wake you up at 3am.",
+    body: "Containerized deploys, production tuning, observability, and resilience patterns — systems that stay quiet under load.",
+    cta: "Talk infrastructure",
     accentClass: "accent-lime",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   teams: {
     kicker: "Team Training",
     headline: "Want your team writing code like this?",
-    body: "I run hands-on workshops for engineering teams: AI patterns, prompt engineering, TypeScript, async architecture, and code quality culture.",
-    cta: "Book a team session →",
+    body: "Hands-on workshops for engineering teams: AI patterns, prompt engineering, TypeScript, async architecture, and code quality culture.",
+    cta: "Book a team session",
     accentClass: "accent-purple",
+    link: CAL_LINK,
+    linkType: "cal",
   },
   fulltime: {
-    kicker: "Open to Full-Time",
-    headline: "Occasionally I take the right full-time role.",
-    body: "Senior engineer and architect with deep AI/LLM, TypeScript, and systems experience. If the mission is compelling, let's have a conversation.",
-    cta: "Start a conversation →",
+    kicker: "Open to Full-Time Roles",
+    headline: "AI Engineering Leader & Principal Architect",
+    body: "Deep expertise in AI/LLM systems, TypeScript, and large-scale architecture. Let's build something extraordinary together.",
+    cta: "View resume",
     accentClass: "accent-cyan",
+    link: RESUME_AI_LEADER,
+    linkType: "resume",
+    secondaryCta: "Schedule a call",
+    secondaryLink: CAL_LINK,
   },
   contract: {
     kicker: "Available for Contract",
-    headline: "Tight deadline? Hard problem? Extra senior hands?",
-    body: "I take short- and long-term contract engagements — full-stack, AI systems, architecture reviews, and tech-debt triage.",
-    cta: "Check availability →",
+    headline: "Tight deadline? Hard problem? Need senior hands?",
+    body: "Short and long-term contract engagements — full-stack, AI systems, architecture reviews, and tech-debt triage.",
+    cta: "Check availability",
     accentClass: "accent-pink",
+    link: CAL_LINK,
+    linkType: "cal",
   },
 };
 
@@ -107,134 +130,249 @@ function pickVariant(category, forced) {
 
 const variantKey = pickVariant(Astro.props.category, Astro.props.variant);
 const cta = VARIANTS[variantKey];
+const isResume = cta.linkType === "resume";
 ---
 
-<aside class={`consulting-cta-banner ${cta.accentClass}`} aria-label="Hire Dan Levy">
-  <div class="cta-inner">
-    <div class="cta-text">
-      <p class="cta-kicker">{cta.kicker}</p>
-      <p class="cta-headline">{cta.headline}</p>
-      <p class="cta-body">{cta.body}</p>
+<aside class={`consulting-cta ${cta.accentClass}`} aria-label="Hire Dan Levy">
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <div class="cta-header">
+      <span class="cta-kicker">{cta.kicker}</span>
+      <h3 class="cta-headline">{cta.headline}</h3>
     </div>
-    <a
-      href={CAL_LINK}
-      class="cta-btn"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {cta.cta}
-    </a>
+    <p class="cta-body">{cta.body}</p>
+    <div class="cta-actions">
+      <a
+        href={cta.link}
+        class={`cta-btn cta-btn-primary ${isResume ? 'cta-btn-resume' : ''}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {isResume ? (
+          <>
+            <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <polyline points="10 9 9 9 8 9"/>
+            </svg>
+            {cta.cta}
+          </>
+        ) : (
+          <>
+            <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            {cta.cta}
+          </>
+        )}
+      </a>
+      {isResume && (
+        <a
+          href={cta.secondaryLink}
+          class="cta-btn cta-btn-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          {cta.secondaryCta}
+        </a>
+      )}
+    </div>
   </div>
 </aside>
 
 <style>
-  .consulting-cta-banner {
+  .consulting-cta {
     --cta-accent: #00d4aa;
-    --cta-accent-dim: rgba(0, 212, 170, 0.12);
-    --cta-accent-border: rgba(0, 212, 170, 0.25);
+    --cta-accent-rgb: 0, 212, 170;
+    --cta-accent-dim: rgba(0, 212, 170, 0.08);
+    --cta-accent-border: rgba(0, 212, 170, 0.15);
+    --cta-accent-glow: rgba(0, 212, 170, 0.12);
     --cta-text: rgba(245, 245, 247, 0.92);
     --cta-muted: rgba(245, 245, 247, 0.55);
-    --cta-bg: rgba(255, 255, 255, 0.03);
-    --cta-radius: 12px;
+    --cta-bg: rgba(255, 255, 255, 0.02);
+    --cta-bg-hover: rgba(255, 255, 255, 0.04);
+    --cta-radius: 16px;
 
+    position: relative;
     background: var(--cta-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid var(--cta-accent-border);
-    border-left: 3px solid var(--cta-accent);
     border-radius: var(--cta-radius);
     margin: 0 0 2.5rem;
-    padding: 1.25rem 1.5rem;
+    padding: 1.5rem 1.75rem;
+    overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
     container-type: inline-size;
   }
 
-  /* ── Accent colour overrides ── */
-  .accent-pink {
-    --cta-accent: #ff6b9d;
-    --cta-accent-dim: rgba(255, 107, 157, 0.1);
-    --cta-accent-border: rgba(255, 107, 157, 0.25);
-  }
-  .accent-orange {
-    --cta-accent: #f59e0b;
-    --cta-accent-dim: rgba(245, 158, 11, 0.1);
-    --cta-accent-border: rgba(245, 158, 11, 0.25);
-  }
-  .accent-lime {
-    --cta-accent: #b8ff5f;
-    --cta-accent-dim: rgba(184, 255, 95, 0.08);
-    --cta-accent-border: rgba(184, 255, 95, 0.22);
-  }
-  .accent-purple {
-    --cta-accent: #a78bfa;
-    --cta-accent-dim: rgba(167, 139, 250, 0.1);
-    --cta-accent-border: rgba(167, 139, 250, 0.25);
+  .consulting-cta:hover {
+    background: var(--cta-bg-hover);
+    border-color: rgba(var(--cta-accent-rgb), 0.25);
+    transform: translateY(-1px);
   }
 
-  .cta-inner {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
+  /* Subtle glow effect */
+  .cta-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--cta-accent), transparent);
+    opacity: 0.6;
   }
 
-  .cta-text {
-    flex: 1 1 16rem;
-    min-width: 0;
+  .cta-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-header {
+    margin-bottom: 0.5rem;
   }
 
   .cta-kicker {
+    display: inline-block;
     color: var(--cta-accent);
     font-size: 0.6875rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 0 0 0.3rem;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.625rem;
+    background: var(--cta-accent-dim);
+    border-radius: 9999px;
+    border: 1px solid var(--cta-accent-border);
   }
 
   .cta-headline {
     color: var(--cta-text);
-    font-size: 0.9375rem;
+    font-size: 1.125rem;
     font-weight: 700;
-    letter-spacing: -0.015em;
-    line-height: 1.3;
-    margin: 0 0 0.35rem;
+    letter-spacing: -0.02em;
+    line-height: 1.35;
+    margin: 0;
   }
 
   .cta-body {
     color: var(--cta-muted);
-    font-size: 0.8125rem;
-    line-height: 1.55;
-    margin: 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    margin: 0 0 1.25rem;
+    max-width: 65ch;
+  }
+
+  .cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
   .cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: 0.25rem;
-    background: var(--cta-accent-dim);
-    border: 1px solid var(--cta-accent-border);
-    border-radius: 9999px;
-    color: var(--cta-accent);
-    flex-shrink: 0;
+    gap: 0.5rem;
     font-size: 0.8125rem;
     font-weight: 600;
     letter-spacing: -0.01em;
-    padding: 0.5rem 1.125rem;
+    padding: 0.625rem 1.25rem;
+    border-radius: 10px;
     text-decoration: none;
-    transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    transition: all 0.2s ease;
     white-space: nowrap;
   }
 
-  .cta-btn:hover {
-    background: rgba(var(--cta-accent), 0.18);
-    border-color: var(--cta-accent);
+  .cta-btn-primary {
+    background: var(--cta-accent);
+    color: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--cta-accent);
+    box-shadow: 0 2px 8px var(--cta-accent-glow);
+  }
+
+  .cta-btn-primary:hover {
+    background: rgba(var(--cta-accent-rgb), 0.9);
+    box-shadow: 0 4px 16px var(--cta-accent-glow);
     transform: translateY(-1px);
   }
 
-  /* Stack vertically on narrow containers */
+  .cta-btn-secondary {
+    background: transparent;
+    color: var(--cta-accent);
+    border: 1px solid var(--cta-accent-border);
+  }
+
+  .cta-btn-secondary:hover {
+    background: var(--cta-accent-dim);
+    border-color: var(--cta-accent);
+  }
+
+  .cta-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  /* Accent colour variants */
+  .accent-pink {
+    --cta-accent: #ff6b9d;
+    --cta-accent-rgb: 255, 107, 157;
+    --cta-accent-dim: rgba(255, 107, 157, 0.08);
+    --cta-accent-border: rgba(255, 107, 157, 0.15);
+    --cta-accent-glow: rgba(255, 107, 157, 0.12);
+  }
+
+  .accent-orange {
+    --cta-accent: #f59e0b;
+    --cta-accent-rgb: 245, 158, 11;
+    --cta-accent-dim: rgba(245, 158, 11, 0.08);
+    --cta-accent-border: rgba(245, 158, 11, 0.15);
+    --cta-accent-glow: rgba(245, 158, 11, 0.12);
+  }
+
+  .accent-lime {
+    --cta-accent: #b8ff5f;
+    --cta-accent-rgb: 184, 255, 95;
+    --cta-accent-dim: rgba(184, 255, 95, 0.08);
+    --cta-accent-border: rgba(184, 255, 95, 0.15);
+    --cta-accent-glow: rgba(184, 255, 95, 0.12);
+  }
+
+  .accent-purple {
+    --cta-accent: #a78bfa;
+    --cta-accent-rgb: 167, 139, 250;
+    --cta-accent-dim: rgba(167, 139, 250, 0.08);
+    --cta-accent-border: rgba(167, 139, 250, 0.15);
+    --cta-accent-glow: rgba(167, 139, 250, 0.12);
+  }
+
+  /* Responsive */
   @container (max-width: 480px) {
-    .cta-inner {
+    .consulting-cta {
+      padding: 1.25rem 1.25rem;
+    }
+
+    .cta-headline {
+      font-size: 1rem;
+    }
+
+    .cta-actions {
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+    }
+
+    .cta-btn {
+      width: 100%;
+      justify-content: center;
     }
   }
 </style>
