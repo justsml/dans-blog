@@ -2,12 +2,14 @@ import { DuckDBInstanceCache } from '@duckdb/node-api';
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
+import { isPublishedPostData, isVisiblePostData } from '../../shared/postVisibility';
 
 interface PostData {
   title: string;
   subTitle?: string;
   label?: string;
   commentsKeyOverride?: string;
+  publish?: boolean;
   unlisted?: boolean;
   hidden?: boolean;
   draft?: boolean;
@@ -60,8 +62,7 @@ function readPostsFromFilesystem(): PostEntry[] {
       const fileContent = fs.readFileSync(indexFile, 'utf-8');
       const { data, content } = matter(fileContent);
       
-      // Skip hidden posts
-      if (data.hidden) continue;
+      if (!isVisiblePostData(data)) continue;
       
       // Extract slug from directory name (remove date prefix if present)
       const slug = postDir.replace(/^\d{4}-\d{2}-\d{2}--/, '');
@@ -76,6 +77,7 @@ function readPostsFromFilesystem(): PostEntry[] {
           subTitle: data.subTitle || '',
           label: data.label,
           commentsKeyOverride: data.commentsKeyOverride,
+          publish: isPublishedPostData(data),
           unlisted: data.unlisted || false,
           hidden: data.hidden || false,
           draft: data.draft || false,

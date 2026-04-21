@@ -1,11 +1,10 @@
 import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
 import { fixSlugPrefix } from "../shared/pathHelpers";
+import { isVisiblePost } from "../shared/postVisibility";
 
 export async function GET(context: any) {
-  const posts = (await getCollection("posts")).filter(
-    (post: any) => !post.data.hidden,
-  ).reverse();
+  const posts = (await getCollection("posts")).filter(isVisiblePost).reverse();
 
   posts.unshift({
     id: "open-source-journal",
@@ -15,6 +14,7 @@ export async function GET(context: any) {
     data: {
       title: "Open Source Journal",
       subTitle: "A collection of open-source projects I've worked on.",
+      publish: true,
       category: "Projects",
       date: "2024-12-16",
       modified: "2024-12-28",

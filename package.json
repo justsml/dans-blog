@@ -1,12 +1,13 @@
 {
   "name": "dans-blog-v3",
   "type": "commonjs",
-  "version": "2025.09.11",
+  "version": "2026.04.20",
   "repository": {
     "type": "git",
     "url": "https://github.com/justsml/dans-blog"
   },
   "scripts": {
+    "deploy": "netlify build && netlify deploy --prod",
     "webp-images": "sh -c 'source ./src/scripts/webp-image-conversion-cmds.sh && convert_and_cleanup_images'",
     "fix-quizzes": "bun ./src/scripts/quiz-utils/update-quizzes.ts",
     "static": "PORT=4444 bunx serve dist",

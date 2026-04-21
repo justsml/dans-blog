@@ -1,16 +1,5 @@
 import { defineCollection, z } from "astro:content";
 
-const category = defineCollection({
-  type: "content",
-  // Type-check frontmatter using a schema
-  schema: () =>
-    z.object({
-      category: z.string(),
-      url: z.string(),
-      count: z.number(),
-    })
-});
-
 export const posts = defineCollection({
   type: "content",
   // Type-check frontmatter using a schema
@@ -24,6 +13,7 @@ export const posts = defineCollection({
       /** To override utteranc.es lookup string */
       commentsKeyOverride: z.string().optional(),
       
+      publish: z.boolean().optional().default(true),
       draft: z.boolean().optional(),
       /** unlisted omits in post lists */
       unlisted: z.coerce.boolean().optional(),
@@ -58,4 +48,4 @@ export const posts = defineCollection({
     }),
 });
 
-export const collections = { posts, category };
+export const collections = { posts };

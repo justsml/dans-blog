@@ -2,11 +2,12 @@ import { getCollection } from "astro:content";
 import { fixSlugPrefix, slugify } from "./pathHelpers.ts";
 import type { ArticlePost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
+import { isRoutablePost, isVisiblePost } from "./postVisibility.ts";
 
 const _postsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
 )
-  .filter((post) => !post.data.hidden)
+  .filter(isVisiblePost)
   .sort(
     // @ts-expect-error - data is not always defined
     (a, b) => toDate(a?.data?.date) - toDate(b?.data?.date),
@@ -91,10 +92,7 @@ export const PostCollections = {
     params: Record<string, unknown>;
     props: Record<string, unknown>;
   }> {
-    // console.log("getStaticPaths", posts);
-    posts = posts.filter(
-      (post) => !post.data.hidden && !post.data.unlisted && !post.data.draft,
-    );
+    posts = posts.filter(isRoutablePost);
     return posts.map((post) => ({
       params: { slug: fixSlugPrefix(post.slug) },
       props: { ...post, slug: fixSlugPrefix(post.slug) },
@@ -148,18 +146,23 @@ export const PostCollections = {
       "quiz-bash-in-the-shell",
       // "should-you-use-named-or-default-exports",
       "quiz-postgres-sql-mastery-pt1",
-    ].map((slug) => PostCollections._postsBySlug[slug]);
+    ]
+      .map((slug) => PostCollections._postsBySlug[slug])
+      .filter(Boolean);
   },
 
   getPostsBySlugs(slugs: string[]) {
-    const found = slugs.map((slug) => PostCollections._postsBySlug[slug]);
+    const found = slugs.flatMap((slug) => {
+      const post = PostCollections._postsBySlug[slug];
+      return post ? [post] : [];
+    });
     if (found.length < slugs.length) {
-      console.error(
-        "Some slugs not found: %o   matching: %o",
-        slugs,
+      const missing = slugs.filter((slug) => PostCollections._postsBySlug[slug] == null);
+      console.warn(
+        "Skipping missing or unpublished slugs: %o   matching: %o",
+        missing,
         found.length,
       );
-      throw new Error(`Some slugs not found: ${slugs.join(", ")}`);
     }
     return found;
   },

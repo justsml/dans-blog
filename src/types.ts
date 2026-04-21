@@ -109,6 +109,7 @@ export type ArticlePost = {
     label?: string;
     /** To override utteranc.es lookup string */
     commentsKeyOverride?: string;
+    publish?: boolean;
     unlisted?: boolean;
     hidden?: boolean;
     draft?: boolean;
