@@ -1,9 +1,8 @@
 ---
 // AI Consulting Landing Page
 
-const STRIPE_INTRO_CALL_LINK = import.meta.env.STRIPE_INTRO_CALL_LINK;
-const STRIPE_RETAINER_LINK = import.meta.env.STRIPE_RETAINER_LINK;
-const CAL_LINK = import.meta.env.CAL_LINK;
+const INTRO_CALL_LINK =
+  process.env.INTRO_CALL_LINK ?? "https://cal.com/dan-levy-net/30min-intro-call";
 
 import Layout from "../layouts/Page.astro";
 
@@ -36,7 +35,7 @@ const description =
           See How It Works →
         </a>
         <a href={STRIPE_INTRO_CALL_LINK} class="btn btn-ghost btn-xl" target="_blank" rel="noopener">
-          Book 30-Min Call — $500
+          Book 30-Min Call — $300
         </a>
       </div>
       <div class="hero-stats fade-in">
