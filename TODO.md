@@ -2,14 +2,15 @@
 
 ## Performance
 
+- [ ] Create a standard extraction contract for each document type (PDF, HTML, Markdown, etc.) that includes both the extracted text, images, image descriptions, charts, and metadata like token count, chunk count, markdown headers, links, ocr stats, and extraction time. This will allow us to make informed decisions about which extraction methods to use for different document types and sizes. Goal: measure quality, latency and perf issues. ToC, Tables, LaTeX, Code, QR codes, and images are all known pain points that we should prioritize. Write tests to benchmark each added document extraction method we add. (As much content as possible should end up in markdown, with relative image paths & successfully extracted images. The MD needs to be rendered in our UI, but we should also capture the raw text and metadata for search and other non-rendering use cases.)
 - [ ] Re-measure homepage and article pages after the current lazy-load pass to confirm LCP, TBT, and request-count improvements.
-- [ ] Keep PostHog lean by loading only the core client up front and deferring heavier add-ons like session recording, tracing headers, and exception capture until they are clearly needed.
-- [ ] Keep search lazy. The header should only load Pagefind assets and initialize the UI after someone opens search.
-- [ ] Keep `htmx` scoped to the homepage article feed and paginated feed partials instead of shipping it site-wide.
-- [ ] Continue trimming article-page hydration. Share stats, comments, banner effects, and quiz logic should stay behind `client:visible`, idle work, or explicit quiz/banner detection.
+- [x] Keep PostHog lean by loading only the core client up front and deferring heavier add-ons like session recording, tracing headers, and exception capture until they are clearly needed.
+- [x] Keep search lazy. The header should only load Pagefind assets and initialize the UI after someone opens search.
+- [x] Keep `htmx` scoped to the homepage article feed and paginated feed partials instead of shipping it site-wide.
+- [x] Continue trimming article-page hydration. Share stats, comments, banner effects, and quiz logic should stay behind `client:visible`, idle work, or explicit quiz/banner detection.
 - [ ] Revisit article hero image priority and loading behavior to improve article LCP.
-- [ ] Update PostHog preconnect to the actual ingest host: `https://us.i.posthog.com`.
-- [ ] Keep hashed asset caching at `max-age=31536000, immutable`.
+- [x] Update PostHog preconnect to the actual ingest host: `https://us.i.posthog.com`.
+- [x] Keep hashed asset caching at `max-age=31536000, immutable`.
 
 ## Content And Editorial Ops
 
