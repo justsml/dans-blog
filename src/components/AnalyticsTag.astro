@@ -8,10 +8,7 @@
   if (!isLocalhost(globalThis?.location?.hostname)) setTimeout(initStats, 750);
 
   async function initStats() {
-    const [{ posthog }, extensionBundles] = await Promise.all([
-      import("posthog-js/dist/module.slim"),
-      import("posthog-js/dist/extension-bundles"),
-    ]);
+    const { posthog } = await import("posthog-js/dist/module.js");
 
     posthog.init(
       "phc_JODNIixGF47WMcySFGQwT2YS7z6ZD5uqk7Tj3KmAqP9",
@@ -20,11 +17,6 @@
         person_profiles: "always",
         disable_session_recording: true,
         capture_pageview: true,
-        __extensionClasses: {
-          ...extensionBundles.AnalyticsExtensions,
-          ...extensionBundles.ErrorTrackingExtensions,
-          ...extensionBundles.TracingExtensions,
-        },
       },
     );
 

@@ -4,6 +4,7 @@ import Page from "../layouts/Page.astro";
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "../components/ArticleCard";
 import { Combobox } from "../components/ui/combobox";
+// import FloatingLines from "../components/FloatingLines";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
@@ -46,7 +47,26 @@ posts = posts.slice(0, pageSize - 1);
 const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 ---
 
-<Page title={defaultFullTitle} subTitle={SITE_SEO_DESCRIPTION}>
+<Page title={defaultFullTitle} subTitle={SITE_SEO_DESCRIPTION} className="home-page">
+  <!-- <div class="background-effect full-width" aria-hidden="true">
+    <FloatingLines
+      client:load
+      enabledWaves={["top", "middle", "bottom"]}
+      lineCount={8}
+      lineDistance={8}
+      bendRadius={14}
+      bendStrength={10.5}
+      interactive
+      parallax={true}
+      animationSpeed={3.2}
+      gradientStart="hsl(var(--neon-pink))"
+      gradientMid="hsl(var(--neon-cyan))"
+      gradientEnd="hsl(var(--neon-purple))"
+      backgroundColor="hsl(var(--background))"
+      backgroundAccentColor="hsl(var(--bg-dark))"
+      backgroundGlowColor="hsl(var(--neon-cyan))"
+    />
+  </div> -->
   <div class="filter-toolbar">
     {/* <ArticleFilterLinks /> */}
     <Combobox
@@ -63,7 +83,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   </div>
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
     <div class="spotlight-copy">
-      <p class="eyebrow">Work, notes, and useful trails</p>
+      <p class="eyebrow">Work, notes, and a few projects</p>
     </div>
     <div class="spotlight-actions" aria-label="Featured links">
       <a class="spotlight-link consulting-link" href="/consulting/">
@@ -178,6 +198,51 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 </script>
 
 <style>
+  .background-effect {
+    height: min(600px, 62vh);
+    inset: 0 auto auto 50%;
+    min-height: 360px;
+    overflow: hidden;
+    padding-inline: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    width: 100vw;
+    z-index: 0;
+  }
+
+  .background-effect::after {
+    background: linear-gradient(
+      180deg,
+      hsl(var(--background) / 0) 0%,
+      hsl(var(--background) / 0.28) 72%,
+      hsl(var(--background)) 100%
+    );
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .background-effect :global(astro-island),
+  .background-effect :global(.floating-lines-container) {
+    display: block;
+    height: 100%;
+    width: 100%;
+  }
+
+  :global(main.home-page) {
+    isolation: isolate;
+    position: relative;
+  }
+
+  .filter-toolbar,
+  .home-link-spotlight,
+  .article-list {
+    position: relative;
+    z-index: 1;
+  }
+
   .home-link-spotlight {
     --spotlight-cyan: var(--neon-cyan);
     --spotlight-pink: var(--neon-pink);

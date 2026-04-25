@@ -78,7 +78,7 @@ Many database libraries support round-robin failover by specifying multiple host
 llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
 ```
 
-That `s` in `llms://` isn't a typo—it's a hint that we're dealing with multiple hosts. If `primary.gpt` hangs, the client automatically retries `backup.gpt`. No complex router logic required.
+That `s` in `llms://` isn't a typo. It's plural. If `primary.gpt` hangs, the client automatically retries `backup.gpt`. No complex router logic required.
 
 <blockquote class="inset">One string with everything from your **auth** to your **endpoint** to your **hyperparameters**.</blockquote>
 

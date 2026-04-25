@@ -1,6 +1,6 @@
 ---
 title: "JSONB: The Best Way to Ruin Your Database"
-subTitle: "How your 'temporary' schema-less column became permanent technical debt."
+subTitle: "JSONB is powerful, useful, and very easy to misuse when you let a blob become your real schema."
 date: 2025-12-29
 modified: 2025-12-30
 tags: [postgres, postgresql, databases, jsonb, json, schema-design, technical-debt]
@@ -14,11 +14,13 @@ cover_icon: ./square.webp
 
 PostgreSQL added JSONB to let you store semi-structured data without defining rigid schemas upfront. The idea was sound: sometimes you genuinely don't know what the data will look like, or it changes too frequently for traditional columns to make sense.
 
-But somewhere between intention and implementation, JSONB became the database equivalent of "I'll clean my room later." That temporary solution you reached for six months ago? It's still there, and it's gotten worse.
+That matters because JSONB is not a mistake. In plenty of systems it is the cleanest representation of the problem space. If you're storing third-party webhook payloads, versioned event bodies, feature flags, or LLM configuration objects where every provider and model exposes a slightly different and constantly changing option set, forcing everything into first-class columns can be more awkward than helpful.
 
-I keep seeing the same pattern. A team adds a JSONB column because they're unsure about requirements. They promise themselves they'll normalize it once things settle down. Three years later, that column contains forty different versions of what was supposed to be a user profile, queried by fifteen microservices that each make different assumptions about what's inside.
+The problem is that JSONB is also the easiest way to defer schema decisions without admitting you're deferring them. Somewhere between intention and implementation, it became the database equivalent of "I'll clean my room later." That temporary solution you reached for six months ago? It's still there, and now production depends on it.
 
-The technical debt isn't the JSONB itself. It's the gap between what you told yourself you were building and what you actually built.
+I keep seeing the same pattern. A team adds a JSONB column because they're unsure about requirements. They promise themselves they'll normalize it once things settle down. Three years later, that column contains forty different versions of what was supposed to be a user profile, queried by fifteen services that each make different assumptions about what's inside.
+
+The technical debt isn't the JSONB itself. It's the gap between what you told yourself you were building and what you actually built: an undocumented schema-on-read system.
 
 ## What Usually Happens
 
@@ -33,7 +35,7 @@ CREATE TABLE users (
 
 It works. You ship the feature, move on to the next one, then the next one. The JSONB column grows quietly in the background.
 
-Six months in, product asks a simple question: "How many users are in New York?"
+This is the fork in the road. If `profile` stays an opaque blob fetched by `user.id`, you're probably fine. If it starts becoming the primary place business data lives, the tradeoffs change fast.
 
 Product asks: *"How many users are in New York?"*
 
@@ -44,7 +46,7 @@ SELECT count(*) FROM users WHERE profile->>'location' = 'New York';
 
 Postgres conducts a full table scan. Every single row.
 
-So you add a GIN index. Now your write performance tanks because GIN indexes are huge and expensive to update.
+So you add a GIN index. Maybe that's still acceptable. Sometimes it is. But now you're paying real complexity and storage cost because a field that behaves like first-class relational data never became a first-class column.
 
 ### Year 1: Schema Drift
 
@@ -60,16 +62,20 @@ Your application code now looks like this:
 const city = user.location || user.city || user.address?.city || "Unknown";
 ```
 
-You didn't remove the schema. You just moved the validation from the database (where it belongs) to your application (where it rots).
+You didn't remove the schema. You just moved validation and consistency checks from the database into scattered application code.
 
----
 ---
 
 ## When to Actually Use JSONB
 
-I'm not a luddite. JSONB has valid use cases. Many times it's perfectly fine—even optimal.
+JSONB has valid use cases. Many times it's perfectly fine, and sometimes it's the best choice available.
 
-The critical distinction: Do you need to query ad-hoc key paths, or are you storing opaque blobs?
+The critical distinction is not "structured good, JSON bad." It's closer to this:
+
+- Is the data mostly fetched as a whole by a stable primary key?
+- Do the keys vary materially across providers, versions, tenants, or time?
+- Are you querying a few known fields, or inventing new path queries every sprint?
+- Does the application own versioning and validation intentionally, or is it just winging it?
 
 ### Legitimate JSONB Use Cases
 
@@ -79,11 +85,37 @@ The critical distinction: Do you need to query ad-hoc key paths, or are you stor
 
 3.  **User Preferences & Settings**: Settings objects where you have 100+ boolean flags, most are false, and you're always fetching the entire blob by user ID. You're not running `WHERE preferences->>'theme' = 'dark'`. **JSONB works.**
 
-4.  **API Response Caching**: You're caching entire API responses. The database is just a faster Redis. You fetch by cache key, never by nested properties. **JSONB is appropriate.**
+4.  **LLM Provider / Model Config**: This is one of the clearest modern examples. OpenAI, Anthropic, Gemini, open-weight local models, and vendor-specific gateways all expose overlapping but different parameters. Even within one provider, model capabilities and option names evolve. A JSONB config blob is often much more honest than pretending `temperature`, `top_p`, `reasoning_effort`, `json_schema`, `tool_choice`, and twenty other knobs should all be universal columns. **JSONB is often the right abstraction here.**
 
-5.  **Event Sourcing**: You're storing immutable event payloads. Your queries are always "give me all events for aggregate X" ordered by time. You never run WHERE clauses on event properties. **JSONB fits.**
+5.  **API Response Caching**: You're caching entire API responses. The database is just a faster Redis. You fetch by cache key, never by nested properties. **JSONB is appropriate.**
 
-Rule of Thumb: If you put it in a `WHERE` clause with dynamic paths, it should probably be a column. If it's always fetched as a complete blob by a known key, JSONB is fine.
+6.  **Event Sourcing**: You're storing immutable event payloads. Your queries are always "give me all events for aggregate X" ordered by time. You never run `WHERE` clauses on event properties. **JSONB fits.**
+
+7.  **Extensibility Surfaces**: Integrations, plugin settings, per-tenant overrides, marketplace metadata, provider capabilities, or "extras" fields where you explicitly expect the shape to vary by subtype. **JSONB can be the right contract, not a compromise.**
+
+Rule of thumb: if the application fetches the document by a known key and understands how to validate/version it, JSONB can be excellent. If the business keeps asking relational questions about nested keys, those fields are trying to become columns.
+
+## The Best Pattern Is Often Hybrid
+
+A lot of mature systems land here:
+
+```sql
+CREATE TABLE llm_requests (
+  id UUID PRIMARY KEY,
+  provider TEXT NOT NULL,
+  model TEXT NOT NULL,
+  status TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  config JSONB NOT NULL
+);
+```
+
+This is usually better than either extreme.
+
+- `provider`, `model`, `status`, and `created_at` are first-class columns because you'll filter, join, aggregate, and index them.
+- `config` stays JSONB because the exact option surface is model-specific, provider-specific, and likely to evolve.
+
+That is not "failing to normalize." That is drawing the line in the right place.
 
 ### At Scale: Object Versioning > Normalization
 
@@ -101,23 +133,38 @@ CREATE TABLE entities (
 
 Your application knows how to read `version: 1`, `version: 2`, `version: 3`. No database migrations for new fields. Code handles backward compatibility.
 
-This is an architectural decision, not laziness. It trades database complexity for application complexity—a worthwhile trade at scale.
+This is an architectural decision, not laziness. It trades database complexity for application complexity. Sometimes that's exactly the right trade, especially when the document is naturally versioned and the app is the canonical interpreter.
 
-The problem isn't JSONB. The problem is claiming it's "temporary" when you're actually building an unversioned, undocumented schema-on-read system by accident.
+The failure mode is not "using JSONB." The failure mode is using JSONB without versioning, validation, promotion rules, or a clear boundary between document data and relational data.
+
+## The Questions That Actually Matter
+
+Before you add a JSONB column, ask:
+
+1.  Will we query nested fields in `WHERE`, `JOIN`, `GROUP BY`, or `ORDER BY` regularly?
+2.  Do we control this schema, or is it externally defined and volatile?
+3.  Is the shape intentionally heterogeneous across records?
+4.  Do we have application-level validation and versioning?
+5.  Which fields are likely to become operational dimensions later?
+
+If the answer to #1 is "yes, constantly," that's a strong signal for columns.
+
+If the answers to #2 and #3 are "yes," JSONB is probably doing real work for you.
 
 ---
 ## Escaping the Trap
 
 If you are already in this hole, stop digging.
 
-1.  Audit: Run `jsonb_object_keys` to see what you're actually storing.
-2.  Promote: Identify the top 3 most used fields. Make them real columns.
-3.  Migrate: Write a script to backfill the columns.
-4.  Drop: Remove the keys from the JSONB blob.
+1.  Audit: Run `jsonb_object_keys` and inspect actual shape drift, not the shape you assume exists.
+2.  Promote: Identify the fields you filter, join, sort, or report on most often. Make those real columns.
+3.  Validate: Add application or database-level validation for whatever remains in JSONB.
+4.  Version: If the blob is real domain data, version it explicitly.
+5.  Trim: Remove duplicated keys from the blob once the promoted columns are established.
 
-Don't say "we'll fix it later." Fix it now.
+Don't tell yourself every blob must be normalized. Also don't tell yourself a blob with permanent business semantics is "temporary."
 
-Later never comes. And your database is crying.
+JSONB is great when the document is genuinely document-shaped. It's dangerous when it's a relational schema wearing a fake mustache.
 
 ## Resources
 
