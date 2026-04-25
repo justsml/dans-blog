@@ -1,5 +1,4 @@
 ---
-import omit from "lodash/omit";
 import { SITE_TITLE } from "../consts";
 import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar-88.webp";
@@ -17,14 +16,9 @@ type Props = {
 
 const { className } = Astro.props;
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
-const imgPaths = ["data.cover", "data.cover_icon", "data.cover_mobile"];
-const categories = getCategoryCounts();
-const popularPosts = (getPopularPosts() as MyPost[]).map((p) =>
-  getMinimalPostData(p, ["data.body", ...imgPaths]),
-);
-const recentPosts = (getRecentPosts() as MyPost[]).map((p) =>
-  getMinimalPostData(p, ["data.body", ...imgPaths]),
-);
+const categories = getCategoryCounts().slice(0, 6);
+const popularPosts = (getPopularPosts() as MyPost[]).map(getNavPostData);
+const recentPosts = (getRecentPosts() as MyPost[]).map(getNavPostData);
 // const tagCounts = getTagCounts();
 // console.log("popularPosts", popularPosts[0]);
 
@@ -37,11 +31,17 @@ type Post<TData extends Record<string, any> = any> = {
 };
 type MyPost = Post<ArticlePost["data"]>;
 
-function getMinimalPostData(payload: unknown, omitFields = ["body"]) {
-  if (!payload || typeof payload !== "object" || !("body" in payload))
-    return {};
-  const { body: _body, ...data } = payload;
-  return omit(data, omitFields);
+function getNavPostData(post: MyPost) {
+  const { title, subTitle, modified, date } = post.data;
+  return {
+    slug: post.slug,
+    data: {
+      title,
+      subTitle,
+      modified,
+      date,
+    },
+  };
 }
 ---
 
@@ -55,7 +55,7 @@ function getMinimalPostData(payload: unknown, omitFields = ["body"]) {
     </h2>
     <div class="nav-box screenshot-hidden">
       <NavMenu  
-        client:only="react"
+        client:idle
         categories={categories}
         popularPosts={popularPosts}
         recentPosts={recentPosts}

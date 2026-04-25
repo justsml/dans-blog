@@ -754,6 +754,7 @@ main .info {
 
 .filter-toolbar {
   display: grid;
+  gap: 0.35rem;
   place-content: center end;
   margin: 0rem 3rem 1.5rem 3rem;
   height: 4rem;
@@ -763,6 +764,37 @@ main .info {
     margin: 0rem 3rem 1.5rem 3rem;
     height: 2.75rem;
   }
+}
+
+.sort-select-label {
+  color: hsl(var(--muted-foreground));
+  font-size: 0.8rem;
+  line-height: 1;
+}
+
+.sort-select {
+  appearance: none;
+  background-color: hsl(var(--background));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5rem;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  font: inherit;
+  min-width: 13rem;
+  padding: 0.55rem 2rem 0.55rem 0.8rem;
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 1rem) 50%,
+    calc(100% - 0.72rem) 50%;
+  background-size: 0.32rem 0.32rem;
+  background-repeat: no-repeat;
+}
+
+.sort-select:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }
 
 .combobox-options {

@@ -3,7 +3,6 @@ import Page from "../layouts/Page.astro";
 
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "../components/ArticleCard";
-import { Combobox } from "../components/ui/combobox";
 // import FloatingLines from "../components/FloatingLines";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
@@ -69,17 +68,11 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   </div> -->
   <div class="filter-toolbar">
     {/* <ArticleFilterLinks /> */}
-    <Combobox
-      client:only={"react"}
-      options={filterOptions}
-      buttonText="View articles by..."
-      onChange={(value) =>
-        console.log(
-          "Combobox changed!",
-          value,
-          "sortCardsBy" in window ? window.sortCardsBy : "sortCardsBy not found"
-        )}
-    />
+    <label class="sort-select-label" for="article-sort">View articles by</label>
+    <select id="article-sort" class="sort-select" aria-label="Sort articles">
+      <option value="">View articles by...</option>
+      {filterOptions.map((option) => <option value={option.value}>{option.label}</option>)}
+    </select>
   </div>
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
     <div class="spotlight-copy">
@@ -195,6 +188,15 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 
   window.sortCardsByDate = sortCardsByDate;
   window.sortCardsBy = sortCardsBy;
+
+  document.addEventListener("astro:page-load", function () {
+    const sortSelect = document.querySelector("#article-sort");
+    sortSelect?.addEventListener("change", function (event) {
+      const target = event.target;
+      if (!(target instanceof HTMLSelectElement)) return;
+      sortCardsBy(target.value);
+    });
+  });
 </script>
 
 <style>

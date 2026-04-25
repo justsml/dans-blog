@@ -2,10 +2,7 @@
 
 ---
 <script>
-  import globalSafe from "globalthis";
-  const globalThis = globalSafe();
-
-  if (!isLocalhost(globalThis?.location?.hostname)) setTimeout(initStats, 750);
+  if (!isLocalhost(globalThis.location.hostname)) deferAnalytics(initStats);
 
   async function initStats() {
     const { posthog } = await import("posthog-js/dist/module.js");
@@ -22,6 +19,16 @@
 
     (globalThis as typeof globalThis & { _posthog?: typeof posthog })._posthog = posthog;
   }
+
+  function deferAnalytics(work: () => void | Promise<void>) {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(() => void work(), { timeout: 2500 });
+      return;
+    }
+
+    globalThis.setTimeout(() => void work(), 1500);
+  }
+
   // from `local-hostname`
   function isLocalhost(hostname: string) {
     const RGX = /^(::1?|(.*\.)?localhost|((0|10|127)(\.(\d|[1-8]\d|9\d|1\d{2}|2[0-4]\d|25[0-5])){3})|((192\.168|169\.254|(172\.(1[6-9]|2\d|3[01])))(\.(\d|[1-8]\d|9\d|1\d{2}|2[0-4]\d|25[0-5])){2}))$/i;
