@@ -267,11 +267,13 @@ const heroPreload = _heroSrc
       // window?.__superHackFix_patchOptionsListWithActualHeight();
 
       const scoreEls = document.querySelectorAll(".score");
-      const scoreEl = scoreEls[0];
+      const scoreEl = scoreEls[0] as HTMLElement | undefined;
       const scoreWrapper = document.querySelector(".score-wrapper");
       const scoreLabel = document.querySelector(".score label");
       const correct = document.querySelectorAll("main .challenge.correct");
       const congratsMsg = document.querySelector(".congrats-message");
+
+      if (!scoreEl) return false;
 
       // Add up the tries from [data-answer-count]
       const questionStore = getQuestionStore();
@@ -285,7 +287,7 @@ const heroPreload = _heroSrc
         questions.length === correct.length && tries === questions.length;
 
       if (scoreEl?.parentNode?.nodeName !== "BODY")
-        document.body.appendChild(scoreEl!);
+        document.body.appendChild(scoreEl);
 
       if (isPerfect) {
         scoreEl?.classList.add("perfect");

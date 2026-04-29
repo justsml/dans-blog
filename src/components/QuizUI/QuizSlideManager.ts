@@ -126,6 +126,13 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     visibilityObserver.observe(quizSection);
 
     // --- State Updates ---
+    const syncAnswers = () => {
+      challenges.forEach((c, i) => {
+        if (c.classList.contains("correct")) answeredQuestions.set(i, true);
+        else if (c.classList.contains("incorrect")) answeredQuestions.set(i, false);
+      });
+    };
+
     const updateProgress = () => {
       const correctCount = [...answeredQuestions.values()].filter((v) => v).length;
       const fill = scoreBar.querySelector(".quiz-score-bar-fill") as HTMLElement;
@@ -180,6 +187,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         currentIsland.style.display = "none";
         nextIsland.style.display = "";
         isTransitioning = false;
+        syncAnswers();
         updateNavButtons();
         updateDots();
         updateProgress();
@@ -278,6 +286,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       }
     });
 
+    syncAnswers();
     updateNavButtons();
     updateDots();
     updateProgress();
