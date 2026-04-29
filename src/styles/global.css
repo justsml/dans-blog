@@ -350,7 +350,13 @@ html {
 
 body {
   overflow-x: hidden;
-  background-color: hsl(var(--background));
+  background:
+    linear-gradient(rgba(244, 240, 232, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 240, 232, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 15% 12%, rgba(40, 232, 223, 0.14), transparent 30rem),
+    radial-gradient(circle at 88% 18%, rgba(255, 115, 201, 0.1), transparent 26rem),
+    var(--consulting-bg);
+  background-size: 56px 56px, 56px 56px, auto, auto, auto;
   color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
