@@ -137,7 +137,12 @@
     --neon-yellow-gradient: linear-gradient(to top left, hsl(var(--neon-yellow)), hsl(var(--neon-yellow)));
     --neon-blue-gradient: linear-gradient(to top left, hsl(var(--neon-blue)), hsl(var(--neon-blue)));
     --neon-orange-gradient: linear-gradient(to top left, hsl(var(--neon-orange)), hsl(var(--neon-orange))); */
-    --consulting-bg: #05080b;
+    --site-page-bg: #05080b;
+    --site-grid-line: rgba(244, 240, 232, 0.035);
+    --site-bg-glow-cyan: rgba(40, 232, 223, 0.14);
+    --site-bg-glow-pink: rgba(255, 115, 201, 0.1);
+    --site-grid-size: 56px;
+    --consulting-bg: var(--site-page-bg);
     --background: 210 38% 3%; /* Matches --consulting-bg for hsl(var(--background)) consumers. */
     --bg-dark: 208 52% 15%;
     --foreground: 210 5% 90%;
@@ -349,19 +354,28 @@ html {
 }
 
 body {
+  min-height: 100vh;
   overflow-x: hidden;
+  background-color: var(--site-page-bg, #05080b);
   background:
-    linear-gradient(rgba(244, 240, 232, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 240, 232, 0.035) 1px, transparent 1px),
-    radial-gradient(circle at 15% 12%, rgba(40, 232, 223, 0.14), transparent 30rem),
-    radial-gradient(circle at 88% 18%, rgba(255, 115, 201, 0.1), transparent 26rem),
-    var(--consulting-bg);
-  background-size: 56px 56px, 56px 56px, auto, auto, auto;
+    linear-gradient(var(--site-grid-line, rgba(244, 240, 232, 0.035)) 1px, transparent 1px),
+    linear-gradient(90deg, var(--site-grid-line, rgba(244, 240, 232, 0.035)) 1px, transparent 1px),
+    radial-gradient(circle at 15% 12%, var(--site-bg-glow-cyan, rgba(40, 232, 223, 0.14)), transparent 30rem),
+    radial-gradient(circle at 88% 18%, var(--site-bg-glow-pink, rgba(255, 115, 201, 0.1)), transparent 26rem),
+    var(--site-page-bg, #05080b);
+  background-size: var(--site-grid-size, 56px) var(--site-grid-size, 56px), var(--site-grid-size, 56px) var(--site-grid-size, 56px), auto, auto, auto;
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
   color: hsl(var(--foreground));
   font-family: "Raleway", sans-serif;
   font-optical-sizing: auto;
   line-height: 1.7;
   font-size: 1.125rem;
+}
+
+body.post-page {
+  --site-bg-glow-cyan: rgba(159, 184, 255, 0.13);
+  --site-bg-glow-pink: rgba(40, 232, 223, 0.1);
 }
 
 /* Prevent background scrolling when search panel is open */

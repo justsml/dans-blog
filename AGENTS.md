@@ -9,6 +9,10 @@ Astro 5 static blog with MDX content, interactive React quizzes, and Bun as the 
 **Stack**: Astro 5, React 18, Tailwind CSS v4, MDX, Bun
 **Deployment**: Netlify (static files)
 
+## IMPORTANT
+
+The server is probably running already. Never just assume you need to run `bun run dev` - always check the http localhost port (and response) first to see if it's already running. If you run `bun run dev` while it's already running, you'll get a confused around different ports or errors about the port being in use. If that happens, just stop the new process and check the existing one. Or stop and ask the user to start it again.
+
 ## Commands
 
 ```bash
