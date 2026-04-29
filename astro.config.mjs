@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ quiet: true });
 import { globSync } from "tinyglobby";
 
 // import { visualizer } from "rollup-plugin-visualizer";
@@ -9,7 +9,7 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
-import orama from '@orama/plugin-astro'
+import orama from "@orama/plugin-astro";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -21,7 +21,14 @@ import { statSync } from "fs";
 // import { rehypeHeadingIds } from '@astrojs/markdown-remark'
 // import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 const siteUrl = "https://danlevy.net";
-const ignorePaths = ["/404", "/404.html", "/500", "/500.html", "/pages/", "/category/"];
+const ignorePaths = [
+  "/404",
+  "/404.html",
+  "/500",
+  "/500.html",
+  "/pages/",
+  "/category/",
+];
 
 // https://astro.build/config
 export default defineConfig({
@@ -54,8 +61,7 @@ export default defineConfig({
 
   integrations: [
     pagefind(),
-    react({
-    }),
+    react({}),
     expressiveCode({
       // themes: ['dracula', 'solarized-light'],
       themes: ["dracula"],
@@ -72,7 +78,10 @@ export default defineConfig({
         // const post = PostCollections.getPostsBySlugs([slug])[0];
         // const modified = toDate(post?.data?.modified ?? post?.data?.date ?? new Date());
         // use tinyglobby to get the file modified date
-        const files = globSync(`**/*${slug}*/**/index.md*`, { cwd: "src", absolute: true });
+        const files = globSync(`**/*${slug}*/**/index.md*`, {
+          cwd: "src",
+          absolute: true,
+        });
 
         // const initialLastmod = item.lastmod;
 
@@ -87,8 +96,6 @@ export default defineConfig({
         return item;
       },
       filter: (page) => {
-
-
         const isIgnoredPath = ignorePaths.every((path) => {
           return !page.includes(path);
         });
@@ -100,24 +107,24 @@ export default defineConfig({
       applyBaseStyles: false,
       nesting: true,
     }),
-    orama({
-      // We can generate more than one DB, with different configurations
-      danlevy_db: {
-        // Required. Only pages matching this path regex will be indexed
-        pathMatcher: /.+/,
+    // orama({
+    //   // We can generate more than one DB, with different configurations
+    //   danlevy_db: {
+    //     // Required. Only pages matching this path regex will be indexed
+    //     pathMatcher: /.+/,
 
-        // Optional. 'english' by default
-        // language: 'english',
-        searchOptions: {
-          mode: "fulltext",
-          // Add more options here: https://docs.orama-search.com/guides/usage/initialization#searchoptions
-        },
-        caseSensitive: false,
-        // Optional. ['body'] by default. Use it to constraint what is used to
-        // index a page.
-        contentSelectors: ['h1', 'main'],
-      }
-    })
+    //     // Optional. 'english' by default
+    //     // language: 'english',
+    //     searchOptions: {
+    //       mode: "fulltext",
+    //       // Add more options here: https://docs.orama-search.com/guides/usage/initialization#searchoptions
+    //     },
+    //     caseSensitive: false,
+    //     // Optional. ['body'] by default. Use it to constraint what is used to
+    //     // index a page.
+    //     contentSelectors: ["h1", "main"],
+    //   },
+    // }),
 
     // partytown(),
   ],
