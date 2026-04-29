@@ -73,7 +73,7 @@ const relatedServices = consultingServices.filter(
     <div class="service-shell two-col">
       <div>
         <p class="section-label">Why teams call</p>
-        <h2>The old serial path is not the only path anymore.</h2>
+        <h2>The pattern I keep seeing.</h2>
       </div>
       <div class="stack-list">
         {service.whyNow.map((item) => (
@@ -89,7 +89,7 @@ const relatedServices = consultingServices.filter(
     <div class="service-shell two-col">
       <div>
         <p class="section-label">What changes</p>
-        <h2>Agentic work creates leverage when evals keep it honest.</h2>
+        <h2>What actually gets better.</h2>
       </div>
       <div class="stack-list">
         {service.outcomes.map((item) => (
@@ -118,7 +118,7 @@ const relatedServices = consultingServices.filter(
   <section class="service-section full-section">
     <div class="service-shell">
       <p class="section-label">How I work</p>
-      <h2>A focused senior engagement from tests to parallel exploration to shipped change.</h2>
+      <h2>No mystery, no handoff decks.</h2>
       <div class="approach-grid">
         {service.approach.map((step, index) => (
           <article class="approach-card">
@@ -136,10 +136,11 @@ const relatedServices = consultingServices.filter(
       <div class="final-cta">
         <div>
           <p class="section-label">Next step</p>
-          <h2>If the team keeps circling the same decision, make the work testable.</h2>
+          <h2>Ready to stop circling it?</h2>
           <p class="cta-copy">
-            Bring the architecture, the bill, the failure mode, or the looming launch.
-            We will turn it into paths agents can explore and tests can judge.
+            Bring whatever your team keeps putting off — the scary migration,
+            the expensive AI bill, the app that misbehaves in production.
+            We'll figure out what's actually blocking it.
           </p>
         </div>
         <a href={INTRO_CALL_LINK} class="btn btn-primary btn-large" target="_blank" rel="noopener">
@@ -207,6 +208,41 @@ const relatedServices = consultingServices.filter(
     padding: 5.5rem 0 3rem;
   }
 
+  :global(.top-header .header-nav > h2) {
+    text-shadow: none !important;
+  }
+
+  :global(.top-header .header-nav > h2 .title) {
+    animation: service-site-title-drift 7s ease-in-out infinite alternate !important;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 28%, #7fd7c9 56%, #9fb8ff 78%, #f6fbff 100%) !important;
+    background-clip: text !important;
+    background-size: 230% 100% !important;
+    color: transparent !important;
+    filter: drop-shadow(0 16px 24px rgba(1, 18, 22, 0.42)) !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0.55px rgba(246, 251, 255, 0.26) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover) {
+    text-shadow: none !important;
+    transform: translateY(-1px);
+  }
+
+  :global(.top-header .header-nav > h2 a img) {
+    border-color: rgba(246, 251, 255, 0.72) !important;
+    box-shadow:
+      0 12px 28px rgba(0, 18, 28, 0.32),
+      0 0 0 1px rgba(127, 215, 201, 0.18) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover a img) {
+    border-color: rgba(246, 251, 255, 0.86) !important;
+    box-shadow:
+      0 14px 32px rgba(0, 18, 28, 0.36),
+      0 0 0 1px rgba(240, 161, 180, 0.24) !important;
+  }
+
   .service-stats,
   .service-section {
     padding: 0 0 4.5rem;
@@ -253,12 +289,23 @@ const relatedServices = consultingServices.filter(
   }
 
   h1 {
-    color: var(--service-text);
+    animation: service-title-drift 8s ease-in-out infinite alternate;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 24%, #7fd7c9 52%, #9fb8ff 76%, #f6fbff 100%);
+    background-clip: text;
+    background-size: 220% 100%;
+    color: transparent;
     font-size: clamp(2.9rem, 5vw, 5.3rem);
     letter-spacing: -0.055em;
     line-height: 0.95;
     margin: 0 0 1.35rem;
     max-width: 11ch;
+    text-shadow:
+      0 1px 0 rgba(246, 251, 255, 0.18),
+      0 18px 48px rgba(2, 16, 25, 0.56),
+      0 0 42px rgba(127, 215, 201, 0.14);
+    text-wrap: balance;
+    -webkit-text-stroke: 1px rgba(246, 251, 255, 0.2);
   }
 
   h2 {
@@ -369,6 +416,10 @@ const relatedServices = consultingServices.filter(
   .panel-list li {
     border-top: 1px solid var(--service-border);
     padding-top: 0.95rem;
+  }
+
+  .panel-list li::marker {
+    content: "";
   }
 
   .stats-grid,
@@ -508,6 +559,41 @@ const relatedServices = consultingServices.filter(
 
     .btn {
       width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 {
+      animation: none;
+      background-position: 50% 50%;
+      filter: none;
+    }
+
+    :global(.top-header .header-nav > h2 .title) {
+      animation: none !important;
+      background-position: 50% 50% !important;
+    }
+  }
+
+  @keyframes service-title-drift {
+    0% {
+      background-position: 0% 50%;
+      filter: drop-shadow(0 0 0 rgba(240, 161, 180, 0));
+    }
+
+    100% {
+      background-position: 100% 50%;
+      filter: drop-shadow(0 18px 34px rgba(127, 215, 201, 0.14));
+    }
+  }
+
+  @keyframes service-site-title-drift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
     }
   }
 </style>

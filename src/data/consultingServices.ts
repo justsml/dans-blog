@@ -35,9 +35,9 @@ export const consultingServices: ConsultingService[] = [
     metaTitle: "AI Consulting for Cost, Architecture, and LLM Systems",
     description:
       "Senior help with agentic application architecture, model routing, token observability, prompt systems, and eval-backed production tradeoffs.",
-    heroTitle: "Build agentic applications that can be tested, operated, and trusted.",
+    heroTitle: "The demo worked great. Production has opinions.",
     heroBody:
-      "I help teams move from impressive demos to agentic systems with clear routes, measurable quality, useful traces, and test/eval gates. That can mean redesigning model routing, adding token observability, building eval suites, improving caching, or turning a fragile prototype into a production system your team can reason about.",
+      "I help teams move from impressive demos to agentic systems that hold up — with clear routing, measurable quality, useful traces, and eval gates. That can mean redesigning model routing, adding token observability, building eval suites, or turning a fragile prototype into a production system your team can actually reason about.",
     primaryCta: "Book an AI Consulting Call",
     secondaryCta: "See all consulting services",
     stats: [
@@ -46,9 +46,9 @@ export const consultingServices: ConsultingService[] = [
       { value: "Visible", label: "Spend and quality tied to features" },
     ],
     whyNow: [
-      "Agentic products often ship before the team has a clean way to measure quality, regressions, cost, and autonomy boundaries.",
-      "Once usage grows, small routing, context, and tool-calling decisions start shaping product behavior.",
-      "Teams need practical architecture judgment that balances quality, latency, safety, and cost without treating evals as an afterthought.",
+      "The demo shipped. Then the real questions started: why does this cost so much, why did it say that, and what happens when it runs unsupervised?",
+      "Once usage grows, the 'we'll fix it later' prompt and routing decisions start shaping product behavior in ways nobody planned for.",
+      "Teams need practical architecture judgment that balances quality, latency, safety, and cost — without treating evals as something you do after the incident.",
     ],
     outcomes: [
       "Identify the features, prompts, routes, and user patterns driving the majority of AI spend.",
@@ -85,9 +85,9 @@ export const consultingServices: ConsultingService[] = [
     metaTitle: "AI Guardrails Consulting for Safer, Cheaper AI Products",
     description:
       "Expert guidance for adding practical safety, moderation, policy controls, and eval-backed boundaries to agentic applications.",
-    heroTitle: "Add AI safety that protects the product without freezing the team.",
+    heroTitle: "Your users are creative. More creative than your happy-path tests.",
     heroBody:
-      "I help teams add moderation, prompt defenses, policy enforcement, evals, and human-review escape hatches that fit the product they actually have today. The goal is not theater. It is practical guardrails that let agentic features keep moving with evidence.",
+      "I help teams add moderation, prompt defenses, policy enforcement, evals, and human-review escape hatches that fit the product they actually have today. The goal is not security theater. It's practical guardrails that let agentic features keep moving — with evidence that they're not going sideways.",
     primaryCta: "Book an AI Guardrails Review",
     secondaryCta: "See all consulting services",
     stats: [
@@ -96,7 +96,7 @@ export const consultingServices: ConsultingService[] = [
       { value: "Clear", label: "Policies engineers can implement" },
     ],
     whyNow: [
-      "Prompt injection, jailbreak attempts, and adversarial users usually show up after product-market fit, not before.",
+      "Adversarial users don't show up during happy-path testing. They show up the week after you launch, with time on their hands.",
       "Teams often overspend on blanket moderation calls when a layered policy engine would catch most issues for far less.",
       "A safe demo is not the same thing as a production-safe agentic workflow with logging, evals, escalation, and recovery paths.",
     ],
@@ -135,9 +135,9 @@ export const consultingServices: ConsultingService[] = [
     metaTitle: "Supabase Scaling, Migration, and Auth Cost Rescue",
     description:
       "Modernize hosted defaults, move selected services to native cloud or blended open-source infrastructure, and use agentic delivery to explore safer paths in parallel.",
-    heroTitle: "Modern migrations do not have to move one file at a time.",
+    heroTitle: "You outgrew the easy path. That doesn't mean the hard path has to be serial.",
     heroBody:
-      "I work with teams that outgrew the easy early path. Instead of treating migration as one long serial march, we can use agentic coding to explore slices in parallel, test the results against real behavior, and converge on the safest target architecture.",
+      "I work with teams that hit the wall Supabase wasn't designed for. Instead of one long serial migration march, we use agentic coding to explore slices in parallel, test the results against real behavior, and converge on the safest target architecture — without betting everything on one plan.",
     primaryCta: "Talk Through Your Supabase Stack",
     secondaryCta: "See all consulting services",
     stats: [
@@ -146,9 +146,9 @@ export const consultingServices: ConsultingService[] = [
       { value: "14x", label: "User growth absorbed after the switch" },
     ],
     whyNow: [
-      "Hosted convenience can hide which parts of auth, database, storage, and edge workloads still belong together.",
-      "Work that used to require a slow rewrite can now be split into agent-sized investigations with tests around each boundary.",
-      "Avoid rip-and-replace by identifying which parts of the stack still help and which parts should move.",
+      "Supabase is great — until the bill arrives and you're paying enterprise prices for what's essentially managed Postgres and some auth middleware.",
+      "Work that used to require a painful rewrite can now be split into agent-sized investigations with tests around each boundary.",
+      "The goal isn't rip-and-replace. It's figuring out which parts of the stack still earn their keep and which parts should move.",
     ],
     outcomes: [
       "Audit which parts of Supabase still help and which parts are now acting like a tax on growth.",
@@ -193,7 +193,7 @@ export const consultingServices: ConsultingService[] = [
       "Rescue LLM knowledge systems with retrieval evals, grounding checks, query routing, and document-scale diagnostics.",
     heroTitle: "Your RAG system worked beautifully until success broke it.",
     heroBody:
-      "That is a common pattern. A knowledge integration feels magical at first, then volume rises, the document graph gets messy, and the model starts pulling the wrong things for the right questions. I help teams build evals around the failures, diagnose the collapse, and rebuild retrieval for relevance, precision, and scale.",
+      "It always feels magical at first. Then volume rises, the document graph gets messy, and the model starts confidently pulling the wrong things for the right questions. I help teams build evals around the failures, diagnose what actually collapsed, and rebuild retrieval for relevance, precision, and scale.",
     primaryCta: "Book a RAG Rescue Session",
     secondaryCta: "See all consulting services",
     stats: [
@@ -202,9 +202,9 @@ export const consultingServices: ConsultingService[] = [
       { value: "Context aware", label: "graphRAG activation by query intent" },
     ],
     whyNow: [
-      "RAG failures often look like model failures even when retrieval is the real culprit.",
-      "As document counts rise, chunking, metadata, embeddings, and reranking choices interact in ways that create semantic confusion.",
-      "Teams can waste months tuning prompts when the right fix is retrieval evals, architecture, and query routing.",
+      "When your AI gives a wrong answer, everyone blames the model. Half the time it's retrieval sending the wrong context and the model is just doing its best.",
+      "As document counts rise, chunking, metadata, embeddings, and reranking choices interact in ways that create semantic confusion at exactly the worst moments.",
+      "Teams can waste months tuning prompts when the real fix is retrieval evals, architecture, and query routing.",
     ],
     outcomes: [
       "Identify the specific causes of context collapse, retrieval drift, and semantic confusion in your current stack.",
@@ -247,9 +247,9 @@ export const consultingServices: ConsultingService[] = [
     metaTitle: "Developer AI Coding Security, Sandboxing, and CI/CD Hardening",
     description:
       "Secure the way developers and AI coding agents write, run, test, evaluate, and ship code with sandboxing, canaries, hardened CI/CD, and controlled access.",
-    heroTitle: "Agentic coding needs speed, taste, and guardrails.",
+    heroTitle: "Your developers love their AI coding tools. Your security posture hasn't caught up yet.",
     heroBody:
-      "I help teams make AI-assisted development powerful without letting it become chaos. That includes sandboxed execution, decoy credentials, repository controls, CI/CD hardening, eval gates, and operational boundaries that let many agents work in parallel without losing control.",
+      "I help teams make AI-assisted development fast without letting it become a liability. That means sandboxed execution, decoy credentials, repository controls, CI/CD hardening, and eval gates — the kind of guardrails that let many agents work in parallel without your security team having a quiet panic.",
     primaryCta: "Review AI Coding Security",
     secondaryCta: "See all consulting services",
     stats: [
@@ -258,9 +258,9 @@ export const consultingServices: ConsultingService[] = [
       { value: "Hardened", label: "CI/CD and repository guardrails" },
     ],
     whyNow: [
-      "AI coding tools move faster than most internal engineering processes.",
-      "Repository access, terminal execution, secrets exposure, and automation sprawl create a new threat surface inside engineering itself.",
-      "Teams need controls that support productivity instead of forcing developers back to manual workarounds.",
+      "AI coding tools move faster than most internal security processes were designed for. That gap is the new attack surface.",
+      "Repository access, terminal execution, secrets exposure, and automation sprawl create a threat surface inside engineering that most threat models don't cover.",
+      "Controls that slow developers down get bypassed. The goal is guardrails that fit the actual workflow.",
     ],
     outcomes: [
       "Define safe boundaries for AI coding agents, assistants, and automation in local, CI, and production-adjacent environments.",
@@ -297,9 +297,9 @@ export const consultingServices: ConsultingService[] = [
     metaTitle: "Whole Enterprise Security Assessment for Modern Engineering Orgs",
     description:
       "A broad security assessment spanning application risk, identity, infrastructure, cloud posture, developer workflow, AI exposure, and organizational weak points.",
-    heroTitle: "Security problems rarely stay in one layer. Your assessment should not either.",
+    heroTitle: "The breach that keeps you up at night isn't one big flaw. It's three small ones holding hands.",
     heroBody:
-      "I perform enterprise-minded security reviews for companies that need the real picture, not a narrow point-in-time scan. We look across product, cloud, identity, engineering workflow, AI systems, and operational practices to find the vulnerabilities that compound together.",
+      "I perform enterprise-minded security reviews for companies that need the real picture, not a narrow point-in-time scan. We look across product, cloud, identity, engineering workflow, AI systems, and operational practices — because the vulnerabilities that compound together are the ones that hurt.",
     primaryCta: "Book a Security Assessment Call",
     secondaryCta: "See all consulting services",
     stats: [
@@ -308,9 +308,9 @@ export const consultingServices: ConsultingService[] = [
       { value: "Actionable", label: "Roadmap your team can execute" },
     ],
     whyNow: [
-      "Many serious incidents are created by two or three moderate weaknesses interacting, not by one dramatic flaw.",
-      "Fast-moving engineering organizations accumulate invisible risk in build pipelines, auth layers, cloud defaults, and AI integrations.",
-      "Leadership needs prioritized security work, not an unreadable pile of disconnected findings.",
+      "Most serious incidents aren't caused by one dramatic flaw. They're caused by two or three moderate ones that nobody connected.",
+      "Fast-moving engineering orgs quietly accumulate risk in build pipelines, auth layers, cloud defaults, and AI integrations — none of it alarming in isolation.",
+      "Leadership needs a prioritized remediation plan, not a scanner report that reads like a legal filing.",
     ],
     outcomes: [
       "Reveal the risk patterns connecting product, infrastructure, identity, AI, and developer workflow.",

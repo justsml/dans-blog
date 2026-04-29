@@ -72,17 +72,17 @@ const processSteps = [
 
 const serviceSummaries: Record<string, string> = {
   "ai-consulting":
-    "Design agentic applications with routing, evals, observability, and production tradeoffs in view.",
+    "Your AI costs are climbing and the answers are inconsistent. Build the routing, evals, and observability that fix both.",
   "ai-guardrails":
-    "Add policy checks, review paths, and eval-backed safety controls around agentic products.",
+    "Your users are creative. Add policy controls, review paths, and eval gates before they find the fun edge cases.",
   "supabase-scaling-migration":
-    "Use parallel agentic exploration to modernize the stack without waiting on one serial plan.",
+    "Your auth bill is bigger than your office rent. Let's fix that — with agents exploring the migration in parallel.",
   "rag-rescue":
-    "Repair retrieval with evals for relevance, grounding, document scale, and answer quality.",
+    "RAG worked great at 500 docs. At 50,000 it's hallucinating confidently. Time to rebuild retrieval properly.",
   "developer-ai-coding-security":
-    "Make agentic coding productive and governable with sandboxes, access control, and CI checks.",
+    "AI coding tools are fast. That's the problem. Add sandboxes, access controls, and CI gates before they are.",
   "enterprise-security-assessment":
-    "Review application, cloud, identity, workflow, and AI exposure as one connected system.",
+    "Security debt accumulates quietly until it doesn't. Find the compound risks before they find you.",
 };
 
 const trustSignals = [
@@ -118,9 +118,9 @@ const caseProofs = consultingServices
   }));
 
 const fitSignals = [
-  "A system looks too tangled to move, but too important to leave alone",
-  "An agentic app needs evals, guardrails, and a clearer operating model",
-  "A migration could be explored by agents before the team commits to a path",
+  "Your AI app works great in the demo. In production it's... creative.",
+  "You've been \"adding guardrails next sprint\" for four sprints now",
+  "The migration estimate keeps growing and nobody wants to own it",
 ];
 ---
 
@@ -171,11 +171,11 @@ const fitSignals = [
         <div class="hero-insight-card">
           <div class="story-beat">
             <span>How it started</span>
-            <strong>"This migration would take a quarter."</strong>
+            <strong>"GPT-3.5 sure can generate code!"</strong>
           </div>
           <div class="story-beat">
             <span>How it's going</span>
-            <strong>Ten agents ran it in parallel. Tests picked the winner by Tuesday.</strong>
+            <strong>Our swarm of Agents completed & tested 183 tickets before lunch. Six regressions were caught and fixed.</strong>
           </div>
         </div>
       </div>
@@ -360,11 +360,11 @@ const fitSignals = [
     <div class="consulting-shell cta-grid">
       <div>
         <p class="eyebrow">Next step</p>
-        <h2>Bring the system that feels too tangled to move.</h2>
+        <h2>Bring the thing your team keeps not finishing.</h2>
         <p>
-          Bring the migration, agentic application, retrieval failure, security
-          concern, or platform decision your team keeps circling. We will turn
-          it into work agents can explore and tests can judge.
+          The migration everyone's afraid to start. The agentic app that only
+          works in staging. The AI product that's expensive and nobody's sure
+          why. Let's figure out what's actually wrong and fix it.
         </p>
         <div class="hero-actions">
           <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
@@ -397,7 +397,7 @@ const fitSignals = [
     --consulting-panel-strong: rgba(244, 240, 232, 0.075);
     --consulting-cyan: #28e8df;
     --consulting-coral: #ff73c9;
-    --consulting-amber: #d8a84b;
+    --consulting-amber: #b8c7d9;
     --consulting-radius: 18px;
     --consulting-radius-sm: 10px;
     --consulting-shadow: 0 28px 90px rgba(0, 18, 28, 0.58);
@@ -432,6 +432,41 @@ const fitSignals = [
   .consulting-hero {
     padding: clamp(4rem, 8vw, 7rem) 0 5rem;
     overflow: hidden;
+  }
+
+  :global(.top-header .header-nav > h2) {
+    text-shadow: none !important;
+  }
+
+  :global(.top-header .header-nav > h2 .title) {
+    animation: consulting-site-title-drift 7s ease-in-out infinite alternate !important;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 28%, #74d8ca 56%, #9fb8ff 78%, #f6fbff 100%) !important;
+    background-clip: text !important;
+    background-size: 230% 100% !important;
+    color: transparent !important;
+    filter: drop-shadow(0 16px 24px rgba(1, 18, 22, 0.42)) !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0.55px rgba(246, 251, 255, 0.26) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover) {
+    text-shadow: none !important;
+    transform: translateY(-1px);
+  }
+
+  :global(.top-header .header-nav > h2 a img) {
+    border-color: rgba(246, 251, 255, 0.72) !important;
+    box-shadow:
+      0 12px 28px rgba(0, 18, 28, 0.32),
+      0 0 0 1px rgba(116, 216, 202, 0.18) !important;
+  }
+
+  :global(.top-header .header-nav > h2:hover a img) {
+    border-color: rgba(246, 251, 255, 0.86) !important;
+    box-shadow:
+      0 14px 32px rgba(0, 18, 28, 0.36),
+      0 0 0 1px rgba(236, 161, 176, 0.24) !important;
   }
 
   .consulting-hero::after {
@@ -568,13 +603,23 @@ const fitSignals = [
 
   h1 {
     max-width: 720px;
-    color: var(--consulting-ink);
+    animation: consulting-title-drift 8s ease-in-out infinite alternate;
+    background:
+      linear-gradient(105deg, #f6fbff 0%, #c8d6e5 22%, #79d8cc 48%, #9fb8ff 72%, #f6fbff 100%);
+    background-clip: text;
+    background-size: 220% 100%;
+    color: transparent;
     font-size: clamp(3.25rem, 6.1vw, 5.65rem);
     font-weight: 590;
     letter-spacing: -0.058em;
     line-height: 0.95;
     margin-bottom: 1.55rem;
+    text-shadow:
+      0 1px 0 rgba(246, 251, 255, 0.18),
+      0 22px 54px rgba(4, 20, 24, 0.56),
+      0 0 44px rgba(121, 216, 204, 0.16);
     text-wrap: balance;
+    -webkit-text-stroke: 1px rgba(246, 251, 255, 0.2);
   }
 
   h2 {
@@ -586,6 +631,28 @@ const fitSignals = [
     margin-bottom: 1.05rem;
     max-width: 13ch;
     text-wrap: balance;
+  }
+
+  @keyframes consulting-title-drift {
+    0% {
+      background-position: 0% 50%;
+      filter: drop-shadow(0 0 0 rgba(244, 167, 180, 0));
+    }
+
+    100% {
+      background-position: 100% 50%;
+      filter: drop-shadow(0 18px 34px rgba(121, 216, 204, 0.14));
+    }
+  }
+
+  @keyframes consulting-site-title-drift {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    100% {
+      background-position: 100% 50%;
+    }
   }
 
   h3 {
@@ -1273,6 +1340,19 @@ const fitSignals = [
     .process-panel > img {
       aspect-ratio: 16 / 10;
       min-height: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    h1 {
+      animation: none;
+      background-position: 50% 50%;
+      filter: none;
+    }
+
+    :global(.top-header .header-nav > h2 .title) {
+      animation: none !important;
+      background-position: 50% 50% !important;
     }
   }
 </style>
