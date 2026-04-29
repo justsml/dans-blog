@@ -1,3 +1,7 @@
+---
+name: quiz-writing
+description: Write engaging, educational quiz posts for DanLevy.net
+---
 # Quiz Writing Skill
 
 Write engaging, educational quiz posts for DanLevy.net — an Astro 5 static blog with interactive React quiz components.
@@ -179,7 +183,7 @@ options={[
 ### Tone Examples
 
 **Good**:
-> "Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed core database contributor, 'what the hell, Dan?! I crashed on the type questions! Thats violent sir!' 😈 You're welcome."
+> "Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed core [related tool] contributor, 'what the hell, Dan?! I crashed on the third questions! Thats violent sir!' 😈 You're welcome."
 
 **Good**:
 > "I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings — with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠"
