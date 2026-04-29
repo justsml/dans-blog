@@ -410,6 +410,10 @@ const heroPreload = _heroSrc
       const quiz = document.querySelector(".quiz-ui");
       if (quiz) {
         deferWork(() => bootQuizLogic(quiz), 900);
+        // Initialize single-question slide manager
+        import("../components/QuizUI/QuizSlideManager").then(({ initQuizSlideManager }) => {
+          deferWork(() => initQuizSlideManager(quiz.closest("section") as HTMLElement), 200);
+        });
       }
     });
     function getAnswerCount() {

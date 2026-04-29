@@ -71,25 +71,25 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 | `subTitle` | string | Catchy tagline, often wordplay or question | `"Are your exceptions truly exceptional?"` |
 | `label` | string | Short label for UI badges | `"Errors"`, `"RegEx"`, `"CSS Fundamentals"` |
 | `category` | string | Always `"Quiz"` | `Quiz` |
-| `subCategory` | string | Topic area | `JavaScript`, `CSS`, `Rust`, `PostgreSQL`, `Bash` |
-| `date` | date | Post date (YYYY-MM-DD) | `2025-11-03` |
+| `subCategory` | string | Topic area | `JavaScript`, `CSS`, `Rust`, `PostgreSQL`, `Bash`, `Cloud` |
+| `date` | string | Post date (YYYY-MM-DD) | `2025-11-03` |
 | `tags` | array | Include `quiz` + topic + difficulty levels | `[quiz, javascript, error-handling, intermediate, advanced]` |
 
 ### Optional Fields
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `modified` | date | Last modified date |
+| `modified` | string | Last modified date |
 | `unlisted` | boolean | Hide from lists but accessible via URL |
 | `draft` | boolean | Hide from build entirely |
 | `redirects` | array | Old URLs to redirect here |
-| `social_image` | string | Legacy field, prefer cover_* fields |
+| `social_image` | string | Path to social sharing image |
 | `related` | array | Related post slugs |
 | `popularity` | number | 0-1 score for sorting |
 
-### Cover Image Fields (Required)
+### Cover Image Fields
 
-Three cover images are required, all WebP format:
+At least one cover image is needed. Most quizzes use three variants:
 
 ```yaml
 cover_full_width: [filename]-wide.webp
@@ -97,14 +97,12 @@ cover_mobile: [filename]-square-200.webp
 cover_icon: [filename]-square-200.webp
 ```
 
-**Naming convention**: Use Unsplash photo credit base name when applicable:
-- `christopher-burns-8KfCR12oeUM-unsplash-wide.webp`
-- `christopher-burns-8KfCR12oeUM-unsplash-square.webp`
+Some older quizzes also include a `cover` field (square format).
 
-Or thematic names:
-- `psychedelic-shell-wide.webp` / `psychedelic-shell-square-200.webp`
-- `elephant-synthwave-gym-wide.webp` / `elephant-synthwave-gym-square-200.webp`
-- `boxes-of-nesting-dolls-wide.webp` / `boxes-of-nesting-dolls-square.webp`
+**Naming conventions**:
+- Unsplash photos: `photographer-name-XXXX-unsplash-wide.webp`, `photographer-name-XXXX-unsplash-square.webp`
+- Thematic/illustrated: `psychedelic-shell-wide.webp`, `elephant-synthwave-gym-square-200.webp`
+- Social: `desktop-social.webp`, `mobile.webp` (some quizzes use these in `social_image`)
 
 **Cover credit** (optional, for Unsplash photos):
 ```yaml
@@ -117,59 +115,100 @@ cover_credit: Photo by <a href="https://unsplash.com/@photographer">Name</a> on 
 
 ```tsx
 <Challenge
-  client:load          // Required: React hydration directive
+  client:load          // Required: Astro React hydration directive
   index={0}            // Required: Zero-based question number
   group="Warmup"       // Required: Category grouping for this question
   title="Question Title" // Required: Short descriptive title
-  options={[           // Required: Array of option objects
+  options={[           // Required: Array of Option objects
     { text: 'Option A' },
     { text: 'Option B', isAnswer: true },
     { text: 'Option C', hint: "Optional hint text" },
   ]}
-  difficulty={2}       // Optional: 1-5 difficulty scale (Rust quizzes use this)
-  objectives={[        // Optional: Learning objectives (Rust quizzes use this)
+  difficulty={2}       // Optional: 1-5 numeric scale (used in Rust & AWS quizzes)
+  objectives={[        // Optional: Learning objectives (used in Rust & AWS quizzes)
     "Understand concept X",
     "Identify pattern Y",
   ]}
 >
 ```
 
+**Note on `client:load`**: The vast majority of quizzes use `client:load`. Only the oldest quiz (JavaScript Promises, 2019) uses `client:only="react"` on some Challenges. Always use `client:load` for new quizzes.
+
+### Option Type
+
+The `Option` type (from `src/components/QuizUI/types.ts`):
+
+```ts
+type Option = { text: string; isAnswer: boolean; hint?: string };
+```
+
+- `text` (required): The displayed option text
+- `isAnswer` (required): Exactly one option must have `isAnswer: true`
+- `hint` (optional): Per-option hint shown when user selects that wrong answer
+
 ### Slots
 
-Every Challenge has two required slots:
+Every Challenge has **two required slots** and **one optional slot**:
 
-#### Question Slot
+#### Question Slot (required)
 
 ```mdx
 <slot name="question">
 <div className="question">
-  [Question text - can include code blocks with language hint]
+  What does `JSON.stringify(error)` return?
+  ```js
+  const error = new Error('Oops');
+  console.log(JSON.stringify(error));
+  ```
 </div>
 </slot>
 ```
 
-#### Explanation Slot
+#### Explanation Slot (required)
 
 ```mdx
 <slot name="explanation">
 <div className="explanation">
-  [Detailed explanation with code examples, bullet points, links]
+  Error objects have non-enumerable properties (`message`, `name`, `stack`), so
+  `JSON.stringify()` returns `{}`. Use `JSON.stringify(error, Object.getOwnPropertyNames(error))`
+  or create a plain object instead.
 </div>
 </slot>
 ```
 
-#### Hint Slot (Optional)
+#### Hints Slot (optional — two styles)
 
-Hints are NOT in a separate slot. They are attached to individual options:
+There are **two hint styles** used across quizzes. Pick one per question, don't mix both.
+
+**Style A: Per-option hints** (used in Rust & AWS quizzes). Hints are attached to individual wrong-answer options:
 
 ```js
 options={[
-  { text: 'Wrong answer', hint: "Think about X..." },
+  { text: 'Wrong A', hint: "Think about what happens after a move" },
+  { text: 'Wrong B', hint: "Once moved, can we still use it?" },
   { text: 'Correct answer', isAnswer: true },
+  { text: 'Wrong C', hint: "Rust catches these at compile time" },
 ]}
 ```
 
-**Hint behavior**: When user selects a wrong option that has a `hint`, the hint appears as a tooltip. Hints are shown after the first wrong attempt (IGNORE_HINTS = 1 in Challenge.tsx).
+**Style B: Hints slot** (used in older JS quizzes, 2024 era). An empty or content-filled `<slot name="hints">` block:
+
+```mdx
+<slot name='hints'>
+<div className="hint">
+  Think about enumerable properties on Error objects.
+</div>
+</slot>
+```
+
+Or an empty hints slot (just the tags with no content):
+
+```mdx
+<slot name='hints'>
+</slot>
+```
+
+**Prefer Style A (per-option hints) for new quizzes.** Style A is more engaging because hints are specific to the wrong answer the user selected, not generic. Style B with an empty slot just means "no hint for this question."
 
 ## Writing Style & Tone
 
@@ -182,43 +221,47 @@ options={[
 
 ### Tone Examples
 
-**Good**:
-> "Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed core [related tool] contributor, 'what the hell, Dan?! I crashed on the third questions! Thats violent sir!' 😈 You're welcome."
+**Good** (PostgreSQL quiz — playful insider tone):
+> Did this make you frustrated, even _angry_? You're not alone! To quote an unnamed "core" database contributor, "what the hell, Dan?! I crashed on the type questions! Thats violent sir!" 😈 You're welcome.
 
-**Good**:
-> "I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings — with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠"
+**Good** (Bash quiz — irreverent but educational):
+> I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings — with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠
 
-**Good**:
+**Good** (Short subtitle wordplay):
 > "Are your exceptions truly exceptional?"
-
-**Good**:
 > "(Borrow) check yo self before you wreck yo self! 🦀"
+> "Can you navigate the cloud labyrinth?"
 
 ### Emoji Usage
 
-Use emojis sparingly but effectively:
-- 🐘 for PostgreSQL
-- 🦀 for Rust
-- 💥 for errors/explosions
-- 🚨 for errors/warnings
-- 🤖 for bots/automation
-- ✨ for features/highlights
-- 🍀 for luck
-- 🏆 for achievements
-- 🤔 for thinking/questioning
-- 🤯 for mind-blowing
-- 🕵️‍♂️ for detective/investigation
-- 😈 for tricky/diabolical questions
-- 🫠 for frustration/melting
-- 💪 for strength/challenges
+Use emojis sparingly but effectively. Prefer 1-3 per section, not per question:
+
+| Emoji | Usage |
+|-------|-------|
+| 🐘 | PostgreSQL |
+| 🦀 | Rust |
+| 💥 | Errors / explosions |
+| 🚨 | Errors / warnings |
+| 🤖 | Bots / automation / "these aren't your typical questions" |
+| ✨ | Features / "no signup required" |
+| 🍀 | Luck / "good luck" |
+| 🏆 | Achievements / scoring |
+| 🤔 | Thinking / questioning |
+| 🤯 | Mind-blowing |
+| 🕵️‍♂️ | Detective / "identify the invalid one" |
+| 😈 | Tricky / diabolical questions |
+| 🫠 | Frustration / melting |
+| 💪 | Strength / challenges |
+| 🔥 | Hot takes |
+| ⬇️ | "Jump in below" |
 
 ### Punctuation & Formatting
 
-- Use **bold** for emphasis on key terms
+- Use **bold** for emphasis on key terms or highlights
 - Use _italics_ for asides, commentary, or subtle emphasis
 - Use `backticks` for code references inline
-- Use ❌ and ✅ for invalid/valid indicators
-- Use `**NOT**` or `**INVALID**` with ❌ for "spot the wrong one" questions
+- Use ❌ and ✅ for invalid/valid indicators in "spot the invalid" questions
+- Use <em class="highlight"> for emphasized text in question bodies
 
 ## Question Types & Patterns
 
@@ -229,31 +272,32 @@ Show code, ask what it produces:
 ```mdx
 <slot name="question">
 <div className="question">
-  What will this code print?
+  What does `JSON.stringify(error)` return?
   ```js
-  const person = { name: 'Dan' };
-  const { name, age } = person;
-  console.log(`Name: ${name}, Age: ${age}`);
+  const error = new Error('Oops');
+  console.log(JSON.stringify(error));
   ```
 </div>
 </slot>
 ```
 
-**Options**: Actual output values, common misconceptions, error messages
+**Options**: Actual output values, common misconceptions, error messages.
 
-### 2. "Spot the Invalid" (Type/Feature Questions)
+### 2. "Spot the Invalid" (Type/Feature Identification)
 
-List several items, one is fake/invalid:
+List several items, one is fake/invalid. Often uses <em class="highlight">:
 
 ```mdx
 <slot name="question">
 <div className="question">
-  Which of these is <em class="highlight">NOT</em> a valid PostgreSQL type?
+  Which of these is <em class="highlight">NOT</em> ❌ a valid PostgreSQL type?
+
+  (Seriously, these are (mostly) real types.)
 </div>
 </slot>
 ```
 
-**Options**: All real except one plausible-sounding fake
+**Options**: 5-7 real items + 1 plausible-sounding fake. These questions typically have more options (5-8).
 
 ### 3. "Which Syntax is Correct?"
 
@@ -269,17 +313,24 @@ Show variations of syntax, ask which works:
 
 **Options**: Correct syntax + common mistakes (spaces, wrong operators, etc.)
 
-### 4. "What Happens When..." (Behavior Questions)
+### 4. "What Happens When..." (Behavior Prediction)
 
 Describe a scenario, ask about runtime/compile behavior:
 
 ```mdx
 <slot name="question">
 <div className="question">
-  What happens when calculating total possible student IDs?
-  ```sql
-  SELECT 256 * 256 * 256 * 256;
+  What happens with multiple mutable references?
+  ```rust
+  fn main() {
+      let mut wisdom = String::from("He who laughs at");
+      let ref1 = &mut wisdom;
+      let ref2 = &mut wisdom;
+      ref1.push_str(" himself never runs");
+      ref2.push_str(" out of things to laugh at.");
+  }
   ```
+  Think about Rust's rules for mutable references.
 </div>
 </slot>
 ```
@@ -300,72 +351,98 @@ Ask about concepts, best practices, or when to use something:
 
 ### Number of Options
 
-- **4-6 options** is typical
-- **Type identification questions**: 5-8 options (list many real items + 1 fake)
-- **Output questions**: 4-5 options (correct + plausible wrong answers)
+- **4-6 options** is typical for "what's the output" and conceptual questions
+- **5-8 options** for "spot the invalid" / type identification questions
+- **4-5 options** for output prediction questions
 
 ### Option Structure
 
 ```js
-// Simple
+// Simple — most quizzes
 { text: 'Option text' }
 
 // Correct answer
 { text: 'Option text', isAnswer: true }
 
-// With hint for wrong answer
-{ text: 'Option text', hint: "Think about X..." }
+// With per-option hint (Rust/AWS style)
+{ text: 'Wrong answer', hint: "Think about X..." }
+
+// Multiple correct (RARE, only when intentional)
+{ text: 'TypeScript error', isAnswer: true }
+{ text: 'null', isAnswer: true }
 ```
 
 ### Crafting Wrong Answers
 
 Wrong answers should be:
 1. **Plausible misconceptions**: What a developer might actually think
-2. **Common mistakes**: Real errors people make
-3. **Edge cases**: Technically possible but unlikely
+2. **Common mistakes**: Real errors people make (e.g., `name = Dan` with spaces in Bash)
+3. **Close-but-wrong**: Values that differ from correct by one character or concept
 4. **Opposite of correct**: For conceptual questions
 
 **Examples of good wrong answers**:
-- For `JSON.stringify(new Error('Oops'))`: `'{"message":"Oops","name":"Error"}'` (what you'd expect but isn't true)
-- For Bash variable: `"$name=Dan"` (common mistake with `$`)
-- For CSS invalid selector: `c {}` (looks valid but `<c>` isn't an HTML element)
+- For `JSON.stringify(new Error('Oops'))`: `'{"message":"Oops","name":"Error"}'` — what you'd expect but isn't true
+- For Bash variable: `"$name=Dan"` — common mistake of using `$` prefix
+- For CSS invalid selector: `c {}` — looks valid but `<c>` isn't an HTML element
+- For PostgreSQL types: `ipv4` — so intuitive it must exist, but doesn't; `inet` covers both IPv4 and IPv6
 
 ### Answer Distribution
 
-- **Exactly ONE** `isAnswer: true` per question (unless intentionally multi-answer like TypeScript quiz #8)
-- Spread correct answers across different positions (don't always make it option C)
+- **Exactly ONE** `isAnswer: true` per question (unless intentionally multi-answer — see below)
+- Spread correct answers across different positions (don't always make it option B or C)
+- Don't make "Error" or "undefined" always the correct answer
 
-## Hint Writing Guidelines
+### Multiple Correct Answers (RARE)
 
-### When to Use Hints
-
-- Attach hints to **wrong answers only** (not the correct one)
-- Hints should **guide without giving away** the answer
-- Use hints for **tricky questions** where learners need a nudge
-
-### Hint Style
-
-**Good hints**:
-- "Think about enumerable properties on Error objects."
-- "Consider how console.log handles objects vs JSON serialization."
-- "Remember the prototype chain in JavaScript inheritance."
-- "Different contexts have different Error constructors."
-
-**Hint characteristics**:
-- 1-2 sentences max
-- Points to the concept, not the answer
-- Uses "Think about...", "Consider...", "Remember..." patterns
-- Can reference specific technical concepts
-
-### Hint Placement
+Only use when there are genuinely two valid answers. Explain why in the explanation:
 
 ```js
 options={[
-  { text: '{"message":"Oops","name":"Error"}' },
-  { text: '{}', isAnswer: true },
-  { text: '{"error":"Oops"}' },
-  { text: 'null', hint: "JSON.stringify doesn't return null for objects" },
+  { text: 'TypeScript error', isAnswer: true },
+  { text: "'null'", isAnswer: true },
+  { text: 'undefined' },
 ]}
+```
+
+This was used in the Destructuring quiz for a TypeScript question where ignoring type errors gives different runtime behavior. **Use sparingly** — most questions should have exactly one correct answer.
+
+## Hint Writing Guidelines
+
+### Per-Option Hints (Preferred Style)
+
+Attached to wrong-answer options. Shown as tooltips when user clicks that wrong answer after the first wrong attempt (IGNORE_HINTS = 1).
+
+```js
+options={[
+  { text: 'Wrong A', hint: "Think about what happens to 'philosopher' after it's moved" },
+  { text: 'Compilation Error', isAnswer: true },
+  { text: 'Runtime Error', hint: "Rust catches these issues at compile time" },
+  { text: 'null', hint: "Rust doesn't have null values" },
+]}
+```
+
+**Hint writing principles**:
+- 1-2 sentences max
+- Point to the concept, not the answer
+- Use patterns: "Think about...", "Consider...", "Remember..."
+- Can reference specific technical terms ("enumerable properties", "prototype chain")
+- Witty/humorous hints are acceptable and encouraged (AWS quiz: `{ text: "DynamoDB credits for Green Vendors", hint: "Really?" }`)
+
+### Hints Slot (Legacy Style)
+
+Used in older JavaScript quizzes (2024 era). Can be empty or contain a single hint div:
+
+```mdx
+<!-- Empty hints slot (no hint for this question) -->
+<slot name='hints'>
+</slot>
+
+<!-- With hint content -->
+<slot name='hints'>
+<div className="hint">
+  Think about enumerable properties on Error objects.
+</div>
+</slot>
 ```
 
 ## Explanation Writing Guidelines
@@ -376,24 +453,44 @@ options={[
 2. **Explain why**: Break down the reasoning
 3. **Show alternatives**: "Here's how to fix this..." or "Common patterns include..."
 4. **Provide context**: When/why this matters in real code
-5. **Link to resources**: MDN, official docs, etc. (optional)
+5. **Link to resources**: MDN, official docs, etc. (optional but common)
 
-### Example Explanation (JavaScript)
+### Explanation Styles by Depth
 
+**Short** (2-4 sentences, for straightforward questions):
 ```mdx
 <slot name="explanation">
 <div className="explanation">
-  Error objects have non-enumerable properties (`message`, `name`, `stack`), so `JSON.stringify()` returns `{}`. This is a common gotcha when sending errors in API responses. Use `JSON.stringify(error, Object.getOwnPropertyNames(error))` or create a plain object instead.
+  The `age` property does not exist on `person`, so `age` will be `undefined`.
+  Definitely not `Infinity` 😅
+
+  This results in:
+  ```plaintext
+  Name: Dan Levy, Age: undefined
+  ```
 </div>
 </slot>
 ```
 
-### Example Explanation (Rust - Detailed)
-
+**Medium** (1-2 paragraphs, for intermediate questions):
 ```mdx
 <slot name="explanation">
 <div className="explanation">
-  This code fails to compile because of Rust's ownership rules. When we assign `philosopher` to `greeting`, the ownership of the String is moved to `greeting`. After this move, `philosopher` is no longer valid to use.
+  Error objects have non-enumerable properties (`message`, `name`, `stack`), so
+  `JSON.stringify()` returns `{}`. This is a common gotcha when sending errors
+  in API responses. Use `JSON.stringify(error, Object.getOwnPropertyNames(error))`
+  or create a plain object instead.
+</div>
+</slot>
+```
+
+**Long** (multiple paragraphs + code examples, for advanced/Rust topics):
+```mdx
+<slot name="explanation">
+<div className="explanation">
+  This code fails to compile because of Rust's ownership rules. When we assign
+  `philosopher` to `greeting`, the ownership of the String is moved to `greeting`.
+  After this move, `philosopher` is no longer valid to use.
 
   Here are three ways to fix this:
 
@@ -417,22 +514,16 @@ options={[
 </slot>
 ```
 
-### Explanation Length
+### Explanation Content Rules
 
-- **Simple questions**: 2-4 sentences
-- **Complex questions**: Multiple paragraphs with code examples
-- **Rust/advanced topics**: Extensive with multiple solutions, best practices, common patterns
-
-### Code in Explanations
-
-- Always use fenced code blocks with language hint
+- Always use fenced code blocks with language hint (````js`, ````sql`, ````rust`, ````bash`, ````html`, ````plaintext`)
 - Show **correct code** and explain why it works
 - Show **common fixes** for error-based questions
-- Use comments to explain key lines
+- Use bullet lists for enumerating options/features
+- Include MDN or official doc links for web platform topics
+- Personality is welcome (see PostgreSQL quiz: "Did this make you frustrated, even _angry_?")
 
 ### Links in Explanations
-
-Include links to authoritative resources:
 
 ```markdown
 [Learn more about RegExp flags](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
@@ -446,7 +537,7 @@ Common link targets:
 
 ## Group Naming Conventions
 
-Groups organize questions into thematic sections. Use these patterns:
+Groups organize questions into thematic sections displayed in the quiz UI.
 
 ### Progression Pattern
 
@@ -456,82 +547,57 @@ Groups organize questions into thematic sections. Use these patterns:
 
 ### Examples from Existing Quizzes
 
-**JavaScript Error Quiz**:
-- "Serialization Surprises"
-- "Type Checking Tricks"
-- "Throwing Non-Errors"
-- "Custom Errors"
-- "Error Cause"
-- "Stack Traces"
-- "Message Templates"
-- "API Gotchas"
-- "Async Errors"
-- "Error Properties"
-- "Error Boundaries"
+**JavaScript Error Quiz** — descriptive/thematic names:
+- "Serialization Surprises", "Type Checking Tricks", "Throwing Non-Errors", "Custom Errors", "Error Cause", "Stack Traces", "Message Templates", "API Gotchas", "Async Errors", "Error Properties", "Error Boundaries"
 
-**PostgreSQL Quiz**:
-- "Warmup: Functions"
-- "Warmup: Type Casting"
-- "Constraints"
-- "Date/Time"
-- "Timestamps"
-- "Postgres Types"
-- "Integer Arithmetic"
-- "Constraints"
+**PostgreSQL Quiz** — topic + prefix pattern:
+- "Warmup: Functions", "Warmup: Type Casting", "Constraints", "Date/Time", "Timestamps", "Postgres Types", "Integer Arithmetic"
 
-**Regex Quiz**:
-- "Warmup"
-- "Basic Matching"
-- "Common Gotchas"
-- "Look-ahead"
-- "Look-behind"
-- "Look-into-hell" (for the hardest question 😈)
+**Regex Quiz** — skill-level progression with humor:
+- "Warmup" → "Basic Matching" → "Common Gotchas" → "Look-ahead" → "Look-behind" → "Look-into-hell" 😈
 
-**Bash Quiz**:
-- "Warmup"
-- "Warmup: Escaping"
-- "Warmup: Expansion"
-- "Variables"
-- "Replacing Substrings"
-- "String Length"
-- "Conditionals"
-- "Functions"
-- "Composition"
-- "Arithmetic"
-- "Loops"
-- "Gotchas"
+**Bash Quiz** — concise topic names:
+- "Warmup", "Warmup: Escaping", "Warmup: Expansion", "Variables", "Replacing Substrings", "String Length", "Conditionals", "Functions", "Composition", "Arithmetic", "Loops", "Gotchas"
+
+**Rust Quiz** — conceptual groupings:
+- "Ownership", "Borrowing", "Lifetime Elision", "Smart Pointers", "Reference Counting", "Lifetimes", "RefCells", "Mutability", "Memory Patterns", "Design Patterns", "Best Practices", "Advanced Patterns"
 
 ### Group Naming Rules
 
-1. **Start with "Warmup"** for easy introductory questions (2-3 questions)
-2. **Use topic names** for thematic groupings
+1. **Start with "Warmup"** for 1-3 easy introductory questions
+2. **Use topic names** for thematic groupings (2-5 questions per group)
 3. **Add prefixes** like "Warmup:", "Advanced:", "Common:" for clarity
-4. **Be creative** with names that fit the topic ("Serialization Surprises", "Look-into-hell")
-5. **Keep groups to 2-5 questions** each
+4. **Be creative** — names that fit the topic make it memorable ("Serialization Surprises", "Look-into-hell")
+5. **Don't repeat group names** within a quiz (each group should have a unique name)
 
 ## Difficulty Progression
 
 ### Standard Progression
 
-1. **Warmup (1-3 questions)**: Easy, foundational concepts
+1. **Warmup (1-3 questions)**: Easy, foundational concepts — build confidence
 2. **Basic/Intermediate**: Core concepts with some gotchas
-3. **Advanced**: Tricky edge cases, deep knowledge
-4. **Expert/Gotchas**: Rare behaviors, "gotcha" questions
+3. **Advanced**: Tricky edge cases, cross-environment behavior
+4. **Expert/Gotchas**: Rare behaviors, "gotcha" questions, mind-benders
 
-### Difficulty Indicators
+### Numeric Difficulty Scale (Rust & AWS Quizzes)
 
-- **Warmup**: No hints needed, straightforward
-- **Basic**: May have one tricky option
-- **Intermediate**: Requires understanding of nuances
-- **Advanced**: Edge cases, cross-environment behavior
-- **Expert**: Rarely-used features, implementation details
+Used with the `difficulty` prop on a 1-5 scale:
 
-### Rust-Specific Difficulty
+| Level | Meaning | Example |
+|-------|---------|---------|
+| 1 | Warmup/Trivia | "What does S3 stand for?" |
+| 2 | Basic | "Basic variable declaration in Bash" |
+| 3 | Intermediate | "Mutable borrowing rules" |
+| 4 | Advanced | "Lifetime annotations on structs" |
+| 5 | Expert | "Zero-cost abstractions / memory layout" |
 
-Rust quizzes use explicit `difficulty={1-5}` and `objectives`:
+### Difficulty + Objectives Pattern
+
+Used in Rust and AWS quizzes for pedagogical structure:
 
 ```mdx
 <Challenge
+  client:load
   index={0}
   group="Ownership"
   title="Basic Move Semantics"
@@ -544,6 +610,8 @@ Rust quizzes use explicit `difficulty={1-5}` and `objectives`:
 >
 ```
 
+**When to use difficulty + objectives**: Add them when the quiz covers a structured learning progression (Rust, AWS, databases). Skip for casual knowledge quizzes (regex, CSS, destructuring).
+
 ## Code Formatting Rules
 
 ### Code Block Language Hints
@@ -551,42 +619,22 @@ Rust quizzes use explicit `difficulty={1-5}` and `objectives`:
 Always specify the language:
 
 ````mdx
-```js
-const x = 42;
-```
-
-```sql
-SELECT * FROM users;
-```
-
-```rust
-fn main() {
-    println!("Hello");
-}
-```
-
-```bash
-echo "Hello World"
-```
-
-```html
-<div class="container"></div>
-```
-
-```ts
-const x: number = 42;
-```
-
-```plaintext
-Output here
-```
+```js       // JavaScript
+```ts       // TypeScript
+```sql      // SQL / PostgreSQL
+```rust     // Rust
+```bash     // Shell / Bash
+```html     // HTML
+```css      // CSS
+```json     // JSON
+```plaintext // Plain output / no syntax
 ````
 
 ### Code Width
 
-- **Keep code lines under ~50-60 characters** when possible (especially for Rust quizzes)
-- This ensures readability across devices
-- Break long lines at natural points
+- **Keep code lines under ~50-60 characters** when possible (especially for Rust quizzes, which note this explicitly)
+- This ensures readability across mobile devices
+- Break long lines at natural points (after operators, at function args)
 
 ### Inline Code
 
@@ -595,6 +643,8 @@ Use backticks for:
 - Function calls: `JSON.stringify()`
 - Operators: `??`, `?.`, `||=`
 - Values: `undefined`, `null`, `true`
+- CSS properties: `font-size`, `align-content`
+- SQL types: `VARCHAR(100)`, `timestamptz`
 
 ## Intro Section Patterns
 
@@ -608,7 +658,7 @@ This quiz covers [scope description]: from [basic concept] to [advanced concept]
 Good luck! 🍀
 ```
 
-### Bullet Point Intro
+### Bullet Point Intro (Very Common)
 
 ```mdx
 ### Think you know [topic] inside and out?
@@ -638,9 +688,21 @@ Jump right in to the warmup — prove your skills! 👇
 This quiz covers a mix of familiar and lesser-known features...
 ```
 
+### With Context Intro (AWS/Rust style)
+
+```mdx
+<p class="inset">Ready to test your Rust memory management skills? 🦀</p>
+
+This quiz will challenge your understanding of Rust's ownership system, borrowing rules, lifetimes, and smart pointers.
+
+**Note:** The questions are formatted in ~50-column width to ensure readability across all devices.
+
+Whether you're a seasoned Rustacean or just getting started, this quiz will help reinforce your knowledge. **Let's dive in!** 🦀
+```
+
 ## Section Breaks Between Groups
 
-Use markdown headers or paragraphs to break up long quizzes:
+Use markdown headers or styled paragraphs to break up long quizzes:
 
 ```mdx
 # Dizzying Types
@@ -658,16 +720,18 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
 # TypeScript Ahead
 ```
 
+Section breaks serve as transitions — add context about what's coming next.
+
 ## Closing Section Patterns
 
 ### Standard Closing
 
 ```mdx
-## How did you do? 🧐
+## Master the Art of Error Handling
 
-[Topic] can be a beast to tame, but they're incredibly powerful once you get the hang of them. Keep practicing!
+From serialization gotchas to cross-context instanceof failures, these advanced concepts separate junior developers from ~seasoned~ damaged professionals.
 
-Looking for more? Check out my [Quiz Collection](/challenges/) for additional brain teasers!
+Ready for more challenges? Check out our [complete quiz collection](/challenges/) for additional brain teasers on JavaScript, algorithms, and more!
 ```
 
 ### Playful Closing
@@ -680,20 +744,35 @@ Let me know in the comments below!
 ### Further Reading
 
 Brush up on your skills:
-- [Resource 1](url)
-- [Resource 2](url)
+- [Bash Guide](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
 ```
 
-### Rust-Style Closing
+### Multi-Part Closing
+
+```mdx
+Well done! You went deep on several areas of PostgreSQL! 🐘
+
+I hope you learned something new, or at least got a score to gloat about! 🏆
+
+<p class="inset">Check out [Part 2](/quiz-postgres-sql-mastery-pt2/) for more Postgres fun! 🚀</p>
+
+Want more thrills in life? Check out my [Quiz Collection](/challenges/) for endless* fun!
+```
+
+### Rust-Style Closing (with resources)
 
 ```mdx
 Thanks for taking the quiz! If you enjoyed testing your Rust knowledge, check out my other [programming challenges](/challenges/)! 🧠
 
 **Want to level up your Rust skills?** Here are some recommended resources:
 
-- [Rust Book - Chapter 4: Ownership](url)
-- [Rust By Example](url)
+- [Rust Book - Chapter 4: Ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+- [Rust By Example - Memory Management](https://doc.rust-lang.org/rust-by-example/scope.html)
 ```
+
+All closings should include a link to `/challenges/` (the quiz collection page).
 
 ## Verification Steps
 
@@ -704,19 +783,19 @@ After writing a quiz, verify:
 - [ ] `title` starts with "Quiz: "
 - [ ] `category` is exactly `Quiz`
 - [ ] `subCategory` matches the topic
-- [ ] `tags` includes `quiz` + topic + difficulty levels
-- [ ] All three cover image fields present
-- [ ] Cover images are WebP format
+- [ ] `tags` includes `quiz` + topic keywords + difficulty levels
+- [ ] Cover images are present and WebP format
 - [ ] Date format is YYYY-MM-DD
 
 ### 2. Challenge Structure
 
-- [ ] Every Challenge has `client:load` directive
+- [ ] Every Challenge has `client:load` directive (NOT `client:only`)
 - [ ] `index` values are sequential starting from 0
-- [ ] Every Challenge has exactly ONE `isAnswer: true` option
+- [ ] Every Challenge has exactly ONE `isAnswer: true` option (unless intentionally multi-answer)
 - [ ] Every Challenge has both `question` and `explanation` slots
 - [ ] `group` and `title` props are present on every Challenge
 - [ ] All slots use proper `<slot name="...">` syntax
+- [ ] `className` (not `class`) is used in JSX/MDX
 
 ### 3. Content Quality
 
@@ -724,7 +803,7 @@ After writing a quiz, verify:
 - [ ] Wrong answers are plausible misconceptions
 - [ ] Explanations explain WHY, not just WHAT
 - [ ] Code examples are correct and runnable
-- [ ] Explanations include fixes/solutions for error questions
+- [ ] Explanations include fixes/solutions for error-based questions
 - [ ] Hints guide without giving away answers
 - [ ] Difficulty progresses from warmup to advanced
 
@@ -742,43 +821,50 @@ After writing a quiz, verify:
 # Type check
 bun run check
 
-# Validate quiz structure
+# Validate quiz structure (checks question numbering)
 bun run fix-quizzes
 
 # Build to verify no errors
 bun run build
+
+# Generate quiz question screenshots for social images
+bun run screenshots
 ```
 
-### 6. Generate Screenshots (for social images)
+### 6. Generate Social Images
 
 ```bash
 bun run screenshots
 ```
 
-## Common Gotchas to Avoid
+## Common Gotchas
 
 ### DON'T
 
 - ❌ Use `getCollection("posts")` directly — use `PostCollections` from `@/shared/postsCache`
 - ❌ Manually edit `public/_redirects` — use frontmatter `redirects` array
-- ❌ Put multiple `isAnswer: true` in one question (unless intentional)
+- ❌ Put multiple `isAnswer: true` in one question (unless intentional and explained)
 - ❌ Write explanations that just repeat the question
 - ❌ Make wrong answers obviously wrong
 - ❌ Use emojis excessively (1-3 per section max)
 - ❌ Forget the `client:load` directive on Challenges
 - ❌ Skip the warmup questions
 - ❌ Write code that doesn't actually work as described
+- ❌ Use `class` in JSX — use `className` instead
+- ❌ Use `client:only="react"` (legacy, use `client:load`)
 
 ### DO
 
-- ✅ Start with warmup questions (2-3 easy ones)
-- ✅ Group related questions together
+- ✅ Start with warmup questions (1-3 easy ones)
+- ✅ Group related questions together with meaningful group names
 - ✅ Include real-world context in explanations
-- ✅ Show multiple solutions when applicable
+- ✅ Show multiple solutions when applicable (especially for Rust)
 - ✅ Link to authoritative resources
 - ✅ Use personality and humor appropriately
 - ✅ Test code examples before including them
 - ✅ Run `bun run fix-quizzes` before committing
+- ✅ Use `className` not `class` in JSX/MDX
+- ✅ Link to `/challenges/` in closing sections
 
 ## File Structure
 
@@ -789,6 +875,11 @@ src/content/posts/YYYY-MM-DD--quiz-[topic-slug]/
 ├── [cover]-square-200.webp      # Mobile cover (200px)
 └── [cover]-square-300px.webp    # Icon cover (300px, optional)
 ```
+
+Some quizzes also include:
+- `desktop-social.webp` — social sharing image
+- `mobile.webp` — mobile social sharing image
+- `annotated-code/` — subdirectory with annotated code images
 
 ## Directory Naming
 
@@ -814,65 +905,63 @@ These paths assume posts are in `src/content/posts/YYYY-MM-DD--slug/` (3 levels 
 
 ## Advanced Challenge Features
 
-### Hint System
+### Per-Option Hints (Preferred)
 
-Hints are attached to individual wrong answers and shown after the first incorrect attempt:
+Hints attached to individual wrong answers, shown after the first incorrect attempt:
 
 ```js
 options={[
-  { text: 'Wrong A', hint: "Think about X..." },
-  { text: 'Wrong B', hint: "Consider Y..." },
-  { text: 'Correct', isAnswer: true },
+  { text: 'Wrong A', hint: "Think about what happens after a move" },
+  { text: 'Compilation Error', isAnswer: true },
+  { text: 'Runtime Error', hint: "Rust catches these at compile time" },
 ]}
 ```
 
-### Multiple Correct Answers (Rare)
+**Hint behavior**: After 1 wrong attempt (IGNORE_HINTS = 1), subsequent wrong selections that have hints will show the hint as a tooltip. This means the first wrong answer never shows its hint — only the second+ wrong answers do.
+
+### Difficulty + Objectives (Rust & AWS Pattern)
+
+For structured learning quizzes, add `difficulty` and `objectives`:
+
+```mdx
+<Challenge
+  client:load
+  index={0}
+  group="Ownership"
+  title="Basic Move Semantics"
+  difficulty={2}
+  objectives={[
+    "Explain Rust's ownership rules and move semantics",
+    "Identify compilation errors related to moved values",
+    "Apply solutions to fix move-related compilation errors"
+  ]}
+>
+```
+
+**When to use**: Add these for quizzes that teach a structured curriculum (Rust, AWS, databases). Skip for casual knowledge quizzes (regex, CSS, destructuring).
+
+### Multiple Correct Answers (RARE)
 
 Some questions intentionally have multiple correct answers:
 
 ```js
 options={[
   { text: 'TypeScript error', isAnswer: true },
-  { text: 'null', isAnswer: true },  // Both are valid answers
+  { text: 'null', isAnswer: true },  // Runtime behavior differs from TS expectation
   { text: 'undefined' },
 ]}
 ```
 
-Use this sparingly and explain in the explanation why there are two answers.
-
-### Objectives & Difficulty (Rust Pattern)
-
-For advanced/technical quizzes:
-
-```mdx
-<Challenge
-  index={0}
-  difficulty={2}
-  objectives={[
-    "Understand concept X",
-    "Identify pattern Y",
-    "Apply solution Z"
-  ]}
->
-```
-
-### Standards Compliance (Optional)
-
-For language-specific quizzes, you can reference standards:
-
-```mdx
-<Challenge
-  standards={["ES2022", "ECMA-262"]}
->
-```
+**When to use**: Only when there are genuinely two valid answers (e.g., TypeScript says one thing, runtime says another). Always explain in the explanation why there are two correct answers.
 
 ## Question Count Guidelines
 
-- **Minimum**: 10 questions
+- **Minimum**: 9 questions (oldest quiz has 9, most have 10-16)
 - **Typical**: 12-16 questions
-- **Maximum**: ~20 questions (beyond this, consider splitting into parts)
+- **Maximum**: ~18 questions (Rust quiz has 18, AWS has 20+)
+- **Beyond ~18-20**: Split into Part 1, Part 2, etc. with cross-links
 
-For very long quizzes, split into Part 1, Part 2, etc. with cross-links:
+For multi-part quizzes, link between parts:
 
 ```mdx
 > **Part 1 of 2.** [Go to Part 2](/quiz-postgres-sql-mastery-pt2/)
@@ -883,11 +972,51 @@ For very long quizzes, split into Part 1, Part 2, etc. with cross-links:
 Always include these tag categories:
 
 1. **Quiz identifier**: `quiz`
-2. **Topic**: `javascript`, `rust`, `css`, `postgresql`, `bash`, `regex`
-3. **Sub-topic** (optional): `error-handling`, `memory-management`, `destructuring`
+2. **Topic**: `javascript`, `rust`, `css`, `postgresql`, `bash`, `regex`, `aws`, `cloud`
+3. **Sub-topic** (optional): `error-handling`, `memory-management`, `destructuring`, `s3`, `dynamodb`
 4. **Difficulty levels**: `intro`, `beginner`, `intermediate`, `advanced`, `expert`
 
-Example:
+Examples:
 ```yaml
 tags: [quiz, javascript, error-handling, intermediate, advanced]
+tags: [quiz, javascript, intro, esnext, features, intermediate]
+tags: [quiz, rust, memory-management, ownership, borrowing, lifetimes, intermediate, advanced]
+tags: [quiz, aws, cloud, storage, databases, s3, dynamodb, rds, elasticache]
+tags: [quiz, bash, scripting, shell, linux, beginner, intermediate, advanced]
 ```
+
+## Content Schema (Zod)
+
+The frontmatter is validated against this Zod schema (from `src/content.config.ts`):
+
+```ts
+z.object({
+  title: z.string(),
+  subTitle: z.string().optional().default(""),
+  label: z.string().optional(),
+  social_image: image().optional(),
+  commentsKeyOverride: z.string().optional(),
+  publish: z.boolean().optional().default(true),
+  draft: z.boolean().optional(),
+  unlisted: z.coerce.boolean().optional(),
+  hidden: z.coerce.boolean().optional(),
+  date: z.coerce.string().optional(),
+  modified: z.coerce.string().optional(),
+  minReleaseDate: z.coerce.date().optional(),
+  cover: image().optional(),
+  cover_full_width: image().optional(),
+  cover_mobile: image().optional(),
+  cover_icon: image().optional(),
+  category: z.string().optional(),
+  subCategory: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+  popularity: z.number().min(0).max(1.0).optional(),
+  related: z.array(z.string()).optional(),
+  redirects: z.array(z.string()).optional(),
+})
+```
+
+Key observations:
+- `title` is the only truly required field (everything else has defaults or is optional)
+- But for quizzes, you should always include: `title`, `category: Quiz`, `subCategory`, `date`, `tags`, and cover images
+- `subTitle` defaults to `""` — set it to something catchy

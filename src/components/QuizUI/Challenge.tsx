@@ -9,7 +9,6 @@ import {
 } from "react";
 import type { Option } from "./types";
 import { QuizContext } from "./QuizContext";
-import { QuizNavigationContext } from "./QuizUI";
 import classNames from "classnames";
 
 import { slugify } from "../../shared/pathHelpers.ts";
@@ -20,15 +19,12 @@ import { usePostHog } from "../PostHogEntry.tsx";
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
 import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-
-gsap.registerPlugin(useGSAP);
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
 
 /**
- * Challenge component with GSAP animations
+ * Challenge component
  */
 export default function Challenge({
   children,
@@ -54,7 +50,6 @@ export default function Challenge({
   const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
-  const { markAnswered, nextQuestion, totalQuestions, currentIndex } = useContext(QuizNavigationContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
   const [challengeClass, setChallengeClass] = useState<string>("untouched");
@@ -125,6 +120,26 @@ export default function Challenge({
   const [showHint, setShowHint] = useState<string | false>(false);
   const [ignoreHintBy, setIgnoreHintBy] = useState<number>(IGNORE_HINTS);
 
+  const triggerShake = (element: HTMLElement) => {
+    gsap.set(element, { x: 0, rotation: 0 });
+    const tl = gsap.timeline();
+    for (let i = 0; i < 5; i++) {
+      const intensity = 1 - (i * 0.15);
+      tl.to(element, {
+        x: (i % 2 === 0 ? -1 : 1) * 12 * intensity,
+        rotation: (i % 2 === 0 ? -1 : 1) * 2 * intensity,
+        duration: 0.06,
+        ease: "power2.out"
+      });
+    }
+    tl.to(element, {
+      x: 0,
+      rotation: 0,
+      duration: 0.3,
+      ease: "elastic.out(1, 0.5)"
+    });
+  };
+
   const handleAnswer = (option: Option) => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
@@ -142,15 +157,6 @@ export default function Challenge({
     if (option.isAnswer) {
       setChallengeClass("correct");
       setIsCorrect(true);
-      markAnswered(questionIndex, true);
-      
-      // Fire confetti effect
-      const effects = (window as any).__quizEffects;
-      if (effects?.fireConfetti) {
-        effects.fireConfetti();
-      }
-      
-      // Pulse animation with GSAP
       if (challengeRef.current) {
         gsap.fromTo(challengeRef.current, 
           { scale: 1 },
@@ -163,44 +169,14 @@ export default function Challenge({
           }
         );
       }
-      
-      // Auto-advance to next question after a short delay
-      setTimeout(() => {
-        if (questionIndex < totalQuestions - 1) {
-          nextQuestion();
-        }
-      }, 1500);
+      // Notify the slide manager to advance
+      window.dispatchEvent(new CustomEvent("quiz-answer-correct", { detail: { index: questionIndex } }));
     } else {
       setChallengeClass("incorrect");
       setIsCorrect(false);
-      markAnswered(questionIndex, false);
-      
-      // Enhanced shake effect with GSAP
       if (challengeRef.current) {
-        const effects = (window as any).__quizEffects;
-        if (effects?.triggerShake) {
-          effects.triggerShake(challengeRef.current);
-        } else {
-          // Fallback to GSAP shake
-          const tl = gsap.timeline();
-          for (let i = 0; i < 5; i++) {
-            const intensity = 1 - (i * 0.15);
-            tl.to(challengeRef.current, {
-              x: (i % 2 === 0 ? -1 : 1) * 12 * intensity,
-              rotation: (i % 2 === 0 ? -1 : 1) * 2 * intensity,
-              duration: 0.06,
-              ease: "power2.out"
-            });
-          }
-          tl.to(challengeRef.current, {
-            x: 0,
-            rotation: 0,
-            duration: 0.3,
-            ease: "elastic.out(1, 0.5)"
-          });
-        }
+        triggerShake(challengeRef.current);
       }
-      // decrement ignoreHintBy
       if (ignoreHintBy > 0) {
         setIgnoreHintBy(ignoreHintBy - 1);
       }
@@ -224,7 +200,6 @@ export default function Challenge({
         challengeRef.current.querySelector("div.explanation")?.innerHTML;
       if (e) setExplanationText(e);
 
-      // apply size updates
       requestAnimationFrame(() => {
         const quizOptionPanel =
           challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
@@ -241,8 +216,8 @@ export default function Challenge({
     }
   }, [explanationText, challengeRef]);
 
-  // GSAP entrance animation for the question card
-  useGSAP(() => {
+  // GSAP entrance animation
+  useEffect(() => {
     if (challengeRef.current) {
       gsap.fromTo(
         challengeRef.current,
@@ -259,11 +234,10 @@ export default function Challenge({
           rotationX: 0,
           duration: 0.6,
           ease: "power3.out",
-          clearProps: "transform",
         }
       );
     }
-  }, { scope: challengeRef, dependencies: [currentIndex, questionIndex] });
+  }, []);
 
   const sequenceNum = (questionIndex ?? 0) + 1;
 
@@ -281,7 +255,6 @@ export default function Challenge({
   const _options = options
     .map((option) => {
       const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
-      // Bail out of wrong answers once answered
       if (isCorrect && !option.isAnswer) return null;
 
       const _showHint = option.hint === showHint ? showHint : false;
@@ -360,12 +333,6 @@ export default function Challenge({
               ev.preventDefault();
               const { clientX, clientY } = ev;
               const target: HTMLElement = ev.target as HTMLElement;
-              console.log(
-                "Clicked on explanation",
-                { clientX, clientY },
-                target.tagName,
-                target.getAttributeNames(),
-              );
 
               const link: HTMLAnchorElement | null =
                 target.tagName === "A"
@@ -382,17 +349,14 @@ export default function Challenge({
               }
 
               if (isInParagraph) {
-                console.log("Clicked in paragraph %o", target);
                 return false;
               }
               if (isInCodeBlock) {
-                console.log("Clicked in code block %o", target);
                 return false;
               }
 
               if (link) {
                 navigate(link.href, { sourceElement: link });
-                console.log("Clicked on link", link, link?.href);
                 return true;
               }
             }}
@@ -425,7 +389,6 @@ function isTopRightCorner(
     if (Number.isNaN(right) || Number.isNaN(top)) {
       return false;
     }
-    console.log("isBefore %o %o", { top, right, left, scrollX, scrollY });
     if (top <= hitBox && right <= hitBox) {
       return true;
     }
