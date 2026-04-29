@@ -41,6 +41,18 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     ]);
   };
 
+  const showIsland = (island: HTMLElement) => {
+    island.classList.add("quiz-slide", "quiz-slide--active");
+    island.classList.remove("quiz-slide--hidden");
+    island.style.removeProperty("display");
+  };
+
+  const hideIsland = (island: HTMLElement) => {
+    island.classList.add("quiz-slide", "quiz-slide--hidden");
+    island.classList.remove("quiz-slide--active");
+    island.style.removeProperty("display");
+  };
+
   function triggerConfetti(originElement: HTMLElement) {
     if (prefersReducedMotion) return;
     const rect = originElement.getBoundingClientRect();
@@ -118,11 +130,9 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       quizSection.appendChild(scoreBar);
     }
 
-    // Hide all islands except the first
     islands.forEach((island, i) => {
-      if (i !== 0) {
-        island.style.display = "none";
-      }
+      if (i === 0) showIsland(island);
+      else hideIsland(island);
     });
 
     // Mark quiz as slide-enabled
@@ -272,8 +282,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         quizUI.style.minHeight = previousQuizStyles.minHeight;
         quizUI.style.overflow = previousQuizStyles.overflow;
 
-        currentIsland.style.display = "none";
-        nextIsland.style.display = "";
+        hideIsland(currentIsland);
+        showIsland(nextIsland);
         gsap.set([currentIsland, nextIsland], {
           clearProps: "position,top,left,width,zIndex,autoAlpha,y,scale,filter",
         });
@@ -302,7 +312,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       const currentRect = currentIsland.getBoundingClientRect();
       const currentHeight = currentRect.height;
       const islandTop = Math.max(0, currentRect.top - quizRect.top);
-      nextIsland.style.display = "";
+      showIsland(nextIsland);
       gsap.set(nextIsland, { autoAlpha: 0 });
       const nextHeight = nextIsland.getBoundingClientRect().height;
       const lockedHeight = Math.max(

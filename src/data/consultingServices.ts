@@ -28,6 +28,56 @@ export const INTRO_CALL_LINK =
 
 export const consultingServices: ConsultingService[] = [
   {
+    slug: "ai-consulting",
+    kicker: "AI Consulting",
+    title: "AI Consulting and Cost Optimization",
+    navTitle: "AI Consulting",
+    metaTitle: "AI Consulting for Cost, Architecture, and LLM Systems",
+    description:
+      "Senior help with AI architecture, model routing, token observability, prompt systems, and cost optimization when LLM usage starts affecting product margins.",
+    heroTitle: "Make your AI system cheaper, clearer, and easier to operate.",
+    heroBody:
+      "I help teams understand where LLM cost, latency, quality, and architecture tradeoffs are hiding. That can mean auditing prompts and traces, redesigning model routing, adding token observability, improving caching, or turning a fragile AI prototype into a production system with measurable unit economics.",
+    primaryCta: "Book an AI Consulting Call",
+    secondaryCta: "See all consulting services",
+    stats: [
+      { value: "40-70%", label: "Common token cost reduction target" },
+      { value: "Routed", label: "Model selection by task, risk, and price" },
+      { value: "Visible", label: "Spend tied to features and users" },
+    ],
+    whyNow: [
+      "AI products often ship with hidden unit economics because prompts, context windows, retries, and model choices were optimized for speed of launch.",
+      "Once usage grows, small routing and context decisions become recurring infrastructure spend.",
+      "Teams need practical architecture judgment that balances quality, latency, safety, and cost instead of chasing one metric at a time.",
+    ],
+    outcomes: [
+      "Identify the features, prompts, routes, and user patterns driving the majority of AI spend.",
+      "Design a model-routing and caching strategy that keeps quality high while reserving expensive models for work that truly needs them.",
+      "Add token and trace observability so product, engineering, and finance can reason from the same facts.",
+      "Turn cost improvements into measurable changes your team can keep operating after the engagement.",
+    ],
+    deliverables: [
+      "AI architecture and cost review across prompts, traces, models, and data flow",
+      "Prioritized optimization roadmap with risk, effort, and savings tradeoffs",
+      "Model routing, caching, batching, and prompt strategy recommendations",
+      "Implementation support for the highest-leverage fixes",
+    ],
+    approach: [
+      {
+        title: "Make the bill explainable",
+        body: "We connect invoices, traces, prompts, endpoints, and product behavior so the spend has owners and causes.",
+      },
+      {
+        title: "Tune the architecture, not just the prompt",
+        body: "I look at routing, context design, caching, retrieval, retries, evals, and fallback behavior together because cost usually emerges from the system.",
+      },
+      {
+        title: "Ship measurable changes",
+        body: "The goal is not a slide deck of suggestions. It is a set of improvements your team can deploy, verify, and keep improving.",
+      },
+    ],
+  },
+  {
     slug: "ai-guardrails",
     kicker: "AI Guardrails",
     title: "AI Guardrails Consulting",
