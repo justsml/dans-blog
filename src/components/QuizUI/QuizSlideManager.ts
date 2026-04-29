@@ -3,7 +3,7 @@ import gsap from "gsap";
 /**
  * QuizSlideManager - Transforms SSR-rendered quiz into single-question view
  * with GSAP-powered 3D transitions, navigation dots, and progress bar.
- * 
+ *
  * This runs client-side only, after React hydration completes.
  */
 export function initQuizSlideManager(quizSection: HTMLElement) {
@@ -21,6 +21,83 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   let currentIndex = 0;
   let isTransitioning = false;
   const answeredQuestions = new Map<number, boolean>();
+
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  // --- Confetti Effect ---
+
+  function triggerConfetti(originElement: HTMLElement) {
+    if (prefersReducedMotion) return;
+
+    const rect = originElement.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+
+    const container = document.createElement("div");
+    container.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    `;
+    document.body.appendChild(container);
+
+    const colors = ["#82ff9d", "#4ecdc4", "#ffffff", "#ffd93d", "#6bcb77"];
+    const particleCount = 50;
+    const particles: HTMLElement[] = [];
+
+    for (let i = 0; i < particleCount; i++) {
+      const p = document.createElement("div");
+      const size = Math.random() * 6 + 4;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const shape = Math.random() > 0.5 ? "50%" : "0";
+
+      p.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: ${color};
+        border-radius: ${shape};
+        left: ${centerX}px;
+        top: ${centerY}px;
+        will-change: transform, opacity;
+      `;
+      container.appendChild(p);
+      particles.push(p);
+    }
+
+    const tl = gsap.timeline({
+      onComplete: () => {
+        container.remove();
+      },
+    });
+
+    particles.forEach((p) => {
+      const angle = Math.random() * Math.PI * 2;
+      const velocity = Math.random() * 180 + 80;
+      const vx = Math.cos(angle) * velocity;
+      const vy = Math.sin(angle) * velocity - Math.random() * 100;
+
+      tl.to(
+        p,
+        {
+          x: vx,
+          y: vy + 300,
+          rotation: Math.random() * 720 - 360,
+          opacity: 0,
+          duration: Math.random() * 0.6 + 0.8,
+          ease: "power2.out",
+        },
+        0
+      );
+    });
+  }
 
   // --- Build UI ---
 
@@ -47,8 +124,10 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       </button>
     </div>
     <div class="quiz-dots-bar">
-      ${Array.from({ length: totalQuestions }, (_, i) => 
-        `<button class="quiz-dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Go to question ${i + 1}"></button>`
+      ${Array.from(
+        { length: totalQuestions },
+        (_, i) =>
+          `<button class="quiz-dot ${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Go to question ${i + 1}"></button>`
       ).join("")}
     </div>
   `;
@@ -62,13 +141,15 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     const slide = document.createElement("div");
     slide.className = `quiz-question-slide ${index === 0 ? "active" : ""}`;
     slide.dataset.questionIndex = String(index);
-    
+
     if (index === 0) {
-      slide.style.cssText = "position: relative; opacity: 1; pointer-events: auto;";
+      slide.style.cssText =
+        "position: relative; opacity: 1; pointer-events: auto;";
     } else {
-      slide.style.cssText = "position: absolute; top: 0; left: 0; width: 100%; opacity: 0; pointer-events: none;";
+      slide.style.cssText =
+        "position: absolute; top: 0; left: 0; width: 100%; opacity: 0; pointer-events: none;";
     }
-    
+
     // Move challenge into slide
     slide.appendChild(challenge);
     slideContainer.appendChild(slide);
@@ -82,17 +163,25 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   // --- State & Update Functions ---
 
   const updateProgress = () => {
-    const correctCount = [...answeredQuestions.values()].filter(v => v).length;
-    const fill = progressBar.querySelector(".quiz-progress-fill") as HTMLElement;
-    const text = progressBar.querySelector(".quiz-progress-text") as HTMLElement;
-    const score = progressBar.querySelector(".quiz-score-text") as HTMLElement;
-    if (fill) fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
-    if (text) text.textContent = `Question ${currentIndex + 1} of ${totalQuestions}`;
-    if (score) score.textContent = `Score: ${correctCount}/${totalQuestions}`;
+    const correctCount = [...answeredQuestions.values()].filter((v) => v).length;
+    const fill = topBar.querySelector(
+      ".quiz-progress-fill-compact"
+    ) as HTMLElement;
+    const currentNum = topBar.querySelector(
+      ".quiz-counter-current"
+    ) as HTMLElement;
+    const scoreValue = topBar.querySelector(
+      ".quiz-score-value"
+    ) as HTMLElement;
+    if (fill)
+      fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
+    if (currentNum) currentNum.textContent = String(currentIndex + 1);
+    if (scoreValue)
+      scoreValue.textContent = `${correctCount}/${totalQuestions}`;
   };
 
   const updateDots = () => {
-    nav.querySelectorAll(".quiz-dot").forEach((dot, i) => {
+    topBar.querySelectorAll(".quiz-dot").forEach((dot, i) => {
       dot.classList.toggle("active", i === currentIndex);
       dot.classList.remove("correct", "incorrect");
       if (answeredQuestions.has(i)) {
@@ -102,17 +191,31 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   };
 
   const updateNavButtons = () => {
-    const prevBtn = nav.querySelector(".quiz-nav-prev") as HTMLButtonElement;
-    const nextBtn = nav.querySelector(".quiz-nav-next") as HTMLButtonElement;
+    const prevBtn = topBar.querySelector(
+      ".quiz-nav-prev"
+    ) as HTMLButtonElement;
+    const nextBtn = topBar.querySelector(
+      ".quiz-nav-next"
+    ) as HTMLButtonElement;
     if (prevBtn) prevBtn.disabled = currentIndex === 0 || isTransitioning;
-    if (nextBtn) nextBtn.disabled = currentIndex === totalQuestions - 1 || isTransitioning;
+    if (nextBtn)
+      nextBtn.disabled = currentIndex === totalQuestions - 1 || isTransitioning;
   };
 
   // --- Transition ---
 
-  const goToQuestion = (targetIndex: number, direction?: "next" | "prev") => {
-    if (isTransitioning || targetIndex === currentIndex || targetIndex < 0 || targetIndex >= totalQuestions) return;
-    
+  const goToQuestion = (
+    targetIndex: number,
+    direction?: "next" | "prev"
+  ) => {
+    if (
+      isTransitioning ||
+      targetIndex === currentIndex ||
+      targetIndex < 0 ||
+      targetIndex >= totalQuestions
+    )
+      return;
+
     isTransitioning = true;
     const dir = direction || (targetIndex > currentIndex ? "next" : "prev");
     const fromIndex = currentIndex;
@@ -122,28 +225,49 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     const currentSlide = slides[fromIndex] as HTMLElement;
     const nextSlide = slides[targetIndex] as HTMLElement;
 
+    const onComplete = () => {
+      gsap.set(currentSlide, {
+        autoAlpha: 0,
+        pointerEvents: "none",
+        position: "absolute",
+        rotationX: dir === "next" ? 10 : -10,
+      });
+      gsap.set(nextSlide, {
+        position: "relative",
+        rotationX: 0,
+      });
+      currentSlide.classList.remove("active");
+      nextSlide.classList.add("active");
+      isTransitioning = false;
+      updateNavButtons();
+      updateDots();
+      updateProgress();
+
+      // Scroll to top of quiz
+      topBar.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    if (prefersReducedMotion) {
+      // Instant swap for reduced motion
+      gsap.set(currentSlide, {
+        autoAlpha: 0,
+        pointerEvents: "none",
+        position: "absolute",
+      });
+      gsap.set(nextSlide, {
+        autoAlpha: 1,
+        pointerEvents: "auto",
+        position: "relative",
+        rotationX: 0,
+        y: 0,
+        scale: 1,
+      });
+      onComplete();
+      return;
+    }
+
     const tl = gsap.timeline({
-      onComplete: () => {
-        gsap.set(currentSlide, {
-          autoAlpha: 0,
-          pointerEvents: "none",
-          position: "absolute",
-          rotationX: dir === "next" ? 10 : -10,
-        });
-        gsap.set(nextSlide, {
-          position: "relative",
-          rotationX: 0,
-        });
-        currentSlide.classList.remove("active");
-        nextSlide.classList.add("active");
-        isTransitioning = false;
-        updateNavButtons();
-        updateDots();
-        updateProgress();
-        
-        // Scroll to top of quiz
-        progressBar.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      onComplete,
     });
 
     // Prepare next slide for animation
@@ -164,49 +288,69 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       y: dir === "next" ? -30 : 30,
       scale: 0.95,
       ease: "power2.in",
-    })
-    // Enter next
-    .to(nextSlide, {
-      duration: 0.5,
-      autoAlpha: 1,
-      rotationX: 0,
-      y: 0,
-      scale: 1,
-      ease: "power3.out",
-    }, 0.1);
+    }).to(
+      nextSlide,
+      {
+        duration: 0.5,
+        autoAlpha: 1,
+        rotationX: 0,
+        y: 0,
+        scale: 1,
+        ease: "power3.out",
+      },
+      0.1
+    );
 
     updateNavButtons();
   };
 
   // --- Event Listeners ---
 
-  const prevBtn = nav.querySelector(".quiz-nav-prev") as HTMLButtonElement;
-  const nextBtn = nav.querySelector(".quiz-nav-next") as HTMLButtonElement;
-  
-  prevBtn?.addEventListener("click", () => goToQuestion(currentIndex - 1, "prev"));
-  nextBtn?.addEventListener("click", () => goToQuestion(currentIndex + 1, "next"));
+  const prevBtn = topBar.querySelector(".quiz-nav-prev") as HTMLButtonElement;
+  const nextBtn = topBar.querySelector(".quiz-nav-next") as HTMLButtonElement;
 
-  nav.querySelectorAll(".quiz-dot").forEach(dot => {
+  prevBtn?.addEventListener("click", () =>
+    goToQuestion(currentIndex - 1, "prev")
+  );
+  nextBtn?.addEventListener("click", () =>
+    goToQuestion(currentIndex + 1, "next")
+  );
+
+  topBar.querySelectorAll(".quiz-dot").forEach((dot) => {
     dot.addEventListener("click", () => {
-      const targetIndex = parseInt((dot as HTMLElement).dataset.index || "0", 10);
+      const targetIndex = parseInt(
+        (dot as HTMLElement).dataset.index || "0",
+        10
+      );
       goToQuestion(targetIndex, targetIndex > currentIndex ? "next" : "prev");
     });
   });
 
   // Listen for correct answer events from Challenge components
-  window.addEventListener("quiz-answer-correct", ((e: Event) => {
-    const detail = (e as CustomEvent).detail;
-    answeredQuestions.set(detail.index, true);
-    updateDots();
-    updateProgress();
-    
-    // Auto-advance after delay
-    setTimeout(() => {
-      if (currentIndex < totalQuestions - 1) {
-        goToQuestion(currentIndex + 1, "next");
+  window.addEventListener(
+    "quiz-answer-correct",
+    ((e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      answeredQuestions.set(detail.index, true);
+      updateDots();
+      updateProgress();
+
+      // Trigger confetti from the active challenge
+      const activeSlide = slideContainer.querySelector(
+        ".quiz-question-slide.active .challenge"
+      ) as HTMLElement;
+      if (activeSlide) {
+        triggerConfetti(activeSlide);
       }
-    }, 1500);
-  }) as EventListener);
+
+      // Auto-advance after delay
+      setTimeout(() => {
+        if (currentIndex < totalQuestions - 1) {
+          goToQuestion(currentIndex + 1, "next");
+        }
+      }, 1500);
+    }) as EventListener
+  );
 
   // Track incorrect answers via mutation observer
   const observer = new MutationObserver((mutations) => {
@@ -216,7 +360,10 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         if (target.classList.contains("challenge")) {
           const slide = target.closest(".quiz-question-slide");
           if (slide) {
-            const idx = parseInt((slide as HTMLElement).dataset.questionIndex || "0", 10);
+            const idx = parseInt(
+              (slide as HTMLElement).dataset.questionIndex || "0",
+              10
+            );
             if (target.classList.contains("correct")) {
               answeredQuestions.set(idx, true);
             } else if (target.classList.contains("incorrect")) {
@@ -230,7 +377,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     }
   });
 
-  challenges.forEach(c => {
+  challenges.forEach((c) => {
     observer.observe(c, { attributes: true, attributeFilter: ["class"] });
   });
 
