@@ -18,15 +18,25 @@ type IdxOnly = { index: number };
 
 export const QuestionStore = (slug: string) => {
   slug = slug.replace(/^\/|\/$/gm, "");
-  const questions: QuestionList = JSON.parse(
-    global?.localStorage?.getItem(slug) ?? "[]",
-  );
+  const storageKey = `${KEY_PREFIX}${slug}`;
+  const legacyValue = global?.localStorage?.getItem(slug);
+  const storedValue =
+    global?.localStorage?.getItem(storageKey) ?? legacyValue ?? "[]";
+  const questions: QuestionList = JSON.parse(storedValue);
   const save = () =>
-    global?.localStorage.setItem(slug, JSON.stringify(questions));
-  const reset = () => global?.localStorage.setItem(slug, "[]");
+    global?.localStorage.setItem(storageKey, JSON.stringify(questions));
+  const reset = () => {
+    global?.localStorage.removeItem(storageKey);
+    global?.localStorage.removeItem(slug);
+  };
+
+  if (legacyValue != null && global?.localStorage?.getItem(storageKey) == null) {
+    save();
+    global?.localStorage.removeItem(slug);
+  }
 
   return {
-    __slug: slug,
+    __slug: storageKey,
     __questions: questions,
 
     total: () => questions.length,

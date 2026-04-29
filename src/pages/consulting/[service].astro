@@ -1,0 +1,513 @@
+---
+import Layout from "../../layouts/Page.astro";
+import {
+  INTRO_CALL_LINK,
+  consultingServices,
+  consultingServicesBySlug,
+} from "../../data/consultingServices";
+
+export function getStaticPaths() {
+  return consultingServices.map((service) => ({
+    params: { service: service.slug },
+    props: { service },
+  }));
+}
+
+const service = Astro.props.service ??
+  consultingServicesBySlug.get(Astro.params.service ?? "");
+
+if (!service) {
+  throw new Error(`Unknown consulting service: ${Astro.params.service}`);
+}
+
+const relatedServices = consultingServices.filter(
+  (entry) => entry.slug !== service.slug,
+).slice(0, 3);
+---
+
+<Layout
+  frontmatter={{
+    title: service.metaTitle,
+    subTitle: service.description,
+  }}
+>
+  <section class="service-hero full-section">
+    <div class="service-shell">
+      <div class="hero-copy">
+        <p class="eyebrow">{service.kicker}</p>
+        <h1>{service.heroTitle}</h1>
+        <p class="hero-body">{service.heroBody}</p>
+        <div class="hero-actions">
+          <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
+            {service.primaryCta} →
+          </a>
+          <a href="/consulting/" class="btn btn-secondary">
+            {service.secondaryCta}
+          </a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <p class="panel-kicker">Best fit</p>
+        <h2>{service.title}</h2>
+        <ul class="panel-list">
+          {service.deliverables.map((item) => <li>{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-stats full-section">
+    <div class="service-shell">
+      <div class="stats-grid">
+        {service.stats.map((stat) => (
+          <div class="stat-card">
+            <div class="stat-value">{stat.value}</div>
+            <p>{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell two-col">
+      <div>
+        <p class="section-label">Why teams call</p>
+        <h2>The problem usually gets expensive before it gets obvious.</h2>
+      </div>
+      <div class="stack-list">
+        {service.whyNow.map((item) => (
+          <article class="info-card">
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell two-col">
+      <div>
+        <p class="section-label">What changes</p>
+        <h2>Engagements are designed to produce visible leverage fast.</h2>
+      </div>
+      <div class="stack-list">
+        {service.outcomes.map((item) => (
+          <article class="info-card outcome-card">
+            <span class="check">✓</span>
+            <p>{item}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {service.caseStudy && (
+    <section class="service-section full-section">
+      <div class="service-shell">
+        <div class="case-study">
+          <p class="section-label">{service.caseStudy.label}</p>
+          <h2>{service.caseStudy.title}</h2>
+          <p class="case-body">{service.caseStudy.body}</p>
+          <p class="case-highlight">{service.caseStudy.highlight}</p>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="service-section full-section">
+    <div class="service-shell">
+      <p class="section-label">How I work</p>
+      <h2>A focused, senior engagement from diagnosis through implementation planning.</h2>
+      <div class="approach-grid">
+        {service.approach.map((step, index) => (
+          <article class="approach-card">
+            <div class="step-num">0{index + 1}</div>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section">
+    <div class="service-shell">
+      <div class="final-cta">
+        <div>
+          <p class="section-label">Next step</p>
+          <h2>If this is already slowing growth, waiting usually makes it more expensive.</h2>
+          <p class="cta-copy">
+            Bring the architecture, the bill, the failure mode, or the looming launch.
+            We will get to the highest-leverage next move quickly.
+          </p>
+        </div>
+        <a href={INTRO_CALL_LINK} class="btn btn-primary btn-large" target="_blank" rel="noopener">
+          {service.primaryCta} →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-section full-section related-section">
+    <div class="service-shell">
+      <p class="section-label">Related services</p>
+      <div class="related-grid">
+        {relatedServices.map((entry) => (
+          <a class="related-card" href={`/consulting/${entry.slug}/`}>
+            <span class="related-kicker">{entry.kicker}</span>
+            <h3>{entry.navTitle}</h3>
+            <p>{entry.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  :root {
+    --service-bg: #05070a;
+    --service-surface: rgba(255, 255, 255, 0.04);
+    --service-surface-strong: rgba(255, 255, 255, 0.07);
+    --service-border: rgba(255, 255, 255, 0.09);
+    --service-border-strong: rgba(255, 255, 255, 0.16);
+    --service-text: #f5f7fb;
+    --service-muted: rgba(245, 247, 251, 0.7);
+    --service-soft: rgba(245, 247, 251, 0.48);
+    --service-accent: #00d4aa;
+    --service-accent-2: #2cb2ff;
+    --service-accent-3: #ff7aa2;
+    --service-gradient: linear-gradient(135deg, #00d4aa 0%, #2cb2ff 45%, #ff7aa2 100%);
+    --service-radius: 24px;
+    --service-shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
+  }
+
+  .full-section {
+    grid-column: full-width;
+    width: 100%;
+  }
+
+  .service-hero,
+  .service-stats,
+  .service-section {
+    background:
+      radial-gradient(circle at top left, rgba(0, 212, 170, 0.1), transparent 35%),
+      radial-gradient(circle at top right, rgba(44, 178, 255, 0.08), transparent 25%),
+      var(--service-bg);
+  }
+
+  .service-shell {
+    max-width: min(1160px, 100% - 3rem);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .service-hero {
+    padding: 5.5rem 0 3rem;
+  }
+
+  .service-stats,
+  .service-section {
+    padding: 0 0 4.5rem;
+  }
+
+  .service-section {
+    border-top: 1px solid var(--service-border);
+    padding-top: 4.5rem;
+  }
+
+  .service-shell.two-col {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+
+  .service-hero .service-shell {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+    align-items: end;
+  }
+
+  .eyebrow,
+  .section-label,
+  .panel-kicker,
+  .related-kicker {
+    color: var(--service-accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin: 0 0 0.9rem;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p,
+  li,
+  a {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  h1 {
+    color: var(--service-text);
+    font-size: clamp(2.9rem, 5vw, 5.3rem);
+    letter-spacing: -0.055em;
+    line-height: 0.95;
+    margin: 0 0 1.35rem;
+    max-width: 11ch;
+  }
+
+  h2 {
+    color: var(--service-text);
+    font-size: clamp(2rem, 3vw, 3.15rem);
+    letter-spacing: -0.04em;
+    line-height: 1.03;
+    margin: 0 0 1rem;
+    max-width: 14ch;
+  }
+
+  h3 {
+    color: var(--service-text);
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.6rem;
+  }
+
+  .hero-body,
+  .case-body,
+  .cta-copy,
+  .info-card p,
+  .related-card p,
+  .approach-card p,
+  .stat-card p,
+  .hero-panel li {
+    color: var(--service-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .hero-body {
+    font-size: clamp(1.08rem, 1.4vw, 1.25rem);
+    max-width: 56ch;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .btn {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 0.95rem;
+    font-weight: 650;
+    gap: 0.5rem;
+    justify-content: center;
+    padding: 0.95rem 1.5rem;
+    text-decoration: none;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+    white-space: nowrap;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-primary {
+    background: var(--service-gradient);
+    color: #031019;
+    box-shadow: 0 8px 30px rgba(0, 212, 170, 0.22);
+  }
+
+  .btn-secondary {
+    background: var(--service-surface);
+    border: 1px solid var(--service-border);
+    color: var(--service-text);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--service-border-strong);
+  }
+
+  .btn-large {
+    padding-inline: 1.9rem;
+  }
+
+  .hero-panel,
+  .stat-card,
+  .info-card,
+  .case-study,
+  .approach-card,
+  .final-cta,
+  .related-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--service-border);
+    border-radius: var(--service-radius);
+    box-shadow: var(--service-shadow);
+  }
+
+  .hero-panel {
+    padding: 1.6rem;
+  }
+
+  .panel-list {
+    display: grid;
+    gap: 0.95rem;
+    list-style: none;
+    margin: 1.2rem 0 0;
+    padding: 0;
+  }
+
+  .panel-list li {
+    border-top: 1px solid var(--service-border);
+    padding-top: 0.95rem;
+  }
+
+  .stats-grid,
+  .approach-grid,
+  .related-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stat-card {
+    padding: 1.4rem;
+  }
+
+  .stat-value {
+    background: var(--service-gradient);
+    background-clip: text;
+    color: transparent;
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+    font-weight: 750;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stack-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .info-card,
+  .approach-card,
+  .related-card {
+    padding: 1.4rem;
+  }
+
+  .outcome-card {
+    align-items: start;
+    display: grid;
+    gap: 0.9rem;
+    grid-template-columns: auto 1fr;
+  }
+
+  .check {
+    align-items: center;
+    background: rgba(0, 212, 170, 0.14);
+    border-radius: 999px;
+    color: var(--service-accent);
+    display: inline-flex;
+    font-size: 0.95rem;
+    font-weight: 700;
+    height: 2rem;
+    justify-content: center;
+    width: 2rem;
+  }
+
+  .case-study {
+    padding: 2rem;
+  }
+
+  .case-highlight {
+    color: var(--service-text);
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-top: 1rem;
+  }
+
+  .approach-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 2rem;
+  }
+
+  .step-num {
+    color: var(--service-soft);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    margin-bottom: 1rem;
+  }
+
+  .final-cta {
+    align-items: center;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 2rem;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .related-card {
+    display: block;
+    text-decoration: none;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+  }
+
+  .related-card:hover {
+    background: var(--service-surface-strong);
+    border-color: var(--service-border-strong);
+    transform: translateY(-3px);
+  }
+
+  @media (max-width: 980px) {
+    .service-hero .service-shell,
+    .service-shell.two-col,
+    .final-cta,
+    .stats-grid,
+    .approach-grid,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .service-hero {
+      padding-top: 4.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .service-shell {
+      max-width: min(100% - 1.5rem, 1160px);
+      padding: 0 0.75rem;
+    }
+
+    h1 {
+      max-width: none;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+    }
+
+    .btn {
+      width: 100%;
+    }
+  }
+</style>

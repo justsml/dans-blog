@@ -25,6 +25,22 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   const answeredQuestions = new Map<number, boolean>();
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  const revealSelectors = [
+    ".quiz-header",
+    ".quiz-question",
+    ".quiz-options .option",
+    ".quiz-hint-toggle",
+  ];
+
+  const getRevealTargets = (island: HTMLElement) => {
+    const challenge = island.querySelector<HTMLElement>(".challenge");
+    if (!challenge) return [];
+
+    return revealSelectors.flatMap((selector) => [
+      ...challenge.querySelectorAll<HTMLElement>(selector),
+    ]);
+  };
+
   function triggerConfetti(originElement: HTMLElement) {
     if (prefersReducedMotion) return;
     const rect = originElement.getBoundingClientRect();
@@ -83,6 +99,9 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         <span class="quiz-score-bar-label">Score</span>
         <span class="quiz-score-bar-value">0/${totalQuestions}</span>
       </div>
+      <button class="quiz-reset-button" type="button" aria-label="Reset quiz progress">
+        Retake quiz
+      </button>
     </div>
     <div class="quiz-score-bar-congrats" style="display:none"></div>
   `;
@@ -138,9 +157,11 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       const fill = scoreBar.querySelector(".quiz-score-bar-fill") as HTMLElement;
       const currentNum = scoreBar.querySelector(".quiz-score-bar-current") as HTMLElement;
       const scoreValue = scoreBar.querySelector(".quiz-score-bar-value") as HTMLElement;
+      const resetButton = scoreBar.querySelector(".quiz-reset-button") as HTMLButtonElement | null;
       if (fill) fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
       if (currentNum) currentNum.textContent = String(currentIndex + 1);
       if (scoreValue) scoreValue.textContent = `${correctCount}/${totalQuestions}`;
+      if (resetButton) resetButton.disabled = answeredQuestions.size === 0;
 
       const congrats = scoreBar.querySelector(".quiz-score-bar-congrats") as HTMLElement;
       if (congrats && answeredQuestions.size === totalQuestions) {
@@ -172,6 +193,55 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       if (nextBtn) nextBtn.disabled = currentIndex === totalQuestions - 1 || isTransitioning;
     };
 
+    // --- Deep-linking ---
+    const updateHash = (index = currentIndex) => {
+      const seq = index + 1;
+      const hash = `#qq-${seq}`;
+      if (window.location.hash !== hash) {
+        history.replaceState(null, "", hash);
+      }
+    };
+
+    const resolveIndexFromHash = (hash: string) => {
+      const questionMatch = hash.match(/^#qq-(\d+)$/);
+      if (questionMatch) {
+        const targetIdx = parseInt(questionMatch[1], 10) - 1;
+        return targetIdx >= 0 && targetIdx < totalQuestions ? targetIdx : null;
+      }
+
+      if (!hash || hash === "#") return null;
+
+      const rawId = decodeURIComponent(hash.slice(1));
+      if (!rawId) return null;
+
+      for (let idx = 0; idx < challenges.length; idx++) {
+        const challenge = challenges[idx];
+        if (challenge.id === rawId) return idx;
+
+        const escapedId =
+          typeof CSS !== "undefined" && typeof CSS.escape === "function"
+            ? CSS.escape(rawId)
+            : rawId.replace(/["\\#.:()[\],>+~*='` ]/g, "\\$&");
+        if (challenge.querySelector(`#${escapedId}`)) {
+          return idx;
+        }
+      }
+
+      return null;
+    };
+
+    const navigateToHash = () => {
+      const targetIdx = resolveIndexFromHash(window.location.hash);
+      if (targetIdx == null) return false;
+      if (targetIdx === currentIndex) {
+        updateHash(targetIdx);
+        return true;
+      }
+
+      goToQuestion(targetIdx, targetIdx > currentIndex ? "next" : "prev");
+      return true;
+    };
+
     // --- Transition ---
     const goToQuestion = (targetIndex: number, direction?: "next" | "prev") => {
       if (isTransitioning || targetIndex === currentIndex || targetIndex < 0 || targetIndex >= totalQuestions) return;
@@ -182,16 +252,45 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
       const currentIsland = islands[fromIndex];
       const nextIsland = islands[targetIndex];
+      const currentChallenge = currentIsland.querySelector<HTMLElement>(".challenge");
+      const nextChallenge = nextIsland.querySelector<HTMLElement>(".challenge");
+      const transitionChallenges = [currentChallenge, nextChallenge].filter(
+        (challenge): challenge is HTMLElement => Boolean(challenge),
+      );
+      const currentRevealTargets = getRevealTargets(currentIsland);
+      const nextRevealTargets = getRevealTargets(nextIsland);
+      const previousQuizStyles = {
+        position: quizUI.style.position,
+        height: quizUI.style.height,
+        minHeight: quizUI.style.minHeight,
+        overflow: quizUI.style.overflow,
+      };
 
       const onComplete = () => {
+        quizUI.style.position = previousQuizStyles.position;
+        quizUI.style.height = previousQuizStyles.height;
+        quizUI.style.minHeight = previousQuizStyles.minHeight;
+        quizUI.style.overflow = previousQuizStyles.overflow;
+
         currentIsland.style.display = "none";
         nextIsland.style.display = "";
+        gsap.set([currentIsland, nextIsland], {
+          clearProps: "position,top,left,width,zIndex,autoAlpha,y,scale,filter",
+        });
+        gsap.set(transitionChallenges, {
+          clearProps: "autoAlpha,y,scale,filter",
+        });
+        gsap.set([...currentRevealTargets, ...nextRevealTargets], {
+          clearProps: "autoAlpha,y,clipPath",
+        });
+
         isTransitioning = false;
         syncAnswers();
         updateNavButtons();
         updateDots();
         updateProgress();
-        topBar.scrollIntoView({ behavior: "smooth", block: "start" });
+        updateHash();
+        quizSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
       };
 
       if (prefersReducedMotion) {
@@ -199,26 +298,73 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         return;
       }
 
-      // Show next island for animation
+      const quizRect = quizUI.getBoundingClientRect();
+      const currentRect = currentIsland.getBoundingClientRect();
+      const currentHeight = currentRect.height;
+      const islandTop = Math.max(0, currentRect.top - quizRect.top);
       nextIsland.style.display = "";
+      gsap.set(nextIsland, { autoAlpha: 0 });
+      const nextHeight = nextIsland.getBoundingClientRect().height;
+      const lockedHeight = Math.max(
+        currentHeight + islandTop,
+        nextHeight + islandTop,
+        quizRect.height,
+      );
+
+      quizUI.style.position = "relative";
+      quizUI.style.height = `${lockedHeight}px`;
+      quizUI.style.minHeight = `${lockedHeight}px`;
+      quizUI.style.overflow = "visible";
+
+      gsap.set([currentIsland, nextIsland], {
+        position: "absolute",
+        top: islandTop,
+        left: 0,
+        width: "100%",
+      });
+
+      gsap.set(currentIsland, { zIndex: 1, autoAlpha: 1, y: 0, scale: 1 });
+      gsap.set(nextIsland, { zIndex: 2, autoAlpha: 1, y: 0, scale: 1 });
+      if (nextChallenge) {
+        gsap.set(nextChallenge, { autoAlpha: 0.98, y: 0, scale: 0.995 });
+      }
+      gsap.set(nextRevealTargets, {
+        autoAlpha: 0,
+        y: dir === "next" ? 14 : -14,
+        clipPath: dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
+      });
 
       const tl = gsap.timeline({ onComplete });
 
-      gsap.set(nextIsland, { autoAlpha: 0, y: dir === "next" ? 40 : -40, scale: 0.95 });
-
-      tl.to(currentIsland, {
-        duration: 0.35,
+      tl.to(currentRevealTargets, {
+        duration: 0.16,
         autoAlpha: 0,
-        y: dir === "next" ? -30 : 30,
-        scale: 0.95,
+        y: dir === "next" ? -8 : 8,
+        stagger: 0.018,
         ease: "power2.in",
-      }).to(nextIsland, {
-        duration: 0.5,
-        autoAlpha: 1,
-        y: 0,
-        scale: 1,
-        ease: "power3.out",
-      }, 0.1);
+      })
+        .to(currentChallenge, {
+          duration: 0.22,
+          autoAlpha: 0,
+          scale: 0.992,
+          filter: "brightness(0.82)",
+          ease: "power2.out",
+        }, 0.06)
+        .to(nextChallenge, {
+          duration: 0.22,
+          autoAlpha: 1,
+          scale: 1,
+          filter: "brightness(1)",
+          ease: "power2.out",
+        }, 0.08)
+        .to(nextRevealTargets, {
+          duration: 0.34,
+          autoAlpha: 1,
+          y: 0,
+          clipPath: "inset(0% 0% 0% 0%)",
+          stagger: 0.045,
+          ease: "power3.out",
+        }, 0.16);
 
       updateNavButtons();
     };
@@ -234,6 +380,14 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         const targetIndex = parseInt((dot as HTMLElement).dataset.index || "0", 10);
         goToQuestion(targetIndex, targetIndex > currentIndex ? "next" : "prev");
       });
+    });
+
+    const resetButton = scoreBar.querySelector(".quiz-reset-button") as HTMLButtonElement | null;
+    resetButton?.addEventListener("click", async () => {
+      const { QuestionStore } = await import("./QuestionStore");
+      QuestionStore(window.location.pathname).reset();
+      history.replaceState(null, "", `${window.location.pathname}#qq-1`);
+      window.location.reload();
     });
 
     window.addEventListener("quiz-answer-correct", ((e: Event) => {
@@ -290,6 +444,16 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     updateNavButtons();
     updateDots();
     updateProgress();
+
+    // Listen for hash changes (back/forward nav)
+    window.addEventListener("hashchange", () => {
+      navigateToHash();
+    });
+
+    // Navigate to initial hash if present
+    if (!navigateToHash()) {
+      updateHash();
+    }
   }
 
   // Wait for all astro-island elements to finish hydrating before modifying DOM.

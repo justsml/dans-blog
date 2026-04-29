@@ -92,48 +92,66 @@ const VARIANTS = {
   },
 };
 
-/** @type {Record<string, CTAVariant>} */
+/** @type {Record<string, CTAVariant[]>} */
 const CATEGORY_MAP = {
-  ai: "ai-cost",
-  llm: "ai-cost",
-  "machine learning": "ai-cost",
-  openai: "ai-cost",
-  anthropic: "ai-cost",
-  architecture: "ai-arch",
-  rag: "ai-arch",
-  agents: "ai-arch",
-  javascript: "js-ts",
-  typescript: "js-ts",
-  node: "js-ts",
-  "node.js": "js-ts",
-  quiz: "js-ts",
-  react: "js-ts",
-  security: "security",
-  auth: "security",
-  docker: "infra",
-  linux: "infra",
-  infrastructure: "infra",
-  devops: "infra",
-  "open source": "contract",
+  ai: ["ai-cost", "ai-arch", "teams", "contract"],
+  llm: ["ai-cost", "ai-arch", "teams", "contract"],
+  "machine learning": ["ai-cost", "ai-arch", "teams", "contract"],
+  openai: ["ai-cost", "ai-arch", "teams", "contract"],
+  anthropic: ["ai-cost", "ai-arch", "teams", "contract"],
+  architecture: ["ai-arch", "ai-cost", "teams", "contract"],
+  rag: ["ai-arch", "ai-cost", "teams", "contract"],
+  agents: ["ai-arch", "ai-cost", "teams", "contract"],
+  javascript: ["js-ts", "contract", "teams", "ai-cost"],
+  typescript: ["js-ts", "contract", "teams", "ai-cost"],
+  node: ["js-ts", "contract", "teams", "ai-cost"],
+  "node.js": ["js-ts", "contract", "teams", "ai-cost"],
+  quiz: ["js-ts", "contract", "teams", "ai-cost"],
+  react: ["js-ts", "contract", "teams", "ai-cost"],
+  security: ["security", "contract", "ai-arch", "teams"],
+  auth: ["security", "contract", "ai-arch", "teams"],
+  docker: ["infra", "contract", "ai-arch", "teams"],
+  linux: ["infra", "contract", "ai-arch", "teams"],
+  infrastructure: ["infra", "contract", "ai-arch", "teams"],
+  devops: ["infra", "contract", "ai-arch", "teams"],
+  "open source": ["contract", "teams", "js-ts", "ai-cost"],
 };
 
 /**
  * @param {string | undefined} category
  * @param {CTAVariant | undefined} forced
- * @returns {CTAVariant}
+ * @returns {string[]}
  */
-function pickVariant(category, forced) {
-  if (forced) return forced;
+function pickVariants(category, forced) {
+  if (forced) return [forced];
   const key = (category ?? "").toLowerCase().trim();
-  return CATEGORY_MAP[key] ?? "contract";
+  return CATEGORY_MAP[key] ?? ["contract", "js-ts", "teams", "ai-cost"];
 }
 
-const variantKey = pickVariant(Astro.props.category, Astro.props.variant);
-const cta = VARIANTS[variantKey];
+const variantKeys = pickVariants(Astro.props.category, Astro.props.variant);
+const variants = variantKeys.map((k) => VARIANTS[k]);
+const cta = variants[0];
 const isResume = cta.linkType === "resume";
+
+const rotationData = variants.map((v) => ({
+  kicker: v.kicker,
+  headline: v.headline,
+  body: v.body,
+  cta: v.cta,
+  accentClass: v.accentClass,
+  link: v.link,
+  linkType: v.linkType,
+  secondaryCta: v.secondaryCta ?? null,
+  secondaryLink: v.secondaryLink ?? null,
+}));
 ---
 
-<aside class={`consulting-cta ${cta.accentClass}`} aria-label="Hire Dan Levy">
+<aside
+  class={`consulting-cta ${cta.accentClass}`}
+  aria-label="Hire Dan Levy"
+  data-cta-rotation={JSON.stringify(rotationData)}
+  data-cta-slug={Astro.props.slug || 'global'}
+>
   <div class="cta-glow"></div>
   <div class="cta-content">
     <div class="cta-header">
@@ -187,6 +205,85 @@ const isResume = cta.linkType === "resume";
     </div>
   </div>
 </aside>
+
+<script>
+  (function () {
+    const aside = document.querySelector('[data-cta-rotation]');
+    if (!aside) return;
+    /** @type {HTMLElement} */
+    const el = aside;
+
+    const slug = el.getAttribute('data-cta-slug') || 'global';
+    const KEY = 'ctaLastSeen_' + slug;
+    const MS_BETWEEN = 60_000; // 1 minute
+    const INTERVAL = 8_000; // 8 seconds per variant
+
+    const stored = localStorage.getItem(KEY);
+    const last = stored ? parseInt(stored, 10) : 0;
+    if (Date.now() - last < MS_BETWEEN) return;
+
+    const variants = JSON.parse(el.getAttribute('data-cta-rotation') || '[]');
+    if (variants.length <= 1) return;
+
+    let idx = 0;
+
+    const kickerEl = el.querySelector('.cta-kicker');
+    const headlineEl = el.querySelector('.cta-headline');
+    const bodyEl = el.querySelector('.cta-body');
+    const actionsEl = el.querySelector('.cta-actions');
+
+    const calIcon = `<svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`;
+    const resumeIcon = `<svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>`;
+    const chatIcon = `<svg class="cta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`;
+
+    function buildActions(v: any) {
+      const isRes = v.linkType === 'resume';
+      const primary = isRes ? resumeIcon : calIcon;
+      let html = `<a href="${v.link}" class="cta-btn cta-btn-primary${isRes ? ' cta-btn-resume' : ''}" target="_blank" rel="noopener noreferrer">${primary}${v.cta}</a>`;
+      if (isRes && v.secondaryLink) {
+        html += `<a href="${v.secondaryLink}" class="cta-btn cta-btn-secondary" target="_blank" rel="noopener noreferrer">${chatIcon}${v.secondaryCta}</a>`;
+      }
+      return html;
+    }
+
+    function update() {
+      idx = (idx + 1) % variants.length;
+      const v = variants[idx];
+
+      el.classList.add('cta-fade-out');
+
+      setTimeout(() => {
+        el.className = `consulting-cta ${v.accentClass} cta-fade-in`;
+        if (kickerEl) kickerEl.textContent = v.kicker;
+        if (headlineEl) headlineEl.textContent = v.headline;
+        if (bodyEl) bodyEl.textContent = v.body;
+        if (actionsEl) actionsEl.innerHTML = buildActions(v);
+
+        requestAnimationFrame(() => {
+          el.classList.remove('cta-fade-out');
+        });
+      }, 250);
+    }
+
+    const timer = setInterval(update, INTERVAL);
+
+    function cleanup() {
+      clearInterval(timer);
+      document.removeEventListener('visibilitychange', onVis);
+    }
+
+    function onVis() {
+      if (document.hidden) {
+        clearInterval(timer);
+      }
+    }
+
+    document.addEventListener('visibilitychange', onVis);
+    window.addEventListener('beforeunload', cleanup, { once: true });
+
+    localStorage.setItem(KEY, String(Date.now()));
+  })();
+</script>
 
 <style>
   .consulting-cta {
@@ -353,6 +450,19 @@ const isResume = cta.linkType === "resume";
     --cta-accent-dim: rgba(167, 139, 250, 0.08);
     --cta-accent-border: rgba(167, 139, 250, 0.15);
     --cta-accent-glow: rgba(167, 139, 250, 0.12);
+  }
+
+  /* Fade transition for rotation */
+  .cta-fade-out {
+    opacity: 0 !important;
+    transform: translateY(4px) !important;
+    transition: opacity 0.25s ease, transform 0.25s ease, background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .cta-fade-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
   }
 
   /* Responsive */

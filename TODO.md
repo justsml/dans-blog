@@ -34,3 +34,8 @@
 - [ ] Add Fediverse domain identity files only if you want custom-domain Mastodon/WebFinger support.
 - [ ] Consider `llms.txt` if AI crawler discoverability matters to you.
 - [ ] Consider stronger series/tag landing pages for AI Systems, Postgres Pitfalls, Modern Async JS, and Security for Builders.
+- [ ] Explore a playful "background box effect", potentially starting from something like `bunx --bun shadcn@latest add @aceternity/background-ripple-effect-demo`, then make it interactive by turning a clicked box into a mini-game. Start with something simple like tic-tac-toe, or better, riff on Battleship or a similar tiny surprise interaction.
+- [ ] Consider trying `bunx --bun shadcn@latest add @aceternity/vortex-demo` inspired by the Aceternity Vortex component: [ui.aceternity.com/components/vortex](https://ui.aceternity.com/components/vortex).
+- [ ] Explore a trace-on-scroll SVG effect inspired by Aceternity's Tracing Beam, where a beam follows an SVG path as the user scrolls: [ui.aceternity.com/components/tracing-beam](https://ui.aceternity.com/components/tracing-beam).
+- [ ] Explore using an Evervault-style interactive card treatment inspired by Aceternity's component: [ui.aceternity.com/components/evervault-card](https://ui.aceternity.com/components/evervault-card).
+- [ ] Explore a playful motion-heavy card treatment inspired by Aceternity's Wobble Card: [ui.aceternity.com/components/wobble-card](https://ui.aceternity.com/components/wobble-card).

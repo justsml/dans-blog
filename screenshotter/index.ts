@@ -107,6 +107,16 @@ function buildArgs(rssItem: RssishItem): ScreenshotTask {
         "#qq-18": join(`${basePath}`, `/q18.jpg`),
         "#qq-19": join(`${basePath}`, `/q19.jpg`),
         "#qq-20": join(`${basePath}`, `/q20.jpg`),
+        "#qq-21": join(`${basePath}`, `/q21.jpg`),
+        "#qq-22": join(`${basePath}`, `/q22.jpg`),
+        "#qq-23": join(`${basePath}`, `/q23.jpg`),
+        "#qq-24": join(`${basePath}`, `/q24.jpg`),
+        "#qq-25": join(`${basePath}`, `/q25.jpg`),
+        "#qq-26": join(`${basePath}`, `/q26.jpg`),
+        "#qq-27": join(`${basePath}`, `/q27.jpg`),
+        "#qq-28": join(`${basePath}`, `/q28.jpg`),
+        "#qq-29": join(`${basePath}`, `/q29.jpg`),
+        "#qq-30": join(`${basePath}`, `/q30.jpg`),
       }
     : {
         // TODO: Re-enable this when we can control the height of the page/viewport

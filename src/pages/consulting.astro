@@ -1,10 +1,11 @@
 ---
 // AI Consulting Landing Page
 
-const INTRO_CALL_LINK =
-  process.env.INTRO_CALL_LINK ?? "https://cal.com/dan-levy-net/30min?overlayCalendar=true";
-
 import Layout from "../layouts/Page.astro";
+import {
+  INTRO_CALL_LINK,
+  consultingServices,
+} from "../data/consultingServices";
 
 const title = "AI Cost Optimization & Architecture Consulting";
 const description =
@@ -100,40 +101,18 @@ const description =
     <div class="consulting-container">
       <h2 class="fade-in">What I do</h2>
       <p class="section-lead fade-in">
-        End-to-end AI consulting from strategy to implementation — wherever
-        your team needs the most leverage.
+        Specialized consulting engagements for teams dealing with AI safety,
+        retrieval failures, cloud cost pressure, and security risk.
       </p>
       <div class="services-grid fade-in">
-        <div class="service-card">
-          <div class="service-icon">🔍</div>
-          <h3>Cost &amp; Efficiency Audit</h3>
-          <p>Deep analysis of your token usage, model selection, prompt architecture, caching gaps, and vendor contracts. Delivered as a ranked savings roadmap.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🏛️</div>
-          <h3>AI Architecture Review</h3>
-          <p>Evaluate your retrieval pipelines, agent designs, context management, and scalability patterns. Identify what breaks at 10x current load.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">⚡</div>
-          <h3>Performance Optimization</h3>
-          <p>Latency reduction, throughput improvements, prompt compression, model routing, and caching layers — with measurable before/after benchmarks.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🛡️</div>
-          <h3>AI Security Assessment</h3>
-          <p>Prompt injection, data exfiltration risks, agent loop vulnerabilities, PII exposure, and model supply chain risks — reviewed against current threat models.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🎓</div>
-          <h3>Team Training &amp; Upskilling</h3>
-          <p>Hands-on workshops tailored to your stack: prompt engineering, LLM APIs, RAG patterns, agent design, evaluation frameworks, and cost management culture.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🗺️</div>
-          <h3>AI Strategy &amp; Roadmap</h3>
-          <p>Build-vs-buy decisions, vendor evaluation, capability sequencing, and a 6–12 month roadmap your engineering and product teams can actually execute.</p>
-        </div>
+        {consultingServices.map((service) => (
+          <a class="service-card" href={`/consulting/${service.slug}/`}>
+            <div class="service-icon">{service.kicker.split(" ").at(0)}</div>
+            <h3>{service.navTitle}</h3>
+            <p>{service.description}</p>
+            <span class="service-link">Explore service →</span>
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -667,10 +646,12 @@ const description =
   }
 
   .service-card {
+    display: block;
     background: var(--consulting-bg);
     border: none;
     border-radius: 0;
     padding: 2rem;
+    text-decoration: none;
     transition: var(--consulting-transition);
   }
 
@@ -696,8 +677,16 @@ const description =
     font-size: 0.875rem;
     color: var(--consulting-text-secondary);
     line-height: 1.6;
-    margin: 0;
+    margin: 0 0 1rem;
     letter-spacing: -0.005em;
+  }
+
+  .service-link {
+    color: var(--consulting-accent-cyan);
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
   }
 
   /* ── How it Works ── */

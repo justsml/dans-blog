@@ -52,7 +52,12 @@ export default function Challenge({
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
+  const optionsPanelRef = useRef<HTMLElement>(null);
+  const explanationPanelRef = useRef<HTMLElement>(null);
+  const explanationContentRef = useRef<HTMLParagraphElement>(null);
+  const tallestOptionsHeightRef = useRef(0);
   const [challengeClass, setChallengeClass] = useState<string>("untouched");
+  const [panelHeight, setPanelHeight] = useState<number>(SCREENSHOT_SCALE * 70 * options.length);
 
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
@@ -195,24 +200,76 @@ export default function Challenge({
   };
 
   useEffect(() => {
+    const syncPanelHeight = () => {
+      const optionHeight = optionsPanelRef.current?.scrollHeight ?? 0;
+      const explanationHeight = explanationContentRef.current?.scrollHeight ?? explanationPanelRef.current?.scrollHeight ?? 0;
+      const fallbackHeight = SCREENSHOT_SCALE * 70 * options.length;
+
+      if (optionHeight > 0) {
+        tallestOptionsHeightRef.current = Math.max(
+          tallestOptionsHeightRef.current,
+          optionHeight,
+        );
+      }
+
+      const nextHeight = Math.max(
+        tallestOptionsHeightRef.current,
+        explanationHeight,
+        fallbackHeight,
+      );
+
+      if (nextHeight > 0) {
+        setPanelHeight(nextHeight);
+      }
+    };
+
+    syncPanelHeight();
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined"
+        ? new ResizeObserver(() => syncPanelHeight())
+        : null;
+
+    if (resizeObserver) {
+      if (optionsPanelRef.current) resizeObserver.observe(optionsPanelRef.current);
+      if (explanationContentRef.current) {
+        resizeObserver.observe(explanationContentRef.current);
+      } else if (explanationPanelRef.current) {
+        resizeObserver.observe(explanationPanelRef.current);
+      }
+    }
+
+    const island = challengeRef.current?.closest("astro-island");
+    const visibilityObserver =
+      island && typeof MutationObserver !== "undefined"
+        ? new MutationObserver(() => {
+            requestAnimationFrame(syncPanelHeight);
+          })
+        : null;
+
+    if (visibilityObserver && island) {
+      visibilityObserver.observe(island, {
+        attributes: true,
+        attributeFilter: ["style", "class"],
+      });
+    }
+
+    window.addEventListener("resize", syncPanelHeight);
+    const frame = requestAnimationFrame(syncPanelHeight);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", syncPanelHeight);
+      resizeObserver?.disconnect();
+      visibilityObserver?.disconnect();
+    };
+  }, [explanationText, isCorrect, options.length, showExplanation]);
+
+  useEffect(() => {
     if (challengeRef.current) {
       const e =
         challengeRef.current.querySelector("div.explanation")?.innerHTML;
       if (e) setExplanationText(e);
-
-      requestAnimationFrame(() => {
-        const quizOptionPanel =
-          challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
-        if (!quizOptionPanel) return;
-
-        if (
-          quizOptionPanel &&
-          window?.__superHackFix_patchOptionsListWithActualHeight
-        )
-          window?.__superHackFix_patchOptionsListWithActualHeight([
-            quizOptionPanel,
-          ]);
-      });
     }
   }, [explanationText, challengeRef]);
 
@@ -319,15 +376,18 @@ export default function Challenge({
           "card-flip": showExplanation,
         })}
         style={{
-          height: `${SCREENSHOT_SCALE * 70 * _options.length}px`,
+          height: `${panelHeight}px`,
           transition: "height 0.2s ease-in-out",
           overflowY: "auto",
         }}
       >
-        <section className="quiz-options card card-front">{_options}</section>
-        <section className={"explanation card card-back "}>
+        <section className="quiz-options card card-front" ref={optionsPanelRef}>
+          {_options}
+        </section>
+        <section className={"explanation card card-back "} ref={explanationPanelRef}>
           <p
             className="help-box"
+            ref={explanationContentRef}
             dangerouslySetInnerHTML={{ __html: explanationText }}
             onClick={(ev: MouseEvent<HTMLParagraphElement>) => {
               ev.preventDefault();
