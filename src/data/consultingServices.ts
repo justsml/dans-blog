@@ -34,46 +34,46 @@ export const consultingServices: ConsultingService[] = [
     navTitle: "AI Consulting",
     metaTitle: "AI Consulting for Cost, Architecture, and LLM Systems",
     description:
-      "Senior help with AI architecture, model routing, token observability, prompt systems, and cost optimization when LLM usage starts affecting product margins.",
-    heroTitle: "Make your AI system cheaper, clearer, and easier to operate.",
+      "Senior help with agentic application architecture, model routing, token observability, prompt systems, and eval-backed production tradeoffs.",
+    heroTitle: "Build agentic applications that can be tested, operated, and trusted.",
     heroBody:
-      "I help teams understand where LLM cost, latency, quality, and architecture tradeoffs are hiding. That can mean auditing prompts and traces, redesigning model routing, adding token observability, improving caching, or turning a fragile AI prototype into a production system with measurable unit economics.",
+      "I help teams move from impressive demos to agentic systems with clear routes, measurable quality, useful traces, and test/eval gates. That can mean redesigning model routing, adding token observability, building eval suites, improving caching, or turning a fragile prototype into a production system your team can reason about.",
     primaryCta: "Book an AI Consulting Call",
     secondaryCta: "See all consulting services",
     stats: [
       { value: "40-70%", label: "Common token cost reduction target" },
-      { value: "Routed", label: "Model selection by task, risk, and price" },
-      { value: "Visible", label: "Spend tied to features and users" },
+      { value: "Eval-led", label: "Quality checks before agent autonomy" },
+      { value: "Visible", label: "Spend and quality tied to features" },
     ],
     whyNow: [
-      "AI products often ship with hidden unit economics because prompts, context windows, retries, and model choices were optimized for speed of launch.",
-      "Once usage grows, small routing and context decisions become recurring infrastructure spend.",
-      "Teams need practical architecture judgment that balances quality, latency, safety, and cost instead of chasing one metric at a time.",
+      "Agentic products often ship before the team has a clean way to measure quality, regressions, cost, and autonomy boundaries.",
+      "Once usage grows, small routing, context, and tool-calling decisions start shaping product behavior.",
+      "Teams need practical architecture judgment that balances quality, latency, safety, and cost without treating evals as an afterthought.",
     ],
     outcomes: [
       "Identify the features, prompts, routes, and user patterns driving the majority of AI spend.",
-      "Design a model-routing and caching strategy that keeps quality high while reserving expensive models for work that truly needs them.",
-      "Add token and trace observability so product, engineering, and finance can reason from the same facts.",
-      "Turn cost improvements into measurable changes your team can keep operating after the engagement.",
+      "Design model-routing, tool-use, and caching strategies that reserve heavier work for tasks that truly need it.",
+      "Add token, trace, and eval observability so product, engineering, and finance can reason from the same facts.",
+      "Turn architecture improvements into measurable changes your team can keep operating after the engagement.",
     ],
     deliverables: [
-      "AI architecture and cost review across prompts, traces, models, and data flow",
-      "Prioritized optimization roadmap with risk, effort, and savings tradeoffs",
+      "Agentic architecture review across prompts, traces, tools, models, and data flow",
+      "Test and eval plan for quality, regressions, autonomy boundaries, and cost",
       "Model routing, caching, batching, and prompt strategy recommendations",
       "Implementation support for the highest-leverage fixes",
     ],
     approach: [
       {
-        title: "Make the bill explainable",
-        body: "We connect invoices, traces, prompts, endpoints, and product behavior so the spend has owners and causes.",
+        title: "Make behavior explainable",
+        body: "We connect traces, prompts, tool calls, invoices, endpoints, and product behavior so quality and cost have visible causes.",
       },
       {
-        title: "Tune the architecture, not just the prompt",
-        body: "I look at routing, context design, caching, retrieval, retries, evals, and fallback behavior together because cost usually emerges from the system.",
+        title: "Tune the system, not just the prompt",
+        body: "I look at routing, context design, tools, caching, retrieval, retries, evals, and fallback behavior together because quality emerges from the system.",
       },
       {
         title: "Ship measurable changes",
-        body: "The goal is not a slide deck of suggestions. It is a set of improvements your team can deploy, verify, and keep improving.",
+        body: "The goal is not a slide deck of suggestions. It is a set of improvements your team can deploy, evaluate, and keep improving.",
       },
     ],
   },
@@ -84,10 +84,10 @@ export const consultingServices: ConsultingService[] = [
     navTitle: "AI Guardrails",
     metaTitle: "AI Guardrails Consulting for Safer, Cheaper AI Products",
     description:
-      "Expert guidance for adding practical, cost-effective safety, moderation, and policy controls to AI apps without slowing product teams down.",
-    heroTitle: "Add AI safety that protects the product without crushing velocity.",
+      "Expert guidance for adding practical safety, moderation, policy controls, and eval-backed boundaries to agentic applications.",
+    heroTitle: "Add AI safety that protects the product without freezing the team.",
     heroBody:
-      "I help teams add moderation, prompt defenses, policy enforcement, and human-review escape hatches that fit the product they actually have today. The goal is not theater. It is practical guardrails that cut abuse, reduce risk, and avoid expensive overblocking.",
+      "I help teams add moderation, prompt defenses, policy enforcement, evals, and human-review escape hatches that fit the product they actually have today. The goal is not theater. It is practical guardrails that let agentic features keep moving with evidence.",
     primaryCta: "Book an AI Guardrails Review",
     secondaryCta: "See all consulting services",
     stats: [
@@ -98,17 +98,17 @@ export const consultingServices: ConsultingService[] = [
     whyNow: [
       "Prompt injection, jailbreak attempts, and adversarial users usually show up after product-market fit, not before.",
       "Teams often overspend on blanket moderation calls when a layered policy engine would catch most issues for far less.",
-      "A safe demo is not the same thing as a production-safe workflow with logging, escalation, and recovery paths.",
+      "A safe demo is not the same thing as a production-safe agentic workflow with logging, evals, escalation, and recovery paths.",
     ],
     outcomes: [
       "Map every risky AI interaction across input, retrieval, tools, output, and logging.",
       "Design layered moderation so cheap deterministic checks absorb routine policy issues before expensive model reviews fire.",
-      "Add user trust controls like rate limiting, review queues, redaction, quarantine, and escalation paths.",
+      "Add trust controls like rate limiting, review queues, redaction, quarantine, eval gates, and escalation paths.",
       "Document guardrail coverage so product, engineering, and leadership all understand residual risk.",
     ],
     deliverables: [
       "Guardrail architecture and threat model for your current product",
-      "Recommended moderation stack with cost and latency tradeoffs",
+      "Recommended moderation and eval stack with cost and latency tradeoffs",
       "Policy matrix for unsafe content, prompt attacks, PII, and tool misuse",
       "Implementation roadmap your team can ship in phases",
     ],
@@ -134,52 +134,52 @@ export const consultingServices: ConsultingService[] = [
     navTitle: "Supabase Scaling",
     metaTitle: "Supabase Scaling, Migration, and Auth Cost Rescue",
     description:
-      "Scale beyond fragile hosted defaults, migrate to native cloud or blended open-source infrastructure, and cut runaway auth and database costs before growth punishes the stack.",
-    heroTitle: "When Supabase is getting expensive or fragile, I help you regain control before growth turns into a fire drill.",
+      "Modernize hosted defaults, move selected services to native cloud or blended open-source infrastructure, and use agentic delivery to explore safer paths in parallel.",
+    heroTitle: "Modern migrations do not have to move one file at a time.",
     heroBody:
-      "I work with teams that outgrew the easy early path. That can mean moving pieces of Supabase to native cloud, replacing the most expensive services, or designing a blended open-source stack that keeps the developer experience while fixing the bill and removing scaling bottlenecks.",
+      "I work with teams that outgrew the easy early path. Instead of treating migration as one long serial march, we can use agentic coding to explore slices in parallel, test the results against real behavior, and converge on the safest target architecture.",
     primaryCta: "Talk Through Your Supabase Stack",
     secondaryCta: "See all consulting services",
     stats: [
       { value: "$22,500", label: "Monthly auth bill in one rescue" },
-      { value: "< 1 month", label: "Migration window before major campaign" },
+      { value: "Parallel", label: "Multiple migration paths explored at once" },
       { value: "14x", label: "User growth absorbed after the switch" },
     ],
     whyNow: [
-      "Hosted convenience becomes very expensive when auth, database, storage, and edge workloads all scale at once.",
-      "Migration gets riskier the longer it waits, especially if product growth is about to accelerate.",
-      "Avoid rip-and-replace by identifying which parts of the stack still help and which parts are now a tax on growth.",
+      "Hosted convenience can hide which parts of auth, database, storage, and edge workloads still belong together.",
+      "Work that used to require a slow rewrite can now be split into agent-sized investigations with tests around each boundary.",
+      "Avoid rip-and-replace by identifying which parts of the stack still help and which parts should move.",
     ],
     outcomes: [
       "Audit which parts of Supabase still help and which parts are now acting like a tax on growth.",
-      "Design a migration plan to native cloud, open-source infrastructure, or a blended architecture with minimal customer disruption.",
-      "Reduce auth and data-plane risk before a launch, campaign, or pricing change magnifies it.",
-      "Preserve operational simplicity while eliminating the monthly surprises that make finance and engineering both nervous.",
+      "Design a migration plan to native cloud, open-source infrastructure, or a blended architecture with testable seams.",
+      "Use parallel agentic exploration to compare implementation paths before the team commits.",
+      "Preserve operational simplicity while replacing the parts that no longer fit.",
     ],
     deliverables: [
       "Scaling and cost assessment across auth, database, storage, and edge usage",
-      "Migration blueprint with rollback strategy and cutover sequencing",
+      "Migration blueprint with eval harnesses, rollback strategy, and cutover sequencing",
       "Target-state recommendation covering native cloud and open-source options",
-      "Execution support for high-risk migration windows",
+      "Execution support for agent-assisted migration windows",
     ],
     caseStudy: {
       label: "Case Study",
       title: "A company was spending $22,500 every month just to authenticate users.",
-      body: "Before a major ad campaign, I helped them migrate off that setup to better-auth in under one month. The campaign landed, their user base grew 14x, and they avoided the kind of auth bill that would have burned millions as adoption climbed.",
-      highlight: "This is the kind of migration that pays for itself quickly when growth is real.",
+      body: "Before a major ad campaign, I helped them migrate off that setup to better-auth in under one month. The campaign landed, their user base grew 14x, and the new architecture held when adoption climbed.",
+      highlight: "Today, the same class of work can be accelerated further by letting agents explore migration paths in parallel while tests decide what is safe to keep.",
     },
     approach: [
       {
         title: "Find the true choke point",
-        body: "Sometimes the problem is database throughput. Sometimes it is auth. Sometimes it is vendor coupling. We diagnose the expensive part first.",
+        body: "Sometimes the problem is database throughput. Sometimes it is auth. Sometimes it is vendor coupling. We find the real constraint first.",
       },
       {
         title: "Unbundle what no longer belongs together",
         body: "I separate the services that still benefit from managed convenience from the ones that need native cloud performance or open-source economics.",
       },
       {
-        title: "Migrate under pressure without guessing",
-        body: "For time-sensitive launches, I plan staged cutovers, rollback paths, validation checks, and post-launch monitoring so the move holds under load.",
+        title: "Parallelize the unknowns",
+        body: "For time-sensitive launches, agentic coding can explore multiple cutover and implementation paths while validation checks keep the work honest.",
       },
     ],
   },
@@ -190,10 +190,10 @@ export const consultingServices: ConsultingService[] = [
     navTitle: "RAG Rescue",
     metaTitle: "RAG Rescue for Collapsing LLM Knowledge Bases",
     description:
-      "Rescue LLM knowledge systems that worked early, then collapsed under real document volume with semantic confusion, retrieval drift, and unstable answers.",
+      "Rescue LLM knowledge systems with retrieval evals, grounding checks, query routing, and document-scale diagnostics.",
     heroTitle: "Your RAG system worked beautifully until success broke it.",
     heroBody:
-      "That is a common pattern. A knowledge integration feels magical at first, then volume rises, the document graph gets messy, and the model starts pulling the wrong things for the right questions. I help teams diagnose the collapse and rebuild retrieval for relevance, precision, and scale.",
+      "That is a common pattern. A knowledge integration feels magical at first, then volume rises, the document graph gets messy, and the model starts pulling the wrong things for the right questions. I help teams build evals around the failures, diagnose the collapse, and rebuild retrieval for relevance, precision, and scale.",
     primaryCta: "Book a RAG Rescue Session",
     secondaryCta: "See all consulting services",
     stats: [
@@ -204,7 +204,7 @@ export const consultingServices: ConsultingService[] = [
     whyNow: [
       "RAG failures often look like model failures even when retrieval is the real culprit.",
       "As document counts rise, chunking, metadata, embeddings, and reranking choices interact in ways that create semantic confusion.",
-      "Teams can waste months tuning prompts when the right fix is retrieval architecture and query routing.",
+      "Teams can waste months tuning prompts when the right fix is retrieval evals, architecture, and query routing.",
     ],
     outcomes: [
       "Identify the specific causes of context collapse, retrieval drift, and semantic confusion in your current stack.",
@@ -246,10 +246,10 @@ export const consultingServices: ConsultingService[] = [
     navTitle: "AI Coding Security",
     metaTitle: "Developer AI Coding Security, Sandboxing, and CI/CD Hardening",
     description:
-      "Secure the way developers and AI coding agents write, run, test, and ship code with sandboxing, canary credentials, hardened CI/CD, and controlled access patterns.",
-    heroTitle: "If your developers or agents can generate code fast, they can also create blast radius fast.",
+      "Secure the way developers and AI coding agents write, run, test, evaluate, and ship code with sandboxing, canaries, hardened CI/CD, and controlled access.",
+    heroTitle: "Agentic coding needs speed, taste, and guardrails.",
     heroBody:
-      "I help teams secure AI-assisted development before the workflow becomes impossible to govern. That includes sandboxed execution, decoy credentials, repository controls, CI/CD hardening, and operational boundaries that keep experiments from turning into incidents.",
+      "I help teams make AI-assisted development powerful without letting it become chaos. That includes sandboxed execution, decoy credentials, repository controls, CI/CD hardening, eval gates, and operational boundaries that let many agents work in parallel without losing control.",
     primaryCta: "Review AI Coding Security",
     secondaryCta: "See all consulting services",
     stats: [
@@ -258,7 +258,7 @@ export const consultingServices: ConsultingService[] = [
       { value: "Hardened", label: "CI/CD and repository guardrails" },
     ],
     whyNow: [
-      "AI coding tools move faster than most internal security review processes.",
+      "AI coding tools move faster than most internal engineering processes.",
       "Repository access, terminal execution, secrets exposure, and automation sprawl create a new threat surface inside engineering itself.",
       "Teams need controls that support productivity instead of forcing developers back to manual workarounds.",
     ],
@@ -266,13 +266,13 @@ export const consultingServices: ConsultingService[] = [
       "Define safe boundaries for AI coding agents, assistants, and automation in local, CI, and production-adjacent environments.",
       "Reduce the chance of secret leakage, prompt-based repo abuse, poisoned dependencies, and unsafe autonomous actions.",
       "Use canary credentials and monitoring to detect misuse early rather than discovering it after real access is abused.",
-      "Harden CI/CD so generated code still passes through principled review, validation, and release controls.",
+      "Harden CI/CD so generated code still passes through principled review, tests, evals, and release controls.",
     ],
     deliverables: [
       "Threat model for AI-assisted development workflows",
       "Recommendations for sandboxing, access control, and secret handling",
       "Canary credential and detection strategy",
-      "CI/CD hardening checklist tailored to your engineering workflow",
+      "CI/CD and eval-gate checklist tailored to your engineering workflow",
     ],
     approach: [
       {

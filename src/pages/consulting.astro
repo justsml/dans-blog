@@ -8,7 +8,7 @@ import type { ConsultingService } from "../data/consultingServices";
 
 const title = "Senior Software Architecture & Security Consulting";
 const description =
-  "Independent consulting for AI systems, security reviews, RAG rescue, Supabase scaling, developer workflow hardening, and expensive architecture decisions.";
+  "Independent consulting for agentic coding, agentic applications, test-and-eval based development, security, RAG rescue, and modern architecture work.";
 
 const featuredSlugs = ["ai-consulting", "ai-guardrails"];
 const featuredServices = featuredSlugs
@@ -53,61 +53,61 @@ const serviceVisuals: Record<string, { accent: string; mark: string; image: stri
 
 const processSteps = [
   {
-    title: "Diagnose",
-    body: "Start with architecture, traces, bills, incidents, and workflow friction.",
+    title: "Define the target",
+    body: "Turn architecture goals, failure cases, and product expectations into tests and evals.",
   },
   {
-    title: "Map tradeoffs",
-    body: "Separate high-leverage fixes from distractions and make cost, risk, quality, and effort visible.",
+    title: "Fan out",
+    body: "Use agentic coding to explore multiple implementation paths in parallel instead of betting on one.",
   },
   {
-    title: "Ship changes",
-    body: "Stay close to implementation so your team leaves with working changes, not just advice.",
+    title: "Converge",
+    body: "Compare the outputs, combine the strongest pieces, and discard approaches that fail the checks.",
   },
   {
-    title: "Measure",
-    body: "Compare against the baseline and leave observability notes your team can keep using.",
+    title: "Ship with proof",
+    body: "Land the change with eval coverage, observability, and handoff notes your team can keep using.",
   },
 ];
 
 const serviceSummaries: Record<string, string> = {
   "ai-consulting":
-    "Clarify AI architecture, model routing, token cost, observability, and production tradeoffs.",
+    "Design agentic applications with routing, evals, observability, and production tradeoffs in view.",
   "ai-guardrails":
-    "Add practical safety controls, policy checks, and review paths without slowing the product team.",
+    "Add policy checks, review paths, and eval-backed safety controls around agentic products.",
   "supabase-scaling-migration":
-    "Reduce hosted-platform cost and migration risk before growth makes the stack harder to move.",
+    "Use parallel agentic exploration to modernize the stack without waiting on one serial plan.",
   "rag-rescue":
-    "Diagnose retrieval drift, weak grounding, and document-scale failures in production RAG systems.",
+    "Repair retrieval with evals for relevance, grounding, document scale, and answer quality.",
   "developer-ai-coding-security":
-    "Harden AI-assisted coding workflows, sandboxes, repository access, credentials, and CI/CD.",
+    "Make agentic coding productive and governable with sandboxes, access control, and CI checks.",
   "enterprise-security-assessment":
-    "Review application, cloud, identity, workflow, AI exposure, and organizational security risk.",
+    "Review application, cloud, identity, workflow, and AI exposure as one connected system.",
 };
 
 const trustSignals = [
   {
     value: "$22.5K/mo",
-    label: "auth spend removed before a major growth push",
+    label: "auth spend removed before growth multiplied it",
   },
   {
-    value: "14x",
-    label: "user growth absorbed after the migration",
+    value: "10 agents",
+    label: "parallel agent exploration instead of one serial plan",
   },
   {
-    value: "25-50K",
-    label: "documents where retrieval quality started to fail",
+    value: "Eval-led",
+    label: "tests decide what is ready, not vibes",
   },
   {
     value: "Senior-only",
-    label: "you work directly with the person doing the work",
+    label: "strategy stays connected to the implementation",
   },
 ];
 
 const proofPoints = [
-  "Reviews grounded in code, traces, invoices, and incidents",
-  "Implementation support for the fixes that matter most",
-  "Clear tradeoff notes for engineering and leadership",
+  "Agentic delivery with evals — not just vibes and hope",
+  "Parallel agent exploration instead of one slow serial plan",
+  "Production AI design grounded in actual failure cases",
 ];
 
 const caseProofs = consultingServices
@@ -118,9 +118,9 @@ const caseProofs = consultingServices
   }));
 
 const fitSignals = [
-  "A production AI feature is getting expensive or hard to explain",
-  "A launch, migration, audit, or growth event has raised the risk",
-  "You need senior judgment without adding a full-time seat",
+  "A system looks too tangled to move, but too important to leave alone",
+  "An agentic app needs evals, guardrails, and a clearer operating model",
+  "A migration could be explored by agents before the team commits to a path",
 ];
 ---
 
@@ -141,10 +141,11 @@ const fitSignals = [
     <div class="consulting-shell hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Independent senior consulting</p>
-        <h1>Senior engineering judgment for critical systems.</h1>
+        <h1>Your AI app works great. Mostly.</h1>
         <p class="hero-sub">
-          I help teams make high-stakes architecture decisions in AI, security,
-          retrieval, platform migration, and developer workflow.
+          I help teams go from "it works in the demo" to "it works in
+          production" — with agentic coding, eval-driven development, and
+          architecture that holds up when real users show up.
         </p>
         <div class="hero-actions">
           <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
@@ -168,8 +169,14 @@ const fitSignals = [
           />
         </div>
         <div class="hero-insight-card">
-          <span>Common starting point</span>
-          <strong>"We shipped quickly. Now the system is expensive to reason about."</strong>
+          <div class="story-beat">
+            <span>How it started</span>
+            <strong>"This migration would take a quarter."</strong>
+          </div>
+          <div class="story-beat">
+            <span>How it's going</span>
+            <strong>Ten agents ran it in parallel. Tests picked the winner by Tuesday.</strong>
+          </div>
         </div>
       </div>
     </div>
@@ -179,13 +186,14 @@ const fitSignals = [
     <div class="consulting-shell trust-grid">
       <div>
         <p class="eyebrow">Trust model</p>
-        <h2 id="trust-heading">Make the system legible before changing it.</h2>
+        <h2 id="trust-heading">Agents without evals are just expensive chaos.</h2>
       </div>
       <div class="trust-copy">
         <p>
-          The work starts with the facts your team already has: traces, bills,
-          incidents, prompts, schemas, CI behavior, and failure cases. From
-          there, the tradeoffs become visible enough to act on.
+          Agentic work only helps when the target is explicit. I start with
+          your traces, bills, incidents, prompts, and failure cases — then
+          build the checks that let parallel agent work converge instead of
+          just… sprawl.
         </p>
       </div>
     </div>
@@ -203,10 +211,10 @@ const fitSignals = [
     <div class="consulting-shell">
       <div class="section-heading">
         <p class="eyebrow">Services</p>
-        <h2>Focused consulting for expensive technical decisions.</h2>
+        <h2>Pick your flavor of "we need help."</h2>
         <p>
-          Senior help when the cost, risk, or architecture has become too
-          important to handle with guesses.
+          Whether your AI app is too expensive, too unpredictable, or just
+          too scary to touch — there's a service for that.
         </p>
       </div>
 
@@ -256,10 +264,11 @@ const fitSignals = [
     <div class="consulting-shell proof-grid">
       <div class="section-heading sticky-heading">
         <p class="eyebrow">Evidence</p>
-        <h2>Concrete problems. Measurable outcomes.</h2>
+        <h2>Results, not slides.</h2>
         <p>
-          The best engagements start with a live system, a real constraint, and
-          a decision that has become expensive to delay.
+          Migrations that used to take quarters. Auth bills that were eating
+          the runway. RAG systems that worked great until they didn't. Real
+          problems, fixed.
         </p>
       </div>
       <div class="case-stack">
@@ -279,11 +288,11 @@ const fitSignals = [
     <div class="consulting-shell process-grid">
       <div>
         <p class="eyebrow">How I work</p>
-        <h2>From diagnosis to shipped change.</h2>
+        <h2>Not "throw agents at it."</h2>
         <p class="section-copy">
-          I work best when the problem is already real: a costly bill, a risky
-          launch, a failing retrieval system, or a security surface growing
-          faster than the controls around it.
+          Define what done looks like. Let agents explore in parallel.
+          Use evals and senior judgment to pick the parts that actually work.
+          Ship the thing. Repeat.
         </p>
         <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
           <span>Start diagnostic call</span>
@@ -322,10 +331,11 @@ const fitSignals = [
           <p class="eyebrow">Dan Levy</p>
           <h2>Work directly with Dan Levy.</h2>
           <p>
-            I work with a small number of companies each year. The useful part
-            is senior judgment near the implementation: reviewing architecture,
-            talking with engineers, shaping the plan, and helping ship the
-            changes.
+            I work with a small number of companies each year. No account
+            managers, no junior handoffs — just senior judgment near the
+            implementation. Shaping agentic workflows, reviewing architecture,
+            building evals, and helping ship changes your team can actually
+            explain to each other.
           </p>
         </div>
       </div>
@@ -350,11 +360,11 @@ const fitSignals = [
     <div class="consulting-shell cta-grid">
       <div>
         <p class="eyebrow">Next step</p>
-        <h2>Bring the problem that keeps coming back.</h2>
+        <h2>Bring the system that feels too tangled to move.</h2>
         <p>
-          Bring the bill, launch risk, retrieval failure, security concern, or
-          platform decision your team keeps circling. We will identify the next
-          useful move quickly.
+          Bring the migration, agentic application, retrieval failure, security
+          concern, or platform decision your team keeps circling. We will turn
+          it into work agents can explore and tests can judge.
         </p>
         <div class="hero-actions">
           <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
@@ -735,6 +745,12 @@ const fitSignals = [
     padding: 1rem;
     position: absolute;
     right: 1.25rem;
+  }
+
+  .story-beat + .story-beat {
+    border-top: 1px solid var(--consulting-line);
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
   }
 
   .hero-insight-card span {
