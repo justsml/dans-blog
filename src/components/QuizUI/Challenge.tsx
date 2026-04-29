@@ -9,6 +9,7 @@ import {
 } from "react";
 import type { Option } from "./types";
 import { QuizContext } from "./QuizContext";
+import { QuizNavigationContext } from "./QuizUI";
 import classNames from "classnames";
 
 import { slugify } from "../../shared/pathHelpers.ts";
@@ -18,24 +19,16 @@ import { usePostHog } from "../PostHogEntry.tsx";
 
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
-// import { autoFit, reduceFontSizeOnOverflow } from "../../shared/autoFit.ts";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
-// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
-// const updateCodeBlocks = () => {
-//   const blocks = getPreBlocks();
-//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
-// }
-
-// const getPreBlocks = () => [...document.querySelectorAll<HTMLPreElement>(".challenge .expressive-code pre:has(code)")];
-// const updateCodeBlocks = () => {
-//   const blocks = getPreBlocks();
-//   blocks.map((el) => reduceFontSizeOnOverflow(el, 0.9));
-// }
 
 /**
- * Challenge component
+ * Challenge component with GSAP animations
  */
 export default function Challenge({
   children,
@@ -45,7 +38,6 @@ export default function Challenge({
   options,
   explanation,
   index: questionIndex,
-  // hints = [],
 }: {
   children: ReactNode[] | ReactNode;
   index: number;
@@ -57,19 +49,17 @@ export default function Challenge({
   difficulty?: "easy" | "medium" | "hard" | "expert" | string;
   objectives?: string[];
   standards?: string[];
-  // prerequisites?: string[];
-  // hints?: string[];
 }) {
   let questionStore: ReturnType<typeof QuestionStore> | null = null;
   const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
+  const { markAnswered, nextQuestion, totalQuestions, currentIndex } = useContext(QuizNavigationContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
   const [challengeClass, setChallengeClass] = useState<string>("untouched");
 
   const [isCorrect, setIsCorrect] = useState<boolean | undefined>(undefined);
-  // const [selectedOption, setSelectedOption] = useState<OptionSelection>({ text: "" });
   const [showExplanation, setShowExplanation] = useState<boolean>(false);
   const [explanationText, setExplanationText] = useState<string>(explanation!);
   const [tries, setTries] = useState<number>(0);
@@ -84,31 +74,9 @@ export default function Challenge({
     window?.__updateCounts();
   };
 
-  // const [clean]
-
-  // const reset = () => {
-  //   setIsCorrect(undefined);
-  //   setChallengeClass("untouched");
-  //   setShowExplanation(false);
-  // };
-
-  // useEffect(() => {
-
-  //   document.addEventListener("dblclick", updateCodeBlocks);
-
-  //   return () => document.removeEventListener("dblclick", updateCodeBlocks);
-  // }, []);
-
   useEffect(() => {
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
-
-    // if (global?.location?.pathname)
-    //   autoFit(`.challenge .expressive-code pre:has(code)`, {
-    //     fontMax: "2.05rem",
-    //     step: 0.1,
-    //     stepLimit: 25,
-    //   });
 
     const link = global?.location?.pathname ?? "";
     setPageLink(siteDomain + link);
@@ -119,14 +87,12 @@ export default function Challenge({
       questionStore = QuestionStore(global?.location.pathname);
 
     if (questionStore) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       questionStore.addQuestion({
         title,
         group,
         question,
         index: questionIndex,
       });
-      // console.log("Added question to store:", questionIndex, group, title);
       const isCorrect =
         questionStore?.isCorrect({
           index: questionIndex,
@@ -160,7 +126,6 @@ export default function Challenge({
   const [ignoreHintBy, setIgnoreHintBy] = useState<number>(IGNORE_HINTS);
 
   const handleAnswer = (option: Option) => {
-    // console.log("Answering question:", title, question, option);
     if (!questionStore)
       questionStore = QuestionStore(global?.location.pathname);
 
@@ -171,30 +136,75 @@ export default function Challenge({
       option,
     );
 
-    // console.log("Answered question:", title, option, {
-    //   __slug: questionStore.__slug,
-    //   sumOfTries: questionStore.sumOfTries(),
-    //   correct: questionStore.correct(),
-    //   total: questionStore.total(),
-    // });
-
-    // questionStore.total();
     setTries(questionStore.sumOfTries());
 
     setShowHint(false);
     if (option.isAnswer) {
-      setChallengeClass("correct pulse");
+      setChallengeClass("correct");
       setIsCorrect(true);
+      markAnswered(questionIndex, true);
+      
+      // Fire confetti effect
+      const effects = (window as any).__quizEffects;
+      if (effects?.fireConfetti) {
+        effects.fireConfetti();
+      }
+      
+      // Pulse animation with GSAP
+      if (challengeRef.current) {
+        gsap.fromTo(challengeRef.current, 
+          { scale: 1 },
+          { 
+            scale: 1.03, 
+            duration: 0.15, 
+            ease: "power2.out",
+            yoyo: true,
+            repeat: 1
+          }
+        );
+      }
+      
+      // Auto-advance to next question after a short delay
+      setTimeout(() => {
+        if (questionIndex < totalQuestions - 1) {
+          nextQuestion();
+        }
+      }, 1500);
     } else {
-      setChallengeClass("incorrect shake");
+      setChallengeClass("incorrect");
       setIsCorrect(false);
+      markAnswered(questionIndex, false);
+      
+      // Enhanced shake effect with GSAP
+      if (challengeRef.current) {
+        const effects = (window as any).__quizEffects;
+        if (effects?.triggerShake) {
+          effects.triggerShake(challengeRef.current);
+        } else {
+          // Fallback to GSAP shake
+          const tl = gsap.timeline();
+          for (let i = 0; i < 5; i++) {
+            const intensity = 1 - (i * 0.15);
+            tl.to(challengeRef.current, {
+              x: (i % 2 === 0 ? -1 : 1) * 12 * intensity,
+              rotation: (i % 2 === 0 ? -1 : 1) * 2 * intensity,
+              duration: 0.06,
+              ease: "power2.out"
+            });
+          }
+          tl.to(challengeRef.current, {
+            x: 0,
+            rotation: 0,
+            duration: 0.3,
+            ease: "elastic.out(1, 0.5)"
+          });
+        }
+      }
       // decrement ignoreHintBy
       if (ignoreHintBy > 0) {
-        console.log("Decrementing ignoreHintBy", ignoreHintBy);
         setIgnoreHintBy(ignoreHintBy - 1);
       }
       if (option.hint && ignoreHintBy < 1) {
-        // check if we should ignore hints -
         setShowHint(option.hint);
       }
     }
@@ -209,41 +219,51 @@ export default function Challenge({
   };
 
   useEffect(() => {
-    const hasAnimation =
-      challengeClass.includes("shake") || challengeClass.includes("pulse");
-
-    if (challengeClass && hasAnimation) {
-      const cssBefore = challengeClass
-        .split(" ")
-        .filter((c) => !["shake", "pulse"].includes(c));
-      setTimeout(() => {
-        setChallengeClass(cssBefore.join(" "));
-      }, 1000);
-    }
-  }, [challengeClass]);
-
-  useEffect(() => {
     if (challengeRef.current) {
       const e =
         challengeRef.current.querySelector("div.explanation")?.innerHTML;
       if (e) setExplanationText(e);
+
+      // apply size updates
+      requestAnimationFrame(() => {
+        const quizOptionPanel =
+          challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
+        if (!quizOptionPanel) return;
+
+        if (
+          quizOptionPanel &&
+          window?.__superHackFix_patchOptionsListWithActualHeight
+        )
+          window?.__superHackFix_patchOptionsListWithActualHeight([
+            quizOptionPanel,
+          ]);
+      });
     }
-
-    // apply size updates
-    requestAnimationFrame(() => {
-      const quizOptionPanel =
-        challengeRef.current?.querySelector?.<HTMLElement>(".quiz-options");
-      if (!quizOptionPanel) return;
-
-      if (
-        quizOptionPanel &&
-        window?.__superHackFix_patchOptionsListWithActualHeight
-      )
-        window?.__superHackFix_patchOptionsListWithActualHeight([
-          quizOptionPanel,
-        ]);
-    });
   }, [explanationText, challengeRef]);
+
+  // GSAP entrance animation for the question card
+  useGSAP(() => {
+    if (challengeRef.current) {
+      gsap.fromTo(
+        challengeRef.current,
+        {
+          autoAlpha: 0,
+          y: 40,
+          scale: 0.95,
+          rotationX: -8,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          rotationX: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          clearProps: "transform",
+        }
+      );
+    }
+  }, { scope: challengeRef, dependencies: [currentIndex, questionIndex] });
 
   const sequenceNum = (questionIndex ?? 0) + 1;
 
@@ -258,15 +278,6 @@ export default function Challenge({
     );
   }
 
-  // Sorta supported, **only need to select one correct answer**
-  // if (correctCount >= 2) {
-  //   console.error("NotYetSupported: Multiple correct answers found for question:",
-  //     question,
-  //     title,
-  //     options,
-  //   );
-  // }
-
   const _options = options
     .map((option) => {
       const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
@@ -274,7 +285,6 @@ export default function Challenge({
       if (isCorrect && !option.isAnswer) return null;
 
       const _showHint = option.hint === showHint ? showHint : false;
-      // console.log("Option", option, _showHint)
       return (
         <a
           key={option.text}
@@ -282,17 +292,10 @@ export default function Challenge({
             "option",
             {
               "correct-answer": isCurrentOptionCorrectAnswer,
-              // "slideOutRight": isCorrect && !option.isAnswer,
             },
             "mx-auto",
           )}
           onClick={() => !isCorrect && handleAnswer(option)}
-          // onTransitionEnd={(e) => {
-          //   if (isCorrect && !option.isAnswer) {
-          //     document.removeChild(e.currentTarget!)
-          //     // setChallengeClass(challengeClass.concat(" answerAnimationEnded"));
-          //   }
-          // }}
         >
           <label>{option.text}</label>
           <HintTooltip
@@ -313,7 +316,7 @@ export default function Challenge({
   return (
     <div
       id={`qq-${sequenceNum}`}
-      className={clsx("challenge", challengeClass)}
+      className={clsx("challenge challenge-modern", challengeClass)}
       ref={challengeRef}
       data-answer-count={tries}
       data-question-correct={isCorrect}
@@ -364,8 +367,6 @@ export default function Challenge({
                 target.getAttributeNames(),
               );
 
-              // const isAbs = isAbsoluteElement({target});
-
               const link: HTMLAnchorElement | null =
                 target.tagName === "A"
                   ? (target as HTMLAnchorElement)
@@ -376,7 +377,6 @@ export default function Challenge({
               const isInCodeBlock = target.closest("code, pre");
               const isInParagraph = target.closest("p");
               if (isTopRight) {
-                // console.log("TOP RIGHT CLOSE")
                 setShowExplanation(false);
                 return false;
               }
@@ -432,45 +432,3 @@ function isTopRightCorner(
   }
   return false;
 }
-
-// function isAbsoluteElement({
-//   target,
-//   pseudo = "::before",
-// }: {
-//   target: EventTarget | null;
-//   pseudo?: string;
-// }) {
-//   if (!target) return false;
-
-//   const before = getComputedStyle(target as HTMLElement, pseudo);
-//   if (before) {
-//     // Then we parse out the dimensions
-//     const top = Number(before.getPropertyValue("top").slice(0, -2));
-//     const bottom = Number(before.getPropertyValue("bottom").slice(0, -2));
-//     const left = Number(before.getPropertyValue("left").slice(0, -2));
-//     const right = Number(before.getPropertyValue("right").slice(0, -2));
-
-//     const width = Number(before.getPropertyValue("width").slice(0, -2));
-//     const height = Number(before.getPropertyValue("height").slice(0, -2));
-//     console.log("isAbsolute %o", {
-//       top,
-//       bottom,
-//       left,
-//       right,
-//       width,
-//       height,
-//     });
-//     // And get the mouse position (layerX and layerY are relative to the target)
-//     // Finally we do a bounds check (Is the mouse inside of the before element)
-//     if (
-//       Number.isNaN(left) ||
-//       Number.isNaN(top) ||
-//       Number.isNaN(bottom) ||
-//       Number.isNaN(right)
-//     ) {
-//       return false;
-//     }
-
-//   }
-//   return true;
-// }
