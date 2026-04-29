@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
-import { fixSlugPrefix } from "../shared/pathHelpers";
+import { getSlugFromId } from "../shared/pathHelpers";
 import { isVisiblePost } from "../shared/postVisibility";
 
 export async function GET(context: any) {
@@ -41,8 +41,8 @@ export async function GET(context: any) {
       categories: [post.data.category, post.data.subCategory, ...(post.data.tags ?? [])].filter(Boolean),
       category: post.data.category,
       cover: post.data?.cover?.src,
-      slug: fixSlugPrefix(post.slug),
-      link: `/${fixSlugPrefix(post.slug)}/`,
+      slug: getSlugFromId(post.id),
+      link: `/${getSlugFromId(post.id)}/`,
     })),
   }), { status: 200, headers: { "Content-Type": "application/json" } });
 }

@@ -1,13 +1,15 @@
-import { CollectionEntry } from "astro:content";
 import * as fs from "fs";
 import { resolve, dirname, join } from "path";
 
 export function autoRegisterRedirects({
   slug,
   data: { redirects },
-}: CollectionEntry<"posts">) {
+}: {
+  slug: string;
+  data: { redirects?: string[] };
+}) {
   // use project root to load /public/_redirects
-  const root = resolve(dirname(new URL(import.meta.url).pathname), "../../");
+  const root = process.cwd();
   const redirectsPath = join(root, "public/_redirects");
   const redMan = new RedirectManager(redirectsPath);
   // Redirect paths in `redirects` array to the `slug` path

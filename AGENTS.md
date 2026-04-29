@@ -191,7 +191,9 @@ Redirects auto-generate during build.
 5. MDX rendered to HTML with React components
 6. Images optimized (Sharp)
 7. Code highlighting applied (Expressive Code, Dracula theme)
-8. Search indexes built (Orama, Pagefind)
+8. Search index built (Pagefind)
+
+**Search**: Pagefind is the only supported search index. Do not work on or maintain compatibility with Orama, LanceDB, or any other search implementations. These are experimental and not supported.
 9. Static HTML output to `dist/`
 
 ## Key Files

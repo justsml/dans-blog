@@ -1,7 +1,7 @@
 import rss from "@astrojs/rss";
 import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
-import { fixSlugPrefix } from "../shared/pathHelpers";
+import { getSlugFromId } from "../shared/pathHelpers";
 import type { APIContext } from 'astro';
 import { isVisiblePost } from "../shared/postVisibility";
 
@@ -41,7 +41,7 @@ export async function GET(context: APIContext) {
       categories: [post.data.category, ...(post.data.tags ?? [])],
       category: post.data.category,
       cover: post.data?.cover?.src,
-      link: `/${fixSlugPrefix(post.slug)}/`,
+      link: `/${getSlugFromId(post.id)}/`,
     })),
   });
 }

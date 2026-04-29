@@ -1,5 +1,5 @@
 import { getCollection } from "astro:content";
-import { fixSlugPrefix, slugify } from "./pathHelpers.ts";
+import { fixSlugPrefix, getSlugFromId, slugify } from "./pathHelpers.ts";
 import type { ArticlePost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
 import { isRoutablePost, isVisiblePost } from "./postVisibility.ts";
@@ -16,7 +16,7 @@ const _postsCollection: ArticlePost[] = (
 
 const _posts = _postsCollection.map((post) => ({
   ...post,
-  slug: fixSlugPrefix(post.slug),
+  slug: getSlugFromId(post.id),
 }));
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
