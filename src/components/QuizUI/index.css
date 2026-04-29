@@ -432,6 +432,19 @@ html {
     /* margin: 1rem 0; */
   }
 
+  .quiz-body-panel {
+    box-sizing: border-box;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    overflow-x: clip;
+    overflow-y: visible;
+    scrollbar-width: none;
+  }
+
+  .quiz-body-panel::-webkit-scrollbar {
+    display: none;
+  }
+
   .option {
     box-sizing: border-box;
     min-inline-size: 0;
@@ -1020,6 +1033,88 @@ html {
   box-shadow: 0 0 12px rgba(130, 255, 157, 0.6);
 }
 
+.quiz-completion-card {
+  position: fixed;
+  left: 50%;
+  bottom: 4.5rem;
+  width: min(420px, calc(100vw - 2rem));
+  padding: 1.1rem 1.25rem 1.2rem;
+  overflow: hidden;
+  border: 1px solid rgba(130, 255, 157, 0.28);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(255, 217, 61, 0.16), transparent 28%),
+    linear-gradient(145deg, rgba(18, 26, 33, 0.98) 0%, rgba(35, 40, 48, 0.98) 100%);
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  color: rgba(250, 250, 250, 0.96);
+  text-align: center;
+  transform: translateX(-50%);
+  z-index: 25;
+  pointer-events: none;
+}
+
+.quiz-completion-card[hidden] {
+  display: none;
+}
+
+.quiz-completion-card__shine {
+  position: absolute;
+  inset: -45% auto auto -25%;
+  width: 55%;
+  height: 180%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+  transform: rotate(18deg);
+  animation: quizCompletionShine 1.15s ease-out 0.16s both;
+}
+
+.quiz-completion-card__eyebrow {
+  margin-bottom: 0.25rem;
+  color: rgba(130, 255, 157, 0.82);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.quiz-completion-card__title {
+  font-size: clamp(1.55rem, 5vw, 2.15rem);
+  font-weight: 850;
+  line-height: 1.05;
+}
+
+.quiz-completion-card__misses {
+  margin-top: 0.45rem;
+  color: rgba(210, 210, 210, 0.68);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@keyframes quizCompletionShine {
+  from {
+    opacity: 0;
+    translate: -30% 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    translate: 270% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quiz-completion-card__shine {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* Question slides - using astro-island elements directly */
 .quiz-ui astro-island.quiz-slide {
   display: block;
@@ -1190,7 +1285,8 @@ html {
 
 .challenge-modern .option:hover:not(.correct-answer) {
   background: rgba(255, 255, 255, 0.06);
-  transform: translateX(3px);
+  transform: translate3d(0, -1px, 0);
+  box-shadow: inset 3px 0 0 rgba(130, 255, 157, 0.3);
 }
 
 /* Correct answer highlight */

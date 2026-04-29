@@ -22,81 +22,180 @@ const serviceVisuals: Record<string, { accent: string; mark: string; image: stri
   "ai-consulting": {
     accent: "cyan",
     mark: "AI",
-    image: "/images/consulting/service-ai-consulting.png",
+    image: "/images/consulting/service-ai-consulting.webp",
   },
   "ai-guardrails": {
     accent: "coral",
     mark: "GR",
-    image: "/images/consulting/service-ai-guardrails.png",
+    image: "/images/consulting/service-ai-guardrails.webp",
   },
   "supabase-scaling-migration": {
     accent: "amber",
     mark: "SB",
-    image: "/images/consulting/service-supabase.png",
+    image: "/images/consulting/service-supabase.webp",
   },
   "rag-rescue": {
     accent: "cyan",
     mark: "RG",
-    image: "/images/consulting/service-rag.png",
+    image: "/images/consulting/service-rag.webp",
   },
   "developer-ai-coding-security": {
     accent: "coral",
     mark: "CS",
-    image: "/images/consulting/service-coding-security.png",
+    image: "/images/consulting/service-coding-security.webp",
   },
   "enterprise-security-assessment": {
     accent: "amber",
     mark: "ES",
-    image: "/images/consulting/service-enterprise-security.png",
+    image: "/images/consulting/service-enterprise-security.webp",
   },
 };
 
 const processSteps = [
   {
     title: "Diagnose",
-    body: "We start with the real architecture, traces, bills, incidents, and workflow friction.",
+    body: "Start with architecture, traces, bills, incidents, and workflow friction.",
   },
   {
-    title: "Model the tradeoffs",
-    body: "I separate high-leverage fixes from distractions and make cost, risk, quality, and effort visible.",
+    title: "Map tradeoffs",
+    body: "Separate high-leverage fixes from distractions and make cost, risk, quality, and effort visible.",
   },
   {
-    title: "Ship the fix",
-    body: "The engagement stays close to implementation so your team leaves with changes, not just advice.",
+    title: "Ship changes",
+    body: "Stay close to implementation so your team leaves with working changes, not just advice.",
   },
   {
-    title: "Measure what changed",
-    body: "We compare against the baseline and leave behind the observability and handoff notes to keep improving.",
+    title: "Measure",
+    body: "Compare against the baseline and leave observability notes your team can keep using.",
   },
+];
+
+const serviceSummaries: Record<string, string> = {
+  "ai-consulting":
+    "Clarify AI architecture, model routing, token cost, observability, and production tradeoffs.",
+  "ai-guardrails":
+    "Add practical safety controls, policy checks, and review paths without slowing the product team.",
+  "supabase-scaling-migration":
+    "Reduce hosted-platform cost and migration risk before growth makes the stack harder to move.",
+  "rag-rescue":
+    "Diagnose retrieval drift, weak grounding, and document-scale failures in production RAG systems.",
+  "developer-ai-coding-security":
+    "Harden AI-assisted coding workflows, sandboxes, repository access, credentials, and CI/CD.",
+  "enterprise-security-assessment":
+    "Review application, cloud, identity, workflow, AI exposure, and organizational security risk.",
+};
+
+const trustSignals = [
+  {
+    value: "$22.5K/mo",
+    label: "auth spend removed before a major growth push",
+  },
+  {
+    value: "14x",
+    label: "user growth absorbed after the migration",
+  },
+  {
+    value: "25-50K",
+    label: "documents where retrieval quality started to fail",
+  },
+  {
+    value: "Senior-only",
+    label: "you work directly with the person doing the work",
+  },
+];
+
+const proofPoints = [
+  "Reviews grounded in code, traces, invoices, and incidents",
+  "Implementation support for the fixes that matter most",
+  "Clear tradeoff notes for engineering and leadership",
+];
+
+const caseProofs = consultingServices
+  .filter((service) => service.caseStudy)
+  .map((service) => ({
+    service: service.navTitle,
+    ...service.caseStudy!,
+  }));
+
+const fitSignals = [
+  "A production AI feature is getting expensive or hard to explain",
+  "A launch, migration, audit, or growth event has raised the risk",
+  "You need senior judgment without adding a full-time seat",
 ];
 ---
 
 <Layout frontmatter={{ title, subTitle: description }}>
   <section class="consulting-hero full-section">
+    <div class="consulting-shell consulting-practice-bar">
+      <a class="practice-home" href="/">
+        <span class="practice-mark">DL</span>
+        <span>
+          <strong>DanLevy.net</strong>
+          <small>Return to the writing</small>
+        </span>
+      </a>
+      <div class="practice-divider" aria-hidden="true"></div>
+      <span class="practice-label">Consulting practice</span>
+    </div>
+
     <div class="consulting-shell hero-grid">
       <div class="hero-copy">
         <p class="eyebrow">Independent senior consulting</p>
-        <h1>Senior architecture for hard problems.</h1>
+        <h1>Senior engineering judgment for critical systems.</h1>
         <p class="hero-sub">
-          AI systems, security reviews, retrieval rescue, platform migrations,
-          and developer workflow hardening from one senior engineer.
+          I help teams make high-stakes architecture decisions in AI, security,
+          retrieval, platform migration, and developer workflow.
         </p>
         <div class="hero-actions">
           <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
-            Book a diagnostic call
+            <span>Book diagnostic call</span>
+            <span class="btn-icon" aria-hidden="true">↗</span>
           </a>
-          <a href="#services" class="btn btn-secondary">View services</a>
+          <a href="#services" class="btn btn-secondary">See services</a>
         </div>
+        <ul class="hero-proof" aria-label="Engagement proof">
+          {proofPoints.map((point) => <li>{point}</li>)}
+        </ul>
       </div>
 
-      <div class="hero-art" aria-hidden="true">
-        <img
-          src="/images/consulting/consulting-hero.png"
-          alt=""
-          loading="eager"
-          decoding="async"
-        />
+      <div class="hero-visual-stack">
+        <div class="hero-art" aria-hidden="true">
+          <img
+            src="/images/consulting/consulting-hero-workbench.webp"
+            alt=""
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+        <div class="hero-insight-card">
+          <span>Common starting point</span>
+          <strong>"We shipped quickly. Now the system is expensive to reason about."</strong>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <section class="trust-section full-section" aria-labelledby="trust-heading">
+    <div class="consulting-shell trust-grid">
+      <div>
+        <p class="eyebrow">Trust model</p>
+        <h2 id="trust-heading">Make the system legible before changing it.</h2>
+      </div>
+      <div class="trust-copy">
+        <p>
+          The work starts with the facts your team already has: traces, bills,
+          incidents, prompts, schemas, CI behavior, and failure cases. From
+          there, the tradeoffs become visible enough to act on.
+        </p>
+      </div>
+    </div>
+    <div class="consulting-shell trust-metrics" aria-label="Consulting proof points">
+      {trustSignals.map((signal) => (
+        <article class="trust-metric">
+          <strong>{signal.value}</strong>
+          <span>{signal.label}</span>
+        </article>
+      ))}
     </div>
   </section>
 
@@ -104,10 +203,10 @@ const processSteps = [
     <div class="consulting-shell">
       <div class="section-heading">
         <p class="eyebrow">Services</p>
-        <h2>Services for hard engineering inflection points.</h2>
+        <h2>Focused consulting for expensive technical decisions.</h2>
         <p>
-          Focused senior help when the bill, the risk, or the architecture
-          starts moving faster than the team can comfortably reason about.
+          Senior help when the cost, risk, or architecture has become too
+          important to handle with guesses.
         </p>
       </div>
 
@@ -117,13 +216,13 @@ const processSteps = [
           return (
             <a class={`featured-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
               <div class="card-image" aria-hidden="true">
-                <img src={visual.image} alt="" loading="lazy" decoding="async" />
+                <img src={visual.image} alt="" loading="eager" decoding="async" />
               </div>
               <div class="service-mark">{visual.mark}</div>
               <p class="card-kicker">{service.kicker}</p>
               <h3>{service.navTitle}</h3>
-              <p>{service.description}</p>
-              <span>Explore service</span>
+              <p>{serviceSummaries[service.slug] ?? service.description}</p>
+              <span class="card-link">Explore service <span aria-hidden="true">→</span></span>
             </a>
           );
         })}
@@ -134,21 +233,44 @@ const processSteps = [
           const visual = serviceVisuals[service.slug] ?? {
             accent: "cyan",
             mark: service.navTitle.slice(0, 2).toUpperCase(),
-          image: "/images/consulting/service-ai-consulting.png",
+            image: "/images/consulting/service-ai-consulting.webp",
           };
           return (
             <a class={`service-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
               <div class="supporting-image" aria-hidden="true">
-                <img src={visual.image} alt="" loading="lazy" decoding="async" />
+                <img src={visual.image} alt="" loading="eager" decoding="async" />
               </div>
               <div class="service-mark">{visual.mark}</div>
               <p class="card-kicker">{service.kicker}</p>
               <h3>{service.navTitle}</h3>
-              <p>{service.description}</p>
-              <span>Explore service</span>
+              <p>{serviceSummaries[service.slug] ?? service.description}</p>
+              <span class="card-link">Explore service <span aria-hidden="true">→</span></span>
             </a>
           );
         })}
+      </div>
+    </div>
+  </section>
+
+  <section class="consulting-section proof-section full-section">
+    <div class="consulting-shell proof-grid">
+      <div class="section-heading sticky-heading">
+        <p class="eyebrow">Evidence</p>
+        <h2>Concrete problems. Measurable outcomes.</h2>
+        <p>
+          The best engagements start with a live system, a real constraint, and
+          a decision that has become expensive to delay.
+        </p>
+      </div>
+      <div class="case-stack">
+        {caseProofs.map((item) => (
+          <article class="case-card">
+            <p class="card-kicker">{item.label} · {item.service}</p>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <strong>{item.highlight}</strong>
+          </article>
+        ))}
       </div>
     </div>
   </section>
@@ -157,22 +279,23 @@ const processSteps = [
     <div class="consulting-shell process-grid">
       <div>
         <p class="eyebrow">How I work</p>
-        <h2>From diagnosis to shipped leverage.</h2>
+        <h2>From diagnosis to shipped change.</h2>
         <p class="section-copy">
-          I work best when the problem is already real: a bill with teeth, a
-          launch with risk, a retrieval system wobbling, or a security surface
-          growing faster than the controls around it.
+          I work best when the problem is already real: a costly bill, a risky
+          launch, a failing retrieval system, or a security surface growing
+          faster than the controls around it.
         </p>
         <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
-          Start with a diagnostic call
+          <span>Start diagnostic call</span>
+          <span class="btn-icon" aria-hidden="true">↗</span>
         </a>
       </div>
 
       <div class="process-panel">
         <img
-          src="/images/consulting/service-rag.png"
+          src="/images/consulting/service-rag.webp"
           alt=""
-          loading="lazy"
+          loading="eager"
           decoding="async"
           aria-hidden="true"
         />
@@ -197,12 +320,12 @@ const processSteps = [
         <div class="about-avatar">DL</div>
         <div>
           <p class="eyebrow">Dan Levy</p>
-          <h2>You get the person doing the work.</h2>
+          <h2>Work directly with Dan Levy.</h2>
           <p>
-            I am a software engineer and architect who works directly with a
-            small number of companies each year. The useful bit is senior
-            judgment close to the code: reviewing architecture, talking with
-            engineers, shaping the plan, and helping the team ship the changes.
+            I work with a small number of companies each year. The useful part
+            is senior judgment near the implementation: reviewing architecture,
+            talking with engineers, shaping the plan, and helping ship the
+            changes.
           </p>
         </div>
       </div>
@@ -215,30 +338,37 @@ const processSteps = [
         <span>Security</span>
       </div>
     </div>
+    <div class="consulting-shell fit-panel">
+      <p class="eyebrow">Good fit</p>
+      <div class="fit-list">
+        {fitSignals.map((signal) => <p>{signal}</p>)}
+      </div>
+    </div>
   </section>
 
   <section class="consulting-cta full-section">
     <div class="consulting-shell cta-grid">
       <div>
         <p class="eyebrow">Next step</p>
-        <h2>Bring the hard problem.</h2>
+        <h2>Bring the problem that keeps coming back.</h2>
         <p>
-          Bring the confusing bill, the brittle launch, the retrieval failure,
-          the security concern, or the platform decision your team keeps
-          circling. We will find the useful next move fast.
+          Bring the bill, launch risk, retrieval failure, security concern, or
+          platform decision your team keeps circling. We will identify the next
+          useful move quickly.
         </p>
         <div class="hero-actions">
           <a href={INTRO_CALL_LINK} class="btn btn-primary" target="_blank" rel="noopener">
-            Book a diagnostic call
+            <span>Book diagnostic call</span>
+            <span class="btn-icon" aria-hidden="true">↗</span>
           </a>
           <a href="/" class="btn btn-secondary">Read the writing</a>
         </div>
       </div>
       <div class="cta-art" aria-hidden="true">
         <img
-          src="/images/consulting/service-enterprise-security.png"
+          src="/images/consulting/service-enterprise-security.webp"
           alt=""
-          loading="lazy"
+          loading="eager"
           decoding="async"
         />
       </div>
@@ -248,19 +378,21 @@ const processSteps = [
 
 <style>
   :root {
-    --consulting-bg: #050607;
+    --consulting-bg: #05080b;
     --consulting-ink: #f4f0e8;
-    --consulting-muted: rgba(244, 240, 232, 0.7);
-    --consulting-soft: rgba(244, 240, 232, 0.48);
+    --consulting-muted: rgba(244, 240, 232, 0.72);
+    --consulting-soft: rgba(244, 240, 232, 0.54);
     --consulting-line: rgba(244, 240, 232, 0.11);
     --consulting-panel: rgba(244, 240, 232, 0.045);
     --consulting-panel-strong: rgba(244, 240, 232, 0.075);
-    --consulting-cyan: #25d6c4;
-    --consulting-coral: #ff7f67;
+    --consulting-cyan: #28e8df;
+    --consulting-coral: #ff73c9;
     --consulting-amber: #d8a84b;
     --consulting-radius: 18px;
     --consulting-radius-sm: 10px;
-    --consulting-shadow: 0 28px 90px rgba(0, 0, 0, 0.5);
+    --consulting-shadow: 0 28px 90px rgba(0, 18, 28, 0.58);
+    --consulting-motion: 520ms cubic-bezier(0.32, 0.72, 0, 1);
+    --consulting-font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
   }
 
   .full-section {
@@ -270,12 +402,13 @@ const processSteps = [
 
   .consulting-hero,
   .consulting-section,
-  .consulting-cta {
+  .consulting-cta,
+  .trust-section {
     background:
       linear-gradient(rgba(244, 240, 232, 0.035) 1px, transparent 1px),
       linear-gradient(90deg, rgba(244, 240, 232, 0.035) 1px, transparent 1px),
-      radial-gradient(circle at 15% 12%, rgba(37, 214, 196, 0.13), transparent 30rem),
-      radial-gradient(circle at 88% 18%, rgba(255, 127, 103, 0.1), transparent 26rem),
+      radial-gradient(circle at 15% 12%, rgba(40, 232, 223, 0.14), transparent 30rem),
+      radial-gradient(circle at 88% 18%, rgba(255, 115, 201, 0.1), transparent 26rem),
       var(--consulting-bg);
     background-size: 56px 56px, 56px 56px, auto, auto, auto;
     color: var(--consulting-ink);
@@ -291,10 +424,97 @@ const processSteps = [
     overflow: hidden;
   }
 
+  .consulting-hero::after {
+    background: linear-gradient(90deg, transparent, rgba(40, 232, 223, 0.75), rgba(255, 115, 201, 0.62), transparent);
+    content: "";
+    display: block;
+    height: 1px;
+    margin: clamp(4rem, 7vw, 6rem) auto 0;
+    opacity: 0.58;
+    width: min(1180px, calc(100% - 3rem));
+  }
+
+  .consulting-practice-bar {
+    align-items: center;
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+    margin-bottom: clamp(3rem, 6vw, 5.5rem);
+  }
+
+  .practice-home {
+    align-items: center;
+    background: rgba(244, 240, 232, 0.045);
+    border: 1px solid var(--consulting-line);
+    border-radius: 999px;
+    color: var(--consulting-ink);
+    display: inline-flex;
+    gap: 0.85rem;
+    padding: 0.55rem 1rem 0.55rem 0.55rem;
+    text-decoration: none;
+    transition: border-color var(--consulting-motion), background var(--consulting-motion), transform var(--consulting-motion);
+  }
+
+  .practice-home:hover {
+    background: rgba(244, 240, 232, 0.07);
+    border-color: rgba(37, 214, 196, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .practice-mark {
+    align-items: center;
+    background: linear-gradient(135deg, rgba(37, 214, 196, 0.2), rgba(255, 127, 103, 0.13));
+    border: 1px solid rgba(244, 240, 232, 0.13);
+    border-radius: 50%;
+    display: flex;
+    flex: 0 0 auto;
+    font-size: 0.76rem;
+    font-weight: 800;
+    height: 2.25rem;
+    justify-content: center;
+    letter-spacing: 0.02em;
+    width: 2.25rem;
+  }
+
+  .practice-home strong,
+  .practice-home small {
+    display: block;
+    line-height: 1.1;
+  }
+
+  .practice-home strong {
+    font-size: 0.9rem;
+    letter-spacing: -0.01em;
+  }
+
+  .practice-home small {
+    color: var(--consulting-soft);
+    font-size: 0.72rem;
+    font-weight: 650;
+    margin-top: 0.18rem;
+  }
+
+  .practice-divider {
+    background: linear-gradient(90deg, rgba(244, 240, 232, 0.28), transparent);
+    height: 1px;
+    max-width: 12rem;
+    flex: 1 1 8rem;
+  }
+
+  .practice-label {
+    color: var(--consulting-soft);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
   .hero-grid,
   .process-grid,
   .about-grid,
-  .cta-grid {
+  .cta-grid,
+  .trust-grid,
+  .proof-grid {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     gap: clamp(2rem, 5vw, 4.5rem);
@@ -304,12 +524,17 @@ const processSteps = [
   .eyebrow,
   .card-kicker {
     color: var(--consulting-cyan);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 0.74rem;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    margin: 0 0 1rem;
+    font-family: var(--consulting-font);
+    font-size: 0.72rem;
+    font-weight: 650;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 1.15rem;
     text-transform: uppercase;
+  }
+
+  .eyebrow {
+    color: rgba(40, 232, 223, 0.88);
   }
 
   h1,
@@ -317,8 +542,10 @@ const processSteps = [
   h3,
   p,
   a,
-  span {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  span,
+  strong,
+  li {
+    font-family: var(--consulting-font);
   }
 
   h1,
@@ -330,31 +557,35 @@ const processSteps = [
   }
 
   h1 {
-    max-width: 800px;
+    max-width: 720px;
     color: var(--consulting-ink);
-    font-size: clamp(3.1rem, 6.2vw, 5.6rem);
-    font-weight: 760;
-    letter-spacing: -0.055em;
-    line-height: 0.94;
-    margin-bottom: 1.4rem;
+    font-size: clamp(3.25rem, 6.1vw, 5.65rem);
+    font-weight: 590;
+    letter-spacing: -0.058em;
+    line-height: 0.95;
+    margin-bottom: 1.55rem;
+    text-wrap: balance;
   }
 
   h2 {
     color: var(--consulting-ink);
-    font-size: clamp(2.3rem, 4.7vw, 4.6rem);
-    font-weight: 740;
-    letter-spacing: -0.05em;
-    line-height: 0.96;
-    margin-bottom: 1rem;
+    font-size: clamp(2.45rem, 4.8vw, 4.8rem);
+    font-weight: 620;
+    letter-spacing: -0.058em;
+    line-height: 0.98;
+    margin-bottom: 1.05rem;
+    max-width: 13ch;
+    text-wrap: balance;
   }
 
   h3 {
     color: var(--consulting-ink);
-    font-size: clamp(1.18rem, 1.5vw, 1.42rem);
-    font-weight: 700;
-    letter-spacing: -0.025em;
-    line-height: 1.08;
-    margin-bottom: 0.7rem;
+    font-size: clamp(1.08rem, 1.35vw, 1.34rem);
+    font-weight: 610;
+    letter-spacing: -0.027em;
+    line-height: 1.12;
+    margin-bottom: 0.72rem;
+    text-wrap: balance;
   }
 
   .hero-sub,
@@ -363,14 +594,45 @@ const processSteps = [
   .consulting-cta p,
   .about-card p {
     color: var(--consulting-muted);
-    font-size: clamp(1.04rem, 1.6vw, 1.25rem);
-    line-height: 1.65;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.02rem, 1.42vw, 1.16rem);
+    font-weight: 420;
+    line-height: 1.58;
+    letter-spacing: -0.014em;
   }
 
   .hero-sub {
+    max-width: 590px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-proof {
+    display: grid;
+    gap: 0.85rem;
+    list-style: none;
+    margin: 2rem 0 0;
     max-width: 620px;
-    margin-bottom: 2.2rem;
+    padding: 0;
+  }
+
+  .hero-proof li {
+    color: rgba(244, 240, 232, 0.58);
+    font-size: 0.88rem;
+    font-weight: 430;
+    line-height: 1.45;
+    padding-left: 1.35rem;
+    position: relative;
+  }
+
+  .hero-proof li::before {
+    background: linear-gradient(135deg, var(--consulting-cyan), var(--consulting-coral));
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(40, 232, 223, 0.28);
+    content: "";
+    height: 0.48rem;
+    left: 0;
+    position: absolute;
+    top: 0.48rem;
+    width: 0.48rem;
   }
 
   .hero-actions {
@@ -383,19 +645,31 @@ const processSteps = [
     align-items: center;
     border-radius: 999px;
     display: inline-flex;
+    gap: 0.65rem;
     font-size: 0.96rem;
-    font-weight: 700;
+    font-weight: 620;
     justify-content: center;
     min-height: 3.25rem;
-    padding: 0.95rem 1.35rem;
+    padding: 0.72rem 0.82rem 0.72rem 1.35rem;
     text-decoration: none;
-    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+    transition: border-color var(--consulting-motion), box-shadow var(--consulting-motion), transform var(--consulting-motion), background var(--consulting-motion);
   }
 
   .btn-primary {
     background: var(--consulting-ink);
-    box-shadow: 0 14px 45px rgba(37, 214, 196, 0.16);
+    box-shadow: 0 14px 45px rgba(40, 232, 223, 0.18);
     color: #050607;
+  }
+
+  .btn-icon {
+    align-items: center;
+    background: rgba(5, 6, 7, 0.09);
+    border-radius: 50%;
+    display: inline-flex;
+    height: 2rem;
+    justify-content: center;
+    transition: transform var(--consulting-motion), background var(--consulting-motion);
+    width: 2rem;
   }
 
   .btn-primary:hover,
@@ -403,10 +677,24 @@ const processSteps = [
     transform: translateY(-2px);
   }
 
+  .btn-primary:hover .btn-icon {
+    background: rgba(5, 6, 7, 0.14);
+    transform: translate(2px, -1px);
+  }
+
+  .btn:active {
+    transform: translateY(0) scale(0.985);
+  }
+
   .btn-secondary {
     background: rgba(244, 240, 232, 0.055);
     border: 1px solid var(--consulting-line);
     color: var(--consulting-ink);
+    padding: 0.95rem 1.35rem;
+  }
+
+  .hero-visual-stack {
+    position: relative;
   }
 
   .hero-art,
@@ -420,8 +708,52 @@ const processSteps = [
   }
 
   .hero-art {
-    aspect-ratio: 1 / 0.82;
+    aspect-ratio: 16 / 10;
     transform: rotate(1deg);
+  }
+
+  .hero-art::after,
+  .cta-art::after,
+  .card-image::after,
+  .supporting-image::after {
+    background: linear-gradient(135deg, rgba(40, 232, 223, 0.16), transparent 38%, rgba(255, 115, 201, 0.12));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .hero-insight-card {
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.1), rgba(244, 240, 232, 0.045)),
+      rgba(5, 8, 11, 0.94);
+    border: 1px solid rgba(244, 240, 232, 0.14);
+    border-radius: 14px;
+    bottom: -1.5rem;
+    box-shadow: 0 20px 70px rgba(0, 18, 28, 0.62);
+    max-width: 20rem;
+    padding: 1rem;
+    position: absolute;
+    right: 1.25rem;
+  }
+
+  .hero-insight-card span {
+    color: var(--consulting-cyan);
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 680;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.45rem;
+    text-transform: uppercase;
+  }
+
+  .hero-insight-card strong {
+    color: var(--consulting-ink);
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 560;
+    letter-spacing: -0.018em;
+    line-height: 1.34;
   }
 
   .hero-art img,
@@ -435,19 +767,80 @@ const processSteps = [
     width: 100%;
   }
 
-  .consulting-section {
+  .consulting-section,
+  .trust-section {
     border-top: 1px solid var(--consulting-line);
     padding: clamp(4.5rem, 8vw, 7rem) 0;
   }
 
+  .trust-section {
+    background:
+      radial-gradient(circle at 18% 10%, rgba(40, 232, 223, 0.11), transparent 24rem),
+      radial-gradient(circle at 80% 90%, rgba(255, 115, 201, 0.09), transparent 28rem),
+      #071017;
+  }
+
+  .trust-grid {
+    align-items: end;
+    grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+    margin-bottom: 2rem;
+  }
+
+  .trust-copy p {
+    color: var(--consulting-muted);
+    font-size: clamp(1rem, 1.35vw, 1.12rem);
+    font-weight: 420;
+    line-height: 1.58;
+    margin-bottom: 0;
+  }
+
+  .trust-metrics {
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid var(--consulting-line);
+    border-radius: var(--consulting-radius);
+    background: var(--consulting-line);
+    box-shadow: var(--consulting-shadow);
+  }
+
+  .trust-metric {
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.075), rgba(244, 240, 232, 0.028)),
+      var(--consulting-bg);
+    min-height: 12rem;
+    padding: clamp(1rem, 2vw, 1.35rem);
+  }
+
+  .trust-metric strong {
+    color: var(--consulting-ink);
+    display: block;
+    font-family: var(--consulting-font);
+    font-size: clamp(1.7rem, 3vw, 2.45rem);
+    font-variant-numeric: tabular-nums;
+    font-weight: 560;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+    margin-bottom: 1rem;
+  }
+
+  .trust-metric span {
+    color: var(--consulting-muted);
+    display: block;
+    font-size: 0.86rem;
+    font-weight: 420;
+    line-height: 1.42;
+  }
+
   .section-heading {
     margin-bottom: clamp(2rem, 4vw, 3.25rem);
-    max-width: 820px;
+    max-width: 980px;
   }
 
   .section-heading p,
   .section-copy {
-    max-width: 700px;
+    max-width: 660px;
   }
 
   .featured-services {
@@ -465,13 +858,14 @@ const processSteps = [
     overflow: hidden;
     position: relative;
     text-decoration: none;
-    transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+    transition: border-color var(--consulting-motion), transform var(--consulting-motion), background var(--consulting-motion), box-shadow var(--consulting-motion);
   }
 
   .featured-card:hover,
   .service-card:hover {
     background: linear-gradient(180deg, rgba(244, 240, 232, 0.1), rgba(244, 240, 232, 0.045));
     border-color: rgba(244, 240, 232, 0.22);
+    box-shadow: 0 22px 70px rgba(0, 18, 28, 0.42);
     transform: translateY(-3px);
   }
 
@@ -487,6 +881,7 @@ const processSteps = [
     border-radius: 14px;
     margin-bottom: 1.45rem;
     overflow: hidden;
+    position: relative;
   }
 
   .service-mark {
@@ -508,16 +903,32 @@ const processSteps = [
   .featured-card p,
   .service-card p {
     color: var(--consulting-muted);
-    font-size: 0.95rem;
-    line-height: 1.62;
+    font-size: 0.92rem;
+    font-weight: 420;
+    line-height: 1.55;
     margin-bottom: 1.2rem;
   }
 
   .featured-card span,
   .service-card span {
     color: var(--consulting-ink);
-    font-size: 0.9rem;
-    font-weight: 750;
+    font-size: 0.88rem;
+    font-weight: 610;
+  }
+
+  .card-link {
+    align-items: center;
+    display: inline-flex;
+    gap: 0.35rem;
+  }
+
+  .card-link span {
+    transition: transform var(--consulting-motion);
+  }
+
+  .featured-card:hover .card-link span,
+  .service-card:hover .card-link span {
+    transform: translateX(3px);
   }
 
   .featured-card.cyan .card-kicker,
@@ -554,7 +965,62 @@ const processSteps = [
     filter: saturate(0.85);
     margin-bottom: 1.1rem;
     overflow: hidden;
+    position: relative;
     width: 100%;
+  }
+
+  .proof-section {
+    background:
+      linear-gradient(90deg, rgba(40, 232, 223, 0.08), transparent 26%),
+      var(--consulting-bg);
+  }
+
+  .proof-grid {
+    align-items: start;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  }
+
+  .sticky-heading {
+    margin-bottom: 0;
+    position: sticky;
+    top: 2rem;
+  }
+
+  .case-stack {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .case-card {
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.085), rgba(244, 240, 232, 0.035)),
+      var(--consulting-bg);
+    border: 1px solid var(--consulting-line);
+    border-radius: var(--consulting-radius);
+    box-shadow: 0 20px 70px rgba(0, 18, 28, 0.35);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .case-card h3 {
+    font-size: clamp(1.45rem, 2.5vw, 2.05rem);
+    font-weight: 590;
+    max-width: 22ch;
+  }
+
+  .case-card p {
+    color: var(--consulting-muted);
+    font-size: 0.96rem;
+    font-weight: 420;
+    line-height: 1.58;
+  }
+
+  .case-card strong {
+    color: var(--consulting-ink);
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 560;
+    line-height: 1.48;
+    margin-top: 1.2rem;
   }
 
   .process-section {
@@ -604,8 +1070,9 @@ const processSteps = [
 
   .step p {
     color: var(--consulting-muted);
-    font-size: 0.9rem;
-    line-height: 1.55;
+    font-size: 0.88rem;
+    font-weight: 420;
+    line-height: 1.5;
     margin-bottom: 0;
   }
 
@@ -652,6 +1119,33 @@ const processSteps = [
     padding: 0.6rem 0.9rem;
   }
 
+  .fit-panel {
+    background:
+      linear-gradient(90deg, rgba(40, 232, 223, 0.09), transparent),
+      rgba(244, 240, 232, 0.045);
+    border: 1px solid var(--consulting-line);
+    border-radius: var(--consulting-radius);
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .fit-list {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .fit-list p {
+    color: var(--consulting-muted);
+    font-size: 0.9rem;
+    font-weight: 420;
+    line-height: 1.45;
+    margin: 0;
+  }
+
   .consulting-cta {
     border-top: 1px solid var(--consulting-line);
     padding: clamp(4.5rem, 8vw, 7rem) 0;
@@ -669,7 +1163,9 @@ const processSteps = [
     .hero-grid,
     .process-grid,
     .about-grid,
-    .cta-grid {
+    .cta-grid,
+    .trust-grid,
+    .proof-grid {
       grid-template-columns: 1fr;
     }
 
@@ -677,9 +1173,18 @@ const processSteps = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .trust-metrics,
+    .fit-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .capability-strip {
       justify-content: start;
       max-width: none;
+    }
+
+    .sticky-heading {
+      position: static;
     }
   }
 
@@ -688,9 +1193,27 @@ const processSteps = [
       width: min(100% - 1.5rem, 1180px);
     }
 
+    .consulting-practice-bar {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .practice-home {
+      width: fit-content;
+    }
+
+    .practice-divider {
+      flex: 0 0 auto;
+      max-width: none;
+      width: 100%;
+    }
+
     .consulting-hero,
     .consulting-section,
-    .consulting-cta {
+    .consulting-cta,
+    .trust-section {
       padding: 3.5rem 0;
     }
 
@@ -706,7 +1229,10 @@ const processSteps = [
     .featured-services,
     .service-grid,
     .process-panel,
-    .about-card {
+    .about-card,
+    .trust-metrics,
+    .fit-panel,
+    .fit-list {
       grid-template-columns: 1fr;
     }
 
@@ -720,6 +1246,12 @@ const processSteps = [
 
     .hero-art {
       transform: none;
+    }
+
+    .hero-insight-card {
+      margin-top: 1rem;
+      max-width: none;
+      position: static;
     }
 
     .process-panel > img {

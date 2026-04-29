@@ -22,6 +22,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   const totalQuestions = challenges.length;
   let currentIndex = 0;
   let isTransitioning = false;
+  let completionCardShown = false;
+  let totalAttemptCount = 0;
   const answeredQuestions = new Map<number, boolean>();
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -118,6 +120,18 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     <div class="quiz-score-bar-congrats" style="display:none"></div>
   `;
 
+  const completionCard = document.createElement("div");
+  completionCard.className = "quiz-completion-card";
+  completionCard.setAttribute("role", "status");
+  completionCard.setAttribute("aria-live", "polite");
+  completionCard.setAttribute("hidden", "");
+  completionCard.innerHTML = `
+    <div class="quiz-completion-card__shine"></div>
+    <div class="quiz-completion-card__eyebrow">Celebration unlocked</div>
+    <div class="quiz-completion-card__title">Quiz Completed</div>
+    <div class="quiz-completion-card__misses"></div>
+  `;
+
   // --- Wait for React hydration, then activate slide system ---
   function activate() {
     // Insert nav bar BEFORE .quiz-ui (outside it, no DOM changes inside)
@@ -142,6 +156,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     // This ensures position:fixed is relative to the viewport
     document.body.appendChild(topBar);
     document.body.appendChild(scoreBar);
+    document.body.appendChild(completionCard);
 
     // Show/hide nav & score bars based on quiz section visibility
     const visibilityObserver = new IntersectionObserver(
@@ -156,14 +171,17 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
     // --- State Updates ---
     const syncAnswers = () => {
+      totalAttemptCount = 0;
       challenges.forEach((c, i) => {
         if (c.classList.contains("correct")) answeredQuestions.set(i, true);
         else if (c.classList.contains("incorrect")) answeredQuestions.set(i, false);
+        totalAttemptCount += Number(c.dataset.answerCount || "0");
       });
     };
 
     const updateProgress = () => {
       const correctCount = [...answeredQuestions.values()].filter((v) => v).length;
+      const missCount = getMissCount(correctCount);
       const fill = scoreBar.querySelector(".quiz-score-bar-fill") as HTMLElement;
       const currentNum = scoreBar.querySelector(".quiz-score-bar-current") as HTMLElement;
       const scoreValue = scoreBar.querySelector(".quiz-score-bar-value") as HTMLElement;
@@ -171,19 +189,101 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       if (fill) fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
       if (currentNum) currentNum.textContent = String(currentIndex + 1);
       if (scoreValue) scoreValue.textContent = `${correctCount}/${totalQuestions}`;
-      if (resetButton) resetButton.disabled = answeredQuestions.size === 0;
+      if (resetButton) resetButton.disabled = totalAttemptCount === 0 && answeredQuestions.size === 0;
 
       const congrats = scoreBar.querySelector(".quiz-score-bar-congrats") as HTMLElement;
-      if (congrats && answeredQuestions.size === totalQuestions) {
-        const isPerfect = correctCount === totalQuestions;
+      if (congrats && correctCount === totalQuestions) {
+        const isPerfect = missCount === 0;
         congrats.style.display = "block";
-        congrats.textContent = isPerfect ? `Perfect! ${correctCount}/${totalQuestions}` : `All done! ${correctCount}/${totalQuestions}`;
+        congrats.textContent = isPerfect ? `Perfect! ${correctCount}/${totalQuestions}` : `All done! ${correctCount}/${totalQuestions} (${missCount} missed)`;
         scoreBar.classList.toggle("quiz-score-bar--perfect", isPerfect);
         scoreBar.classList.toggle("quiz-score-bar--success", !isPerfect);
       } else if (congrats) {
         congrats.style.display = "none";
         scoreBar.classList.remove("quiz-score-bar--perfect", "quiz-score-bar--success");
       }
+    };
+
+    const getWrongAnswerCount = () =>
+      [...answeredQuestions.values()].filter((answer) => !answer).length;
+
+    const getMissCount = (correctCount = [...answeredQuestions.values()].filter(Boolean).length) =>
+      Math.max(totalAttemptCount - correctCount, getWrongAnswerCount());
+
+    const isQuestionCorrect = (index: number) => answeredQuestions.get(index) === true;
+
+    const isQuizCorrectlyCompleted = () =>
+      Array.from({ length: totalQuestions }, (_, index) => isQuestionCorrect(index))
+        .every(Boolean);
+
+    const findNextUnansweredIndex = (fromIndex: number) => {
+      for (let offset = 1; offset <= totalQuestions; offset++) {
+        const candidateIndex = (fromIndex + offset) % totalQuestions;
+        if (!isQuestionCorrect(candidateIndex)) return candidateIndex;
+      }
+
+      return null;
+    };
+
+    const showCompletionCard = () => {
+      if (completionCardShown || !isQuizCorrectlyCompleted()) return;
+
+      completionCardShown = true;
+      const missCount = getMissCount();
+      const misses = completionCard.querySelector(".quiz-completion-card__misses");
+      if (misses) {
+        misses.textContent = missCount === 0
+          ? "0 misses. Clean sweep."
+          : `${missCount} ${missCount === 1 ? "miss" : "misses"} / wrong ${missCount === 1 ? "answer" : "answers"}`;
+      }
+
+      completionCard.removeAttribute("hidden");
+
+      if (prefersReducedMotion) return;
+
+      gsap.fromTo(
+        completionCard,
+        { autoAlpha: 0, y: 28, scale: 0.94, rotationX: -8 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          rotationX: 0,
+          duration: 0.48,
+          ease: "back.out(1.7)",
+        },
+      );
+
+      gsap.fromTo(
+        completionCard.querySelectorAll(".quiz-completion-card__eyebrow, .quiz-completion-card__title, .quiz-completion-card__misses"),
+        { autoAlpha: 0, y: 10 },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.34,
+          stagger: 0.07,
+          ease: "power2.out",
+          delay: 0.12,
+        },
+      );
+    };
+
+    const advanceToNextUnanswered = (answeredIndex: number) => {
+      const nextUnansweredIndex = findNextUnansweredIndex(answeredIndex);
+
+      if (nextUnansweredIndex == null) {
+        showCompletionCard();
+        return;
+      }
+
+      if (nextUnansweredIndex === currentIndex) return;
+
+      window.setTimeout(() => {
+        goToQuestion(
+          nextUnansweredIndex,
+          nextUnansweredIndex > currentIndex ? "next" : "prev",
+        );
+      }, 950);
     };
 
     const updateDots = () => {
@@ -407,9 +507,25 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       updateProgress();
       const activeChallenge = islands[currentIndex]?.querySelector(".challenge") as HTMLElement;
       if (activeChallenge) triggerConfetti(activeChallenge);
-      setTimeout(() => {
-        if (currentIndex < totalQuestions - 1) goToQuestion(currentIndex + 1, "next");
-      }, 1500);
+    }) as EventListener);
+
+    window.addEventListener("quiz-question-answered", ((e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (typeof detail?.index !== "number") return;
+
+      answeredQuestions.set(detail.index, Boolean(detail.isCorrect));
+      if (typeof detail.totalTries === "number") {
+        totalAttemptCount = detail.totalTries;
+      } else if (typeof detail.tries === "number") {
+        challenges[detail.index].dataset.answerCount = String(detail.tries);
+        totalAttemptCount = challenges.reduce(
+          (sum, challenge) => sum + Number(challenge.dataset.answerCount || "0"),
+          0,
+        );
+      }
+      updateDots();
+      updateProgress();
+      advanceToNextUnanswered(detail.index);
     }) as EventListener);
 
     const observer = new MutationObserver((mutations) => {

@@ -148,7 +148,7 @@ export const consultingServices: ConsultingService[] = [
     whyNow: [
       "Hosted convenience becomes very expensive when auth, database, storage, and edge workloads all scale at once.",
       "Migration gets riskier the longer it waits, especially if product growth is about to accelerate.",
-      "Most teams do not need a full rewrite. They need the expensive, brittle pieces isolated and replaced carefully.",
+      "Avoid rip-and-replace by identifying which parts of the stack still help and which parts are now a tax on growth.",
     ],
     outcomes: [
       "Audit which parts of Supabase still help and which parts are now acting like a tax on growth.",

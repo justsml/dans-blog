@@ -156,7 +156,10 @@ export default function Challenge({
       option,
     );
 
-    setTries(questionStore.sumOfTries());
+    const currentQuestionTries =
+      questionStore?.getTries({ index: questionIndex }) ?? 0;
+    const totalQuizTries = questionStore?.sumOfTries() ?? currentQuestionTries;
+    setTries(currentQuestionTries);
 
     setShowHint(false);
     if (option.isAnswer) {
@@ -174,7 +177,7 @@ export default function Challenge({
           }
         );
       }
-      // Notify the slide manager to advance
+      // Notify the slide manager to celebrate correct answers.
       window.dispatchEvent(new CustomEvent("quiz-answer-correct", { detail: { index: questionIndex } }));
     } else {
       setChallengeClass("incorrect");
@@ -196,6 +199,14 @@ export default function Challenge({
       title: title,
       questionIndex,
     });
+    window.dispatchEvent(new CustomEvent("quiz-question-answered", {
+      detail: {
+        index: questionIndex,
+        isCorrect: option.isAnswer,
+        tries: currentQuestionTries,
+        totalTries: totalQuizTries,
+      },
+    }));
     setTimeout(updateCounts, 20);
   };
 
@@ -378,7 +389,8 @@ export default function Challenge({
         style={{
           height: `${panelHeight}px`,
           transition: "height 0.2s ease-in-out",
-          overflowY: "auto",
+          overflowX: "clip",
+          overflowY: "visible",
         }}
       >
         <section className="quiz-options card card-front" ref={optionsPanelRef}>
