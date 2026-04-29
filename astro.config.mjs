@@ -27,6 +27,12 @@ const ignorePaths = ["/404", "/404.html", "/500", "/500.html", "/pages/", "/cate
 export default defineConfig({
   output: "static",
   trailingSlash: "ignore",
+  server: {
+    port: 4242,
+  },
+  preview: {
+    port: 4242,
+  },
   build: {
     format: "directory",
   },

@@ -15,7 +15,7 @@ let count = 0;
 const log = makeLogs("screenshotter");
 
 const screenshotService = new ScreenshotService();
-const siteUrlPrefix = SITE_URL ?? "http://localhost:4321";
+const siteUrlPrefix = SITE_URL ?? "http://localhost:4242";
 const rssFeed = await getSiteRss(siteUrlPrefix, "/rss.json");
 
 // get --filter=arg
@@ -362,7 +362,7 @@ async function generateImages(args: ScreenshotTask) {
 }
 // console.log("QUIZ PAGE: ", category, slug, title);
 // const siteUrlPrefix = "http://localhost:3000"
-// // const siteUrlPrefix = "https://danlevy.net"; // "http://localhost:4321"
+// // const siteUrlPrefix = "https://danlevy.net"; // "http://localhost:4242"
 // // const contentPath = Astro.props.sourcePath.split("/")[0];
 // const fullPath = `src/content/posts/${Astro.props.sourcePath}`
 // const basePath = `${process.cwd()}`

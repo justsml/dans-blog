@@ -13,7 +13,7 @@ Astro 5 static blog with MDX content, interactive React quizzes, and Bun as the 
 
 ```bash
 # Development
-bun run dev              # Dev server at localhost:4321 (runs type check first)
+bun run dev              # Dev server at localhost:4242 (runs type check first)
 bun run check            # Type check without starting server
 
 # Build
