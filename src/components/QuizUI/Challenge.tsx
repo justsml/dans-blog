@@ -46,12 +46,12 @@ export default function Challenge({
   objectives?: string[];
   standards?: string[];
 }) {
-  let questionStore: ReturnType<typeof QuestionStore> | null = null;
   const siteDomain = `DanLevy.net`;
 
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
+  const questionStoreRef = useRef<ReturnType<typeof QuestionStore> | null>(null);
   const optionsPanelRef = useRef<HTMLElement>(null);
   const explanationPanelRef = useRef<HTMLElement>(null);
   const explanationContentRef = useRef<HTMLParagraphElement>(null);
@@ -75,31 +75,33 @@ export default function Challenge({
   };
 
   useEffect(() => {
-    if (!questionStore)
-      questionStore = QuestionStore(global?.location.pathname);
+    if (!questionStoreRef.current) {
+      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    }
 
     const link = global?.location?.pathname ?? "";
     setPageLink(siteDomain + link);
   }, [global?.location?.pathname]);
 
   useEffect(() => {
-    if (!questionStore)
-      questionStore = QuestionStore(global?.location.pathname);
+    if (!questionStoreRef.current) {
+      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    }
 
-    if (questionStore) {
-      questionStore.addQuestion({
+    if (questionStoreRef.current) {
+      questionStoreRef.current.addQuestion({
         title,
         group,
         question,
         index: questionIndex,
       });
       const isCorrect =
-        questionStore?.isCorrect({
+        questionStoreRef.current?.isCorrect({
           index: questionIndex,
         }) ?? undefined;
 
       const tries =
-        questionStore?.getTries({
+        questionStoreRef.current?.getTries({
           index: questionIndex,
         }) ?? 0;
 
@@ -111,7 +113,7 @@ export default function Challenge({
     } else {
       console.error("QuestionStore is not initialized");
     }
-  }, [questionStore, title, group, question, options, explanation]);
+  }, [title, group, question, questionIndex]);
 
   const { posthog } = usePostHog();
   
@@ -146,10 +148,11 @@ export default function Challenge({
   };
 
   const handleAnswer = (option: Option) => {
-    if (!questionStore)
-      questionStore = QuestionStore(global?.location.pathname);
+    if (!questionStoreRef.current) {
+      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    }
 
-    questionStore?.answerQuestion(
+    questionStoreRef.current?.answerQuestion(
       {
         index: questionIndex,
       },
@@ -157,8 +160,8 @@ export default function Challenge({
     );
 
     const currentQuestionTries =
-      questionStore?.getTries({ index: questionIndex }) ?? 0;
-    const totalQuizTries = questionStore?.sumOfTries() ?? currentQuestionTries;
+      questionStoreRef.current?.getTries({ index: questionIndex }) ?? 0;
+    const totalQuizTries = questionStoreRef.current?.sumOfTries() ?? currentQuestionTries;
     setTries(currentQuestionTries);
 
     setShowHint(false);
@@ -327,8 +330,10 @@ export default function Challenge({
 
       const _showHint = option.hint === showHint ? showHint : false;
       return (
-        <a
+        <div
           key={option.text}
+          role="button"
+          tabIndex={0}
           className={classNames(
             "option",
             {
@@ -337,6 +342,12 @@ export default function Challenge({
             "mx-auto",
           )}
           onClick={() => !isCorrect && handleAnswer(option)}
+          onKeyDown={(event) => {
+            if ((event.key === "Enter" || event.key === " ") && !isCorrect) {
+              event.preventDefault();
+              handleAnswer(option);
+            }
+          }}
         >
           <label>{option.text}</label>
           <HintTooltip
@@ -349,7 +360,7 @@ export default function Challenge({
               setShowHint(false);
             }}
           />
-        </a>
+        </div>
       );
     })
     .filter(Boolean);

@@ -30,6 +30,7 @@ const NavMenu = ({
   recentPosts: any[];
 }) => {
   const [currentPanel, setCurrentPanel] = useState<string>("");
+  const [isMounted, setIsMounted] = useState(false);
   const isMenuOpen = currentPanel.length >= 1;
 
   // make sure we only get the first 6 categories
@@ -55,6 +56,11 @@ const NavMenu = ({
     // setViewportTopOffset(`${topOffset}px`);
     $viewport.style.top = `${topOffset}px`;
   }
+
+  // Update the viewport offset on window resize and orientation change
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Update the viewport offset on window resize and orientation change
   useEffect(() => {
@@ -180,7 +186,6 @@ const NavMenu = ({
       delayDuration={300}
       onClick={safeDetectViewportOffset}
       value={currentPanel}
-      onMouseEnter={(e) => console.log("MouseEnter", e.currentTarget, e.target)}
     >
       <NavigationMenu.List className="NavigationMenuList">
         <NavigationMenu.Item
@@ -511,7 +516,7 @@ const NavMenu = ({
         </NavigationMenu.Indicator>
       </NavigationMenu.List>
 
-      {typeof document !== "undefined" &&
+      {isMounted &&
         createPortal(
           <div className="ViewportPosition" style={{ top: "5.6rem" }}>
             <NavigationMenu.Viewport className="NavigationMenuViewport" />

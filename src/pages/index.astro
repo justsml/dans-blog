@@ -112,8 +112,11 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 </Page>
 
 <script>
+  let htmxRequested = false;
+
   function loadHtmx() {
-    if (document.querySelector("script[data-x-htmx-tag]")) return;
+    if (htmxRequested || document.querySelector("script[data-x-htmx-tag]")) return;
+    htmxRequested = true;
 
     const scriptEl = document.createElement("script");
     scriptEl.setAttribute("data-x-htmx-tag", "");
@@ -127,12 +130,36 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     document.body.appendChild(scriptEl);
   }
 
-  document.addEventListener("astro:page-load", loadHtmx);
+  function scheduleHtmxLoad() {
+    const target = document.querySelector("[hx-get][hx-trigger='revealed']");
+    if (!target) return;
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((entry) => entry.isIntersecting)) return;
+          observer.disconnect();
+          loadHtmx();
+        },
+        { rootMargin: "900px 0px" },
+      );
+      observer.observe(target);
+      return;
+    }
+
+    if ("requestIdleCallback" in globalThis) {
+      globalThis.requestIdleCallback(loadHtmx, { timeout: 1800 });
+    } else {
+      globalThis.setTimeout(loadHtmx, 900);
+    }
+  }
+
+  document.addEventListener("astro:page-load", scheduleHtmxLoad);
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", loadHtmx, { once: true });
+    document.addEventListener("DOMContentLoaded", scheduleHtmxLoad, { once: true });
   } else {
-    loadHtmx();
+    scheduleHtmxLoad();
   }
 </script>
 

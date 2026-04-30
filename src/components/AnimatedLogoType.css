@@ -1,0 +1,175 @@
+.animated-logo-type {
+  --logo-ink: #f3ffff;
+  --logo-cyan: #8cf8ff;
+  --logo-pink: #e879cf;
+  --logo-muted: rgba(196, 240, 246, 0.72);
+
+  display: inline-grid;
+  grid-template-columns: 2.35rem minmax(8.75rem, 13.5rem);
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--logo-ink);
+  text-decoration: none;
+  line-height: 1;
+  transform: translateZ(0);
+  transition:
+    filter 220ms ease,
+    transform 220ms ease;
+}
+
+.header-nav .animated-logo-type {
+  display: inline-grid;
+  grid-template-columns: 2.35rem minmax(8.75rem, 13.5rem);
+  padding-left: 0;
+  border-bottom: 0;
+  font-size: inherit;
+}
+
+.header-nav .animated-logo-type::after {
+  display: none;
+}
+
+.animated-logo-type:hover,
+.animated-logo-type:focus-visible {
+  filter: drop-shadow(0 0 12px rgba(140, 248, 255, 0.28));
+  transform: translateY(-1px) translateZ(0);
+}
+
+.animated-logo-type:focus-visible {
+  outline: 2px solid var(--logo-cyan);
+  outline-offset: 0.35rem;
+  border-radius: 0.5rem;
+}
+
+.animated-logo-type__avatar {
+  width: 2.15rem;
+  height: 2.15rem;
+  min-width: 2.15rem;
+  min-height: 2.15rem;
+  border: 2px solid rgba(255, 255, 255, 0.84);
+  border-radius: 999px;
+  box-shadow:
+    0 0 14px rgba(140, 248, 255, 0.24),
+    0 4px 10px rgba(0, 0, 0, 0.18);
+  object-fit: cover;
+  transition:
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    transform 220ms ease;
+}
+
+.header-nav .animated-logo-type__avatar {
+  width: 2.15rem;
+  height: 2.15rem;
+  min-width: 2.15rem;
+  min-height: 2.15rem;
+  margin: 0;
+}
+
+.animated-logo-type:hover .animated-logo-type__avatar,
+.animated-logo-type:focus-visible .animated-logo-type__avatar {
+  border-color: rgba(140, 248, 255, 0.92);
+  box-shadow:
+    0 0 18px rgba(140, 248, 255, 0.36),
+    0 6px 14px rgba(0, 0, 0, 0.2);
+  transform: scale(1.025) translateZ(0);
+}
+
+.animated-logo-type__svg {
+  display: block;
+  width: clamp(8.9rem, 28vw, 13.5rem);
+  height: auto;
+  overflow: visible;
+  filter:
+    drop-shadow(0 0 8px rgba(140, 248, 255, 0.3))
+    drop-shadow(0 0 16px rgba(140, 248, 255, 0.12));
+}
+
+.animated-logo-type__wordmark {
+  isolation: isolate;
+}
+
+.animated-logo-type__segment {
+  fill: var(--logo-ink);
+  font-family: "Playwrite AU NSW", "Segoe Script", cursive;
+  font-size: 29px;
+  font-weight: 400;
+  letter-spacing: 0;
+  paint-order: stroke fill;
+  stroke: rgba(140, 248, 255, 0.1);
+  stroke-width: 0.28px;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.animated-logo-type__segment--name {
+  font-size: 29px;
+}
+
+.animated-logo-type__segment--suffix {
+  fill: var(--logo-muted);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  stroke-width: 0.25px;
+}
+
+.animated-logo-type__rule {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.15;
+  opacity: 0.58;
+}
+
+.animated-logo-type__sweep {
+  fill: rgba(140, 248, 255, 0.2);
+  filter: blur(7px);
+  mix-blend-mode: screen;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+}
+
+.animated-logo-type__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 520px) {
+  .animated-logo-type {
+    grid-template-columns: 2rem minmax(6.4rem, 7.5rem);
+    gap: 0.4rem;
+  }
+
+  .header-nav .animated-logo-type {
+    grid-template-columns: 2rem minmax(6.4rem, 7.5rem);
+  }
+
+  .animated-logo-type__avatar {
+    width: 1.9rem;
+    height: 1.9rem;
+    min-width: 1.9rem;
+    min-height: 1.9rem;
+  }
+
+  .header-nav .animated-logo-type__avatar {
+    width: 1.9rem;
+    height: 1.9rem;
+    min-width: 1.9rem;
+    min-height: 1.9rem;
+  }
+
+  .animated-logo-type__svg {
+    width: clamp(6.4rem, 32vw, 7.5rem);
+  }
+}
