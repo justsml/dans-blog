@@ -21,16 +21,6 @@ let posts = PostCollections.getPosts().map((p) =>
 )
 .filter((p) => !p.data?.unlisted && !p.data?.hidden) as ArticlePost[];
 
-const filterOptions = [
-  { label: "By recently updated", value: "modified" },
-  { label: "By publish date", value: "created" },
-  // { label: "", value: "" },
-  // ...PostCollections.getCategoryCounts().map(([cat, count]) => ({
-  //   label: `By '${cat}': ${count}`,
-  //   value: cat,
-  // })),
-];
-
 const defaultNextUrl = "/pages/2-date-desc.html";
 
 const nextPageAttrs = defaultNextUrl
@@ -66,17 +56,21 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
       backgroundGlowColor="hsl(var(--neon-cyan))"
     />
   </div> -->
-  <div class="filter-toolbar">
-    {/* <ArticleFilterLinks /> */}
-    <label class="sort-select-label" for="article-sort">View articles by</label>
-    <select id="article-sort" class="sort-select" aria-label="Sort articles">
-      <option value="">View articles by...</option>
-      {filterOptions.map((option) => <option value={option.value}>{option.label}</option>)}
-    </select>
-  </div>
+  <section class="home-explainer" aria-labelledby="home-title">
+    <p class="eyebrow">Field notes</p>
+    <h1 id="home-title">Notes from where the docs run out.</h1>
+    <p>
+      AI systems, JavaScript, security, databases, and bug fixes worth remembering.
+    </p>
+  </section>
+
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
     <div class="spotlight-copy">
-      <p class="eyebrow">Work, notes, and a few projects</p>
+      <p class="eyebrow">Resources</p>
+      <h2 id="home-link-spotlight-title">Useful paths</h2>
+      <p>
+        Consulting work and open source notes.
+      </p>
     </div>
     <div class="spotlight-actions" aria-label="Featured links">
       <a class="spotlight-link consulting-link" href="/consulting/">
@@ -89,6 +83,17 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
       </a>
     </div>
   </section>
+
+  <section class="archive-intro" aria-labelledby="archive-title">
+    <div>
+      <p class="eyebrow">Latest writing</p>
+      <h2 id="archive-title">Recent writing</h2>
+      <p>
+        Newest first.
+      </p>
+    </div>
+  </section>
+
   <div class:list={["article-list"]}>
     {
       posts
@@ -163,69 +168,6 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   }
 </script>
 
-<script is:inline>
-  // document.addEventListener("astro:page-load", function () {});
-
-  function sortCardsByDate(mode) {
-    if (!mode) return;
-    const grid = document.querySelector(".article-list");
-    if (!grid) return console.info("No article-list grid found");
-
-    let reverse = grid.dataset.lastSortMode === mode;
-
-    if (mode === "modified" || mode === "created") {
-      const sortedCards = [...document.querySelectorAll(".article-card")].sort(
-        (a, b) => {
-          const aDate = a.dataset[mode];
-          const bDate = b.dataset[mode];
-          if (!aDate || !bDate)
-            return console.warn("No date found for", a, b) || 0;
-          const aTime = new Date(aDate).getTime();
-          const bTime = new Date(bDate).getTime();
-          if (mode === "created") {
-            return reverse ? bTime - aTime : aTime - bTime;
-          } else {
-            return reverse ? aTime - bTime : bTime - aTime;
-          }
-        }
-      );
-
-      if (reverse) {
-        grid.dataset.lastSortMode = "";
-      } else {
-        grid.dataset.lastSortMode = mode;
-      }
-      // Update the order of the cards
-      sortedCards.forEach((card, index) => {
-        card.style.order = `${index + 1}`;
-      });
-    } else {
-      console.error("Invalid sort mode", mode);
-    }
-  }
-
-  function sortCardsBy(mode) {
-    if (!mode) return;
-    if (mode === "modified" || mode === "created") {
-      sortCardsByDate(mode);
-    } else {
-      console.error("TODO: redirect to categoryInvalid sort mode", mode);
-    }
-  }
-
-  window.sortCardsByDate = sortCardsByDate;
-  window.sortCardsBy = sortCardsBy;
-
-  document.addEventListener("astro:page-load", function () {
-    const sortSelect = document.querySelector("#article-sort");
-    sortSelect?.addEventListener("change", function (event) {
-      const target = event.target;
-      if (!(target instanceof HTMLSelectElement)) return;
-      sortCardsBy(target.value);
-    });
-  });
-</script>
-
 <style>
   .background-effect {
     height: min(600px, 62vh);
@@ -265,11 +207,54 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     position: relative;
   }
 
-  .filter-toolbar,
+  .home-explainer,
   .home-link-spotlight,
+  .archive-intro,
   .article-list {
     position: relative;
     z-index: 1;
+  }
+
+  .home-explainer,
+  .archive-intro {
+    margin-inline: auto;
+    max-width: 980px;
+    width: min(100%, 980px);
+  }
+
+  .home-explainer {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: clamp(0.5rem, 2vw, 1.5rem);
+    padding-block: clamp(0.75rem, 2vw, 1.5rem) clamp(0.35rem, 1vw, 0.75rem);
+  }
+
+  .home-explainer h1,
+  .archive-intro h2 {
+    color: var(--clr-muted-100);
+    font-family: "Raleway", sans-serif;
+    letter-spacing: 0;
+    line-height: 1.05;
+    margin: 0;
+    text-shadow: none;
+    text-wrap: balance;
+  }
+
+  .home-explainer h1 {
+    font-size: clamp(1.35rem, 3vw, 2.25rem);
+    font-weight: 700;
+    max-width: 30ch;
+    text-wrap: wrap;
+  }
+
+  .home-explainer p:not(.eyebrow),
+  .spotlight-copy p:not(.eyebrow),
+  .archive-intro p:not(.eyebrow) {
+    color: hsl(var(--muted-foreground));
+    font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+    line-height: 1.65;
+    margin: 0;
+    max-width: 62ch;
   }
 
   .home-link-spotlight {
@@ -329,6 +314,24 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     display: grid;
     gap: 0.75rem;
     grid-template-columns: 1fr;
+  }
+
+  .archive-intro {
+    align-items: end;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .archive-intro h2 {
+    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    font-weight: 700;
+    max-width: 18ch;
+  }
+
+  .article-list {
+    margin-top: clamp(1rem, 3vw, 2rem);
   }
 
   .spotlight-link {

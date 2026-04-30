@@ -3,8 +3,8 @@
   --logo-cyan: #ff71dc;
   --logo-pink: #ff4fc4;
   --logo-purple: #a96cff;
-  --logo-neon-core: #ff72d8;
-  --logo-neon-halo: #b06cff;
+  --logo-neon-core: #fff7fd;
+  --logo-neon-halo: #ff3bc7;
   --logo-muted: rgba(196, 240, 246, 0.72);
 
   display: inline-grid;
@@ -34,7 +34,7 @@
 
 .animated-logo-type:hover,
 .animated-logo-type:focus-visible {
-  filter: drop-shadow(0 0 12px rgba(140, 248, 255, 0.28));
+  filter: drop-shadow(0 0 12px rgba(255, 31, 184, 0.34));
   transform: translateY(-1px) translateZ(0);
 }
 
@@ -86,8 +86,9 @@
   height: auto;
   overflow: visible !important;
   filter:
-    drop-shadow(0 0 9px rgba(255, 113, 220, 0.26))
-    drop-shadow(0 0 18px rgba(176, 108, 255, 0.14));
+    drop-shadow(0 0 4px rgba(255, 31, 184, 0.42))
+    drop-shadow(0 0 12px rgba(255, 31, 184, 0.48))
+    drop-shadow(0 0 25px rgba(255, 59, 199, 0.26));
 }
 
 .animated-logo-type__wordmark {
@@ -111,31 +112,13 @@
   font-size: 29px;
 }
 
-.animated-logo-type__thread,
-.animated-logo-type__rule {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1;
-  stroke-dashoffset: 1;
-  vector-effect: non-scaling-stroke;
-  stroke-width: 1.15;
-  opacity: 0.58;
-  stroke: var(--logo-neon-halo);
-}
-
-.animated-logo-type__thread {
-  stroke: rgba(255, 230, 250, 0.9);
-  stroke-width: 1.25;
-  opacity: 0.74;
-  filter: drop-shadow(0 0 5px rgba(255, 113, 220, 0.44));
-}
-
 .animated-logo-type__name-neon {
   fill: var(--logo-neon-core);
   opacity: 0;
-  stroke: rgba(255, 220, 250, 0.72);
-  stroke-width: 0.7px;
+  paint-order: stroke fill;
+  stroke: rgba(255, 255, 255, 0.92);
+  stroke-linejoin: round;
+  stroke-width: 0.5px;
   filter: url("#animated-logo-type-glow");
 }
 

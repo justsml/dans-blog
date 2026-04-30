@@ -6,6 +6,7 @@ import "./AnimatedLogoType.css";
 gsap.registerPlugin(useGSAP);
 
 const LOGO_REVEAL_WIDTH = 198;
+const NEON_STEADY_ALPHA = 0.88;
 
 type AnimatedLogoTypeProps = {
   avatarSrc: string;
@@ -23,20 +24,18 @@ export default function AnimatedLogoType({
   useGSAP(
     () => {
       const motion = gsap.matchMedia();
+      const neonTarget = ".animated-logo-type__name-neon";
 
       motion.add("(prefers-reduced-motion: reduce)", () => {
-        gsap.set(".animated-logo-type__thread, .animated-logo-type__segment", {
+        gsap.set(".animated-logo-type__segment", {
           autoAlpha: 1,
           clearProps: "transform",
         });
         gsap.set(".animated-logo-type__name-reveal", {
           attr: { width: LOGO_REVEAL_WIDTH },
         });
-        gsap.set(".animated-logo-type__name-neon", {
-          autoAlpha: 0.68,
-        });
-        gsap.set(".animated-logo-type__rule", {
-          strokeDashoffset: 0,
+        gsap.set(neonTarget, {
+          autoAlpha: NEON_STEADY_ALPHA,
         });
       });
 
@@ -44,33 +43,64 @@ export default function AnimatedLogoType({
         let introComplete = false;
         let lastFlicker = 0;
         let lastScrollY = window.scrollY;
+        let tubeHum: gsap.core.Tween | undefined;
 
         const flicker = gsap
-          .timeline({ paused: true })
-          .to(".animated-logo-type__name-neon", {
-            autoAlpha: 0.34,
+          .timeline({
+            paused: true,
+            onStart: () => tubeHum?.pause(),
+            onComplete: () => tubeHum?.play(),
+          })
+          .to(neonTarget, {
+            autoAlpha: 0.7,
+            scale: 0.998,
             duration: 0.035,
             ease: "none",
           })
-          .to(".animated-logo-type__name-neon", {
-            autoAlpha: 0.9,
-            duration: 0.055,
+          .to(neonTarget, {
+            autoAlpha: 0.96,
+            scale: 1.001,
+            duration: 0.05,
             ease: "none",
           })
-          .to(".animated-logo-type__name-neon", {
-            autoAlpha: 0.48,
-            duration: 0.03,
+          .to(neonTarget, {
+            autoAlpha: 0.76,
+            scale: 0.999,
+            duration: 0.025,
             ease: "none",
           })
-          .to(".animated-logo-type__name-neon", {
-            autoAlpha: 0.72,
-            duration: 0.16,
+          .to(neonTarget, {
+            autoAlpha: NEON_STEADY_ALPHA,
+            scale: 1,
+            duration: 0.22,
             ease: "sine.out",
           });
+
+        tubeHum = gsap.to(neonTarget, {
+          autoAlpha: 0.95,
+          duration: 2.4,
+          ease: "sine.inOut",
+          repeat: -1,
+          yoyo: true,
+          paused: true,
+        });
+
+        let randomFlickerDelay: gsap.core.Tween;
+        const randomFlicker = () => {
+          if (introComplete && !flicker.isActive()) {
+            flicker.restart();
+          }
+
+          randomFlickerDelay = gsap.delayedCall(gsap.utils.random(4.5, 9.5), randomFlicker);
+          return randomFlickerDelay;
+        };
+
+        randomFlickerDelay = gsap.delayedCall(2.8, randomFlicker);
 
         const tl = gsap.timeline({
           onComplete: () => {
             introComplete = true;
+            tubeHum?.play(0);
           },
           defaults: {
             ease: "power3.out",
@@ -85,11 +115,9 @@ export default function AnimatedLogoType({
           .set(".animated-logo-type__name-reveal", {
             attr: { width: 0 },
           })
-          .set(".animated-logo-type__thread, .animated-logo-type__rule", {
-            strokeDashoffset: 1,
-          })
-          .set(".animated-logo-type__name-neon", {
+          .set(neonTarget, {
             autoAlpha: 0,
+            scale: 1,
           })
           .from(
             ".animated-logo-type__avatar",
@@ -102,15 +130,6 @@ export default function AnimatedLogoType({
             0,
           )
           .to(
-            ".animated-logo-type__thread",
-            {
-              strokeDashoffset: 0,
-              duration: 0.56,
-              ease: "power2.inOut",
-            },
-            0.06,
-          )
-          .to(
             ".animated-logo-type__name-reveal",
             {
               attr: { width: LOGO_REVEAL_WIDTH },
@@ -120,25 +139,7 @@ export default function AnimatedLogoType({
             "-=0.18",
           )
           .to(
-            ".animated-logo-type__thread",
-            {
-              autoAlpha: 0.36,
-              duration: 0.28,
-              ease: "sine.out",
-            },
-            "-=0.2",
-          )
-          .to(
-            ".animated-logo-type__rule",
-            {
-              strokeDashoffset: 0,
-              duration: 0.42,
-              ease: "power2.inOut",
-            },
-            "-=0.16",
-          )
-          .to(
-            ".animated-logo-type__name-neon",
+            neonTarget,
             {
               autoAlpha: 1,
               duration: 0.08,
@@ -147,9 +148,9 @@ export default function AnimatedLogoType({
             "-=0.2",
           )
           .to(
-            ".animated-logo-type__name-neon",
+            neonTarget,
             {
-              autoAlpha: 0.72,
+              autoAlpha: NEON_STEADY_ALPHA,
               duration: 0.42,
               ease: "sine.out",
             },
@@ -171,6 +172,9 @@ export default function AnimatedLogoType({
 
         return () => {
           window.removeEventListener("scroll", disturbNeon);
+          tubeHum?.kill();
+          randomFlickerDelay.kill();
+          flicker.kill();
         };
       });
 
@@ -205,23 +209,23 @@ export default function AnimatedLogoType({
             colorInterpolationFilters="sRGB"
           >
             <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="softTube" />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="cyanBlur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.9" result="hotPinkBlur" />
             <feColorMatrix
-              in="cyanBlur"
-              result="cyanGlow"
+              in="hotPinkBlur"
+              result="hotPinkGlow"
               type="matrix"
-              values="0 0 0 0 0.74 0 0 0 0 0.34 0 0 0 0 1 0 0 0 0.72 0"
+              values="0 0 0 0 1 0 0 0 0 0.08 0 0 0 0 0.72 0 0 0 0.9 0"
             />
-            <feGaussianBlur in="SourceGraphic" stdDeviation="5.6" result="pinkBlur" />
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5.2" result="pinkBlur" />
             <feColorMatrix
               in="pinkBlur"
               result="pinkGlow"
               type="matrix"
-              values="0 0 0 0 1 0 0 0 0 0.17 0 0 0 0 0.67 0 0 0 0.55 0"
+              values="0 0 0 0 1 0 0 0 0 0.02 0 0 0 0 0.58 0 0 0 0.72 0"
             />
             <feMerge>
               <feMergeNode in="pinkGlow" />
-              <feMergeNode in="cyanGlow" />
+              <feMergeNode in="hotPinkGlow" />
               <feMergeNode in="softTube" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
@@ -237,11 +241,6 @@ export default function AnimatedLogoType({
             />
           </mask>
         </defs>
-        <path
-          className="animated-logo-type__thread"
-          pathLength="1"
-          d="M0 29 C16 30 25 25 36 27 C55 30 72 35 91 30 C108 26 121 22 139 26 C158 30 174 33 198 29"
-        />
         <g className="animated-logo-type__wordmark" mask="url(#animated-logo-type-name-mask)">
           <text className="animated-logo-type__segment animated-logo-type__segment--name" x="2" y="34">
             DanLevy.net
@@ -254,11 +253,6 @@ export default function AnimatedLogoType({
         >
           DanLevy.net
         </text>
-        <path
-          className="animated-logo-type__rule"
-          pathLength="1"
-          d="M5 43 C58 46 130 46 228 42"
-        />
       </svg>
     </a>
   );

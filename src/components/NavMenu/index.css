@@ -285,54 +285,26 @@ pre {
   height: auto;
   
   button {
-    border-radius: 0.75rem;
-    background: rgba(30, 45, 55, 0.95);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(0, 255, 255, 0.4);
+    border: 0;
+    background: transparent;
     padding: 0.5rem;
-    box-shadow:
-      0 0 20px rgba(0, 255, 255, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none;
+    transition: color 0.2s ease, transform 0.2s ease;
     position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg,
-        transparent,
-        rgba(0, 255, 255, 0.1),
-        transparent
-      );
-      transition: left 0.6s ease;
-    }
     
     &:hover {
-      background: rgba(21, 32, 40, 0.9);
-      border-color: rgba(0, 255, 255, 0.5);
-      box-shadow:
-        0 0 40px rgba(0, 255, 255, 0.3),
-        0 0 20px rgba(255, 0, 204, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px) scale(1.05);
-      
-      &::before {
-        left: 100%;
-      }
+      background: transparent;
+      box-shadow: none;
+      transform: translateY(-1px) scale(1.05);
     }
     
     &:focus {
       outline: none;
-      box-shadow:
-        0 0 0 2px rgba(0, 255, 255, 0.6),
-        0 0 30px rgba(0, 255, 255, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      border-color: rgba(0, 255, 255, 0.5);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(0, 255, 255, 0.65);
+      outline-offset: 0.2rem;
     }
 
     @screen sm {
@@ -343,8 +315,7 @@ pre {
   svg {
     max-width: 1.5rem;
     color: var(--neon-cyan);
-    transition: all 0.3s ease;
-    filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.5));
+    transition: color 0.2s ease, transform 0.2s ease;
     
     @screen sm {
       max-width: 1.75rem;
@@ -1007,4 +978,3 @@ button:focus {
   outline: 2px solid var(--neon-pink) !important;
   /* box-shadow: 0 0 0 3px var(--neon-pink); */
 }
-

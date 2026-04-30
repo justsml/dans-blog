@@ -1,6 +1,6 @@
 .top-header {
   padding-inline: 1rem;
-  padding-block: 1.5rem;
+  padding-block: 0.7rem;
   background: transparent;
   position: relative;
   z-index: 50;
@@ -14,7 +14,7 @@
 
   @screen sm {
     padding-inline: 2rem;
-    padding-block: 1.5rem;
+    padding-block: 0.8rem;
   }
 
   nav {
@@ -136,4 +136,21 @@
     }
   }
 
+}
+
+.top-header .header-nav {
+  align-items: center;
+  height: clamp(4.25rem, 7vw, 5rem);
+}
+
+.top-header .header-nav .nav-box {
+  align-self: center;
+  margin-top: 0;
+}
+
+@media (max-width: 700px) {
+  .top-header .header-nav {
+    height: auto;
+    row-gap: 0.65rem;
+  }
 }
