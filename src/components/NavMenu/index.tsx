@@ -9,16 +9,16 @@ import {
   EnvelopeClosedIcon,
   GitHubLogoIcon,
   LinkedInLogoIcon,
+  MagnifyingGlassIcon,
+  ReaderIcon,
   RocketIcon,
   TwitterLogoIcon,
 } from "@radix-ui/react-icons";
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
-import { Badge } from "../ui/badge";
 import { useCallback, useEffect, useState } from "react";
-import { SearchButton } from "../SearchUI/SearchButton";
+import { ensurePagefindInitialized } from "../SearchUI/searchLoader";
 import "./index.css";
-import { NotepadText } from "lucide-react";
 
 const NavMenu = ({
   categories,
@@ -60,6 +60,45 @@ const NavMenu = ({
   // Update the viewport offset on window resize and orientation change
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleBackdropClick = (e: MouseEvent) => {
+      setTimeout(() => {
+        const searchBar = document.querySelector(".searchBar");
+        if (!searchBar || searchBar.classList.contains("collapsed")) return;
+
+        const searchContainer = searchBar.querySelector(".pagefind-ui");
+        const target = e.target as HTMLElement;
+
+        if (searchContainer && !searchContainer.contains(target)) {
+          const searchButton = target.closest(".btnSearchToggle");
+          const navMenu = target.closest(".NavigationMenuRoot");
+
+          if (!searchButton && !navMenu) {
+            searchBar.classList.add("collapsed");
+            document.body.classList.remove("search-panel-open");
+          }
+        }
+      }, 10);
+    };
+
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      const searchBar = document.querySelector(".searchBar");
+      if (searchBar && !searchBar.classList.contains("collapsed")) {
+        searchBar.classList.add("collapsed");
+        document.body.classList.remove("search-panel-open");
+      }
+    };
+
+    document.addEventListener("click", handleBackdropClick);
+    document.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      document.removeEventListener("click", handleBackdropClick);
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
   }, []);
 
   // Update the viewport offset on window resize and orientation change
@@ -167,6 +206,29 @@ const NavMenu = ({
     setCurrentPanel(currentPanel === panel ? "" : panel);
   };
 
+  const toggleSearch = async () => {
+    const searchBar = document.querySelector(".searchBar");
+    if (!searchBar) return console.warn(`Missing '.searchBar' element`);
+
+    const isCollapsed = searchBar.classList.contains("collapsed");
+
+    if (isCollapsed) {
+      setCurrentPanel("");
+      await ensurePagefindInitialized();
+      searchBar.classList.remove("collapsed");
+      document.body.classList.add("search-panel-open");
+
+      setTimeout(() => {
+        const searchInput = searchBar.querySelector<HTMLInputElement>('input[type="text"]');
+        searchInput?.focus();
+      }, 350);
+      return;
+    }
+
+    searchBar.classList.add("collapsed");
+    document.body.classList.remove("search-panel-open");
+  };
+
   const _changeToPanel = (panel: string) => {
     if (currentPanel === panel) return;
     if (currentPanel.length >= 1) {
@@ -193,7 +255,18 @@ const NavMenu = ({
           className="searchToggle"
           onClick={() => togglePanel("")}
         >
-          <SearchButton />
+          <button
+            title="Toggle search panel"
+            type="button"
+            className="btnSearchToggle p-1"
+            onClick={(event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              void toggleSearch();
+            }}
+          >
+            <MagnifyingGlassIcon />
+          </button>
         </NavigationMenu.Item>
 
         <NavigationMenu.Item
@@ -233,7 +306,9 @@ const NavMenu = ({
                           className="CalloutItem"
                         >
                           {category}{" "}
-                          <Badge variant={"secondary"}>{count as number}</Badge>
+                          <span className="ui-badge inline-flex items-center rounded-full border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors">
+                            {count as number}
+                          </span>
                         </a>
                       ))}
                     </p>
@@ -484,7 +559,7 @@ const NavMenu = ({
                         rel="me"
                         href="/open-source-journal">
                         <span className="Icon">
-                          <NotepadText
+                          <ReaderIcon
                             className="svg-icon"
                             width={30}
                             height={30}
