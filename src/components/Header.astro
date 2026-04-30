@@ -1,6 +1,6 @@
 ---
 import { SITE_TITLE } from "../consts";
-import AnimatedLogoType from "./AnimatedLogoType";
+import AnimatedLogoType from "./AnimatedLogoType.astro";
 import NavMenu from "./NavMenu";
 import avatarImage from "@/assets/avatar-88.webp";
 import { PostCollections } from "@/shared/postsCache";
@@ -50,7 +50,6 @@ function getNavPostData(post: MyPost) {
   <div class:list={["header-nav", "h-card"]}>
     <h2>
       <AnimatedLogoType
-        client:load
         avatarSrc={avatarImage.src}
         siteTitle={SITE_TITLE}
       />

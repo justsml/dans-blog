@@ -9,7 +9,6 @@ import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwind from "@astrojs/tailwind";
 import pagefind from "astro-pagefind";
-import orama from "@orama/plugin-astro";
 
 import expressiveCode from "astro-expressive-code";
 import { pluginLineNumbers } from "@expressive-code/plugin-line-numbers";
@@ -42,6 +41,9 @@ export default defineConfig({
   },
   build: {
     format: "directory",
+  },
+  prefetch: {
+    prefetchAll: false,
   },
   cacheDir: ".cache",
   site: siteUrl,

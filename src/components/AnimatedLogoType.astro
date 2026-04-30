@@ -1,0 +1,84 @@
+---
+import "./AnimatedLogoType.css";
+
+type Props = {
+  avatarSrc: string;
+  siteTitle: string;
+  href?: string;
+};
+
+const { avatarSrc, siteTitle, href = "/" } = Astro.props;
+---
+
+<a class="animated-logo-type u-url" href={href} aria-label="Return Home">
+  <img
+    src={avatarSrc}
+    alt="Dan Levy's Avatar"
+    class="animated-logo-type__avatar u-logo"
+    width="88"
+    height="88"
+    decoding="async"
+  />
+  <span class="animated-logo-type__sr p-name">{siteTitle}</span>
+  <svg
+    class="animated-logo-type__svg"
+    viewBox="0 0 244 54"
+    role="img"
+    aria-hidden="true"
+  >
+    <defs>
+      <filter
+        id="animated-logo-type-glow"
+        x="-70%"
+        y="-150%"
+        width="260%"
+        height="430%"
+        color-interpolation-filters="sRGB"
+      >
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="softTube" />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="1.9" result="hotPinkBlur" />
+        <feColorMatrix
+          in="hotPinkBlur"
+          result="hotPinkGlow"
+          type="matrix"
+          values="0 0 0 0 1 0 0 0 0 0.08 0 0 0 0 0.72 0 0 0 0.9 0"
+        />
+        <feGaussianBlur in="SourceGraphic" stdDeviation="5.2" result="pinkBlur" />
+        <feColorMatrix
+          in="pinkBlur"
+          result="pinkGlow"
+          type="matrix"
+          values="0 0 0 0 1 0 0 0 0 0.02 0 0 0 0 0.58 0 0 0 0.72 0"
+        />
+        <feMerge>
+          <feMergeNode in="pinkGlow" />
+          <feMergeNode in="hotPinkGlow" />
+          <feMergeNode in="softTube" />
+          <feMergeNode in="SourceGraphic" />
+        </feMerge>
+      </filter>
+      <mask id="animated-logo-type-name-mask" maskUnits="userSpaceOnUse">
+        <rect
+          class="animated-logo-type__name-reveal"
+          x="0"
+          y="0"
+          width="198"
+          height="47"
+          fill="#fff"
+        />
+      </mask>
+    </defs>
+    <g class="animated-logo-type__wordmark" mask="url(#animated-logo-type-name-mask)">
+      <text class="animated-logo-type__segment animated-logo-type__segment--name" x="2" y="34">
+        DanLevy.net
+      </text>
+    </g>
+    <text
+      class="animated-logo-type__segment animated-logo-type__segment--name animated-logo-type__name-neon"
+      x="2"
+      y="34"
+    >
+      DanLevy.net
+    </text>
+  </svg>
+</a>

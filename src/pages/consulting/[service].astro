@@ -23,6 +23,35 @@ if (!service) {
 const relatedServices = consultingServices.filter(
   (entry) => entry.slug !== service.slug,
 ).slice(0, 3);
+
+const serviceVisuals: Record<string, { accent: string; image: string }> = {
+  "ai-consulting": {
+    accent: "cyan",
+    image: "/images/consulting/service-ai-consulting-v2.webp",
+  },
+  "ai-guardrails": {
+    accent: "coral",
+    image: "/images/consulting/service-ai-guardrails-v2.webp",
+  },
+  "supabase-scaling-migration": {
+    accent: "amber",
+    image: "/images/consulting/service-supabase-v2.webp",
+  },
+  "rag-rescue": {
+    accent: "cyan",
+    image: "/images/consulting/service-rag-v2.webp",
+  },
+  "developer-ai-coding-security": {
+    accent: "coral",
+    image: "/images/consulting/service-coding-security-v2.webp",
+  },
+  "enterprise-security-assessment": {
+    accent: "amber",
+    image: "/images/consulting/service-enterprise-security-v2.webp",
+  },
+};
+
+const serviceVisual = serviceVisuals[service.slug] ?? serviceVisuals["ai-consulting"];
 ---
 
 <Layout
@@ -46,7 +75,10 @@ const relatedServices = consultingServices.filter(
           </a>
         </div>
       </div>
-      <div class="hero-panel">
+      <div class={`hero-panel ${serviceVisual.accent}`}>
+        <div class="hero-panel-image" aria-hidden="true">
+          <img src={serviceVisual.image} alt="" loading="eager" decoding="async" />
+        </div>
         <p class="panel-kicker">Best fit</p>
         <h2>{service.title}</h2>
         <ul class="panel-list">
@@ -400,6 +432,45 @@ const relatedServices = consultingServices.filter(
 
   .hero-panel {
     padding: 1.6rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-panel::after {
+    background: linear-gradient(135deg, rgba(0, 212, 170, 0.14), transparent 38%, rgba(255, 122, 162, 0.1));
+    content: "";
+    inset: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .hero-panel.coral::after {
+    background: linear-gradient(135deg, rgba(255, 122, 162, 0.18), transparent 42%, rgba(0, 212, 170, 0.08));
+  }
+
+  .hero-panel.amber::after {
+    background: linear-gradient(135deg, rgba(230, 180, 86, 0.18), transparent 42%, rgba(0, 212, 170, 0.08));
+  }
+
+  .hero-panel > :not(.hero-panel-image) {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-panel-image {
+    aspect-ratio: 16 / 10;
+    border: 1px solid var(--service-border);
+    border-radius: 18px;
+    margin: -0.55rem -0.55rem 1.35rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .hero-panel-image img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
   }
 
   .panel-list {

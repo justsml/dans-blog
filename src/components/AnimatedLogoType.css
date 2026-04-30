@@ -114,12 +114,39 @@
 
 .animated-logo-type__name-neon {
   fill: var(--logo-neon-core);
-  opacity: 0;
+  animation: animated-logo-type-hum 4.8s ease-in-out 1.4s infinite alternate;
+  opacity: 0.88;
   paint-order: stroke fill;
   stroke: rgba(255, 255, 255, 0.92);
   stroke-linejoin: round;
   stroke-width: 0.5px;
   filter: url("#animated-logo-type-glow");
+}
+
+.animated-logo-type__name-reveal {
+  animation: animated-logo-type-reveal 740ms ease-in-out both;
+  transform-box: fill-box;
+  transform-origin: left center;
+}
+
+@keyframes animated-logo-type-reveal {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes animated-logo-type-hum {
+  from {
+    opacity: 0.82;
+  }
+
+  to {
+    opacity: 0.96;
+  }
 }
 
 .animated-logo-type__sr {
@@ -132,6 +159,16 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-logo-type,
+  .animated-logo-type__avatar,
+  .animated-logo-type__name-neon,
+  .animated-logo-type__name-reveal {
+    animation: none;
+    transition: none;
+  }
 }
 
 @media (max-width: 700px) {

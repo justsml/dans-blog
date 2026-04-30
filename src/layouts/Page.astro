@@ -5,7 +5,6 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { default as defaultSocialBanner } from "../assets/social-banner.webp";
-import { fade } from "astro:transitions";
 import clsx from "clsx";
 import SiteLinkedData from "../components/Seo/SiteLinkedData.astro";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
@@ -25,11 +24,11 @@ type Props = {
 const socialBanner = Astro.props.socialImage || defaultSocialBanner;
 ---
 
-<html lang="en" transition:name="root" transition:animate="none">
+<html lang="en">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />
   </head>
-  <body transition:animate={fade({ duration: "0.285s" })}>
+  <body>
     <Header className="content-grid" />
     <main class={clsx("content-grid", Astro.props.className)}>
       <slot name="default" />

@@ -21,12 +21,36 @@
   }
 
   function deferAnalytics(work: () => void | Promise<void>) {
+    let hasRun = false;
+    let fallbackTimer: ReturnType<typeof globalThis.setTimeout> | undefined;
+
+    const runOnce = () => {
+      if (hasRun) return;
+      hasRun = true;
+      if (fallbackTimer) globalThis.clearTimeout(fallbackTimer);
+      removeInteractionListeners();
+      void work();
+    };
+
+    const addInteractionListeners = () => {
+      for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
+        window.addEventListener(eventName, runOnce, { once: true, passive: true });
+      }
+    };
+
+    const removeInteractionListeners = () => {
+      for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
+        window.removeEventListener(eventName, runOnce);
+      }
+    };
+
+    addInteractionListeners();
+    fallbackTimer = globalThis.setTimeout(runOnce, 8000);
+
     if ("requestIdleCallback" in window) {
-      window.requestIdleCallback(() => void work(), { timeout: 2500 });
+      window.requestIdleCallback(runOnce, { timeout: 5000 });
       return;
     }
-
-    globalThis.setTimeout(() => void work(), 1500);
   }
 
   // from `local-hostname`

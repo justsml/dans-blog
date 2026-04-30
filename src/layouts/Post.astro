@@ -13,8 +13,6 @@ import type { ImageMetadata } from "astro";
 import AdditionalReading from "../components/AdditionalReading.astro";
 import CategoryLink from "../components/CategoryLink.astro";
 import { EditOnGitHubLink } from "../components/EditOnGitHubLink";
-// import { moveInOutTransition } from "../components/TransitionAnimations.ts";
-import { fade } from "astro:transitions";
 import { ShareCounters } from "../components/ShareUI";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 import ConsultingCTA from "../components/ConsultingCTA.astro";
@@ -106,7 +104,7 @@ const heroPreload = _heroSrc
   : null;
 ---
 
-<html lang="en" transition:name="root">
+<html lang="en">
   <head>
     <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
     {modTime && <meta http-equiv="last-modified" content={modTime} />}
@@ -124,7 +122,7 @@ const heroPreload = _heroSrc
       />
     )}
   </head>
-  <body class="post-page" transition:animate={fade({ duration: "0.285s" })}>
+  <body class="post-page">
     <Header className="content-grid article" date={date} modified={modified} />
     <main
       data-pagefind-body
@@ -137,7 +135,6 @@ const heroPreload = _heroSrc
         title && (
           <h1
             class="p-name"
-            transition:name="page.h1"
             data-pagefind-meta="title"
             style={{
               viewTransitionName: `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`,
@@ -149,7 +146,7 @@ const heroPreload = _heroSrc
       }
       {
         subTitleHtml && (
-          <h2 class="p-summary" transition:name="page.h2" set:html={subTitleHtml} />
+          <h2 class="p-summary" set:html={subTitleHtml} />
         )
       }
 

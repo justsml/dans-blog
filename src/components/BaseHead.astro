@@ -1,6 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-
 import type { ImageMetadata } from "astro";
 import pkg from "../../package.json";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
@@ -8,7 +6,6 @@ import socialBanner from "../assets/social-banner.webp";
 import "@/styles/nav.css";
 import "@/styles/layout.css";
 import "@/styles/global.css";
-import { slideUpAnim, slideUpTransition } from './TransitionAnimations';
 
 interface Props {
   title: string;
@@ -46,7 +43,20 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="site-version" content={version ?? "0.0.0"} />
-<link rel="preconnect" href="https://us.i.posthog.com" />
+<link
+  rel="preload"
+  href="/fonts/raleway-latin-wght-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/playwrite-au-nsw-fallback-wght-normal.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
 <link rel="canonical" class="p-url" href={canonicalURL} />
 <link rel="sitemap" href="/sitemap-0.xml" />
 {/*Primary Meta Tags*/}
@@ -135,8 +145,6 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   href="/icons/icon-512x512.webp"
 />
 
-<ClientRouter fallback="swap" transition:animate={slideUpTransition} />
-
 <style is:global>
   @keyframes slideUp {
     0% {
@@ -149,9 +157,9 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     }
   }
 
-  /* @view-transition {
+  @view-transition {
     navigation: auto;
-  } */
+  }
 
   /* Customize the default animation behavior */
 

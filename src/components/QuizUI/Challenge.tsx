@@ -1,4 +1,3 @@
-import { navigate } from "astro:transitions/client";
 import {
   MouseEvent,
   useContext,
@@ -18,7 +17,6 @@ import { usePostHog } from "../PostHogEntry.tsx";
 
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
-import gsap from "gsap";
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
@@ -64,6 +62,7 @@ export default function Challenge({
   const [explanationText, setExplanationText] = useState<string>(explanation!);
   const [tries, setTries] = useState<number>(0);
   const [pageLink, setPageLink] = useState<string>("");
+  const animationTimerRef = useRef<number | null>(null);
 
   const updateCounts = () => {
     const questions = document.querySelectorAll("main .challenge");
@@ -127,24 +126,21 @@ export default function Challenge({
   const [showHint, setShowHint] = useState<string | false>(false);
   const [ignoreHintBy, setIgnoreHintBy] = useState<number>(IGNORE_HINTS);
 
-  const triggerShake = (element: HTMLElement) => {
-    gsap.set(element, { x: 0, rotation: 0 });
-    const tl = gsap.timeline();
-    for (let i = 0; i < 5; i++) {
-      const intensity = 1 - (i * 0.15);
-      tl.to(element, {
-        x: (i % 2 === 0 ? -1 : 1) * 12 * intensity,
-        rotation: (i % 2 === 0 ? -1 : 1) * 2 * intensity,
-        duration: 0.06,
-        ease: "power2.out"
-      });
+  const replayAnimation = (className: string, duration = 520) => {
+    const element = challengeRef.current;
+    if (!element) return;
+
+    if (animationTimerRef.current) {
+      window.clearTimeout(animationTimerRef.current);
     }
-    tl.to(element, {
-      x: 0,
-      rotation: 0,
-      duration: 0.3,
-      ease: "elastic.out(1, 0.5)"
-    });
+
+    element.classList.remove("answer-correct-pulse", "answer-incorrect-shake");
+    void element.offsetWidth;
+    element.classList.add(className);
+    animationTimerRef.current = window.setTimeout(() => {
+      element.classList.remove(className);
+      animationTimerRef.current = null;
+    }, duration);
   };
 
   const handleAnswer = (option: Option) => {
@@ -168,26 +164,13 @@ export default function Challenge({
     if (option.isAnswer) {
       setChallengeClass("correct");
       setIsCorrect(true);
-      if (challengeRef.current) {
-        gsap.fromTo(challengeRef.current, 
-          { scale: 1 },
-          { 
-            scale: 1.03, 
-            duration: 0.15, 
-            ease: "power2.out",
-            yoyo: true,
-            repeat: 1
-          }
-        );
-      }
+      replayAnimation("answer-correct-pulse", 360);
       // Notify the slide manager to celebrate correct answers.
       window.dispatchEvent(new CustomEvent("quiz-answer-correct", { detail: { index: questionIndex } }));
     } else {
       setChallengeClass("incorrect");
       setIsCorrect(false);
-      if (challengeRef.current) {
-        triggerShake(challengeRef.current);
-      }
+      replayAnimation("answer-incorrect-shake", 520);
       if (ignoreHintBy > 0) {
         setIgnoreHintBy(ignoreHintBy - 1);
       }
@@ -287,27 +270,14 @@ export default function Challenge({
     }
   }, [explanationText, challengeRef]);
 
-  // GSAP entrance animation
   useEffect(() => {
-    if (challengeRef.current) {
-      gsap.fromTo(
-        challengeRef.current,
-        {
-          autoAlpha: 0,
-          y: 40,
-          scale: 0.95,
-          rotationX: -8,
-        },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-          duration: 0.6,
-          ease: "power3.out",
-        }
-      );
-    }
+    challengeRef.current?.classList.add("challenge-enter");
+
+    return () => {
+      if (animationTimerRef.current) {
+        window.clearTimeout(animationTimerRef.current);
+      }
+    };
   }, []);
 
   const sequenceNum = (questionIndex ?? 0) + 1;
@@ -413,8 +383,6 @@ export default function Challenge({
             ref={explanationContentRef}
             dangerouslySetInnerHTML={{ __html: explanationText }}
             onClick={(ev: MouseEvent<HTMLParagraphElement>) => {
-              ev.preventDefault();
-              const { clientX, clientY } = ev;
               const target: HTMLElement = ev.target as HTMLElement;
 
               const link: HTMLAnchorElement | null =
@@ -427,21 +395,12 @@ export default function Challenge({
               const isInCodeBlock = target.closest("code, pre");
               const isInParagraph = target.closest("p");
               if (isTopRight) {
+                ev.preventDefault();
                 setShowExplanation(false);
                 return false;
               }
 
-              if (isInParagraph) {
-                return false;
-              }
-              if (isInCodeBlock) {
-                return false;
-              }
-
-              if (link) {
-                navigate(link.href, { sourceElement: link });
-                return true;
-              }
+              if (link || isInParagraph || isInCodeBlock) return true;
             }}
           ></p>
         </section>
@@ -462,12 +421,10 @@ function isTopRightCorner(
 ) {
   if (!target) return false;
   const before = getComputedStyle(target as HTMLElement, "::before");
-  const { scrollY, scrollX } = global;
 
   if (before) {
     const top = Number(before.getPropertyValue("top").slice(0, -2));
     const right = Number(before.getPropertyValue("right").slice(0, -2));
-    const left = Number(before.getPropertyValue("left").slice(0, -2));
 
     if (Number.isNaN(right) || Number.isNaN(top)) {
       return false;

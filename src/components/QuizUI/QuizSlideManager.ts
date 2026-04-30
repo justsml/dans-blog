@@ -1,5 +1,3 @@
-import gsap from "gsap";
-
 /**
  * QuizSlideManager - CSS-first single-question quiz view.
  *
@@ -33,6 +31,28 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     ".quiz-options .option",
     ".quiz-hint-toggle",
   ];
+
+  const animateElement = (
+    element: Element | null,
+    keyframes: Keyframe[],
+    options: KeyframeAnimationOptions,
+  ) => {
+    if (!element || prefersReducedMotion) return Promise.resolve();
+    return element.animate(keyframes, options).finished.catch(() => undefined);
+  };
+
+  const animateElements = (
+    elements: Element[],
+    keyframes: Keyframe[],
+    options: KeyframeAnimationOptions & { stagger?: number },
+  ) => Promise.all(
+    elements.map((element, index) =>
+      animateElement(element, keyframes, {
+        ...options,
+        delay: (options.delay ?? 0) + index * (options.stagger ?? 0),
+      }),
+    ),
+  );
 
   const getRevealTargets = (island: HTMLElement) => {
     const challenge = island.querySelector<HTMLElement>(".challenge");
@@ -75,12 +95,26 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       particles.push(p);
     }
 
-    const tl = gsap.timeline({ onComplete: () => container.remove() });
     particles.forEach((p) => {
       const angle = Math.random() * Math.PI * 2;
       const vel = Math.random() * 180 + 80;
-      tl.to(p, { x: Math.cos(angle) * vel, y: Math.sin(angle) * vel - Math.random() * 100 + 300, rotation: Math.random() * 720 - 360, opacity: 0, duration: Math.random() * 0.6 + 0.8, ease: "power2.out" }, 0);
+      p.animate(
+        [
+          { transform: "translate3d(0, 0, 0) rotate(0deg)", opacity: 1 },
+          {
+            transform: `translate3d(${Math.cos(angle) * vel}px, ${Math.sin(angle) * vel - Math.random() * 100 + 300}px, 0) rotate(${Math.random() * 720 - 360}deg)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: (Math.random() * 0.6 + 0.8) * 1000,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "forwards",
+        },
+      );
     });
+
+    window.setTimeout(() => container.remove(), 1500);
   }
 
   // --- Build Nav Bar ---
@@ -239,31 +273,27 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
       completionCard.removeAttribute("hidden");
 
-      if (prefersReducedMotion) return;
-
-      gsap.fromTo(
+      animateElement(
         completionCard,
-        { autoAlpha: 0, y: 28, scale: 0.94, rotationX: -8 },
-        {
-          autoAlpha: 1,
-          y: 0,
-          scale: 1,
-          rotationX: 0,
-          duration: 0.48,
-          ease: "back.out(1.7)",
-        },
+        [
+          { opacity: 0, transform: "translateY(28px) scale(0.94) rotateX(-8deg)" },
+          { opacity: 1, transform: "translateY(0) scale(1) rotateX(0)" },
+        ],
+        { duration: 480, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "both" },
       );
 
-      gsap.fromTo(
-        completionCard.querySelectorAll(".quiz-completion-card__eyebrow, .quiz-completion-card__title, .quiz-completion-card__misses"),
-        { autoAlpha: 0, y: 10 },
+      animateElements(
+        [...completionCard.querySelectorAll(".quiz-completion-card__eyebrow, .quiz-completion-card__title, .quiz-completion-card__misses")],
+        [
+          { opacity: 0, transform: "translateY(10px)" },
+          { opacity: 1, transform: "translateY(0)" },
+        ],
         {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.34,
-          stagger: 0.07,
-          ease: "power2.out",
-          delay: 0.12,
+          delay: 120,
+          duration: 340,
+          easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+          fill: "both",
+          stagger: 70,
         },
       );
     };
@@ -384,14 +414,25 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
         hideIsland(currentIsland);
         showIsland(nextIsland);
-        gsap.set([currentIsland, nextIsland], {
-          clearProps: "position,top,left,width,zIndex,autoAlpha,y,scale,filter",
+        [currentIsland, nextIsland].forEach((island) => {
+          island.style.removeProperty("position");
+          island.style.removeProperty("top");
+          island.style.removeProperty("left");
+          island.style.removeProperty("width");
+          island.style.removeProperty("z-index");
+          island.style.removeProperty("opacity");
+          island.style.removeProperty("transform");
+          island.style.removeProperty("filter");
         });
-        gsap.set(transitionChallenges, {
-          clearProps: "autoAlpha,y,scale,filter",
+        transitionChallenges.forEach((challenge) => {
+          challenge.style.removeProperty("opacity");
+          challenge.style.removeProperty("transform");
+          challenge.style.removeProperty("filter");
         });
-        gsap.set([...currentRevealTargets, ...nextRevealTargets], {
-          clearProps: "autoAlpha,y,clipPath",
+        [...currentRevealTargets, ...nextRevealTargets].forEach((target) => {
+          target.style.removeProperty("opacity");
+          target.style.removeProperty("transform");
+          target.style.removeProperty("clip-path");
         });
 
         isTransitioning = false;
@@ -413,7 +454,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       const currentHeight = currentRect.height;
       const islandTop = Math.max(0, currentRect.top - quizRect.top);
       showIsland(nextIsland);
-      gsap.set(nextIsland, { autoAlpha: 0 });
+      nextIsland.style.opacity = "0";
       const nextHeight = nextIsland.getBoundingClientRect().height;
       const lockedHeight = Math.max(
         currentHeight + islandTop,
@@ -426,55 +467,92 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       quizUI.style.minHeight = `${lockedHeight}px`;
       quizUI.style.overflow = "visible";
 
-      gsap.set([currentIsland, nextIsland], {
-        position: "absolute",
-        top: islandTop,
-        left: 0,
-        width: "100%",
+      [currentIsland, nextIsland].forEach((island) => {
+        island.style.position = "absolute";
+        island.style.top = `${islandTop}px`;
+        island.style.left = "0";
+        island.style.width = "100%";
       });
 
-      gsap.set(currentIsland, { zIndex: 1, autoAlpha: 1, y: 0, scale: 1 });
-      gsap.set(nextIsland, { zIndex: 2, autoAlpha: 1, y: 0, scale: 1 });
+      currentIsland.style.zIndex = "1";
+      currentIsland.style.opacity = "1";
+      currentIsland.style.transform = "translateY(0) scale(1)";
+      nextIsland.style.zIndex = "2";
+      nextIsland.style.opacity = "1";
+      nextIsland.style.transform = "translateY(0) scale(1)";
       if (nextChallenge) {
-        gsap.set(nextChallenge, { autoAlpha: 0.98, y: 0, scale: 0.995 });
+        nextChallenge.style.opacity = "0.98";
+        nextChallenge.style.transform = "translateY(0) scale(0.995)";
       }
-      gsap.set(nextRevealTargets, {
-        autoAlpha: 0,
-        y: dir === "next" ? 14 : -14,
-        clipPath: dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
+      nextRevealTargets.forEach((target) => {
+        target.style.opacity = "0";
+        target.style.transform = `translateY(${dir === "next" ? 14 : -14}px)`;
+        target.style.clipPath = dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)";
       });
 
-      const tl = gsap.timeline({ onComplete });
-
-      tl.to(currentRevealTargets, {
-        duration: 0.16,
-        autoAlpha: 0,
-        y: dir === "next" ? -8 : 8,
-        stagger: 0.018,
-        ease: "power2.in",
-      })
-        .to(currentChallenge, {
-          duration: 0.22,
-          autoAlpha: 0,
-          scale: 0.992,
-          filter: "brightness(0.82)",
-          ease: "power2.out",
-        }, 0.06)
-        .to(nextChallenge, {
-          duration: 0.22,
-          autoAlpha: 1,
-          scale: 1,
-          filter: "brightness(1)",
-          ease: "power2.out",
-        }, 0.08)
-        .to(nextRevealTargets, {
-          duration: 0.34,
-          autoAlpha: 1,
-          y: 0,
-          clipPath: "inset(0% 0% 0% 0%)",
-          stagger: 0.045,
-          ease: "power3.out",
-        }, 0.16);
+      void Promise.all([
+        animateElements(
+          currentRevealTargets,
+          [
+            { opacity: 1, transform: "translateY(0)" },
+            { opacity: 0, transform: `translateY(${dir === "next" ? -8 : 8}px)` },
+          ],
+          {
+            duration: 160,
+            easing: "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+            fill: "both",
+            stagger: 18,
+          },
+        ),
+        animateElement(
+          currentChallenge,
+          [
+            { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
+            { opacity: 0, transform: "scale(0.992)", filter: "brightness(0.82)" },
+          ],
+          {
+            delay: 60,
+            duration: 220,
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
+          },
+        ),
+        animateElement(
+          nextChallenge,
+          [
+            { opacity: 0.98, transform: "scale(0.995)", filter: "brightness(0.96)" },
+            { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
+          ],
+          {
+            delay: 80,
+            duration: 220,
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
+          },
+        ),
+        animateElements(
+          nextRevealTargets,
+          [
+            {
+              opacity: 0,
+              transform: `translateY(${dir === "next" ? 14 : -14}px)`,
+              clipPath: dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
+            },
+            {
+              opacity: 1,
+              transform: "translateY(0)",
+              clipPath: "inset(0% 0% 0% 0%)",
+            },
+          ],
+          {
+            delay: 160,
+            duration: 340,
+            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            fill: "both",
+            stagger: 45,
+          },
+        ),
+      ]).then(onComplete);
 
       updateNavButtons();
     };
