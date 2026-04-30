@@ -6,7 +6,6 @@ import "./AnimatedLogoType.css";
 gsap.registerPlugin(useGSAP);
 
 const LOGO_REVEAL_WIDTH = 198;
-const LOGO_SWEEP_X = 192;
 
 type AnimatedLogoTypeProps = {
   avatarSrc: string;
@@ -35,9 +34,6 @@ export default function AnimatedLogoType({
         });
         gsap.set(".animated-logo-type__name-neon", {
           autoAlpha: 0.68,
-        });
-        gsap.set(".animated-logo-type__sweep", {
-          autoAlpha: 0,
         });
         gsap.set(".animated-logo-type__rule", {
           strokeDashoffset: 0,
@@ -92,11 +88,8 @@ export default function AnimatedLogoType({
           .set(".animated-logo-type__thread, .animated-logo-type__rule", {
             strokeDashoffset: 1,
           })
-          .set(".animated-logo-type__name-neon, .animated-logo-type__sweep", {
+          .set(".animated-logo-type__name-neon", {
             autoAlpha: 0,
-          })
-          .set(".animated-logo-type__sweep", {
-            x: -22,
           })
           .from(
             ".animated-logo-type__avatar",
@@ -154,32 +147,13 @@ export default function AnimatedLogoType({
             "-=0.2",
           )
           .to(
-            ".animated-logo-type__sweep",
-            {
-              autoAlpha: 1,
-              x: LOGO_SWEEP_X,
-              duration: 0.68,
-              ease: "power2.inOut",
-            },
-            "<",
-          )
-          .to(
             ".animated-logo-type__name-neon",
             {
               autoAlpha: 0.72,
-              duration: 0.22,
+              duration: 0.42,
               ease: "sine.out",
             },
-            "-=0.18",
-          )
-          .to(
-            ".animated-logo-type__sweep",
-            {
-              autoAlpha: 0,
-              duration: 0.18,
-              ease: "sine.out",
-            },
-            "<",
+            "+=0.18",
           );
 
         const disturbNeon = () => {
@@ -262,11 +236,6 @@ export default function AnimatedLogoType({
               fill="#fff"
             />
           </mask>
-          <clipPath id="animated-logo-type-sweep-clip">
-            <text className="animated-logo-type__segment animated-logo-type__segment--name" x="2" y="34">
-              DanLevy.net
-            </text>
-          </clipPath>
         </defs>
         <path
           className="animated-logo-type__thread"
@@ -285,15 +254,6 @@ export default function AnimatedLogoType({
         >
           DanLevy.net
         </text>
-        <rect
-          className="animated-logo-type__sweep"
-          clipPath="url(#animated-logo-type-sweep-clip)"
-          x="2"
-          y="2"
-          width="30"
-          height="44"
-          rx="15"
-        />
         <path
           className="animated-logo-type__rule"
           pathLength="1"

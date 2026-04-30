@@ -129,13 +129,20 @@ const fitSignals = [
     <div class="consulting-shell consulting-practice-bar">
       <a class="practice-home" href="/">
         <span class="practice-mark">DL</span>
-        <span>
+        <span class="practice-brand-copy">
           <strong>DanLevy.net</strong>
           <small>Return to the writing</small>
         </span>
       </a>
-      <div class="practice-divider" aria-hidden="true"></div>
-      <span class="practice-label">Consulting practice</span>
+      <div class="practice-signal" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="practice-label">
+        <span>Consulting practice</span>
+        <strong>Production AI systems</strong>
+      </div>
     </div>
 
     <div class="consulting-shell hero-grid">
@@ -476,76 +483,169 @@ const fitSignals = [
   .consulting-practice-bar {
     align-items: center;
     display: flex;
-    gap: 1rem;
-    justify-content: flex-start;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    justify-content: space-between;
     margin-bottom: clamp(3rem, 6vw, 5.5rem);
+    min-height: 4.5rem;
+    position: relative;
+  }
+
+  .consulting-practice-bar::before {
+    background:
+      linear-gradient(90deg, rgba(40, 232, 223, 0.18), transparent 38%),
+      linear-gradient(180deg, rgba(244, 240, 232, 0.07), rgba(244, 240, 232, 0.018));
+    border: 1px solid rgba(244, 240, 232, 0.09);
+    border-radius: 16px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 240, 232, 0.08),
+      0 18px 54px rgba(0, 18, 28, 0.22);
+    content: "";
+    inset: -0.55rem -0.65rem;
+    opacity: 0.8;
+    pointer-events: none;
+    position: absolute;
   }
 
   .practice-home {
     align-items: center;
-    background: rgba(244, 240, 232, 0.045);
-    border: 1px solid var(--consulting-line);
-    border-radius: 999px;
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.13), rgba(244, 240, 232, 0.055)),
+      rgba(5, 8, 11, 0.74);
+    border: 1px solid rgba(244, 240, 232, 0.13);
+    border-radius: 12px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 240, 232, 0.1),
+      0 16px 36px rgba(0, 18, 28, 0.25);
     color: var(--consulting-ink);
     display: inline-flex;
-    gap: 0.85rem;
-    padding: 0.55rem 1rem 0.55rem 0.55rem;
+    gap: 0.75rem;
+    min-width: 13rem;
+    padding: 0.6rem 0.95rem 0.6rem 0.6rem;
+    position: relative;
     text-decoration: none;
-    transition: border-color var(--consulting-motion), background var(--consulting-motion), transform var(--consulting-motion);
+    transition: border-color var(--consulting-motion), background var(--consulting-motion), box-shadow var(--consulting-motion), transform var(--consulting-motion);
+    z-index: 1;
   }
 
   .practice-home:hover {
-    background: rgba(244, 240, 232, 0.07);
-    border-color: rgba(37, 214, 196, 0.35);
-    transform: translateY(-1px);
+    background:
+      linear-gradient(135deg, rgba(244, 240, 232, 0.16), rgba(244, 240, 232, 0.07)),
+      rgba(5, 8, 11, 0.86);
+    border-color: rgba(40, 232, 223, 0.36);
+    box-shadow:
+      inset 0 1px 0 rgba(244, 240, 232, 0.13),
+      0 20px 42px rgba(0, 18, 28, 0.3),
+      0 0 0 1px rgba(40, 232, 223, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .practice-home:focus-visible {
+    outline: 2px solid rgba(40, 232, 223, 0.78);
+    outline-offset: 4px;
   }
 
   .practice-mark {
     align-items: center;
-    background: linear-gradient(135deg, rgba(37, 214, 196, 0.2), rgba(255, 127, 103, 0.13));
-    border: 1px solid rgba(244, 240, 232, 0.13);
-    border-radius: 50%;
+    background:
+      radial-gradient(circle at 30% 25%, rgba(244, 240, 232, 0.3), transparent 35%),
+      linear-gradient(135deg, rgba(40, 232, 223, 0.2), rgba(159, 184, 255, 0.11));
+    border: 1px solid rgba(244, 240, 232, 0.18);
+    border-radius: 10px;
+    box-shadow:
+      inset 0 1px 0 rgba(244, 240, 232, 0.12),
+      0 10px 22px rgba(0, 18, 28, 0.24);
     display: flex;
     flex: 0 0 auto;
     font-size: 0.76rem;
     font-weight: 800;
-    height: 2.25rem;
+    height: 2.45rem;
     justify-content: center;
-    letter-spacing: 0.02em;
-    width: 2.25rem;
+    letter-spacing: 0;
+    width: 2.45rem;
   }
 
-  .practice-home strong,
-  .practice-home small {
+  .practice-brand-copy strong,
+  .practice-brand-copy small {
     display: block;
     line-height: 1.1;
   }
 
-  .practice-home strong {
-    font-size: 0.9rem;
-    letter-spacing: -0.01em;
+  .practice-brand-copy strong {
+    font-size: 0.92rem;
+    letter-spacing: 0;
   }
 
-  .practice-home small {
+  .practice-brand-copy small {
     color: var(--consulting-soft);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 650;
     margin-top: 0.18rem;
   }
 
-  .practice-divider {
-    background: linear-gradient(90deg, rgba(244, 240, 232, 0.28), transparent);
+  .practice-signal {
+    align-items: center;
+    display: grid;
+    flex: 1 1 auto;
+    gap: 0.65rem;
+    grid-template-columns: minmax(2rem, 1fr) auto minmax(2rem, 1fr);
+    min-width: 8rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .practice-signal span {
+    display: block;
+  }
+
+  .practice-signal span:first-child,
+  .practice-signal span:last-child {
+    background: linear-gradient(90deg, transparent, rgba(244, 240, 232, 0.26), rgba(40, 232, 223, 0.34));
     height: 1px;
-    max-width: 12rem;
-    flex: 1 1 8rem;
+  }
+
+  .practice-signal span:last-child {
+    background: linear-gradient(90deg, rgba(40, 232, 223, 0.34), rgba(244, 240, 232, 0.18), transparent);
+  }
+
+  .practice-signal span:nth-child(2) {
+    background: rgba(40, 232, 223, 0.9);
+    border-radius: 999px;
+    box-shadow:
+      0 0 0 5px rgba(40, 232, 223, 0.07),
+      0 0 26px rgba(40, 232, 223, 0.42);
+    height: 0.38rem;
+    width: 0.38rem;
   }
 
   .practice-label {
-    color: var(--consulting-soft);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.13em;
+    border-left: 1px solid rgba(244, 240, 232, 0.14);
+    min-width: 13.5rem;
+    padding-left: clamp(1rem, 2vw, 1.4rem);
+    position: relative;
+    text-align: right;
+    z-index: 1;
+  }
+
+  .practice-label span,
+  .practice-label strong {
+    display: block;
+    line-height: 1.1;
+  }
+
+  .practice-label span {
+    color: rgba(40, 232, 223, 0.82);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0.35rem;
     text-transform: uppercase;
+  }
+
+  .practice-label strong {
+    color: rgba(244, 240, 232, 0.86);
+    font-size: clamp(0.98rem, 1.4vw, 1.18rem);
+    font-weight: 620;
+    letter-spacing: 0;
   }
 
   .hero-grid,
@@ -1275,16 +1375,31 @@ const fitSignals = [
       flex-direction: column;
       gap: 0.85rem;
       margin-bottom: 2.5rem;
+      min-height: 0;
+    }
+
+    .consulting-practice-bar::before {
+      inset: -0.45rem;
     }
 
     .practice-home {
-      width: fit-content;
+      min-width: 0;
+      width: 100%;
     }
 
-    .practice-divider {
+    .practice-signal {
       flex: 0 0 auto;
-      max-width: none;
+      min-width: 0;
       width: 100%;
+    }
+
+    .practice-label {
+      border-left: 0;
+      border-top: 1px solid rgba(244, 240, 232, 0.11);
+      min-width: 0;
+      padding-left: 0;
+      padding-top: 0.85rem;
+      text-align: left;
     }
 
     .consulting-hero,
