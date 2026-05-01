@@ -401,20 +401,30 @@ const heroPreload = _heroSrc
       });
     }
 
-    document.addEventListener("astro:page-load", function () {
+    function bootPageEnhancements() {
       __checkForEmptyShareCounts();
 
       deferWork(bootBannerEffects, 1800);
 
-      const quiz = document.querySelector(".quiz-ui");
-      if (quiz) {
+      const quiz = document.querySelector<HTMLElement>(".quiz-ui");
+      if (quiz && !quiz.dataset.quizLogicInitialized) {
+        quiz.dataset.quizLogicInitialized = "true";
         deferWork(() => bootQuizLogic(quiz), 900);
         // Initialize single-question slide manager
         import("../components/QuizUI/QuizSlideManager").then(({ initQuizSlideManager }) => {
           deferWork(() => initQuizSlideManager(quiz.closest("section") as HTMLElement), 200);
         });
       }
-    });
+    }
+
+    document.addEventListener("astro:page-load", bootPageEnhancements);
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", bootPageEnhancements, { once: true });
+    } else {
+      bootPageEnhancements();
+    }
+
     function getAnswerCount() {
       return [...document.querySelectorAll("[data-answer-count")].reduce(
         (acc, q) => {

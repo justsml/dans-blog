@@ -57,9 +57,11 @@ export class ScanlineBannerEffect extends BaseBannerEffect {
         vec3 color = texture2D(u_texture, uv).rgb;
         
         // Scanline effect
-        float scanlineIntensity = (0.05 + u_scrollVelocity * 0.1) * u_distortionStrength;
-        float scanline = sin(v_texCoord.y * u_resolution.y * 2.0) * scanlineIntensity;
-        color -= scanline;
+        float time = u_time * 0.001;
+        float scanlineIntensity = (0.045 + u_scrollVelocity * 0.1) * u_distortionStrength;
+        float movingScanline = 0.5 + 0.5 * sin((v_texCoord.y * u_resolution.y * 2.0) - (time * 22.0));
+        float fineInterlace = 0.5 + 0.5 * sin((v_texCoord.y * u_resolution.y * 4.0) + (time * 9.0));
+        color -= (movingScanline * 0.75 + fineInterlace * 0.25) * scanlineIntensity;
         
         // Horizontal sweep based on scroll
         float sweepY = u_scrollProgress;

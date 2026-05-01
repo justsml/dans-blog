@@ -46,7 +46,8 @@ strike {
   position: relative;
   border-radius: var(--border-radius);
   padding: calc(var(--border-radius) * 2);
-  --local-color: var(--cold-bg);
+  --quiz-accent: rgb(190, 255, 74);
+  --local-color: color-mix(in srgb, var(--quiz-accent) 42%, var(--cold-bg));
   transition:
     background 0.3s ease-out,
     background-color 0.3s ease-out,
@@ -55,8 +56,16 @@ strike {
     transform 0.3s ease-out;
 
   h2 {
+    color: color-mix(in srgb, var(--quiz-accent) 78%, white);
     font-size: 1.25rem;
     margin: 0;
+  }
+
+  .small-label {
+    color: color-mix(in srgb, var(--quiz-accent) 68%, white);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }
 
@@ -67,7 +76,7 @@ strike {
   --progress-height: calc(var(--percent-completed) * 100%);
   inset: auto var(--card-border-size) var(--card-border-size)
     var(--card-border-size);
-  background-color: var(--neon-green);
+  background-color: var(--quiz-accent);
   background-blend-mode: overlay;
   background-position: 0 0;
   background-size: 100% 100%;
@@ -93,6 +102,7 @@ strike {
   /* padding: 1.5rem; */
   background: #222;
   color: #fff;
+  border: 1px solid color-mix(in srgb, var(--quiz-accent) 22%, transparent);
   border-radius: var(--border-radius);
   width: 100%;
   height: 100%;

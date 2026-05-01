@@ -36,6 +36,7 @@ export const ArticleCard = ({
   const { createdAgo, modifiedAgo } = getComputedDates({ date, modified });
 
   const icon = cover_mobile;
+  const popularity = article.data.popularity ?? 0;
   // console.log(cover_icon);
   const image =
     typeof icon === "string" ? (
@@ -66,13 +67,23 @@ export const ArticleCard = ({
   }
 
   const myClass = isTile ? "article-tile" : "article-card";
+  const editorialClass =
+    !isTile && popularity >= 0.95
+      ? " article-card--feature article-card--popular"
+      : !isTile && popularity >= 0.7
+        ? " article-card--popular"
+        : "";
   const viewTransitionName = `article-${`${slug}`.replace(/^\/*|\/*$/g, "")}`;
 
   return (
     <a
       href={`/${slug}/`}
       className={
-        myClass + " " + categoryClass + (className ? ` ${className}` : "")
+        myClass +
+        editorialClass +
+        " " +
+        categoryClass +
+        (className ? ` ${className}` : "")
       }
       // title={(draft ? 'DRAFT: ' : '') + title}
       data-created={date}

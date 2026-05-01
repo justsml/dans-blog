@@ -43,6 +43,13 @@
       color 180ms ease,
       transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
     color: var(--clr-muted-300);
+
+    &.category-quiz {
+      border-color: rgba(198, 255, 92, 0.2);
+      .post-title {
+        color: color-mix(in srgb, rgb(190, 255, 74) 74%, var(--clr-muted-100));
+      }
+    }
   
     &:hover {
       border-color: rgba(191, 248, 244, 0.32);
@@ -51,6 +58,9 @@
       transform: translateY(-3px);
       .small-label {
         color: unset;
+      }
+      &.category-quiz {
+        border-color: rgba(198, 255, 92, 0.38);
       }
       .article-card__media img {
         opacity: 0.96;

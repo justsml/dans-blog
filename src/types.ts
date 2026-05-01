@@ -120,6 +120,7 @@ export type ArticlePost = {
     category: string;
     subCategory?: string;
     tags: string[];
+    popularity?: number;
   };
 };
 
