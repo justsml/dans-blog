@@ -3,6 +3,7 @@ import type { Page, PagePath, ArticlePost } from "../../types";
 import { PostCollections, getArticleSortFn } from "../../shared/postsCache";
 import { pageSize } from "../../shared/pagination";
 import { ArticleCard } from "../../components/ArticleCard";
+import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
 // import { RefreshCw } from "lucide-react";
 
@@ -93,20 +94,32 @@ const nextPageAttrs = nextUrl
       "hx-swap": "afterend",
     }
   : {};
+
+const shouldShowConsultingCta = currentPage % 2 === 0;
+const consultingCtaIndex = Math.min(4, Math.max(data.length - 2, 0));
 ---
 
 {
-  data.map(({ props }: any, index) =>
-    index === data.length - 1 ? (
-      <ArticleCard
-        article={props as ArticlePost}
-        width={200}
-        {...nextPageAttrs}
-      />
-    ) : (
-      <ArticleCard article={props as ArticlePost} width={200} />
-    ),
-  )
+  data.map(({ props }: any, index) => (
+    <>
+      {index === data.length - 1 ? (
+        <ArticleCard
+          article={props as ArticlePost}
+          width={200}
+          {...nextPageAttrs}
+        />
+      ) : (
+        <ArticleCard article={props as ArticlePost} width={200} />
+      )}
+      {shouldShowConsultingCta && index === consultingCtaIndex && (
+        <ArticleListConsultingCTA
+          category={(props as ArticlePost).data.category}
+          compact
+          pageCount={currentPage}
+        />
+      )}
+    </>
+  ))
 }
 
 {

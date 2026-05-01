@@ -1,0 +1,440 @@
+---
+import { INTRO_CALL_LINK } from "../data/consultingServices";
+
+type VariantKey = "ai" | "security" | "infra" | "js" | "default";
+
+type Props = {
+  category?: string;
+  compact?: boolean;
+  pageCount?: number;
+};
+
+const VARIANTS: Record<
+  VariantKey,
+  {
+    eyebrow: string;
+    title: string;
+    body: string;
+    accentClass: string;
+    primaryLabel: string;
+  }
+> = {
+  ai: {
+    eyebrow: "AI consulting",
+    title: "Shipping AI work that needs more than a demo?",
+    body: "I help teams turn model calls, agents, RAG, evals, and cost controls into production systems people can trust.",
+    accentClass: "article-list-cta--cyan",
+    primaryLabel: "See AI services",
+  },
+  security: {
+    eyebrow: "Security consulting",
+    title: "Have a risky launch or auth surface to review?",
+    body: "I review app security, prompt-injection exposure, auth flows, and the quiet edge cases that become incident reports.",
+    accentClass: "article-list-cta--amber",
+    primaryLabel: "Review options",
+  },
+  infra: {
+    eyebrow: "Infrastructure help",
+    title: "Need production systems that stay boring?",
+    body: "I tune deploys, observability, containers, and reliability paths so your team can ship without the 3am surprise.",
+    accentClass: "article-list-cta--lime",
+    primaryLabel: "Talk infrastructure",
+  },
+  js: {
+    eyebrow: "Senior JS/TS help",
+    title: "Stuck on a hard JavaScript or TypeScript problem?",
+    body: "I bring 18+ years of production JS/TS experience to architecture reviews, rescue work, and focused implementation sprints.",
+    accentClass: "article-list-cta--pink",
+    primaryLabel: "Check availability",
+  },
+  default: {
+    eyebrow: "Consulting",
+    title: "Have a hard technical problem worth solving well?",
+    body: "I work with teams on AI systems, TypeScript architecture, security reviews, and production rescue missions.",
+    accentClass: "article-list-cta--cyan",
+    primaryLabel: "Explore consulting",
+  },
+};
+
+const CATEGORY_MAP: Record<string, VariantKey> = {
+  ai: "ai",
+  llm: "ai",
+  openai: "ai",
+  anthropic: "ai",
+  agents: "ai",
+  rag: "ai",
+  "machine learning": "ai",
+  security: "security",
+  auth: "security",
+  docker: "infra",
+  devops: "infra",
+  infrastructure: "infra",
+  linux: "infra",
+  javascript: "js",
+  typescript: "js",
+  react: "js",
+  node: "js",
+  "node.js": "js",
+  quiz: "js",
+};
+
+const { category, compact = false, pageCount = 1 } = Astro.props as Props;
+const variantKey = CATEGORY_MAP[(category ?? "").toLowerCase().trim()] ?? "default";
+const rotationKeys = [
+  variantKey,
+  ...(["ai", "js", "security", "infra", "default"] as VariantKey[]).filter(
+    (key) => key !== variantKey,
+  ),
+];
+const messageIndex = Math.max(0, Math.floor(pageCount) - 1) % rotationKeys.length;
+const orderedRotationKeys = [
+  ...rotationKeys.slice(messageIndex),
+  ...rotationKeys.slice(0, messageIndex),
+];
+const rotationData = orderedRotationKeys.map((key) => VARIANTS[key]);
+const selectedCta = rotationData[0];
+---
+
+<aside
+  class:list={[
+    "article-list-cta",
+    selectedCta.accentClass,
+    compact && "article-list-cta--compact",
+  ]}
+  aria-label="Consulting services"
+  data-pagefind-ignore="all"
+  data-article-list-cta
+  data-article-list-cta-variants={JSON.stringify(rotationData)}
+>
+  <div class="article-list-cta__ornament" aria-hidden="true"></div>
+  <div class="article-list-cta__copy">
+    <p class="article-list-cta__eyebrow" data-article-list-cta-eyebrow>{selectedCta.eyebrow}</p>
+    <h3 data-article-list-cta-title>{selectedCta.title}</h3>
+    <p data-article-list-cta-body>{selectedCta.body}</p>
+  </div>
+  <div class="article-list-cta__actions">
+    <a
+      class="article-list-cta__link"
+      href={INTRO_CALL_LINK}
+      target="_blank"
+      rel="noopener"
+      data-article-list-cta-primary
+    >
+      <span data-article-list-cta-primary-label>{selectedCta.primaryLabel}</span>
+      <span aria-hidden="true">-&gt;</span>
+    </a>
+  </div>
+</aside>
+
+<script is:inline>
+  (() => {
+    const SELECTOR = "[data-article-list-cta]";
+    const INTERVAL_MS = 7_500;
+    const FADE_MS = 220;
+    const ACCENT_CLASSES = [
+      "article-list-cta--cyan",
+      "article-list-cta--pink",
+      "article-list-cta--amber",
+      "article-list-cta--lime",
+    ];
+
+    if (window.__articleListCtaBootstrapped) {
+      window.__initArticleListCtas?.();
+      return;
+    }
+
+    window.__articleListCtaBootstrapped = true;
+
+    function initCard(card) {
+      if (!(card instanceof HTMLElement) || card.dataset.articleListCtaReady === "true") {
+        return;
+      }
+
+      card.dataset.articleListCtaReady = "true";
+
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+
+      let variants = [];
+      try {
+        variants = JSON.parse(card.dataset.articleListCtaVariants || "[]");
+      } catch {
+        variants = [];
+      }
+
+      if (!Array.isArray(variants) || variants.length <= 1) return;
+
+      const eyebrow = card.querySelector("[data-article-list-cta-eyebrow]");
+      const title = card.querySelector("[data-article-list-cta-title]");
+      const body = card.querySelector("[data-article-list-cta-body]");
+      const primaryLabel = card.querySelector("[data-article-list-cta-primary-label]");
+
+      let index = 0;
+      const update = () => {
+        index = (index + 1) % variants.length;
+        const next = variants[index];
+        if (!next) return;
+
+        card.classList.add("article-list-cta--fading");
+
+        window.setTimeout(() => {
+          card.classList.remove(...ACCENT_CLASSES);
+          if (typeof next.accentClass === "string") {
+            card.classList.add(next.accentClass);
+          }
+
+          if (eyebrow) eyebrow.textContent = next.eyebrow || "";
+          if (title) title.textContent = next.title || "";
+          if (body) body.textContent = next.body || "";
+          if (primaryLabel) primaryLabel.textContent = next.primaryLabel || "Explore consulting";
+
+          window.requestAnimationFrame(() => {
+            card.classList.remove("article-list-cta--fading");
+          });
+        }, FADE_MS);
+      };
+
+      const timer = window.setInterval(update, INTERVAL_MS);
+      card.dataset.articleListCtaTimer = String(timer);
+    }
+
+    function initAll() {
+      document.querySelectorAll(SELECTOR).forEach(initCard);
+    }
+
+    window.__initArticleListCtas = initAll;
+    initAll();
+    document.addEventListener("astro:page-load", initAll);
+    document.addEventListener("htmx:afterSwap", initAll);
+  })();
+</script>
+
+<style>
+  .article-list-cta {
+    --cta-accent: rgb(0, 245, 238);
+    --cta-accent-soft: rgba(191, 248, 244, 0.58);
+    --cta-accent-dim: rgba(0, 245, 238, 0.052);
+    --cta-border: rgba(218, 246, 243, 0.09);
+    --cta-bg: rgba(6, 11, 14, 0.72);
+    background:
+      linear-gradient(140deg, rgba(255, 255, 255, 0.045), transparent 32%) padding-box,
+      radial-gradient(circle at 12% 0%, var(--cta-accent-dim), transparent 36%) padding-box,
+      var(--cta-bg);
+    border: 1px solid var(--cta-border);
+    border-radius: 0;
+    box-shadow: 0 14px 34px rgba(0, 8, 12, 0.16);
+    color: var(--clr-muted-100);
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.45rem);
+    grid-template-columns: minmax(0, 1fr);
+    isolation: isolate;
+    min-height: 100%;
+    overflow: hidden;
+    padding: clamp(1rem, 2vw, 1.35rem);
+    position: relative;
+    transition:
+      border-color 240ms ease,
+      box-shadow 240ms ease,
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .article-list-cta::before {
+    background: linear-gradient(90deg, transparent, var(--cta-accent), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 clamp(1rem, 3vw, 2rem) auto;
+    opacity: 0.36;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .article-list-cta::after {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 26px 26px;
+    content: "";
+    inset: 0;
+    mask-image: linear-gradient(130deg, transparent 0%, #000 22%, transparent 74%);
+    opacity: 0.24;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .article-list-cta__ornament {
+    aspect-ratio: 1;
+    border: 1px solid color-mix(in srgb, var(--cta-accent) 22%, transparent);
+    border-radius: 999px;
+    inset: auto -3.75rem -4.25rem auto;
+    opacity: 0.46;
+    position: absolute;
+    width: clamp(9rem, 18vw, 14rem);
+  }
+
+  .article-list-cta__ornament::before,
+  .article-list-cta__ornament::after {
+    border: inherit;
+    border-radius: inherit;
+    content: "";
+    inset: 1.1rem;
+    position: absolute;
+  }
+
+  .article-list-cta__ornament::after {
+    inset: 2.2rem;
+  }
+
+  .article-list-cta__copy,
+  .article-list-cta__actions {
+    position: relative;
+    z-index: 1;
+  }
+
+  .article-list-cta__copy {
+    display: grid;
+    gap: 0.55rem;
+    transition:
+      opacity 220ms ease,
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .article-list-cta__eyebrow {
+    color: var(--cta-accent-soft);
+    font-size: clamp(0.68rem, 1.1cqi, 0.78rem);
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .article-list-cta h3 {
+    color: rgba(245, 245, 247, 0.82);
+    font-family: "Raleway", sans-serif;
+    font-size: clamp(1.35rem, 3.1cqi, 2rem);
+    font-weight: 760;
+    letter-spacing: 0;
+    line-height: 1.04;
+    margin: 0;
+    max-width: 19ch;
+    text-wrap: balance;
+  }
+
+  .article-list-cta__copy p:not(.article-list-cta__eyebrow) {
+    color: rgba(221, 232, 233, 0.56);
+    font-size: clamp(0.94rem, 1.45cqi, 1.04rem);
+    font-weight: 300;
+    line-height: 1.55;
+    margin: 0;
+    max-width: 54ch;
+  }
+
+  .article-list-cta__actions {
+    align-items: center;
+    align-self: end;
+    display: flex;
+    transition:
+      opacity 220ms ease,
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .article-list-cta__link {
+    align-items: center;
+    border-radius: 0;
+    color: var(--cta-accent-soft);
+    display: flex;
+    font-size: 0.86rem;
+    font-weight: 750;
+    gap: 0.55rem;
+    justify-content: space-between;
+    line-height: 1;
+    min-height: 2.35rem;
+    padding-block: 0.7rem;
+    position: relative;
+    text-decoration: none;
+    transition:
+      color 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    width: 100%;
+  }
+
+  .article-list-cta__link::before,
+  .article-list-cta__link::after {
+    background: color-mix(in srgb, var(--cta-accent) 34%, transparent);
+    content: "";
+    height: 1px;
+    inset: auto 0 0;
+    position: absolute;
+  }
+
+  .article-list-cta__link::after {
+    background: var(--cta-accent);
+    opacity: 0.72;
+    transform: scaleX(0.28);
+    transform-origin: left;
+    transition: transform 180ms ease;
+  }
+
+  .article-list-cta__link:hover,
+  .article-list-cta__link:focus-visible {
+    color: rgba(245, 245, 247, 0.86);
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .article-list-cta__link:hover::after,
+  .article-list-cta__link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .article-list-cta__link:active {
+    transform: translateY(-1px) scale(0.99);
+  }
+
+  .article-list-cta--pink {
+    --cta-accent: rgb(255, 107, 157);
+    --cta-accent-soft: rgba(255, 178, 204, 0.62);
+    --cta-accent-dim: rgba(255, 107, 157, 0.055);
+    --cta-border: rgba(255, 107, 157, 0.11);
+  }
+
+  .article-list-cta--amber {
+    --cta-accent: rgb(245, 158, 11);
+    --cta-accent-soft: rgba(255, 203, 116, 0.62);
+    --cta-accent-dim: rgba(245, 158, 11, 0.06);
+    --cta-border: rgba(245, 158, 11, 0.12);
+  }
+
+  .article-list-cta--lime {
+    --cta-accent: rgb(184, 255, 95);
+    --cta-accent-soft: rgba(219, 255, 172, 0.64);
+    --cta-accent-dim: rgba(184, 255, 95, 0.055);
+    --cta-border: rgba(184, 255, 95, 0.11);
+  }
+
+  .article-list-cta--compact h3 {
+    font-size: clamp(1.18rem, 2.6cqi, 1.55rem);
+  }
+
+  .article-list-cta--fading .article-list-cta__copy,
+  .article-list-cta--fading .article-list-cta__actions {
+    opacity: 0.45;
+    transform: translateY(4px);
+  }
+
+  @media (min-width: 1040px) {
+    .article-list-cta {
+      grid-row: span 3;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .article-list-cta__actions {
+      align-content: end;
+      justify-content: end;
+    }
+  }
+</style>

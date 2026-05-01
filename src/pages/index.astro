@@ -3,6 +3,7 @@ import Page from "../layouts/Page.astro";
 
 import { PostCollections } from "../shared/postsCache.ts";
 import { ArticleCard } from "../components/ArticleCard";
+import ArticleListConsultingCTA from "../components/ArticleListConsultingCTA.astro";
 // import FloatingLines from "../components/FloatingLines";
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
@@ -32,6 +33,7 @@ const nextPageAttrs = defaultNextUrl
   : {};
 // 
 posts = posts.slice(0, pageSize - 1);
+const consultingCtaIndex = Math.min(3, Math.max(posts.length - 2, 0));
 
 const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 ---
@@ -101,15 +103,18 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
         //   ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
         // )
         .map((props: any, index) =>
-          index === posts.length - 1 ? (
-            <ArticleCard
-              article={props as ArticlePost}
-              width={200}
-              {...nextPageAttrs}
-            />
-          ) : (
-            <ArticleCard article={props as ArticlePost} width={200} />
-          )
+          <>
+            {index === posts.length - 1 ? (
+              <ArticleCard
+                article={props as ArticlePost}
+                width={200}
+                {...nextPageAttrs}
+              />
+            ) : (
+              <ArticleCard article={props as ArticlePost} width={200} />
+            )}
+            {index === consultingCtaIndex && <ArticleListConsultingCTA pageCount={1} />}
+          </>
         )
     }
     <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->

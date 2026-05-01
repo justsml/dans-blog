@@ -1,5 +1,6 @@
 ---
 import { ArticleCard } from "../../components/ArticleCard";
+import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import Page from "../../layouts/Page.astro";
 import { PostCollections } from "../../shared/postsCache";
 import type { ArticlePost } from "../../types";
@@ -15,6 +16,7 @@ type Props = {
 
 const { category, count } = Astro.props as Props;
 const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unknown as ArticlePost[];
+const consultingCtaIndex = Math.min(3, Math.max(posts.length - 2, 0));
 
 // console.log("category.astro.props", Astro.props);
 ---
@@ -41,6 +43,19 @@ const posts: ArticlePost[] = PostCollections.getPostsByCategory(category) as unk
   </div>
   <p style="margin: .2rem .75rem">Found {count} articles</p>
   <div class:list={["article-list"]}>
-    {posts.map((post) => <ArticleCard article={post} />)}
+    {
+      posts.map((post, index) => (
+        <>
+          <ArticleCard article={post} />
+          {index === consultingCtaIndex && (
+            <ArticleListConsultingCTA
+              category={category}
+              compact={count < 6}
+              pageCount={count}
+            />
+          )}
+        </>
+      ))
+    }
   </div>
 </Page>
