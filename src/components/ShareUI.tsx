@@ -161,7 +161,7 @@ async function fetchShareCounts(url: string): Promise<ShareCounts> {
  * ShareCounters component
  */
 export function ShareCounters({ url, className }: { url: string, className?: string }) {
-  const [counts, setCounts] = React.useState<ShareCounts>(() => readCachedCounts(url) ?? EMPTY_COUNTS);
+  const [counts, setCounts] = React.useState<ShareCounts>(EMPTY_COUNTS);
 
   React.useEffect(() => {
     const cached = readCachedCounts(url);

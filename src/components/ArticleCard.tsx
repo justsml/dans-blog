@@ -79,7 +79,7 @@ export const ArticleCard = ({
       data-modified={modified}
       {...htmxArgs}
     >
-      <label
+      <span
         className="small-label"
         title={tags && tags.join(", ")}
         dangerouslySetInnerHTML={{
@@ -87,7 +87,7 @@ export const ArticleCard = ({
             category +
             (category === "Quiz" ? `: <sup>${subCategory}</sup>` : ``),
         }}
-      ></label>
+      ></span>
       {isTile ? (
         <h4 style={{ viewTransitionName }} className="post-title">
           {title}
@@ -98,7 +98,7 @@ export const ArticleCard = ({
         </h2>
       )}
       <p dangerouslySetInnerHTML={{ __html: subTitle.replace(/`([^`]+)`/g, "<code>$1</code>") }} />
-      {image}
+      {image && <span className="article-card__media">{image}</span>}
       <InfoLabel
         text={[`created ${createdAgo} ago`, `updated ${modifiedAgo} ago`]}
       />
