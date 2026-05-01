@@ -1,5 +1,14 @@
 ---
-import { RssIcon } from "lucide-react";
+import {
+  ArrowUpRightIcon,
+  CopyIcon,
+  QuoteIcon,
+  RssIcon,
+  Share2Icon,
+} from "lucide-react";
+import { PostCollections } from "../shared/postsCache";
+import type { ArticlePost } from "../types";
+import SocialLinks from "./SocialLinks.astro";
 import SubscribeForm from "./SubscribeForm.astro";
 
 type Props = {
@@ -9,96 +18,519 @@ type Props = {
 const { showSubscribeForm = false } = Astro.props;
 
 const today = new Date();
+
+const popularPosts = PostCollections.getPopularPosts() as ArticlePost[];
+const recentPosts = PostCollections.getRecentPosts(8) as ArticlePost[];
+const suggestedPosts = [
+  ...popularPosts,
+  ...recentPosts.filter(
+    (post) => !popularPosts.some((popularPost) => popularPost.slug === post.slug),
+  ),
+].slice(0, 3);
 ---
 
-<footer class="content-grid" role="presentation">
-  <p class="copyright">
-    &copy; 2008-{today.getFullYear()}
-    <a href="https://danlevy.net/">Dan Levy</a> - All rights rebased.
-  </p>
+<footer class="content-grid site-footer" role="contentinfo" data-pagefind-ignore="all">
+  <div class="site-footer__grid">
+    <section class="footer-card footer-card--quote" aria-labelledby="footer-quote-title">
+      <div class="footer-card__marker" aria-hidden="true">
+        <QuoteIcon size="1.15em" strokeWidth={1.7} />
+      </div>
+      <p class="footer-kicker" id="footer-quote-title">Syntax field report</p>
+      <blockquote>
+        <p>Wow! Dan, you're like an AI man!</p>
+        <cite>
+          <a href="https://wesbos.com/" target="_blank" rel="noopener noreferrer">Wes Bos</a>
+          <span>on</span>
+          <a href="https://syntax.fm/" target="_blank" rel="noopener noreferrer">Syntax.fm</a>
+        </cite>
+      </blockquote>
+    </section>
 
-  <p class="locations">🇿🇦 🇮🇪 🇬🇧 🇺🇸 🏳️‍🌈</p>
+    <section class="footer-card footer-card--connect" aria-labelledby="footer-connect-title">
+      <p class="footer-kicker" id="footer-connect-title">Elsewhere</p>
+      <h2>Follow the trail.</h2>
+      <SocialLinks />
+      <button class="footer-action" type="button" data-footer-share>
+        <Share2Icon size="1.05em" strokeWidth={1.8} />
+        <span data-footer-share-label>Share this page</span>
+      </button>
+    </section>
 
-  <section class="quotable" aria-labelledby="quote-attribution">
-    <p>
-      <span class="quote-mark">"</span>Wow! Dan, you're like an AI man!<span
-        class="quote-mark">"</span
-      >
-    </p>
-    <p id="quote-attribution">
-      <cite>— <a href="https://wesbos.com/" target="_blank" rel="noopener noreferrer">Wes Bos</a> @ <a href="https://syntax.fm/" target="_blank" rel="noopener noreferrer">Syntax.fm</a></cite>
-    </p>
-  </section>
+    <section class="footer-card footer-card--rss" aria-labelledby="footer-rss-title">
+      <p class="footer-kicker" id="footer-rss-title">Feeds</p>
+      <a class="footer-feed-link" href="/rss.xml">
+        <RssIcon size="1.2em" strokeWidth={1.8} />
+        <span>RSS feed</span>
+        <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
+      </a>
+      <a class="footer-feed-link footer-feed-link--quiet" href="/rss.json">
+        <CopyIcon size="1.05em" strokeWidth={1.8} />
+        <span>JSON feed</span>
+        <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
+      </a>
+    </section>
 
-  {showSubscribeForm && <SubscribeForm />}
+    <section class="footer-card footer-card--reading" aria-labelledby="footer-reading-title">
+      <div class="footer-card__heading">
+        <p class="footer-kicker">Suggested articles</p>
+        <h2 id="footer-reading-title">Keep reading</h2>
+      </div>
+      <div class="footer-reading-list">
+        {
+          suggestedPosts.map((post) => (
+            <a class="footer-reading-link" href={`/${post.slug}/`}>
+              <span class="footer-reading-link__category">{post.data.category}</span>
+              <span class="footer-reading-link__title">{post.data.title}</span>
+              <ArrowUpRightIcon size="1em" strokeWidth={1.8} aria-hidden="true" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
 
-  <section class="center syndication">
-    <a href="/rss.xml" title="Need that sweet sweet RSS?">
-      <RssIcon size="1.5em" />
-      Need that sweet sweet RSS?
-    </a>
-  </section>
+    {
+      showSubscribeForm && (
+        <section class="footer-card footer-card--subscribe" aria-label="Subscribe">
+          <SubscribeForm />
+        </section>
+      )
+    }
+
+    <section class="footer-card footer-card--meta" aria-label="Site credits">
+      <p>
+        &copy; 2008-{today.getFullYear()}
+        <a href="https://danlevy.net/">Dan Levy</a>
+      </p>
+      <p>All rights rebased. Written across South Africa, Ireland, the United Kingdom, and the United States.</p>
+    </section>
+  </div>
 </footer>
 
+<script is:inline>
+  (() => {
+    const buttons = document.querySelectorAll("[data-footer-share]");
+    if (!buttons.length) return;
+
+    buttons.forEach((button) => {
+      if (!(button instanceof HTMLButtonElement) || button.dataset.footerShareReady === "true") {
+        return;
+      }
+
+      button.dataset.footerShareReady = "true";
+      const label = button.querySelector("[data-footer-share-label]");
+      const defaultText = label?.textContent || "Share this page";
+
+      button.addEventListener("click", async () => {
+        const url = window.location.href;
+        const title = document.title || "DanLevy.net";
+
+        try {
+          if (navigator.share) {
+            await navigator.share({ title, url });
+          } else {
+            await navigator.clipboard.writeText(url);
+            if (label) label.textContent = "Copied link";
+            window.setTimeout(() => {
+              if (label) label.textContent = defaultText;
+            }, 1_600);
+          }
+        } catch {
+          if (label) label.textContent = defaultText;
+        }
+      });
+    });
+  })();
+</script>
 
 <style>
-  footer {
-    padding: 8em 0.5em 6em 0.5em;
-    background: linear-gradient(var(--gray-gradient)) no-repeat;
-    color: rgb(var(--gray));
-    text-align: center;
-    font-size: 0.9em;
-    .locations {
-      padding-block: 0.5em 1em;
-    }
-
-    /* p {
-			margin: 0;
-			padding: 0;
-		} */
+  .site-footer {
+    --footer-accent: rgb(0, 245, 238);
+    --footer-accent-soft: rgba(191, 248, 244, 0.82);
+    --footer-pink: rgb(255, 107, 157);
+    --footer-lime: rgb(184, 255, 95);
+    --footer-bg: rgba(5, 9, 12, 0.94);
+    --footer-card-bg: rgba(8, 14, 18, 0.86);
+    --footer-border: rgba(218, 246, 243, 0.12);
+    --footer-muted: rgba(221, 232, 233, 0.62);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(0, 245, 238, 0.1), transparent 34%),
+      radial-gradient(circle at 86% 24%, rgba(255, 107, 157, 0.08), transparent 30%),
+      linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.14) 12%),
+      var(--footer-bg);
+    color: var(--clr-muted-100);
+    margin-top: clamp(3rem, 8vw, 7rem);
+    overflow: hidden;
+    padding-block: clamp(1.25rem, 4vw, 3rem) clamp(1.75rem, 5vw, 4rem);
+    position: relative;
   }
 
-  .locations {
-    font-size: 1.5em;
-    margin-block: 2em 1em;
+  .site-footer::before {
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent),
+      linear-gradient(90deg, var(--footer-accent), var(--footer-lime), var(--footer-pink));
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.66;
+    position: absolute;
   }
 
-  section.syndication {
-    margin-block: 5em 0.5em;
-    text-align: center;
-    font-size: 0.9em;
-    /* font-style: italic; */
-    font-family: "Noto Sans Mono", "Courier New", Courier, monospace;
+  .site-footer::after {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+    background-size: 28px 28px;
+    content: "";
+    inset: 0;
+    mask-image: linear-gradient(180deg, #000, transparent 82%);
+    opacity: 0.45;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    gap: 0;
+    grid-auto-rows: minmax(clamp(5.35rem, 8vw, 6.5rem), auto);
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    margin-inline: auto;
+    max-width: 1180px;
+    padding-inline: clamp(1rem, 5vw, 2rem);
+    position: relative;
+    width: 100%;
+    z-index: 1;
+  }
+
+  .footer-card {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 36%) padding-box,
+      radial-gradient(circle at 12% 0%, rgba(0, 245, 238, 0.035), transparent 34%) padding-box,
+      var(--footer-card-bg);
+    border: 1px solid var(--footer-border);
+    border-radius: 0;
+    box-shadow: 0 16px 42px rgba(0, 8, 12, 0.18);
+    display: grid;
+    gap: 0.85rem;
+    isolation: isolate;
+    min-height: 100%;
+    overflow: hidden;
+    padding: clamp(1rem, 2vw, 1.25rem);
+    position: relative;
+  }
+
+  .footer-card::before {
+    background:
+      linear-gradient(90deg, var(--footer-card-accent, var(--footer-accent)), rgba(255, 255, 255, 0.18), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 1rem auto;
+    opacity: 0.4;
+    position: absolute;
+    transform: scaleX(0.42);
+    transform-origin: left;
     transition:
-      transform 0.25s ease-in-out,
-      scale 0.25s ease-in;
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
 
-    svg {
-      display: inline-block;
-      color: var(--clr-muted-300) !important;
-    }
-    &:has(a:hover) {
-      scale: 1.075;
+  .footer-card:hover::before,
+  .footer-card:focus-within::before {
+    opacity: 0.86;
+    transform: scaleX(1);
+  }
+
+  .footer-card--quote {
+    --footer-card-accent: var(--footer-pink);
+    align-content: space-between;
+  }
+
+  .footer-card--connect {
+    --footer-card-accent: var(--footer-accent);
+  }
+
+  .footer-card--rss {
+    --footer-card-accent: var(--footer-lime);
+    align-content: end;
+  }
+
+  .footer-card--reading {
+    --footer-card-accent: var(--footer-accent);
+  }
+
+  .footer-card--meta {
+    --footer-card-accent: rgba(221, 232, 233, 0.42);
+    align-content: end;
+  }
+
+  .footer-card__marker {
+    align-items: center;
+    border: 1px solid color-mix(in srgb, var(--footer-card-accent) 35%, transparent);
+    color: color-mix(in srgb, var(--footer-card-accent) 82%, white);
+    display: inline-flex;
+    height: 2.2rem;
+    justify-content: center;
+    width: 2.2rem;
+  }
+
+  .footer-kicker {
+    color: color-mix(in srgb, var(--footer-card-accent, var(--footer-accent)) 68%, white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .footer-card h2 {
+    color: var(--clr-muted-100);
+    font-family: "Raleway", sans-serif;
+    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-weight: 740;
+    letter-spacing: 0;
+    line-height: 1.05;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .footer-card p {
+    color: var(--footer-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .footer-card a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  blockquote {
+    display: grid;
+    gap: 0.85rem;
+    margin: 0;
+  }
+
+  blockquote p {
+    color: rgba(245, 245, 247, 0.86);
+    font-family: "Raleway", sans-serif;
+    font-size: clamp(1.45rem, 4vw, 2.35rem);
+    font-weight: 760;
+    letter-spacing: 0;
+    line-height: 1.02;
+    max-width: 17ch;
+    text-wrap: balance;
+  }
+
+  cite {
+    align-items: center;
+    color: var(--footer-muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    font-style: normal;
+    gap: 0.4rem;
+  }
+
+  cite a,
+  .footer-card--meta a {
+    color: var(--footer-accent-soft);
+  }
+
+  cite a:hover,
+  cite a:focus-visible,
+  .footer-card--meta a:hover,
+  .footer-card--meta a:focus-visible {
+    color: white;
+    outline: none;
+    text-decoration: underline;
+  }
+
+  .footer-card :global(.social-links) {
+    gap: 0.7rem;
+    height: auto;
+    justify-content: flex-start;
+    margin: 0;
+    padding-block: 0.2rem;
+  }
+
+  .footer-card :global(.social-links a) {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(218, 246, 243, 0.11);
+    display: inline-flex;
+    height: 2.35rem;
+    justify-content: center;
+    transition:
+      border-color 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+    width: 2.35rem;
+  }
+
+  .footer-card :global(.social-links a:hover),
+  .footer-card :global(.social-links a:focus-visible) {
+    border-color: rgba(191, 248, 244, 0.4);
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .footer-card :global(.social-links .icon) {
+    display: block;
+    height: 1.2rem;
+    margin: 0;
+    opacity: 0.84;
+    width: 1.2rem;
+  }
+
+  .footer-action,
+  .footer-feed-link,
+  .footer-reading-link {
+    align-items: center;
+    border: 0;
+    border-radius: 0;
+    display: grid;
+    gap: 0.65rem;
+    text-align: left;
+    transition:
+      color 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footer-action {
+    background: transparent;
+    border-bottom: 1px solid color-mix(in srgb, var(--footer-accent) 34%, transparent);
+    color: var(--footer-accent-soft);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 750;
+    grid-template-columns: auto 1fr;
+    justify-self: start;
+    padding: 0 0 0.65rem;
+  }
+
+  .footer-action:hover,
+  .footer-action:focus-visible,
+  .footer-feed-link:hover,
+  .footer-feed-link:focus-visible,
+  .footer-reading-link:hover,
+  .footer-reading-link:focus-visible {
+    color: white;
+    outline: none;
+    transform: translateY(-2px);
+  }
+
+  .footer-action:active,
+  .footer-feed-link:active,
+  .footer-reading-link:active {
+    transform: translateY(-1px) scale(0.995);
+  }
+
+  .footer-feed-link {
+    border-bottom: 1px solid color-mix(in srgb, var(--footer-lime) 24%, transparent);
+    color: rgba(219, 255, 172, 0.76);
+    font-weight: 750;
+    grid-template-columns: auto 1fr auto;
+    padding-block: 0.75rem;
+  }
+
+  .footer-feed-link--quiet {
+    color: var(--footer-muted);
+  }
+
+  .footer-card__heading {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .footer-reading-list {
+    display: grid;
+    gap: 0;
+  }
+
+  .footer-reading-link {
+    border-top: 1px solid rgba(218, 246, 243, 0.1);
+    color: var(--clr-muted-100);
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding-block: 0.8rem;
+  }
+
+  .footer-reading-link__category,
+  .footer-reading-link__title {
+    grid-column: 1;
+  }
+
+  .footer-reading-link__category {
+    color: var(--footer-accent-soft);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .footer-reading-link__title {
+    color: rgba(245, 245, 247, 0.84);
+    display: -webkit-box;
+    font-family: "Raleway", sans-serif;
+    font-size: 1.04rem;
+    font-weight: 660;
+    line-height: 1.12;
+    margin-top: 0.25rem;
+    overflow: hidden;
+    text-wrap: balance;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .footer-reading-link svg {
+    align-self: center;
+    color: var(--footer-muted);
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .footer-card--meta {
+    font-size: 0.85rem;
+  }
+
+  @media (min-width: 760px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    a,
-    a:visited,
-    a:active,
-    a:focus {
-      transition:
-        color 0.25s ease-in,
-        text-shadow 0.25s ease-in,
-        transform 0.25s ease-in-out;
-      text-decoration: none;
-      color: rgb(var(--clr-muted-300));
-      font-size: 0.825rem;
-      font-weight: 300;
-      letter-spacing: 0.025rem;
+    .footer-card--quote,
+    .footer-card--reading {
+      grid-row: span 3;
     }
-    a:hover {
-      color: var(--neon-pink);
-      text-decoration: underline;
-      transform: scale(1.05);
+
+    .footer-card--connect,
+    .footer-card--rss,
+    .footer-card--meta,
+    .footer-card--subscribe {
+      grid-row: span 2;
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .site-footer__grid {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.82fr) minmax(0, 1.13fr);
+    }
+
+    .footer-card--quote {
+      grid-column: span 1;
+      grid-row: span 3;
+    }
+
+    .footer-card--connect,
+    .footer-card--rss,
+    .footer-card--meta,
+    .footer-card--subscribe {
+      grid-row: span 2;
+    }
+
+    .footer-card--reading {
+      grid-column: span 1;
+      grid-row: span 3;
     }
   }
 
