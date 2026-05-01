@@ -173,14 +173,15 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   options={[
     {text: 'SyntaxError'},
     {text: 'Promise'},
-    {text: 'Module', isAnswer: true },
+    {text: 'Module'},
+    {text: 'object', isAnswer: true },
     {text: 'undefined'},
   ]}
 >
 
   <slot name="question">
   <div className="question">
-    What does the `import()` function return?
+    What does this log?
     ```js
     const modulePromise = import('./myModule.js');
     console.log(typeof modulePromise);
@@ -193,7 +194,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    The `import()` function returns a `Promise` that resolves to the module object. In this case, `typeof modulePromise` will return `'object'`, as it is an instance of `Promise`.
+    The `import()` function returns a `Promise` that resolves to the module object. Because `Promise` instances are objects, `typeof modulePromise` logs `'object'`.
   </div>
   </slot>
 
@@ -205,7 +206,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'Fulfilled: success', isAnswer: true },
+    {text: 'fulfilled: success', isAnswer: true },
     {text: 'Rejected: error'},
     {text: 'Pending'},
     {text: 'null'},
@@ -232,7 +233,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `Promise.allSettled` returns an array of objects describing the outcome of each promise. The first promise is `fulfilled` with the value `'success'`, so the log statement will print `Fulfilled: success`.
+    `Promise.allSettled` returns an array of objects describing the outcome of each promise. The first promise is `fulfilled` with the value `'success'`, so the log statement will print `fulfilled: success`.
   </div>
   </slot>
 
@@ -257,7 +258,6 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
     ```js
     const str = 'foo1bar2baz3';
     const matches = str.matchAll(/\d/g);
-    console.log(typeof matches);
     ```
   </div>
   </slot>

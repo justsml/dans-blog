@@ -152,11 +152,10 @@ Let's see how well you know your streams from your buffers! 🚀
 >
   <slot name="question">
   <div className="question">
-    What does this code return?
+    What does `fs.readFileSync()` return by default?
     ```js
     import fs from 'fs';
     const content = fs.readFileSync('test.txt');
-    console.log(typeof content);
     ```
   </div>
   </slot>
@@ -178,8 +177,8 @@ Let's see how well you know your streams from your buffers! 🚀
   group="Streams"
   title="Stream Events"
   options={[
-    {text: "'data', 'end', 'error', 'finish'", isAnswer: true},
-    {text: "'data', 'close', 'error'"},
+    {text: "'data', 'end', 'error', 'close'", isAnswer: true},
+    {text: "'finish', 'drain', 'pipe'"},
     {text: "'read', 'write', 'end'"},
     {text: "'open', 'close', 'data'"},
   ]}
@@ -196,7 +195,7 @@ Let's see how well you know your streams from your buffers! 🚀
     - 'data': When data is available to be read
     - 'end': When there is no more data to read
     - 'error': When an error occurs
-    - 'finish': When all data has been flushed to the underlying system
+    - 'close': When the stream and underlying resource have closed
 
     ```js
     const readable = fs.createReadStream('file.txt');
@@ -329,14 +328,14 @@ Let's see how well you know your streams from your buffers! 🚀
   title="File Watching"
   options={[
     {text: 'Once per file change'},
-    {text: 'Twice per file change', isAnswer: true},
+    {text: 'Not guaranteed; may fire multiple times', isAnswer: true},
     {text: 'Never'},
     {text: 'Only on file deletion'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    How many times will the callback fire when a file is modified?
+    How many times is `fs.watch()` guaranteed to fire when a file is modified?
     ```js
     import fs from 'fs';
     fs.watch('test.txt', (eventType, filename) => {
@@ -349,7 +348,7 @@ Let's see how well you know your streams from your buffers! 🚀
 
   <slot name='explanation'>
   <div className="explanation">
-    `fs.watch()` often fires twice for a single change because many text editors:
+    `fs.watch()` is not guaranteed to fire exactly once per logical file change. It often fires multiple times because many text editors:
     1. Save to a temporary file
     2. Rename it to the target file
 
@@ -615,4 +614,3 @@ Let's see how well you know your streams from your buffers! 🚀
 </QuizUI>
 
 I hope you enjoyed testing your NodeJS IO knowledge! Want more? Check out my [Quiz Collection](/challenges/) for more challenges!
-

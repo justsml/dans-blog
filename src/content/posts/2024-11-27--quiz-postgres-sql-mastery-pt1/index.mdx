@@ -111,7 +111,7 @@ Good luck! 🍀
   options={[
     {text: 'No NULLs allowed'},
     {text: 'One NULL allowed', },
-    {text: 'Two NULLs allowed', isAnswer: true},
+    {text: 'Multiple NULLs allowed', isAnswer: true},
     {text: 'Depends on PostgreSQL version'},
   ]}
 >
@@ -205,13 +205,17 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    They both are the same size (8 bytes) and store the same UTC-based date & time!
+    They are both 8 bytes, but they do not store the same kind of value.
 
     So what's the difference? It's in the input parsing.
 
     **`timestamptz`**
-    - let's you convert dates between timezones.
-    - Takes into account the server/connection `timezone` setting. (See TZ environment variable.)
+    - Normalizes input to an absolute point in time.
+    - Takes into account the server/connection `TimeZone` setting when parsing input without an explicit offset and when displaying output.
+
+    **`timestamp`**
+    - Stores a date and time without timezone conversion.
+    - Does not preserve or normalize timezone information.
     
     
     **`timestamp`**
@@ -473,10 +477,10 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
     PostgreSQL timestamps have microsecond (6 decimal places) precision.
 
     - Maximum: `.123456` (6 digits)
-    - Nanoseconds (9 digits) are truncated
-    - Timezone offset required for `timestamptz`
+    - Nanoseconds (9 digits) are rounded or truncated to the supported precision
+    - Timezone offsets are accepted for `timestamptz`, but not required
 
-    **Not-so-common gotcha:** Some languages/frameworks send nanosecond precision that gets silently truncated!
+    **Not-so-common gotcha:** Some languages/frameworks send nanosecond precision, but PostgreSQL stores timestamps at microsecond precision.
   </div>
   </slot>
 </Challenge>
@@ -508,7 +512,6 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
 
     The correct geometric and text search types include:
     - `lseg` (line segment)
-    - `txid` (transaction ID)
     - `bytea` (binary data)
     - `tsquery` (text search query)
     - `tsvector` (text search document)
@@ -522,8 +525,8 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
   group="Constraints"
   title="Check Constraint Timing"
   options={[
-    {text: 'Immediately'},
-    {text: 'At transaction commit', isAnswer: true},
+    {text: 'Immediately for new or changed rows', isAnswer: true},
+    {text: 'At transaction commit'},
     {text: 'On next query'},
     {text: 'Never - constraints are only checked on INSERT'}
   ]}
@@ -545,9 +548,10 @@ For each question, identify the **one invalid type**. 🕵️‍♂️
   <slot name='explanation'>
   <div className="explanation">
     `NOT VALID` constraints:
-    - Are checked at transaction commit
+    - Are checked immediately for new inserts and updates
     - Don't validate existing rows
-    - Useful for large tables
+    - Can validate existing rows later with `VALIDATE CONSTRAINT`
+    - Are useful for large tables
     
     Without `NOT VALID`:
     - Constraint is checked immediately

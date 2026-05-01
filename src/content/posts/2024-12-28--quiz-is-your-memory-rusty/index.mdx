@@ -384,11 +384,11 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
     },
     {
       text: 'Compilation Error',
-      hint: "You're getting warmer - but what kind of error?"
+      hint: "The compiler can't determine a finite size for this recursive type.",
+      isAnswer: true
     },
     {
-      text: 'Stack overflow',
-      isAnswer: true
+      text: 'Stack overflow'
     }
   ]}
 >
@@ -749,7 +749,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
       hint: "Can we have two mutable borrows at once?"
     },
     {
-      text: 'Already borrowed: BorrowError',
+      text: 'Runtime panic: RefCell already borrowed',
       isAnswer: true
     },
     {
@@ -1360,11 +1360,12 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
   options={[
     {
       text: 'Resource is freed after scope',
-      hint: "Check if FileWrapper implements Drop"
+      hint: "The File field has its own Drop implementation.",
+      isAnswer: true
     },
     {
       text: 'Resource leaks',
-      isAnswer: true
+      hint: "The wrapper has no custom Drop, but its fields are still dropped."
     },
     {
       text: 'Compilation Error',
@@ -1398,7 +1399,9 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
 
   <slot name='explanation'>
     <div className="explanation">
-      RAII in Rust ensures resources are properly managed. Here's how to implement it correctly:
+      RAII in Rust ensures resources are properly managed. In this example, `FileWrapper` does not need a custom `Drop` implementation for the file handle to close: its `File` field is dropped automatically when the wrapper goes out of scope.
+
+      You only implement `Drop` when the wrapper itself has extra cleanup behavior beyond dropping its fields:
 
       ```rust
       use std::fs::File;
@@ -1434,11 +1437,12 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
       RAII Patterns:
       1. Constructor acquires resources
       2. Methods use resources safely
-      3. Drop releases resources
-      4. Use `?` for error propagation
+      3. Fields are dropped automatically when the owner goes out of scope
+      4. Custom Drop adds extra cleanup when needed
+      5. Use `?` for error propagation
 
       Best practices:
-      1. Implement Drop for custom resource types
+      1. Rely on standard library Drop implementations when they already model the resource
       2. Keep resource management simple and obvious
       3. Use standard library types when possible
       4. Document cleanup behavior
@@ -1574,12 +1578,12 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
       hint: "Consider alignment requirements"
     },
     {
-      text: '24 bytes',
-      isAnswer: true
+      text: '24 bytes'
     },
     {
       text: '32 bytes',
-      hint: "It's not quite that large"
+      hint: "String is larger than a single pointer.",
+      isAnswer: true
     },
     {
       text: 'Depends on platform',
@@ -1605,16 +1609,17 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
       Let's break down struct memory layout and optimization:
 
       ```rust
-      // Original: 24 bytes
+      // Typical current 64-bit Rust layout: 32 bytes
       struct Metadata {
-          id: u32,     // 4 bytes + 4 padding
-          name: String, // 8 bytes (pointer)
-          active: bool  // 1 byte + 7 padding
+          id: u32,       // 4 bytes
+          name: String,  // 24 bytes on 64-bit systems
+          active: bool   // 1 byte + padding/alignment
       }
 
-      // Optimized: 16 bytes
+      // Reordering fields may reduce padding for repr(C) structs,
+      // but default Rust layout is not a stable ABI guarantee.
       struct OptimizedMetadata {
-          name: String,   // 8 bytes
+          name: String,   // 24 bytes
           id: u32,       // 4 bytes
           active: bool    // 1 byte + 3 padding
       }
@@ -1631,7 +1636,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
       Memory layout considerations:
       1. Alignment requirements:
          - u32: 4-byte alignment
-         - String: 8-byte alignment (64-bit pointer)
+         - String: 8-byte alignment and 24-byte size on common 64-bit targets
          - bool: 1-byte alignment
 
       2. Field ordering strategies:
@@ -1762,4 +1767,3 @@ Thanks for taking the quiz! If you enjoyed testing your Rust knowledge, check ou
 - [Rust Book - Chapter 4: Ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
 - [Rust By Example - Memory Management](https://doc.rust-lang.org/rust-by-example/scope.html)
 - [Rust Reference - Memory Model](https://doc.rust-lang.org/reference/memory-model.html)
-

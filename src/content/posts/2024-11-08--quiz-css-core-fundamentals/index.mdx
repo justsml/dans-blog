@@ -115,7 +115,7 @@ There are also several units that have always been around but are rarely used, l
 >
   <slot name="question">
     <div className="question">
-      Which of these units is <em class="highlight">NOT</em> a valid ❌ CSS unit? (Yes, ALL but ONE are unsupported.)
+      Which of these units is <em class="highlight">NOT</em> a valid ❌ CSS unit?
     </div>
   </slot>
   <slot name="explanation">
@@ -124,7 +124,7 @@ There are also several units that have always been around but are rarely used, l
       
       There are also several units that have always been around but are rarely used, like `cm` for centimeters, `mm`, `in` for inches, `pt` for points, `pc`, `cap` for the size of capital letters, and `ex` which is equal to the height of the letter `x`.
 
-      Popular units include the familiar `px` for pixels, `em` for the width of the letter `m`, and `rem` is secretly an homage to the forgotten 90's band R.E.M. (ok, not really, it's just a relative `em` unit that references the root element).
+      Popular units include the familiar `px` for pixels, `em` relative to the element's font size, and `rem` is secretly an homage to the forgotten 90's band R.E.M. (ok, not really, it's just a relative `em` unit that references the root element).
     </div>
   </slot>
 </Challenge>
@@ -196,7 +196,7 @@ There are also several units that have always been around but are rarely used, l
   options={[
     { text: 'a {}' },
     { text: 'b.b {}' },
-    { text: 'c {}', isAnswer: true },
+    { text: 'c > > d {}', isAnswer: true },
     { text: '#d {}' },
   ]}
 >
@@ -207,9 +207,9 @@ There are also several units that have always been around but are rarely used, l
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      The selector `c {}` is invalid because there is no `<c></c>` HTML element. Valid CSS selectors match known HTML tags, IDs, or classes.
+      The selector `c > > d {}` is invalid because the child combinator is repeated without a selector between the two `>` characters.
 
-      The other selectors are valid, targeting `<a>`, `<b class="b">`, and an element with the ID `d`.
+      The other selectors are valid. A type selector like `c {}` is syntactically valid CSS even if `c` is not a standard HTML element.
     </div>
   </slot>
 </Challenge>
@@ -223,8 +223,8 @@ There are also several units that have always been around but are rarely used, l
     { text: 'a :nth-child(3)' },
     { text: 'a:last-item' },
     { text: 'nav:last-of-type(a)' },
-    { text: 'nav:nth-child(3)', isAnswer: true },
-    { text: 'a:last-child' },
+    { text: 'nav:nth-child(3)' },
+    { text: 'a:last-child', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -241,7 +241,7 @@ There are also several units that have always been around but are rarely used, l
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      The correct selector is `nav:nth-child(3)`, which targets the third child of the `nav` element. The `:last-item` and `:last-child` selectors are not valid CSS selectors, and `:nth-child(3)` targets the third child of any parent element.
+      The correct selector is `a:last-child`, which matches the last `<a>` when it is also the last child of its parent. `nav:nth-child(3)` would match a `<nav>` element that is the third child of its own parent.
     </div>
   </slot>
 </Challenge>
@@ -312,12 +312,12 @@ There are also several units that have always been around but are rarely used, l
 >
   <slot name="question">
     <div className="question">
-      How do you center a block element vertically in flow layout?
+      How do you center content vertically inside a block container in modern flow layout?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Using `align-content` is the correct way to center a block element vertically, since being added to flow layout in 2024.
+      Using `align-content` is the modern way to center the contents of a block container vertically in flow layout.
 
       The `align-items` and `justify-content` properties are used for flexbox and grid layouts, but not flow.
 

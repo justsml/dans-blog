@@ -209,7 +209,7 @@ You can create auto-adjusting layouts where the container and children each play
 
   <slot name="explanation">
   <div className="explanation">
-The `var()` function allows you to set a fallback value if the variable is not defined. In this case, the background will be `red` because `--primary` is not defined.
+The `var()` function allows you to set a fallback value if the variable is not defined. In this case, the background will be `olivedrab` (`#6b8e23`) because `--primary` is not defined.
 
 This is a great way to ensure your styles don't break if a variable is missing or not supported.
   </div>
@@ -242,9 +242,9 @@ This is a great way to ensure your styles don't break if a variable is missing o
 
   <slot name="explanation">
   <div className="explanation">
-The `clamp()` function allows the width to scale based on `10vw`, but keeps it within a range of 200px to 600px.
+The `clamp()` function allows the width to scale based on `50vw`, but keeps it within a range of 200px to 500px.
 
-This means the width will be 200px when the viewport is less than 2000px, and 600px when the viewport is greater than 6000px. In between, it will scale linearly.
+This means the width will be 200px when 50vw would be less than 200px, 500px when 50vw would be greater than 500px, and linear between those limits.
 
 It lets you be auto-magically responsive! The thing to know about `clamp` is it combines **fixed units** with **responsive or computed units.**
 
@@ -343,7 +343,7 @@ This is a great way to keep related styles together and avoid long selectors.
 
   <slot name="explanation">
   <div className="explanation">
-The `>` selector in the nested rule applies `background-color: yellow` only to direct children `div` elements within `.container`.
+The `>` selector in the nested rule applies `background-color: white` only to direct children `div` elements within `.container`.
 
 The last rule, `background-color: blue !important;`, is a little distraction. It's **outside the nested rule** and will be applied to all `.container` elements.
   </div>

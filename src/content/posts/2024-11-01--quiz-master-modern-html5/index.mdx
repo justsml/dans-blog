@@ -74,7 +74,7 @@ The `<ul>` tag creates an unordered list, with items typically marked by bullets
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines the "Description Definition" in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
+The [`<dd>` element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) defines a description, definition, or value in a description list, used within `<dl>` tags to pair with `<dt>` (_Description Term_).
 
 This is useful when showing key-value data. Profile information, Settings, and Stats are a common examples.
 
@@ -307,16 +307,15 @@ Specifically used with [`<video>`](https://developer.mozilla.org/en-US/docs/Web/
   <slot name='explanation'>
   <div className="explanation">
 
-The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a neighboring related `<h1>` to `<h6>` elements.
+The [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) element groups a heading with related secondary content, usually one or more `<p>` elements.
 
-It may be useful if you frequently put `<h1>` and `<h2>` elements together, since the `<h2>` should probably be a `<p>` tag.
+It may be useful when a heading has a subtitle, tagline, or alternative title that should not become another heading in the document outline.
 
 ```html
 <article>
   <hgroup>
     <h1>Frankenstein</h1>
     <p>Or: The Modern Prometheus</p>
-    <h2>Understanding Mary Shelley</h2>
   </hgroup>
   <section>
     <h2>Chapter 1</h2>
@@ -348,15 +347,14 @@ It may be useful if you frequently put `<h1>` and `<h2>` elements together, sinc
 
   <slot name='explanation'>
   <div className="explanation">
-The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) functions exactly like a `<ul>`.
+The [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) represents a list of commands or interactive controls.
 
-If your `<li>`'s have mostly links, **you should use a `<menu>` element instead.**
+If your list is navigation links, use `<nav>` with a `<ul>`. Use `<menu>` for toolbar-like controls or command lists.
 
 ```html
-<menu> <!-- Instead of <ul> use a <menu> -->
-  <li><a href="/home">Home</a></li>
-  <li><a href="/about">About</a></li>
-  <li><a href="/contact">Contact</a></li>
+<menu>
+  <li><button type="button">Copy</button></li>
+  <li><button type="button">Paste</button></li>
 </menu>
 ```
 
@@ -448,7 +446,7 @@ It's functionally like a `<div>` - with a few extra built-in features.
   client:visible={{rootMargin: "600px"}}
   index={11}
   group="Advanced Semantic HTML"
-  title="Usage of `<date>` + `<time>`"
+  title="Usage of `<time>`"
   options={[
     {text: 'To represent date and time', isAnswer: true },
     {text: 'To define timestamp'},
@@ -458,13 +456,13 @@ It's functionally like a `<div>` - with a few extra built-in features.
 >
   <slot name="question">
   <div className="question">
-    How are `<date>` and `<time>` elements used in HTML?
+    How is the `<time>` element used in HTML?
   </div>
   </slot>
 
   <slot name='explanation'>
   <div className="explanation">
-The `<time>` element is used for date and time, which can include human-readable content and machine-readable `datetime` attributes.
+The `<time>` element is used for dates, times, or durations. It can include human-readable content and a machine-readable `datetime` attribute. HTML does not have a `<date>` element.
   </div>
   </slot>
 

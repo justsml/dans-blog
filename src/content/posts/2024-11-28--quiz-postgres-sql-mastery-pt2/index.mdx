@@ -194,7 +194,7 @@ Good luck! 🍀
   client:visible={{rootMargin: "600px"}}
   index={4}
   group="SQL Internals"
-  title="Hash Join Triggers"
+  title="Hash Join Eligibility"
   options={[
     {text: 'ON a.id = b.id', isAnswer: true},
     {text: 'ON a.id > b.id'},
@@ -204,7 +204,7 @@ Good luck! 🍀
 >
   <slot name="question">
   <div className="question">
-    Which `ON` condition triggers a `HASH JOIN` in PostgreSQL?
+    Which `ON` condition can PostgreSQL use for a `HASH JOIN`?
     ```sql
     SELECT *
     FROM students a
@@ -216,13 +216,13 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    A hash join is triggered by an equality (`=`) condition in the `ON` clause.
+    A hash join is possible with an equality (`=`) condition in the `ON` clause.
 
-    - `=` is the most common hash join trigger
-    - `>` and `>=` trigger a merge join
+    - `=` is the key predicate shape for hash joins
+    - `>` and `>=` are not hash-join predicates
     - `HASH JOIN` is not a valid syntax in PostgreSQL
 
-    Hash joins are efficient for large tables, but require enough memory to build the hash table.
+    The planner may still choose a nested loop or merge join depending on table size, statistics, indexes, and memory settings.
   </div>
   </slot>
 </Challenge>
@@ -233,10 +233,10 @@ Good luck! 🍀
   group="Indexing"
   title="Multi-Column Index Order"
   options={[
-    {text: 'CREATE INDEX ON students.grade_level;\nCREATE ... students.last_name;'},
+    {text: 'CREATE INDEX ON students(grade_level, last_name);', isAnswer: true},
     {text: 'CREATE INDEX ON students(grade_level);'},
     {text: 'CREATE INDEX ON students(last_name, age);'},
-    {text: 'CREATE INDEX ON students(first_name, last_name, grade_level);', isAnswer: true},
+    {text: 'CREATE INDEX ON students(first_name, last_name, grade_level);'},
   ]}
 >
   <slot name="question">
@@ -253,16 +253,17 @@ Good luck! 🍀
 
   <slot name='explanation'>
   <div className="explanation">
-    To me, the surprising thing here is that a multi-column index can be used for queries that only use a subset of the columns; and that the order of columns in the query **DO NOT** need to match the index definition!
+    To me, the surprising thing here is that a multi-column index can be used even when the column order in the query text doesn't match the index definition.
 
-    **Note:** For faster queries, put the most *selective* column(s) first. In this case, `grade_level` is more selective than `last_name` - meaning it will likely filter out more rows.
+    **Note:** With B-tree indexes, the leading column matters. Since this query filters by `grade_level` and `last_name`, an index beginning with `grade_level` and then `last_name` is a good fit.
 
     The faster SQL can select the fewest rows, the better the performance.
 
     For example, if you have a `task` table, and you know that `status` is more selective than `created_at`, you should put `status` first in the query. This will make querying `status = 'done' AND created_at > '2024-01-01'` faster than querying `created_at > '2024-01-01' AND status = 'done'`.
 
     A B+Tree index can be used for:
-    - Any subset of columns, `=`, `>`, `<`, `BETWEEN`, `IN`.
+    - The leading column, or a leftmost prefix of columns.
+    - Operators such as `=`, `>`, `<`, `BETWEEN`, and `IN`, depending on the query shape.
     - Prefix matching, `LIKE 'prefix%'`.
 
     Thanks to [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) for pointing out an earlier mistake in this explanation!
@@ -392,14 +393,14 @@ Good luck! 🍀
     Example:
     ```sql
     -- Sample 10% of rows
-    SELECT * FROM students TABLESAMPLE BERNOULLI (0.1);
+    SELECT * FROM students TABLESAMPLE BERNOULLI (10);
 
     -- For repeatable results, use REPEATABLE:
     SELECT * FROM students
     TABLESAMPLE BERNOULLI (10) REPEATABLE (42);
     ```
 
-    Also worth mentioning, `TABLESAMPLE` [has been reported](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) to not be very random. If you need a _more_ random sample, consider using `ORDER BY RANDOM() LIMIT 10`. But be aware that this can be slow on large tables.
+    Also worth mentioning, `TABLESAMPLE` [has been reported](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) to not be very random. If you need a _more_ random fixed-size sample, consider using `ORDER BY RANDOM() LIMIT 10`. But be aware that this returns 10 rows, not 10%, and can be slow on large tables.
 
     There are also some third-party extensions that provide better random sampling methods, but that's out of scope for this! 😅
   </div>

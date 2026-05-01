@@ -311,17 +311,16 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   title="Stack Operations"
   index={9}
   options={[
-    {text: 'Push', isAnswer: true},
-    {text: 'Pop', isAnswer: true},
-    {text: 'Peek', isAnswer: true},
-    {text: 'Enqueue'},
-    {text: 'Traverse'},
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
   ]}
 >
 
   <slot name="question">
   <div className="question">
-    Which of the following are typical operations performed on a stack?
+    Which set contains typical operations performed on a stack?
   </div>
   </slot>
 
@@ -370,20 +369,19 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
 <Challenge
   client:visible={{rootMargin: "600px"}}
   group="Tree Data Structures"
-  title="Balanced Tree"
+  title="Self-Balancing Search Trees"
   index={11}
   options={[
-    {text: 'AVL Tree', isAnswer: true},
-    {text: 'Binary Search Tree'},
-    {text: 'Red-Black Tree', isAnswer: true},
-    {text: 'Min Heap'},
-    {text: 'Max Heap'},
+    {text: 'AVL Tree and Red-Black Tree', isAnswer: true},
+    {text: 'Binary Search Tree and Min Heap'},
+    {text: 'Min Heap and Max Heap'},
+    {text: 'Stack and Queue'},
   ]}
 >
 
   <slot name="question">
   <div className="question">
-    Which of the following are examples of balanced tree data structures?
+    Which set contains examples of self-balancing binary search tree data structures?
   </div>
   </slot>
 
@@ -435,11 +433,10 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   title="Queue Operations"
   index={13}
   options={[
-    {text: 'Push'},
-    {text: 'Pop'},
-    {text: 'Enqueue', isAnswer: true},
-    {text: 'Dequeue', isAnswer: true},
-    {text: 'Top'},
+    {text: 'Push and Pop'},
+    {text: 'Enqueue and Dequeue', isAnswer: true},
+    {text: 'Peek and Top'},
+    {text: 'Traverse and Sort'},
   ]}
 >
 
@@ -466,10 +463,9 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   title="Topological Sorting"
   index={14}
   options={[
-    {text: 'Graph must be directed', isAnswer: true},
-    {text: 'Graph must be acyclic', isAnswer: true},
-    {text: 'Graph must be weighted'},
-    {text: 'Graph must be connected'},
+    {text: 'Graph must be directed and acyclic', isAnswer: true},
+    {text: 'Graph must be weighted and connected'},
+    {text: 'Graph must be undirected and acyclic'},
     {text: 'Graph must contain cycles'},
   ]}
 >
@@ -559,17 +555,16 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   title="Binary Tree Traversals"
   index={17}
   options={[
-    {text: 'In-order', isAnswer: true},
-    {text: 'Pre-order', isAnswer: true},
-    {text: 'Breadth-First'},
-    {text: 'Depth-First'},
-    {text: 'Post-order', isAnswer: true},
+    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
+    {text: 'Breadth-First, Depth-First, Heapify'},
+    {text: 'Sort, Search, Rotate'},
+    {text: 'Push, Pop, Peek'},
   ]}
 >
 
   <slot name="question">
   <div className="question">
-    Which of the following are common traversal techniques for a binary tree?
+    Which set lists the common depth-first traversal orders for a binary tree?
   </div>
   </slot>
 
@@ -578,7 +573,7 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
 
   <slot name='explanation'>
   <div className="explanation">
-    In-order, Pre-order, and Post-order are the three common techniques to traverse binary trees, each with a different order of visiting nodes.
+    In-order, Pre-order, and Post-order are the three common depth-first traversal orders for binary trees, each with a different order of visiting nodes. Breadth-first traversal is also common, but it is a different traversal category.
   </div>
   </slot>
 
@@ -590,11 +585,10 @@ This quiz will test your knowledge of data structures (Stacks, Lists, Trees, etc
   title="Heap Property"
   index={18}
   options={[
-    {text: 'Root is always the smallest element', isAnswer: true},
+    {text: 'Root is the smallest element and height is O(log n)', isAnswer: true},
     {text: 'Root is always the largest element'},
     {text: 'All leaves are at the same level'},
-    {text: 'All nodes are balanced'},
-    {text: 'Tree height is O(log n)', isAnswer: true},
+    {text: 'All nodes are sorted left-to-right'},
   ]}
 >
 

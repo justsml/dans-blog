@@ -6,41 +6,130 @@ import {
   RssIcon,
   Share2Icon,
 } from "lucide-react";
+import { INTRO_CALL_LINK } from "../data/consultingServices";
 import { PostCollections } from "../shared/postsCache";
 import type { ArticlePost } from "../types";
+import { EditOnGitHubLink } from "./EditOnGitHubLink";
 import SocialLinks from "./SocialLinks.astro";
 import SubscribeForm from "./SubscribeForm.astro";
 
 type Props = {
   showSubscribeForm?: boolean;
+  slugs?: string[];
+  excludeSlugs?: string[];
+  articleLimit?: number;
+  tags?: string[];
+  category?: string;
+  currentSlug?: string;
+  editSourcePath?: string;
 }
 
-const { showSubscribeForm = false } = Astro.props;
+const {
+  showSubscribeForm = false,
+  articleLimit = 4,
+  excludeSlugs = [],
+  tags = [],
+  category,
+  currentSlug,
+  editSourcePath,
+} = Astro.props as Props;
 
 const today = new Date();
 
 const popularPosts = PostCollections.getPopularPosts() as ArticlePost[];
 const recentPosts = PostCollections.getRecentPosts(8) as ArticlePost[];
-const suggestedPosts = [
-  ...popularPosts,
-  ...recentPosts.filter(
-    (post) => !popularPosts.some((popularPost) => popularPost.slug === post.slug),
-  ),
-].slice(0, 3);
+let slugs = Astro.props.slugs ?? [];
+
+if (slugs.length < articleLimit) {
+  slugs = getRelatedArticleSlugs(slugs, articleLimit, tags, category, currentSlug);
+}
+
+slugs = addFallbackArticleSlugs(slugs, articleLimit);
+
+const footerArticles = PostCollections.getPostsBySlugs(slugs).map((post) => post as ArticlePost);
+
+function getRelatedArticleSlugs(
+  currentSlugs: string[],
+  limit: number,
+  currentTags: string[],
+  currentCategory?: string,
+  activeSlug?: string,
+) {
+  const posts = PostCollections.getPosts() as ArticlePost[];
+  const scoredPosts = posts
+    .filter((post) => (
+      post.slug !== activeSlug &&
+      !excludeSlugs.includes(post.slug) &&
+      !currentSlugs.includes(post.slug) &&
+      !post.data.draft &&
+      !post.data.hidden
+    ))
+    .map((post) => {
+      const matchingTags = post.data.tags?.filter((tag) => currentTags.includes(tag)).length ?? 0;
+      const categoryScore = currentCategory && post.data.category === currentCategory ? 3 : 0;
+      return { post, score: categoryScore + matchingTags };
+    })
+    .filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score);
+
+  const slotsForRelated = Math.max(0, limit - 2);
+
+  for (const item of scoredPosts) {
+    if (currentSlugs.length >= slotsForRelated) break;
+    currentSlugs.push(item.post.slug);
+  }
+
+  return currentSlugs;
+}
+
+function addFallbackArticleSlugs(currentSlugs: string[], limit: number) {
+  const fallbackPosts = [...popularPosts, ...recentPosts];
+
+  for (const post of fallbackPosts) {
+    if (currentSlugs.length >= limit) break;
+    if (!post || post.slug === currentSlug) continue;
+    if (excludeSlugs.includes(post.slug) || currentSlugs.includes(post.slug)) continue;
+    if (post.data.draft || post.data.hidden) continue;
+    currentSlugs.push(post.slug);
+  }
+
+  return currentSlugs.slice(0, limit);
+}
+
+function getArticleImage(article: ArticlePost) {
+  const icon = article.data.cover_mobile;
+  if (typeof icon === "string") return icon;
+  if (icon && typeof icon === "object" && "src" in icon) return icon.src;
+  return "";
+}
 ---
 
 <footer class="content-grid site-footer" role="contentinfo" data-pagefind-ignore="all">
   <div class="site-footer__grid">
+    <section class="footer-card footer-card--rss" aria-labelledby="footer-rss-title">
+      <p class="footer-kicker" id="footer-rss-title">Feeds</p>
+      <a class="footer-feed-link" href="/rss.xml">
+        <RssIcon size="1.2em" strokeWidth={1.8} />
+        <span>RSS feed</span>
+        <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
+      </a>
+      <a class="footer-feed-link footer-feed-link--quiet" href="/rss.json">
+        <CopyIcon size="1.05em" strokeWidth={1.8} />
+        <span>JSON feed</span>
+        <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
+      </a>
+    </section>
+
     <section class="footer-card footer-card--quote" aria-labelledby="footer-quote-title">
       <div class="footer-card__marker" aria-hidden="true">
         <QuoteIcon size="1.15em" strokeWidth={1.7} />
       </div>
-      <p class="footer-kicker" id="footer-quote-title">Syntax field report</p>
+      <p class="footer-kicker" id="footer-quote-title">Quotable</p>
       <blockquote>
         <p>Wow! Dan, you're like an AI man!</p>
         <cite>
           <a href="https://wesbos.com/" target="_blank" rel="noopener noreferrer">Wes Bos</a>
-          <span>on</span>
+          <span>from</span>
           <a href="https://syntax.fm/" target="_blank" rel="noopener noreferrer">Syntax.fm</a>
         </cite>
       </blockquote>
@@ -56,31 +145,37 @@ const suggestedPosts = [
       </button>
     </section>
 
-    <section class="footer-card footer-card--rss" aria-labelledby="footer-rss-title">
-      <p class="footer-kicker" id="footer-rss-title">Feeds</p>
-      <a class="footer-feed-link" href="/rss.xml">
-        <RssIcon size="1.2em" strokeWidth={1.8} />
-        <span>RSS feed</span>
-        <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
-      </a>
-      <a class="footer-feed-link footer-feed-link--quiet" href="/rss.json">
-        <CopyIcon size="1.05em" strokeWidth={1.8} />
-        <span>JSON feed</span>
+    <section class="footer-card footer-card--cta" aria-labelledby="footer-cta-title">
+      <p class="footer-kicker">Consulting</p>
+      <h2 id="footer-cta-title">Hard technical problem?</h2>
+      <p>AI systems, security reviews, TypeScript architecture, and production rescue work.</p>
+      <a class="footer-cta-link" href={INTRO_CALL_LINK} target="_blank" rel="noopener">
+        <span>Book a call</span>
         <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
       </a>
     </section>
 
     <section class="footer-card footer-card--reading" aria-labelledby="footer-reading-title">
       <div class="footer-card__heading">
-        <p class="footer-kicker">Suggested articles</p>
-        <h2 id="footer-reading-title">Keep reading</h2>
+        <p class="footer-kicker">Related articles</p>
+        <h2 id="footer-reading-title">Read More Shit by Dan Levy</h2>
       </div>
-      <div class="footer-reading-list">
+      <div class="footer-article-grid">
         {
-          suggestedPosts.map((post) => (
-            <a class="footer-reading-link" href={`/${post.slug}/`}>
-              <span class="footer-reading-link__category">{post.data.category}</span>
-              <span class="footer-reading-link__title">{post.data.title}</span>
+          footerArticles.map((article) => (
+            <a class="footer-article-card" href={`/${article.slug}/`}>
+              {getArticleImage(article) && (
+                <span class="footer-article-card__media">
+                  <img
+                    src={getArticleImage(article)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+              )}
+              <span class="footer-article-card__category">{article.data.category}</span>
+              <span class="footer-article-card__title">{article.data.title}</span>
               <ArrowUpRightIcon size="1em" strokeWidth={1.8} aria-hidden="true" />
             </a>
           ))
@@ -97,6 +192,14 @@ const suggestedPosts = [
     }
 
     <section class="footer-card footer-card--meta" aria-label="Site credits">
+      {
+        editSourcePath && (
+          <EditOnGitHubLink
+            sourcePath={editSourcePath}
+            repoUri="https://github.com/justsml/dans-blog/tree/main/src/content/posts"
+          />
+        )
+      }
       <p>
         &copy; 2008-{today.getFullYear()}
         <a href="https://danlevy.net/">Dan Levy</a>
@@ -241,11 +344,17 @@ const suggestedPosts = [
 
   .footer-card--quote {
     --footer-card-accent: var(--footer-pink);
-    align-content: space-between;
+    align-content: center;
+    gap: 0.95rem;
   }
 
   .footer-card--connect {
     --footer-card-accent: var(--footer-accent);
+  }
+
+  .footer-card--cta {
+    --footer-card-accent: var(--footer-pink);
+    align-content: end;
   }
 
   .footer-card--rss {
@@ -267,9 +376,10 @@ const suggestedPosts = [
     border: 1px solid color-mix(in srgb, var(--footer-card-accent) 35%, transparent);
     color: color-mix(in srgb, var(--footer-card-accent) 82%, white);
     display: inline-flex;
-    height: 2.2rem;
+    height: 1.75rem;
     justify-content: center;
-    width: 2.2rem;
+    opacity: 0.74;
+    width: 1.75rem;
   }
 
   .footer-kicker {
@@ -305,28 +415,30 @@ const suggestedPosts = [
   }
 
   blockquote {
+    border-left: 1px solid color-mix(in srgb, var(--footer-card-accent) 26%, transparent);
     display: grid;
-    gap: 0.85rem;
+    gap: 0.55rem;
     margin: 0;
+    padding-left: 0.85rem;
   }
 
   blockquote p {
-    color: rgba(245, 245, 247, 0.86);
+    color: rgba(221, 232, 233, 0.64);
     font-family: "Raleway", sans-serif;
-    font-size: clamp(1.45rem, 4vw, 2.35rem);
-    font-weight: 760;
+    font-size: clamp(1.05rem, 2vw, 1.42rem);
+    font-weight: 620;
     letter-spacing: 0;
-    line-height: 1.02;
-    max-width: 17ch;
+    line-height: 1.18;
+    max-width: 20ch;
     text-wrap: balance;
   }
 
   cite {
     align-items: center;
-    color: var(--footer-muted);
+    color: rgba(221, 232, 233, 0.5);
     display: flex;
     flex-wrap: wrap;
-    font-size: 0.88rem;
+    font-size: 0.78rem;
     font-style: normal;
     gap: 0.4rem;
   }
@@ -383,6 +495,7 @@ const suggestedPosts = [
 
   .footer-action,
   .footer-feed-link,
+  .footer-cta-link,
   .footer-reading-link {
     align-items: center;
     border: 0;
@@ -410,6 +523,8 @@ const suggestedPosts = [
 
   .footer-action:hover,
   .footer-action:focus-visible,
+  .footer-cta-link:hover,
+  .footer-cta-link:focus-visible,
   .footer-feed-link:hover,
   .footer-feed-link:focus-visible,
   .footer-reading-link:hover,
@@ -420,9 +535,32 @@ const suggestedPosts = [
   }
 
   .footer-action:active,
+  .footer-cta-link:active,
   .footer-feed-link:active,
-  .footer-reading-link:active {
+  .footer-article-card:active {
     transform: translateY(-1px) scale(0.995);
+  }
+
+  .footer-card--cta p:not(.footer-kicker) {
+    color: rgba(221, 232, 233, 0.58);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 28ch;
+  }
+
+  .footer-card--cta h2 {
+    font-size: clamp(1.18rem, 2.2vw, 1.55rem);
+    max-width: 14ch;
+  }
+
+  .footer-cta-link {
+    border-bottom: 1px solid color-mix(in srgb, var(--footer-pink) 34%, transparent);
+    color: rgba(255, 178, 204, 0.76);
+    font-size: 0.86rem;
+    font-weight: 750;
+    grid-template-columns: minmax(0, auto) auto;
+    justify-self: start;
+    padding-block: 0.65rem;
   }
 
   .footer-feed-link {
@@ -442,55 +580,185 @@ const suggestedPosts = [
     gap: 0.4rem;
   }
 
-  .footer-reading-list {
+  .footer-card--reading {
+    align-content: start;
+  }
+
+  .footer-card--reading .footer-card__heading {
+    max-width: 34rem;
+  }
+
+  .footer-article-grid {
     display: grid;
     gap: 0;
+    grid-auto-flow: row dense;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 
-  .footer-reading-link {
-    border-top: 1px solid rgba(218, 246, 243, 0.1);
+  .footer-article-card {
+    --footer-article-accent: var(--footer-accent);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 34%) padding-box,
+      rgba(6, 11, 14, 0.72);
+    border: 1px solid rgba(218, 246, 243, 0.11);
     color: var(--clr-muted-100);
+    display: grid;
+    gap: 0.45rem;
+    grid-template-areas:
+      "category icon"
+      "title icon"
+      "media media";
     grid-template-columns: minmax(0, 1fr) auto;
-    padding-block: 0.8rem;
+    grid-template-rows: auto minmax(2.6rem, auto) minmax(6rem, 1fr);
+    min-height: clamp(11.5rem, 22vw, 15rem);
+    overflow: hidden;
+    padding: clamp(0.8rem, 1.6vw, 1rem);
+    position: relative;
+    text-decoration: none;
+    transform: translateZ(0);
+    transition:
+      border-color 220ms ease,
+      color 220ms ease,
+      transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .footer-reading-link__category,
-  .footer-reading-link__title {
-    grid-column: 1;
+  .footer-article-card:nth-child(2n) {
+    --footer-article-accent: var(--footer-pink);
   }
 
-  .footer-reading-link__category {
-    color: var(--footer-accent-soft);
+  .footer-article-card:nth-child(3n) {
+    --footer-article-accent: var(--footer-lime);
+  }
+
+  .footer-article-card::before {
+    background: linear-gradient(90deg, var(--footer-article-accent), rgba(255, 255, 255, 0.16), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.36;
+    position: absolute;
+    transform: scaleX(0.36);
+    transform-origin: left;
+    transition:
+      opacity 220ms ease,
+      transform 220ms ease;
+  }
+
+  .footer-article-card:hover,
+  .footer-article-card:focus-visible {
+    border-color: color-mix(in srgb, var(--footer-article-accent) 36%, transparent);
+    color: white;
+    outline: none;
+    transform: translateY(-3px);
+  }
+
+  .footer-article-card:hover::before,
+  .footer-article-card:focus-visible::before {
+    opacity: 0.9;
+    transform: scaleX(1);
+  }
+
+  .footer-article-card:hover img,
+  .footer-article-card:focus-visible img {
+    filter: saturate(1.05) contrast(1.05);
+    opacity: 0.96;
+    transform: scale(1.055);
+  }
+
+  .footer-article-card__category {
+    color: color-mix(in srgb, var(--footer-article-accent) 72%, white);
     font-size: 0.68rem;
     font-weight: 800;
+    grid-area: category;
     letter-spacing: 0.08em;
     line-height: 1;
     text-transform: uppercase;
   }
 
-  .footer-reading-link__title {
+  .footer-article-card__title {
     color: rgba(245, 245, 247, 0.84);
     display: -webkit-box;
     font-family: "Raleway", sans-serif;
-    font-size: 1.04rem;
-    font-weight: 660;
-    line-height: 1.12;
-    margin-top: 0.25rem;
+    font-size: clamp(1.05rem, 2.1vw, 1.35rem);
+    font-weight: 720;
+    grid-area: title;
+    line-height: 1.06;
     overflow: hidden;
     text-wrap: balance;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
   }
 
-  .footer-reading-link svg {
-    align-self: center;
-    color: var(--footer-muted);
-    grid-column: 2;
-    grid-row: 1 / span 2;
+  .footer-article-card > svg {
+    color: color-mix(in srgb, var(--footer-article-accent) 56%, white);
+    grid-area: icon;
+  }
+
+  .footer-article-card__media {
+    align-self: end;
+    aspect-ratio: 16 / 9;
+    display: block;
+    grid-area: media;
+    inline-size: calc(100% + 2rem);
+    margin: 0 -1rem -1rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .footer-article-card__media::after {
+    background:
+      linear-gradient(180deg, transparent 45%, rgba(5, 8, 11, 0.68)),
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.2), transparent 30%);
+    content: "";
+    inset: 0;
+    opacity: 0.82;
+    pointer-events: none;
+    position: absolute;
+  }
+
+  .footer-article-card__media img {
+    display: block;
+    filter: saturate(0.9) contrast(1.02);
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.78;
+    transform: scale(1.01);
+    transition:
+      filter 420ms ease,
+      opacity 420ms ease,
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    width: 100%;
   }
 
   .footer-card--meta {
     font-size: 0.85rem;
+  }
+
+  .footer-card--meta :global(.edit-on-github) {
+    border-bottom: 1px solid color-mix(in srgb, var(--footer-card-accent) 42%, transparent);
+    color: var(--footer-accent-soft);
+    justify-content: flex-start !important;
+    justify-self: start;
+    padding: 0 0 0.6rem !important;
+    transition:
+      color 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .footer-card--meta :global(.edit-on-github span) {
+    color: inherit !important;
+  }
+
+  .footer-card--meta :global(.edit-on-github .icon) {
+    opacity: 0.72;
+  }
+
+  .footer-card--meta :global(.edit-on-github:hover),
+  .footer-card--meta :global(.edit-on-github:focus-visible) {
+    color: white;
+    outline: none;
+    text-decoration: none;
+    transform: translateY(-2px);
   }
 
   @media (min-width: 760px) {
@@ -498,12 +766,21 @@ const suggestedPosts = [
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .footer-card--quote,
-    .footer-card--reading {
+    .footer-card--quote {
       grid-row: span 3;
     }
 
+    .footer-card--reading {
+      grid-column: 1 / -1;
+      grid-row: span 3;
+    }
+
+    .footer-article-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .footer-card--connect,
+    .footer-card--cta,
     .footer-card--rss,
     .footer-card--meta,
     .footer-card--subscribe {
@@ -517,20 +794,45 @@ const suggestedPosts = [
     }
 
     .footer-card--quote {
-      grid-column: span 1;
-      grid-row: span 3;
+      grid-column: 1;
+      grid-row: 3 / span 2;
     }
 
-    .footer-card--connect,
-    .footer-card--rss,
-    .footer-card--meta,
+    .footer-card--connect {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+
+    .footer-card--rss {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+    }
+
+    .footer-card--cta {
+      grid-column: 3;
+      grid-row: 1 / span 2;
+    }
+
+    .footer-card--meta {
+      grid-column: 1;
+      grid-row: 5 / span 2;
+    }
+
     .footer-card--subscribe {
       grid-row: span 2;
     }
 
     .footer-card--reading {
-      grid-column: span 1;
-      grid-row: span 3;
+      grid-column: 2 / 4;
+      grid-row: 3 / span 4;
+    }
+
+    .footer-article-grid {
+      grid-template-columns: repeat(2, minmax(14rem, 1fr));
+    }
+
+    .footer-article-card {
+      min-height: clamp(12rem, 16vw, 14rem);
     }
   }
 

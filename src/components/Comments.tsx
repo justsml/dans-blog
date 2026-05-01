@@ -17,7 +17,7 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       script.setAttribute("repo", "justsml/dans-blog");
       script.setAttribute("issue-term", "pathname");
       script.setAttribute("label", "💬 comment");
-      script.setAttribute("theme", "preferred-color-scheme");
+      script.setAttribute("theme", "icy-dark");
       script.setAttribute("crossorigin", "anonymous");
 
       script.onload = () => {
@@ -76,4 +76,3 @@ export const Comments = ({post}: {post: ArticlePost}) => {
 
   return <GitHubIssueComments path={key} />;
 };
-

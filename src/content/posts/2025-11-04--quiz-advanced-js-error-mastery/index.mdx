@@ -185,7 +185,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="String Throws"
   options={[
     {text: 'TypeError: string is not an Error'},
-    {text: 'Catches with e === "Oops!"', isAnswer: true },
+    {text: 'false, "string"', isAnswer: true },
     {text: 'Creates an Error object automatically'},
     {text: 'undefined behavior'},
   ]}
@@ -431,7 +431,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="Express Response Error"
   options={[
     {text: 'Sends the full error object'},
-    {text: 'Sends {}', isAnswer: true },
+    {text: 'Sends {"error":{}}', isAnswer: true },
     {text: 'Throws a server error'},
     {text: 'Sends the error message only'},
   ]}
@@ -554,8 +554,8 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="Object vs Error Detection"
   options={[
     {text: 'true, true'},
-    {text: 'false, false'},
-    {text: 'true, false', isAnswer: true },
+    {text: 'false, false', isAnswer: true },
+    {text: 'true, false'},
     {text: 'false, true'},
   ]}
 >

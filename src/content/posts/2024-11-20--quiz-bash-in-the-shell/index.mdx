@@ -201,7 +201,7 @@ Sharpen (or prove) your shell scripting **skills**!
     Bark meow
     ```
 
-    It is case-sensitive. To make it case-insensitive, use `${var^pattern/replacement}`.
+    It is case-sensitive. To handle both `bark` and `Bark`, use a pattern such as `${var/[Bb]ark/Bark}` or normalize the string before replacement.
 
     To replace all occurrences, use `${var//pattern/replacement}`.
 
@@ -258,8 +258,8 @@ Sharpen (or prove) your shell scripting **skills**!
   title="Basic If-Else"
   options={[
     { text: "File exists" },
-    { text: "File does not exist" },
-    { text: "Error", isAnswer: true },
+    { text: "File does not exist, after a test syntax error", isAnswer: true },
+    { text: "Error only" },
     { text: "Missing double brackets" },
     { text: "Nothing" },
   ]}
@@ -283,6 +283,8 @@ Sharpen (or prove) your shell scripting **skills**!
     
     Bash is quite touchy here: spaces are required inside bracket expressions.
 
+    Because the `then` condition fails with a `[` diagnostic, Bash continues to the `else` branch and prints `File does not exist`.
+
     The correct syntax is:
     ```bash
     if [ -e example.txt ]; then
@@ -304,9 +306,9 @@ Sharpen (or prove) your shell scripting **skills**!
   title="String Comparison"
   options={[
     { text: "Same cat" },
-    { text: "Different cats" },
+    { text: "Different cats, after a test syntax error", isAnswer: true },
     { text: "Zalgo" },
-    { text: "Error", isAnswer: true },
+    { text: "Error only" },
   ]}
 >
   <slot name="question">
@@ -326,13 +328,13 @@ Sharpen (or prove) your shell scripting **skills**!
 
   <slot name="explanation">
   <div className="explanation">
-    Another Error! 🚨
+    Another test syntax error!
 
-    Did you catch the invalid  `===` operator?
+    Did you catch the invalid `===` operator?
 
     You might have been thinking of JavaScript...
 
-    In Bash, use `==` for equality comparisons.
+    With `[ ... ]`, Bash reports a diagnostic and the condition is false, so the `else` branch prints `Different cats`. In Bash, use `=` or `==` for equality comparisons.
   </div>
   </slot>
 </Challenge>

@@ -119,7 +119,7 @@ Get ready to prove your cloud expertise! 🚀
 >
   <slot name="question">
   <div className="question">
-    Most scalable way to handle many UPDATES to DynamoDB? (for example, backfilling a `status=active` column.)
+    Which DynamoDB API updates attributes on one existing item?
   </div>
   </slot>
 
@@ -130,7 +130,7 @@ Get ready to prove your cloud expertise! 🚀
   While `BatchWriteItem` can handle multiple operations, it's limited to PUTs and DELETES. `TransactWriteItems` is more powerful, but it's a bit of a sledgehammer for simple updates.
   For simple updates, `UpdateItem` is the best choice. It allows you to UPDATE, or modify one or more attributes in an existing item.
 
-  The `UpdateItem` operation is the best way to handle multiple updates. It allows you to modify one or more attributes in an existing item.
+  The `UpdateItem` operation modifies one item per request. For large backfills or bulk updates, you typically orchestrate many `UpdateItem` calls or use a larger workflow such as PartiQL batch execution, Step Functions, Glue, EMR, or a custom worker process.
 
   The `UpdateItem` operation:
   - Updates an existing item's attributes.
@@ -163,7 +163,7 @@ Get ready to prove your cloud expertise! 🚀
 >
   <slot name="question">
     <div className="question">
-      Which AWS database service does NOT support full-text search capabilities out of the box?
+      Which AWS service here is primarily a cache and does NOT include built-in full-text search?
     </div>
   </slot>
 
@@ -249,14 +249,14 @@ Get ready to prove your cloud expertise! 🚀
 
       Time for a tricky one...
 
-      Which AWS service does NOT support stateful, direct, full-duplex WebSocket connections?
+      Which AWS service does NOT give you raw WebSocket connections directly to your own long-running backend process?
     </div>
   </slot>
 
   <slot name="explanation">
     <div className="explanation">
-      API Gateway largely supports WebSockets, however the implementation is a bit different.
-      Instead of full-duplex direct connections, it's got a more "stateless" approach. This means you can't maintain a direct connection between clients and servers.
+      API Gateway supports bidirectional WebSocket APIs, but the implementation is different from a raw WebSocket connection to your own long-running server process.
+      Instead of a direct socket into your backend, API Gateway manages the client connection and routes messages to Lambda, HTTP endpoints, or other integrations.
       Events are sent via the API Gateway, which dispatches message(s) to the appropriate Lambda function or other service. Messages are relayed back to the client in a similar manner.
 
       The others are much more WebSocket-friendly:
@@ -481,8 +481,8 @@ Get ready to prove your cloud expertise! 🚀
     "Design for S3 partition distribution"
   ]}
   options={[
-    { text: "Use sequential prefixes" },
-    { text: "Use random/hash prefixes", isAnswer: true },
+    { text: "Use logical prefixes; randomization is not required", isAnswer: true },
+    { text: "Use random/hash prefixes" },
     { text: "Always use largest objects" },
     { text: "Minimize number of objects" }
   ]}
@@ -496,12 +496,12 @@ Get ready to prove your cloud expertise! 🚀
   <slot name="explanation">
   <div className="explanation">
   S3 Performance Tips:
-  - Use random/hash prefixes in object keys
-  - Prevents "hot" partitions
-  - Distributes load across S3 infrastructure
-  - Improves request distribution
+  - Modern S3 automatically scales request rates per prefix
+  - You don't need random/hash prefixes for performance
+  - Use logical key names that fit your access patterns
+  - Monitor 503 Slow Down responses if you push very high request rates
 
-  Avoid sequential prefixes which can create bottlenecks.
+  Old guidance recommended randomizing prefixes to avoid hot partitions, but AWS no longer recommends that as a default performance requirement.
 
   [S3 Performance Guidelines](https://aws.amazon.com/s3/performance/)
   </div>
@@ -871,10 +871,10 @@ Get ready to prove your cloud expertise! 🚀
     "Apply consistency models to real-world scenarios"
   ]}
   options={[
-    { text: "Eventually consistent reads are always slower" },
-    { text: "Strongly consistent reads provide fresher data but consume more capacity", isAnswer: true },
-    { text: "Eventually consistent reads are more expensive" },
-    { text: "Consistency models don't affect capacity consumption" }
+    { text: "50 reads per second" },
+    { text: "100 reads per second", isAnswer: true },
+    { text: "200 reads per second" },
+    { text: "Unlimited reads per second" }
   ]}
 >
   <slot name="question">
@@ -916,7 +916,7 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Manual intervention required" },
-    { text: "Automatic promotion of replica with lowest lag", isAnswer: true },
+    { text: "Automatic promotion based on failover priority tier", isAnswer: true },
     { text: "Always fails over to oldest replica" },
     { text: "Requires application reconfiguration" }
   ]}
@@ -931,13 +931,13 @@ Get ready to prove your cloud expertise! 🚀
     <div className="explanation">
       Aurora Failover Process:
       1. Detects primary instance failure
-      2. Evaluates replica lag for all replicas
-      3. Promotes replica with lowest replication lag
+      2. Chooses an Aurora Replica based primarily on failover priority tier
+      3. Uses instance characteristics as tie-breakers when priorities match
       4. Updates cluster endpoint automatically
 
       Best Practices:
       - Maintain multiple replicas across AZs
-      - Monitor replication lag
+      - Configure promotion tiers intentionally
       - Use cluster endpoint in applications
       - Test failover scenarios regularly
     </div>
@@ -1013,7 +1013,7 @@ Get ready to prove your cloud expertise! 🚀
     <div className="explanation">
       DynamoDB TTL Characteristics:
       - Background process monitors TTL attribute
-      - Items deleted within 48 hours of expiration
+      - Expired items are deleted on a best-effort schedule, typically within a few days
       - No additional cost for TTL
       - Deleted items appear in streams
 
@@ -1039,7 +1039,7 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Scales instantly on demand" },
-    { text: "Requires warm-up period for scaling", isAnswer: true },
+    { text: "Scaling speed depends on current and configured capacity", isAnswer: true },
     { text: "Only scales at preset intervals" },
     { text: "Manual scaling only" }
   ]}
@@ -1053,16 +1053,15 @@ Get ready to prove your cloud expertise! 🚀
   <slot name="explanation">
     <div className="explanation">
       Aurora Serverless Scaling:
-      - Requires 15-60 seconds for scaling
-      - Creates new capacity optimized for workload
-      - May pause during very low activity
+      - Aurora Serverless v2 scales capacity in fine-grained ACU increments
+      - Scaling speed depends on current capacity and min/max ACU settings
+      - Supported versions can auto-pause at 0 ACUs when configured
       - Billing per-second based on ACUs
 
       Best Practices:
-      - Set minimum capacity for critical workloads
+      - Set minimum capacity high enough for sudden spikes on critical workloads
       - Monitor scaling events
-      - Configure timeout actions
-      - Use proper connection management
+      - Keep connection management in mind
     </div>
   </slot>
 </Challenge>

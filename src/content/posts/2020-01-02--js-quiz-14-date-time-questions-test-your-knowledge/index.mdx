@@ -225,11 +225,11 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
 
     <slot name='explanation'>
     <div className="explanation">
-      The string without a `T` time value may appear to be Jan 1st, 2020 - but it's interpreted as a GMT time, and when adjusted to our local timezone (GMT-7) we find we're still in 2019.
+      The string without a `T` time value may appear to be Jan 1st, 2020 - but date-only strings are interpreted as UTC, and when adjusted to our local timezone (GMT-7) we find we're still in 2019.
 
-      The `Date` class implicitly applies local time to date strings when a time is not provided.
+      Date-time strings without an explicit timezone are interpreted in local time.
   
-      The `T00:00` causes it to adjust for local time.
+      The `T00:00` form causes the second value to be interpreted as local midnight.
 
       The first date is interpreted as `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.
       The second date is interpreted as `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.
@@ -547,7 +547,7 @@ This quiz is designed to test (and deepen) your knowledge of the native `Date` A
     {text: 'Jan 01 2020'},
     {text: 'Feb 01 2020'},
     {text: 'Jan 01 2019'},
-    {text: 'Feb 01 2019', isAnswer: true },
+    {text: 'Dec 01 2019', isAnswer: true },
 
     {text: 'RangeError: Invalid argument.' },
   ]}

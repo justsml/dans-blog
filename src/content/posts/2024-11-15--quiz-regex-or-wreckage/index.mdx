@@ -190,7 +190,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
   <slot name='explanation'>
   <div className="explanation">
-    This pattern won't match anything because the look-ahead is backwards! The correct pattern would be `/(?=[\$€])\d+/g`.
+    This pattern won't match anything because the look-ahead is backwards! If you want digits preceded by `$` or `€`, use a look-behind: `/(?<=[\$€])\d+/g`.
 
     Look-aheads check what comes *after* the current position. The pattern as written looks for:
     - One or more digits (`\d+`)
@@ -370,7 +370,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   <div className="question">
     Which will be the result of this?
     ```js
-    /^\d+(?![a-z])/ig.match("123aBc")
+    "123aBc".match(/^\d+(?![a-z])/ig)
     ```
   </div>
   </slot>
@@ -388,7 +388,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   client:visible={{rootMargin: "600px"}}
   index={10}
   group="Look-behind"
-  title="Non-capturing Groups"
+  title="Look-behind Split"
   options={[
     {text: '["a,", "b,", "c"]', isAnswer: true},
     {text: '["a,b,c"]'},
@@ -412,7 +412,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - `b,` (after comma)
     - `c` (no comma after)
 
-    The look-behind doesn't consume the comma, so it's not part of the split result.
+    The look-behind doesn't consume the comma, so the comma remains attached to the previous segment in the split result.
 
     This is useful when you want to split a string based on what comes before it **without losing the split character(s).**
 

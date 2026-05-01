@@ -145,9 +145,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node 20, `ReferenceError: place is not defined`
+  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined` before `place` is ever read.
 
-  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+  Exact wording varies between browsers and runtimes.
   </div>
   </slot>
 </Challenge>
@@ -194,9 +194,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   ```plaintext
   In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node 20, `ReferenceError: place is not defined`
+  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-  In Safari and Bun, `TypeError: Right side of assignment cannot be destructured`
+  Exact wording varies between browsers and runtimes.
   ```
   </div>
   </slot>
@@ -278,7 +278,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   <div className="explanation">
   This function extracts `name` and `age` properties, using defaults if necessary. In this case, the place key on the default object is just noise, it's not used inside `displayUser()`.
 
-  In Strict mode, this will throw an error because `place` is not defined in the function scope. In non-strict mode, it will print `Hi Dan from Unknown`.
+  Strict mode doesn't change this one: reading the undeclared `place` binding throws a `ReferenceError`.
   
   </div>
   </slot>
@@ -388,8 +388,8 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
     { text: "N/A" },
     { text: "undefined" },
     { text: "Unknown" },
-    { text: "'null'", isAnswer: true },
-    { text: "Error", isAnswer: true },
+    { text: "'null'" },
+    { text: "TypeScript Error", isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -416,11 +416,9 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  TypeScript will throw an error because the `place` property cannot be null.
+  TypeScript reports an error because `place` is typed as `string`, but the call passes `null`. The call also omits the required `age` property.
 
   If you ignore type errors, running the code will print `null` to the console.
-
-  So there's 2 answers.
   </div>
   </slot>
 </Challenge>
@@ -476,8 +474,7 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
   options={[
     { text: "Error: Property 'first' is missing" },
     { text: "Error: Property 'last' is missing" },
-    { text: "Error: Property 'birth' is missing", isAnswer: true },
-    { text: "Error: Property 'age' is missing", isAnswer: true },
+    { text: "Error: Properties 'birth' and 'age' are missing", isAnswer: true },
     { text: "Error: Property 'place' is missing" },
     { text: "Error: 'string' has no properties in {...}" }
   ]}
@@ -504,11 +501,11 @@ Jump right in to the warmup - prove your Destructuring skills! 👇
 
   <slot name="explanation">
   <div className="explanation">
-  The error is in the `greet` function signature. The `age` and `birth` properties are missing in the passed object. so they should be optional in the type definition.
+  The error is in the `greet` function signature. The `age` and `birth` properties are missing in the passed object, so they should be optional in the type definition.
 
   Even though the `birth` property is destructured with a default value, the type definition requires it to be present. In order to mark a property as optional in TypeScript, you should use the `?` operator.
   
-  Note `birth?: number` isn't the same as `birth: number | undefined`.
+  Note `birth?: { place?: string }` isn't the same as `birth: { place?: string } | undefined`.
   </div>
   </slot>
 </Challenge>
