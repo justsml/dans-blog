@@ -87,12 +87,7 @@ const rotationKeys = [
   ),
 ];
 const messageIndex = Math.max(0, Math.floor(pageCount) - 1) % rotationKeys.length;
-const orderedRotationKeys = [
-  ...rotationKeys.slice(messageIndex),
-  ...rotationKeys.slice(0, messageIndex),
-];
-const rotationData = orderedRotationKeys.map((key) => VARIANTS[key]);
-const selectedCta = rotationData[0];
+const selectedCta = VARIANTS[rotationKeys[messageIndex]];
 ---
 
 <aside
@@ -103,14 +98,12 @@ const selectedCta = rotationData[0];
   ]}
   aria-label="Consulting services"
   data-pagefind-ignore="all"
-  data-article-list-cta
-  data-article-list-cta-variants={JSON.stringify(rotationData)}
 >
   <div class="article-list-cta__ornament" aria-hidden="true"></div>
   <div class="article-list-cta__copy">
-    <p class="article-list-cta__eyebrow" data-article-list-cta-eyebrow>{selectedCta.eyebrow}</p>
-    <h3 data-article-list-cta-title>{selectedCta.title}</h3>
-    <p data-article-list-cta-body>{selectedCta.body}</p>
+    <p class="article-list-cta__eyebrow">{selectedCta.eyebrow}</p>
+    <h3>{selectedCta.title}</h3>
+    <p>{selectedCta.body}</p>
   </div>
   <div class="article-list-cta__actions">
     <a
@@ -118,97 +111,12 @@ const selectedCta = rotationData[0];
       href={INTRO_CALL_LINK}
       target="_blank"
       rel="noopener"
-      data-article-list-cta-primary
     >
-      <span data-article-list-cta-primary-label>{selectedCta.primaryLabel}</span>
+      <span>{selectedCta.primaryLabel}</span>
       <span aria-hidden="true">-&gt;</span>
     </a>
   </div>
 </aside>
-
-<script is:inline>
-  (() => {
-    const SELECTOR = "[data-article-list-cta]";
-    const INTERVAL_MS = 7_500;
-    const FADE_MS = 220;
-    const ACCENT_CLASSES = [
-      "article-list-cta--cyan",
-      "article-list-cta--pink",
-      "article-list-cta--amber",
-      "article-list-cta--lime",
-    ];
-
-    if (window.__articleListCtaBootstrapped) {
-      window.__initArticleListCtas?.();
-      return;
-    }
-
-    window.__articleListCtaBootstrapped = true;
-
-    function initCard(card) {
-      if (!(card instanceof HTMLElement) || card.dataset.articleListCtaReady === "true") {
-        return;
-      }
-
-      card.dataset.articleListCtaReady = "true";
-
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        return;
-      }
-
-      let variants = [];
-      try {
-        variants = JSON.parse(card.dataset.articleListCtaVariants || "[]");
-      } catch {
-        variants = [];
-      }
-
-      if (!Array.isArray(variants) || variants.length <= 1) return;
-
-      const eyebrow = card.querySelector("[data-article-list-cta-eyebrow]");
-      const title = card.querySelector("[data-article-list-cta-title]");
-      const body = card.querySelector("[data-article-list-cta-body]");
-      const primaryLabel = card.querySelector("[data-article-list-cta-primary-label]");
-
-      let index = 0;
-      const update = () => {
-        index = (index + 1) % variants.length;
-        const next = variants[index];
-        if (!next) return;
-
-        card.classList.add("article-list-cta--fading");
-
-        window.setTimeout(() => {
-          card.classList.remove(...ACCENT_CLASSES);
-          if (typeof next.accentClass === "string") {
-            card.classList.add(next.accentClass);
-          }
-
-          if (eyebrow) eyebrow.textContent = next.eyebrow || "";
-          if (title) title.textContent = next.title || "";
-          if (body) body.textContent = next.body || "";
-          if (primaryLabel) primaryLabel.textContent = next.primaryLabel || "Explore consulting";
-
-          window.requestAnimationFrame(() => {
-            card.classList.remove("article-list-cta--fading");
-          });
-        }, FADE_MS);
-      };
-
-      const timer = window.setInterval(update, INTERVAL_MS);
-      card.dataset.articleListCtaTimer = String(timer);
-    }
-
-    function initAll() {
-      document.querySelectorAll(SELECTOR).forEach(initCard);
-    }
-
-    window.__initArticleListCtas = initAll;
-    initAll();
-    document.addEventListener("astro:page-load", initAll);
-    document.addEventListener("htmx:afterSwap", initAll);
-  })();
-</script>
 
 <style>
   .article-list-cta {
@@ -418,12 +326,6 @@ const selectedCta = rotationData[0];
 
   .article-list-cta--compact h3 {
     font-size: clamp(1.18rem, 2.6cqi, 1.55rem);
-  }
-
-  .article-list-cta--fading .article-list-cta__copy,
-  .article-list-cta--fading .article-list-cta__actions {
-    opacity: 0.45;
-    transform: translateY(4px);
   }
 
   @media (min-width: 1040px) {

@@ -417,7 +417,7 @@ pre {
 .NavigationMenuLink {
   padding: 0.62rem 0.82rem;
   user-select: none;
-  font-weight: 620;
+  font-weight: 560;
   line-height: 1;
   border-radius: 0;
   font-size: 1rem;
@@ -721,7 +721,7 @@ pre {
 
   &.two {
     grid-template-columns: 1fr 1fr;
-    font-weight: 500;
+    font-weight: 420;
   }
 
   &.three {
@@ -851,7 +851,7 @@ pre {
 }
 
 .ListItemHeading {
-  font-weight: 620;
+  font-weight: 560;
   line-height: 1.12;
   margin-bottom: 0.45rem;
   color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
@@ -925,7 +925,7 @@ pre {
 .CalloutHeading {
   color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
   font-size: 1.75rem;
-  font-weight: 640;
+  font-weight: 580;
   line-height: 1.1;
   text-wrap: balance;
   /* margin-top: 1rem; */
@@ -980,21 +980,24 @@ pre {
 }
 
 .ViewportPosition {
+  --site-shell-gutter: clamp(1rem, 5vw, 2rem);
+  --site-shell-width: 1180px;
+
   position: absolute;
   display: flex;
   justify-content: flex-end;
-  padding-inline: 1rem;
-  /* width: 90vw; */
-  width: calc(100vw - 2rem);
+  left: 50%;
+  padding-inline: 0;
+  transform: translateX(-50%);
+  width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
   perspective: 600px;
   transition: top 250ms ease;
 
   @screen sm {
-    width: calc(100% - 2rem);
+    width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
   }
   @screen md {
-    width: calc(100% - 2rem);
-    /* left: 4rem; */
+    width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
   }
 }
 
@@ -1054,7 +1057,7 @@ pre {
   color: color-mix(in srgb, var(--nav-tile-accent) 72%, white) !important;
   display: inline-flex;
   font-size: 0.72rem;
-  font-weight: 620;
+  font-weight: 560;
   justify-content: center;
   line-height: 1;
   margin-left: 0.25rem;
