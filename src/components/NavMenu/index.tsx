@@ -282,10 +282,7 @@ const NavMenu = ({
               <li className="item-quizzes">
                 <NavigationMenu.Link asChild>
                   <a href="/challenges" className="CalloutItem">
-                    <div
-                      className="Callout"
-                      style={{ background: "var(--neon-gg-bg)" }}
-                    >
+                    <div className="Callout nav-tile-quiz">
                       <div className="CalloutHeading">Quizzes</div>
                       <p className="CalloutText">Try Dan's Challenges!</p>
                     </div>
@@ -306,7 +303,7 @@ const NavMenu = ({
                           className="CalloutItem"
                         >
                           {category}{" "}
-                          <span className="ui-badge inline-flex items-center rounded-full border border-transparent bg-secondary px-2.5 py-0.5 text-xs font-semibold text-secondary-foreground transition-colors">
+                          <span className="ui-badge nav-count-badge">
                             {count as number}
                           </span>
                         </a>

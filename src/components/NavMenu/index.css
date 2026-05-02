@@ -11,6 +11,14 @@
   --neon-purple: #9900ff;
   --neon-yellow: #ffff00;
   --neon-orange: #ff9900;
+  --nav-tile-bg: rgba(8, 14, 18, 0.9);
+  --nav-tile-surface: rgba(11, 18, 23, 0.94);
+  --nav-tile-border: rgba(218, 246, 243, 0.14);
+  --nav-tile-muted: rgba(221, 232, 233, 0.68);
+  --nav-tile-accent: rgb(0, 245, 238);
+  --nav-tile-accent-soft: rgba(191, 248, 244, 0.86);
+  --nav-tile-glow: rgba(0, 245, 238, 0.16);
+  --nav-tile-dim: rgba(0, 245, 238, 0.045);
 
   --neon-cyan-gradient: linear-gradient(
     to top left,
@@ -152,38 +160,53 @@
 }
 
 .neon-bg-1 {
-  background: var(--neon-bg-1);
-  color: var(--background);
+  --nav-tile-accent: rgb(0, 245, 238);
+  --nav-tile-accent-soft: rgba(191, 248, 244, 0.86);
+  --nav-tile-glow: rgba(0, 245, 238, 0.18);
+  --nav-tile-dim: rgba(0, 245, 238, 0.05);
 }
 .neon-bg-2 {
-  background: var(--neon-bg-2);
-  color: var(--background);
+  --nav-tile-accent: rgb(0, 245, 238);
+  --nav-tile-accent-soft: rgba(191, 248, 244, 0.86);
+  --nav-tile-glow: rgba(0, 245, 238, 0.18);
+  --nav-tile-dim: rgba(0, 245, 238, 0.05);
 }
 .neon-bg-3 {
-  background: var(--neon-bg-3);
-  color: var(--background);
+  --nav-tile-accent: rgb(255, 107, 157);
+  --nav-tile-accent-soft: rgba(255, 178, 204, 0.72);
+  --nav-tile-glow: rgba(255, 107, 157, 0.16);
+  --nav-tile-dim: rgba(255, 107, 157, 0.05);
 }
 .neon-bg-4 {
-  background: var(--neon-bg-4);
-  color: var(--background);
+  --nav-tile-accent: rgb(184, 255, 95);
+  --nav-tile-accent-soft: rgba(219, 255, 172, 0.74);
+  --nav-tile-glow: rgba(184, 255, 95, 0.14);
+  --nav-tile-dim: rgba(184, 255, 95, 0.045);
 }
 .neon-bg-5 {
-  background: var(--neon-bg-5);
-  color: var(--background);
+  --nav-tile-accent: rgb(245, 158, 11);
+  --nav-tile-accent-soft: rgba(255, 203, 116, 0.72);
+  --nav-tile-glow: rgba(245, 158, 11, 0.14);
+  --nav-tile-dim: rgba(245, 158, 11, 0.05);
 }
 .neon-bg-6 {
-  background: var(--neon-bg-6);
-  color: var(--background);
-  .CalloutHeading {
-    color: var(--text-color);
-  }
+  --nav-tile-accent: rgb(255, 107, 157);
+  --nav-tile-accent-soft: rgba(255, 178, 204, 0.72);
+  --nav-tile-glow: rgba(255, 107, 157, 0.16);
+  --nav-tile-dim: rgba(255, 107, 157, 0.05);
 }
 .neon-bg-7 {
-  background: var(--neon-bg-7);
-  color: var(--background);
-  .CalloutHeading {
-    color: var(--background);
-  }
+  --nav-tile-accent: rgb(153, 0, 255);
+  --nav-tile-accent-soft: rgba(214, 170, 255, 0.72);
+  --nav-tile-glow: rgba(153, 0, 255, 0.18);
+  --nav-tile-dim: rgba(153, 0, 255, 0.05);
+}
+
+.nav-tile-quiz {
+  --nav-tile-accent: rgb(184, 255, 95);
+  --nav-tile-accent-soft: rgba(219, 255, 172, 0.74);
+  --nav-tile-glow: rgba(184, 255, 95, 0.14);
+  --nav-tile-dim: rgba(184, 255, 95, 0.045);
 }
 
 /* reset */
@@ -263,10 +286,10 @@ pre {
   justify-content: center;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0;
   margin: 0;
   text-wrap: nowrap;
-  gap: 0.5rem;
+  gap: 0;
 
   /* Mobile layout */
   grid-template-rows: 1fr 1fr 1fr;
@@ -285,17 +308,50 @@ pre {
   height: auto;
   
   button {
-    border: 0;
-    background: transparent;
-    padding: 0.5rem;
-    box-shadow: none;
-    transition: color 0.2s ease, transform 0.2s ease;
+    align-items: center;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%),
+      var(--nav-tile-surface);
+    border: 1px solid rgba(0, 245, 238, 0.24);
+    border-radius: 0;
+    box-shadow: 0 10px 26px rgba(0, 8, 12, 0.2);
+    display: inline-flex;
+    justify-content: center;
+    min-height: 2.75rem;
+    min-width: 2.75rem;
+    padding: 0.55rem;
     position: relative;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      color 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+    &::before {
+      background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+      content: "";
+      height: 1px;
+      inset: 0 0 auto;
+      opacity: 0.54;
+      position: absolute;
+      transform: scaleX(0.5);
+      transform-origin: left;
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
     
     &:hover {
-      background: transparent;
-      box-shadow: none;
-      transform: translateY(-1px) scale(1.05);
+      border-color: rgba(0, 245, 238, 0.44);
+      box-shadow: 0 18px 42px rgba(0, 8, 12, 0.32), 0 0 24px rgba(0, 245, 238, 0.1);
+      transform: translateY(-2px);
+
+      &::before {
+        opacity: 0.9;
+        transform: scaleX(1);
+      }
+    }
+
+    &:active {
+      transform: translateY(-1px) scale(0.99);
     }
     
     &:focus {
@@ -328,7 +384,7 @@ pre {
     align-items: center;
     grid-template-columns: 3.5rem repeat(3, minmax(5rem, 1fr));
     grid-template-rows: 1fr;
-    gap: 1rem;
+    gap: 0;
     
     li {
       grid-column: unset;
@@ -359,44 +415,45 @@ pre {
 
 .NavigationMenuTrigger,
 .NavigationMenuLink {
-  padding: 0.5rem 0.75rem;
+  padding: 0.62rem 0.82rem;
   user-select: none;
-  font-weight: 500;
+  font-weight: 760;
   line-height: 1;
-  border-radius: 0.75rem;
-  font-size: 1.125rem;
-  color: #ffffff;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+  border-radius: 0;
+  font-size: 1rem;
+  color: var(--clr-muted-100);
+  letter-spacing: 0;
+  text-shadow: none;
   cursor: pointer;
-  background: rgba(30, 45, 55, 0.95);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(0, 255, 255, 0.4);
-  box-shadow:
-    0 0 20px rgba(0, 255, 255, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 42%),
+    var(--nav-tile-surface);
+  border: 1px solid var(--nav-tile-border);
+  box-shadow: 0 10px 26px rgba(0, 8, 12, 0.2);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
 
   @screen sm {
-    font-size: 1.25rem;
-    padding: 0.6rem 1rem;
+    font-size: 1.12rem;
+    padding: 0.7rem 1rem;
   }
 
-  /* Subtle neon glow animation */
   &::before {
-    content: '';
+    background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.48;
     position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(0, 255, 255, 0.1),
-      transparent
-    );
-    transition: left 0.6s ease;
+    transform: scaleX(0.5);
+    transform-origin: left;
+    transition: opacity 180ms ease, transform 180ms ease;
   }
 }
 
@@ -404,25 +461,25 @@ pre {
 .NavigationMenuLink:focus {
   outline: none;
   box-shadow:
-    0 0 0 2px rgba(0, 255, 255, 0.6),
-    0 0 30px rgba(0, 255, 255, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  border-color: rgba(0, 255, 255, 0.5);
+    0 0 0 2px rgba(0, 245, 238, 0.54),
+    0 0 28px rgba(0, 245, 238, 0.16);
+  border-color: rgba(0, 245, 238, 0.48);
 }
 
 .NavigationMenuTrigger:hover,
 .NavigationMenuLink:hover {
-  background: rgba(21, 32, 40, 0.9);
-  border-color: rgba(0, 255, 255, 0.5);
-  box-shadow:
-    0 0 40px rgba(0, 255, 255, 0.3),
-    0 0 20px rgba(255, 0, 204, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px) scale(1.02);
-  color: #fff;
+  background:
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
+    var(--nav-tile-surface);
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 38%, transparent);
+  box-shadow: 0 18px 42px rgba(0, 8, 12, 0.32), 0 0 24px var(--nav-tile-glow);
+  transform: translateY(-2px);
+  color: var(--clr-muted-100);
   
   &::before {
-    left: 100%;
+    opacity: 0.9;
+    transform: scaleX(1);
   }
 }
 
@@ -431,7 +488,8 @@ pre {
   align-items: center;
   justify-content: space-between;
   gap: 0.25rem;
-  margin: 0 auto;
+  margin: 0;
+  width: 100%;
 }
 
 .CaretDown {
@@ -439,18 +497,18 @@ pre {
 }
 
 .NavigationMenuTrigger[data-state="open"] {
-  background: rgba(21, 32, 40, 0.95);
-  border-color: rgba(0, 255, 255, 0.6);
-  box-shadow:
-    0 0 30px rgba(0, 255, 255, 0.4),
-    0 0 15px rgba(255, 0, 204, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background:
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
+    var(--nav-tile-surface);
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 44%, transparent);
+  box-shadow: 0 18px 42px rgba(0, 8, 12, 0.32), 0 0 28px var(--nav-tile-glow);
+  color: var(--clr-muted-100);
 }
 
 .NavigationMenuTrigger[data-state="open"] .CaretDown {
   transform: rotate(180deg);
-  filter: drop-shadow(0 0 4px rgba(0, 255, 255, 0.6));
+  filter: drop-shadow(0 0 4px rgba(0, 245, 238, 0.48));
 }
 
 .NavigationMenuLink {
@@ -527,23 +585,50 @@ pre {
   margin-top: 0.75rem;
   margin-bottom: 3rem;
   width: 100%;
-  background: rgba(21, 32, 40, 0.95);
-  backdrop-filter: blur(20px);
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04),
-    0 0 40px rgba(0, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at 14% 0%, rgba(0, 245, 238, 0.08), transparent 36%),
+    radial-gradient(circle at 86% 18%, rgba(255, 107, 157, 0.06), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%),
+    rgba(5, 9, 12, 0.96);
+  backdrop-filter: blur(16px);
+  border-radius: 0;
+  border: 1px solid var(--nav-tile-border);
+  box-shadow: 0 24px 58px rgba(0, 8, 12, 0.36), 0 0 42px rgba(0, 245, 238, 0.08);
   height: var(--radix-navigation-menu-viewport-height);
   transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   max-height: 75vh;
   overflow-y: auto;
   overflow-x: hidden;
+  isolation: isolate;
   
-  /* Custom scrollbar */
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+  scrollbar-color: rgba(0, 245, 238, 0.42) transparent;
+
+  &::before {
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent),
+      linear-gradient(90deg, rgb(0, 245, 238), rgb(184, 255, 95), rgb(255, 107, 157));
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.66;
+    position: absolute;
+    z-index: 1;
+  }
+
+  &::after {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+    background-size: 28px 28px;
+    content: "";
+    inset: 0;
+    mask-image: linear-gradient(180deg, #000, transparent 82%);
+    opacity: 0.42;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+  }
   
   &::-webkit-scrollbar {
     width: 8px;
@@ -551,15 +636,13 @@ pre {
   
   &::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
   }
   
   &::-webkit-scrollbar-thumb {
-    background: rgba(0, 255, 255, 0.3);
-    border-radius: 4px;
+    background: rgba(0, 245, 238, 0.38);
     
     &:hover {
-      background: rgba(0, 255, 255, 0.5);
+      background: rgba(0, 245, 238, 0.58);
     }
   }
   
@@ -617,7 +700,7 @@ pre {
   img {
     margin: 0.1rem auto;
     border: 0.25rem solid var(--highlight);
-    border-radius: 0.5rem;
+    border-radius: 0;
     background-color: var(--highlight);
   }
 }
@@ -633,14 +716,12 @@ pre {
 
   &.one {
     grid-template-rows: 140px 50px auto;
-    text-shadow: 1px 1px 1.5px #444;
 
   }
 
   &.two {
     grid-template-columns: 1fr 1fr;
     font-weight: 800;;
-    /* text-shadow: 1px 1px 1.5px #444; */
   }
 
   &.three {
@@ -721,59 +802,132 @@ pre {
   /* outline: none; */
   text-decoration: none;
   user-select: none;
-  padding: .75rem;
-  border-radius: .5rem;
+  padding: .85rem;
+  border-radius: 0;
   font-size: 15px;
   line-height: 1;
+  min-height: 100%;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 38%),
+    var(--nav-tile-bg);
+  border: 1px solid var(--nav-tile-border);
+  box-shadow: 0 16px 42px rgba(0, 8, 12, 0.18);
+  color: var(--clr-muted-100);
+  overflow: hidden;
+  position: relative;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &::before {
+    background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.38;
+    position: absolute;
+    transform: scaleX(0.36);
+    transform-origin: left;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
 }
 .ListItemLink:focus {
-  box-shadow: 0 0 0 2px var(--neon-purple);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--nav-tile-accent) 54%, transparent), 0 16px 42px rgba(0, 8, 12, 0.18);
 }
-.ListItemLink:hover {
-  background-color: var(--mauve-3);
+.ListItemLink:hover,
+.ListItemLink:focus-visible {
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 36%, transparent);
+  box-shadow: 0 24px 58px rgba(0, 8, 12, 0.32), 0 0 24px var(--nav-tile-glow);
+  color: var(--clr-muted-100);
+  outline: none;
+  transform: translateY(-2px);
+
+  &::before {
+    opacity: 0.86;
+    transform: scaleX(1);
+  }
 }
 
 .ListItemHeading {
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: 5px;
-  color: var(--neon-pink);
+  font-weight: 780;
+  line-height: 1.12;
+  margin-bottom: 0.45rem;
+  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
+  text-wrap: balance;
 }
 
 .ListItemText {
-  color: var(--mauve-11);
-  line-height: 1.4;
+  color: var(--nav-tile-muted);
+  line-height: 1.45;
+  margin: 0;
   /* font-weight: initial; */
 }
 
 .Callout {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 38%) padding-box,
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 34%) padding-box,
+    var(--nav-tile-bg);
+  border: 1px solid var(--nav-tile-border);
+  border-radius: 0;
+  box-shadow: 0 16px 42px rgba(0, 8, 12, 0.18);
+  color: var(--clr-muted-100);
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  /* background: linear-gradient(135deg, var(--purple-9) 0%, var(--indigo-9) 100%); */
-  /* background: var(--neon-bg-1); */
-  border-radius: .5rem;
   padding: 1.5rem;
   text-decoration: none;
   /* outline: none; */
   user-select: none;
+  overflow: hidden;
+  position: relative;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  &::before {
+    background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 1rem auto;
+    opacity: 0.42;
+    position: absolute;
+    transform: scaleX(0.42);
+    transform-origin: left;
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
 
   a {
-    color: #ffffff;
+    color: inherit;
   }
 }
 
-.Callout:focus {
-  box-shadow: 0 0 0 2px var(--neon-pink);
+.Callout:hover,
+.Callout:focus,
+.Callout:focus-within {
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 36%, transparent);
+  box-shadow: 0 24px 58px rgba(0, 8, 12, 0.32), 0 0 24px var(--nav-tile-glow);
+  outline: none;
+  transform: translateY(-2px);
+
+  &::before {
+    opacity: 0.86;
+    transform: scaleX(1);
+  }
 }
 
 .CalloutHeading {
-  color: white;
+  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
   font-size: 1.75rem;
-  font-weight: 500;
+  font-weight: 760;
   line-height: 1.1;
+  text-wrap: balance;
   /* margin-top: 1rem; */
   /* margin-left: -0.5rem */
 }
@@ -781,13 +935,14 @@ pre {
 .ContactSubMenu {
   padding: .5rem 0;
   .CalloutHeading {
-    color: var(--accent);
+    color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
   }
 }
 .CalloutText {
   font-size: 1.2rem;
   font-weight: 300;
   line-height: 1.3;
+  color: var(--nav-tile-muted);
 
   display: grid;
   gap: 1rem;
@@ -797,7 +952,7 @@ pre {
     width: 38%;
   }
   a.CalloutItem {
-    text-shadow: 1px 1px 1px #333333, 1px 2px 2px #666, 2.5px 3.5px 2.5px #999;
+    text-shadow: none;
   }
 }
 
@@ -857,29 +1012,60 @@ pre {
 .Arrow {
   position: relative;
   top: 70%;
-  background-color: white;
-  width: 10px;
-  height: 10px;
+  background-color: rgb(0, 245, 238);
+  width: 9px;
+  height: 9px;
   transform: rotate(45deg);
-  border-top-left-radius: 2px;
+  border: 1px solid rgba(191, 248, 244, 0.6);
+  border-top-left-radius: 0;
+  box-shadow: 0 0 14px rgba(0, 245, 238, 0.24);
 }
 
 .Callout .CalloutItem {
-  font-size: 1.1rem;
+  color: var(--clr-muted-100);
+  display: block;
+  font-size: 1.02rem;
+  line-height: 1.16;
+  padding: 0.1rem 0;
+  text-decoration: none;
+  transition: color 160ms ease, transform 160ms ease;
+}
+
+.Callout .CalloutItem:hover,
+.Callout .CalloutItem:focus-visible {
+  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
+  outline: none;
+  transform: translateX(2px);
 }
 
 .Callout .CalloutItem sup {
   display: block;
   height: 1rem;
   margin-top: 0.8rem;
-  opacity: .5;
+  color: var(--nav-tile-muted);
+  opacity: .68;
+}
+
+.Callout .ui-badge {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid color-mix(in srgb, var(--nav-tile-accent) 28%, transparent) !important;
+  border-radius: 0 !important;
+  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white) !important;
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 760;
+  justify-content: center;
+  line-height: 1;
+  margin-left: 0.25rem;
+  padding: 0.08rem 0.38rem;
 }
 
 .ArticleCard {
   width: 16rem;
 
   & img {
-    border-radius: 100%;
+    border-radius: 0;
     width: 120px;
     height: 120px;
   }
