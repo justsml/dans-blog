@@ -1,5 +1,10 @@
 .top-header {
-  padding-inline: 1rem;
+  --site-shell-gutter: clamp(1rem, 5vw, 2rem);
+  --site-shell-width: 1180px;
+  --content-max-width: var(--site-shell-width);
+  --breakout-max-width: var(--site-shell-width);
+  --padding-inline: 0;
+  padding-inline: 0;
   padding-block: 0.7rem;
   background: transparent;
   position: relative;
@@ -13,7 +18,7 @@
   }
 
   @screen sm {
-    padding-inline: 2rem;
+    padding-inline: 0;
     padding-block: 0.8rem;
   }
 
@@ -140,7 +145,11 @@
 
 .top-header .header-nav {
   align-items: center;
+  grid-column: full-width;
   height: clamp(4.25rem, 7vw, 5rem);
+  justify-self: center;
+  margin-inline: auto;
+  width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
 }
 
 .top-header .header-nav .nav-box {

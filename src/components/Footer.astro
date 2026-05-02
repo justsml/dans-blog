@@ -247,6 +247,11 @@ function getArticleImage(article: ArticlePost) {
 
 <style>
   .site-footer {
+    --site-shell-gutter: clamp(1rem, 5vw, 2rem);
+    --site-shell-width: 1180px;
+    --content-max-width: var(--site-shell-width);
+    --breakout-max-width: var(--site-shell-width);
+    --padding-inline: 0;
     --footer-accent: rgb(0, 245, 238);
     --footer-accent-soft: rgba(191, 248, 244, 0.82);
     --footer-pink: rgb(255, 107, 157);
@@ -294,13 +299,15 @@ function getArticleImage(article: ArticlePost) {
   .site-footer__grid {
     display: grid;
     gap: 0;
+    grid-column: full-width;
     grid-auto-rows: minmax(clamp(5.35rem, 8vw, 6.5rem), auto);
     grid-template-columns: repeat(1, minmax(0, 1fr));
+    justify-self: center;
     margin-inline: auto;
-    max-width: 1180px;
-    padding-inline: clamp(1rem, 5vw, 2rem);
+    max-width: none;
+    padding-inline: 0;
     position: relative;
-    width: 100%;
+    width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
     z-index: 1;
   }
 

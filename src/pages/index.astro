@@ -208,6 +208,11 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   }
 
   :global(main.home-page) {
+    --site-shell-gutter: clamp(1rem, 5vw, 2rem);
+    --site-shell-width: 1180px;
+    --content-max-width: var(--site-shell-width);
+    --breakout-max-width: var(--site-shell-width);
+    --padding-inline: 0;
     isolation: isolate;
     position: relative;
   }
@@ -216,15 +221,17 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   .home-link-spotlight,
   .archive-intro,
   .article-list {
+    grid-column: full-width;
+    justify-self: center;
     position: relative;
+    width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
     z-index: 1;
   }
 
   .home-explainer,
   .archive-intro {
     margin-inline: auto;
-    max-width: 980px;
-    width: min(100%, 980px);
+    max-width: none;
   }
 
   .home-explainer {
@@ -273,10 +280,9 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     grid-template-columns: 1fr;
     isolation: isolate;
     margin: 0.75rem auto 1.75rem;
-    max-width: 980px;
+    max-width: none;
     overflow: hidden;
     position: relative;
-    width: min(100%, 980px);
   }
 
   .home-link-spotlight::before {
@@ -337,6 +343,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 
   .article-list {
     margin-top: clamp(1rem, 3vw, 2rem);
+    max-width: none;
   }
 
   .spotlight-link {
