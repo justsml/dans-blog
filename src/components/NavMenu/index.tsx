@@ -43,13 +43,14 @@ const NavMenu = ({
   );
 
   function detectViewportOffset() {
-    const $arrow: HTMLDivElement | null = document.querySelector(".Arrow");
     const $viewport: HTMLDivElement | null =
       document.querySelector(".ViewportPosition");
-    if (!$arrow || !$viewport) return;
+    const $menuRoot: HTMLDivElement | null =
+      document.querySelector(".NavigationMenuRoot");
+    if (!$menuRoot || !$viewport) return;
 
-    const arrowBox = $arrow.getBoundingClientRect();
-    const topOffset = arrowBox.top - 8;
+    const menuRootBox = $menuRoot.getBoundingClientRect();
+    const topOffset = menuRootBox.bottom + 1;
 
     // console.log('detectViewport', {topOffset, arrowBox, prevViewportTop: $viewport.style.top});
     // $viewport.style.top = `${topOffset}px`
@@ -258,7 +259,7 @@ const NavMenu = ({
           <button
             title="Toggle search panel"
             type="button"
-            className="btnSearchToggle p-1"
+            className="btnSearchToggle"
             onClick={(event) => {
               event.preventDefault();
               event.stopPropagation();

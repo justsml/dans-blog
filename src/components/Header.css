@@ -158,8 +158,21 @@
 }
 
 @media (max-width: 700px) {
+  .top-header {
+    padding-block: 0.85rem 1rem;
+  }
+
   .top-header .header-nav {
+    align-items: start;
+    grid-auto-rows: max-content;
     height: auto;
-    row-gap: 0.65rem;
+    justify-items: start;
+    row-gap: 0.8rem;
+  }
+
+  .top-header .header-nav > h2,
+  .top-header .header-nav .nav-box {
+    justify-self: stretch;
+    width: 100%;
   }
 }
