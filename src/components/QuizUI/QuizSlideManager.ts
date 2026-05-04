@@ -5,25 +5,57 @@
  * Nav/score bars are appended to the parent section, not inside .quiz-ui.
  * Islands are hidden via display:none only after hydration signals completion.
  */
-export function initQuizSlideManager(quizSection: HTMLElement) {
-  if (!quizSection) return;
+export type QuizSlideManagerController = {
+  destroy: () => void;
+};
+
+type QuizSlideManagerOptions = {
+  onReset?: () => void | Promise<void>;
+};
+
+export function initQuizSlideManager(
+  quizSection: HTMLElement,
+  { onReset }: QuizSlideManagerOptions = {},
+): QuizSlideManagerController | null {
+  if (!quizSection) return null;
 
   const quizUI = quizSection.querySelector(".quiz-ui") as HTMLElement;
-  if (!quizUI) return;
+  if (!quizUI) return null;
 
-  const islands = [...quizUI.querySelectorAll<HTMLElement>("astro-island")].filter(
-    (island) => island.querySelector(".challenge")
+  const islands = [
+    ...quizUI.querySelectorAll<HTMLElement>("astro-island"),
+  ].filter((island) => island.querySelector(".challenge"));
+  if (islands.length === 0) return null;
+
+  const challenges = islands.map(
+    (island) => island.querySelector<HTMLElement>(".challenge")!,
   );
-  if (islands.length === 0) return;
-
-  const challenges = islands.map((island) => island.querySelector<HTMLElement>(".challenge")!);
   const totalQuestions = challenges.length;
   let currentIndex = 0;
   let isTransitioning = false;
   let completionCardShown = false;
   let totalAttemptCount = 0;
   const answeredQuestions = new Map<number, boolean>();
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  const cleanupHandlers: Array<() => void> = [];
+  let destroyed = false;
+  let hydrationTimer: number | null = null;
+  let visibilityObserver: IntersectionObserver | null = null;
+  let mutationObserver: MutationObserver | null = null;
+
+  const listen = (
+    target: EventTarget,
+    type: string,
+    listener: EventListener,
+    options?: AddEventListenerOptions | boolean,
+  ) => {
+    target.addEventListener(type, listener, options);
+    cleanupHandlers.push(() =>
+      target.removeEventListener(type, listener, options),
+    );
+  };
 
   const revealSelectors = [
     ".quiz-header",
@@ -45,14 +77,15 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     elements: Element[],
     keyframes: Keyframe[],
     options: KeyframeAnimationOptions & { stagger?: number },
-  ) => Promise.all(
-    elements.map((element, index) =>
-      animateElement(element, keyframes, {
-        ...options,
-        delay: (options.delay ?? 0) + index * (options.stagger ?? 0),
-      }),
-    ),
-  );
+  ) =>
+    Promise.all(
+      elements.map((element, index) =>
+        animateElement(element, keyframes, {
+          ...options,
+          delay: (options.delay ?? 0) + index * (options.stagger ?? 0),
+        }),
+      ),
+    );
 
   const getRevealTargets = (island: HTMLElement) => {
     const challenge = island.querySelector<HTMLElement>(".challenge");
@@ -168,6 +201,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
   // --- Wait for React hydration, then activate slide system ---
   function activate() {
+    if (destroyed) return;
     // Insert nav bar BEFORE .quiz-ui (outside it, no DOM changes inside)
     quizSection.insertBefore(topBar, quizUI);
 
@@ -193,13 +227,13 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     document.body.appendChild(completionCard);
 
     // Show/hide nav & score bars based on quiz section visibility
-    const visibilityObserver = new IntersectionObserver(
+    visibilityObserver = new IntersectionObserver(
       ([entry]) => {
         const visible = entry.isIntersecting;
         topBar.classList.toggle("quiz-nav-bar--hidden", !visible);
         scoreBar.classList.toggle("quiz-score-bar--hidden", !visible);
       },
-      { threshold: 0, rootMargin: "-10% 0px -10% 0px" }
+      { threshold: 0, rootMargin: "-10% 0px -10% 0px" },
     );
     visibilityObserver.observe(quizSection);
 
@@ -208,47 +242,72 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       totalAttemptCount = 0;
       challenges.forEach((c, i) => {
         if (c.classList.contains("correct")) answeredQuestions.set(i, true);
-        else if (c.classList.contains("incorrect")) answeredQuestions.set(i, false);
+        else if (c.classList.contains("incorrect"))
+          answeredQuestions.set(i, false);
         totalAttemptCount += Number(c.dataset.answerCount || "0");
       });
     };
 
     const updateProgress = () => {
-      const correctCount = [...answeredQuestions.values()].filter((v) => v).length;
+      const correctCount = [...answeredQuestions.values()].filter(
+        (v) => v,
+      ).length;
       const missCount = getMissCount(correctCount);
-      const fill = scoreBar.querySelector(".quiz-score-bar-fill") as HTMLElement;
-      const currentNum = scoreBar.querySelector(".quiz-score-bar-current") as HTMLElement;
-      const scoreValue = scoreBar.querySelector(".quiz-score-bar-value") as HTMLElement;
-      const resetButton = scoreBar.querySelector(".quiz-reset-button") as HTMLButtonElement | null;
-      if (fill) fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
+      const fill = scoreBar.querySelector(
+        ".quiz-score-bar-fill",
+      ) as HTMLElement;
+      const currentNum = scoreBar.querySelector(
+        ".quiz-score-bar-current",
+      ) as HTMLElement;
+      const scoreValue = scoreBar.querySelector(
+        ".quiz-score-bar-value",
+      ) as HTMLElement;
+      const resetButton = scoreBar.querySelector(
+        ".quiz-reset-button",
+      ) as HTMLButtonElement | null;
+      if (fill)
+        fill.style.width = `${((currentIndex + 1) / totalQuestions) * 100}%`;
       if (currentNum) currentNum.textContent = String(currentIndex + 1);
-      if (scoreValue) scoreValue.textContent = `${correctCount}/${totalQuestions}`;
-      if (resetButton) resetButton.disabled = totalAttemptCount === 0 && answeredQuestions.size === 0;
+      if (scoreValue)
+        scoreValue.textContent = `${correctCount}/${totalQuestions}`;
+      if (resetButton)
+        resetButton.disabled =
+          totalAttemptCount === 0 && answeredQuestions.size === 0;
 
-      const congrats = scoreBar.querySelector(".quiz-score-bar-congrats") as HTMLElement;
+      const congrats = scoreBar.querySelector(
+        ".quiz-score-bar-congrats",
+      ) as HTMLElement;
       if (congrats && correctCount === totalQuestions) {
         const isPerfect = missCount === 0;
         congrats.style.display = "block";
-        congrats.textContent = isPerfect ? `Perfect! ${correctCount}/${totalQuestions}` : `All done! ${correctCount}/${totalQuestions} (${missCount} missed)`;
+        congrats.textContent = isPerfect
+          ? `Perfect! ${correctCount}/${totalQuestions}`
+          : `All done! ${correctCount}/${totalQuestions} (${missCount} missed)`;
         scoreBar.classList.toggle("quiz-score-bar--perfect", isPerfect);
         scoreBar.classList.toggle("quiz-score-bar--success", !isPerfect);
       } else if (congrats) {
         congrats.style.display = "none";
-        scoreBar.classList.remove("quiz-score-bar--perfect", "quiz-score-bar--success");
+        scoreBar.classList.remove(
+          "quiz-score-bar--perfect",
+          "quiz-score-bar--success",
+        );
       }
     };
 
     const getWrongAnswerCount = () =>
       [...answeredQuestions.values()].filter((answer) => !answer).length;
 
-    const getMissCount = (correctCount = [...answeredQuestions.values()].filter(Boolean).length) =>
-      Math.max(totalAttemptCount - correctCount, getWrongAnswerCount());
+    const getMissCount = (
+      correctCount = [...answeredQuestions.values()].filter(Boolean).length,
+    ) => Math.max(totalAttemptCount - correctCount, getWrongAnswerCount());
 
-    const isQuestionCorrect = (index: number) => answeredQuestions.get(index) === true;
+    const isQuestionCorrect = (index: number) =>
+      answeredQuestions.get(index) === true;
 
     const isQuizCorrectlyCompleted = () =>
-      Array.from({ length: totalQuestions }, (_, index) => isQuestionCorrect(index))
-        .every(Boolean);
+      Array.from({ length: totalQuestions }, (_, index) =>
+        isQuestionCorrect(index),
+      ).every(Boolean);
 
     const findNextUnansweredIndex = (fromIndex: number) => {
       for (let offset = 1; offset <= totalQuestions; offset++) {
@@ -264,11 +323,14 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
       completionCardShown = true;
       const missCount = getMissCount();
-      const misses = completionCard.querySelector(".quiz-completion-card__misses");
+      const misses = completionCard.querySelector(
+        ".quiz-completion-card__misses",
+      );
       if (misses) {
-        misses.textContent = missCount === 0
-          ? "0 misses. Clean sweep."
-          : `${missCount} ${missCount === 1 ? "miss" : "misses"} / wrong ${missCount === 1 ? "answer" : "answers"}`;
+        misses.textContent =
+          missCount === 0
+            ? "0 misses. Clean sweep."
+            : `${missCount} ${missCount === 1 ? "miss" : "misses"} / wrong ${missCount === 1 ? "answer" : "answers"}`;
       }
 
       completionCard.removeAttribute("hidden");
@@ -276,14 +338,25 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       animateElement(
         completionCard,
         [
-          { opacity: 0, transform: "translateY(28px) scale(0.94) rotateX(-8deg)" },
+          {
+            opacity: 0,
+            transform: "translateY(28px) scale(0.94) rotateX(-8deg)",
+          },
           { opacity: 1, transform: "translateY(0) scale(1) rotateX(0)" },
         ],
-        { duration: 480, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)", fill: "both" },
+        {
+          duration: 480,
+          easing: "cubic-bezier(0.34, 1.56, 0.64, 1)",
+          fill: "both",
+        },
       );
 
       animateElements(
-        [...completionCard.querySelectorAll(".quiz-completion-card__eyebrow, .quiz-completion-card__title, .quiz-completion-card__misses")],
+        [
+          ...completionCard.querySelectorAll(
+            ".quiz-completion-card__eyebrow, .quiz-completion-card__title, .quiz-completion-card__misses",
+          ),
+        ],
         [
           { opacity: 0, transform: "translateY(10px)" },
           { opacity: 1, transform: "translateY(0)" },
@@ -327,10 +400,16 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     };
 
     const updateNavButtons = () => {
-      const prevBtn = topBar.querySelector(".quiz-nav-prev") as HTMLButtonElement;
-      const nextBtn = topBar.querySelector(".quiz-nav-next") as HTMLButtonElement;
+      const prevBtn = topBar.querySelector(
+        ".quiz-nav-prev",
+      ) as HTMLButtonElement;
+      const nextBtn = topBar.querySelector(
+        ".quiz-nav-next",
+      ) as HTMLButtonElement;
       if (prevBtn) prevBtn.disabled = currentIndex === 0 || isTransitioning;
-      if (nextBtn) nextBtn.disabled = currentIndex === totalQuestions - 1 || isTransitioning;
+      if (nextBtn)
+        nextBtn.disabled =
+          currentIndex === totalQuestions - 1 || isTransitioning;
     };
 
     // --- Deep-linking ---
@@ -384,7 +463,13 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
     // --- Transition ---
     const goToQuestion = (targetIndex: number, direction?: "next" | "prev") => {
-      if (isTransitioning || targetIndex === currentIndex || targetIndex < 0 || targetIndex >= totalQuestions) return;
+      if (
+        isTransitioning ||
+        targetIndex === currentIndex ||
+        targetIndex < 0 ||
+        targetIndex >= totalQuestions
+      )
+        return;
       isTransitioning = true;
       const dir = direction || (targetIndex > currentIndex ? "next" : "prev");
       const fromIndex = currentIndex;
@@ -392,7 +477,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
 
       const currentIsland = islands[fromIndex];
       const nextIsland = islands[targetIndex];
-      const currentChallenge = currentIsland.querySelector<HTMLElement>(".challenge");
+      const currentChallenge =
+        currentIsland.querySelector<HTMLElement>(".challenge");
       const nextChallenge = nextIsland.querySelector<HTMLElement>(".challenge");
       const transitionChallenges = [currentChallenge, nextChallenge].filter(
         (challenge): challenge is HTMLElement => Boolean(challenge),
@@ -487,7 +573,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       nextRevealTargets.forEach((target) => {
         target.style.opacity = "0";
         target.style.transform = `translateY(${dir === "next" ? 14 : -14}px)`;
-        target.style.clipPath = dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)";
+        target.style.clipPath =
+          dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)";
       });
 
       void Promise.all([
@@ -495,7 +582,10 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
           currentRevealTargets,
           [
             { opacity: 1, transform: "translateY(0)" },
-            { opacity: 0, transform: `translateY(${dir === "next" ? -8 : 8}px)` },
+            {
+              opacity: 0,
+              transform: `translateY(${dir === "next" ? -8 : 8}px)`,
+            },
           ],
           {
             duration: 160,
@@ -508,7 +598,11 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
           currentChallenge,
           [
             { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
-            { opacity: 0, transform: "scale(0.992)", filter: "brightness(0.82)" },
+            {
+              opacity: 0,
+              transform: "scale(0.992)",
+              filter: "brightness(0.82)",
+            },
           ],
           {
             delay: 60,
@@ -520,7 +614,11 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
         animateElement(
           nextChallenge,
           [
-            { opacity: 0.98, transform: "scale(0.995)", filter: "brightness(0.96)" },
+            {
+              opacity: 0.98,
+              transform: "scale(0.995)",
+              filter: "brightness(0.96)",
+            },
             { opacity: 1, transform: "scale(1)", filter: "brightness(1)" },
           ],
           {
@@ -536,7 +634,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
             {
               opacity: 0,
               transform: `translateY(${dir === "next" ? 14 : -14}px)`,
-              clipPath: dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
+              clipPath:
+                dir === "next" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
             },
             {
               opacity: 1,
@@ -560,34 +659,52 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     // --- Event Listeners ---
     const prevBtn = topBar.querySelector(".quiz-nav-prev") as HTMLButtonElement;
     const nextBtn = topBar.querySelector(".quiz-nav-next") as HTMLButtonElement;
-    prevBtn?.addEventListener("click", () => goToQuestion(currentIndex - 1, "prev"));
-    nextBtn?.addEventListener("click", () => goToQuestion(currentIndex + 1, "next"));
+    if (prevBtn) {
+      listen(prevBtn, "click", () => goToQuestion(currentIndex - 1, "prev"));
+    }
+    if (nextBtn) {
+      listen(nextBtn, "click", () => goToQuestion(currentIndex + 1, "next"));
+    }
 
     topBar.querySelectorAll(".quiz-dot").forEach((dot) => {
-      dot.addEventListener("click", () => {
-        const targetIndex = parseInt((dot as HTMLElement).dataset.index || "0", 10);
+      listen(dot, "click", () => {
+        const targetIndex = parseInt(
+          (dot as HTMLElement).dataset.index || "0",
+          10,
+        );
         goToQuestion(targetIndex, targetIndex > currentIndex ? "next" : "prev");
       });
     });
 
-    const resetButton = scoreBar.querySelector(".quiz-reset-button") as HTMLButtonElement | null;
-    resetButton?.addEventListener("click", async () => {
-      const { QuestionStore } = await import("./QuestionStore");
-      QuestionStore(window.location.pathname).reset();
-      history.replaceState(null, "", `${window.location.pathname}#qq-1`);
-      window.location.reload();
-    });
+    const resetButton = scoreBar.querySelector(
+      ".quiz-reset-button",
+    ) as HTMLButtonElement | null;
+    if (resetButton) {
+      listen(resetButton, "click", async () => {
+        if (onReset) {
+          await onReset();
+          return;
+        }
 
-    window.addEventListener("quiz-answer-correct", ((e: Event) => {
+        const { QuestionStore } = await import("./QuestionStore");
+        QuestionStore(window.location.pathname).reset();
+        history.replaceState(null, "", `${window.location.pathname}#qq-1`);
+        window.location.reload();
+      });
+    }
+
+    listen(window, "quiz-answer-correct", ((e: Event) => {
       const detail = (e as CustomEvent).detail;
       answeredQuestions.set(detail.index, true);
       updateDots();
       updateProgress();
-      const activeChallenge = islands[currentIndex]?.querySelector(".challenge") as HTMLElement;
+      const activeChallenge = islands[currentIndex]?.querySelector(
+        ".challenge",
+      ) as HTMLElement;
       if (activeChallenge) triggerConfetti(activeChallenge);
     }) as EventListener);
 
-    window.addEventListener("quiz-question-answered", ((e: Event) => {
+    listen(window, "quiz-question-answered", ((e: Event) => {
       const detail = (e as CustomEvent).detail;
       if (typeof detail?.index !== "number") return;
 
@@ -597,7 +714,8 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       } else if (typeof detail.tries === "number") {
         challenges[detail.index].dataset.answerCount = String(detail.tries);
         totalAttemptCount = challenges.reduce(
-          (sum, challenge) => sum + Number(challenge.dataset.answerCount || "0"),
+          (sum, challenge) =>
+            sum + Number(challenge.dataset.answerCount || "0"),
           0,
         );
       }
@@ -606,17 +724,22 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       advanceToNextUnanswered(detail.index);
     }) as EventListener);
 
-    const observer = new MutationObserver((mutations) => {
+    mutationObserver = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
-        if (mutation.type === "attributes" && mutation.attributeName === "class") {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "class"
+        ) {
           const target = mutation.target as HTMLElement;
           if (target.classList.contains("challenge")) {
             const island = target.closest("astro-island");
             if (island) {
               const idx = islands.indexOf(island as HTMLElement);
               if (idx !== -1) {
-                if (target.classList.contains("correct")) answeredQuestions.set(idx, true);
-                else if (target.classList.contains("incorrect")) answeredQuestions.set(idx, false);
+                if (target.classList.contains("correct"))
+                  answeredQuestions.set(idx, true);
+                else if (target.classList.contains("incorrect"))
+                  answeredQuestions.set(idx, false);
                 updateDots();
                 updateProgress();
               }
@@ -626,23 +749,35 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       }
     });
 
-    challenges.forEach((c) => observer.observe(c, { attributes: true, attributeFilter: ["class"] }));
+    challenges.forEach((c) =>
+      mutationObserver?.observe(c, {
+        attributes: true,
+        attributeFilter: ["class"],
+      }),
+    );
 
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+    listen(document, "keydown", ((e: Event) => {
+      const keyboardEvent = e as KeyboardEvent;
+      if (
+        keyboardEvent.key === "ArrowRight" ||
+        keyboardEvent.key === "ArrowDown"
+      ) {
         const rect = quizSection.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-          e.preventDefault();
+          keyboardEvent.preventDefault();
           goToQuestion(currentIndex + 1, "next");
         }
-      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      } else if (
+        keyboardEvent.key === "ArrowLeft" ||
+        keyboardEvent.key === "ArrowUp"
+      ) {
         const rect = quizSection.getBoundingClientRect();
         if (rect.top < window.innerHeight && rect.bottom > 0) {
-          e.preventDefault();
+          keyboardEvent.preventDefault();
           goToQuestion(currentIndex - 1, "prev");
         }
       }
-    });
+    }) as EventListener);
 
     syncAnswers();
     updateNavButtons();
@@ -650,7 +785,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
     updateProgress();
 
     // Listen for hash changes (back/forward nav)
-    window.addEventListener("hashchange", () => {
+    listen(window, "hashchange", () => {
       navigateToHash();
     });
 
@@ -667,6 +802,7 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
   const maxAttempts = 50; // 50 * 100ms = 5s max wait
 
   function checkHydration() {
+    if (destroyed) return;
     attempts++;
     // Check if all islands have been hydrated by looking for React internals
     // After hydration, React adds __reactFiber$ or __reactInternalInstance$ properties
@@ -674,15 +810,51 @@ export function initQuizSlideManager(quizSection: HTMLElement) {
       const challenge = island.querySelector(".challenge");
       if (!challenge) return false;
       // React attaches internal properties after hydration
-      return Object.keys(challenge).some((key) => key.startsWith("__reactFiber$") || key.startsWith("__reactInternalInstance$"));
+      return Object.keys(challenge).some(
+        (key) =>
+          key.startsWith("__reactFiber$") ||
+          key.startsWith("__reactInternalInstance$"),
+      );
     });
 
     if (allHydrated || attempts >= maxAttempts) {
       activate();
     } else {
-      setTimeout(checkHydration, 100);
+      hydrationTimer = window.setTimeout(checkHydration, 100);
     }
   }
 
   checkHydration();
+  return {
+    destroy: () => {
+      destroyed = true;
+      if (hydrationTimer != null) {
+        window.clearTimeout(hydrationTimer);
+        hydrationTimer = null;
+      }
+      cleanupHandlers.splice(0).forEach((cleanup) => cleanup());
+      visibilityObserver?.disconnect();
+      mutationObserver?.disconnect();
+      topBar.remove();
+      scoreBar.remove();
+      completionCard.remove();
+      quizUI.classList.remove("quiz-slides-active");
+      islands.forEach((island) => {
+        island.classList.remove(
+          "quiz-slide",
+          "quiz-slide--active",
+          "quiz-slide--hidden",
+        );
+        island.style.removeProperty("display");
+        island.style.removeProperty("position");
+        island.style.removeProperty("top");
+        island.style.removeProperty("left");
+        island.style.removeProperty("width");
+        island.style.removeProperty("z-index");
+        island.style.removeProperty("opacity");
+        island.style.removeProperty("transform");
+        island.style.removeProperty("filter");
+      });
+    },
+  };
 }

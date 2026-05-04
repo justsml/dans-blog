@@ -240,90 +240,7 @@ const heroPreload = _heroSrc
     onload="this.media='all'"
   />
   <script>
-    let $interval: NodeJS.Timeout | null = null;
-    let intCount = 0;
-    let questionStoreCache: any = null;
-    let questionStorePromise: Promise<any> | null = null;
-    // Hackety hack to update the score-wrapper on quiz pages
-    window.__updateCounts = () => {
-      const quizUI = document.querySelectorAll(".quiz-ui");
-      const questions = document.querySelectorAll("main .challenge");
-      const isQuizPage = quizUI.length > 0;
-
-      if (!isQuizPage || questions.length <= 0) return false; // Not a quiz page
-
-      // window?.__superHackFix_patchOptionsListWithActualHeight();
-
-      const scoreEls = document.querySelectorAll(".score");
-      const scoreEl = scoreEls[0] as HTMLElement | undefined;
-      const scoreWrapper = document.querySelector(".score-wrapper");
-      const scoreLabel = document.querySelector(".score label");
-      const correct = document.querySelectorAll("main .challenge.correct");
-      const congratsMsg = document.querySelector(".congrats-message");
-
-      if (!scoreEl) return false;
-
-      // Add up the tries from [data-answer-count]
-      const questionStore = getQuestionStore();
-
-      // Use question store **if available**
-      const tries: number = questionStore
-        ? questionStore.sumOfTries()
-        : getAnswerCount();
-
-      const isPerfect =
-        questions.length === correct.length && tries === questions.length;
-
-      if (scoreEl?.parentNode?.nodeName !== "BODY")
-        document.body.appendChild(scoreEl);
-
-      if (isPerfect) {
-        scoreEl?.classList.add("perfect");
-        quizUI[0].classList.add("perfect");
-      }
-
-      if (scoreEls.length >= 2) console.error("Multiple score elements found");
-      if (!scoreLabel) {
-        console.error("Expected score label, not found");
-        return false;
-      }
-      if (correct.length > 0) scoreEls[0].classList.add("active");
-
-      if (questions.length === correct.length) {
-        scoreEl.classList.add("all-correct");
-        if (congratsMsg) {
-          const winningMessage = isPerfect ? "WOW! Perfect!" : "All correct!";
-          const hTag = isPerfect ? "h2" : "h3";
-          congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}</${hTag}>`;
-        }
-        scoreWrapper?.classList.toggle("pulse");
-        scoreEl?.classList.add("success");
-      } else {
-        scoreLabel.innerHTML = `${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}`;
-      }
-      return true;
-    };
-
-    function getQuestionStore() {
-      return questionStoreCache;
-    }
-
-    async function loadQuestionStore() {
-      if (questionStoreCache) return questionStoreCache;
-
-      if (!questionStorePromise) {
-        questionStorePromise = import("../components/QuizUI/QuestionStore")
-          .then(({ QuestionStore }) => {
-            questionStoreCache = QuestionStore(window.location.pathname);
-            return questionStoreCache;
-          })
-          .finally(() => {
-            questionStorePromise = null;
-          });
-      }
-
-      return questionStorePromise;
-    }
+    import { bootQuizRuntime } from "../components/QuizUI/QuizRuntime";
 
     async function bootBannerEffects() {
       const banner = document.querySelector(".banner-wrapper, .hero-image");
@@ -349,63 +266,11 @@ const heroPreload = _heroSrc
       }, 350);
     }
 
-    function startQuizRefreshLoop() {
-      intCount = 0;
-      // @ts-ignore fucking type errors
-      $interval = setInterval(() => {
-        intCount++;
-
-        window.__updateCounts();
-
-        if (intCount > 12) {
-          clearInterval($interval!);
-        }
-      }, 100);
-    }
-
-    async function bootQuizLogic(quiz: Element) {
-      __checkForEmptyShareCounts();
-      if (!quiz) return;
-
-      // window?.__superHackFix_patchOptionsListWithActualHeight();
-      const questionStore = await loadQuestionStore();
-      const resetButton = document.querySelector("button.reset-quiz");
-      if (resetButton) {
-        resetButton.addEventListener("click", () => {
-          questionStore?.reset();
-          location.reload();
-        });
-      }
-
-      startQuizRefreshLoop();
-
-      quiz.addEventListener(
-        "mousedown",
-        () => {
-          clearInterval($interval!);
-        },
-        { once: true },
-      );
-      quiz.addEventListener("click", () => {
-        clearInterval($interval!);
-        window.__updateCounts();
-      });
-    }
-
     function bootPageEnhancements() {
       __checkForEmptyShareCounts();
 
       deferWork(bootBannerEffects, 1800);
-
-      const quiz = document.querySelector<HTMLElement>(".quiz-ui");
-      if (quiz && !quiz.dataset.quizLogicInitialized) {
-        quiz.dataset.quizLogicInitialized = "true";
-        deferWork(() => bootQuizLogic(quiz), 900);
-        // Initialize single-question slide manager
-        import("../components/QuizUI/QuizSlideManager").then(({ initQuizSlideManager }) => {
-          deferWork(() => initQuizSlideManager(quiz.closest("section") as HTMLElement), 200);
-        });
-      }
+      bootQuizRuntime();
     }
 
     document.addEventListener("astro:page-load", bootPageEnhancements);
@@ -414,19 +279,6 @@ const heroPreload = _heroSrc
       document.addEventListener("DOMContentLoaded", bootPageEnhancements, { once: true });
     } else {
       bootPageEnhancements();
-    }
-
-    function getAnswerCount() {
-      return [...document.querySelectorAll("[data-answer-count")].reduce(
-        (acc, q) => {
-          const tries = parseInt(
-            q.getAttribute("data-answer-count") || "0",
-            10,
-          );
-          return acc + tries;
-        },
-        0,
-      );
     }
 
     /**
