@@ -80,14 +80,14 @@ const CATEGORY_MAP: Record<string, VariantKey> = {
 
 const { category, compact = false, pageCount = 1 } = Astro.props as Props;
 const variantKey = CATEGORY_MAP[(category ?? "").toLowerCase().trim()] ?? "default";
-const rotationKeys = [
-  variantKey,
-  ...(["ai", "js", "security", "infra", "default"] as VariantKey[]).filter(
-    (key) => key !== variantKey,
-  ),
-];
-const messageIndex = Math.max(0, Math.floor(pageCount) - 1) % rotationKeys.length;
-const selectedCta = VARIANTS[rotationKeys[messageIndex]];
+const repeatRotationKeys = (["js", "security", "infra", "default", "ai"] as VariantKey[])
+  .filter((key) => key !== variantKey);
+const messageNumber = Math.max(1, Math.floor(pageCount));
+const selectedVariantKey =
+  messageNumber === 1
+    ? variantKey
+    : repeatRotationKeys[(messageNumber - 2) % repeatRotationKeys.length];
+const selectedCta = VARIANTS[selectedVariantKey];
 ---
 
 <aside

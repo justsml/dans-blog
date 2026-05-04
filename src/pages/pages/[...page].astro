@@ -2,6 +2,7 @@
 import type { Page, PagePath, ArticlePost } from "../../types";
 import { PostCollections, getArticleSortFn } from "../../shared/postsCache";
 import { pageSize } from "../../shared/pagination";
+import { getArticleListCtaOccurrence } from "../../shared/articleListCta";
 import { ArticleCard } from "../../components/ArticleCard";
 import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
@@ -95,12 +96,15 @@ const nextPageAttrs = nextUrl
     }
   : {};
 
-const shouldShowConsultingCta = currentPage % 2 === 0;
-const consultingCtaIndex = Math.min(4, Math.max(data.length - 2, 0));
+const articleListOffset = (currentPage - 1) * (pageSize - 1);
+
 ---
 
 {
-  data.map(({ props }: any, index) => (
+  data.map(({ props }: any, index) => {
+    const ctaOccurrence = getArticleListCtaOccurrence(index, articleListOffset);
+
+    return (
     <>
       {index === data.length - 1 ? (
         <ArticleCard
@@ -111,15 +115,16 @@ const consultingCtaIndex = Math.min(4, Math.max(data.length - 2, 0));
       ) : (
         <ArticleCard article={props as ArticlePost} width={200} />
       )}
-      {shouldShowConsultingCta && index === consultingCtaIndex && (
+      {ctaOccurrence !== null && (
         <ArticleListConsultingCTA
-          category={(props as ArticlePost).data.category}
+          category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
           compact
-          pageCount={currentPage}
+          pageCount={ctaOccurrence}
         />
       )}
     </>
-  ))
+    );
+  })
 }
 
 {

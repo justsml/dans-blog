@@ -8,6 +8,7 @@ import ArticleListConsultingCTA from "../components/ArticleListConsultingCTA.ast
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
+import { getArticleListCtaOccurrence } from "../shared/articleListCta";
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -33,7 +34,6 @@ const nextPageAttrs = defaultNextUrl
   : {};
 // 
 posts = posts.slice(0, pageSize - 1);
-const consultingCtaIndex = Math.min(3, Math.max(posts.length - 2, 0));
 
 const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 ---
@@ -76,7 +76,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     </div>
     <div class="spotlight-actions" aria-label="Featured links">
       <a class="spotlight-link consulting-link" href="/consulting/">
-        <span class="link-kicker">Consulting</span>
+        <span class="link-kicker">Hire Me</span>
         <span class="link-title">Build better AI systems</span>
       </a>
       <a class="spotlight-link oss-link" href="/open-source-journal/">
@@ -102,7 +102,10 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
         // .filter(
         //   ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
         // )
-        .map((props: any, index) =>
+        .map((props: any, index) => {
+          const ctaOccurrence = getArticleListCtaOccurrence(index);
+
+          return (
           <>
             {index === posts.length - 1 ? (
               <ArticleCard
@@ -113,9 +116,15 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
             ) : (
               <ArticleCard article={props as ArticlePost} width={200} />
             )}
-            {index === consultingCtaIndex && <ArticleListConsultingCTA pageCount={1} />}
+            {ctaOccurrence !== null && (
+              <ArticleListConsultingCTA
+                category={ctaOccurrence === 1 ? undefined : (props as ArticlePost).data.category}
+                pageCount={ctaOccurrence}
+              />
+            )}
           </>
-        )
+          );
+        })
     }
     <!-- {nextPageAttrs && <a hx-get={defaultNextUrl} hx-swap="afterend">Next</a>} -->
   </div>
