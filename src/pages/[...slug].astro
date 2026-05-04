@@ -2,10 +2,15 @@
 import Post from "../layouts/Post.astro";
 import { render, type CollectionEntry } from "astro:content";
 import { PostCollections } from "../shared/postsCache";
-import { autoRegisterRedirects } from "../scripts/redirectManager";
+import {
+  writeRedirectManifest,
+  type RedirectSourcePost,
+} from "../scripts/redirectManager";
 
 export async function getStaticPaths() {
-  return PostCollections.getStaticPaths();
+  const paths = PostCollections.getStaticPaths();
+  writeRedirectManifest(paths.map(({ props }) => props as RedirectSourcePost));
+  return paths;
 }
 
 type Props = CollectionEntry<"posts"> & { slug: string };
@@ -13,8 +18,6 @@ type Props = CollectionEntry<"posts"> & { slug: string };
 const post = Astro.props as Props;
 const results = await render(post);
 const { Content } = results;
-
-autoRegisterRedirects(post);
 ---
 
 <Post sourcePath={post.id} slug={post.slug} frontmatter={{ ...post.data }}>
