@@ -17,7 +17,7 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { useCallback, useEffect, useState } from "react";
-import { ensurePagefindInitialized } from "../SearchUI/searchLoader";
+import { ensurePagefindInitialized } from "../SearchUI/pagefindLoader";
 import "./index.css";
 
 const NavMenu = ({

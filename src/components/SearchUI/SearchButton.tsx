@@ -1,7 +1,7 @@
 import { SearchIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useEffect } from "react";
-import { ensurePagefindInitialized } from "./searchLoader";
+import { ensurePagefindInitialized } from "./pagefindLoader";
 
 export const SearchButton = () => {
   useEffect(() => {
