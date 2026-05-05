@@ -2,14 +2,11 @@
 import Post from "../layouts/Post.astro";
 import { render, type CollectionEntry } from "astro:content";
 import { PostCollections } from "../shared/postsCache";
-import {
-  writeRedirectManifest,
-  type RedirectSourcePost,
-} from "../scripts/redirectManager";
+import { writeRedirectManifest } from "../scripts/redirectManager";
 
 export async function getStaticPaths() {
   const paths = PostCollections.getStaticPaths();
-  writeRedirectManifest(paths.map(({ props }) => props as RedirectSourcePost));
+  writeRedirectManifest(PostCollections.getRedirectSourcePosts());
   return paths;
 }
 

@@ -1,14 +1,13 @@
-import { QuestionStore } from "./QuestionStore";
+import { createQuizProgress, type QuizProgress } from "./QuizProgress";
 import {
   initQuizSlideManager,
   type QuizSlideManagerController,
 } from "./QuizSlideManager";
 
-type QuestionStoreInstance = ReturnType<typeof QuestionStore>;
-
 export type QuizRuntimeController = {
   destroy: () => void;
-  getQuestionStore: () => QuestionStoreInstance;
+  getQuizProgress: () => QuizProgress;
+  getQuestionStore: () => QuizProgress;
   updateCounts: () => boolean;
 };
 
@@ -54,19 +53,19 @@ export function destroyQuizRuntime() {
 
 function createQuizRuntime(quiz: HTMLElement): QuizRuntimeController {
   const abortController = new AbortController();
-  const questionStore = QuestionStore(window.location.pathname);
+  const quizProgress = createQuizProgress(window.location.pathname);
   let refreshInterval: number | null = null;
   let refreshCount = 0;
   let slideManager: QuizSlideManagerController | null = null;
   let destroyed = false;
 
-  const updateCounts = () => updateQuizCounts(questionStore);
+  const updateCounts = () => updateQuizCounts(quizProgress);
 
   window.__updateCounts = updateCounts;
   quiz.dataset.quizLogicInitialized = "true";
 
   const resetQuiz = () => {
-    questionStore.reset();
+    quizProgress.reset();
     history.replaceState(null, "", `${window.location.pathname}#qq-1`);
     window.location.reload();
   };
@@ -97,12 +96,13 @@ function createQuizRuntime(quiz: HTMLElement): QuizRuntimeController {
 
   deferWork(() => {
     if (destroyed) return;
-    slideManager = initQuizSlideManager(
-      quiz.closest("section") as HTMLElement,
-      {
-        onReset: resetQuiz,
-      },
-    );
+      slideManager = initQuizSlideManager(
+        quiz.closest("section") as HTMLElement,
+        {
+          onReset: resetQuiz,
+          progress: quizProgress,
+        },
+      );
   }, 200);
 
   function startQuizRefreshLoop() {
@@ -135,15 +135,22 @@ function createQuizRuntime(quiz: HTMLElement): QuizRuntimeController {
       }
       delete quiz.dataset.quizLogicInitialized;
     },
-    getQuestionStore: () => questionStore,
+    getQuizProgress: () => quizProgress,
+    getQuestionStore: () => quizProgress,
     updateCounts,
   };
 }
 
-function updateQuizCounts(questionStore: QuestionStoreInstance) {
+function updateQuizCounts(quizProgress: QuizProgress) {
   const quizUI = document.querySelectorAll(".quiz-ui");
   const questions = document.querySelectorAll("main .challenge");
   const isQuizPage = quizUI.length > 0;
+  const progress = quizProgress.getSnapshot();
+  const totalQuestions = Math.max(progress.total, questions.length);
+  const correctCount =
+    progress.total > 0
+      ? progress.correct
+      : document.querySelectorAll("main .challenge.correct").length;
 
   if (!isQuizPage || questions.length <= 0) return false;
 
@@ -151,14 +158,13 @@ function updateQuizCounts(questionStore: QuestionStoreInstance) {
   const scoreEl = scoreEls[0] as HTMLElement | undefined;
   const scoreWrapper = document.querySelector(".score-wrapper");
   const scoreLabel = document.querySelector(".score label");
-  const correct = document.querySelectorAll("main .challenge.correct");
   const congratsMsg = document.querySelector(".congrats-message");
 
   if (!scoreEl) return false;
 
-  const tries = questionStore.sumOfTries() || getAnswerCount();
+  const tries = progress.tries || getAnswerCount();
   const isPerfect =
-    questions.length === correct.length && tries === questions.length;
+    totalQuestions === correctCount && tries === totalQuestions;
 
   if (scoreEl?.parentNode?.nodeName !== "BODY") {
     document.body.appendChild(scoreEl);
@@ -174,19 +180,19 @@ function updateQuizCounts(questionStore: QuestionStoreInstance) {
     console.error("Expected score label, not found");
     return false;
   }
-  if (correct.length > 0) scoreEls[0].classList.add("active");
+  if (correctCount > 0) scoreEls[0].classList.add("active");
 
-  if (questions.length === correct.length) {
+  if (totalQuestions === correctCount) {
     scoreEl.classList.add("all-correct");
     if (congratsMsg) {
       const winningMessage = isPerfect ? "WOW! Perfect!" : "All correct!";
       const hTag = isPerfect ? "h2" : "h3";
-      congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}</${hTag}>`;
+      congratsMsg.innerHTML = `<${hTag}>${winningMessage} ${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}</${hTag}>`;
     }
     scoreWrapper?.classList.toggle("pulse");
     scoreEl?.classList.add("success");
   } else {
-    scoreLabel.innerHTML = `${correct.length} / ${questions.length} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}`;
+    scoreLabel.innerHTML = `${correctCount} / ${totalQuestions} ${tries > 0 ? `<sup>(${tries} tries)</sup>` : ""}`;
   }
   return true;
 }

@@ -11,12 +11,12 @@ import { QuizContext } from "./QuizContext";
 import classNames from "classnames";
 
 import { slugify } from "../../shared/pathHelpers.ts";
-import { QuestionStore } from "./QuestionStore.ts";
 import { HintTooltip } from "./HintTooltip.tsx";
 import { usePostHog } from "../PostHogEntry.tsx";
 
 import clsx from "clsx";
 import getGlobal from "@stdlib/utils-global";
+import { createQuizProgress, type QuizProgress } from "./QuizProgress.ts";
 
 const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
@@ -49,7 +49,7 @@ export default function Challenge({
   const { setTotalQuestions, setCorrectAnswers } = useContext(QuizContext);
 
   const challengeRef = useRef<HTMLDivElement>(null);
-  const questionStoreRef = useRef<ReturnType<typeof QuestionStore> | null>(null);
+  const quizProgressRef = useRef<QuizProgress | null>(null);
   const optionsPanelRef = useRef<HTMLElement>(null);
   const explanationPanelRef = useRef<HTMLElement>(null);
   const explanationContentRef = useRef<HTMLParagraphElement>(null);
@@ -74,8 +74,10 @@ export default function Challenge({
   };
 
   useEffect(() => {
-    if (!questionStoreRef.current) {
-      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    if (!quizProgressRef.current) {
+      quizProgressRef.current = createQuizProgress(
+        global?.location?.pathname ?? "",
+      );
     }
 
     const link = global?.location?.pathname ?? "";
@@ -83,26 +85,25 @@ export default function Challenge({
   }, [global?.location?.pathname]);
 
   useEffect(() => {
-    if (!questionStoreRef.current) {
-      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    if (!quizProgressRef.current) {
+      quizProgressRef.current = createQuizProgress(
+        global?.location?.pathname ?? "",
+      );
     }
 
-    if (questionStoreRef.current) {
-      questionStoreRef.current.addQuestion({
+    if (quizProgressRef.current) {
+      quizProgressRef.current.registerQuestion({
         title,
         group,
         question,
         index: questionIndex,
       });
       const isCorrect =
-        questionStoreRef.current?.isCorrect({
-          index: questionIndex,
-        }) ?? undefined;
+        quizProgressRef.current?.getQuestion(questionIndex)?.isCorrect ??
+        undefined;
 
       const tries =
-        questionStoreRef.current?.getTries({
-          index: questionIndex,
-        }) ?? 0;
+        quizProgressRef.current?.getQuestion(questionIndex)?.tries ?? 0;
 
       setTries(tries);
       setIsCorrect(isCorrect);
@@ -110,7 +111,7 @@ export default function Challenge({
         isCorrect === true ? "correct" : isCorrect === false ? "incorrect" : "",
       );
     } else {
-      console.error("QuestionStore is not initialized");
+      console.error("Quiz progress is not initialized");
     }
   }, [title, group, question, questionIndex]);
 
@@ -144,20 +145,18 @@ export default function Challenge({
   };
 
   const handleAnswer = (option: Option) => {
-    if (!questionStoreRef.current) {
-      questionStoreRef.current = QuestionStore(global?.location.pathname);
+    if (!quizProgressRef.current) {
+      quizProgressRef.current = createQuizProgress(
+        global?.location?.pathname ?? "",
+      );
     }
 
-    questionStoreRef.current?.answerQuestion(
-      {
-        index: questionIndex,
-      },
+    const answerResult = quizProgressRef.current.answerQuestion(
+      questionIndex,
       option,
     );
-
-    const currentQuestionTries =
-      questionStoreRef.current?.getTries({ index: questionIndex }) ?? 0;
-    const totalQuizTries = questionStoreRef.current?.sumOfTries() ?? currentQuestionTries;
+    const currentQuestionTries = answerResult.question.tries;
+    const totalQuizTries = answerResult.snapshot.tries;
     setTries(currentQuestionTries);
 
     setShowHint(false);
@@ -166,7 +165,11 @@ export default function Challenge({
       setIsCorrect(true);
       replayAnimation("answer-correct-pulse", 360);
       // Notify the slide manager to celebrate correct answers.
-      window.dispatchEvent(new CustomEvent("quiz-answer-correct", { detail: { index: questionIndex } }));
+      window.dispatchEvent(
+        new CustomEvent("quiz-answer-correct", {
+          detail: { index: questionIndex, snapshot: answerResult.snapshot },
+        }),
+      );
     } else {
       setChallengeClass("incorrect");
       setIsCorrect(false);
@@ -191,6 +194,7 @@ export default function Challenge({
         isCorrect: option.isAnswer,
         tries: currentQuestionTries,
         totalTries: totalQuizTries,
+        snapshot: answerResult.snapshot,
       },
     }));
     setTimeout(updateCounts, 20);

@@ -240,46 +240,9 @@ const heroPreload = _heroSrc
     onload="this.media='all'"
   />
   <script>
-    import { bootQuizRuntime } from "../components/QuizUI/QuizRuntime";
+    import { installPostEnhancementLifecycle } from "../layouts/postEnhancements";
 
-    async function bootBannerEffects() {
-      const banner = document.querySelector(".banner-wrapper, .hero-image");
-      if (!banner || typeof window === "undefined") return;
-
-      const { initBannerEffects } = await import("../scripts/bannerEffects");
-      initBannerEffects("scanline", {
-        distortionStrength: 0.5,
-        scrollSensitivity: 0.125,
-      });
-    }
-
-    function deferWork(work: () => void | Promise<void>, timeout = 1200) {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(() => {
-          void work();
-        }, { timeout });
-        return;
-      }
-
-      globalThis.setTimeout(() => {
-        void work();
-      }, 350);
-    }
-
-    function bootPageEnhancements() {
-      __checkForEmptyShareCounts();
-
-      deferWork(bootBannerEffects, 1800);
-      bootQuizRuntime();
-    }
-
-    document.addEventListener("astro:page-load", bootPageEnhancements);
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", bootPageEnhancements, { once: true });
-    } else {
-      bootPageEnhancements();
-    }
+    installPostEnhancementLifecycle();
 
     /**
      * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
@@ -298,51 +261,7 @@ const heroPreload = _heroSrc
      *     -   **Smooth Reveal**: The effect now fades in over 800ms for a more cinematic entrance.
      *
      * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
-     * This exists to patch the height of the options list - since we added the flip card effect, not all browsers are smart enough about calculating the height of the option elements.
      */
-    window.__superHackFix_patchOptionsListWithActualHeight =
-      function __superHackFix_patchOptionsListWithActualHeight(
-        quizOptions: HTMLElement[] | null = null,
-      ) {
-        quizOptions = quizOptions ?? [
-          ...document.querySelectorAll<HTMLElement>(".quiz-options"),
-        ];
-        console.log("patchRealHeight", quizOptions.length);
-        quizOptions.forEach(function (optionPanel) {
-          try {
-            let childHeights =
-              optionPanel &&
-              Array.from(optionPanel.querySelectorAll("a")).map(
-                function (child) {
-                  return child.getBoundingClientRect().height;
-                },
-              );
-            const sumHeight =
-              childHeights && childHeights.reduce((a, b) => a + b, 0);
-            console.log("sumHeight", sumHeight);
-            if (optionPanel.parentElement)
-              optionPanel.parentElement.style.height = sumHeight + "px";
-          } catch (e) {
-            console.error("Error patching options list", e);
-          }
-        });
-        return quizOptions;
-      };
-
-    function __checkForEmptyShareCounts() {
-      const shareCounters = document.querySelector(".share-counters");
-      const emptySpans = shareCounters?.querySelectorAll("span:empty");
-
-      if (emptySpans && emptySpans.length >= 3) {
-        shareCounters?.classList.add("hidden", "empty", "no-share-counts");
-      }
-      return {
-        shareCounters,
-        emptySpans,
-      };
-    }
-    // @ts-ignore
-    window.__checkForEmptyShareCounts = __checkForEmptyShareCounts;
   </script>
 
   <style is:global>

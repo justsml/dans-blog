@@ -17,7 +17,10 @@ import {
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
 import { useCallback, useEffect, useState } from "react";
-import { ensurePagefindInitialized } from "../SearchUI/pagefindLoader";
+import {
+  installSearchPanelDismissal,
+  toggleSearchPanel,
+} from "../SearchUI/searchPanelRuntime";
 import "./index.css";
 
 const NavMenu = ({
@@ -64,42 +67,7 @@ const NavMenu = ({
   }, []);
 
   useEffect(() => {
-    const handleBackdropClick = (e: MouseEvent) => {
-      setTimeout(() => {
-        const searchBar = document.querySelector(".searchBar");
-        if (!searchBar || searchBar.classList.contains("collapsed")) return;
-
-        const searchContainer = searchBar.querySelector(".pagefind-ui");
-        const target = e.target as HTMLElement;
-
-        if (searchContainer && !searchContainer.contains(target)) {
-          const searchButton = target.closest(".btnSearchToggle");
-          const navMenu = target.closest(".NavigationMenuRoot");
-
-          if (!searchButton && !navMenu) {
-            searchBar.classList.add("collapsed");
-            document.body.classList.remove("search-panel-open");
-          }
-        }
-      }, 10);
-    };
-
-    const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      const searchBar = document.querySelector(".searchBar");
-      if (searchBar && !searchBar.classList.contains("collapsed")) {
-        searchBar.classList.add("collapsed");
-        document.body.classList.remove("search-panel-open");
-      }
-    };
-
-    document.addEventListener("click", handleBackdropClick);
-    document.addEventListener("keydown", handleEscapeKey);
-
-    return () => {
-      document.removeEventListener("click", handleBackdropClick);
-      document.removeEventListener("keydown", handleEscapeKey);
-    };
+    return installSearchPanelDismissal();
   }, []);
 
   // Update the viewport offset on window resize and orientation change
@@ -208,26 +176,8 @@ const NavMenu = ({
   };
 
   const toggleSearch = async () => {
-    const searchBar = document.querySelector(".searchBar");
-    if (!searchBar) return console.warn(`Missing '.searchBar' element`);
-
-    const isCollapsed = searchBar.classList.contains("collapsed");
-
-    if (isCollapsed) {
-      setCurrentPanel("");
-      await ensurePagefindInitialized();
-      searchBar.classList.remove("collapsed");
-      document.body.classList.add("search-panel-open");
-
-      setTimeout(() => {
-        const searchInput = searchBar.querySelector<HTMLInputElement>('input[type="text"]');
-        searchInput?.focus();
-      }, 350);
-      return;
-    }
-
-    searchBar.classList.add("collapsed");
-    document.body.classList.remove("search-panel-open");
+    setCurrentPanel("");
+    await toggleSearchPanel();
   };
 
   const _changeToPanel = (panel: string) => {

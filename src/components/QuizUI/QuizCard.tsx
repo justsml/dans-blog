@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { slugify } from "../../shared/pathHelpers.ts";
 import type { QuizPost } from "../../types.ts";
 import { useEffect, useState } from "react";
-import { QuestionStore } from "./QuestionStore.ts";
+import { createQuizProgress } from "./QuizProgress.ts";
 
 export const QuizCard = ({
   article,
@@ -39,10 +39,10 @@ export const QuizCard = ({
   const questionCount = article.data.questionCount ?? countTotal;
 
   useEffect(() => {
-    const qStore = QuestionStore(slug);
-    setCountCorrect(qStore.correct());
-    setCountTotal(qStore.total());
-    setCountTries(qStore.sumOfTries());
+    const progress = createQuizProgress(slug).getSnapshot();
+    setCountCorrect(progress.correct);
+    setCountTotal(progress.total);
+    setCountTries(progress.tries);
   }, [slug, countCorrect]);
 
   const allCorrect = countCorrect === questionCount;

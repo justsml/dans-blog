@@ -5,17 +5,20 @@
  * Nav/score bars are appended to the parent section, not inside .quiz-ui.
  * Islands are hidden via display:none only after hydration signals completion.
  */
+import type { QuizProgress, QuizProgressSnapshot } from "./QuizProgress";
+
 export type QuizSlideManagerController = {
   destroy: () => void;
 };
 
 type QuizSlideManagerOptions = {
   onReset?: () => void | Promise<void>;
+  progress?: QuizProgress;
 };
 
 export function initQuizSlideManager(
   quizSection: HTMLElement,
-  { onReset }: QuizSlideManagerOptions = {},
+  { onReset, progress }: QuizSlideManagerOptions = {},
 ): QuizSlideManagerController | null {
   if (!quizSection) return null;
 
@@ -240,12 +243,28 @@ export function initQuizSlideManager(
     // --- State Updates ---
     const syncAnswers = () => {
       totalAttemptCount = 0;
+      answeredQuestions.clear();
+      const snapshot = progress?.getSnapshot();
+
       challenges.forEach((c, i) => {
-        if (c.classList.contains("correct")) answeredQuestions.set(i, true);
-        else if (c.classList.contains("incorrect"))
+        const questionProgress = snapshot?.questions[i];
+        if (questionProgress?.isCorrect != null) {
+          answeredQuestions.set(i, questionProgress.isCorrect);
+        } else if (c.classList.contains("correct")) {
+          answeredQuestions.set(i, true);
+        } else if (c.classList.contains("incorrect")) {
           answeredQuestions.set(i, false);
-        totalAttemptCount += Number(c.dataset.answerCount || "0");
+        }
+        totalAttemptCount =
+          snapshot?.tries ??
+          totalAttemptCount + Number(c.dataset.answerCount || "0");
       });
+    };
+
+    const syncAttemptCount = (snapshot?: QuizProgressSnapshot) => {
+      if (!snapshot) return false;
+      totalAttemptCount = snapshot.tries;
+      return true;
     };
 
     const updateProgress = () => {
@@ -696,6 +715,7 @@ export function initQuizSlideManager(
     listen(window, "quiz-answer-correct", ((e: Event) => {
       const detail = (e as CustomEvent).detail;
       answeredQuestions.set(detail.index, true);
+      syncAttemptCount(detail.snapshot);
       updateDots();
       updateProgress();
       const activeChallenge = islands[currentIndex]?.querySelector(
@@ -709,7 +729,9 @@ export function initQuizSlideManager(
       if (typeof detail?.index !== "number") return;
 
       answeredQuestions.set(detail.index, Boolean(detail.isCorrect));
-      if (typeof detail.totalTries === "number") {
+      if (syncAttemptCount(detail.snapshot)) {
+        // snapshot owns the attempt count
+      } else if (typeof detail.totalTries === "number") {
         totalAttemptCount = detail.totalTries;
       } else if (typeof detail.tries === "number") {
         challenges[detail.index].dataset.answerCount = String(detail.tries);

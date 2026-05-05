@@ -1,48 +1,16 @@
 import rss from "@astrojs/rss";
-import { getCollection } from "astro:content";
 import { SITE_TITLE, SITE_SEO_DESCRIPTION } from "../consts";
-import { getSlugFromId } from "../shared/pathHelpers";
 import type { APIContext } from 'astro';
-import { isVisiblePost } from "../shared/postVisibility";
+import { PostCollections } from "../shared/postsCache";
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection("posts")).filter(isVisiblePost).reverse();
-
-  posts.unshift({
-    id: "open-source-journal",
-    slug: "open-source-journal",
-    // @ts-ignore
-    collection: "pages",
-    data: {
-      title: "Open Source Journal",
-      subTitle: "A collection of open-source projects I've worked on.",
-      publish: true,
-      category: "Projects",
-      date: "2024-12-16",
-      modified: "2024-12-28",
-      tags: ["open-source", "projects"],
-      cover: {
-        src: "../../images/social-banner.webp",
-        format: "webp",
-        width: 1200,
-        height: 628,
-      },
-    }
-  });
+  const items = PostCollections.getFeedItems({ includeSubCategory: false });
 
   return rss({
     title: SITE_TITLE,
     description: SITE_SEO_DESCRIPTION,
     site: context.site!,
-    items: posts.map((post: any) => ({
-      ...post.data,
-      pubDate: new Date(post.data.date!),
-      description: post.data.subTitle,
-      categories: [post.data.category, ...(post.data.tags ?? [])],
-      category: post.data.category,
-      cover: post.data?.cover?.src,
-      link: `/${getSlugFromId(post.id)}/`,
-    })),
+    items,
   });
 }
 

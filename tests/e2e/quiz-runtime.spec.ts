@@ -2,9 +2,8 @@ import { expect, test } from "@playwright/test";
 
 test.describe("Quiz runtime", () => {
   test("boots slide navigation and records an answer", async ({ page }) => {
+    await page.addInitScript(() => localStorage.clear());
     await page.goto("/quiz-is-your-memory-rusty/");
-    await page.evaluate(() => localStorage.clear());
-    await page.reload();
 
     const quiz = page.locator(".quiz-ui");
     await expect(quiz).toBeVisible();

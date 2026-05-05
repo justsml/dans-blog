@@ -5,7 +5,11 @@ declare global {
     __updateCounts: () => boolean;
     __superHackFix_patchOptionsListWithActualHeight: (
       quizOptions?: HTMLElement[] | null,
-    ) => void;
+    ) => HTMLElement[];
+    __checkForEmptyShareCounts: () => {
+      shareCounters: Element | null;
+      emptySpans: NodeListOf<Element> | undefined;
+    };
   }
 }
 
@@ -113,6 +117,8 @@ export type ArticlePost = {
     unlisted?: boolean;
     hidden?: boolean;
     draft?: boolean;
+    redirects?: string[];
+    cover?: ImageMetadata;
     cover_icon: ImageMetadata;
     cover_mobile: ImageMetadata;
     date: string;

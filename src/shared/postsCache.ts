@@ -1,6 +1,6 @@
 import { getCollection } from "astro:content";
 import { fixSlugPrefix, getSlugFromId, slugify } from "./pathHelpers.ts";
-import type { ArticlePost } from "../types.ts";
+import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
 import { isRoutablePost, isVisiblePost } from "./postVisibility.ts";
 
@@ -20,6 +20,39 @@ const _posts = _postsCollection.map((post) => ({
 }));
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
+
+export type PostFeedItem = {
+  sourcePath: string;
+  title: string;
+  pubDate: Date;
+  description: string;
+  categories: string[];
+  category: string;
+  cover?: string;
+  slug: string;
+  link: string;
+};
+
+const openSourceJournalPost = {
+  id: "open-source-journal",
+  slug: "open-source-journal",
+  collection: "pages",
+  data: {
+    title: "Open Source Journal",
+    subTitle: "A collection of open-source projects I've worked on.",
+    publish: true,
+    category: "Projects",
+    date: "2024-12-16",
+    modified: "2024-12-28",
+    tags: ["open-source", "projects"],
+    cover: {
+      src: "../../images/social-banner.webp",
+      format: "webp",
+      width: 1200,
+      height: 628,
+    },
+  },
+} as unknown as ArticlePost;
 
 /**
  * PostCollections provides access to posts' data, pre-.
@@ -84,6 +117,53 @@ export const PostCollections = {
   getPosts() {
     const posts = PostCollections._posts;
     return posts;
+  },
+
+  getQuizPosts() {
+    return PostCollections._quizPosts;
+  },
+
+  getQuizList(): QuizPost[] {
+    const quizPosts = PostCollections.getQuizPosts()
+      .map(toClientSafePost)
+      .sort((a: ArticlePost, b: ArticlePost) => {
+        const subCategoryA = a.data.subCategory;
+        const subCategoryB = b.data.subCategory;
+
+        if (subCategoryA == null || subCategoryB == null) return 0;
+        return subCategoryA.localeCompare(subCategoryB);
+      });
+
+    return quizPosts.map((post, index): QuizPost => ({
+      ...post,
+      data: {
+        ...post.data,
+        index,
+        subCategory: post.data.subCategory || "Uncategorized",
+        correctCount: 0,
+        questionCount: countQuizQuestions(post.body),
+        label: post.data.label || post.data.title,
+      },
+    })) as QuizPost[];
+  },
+
+  getRedirectSourcePosts(posts: ArticlePost[] = _posts as ArticlePost[]) {
+    return posts.filter(isRoutablePost).map((post) => ({
+      slug: fixSlugPrefix(post.slug),
+      data: {
+        redirects: post.data.redirects,
+      },
+    }));
+  },
+
+  getFeedPosts() {
+    return [openSourceJournalPost, ...PostCollections._posts];
+  },
+
+  getFeedItems({ includeSubCategory = true } = {}): PostFeedItem[] {
+    return PostCollections.getFeedPosts().map((post) =>
+      toFeedItem(post, { includeSubCategory }),
+    );
   },
 
   getStaticPaths(
@@ -182,6 +262,46 @@ export const PostCollections = {
       .slice(0, limit);
   },
 };
+
+function toClientSafePost(post: ArticlePost): ArticlePost {
+  return {
+    ...post,
+    data: {
+      ...post.data,
+      cover: undefined,
+      cover_icon: undefined,
+      cover_mobile: undefined,
+    },
+  } as unknown as ArticlePost;
+}
+
+function countQuizQuestions(body?: string) {
+  return body?.match(/<Challenge\b/g)?.length ?? 0;
+}
+
+function toFeedItem(
+  post: ArticlePost,
+  { includeSubCategory }: { includeSubCategory: boolean },
+): PostFeedItem {
+  const slug = fixSlugPrefix(post.slug || getSlugFromId(post.id));
+  const categories = [
+    post.data.category,
+    includeSubCategory ? post.data.subCategory : undefined,
+    ...(post.data.tags ?? []),
+  ].filter(Boolean) as string[];
+
+  return {
+    sourcePath: post.id,
+    title: post.data.title,
+    pubDate: new Date(post.data.date!),
+    description: post.data.subTitle,
+    categories,
+    category: post.data.category,
+    cover: post.data?.cover?.src,
+    slug,
+    link: `/${slug}/`,
+  };
+}
 
 export const getArticleSortFn = (
   field: "date" | "modified",
