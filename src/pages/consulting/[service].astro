@@ -1,10 +1,18 @@
 ---
 import Layout from "../../layouts/Page.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import {
   INTRO_CALL_LINK,
   consultingServices,
   consultingServicesBySlug,
 } from "../../data/consultingServices";
+import serviceAiConsultingImage from "../../assets/consulting/service-ai-consulting-v2.webp";
+import serviceAiGuardrailsImage from "../../assets/consulting/service-ai-guardrails-v2.webp";
+import serviceCodingSecurityImage from "../../assets/consulting/service-coding-security-v2.webp";
+import serviceEnterpriseSecurityImage from "../../assets/consulting/service-enterprise-security-v2.webp";
+import serviceRagImage from "../../assets/consulting/service-rag-v2.webp";
+import serviceSupabaseImage from "../../assets/consulting/service-supabase-v2.webp";
 
 export function getStaticPaths() {
   return consultingServices.map((service) => ({
@@ -24,30 +32,32 @@ const relatedServices = consultingServices.filter(
   (entry) => entry.slug !== service.slug,
 ).slice(0, 3);
 
-const serviceVisuals: Record<string, { accent: string; image: string }> = {
+const heroPanelImageSizes = "(max-width: 900px) calc(100vw - 3rem), 500px";
+
+const serviceVisuals: Record<string, { accent: string; image: ImageMetadata }> = {
   "ai-consulting": {
     accent: "cyan",
-    image: "/images/consulting/service-ai-consulting-v2.webp",
+    image: serviceAiConsultingImage,
   },
   "ai-guardrails": {
     accent: "coral",
-    image: "/images/consulting/service-ai-guardrails-v2.webp",
+    image: serviceAiGuardrailsImage,
   },
   "supabase-scaling-migration": {
     accent: "amber",
-    image: "/images/consulting/service-supabase-v2.webp",
+    image: serviceSupabaseImage,
   },
   "rag-rescue": {
     accent: "cyan",
-    image: "/images/consulting/service-rag-v2.webp",
+    image: serviceRagImage,
   },
   "developer-ai-coding-security": {
     accent: "coral",
-    image: "/images/consulting/service-coding-security-v2.webp",
+    image: serviceCodingSecurityImage,
   },
   "enterprise-security-assessment": {
     accent: "amber",
-    image: "/images/consulting/service-enterprise-security-v2.webp",
+    image: serviceEnterpriseSecurityImage,
   },
 };
 
@@ -77,7 +87,15 @@ const serviceVisual = serviceVisuals[service.slug] ?? serviceVisuals["ai-consult
       </div>
       <div class={`hero-panel ${serviceVisual.accent}`}>
         <div class="hero-panel-image" aria-hidden="true">
-          <img src={serviceVisual.image} alt="" loading="eager" decoding="async" />
+          <Image
+            src={serviceVisual.image}
+            alt=""
+            widths={[480, 720, 960, 1280, 1586]}
+            sizes={heroPanelImageSizes}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
         <p class="panel-kicker">Best fit</p>
         <h2>{service.title}</h2>

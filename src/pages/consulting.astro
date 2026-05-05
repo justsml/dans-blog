@@ -1,10 +1,20 @@
 ---
 import Layout from "../layouts/Page.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import {
   INTRO_CALL_LINK,
   consultingServices,
 } from "../data/consultingServices";
 import type { ConsultingService } from "../data/consultingServices";
+import consultingHeroImage from "../assets/consulting/consulting-hero-workbench-v2.webp";
+import consultingProcessImage from "../assets/consulting/consulting-process-v2.webp";
+import serviceAiConsultingImage from "../assets/consulting/service-ai-consulting-v2.webp";
+import serviceAiGuardrailsImage from "../assets/consulting/service-ai-guardrails-v2.webp";
+import serviceCodingSecurityImage from "../assets/consulting/service-coding-security-v2.webp";
+import serviceEnterpriseSecurityImage from "../assets/consulting/service-enterprise-security-v2.webp";
+import serviceRagImage from "../assets/consulting/service-rag-v2.webp";
+import serviceSupabaseImage from "../assets/consulting/service-supabase-v2.webp";
 
 const title = "Senior Software Architecture & Security Consulting";
 const description =
@@ -18,36 +28,41 @@ const supportingServices = consultingServices.filter(
   (service) => !featuredSlugs.includes(service.slug),
 );
 
-const serviceVisuals: Record<string, { accent: string; mark: string; image: string }> = {
+const heroImageSizes = "(max-width: 900px) calc(100vw - 3rem), 560px";
+const featuredImageSizes = "(max-width: 900px) calc(100vw - 3rem), 520px";
+const serviceImageSizes =
+  "(max-width: 760px) calc(100vw - 3rem), (max-width: 1180px) 44vw, 340px";
+
+const serviceVisuals: Record<string, { accent: string; mark: string; image: ImageMetadata }> = {
   "ai-consulting": {
     accent: "cyan",
     mark: "AI",
-    image: "/images/consulting/service-ai-consulting-v2.webp",
+    image: serviceAiConsultingImage,
   },
   "ai-guardrails": {
     accent: "coral",
     mark: "GR",
-    image: "/images/consulting/service-ai-guardrails-v2.webp",
+    image: serviceAiGuardrailsImage,
   },
   "supabase-scaling-migration": {
     accent: "amber",
     mark: "SB",
-    image: "/images/consulting/service-supabase-v2.webp",
+    image: serviceSupabaseImage,
   },
   "rag-rescue": {
     accent: "cyan",
     mark: "RG",
-    image: "/images/consulting/service-rag-v2.webp",
+    image: serviceRagImage,
   },
   "developer-ai-coding-security": {
     accent: "coral",
     mark: "CS",
-    image: "/images/consulting/service-coding-security-v2.webp",
+    image: serviceCodingSecurityImage,
   },
   "enterprise-security-assessment": {
     accent: "amber",
     mark: "ES",
-    image: "/images/consulting/service-enterprise-security-v2.webp",
+    image: serviceEnterpriseSecurityImage,
   },
 };
 
@@ -168,10 +183,13 @@ const fitSignals = [
 
       <div class="hero-visual-stack">
         <div class="hero-art" aria-hidden="true">
-          <img
-            src="/images/consulting/consulting-hero-workbench-v2.webp"
+          <Image
+            src={consultingHeroImage}
             alt=""
+            widths={[480, 720, 960, 1280, 1586]}
+            sizes={heroImageSizes}
             loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
         </div>
@@ -228,7 +246,14 @@ const fitSignals = [
           return (
             <a class={`featured-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
               <div class="card-image" aria-hidden="true">
-                <img src={visual.image} alt="" loading="eager" decoding="async" />
+                <Image
+                  src={visual.image}
+                  alt=""
+                  widths={[320, 480, 720, 960]}
+                  sizes={featuredImageSizes}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div class="service-mark">{visual.mark}</div>
               <p class="card-kicker">{service.kicker}</p>
@@ -245,12 +270,19 @@ const fitSignals = [
           const visual = serviceVisuals[service.slug] ?? {
             accent: "cyan",
             mark: service.navTitle.slice(0, 2).toUpperCase(),
-            image: "/images/consulting/service-ai-consulting-v2.webp",
+            image: serviceAiConsultingImage,
           };
           return (
             <a class={`service-card ${visual.accent}`} href={`/consulting/${service.slug}/`}>
               <div class="supporting-image" aria-hidden="true">
-                <img src={visual.image} alt="" loading="eager" decoding="async" />
+                <Image
+                  src={visual.image}
+                  alt=""
+                  widths={[240, 360, 480, 720]}
+                  sizes={serviceImageSizes}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
               <div class="service-mark">{visual.mark}</div>
               <p class="card-kicker">{service.kicker}</p>
@@ -305,10 +337,12 @@ const fitSignals = [
       </div>
 
       <div class="process-panel">
-        <img
-          src="/images/consulting/consulting-process-v2.webp"
+        <Image
+          src={consultingProcessImage}
           alt=""
-          loading="eager"
+          widths={[480, 720, 960, 1280]}
+          sizes={heroImageSizes}
+          loading="lazy"
           decoding="async"
           aria-hidden="true"
         />
@@ -379,10 +413,12 @@ const fitSignals = [
         </div>
       </div>
       <div class="cta-art" aria-hidden="true">
-        <img
-          src="/images/consulting/service-enterprise-security-v2.webp"
+        <Image
+          src={serviceEnterpriseSecurityImage}
           alt=""
-          loading="eager"
+          widths={[480, 720, 960, 1280]}
+          sizes={heroImageSizes}
+          loading="lazy"
           decoding="async"
         />
       </div>

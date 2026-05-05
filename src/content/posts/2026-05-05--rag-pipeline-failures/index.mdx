@@ -1,0 +1,192 @@
+---
+title: "The 5 Ways Your RAG Pipeline Will Fail in Production"
+subTitle: "It worked in the demo. Here's why it won't survive contact with real users."
+date: 2026-05-04
+modified: 2026-05-05
+tags: [ai, rag, vector-search, llm, production, embeddings, architecture]
+category: AI
+subCategory: Architecture
+draft: true
+popularity: 0.8
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+The RAG demo always looks great.
+
+You embed some docs, spin up a vector store, wire it to a chat interface, and watch the model cite your internal knowledge base like it's been working there for years. Beautiful. You show it to stakeholders. They're impressed. Someone says "let's ship this."
+
+Six weeks later, users are getting confidently wrong answers. Support tickets are piling up. The system *works*, it just doesn't work *well* — and the gap between those two things is eating your team alive.
+
+Here are the five ways this happens, and what to actually do about each one.
+
+---
+
+## 1. Your Chunks Are the Wrong Size
+
+This is the most common failure and the hardest to diagnose, because it doesn't crash. It just quietly makes your answers worse.
+
+The problem is that vector search retrieves *chunks*, not documents. Whatever you split your source material into, that's the unit your retriever works with. And if your chunks are wrong, your model is answering questions with the wrong fragments.
+
+**Too small**: The chunk contains a partial answer. The embedding captures the right topic, but the retrieved text is missing context. You fetch "The maximum timeout is 30 seconds" without the sentence before it that says "when using the legacy API."
+
+**Too large**: The embedding becomes a blurry average of many ideas. Semantic search gets confused because the chunk is about multiple things, and the resulting vector doesn't represent any of them cleanly.
+
+The chunk size that works depends entirely on your content. Technical documentation with consistent structure is different from legal contracts is different from customer support transcripts. There's no universal answer.
+
+What you should actually do: measure. Build an eval set of question/answer pairs from your corpus. Try chunk sizes of 256, 512, and 1024 tokens. Measure retrieval precision — does the right chunk appear in the top 5 results? You'll find out fast that the chunk size matters more than the embedding model you agonized over.
+
+The second thing you should do: use overlapping chunks. A 512-token chunk with 64 tokens of overlap on each side means answers that span a boundary still get retrieved. Most vector libraries support this. Most people skip it.
+
+---
+
+## 2. Your Embeddings Go Stale (And You Won't Notice)
+
+Imagine your company rebrands. Or renames a product. Or updates its pricing. Or deprecates an API.
+
+You update the documentation. But you don't re-embed the chunks. The vector index still represents the old content.
+
+Users ask about the new pricing. The embeddings route them to the old content. The model reads the old content and confidently explains the old pricing. Support gets a ticket.
+
+This isn't hypothetical. Every production RAG system I've seen hits this eventually. The fix sounds obvious — just re-embed when content changes — but in practice, nobody builds this pipeline until after the first incident.
+
+What you actually need is an incremental re-indexing strategy with content fingerprinting. Something like:
+
+```typescript
+import { createHash } from 'crypto';
+
+async function upsertDocument(doc: Document, vectorStore: VectorStore) {
+  const fingerprint = createHash('sha256')
+    .update(doc.content)
+    .digest('hex');
+
+  const existing = await vectorStore.getBySourceId(doc.id);
+
+  if (existing?.fingerprint === fingerprint) {
+    return; // Content unchanged, skip re-embedding
+  }
+
+  const chunks = chunkDocument(doc);
+  const embeddings = await embedBatch(chunks);
+
+  await vectorStore.upsert(
+    chunks.map((chunk, i) => ({
+      id: `${doc.id}:${i}`,
+      sourceId: doc.id,
+      fingerprint,
+      vector: embeddings[i],
+      text: chunk.text,
+      metadata: { ...doc.metadata, updatedAt: new Date() },
+    }))
+  );
+}
+```
+
+Re-index on write, fingerprint on content, not on timestamps. Documents get updated in your CMS all the time without the actual content changing.
+
+---
+
+## 3. Retrieval Precision vs. Recall: You're Optimizing the Wrong One
+
+Most RAG tutorials show you how to retrieve the top-K chunks. They don't explain that you're making a tradeoff between two things that point in opposite directions.
+
+**High recall**: Return everything that might be relevant. Users always get an answer. But the model's context window is full of tangentially related noise, and it hallucinates to fill the gaps between fragments.
+
+**High precision**: Only return the most relevant chunks. The model works with clean, focused context. But if the right chunk isn't in the top 3, the model doesn't have the information and confidently makes something up anyway.
+
+The failure modes look identical to users — they get wrong answers. But the cause is opposite, and the fix is opposite.
+
+Two techniques that actually help:
+
+**Reranking**: Retrieve more candidates (top-20), then use a cross-encoder model to rerank them by relevance before passing to the LLM. Cross-encoders are slower than vector similarity but dramatically more accurate at the final ranking step.
+
+```typescript
+import { Reranker } from '@mastra/rag';
+
+const results = await vectorStore.search(queryEmbedding, { topK: 20 });
+const reranked = await reranker.rank(query, results);
+const context = reranked.slice(0, 5); // Now top-5 actually means something
+```
+
+**Hybrid search**: Combine vector search (semantic similarity) with keyword search (BM25). They fail in different ways. Vector search struggles with specific terms, model names, and IDs. Keyword search struggles with paraphrasing and synonyms. Together, they cover each other's blind spots.
+
+---
+
+## 4. Your Context Window Is the Wrong Shape
+
+You've retrieved the right chunks. Congratulations. The model is still going to get this wrong.
+
+The problem is where you put things in the prompt. This sounds like a minor implementation detail. It isn't.
+
+LLMs suffer from what researchers call the "lost in the middle" problem. Relevant information buried in the middle of a long context is significantly less likely to be used than information at the beginning or end. Papers have measured this effect; it's not subtle.
+
+If you're shoving 20 retrieved chunks in a flat list and hoping the model synthesizes them correctly, you're leaving performance on the table.
+
+Things that actually help:
+
+**Position your most relevant chunks at the start and end.** The top-ranked result goes first, second-ranked goes last, and the rest fill the middle. Counter-intuitive, but it works.
+
+**Explicitly number and label your context sections.** `[Source 1]` ... `[Source 2]` gives the model anchors to reason about.
+
+**Add a retrieval confidence signal.** If your similarity score is 0.65 on a 0-1 scale, tell the model: "The following context was retrieved with moderate confidence. Acknowledge uncertainty if the answer is unclear."
+
+**Set a context budget.** Don't just pass everything you retrieved. Count tokens, prioritize by relevance score, and hard-cut at 60-70% of the model's context window. Leave room for the model to reason without thrashing.
+
+---
+
+## 5. You Have No Idea When It's Wrong
+
+This is the one that keeps me up at night.
+
+With a traditional API, failures are visible: HTTP 500, timeout, schema validation error. You know immediately. You fix it. RAG failures are invisible: the system returns a response, the response looks plausible, the response is wrong.
+
+You won't know your RAG pipeline is failing until users tell you. And users often don't tell you — they just stop trusting the system and go back to Ctrl+F.
+
+The minimum viable observability setup for a production RAG system:
+
+**Log your retrieval chain.** Every query, what was retrieved (chunk IDs + scores), and what the model produced. You need this to debug anything.
+
+**Track retrieval metrics.** Mean reciprocal rank (MRR) and NDCG if you have ground-truth labels. At minimum, track similarity score distributions — if your P50 retrieval score drops, your index quality dropped.
+
+**Build a feedback loop.** Even a thumbs up/down on responses, connected back to the query and retrieved chunks, gives you training signal. Without it, you're flying blind.
+
+**Run periodic evals.** A test set of 50-100 questions with known correct answers, run weekly, will catch regression before users do. It doesn't have to be fancy. A spreadsheet and a script is fine.
+
+```typescript
+async function runEval(
+  testCases: { query: string; expectedAnswer: string }[],
+  pipeline: RAGPipeline
+) {
+  const results = await Promise.all(
+    testCases.map(async ({ query, expectedAnswer }) => {
+      const response = await pipeline.query(query);
+      const score = await scoreResponse(response, expectedAnswer);
+      return { query, score, response };
+    })
+  );
+
+  const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
+  console.log(`Eval score: ${(avgScore * 100).toFixed(1)}%`);
+  
+  // Alert if score drops below threshold
+  if (avgScore < 0.75) {
+    await notifyTeam(`RAG eval score dropped to ${(avgScore * 100).toFixed(1)}%`);
+  }
+
+  return results;
+}
+```
+
+---
+
+## The Actual Problem
+
+None of these failures are about the embedding model you chose or the vector database you're running. They're about the system design around it.
+
+RAG demos work because the demo conditions are controlled: clean documents, well-formed questions, tolerant evaluators. Production fails because none of those conditions hold.
+
+The good news: every failure above is diagnosable and fixable. But only if you're measuring. The teams that ship reliable RAG systems aren't doing anything exotic — they're just treating it like software engineering instead of magic.
+
+Set up the eval loop first. Everything else is easier once you can measure it.

@@ -1,0 +1,464 @@
+---
+title: "Quiz: Do You Really Understand JavaScript Closures?"
+subTitle: "Most developers think they do. Most developers are wrong."
+date: 2026-05-01
+modified: 2026-05-05
+tags: [javascript, closures, quiz, fundamentals, scope, advanced]
+category: Quiz
+subCategory: JavaScript
+draft: true
+popularity: 0.85
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Closures are one of those concepts that every JavaScript developer *thinks* they understand — right up until the moment they don't. This quiz will find the edges of what you actually know.</p>
+
+Closures show up in event handlers, factory functions, React hooks, module patterns, and pretty much everywhere else. They're not exotic. They're the fabric JavaScript is woven from.
+
+The questions start reasonable and get progressively less so. Good luck. 🍀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={0}
+  group="Warmup"
+  title="Classic Counter"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this log?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const tick = makeCounter();
+    console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` closes over `count`. Every call increments and returns the *same* `count` variable. The three calls produce `1, 2, 3`.
+
+    The key word: *same*. `count` isn't copied into the closure. The closure holds a **live reference** to the variable binding. That's the whole deal.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={1}
+  group="Warmup"
+  title="Separate Closures"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this log?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), b());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Each call to `makeCounter()` creates a **new execution context** with its own fresh `count`. `a` and `b` close over *different* `count` bindings. They don't share state.
+
+    Result: `1, 1`
+
+    This is why closures are used to build private state — each "instance" is independent.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={2}
+  group="The Classic Trap"
+  title="var in a Loop"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined x5'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What gets logged after 100ms?
+    ```javascript
+    for (var i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` is function-scoped. There is exactly **one** `i` — all five callbacks close over the same binding. By the time the timeouts fire, the loop has finished and `i` is `5`.
+
+    Five callbacks. One `i`. Value: `5`. Logged five times.
+
+    The fix is `let` (block-scoped, new binding each iteration) or wrapping in an IIFE to capture the current value:
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={3}
+  group="The Classic Trap"
+  title="let Fixes It (Or Does It?)"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError: i is not defined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Same loop, different keyword. What logs?
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `let` in a `for` loop is special. The spec says: each iteration gets its own **new binding** of `i`. It's as if the loop secretly does this:
+
+    ```javascript
+    { let i = 0; setTimeout(() => console.log(i), 100) }
+    { let i = 1; setTimeout(() => console.log(i), 100) }
+    // ...
+    ```
+
+    So the five callbacks close over five distinct variables. Result: `0, 1, 2, 3, 4`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={4}
+  group="Closures & Objects"
+  title="Object Mutation"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this log?
+    ```javascript
+    function wrap() {
+      const obj = { x: 1 };
+      const getObj = () => obj;
+      obj.x = 99;
+      return getObj;
+    }
+    const get = wrap();
+    console.log(get(), get());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The closure captures the **binding** `obj`, not a snapshot of the object. The object itself is mutated after the closure is created — but `obj` still points to the same reference. Both calls return the same mutated object: `{ x: 99 }`.
+
+    This bites people who assume closures "freeze" values. They don't. They capture **references**.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={5}
+  group="Advanced"
+  title="Stale Closure in React"
+  options={[
+    {text: 'Logs the current count on every click'},
+    {text: 'Always logs 0', isAnswer: true},
+    {text: 'Logs NaN'},
+    {text: "This won't compile"},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What behavior does this React component exhibit when the button is clicked multiple times?
+    ```jsx
+    function Counter() {
+      const [count, setCount] = useState(0);
+
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log('count is', count);
+        }, 1000);
+        return () => clearInterval(id);
+      }, []); // empty deps
+
+      return <button onClick={() => setCount(c => c + 1)}>
+        Click ({count})
+      </button>;
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Classic stale closure. The `useEffect` runs once (empty dep array) and creates an interval that closes over `count` as it was at mount time: `0`. No matter how many times you click, the interval's closure never sees the updated value.
+
+    The button label updates correctly — that's a fresh render. But `console.log` is forever trapped at `0`.
+
+    Fix it by adding `count` to the dep array (recreates the interval) or using a ref:
+    ```jsx
+    const countRef = useRef(count);
+    useEffect(() => { countRef.current = count; }, [count]);
+    // then use countRef.current inside the interval
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={6}
+  group="Advanced"
+  title="Module Pattern"
+  options={[
+    {text: '1, 2, 3'},
+    {text: '1, 1, 1'},
+    {text: 'TypeError: bank.withdraw is not a function'},
+    {text: '1, 2, 3 — but only if you call deposit first', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wait — read carefully. What actually happens?
+    ```javascript
+    const bank = (() => {
+      let balance = 0;
+      return {
+        deposit: (n) => (balance += n),
+        withdraw: (n) => (balance -= n),
+        getBalance: () => balance,
+      };
+    })();
+
+    bank.deposit(100);
+    bank.withdraw(40);
+    console.log(bank.getBalance());
+    ```
+    Options:
+    - `60`
+    - `TypeError: balance is not defined`
+    - `-40`
+    - `100`
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The answer is `60`.
+
+    This is the **Module Pattern** — an IIFE that returns an object of closures. All three methods close over the same `balance` binding. It's genuinely private: you can't access `balance` from outside.
+
+    ```javascript
+    console.log(bank.balance); // undefined
+    ```
+
+    Before classes, this was *the* way to encapsulate state in JavaScript. You'll still see it in legacy codebases and utility libraries.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={7}
+  group="Expert"
+  title="Closure Memory Leak"
+  options={[
+    {text: 'It logs the length of the data array'},
+    {text: 'It creates a memory leak', isAnswer: true},
+    {text: 'It throws a RangeError'},
+    {text: 'Nothing unusual — this is fine'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the problem with this code?
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      element.addEventListener('click', () => {
+        console.log('clicked!');
+      });
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The event listener closes over the entire scope of `attachHandler` — including `data`. Even though `data` is never used inside the callback, the JS engine (historically) couldn't always prove that. The entire `data` array stays in memory as long as the event listener exists.
+
+    `element` is in the DOM. The listener holds `data`. GC can't collect it.
+
+    Fix: either don't close over unused variables, or explicitly release them:
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      // do something with data...
+      
+      element.addEventListener('click', () => {
+        console.log('clicked!');
+      });
+      // data is now eligible for GC since handler doesn't reference it
+      // (modern engines are smarter about this, but don't rely on it)
+    }
+    ```
+
+    Modern V8 is better at this than it used to be. But in long-lived SPAs with many event listeners, this pattern still bites people.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={8}
+  group="Expert"
+  title="The this Trap"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does this log?
+    ```javascript
+    const user = {
+      name: 'Dan',
+      greetArrow: () => console.log(this?.name),
+      greetRegular() {
+        const inner = () => console.log(this?.name);
+        inner();
+      },
+    };
+
+    user.greetArrow();
+    const fn = user.greetRegular;
+    fn();
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Two subtle traps:
+
+    **`greetArrow`**: Arrow functions don't have their own `this`. They capture `this` from the enclosing lexical scope — which here is the module/global scope, not `user`. So `this?.name` is `undefined`.
+
+    **`fn()`**: `greetRegular` is called without a receiver (`fn()` not `user.greetRegular()`). In strict mode, `this` is `undefined`. In sloppy mode, it's the global object. Either way, `this?.name` is `undefined`.
+
+    If you'd called `user.greetRegular()` directly, you'd get `'Dan'` — because then `this` is bound to `user`.
+
+    Result: `undefined, undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={9}
+  group="Bonus"
+  title="Memoization via Closure"
+  options={[
+    {text: 'Calls expensive() 3 times'},
+    {text: 'Calls expensive() 1 time', isAnswer: true},
+    {text: 'Calls expensive() 2 times'},
+    {text: 'Throws: Maximum call stack exceeded'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    How many times is `expensive()` actually called?
+    ```javascript
+    function memoize(fn) {
+      const cache = new Map();
+      return (arg) => {
+        if (cache.has(arg)) return cache.get(arg);
+        const result = fn(arg);
+        cache.set(arg, result);
+        return result;
+      };
+    }
+
+    let calls = 0;
+    const expensive = (n) => { calls++; return n * 2; };
+    const fast = memoize(expensive);
+
+    fast(5);
+    fast(5);
+    fast(5);
+    console.log(calls);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The memoized function closes over `cache`. The first call (`fast(5)`) misses the cache, calls `expensive`, and stores the result. The second and third calls hit the cache and return immediately.
+
+    `calls` is `1`.
+
+    This is closures doing real work. `cache` is private (can't be accessed from outside `memoize`), persistent (lives as long as `fast` exists), and shared across all calls to `fast`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+How'd you do?
+
+- **9-10**: You actually know closures. Probably scary to pair-program with.
+- **6-8**: Solid. The stale closure / `this` questions tripped you up, which is honest.
+- **3-5**: You know the concept but the edges are fuzzy. Go read the MDN scope chain docs.
+- **0-2**: You thought you knew closures. Now you do. That's the point.
+
+The stale closure in React (#6) and the `this` trap (#8) are the ones that cause real production bugs. If those felt unfamiliar, they're worth revisiting — they show up in code review more than any other closure-related issue.
