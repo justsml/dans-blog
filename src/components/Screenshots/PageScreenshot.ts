@@ -46,9 +46,12 @@ class ScreenshotService {
   public pages: Page[] = [];
   private browser: Browser | null = null;
   private headless = true;
+  private readonly navigationTimeoutMs = 30_000;
   private readonly overrideClassName = "screenshot-mode";
 
   public async init(): Promise<void> {
+    if (this.browser) return;
+
     log("Initializing browser");
     this.browser = await chromium.launch({ headless: this.headless });
     log("Browser initialized");
@@ -64,9 +67,17 @@ class ScreenshotService {
       deviceScaleFactor: 4,
     });
     this.pages.push(page);
-    await page.goto(url);
-    log(`Navigated to ${url}`);
-    return page;
+    try {
+      await page.goto(url, {
+        timeout: this.navigationTimeoutMs,
+        waitUntil: "domcontentloaded",
+      });
+      log(`Navigated to ${url}`);
+      return page;
+    } catch (error) {
+      await this.closePage(page);
+      throw error;
+    }
   }
   get _browserInstance() {
     return this.browser;
@@ -96,83 +107,109 @@ class ScreenshotService {
     const page: Page = await this.browser.newPage({
       deviceScaleFactor: 4,
     });
+    this.pages.push(page);
 
-    if (width && height) {
-      await page.setViewportSize({ width: width, height: height });
-      log(`Creating screenshot for ${url} with size ${width}x${height}`);
-    }
+    try {
+      if (width && height) {
+        await page.setViewportSize({ width: width, height: height });
+        log(`Creating screenshot for ${url} with size ${width}x${height}`);
+      }
 
-    await page.goto(url);
-    log(`Navigated to ${url}`);
+      await page.goto(url, {
+        timeout: this.navigationTimeoutMs,
+        waitUntil: "domcontentloaded",
+      });
+      log(`Navigated to ${url}`);
 
-    if (scrollTo) {
-      await page.waitForSelector(scrollTo);
-      await page.evaluate((scrollTo) => {
-        const element = document.querySelector(scrollTo);
-        if (element) element.scrollIntoView();
-        else console.warn(`Element '${scrollTo}' not found. ScrollTo skipped.`);
-      }, scrollTo);
-    }
+      if (scrollTo) {
+        await page.waitForSelector(scrollTo);
+        await page.evaluate((scrollTo) => {
+          const element = document.querySelector(scrollTo);
+          if (element) element.scrollIntoView();
+          else
+            console.warn(`Element '${scrollTo}' not found. ScrollTo skipped.`);
+        }, scrollTo);
+      }
 
-    if (delayMs) await page.waitForTimeout(delayMs);
+      if (delayMs) await page.waitForTimeout(delayMs);
 
-    if (overrideClassName) {
-      await page.evaluate((overrideClassName) => {
-        document.body.classList.add(overrideClassName);
-      }, overrideClassName);
-    }
+      if (overrideClassName) {
+        await page.evaluate((overrideClassName) => {
+          document.body.classList.add(overrideClassName);
+        }, overrideClassName);
+      }
 
-    if (zoom && zoom > 0 && zoom < 10)
-      await page.evaluate(`document.body.style.scale = ${zoom}`);
+      if (zoom && zoom > 0 && zoom < 10) {
+        await page.evaluate((zoom) => {
+          document.body.style.scale = String(zoom);
+        }, zoom);
+      }
 
-    let screenshotBuffer: Buffer | null = null;
+      let screenshotBuffer: Buffer | null = null;
 
-    if (selectorPathMap) {
-      for (const [selector, path] of Object.entries(selectorPathMap)) {
+      if (selectorPathMap) {
+        for (const [selector, path] of Object.entries(selectorPathMap)) {
+          const element = await page.$(selector);
+          if (!element) {
+            throw new Error(`Element with selector '${selector}' not found`);
+          }
+          // delay 1000ms to wait for the element to be fully loaded
+          await page.waitForTimeout(delayMs ?? 1000);
+          screenshotBuffer = await element.screenshot({
+            path: path,
+            quality: 100,
+            scale: "device",
+          });
+          console.log(`Screenshot saved to ${path}`);
+        }
+      } else if (selector) {
         const element = await page.$(selector);
         if (!element) {
           throw new Error(`Element with selector '${selector}' not found`);
         }
-        // delay 1000ms to wait for the element to be fully loaded
-        await page.waitForTimeout(delayMs ?? 1000);
         screenshotBuffer = await element.screenshot({
-          path: path,
+          path: outputPath,
           quality: 100,
           scale: "device",
         });
-        console.log(`Screenshot saved to ${path}`);
+        console.log(`Screenshot saved to ${outputPath}`);
+      } else {
+        await page.evaluate(() => {
+          document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        });
+        screenshotBuffer = await page.screenshot({
+          path: outputPath,
+          quality: 100,
+          scale: "device",
+        });
+        console.log(`Screenshot saved to ${outputPath}`);
       }
-    } else if (selector) {
-      const element = await page.$(selector);
-      if (!element) {
-        throw new Error(`Element with selector '${selector}' not found`);
-      }
-      screenshotBuffer = await element.screenshot({
-        path: outputPath,
-        quality: 100,
-        scale: "device",
-      });
-      console.log(`Screenshot saved to ${outputPath}`);
-    } else {
-      await page.evaluate(() => {
-        document.body.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-      });
-      screenshotBuffer = await page.screenshot({
-        path: outputPath,
-        quality: 100,
-        scale: "device",
-      });
-      console.log(`Screenshot saved to ${outputPath}`);
-    }
 
-    // TADA await page.close();
-    return screenshotBuffer;
+      return screenshotBuffer;
+    } finally {
+      await this.closePage(page);
+    }
   }
 
   public async close(): Promise<void> {
     if (this.browser) {
       await this.browser.close();
+      this.browser = null;
+      this.pages = [];
     }
+  }
+
+  private async closePage(page: Page) {
+    if (!page.isClosed()) {
+      await page.close().catch((error) => {
+        console.error(
+          `Error closing screenshot page: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        );
+      });
+    }
+    this.pages = this.pages.filter((trackedPage) => trackedPage !== page);
   }
 }
 
