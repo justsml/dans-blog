@@ -3,10 +3,13 @@ title: "Postgres Full-Text Search vs. pgvector: When to Use Each"
 subTitle: "You already have both. Here's how to stop picking the wrong one."
 date: 2026-05-08
 modified: 2026-05-08
-tags: [postgres, postgresql, pgvector, full-text-search, vector-search, databases, ai, search]
+tags: [postgres, postgresql, pgvector, full-text-search, vector-search, trigrams, pg_trgm, databases, ai, search]
 category: Code
 subCategory: Databases
 draft: true
+unlisted: true
+hidden: true
+publish: false
 popularity: 0.8
 social_image: ./desktop-social.webp
 cover_full_width: ./wide.webp
@@ -33,6 +36,10 @@ Full-text search (`tsvector` / `GIN` index) is lexical. It tokenizes your text i
 pgvector is semantic. It doesn't know anything about your text. It stores a dense vector — a list of numbers — that represents the *meaning* of a chunk of text as understood by an embedding model. Similarity search finds vectors that are close together in that high-dimensional space, which roughly corresponds to meaning-similarity. "Dog" and "canine" end up near each other. "Running" the sport and "running" a process might not.
 
 The practical difference: FTS is great at "find me documents containing these words." Vector search is great at "find me documents that mean roughly this thing."
+
+![A search tool map showing pg_trgm for short fuzzy strings, full-text search for exact prose queries, pgvector for semantic matching, and hybrid search for long content that needs both exact and semantic signals.](./search-tool-map.svg)
+
+_The first split is not "old search vs. AI search." It's the shape of the text and what kind of answer would be correct._
 
 ---
 
@@ -65,6 +72,79 @@ LIMIT 10;
 ```
 
 The `GENERATED ALWAYS AS` column keeps the index updated automatically. The `setweight` gives title matches higher rank than body matches. That's the whole setup.
+
+---
+
+## When Trigrams Win (pg_trgm)
+
+There's a third tool that gets left out of this conversation: `pg_trgm`. It's not full-text search and it's not vector search — it's fuzzy string matching, and it's the right tool for a specific class of queries that both FTS and pgvector handle poorly.
+
+**The use case: searching names, addresses, identifiers, and short strings with typos.**
+
+FTS tokenizes text into lexemes and stems them. That works well for natural language prose, but it's a bad fit for:
+- Person names ("Dan Levy" → stemmed to "dan levi", "leiv", depends on language config)
+- Company names, addresses, product titles where exact spelling matters
+- Queries with typos — "Micheal Jordan", "Amaon", "javascipt"
+- Autocomplete / prefix search
+- Partial string matching ("son" matching "Johnson", "Anderson")
+
+pgvector is also a poor choice here. You can embed "Micheal Jordan" and find the nearest vector, but the embedding space doesn't organize names by orthographic similarity — it organizes them by semantic meaning. The nearest neighbor of "Micheal Jordan" might be "basketball legend" or "Michael B. Jordan", not the user record with the slightly misspelled name you're trying to find.
+
+`pg_trgm` works differently: it breaks every string into overlapping 3-character slices (trigrams) and measures similarity by how many trigrams two strings share. "Dan" → `" da"`, `"dan"`, `"an "`. "Micheal" and "Michael" share most of their trigrams, so similarity is high.
+
+```sql
+-- Enable the extension (usually already available)
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+-- GIN index on names column — enables fast trigram similarity search
+CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
+
+-- Fuzzy name search: finds "Micheal Jordan" when searching "Michael Jordan"
+SELECT id, name, similarity(name, $1) AS score
+FROM users
+WHERE name % $1          -- % operator = similarity threshold (default 0.3)
+ORDER BY score DESC
+LIMIT 10;
+
+-- Or use ILIKE with trigram index support (fast prefix/contains matching)
+SELECT id, name
+FROM users
+WHERE name ILIKE '%johnson%'   -- GIN index makes this fast
+LIMIT 10;
+```
+
+The `%` operator uses the `pg_trgm.similarity_threshold` setting (default 0.3, range 0–1). Higher values require closer matches. For name search, 0.3–0.4 is usually right — permissive enough to catch typos, strict enough to avoid noise.
+
+**Trigrams also handle prefix search and autocomplete well:**
+
+```sql
+-- Autocomplete: fast prefix matching with index support
+SELECT name FROM users
+WHERE name ILIKE $1 || '%'
+ORDER BY name
+LIMIT 10;
+
+-- More control: word_similarity for partial matches within longer strings
+-- (useful when searching "Johnson" within "Andrew Johnson III")
+SELECT id, name, word_similarity($1, name) AS score
+FROM users
+WHERE $1 <% name          -- <% operator = word_similarity threshold
+ORDER BY score DESC
+LIMIT 10;
+```
+
+**When to reach for `pg_trgm` over FTS:**
+
+| Scenario | Use |
+|---|---|
+| Person/company name search with typos | `pg_trgm` |
+| Autocomplete / prefix search | `pg_trgm` (or FTS with prefix queries) |
+| Searching short strings, codes, identifiers | `pg_trgm` |
+| Searching prose articles, documentation | FTS |
+| Searching log messages for keywords | FTS |
+| Multilingual name search | `pg_trgm` (it's language-agnostic) |
+
+`pg_trgm` is also composable with FTS — you can use trigrams for a fuzzy pre-filter and rank with `ts_rank`, or combine trigram similarity with a vector score.
 
 ---
 
@@ -111,7 +191,7 @@ Vector search handles the conceptual queries well. FTS handles the exact-term qu
 
 The solution is hybrid search: run both, then fuse the results.
 
-**Reciprocal Rank Fusion (RRF)** is the standard algorithm here. It doesn't require you to normalize scores from two different systems — it just combines the rank positions.
+**Reciprocal Rank Fusion (RRF)** is ~~~the name of my metal band~~~ the standard algorithm here. It doesn't require you to normalize scores from two different systems — it just combines the rank positions.
 
 ```sql
 -- Hybrid search with Reciprocal Rank Fusion
@@ -145,21 +225,43 @@ The `60` in the denominator is the RRF constant — higher values reduce the inf
 
 This runs two searches in one query, fuses the ranks, and returns results where both keyword and semantic signals agree at the top.
 
+![A hybrid search pipeline where one query fans out to full-text search and pgvector, each produces ranked results, and Reciprocal Rank Fusion combines the two lists.](./hybrid-rrf-pipeline.svg)
+
+_RRF is valuable because it avoids pretending `ts_rank` and cosine distance are comparable raw scores. It only asks, "how high did this result appear in each list?"_
+
 ---
 
 ## The Practical Decision Tree
 
-**Does the query rely on exact terms?** → FTS (or hybrid)
+When you are picking a search strategy, start with the **shape of the input**, then ask **what kind of query the user is making**. "Short string with spelling variation" is a different problem from "long prose where the exact terms matter," and both are different from "question over document chunks."
 
-**Is the query conversational / described in natural language?** → pgvector
+![A decision tree that chooses pg_trgm, full-text search, pgvector, hybrid search, or a dedicated vector database based on the shape of the text and the way users query it.](./search-decision-tree.svg)
 
-**Are you building RAG over documents?** → pgvector
+The same tree in words:
 
-**Do you need both exact-term and conceptual matching?** → Hybrid (RRF)
+- **Names, addresses, titles, autocomplete, or typo-prone short strings** → `pg_trgm`
+- **Known words, error codes, SKUs, function names, tags, categories, filters** → FTS
+- **Questions, paraphrases, recommendations, related items, multilingual matching, RAG chunks** → pgvector
+- **Technical content where users need both exact symbols and conceptual answers** → Hybrid with RRF
+- **Primary keys, exact IDs, permission filters, date ranges, sorted lists** → normal SQL indexes
+- **Huge vector volume, very high concurrency, or sub-10ms p99 requirements** → evaluate dedicated vector stores
 
-**Are you under 1M document chunks with modest query volume?** → You don't need a separate vector database. `pgvector` with `hnsw` will handle it.
+### FTS vs. Semantic: The Short Version
 
-**Are you over 1M chunks with sub-10ms latency requirements and high concurrent query load?** → Now it's worth evaluating dedicated vector stores. Not before.
+The question "should I use FTS or vector search?" usually resolves to one thing: **do you know what words will appear in the relevant documents?**
+
+If yes — users are searching for known terms, categories, function names, product codes — FTS is faster, cheaper, and more predictable. It tells you exactly why a result matched.
+
+If no — users are describing a concept, asking a question, or searching in a language different from the stored content — vector search is the right tool. It matches on meaning, not words.
+
+The tricky middle is natural language queries over technical content. Someone searching "how do I handle connection drops" might find an article titled "implementing retry logic for network failures" — no overlapping words, but high semantic relevance. That's where vector search earns its keep. FTS would return nothing; vector search returns exactly what the user needed.
+
+The other tricky case is **names and proper nouns**. Neither FTS nor vector search is great at them:
+- FTS will miss "Micheal" when searching "Michael" — different tokens
+- Vector search will miss the name entirely if it doesn't appear frequently in training data
+- `pg_trgm` handles this correctly: orthographic similarity, not semantic or lexical
+
+In practice: most search boxes on content-heavy sites need FTS for speed and keywords, and could benefit from hybrid or `pg_trgm` depending on whether users search for names. A true "semantic search" feature usually means pgvector. RAG always means pgvector.
 
 ---
 
@@ -169,7 +271,60 @@ Eventually, some systems genuinely outgrow pgvector. When that happens, you need
 
 ### The Feature Matrix
 
-The columns that matter for production decisions: deployment model, license, hybrid search (BM25 + vector built in), sparse vector support (SPLADE/BM25 sparse), whether you get SQL or SQL-like querying, multimodal native support, disk-based index (so you're not forced into RAM), max vector dimensions, and what makes each one worth considering.
+A few of the columns need unpacking before the table makes sense.
+
+**Hybrid search** means BM25 keyword search and vector similarity run in one query, merged via Reciprocal Rank Fusion — so "withRetry timeout" matches the function name exactly *and* documents about "retry logic for network failures" semantically. Without it, you pick one or run two queries and fuse them yourself. pgvector's "Manual (RRF via SQL)" is [the approach shown above](#when-you-need-both) — it works, you write it yourself.
+
+**Sparse vectors** go further than BM25. A SPLADE sparse vector has ~30,000 dimensions (one per vocabulary term), ~98% zeros. The non-zero positions tell you which terms matter and how much. A query for "dogs" also weights "canine" and "pet" — BM25-level keyword precision plus intelligent term expansion, inside a vector index with no separate full-text engine. If ❌ here, you need an external FTS layer for exact-term queries.
+
+```python
+# SPLADE: ~30,000 dims total, ~60 non-zero — only the relevant vocabulary positions fire
+def encode_splade(text: str) -> dict:
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        output = model(**tokens)
+    vec = torch.log1p(torch.relu(output.logits)).max(dim=1).values.squeeze()
+    return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
+```
+
+**SQL / SQL-like** is really about filtering. Vector search without filtering isn't production software — you always need to scope by tenant, date, permission, or category. Full SQL (pgvector) lets you express that in one place alongside joins you already have. Purpose-built DBs give you JSON filter objects (Qdrant, Pinecone), a query DSL (Elasticsearch, Milvus), or GraphQL (Weaviate). They work; SQL wins as filter logic gets complex.
+
+```sql
+-- pgvector: vector similarity is just another expression in WHERE
+SELECT id, title, 1 - (embedding <=> $1) AS score
+FROM documents
+WHERE tenant_id = $2 AND category = ANY($3::text[]) AND created_at > NOW() - INTERVAL '90 days'
+ORDER BY embedding <=> $1 LIMIT 10;
+```
+
+```python
+# Qdrant: equivalent filter as a Python object — functional, more ceremony
+results = client.query_points(
+    collection_name="documents", query=query_embedding,
+    query_filter=models.Filter(must=[
+        models.FieldCondition(key="tenant_id", match=models.MatchValue(value=tenant_id)),
+        models.FieldCondition(key="category",  match=models.MatchAny(any=categories)),
+        models.FieldCondition(key="created_at", range=models.DatetimeRange(gte=cutoff)),
+    ]),
+    limit=10,
+)
+```
+
+**Multimodal native** doesn't mean "can store image embeddings" — every database stores float arrays regardless of origin. It means the database ships embedding models for non-text content so you hand it a raw image URL and it handles vectorization. You query with text and get images back, or vice versa. Most databases here are embedding-agnostic — you own that pipeline. Marqo and Weaviate (via CLIP/ImageBind modules) actually close the loop.
+
+```python
+# Marqo: POST raw images, query with text — no external embedding step needed
+mq.index("products").add_documents(
+    [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
+    tensor_fields=["image"]
+)
+results = mq.index("products").search(q="lightweight shoes for summer")
+# Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
+```
+
+**Disk-based index** is a cost question. RAM-resident HNSW costs ~6GB of RAM per million vectors at 1536 dims — roughly $800/month for a 64GB node on AWS. Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB's Lance format, Turbopuffer's object storage tier) trade 5–20ms extra latency for far cheaper infrastructure. For RAG workloads where users tolerate 200–500ms end-to-end, that's usually the right call. Hard constraint: Redis VSS is RAM-only with no disk path.
+
+**Max dimensions** is a forward-looking concern. `text-embedding-3-large` uses 3072 dims, Jina v3 up to 8192, research models are pushing past 16K. MongoDB Atlas caps at 2,048 — already below some current models. Elasticsearch caps at 4,096. Qdrant, Weaviate, and LanceDB are effectively uncapped. Pick something with headroom; migrating a production vector index because you hit a dimension ceiling is a miserable sprint.
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
 |---|---|---|---|---|---|---|---|---|---|

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1140" role="img" aria-labelledby="title desc">
+  <title id="title">Search decision tree</title>
+  <desc id="desc">A decision tree that chooses pg_trgm, full-text search, pgvector, hybrid search, or a dedicated vector database based on input shape and query intent.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="9" stdDeviation="10" flood-color="#111827" flood-opacity="0.12"/>
+    </filter>
+    <style>
+      .bg { fill: #fbfaf7; }
+      .node { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#shadow); }
+      .question { fill: #f8fafc; stroke: #94a3b8; }
+      .trgm { fill: #fffbeb; stroke: #f59e0b; }
+      .fts { fill: #eff6ff; stroke: #3b82f6; }
+      .vector { fill: #f0fdf4; stroke: #22c55e; }
+      .hybrid { fill: #fdf2f8; stroke: #ec4899; }
+      .sql { fill: #f7fee7; stroke: #84cc16; }
+      .external { fill: #f5f3ff; stroke: #8b5cf6; }
+      .title { font: 800 36px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .q { font: 800 20px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .body { font: 550 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .tool { font: 900 22px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .note { font: 600 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .edge { stroke: #334155; stroke-width: 2.6; fill: none; marker-end: url(#arrow); }
+      .edge-label { font: 900 13px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .pill { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="1140"/>
+  <text class="title" x="64" y="68">Decision tree: choose by text shape and query intent</text>
+  <text class="subtitle" x="64" y="102">Ask what the user typed, what the stored text looks like, and what a correct answer means.</text>
+
+  <rect class="node question" x="380" y="140" width="360" height="104" rx="20"/>
+  <text class="q" x="418" y="182">Is the input short, named,</text>
+  <text class="q" x="418" y="210">or typo-prone?</text>
+
+  <path class="edge" d="M380 192 C292 192 260 252 232 306"/>
+  <rect class="pill" x="250" y="230" width="58" height="26" rx="13"/>
+  <text class="edge-label" x="270" y="248">YES</text>
+
+  <rect class="node trgm" x="80" y="306" width="304" height="126" rx="20"/>
+  <text class="tool" x="116" y="352">Use pg_trgm</text>
+  <text class="body" x="116" y="384">Names, addresses, titles,</text>
+  <text class="body" x="116" y="408">autocomplete, typos.</text>
+
+  <path class="edge" d="M740 192 C818 192 842 252 870 306"/>
+  <rect class="pill" x="805" y="230" width="52" height="26" rx="13"/>
+  <text class="edge-label" x="824" y="248">NO</text>
+
+  <rect class="node question" x="736" y="306" width="304" height="126" rx="20"/>
+  <text class="q" x="772" y="352">Must the exact words,</text>
+  <text class="q" x="772" y="380">codes, or symbols match?</text>
+
+  <path class="edge" d="M736 372 C646 372 612 432 584 488"/>
+  <rect class="pill" x="622" y="412" width="58" height="26" rx="13"/>
+  <text class="edge-label" x="642" y="430">YES</text>
+
+  <rect class="node question" x="388" y="488" width="304" height="126" rx="20"/>
+  <text class="q" x="424" y="534">Also need synonyms,</text>
+  <text class="q" x="424" y="562">paraphrases, or RAG?</text>
+
+  <path class="edge" d="M888 432 C888 472 888 486 888 520"/>
+  <rect class="pill" x="904" y="458" width="52" height="26" rx="13"/>
+  <text class="edge-label" x="923" y="476">NO</text>
+
+  <rect class="node question" x="736" y="520" width="304" height="126" rx="20"/>
+  <text class="q" x="772" y="566">Is the user describing</text>
+  <text class="q" x="772" y="594">a concept or asking a question?</text>
+
+  <path class="edge" d="M388 552 C300 552 260 612 232 668"/>
+  <rect class="pill" x="300" y="592" width="52" height="26" rx="13"/>
+  <text class="edge-label" x="319" y="610">NO</text>
+
+  <rect class="node fts" x="80" y="668" width="304" height="126" rx="20"/>
+  <text class="tool" x="116" y="714">Use FTS</text>
+  <text class="body" x="116" y="746">Prose search, logs, docs,</text>
+  <text class="body" x="116" y="770">filters, tags, boolean logic.</text>
+
+  <path class="edge" d="M540 614 C540 650 540 654 540 686"/>
+  <rect class="pill" x="556" y="634" width="58" height="26" rx="13"/>
+  <text class="edge-label" x="576" y="652">YES</text>
+
+  <rect class="node hybrid" x="388" y="686" width="304" height="126" rx="20"/>
+  <text class="tool" x="424" y="732">Use hybrid</text>
+  <text class="body" x="424" y="764">FTS for exact terms, pgvector</text>
+  <text class="body" x="424" y="788">for meaning, RRF to merge.</text>
+
+  <path class="edge" d="M888 646 C888 682 888 686 888 718"/>
+  <rect class="pill" x="904" y="666" width="58" height="26" rx="13"/>
+  <text class="edge-label" x="924" y="684">YES</text>
+
+  <rect class="node vector" x="736" y="718" width="304" height="126" rx="20"/>
+  <text class="tool" x="772" y="764">Use pgvector</text>
+  <text class="body" x="772" y="796">Semantic retrieval, related items,</text>
+  <text class="body" x="772" y="820">RAG chunks, multilingual search.</text>
+
+  <path class="edge" d="M888 646 C888 742 888 786 888 868"/>
+  <rect class="pill" x="904" y="762" width="52" height="26" rx="13"/>
+  <text class="edge-label" x="923" y="780">NO</text>
+
+  <rect class="node sql" x="736" y="868" width="304" height="96" rx="20"/>
+  <text class="tool" x="772" y="910">Use normal indexes</text>
+  <text class="body" x="772" y="940">Primary keys, filters, sorted lists.</text>
+
+  <path class="edge" d="M888 844 C888 948 784 976 748 1010"/>
+  <path class="edge" d="M540 812 C540 946 632 976 672 1010"/>
+
+  <rect class="node external" x="368" y="1010" width="384" height="94" rx="20"/>
+  <text class="tool" x="408" y="1052">Outgrown Postgres?</text>
+  <text class="note" x="408" y="1080">Consider a dedicated vector store only after scale or latency demands it.</text>
+</svg>
