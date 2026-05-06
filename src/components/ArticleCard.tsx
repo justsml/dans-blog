@@ -2,6 +2,7 @@ import { InfoLabel } from "../components/ui/infoLabel";
 import { slugify } from "../shared/pathHelpers";
 import { getComputedDates } from "../shared/dateUtils";
 import type { ArticlePost } from "../types";
+import "./ArticleCard.css";
 
 export const ArticleCard = ({
   article,

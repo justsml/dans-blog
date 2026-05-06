@@ -56,12 +56,28 @@ export const RepoCard = ({
     return <div>Loading...</div>;
   }
 
+  const latestPullTimestamp = Math.max(
+    0,
+    ...prList.map((pull) =>
+      new Date(pull.mergedAt ?? pull.createdAt).getTime(),
+    ),
+  );
+  const latestPullDate =
+    latestPullTimestamp > 0
+      ? new Date(latestPullTimestamp).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })
+      : "No PR date";
+  const hasNotes = Boolean(c.notes?.trim());
+
   return (
     <section
-      style={styles.card}
-      className={clsx("repo-card", "h-card")}
+      className={clsx("repo-card", "h-card", { "has-notes": hasNotes })}
       data-pull-count={prList?.length}
       data-star-count={pr?.repository.stars}
+      data-last-pr-date={latestPullTimestamp}
       data-open-issues={pr?.repository.openIssues}
       data-watchers={pr?.repository.watchers}
       data-forks={pr?.repository.forks}
@@ -73,60 +89,66 @@ export const RepoCard = ({
       data-deletions={pr?.pullStats.deletions}
       data-tags={(c.tags ?? []).join(",")}
     >
-      <h2 style={styles.repoName} className="repo-name">
-        <span className="gh-icon icon-github-octocat w-2 h-2"></span>
-        <a
-          href={`https://github.com/${repo}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          title={c.renamed ? `MOVED: ${c.renamed}` : repo}
-          // style={styles.link}
-          className="p-org"
-        >
-          {repo}
-        </a>
-      </h2>
-      <section className="corner-stats">
-        <aside title="Stars" className="stat">
-          <span className="gh-icon icon-github-star"></span>
-          {pr?.repository.stars.toLocaleString()}
-        </aside>
-        <aside title="Changed files" className="stat">
-          {pr?.pullStats.changedFiles}
-          <span className="gh-icon icon-github-file"></span>
-        </aside>
-        <aside title="Comments" className="stat">
-          {pr?.pullStats.comments}
-          <span className="gh-icon icon-github-comment"></span>
-        </aside>
-        <aside title="Reviews" className="stat">
-          {pr?.pullStats.reviews}
-          <span className="gh-icon icon-github-reviews"></span>
-        </aside>
-      </section>
-      <p className="s-description repo-inner-card description">
-        {c.description_override ?? `[could not load description for ${repo}]`}
-      </p>
-      {c.tags && c.tags.length > 0 && (
-        <div className="tech-tags">
-          {c.tags.map((tag) => {
-            const cfg = TAG_CONFIG[tag];
-            if (!cfg) return null;
-            return (
-              <span
-                key={tag}
-                title={tag}
-                className="tech-tag"
-                style={{ "--tag-color": cfg.color } as React.CSSProperties}
-              >
-                <span className={`tech-tag-icon ${cfg.iconClass}`} />
-              </span>
-            );
-          })}
-        </div>
-      )}
+      <div className="repo-card-flip">
+        <div style={styles.card} className="repo-card-face repo-card-front">
+          <h2 style={styles.repoName} className="repo-name">
+            <span className="gh-icon icon-github-octocat w-2 h-2"></span>
+            <a
+              href={`https://github.com/${repo}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={c.renamed ? `MOVED: ${c.renamed}` : repo}
+              // style={styles.link}
+              className="p-org"
+            >
+              {repo}
+            </a>
+          </h2>
+          <section className="corner-stats">
+            <aside title="Stars" className="stat">
+              <span className="gh-icon icon-github-star"></span>
+              {pr?.repository.stars.toLocaleString()}
+            </aside>
+            <aside title="Last PR date" className="stat last-pr-stat">
+              {latestPullDate}
+            </aside>
+            <aside title="Changed files" className="stat">
+              {pr?.pullStats.changedFiles}
+              <span className="gh-icon icon-github-file"></span>
+            </aside>
+            <aside title="Comments" className="stat">
+              {pr?.pullStats.comments}
+              <span className="gh-icon icon-github-comment"></span>
+            </aside>
+            <aside title="Reviews" className="stat">
+              {pr?.pullStats.reviews}
+              <span className="gh-icon icon-github-reviews"></span>
+            </aside>
+          </section>
+          <p className="s-description repo-inner-card description">
+            {c.description_override ?? `[could not load description for ${repo}]`}
+          </p>
+          {c.tags && c.tags.length > 0 && (
+            <div className="tech-tags">
+              {c.tags.map((tag) => {
+                const cfg = TAG_CONFIG[tag];
+                if (!cfg) return null;
+                return (
+                  <span
+                    key={tag}
+                    title={tag}
+                    className="tech-tag"
+                    style={{ "--tag-color": cfg.color } as React.CSSProperties}
+                  >
+                    <span className={`tech-tag-icon ${cfg.iconClass}`} />
+                    <span className="tech-tag-label">{tag}</span>
+                  </span>
+                );
+              })}
+            </div>
+          )}
 
-      {/* <Button
+          {/* <Button
         variant={showNotes ? "default" : "outline"}
         className="s-button"
         onClick={() => setShowNotes(!showNotes)}
@@ -140,25 +162,25 @@ export const RepoCard = ({
         'animate-card-stretch': !showNotes,
       })} dangerouslySetInnerHTML={{ __html: c.notes }} /> */}
 
-      <div className="s-stats repo-stats">
-        <span className="s-stat pull-requests-list">
-          <span className="gh-icon icon-github-pull-request"></span>
-          {prList?.length >= 2 ? prList?.length + " PRs" : "PR"}:{" "}
-          {prList?.map((pr) => {
-            return (
-              <a
-                key={pr.number}
-                href={pr.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={pr.title}
-              >
-                <code>#{pr.number}</code>
-              </a>
-            );
-          })}
-        </span>
-        {/* <span style={styles.stat}>
+          <div className="s-stats repo-stats">
+            <span className="s-stat pull-requests-list">
+              <span className="gh-icon icon-github-pull-request"></span>
+              {prList?.length >= 2 ? prList?.length + " PRs" : "PR"}:{" "}
+              {prList?.map((pr) => {
+                return (
+                  <a
+                    key={pr.number}
+                    href={pr.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={pr.title}
+                  >
+                    <code>#{pr.number}</code>
+                  </a>
+                );
+              })}
+            </span>
+            {/* <span style={styles.stat}>
           <span className="gh-icon icon-github-issue"></span>
           {pr?.repository.openIssues.toLocaleString()}
         </span>
@@ -166,12 +188,24 @@ export const RepoCard = ({
           <span className="gh-icon icon-github-eye"></span>
           {pr?.repository.watchers.toLocaleString()}
         </span> */}
-      </div>
-      <div className="s-stats pr-diff-stats">
-        <LineChangeIndicator
-          additions={pr?.pullStats.additions}
-          deletions={pr?.pullStats.deletions}
-        />
+          </div>
+          <div className="s-stats pr-diff-stats">
+            <LineChangeIndicator
+              additions={pr?.pullStats.additions}
+              deletions={pr?.pullStats.deletions}
+            />
+          </div>
+        </div>
+        {hasNotes && (
+          <div style={styles.card} className="repo-card-face repo-card-back">
+            <p className="repo-card-back-label">Contribution notes</p>
+            <h3>{repo}</h3>
+            <div
+              className="dan-notes"
+              dangerouslySetInnerHTML={{ __html: c.notes }}
+            />
+          </div>
+        )}
       </div>
     </section>
   );

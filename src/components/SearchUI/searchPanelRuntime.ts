@@ -3,10 +3,12 @@ import { ensurePagefindInitialized } from "./pagefindLoader";
 const SEARCH_BAR_SELECTOR = ".searchBar";
 const SEARCH_INPUT_SELECTOR = 'input[type="text"]';
 const SEARCH_BUTTON_SELECTOR = ".btnSearchToggle";
+const SEARCH_CLEAR_SELECTOR = ".pagefind-ui__search-clear";
 const NAV_MENU_SELECTOR = ".NavigationMenuRoot";
 const SEARCH_PANEL_OPEN_CLASS = "search-panel-open";
 const COLLAPSED_CLASS = "collapsed";
-const FOCUS_DELAY_MS = 350;
+const FOCUS_DELAY_MS = 0;
+const SEARCH_QUERY_STORAGE_KEY = "danlevy.search.query";
 
 type ToggleSearchPanelOptions = {
   dispatchCloseNavPanels?: boolean;
@@ -35,8 +37,12 @@ export async function openSearchPanel({
   }
 
   await ensurePagefindInitialized();
+  positionSearchPanel(searchPanel);
   searchPanel.classList.remove(COLLAPSED_CLASS);
   document.body.classList.add(SEARCH_PANEL_OPEN_CLASS);
+  restoreSearchPanelQuery(searchPanel);
+  installSearchQueryPersistence(searchPanel);
+  installSearchClearAndClose(searchPanel);
   focusSearchPanelInput(searchPanel);
   return true;
 }
@@ -57,6 +63,13 @@ export async function toggleSearchPanel(options?: ToggleSearchPanelOptions) {
 
 export function installSearchPanelDismissal() {
   const abortController = new AbortController();
+
+  window.addEventListener("resize", () => {
+    const searchPanel = getSearchPanelElement();
+    if (searchPanel && !searchPanel.classList.contains(COLLAPSED_CLASS)) {
+      positionSearchPanel(searchPanel);
+    }
+  }, { passive: true, signal: abortController.signal });
 
   document.addEventListener(
     "click",
@@ -96,5 +109,72 @@ function focusSearchPanelInput(searchPanel: HTMLElement) {
     const searchInput =
       searchPanel.querySelector<HTMLInputElement>(SEARCH_INPUT_SELECTOR);
     searchInput?.focus();
+    searchInput?.select();
   }, FOCUS_DELAY_MS);
+}
+
+function positionSearchPanel(searchPanel: HTMLElement) {
+  const menuRoot = document.querySelector<HTMLElement>(NAV_MENU_SELECTOR);
+  const menuBox = menuRoot?.getBoundingClientRect();
+  const top = Math.max(92, Math.round((menuBox?.bottom ?? 92) + 12));
+  const rightGap = Math.max(8, Math.round(window.innerWidth - (menuBox?.right ?? window.innerWidth - 16)));
+  searchPanel.style.setProperty("--search-panel-top", `${top}px`);
+  searchPanel.style.setProperty("--search-panel-right-gap", `${rightGap}px`);
+}
+
+function installSearchQueryPersistence(searchPanel: HTMLElement) {
+  if (searchPanel.dataset.queryPersistenceReady === "true") return;
+
+  searchPanel.addEventListener("input", (event) => {
+    const target = event.target as HTMLInputElement | null;
+    if (!target || target.matches(SEARCH_INPUT_SELECTOR) === false) return;
+    const query = target.value.trim();
+    if (query) {
+      localStorage.setItem(SEARCH_QUERY_STORAGE_KEY, target.value);
+    } else {
+      localStorage.removeItem(SEARCH_QUERY_STORAGE_KEY);
+    }
+  });
+
+  searchPanel.dataset.queryPersistenceReady = "true";
+}
+
+function restoreSearchPanelQuery(searchPanel: HTMLElement) {
+  const savedQuery = localStorage.getItem(SEARCH_QUERY_STORAGE_KEY);
+  if (!savedQuery) return;
+
+  setTimeout(() => {
+    const searchInput =
+      searchPanel.querySelector<HTMLInputElement>(SEARCH_INPUT_SELECTOR);
+    if (!searchInput || searchInput.value === savedQuery) return;
+
+    searchInput.value = savedQuery;
+    searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+  }, 0);
+}
+
+function installSearchClearAndClose(searchPanel: HTMLElement) {
+  if (searchPanel.dataset.clearAndCloseReady === "true") return;
+
+  searchPanel.addEventListener("click", (event) => {
+    const target = event.target as HTMLElement | null;
+    const clearButton = target?.closest<HTMLButtonElement>(SEARCH_CLEAR_SELECTOR);
+    if (!clearButton) return;
+
+    clearSearchQuery(searchPanel);
+    setTimeout(() => closeSearchPanel(), 0);
+  });
+
+  searchPanel.dataset.clearAndCloseReady = "true";
+}
+
+function clearSearchQuery(searchPanel: HTMLElement) {
+  localStorage.removeItem(SEARCH_QUERY_STORAGE_KEY);
+
+  const searchInput =
+    searchPanel.querySelector<HTMLInputElement>(SEARCH_INPUT_SELECTOR);
+  if (!searchInput || searchInput.value === "") return;
+
+  searchInput.value = "";
+  searchInput.dispatchEvent(new Event("input", { bubbles: true }));
 }

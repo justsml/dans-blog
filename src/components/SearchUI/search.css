@@ -1,0 +1,431 @@
+/* Pagefind search panel. Imported by SearchBar.astro only. */
+
+.searchBar {
+  --pagefind-ui-primary: #eeeeee;
+  --pagefind-ui-text: #eeeeee;
+  --pagefind-ui-background: rgba(11, 18, 23, 0.94);
+  --pagefind-ui-border: rgba(218, 246, 243, 0.14);
+  --pagefind-ui-tag: rgba(8, 14, 18, 0.9);
+  --pagefind-ui-border-radius: 0;
+  --pagefind-ui-scale: 1;
+  --search-panel-top: 6.75rem;
+  --search-panel-width: min(calc(100vw - 2rem), 980px);
+
+  background:
+    linear-gradient(180deg, rgba(5, 8, 11, 0.34), rgba(5, 8, 11, 0.8));
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  opacity: 1;
+  padding: 0 1rem 2rem;
+  pointer-events: auto;
+  position: fixed;
+  right: 0;
+  top: var(--search-panel-top);
+  transform: translateY(0);
+  transition:
+    opacity 180ms ease,
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 140;
+
+  > .pagefind-ui {
+    background:
+      radial-gradient(circle at 14% 0%, rgba(0, 245, 238, 0.08), transparent 36%),
+      radial-gradient(circle at 86% 18%, rgba(255, 107, 157, 0.06), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%),
+      rgba(5, 9, 12, 0.985);
+    border: 1px solid var(--nav-tile-border);
+    border-radius: 0;
+    box-shadow: 0 24px 58px rgba(0, 8, 12, 0.36), 0 0 42px rgba(0, 245, 238, 0.08);
+    cursor: default;
+    display: block !important;
+    isolation: isolate;
+    margin: 0 auto !important;
+    max-height: min(74vh, calc(100dvh - var(--search-panel-top) - 1.25rem));
+    max-width: var(--search-panel-width) !important;
+    overflow: hidden;
+    position: relative;
+    width: 100% !important;
+  }
+
+  > .pagefind-ui::before {
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent),
+      linear-gradient(90deg, rgb(0, 245, 238), rgb(184, 255, 95), rgb(255, 107, 157));
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.66;
+    pointer-events: none;
+    position: absolute;
+    z-index: 2;
+  }
+
+  > .pagefind-ui::after {
+    background:
+      linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+    background-size: 28px 28px;
+    content: "";
+    inset: 0;
+    mask-image: linear-gradient(180deg, #000, transparent 82%);
+    opacity: 0.42;
+    pointer-events: none;
+    position: absolute;
+    z-index: -1;
+  }
+
+  > .pagefind-ui > .pagefind-ui {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .pagefind-ui,
+  .pagefind-ui > *,
+  .pagefind-ui__search-wrapper,
+  .pagefind-ui__form,
+  .pagefind-ui__results-area,
+  .pagefind-ui__drawer {
+    grid-column: unset !important;
+    grid-row: unset !important;
+    grid-template-columns: unset !important;
+    grid-template-rows: unset !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .pagefind-ui__search-wrapper {
+    display: block !important;
+    padding: 1rem 1rem 0 !important;
+  }
+
+  .pagefind-ui__form {
+    background:
+      radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
+      var(--nav-tile-surface) !important;
+    border: 1px solid color-mix(in srgb, var(--nav-tile-accent) 36%, transparent) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 16px 42px rgba(0, 8, 12, 0.26), 0 0 22px var(--nav-tile-glow) !important;
+    cursor: text !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0.86rem 1rem !important;
+    position: relative !important;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease !important;
+  }
+
+  .pagefind-ui__form::before {
+    color: var(--neon-cyan);
+    content: "";
+    height: 1.35rem;
+    left: 1rem;
+    opacity: 0.88;
+    position: absolute;
+    top: 1rem;
+    width: 1.35rem;
+    background-color: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.3' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.6-3.6'/%3E%3C/svg%3E") center / contain no-repeat;
+    filter: drop-shadow(0 0 0.55rem rgba(0, 245, 238, 0.4));
+  }
+
+  .pagefind-ui__form svg,
+  .pagefind-ui__form .pagefind-ui__search-icon {
+    display: none !important;
+  }
+
+  .pagefind-ui__form:focus-within {
+    border-color: color-mix(in srgb, var(--nav-tile-accent) 58%, transparent) !important;
+    box-shadow: 0 18px 48px rgba(0, 8, 12, 0.34), 0 0 30px rgba(0, 245, 238, 0.16) !important;
+  }
+
+  .pagefind-ui__search-input {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: var(--pagefind-ui-text) !important;
+    cursor: text !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    height: auto !important;
+    line-height: 1.45 !important;
+    min-width: 0 !important;
+    padding: 0.03rem 4.25rem 0.03rem 2.45rem !important;
+    width: 100% !important;
+  }
+
+  .pagefind-ui__search-input:focus {
+    outline: none !important;
+  }
+
+  .pagefind-ui__search-input::placeholder {
+    color: var(--nav-tile-muted) !important;
+    font-weight: 400 !important;
+  }
+
+  .pagefind-ui__search-clear {
+    align-items: center !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(218, 246, 243, 0.1) !important;
+    border-radius: 0 !important;
+    color: var(--nav-tile-muted) !important;
+    display: flex !important;
+    justify-content: center !important;
+    font-size: 0.82rem !important;
+    height: 2.35rem !important;
+    line-height: 1 !important;
+    min-height: 0 !important;
+    min-width: 2rem !important;
+    padding: 0.35rem !important;
+    position: absolute !important;
+    right: 0.75rem;
+    top: 0.62rem;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      color 180ms ease,
+      transform 180ms ease !important;
+  }
+
+  .pagefind-ui__search-clear:hover,
+  .pagefind-ui__search-clear:focus-visible {
+    background: rgba(0, 245, 238, 0.08) !important;
+    border-color: rgba(0, 245, 238, 0.38) !important;
+    box-shadow: 0 0 18px rgba(0, 245, 238, 0.14) !important;
+    color: var(--neon-cyan) !important;
+    transform: translateY(-1px);
+  }
+
+  .pagefind-ui__drawer {
+    animation: searchDrawerIn 220ms ease;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    margin: 0.9rem 0 0 !important;
+    max-height: calc(min(74vh, 100dvh - var(--search-panel-top) - 1.25rem) - 4.75rem);
+    overflow: hidden;
+    padding: 0.75rem 1rem 1rem !important;
+  }
+
+  .pagefind-ui__results-count {
+    border-bottom: 1px solid rgba(218, 246, 243, 0.1) !important;
+    color: var(--nav-tile-muted) !important;
+    font-size: 0.82rem !important;
+    font-weight: 560 !important;
+    letter-spacing: 0 !important;
+    margin: 0 0 0.75rem !important;
+    padding: 0 0 0.7rem !important;
+  }
+
+  .pagefind-ui__message {
+    border-bottom: 1px solid rgba(218, 246, 243, 0.1) !important;
+    color: var(--nav-tile-muted) !important;
+    font-size: 0.82rem !important;
+    font-weight: 560 !important;
+    letter-spacing: 0 !important;
+    margin: 0 0 0.75rem !important;
+    padding: 0 0 0.7rem !important;
+  }
+
+  .pagefind-ui__results {
+    display: grid !important;
+    gap: 0.75rem;
+    list-style: none !important;
+    max-height: calc(min(74vh, 100dvh - var(--search-panel-top) - 1.25rem) - 7.25rem);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 0 0.2rem 0 0 !important;
+    scrollbar-color: rgba(0, 245, 238, 0.42) transparent;
+    scrollbar-width: thin;
+  }
+
+  .pagefind-ui__results::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .pagefind-ui__results::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .pagefind-ui__results::-webkit-scrollbar-thumb {
+    background: rgba(0, 245, 238, 0.38);
+  }
+
+  .pagefind-ui__result {
+    animation: searchResultIn 220ms ease backwards !important;
+    background:
+      radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 34%),
+      var(--nav-tile-bg) !important;
+    border: 1px solid var(--nav-tile-border) !important;
+    border-radius: 0 !important;
+    box-shadow: 0 12px 30px rgba(0, 8, 12, 0.16);
+    column-gap: 1rem;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    list-style: none !important;
+    margin: 0 !important;
+    overflow: hidden;
+    padding: 1rem !important;
+    position: relative;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  .pagefind-ui__result::before {
+    background: linear-gradient(90deg, var(--nav-tile-accent), rgba(255, 255, 255, 0.18), transparent);
+    content: "";
+    height: 1px;
+    inset: 0 0 auto;
+    opacity: 0.44;
+    position: absolute;
+  }
+
+  .pagefind-ui__result:hover,
+  .pagefind-ui__result:focus-within {
+    border-color: color-mix(in srgb, var(--nav-tile-accent) 36%, transparent) !important;
+    box-shadow: 0 18px 42px rgba(0, 8, 12, 0.26), 0 0 22px var(--nav-tile-glow);
+    transform: translateY(-1px) !important;
+  }
+
+  .pagefind-ui__result:nth-child(1) {
+    animation-delay: 0.03s;
+  }
+
+  .pagefind-ui__result:nth-child(2) {
+    animation-delay: 0.06s;
+  }
+
+  .pagefind-ui__result:nth-child(3) {
+    animation-delay: 0.09s;
+  }
+
+  .pagefind-ui__result:nth-child(n + 4) {
+    animation-delay: 0.12s;
+  }
+
+  .pagefind-ui__result-link {
+    color: var(--neon-cyan) !important;
+    text-decoration: none !important;
+  }
+
+  .pagefind-ui__result-thumb {
+    display: none !important;
+  }
+
+  .pagefind-ui__result-image {
+    display: block !important;
+    height: 100% !important;
+    object-fit: cover;
+    width: 100% !important;
+  }
+
+  .pagefind-ui__result-inner {
+    min-width: 0;
+  }
+
+  .pagefind-ui__result-title {
+    color: var(--clr-muted-100, #f4fbfb) !important;
+    font-size: 1.02rem !important;
+    font-weight: 640 !important;
+    line-height: 1.25 !important;
+    margin: 0 0 0.45rem !important;
+    text-wrap: pretty;
+  }
+
+  .pagefind-ui__result-excerpt {
+    color: rgba(221, 232, 233, 0.76) !important;
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    margin: 0 !important;
+  }
+
+  .pagefind-ui__result mark {
+    background: rgba(0, 245, 238, 0.14) !important;
+    border: 1px solid rgba(0, 245, 238, 0.18);
+    border-radius: 0 !important;
+    color: var(--neon-cyan) !important;
+    font-weight: 650 !important;
+    padding: 0.04em 0.22em !important;
+  }
+
+  .pagefind-ui__message:only-child {
+    border-bottom: 0 !important;
+    padding: 1rem !important;
+  }
+}
+
+.searchBar.collapsed {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-0.75rem);
+}
+
+@media (max-width: 700px) {
+  .searchBar {
+    --search-panel-width: min(calc(100vw - 1rem), 980px);
+    padding-inline: 0.5rem;
+
+    .pagefind-ui__search-wrapper {
+      padding: 0.75rem 0.75rem 0 !important;
+    }
+
+    .pagefind-ui__form {
+      padding: 0.78rem 0.8rem !important;
+    }
+
+    .pagefind-ui__form::before {
+      left: 0.8rem;
+      top: 0.86rem;
+    }
+
+    .pagefind-ui__search-input {
+      padding-left: 2.25rem !important;
+      padding-right: 3.75rem !important;
+    }
+
+    .pagefind-ui__search-clear {
+      right: 0.55rem;
+      top: 0.5rem;
+    }
+
+    .pagefind-ui__drawer {
+      padding: 0.65rem 0.75rem 0.75rem !important;
+    }
+
+    .pagefind-ui__result {
+      padding: 0.88rem !important;
+    }
+  }
+}
+
+@keyframes searchDrawerIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.35rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes searchResultIn {
+  from {
+    opacity: 0;
+    transform: translateY(0.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

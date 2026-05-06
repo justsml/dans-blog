@@ -59,15 +59,27 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
 
 <p class="text-muted-foreground">This page was last updated {new Date().toLocaleDateString()}</p>
 
-<div class="oss-filter-bar" role="group" aria-label="Filter by technology">
-  {allTags.map(([tag, count]) => (
-    <button class="oss-filter-chip" data-filter-tag={tag} aria-pressed="false">
-      {tag}&#160;<span class="oss-filter-count">({count})</span>
+<div class="oss-controls">
+  <div class="oss-control-group" role="group" aria-label="Sort contributions">
+    <span class="oss-control-label">Sort</span>
+    <button class="oss-sort-button" data-sort-key="stars" aria-pressed="true">
+      Stars
     </button>
-  ))}
-  <button class="oss-filter-clear" aria-label="Clear filters" hidden>
-    Clear
-  </button>
+    <button class="oss-sort-button" data-sort-key="last-pr" aria-pressed="false">
+      Last PR
+    </button>
+  </div>
+
+  <div class="oss-filter-bar" role="group" aria-label="Filter by technology">
+    {allTags.map(([tag, count]) => (
+      <button class="oss-filter-chip" data-filter-tag={tag} aria-pressed="false">
+        <span>{tag}</span><span class="oss-filter-count">{count}</span>
+      </button>
+    ))}
+    <button class="oss-filter-clear" aria-label="Clear filters" hidden>
+      Clear
+    </button>
+  </div>
 </div>
 
 <div {...{ className }}>
@@ -91,10 +103,28 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
 
 <script>
   const chips = document.querySelectorAll<HTMLButtonElement>(".oss-filter-chip");
-  const cards = document.querySelectorAll<HTMLElement>(".repo-card");
+  const cards = Array.from(document.querySelectorAll<HTMLElement>(".repo-card"));
   const clearBtn = document.querySelector<HTMLButtonElement>(".oss-filter-clear");
+  const sortButtons =
+    document.querySelectorAll<HTMLButtonElement>(".oss-sort-button");
+  const grid = document.querySelector<HTMLElement>(".contrib-grid");
 
   const active = new Set<string>();
+  let sortKey: "stars" | "last-pr" = "stars";
+
+  const getSortValue = (card: HTMLElement) => {
+    if (sortKey === "last-pr") {
+      return Number(card.dataset.lastPrDate ?? 0);
+    }
+    return Number(card.dataset.starCount ?? 0);
+  };
+
+  function sortCards() {
+    if (!grid) return;
+    [...cards]
+      .sort((a, b) => getSortValue(b) - getSortValue(a))
+      .forEach((card) => grid.append(card));
+  }
 
   function apply() {
     cards.forEach((card) => {
@@ -104,6 +134,16 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
     });
     if (clearBtn) clearBtn.hidden = active.size === 0;
   }
+
+  sortButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      sortKey = button.dataset.sortKey === "last-pr" ? "last-pr" : "stars";
+      sortButtons.forEach((btn) => {
+        btn.setAttribute("aria-pressed", String(btn === button));
+      });
+      sortCards();
+    });
+  });
 
   chips.forEach((chip) => {
     chip.addEventListener("click", () => {
@@ -124,4 +164,6 @@ const allTags = Array.from(tagCounts.entries()).sort((a, b) => b[1] - a[1]);
     chips.forEach((c) => c.setAttribute("aria-pressed", "false"));
     apply();
   });
+
+  sortCards();
 </script>

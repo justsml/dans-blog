@@ -14,6 +14,7 @@ import CategoryLink from "../components/CategoryLink.astro";
 import { ShareCounters } from "../components/ShareCounters";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 import ConsultingCTA from "../components/ConsultingCTA.astro";
+import "@/styles/banner-webgl.css";
 
 type Props = {
   sourcePath: string;
@@ -255,101 +256,4 @@ const heroPreload = _heroSrc
      */
   </script>
 
-  <style is:global>
-    /* WebGL Banner Effect Styles */
-    .banner-webgl-canvas {
-      display: block;
-      width: 100%;
-      height: auto;
-      position: relative;
-      z-index: 1;
-      image-rendering: -webkit-optimize-contrast;
-      image-rendering: crisp-edges;
-      transform: translateZ(0);
-      will-change: transform, opacity;
-      opacity: 1;
-      transition: opacity 0.3s ease-out;
-    }
-
-    .full-width.banner-image,
-    .hero-image-wrapper {
-      position: relative;
-      isolation: isolate;
-    }
-
-    .banner-image[style*="opacity: 0"],
-    .hero-image img[style*="opacity: 0"] {
-      pointer-events: none;
-      user-select: none;
-    }
-
-    .full-width {
-      contain: layout style paint;
-    }
-
-    .hero-image {
-      contain: layout style paint;
-    }
-
-    @media (max-width: 768px) {
-      .banner-webgl-canvas {
-        image-rendering: auto;
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .banner-webgl-canvas {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-
-    @media (prefers-color-scheme: dark) {
-      .banner-webgl-canvas {
-        filter: brightness(0.95) contrast(1.05);
-      }
-    }
-
-    @media print {
-      .banner-webgl-canvas {
-        display: none !important;
-      }
-      
-      .banner-image[style*="opacity: 0"],
-      .hero-image img[style*="opacity: 0"] {
-        opacity: 1 !important;
-        position: static !important;
-        pointer-events: auto !important;
-      }
-    }
-
-    .banner-webgl-canvas,
-    .full-width.banner-image,
-    .hero-image-wrapper {
-      backface-visibility: hidden;
-      perspective: 1000px;
-    }
-
-    /* WebGL Wrapper Layout */
-    .banner-wrapper.full-width {
-      display: block; /* Override grid */
-      margin-bottom: 2rem;
-      position: relative;
-      isolation: isolate;
-      height: 200px; /* Fixed height requested */
-      overflow: hidden; /* Ensure crop */
-      border-top: 1px solid var(--primary);
-      border-bottom: 1px solid var(--primary);
-      box-shadow: inset 0 0 15px rgba(255, 0, 153, 0.1); /* Subtle neon glow */
-    }
-
-    /* Canvas is absolute overlay */
-    .banner-webgl-canvas {
-      position: absolute !important;
-      inset: 0;
-      width: 100% !important; 
-      height: 100% !important;
-      z-index: 10;
-    }
-  </style>
 </html>

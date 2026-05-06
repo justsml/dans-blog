@@ -1,0 +1,265 @@
+---
+title: "Postgres Text Searching Guide 2026"
+subTitle: "The search tools already in your database, and when each one earns its keep."
+date: 2026-05-08
+modified: 2026-05-08
+tags: [postgres, postgresql, full-text-search, trigrams, pg_trgm, databases, search, sql, pg_search]
+category: Code
+subCategory: Databases
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+redirects:
+  - /postgres-fts-vs-pgvector
+---
+
+Most teams use one Postgres search tool. Teams that know all three ship better search with less complexity — and avoid the costly detour to a dedicated search service they didn't need yet.
+
+This guide covers the full set of Postgres-native options: what each one does, when it's the right fit, and how to layer them.
+
+---
+
+## The Three Tools
+
+**Full-text search** (`tsvector` / `GIN` index) is lexical. It tokenizes text into lexemes, stems them, and matches queries against the index. "Running" and "runs" collapse to the same lexeme. So do "dog" and "dogs." The ranking function (`ts_rank`) rewards documents where query terms appear often or prominently.
+
+**Trigrams** (`pg_trgm`) break strings into overlapping 3-character slices and measure how many slices two strings share. "Dan" → `" da"`, `"dan"`, `"an "`. "Micheal" and "Michael" share most of their trigrams, so similarity is high. This makes `pg_trgm` excellent at fuzzy name matching, typo tolerance, and autocomplete — the space where FTS performs poorly.
+
+**Exact-match indexes** (B-tree, hash) handle primary keys, email addresses, IDs, SKUs, and anything where the answer is binary: it matches or it doesn't. These don't feel like "search," but they belong in this conversation because the worst pattern is using fuzzy or semantic search for problems that have correct answers.
+
+The choice isn't about sophistication. It's about matching the tool to the shape of the query.
+
+---
+
+## When Full-Text Search Wins
+
+**Searching prose for keywords.** Blog posts, documentation, product descriptions, support tickets, legal documents. FTS was designed for this shape of content: indexed, ranked retrieval over natural-language text.
+
+**Keyword-based user queries.** Users type a search term, filter by tag, or browse by keyword. FTS handles that intent natively without any embedding infrastructure.
+
+**Ranked results without external dependencies.** FTS indexes are fast, deterministic, and require no API calls. The relevance signal comes from term frequency weighted by field position.
+
+**Boolean filtering alongside search.** FTS composes naturally with your existing query logic:
+
+```sql
+SELECT * FROM posts
+WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
+  AND category = 'tutorial'
+  AND published_at > NOW() - INTERVAL '6 months';
+```
+
+### Setting Up FTS
+
+```sql
+-- Generated column keeps the index current automatically
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(body,  '')), 'B')
+  ) STORED;
+
+CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
+
+-- Query
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'postgres & performance') query
+WHERE search_vector @@ query
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+`setweight` assigns importance: `A` (title) outranks `B` (body). That's the entire relevance model for most content-search use cases.
+
+### What FTS Doesn't Handle Well
+
+- Typos in queries — "javascipt" will not match "javascript"
+- Person names, addresses, proper nouns that don't stem predictably
+- Prefix/autocomplete without special configuration
+- Queries where the user describes a concept rather than naming it
+
+---
+
+## When Trigrams Win (`pg_trgm`)
+
+`pg_trgm` covers the awkward middle that FTS consistently fumbles.
+
+FTS tokenizes text into lexemes and stems them. For prose this is correct. For names and short identifiers it often isn't:
+
+- Person names ("Dan Levy" → stemmed differently depending on dictionary and language config)
+- Company names, addresses, product titles where exact spelling matters
+- Queries with typos — "Micheal Jordan", "Amaon", "javascipt"
+- Autocomplete / prefix search
+- Partial string matching ("son" matching "Johnson", "Anderson")
+
+`pg_trgm` is also language-agnostic, which matters for names from diverse linguistic backgrounds. FTS requires dictionary configuration per language.
+
+### Fuzzy Name Search
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
+
+-- Finds "Micheal Jordan" when searching "Michael Jordan"
+SELECT id, name, similarity(name, $1) AS score
+FROM users
+WHERE name % $1          -- % operator = similarity threshold (default 0.3)
+ORDER BY score DESC
+LIMIT 10;
+```
+
+The `%` operator uses `pg_trgm.similarity_threshold` (default 0.3, range 0–1). For name search, 0.3–0.4 catches typos while keeping noise low.
+
+### Autocomplete and Prefix Search
+
+```sql
+-- Fast prefix matching — GIN index accelerates ILIKE with leading wildcard
+SELECT name FROM users
+WHERE name ILIKE $1 || '%'
+ORDER BY name
+LIMIT 10;
+
+-- word_similarity for partial matches within longer strings
+-- ("Johnson" within "Andrew Johnson III")
+SELECT id, name, word_similarity($1, name) AS score
+FROM users
+WHERE $1 <% name
+ORDER BY score DESC
+LIMIT 10;
+```
+
+The GIN trigram index also accelerates `ILIKE '%pattern%'` queries — a common pattern that's a full-table scan without it.
+
+### When to Reach for pg_trgm over FTS
+
+| Scenario | Use |
+|---|---|
+| Person/company name search with typos | `pg_trgm` |
+| Autocomplete / prefix search | `pg_trgm` (or FTS with prefix queries) |
+| Short strings, identifiers, codes | `pg_trgm` |
+| Prose articles, documentation, tickets | FTS |
+| Log messages for keywords | FTS |
+| Multilingual name search | `pg_trgm` (language-agnostic) |
+
+---
+
+## When Exact-Match SQL Wins
+
+Some "search" problems aren't search at all.
+
+"Find the user with email `dan@example.com`" is an equality check. "Find order `ORD-12345`" is a primary key lookup. "List posts in the `tutorial` category sorted by date" is a filtered query. These belong on B-tree or hash indexes.
+
+Using FTS or trigrams here adds complexity without improving correctness — and for exact identifiers, a near-match is worse than no match.
+
+```sql
+CREATE INDEX users_email_idx ON users (email);
+
+-- Exact lookup: fast and unambiguous
+SELECT id, name FROM users WHERE email = $1;
+```
+
+The broader lesson: approximate search for problems with correct answers is a category error. It returns *something* — which may be confidently wrong.
+
+---
+
+## Combining These Tools
+
+These tools compose cleanly. You don't pick exactly one.
+
+**FTS + pg_trgm for a search box that tolerates typos in keywords:**
+
+```sql
+-- Trigram similarity on title catches typos; ts_rank handles body relevance
+SELECT id, title,
+  ts_rank(search_vector, to_tsquery('simple', $1)) AS fts_rank,
+  similarity(title, $1) AS trgm_score
+FROM posts
+WHERE search_vector @@ to_tsquery('simple', $1)
+   OR title % $1
+ORDER BY (ts_rank(search_vector, to_tsquery('simple', $1)) + similarity(title, $1)) DESC
+LIMIT 10;
+```
+
+**FTS + `unaccent` for international content:**
+
+```sql
+-- Strip diacritical marks so "José" matches "Jose"
+CREATE EXTENSION IF NOT EXISTS unaccent;
+
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('simple', unaccent(coalesce(title, ''))), 'A') ||
+    setweight(to_tsvector('simple', unaccent(coalesce(body, ''))),  'B')
+  ) STORED;
+```
+
+**`unaccent` + `pg_trgm` for international name search:**
+
+```sql
+CREATE INDEX users_name_unaccent_trgm_idx
+  ON users USING GIN (unaccent(name) gin_trgm_ops);
+
+SELECT id, name
+FROM users
+WHERE unaccent(name) % unaccent($1)
+ORDER BY similarity(unaccent(name), unaccent($1)) DESC
+LIMIT 10;
+```
+
+---
+
+## Noteworthy Extensions
+
+**`pg_trgm`** is bundled with most Postgres distributions but requires explicit enablement. The foundation for fuzzy string matching in Postgres.
+
+**`unaccent`** strips diacritical marks before indexing and querying. Pairs well with both `pg_trgm` and FTS for European-language content. Bundled with Postgres.
+
+**`pg_bigm`** extends the trigram approach to bigrams (2-character slices), which significantly improves results for CJK (Chinese, Japanese, Korean) languages where `pg_trgm` underperforms. Must be installed separately; not bundled.
+
+**`pg_search`** (from [ParadeDB](https://www.paradedb.com/)) replaces the standard `GIN` / `tsvector` stack with a Tantivy-based BM25 index. This gives you BM25 scoring (often better than `ts_rank`), fuzzy matching within FTS queries, faceted search, and dramatically faster indexing on large tables. It's a drop-in upgrade path when standard FTS starts showing ranking or performance limits.
+
+```sql
+-- pg_search: BM25 full-text search with fuzzy matching
+CREATE INDEX posts_bm25_idx ON posts
+  USING bm25 (id, title, body)
+  WITH (key_field = 'id', text_fields = '{"title": {}, "body": {}}');
+
+-- Query with BM25 scoring + fuzzy matching (catches "javascipt")
+SELECT id, title, paradedb.score(id) AS rank
+FROM posts
+WHERE posts @@@ paradedb.fuzzy_phrase(field => 'title', value => 'postgres performnce')
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+**`pgvector`** adds dense vector storage and similarity search. It's the right tool when users describe what they want rather than name it — semantic search, RAG, related-content recommendations, multilingual queries. Covered in depth in [Semantic Vector Search and Hybrid Strategies](/semantic-vector-search-landscape).
+
+---
+
+## Decision Table
+
+| What you're searching | Recommended |
+|---|---|
+| Prose articles, docs, tickets | FTS |
+| Person/company names with typos | `pg_trgm` |
+| Autocomplete, prefix search | `pg_trgm` |
+| Short codes, identifiers | `pg_trgm` |
+| Log messages for keywords | FTS |
+| International names | `pg_trgm` + `unaccent` |
+| Large content, better ranking | `pg_search` (ParadeDB BM25) |
+| Primary keys, exact emails, IDs | B-tree index |
+| Dates, ranges, sorted lists | B-tree index |
+| Permissions, categories, filters | Regular WHERE clause |
+| Questions, paraphrases, concepts | pgvector (see next article) |
+
+When in doubt: short strings with spelling variation → trigrams. Long prose for keyword queries → FTS. Structured identifiers → regular indexes. Conceptual or natural-language queries → pgvector.
+
+---
+
+## What's Next
+
+Postgres text search covers a lot of ground, but it has a ceiling. When users describe what they want instead of naming it — "something to help me sleep on a flight," "articles about debugging confidence as a new engineer" — lexical and trigram search both fail.
+
+That's the territory of vector embeddings, semantic search, and hybrid architectures. Covered in [Semantic Vector Search and Hybrid Strategies](/semantic-vector-search-landscape).

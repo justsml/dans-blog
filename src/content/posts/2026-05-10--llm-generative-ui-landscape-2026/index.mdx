@@ -111,6 +111,19 @@ This is appropriate for things where no fixed component catalog will do: algorit
 
 **Appropriate when**: you genuinely need arbitrary visual output — one-off explanatory diagrams, dynamic simulations, creative artifacts. Do not use this for transactional UI. A checkout confirmation does not need a sandboxed iframe.
 
+### Beyond the three patterns: LLMs driving pixels directly
+
+There's an emerging fourth direction that doesn't fit cleanly into any of these patterns: LLMs driving **immersive, game-like experiences** by controlling visual output more directly than a sandboxed iframe.
+
+The canonical distinction within generative UI is **iframe HTML vs. JSON catalog**:
+
+- **Iframe HTML** — the model writes HTML, SVG, Canvas, or WebGL that renders in an isolated sandbox. Maximum expressive freedom; security depends entirely on the iframe boundary. Examples: Anthropic Artifacts, OpenGenerativeUI.
+- **JSON catalog** — the model emits a structured payload constrained to a developer-defined component catalog; your renderer instantiates trusted, pre-built components from that spec. The model decides *what* to show; you decide *how* it renders. Examples: json-render, A2UI.
+
+Beyond these, very recent demos hint at a third mode where the model isn't choosing components or writing sandboxed HTML — it's driving the canvas more directly. Projects like [Tencent's HunyuanWorld](https://arxiv.org/abs/2502.01999), which generates explorable 3D environments from a single image, and game architectures where LLMs generate maps, NPCs, and quests at runtime rather than calling a component catalog, suggest a future where the model is more like a game director than a form renderer. In-browser LLM inference via WebGPU ([WebLLM](https://mlc.ai/web-llm/)) is pushing the same frontier locally.
+
+This territory is genuinely exciting and genuinely early. There are no stable frameworks to build production products with yet. I'll cover this approach in a dedicated article once that changes.
+
 ---
 
 ## The Full Ecosystem
@@ -154,7 +167,9 @@ A2UI uses a flat JSONL format: one component descriptor per line, each with an I
 
 A2UI is security-conscious: the spec is a data format, not executable code. The component catalog is pre-defined by the developer; the agent can only reference types in that catalog. An A2UI renderer that receives an unknown type name ignores it.
 
-CopilotKit's "Open-JSON-UI" format is compatible with A2UI. OpenAI's internal declarative schema is converging with it. If you're picking a spec format for a component catalog today, A2UI is the one with the widest backing and the clearest specification.
+CopilotKit's "Open-JSON-UI" format is compatible with A2UI. If you're picking a spec format for a component catalog today, A2UI is the one with the broadest cross-platform backing.
+
+**A note on stability**: A2UI is pre-1.0 — v0.9 as of this writing — and has shipped breaking spec changes between minor versions. Google's communications about the roadmap have been sporadic and some renderers (Lit, Flutter) have lagged behind spec updates. Budget time for spec drift if you're building on it today. For pure-web use cases, json-render currently has more complete and stable tooling. A2UI's long-term advantage is cross-platform reach (web, Flutter, SwiftUI, Android) that json-render doesn't have.
 
 ### MCP Apps
 
@@ -206,7 +221,7 @@ const { object: dashboard } = useObject({
 
 **AI Elements** ([elements.ai-sdk.dev](https://elements.ai-sdk.dev/)) provides ready-made UI primitives to pair with the SDK.
 
-A note on AI SDK RSC (the React Server Components streaming pattern): development on this is paused. If you're using it, the `useObject` pattern is the migration target.
+**A note on the confusing trajectory here**: In October 2024, Vercel announced in [GitHub Discussion #3251](https://github.com/vercel/ai/discussions/3251) that AI SDK RSC — the React Server Components streaming pattern promoted as the headline "Generative UI" feature in SDK 3.0 — was paused indefinitely due to "several long-standing limitations" with no good near-term solutions. Teams that had built product strategies around RSC streaming were caught off guard. The `generateObject`/`streamObject` APIs were also later deprecated in SDK 6.0. The recommended migration from AI SDK RSC is the `useObject` pattern above, or json-render for catalog-based generation.
 
 ### assistant-ui
 
@@ -227,7 +242,9 @@ The distinguishing features:
 - **Progressive rendering**: components appear as the model streams them, not after the full spec arrives.
 - **Tight schema constraints**: the catalog is designed so the model can't hallucinate valid-but-unknown component types.
 
-If you're building a dashboard or report generation feature and want to skip the infrastructure work of designing your own catalog, json-render is the fastest path.
+If you're building a dashboard or report generation feature and want to skip the infrastructure work of designing your own catalog, json-render is the fastest path for web apps.
+
+**On momentum**: json-render launched from Vercel Labs in early 2026 and has accumulated developer adoption in the React/web space faster than A2UI despite A2UI having Google's backing. The likely reason: json-render's schema constraints are tighter (Zod-typed, shadcn components), streaming works out of the box, and it's immediately useful in a Next.js project with zero protocol overhead. That said, json-render is still pre-1.0 and the relationship between json-render and A2UI is still being worked out — Vercel has experimented with A2UI-compatible output, so convergence is possible. For cross-platform (native mobile, multiple frameworks), A2UI is the better long-term bet.
 
 ### Hashbrown
 
@@ -313,6 +330,22 @@ Neither framework owns the UI tier. They generate the data that your frontend (P
 | Streamlit | Python UI | AI data apps | Python-defined components | No (batch) | [streamlit/streamlit](https://github.com/streamlit/streamlit) |
 | LangChain | Backend | Structured output generation | Pydantic/JSON to frontend | Yes | [langchain-ai/langchain](https://github.com/langchain-ai/langchain) |
 | Haystack | Backend | AI pipeline orchestration | Structured data to frontend | Yes | [deepset-ai/haystack](https://github.com/deepset-ai/haystack) |
+
+---
+
+## Ecosystem Velocity and Unstable Ground
+
+This space is moving fast and several projects have shipped confusing communications alongside their code.
+
+**Vercel AI SDK RSC** was the flagship Generative UI feature when SDK 3.0 launched. Vercel paused its development in October 2024 ([Discussion #3251](https://github.com/vercel/ai/discussions/3251)) citing architectural limitations with React Server Components that had no near-term solution. Teams that had built on it were understandably frustrated. It's still in the docs but isn't the recommended path; `useObject` is.
+
+**json-render** (Vercel Labs) is the new direction — a catalog-based, framework-agnostic alternative that avoids the RSC coupling problems. It's pre-1.0 but has gained significant web developer adoption faster than A2UI, despite A2UI launching around the same time with Google's backing. The momentum gap appears to be a DX story: json-render is immediately useful in a standard React/Next.js project, while A2UI's verbosity and cross-platform scope adds setup friction. How this shakes out as both specs mature is genuinely unclear. Vercel has probed A2UI compatibility in json-render, suggesting convergence is possible.
+
+**A2UI** (Google) is pre-1.0 (v0.9 at this writing) with breaking changes between minor versions and inconsistent Google communications about its roadmap. It's the right choice for cross-platform reach (web + Flutter + SwiftUI) that json-render doesn't address, and it has meaningful enterprise backing. For pure-web projects right now, the DX is rougher.
+
+**AG-UI** (CopilotKit) is also pre-1.0. The most common confusion: the name makes it sound like a UI framework. It isn't — it's a transport protocol. AG-UI defines how events flow between agent backends and your frontend; what you render in response is still your decision. That mental model is solid and broadly adopted, but the pre-1.0 spec means edge cases are still getting worked out.
+
+The practical upshot: **every major player here is pre-1.0**. Plan for API changes. The patterns — tool-to-component, catalog composition, sandboxed generation — are stable enough to build on. The specific protocol choices are not.
 
 ---
 

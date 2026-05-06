@@ -2,10 +2,7 @@
 export default {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}",
   ],
   prefix: "",
   theme: {

@@ -9,7 +9,7 @@
   background: transparent;
   position: relative;
   z-index: 50;
-  transition: all 0.3s ease;
+  transition: padding 0.3s ease;
 
   /* Override article page narrower width for consistent header */
   &.article {
@@ -24,7 +24,7 @@
 
   nav {
     margin-left: 0rem;
-    transition: all 0.3s ease;
+    transition: margin-left 0.3s ease;
 
     @screen sm {
       margin-left: .5rem;
@@ -47,7 +47,9 @@
     text-shadow:
       0 0 20px rgba(0, 255, 255, 0.5),
       0 0 40px rgba(0, 255, 255, 0.3);
-    transition: all 0.3s ease;
+    transition:
+      text-shadow 0.3s ease,
+      transform 0.3s ease;
   }
 
   nav h2 a {
@@ -56,10 +58,15 @@
     align-content: center;
     column-gap: 0.5rem;
     font-size: 1.33rem;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      column-gap 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
     img {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition:
+        border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border: 2px solid rgba(255, 255, 255, 0.8);
       box-shadow:
         0 0 20px rgba(0, 255, 255, 0.3),
@@ -96,7 +103,9 @@
     color: var(--text-color);
     border-bottom: 3px solid transparent;
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition:
+      border-color 0.2s ease,
+      color 0.2s ease;
     position: relative;
   }
 
@@ -105,15 +114,17 @@
     position: absolute;
     bottom: -3px;
     left: 0;
-    width: 0;
+    width: 100%;
     height: 3px;
     background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
-    transition: width 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
   }
 
   nav a:hover::after,
   nav a.active::after {
-    width: 100%;
+    transform: scaleX(1);
   }
 
   nav a.active {

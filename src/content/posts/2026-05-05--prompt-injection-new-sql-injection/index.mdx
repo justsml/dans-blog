@@ -17,13 +17,13 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-It's 2007. A developer builds a login form. They take the username from the request, interpolate it directly into a SQL string, and fire it at the database. Works perfectly in testing.
+It's 2007.
 
-Then someone types `' OR '1'='1` into the username field.
+A developer builds an `Update Profile` ASP.NET 2.0 form. They take the data given to them straight out of the internet and into a simple SQL command! Tested, works in dev, ship it.
 
-The entire users table is theirs.
+Then someone types `' OR '1'='1` into the form.
 
-We spent years drilling this into the industry. Parameterized queries. ORMs. Input validation. "Never trust user input" became muscle memory. Today, SQL injection bugs feel almost embarrassing - the kind of thing a code review is supposed to catch before lunch.
+You may have heard of this story. It's the classic SQL injection attack, and it was devastatingly effective for years. Attackers could bypass authentication, read sensitive data, modify records, and even take over entire databases.
 
 Now look at our LLM code.
 
