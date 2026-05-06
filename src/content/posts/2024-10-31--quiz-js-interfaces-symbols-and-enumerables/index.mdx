@@ -247,7 +247,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    Properties keyed by Symbols are not enumerable in `for...in` loops or `Object.keys()`. In this example, only `regularKey` will be listed, not the Symbol-keyed property.
+    Symbol-keyed properties can have their own `enumerable` flag, but `for...in` and `Object.keys()` only visit string-keyed enumerable properties. In this example, only `regularKey` will be listed, not the Symbol-keyed property.
   </div>
   </slot>
 
@@ -278,7 +278,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    The `Object.getOwnPropertySymbols()` method is used to retrieve all Symbol properties of an object.
+    The `Object.getOwnPropertySymbols()` method is used to retrieve an object's own Symbol property keys.
 
     ```js
     const sym1 = Symbol('id');

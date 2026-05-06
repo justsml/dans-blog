@@ -189,10 +189,10 @@ Good luck! 🍀
   group="Timestamps"
   title="timestamptz vs timestamp"
   options={[
-    {text: 'They\'re exactly 8-bytes', isAnswer: true},
+    {text: 'They both occupy 8 bytes, but represent different timestamp semantics', isAnswer: true},
     {text: 'They\'re interchangeable since Pg v10'},
     {text: 'timestamptz preserves any input timezone'},
-    {text: 'timestamptz adjusts based on the server timezone'},
+    {text: 'timestamptz stores the original timezone name or offset'},
     {text: 'timestamptz stores a 2-byte value for TZ'},
     {text: 'timestamptz is the successor to timestamp'},
   ]}

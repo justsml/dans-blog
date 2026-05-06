@@ -1593,7 +1593,7 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
 >
   <slot name="question">
     <div className="question">
-      On a 64-bit system, what's the size of this struct?
+      On a typical current 64-bit Rust target, what's the size of this struct?
       ```rust
       struct Metadata {
           id: u32,        // How many bytes?
@@ -1645,10 +1645,10 @@ Whether you're a seasoned Rustacean or just getting started with memory manageme
          - Consider cache line optimization
 
       Best practices:
-      1. Order fields from largest to smallest
+      1. For FFI or stable layout assumptions, use an appropriate `repr(...)`
       2. Use appropriate integer sizes
       3. Consider using Option for optional fields
-      4. Document size-critical structs
+      4. Measure size-critical structs with `std::mem::size_of`
       5. Use #[repr(packed)] carefully - it can affect performance
     </div>
   </slot>

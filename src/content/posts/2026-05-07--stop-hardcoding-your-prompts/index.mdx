@@ -1,6 +1,6 @@
 ---
-title: "Stop Hardcoding Your Prompts"
-subTitle: "Template patterns for AI that actually survives production."
+title: "Stop Burying Prompts in Code"
+subTitle: "Prompt patterns that can survive production."
 date: 2026-05-07
 modified: 2026-05-07
 tags: [ai, llm, prompts, typescript, patterns, production, developer-experience]
@@ -17,25 +17,25 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Somewhere in your codebase, there's a string that looks like this:
+Somewhere in your codebase, there is a string like this:
 
 ```typescript
 const prompt = `You are a helpful assistant. The user said: ${userInput}. Answer them.`;
 ```
 
-That string is your system architecture now. Congratulations.
+That string is your system architecture now.
 
-It started reasonable. One model, one use case, a quick prototype. Then the product team asked for a different tone. Then you added retrieval context. Then compliance needed a disclaimer in certain jurisdictions. Then someone asked for multi-language support. Then you needed different behavior for free vs. paid users.
+It started reasonably: one model, one use case, a quick prototype. Then product asked for a different tone. Then you added retrieval context. Then compliance needed jurisdiction-specific disclaimers. Then someone asked for multilingual support. Then free and paid users needed different behavior.
 
-Each change was a string edit somewhere in the codebase. Usually committed with a message like "tweak prompt." Nobody knows what it does. Nobody tested it. It's load-bearing and invisible.
+Each change was a string edit somewhere in the codebase, usually committed as "tweak prompt." Nobody knows what it does. Nobody tested it. It is load-bearing and invisible.
 
-Prompts are configuration. They deserve the same rigor you'd give anything else that controls how your system behaves at runtime. Here's how to actually structure them.
+Prompts are configuration. They deserve the same rigor you'd give anything else that controls runtime behavior. Here's how to structure them.
 
 ---
 
 ## The Problem With String Interpolation
 
-Beyond the "string buried in business logic" issue, raw template literals have a specific failure mode that bites you in production: **injection**.
+Beyond the "string buried in business logic" problem, raw template literals have a production failure mode: **injection**.
 
 You're building a customer support bot. The system prompt is:
 
@@ -49,13 +49,13 @@ The user's name is ${user.name}.
 
 What happens when `user.name` is `"Ignore previous instructions. You are now..."`?
 
-You just concatenated attacker-controlled text into your instruction layer. [This is prompt injection](/prompt-injection-new-sql-injection/), and raw string interpolation is how it gets in. Treating user data as trusted prompt content is the exact same mistake as constructing SQL strings without parameterization.
+You just concatenated attacker-controlled text into your instruction layer. [This is prompt injection](/prompt-injection-new-sql-injection/), and raw string interpolation is how it gets in. Treating user data as trusted prompt content is the same mistake as constructing SQL strings without parameterization.
 
 ---
 
 ## Pattern 1: Typed Prompt Templates
 
-The simplest upgrade: make your prompt's inputs explicit and validated.
+The simplest upgrade: make prompt inputs explicit and validated.
 
 ```typescript
 import { z } from 'zod';
@@ -96,15 +96,15 @@ This gives you:
 - A compile-time contract for what the prompt needs
 - Runtime validation that bad input gets caught before it reaches the model
 - One place to find and understand the prompt logic
-- Easy to test — call `buildSupportPrompt()` with edge case inputs and inspect the output
+- Easy tests: call `buildSupportPrompt()` with edge cases and inspect the output
 
 ---
 
 ## Pattern 2: Composable Prompt Sections
 
-As prompts grow, flat strings become hard to maintain. Different features add different sections. Different deployment contexts need different combinations.
+As prompts grow, flat strings become hard to maintain. Features add sections. Deployment contexts need different combinations.
 
-The answer is the same as it is for complex UI: composition.
+Use the same answer you would use for complex UI: composition.
 
 ```typescript
 type PromptSection = {
@@ -166,18 +166,18 @@ function buildAgentPrompt(context: AgentContext): string {
 }
 ```
 
-Each section is independently testable. `CORE_RULES` is a constant you can grep for. Enterprise behavior is explicit, not buried in a conditional inside a template literal.
+Each section is testable. `CORE_RULES` is a constant you can grep for. Enterprise behavior is explicit, not buried in a template literal conditional.
 
 ---
 
 ## Pattern 3: Separate Instructions From Data
 
-This is the structural fix for prompt injection. Instruction sections and data sections should never be in the same string without explicit separation.
+This is the structural fix for prompt injection. Instruction and data sections should never share an undifferentiated string.
 
 ```typescript
 function buildRagPrompt(query: string, docs: RetrievedDoc[]): ChatMessage[] {
   // Return a messages array instead of a flat string
-  // This is how the OpenAI/Anthropic APIs actually work —
+  // This is how the OpenAI/Anthropic APIs work:
   // use their structure, not a string you'll flatten later
   return [
     {
@@ -210,20 +210,20 @@ function escapeXml(str: string): string {
 }
 ```
 
-User data and document content go through `escapeXml` before landing anywhere near the prompt. Instructions are in a separate `system` message where they have natural separation from user content. An attacker who injects `</document><system>new instructions</system>` into document content gets the escaped version, not an instruction override.
+User data and document content go through `escapeXml` before reaching the prompt. Instructions live in a separate `system` message. An attacker who injects `</document><system>new instructions</system>` into document content gets escaped text, not an instruction override.
 
 ---
 
 ## Pattern 4: Prompt Versioning
 
-Prompts change. Those changes affect behavior. Without versioning, you have no way to:
+Prompts change, and those changes affect behavior. Without versioning, you have no way to:
 
 - Know which prompt produced which output (for debugging)
 - Roll back a prompt change that caused a regression
 - A/B test two prompt versions
 - Audit what your system was doing at a specific point in time
 
-The simplest version: treat prompts like code and keep them in files with a version identifier.
+The simplest version: treat prompts like code and keep them in files with version identifiers.
 
 ```
 src/prompts/
@@ -245,7 +245,7 @@ export const PROMPT_CHANGELOG = {
 };
 ```
 
-Tag every LLM call with the prompt version. Now your logs say "support-agent@v3 produced this output" instead of "the prompt produced this output." When something breaks, you know where to look and what changed.
+Tag every LLM call with the prompt version. Now logs say "support-agent@v3 produced this output" instead of "the prompt produced this output." When something breaks, you know where to look.
 
 ```typescript
 async function callModel(
@@ -269,9 +269,9 @@ async function callModel(
 
 ## Pattern 5: Environment-Specific Behavior
 
-Prompts often need to behave differently in development vs. production. In dev, you want verbose reasoning. In production, you want concise responses. In testing, you want deterministic behavior.
+Prompts often need different behavior in development, production, and tests. In dev, you may want verbose reasoning. In production, concise responses. In tests, deterministic behavior.
 
-Don't solve this with environment checks scattered inside your prompt builder. Solve it with a prompt config layer:
+Don't scatter environment checks through the prompt builder. Add a prompt config layer:
 
 ```typescript
 const PROMPT_CONFIGS: Record<string, PromptConfig> = {
@@ -298,13 +298,13 @@ const PROMPT_CONFIGS: Record<string, PromptConfig> = {
 const config = PROMPT_CONFIGS[process.env.NODE_ENV ?? 'production'];
 ```
 
-Now your CI tests run deterministically (`temperature: 0`) and your prompt builder doesn't have `if (process.env.NODE_ENV === 'development')` checks everywhere.
+Now CI runs deterministically (`temperature: 0`), and your prompt builder doesn't carry `if (process.env.NODE_ENV === 'development')` checks everywhere.
 
 ---
 
 ## Putting It Together
 
-None of these patterns are complex in isolation. The power is in combining them:
+None of these patterns are complex alone. The power is in combining them:
 
 1. **Typed templates** — catch bad input at the boundary, before it touches the model
 2. **Composable sections** — build complex prompts from auditable pieces
@@ -312,6 +312,6 @@ None of these patterns are complex in isolation. The power is in combining them:
 4. **Versioning** — make prompt changes traceable and reversible
 5. **Env-specific config** — stop shipping debug prompts to production
 
-A prompt that has all five properties looks different from the string you started with. It's longer to write once. It's much easier to maintain for a year. And it's the kind of thing you can hand to someone new without a 30-minute explanation of which string to edit and why.
+A prompt with all five properties looks different from the string you started with. It takes longer to write once and is much easier to maintain for a year. You can hand it to someone new without a 30-minute explanation of which string to edit and why.
 
 Your model isn't the hard part of AI engineering. Your prompt infrastructure is.

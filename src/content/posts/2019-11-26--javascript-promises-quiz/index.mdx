@@ -74,7 +74,7 @@ Then the `.catch` handlers work like the DOM's `.addEventListener(event, callbac
   options={[
     {text: 'print message once'},
     {text: 'print message twice'},
-    {text: 'UnhandledPromiseRejectionWarning', isAnswer: true },
+    {text: 'unhandled rejected promise', isAnswer: true },
     {text: 'process exits'}
   ]}
 >
@@ -93,7 +93,7 @@ Then the `.catch` handlers work like the DOM's `.addEventListener(event, callbac
 
   <slot name='explanation'>
   <div className="explanation">
-When using the Promise constructor you must invoke either `resolve()` or `reject()` callbacks. The Promise constructor doesn't use your return value, so the additional Promise created with `Promise.reject()` will effectively never be heard from again.
+When using the Promise constructor you must invoke either `resolve()` or `reject()` callbacks. The Promise constructor ignores the executor's return value, so the additional Promise created with `Promise.reject()` is not chained to `p`. The two handlers are attached to `p`, which remains pending, while the returned rejected promise is reported as unhandled by the host environment.
   </div>
   </slot>
 
@@ -359,4 +359,3 @@ A `return` is key in order to pass a value to the next `.then`.
 </Challenge>
 
 </QuizUI>
-

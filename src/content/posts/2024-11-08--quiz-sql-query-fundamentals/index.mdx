@@ -113,7 +113,7 @@ A `LEFT JOIN` returns all rows from the left table and matched rows from the rig
   options={[
     {text: 'Returns unmatched rows from both tables'},
     {text: 'Returns all rows from both tables, with NULLs for unmatched rows'},
-    {text: 'Returns rows with a match in both tables, excluding NULLs', isAnswer: true },
+    {text: 'Returns rows that satisfy the join condition in both tables', isAnswer: true },
     {text: 'Returns unmatched rows from the right table'}
   ]}
 >
@@ -125,7 +125,7 @@ A `LEFT JOIN` returns all rows from the left table and matched rows from the rig
 
   <slot name="explanation">
   <div className="explanation">
-An `INNER JOIN` returns rows where there is a match in both tables. Unmatched rows are not included in the result set.
+An `INNER JOIN` returns rows where the join condition matches rows from both tables. Unmatched rows are not included in the result set.
   </div>
   </slot>
 </Challenge>
@@ -164,7 +164,7 @@ A correlated subquery is evaluated once per row of the outer query. It reference
     {text: 'Only allowed in DELETE statements'},
     {text: 'Used for aggregation functions'},
     {text: 'Used for defining views only'},
-    {text: 'Defining a temporary result set to use within a SELECT query', isAnswer: true },
+    {text: 'Defining a temporary result set for use in a larger SQL statement', isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -175,7 +175,7 @@ A correlated subquery is evaluated once per row of the outer query. It reference
 
   <slot name="explanation">
   <div className="explanation">
-The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query.
+The `WITH` clause, or Common Table Expression (CTE), is used to define a temporary result set that can be referenced within the main query. In PostgreSQL, `WITH` can be attached to statements such as `SELECT`, `INSERT`, `UPDATE`, `DELETE`, or `MERGE`.
 
 This can help improve readability and maintainability of complex queries.
 

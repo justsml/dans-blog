@@ -207,7 +207,7 @@ Good luck. 🍀
   title="Context Budget"
   options={[
     {text: 'Use 95%+ of the context window to maximize information'},
-    {text: 'Keep total context under 50% to leave room for the response', isAnswer: true},
+    {text: 'Reserve meaningful headroom for output instead of filling the entire window', isAnswer: true},
     {text: 'Context budget only matters for models under 32K tokens'},
     {text: 'The model automatically truncates when the window is exceeded'},
   ]}
@@ -221,7 +221,7 @@ Good luck. 🍀
   <div className="explanation">
     The context window is shared between **input and output**. If you use 90% for input, the model only has 10% of the window left to generate a response — which often causes truncated or degraded outputs.
 
-    A reasonable heuristic: use no more than **60–70% of the total context window for your input** (system prompt + history + retrieved context). Leave the rest for generation.
+    A reasonable heuristic: decide your expected output size first, then keep your input comfortably below the remaining budget. For many RAG tasks, that means using no more than **60–70% of the total context window for input** (system prompt + history + retrieved context). Leave the rest for generation and safety margin.
 
     Additionally, models perform worse near the edges of their context window — comprehension and instruction-following degrade as the context fills up. Running at 95% is technically possible. It's not the same experience as running at 50%.
   </div>
@@ -372,7 +372,7 @@ Good luck. 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Prompt caching (available in Anthropic's Claude and OpenAI's GPT-4o) stores the computed **KV cache** for a static prompt prefix. On subsequent requests with the same prefix, the model skips re-processing those tokens — which reduces latency and dramatically reduces cost (cached tokens are typically 80–90% cheaper).
+    Prompt caching (available in Anthropic's Claude and OpenAI's recent GPT models) reuses the computed **KV cache / prompt prefix state** for static prompt prefixes. On subsequent requests with the same prefix, the model can skip re-processing those tokens — which reduces latency and can dramatically reduce cost.
 
     This is not response caching. The model still generates a fresh response every time. You're just avoiding re-tokenizing and re-computing attention for the part of the prompt that doesn't change.
 
@@ -443,12 +443,13 @@ Good luck. 🍀
 
     Fine-tuning is genuinely better when:
     - You need a consistent style/format the model can't reliably follow from instructions alone
-    - Your task requires knowledge the base model doesn't have (proprietary domain)
+    - Your task requires repeatable behavior on domain-specific patterns that prompting and retrieval don't solve
     - You need to reduce prompt length — fine-tuned behavior doesn't need to be explained every request
     - You're running many requests where consistent few-shot examples are eating significant tokens
 
     Fine-tuning is overkill when:
     - Your instructions fit in a system prompt
+    - You mainly need current or proprietary facts that can be retrieved at request time
     - Requirements change frequently (you'd need to re-fine-tune)
     - You haven't exhausted context engineering first
 

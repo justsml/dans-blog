@@ -27,7 +27,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
   client:visible={{rootMargin: "600px"}}
   index={0}
   group="Warmup"
-  title="The `i` Flag"
+  title="Case-Sensitive Matching"
   options={[
     {text: '["Cat"]'},
     {text: '["cat", "CAT", "Cat"]'},
@@ -46,9 +46,9 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
 
   <slot name='explanation'>
   <div className="explanation">
-    The `i` flag makes the pattern case-insensitive:
+    This pattern uses `g`, but not `i`:
     - `g` finds all matches
-    - **`i` ignores case differences**
+    - Without `i`, matching is case-sensitive
 
     Without the `i` flag, only lowercase "cat" matches.
 
@@ -306,7 +306,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - ✅ "23" (preceded by "abc1")
     - ✅ "456" (preceded by "def")
 
-    Look-behinds must be fixed-length in most browsers (no `*` or `+`).
+    JavaScript supports look-behind assertions in modern engines, including the variable-length look-behind shown here. Some other regex engines only allow fixed-length look-behind.
 
     Note: Look-behind support is relatively recent in JavaScript. Check [browser compatibility](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) if you need to support older browsers.
   </div>
@@ -562,7 +562,7 @@ Test your RegEx knowledge with questions covering basic patterns, quantifiers, g
     - Correct handling of surrogate pairs
 
     Without `u`, emoji and other Unicode characters might not match correctly.
-    The pattern `\p{Emoji}` matches any emoji character.
+    The pattern `\p{Emoji}` matches characters with the Unicode `Emoji` property. In this string, that means the two emoji pictographs.
 
     Note: Unicode property escapes require the `u` flag.
 

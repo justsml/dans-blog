@@ -58,7 +58,7 @@ Good luck! 🍀
     - `LEFT JOIN` (or `LEFT OUTER JOIN`)
     - `RIGHT JOIN` (or `RIGHT OUTER JOIN`)
     - `FULL JOIN` (or `FULL OUTER JOIN`)
-    - `CROSS JOIN` (aka "The Self Join," aka "The Lonely JOIN," famously known-at-parties as the `Cartesian product`!)
+    - `CROSS JOIN` (the Cartesian product, unless a later `WHERE` clause filters it)
   </div>
   </slot>
 </Challenge>
@@ -259,7 +259,7 @@ Good luck! 🍀
 
     The faster SQL can select the fewest rows, the better the performance.
 
-    For example, if you have a `task` table, and you know that `status` is more selective than `created_at`, you should put `status` first in the query. This will make querying `status = 'done' AND created_at > '2024-01-01'` faster than querying `created_at > '2024-01-01' AND status = 'done'`.
+    For example, if you have a `task` table, and you know that `status` is more selective than `created_at`, you might choose an index beginning with `status` for a query like `status = 'done' AND created_at > '2024-01-01'`. The order of conditions in the `WHERE` clause text is not what matters; the index column order and predicate shapes do.
 
     A B+Tree index can be used for:
     - The leading column, or a leftmost prefix of columns.
@@ -382,7 +382,7 @@ Good luck! 🍀
     3. The `ROW_NUMBER() OVER (ORDER BY RAND())` and `ORDER BY RANDOM() > 10` are more red herrings. They look like they could be correct, but they're not. `RAND()` isn't a thing. And `RANDOM() > 10` is a boolean expression that will always be false since `RANDOM()` always is in the range `0.0-1.0`.
     One more problem, the `ORDER BY RANDOM() > 10` would also sort on a boolean value, not a random number. But that `> 10` sure felt like it could be a percentage, right?
     4. `BERNOULLI` is valid, however `SAMPLETABLE` is not.
-    5. `WHERE RANDOM() >= 0.1` is a trick! `RANDOM()` returns a value between 0 and 1, so `>= 0.1` would return 90% of the rows, not 10%.
+    5. `WHERE RANDOM() >= 0.1` is a trick! `RANDOM()` returns a value in the range `0.0 <= x < 1.0`, so `>= 0.1` would return about 90% of the rows, not 10%.
 
     As for the `TABLESAMPLE` method, PostgreSQL supports two sampling methods:
     - `BERNOULLI`: Each row has equal probability

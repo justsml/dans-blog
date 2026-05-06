@@ -81,7 +81,7 @@ There are also several units that have always been around but are rarely used, l
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      Hex codes can be used to represent colors in CSS. They are prefixed with a `#` and must be 3, 4, 6, or 8 characters long.
+      Hex codes can be used to represent colors in CSS. They are prefixed with a `#` and must contain 3, 4, 6, or 8 hexadecimal digits.
       
       The 3-character hex code is a shorthand for the 6-character code, where each character is repeated. The 4-character code includes an alpha channel for transparency.
 
@@ -428,22 +428,22 @@ There are also several units that have always been around but are rarely used, l
   client:visible={{rootMargin: "600px"}}
   index={13}
   group="Selector: Specificity"
-  title="Selector Priority"
+  title="Zero-Specificity Selectors"
   options={[
-    { text: 'main article section blockquote a' },
-    { text: 'blockquote a' },
-    { text: 'a#quote', isAnswer: true },
-    { text: 'a.quote' }
+    { text: ':where(.card) .title', isAnswer: true },
+    { text: '.card .title' },
+    { text: ':is(.card) .title' },
+    { text: '#card .title' }
   ]}
 >
   <slot name="question">
     <div className="question">
-      Which selector will take priority?
+      Which selector has the lowest specificity?
     </div>
   </slot>
   <slot name="explanation">
     <div className="explanation">
-      The `a#quote` selector takes priority due to the ID, which has a higher specificity than tag or class-based selectors.
+      `:where(.card) .title` has the lowest specificity. The `:where()` pseudo-class and everything inside it contributes `0-0-0`, so only `.title` counts. `:is(.card) .title` keeps the specificity of `.card`, `.card .title` has two classes, and `#card .title` includes an ID.
     </div>
   </slot>
 </Challenge>

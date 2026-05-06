@@ -79,7 +79,7 @@ The other options may be familiar from other languages or preprocessor syntaxes,
 >
   <slot name="question">
   <div className="question">
-    If the viewport width is 400px, what will the computed width of the following element be?
+    If the parent/container width is 400px, what will the computed width of the following element be?
     ```css
     div {
       width: min(250px, 50%);
@@ -90,7 +90,7 @@ The other options may be familiar from other languages or preprocessor syntaxes,
 
   <slot name="explanation">
   <div className="explanation">
-The `min()` function will choose the smallest value between 250px and 50% of its parents width.
+The `min()` function will choose the smallest value between 250px and 50% of its parent's width.
 
 To understand the computed value, we need to convert the relative units to pixels:
 
@@ -135,7 +135,7 @@ The `min()` function is especially useful for responsive design, where you can e
 
 <slot name="explanation">
 <div className="explanation">
-  The `max()` function accepts 2 or more inputs, and will use the largest value automatically. In this case, the width works out to `96px`.
+  The `max()` function accepts 2 or more inputs, and will use the largest value automatically. Assuming the root font size is the browser default `16px`, the width works out to `96px`.
 
   To understand the computed value, we need to convert the relative units to pixels:
 

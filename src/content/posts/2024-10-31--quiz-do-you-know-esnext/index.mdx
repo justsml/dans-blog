@@ -383,7 +383,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
   title="WeakRef Usage"
   options={[
     {text: 'ReferenceError'},
-    {text: 'Weak reference to object', isAnswer: true },
+    {text: "{ data: 'important' }", isAnswer: true },
     {text: 'null'},
     {text: 'undefined'},
   ]}
@@ -405,7 +405,7 @@ import QuizUI from '../../../components/QuizUI/QuizUI';
 
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` provides a weak reference to an object, which allows the object to be garbage collected if no other references exist. The `deref()` method returns the original object if it is still available, otherwise `undefined`.
+    `WeakRef` provides a weak reference to an object, which allows the object to be garbage collected if no other references exist. Since `obj` is still strongly referenced here, `deref()` returns the original object. If the target had been reclaimed, `deref()` would return `undefined`.
   </div>
   </slot>
 

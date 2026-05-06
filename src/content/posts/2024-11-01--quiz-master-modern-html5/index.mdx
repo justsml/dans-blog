@@ -334,7 +334,7 @@ It may be useful when a heading has a subtitle, tagline, or alternative title th
   title="Usage of `<menu>`"
   options={[
     {text: 'To define an ordered list'},
-    {text: 'To create a menu or context menu', isAnswer: true },
+    {text: 'To list commands or toolbar controls', isAnswer: true },
     {text: 'To represent a navigation bar'},
     {text: 'To define a button group'},
   ]}
@@ -423,10 +423,7 @@ This is useful for FAQs, collapsible sections, or any content that can be toggle
   <div className="explanation">
 The [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) element is used for pop-ups or modals, and provides semantic markup, extended CSS, and a native API for these interactions.
 
-It's functionally like a `<div>` - with a few extra built-in features.
-
-> According to MDN:
-> JavaScript should be used to display the `<dialog>` element. Use the .showModal() method to display a modal dialog and the `.show()` method to display a non-modal dialog. The dialog box can be closed using the `.close()` method or using the dialog method when submitting a `<form>` that is nested within the `<dialog>` element. Modal dialogs can also be closed by pressing the Esc key.
+Use JavaScript to open it with `.showModal()` for modal dialogs or `.show()` for non-modal dialogs, and close it with `.close()` or a form submission using `method="dialog"`.
 
 ```html
 <dialog>

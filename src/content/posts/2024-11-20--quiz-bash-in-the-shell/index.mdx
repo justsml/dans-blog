@@ -86,9 +86,9 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     I know. It's wild how quickly escaping makes strings tough to parse. Imagine escaping other languages in Bash strings - with all those quotes, apostrophes and `$` symbols to f*ck you up. 🫠
 
-    Single quotes need escaping inside single-quoted strings. The backslash-escaped single quote (`'\''`) allows output of:
+    Single quotes need escaping inside single-quoted strings. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
     ```plaintext
-    It's Bash Time!
+    It's 🔨 Time!
     ```
 
     There are other ways to handle this, but this is the most common.
@@ -123,9 +123,9 @@ Sharpen (or prove) your shell scripting **skills**!
   <div className="explanation">
     The `{}` brace expansion generates multiple versions of its string context, one (or more) for each comma-separated value or pattern.
 
-    Here, `a{b,c}d` expands to:
+    Here, `c{a,b}t` expands to:
     ```plaintext
-    abd acd
+    cat cbt
     ```
   </div>
   </slot>
@@ -258,7 +258,7 @@ Sharpen (or prove) your shell scripting **skills**!
   title="Basic If-Else"
   options={[
     { text: "File exists" },
-    { text: "File does not exist, after a test syntax error", isAnswer: true },
+    { text: "File does not exist, after a test diagnostic", isAnswer: true },
     { text: "Error only" },
     { text: "Missing double brackets" },
     { text: "Nothing" },
@@ -283,7 +283,7 @@ Sharpen (or prove) your shell scripting **skills**!
     
     Bash is quite touchy here: spaces are required inside bracket expressions.
 
-    Because the `then` condition fails with a `[` diagnostic, Bash continues to the `else` branch and prints `File does not exist`.
+    Because the missing space makes the `[` command see no closing `]`, Bash prints a diagnostic, treats the test as failed, and continues to the `else` branch.
 
     The correct syntax is:
     ```bash

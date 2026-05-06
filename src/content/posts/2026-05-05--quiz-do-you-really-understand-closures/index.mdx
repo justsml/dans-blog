@@ -264,10 +264,10 @@ The questions start reasonable and get progressively less so. Good luck. 🍀
   group="Advanced"
   title="Module Pattern"
   options={[
-    {text: '1, 2, 3'},
-    {text: '1, 1, 1'},
-    {text: 'TypeError: bank.withdraw is not a function'},
-    {text: '1, 2, 3 — but only if you call deposit first', isAnswer: true},
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
   ]}
 >
   <slot name="question">
@@ -287,11 +287,6 @@ The questions start reasonable and get progressively less so. Good luck. 🍀
     bank.withdraw(40);
     console.log(bank.getBalance());
     ```
-    Options:
-    - `60`
-    - `TypeError: balance is not defined`
-    - `-40`
-    - `100`
   </div>
   </slot>
   <slot name='explanation'>
@@ -328,7 +323,7 @@ The questions start reasonable and get progressively less so. Good luck. 🍀
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       element.addEventListener('click', () => {
-        console.log('clicked!');
+        console.log('clicked!', data.length);
       });
     }
     ```
@@ -336,21 +331,22 @@ The questions start reasonable and get progressively less so. Good luck. 🍀
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    The event listener closes over the entire scope of `attachHandler` — including `data`. Even though `data` is never used inside the callback, the JS engine (historically) couldn't always prove that. The entire `data` array stays in memory as long as the event listener exists.
+    The event listener closes over `data`, so the array stays reachable for as long as the listener is reachable. If `element` is long-lived and the listener is never removed, that large array is retained too.
 
     `element` is in the DOM. The listener holds `data`. GC can't collect it.
 
-    Fix: either don't close over unused variables, or explicitly release them:
+    Fix: don't capture large data in long-lived listeners unless you really need it, and remove listeners when the owning UI is torn down:
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       // do something with data...
-      
-      element.addEventListener('click', () => {
+
+      const onClick = () => {
         console.log('clicked!');
-      });
-      // data is now eligible for GC since handler doesn't reference it
-      // (modern engines are smarter about this, but don't rely on it)
+      };
+
+      element.addEventListener('click', onClick);
+      return () => element.removeEventListener('click', onClick);
     }
     ```
 
