@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="980" viewBox="0 0 1600 980" role="img" aria-labelledby="title desc">
+  <title id="title">LLM Generative UI Landscape Map</title>
+  <desc id="desc">A layered map showing product shells, UI composition specs, runtime protocols, and model/tool backends.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#121826"/>
+      <stop offset="0.52" stop-color="#182234"/>
+      <stop offset="1" stop-color="#0f1720"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#000000" flood-opacity="0.32"/>
+    </filter>
+    <style>
+      .title { font: 800 56px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f7fafc; letter-spacing: 0; }
+      .subtitle { font: 500 24px Inter, ui-sans-serif, system-ui, sans-serif; fill: #b8c7d9; letter-spacing: 0; }
+      .layer-title { font: 800 28px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f7fafc; letter-spacing: 0; }
+      .layer-note { font: 500 17px Inter, ui-sans-serif, system-ui, sans-serif; fill: #aebed0; letter-spacing: 0; }
+      .node-title { font: 800 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #111827; letter-spacing: 0; }
+      .node-note { font: 600 15px Inter, ui-sans-serif, system-ui, sans-serif; fill: #364154; letter-spacing: 0; }
+      .small { font: 700 14px Inter, ui-sans-serif, system-ui, sans-serif; fill: #dce8f4; letter-spacing: 0.5px; }
+      .band { filter: url(#shadow); }
+      .connector { stroke: #d8e2ef; stroke-width: 3; stroke-opacity: 0.38; stroke-dasharray: 8 10; fill: none; }
+    </style>
+  </defs>
+  <rect width="1600" height="980" fill="url(#bg)"/>
+  <circle cx="1360" cy="125" r="150" fill="#3dd6b3" opacity="0.08"/>
+  <circle cx="225" cy="850" r="170" fill="#ffcf5a" opacity="0.07"/>
+  <text x="90" y="105" class="title">The LLM Generative UI Landscape</text>
+  <text x="92" y="147" class="subtitle">Most confusion comes from mixing up shells, specs, transports, and agents.</text>
+
+  <g class="band">
+    <rect x="80" y="205" width="1440" height="160" rx="24" fill="#223048" stroke="#3b4a63"/>
+    <text x="120" y="255" class="layer-title">Product shell</text>
+    <text x="120" y="285" class="layer-note">Chat, copilot, dashboard, workflow, or host app.</text>
+    <g transform="translate(530 232)">
+      <rect width="185" height="88" rx="18" fill="#f4f7fb"/>
+      <text x="22" y="38" class="node-title">CopilotKit</text>
+      <text x="22" y="64" class="node-note">agent-native app UX</text>
+    </g>
+    <g transform="translate(740 232)">
+      <rect width="185" height="88" rx="18" fill="#f4f7fb"/>
+      <text x="22" y="38" class="node-title">assistant-ui</text>
+      <text x="22" y="64" class="node-note">chat primitives</text>
+    </g>
+    <g transform="translate(950 232)">
+      <rect width="185" height="88" rx="18" fill="#f4f7fb"/>
+      <text x="22" y="38" class="node-title">AI SDK UI</text>
+      <text x="22" y="64" class="node-note">useChat + parts</text>
+    </g>
+    <g transform="translate(1160 232)">
+      <rect width="250" height="88" rx="18" fill="#f4f7fb"/>
+      <text x="22" y="38" class="node-title">ChatGPT / MCP host</text>
+      <text x="22" y="64" class="node-note">iframe widgets + tools</text>
+    </g>
+  </g>
+
+  <g class="band">
+    <rect x="80" y="420" width="1440" height="190" rx="24" fill="#263b36" stroke="#41645a"/>
+    <text x="120" y="470" class="layer-title">UI composition layer</text>
+    <text x="120" y="500" class="layer-note">Output grammar.</text>
+    <g transform="translate(360 515)">
+      <rect width="188" height="92" rx="18" fill="#eaf8f3"/>
+      <text x="22" y="38" class="node-title">Tool UI</text>
+      <text x="22" y="64" class="node-note">prebuilt components</text>
+    </g>
+    <g transform="translate(570 515)">
+      <rect width="188" height="92" rx="18" fill="#eaf8f3"/>
+      <text x="22" y="38" class="node-title">A2UI</text>
+      <text x="22" y="64" class="node-note">declarative JSON</text>
+    </g>
+    <g transform="translate(780 515)">
+      <rect width="188" height="92" rx="18" fill="#eaf8f3"/>
+      <text x="22" y="38" class="node-title">json-render</text>
+      <text x="22" y="64" class="node-note">catalog to renderer</text>
+    </g>
+    <g transform="translate(990 515)">
+      <rect width="188" height="92" rx="18" fill="#eaf8f3"/>
+      <text x="22" y="38" class="node-title">Hashbrown</text>
+      <text x="22" y="64" class="node-note">React / Angular</text>
+    </g>
+    <g transform="translate(1200 515)">
+      <rect width="188" height="92" rx="18" fill="#eaf8f3"/>
+      <text x="22" y="38" class="node-title">OpenUI</text>
+      <text x="22" y="64" class="node-note">compact stream lang</text>
+    </g>
+  </g>
+
+  <g class="band">
+    <rect x="80" y="665" width="1440" height="160" rx="24" fill="#3b304b" stroke="#65537d"/>
+    <text x="120" y="715" class="layer-title">Runtime and transport</text>
+    <text x="120" y="745" class="layer-note">The event pipe for tools, state, and user actions.</text>
+    <g transform="translate(500 692)">
+      <rect width="210" height="88" rx="18" fill="#f5efff"/>
+      <text x="22" y="38" class="node-title">AG-UI</text>
+      <text x="22" y="64" class="node-note">event stream</text>
+    </g>
+    <g transform="translate(735 692)">
+      <rect width="210" height="88" rx="18" fill="#f5efff"/>
+      <text x="22" y="38" class="node-title">MCP Apps</text>
+      <text x="22" y="64" class="node-note">UI over tools</text>
+    </g>
+    <g transform="translate(970 692)">
+      <rect width="210" height="88" rx="18" fill="#f5efff"/>
+      <text x="22" y="38" class="node-title">A2A / MCP</text>
+      <text x="22" y="64" class="node-note">agent + tool links</text>
+    </g>
+  </g>
+
+  <g class="band">
+    <rect x="80" y="865" width="1440" height="62" rx="20" fill="#182231" stroke="#344156"/>
+    <text x="120" y="905" class="small">BACKENDS: LangGraph, Google ADK, CrewAI, Mastra, LlamaIndex, Pydantic AI, Agno, OpenAI Agents SDK, custom tools, model providers</text>
+  </g>
+
+  <path class="connector" d="M800 365 C800 385 800 395 800 420"/>
+  <path class="connector" d="M800 610 C800 635 800 645 800 665"/>
+  <path class="connector" d="M800 825 C800 845 800 850 800 865"/>
+</svg>

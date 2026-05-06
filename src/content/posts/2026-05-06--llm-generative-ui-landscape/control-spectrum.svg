@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Generative UI Control Spectrum</title>
+  <desc id="desc">A spectrum from high developer control to high agent freedom, with common generative UI approaches placed along the axis.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset="1" stop-color="#19242f"/>
+    </linearGradient>
+    <linearGradient id="axis" x1="0" x2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="0.5" stop-color="#f8d477"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+    <style>
+      .title { font: 800 58px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; letter-spacing: 0; }
+      .subtitle { font: 500 24px Inter, ui-sans-serif, system-ui, sans-serif; fill: #b8c6d7; letter-spacing: 0; }
+      .axis-label { font: 800 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; letter-spacing: 0; }
+      .card-title { font: 800 24px Inter, ui-sans-serif, system-ui, sans-serif; fill: #111827; letter-spacing: 0; }
+      .card-note { font: 600 16px Inter, ui-sans-serif, system-ui, sans-serif; fill: #3f4d63; letter-spacing: 0; }
+      .caption { font: 700 17px Inter, ui-sans-serif, system-ui, sans-serif; fill: #dbeafe; letter-spacing: 0; }
+      .warning { font: 800 18px Inter, ui-sans-serif, system-ui, sans-serif; fill: #ffe7a3; letter-spacing: 0; }
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <text x="90" y="110" class="title">Choose the Smallest Useful Freedom</text>
+  <text x="92" y="152" class="subtitle">The model should compose product behavior, not relearn your design system from first principles.</text>
+
+  <rect x="160" y="475" width="1280" height="28" rx="14" fill="url(#axis)"/>
+  <circle cx="190" cy="489" r="44" fill="#5eead4" opacity="0.22"/>
+  <circle cx="1410" cy="489" r="44" fill="#fb7185" opacity="0.22"/>
+  <text x="160" y="560" class="axis-label">Developer owns layout, states, and actions</text>
+  <text x="1052" y="560" class="axis-label">Agent owns layout and expression</text>
+
+  <g filter="url(#shadow)" transform="translate(135 255)">
+    <rect width="300" height="160" rx="22" fill="#effdf9"/>
+    <text x="28" y="48" class="card-title">Tool to component</text>
+    <text x="28" y="82" class="card-note">Model calls get_weather.</text>
+    <text x="28" y="108" class="card-note">App renders WeatherCard.</text>
+    <text x="28" y="134" class="card-note">Best default for products.</text>
+  </g>
+  <line x1="285" y1="415" x2="285" y2="475" stroke="#e6fffb" stroke-width="3"/>
+
+  <g filter="url(#shadow)" transform="translate(465 630)">
+    <rect width="310" height="170" rx="22" fill="#fff8dd"/>
+    <text x="28" y="48" class="card-title">Declarative catalog</text>
+    <text x="28" y="82" class="card-note">Agent composes approved</text>
+    <text x="28" y="108" class="card-note">components: cards, tables,</text>
+    <text x="28" y="134" class="card-note">forms, charts, workflows.</text>
+  </g>
+  <line x1="620" y1="630" x2="620" y2="503" stroke="#fff2bf" stroke-width="3"/>
+
+  <g filter="url(#shadow)" transform="translate(820 255)">
+    <rect width="315" height="170" rx="22" fill="#fff2e9"/>
+    <text x="28" y="48" class="card-title">Iframe mini-app</text>
+    <text x="28" y="82" class="card-note">Tool returns a widget.</text>
+    <text x="28" y="108" class="card-note">Sandbox owns richer</text>
+    <text x="28" y="134" class="card-note">interaction boundaries.</text>
+  </g>
+  <line x1="977" y1="425" x2="977" y2="475" stroke="#ffe8d6" stroke-width="3"/>
+
+  <g filter="url(#shadow)" transform="translate(1185 630)">
+    <rect width="300" height="170" rx="22" fill="#ffecef"/>
+    <text x="28" y="48" class="card-title">Open generation</text>
+    <text x="28" y="82" class="card-note">Agent writes HTML, SVG,</text>
+    <text x="28" y="108" class="card-note">Canvas, or code inside a</text>
+    <text x="28" y="134" class="card-note">strict sandbox.</text>
+  </g>
+  <line x1="1335" y1="630" x2="1335" y2="503" stroke="#ffd4dc" stroke-width="3"/>
+
+  <text x="185" y="895" class="caption">Rule of thumb: start left, move right only when the user problem needs more runtime variation.</text>
+  <text x="185" y="928" class="warning">Do not expose design primitives when domain components will do.</text>
+</svg>
