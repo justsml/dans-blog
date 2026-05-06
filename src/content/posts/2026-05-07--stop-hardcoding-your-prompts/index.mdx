@@ -25,11 +25,11 @@ const prompt = `You are a helpful assistant. The user said: ${userInput}. Answer
 
 That string is your system architecture now.
 
-It started reasonably: one model, one use case, a quick prototype. Then product asked for a different tone. Then you added retrieval context. Then compliance needed jurisdiction-specific disclaimers. Then someone asked for multilingual support. Then free and paid users needed different behavior.
+It started reasonably: one model, one use case, a quick prototype. Then product wanted a warmer tone. Retrieval added a few paragraphs of context. Compliance needed jurisdiction-specific disclaimers. Someone opened a ticket for multilingual support. Free and paid users suddenly needed different behavior.
 
-Each change was a string edit somewhere in the codebase, usually committed as "tweak prompt." Nobody knows what it does. Nobody tested it. It is load-bearing and invisible.
+Each change became a string edit somewhere in the codebase, usually committed as "tweak prompt." Nobody knows which sentence matters. Nobody can roll it back with confidence. It is load-bearing and invisible.
 
-Prompts are configuration. They deserve the same rigor you'd give anything else that controls runtime behavior. Here's how to structure them.
+Prompts are configuration. Treat them like code that controls runtime behavior: typed, testable, versioned, and boring to change.
 
 ---
 
@@ -92,7 +92,7 @@ ${validated.userTier === 'enterprise' ? '- Include SLA references when discussin
 }
 ```
 
-This gives you:
+Now the prompt has:
 - A compile-time contract for what the prompt needs
 - Runtime validation that bad input gets caught before it reaches the model
 - One place to find and understand the prompt logic
@@ -102,9 +102,9 @@ This gives you:
 
 ## Pattern 2: Composable Prompt Sections
 
-As prompts grow, flat strings become hard to maintain. Features add sections. Deployment contexts need different combinations.
+As prompts grow, flat strings turn every product request into archaeology. Features add sections. Deployments need different combinations. Tests need deterministic variants.
 
-Use the same answer you would use for complex UI: composition.
+Use the same answer you would use for complex UI: compose small pieces with explicit boundaries.
 
 ```typescript
 type PromptSection = {
@@ -166,7 +166,7 @@ function buildAgentPrompt(context: AgentContext): string {
 }
 ```
 
-Each section is testable. `CORE_RULES` is a constant you can grep for. Enterprise behavior is explicit, not buried in a template literal conditional.
+Each section is testable. `CORE_RULES` is a constant you can grep for. Enterprise behavior is a named block, not a ternary hiding in the middle of a paragraph.
 
 ---
 
@@ -216,7 +216,7 @@ User data and document content go through `escapeXml` before reaching the prompt
 
 ## Pattern 4: Prompt Versioning
 
-Prompts change, and those changes affect behavior. Without versioning, you have no way to:
+Prompts change behavior as surely as code does. Without versioning, you have no way to:
 
 - Know which prompt produced which output (for debugging)
 - Roll back a prompt change that caused a regression
@@ -245,7 +245,7 @@ export const PROMPT_CHANGELOG = {
 };
 ```
 
-Tag every LLM call with the prompt version. Now logs say "support-agent@v3 produced this output" instead of "the prompt produced this output." When something breaks, you know where to look.
+Tag every LLM call with the prompt version. Logs should say "support-agent@v3 produced this output," not "the prompt did something weird." When behavior changes, you know which artifact changed with it.
 
 ```typescript
 async function callModel(
@@ -304,7 +304,7 @@ Now CI runs deterministically (`temperature: 0`), and your prompt builder doesn'
 
 ## Putting It Together
 
-None of these patterns are complex alone. The power is in combining them:
+None of these patterns are impressive by themselves. That's the point. Together they turn prompt work from folklore into ordinary engineering:
 
 1. **Typed templates** — catch bad input at the boundary, before it touches the model
 2. **Composable sections** — build complex prompts from auditable pieces
@@ -312,6 +312,6 @@ None of these patterns are complex alone. The power is in combining them:
 4. **Versioning** — make prompt changes traceable and reversible
 5. **Env-specific config** — stop shipping debug prompts to production
 
-A prompt with all five properties looks different from the string you started with. It takes longer to write once and is much easier to maintain for a year. You can hand it to someone new without a 30-minute explanation of which string to edit and why.
+A prompt with all five properties looks nothing like the string you started with. It takes longer to write once and much less nerve to change later. You can hand it to someone new without a 30-minute oral history of which sentence is sacred.
 
 Your model isn't the hard part of AI engineering. Your prompt infrastructure is.

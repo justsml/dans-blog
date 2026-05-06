@@ -17,23 +17,23 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Every new model arrives with immaculate benchmarks.
+Every new model arrives wearing a tuxedo of benchmarks.
 
 MMLU: 92.4%. HumanEval: 87.2%. MATH: 73.6%. The numbers go up. The changelog says "improved reasoning." The blog post says "state of the art." You swap it into your pipeline, and nothing gets better. Sometimes things get worse. You're back on the old model by Thursday.
 
-This happens to everyone. It's not a skill issue. It's that the benchmarks aren't measuring what you care about.
+This happens to good teams. The benchmark was not fake; it was answering a different question.
 
 MMLU measures multiple-choice questions from academic subjects. HumanEval measures whether a model can write the function body for simple coding problems. These are legitimate tests of something. They are not tests of whether the model will extract structured data from messy customer feedback, generate SQL that runs against your schema, or refuse to fabricate citations.
 
-The gap between "performs well on benchmarks" and "performs well in your system" is the whole problem of LLM evaluation. Most teams solve it with vibes.
+The gap between "performs well on benchmarks" and "performs well in your system" is the whole problem of LLM evaluation. Too often, the bridge across that gap is a Slack thread and a feeling.
 
 ---
 
 ## What "Vibes-Based Evaluation" Actually Costs
 
-The standard approach: ship a model change, watch for complaints, roll back if things blow up.
+The standard approach: ship a model change, watch the complaint channels, roll back if the room gets loud.
 
-The problems:
+That misses almost everything interesting:
 
 **You only catch loud failures.** Users who get a confidently wrong answer and don't realize it? Silent. Users who get a worse answer and abandon the feature? Silent. Support tickets and error rates capture only a fraction of quality regression.
 
@@ -49,7 +49,7 @@ Evaluation approaches sit on a spectrum from "fast but flimsy" to "expensive but
 
 **LLM-as-judge** is the current darling: ask a powerful model to grade another model's outputs. Fast, scalable, cheap. The problem: it bakes in the grader model's biases, can be gamed, and creates a circular dependency. If you use GPT-5 to grade GPT-5's outputs, you're measuring something like "how much does GPT-5 agree with GPT-5." That's not nothing, but it's not what you think.
 
-**Human eval** is the gold standard everyone abandons. Getting humans to evaluate outputs is expensive, slow, inconsistent across evaluators, and doesn't scale. But it's the only thing that actually validates whether your system is useful to real humans.
+**Human eval** is the gold standard everyone tries to skip. Getting humans to evaluate outputs is expensive, slow, inconsistent across evaluators, and annoying to schedule. But it is the only thing that validates whether your system is useful to real humans.
 
 **Task-specific automated checks** are where most teams should spend more time. They are not glamorous, but they are fast, deterministic, and tied to what matters in your system.
 
@@ -108,11 +108,11 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
 
 ### 2. Build a Golden Set From Your Worst Days
 
-Your best evaluation data is the stuff that went wrong in production.
+Your best evaluation data is the embarrassing stuff: the outputs that made someone file a ticket, screenshot a hallucination, or quietly stop using the feature.
 
 Every time a user reports a bad output, flags a hallucination, or you notice a failure manually, add it to your golden set: the input, the context, and the correct behavior. Keep 50-100 cases and run them on every model change.
 
-This is tedious at first. After six months, you have a test suite that is immune to benchmark gaming because it comes from real failures in your system.
+This feels manual at first. After six months, you have a test suite no public benchmark can game, because every case came from your own failure history.
 
 ```typescript
 interface GoldenCase {
@@ -131,7 +131,7 @@ interface GoldenCase {
 
 ### 3. Regression Testing, Not Just Acceptance Testing
 
-Most teams run evals when considering a model change. That's acceptance testing: "is this new thing good enough?"
+Most teams run evals only when considering a model change. That's acceptance testing: "is this new thing good enough?"
 
 You also need regression testing: "did this break something that used to work?"
 
@@ -175,7 +175,7 @@ async function compareModelVersions(
 }
 ```
 
-If a candidate regresses on known failures, you have a concrete conversation with whoever is pushing the upgrade.
+If a candidate regresses on known failures, the upgrade conversation gets wonderfully specific: which cases improved, which cases broke, and whether the trade is worth it.
 
 ### 4. Use LLM-as-Judge for Exactly One Thing
 
@@ -215,10 +215,10 @@ An explicit rubric reduces evaluator variance, gives you interpretable output, a
 
 ## The Uncomfortable Part
 
-Most teams skip this because it requires knowing what good looks like before you build.
+Most teams skip this because it asks an irritating question early: what would "good" look like here?
 
 That is genuinely hard for a new AI feature. It is also non-optional if you care about reliability. Teams that ship trustworthy AI are doing the same thing they'd do for any critical code path: define expected behavior, test it, and run those tests continuously.
 
-The benchmarks are not lying. They are answering a different question. Stop reading them as product roadmaps and start writing tests that match your system.
+The benchmarks are not lying. They are answering someone else's question. Stop reading them as product roadmaps and start writing tests that match your system.
 
 Your users will notice before your dashboards do. Build the test suite first.

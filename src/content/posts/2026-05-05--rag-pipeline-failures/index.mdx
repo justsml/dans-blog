@@ -19,17 +19,17 @@ cover_icon: ./square.webp
 
 The RAG demo always looks great.
 
-You embed some docs, spin up a vector store, wire it to chat, and watch the model cite your internal knowledge base like it's been there for years. Beautiful. Stakeholders are impressed. Someone says "let's ship this."
+You embed some docs, spin up a vector store, wire it to chat, and watch the model cite your internal knowledge base like it has worked there for years. Beautiful. Stakeholders are impressed. Someone says "let's ship this."
 
-Six weeks later, users are getting confidently wrong answers. Support tickets pile up. The system *works*, just not *well* - and that gap is eating the team alive.
+Six weeks later, users are getting confidently wrong answers. Support tickets pile up. The system *works*, just not in the way people need it to.
 
-Here are the five ways this happens, and what to do about each one.
+The failure is usually not one dramatic mistake. It is five boring ones stacked together.
 
 ---
 
 ## 1. Your Chunks Are the Wrong Size
 
-This is the most common failure and the hardest to diagnose, because it doesn't crash. It just quietly makes your answers worse.
+This failure does not crash. It just makes every answer slightly worse until the whole feature feels untrustworthy.
 
 Vector search retrieves *chunks*, not documents. Whatever you split your source material into becomes the retriever's unit of truth. If the chunks are wrong, the model answers with the wrong fragments.
 
@@ -53,7 +53,7 @@ You update the documentation but don't re-embed the chunks. The vector index sti
 
 Users ask about the new pricing. The embeddings route them to the old content. The model reads the old content and confidently explains the old pricing. Support gets a ticket.
 
-This isn't hypothetical. Every production RAG system I've seen hits it eventually. The fix sounds obvious - re-embed when content changes - but teams rarely build that pipeline before the first incident.
+Every serious RAG system hits this eventually. The fix sounds obvious - re-embed when content changes - but teams rarely build that pipeline before the first incident.
 
 You need incremental re-indexing with content fingerprinting:
 
@@ -121,7 +121,7 @@ const context = reranked.slice(0, 5); // Now top-5 actually means something
 
 You've retrieved the right chunks. Congratulations. The model is still going to get this wrong.
 
-The problem is where you put things in the prompt. That sounds minor. It isn't.
+The issue is not only what you retrieve. It is where you put it.
 
 LLMs suffer from the "lost in the middle" problem. Relevant information buried in the middle of a long context is much less likely to be used than information at the beginning or end. Papers have measured it; the effect is not subtle.
 
@@ -141,7 +141,7 @@ Things that actually help:
 
 ## 5. You Have No Idea When It's Wrong
 
-This is the one that hurts the most.
+This is the quiet failure: the answer returns, the UI looks healthy, and the content is wrong.
 
 With a traditional API, failures are visible: HTTP 500, timeout, schema validation error. You know immediately. RAG failures are quieter: the system returns a response, it looks plausible, and it is wrong.
 
@@ -155,7 +155,7 @@ The minimum viable observability setup for a production RAG system:
 
 **Build a feedback loop.** Even a thumbs up/down on responses, connected back to the query and retrieved chunks, gives you training signal. Without it, you're flying blind.
 
-**Run periodic evals.** A test set of 50-100 questions with known correct answers, run weekly, will catch regression before users do. It doesn't have to be fancy. A spreadsheet and a script is fine.
+**Run periodic evals.** A test set of 50-100 questions with known correct answers, run weekly, will catch regression before users do. A spreadsheet and a script is enough to start.
 
 ```typescript
 async function runEval(
@@ -190,6 +190,6 @@ These failures are not mainly about the embedding model or vector database. They
 
 RAG demos work because the demo conditions are controlled: clean documents, well-formed questions, tolerant evaluators. Production fails because none of those conditions hold.
 
-The good news: every failure above is diagnosable and fixable, but only if you're measuring. Teams that ship reliable RAG aren't doing anything exotic. They're treating it like software engineering instead of magic.
+Every failure above is diagnosable, but only if you're measuring. Reliable RAG teams are not doing anything exotic. They're treating retrieval quality like a real subsystem instead of a demo artifact.
 
 Set up the eval loop first. Everything else is easier once you can measure it.
