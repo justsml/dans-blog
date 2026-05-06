@@ -1,0 +1,221 @@
+---
+title: "LLM Evals Are Broken (Here's What Works Instead)"
+subTitle: "Benchmarks tell you how a model performs on benchmarks. That's not the same thing."
+date: 2026-05-06
+modified: 2026-05-06
+tags: [ai, llm, evals, testing, production, quality, observability]
+category: AI
+subCategory: Engineering
+draft: true
+popularity: 0.85
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+Every time a new model drops, the benchmarks are immaculate.
+
+MMLU: 92.4%. HumanEval: 87.2%. MATH: 73.6%. The numbers go up. The changelog says "improved reasoning." The blog post says "state of the art." You swap it into your pipeline — and nothing gets better. Sometimes things get worse. You're back on the old model by Thursday.
+
+This happens to everyone. It's not a skill issue. It's that the benchmarks aren't measuring what you care about.
+
+MMLU measures multiple-choice questions from academic subjects. HumanEval measures whether a model can write the function body for simple coding problems. These are legitimate tests of something. They're just not tests of whether the model will reliably extract structured data from your messy customer feedback, generate SQL that actually runs against your schema, or decline to fabricate citations when it doesn't know the answer.
+
+The gap between "performs well on benchmarks" and "performs well in your system" is the entire problem of LLM evaluation. And most teams are solving it with vibes.
+
+---
+
+## What "Vibes-Based Evaluation" Actually Costs
+
+The standard approach: ship a model change, watch for complaints, roll back if things blow up.
+
+The problems with this:
+
+**You only catch the loud failures.** Users who get a confidently wrong answer and don't realize it? Silent. Users who get a slightly worse answer and just give up on the feature? Silent. The metric you're watching — support tickets, error rates — captures a fraction of the quality regression.
+
+**You can't distinguish regressions from improvements.** If the new model is better at task A and worse at task B, complaints about B look identical to generic "the AI got worse" feedback. You don't know what to fix.
+
+**You're using your users as test infrastructure.** They didn't sign up for that.
+
+---
+
+## The Eval Spectrum (and Where Most Teams Get It Wrong)
+
+There's a spectrum of evaluation approaches, roughly from "useless but fast" to "expensive but actually valid."
+
+**LLM-as-judge** is the current darling. You ask a powerful model to grade another model's outputs. Fast, scalable, cheap. The problem: it bakes in the grader model's biases, it can be gamed, and it introduces a circular dependency that makes systematic improvement nearly impossible. If you use GPT-5 to grade GPT-5's outputs, you're measuring something like "how much does GPT-5 agree with GPT-5." That's not nothing, but it's not what you think it is.
+
+**Human eval** is the gold standard everyone abandons. Getting humans to evaluate outputs is expensive, slow, inconsistent across evaluators, and doesn't scale. But it's the only thing that actually validates whether your system is useful to real humans.
+
+**Task-specific automated checks** is where most teams should be spending more time, and aren't. These aren't glamorous. But they're fast, deterministic, and closely tied to what actually matters in your system.
+
+---
+
+## What Actually Works
+
+### 1. Define Failure Before You Ship
+
+Before you change a model or a prompt, write down what bad looks like. Specifically.
+
+Not "the output should be accurate." That's not a test. More like:
+
+- Structured JSON output must parse without errors
+- All citations in the response must appear verbatim in the retrieved context
+- Responses must not mention competitor product names
+- SQL queries must be syntactically valid and reference only tables that exist in the schema
+- Sentiment classification must not flip from positive to negative more than 3% of the time on the existing test set
+
+These are things you can check programmatically. No judge model required.
+
+```typescript
+type EvalResult = { passed: boolean; reason?: string };
+
+const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
+  // JSON must parse
+  validJson: (output) => {
+    try {
+      JSON.parse(output);
+      return { passed: true };
+    } catch (e) {
+      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+    }
+  },
+
+  // No hallucinated citations — every claim must appear in context
+  groundedCitations: (output, { retrievedChunks }) => {
+    const claims = extractCitations(output);
+    const ungrounded = claims.filter(
+      (claim) => !retrievedChunks.some((chunk) => chunk.includes(claim))
+    );
+    return ungrounded.length === 0
+      ? { passed: true }
+      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+  },
+
+  // Response length sanity check — catch truncation or runaway generation
+  reasonableLength: (output) => {
+    const words = output.split(/\s+/).length;
+    return words >= 10 && words <= 2000
+      ? { passed: true }
+      : { passed: false, reason: `Word count ${words} out of bounds` };
+  },
+};
+```
+
+### 2. Build a Golden Set From Your Worst Days
+
+Your best evaluation data is the stuff that went wrong in production.
+
+Every time a user reports a bad output, flags a hallucination, or you notice a failure manually: add it to your golden set. The input, the context, and what the correct output should have been. Keep 50-100 cases and run them on every model change.
+
+This sounds tedious. It is, at first. After six months, you have a test suite that is completely immune to benchmark gaming because it's built from real failures in your specific system.
+
+```typescript
+interface GoldenCase {
+  id: string;
+  input: string;
+  context: Record<string, unknown>;
+  expectedBehavior: {
+    mustContain?: string[];
+    mustNotContain?: string[];
+    structureCheck?: (output: string) => boolean;
+    minSimilarityToReference?: number; // cosine similarity to a reference answer
+  };
+  sourceIncident?: string; // link back to the bug report or ticket
+}
+```
+
+### 3. Regression Testing, Not Just Acceptance Testing
+
+Most teams run evals when they're considering a model change. That's acceptance testing — "is this new thing good enough?"
+
+What you actually need is regression testing — "did this change break something that used to work?"
+
+Run your golden set on every prompt change, not just model changes. A prompt that was working fine can silently degrade when you add a new tool, change a RAG retrieval strategy, or update your context template. You won't know without a baseline.
+
+```typescript
+async function compareModelVersions(
+  goldenCases: GoldenCase[],
+  baselinePipeline: Pipeline,
+  candidatePipeline: Pipeline
+) {
+  const results = await Promise.all(
+    goldenCases.map(async (tc) => {
+      const [baseline, candidate] = await Promise.all([
+        baselinePipeline.run(tc.input, tc.context),
+        candidatePipeline.run(tc.input, tc.context),
+      ]);
+
+      return {
+        id: tc.id,
+        baselinePassed: runEvals(baseline, tc.expectedBehavior),
+        candidatePassed: runEvals(candidate, tc.expectedBehavior),
+        regression: /* baseline passed */ && /* candidate failed */,
+        improvement: /* baseline failed */ && /* candidate passed */,
+      };
+    })
+  );
+
+  const regressions = results.filter((r) => r.regression);
+  const improvements = results.filter((r) => r.improvement);
+
+  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+
+  if (regressions.length > 0) {
+    console.error('⛔ Blocking regressions found:');
+    regressions.forEach((r) => console.error(` - ${r.id}`));
+  }
+
+  return { regressions, improvements };
+}
+```
+
+If a candidate model has regressions on known failures, you have a concrete conversation to have with whoever's pushing the upgrade.
+
+### 4. Use LLM-as-Judge for Exactly One Thing
+
+LLM-as-judge is genuinely useful for evaluating open-ended outputs where there's no deterministic right answer — things like "is this response helpful?", "does this summary preserve the key points?", "is this explanation at the right level for a beginner?"
+
+Use it there. Don't use it to evaluate things that have deterministic answers. And when you do use it, make your grading rubric explicit in the judge prompt:
+
+```typescript
+async function judgeHelpfulness(
+  userQuery: string,
+  modelResponse: string
+): Promise<{ score: number; reasoning: string }> {
+  const judgePrompt = `
+You are evaluating a customer support response.
+
+User question: ${userQuery}
+Response: ${modelResponse}
+
+Rate the response on a scale of 1-5:
+5 = Directly answers the question with accurate, actionable information
+4 = Answers the question but could be more specific or actionable
+3 = Partially addresses the question; key information is missing
+2 = Tangentially related but doesn't answer the question
+1 = Off-topic, factually wrong, or harmful
+
+Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+`;
+
+  const result = await judgeModel.generate(judgePrompt);
+  return JSON.parse(result);
+}
+```
+
+An explicit rubric reduces evaluator variance, gives you interpretable output, and makes it easier to audit when the judge is wrong.
+
+---
+
+## The Uncomfortable Part
+
+The reason most teams don't do this: it requires knowing what good looks like before you build.
+
+That's genuinely hard for a new AI feature. But it's not optional if you care about reliability. The teams that ship trustworthy AI systems aren't doing magic — they're doing the same thing they'd do for any critical code path: defining expected behavior, writing tests against it, and running those tests continuously.
+
+The benchmarks aren't lying to you. They're just answering a different question than the one you're asking. Stop reading them as product roadmaps and start writing the tests that actually match your system.
+
+Your users will notice before your dashboards do. Build the test suite first.

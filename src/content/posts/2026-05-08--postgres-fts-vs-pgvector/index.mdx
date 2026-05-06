@@ -1,0 +1,229 @@
+---
+title: "Postgres Full-Text Search vs. pgvector: When to Use Each"
+subTitle: "You already have both. Here's how to stop picking the wrong one."
+date: 2026-05-08
+modified: 2026-05-08
+tags: [postgres, postgresql, pgvector, full-text-search, vector-search, databases, ai, search]
+category: Code
+subCategory: Databases
+draft: true
+popularity: 0.8
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+There's a pattern I keep seeing on teams that start adding AI features: they reach for a dedicated vector database.
+
+Pinecone, Weaviate, Qdrant, Chroma. They spin up a new service, add a new dependency, configure a new connection, pay for a new subscription, and now they have two data sources to keep in sync.
+
+Meanwhile, they already have PostgreSQL. And PostgreSQL already has `pgvector`. And PostgreSQL has had excellent full-text search built in since 2008.
+
+This isn't an argument against dedicated vector stores for every use case — at very large scale with very high query volumes, they matter. But for most applications, running two separate search systems before you've outgrown one is premature complexity. You're solving a problem you don't have yet while making the problem you do have harder.
+
+So: when do you use FTS, when do you use pgvector, and when do you use both?
+
+---
+
+## What Each One Actually Does
+
+Full-text search (`tsvector` / `GIN` index) is lexical. It tokenizes your text into lexemes, stems them, and matches queries against the index. "Running" and "runs" are the same lexeme. "Dog" and "dogs" are the same lexeme. The ranking function (`ts_rank`) rewards documents that contain the query terms more frequently or more prominently.
+
+pgvector is semantic. It doesn't know anything about your text. It stores a dense vector — a list of numbers — that represents the *meaning* of a chunk of text as understood by an embedding model. Similarity search finds vectors that are close together in that high-dimensional space, which roughly corresponds to meaning-similarity. "Dog" and "canine" end up near each other. "Running" the sport and "running" a process might not.
+
+The practical difference: FTS is great at "find me documents containing these words." Vector search is great at "find me documents that mean roughly this thing."
+
+---
+
+## When Full-Text Search Wins
+
+**You're searching on terms that matter exactly.** Product SKUs, error codes, model numbers, usernames, legal clause references. `SKU-AX-44192` is not semantically similar to anything. It either matches or it doesn't. Vector search will confidently return `SKU-AX-44193` as highly relevant. That's not what you want.
+
+**Your queries are keyword-based.** Users typing into a search box, filtering by tag, searching blog posts by keyword. This is what FTS was built for.
+
+**You need ranked results fast without GPU/embedding infrastructure.** FTS indexes are fast, deterministic, and require no external API calls. You add a `tsvector` column, build a GIN index, and you're done.
+
+**You're doing boolean filtering alongside search.** `WHERE to_tsvector(body) @@ to_tsquery('postgres') AND category = 'tutorial' AND published_at > NOW() - INTERVAL '6 months'` — this composes naturally with your existing query logic.
+
+```sql
+-- Create the index
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(body, '')), 'B')
+  ) STORED;
+
+CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
+
+-- Query
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'postgres & performance') query
+WHERE search_vector @@ query
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+The `GENERATED ALWAYS AS` column keeps the index updated automatically. The `setweight` gives title matches higher rank than body matches. That's the whole setup.
+
+---
+
+## When pgvector Wins
+
+**You're building RAG.** The whole point of RAG is semantic retrieval — find the document *chunks* whose meaning is closest to the user's question, even when the wording is completely different. Vector search is purpose-built for this. FTS will miss paraphrases, synonyms, and conceptual matches.
+
+**Users describe what they want, not what to search for.** "Something light for a summer evening" as a wine recommendation query has no keywords. "Articles about building confidence as a new manager" requires semantic understanding that FTS can't provide.
+
+**You're finding similar items.** Related products, similar support tickets, duplicate bug reports. "Find me issues similar to this one" is a vector operation. You embed the new issue and find its nearest neighbors.
+
+**Multilingual content.** Vector embeddings trained on multilingual data can match across languages. FTS requires language-specific configurations and handles cross-language queries poorly.
+
+```sql
+-- Setup
+CREATE EXTENSION IF NOT EXISTS vector;
+
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+CREATE INDEX documents_embedding_idx
+  ON documents USING ivfflat (embedding vector_cosine_ops)
+  WITH (lists = 100);
+
+-- Query: semantic search
+SELECT id, title, 1 - (embedding <=> $1::vector) AS similarity
+FROM documents
+ORDER BY embedding <=> $1::vector
+LIMIT 10;
+```
+
+Note: `ivfflat` is approximate — it's fast but trades some recall for speed. For smaller datasets (under ~1M rows), `hnsw` is often better:
+
+```sql
+CREATE INDEX documents_embedding_idx
+  ON documents USING hnsw (embedding vector_cosine_ops);
+```
+
+---
+
+## When You Need Both
+
+Here's the scenario that trips people up: you're building a search feature for a technical documentation site. Users search for things like "how to configure timeouts" but also search for specific function names like `withRetry()` or error codes like `ECONNRESET`.
+
+Vector search handles the conceptual queries well. FTS handles the exact-term queries well. Neither handles both correctly on its own.
+
+The solution is hybrid search: run both, then fuse the results.
+
+**Reciprocal Rank Fusion (RRF)** is the standard algorithm here. It doesn't require you to normalize scores from two different systems — it just combines the rank positions.
+
+```sql
+-- Hybrid search with Reciprocal Rank Fusion
+WITH fts_results AS (
+  SELECT id, ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM documents, to_tsquery('english', $1) query
+  WHERE search_vector @@ query
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id, ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + f.rank), 0) + COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM fts_results f
+  FULL OUTER JOIN vector_results v ON f.id = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+The `60` in the denominator is the RRF constant — higher values reduce the influence of rank differences, lower values amplify them. The default of 60 works well in most cases.
+
+This runs two searches in one query, fuses the ranks, and returns results where both keyword and semantic signals agree at the top.
+
+---
+
+## The Practical Decision Tree
+
+**Does the query rely on exact terms?** → FTS (or hybrid)
+
+**Is the query conversational / described in natural language?** → pgvector
+
+**Are you building RAG over documents?** → pgvector
+
+**Do you need both exact-term and conceptual matching?** → Hybrid (RRF)
+
+**Are you under 1M document chunks with modest query volume?** → You don't need a separate vector database. `pgvector` with `hnsw` will handle it.
+
+**Are you over 1M chunks with sub-10ms latency requirements and high concurrent query load?** → Now it's worth evaluating dedicated vector stores. Not before.
+
+---
+
+## If You Do Need a Dedicated Vector Store
+
+Eventually, some systems genuinely outgrow pgvector. When that happens, you need to pick something. The market has a lot of noise — here's what actually matters across the top options.
+
+### The Feature Matrix
+
+The columns that matter for production decisions: deployment model, license, hybrid search (BM25 + vector built in), sparse vector support (SPLADE/BM25 sparse), whether you get SQL or SQL-like querying, multimodal native support, disk-based index (so you're not forced into RAM), max vector dimensions, and what makes each one worth considering.
+
+| Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
+|---|---|---|---|---|---|---|---|---|---|
+| **pgvector** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 | Already on Postgres; under 10M vectors |
+| **Qdrant** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Best-in-class | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
+| **Weaviate** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
+| **Pinecone** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
+| **Milvus / Zilliz** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
+| **Chroma** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | Local dev and prototyping only |
+| **LanceDB** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | Edge / serverless; multimodal lakehouse |
+| **Turbopuffer** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | Multi-tenant SaaS; millions of namespaces |
+| **Elasticsearch** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | Already on Elastic stack; hybrid enterprise search |
+| **OpenSearch** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-native; open-source Elastic alternative |
+| **MongoDB Atlas** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 2,048 | Already on MongoDB; document + vector in one |
+| **Redis (VSS)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
+| **Marqo** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
+
+### Reading the Matrix
+
+A few things that don't fit cleanly in a table:
+
+**Sparse vectors** are how you do BM25-quality keyword matching with a vector index — no separate full-text engine required. Qdrant has the most mature implementation. Elasticsearch's ELSER is production-proven at enterprise scale. Weaviate supports them via its BM25F module. If hybrid search is critical and you can't run two systems, sparse vector support is the feature to look for.
+
+**Disk-based indexes** matter more than people realize. RAM-resident HNSW indexes are fast but expensive — at 1536 dimensions, float32, you're looking at ~6GB RAM per million vectors. Disk-based alternatives (Milvus's DiskANN, Elasticsearch's DiskBBQ, Turbopuffer's object storage tier, LanceDB's Lance format) let you trade some query latency for dramatically lower infrastructure cost. For RAG systems where most queries are warm-path user queries and the index is large, this tradeoff is usually worth it.
+
+**Turbopuffer's multi-tenancy** is genuinely in a different class. Every other database counts namespaces or indexes as a limit. Turbopuffer doesn't. Notion runs 10B+ vectors across millions of namespaces on it. If you're building a SaaS product where each user or organization needs isolated vector search, this changes the economics entirely.
+
+**LanceDB embedded mode** is the closest thing to "SQLite for vector search." It runs in-process, no server required, works in Lambda, Cloudflare Workers, edge environments. The Lance columnar format is what makes this possible — it's disk-efficient enough to make embedded operation practical at real scale.
+
+**Chroma stops at dev/test.** At 100M+ vectors it degrades badly, it has no disk index, no real hybrid search, and no production HA story. It's a great prototyping tool — don't mistake it for a production system.
+
+### The Simplified Decision
+
+If you've genuinely outgrown pgvector (over ~10M vectors, or needing sub-10ms p99 at high concurrency):
+
+- **SaaS product with per-tenant isolation** → Turbopuffer
+- **Need Rust-level performance + complex metadata filtering** → Qdrant
+- **Already on Elastic/ELK stack** → Elasticsearch with DiskBBQ
+- **AWS shop that wants open-source** → OpenSearch
+- **Billion-scale on-prem / self-hosted** → Milvus
+- **Edge / serverless / multimodal** → LanceDB
+- **Zero ops, just works, cost is secondary** → Pinecone
+- **Multimodal-first (images, video, audio)** → Marqo
+- **Already on MongoDB** → Atlas Vector Search
+- **Already on Postgres, need more headroom** → Supabase Vector or Neon (both pgvector managed, with better tooling)
+
+---
+
+## One Thing to Not Do
+
+Don't use vector search as a fuzzy text search replacement for things that have correct answers.
+
+"Find me the user with email `dan@example.com`" is not a vector search problem. Neither is "Find me the order with ID `ORD-12345`." Embedding `ORD-12345` and doing cosine similarity against your orders table will return *something*, but it'll be wrong. These are exact-match problems. Use your primary key or a regular index.
+
+Vector search returns the *most similar* thing in your dataset, even when nothing is actually relevant. It doesn't know that there's no good answer. That behavior is appropriate when you're finding related documents. It's catastrophic when you're looking up a specific record and getting back a confidently wrong near-match instead of an empty result.
+
+Know what each tool is for. Both are already in your Postgres installation. Use them where they fit.

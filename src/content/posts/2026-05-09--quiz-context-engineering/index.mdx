@@ -1,0 +1,468 @@
+---
+title: "Quiz: 14 Context Engineering Questions"
+subTitle: "Prompt engineering is what you do. Context engineering is what you ship."
+date: 2026-05-09
+modified: 2026-05-09
+tags: [quiz, ai, llm, context-engineering, prompts, rag, tokens, advanced]
+category: Quiz
+subCategory: AI
+draft: true
+popularity: 0.85
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Everyone talks about prompt engineering. Context engineering is the part that actually determines whether your AI system works in production. How well do you know it?</p>
+
+This quiz covers context windows, token management, retrieval, prompt structure, and the subtle behaviors that make or break production LLM systems. Questions escalate from foundational to genuinely tricky.
+
+Good luck. 🍀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={0}
+  group="Foundations"
+  title="Context Window Basics"
+  options={[
+    {text: 'The maximum number of requests per minute'},
+    {text: 'The combined token limit for input and output', isAnswer: true},
+    {text: 'The number of messages in a conversation'},
+    {text: 'The memory available between sessions'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What does "context window" refer to in an LLM?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The context window is the total number of tokens a model can process in a single call — **input + output combined**. A 128K context window means your prompt + retrieved documents + conversation history + the model's response must all fit within 128,000 tokens.
+
+    It has nothing to do with sessions, memory, or rate limits. When you hit the limit, the model either truncates, errors out, or — worse — silently drops tokens you didn't expect.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={1}
+  group="Foundations"
+  title="Token Estimation"
+  options={[
+    {text: 'About 50 tokens'},
+    {text: 'About 130 tokens', isAnswer: true},
+    {text: 'About 300 tokens'},
+    {text: 'About 1,000 tokens'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Roughly how many tokens does a 100-word English paragraph use with a modern tokenizer like cl100k (GPT-4)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The rule of thumb is **~1.3 tokens per word** for typical English prose. A 100-word paragraph ≈ 130 tokens.
+
+    This varies significantly by content type:
+    - Code: ~1.5–2 tokens/word (special characters, whitespace)
+    - Technical docs with lots of identifiers: can be higher
+    - Common English words: often 1 token each
+    - Rare words, names, non-English text: often 2–4 tokens each
+
+    The `tiktoken` library gives you exact counts. Always measure before assuming.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={2}
+  group="Foundations"
+  title="Role of the System Prompt"
+  options={[
+    {text: 'It is processed first and has higher weight than user messages', isAnswer: true},
+    {text: 'It is identical to a user message but displayed differently'},
+    {text: 'It is only used for API calls, not chat interfaces'},
+    {text: 'It persists across sessions as long-term memory'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is the practical effect of using the `system` role vs. the `user` role in the messages array?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The `system` role is processed as operator-level instructions. Models are trained to give it higher adherence than user messages — it's the architectural boundary between "what the developer said" and "what the user said."
+
+    It's not magic. It doesn't guarantee the model ignores conflicting user instructions (see: prompt injection). But it meaningfully increases the model's tendency to follow your instructions, especially for well-trained models like Claude and GPT-4+.
+
+    In practice: put your persona, rules, and behavioral constraints in `system`. Put retrieved context and user data in `user`. Never put user-controlled input in `system`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={3}
+  group="Retrieval"
+  title="Lost in the Middle"
+  options={[
+    {text: 'Models perform equally well regardless of where context is placed'},
+    {text: 'Models perform best with context at the very end'},
+    {text: 'Models perform best with context at the beginning and end, worst in the middle', isAnswer: true},
+    {text: 'Models perform best with context in the middle of the prompt'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Research on the "Lost in the Middle" problem shows that LLMs tend to:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The [Lost in the Middle paper (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demonstrated that LLMs reliably struggle with information placed in the middle of long contexts. Performance is significantly higher when relevant information appears at the **beginning or end** of the context window.
+
+    Practical implication: when inserting retrieved chunks into a RAG prompt, don't just append them in order of relevance. Put your highest-ranked result first, second-highest last, and fill the middle with lower-ranked material. Counter-intuitive, but measurably better.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={4}
+  group="Retrieval"
+  title="Chunking Strategy"
+  options={[
+    {text: 'Use the largest chunk size your context window allows'},
+    {text: 'Always use 512 tokens — it\'s the standard'},
+    {text: 'Use overlapping chunks sized to match your content structure', isAnswer: true},
+    {text: 'Chunk size doesn\'t matter as long as the embedding model is good'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    When chunking documents for RAG, what's the most important principle?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    There's no universal correct chunk size — it depends on your content. The important principles are:
+
+    1. **Match your content structure.** FAQ pages chunk well at the Q+A level. Legal docs chunk well at the clause level. Code chunks well at the function level.
+    2. **Use overlap.** A 512-token chunk with 64 tokens of overlap on each side means answers that straddle a boundary still get retrieved.
+    3. **Measure.** Build an eval set and test multiple chunk sizes. The chunk size matters more than the embedding model.
+
+    "512 tokens" is a reasonable starting point, not a law.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={5}
+  group="Retrieval"
+  title="Hybrid Search"
+  options={[
+    {text: 'Running the same query twice for redundancy'},
+    {text: 'Using two different embedding models on the same corpus'},
+    {text: 'Combining vector search with keyword search for better retrieval', isAnswer: true},
+    {text: 'Searching across multiple vector databases simultaneously'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    In RAG systems, "hybrid search" refers to:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Hybrid search combines **vector search** (semantic similarity via embeddings) and **keyword search** (BM25 / full-text search) because they fail in complementary ways:
+
+    - Vector search struggles with exact terms: product names, error codes, model numbers, technical identifiers
+    - Keyword search struggles with paraphrasing: "how do I cancel" vs. "terminate subscription"
+
+    Results from both are fused using **Reciprocal Rank Fusion (RRF)** — a ranking algorithm that combines positions from multiple ranked lists without requiring normalized scores.
+
+    Both are available in Postgres with `pgvector` + `tsvector`. You may not need a separate search service.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={6}
+  group="Token Management"
+  title="Context Budget"
+  options={[
+    {text: 'Use 95%+ of the context window to maximize information'},
+    {text: 'Keep total context under 50% to leave room for the response', isAnswer: true},
+    {text: 'Context budget only matters for models under 32K tokens'},
+    {text: 'The model automatically truncates when the window is exceeded'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    When building a RAG prompt with retrieved context, a good rule of thumb for context budget is:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    The context window is shared between **input and output**. If you use 90% for input, the model only has 10% of the window left to generate a response — which often causes truncated or degraded outputs.
+
+    A reasonable heuristic: use no more than **60–70% of the total context window for your input** (system prompt + history + retrieved context). Leave the rest for generation.
+
+    Additionally, models perform worse near the edges of their context window — comprehension and instruction-following degrade as the context fills up. Running at 95% is technically possible. It's not the same experience as running at 50%.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={7}
+  group="Token Management"
+  title="Conversation History Management"
+  options={[
+    {text: 'Always send the complete conversation history'},
+    {text: 'Summarize old messages when the history exceeds a token budget', isAnswer: true},
+    {text: 'Delete old messages — the model has persistent memory'},
+    {text: 'Store history in a vector database and retrieve relevant turns'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    In a multi-turn chat application, what's the correct strategy when conversation history grows long?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    LLMs don't have persistent memory. Every API call is stateless — you send the full context, you get a response. The "memory" of a conversation is entirely the message history you include in each request.
+
+    When that history grows beyond your budget, the options are:
+    1. **Summarize**: Compress older turns into a running summary, keep recent turns verbatim
+    2. **Sliding window**: Keep the last N turns, drop earlier ones
+    3. **Selective retrieval**: Embed conversation turns and retrieve relevant ones per query (complex but powerful)
+
+    Plain truncation — cutting old messages to fit — is the worst option because it silently removes context the model might need.
+
+    Vector DB retrieval of conversation history is theoretically appealing but usually overkill for most chat apps. Summarization is the pragmatic default.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={8}
+  group="Prompt Structure"
+  title="Few-Shot Examples"
+  options={[
+    {text: 'More examples always produce better results'},
+    {text: '3–5 high-quality, diverse examples in the prompt', isAnswer: true},
+    {text: 'Few-shot examples only help for classification tasks'},
+    {text: 'Examples should go after the user query, not before'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    For most production use cases, the optimal few-shot example strategy is:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Few-shot examples dramatically improve output consistency and format adherence. The sweet spot for most tasks is **3–5 high-quality, diverse examples**.
+
+    Why not more? Each example costs tokens. Beyond 5–10 examples, the marginal benefit drops while token cost keeps rising. More examples also increase the chance that the model over-fits to the examples rather than understanding the underlying pattern.
+
+    Why diversity matters: if all your examples are the same type of input, the model won't generalize well to edge cases. Include examples that cover your most important variations.
+
+    Placement: examples go *before* the user query, as part of the system prompt or as prefilled conversation turns — not after.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={9}
+  group="Prompt Structure"
+  title="XML Tags for Structure"
+  options={[
+    {text: 'XML tags are only valid in Anthropic models'},
+    {text: 'XML tags help models distinguish instructions from data and improve parsing accuracy', isAnswer: true},
+    {text: 'XML tags slow down tokenization and should be avoided'},
+    {text: 'XML tags are equivalent to markdown headers'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Why do many production prompts use XML-style tags like `<document>`, `<context>`, `<instructions>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    XML-style tags provide **explicit structural boundaries** that models are trained to recognize and respect. They do two things:
+
+    1. **Separation**: They signal to the model where instructions end and data begins — critical for RAG and for preventing prompt injection from injected documents.
+    2. **Parseability**: When you ask the model to respond in XML (e.g., `<answer>...</answer>`), the tags give you clean extraction points without regex hacks.
+
+    This isn't XML-as-a-markup-language. It's XML as a delimiter convention that models are trained on. It works because the model has seen this pattern extensively in training, not because it's validating schemas.
+
+    Works across all major models (GPT, Claude, Gemini) — it's a training data convention, not a vendor feature.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={10}
+  group="Advanced"
+  title="Temperature and Determinism"
+  options={[
+    {text: 'temperature=0 always produces identical outputs for the same input'},
+    {text: 'temperature=0 makes outputs more deterministic but not guaranteed identical', isAnswer: true},
+    {text: 'temperature=0 disables the model\'s ability to refuse requests'},
+    {text: 'temperature only affects the length of the response'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Setting `temperature=0` in your LLM call means:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `temperature=0` makes the model pick the highest-probability token at each step (greedy decoding), which produces **more consistent** outputs — but not guaranteed-identical outputs.
+
+    Sources of variation at temperature=0:
+    - **Floating-point non-determinism** in GPU math, especially across different hardware or batch sizes
+    - **Server-side infrastructure changes** (model updates, serving infrastructure)
+    - **Long outputs** accumulate small variations
+
+    For test suites and evals that need strict determinism, `temperature=0` is the right choice — just don't write assertions that depend on byte-for-byte identical outputs. Assert on structure, key content, and behavior, not exact strings.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={11}
+  group="Advanced"
+  title="Prompt Caching"
+  options={[
+    {text: 'Caching stores responses and replays them for identical queries'},
+    {text: 'Caching stores compiled KV pairs for static prompt prefixes, reducing input token cost', isAnswer: true},
+    {text: 'Caching is only available in OpenAI models'},
+    {text: 'Caching is automatic and requires no developer configuration'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What is "prompt caching" in the context of LLM APIs (Anthropic, OpenAI)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Prompt caching (available in Anthropic's Claude and OpenAI's GPT-4o) stores the computed **KV cache** for a static prompt prefix. On subsequent requests with the same prefix, the model skips re-processing those tokens — which reduces latency and dramatically reduces cost (cached tokens are typically 80–90% cheaper).
+
+    This is not response caching. The model still generates a fresh response every time. You're just avoiding re-tokenizing and re-computing attention for the part of the prompt that doesn't change.
+
+    Best used for: large system prompts, static documents, tool definitions, few-shot examples — anything that's the same across many requests. The cached prefix must be at the *start* of your prompt.
+
+    Not the same as: semantic deduplication, response memoization, or caching at the application layer.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={12}
+  group="Advanced"
+  title="Grounding vs. Hallucination"
+  options={[
+    {text: 'Tell the model "do not hallucinate" in the system prompt'},
+    {text: 'Use a higher temperature to generate more confident responses'},
+    {text: 'Provide retrieved source documents and instruct the model to cite them', isAnswer: true},
+    {text: 'Use a larger model — hallucination only happens in smaller models'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    The most effective technique for reducing hallucination in a production AI system is:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Instructing a model not to hallucinate doesn't stop hallucination — the model doesn't have a reliable introspective signal for "I'm making this up." It just means the model will confidently tell you it's not making things up while making things up.
+
+    What actually works: **grounding**. Give the model the information it needs to answer correctly, and constrain it to that information:
+
+    ```
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    ```
+
+    Then validate the output: check that claims in the response appear in the retrieved context. This is the citation grounding check — see the RAG eval discussion for implementation.
+
+    Larger models hallucinate less on average, but all models hallucinate. Grounding is the mitigation strategy, not model size.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "600px"}}
+  index={13}
+  group="Expert"
+  title="Context Engineering vs. Fine-Tuning"
+  options={[
+    {text: 'Fine-tuning is always better — context engineering is a workaround'},
+    {text: 'Context engineering is free; fine-tuning is expensive; always use context engineering'},
+    {text: 'Context engineering changes behavior per-request; fine-tuning changes model weights permanently', isAnswer: true},
+    {text: 'They are different names for the same technique'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    What's the key distinction between context engineering and fine-tuning, and when does fine-tuning actually make sense?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    **Context engineering** shapes model behavior through the prompt — system instructions, few-shot examples, retrieved context. It's per-request, reversible, and requires no training.
+
+    **Fine-tuning** updates the model's weights on your data. Changes are permanent (for that checkpoint) and apply to every inference.
+
+    Fine-tuning is genuinely better when:
+    - You need a consistent style/format the model can't reliably follow from instructions alone
+    - Your task requires knowledge the base model doesn't have (proprietary domain)
+    - You need to reduce prompt length — fine-tuned behavior doesn't need to be explained every request
+    - You're running many requests where consistent few-shot examples are eating significant tokens
+
+    Fine-tuning is overkill when:
+    - Your instructions fit in a system prompt
+    - Requirements change frequently (you'd need to re-fine-tune)
+    - You haven't exhausted context engineering first
+
+    The right order: nail context engineering first. Fine-tune when it's provably not enough.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+How'd you do?
+
+- **13–14**: You're building production AI systems, not just demoing them. Rare.
+- **9–12**: Solid practitioner. You know the tools; the edges are still fuzzy.
+- **5–8**: You've used LLMs a lot but haven't thought deeply about context management. Read up on prompt caching and hybrid search — they'll change how you think about costs.
+- **0–4**: Good news: everything in this quiz is learnable and immediately practical. The "lost in the middle" question alone is worth understanding before your next RAG deployment.
+
+Context engineering is the discipline of being intentional about what information you put in the window, where you put it, and how you structure it. The model is the least controllable part of your system. Everything around it is yours.
