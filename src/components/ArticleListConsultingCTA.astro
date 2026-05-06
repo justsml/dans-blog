@@ -90,13 +90,16 @@ const selectedVariantKey =
 const selectedCta = VARIANTS[selectedVariantKey];
 ---
 
-<aside
+<a
   class:list={[
     "article-list-cta",
     selectedCta.accentClass,
     compact && "article-list-cta--compact",
   ]}
-  aria-label="Consulting services"
+  href={INTRO_CALL_LINK}
+  target="_blank"
+  rel="noopener"
+  aria-label={`${selectedCta.primaryLabel}: ${selectedCta.title}`}
   data-pagefind-ignore="all"
 >
   <div class="article-list-cta__ornament" aria-hidden="true"></div>
@@ -106,17 +109,12 @@ const selectedCta = VARIANTS[selectedVariantKey];
     <p>{selectedCta.body}</p>
   </div>
   <div class="article-list-cta__actions">
-    <a
-      class="article-list-cta__link"
-      href={INTRO_CALL_LINK}
-      target="_blank"
-      rel="noopener"
-    >
+    <span class="article-list-cta__link" aria-hidden="true">
       <span>{selectedCta.primaryLabel}</span>
       <span aria-hidden="true">-&gt;</span>
-    </a>
+    </span>
   </div>
-</aside>
+</a>
 
 <style>
   .article-list-cta {
@@ -142,11 +140,20 @@ const selectedCta = VARIANTS[selectedVariantKey];
     overflow: hidden;
     padding: clamp(1rem, 2vw, 1.35rem);
     position: relative;
+    text-decoration: none;
     transition:
       border-color 240ms ease,
       box-shadow 240ms ease,
       opacity 220ms ease,
       transform 220ms ease;
+  }
+
+  .article-list-cta:hover,
+  .article-list-cta:focus-visible {
+    border-color: color-mix(in srgb, var(--cta-accent) 32%, var(--cta-border));
+    box-shadow: 0 18px 42px rgba(0, 8, 12, 0.22);
+    outline: none;
+    transform: translateY(-2px);
   }
 
   .article-list-cta::before {
@@ -287,19 +294,22 @@ const selectedCta = VARIANTS[selectedVariantKey];
     transition: transform 180ms ease;
   }
 
-  .article-list-cta__link:hover,
-  .article-list-cta__link:focus-visible {
+  .article-list-cta:hover .article-list-cta__link,
+  .article-list-cta:focus-visible .article-list-cta__link {
     color: rgba(245, 245, 247, 0.86);
-    outline: none;
     transform: translateY(-2px);
   }
 
-  .article-list-cta__link:hover::after,
-  .article-list-cta__link:focus-visible::after {
+  .article-list-cta:hover .article-list-cta__link::after,
+  .article-list-cta:focus-visible .article-list-cta__link::after {
     transform: scaleX(1);
   }
 
-  .article-list-cta__link:active {
+  .article-list-cta:active {
+    transform: translateY(-1px) scale(0.998);
+  }
+
+  .article-list-cta:active .article-list-cta__link {
     transform: translateY(-1px) scale(0.99);
   }
 
