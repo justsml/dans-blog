@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="780" viewBox="0 0 1600 780" role="img" aria-labelledby="sg-title sg-desc">
+  <title id="sg-title">The Generative UI Output Grammar Spectrum</title>
+  <desc id="sg-desc">A spectrum from left to right showing three output models: tool calls only on the left (safest), component catalog in the middle, and open-ended generation on the right (maximum expressiveness, maximum risk).</desc>
+  <defs>
+    <linearGradient id="bg-g" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#101820"/>
+      <stop offset="1" stop-color="#192230"/>
+    </linearGradient>
+    <linearGradient id="axis-g" x1="0" x2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="0.5" stop-color="#f8d477"/>
+      <stop offset="1" stop-color="#fb7185"/>
+    </linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <style>
+      .t  { font: 800 52px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
+      .st { font: 500 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #94afc7; }
+      .ct { font: 800 22px Inter, ui-sans-serif, system-ui, sans-serif; fill: #111827; }
+      .cb { font: 600 15px Inter, ui-sans-serif, system-ui, sans-serif; fill: #364154; }
+      .al { font: 700 18px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
+      .cap{ font: 600 16px Inter, ui-sans-serif, system-ui, sans-serif; fill: #94afc7; }
+      .badge { font: 800 13px Inter, ui-sans-serif, sans-serif; letter-spacing: .07em; text-transform: uppercase; fill: #fff; }
+    </style>
+  </defs>
+  <rect width="1600" height="780" fill="url(#bg-g)"/>
+  <circle cx="1450" cy="80" r="180" fill="#5eead4" opacity="0.05"/>
+  <circle cx="140" cy="700" r="140" fill="#fb7185" opacity="0.05"/>
+  <text x="90" y="86" class="t">What You Give the Model to Speak With</text>
+  <text x="92" y="124" class="st">Pick the smallest output grammar that solves the user problem. Every step right adds expressiveness and risk.</text>
+  <rect x="90" y="168" width="1420" height="20" rx="10" fill="url(#axis-g)" opacity="0.85"/>
+  <circle cx="110" cy="178" r="36" fill="#5eead4" opacity="0.18"/>
+  <circle cx="1490" cy="178" r="36" fill="#fb7185" opacity="0.18"/>
+  <text x="90"  y="222" class="al">Constrained</text>
+  <text x="1380" y="222" class="al">Open-ended</text>
+  <g filter="url(#sh)" transform="translate(90 250)">
+    <rect width="430" height="390" rx="24" fill="#e8fdf7"/>
+    <rect x="0" y="0" width="430" height="8" rx="4" fill="#5eead4"/>
+    <rect x="24" y="30" width="120" height="28" rx="14" fill="#5eead4"/>
+    <text x="38" y="50" class="badge" fill="#065f46">Pattern 1</text>
+    <text x="24" y="104" class="ct">Tool calls only</text>
+    <text x="24" y="132" class="cb">Model calls named tools.</text>
+    <text x="24" y="155" class="cb">Tools return structured data.</text>
+    <text x="24" y="178" class="cb">App maps tool names to pre-built</text>
+    <text x="24" y="201" class="cb">components the developer owns.</text>
+    <line x1="24" y1="226" x2="406" y2="226" stroke="#5eead4" stroke-width="1" opacity="0.5"/>
+    <text x="24" y="258" class="cb" fill="#065f46">Zero layout generation.</text>
+    <text x="24" y="281" class="cb" fill="#065f46">Zero hallucinated UI structure.</text>
+    <text x="24" y="320" class="cb">Tools: Vercel AI SDK useChat,</text>
+    <text x="24" y="343" class="cb">assistant-ui, CopilotKit static</text>
+    <text x="24" y="366" class="cb">tool rendering</text>
+  </g>
+  <g filter="url(#sh)" transform="translate(585 250)">
+    <rect width="430" height="390" rx="24" fill="#fffcee"/>
+    <rect x="0" y="0" width="430" height="8" rx="4" fill="#f8d477"/>
+    <rect x="24" y="30" width="120" height="28" rx="14" fill="#f8d477"/>
+    <text x="38" y="50" class="badge" fill="#713f12">Pattern 2</text>
+    <text x="24" y="104" class="ct">Component catalog</text>
+    <text x="24" y="132" class="cb">Model emits a typed JSON tree.</text>
+    <text x="24" y="155" class="cb">Every node references a component</text>
+    <text x="24" y="178" class="cb">in a developer-defined catalog.</text>
+    <text x="24" y="201" class="cb">Schema catches unknown types.</text>
+    <line x1="24" y1="226" x2="406" y2="226" stroke="#f8d477" stroke-width="1" opacity="0.5"/>
+    <text x="24" y="258" class="cb" fill="#713f12">Agent controls composition;</text>
+    <text x="24" y="281" class="cb" fill="#713f12">developer controls rendering.</text>
+    <text x="24" y="320" class="cb">Tools: json-render, A2UI,</text>
+    <text x="24" y="343" class="cb">Hashbrown, OpenUI, Tambo,</text>
+    <text x="24" y="366" class="cb">CopilotKit declarative mode</text>
+  </g>
+  <g filter="url(#sh)" transform="translate(1080 250)">
+    <rect width="430" height="390" rx="24" fill="#fff0f2"/>
+    <rect x="0" y="0" width="430" height="8" rx="4" fill="#fb7185"/>
+    <rect x="24" y="30" width="120" height="28" rx="14" fill="#fb7185"/>
+    <text x="38" y="50" class="badge" fill="#7f1d1d">Pattern 3</text>
+    <text x="24" y="104" class="ct">Open-ended generation</text>
+    <text x="24" y="132" class="cb">Model writes HTML, SVG,</text>
+    <text x="24" y="155" class="cb">Canvas, or arbitrary code.</text>
+    <text x="24" y="178" class="cb">Rendered in a sandboxed iframe</text>
+    <text x="24" y="201" class="cb">with strict CSP.</text>
+    <line x1="24" y1="226" x2="406" y2="226" stroke="#fb7185" stroke-width="1" opacity="0.5"/>
+    <text x="24" y="258" class="cb" fill="#7f1d1d">Maximum expressiveness.</text>
+    <text x="24" y="281" class="cb" fill="#7f1d1d">Requires strict sandboxing.</text>
+    <text x="24" y="320" class="cb">Tools: OpenGenerativeUI,</text>
+    <text x="24" y="343" class="cb">MCP Apps, CopilotKit</text>
+    <text x="24" y="366" class="cb">open-ended sandbox</text>
+  </g>
+  <line x1="305" y1="188" x2="305" y2="250" stroke="#5eead4" stroke-width="2" opacity="0.5"/>
+  <line x1="800" y1="188" x2="800" y2="250" stroke="#f8d477" stroke-width="2" opacity="0.5"/>
+  <line x1="1295" y1="188" x2="1295" y2="250" stroke="#fb7185" stroke-width="2" opacity="0.5"/>
+  <text x="90" y="698" class="cap">Start at Pattern 1. Move to Pattern 2 when users need adaptive composition. Move to Pattern 3 only for creative artifacts.</text>
+  <text x="90" y="726" class="cap">Most production apps use a mix: Pattern 1 for transactional UI, Pattern 2 for adaptive dashboards, Pattern 3 for one-off visuals.</text>
+</svg>

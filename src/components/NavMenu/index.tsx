@@ -216,7 +216,7 @@ const NavMenu = ({
               void toggleSearch();
             }}
           >
-            <MagnifyingGlassIcon />
+            <MagnifyingGlassIcon  />
           </button>
         </NavigationMenu.Item>
 

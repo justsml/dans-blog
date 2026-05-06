@@ -21,7 +21,7 @@ export const SearchButton = () => {
     <Button
       title="Toggle search panel"
       type="button"
-      className={"btnSearchToggle p-1"}
+      className={"btnSearchToggle"}
       variant={"ghost"}
       onClick={handleToggle}
     >

@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="fs-title fs-desc">
+  <title id="fs-title">The Generative UI Full Stack Map</title>
+  <desc id="fs-desc">Four-layer diagram. Top: wire protocols (AG-UI, A2UI, MCP Apps, Open-JSON-UI). Second: JS/TS app shells (CopilotKit, Vercel AI SDK UI, assistant-ui, LangGraph UI). Third: JS/TS catalog tools (json-render, Hashbrown, OpenUI, Tambo). Bottom: Python tooling (Gradio, Streamlit, LangChain, Haystack).</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0e1620"/>
+      <stop offset="1" stop-color="#19242f"/>
+    </linearGradient>
+    <filter id="sh2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+    <style>
+      .t2  { font: 800 46px Inter, ui-sans-serif, system-ui, sans-serif; fill: #f8fafc; }
+      .st2 { font: 500 20px Inter, ui-sans-serif, system-ui, sans-serif; fill: #94afc7; }
+      .ll  { font: 800 12px Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; fill: #94afc7; }
+      .nt  { font: 800 18px Inter, ui-sans-serif, system-ui, sans-serif; fill: #111827; }
+      .nb  { font: 600 13px Inter, ui-sans-serif, system-ui, sans-serif; fill: #364154; }
+      .cap2{ font: 600 14px Inter, ui-sans-serif, system-ui, sans-serif; fill: #94afc7; }
+    </style>
+  </defs>
+  <rect width="1600" height="1040" fill="url(#bg2)"/>
+  <circle cx="1480" cy="100" r="200" fill="#7c3aed" opacity="0.05"/>
+  <circle cx="120" cy="960" r="160" fill="#22c55e" opacity="0.05"/>
+  <text x="90" y="68" class="t2">The Generative UI Stack</text>
+  <text x="92" y="100" class="st2">Four distinct layers. Most confusion comes from treating one layer as if it were another.</text>
+  <rect x="72" y="124" width="1456" height="14" rx="7" fill="#7c3aed" opacity="0.7"/>
+  <text x="90" y="162" class="ll">Layer 1 — Wire protocols and formats</text>
+  <g filter="url(#sh2)" transform="translate(90 176)">
+    <rect width="330" height="148" rx="18" fill="#f5f3ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#7c3aed"/>
+    <text x="22" y="44" class="nt">AG-UI</text>
+    <text x="22" y="68" class="nb">Event-based agent-to-app protocol.</text>
+    <text x="22" y="88" class="nb">~16 event types, transport-agnostic.</text>
+    <text x="22" y="112" class="nb" fill="#5b21b6">github: ag-ui-protocol/ag-ui</text>
+    <text x="22" y="134" class="nb" fill="#5b21b6">How agents talk. Not what they show.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(446 176)">
+    <rect width="330" height="148" rx="18" fill="#f5f3ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#7c3aed"/>
+    <text x="22" y="44" class="nt">A2UI</text>
+    <text x="22" y="68" class="nb">Declarative JSONL component spec.</text>
+    <text x="22" y="88" class="nb">Flat list, incremental, streamable.</text>
+    <text x="22" y="112" class="nb" fill="#5b21b6">github: google/A2UI</text>
+    <text x="22" y="134" class="nb" fill="#5b21b6">What agents send. Not how it renders.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(802 176)">
+    <rect width="330" height="148" rx="18" fill="#f5f3ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#7c3aed"/>
+    <text x="22" y="44" class="nt">MCP Apps</text>
+    <text x="22" y="68" class="nb">MCP extension for UI widgets.</text>
+    <text x="22" y="88" class="nb">Iframe sandboxing, predeclared templates.</text>
+    <text x="22" y="112" class="nb" fill="#5b21b6">github: modelcontextprotocol</text>
+    <text x="22" y="134" class="nb" fill="#5b21b6">UI resources over MCP. Host-controlled.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(1158 176)">
+    <rect width="330" height="148" rx="18" fill="#f5f3ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#7c3aed"/>
+    <text x="22" y="44" class="nt">Open-JSON-UI</text>
+    <text x="22" y="68" class="nb">Converging declarative UI spec.</text>
+    <text x="22" y="88" class="nb">A2UI-compatible. OpenAI-originated.</text>
+    <text x="22" y="112" class="nb" fill="#5b21b6">CopilotKit/generative-ui examples</text>
+    <text x="22" y="134" class="nb" fill="#5b21b6">Informal standard emerging.</text>
+  </g>
+  <rect x="72" y="354" width="1456" height="14" rx="7" fill="#2563eb" opacity="0.7"/>
+  <text x="90" y="392" class="ll">Layer 2 — JavaScript / TypeScript app shells</text>
+  <g filter="url(#sh2)" transform="translate(90 406)">
+    <rect width="330" height="148" rx="18" fill="#eff6ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#2563eb"/>
+    <text x="22" y="44" class="nt">CopilotKit</text>
+    <text x="22" y="68" class="nb">Full frontend stack for agent apps.</text>
+    <text x="22" y="88" class="nb">AG-UI native, shared state, HITL.</text>
+    <text x="22" y="112" class="nb" fill="#1d4ed8">CopilotKit/CopilotKit</text>
+    <text x="22" y="134" class="nb" fill="#1d4ed8">React + Angular. Production.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(446 406)">
+    <rect width="330" height="148" rx="18" fill="#eff6ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#2563eb"/>
+    <text x="22" y="44" class="nt">Vercel AI SDK UI</text>
+    <text x="22" y="68" class="nb">useChat + useObject + streamUI.</text>
+    <text x="22" y="88" class="nb">Streaming, tool rendering, Next.js.</text>
+    <text x="22" y="112" class="nb" fill="#1d4ed8">vercel/ai</text>
+    <text x="22" y="134" class="nb" fill="#1d4ed8">Widely used TypeScript baseline.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(802 406)">
+    <rect width="330" height="148" rx="18" fill="#eff6ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#2563eb"/>
+    <text x="22" y="44" class="nt">assistant-ui</text>
+    <text x="22" y="68" class="nb">Composable React chat primitives.</text>
+    <text x="22" y="88" class="nb">BYOB, tool rendering, streaming.</text>
+    <text x="22" y="112" class="nb" fill="#1d4ed8">assistant-ui/assistant-ui</text>
+    <text x="22" y="134" class="nb" fill="#1d4ed8">Production chat ergonomics.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(1158 406)">
+    <rect width="330" height="148" rx="18" fill="#eff6ff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#2563eb"/>
+    <text x="22" y="44" class="nt">LangGraph Generative UI</text>
+    <text x="22" y="68" class="nb">Graph-emitted named UI messages.</text>
+    <text x="22" y="88" class="nb">Components co-located with graph.</text>
+    <text x="22" y="112" class="nb" fill="#1d4ed8">LangGraph Platform</text>
+    <text x="22" y="134" class="nb" fill="#1d4ed8">Natural for LangGraph deployments.</text>
+  </g>
+  <rect x="72" y="584" width="1456" height="14" rx="7" fill="#0891b2" opacity="0.7"/>
+  <text x="90" y="622" class="ll">Layer 3 — JavaScript / TypeScript UI spec and catalog tools</text>
+  <g filter="url(#sh2)" transform="translate(90 636)">
+    <rect width="330" height="148" rx="18" fill="#ecfeff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#0891b2"/>
+    <text x="22" y="44" class="nt">json-render</text>
+    <text x="22" y="68" class="nb">Pre-built catalog + Zod schemas.</text>
+    <text x="22" y="88" class="nb">Multi-target: web, PDF, email, video.</text>
+    <text x="22" y="112" class="nb" fill="#0e7490">vercel-labs/json-render</text>
+    <text x="22" y="134" class="nb" fill="#0e7490">React, Vue, Svelte, Solid, RN.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(446 636)">
+    <rect width="330" height="148" rx="18" fill="#ecfeff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#0891b2"/>
+    <text x="22" y="44" class="nt">Hashbrown</text>
+    <text x="22" y="68" class="nb">LLM selects approved app components.</text>
+    <text x="22" y="88" class="nb">Client-side tools. Embeds in products.</text>
+    <text x="22" y="112" class="nb" fill="#0e7490">liveloveapp/hashbrown</text>
+    <text x="22" y="134" class="nb" fill="#0e7490">React + Angular. In-product surfaces.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(802 636)">
+    <rect width="330" height="148" rx="18" fill="#ecfeff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#0891b2"/>
+    <text x="22" y="44" class="nt">OpenUI</text>
+    <text x="22" y="68" class="nb">Compact streaming UI language.</text>
+    <text x="22" y="88" class="nb">Token-efficient, model-agnostic.</text>
+    <text x="22" y="112" class="nb" fill="#0e7490">thesysdev/openui</text>
+    <text x="22" y="134" class="nb" fill="#0e7490">Built-in charts, forms, tables.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(1158 636)">
+    <rect width="330" height="148" rx="18" fill="#ecfeff"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#0891b2"/>
+    <text x="22" y="44" class="nt">Tambo</text>
+    <text x="22" y="68" class="nb">Stateful AI component selection.</text>
+    <text x="22" y="88" class="nb">Client-side tool execution. React.</text>
+    <text x="22" y="112" class="nb" fill="#0e7490">tambo-ai/tambo</text>
+    <text x="22" y="134" class="nb" fill="#0e7490">Automatic orchestration.</text>
+  </g>
+  <rect x="72" y="814" width="1456" height="14" rx="7" fill="#16a34a" opacity="0.7"/>
+  <text x="90" y="852" class="ll">Layer 4 — Python tooling (demos, data apps, ML pipelines)</text>
+  <g filter="url(#sh2)" transform="translate(90 866)">
+    <rect width="330" height="130" rx="18" fill="#f0fdf4"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#16a34a"/>
+    <text x="22" y="44" class="nt">Gradio</text>
+    <text x="22" y="68" class="nb">Python-first ML demo UIs.</text>
+    <text x="22" y="88" class="nb">ChatInterface, Blocks, HF Spaces.</text>
+    <text x="22" y="114" class="nb" fill="#166534">gradio-app/gradio — Very mature.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(446 866)">
+    <rect width="330" height="130" rx="18" fill="#f0fdf4"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#16a34a"/>
+    <text x="22" y="44" class="nt">Streamlit</text>
+    <text x="22" y="68" class="nb">Script-to-app for AI data apps.</text>
+    <text x="22" y="88" class="nb">All major LLMs, Snowflake native.</text>
+    <text x="22" y="114" class="nb" fill="#166534">streamlit/streamlit — Very mature.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(802 866)">
+    <rect width="330" height="130" rx="18" fill="#f0fdf4"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#16a34a"/>
+    <text x="22" y="44" class="nt">LangChain LCEL</text>
+    <text x="22" y="68" class="nb">Agent pipelines, structured outputs.</text>
+    <text x="22" y="88" class="nb">Tool use chains. Backend, not UI.</text>
+    <text x="22" y="114" class="nb" fill="#166534">langchain-ai/langchain — Stable.</text>
+  </g>
+  <g filter="url(#sh2)" transform="translate(1158 866)">
+    <rect width="330" height="130" rx="18" fill="#f0fdf4"/>
+    <rect x="0" y="0" width="330" height="6" rx="3" fill="#16a34a"/>
+    <text x="22" y="44" class="nt">Haystack</text>
+    <text x="22" y="68" class="nb">Modular AI pipelines, RAG, MCP.</text>
+    <text x="22" y="88" class="nb">Hayhooks exposes pipelines as APIs.</text>
+    <text x="22" y="114" class="nb" fill="#166534">deepset-ai/haystack — Stable.</text>
+  </g>
+  <text x="90" y="1018" class="cap2">Layers 1 and 2 often combine: AG-UI carries events; A2UI carries catalog specs; app shells render them. Layer 4 is a parallel track for Python-first workflows.</text>
+</svg>
