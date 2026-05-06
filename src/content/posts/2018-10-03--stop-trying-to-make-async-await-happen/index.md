@@ -177,11 +177,11 @@ There are 5 anonymous methods defined in this single function. As Jake even poin
 
 ### Begin by **extracting methods**...
 
-![](async-refactor-google-extract-methods-resized-75.webp "Extracting methods")
+![VS Code refactor extracting async methods from Promise code](async-refactor-google-extract-methods-resized-75.webp "Extracting methods")
 
 ### Continue by replacing the `.reduce()` and `logPromise()` with a `Promise.all` and a `..map()`...
 
-![](async-refactor-google-chain-methods-resized-75.webp "Improving readability")
+![Refactored Promise chain using Promise all and map for readability](async-refactor-google-chain-methods-resized-75.webp "Improving readability")
 
 
 ### Summary

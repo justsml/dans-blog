@@ -435,6 +435,7 @@ const NavMenu = ({
                     <a href="/about">
                       <img
                         src={avatarImage.src}
+                        alt="Dan Levy"
                         width={avatarImage.width}
                         height={avatarImage.height}
                         loading="lazy"

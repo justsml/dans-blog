@@ -160,15 +160,6 @@ const heroPreload = _heroSrc
         typeof cover_full_width === "object" &&
         "src" in cover_full_width ? (
           <div class="banner-wrapper full-width">
-            {/* Ghost image: invisible, only holds layout space — deprioritise it */}
-            <Image
-              class="ghost-image"
-              src={cover_full_width as ImageMetadata}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              {...responsiveImgSizes_fullWidth}
-            />
             {/* LCP target — eager + high priority, preloaded in <head> */}
             <Image
               class="flow u-photo banner-image"
@@ -350,15 +341,6 @@ const heroPreload = _heroSrc
       border-top: 1px solid var(--primary);
       border-bottom: 1px solid var(--primary);
       box-shadow: inset 0 0 15px rgba(255, 0, 153, 0.1); /* Subtle neon glow */
-    }
-
-    /* Ghost image props open the container */
-    .ghost-image {
-      display: block;
-      width: 100%;
-      height: auto;
-      visibility: hidden; /* Takes up space but invisible */
-      pointer-events: none;
     }
 
     /* Canvas is absolute overlay */

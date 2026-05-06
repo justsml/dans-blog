@@ -36,7 +36,7 @@ This shows how `console.log()`'s execution will be delayed by `delay(msec)`.
 delay(1000).then(() => console.log("done"));
 ```
 
-![](N_1000ms_log.webp)
+![Timeline showing delay 1000 then console log running after one second](N_1000ms_log.webp)
 
 <!-- ```
 delay(1000) --------|.then(fn)
@@ -61,7 +61,7 @@ Generally the desired usage for `console.log` is shown in Example #1. Make sure 
 delay(1000).then(console.log("done"));
 ```
 
-![](N_1000ms_!log.webp)
+![Timeline showing console log running immediately before the delay finishes](N_1000ms_!log.webp)
 
 <!-- ```
 delay(1000) --------|.then(null)
@@ -80,7 +80,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![](N_3000ms.webp)
+![Timeline showing three delay promises resolving after one two and three seconds](N_3000ms.webp)
 
 <!-- ```
 delay(1000) ------|.then(console.log)
@@ -99,7 +99,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![](N_3000ms_PromiseAll.webp)
+![Timeline showing Promise all waiting for all three delay promises](N_3000ms_PromiseAll.webp)
 
 <!--
 ```

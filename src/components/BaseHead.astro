@@ -22,6 +22,27 @@ let { title, description, image } = Astro.props;
 
 if (description === "undefined") description = undefined;
 
+const META_DESCRIPTION_MAX_LENGTH = 155;
+
+function normalizeMetaDescription(value: string | undefined) {
+  if (!value) return undefined;
+
+  const text = value
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/<[^>]*>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (text.length <= META_DESCRIPTION_MAX_LENGTH) return text;
+
+  const truncated = text
+    .slice(0, META_DESCRIPTION_MAX_LENGTH - 3)
+    .replace(/\s+\S*$/, "")
+    .replace(/[,:;.!?\-]+$/, "");
+
+  return `${truncated}...`;
+}
+
 if (
   !image ||
   (typeof image === "string" ? image.length <= 1 : !("src" in image))
@@ -31,7 +52,7 @@ if (
 const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 const siteTitle =
   title === "DanLevy.net" ? defaultFullTitle : `${title} | ${SITE_TITLE}`;
-const siteDescription = description || SITE_SEO_DESCRIPTION;
+const siteDescription = normalizeMetaDescription(description || SITE_SEO_DESCRIPTION);
 
 const version = pkg.version;
 
@@ -69,7 +90,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
 <slot name="description">
   {
     siteDescription && (
-      <meta name="description" content={description ?? siteDescription} />
+      <meta name="description" content={siteDescription} />
     )
   }
   {
