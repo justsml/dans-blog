@@ -52,7 +52,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
             <li class="item-categories">
               <div class="Callout neon-bg-3">
                 <div class="CalloutHeading">Categories</div>
-                <p class="CalloutText">
+                <div class="CalloutText">
                   {
                     categories.slice(0, 6).map(([category, count]) => (
                       <a
@@ -64,14 +64,14 @@ const { categories, popularPosts, recentPosts } = Astro.props;
                       </a>
                     ))
                   }
-                </p>
+                </div>
               </div>
             </li>
 
             <li class="item-popular">
               <div class="Callout neon-bg-2">
                 <div class="CalloutHeading">Popular</div>
-                <p class="CalloutText">
+                <div class="CalloutText">
                   {
                     popularPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
@@ -83,14 +83,14 @@ const { categories, popularPosts, recentPosts } = Astro.props;
                       );
                     })
                   }
-                </p>
+                </div>
               </div>
             </li>
 
             <li class="item-recent">
               <div class="Callout neon-bg-4">
                 <div class="CalloutHeading">Recent</div>
-                <p class="CalloutText">
+                <div class="CalloutText">
                   {
                     recentPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
@@ -102,7 +102,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
                       );
                     })
                   }
-                </p>
+                </div>
               </div>
             </li>
           </ul>
@@ -153,7 +153,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
             <li>
               <div class="Callout ContactSubMenu">
                 <div class="CalloutHeading">Contact Me</div>
-                <p class="CalloutText">
+                <div class="CalloutText">
                   <span class="SocialLinks">
                     <a href="/contact"><span class="Icon">✉</span><label><code>&lt;form&gt;</code></label></a>
                     <a rel="me" href="http://x.com/justsml" target="_blank"><span class="Icon">𝕏</span><label>Twitter</label></a>
@@ -162,7 +162,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
                     <a rel="me" href="/open-source-journal"><span class="Icon">OSS</span><label>OSS Log</label></a>
                     <a rel="me" href="/docs/resume.pdf" target="_blank"><span class="Icon">PDF</span><label>Resume</label></a>
                   </span>
-                </p>
+                </div>
               </div>
             </li>
           </ul>
@@ -175,29 +175,81 @@ const { categories, popularPosts, recentPosts } = Astro.props;
 <script>
   const navRoot = document.querySelector(".static-nav");
   const searchButton = navRoot?.querySelector(".btnSearchToggle");
+  const menus: HTMLDetailsElement[] = navRoot ? Array.from(navRoot.querySelectorAll("details.static-nav-menu")) : [];
+  let closeTimer = 0;
+  let searchRuntimeReady = false;
+
+  const closeMenus = (except: HTMLDetailsElement | null = null) => {
+    menus.forEach((details) => {
+      if (details !== except) details.removeAttribute("open");
+    });
+  };
+
+  const openMenu = (details: HTMLDetailsElement) => {
+    window.clearTimeout(closeTimer);
+    document.dispatchEvent(new CustomEvent("closeSearchPanel"));
+    details.setAttribute("open", "");
+    closeMenus(details);
+  };
+
+  const hasOpenMenu = () => menus.some((details) => details.open);
 
   navRoot?.addEventListener("toggle", (event) => {
     const current = event.target;
     if (!(current instanceof HTMLDetailsElement) || !current.open) return;
-    navRoot.querySelectorAll("details[open]").forEach((details) => {
-      if (details !== current) details.removeAttribute("open");
-    });
+    closeMenus(current);
   }, true);
+
+  menus.forEach((details) => {
+    const summary = details.querySelector("summary");
+
+    summary?.addEventListener("click", (event) => {
+      event.preventDefault();
+      openMenu(details);
+    });
+
+    details.addEventListener("pointerenter", (event) => {
+      if (!(event instanceof PointerEvent)) return;
+      if (event.pointerType === "touch") return;
+      if (hasOpenMenu() || document.body.classList.contains("search-panel-open")) return;
+      openMenu(details);
+    });
+
+    details.addEventListener("pointerleave", (event) => {
+      if (!(event instanceof PointerEvent)) return;
+      if (event.pointerType === "touch") return;
+      if (event.relatedTarget instanceof Element && event.relatedTarget.closest(".static-nav")) return;
+      window.clearTimeout(closeTimer);
+      closeTimer = window.setTimeout(() => {
+        if (!details.matches(":focus-within")) details.removeAttribute("open");
+      }, 120);
+    });
+
+    details.addEventListener("focusin", () => {
+      if (details.matches(":hover")) return;
+      openMenu(details);
+    });
+  });
 
   document.addEventListener("click", (event) => {
     const target = event.target;
     if (!(target instanceof Element) || target.closest(".static-nav")) return;
-    navRoot?.querySelectorAll("details[open]").forEach((details) => {
-      details.removeAttribute("open");
-    });
+    closeMenus();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+    closeMenus();
   });
 
   searchButton?.addEventListener("click", async (event) => {
     event.preventDefault();
-    navRoot?.querySelectorAll("details[open]").forEach((details) => {
-      details.removeAttribute("open");
-    });
-    const { toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
+    closeMenus();
+    const { installSearchPanelDismissal, toggleSearchPanel } = await import("./SearchUI/searchPanelRuntime");
+    if (!searchRuntimeReady) {
+      installSearchPanelDismissal();
+      searchRuntimeReady = true;
+    }
     await toggleSearchPanel({ dispatchCloseNavPanels: false });
   });
 </script>

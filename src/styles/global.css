@@ -351,7 +351,7 @@ body.post-page {
 
 /* Prevent background scrolling when search panel is open */
 body.search-panel-open {
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 h1,
@@ -407,6 +407,20 @@ h1:first-of-type {
   /* animation-fill-mode: forwards;
     animation-play-state: running;
      */
+}
+
+main.article > h1.p-name {
+  background:
+    linear-gradient(100deg, #ffffff 0%, #ff8bd8 28%, #69fff7 58%, #c8ff7a 82%, #ffffff 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter:
+    drop-shadow(0 0 0.06rem rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 0.65rem hsl(var(--neon-pink) / 0.48))
+    drop-shadow(0 0 1.25rem hsl(var(--neon-cyan) / 0.28));
+  text-shadow: none;
 }
 
 .gist {

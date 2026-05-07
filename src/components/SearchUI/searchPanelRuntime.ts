@@ -9,6 +9,7 @@ const SEARCH_PANEL_OPEN_CLASS = "search-panel-open";
 const COLLAPSED_CLASS = "collapsed";
 const FOCUS_DELAY_MS = 0;
 const SEARCH_QUERY_STORAGE_KEY = "danlevy.search.query";
+let dismissalInstalled = false;
 
 type ToggleSearchPanelOptions = {
   dispatchCloseNavPanels?: boolean;
@@ -64,6 +65,9 @@ export async function toggleSearchPanel(options?: ToggleSearchPanelOptions) {
 }
 
 export function installSearchPanelDismissal() {
+  if (dismissalInstalled) return () => {};
+  dismissalInstalled = true;
+
   const abortController = new AbortController();
 
   window.addEventListener("resize", () => {
@@ -89,7 +93,16 @@ export function installSearchPanelDismissal() {
     { signal: abortController.signal },
   );
 
-  return () => abortController.abort();
+  document.addEventListener(
+    "closeSearchPanel",
+    () => closeSearchPanel(),
+    { signal: abortController.signal },
+  );
+
+  return () => {
+    dismissalInstalled = false;
+    abortController.abort();
+  };
 }
 
 function closeSearchPanelFromOutsideClick(event: MouseEvent) {
@@ -118,10 +131,12 @@ function focusSearchPanelInput(searchPanel: HTMLElement) {
 function positionSearchPanel(searchPanel: HTMLElement) {
   const menuRoot = document.querySelector<HTMLElement>(NAV_MENU_SELECTOR);
   const menuBox = menuRoot?.getBoundingClientRect();
-  const top = Math.max(92, Math.round((menuBox?.bottom ?? 92) + 12));
+  const top = Math.max(44, Math.round(menuBox?.bottom ?? 92));
   const rightGap = Math.max(8, Math.round(window.innerWidth - (menuBox?.right ?? window.innerWidth - 16)));
+  const width = Math.min(544, Math.max(320, Math.round(menuBox?.width ?? 544)));
   searchPanel.style.setProperty("--search-panel-top", `${top}px`);
   searchPanel.style.setProperty("--search-panel-right-gap", `${rightGap}px`);
+  searchPanel.style.setProperty("--search-panel-width", `${width}px`);
 }
 
 function installSearchQueryPersistence(searchPanel: HTMLElement) {
