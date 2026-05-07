@@ -9,6 +9,7 @@ import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
 import {
+  HOME_ARTICLE_LIST_CTA_INTERVALS,
   HOME_ARTICLE_LIST_CTA_LIMIT,
   getArticleListCtaOccurrence,
 } from "../shared/articleListCta";
@@ -110,6 +111,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
             index,
             0,
             HOME_ARTICLE_LIST_CTA_LIMIT,
+            HOME_ARTICLE_LIST_CTA_INTERVALS,
           );
 
           return (

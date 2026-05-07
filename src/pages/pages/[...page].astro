@@ -3,6 +3,7 @@ import type { Page, PagePath, ArticlePost } from "../../types";
 import { PostCollections, getArticleSortFn } from "../../shared/postsCache";
 import { pageSize } from "../../shared/pagination";
 import {
+  HOME_ARTICLE_LIST_CTA_INTERVALS,
   HOME_ARTICLE_LIST_CTA_LIMIT,
   getArticleListCtaOccurrence,
 } from "../../shared/articleListCta";
@@ -109,6 +110,7 @@ const articleListOffset = (currentPage - 1) * (pageSize - 1);
       index,
       articleListOffset,
       HOME_ARTICLE_LIST_CTA_LIMIT,
+      HOME_ARTICLE_LIST_CTA_INTERVALS,
     );
 
     return (
