@@ -26,14 +26,14 @@ Wait, is this a fight? It must be right? We don't seem to talk about callbacks a
 
 No, it's not a fight. Ultimately it's another potential tool in your toolbox. However, because `async`/`await` doesn't replace all Promise functionality (specifically `Promise.all`, `.race`) **it's misleading presenting it as a replacement.**
 
-There's a lot of influential people promoting this misconception `async`/`await` is the Promises [replacement](https://developers.google.com/web/fundamentals/primers/async-functions) [everyone's](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [been](https://twitter.com/umaar/status/1045655069478334464) [waiting](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [for](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba).
+There's a lot of influential people promoting this misconception `async`/`await` is the Promises [replacement](https://developers.google.com/web/fundamentals/primers/async-functions) [everyone's](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9) [been](https://x.com/umaar/status/1045655069478334464) [waiting](http://2ality.com/2017/08/promise-try.html#why-not-just-use-async-functions) [for](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba).
 
 > **Hint: No, nope, and not even a little.**
 
 
-A recent addition to VS Code advances this bias. As [@umaar](https://twitter.com/umaar) tweeted:
+A recent addition to VS Code advances this bias. As [@umaar](https://x.com/umaar) tweeted:
 
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.twitter.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://twitter.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
 <!-- Sure, it's an impressive addition to an already amazing list of features. -->
 
@@ -131,7 +131,7 @@ Interestingly, most developers report they are _pretty dang good_ at **Single Pu
 
 <!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
 
-Let's look at an example the (incredibly talented) [Jake Archibald](https://twitter.com/jaffathecake) features in his async/await article for the Google Developers site (note: 2024, link removed).
+Let's look at an example the (incredibly talented) [Jake Archibald](https://x.com/jaffathecake) features in his async/await article for the Google Developers site (note: 2024, link removed).
 
 <!--
 Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
@@ -186,7 +186,7 @@ There are 5 anonymous methods defined in this single function. As Jake even poin
 
 ### Summary
 
-Try apply these techniques to your own code! Then [tweet at me](https://twitter.com/justsml) & let me know how it went. Or if you have questions or comments, reach out as well!
+Try apply these techniques to your own code! Then [tweet at me](https://x.com/justsml) & let me know how it went. Or if you have questions or comments, reach out as well!
 
 Help spread the #PromiseTruth & share this article. ❤️
 
@@ -195,4 +195,4 @@ Help spread the #PromiseTruth & share this article. ❤️
 #### Related Reading
 
 * [Daniel Brain](https://medium.com/@bluepnume/even-with-async-await-you-probably-still-need-promises-9b259854c161)
-* [Eric Elliott](https://twitter.com/_ericelliott?lang=en)
+* [Eric Elliott](https://x.com/_ericelliott?lang=en)

@@ -10,7 +10,7 @@ export const SiteAuthors = {
       "Entrepreneur, Engineer, Educator, and Current World's Only Dan.best",
     sameAs: [
       "https://github.com/justsml",
-      "https://twitter.com/justsml",
+      "https://x.com/justsml",
       "https://www.linkedin.com/in/realdanlevy/",
       "https://bsky.app/profile/danlevy.net",
       "https://mastodon.social/@justsml",

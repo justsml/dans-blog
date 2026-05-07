@@ -1,5 +1,5 @@
 ---
-title: "LLM Evals Need Better Tests"
+title: "How to fight LLM Evils with Evals!"
 subTitle: "Benchmarks measure benchmarks. Your system needs its own proof."
 date: 2026-05-06
 modified: 2026-05-06
@@ -19,13 +19,11 @@ cover_icon: ./square.webp
 
 Every new model arrives wearing a tuxedo of benchmarks.
 
-MMLU: 92.4%. HumanEval: 87.2%. MATH: 73.6%. The numbers go up. The changelog says "improved reasoning." The blog post says "state of the art." You swap it into your pipeline, and nothing gets better. Sometimes things get worse. You're back on the old model by Thursday.
+MMLU: 92.4%. HumanEval: 87.2%. LLeMU: 88.7%. MATH: 73.6%. AGI: 127%!
 
-This happens to good teams. The benchmark was not fake; it was answering a different question.
+Yet, for 99% of businesses building process & product with AI, **none of it matters.**
 
-MMLU measures multiple-choice questions from academic subjects. HumanEval measures whether a model can write the function body for simple coding problems. These are legitimate tests of something. They are not tests of whether the model will extract structured data from messy customer feedback, generate SQL that runs against your schema, or refuse to fabricate citations.
-
-The gap between "performs well on benchmarks" and "performs well in your system" is the whole problem of LLM evaluation. Too often, the bridge across that gap is a Slack thread and a feeling.
+What matters? How are YOUR workloads doing? Getting better or worse? The only sane way to know that is to write Evals (tests for LLMs) that reflect the specific tasks, data, and failure modes of your system.
 
 ---
 

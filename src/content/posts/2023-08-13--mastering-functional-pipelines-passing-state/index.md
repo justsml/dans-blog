@@ -185,7 +185,7 @@ Ultimately this makes it easier to decide where new functionality belongs. (e.g.
 
 Passing state through a complex pipeline can be tricky. However, with a little refactor practice, you’ll find yourself writing more readable code, with less cognitive load.
 
-Questions? Comments? Concerns? Feel free to reach out [@justsml](https://twitter.com/justsml) or [email](mailto:dan@danlevy.net).
+Questions? Comments? Concerns? Feel free to reach out [@justsml](https://x.com/justsml) or [email](mailto:dan@danlevy.net).
 
 #### Stay tuned for the next part in the series
 

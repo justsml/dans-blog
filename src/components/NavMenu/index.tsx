@@ -469,7 +469,7 @@ const NavMenu = ({
                         </label>
                       </a>
 
-                      <a rel="me" href="http://twitter.com/justsml" target="_blank">
+                      <a rel="me" href="http://x.com/justsml" target="_blank">
                         <span className="Icon">
                           <TwitterLogoIcon
                             className="svg-icon"

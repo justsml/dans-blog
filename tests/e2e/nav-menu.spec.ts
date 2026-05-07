@@ -181,9 +181,9 @@ test.describe('Navigation Menu', () => {
       await page.waitForTimeout(500);
       
       // Test Twitter link in the About menu
-      const twitterLink = page.locator('.ContactSubMenu a[href="http://twitter.com/justsml"]');
+      const twitterLink = page.locator('.ContactSubMenu a[href="http://x.com/justsml"]');
       await expect(twitterLink).toBeVisible();
-      await expect(twitterLink).toHaveAttribute('href', 'http://twitter.com/justsml');
+      await expect(twitterLink).toHaveAttribute('href', 'http://x.com/justsml');
       
       // Test GitHub link in the About menu
       const githubLink = page.locator('.ContactSubMenu a[href="https://github.com/justsml"]');
