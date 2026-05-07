@@ -409,17 +409,28 @@ h1:first-of-type {
      */
 }
 
-main.article > h1.p-name {
+main.article > h1.p-name,
+main.content-grid:not(.home-page) > h1:first-of-type,
+main.content-grid:not(.home-page) > section:first-child > h1:first-child,
+main.content-grid:not(.home-page) > .full-width:first-child > h1:first-child,
+main > section:first-child > h1:first-child {
   background:
-    linear-gradient(100deg, #ffffff 0%, #ff8bd8 28%, #69fff7 58%, #c8ff7a 82%, #ffffff 100%);
+    linear-gradient(105deg, #fffafd 0%, #ff4fc4 22%, #b06cff 42%, #00f5ee 64%, #b8ff5f 86%, #fff7fd 100%);
+  background-size: 120% 100%;
   background-clip: text;
   -webkit-background-clip: text;
+  box-decoration-break: clone;
   color: transparent;
+  display: flow-root;
+  line-height: 1.88;
+  overflow: visible;
+  padding-block: 0.12em 0.22em !important;
   -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
   filter:
-    drop-shadow(0 0 0.06rem rgba(255, 255, 255, 0.95))
-    drop-shadow(0 0 0.65rem hsl(var(--neon-pink) / 0.48))
-    drop-shadow(0 0 1.25rem hsl(var(--neon-cyan) / 0.28));
+    drop-shadow(0 0 0.04rem rgba(255, 255, 255, 0.98))
+    drop-shadow(0 0 0.42rem hsl(var(--neon-pink) / 0.58))
+    drop-shadow(0 0 0.9rem hsl(var(--neon-cyan) / 0.34));
   text-shadow: none;
 }
 
