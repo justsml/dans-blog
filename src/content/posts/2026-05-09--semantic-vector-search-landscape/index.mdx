@@ -29,6 +29,26 @@ If you want the Postgres-native lexical and fuzzy search tools first, start with
 
 ---
 
+## Terms at a Glance
+
+**Embedding** — A dense list of floating-point numbers produced by a model, representing a piece of text (or image, audio, etc.) as a point in high-dimensional space. Semantically related content lands nearby; unrelated content lands far apart.
+
+**Lexical search** — Search based on exact word and token matching. Fast, deterministic, and correct for known terms. Doesn't understand synonyms, paraphrases, or cross-language equivalents.
+
+**Semantic search** — Search based on meaning rather than tokens. A query for "how do I handle timeouts" can match a document titled "configuring retry policies" with no shared words, because their embeddings are geometrically close.
+
+**Vector** — A list of numbers. In search contexts, the output of an embedding model. "Vector search" finds the vectors closest to a query vector by geometric distance.
+
+**FTS (Full-Text Search)** — Postgres's built-in lexical search, powered by `tsvector` / `tsquery`. Tokenizes, stems, and indexes text for keyword queries. Strong for prose and exact-term lookup; blind to meaning.
+
+**BM25** — A ranking algorithm for lexical search (used by Elasticsearch, Qdrant, and others). Scores results by term frequency weighted against how rare the term is across the corpus. Better than raw keyword matching; still lexical.
+
+**HNSW (Hierarchical Navigable Small World)** — The standard approximate nearest-neighbor index for vector search. Builds a layered proximity graph for fast, high-recall similarity queries. pgvector, Qdrant, Weaviate, and most others use it.
+
+**RRF (Reciprocal Rank Fusion)** — An algorithm for merging ranked result lists from multiple retrieval systems. Uses rank position only — no score normalization needed. A result that ranks high in both FTS and vector lists gets a stronger combined score than one that dominates only one.
+
+---
+
 ## What Semantic Search Actually Does
 
 Vector embeddings convert text (or images, audio, etc.) into a list of numbers — a point in high-dimensional space. An embedding model is trained so that semantically related text lands nearby in that space. "Dog" and "canine" end up close. "Running a marathon" and "running a Python script" end up far apart despite sharing a word.
@@ -46,15 +66,19 @@ Lexical search (`tsvector`, `pg_trgm`) can't do any of this. It operates on word
 
 ## When pgvector Wins
 
-**Building RAG.** Retrieval-Augmented Generation retrieves the document chunks whose meaning is closest to the user's question, then passes them to a language model as context. This retrieval step is a vector operation. FTS will miss paraphrases, synonyms, and conceptual matches that a relevant chunk might express differently.
+**Building RAG.** Retrieval-Augmented Generation retrieves the document chunks whose meaning is closest to the user's question, then passes them to a language model as context. This retrieval step is a vector operation. FTS will miss paraphrases, synonyms, and conceptual matches that a relevant chunk might express differently. The pgvector advantage over a standalone vector store: it runs inside your existing Postgres instance — no separate service to deploy, operate, or sync data into.
 
 **Users describe what they want, not what to search for.** "Articles about building confidence as a new manager" has no keywords that reliably appear in the relevant posts. "A lightweight framework for handling side effects" may not use those exact words in the documentation. Vector search matches the intent, not the spelling.
 
-**Finding similar items.** Related products, similar support tickets, duplicate bug reports, articles you might also like. "Find issues similar to this one" is a nearest-neighbor search. Embed the issue, find its neighbors.
+**Finding similar items.** Related products, similar support tickets, duplicate bug reports, articles you might also like. "Find issues similar to this one" is a nearest-neighbor search — embed the item, find its geometric neighbors. One important caveat: vector search always returns results, even when nothing is genuinely similar. For dedup and recommendation use cases, filter by a minimum similarity threshold (e.g., cosine similarity ≥ 0.80) to avoid surfacing low-confidence matches as if they were meaningful.
 
-**Multilingual search.** Multilingual embedding models map semantically equivalent content across languages into nearby vectors. FTS requires per-language dictionary configuration and handles cross-language queries poorly. `pg_trgm` is language-agnostic but orthographic, not semantic.
+**Semantic deduplication.** Before indexing content for RAG or search, you often need to identify near-duplicates in the corpus — articles revised multiple times, support tickets filed twice, knowledge base entries that overlap significantly. Embed the documents and threshold-filter by cosine similarity to flag or merge near-duplicates before they pollute your index. This prevents retrieval from returning multiple near-identical chunks and diluting the context window.
+
+**Multilingual search.** Multilingual embedding models map semantically equivalent content across languages into nearby vectors. A query in Spanish for "perder peso" can match an English article on "sustainable weight loss habits" — no shared tokens, same underlying meaning. FTS requires per-language dictionary configuration and handles cross-language queries poorly. `pg_trgm` is language-agnostic but orthographic, not semantic.
 
 ### Setting Up pgvector
+
+From extension install to similarity query, the setup is a handful of SQL statements:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;

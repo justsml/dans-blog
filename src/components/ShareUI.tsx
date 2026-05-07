@@ -24,7 +24,7 @@ import {
   PinterestShareButton,
   RedditShareButton,
   TelegramShareButton,
-  TumblrShareButton,
+  // TumblrShareButton,
   TwitterShareButton,
   WhatsappShareButton,
 } from "react-share";

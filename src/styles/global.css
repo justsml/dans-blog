@@ -815,6 +815,7 @@ pre.astro-code {
 /* TABLE GLOBAL STYLES */
 table {
   margin-block: 2rem;
+  margin-inline: auto;
   line-height: 2;
 
   thead {
@@ -1247,6 +1248,11 @@ Overriding the style when generating screenshots
 .article,
 article {
   table {
+    display: block;
+    inline-size: max-content;
+    max-inline-size: min(100%, calc(100vw - 1rem));
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
     border-bottom: .2px solid var(--neon-pink, #ff00c3);
 
     th {
@@ -1260,5 +1266,13 @@ article {
     tr:nth-child(even) {
       background-color: var(--clr-muted-700, #333);
     }
+  }
+}
+
+.content-grid.article,
+article.content-grid {
+  > table {
+    grid-column: breakout;
+    justify-self: center;
   }
 }
