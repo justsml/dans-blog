@@ -8,7 +8,10 @@ import ArticleListConsultingCTA from "../components/ArticleListConsultingCTA.ast
 import type { ArticlePost } from "../types";
 import omit from "lodash/omit";
 import { pageSize } from "../shared/pagination";
-import { getArticleListCtaOccurrence } from "../shared/articleListCta";
+import {
+  HOME_ARTICLE_LIST_CTA_LIMIT,
+  getArticleListCtaOccurrence,
+} from "../shared/articleListCta";
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
@@ -103,7 +106,11 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
         //   ({data: {unlisted, hidden}}) => unlisted !== true && hidden !== true
         // )
         .map((props: any, index) => {
-          const ctaOccurrence = getArticleListCtaOccurrence(index);
+          const ctaOccurrence = getArticleListCtaOccurrence(
+            index,
+            0,
+            HOME_ARTICLE_LIST_CTA_LIMIT,
+          );
 
           return (
           <>
@@ -364,7 +371,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   }
 
   .archive-intro h2 {
-    font-size: clamp(1.55rem, 3vw, 2.35rem);
+    font-size: 1.75rem;
     font-weight: 700;
     max-width: 18ch;
   }
@@ -503,6 +510,10 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     }
 
     .spotlight-copy h2 {
+      font-size: 2rem;
+    }
+
+    .archive-intro h2 {
       font-size: 2rem;
     }
 

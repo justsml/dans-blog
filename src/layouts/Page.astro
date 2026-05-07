@@ -18,9 +18,11 @@ type Props = {
   frontmatter?: Record<string, any>;
   socialImage?: string | ImageMetadata;
   className?: string;
+  pagefindBody?: boolean;
 };
 
 const socialBanner = Astro.props.socialImage || defaultSocialBanner;
+const pagefindBody = Astro.props.pagefindBody ?? false;
 ---
 
 <html lang="en">
@@ -29,7 +31,10 @@ const socialBanner = Astro.props.socialImage || defaultSocialBanner;
   </head>
   <body>
     <Header className="content-grid" />
-    <main class={clsx("content-grid", Astro.props.className)}>
+    <main
+      class={clsx("content-grid", Astro.props.className)}
+      data-pagefind-body={pagefindBody ? true : undefined}
+    >
       <slot name="default" />
     </main>
     <Footer />

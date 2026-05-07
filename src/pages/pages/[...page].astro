@@ -2,7 +2,10 @@
 import type { Page, PagePath, ArticlePost } from "../../types";
 import { PostCollections, getArticleSortFn } from "../../shared/postsCache";
 import { pageSize } from "../../shared/pagination";
-import { getArticleListCtaOccurrence } from "../../shared/articleListCta";
+import {
+  HOME_ARTICLE_LIST_CTA_LIMIT,
+  getArticleListCtaOccurrence,
+} from "../../shared/articleListCta";
 import { ArticleCard } from "../../components/ArticleCard";
 import ArticleListConsultingCTA from "../../components/ArticleListConsultingCTA.astro";
 import { PaginateFunction } from "astro";
@@ -102,7 +105,11 @@ const articleListOffset = (currentPage - 1) * (pageSize - 1);
 
 {
   data.map(({ props }: any, index) => {
-    const ctaOccurrence = getArticleListCtaOccurrence(index, articleListOffset);
+    const ctaOccurrence = getArticleListCtaOccurrence(
+      index,
+      articleListOffset,
+      HOME_ARTICLE_LIST_CTA_LIMIT,
+    );
 
     return (
     <>

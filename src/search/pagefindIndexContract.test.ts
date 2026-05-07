@@ -19,6 +19,21 @@ describe("Pagefind index contract", () => {
     expect(postLayout).toContain('data-pagefind-meta="title"');
   });
 
+  test("opts new non-post editorial pages into the Pagefind index", () => {
+    expect(readProjectFile("src/layouts/Page.astro")).toContain(
+      "pagefindBody",
+    );
+    expect(readProjectFile("src/pages/consulting.astro")).toContain(
+      "pagefindBody",
+    );
+    expect(readProjectFile("src/pages/consulting/[service].astro")).toContain(
+      "pagefindBody",
+    );
+    expect(readProjectFile("src/pages/open-source-journal.astro")).toContain(
+      "pagefindBody",
+    );
+  });
+
   test("keeps repeated article chrome out of the search index", () => {
     expect(readProjectFile("src/components/Footer.astro")).toContain(
       'data-pagefind-ignore="all"',

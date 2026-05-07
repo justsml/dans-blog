@@ -219,13 +219,14 @@ export const PostCollections = {
       "llm-connection-strings",
       "you-may-not-need-axios",
       "you-might-not-need-algolia",
+      "ai-sdk-math-tool",
       "serverless-database-magic",
       // "the-last-to-think",
       "naming-things-real-good",
       "beware-the-single-purpose-people",
       "quiz-bash-in-the-shell",
       // "should-you-use-named-or-default-exports",
-      "quiz-postgres-sql-mastery-pt1",
+      // "quiz-postgres-sql-mastery-pt1",
     ]
       .map((slug) => PostCollections._postsBySlug[slug])
       .filter(Boolean);
