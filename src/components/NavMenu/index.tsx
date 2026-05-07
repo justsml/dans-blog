@@ -1,4 +1,5 @@
 import throttle from "lodash/throttle";
+import debounce from "lodash/debounce";
 
 import { createPortal } from "react-dom";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
@@ -16,8 +17,9 @@ import {
 } from "@radix-ui/react-icons";
 import { ListItem } from "./ListItem";
 import { getComputedDates } from "../../shared/dateUtils";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
+  closeSearchPanel,
   installSearchPanelDismissal,
   toggleSearchPanel,
 } from "../SearchUI/searchPanelRuntime";
@@ -171,26 +173,37 @@ const NavMenu = ({
     };
   }, []);
 
+  const changeToPanel = useMemo(
+    () =>
+      debounce((panel: string) => {
+        setCurrentPanel((previousPanel) => {
+          if (previousPanel === panel || previousPanel.length < 1) {
+            return previousPanel;
+          }
+
+          if (panel) closeSearchPanel();
+          return panel;
+        });
+      }, 180),
+    [],
+  );
+
+  useEffect(() => {
+    return () => changeToPanel.cancel();
+  }, [changeToPanel]);
+
   const togglePanel = (panel: string) => {
-    setCurrentPanel(currentPanel === panel ? "" : panel);
+    changeToPanel.cancel();
+    const nextPanel = currentPanel === panel ? "" : panel;
+    if (nextPanel) closeSearchPanel();
+    setCurrentPanel(nextPanel);
   };
 
   const toggleSearch = async () => {
+    changeToPanel.cancel();
     setCurrentPanel("");
     await toggleSearchPanel();
   };
-
-  const _changeToPanel = (panel: string) => {
-    if (currentPanel === panel) return;
-    if (currentPanel.length >= 1) {
-      setCurrentPanel(panel);
-    }
-  };
-  const changeToPanel = throttle(_changeToPanel, 50, {
-    leading: false,
-    trailing: true,
-  });
-  //    throttle(detectViewportOffset, 100, { leading: false, trailing: true }),
 
   return (
     <NavigationMenu.Root

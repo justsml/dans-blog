@@ -36,14 +36,16 @@ export async function openSearchPanel({
     document.dispatchEvent(new CustomEvent("closeNavPanels"));
   }
 
-  await ensurePagefindInitialized();
   positionSearchPanel(searchPanel);
   searchPanel.classList.remove(COLLAPSED_CLASS);
   document.body.classList.add(SEARCH_PANEL_OPEN_CLASS);
-  restoreSearchPanelQuery(searchPanel);
-  installSearchQueryPersistence(searchPanel);
-  installSearchClearAndClose(searchPanel);
-  focusSearchPanelInput(searchPanel);
+  const isSearchReady = await ensurePagefindInitialized();
+  if (isSearchReady) {
+    restoreSearchPanelQuery(searchPanel);
+    installSearchQueryPersistence(searchPanel);
+    installSearchClearAndClose(searchPanel);
+    focusSearchPanelInput(searchPanel);
+  }
   return true;
 }
 
