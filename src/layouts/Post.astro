@@ -102,6 +102,10 @@ const heroPreload = _heroSrc
       quality: 70,
     }).catch(() => null)
   : null;
+
+const shouldCropMobileBanner =
+  isImageMetadata(cover_full_width) &&
+  cover_full_width.width / cover_full_width.height < 2.4;
 ---
 
 <html lang="en">
@@ -161,7 +165,13 @@ const heroPreload = _heroSrc
         cover_full_width &&
         typeof cover_full_width === "object" &&
         "src" in cover_full_width ? (
-          <div class="banner-wrapper full-width">
+          <div
+            class:list={[
+              "banner-wrapper",
+              "full-width",
+              shouldCropMobileBanner && "crop-mobile",
+            ]}
+          >
             {/* LCP target — eager + high priority, preloaded in <head> */}
             <Image
               class="flow u-photo banner-image"

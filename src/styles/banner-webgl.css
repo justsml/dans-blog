@@ -34,15 +34,21 @@
   box-shadow: inset 0 0 15px rgba(255, 0, 153, 0.1);
 }
 
-.banner-wrapper.full-width .banner-image {
+.banner-wrapper.full-width.crop-mobile .banner-image {
   display: block;
   height: min(34vw, 140px);
   object-fit: cover;
   width: 100%;
 }
 
+@media (max-width: 599px) {
+  .banner-wrapper.full-width.crop-mobile {
+    height: min(34vw, 140px);
+  }
+}
+
 @media (min-width: 600px) {
-  .banner-wrapper.full-width .banner-image {
+  .banner-wrapper.full-width.crop-mobile .banner-image {
     height: 200px;
   }
 }
@@ -63,7 +69,7 @@
 .hero-image-wrapper {
   margin: 1rem auto;
   padding: 0.25rem;
-  border: 0.5px solid var(--neon-pink);
+  border: 0.5px solid hsl(var(--neon-pink));
   border-radius: 1rem;
   max-width: calc(2rem + 400px);
   width: max-content;

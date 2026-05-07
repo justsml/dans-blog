@@ -1,9 +1,16 @@
 .static-nav {
+  --neon-cyan: #00ffff;
+  --neon-pink: #ff00cc;
+  --neon-green: #00ff00;
+  --neon-purple: #9900ff;
+  --neon-yellow: #ffff00;
+  --neon-orange: #ff9900;
   --nav-tile-bg: rgba(8, 14, 18, 0.92);
   --nav-tile-surface: rgba(11, 18, 23, 0.95);
   --nav-tile-border: rgba(218, 246, 243, 0.14);
   --nav-tile-muted: rgba(221, 232, 233, 0.7);
   --nav-tile-accent: rgb(0, 245, 238);
+  --nav-tile-accent-soft: rgba(191, 248, 244, 0.86);
   --nav-tile-glow: rgba(0, 245, 238, 0.15);
   --nav-tile-dim: rgba(0, 245, 238, 0.05);
   contain: layout style;
@@ -52,6 +59,12 @@
   text-wrap: nowrap;
   user-select: none;
   width: 100%;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .searchToggle button {
@@ -63,6 +76,10 @@
 .searchToggle svg {
   display: block;
   height: 1.35rem;
+  filter: drop-shadow(0 0 0.4rem rgba(0, 245, 238, 0.32));
+  transition:
+    filter 180ms ease,
+    transform 180ms ease;
   width: 1.35rem;
 }
 
@@ -76,6 +93,46 @@
   inset: 0 0 auto;
   opacity: 0.48;
   position: absolute;
+  transform: scaleX(0.5);
+  transform-origin: left;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.searchToggle button::before {
+  transform: scaleX(1);
+}
+
+.NavigationMenuTrigger:hover,
+.NavigationMenuTrigger:focus-visible,
+.searchToggle button:hover,
+.searchToggle button:focus-visible {
+  background:
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
+    var(--nav-tile-surface);
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 38%, transparent);
+  box-shadow:
+    0 18px 42px rgba(0, 8, 12, 0.32),
+    0 0 24px var(--nav-tile-glow);
+  color: var(--clr-muted-100, #f4f8f8);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.NavigationMenuTrigger:hover::before,
+.NavigationMenuTrigger:focus-visible::before,
+.searchToggle button:hover::before,
+.searchToggle button:focus-visible::before {
+  opacity: 0.9;
+  transform: scaleX(1);
+}
+
+.searchToggle button:hover svg,
+.searchToggle button:focus-visible svg {
+  filter: drop-shadow(0 0 0.75rem rgba(0, 245, 238, 0.58));
+  transform: scale(1.06);
 }
 
 .static-nav-menu {
@@ -91,6 +148,10 @@
 }
 
 .static-nav-menu[open] > summary {
+  background:
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
+    var(--nav-tile-surface);
   border-color: color-mix(in srgb, var(--nav-tile-accent) 44%, transparent);
   box-shadow: 0 18px 42px rgba(0, 8, 12, 0.32), 0 0 28px var(--nav-tile-glow);
 }
@@ -101,16 +162,22 @@
 }
 
 .static-nav-menu[open] .CaretDown {
+  color: var(--neon-cyan);
+  filter: drop-shadow(0 0 4px rgba(0, 245, 238, 0.48));
   transform: rotate(180deg);
 }
 
 .static-nav-panel {
   background:
     radial-gradient(circle at 14% 0%, rgba(0, 245, 238, 0.08), transparent 36%),
+    radial-gradient(circle at 86% 18%, rgba(255, 107, 157, 0.06), transparent 34%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 34%),
     rgba(5, 9, 12, 0.98);
   border: 1px solid var(--nav-tile-border);
-  box-shadow: 0 24px 58px rgba(0, 8, 12, 0.36);
+  box-shadow:
+    0 24px 58px rgba(0, 8, 12, 0.36),
+    0 0 42px rgba(0, 245, 238, 0.08);
+  isolation: isolate;
   max-height: min(72vh, 42rem);
   min-width: min(42rem, calc(100vw - 2rem));
   overflow: auto;
@@ -120,6 +187,32 @@
   top: calc(100% + 0.75rem);
   width: min(52rem, calc(100vw - 2rem));
   z-index: 400;
+}
+
+.static-nav-panel::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent),
+    linear-gradient(90deg, rgb(0, 245, 238), rgb(184, 255, 95), rgb(255, 107, 157));
+  content: "";
+  height: 1px;
+  inset: 0 0 auto;
+  opacity: 0.66;
+  position: absolute;
+  z-index: 1;
+}
+
+.static-nav-panel::after {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.026) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+  background-size: 28px 28px;
+  content: "";
+  inset: 0;
+  mask-image: linear-gradient(180deg, #000, transparent 82%);
+  opacity: 0.42;
+  pointer-events: none;
+  position: absolute;
+  z-index: -1;
 }
 
 .List {
@@ -156,7 +249,8 @@
 .Callout,
 .ListItemLink {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 38%) padding-box,
+    radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 34%) padding-box,
     var(--nav-tile-bg);
   border: 1px solid var(--nav-tile-border);
   box-shadow: 0 16px 42px rgba(0, 8, 12, 0.18);
@@ -167,6 +261,11 @@
   padding: 0.9rem;
   position: relative;
   text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease,
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .Callout {
@@ -177,9 +276,10 @@
 
 .CalloutHeading,
 .ListItemHeading {
-  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
+  color: color-mix(in srgb, var(--nav-tile-accent) 76%, white);
   font-weight: 580;
   line-height: 1.12;
+  text-wrap: balance;
 }
 
 .CalloutHeading {
@@ -204,10 +304,44 @@
 }
 
 .CalloutItem {
-  color: inherit;
+  color: var(--clr-muted-100, #f4f8f8);
   display: block;
+  font-size: 1.02rem;
   line-height: 1.16;
+  padding: 0.1rem 0;
   text-decoration: none;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.Callout:hover,
+.Callout:focus,
+.Callout:focus-within,
+.ListItemLink:hover,
+.ListItemLink:focus-visible {
+  border-color: color-mix(in srgb, var(--nav-tile-accent) 36%, transparent);
+  box-shadow:
+    0 24px 58px rgba(0, 8, 12, 0.32),
+    0 0 24px var(--nav-tile-glow);
+  color: var(--clr-muted-100, #f4f8f8);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.Callout:hover::before,
+.Callout:focus-within::before,
+.ListItemLink:hover::before,
+.ListItemLink:focus-visible::before {
+  opacity: 0.86;
+  transform: scaleX(1);
+}
+
+.CalloutItem:hover,
+.CalloutItem:focus-visible {
+  color: color-mix(in srgb, var(--nav-tile-accent) 76%, white);
+  outline: none;
+  transform: translateX(2px);
 }
 
 .CalloutItem sup {
@@ -218,10 +352,14 @@
 }
 
 .ui-badge {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid color-mix(in srgb, var(--nav-tile-accent) 28%, transparent);
   color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
   display: inline-flex;
   font-size: 0.72rem;
+  font-weight: 560;
+  justify-content: center;
   line-height: 1;
   margin-left: 0.25rem;
   padding: 0.08rem 0.38rem;
@@ -235,7 +373,7 @@
 
 .SocialLinks a {
   align-items: center;
-  color: var(--neon-purple, #9900ff);
+  color: color-mix(in srgb, var(--nav-tile-accent) 72%, white);
   display: grid;
   gap: 0.45rem;
   grid-template-columns: 2.5rem 1fr;
@@ -259,16 +397,25 @@
 
 .neon-bg-2 {
   --nav-tile-accent: rgb(0, 245, 238);
+  --nav-tile-accent-soft: rgba(191, 248, 244, 0.86);
+  --nav-tile-glow: rgba(0, 245, 238, 0.18);
+  --nav-tile-dim: rgba(0, 245, 238, 0.05);
 }
 
 .neon-bg-3,
 .neon-bg-6 {
   --nav-tile-accent: rgb(255, 107, 157);
+  --nav-tile-accent-soft: rgba(255, 178, 204, 0.72);
+  --nav-tile-glow: rgba(255, 107, 157, 0.16);
+  --nav-tile-dim: rgba(255, 107, 157, 0.05);
 }
 
 .neon-bg-4,
 .nav-tile-quiz {
   --nav-tile-accent: rgb(184, 255, 95);
+  --nav-tile-accent-soft: rgba(219, 255, 172, 0.74);
+  --nav-tile-glow: rgba(184, 255, 95, 0.14);
+  --nav-tile-dim: rgba(184, 255, 95, 0.045);
 }
 
 @media (min-width: 580px) {

@@ -279,8 +279,8 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   }
 
   .home-link-spotlight {
-    --spotlight-cyan: var(--neon-cyan);
-    --spotlight-pink: var(--neon-pink);
+    --spotlight-cyan: hsl(var(--neon-cyan));
+    --spotlight-pink: hsl(var(--neon-pink));
     --spotlight-lime: #b8ff5f;
     --spotlight-ink: rgb(5, 8, 10);
     align-items: center;
@@ -322,7 +322,7 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
   }
 
   .eyebrow {
-    color: var(--spotlight-cyan);
+    color: var(--spotlight-cyan, hsl(var(--neon-cyan)));
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: 0.08em;

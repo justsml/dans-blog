@@ -263,12 +263,12 @@ function getArticleImage(article: ArticlePost) {
     background:
       radial-gradient(circle at 18% 0%, rgba(0, 245, 238, 0.1), transparent 34%),
       radial-gradient(circle at 86% 24%, rgba(255, 107, 157, 0.08), transparent 30%),
-      linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.14) 12%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.18) 14%, rgba(0, 0, 0, 0.06)),
       var(--footer-bg);
     color: var(--clr-muted-100);
     margin-top: clamp(3rem, 8vw, 7rem);
     overflow: hidden;
-    padding-block: clamp(1.25rem, 4vw, 3rem) clamp(1.75rem, 5vw, 4rem);
+    padding-block: clamp(2.25rem, 5vw, 4.5rem) clamp(1.75rem, 5vw, 4rem);
     position: relative;
   }
 
@@ -300,7 +300,7 @@ function getArticleImage(article: ArticlePost) {
     display: grid;
     gap: 0;
     grid-column: 1 / -1;
-    grid-auto-rows: minmax(clamp(5.35rem, 8vw, 6.5rem), auto);
+    grid-auto-rows: minmax(clamp(5.8rem, 8.4vw, 6.9rem), auto);
     grid-template-columns: repeat(1, minmax(0, 1fr));
     justify-self: center;
     margin-inline: auto;
@@ -324,7 +324,7 @@ function getArticleImage(article: ArticlePost) {
     isolation: isolate;
     min-height: 100%;
     overflow: hidden;
-    padding: clamp(1rem, 2vw, 1.25rem);
+    padding: clamp(1.15rem, 2.25vw, 1.55rem);
     position: relative;
   }
 
@@ -361,7 +361,7 @@ function getArticleImage(article: ArticlePost) {
 
   .footer-card--cta {
     --footer-card-accent: var(--footer-pink);
-    align-content: end;
+    align-content: start;
   }
 
   .footer-card--rss {
@@ -371,11 +371,13 @@ function getArticleImage(article: ArticlePost) {
 
   .footer-card--reading {
     --footer-card-accent: var(--footer-accent);
+    padding: clamp(1.15rem, 2.25vw, 1.7rem);
   }
 
   .footer-card--meta {
     --footer-card-accent: rgba(221, 232, 233, 0.42);
     align-content: end;
+    min-height: clamp(11rem, 24vw, 16rem);
   }
 
   .footer-card__marker {
@@ -402,7 +404,7 @@ function getArticleImage(article: ArticlePost) {
   .footer-card h2 {
     color: var(--clr-muted-100);
     font-family: "Raleway", sans-serif;
-    font-size: clamp(1.35rem, 3vw, 2rem);
+    font-size: clamp(1.55rem, 3.3vw, 2.35rem);
     font-weight: 740;
     letter-spacing: 0;
     line-height: 1.05;
@@ -550,13 +552,13 @@ function getArticleImage(article: ArticlePost) {
 
   .footer-card--cta p:not(.footer-kicker) {
     color: rgba(221, 232, 233, 0.58);
-    font-size: 0.9rem;
+    font-size: clamp(0.92rem, 1.5vw, 1rem);
     line-height: 1.5;
     max-width: 28ch;
   }
 
   .footer-card--cta h2 {
-    font-size: clamp(1.18rem, 2.2vw, 1.55rem);
+    font-size: clamp(1.35rem, 2.6vw, 1.8rem);
     max-width: 14ch;
   }
 
@@ -741,6 +743,16 @@ function getArticleImage(article: ArticlePost) {
     font-size: 0.85rem;
   }
 
+  .footer-card--rss,
+  .footer-card--connect,
+  .footer-card--cta {
+    min-height: clamp(12rem, 18vw, 15.5rem);
+  }
+
+  .footer-card--quote {
+    min-height: clamp(18rem, 36vw, 30rem);
+  }
+
   .footer-card--meta :global(.edit-on-github) {
     border-bottom: 1px solid color-mix(in srgb, var(--footer-card-accent) 42%, transparent);
     color: var(--footer-accent-soft);
@@ -802,7 +814,7 @@ function getArticleImage(article: ArticlePost) {
 
     .footer-card--quote {
       grid-column: 1;
-      grid-row: 3 / span 2;
+      grid-row: 3 / span 3;
     }
 
     .footer-card--connect {
@@ -822,7 +834,7 @@ function getArticleImage(article: ArticlePost) {
 
     .footer-card--meta {
       grid-column: 1;
-      grid-row: 5 / span 2;
+      grid-row: 6 / span 2;
     }
 
     .footer-card--subscribe {
@@ -831,7 +843,7 @@ function getArticleImage(article: ArticlePost) {
 
     .footer-card--reading {
       grid-column: 2 / 4;
-      grid-row: 3 / span 4;
+      grid-row: 3 / span 5;
     }
 
     .footer-article-grid {
@@ -840,6 +852,10 @@ function getArticleImage(article: ArticlePost) {
 
     .footer-article-card {
       min-height: clamp(12rem, 16vw, 14rem);
+    }
+
+    .footer-article-card:first-child {
+      min-height: clamp(17rem, 24vw, 21rem);
     }
   }
 
