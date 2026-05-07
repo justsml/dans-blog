@@ -1,7 +1,7 @@
 ---
 import { SITE_TITLE } from "../consts";
 import AnimatedLogoType from "./AnimatedLogoType.astro";
-import NavMenu from "./NavMenu";
+import StaticNavMenu from "./StaticNavMenu.astro";
 import avatarImage from "@/assets/avatar-88.webp";
 import { PostCollections } from "@/shared/postsCache";
 import SearchBar from "@/components/SearchUI/SearchBar.astro";
@@ -55,8 +55,7 @@ function getNavPostData(post: MyPost) {
       />
     </h2>
     <div class="nav-box screenshot-hidden">
-      <NavMenu  
-        client:idle={{ timeout: 1200 }}
+      <StaticNavMenu
         categories={categories}
         popularPosts={popularPosts}
         recentPosts={recentPosts}

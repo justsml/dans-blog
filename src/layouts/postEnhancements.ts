@@ -1,5 +1,3 @@
-import { bootQuizRuntime } from "../components/QuizUI/QuizRuntime";
-
 let lifecycleInstalled = false;
 
 export function installPostEnhancementLifecycle() {
@@ -23,8 +21,8 @@ export function installPostEnhancementLifecycle() {
 
 export function bootPostEnhancements() {
   checkForEmptyShareCounts();
-  deferWork(bootBannerEffects, 1800);
-  bootQuizRuntime();
+  deferUntilAfterStartup(bootBannerEffects);
+  bootQuizEnhancements();
 }
 
 async function bootBannerEffects() {
@@ -36,6 +34,33 @@ async function bootBannerEffects() {
     distortionStrength: 0.5,
     scrollSensitivity: 0.125,
   });
+}
+
+async function bootQuizEnhancements() {
+  const quiz = document.querySelector<HTMLElement>(".quiz-ui");
+  if (!quiz) return;
+
+  deferWork(async () => {
+    const { bootQuizRuntime } = await import("../components/QuizUI/QuizRuntime");
+    bootQuizRuntime({ quiz });
+  }, 2500);
+}
+
+function deferUntilAfterStartup(work: () => void | Promise<void>) {
+  let hasRun = false;
+  let fallbackTimer: ReturnType<typeof globalThis.setTimeout> | undefined;
+  const run = () => {
+    if (hasRun) return;
+    hasRun = true;
+    if (fallbackTimer) globalThis.clearTimeout(fallbackTimer);
+    deferWork(work, 12000);
+  };
+
+  for (const eventName of ["pointerdown", "keydown", "scroll", "touchstart"]) {
+    window.addEventListener(eventName, run, { once: true, passive: true });
+  }
+
+  fallbackTimer = globalThis.setTimeout(run, 12000);
 }
 
 function deferWork(work: () => void | Promise<void>, timeout = 1200) {
