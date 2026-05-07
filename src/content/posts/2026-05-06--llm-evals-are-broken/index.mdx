@@ -1,15 +1,11 @@
 ---
-title: "How to fight LLM Evils with Evals!"
-subTitle: "Benchmarks measure benchmarks. Your system needs its own proof."
-date: 2026-05-06
+title: "Fight Evils with Evals!"
+subTitle: "Benchmarks measure benchmarks. Your system needs its own measures."
+date: 2026-05-01
 modified: 2026-05-06
 tags: [ai, llm, evals, testing, production, quality, observability]
 category: AI
 subCategory: Engineering
-draft: true
-unlisted: true
-hidden: true
-publish: false
 popularity: 0.85
 social_image: ./desktop-social.webp
 cover_full_width: ./wide.webp
@@ -24,6 +20,10 @@ MMLU: 92.4%. HumanEval: 87.2%. LLeMU: 88.7%. MATH: 73.6%. AGI: 127%!
 Yet, for 99% of businesses building process & product with AI, **none of it matters.**
 
 What matters? How are YOUR workloads doing? Getting better or worse? The only sane way to know that is to write Evals (tests for LLMs) that reflect the specific tasks, data, and failure modes of your system.
+
+<blockquote class="breakout">
+  <p>The benchmarks are not lying. They are answering someone else's question.</p>
+</blockquote>
 
 ---
 
@@ -44,6 +44,13 @@ That misses almost everything interesting:
 ## The Eval Spectrum (and Where Most Teams Get It Wrong)
 
 Evaluation approaches sit on a spectrum from "fast but flimsy" to "expensive but valid."
+
+<figure class="breakout">
+
+![A spectrum diagram comparing deterministic checks, LLM-as-judge, and human evaluation by speed, cost, and validity.](./eval-spectrum.svg)
+
+<figcaption>Use the cheapest evaluation method that can honestly catch the failure.</figcaption>
+</figure>
 
 **LLM-as-judge** is the current darling: ask a powerful model to grade another model's outputs. Fast, scalable, cheap. The problem: it bakes in the grader model's biases, can be gamed, and creates a circular dependency. If you use GPT-5 to grade GPT-5's outputs, you're measuring something like "how much does GPT-5 agree with GPT-5." That's not nothing, but it's not what you think.
 
@@ -68,6 +75,8 @@ Not "the output should be accurate." That's not a test. More like:
 - Sentiment classification must not flip from positive to negative more than 3% of the time on the existing test set
 
 You can check these programmatically. No judge model required.
+
+**Eval harness: deterministic checks**
 
 ```typescript
 type EvalResult = { passed: boolean; reason?: string };
@@ -112,6 +121,15 @@ Every time a user reports a bad output, flags a hallucination, or you notice a f
 
 This feels manual at first. After six months, you have a test suite no public benchmark can game, because every case came from your own failure history.
 
+<figure class="breakout">
+
+![A workflow diagram showing how bad production incidents become golden cases, then CI eval runs, then blocked regressions or approved releases.](./golden-set-lifecycle.svg)
+
+<figcaption>A golden set turns the embarrassing stuff into a regression suite.</figcaption>
+</figure>
+
+**Golden case shape**
+
 ```typescript
 interface GoldenCase {
   id: string;
@@ -133,7 +151,10 @@ Most teams run evals only when considering a model change. That's acceptance tes
 
 You also need regression testing: "did this break something that used to work?"
 
-Run your golden set on every prompt change, not just model changes. A prompt that was working fine can silently degrade when you add a new tool, change a RAG retrieval strategy, or update your context template. You won't know without a baseline.
+Run your golden set on every prompt change, not just model changes. A prompt that was working fine can silently degrade when you add a new tool, change a RAG retrieval strategy, or update your context template. You won't know without a baseline. Tools like [Langfuse](https://langfuse.com/) attach eval scores to production traces so regression shows up in dashboards, not just in incident reports.
+
+<details>
+<summary>Eval harness: baseline vs candidate comparison</summary>
 
 ```typescript
 async function compareModelVersions(
@@ -165,13 +186,15 @@ async function compareModelVersions(
   console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
 
   if (regressions.length > 0) {
-    console.error('⛔ Blocking regressions found:');
+    console.error('Blocking regressions found:');
     regressions.forEach((r) => console.error(` - ${r.id}`));
   }
 
   return { regressions, improvements };
 }
 ```
+
+</details>
 
 If a candidate regresses on known failures, the upgrade conversation gets wonderfully specific: which cases improved, which cases broke, and whether the trade is worth it.
 
@@ -180,6 +203,8 @@ If a candidate regresses on known failures, the upgrade conversation gets wonder
 LLM-as-judge is useful for open-ended outputs where there is no deterministic right answer: "is this response helpful?", "does this summary preserve the key points?", "is this explanation right for a beginner?"
 
 Use it there. Don't use it for deterministic answers. When you do use it, make the grading rubric explicit:
+
+**Eval harness: rubric-based judge**
 
 ```typescript
 async function judgeHelpfulness(
@@ -207,7 +232,25 @@ Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
 }
 ```
 
-An explicit rubric reduces evaluator variance, gives you interpretable output, and makes it easier to audit when the judge is wrong.
+An explicit rubric reduces evaluator variance, gives you interpretable output, and makes it easier to audit when the judge is wrong. Libraries like [Autoevals](https://github.com/braintrustdata/autoevals) and [Braintrust](https://www.braintrust.dev/) ship prebuilt rubrics for common tasks — worth stealing before writing your own from scratch.
+
+---
+
+## Tools Worth Knowing
+
+You don't have to build all of this from scratch. Several tools have made serious progress on the eval infrastructure problem:
+
+**[Braintrust](https://www.braintrust.dev/)** — Full eval platform with experiment tracking, dataset management, and scoring functions. Organizes eval runs by prompt, model, and deployment so you can diff quality over time, not just across releases. Pairs well with their open-source **[Autoevals](https://github.com/braintrustdata/autoevals)** library, which ships prebuilt model-graded scoring functions for common tasks (factual accuracy, helpfulness, toxicity, semantic similarity).
+
+**[Langfuse](https://langfuse.com/)** — Open-source LLM observability that sits between your app and your models. Traces every call, attaches eval scores (human or automated) to individual spans, and surfaces quality trends over production traffic. Good choice if you want observability and evals in the same tool rather than a separate eval harness.
+
+**[Evalite](https://www.evalite.dev/)** — TypeScript-native eval framework by Matt Pocock. Low ceremony: define a task, define a scorer, run it in your existing test setup. Targets teams who want evals that feel like unit tests rather than a separate ML experiment platform.
+
+**[promptfoo](https://www.promptfoo.dev/)** — CLI-first eval runner focused on prompt comparison and red-teaming. Easy to configure via YAML, integrates with most model providers, and has built-in support for detecting prompt injection and other adversarial inputs.
+
+**[deepeval](https://docs.confident-ai.com/)** — Python eval framework with a large library of built-in metrics (G-Eval, RAG faithfulness, answer relevancy, hallucination detection). Useful for RAG pipelines where you want specific grading for retrieval quality, not just generation quality.
+
+The right tool depends on your stack and where you're starting from. What matters more than the choice of framework is the discipline of running evals at all — consistently, on every significant change.
 
 ---
 

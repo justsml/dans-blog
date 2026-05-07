@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">The eval spectrum</title>
+  <desc id="desc">A spectrum comparing deterministic checks, LLM-as-judge, and human evaluation by speed, cost, and validity.</desc>
+  <defs>
+    <linearGradient id="rail" x1="140" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#26f4df"/>
+      <stop offset="0.52" stop-color="#b9e66f"/>
+      <stop offset="1" stop-color="#ff6db7"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity="0.34"/>
+    </filter>
+    <style>
+      .bg { fill: #061015; }
+      .grid { stroke: rgba(242, 252, 252, 0.06); stroke-width: 1; }
+      .rail { stroke: url(#rail); stroke-width: 14; stroke-linecap: round; }
+      .tick { stroke: rgba(255, 255, 255, 0.3); stroke-width: 2; }
+      .card { fill: rgba(8, 18, 24, 0.94); stroke: rgba(230, 255, 252, 0.14); stroke-width: 1.2; rx: 16; }
+      .cardStrong { stroke: rgba(38, 244, 223, 0.36); }
+      .cardJudge { stroke: rgba(185, 230, 111, 0.32); }
+      .cardHuman { stroke: rgba(255, 109, 183, 0.36); }
+      .label { fill: #edf8f7; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 28px; font-weight: 700; letter-spacing: 0; }
+      .small { fill: rgba(237, 248, 247, 0.74); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 18px; letter-spacing: 0; }
+      .axis { fill: rgba(237, 248, 247, 0.64); font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 19px; letter-spacing: 0; }
+      .value { fill: #26f4df; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 17px; letter-spacing: 0; }
+      .pink { fill: #ff8ec8; }
+      .lime { fill: #cde978; }
+      .title { fill: #ffffff; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 52px; font-weight: 800; letter-spacing: 0; }
+    </style>
+  </defs>
+  <rect class="bg" width="1200" height="675"/>
+  <g opacity="0.9">
+    <path class="grid" d="M0 84.5H1200M0 169.5H1200M0 254.5H1200M0 339.5H1200M0 424.5H1200M0 509.5H1200M0 594.5H1200"/>
+    <path class="grid" d="M100.5 0V675M200.5 0V675M300.5 0V675M400.5 0V675M500.5 0V675M600.5 0V675M700.5 0V675M800.5 0V675M900.5 0V675M1000.5 0V675M1100.5 0V675"/>
+  </g>
+  <text class="title" x="80" y="92">The Eval Spectrum</text>
+  <text class="axis" x="84" y="130">fast / cheap / narrow</text>
+  <text class="axis" x="878" y="130">slow / costly / valid</text>
+  <path class="rail" d="M150 232H1050"/>
+  <path class="tick" d="M170 200V264M600 200V264M1030 200V264"/>
+  <g filter="url(#softShadow)">
+    <rect class="card cardStrong" x="72" y="300" width="310" height="238"/>
+    <rect class="card cardJudge" x="445" y="300" width="310" height="238"/>
+    <rect class="card cardHuman" x="818" y="300" width="310" height="238"/>
+  </g>
+  <g>
+    <text class="label" x="104" y="356">Deterministic checks</text>
+    <text class="small" x="104" y="402">JSON parses</text>
+    <text class="small" x="104" y="433">citations grounded</text>
+    <text class="small" x="104" y="464">schema-safe SQL</text>
+    <text class="value" x="104" y="510">Best for known failures</text>
+  </g>
+  <g>
+    <text class="label" x="477" y="356">LLM-as-judge</text>
+    <text class="small" x="477" y="402">helpfulness</text>
+    <text class="small" x="477" y="433">summary quality</text>
+    <text class="small" x="477" y="464">rubric scoring</text>
+    <text class="value lime" x="477" y="510">Useful, not a court</text>
+  </g>
+  <g>
+    <text class="label" x="850" y="356">Human eval</text>
+    <text class="small" x="850" y="402">real judgment</text>
+    <text class="small" x="850" y="433">domain taste</text>
+    <text class="small" x="850" y="464">business fit</text>
+    <text class="value pink" x="850" y="510">Gold standard, spendy</text>
+  </g>
+  <text class="axis" x="156" y="599">Use the cheapest test that can honestly catch the failure.</text>
+</svg>
