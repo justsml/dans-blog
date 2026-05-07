@@ -72,9 +72,9 @@ const subTitleHtml = subTitle?.replace(/`([^`]+)`/g, "<code>$1</code>");
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
 
 const responsiveImgSizes_fullWidth = {
-  widths: [720, 1280, 1920],
+  widths: [480, 720, 960, 1280],
   sizes: `
-    (max-width: 600px) 100vw,
+    (max-width: 600px) 66vw,
     (max-width: 1200px) 80vw,
     60vw`,
 };
@@ -97,8 +97,9 @@ const _heroSrc = isImageMetadata(cover_full_width)
 const heroPreload = _heroSrc
   ? await getImage({
       src: _heroSrc,
-      widths: isImageMetadata(cover_full_width) ? [720, 1280, 1920] : [800, 1440, 1920],
+      widths: isImageMetadata(cover_full_width) ? [480, 720, 960, 1280] : [800, 1440, 1920],
       format: "webp",
+      quality: 70,
     }).catch(() => null)
   : null;
 ---
@@ -116,7 +117,7 @@ const heroPreload = _heroSrc
         as="image"
         href={heroPreload.src}
         imagesrcset={heroPreload.srcSet.attribute}
-        imagesizes="(max-width: 600px) 100vw, (max-width: 1200px) 80vw, 60vw"
+        imagesizes="(max-width: 600px) 66vw, (max-width: 1200px) 80vw, 60vw"
         fetchpriority="high"
       />
     )}
@@ -167,6 +168,7 @@ const heroPreload = _heroSrc
               src={cover_full_width as ImageMetadata}
               alt={title}
               format="webp"
+              quality={70}
               loading="eager"
               fetchpriority="high"
               {...responsiveImgSizes_fullWidth}

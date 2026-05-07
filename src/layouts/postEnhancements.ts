@@ -40,10 +40,10 @@ async function bootQuizEnhancements() {
   const quiz = document.querySelector<HTMLElement>(".quiz-ui");
   if (!quiz) return;
 
-  deferWork(async () => {
+  deferUntilAfterStartup(async () => {
     const { bootQuizRuntime } = await import("../components/QuizUI/QuizRuntime");
     bootQuizRuntime({ quiz });
-  }, 2500);
+  });
 }
 
 function deferUntilAfterStartup(work: () => void | Promise<void>) {

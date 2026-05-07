@@ -34,6 +34,19 @@
   box-shadow: inset 0 0 15px rgba(255, 0, 153, 0.1);
 }
 
+.banner-wrapper.full-width .banner-image {
+  display: block;
+  height: min(34vw, 140px);
+  object-fit: cover;
+  width: 100%;
+}
+
+@media (min-width: 600px) {
+  .banner-wrapper.full-width .banner-image {
+    height: 200px;
+  }
+}
+
 .banner-wrapper.full-width .banner-webgl-canvas {
   position: absolute !important;
   inset: 0;
