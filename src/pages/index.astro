@@ -342,6 +342,25 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     gap: 1rem;
     grid-template-columns: minmax(0, 1fr);
     margin-top: clamp(1.5rem, 4vw, 3rem);
+    padding-top: 1.4rem;
+    position: relative;
+  }
+
+  .archive-intro::before {
+    background:
+      linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent),
+      linear-gradient(
+        90deg,
+        var(--spotlight-cyan, hsl(var(--neon-cyan))),
+        var(--spotlight-lime, #b8ff5f),
+        var(--spotlight-pink, hsl(var(--neon-pink)))
+      );
+    content: "";
+    height: 1px;
+    inset: 0 auto auto 0;
+    opacity: 0.82;
+    position: absolute;
+    width: 100%;
   }
 
   .archive-intro h2 {

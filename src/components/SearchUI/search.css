@@ -105,7 +105,7 @@
 
   .pagefind-ui__search-wrapper {
     display: block !important;
-    padding: 1rem 1rem 0 !important;
+    padding: 0 !important;
   }
 
   .pagefind-ui__form {
@@ -113,9 +113,10 @@
       radial-gradient(circle at 12% 0%, var(--nav-tile-dim), transparent 40%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 42%),
       var(--nav-tile-surface) !important;
-    border: 1px solid color-mix(in srgb, var(--nav-tile-accent) 36%, transparent) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--nav-tile-border) !important;
     border-radius: 0 !important;
-    box-shadow: 0 16px 42px rgba(0, 8, 12, 0.26), 0 0 22px var(--nav-tile-glow) !important;
+    box-shadow: none !important;
     cursor: text !important;
     display: block !important;
     margin: 0 !important;
@@ -147,7 +148,7 @@
 
   .pagefind-ui__form:focus-within {
     border-color: color-mix(in srgb, var(--nav-tile-accent) 58%, transparent) !important;
-    box-shadow: 0 18px 48px rgba(0, 8, 12, 0.34), 0 0 30px rgba(0, 245, 238, 0.16) !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--nav-tile-accent) 18%, transparent) !important;
   }
 
   .pagefind-ui__search-input {
@@ -221,7 +222,7 @@
     background: transparent !important;
     border: 0 !important;
     box-shadow: none !important;
-    margin: 0.9rem 0 0 !important;
+    margin: 0 !important;
     max-height: calc(min(76vh, 100dvh - var(--search-panel-top) - 0.5rem) - 4.75rem);
     overflow: hidden;
     padding: 0.75rem 1rem 1rem !important;
@@ -418,16 +419,16 @@
   .searchBar {
     --search-panel-right-gap: 0.5rem;
     --search-panel-width: min(calc(100vw - 1rem), 980px);
-    padding-inline: 0.5rem;
+    padding-inline: 0;
 
     > .pagefind-ui {
-      margin-inline: auto !important;
+      margin-inline: 0 !important;
       max-width: var(--search-panel-width) !important;
       width: var(--search-panel-width) !important;
     }
 
     .pagefind-ui__search-wrapper {
-      padding: 0.75rem 0.75rem 0 !important;
+      padding: 0 !important;
     }
 
     .pagefind-ui__form {

@@ -4,7 +4,7 @@ const SEARCH_BAR_SELECTOR = ".searchBar";
 const SEARCH_INPUT_SELECTOR = 'input[type="text"]';
 const SEARCH_BUTTON_SELECTOR = ".btnSearchToggle";
 const SEARCH_CLEAR_SELECTOR = ".pagefind-ui__search-clear";
-const NAV_MENU_SELECTOR = ".NavigationMenuRoot";
+const NAV_MENU_SELECTOR = ".static-nav";
 const SEARCH_PANEL_OPEN_CLASS = "search-panel-open";
 const COLLAPSED_CLASS = "collapsed";
 const FOCUS_DELAY_MS = 0;
@@ -131,9 +131,11 @@ function focusSearchPanelInput(searchPanel: HTMLElement) {
 function positionSearchPanel(searchPanel: HTMLElement) {
   const menuRoot = document.querySelector<HTMLElement>(NAV_MENU_SELECTOR);
   const menuBox = menuRoot?.getBoundingClientRect();
+  const viewportWidth = document.documentElement.clientWidth;
   const top = Math.max(44, Math.round(menuBox?.bottom ?? 92));
-  const rightGap = Math.max(8, Math.round(window.innerWidth - (menuBox?.right ?? window.innerWidth - 16)));
-  const width = Math.min(544, Math.max(320, Math.round(menuBox?.width ?? 544)));
+  const rightGap = Math.max(0, Math.round(viewportWidth - (menuBox?.right ?? viewportWidth - 16)));
+  const navWidth = Math.max(320, Math.round(menuBox?.width ?? 544));
+  const width = Math.min(544, navWidth, viewportWidth - rightGap);
   searchPanel.style.setProperty("--search-panel-top", `${top}px`);
   searchPanel.style.setProperty("--search-panel-right-gap", `${rightGap}px`);
   searchPanel.style.setProperty("--search-panel-width", `${width}px`);
