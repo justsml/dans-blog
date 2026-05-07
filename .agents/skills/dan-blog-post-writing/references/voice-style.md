@@ -30,6 +30,42 @@ Good rhythm pattern:
 4. Why it fails in production.
 5. The practical frame that makes the rest of the post useful.
 
+## Prose Moves
+
+Make the prose feel authored, not assembled:
+
+- Prefer a concrete noun plus active verb over abstract diagnosis: "the retriever drops the source document" beats "retrieval quality is impacted."
+- Put the important distinction at the end of a sentence when you want it to land.
+- Use short paragraphs for turns in the argument; use longer paragraphs only when walking through a mechanism.
+- Let some sentences be blunt. If every sentence is polished to the same smoothness, the article loses its pulse.
+- Use repetition intentionally for structure, not because the same idea was drafted three times.
+- Keep transitions causal: "That is why...", "The failure mode is...", "This matters when...".
+
+Good explanatory sentence shapes:
+
+- "The problem is not X. The problem is that X now owns Y."
+- "This works until [specific production condition]."
+- "That distinction sounds academic until [specific consequence]."
+- "Use X when [condition]. Use Y when [different condition]."
+
+## Blockquotes And Pull Quotes
+
+Use blockquotes sparingly. They should create contrast, authority, or a clean rhetorical pause.
+
+Good uses:
+
+- A short external quote that the post explains, challenges, or builds from.
+- A compressed version of the thesis after the intro.
+- A warning or rule of thumb that deserves visual weight.
+
+Avoid:
+
+- Long quoted passages.
+- Blockquotes that merely decorate ordinary prose.
+- Quoting a source when a link plus paraphrase would be cleaner.
+
+When quoting external sources, keep excerpts short, link the source near the quote, and explain why the quote matters in Dan's own prose.
+
 ## Humor
 
 Use humor as seasoning:
@@ -122,3 +158,5 @@ Before finalizing, remove or rewrite:
 - generic "robust, scalable, seamless" claims
 - paragraphs that only say "there are tradeoffs" without naming them
 - fake balance where one option is clearly the better default
+- section endings that trail off with "it depends" instead of giving a decision rule
+- captions that say only what is visible instead of explaining why the image is there

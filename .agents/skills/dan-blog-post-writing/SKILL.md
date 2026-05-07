@@ -14,8 +14,8 @@ Write articles that sound native to DanLevy.net: practical, technically sharp, o
 Read only the references needed for the task:
 
 - `references/article-workflow.md` for the drafting, rewriting, research, and quality workflow.
-- `references/voice-style.md` before writing or substantially rewriting body prose.
-- `references/frontmatter-images.md` before creating a post file, touching frontmatter, or proposing/generated images.
+- `references/voice-style.md` before writing or substantially rewriting body prose, explanatory asides, blockquotes, or section transitions.
+- `references/frontmatter-images.md` before creating a post file, touching frontmatter, choosing categories/tags, writing image captions, or proposing/generated visuals.
 
 When working inside `/Users/dan/code/oss/dans-blog`, sample 2-5 nearby posts before writing if the topic has an established local pattern. Prefer recent posts in the same category or posts the user has open.
 
@@ -25,9 +25,10 @@ When working inside `/Users/dan/code/oss/dans-blog`, sample 2-5 nearby posts bef
 2. Inspect local examples and any existing draft. Preserve user-written good parts; improve structure, claims, rhythm, and specificity.
 3. For current technical claims, verify against primary/current sources before presenting them as fact. Link sources naturally in the article.
 4. Build the article around one strong thesis, a practical map, concrete examples, and a useful ending. Avoid generic thought-leadership filler.
-5. Use the frontmatter and image conventions from `references/frontmatter-images.md`.
-6. If editing files, create or update the MDX and image references in the post directory. Do not edit `public/_redirects` manually.
-7. Validate when practical with `bun run check` or `bun run build` for broad changes. Use `bun`, never npm or yarn.
+5. Tune the technical depth deliberately: decide whether the piece should be conceptual, practitioner-level, or implementation-heavy, then adjust code, diagrams, asides, and prerequisites to match.
+6. Use the frontmatter, taxonomy, image, and caption conventions from `references/frontmatter-images.md`.
+7. If editing files, create or update the MDX and image references in the post directory. Do not edit `public/_redirects` manually.
+8. Validate when practical with `bun run check` or `bun run build` for broad changes. Use `bun`, never npm or yarn.
 
 ## Output Expectations
 
@@ -36,6 +37,7 @@ For a new post, produce:
 - A date-prefixed post directory name and slug.
 - Complete frontmatter.
 - MDX body with links, code blocks, tables, figures, or callouts when they genuinely help.
+- A content-depth note when relevant: what was made more conceptual, more technical, or more explanatory.
 - An image plan with at least 3 visual concept variants unless the user asks to skip images.
 - Asset filenames that match the selected frontmatter.
 

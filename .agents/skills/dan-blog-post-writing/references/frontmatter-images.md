@@ -43,23 +43,55 @@ Use `redirects` in frontmatter for old URLs. Never edit `public/_redirects` manu
 
 Use existing categories when possible:
 
-- `AI` for LLMs, agents, evals, prompt engineering, vector search with AI framing.
-- `Code` for programming, architecture, JavaScript, databases, patterns.
-- `Security` for security-first articles.
-- `Search` for site search and search infrastructure.
+- `AI` for LLMs, agents, evals, prompt engineering, RAG, AI infrastructure, model APIs, and vector search with AI framing.
+- `Code` for programming, architecture, JavaScript, TypeScript, databases, frontend, backend, patterns, and implementation guides.
+- `Security` for security-first articles, vulnerability management, auth, supply chain, prompt injection as security, and defensive engineering.
+- `Search` for site search, Pagefind, full-text search, trigrams, semantic search, and search infrastructure when search is the primary subject.
+- `Guides` for durable how-to material that is less opinion essay and more practical walkthrough.
+- `Engineering` for team/process/product-engineering pieces where the main point is how engineering work is organized.
+- `Instructional Design` for teaching, assessment, learning design, and education strategy.
+- `DevOps` for deployment, servers, Docker, hosting, shell, and operational setup posts.
 - `Quiz` only for quiz posts; use the `quiz-writing` skill for those.
 
-Use precise `subCategory` values such as `Engineering`, `Security`, `Databases`, `Open Source`, or `Best Practices`.
+Prefer current broad categories over one-off legacy categories such as `Thoughts`, `Regex`, `HowTo`, or `Lulz` unless the user is intentionally working in an old post style.
+
+Preferred `subCategory` values:
+
+- `Engineering`
+- `Databases`
+- `JavaScript`
+- `Architecture`
+- `Security`
+- `Open Source`
+- `Best Practices`
+- `Frontend`
+- `CSS`
+- `AI Infrastructure`
+- `Machine Learning`
+- `Teaching`
+- `Engineering Management`
+- `Cloud`
+
+Normalize near-duplicates for new work: use `Databases`, not `Database`; use `JavaScript`, not `NodeJS` unless the post is specifically about Node.js.
 
 ## Tags
 
 Tags should include:
 
-- broad topic: `ai`, `code`, `security`, `postgres`
-- specific terms: `pgvector`, `prompt-injection`, `full-text-search`, `typescript`
-- audience/context: `production`, `developer-experience`, `testing`, `observability`
+- broad topic: `ai`, `code`, `security`, `javascript`, `postgres`, `databases`, `search`
+- specific terms: `llm`, `agents`, `rag`, `embeddings`, `vector-search`, `pgvector`, `full-text-search`, `trigrams`, `pg_trgm`, `prompt-injection`, `typescript`, `react`, `tailwind`, `pagefind`, `mastra`, `mcp`
+- audience/context: `production`, `developer-experience`, `testing`, `observability`, `performance`, `debugging`, `architecture`, `best-practices`, `open-source`
+- level tags only when useful: `beginner`, `intermediate`, `advanced`, `fundamentals`, `intro`
 
-Prefer 6-10 tags for substantial technical posts.
+Prefer 6-10 tags for substantial technical posts. Use lowercase kebab-case for new tags unless preserving an established proper noun. Avoid creating both singular and plural forms (`database` and `databases`) for new posts; pick the existing stronger tag, usually `databases`.
+
+Preferred tag families:
+
+- AI: `ai`, `llm`, `agents`, `rag`, `embeddings`, `vector-search`, `prompt-engineering`, `evals`, `model-routing`, `tools`, `mcp`, `mastra`
+- Security: `security`, `prompt-injection`, `web-security`, `auth`, `vpn`, `tailscale`, `owasp`, `attack-vectors`
+- Databases/search: `postgres`, `postgresql`, `sql`, `databases`, `search`, `full-text-search`, `trigrams`, `pg_trgm`, `pgvector`, `semantic-search`, `hybrid-search`
+- JavaScript/frontend: `javascript`, `typescript`, `react`, `frontend`, `css`, `tailwind`, `promises`, `async`, `nodejs`
+- Engineering practice: `architecture`, `patterns`, `production`, `testing`, `debugging`, `performance`, `developer-experience`, `observability`, `open-source`
 
 ## Image Asset Set
 
@@ -100,6 +132,9 @@ Offer variants like these, adapted to the topic:
 - **Editorial metaphor**: one memorable visual metaphor, useful for opinion pieces and warnings.
 - **Workbench / systems view**: terminals, schemas, traces, code, mechanical parts, useful for practical engineering guides.
 - **Failure-mode scene**: a system doing the wrong thing in a visually obvious way, useful for security, evals, and architecture pitfalls.
+- **Infographic explainer**: one clear flow, matrix, lifecycle, stack, or spectrum, useful when the article's main value is organizing a confusing concept.
+- **Annotated architecture**: boxes, arrows, boundaries, permissions, data paths, or retrieval stages, useful when implementation shape matters.
+- **Before/after model**: two contrasting panels or states, useful when the post argues against a bad default and toward a better operating model.
 
 For each variant, include:
 
@@ -108,6 +143,31 @@ For each variant, include:
 - prompt
 - suggested filenames
 - notes for wide/square/social crop safety
+
+## In-Article Figures And Captions
+
+Use visuals inside the article when they reduce cognitive load:
+
+- Use an infographic-style visual for taxonomies, pipelines, query flows, security boundaries, tradeoff spectra, or "which tool when" decisions.
+- Use a small illustrative figure for a metaphor only when it reinforces the thesis and does not feel like decoration.
+- Use diagrams when the article keeps saying "layer", "boundary", "pipeline", "loop", "handoff", "ranking", or "trust".
+- Use screenshots only when the real UI or output matters. Prefer diagrams for concepts and generated editorial images for mood.
+
+Captions should explain the lesson of the image:
+
+```mdx
+<figure>
+  <img src="./retrieval-pipeline.webp" alt="Diagram of a retrieval pipeline with filtering, ranking, and answer generation stages" />
+  <figcaption>Retrieval quality is not one step. Filtering, ranking, and generation can each fail independently.</figcaption>
+</figure>
+```
+
+Caption rules:
+
+- Say what the reader should notice, not just what the image contains.
+- Keep captions to one or two sentences.
+- Use accurate alt text that describes the image for readers who cannot see it.
+- For diagrams with labels baked into the image, make the caption carry the argument so the post still works if the image is compressed.
 
 ## Prompt Style
 
