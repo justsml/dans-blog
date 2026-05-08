@@ -82,5 +82,20 @@ if (!shouldSkipCommit) {
 function getCandidateCommits() {
   const grep = `i18n candidate(${locale}): ${slug} via`;
   const output = run("git", ["log", "--format=%H", "--grep", grep]);
-  return output.split(/\r?\n/).filter(Boolean).reverse();
+  return output
+    .split(/\r?\n/)
+    .filter(Boolean)
+    .filter((commit) => commitChangesTarget(commit))
+    .reverse();
+}
+
+function commitChangesTarget(commit: string) {
+  const changedFiles = run("git", [
+    "diff-tree",
+    "--no-commit-id",
+    "--name-only",
+    "-r",
+    commit,
+  ]);
+  return changedFiles.split(/\r?\n/).includes(targetRelPath);
 }
