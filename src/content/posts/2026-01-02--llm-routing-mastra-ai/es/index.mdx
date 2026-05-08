@@ -1,23 +1,23 @@
 ---
 title: "No te cases con tu modelo"
-subTitle: "Enrutamiento de LLMs, tan de moda ahora"
+subTitle: "Enrutamiento de LLM, la tendencia del momento"
 ---
 
-La mayoría de los equipos de ingeniería eligen un modelo de lenguaje y se aferran a él. Un proveedor, un modelo, todas las tareas. Es como contratar a una persona para que programe, escriba tu copy y haga tus impuestos solo porque le fue bien en la primera entrevista.
+La mayoría de los equipos de ingeniería eligen un modelo de lenguaje y se quedan con él. Un proveedor, un modelo, todas las tareas. Es como contratar a una sola persona para que se encargue de tu programación, tu redacción publicitaria y tus impuestos porque resultó ser buena en la primera entrevista.
 
-En cualquier momento dado, un modelo es mejor para código, otro es mejor con contextos largos y desordenados, y otro es la opción barata y aburrida para clasificación. Los nombres cambian. La naturaleza del problema no. Tratar a un modelo como si fuera experto en todo significa que o estás pagando de más por tareas simples o estás obteniendo resultados mediocres en tareas especializadas.
+En cualquier momento dado, un modelo es mejor para el código, otro es mejor con contextos largos y desordenados, y otro es el caballo de batalla más barato y aburrido para la clasificación. Los nombres cambian. La forma del problema no. Tratar a un modelo como si fuera excelente en todo significa que estás pagando de más por tareas sencillas o que estás obteniendo resultados mediocres en tareas especializadas.
 
-Vi a un equipo quemar miles de dólares ejecutando análisis de sentimiento a través de un modelo de $30 por millón de tokens cuando uno de $0.50 habría hecho el trabajo igual de bien. Formateo simple de JSON, tareas básicas de clasificación, todo pasando por su proveedor premium. Lo único que se estaba calentando era su factura de AWS.
+He visto a un equipo quemar miles de dólares ejecutando análisis de sentimientos a través de un modelo de 30 dólares por millón de tokens cuando un modelo de 0,50 dólares habría hecho el trabajo igual de bien. Formateo JSON simple, tareas de clasificación básicas, todo pasando por su proveedor premium. Lo único que se estaba calentando era su factura de AWS.
 
-Hay una mejor manera, y no es particularmente complicada.
+Hay una forma mejor, y no es particularmente complicada.
 
 ## Delegación sobre devoción
 
-¿Y si pudieras enrutar las solicitudes al modelo que realmente sea el más adecuado para esa tarea específica? Usa tu modelo potente y caro para lo difícil, pero delega el análisis y formateo simple a algo más barato. Obtén los beneficios de múltiples proveedores sin tener que manipularlos manualmente en tu código.
+¿Qué pasaría si pudieras dirigir las solicitudes al modelo que realmente mejor se adapte a esa tarea específica? Usa tu potencia costosa para las cosas difíciles, pero delega el análisis y el formato simples a algo más barato. Obtén los beneficios de múltiples proveedores sin tener que hacer malabares con ellos manualmente en tu código base.
 
-Mastra te permite construir exactamente este tipo de sistema. Configuras agentes especialistas para diferentes tipos de trabajo, luego creas un agente enrutador que determina qué especialista debe manejar cada solicitud. Los IDs de modelo de abajo son ejemplos, no una tabla de clasificación. Cámbialos por los modelos actuales que ganen tus evaluaciones y se ajusten a tu presupuesto.
+Mastra te permite construir exactamente este tipo de sistema. Configuras agentes especialistas para diferentes tipos de trabajo, luego creas un agente enrutador que determina qué especialista debe manejar cada solicitud. Los IDs de los modelos a continuación son ejemplos, no una tabla de posiciones. Cámbialos por los modelos actuales que ganen tus evaluaciones y se ajusten a tu presupuesto.
 
-Piénsalo así: tienes tres especialistas en tu equipo.
+Piénsalo de esta manera: tienes tres especialistas en tu equipo.
 
 ```typescript
 // ./src/mastra/index.ts
@@ -29,7 +29,7 @@ import { google } from '@ai-sdk/google';
 
 export const claudeAgent = new Agent({
   id: 'claude-agent',
-  instructions: 'Eres un ingeniero experto. ¿Escribes bugs? Estás despedido.',
+  instructions: 'Eres un ingeniero experto. ¿Escribes errores? Estás despedido.',
   model: anthropic(process.env.CODE_MODEL ?? 'claude-sonnet-4-5'),
 });
 
@@ -41,23 +41,23 @@ export const geminiAgent = new Agent({
 
 export const gptAgent = new Agent({
   id: 'gpt-agent',
-  instructions: 'Eres un asistente servicial. Sé aburrido.',
+  instructions: 'Eres un asistente útil. Sé aburrido.',
   model: openai(process.env.GENERAL_MODEL ?? 'gpt-5.2'),
 });
 ```
 
-Cada uno tiene un trabajo. Tu agente de código debería ser el modelo que pase tus evaluaciones de código específicas de tu repositorio. Tu agente de contexto largo debería ser aquel que sobreviva a tus documentos reales sin convertir el medio en sopa. Tu agente general debería ser barato, confiable y aburrido de la mejor manera posible.
+Cada uno tiene un trabajo. Tu agente de código debe ser el modelo que pase tus evaluaciones de código específicas del repositorio. Tu agente de contexto largo debe ser el que sobreviva a tus documentos reales sin convertir el medio en una sopa. Tu agente general debe ser barato, confiable y aburrido de la mejor manera posible.
 
-Aquí es donde se pone interesante. Agregas un enrutador que actúa como un proxy inteligente:
+Aquí es donde se pone interesante. Añades un enrutador que actúa como un proxy inteligente:
 
 ```typescript
 export const routerAgent = new Agent({
   id: 'router-agent',
   name: 'El Jefe',
   instructions: `Eres un enrutador inteligente.
-  - Código -> Claude
+  - Programación -> Claude
   - Poesía -> Gemini
-  - Hechos -> GPT
+  - Datos -> GPT
 
   No hagas el trabajo tú mismo. Delega.`,
   model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // ¡Usa un modelo barato para el enrutamiento!
@@ -73,30 +73,30 @@ export const mastra = new Mastra({
 });
 ```
 
-El enrutador mismo se ejecuta en un modelo ligero porque solo está tomando decisiones sobre a dónde enviar el tráfico. No estás pagando tarifas premium para descubrir qué otro modelo premium usar. Mide esto también; un mal enrutador convierte silenciosamente los ahorros en enrutamientos erróneos.
+El enrutador en sí se ejecuta en un modelo ligero porque solo está tomando decisiones sobre a dónde enviar el tráfico. No estás pagando tarifas premium para descubrir qué otro modelo premium usar. Mide esto también; un mal enrutador convierte silenciosamente los ahorros en desvíos erróneos.
 
-Cuando alguien pide una implementación de bubble sort, el enrutador lo reconoce como trabajo de código y se lo entrega a tu especialista en código. ¿Un prompt de escritura creativa? Eso va al modelo que elegiste por su voz y alcance. ¿Una pregunta factual sobre eventos históricos? Enrútala al agente general, idealmente con recuperación cuando la frescura o la citación importan.
+Cuando alguien pide una implementación de bubble sort, el enrutador lo reconoce como trabajo de código y se lo entrega a tu especialista en código. ¿Un mensaje de escritura creativa? Eso va al modelo que hayas elegido por su voz y rango. ¿Pregunta fáctica sobre eventos históricos? Dirígela al agente general, idealmente con recuperación cuando la frescura o la citación importen.
 
-## Los beneficios prácticos
+## Beneficios prácticos
 
-**La eficiencia de costos importa más de lo que crees.** Un modelo de enrutamiento pequeño tomando decisiones de delegación cuesta una fracción de ejecutar cada solicitud a través de tu proveedor más caro. Con el tiempo, especialmente a escala, esto se convierte en dinero real. Solo pagas por la inteligencia de alto rendimiento cuando realmente la necesitas.
+**La eficiencia de costes importa más de lo que crees.** Un pequeño modelo de enrutamiento que toma decisiones de delegación cuesta una fracción de ejecutar cada solicitud a través de tu proveedor más caro. Con el tiempo, especialmente a escala, esto suma dinero real. Solo pagas por la inteligencia de alta resistencia cuando realmente la necesitas.
 
-**La calidad mejora cuando emparejas modelos con tareas.** El ganador cambia por mes, tarea y forma del prompt. Por eso la capa de enrutamiento debería depender de tus evaluaciones, no de cualquier modelo estuviera ganando en Twitter la semana que escribiste la integración.
+**La calidad mejora cuando haces coincidir los modelos con las tareas.** El ganador cambia por mes, tarea y forma del prompt. Es por eso que la capa de enrutamiento debe depender de tus evaluaciones, no del modelo que estuviera ganando en Twitter la semana que escribiste la integración.
 
-**La resiliencia se convierte en un beneficio colateral.** Cuando OpenAI tiene una de sus caídas periódicas (y las tienen), tu enrutador puede redirigir el tráfico a otros proveedores. No estás varado esperando a que una API específica vuelva a estar en línea.
+**La resiliencia se convierte en un beneficio secundario.** Cuando OpenAI tiene una de sus caídas periódicas (y las tienen), tu enrutador puede redirigir el tráfico a otros proveedores. No te quedas paralizado esperando a que una API específica vuelva a estar en línea.
 
-Esto no se trata de ser inteligente por el gusto de serlo. Se trata de construir sistemas que tengan sentido tanto financiera como técnicamente. No usarías el mismo martillo para cada tarea de construcción, y probablemente tampoco deberías usar el mismo modelo de lenguaje para cada tarea de IA.
+Esto no se trata de ser ingenioso por el simple hecho de serlo. Se trata de construir sistemas que tengan sentido tanto financiera como técnicamente. No usarías el mismo martillo para cada tarea de construcción, y probablemente tampoco deberías usar el mismo modelo de lenguaje para cada tarea de IA.
 
-La belleza de este enfoque es que tu código de aplicación no cambia. Todavía solo llamas a tu agente enrutador. La complejidad de decidir qué modelo usar para qué tarea vive en un solo lugar, configurada una vez, en lugar de estar dispersa por todo tu código en un montón de lógica condicional.
+La belleza de este enfoque es que el código de tu aplicación no cambia. Sigues llamando a tu agente enrutador. La complejidad de decidir qué modelo usar para qué tarea vive en un solo lugar, configurado una vez, en lugar de estar disperso por todo tu código base en un montón de lógica condicional.
 
 ### Recursos
 
 - [Documentación de Mastra.ai](https://mastra.ai/docs)
-- [Repositorio de Mastra en GitHub](https://github.com/mastra-ai/mastra)
+- [Repositorio de GitHub de Mastra](https://github.com/mastra-ai/mastra)
 
 ## Lee la serie
 
-1. **Enrutamiento de LLMs** (Este artículo)
-2. [Seguridad y guardarraíles](/mastra-security-guardrails)
+1. **Enrutamiento de LLM** (Este post)
+2. [Seguridad y barreras de protección](/mastra-security-guardrails)
 3. [Integraciones de MCP y herramientas](/mastra-mcp-tool-integrations)
 4. [Flujos de trabajo y memoria](/mastra-workflows-memory)
