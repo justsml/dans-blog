@@ -1,5 +1,6 @@
 import { RSSFeedItem } from "@astrojs/rss";
 export type RssishItem = RSSFeedItem & {
+  questionCount?: number;
   sourcePath: string;
   slug: string;
 };

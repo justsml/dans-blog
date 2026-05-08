@@ -29,6 +29,7 @@ export type PostFeedItem = {
   categories: string[];
   category: string;
   cover?: string;
+  questionCount?: number;
   slug: string;
   link: string;
 };
@@ -299,6 +300,10 @@ function toFeedItem(
     categories,
     category: post.data.category,
     cover: post.data?.cover?.src,
+    questionCount:
+      post.data.category === "Quiz"
+        ? countQuizQuestions(post.body)
+        : undefined,
     slug,
     link: `/${slug}/`,
   };

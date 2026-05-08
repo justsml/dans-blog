@@ -1,6 +1,6 @@
 # 9. File System
 
-How many times will the callback fire when a file is modified?
+How many times is fs.watch() guaranteed to fire when a file is modified?
 
 import fs from 'fs';
 fs.watch('test.txt', (eventType, filename) => {
@@ -10,7 +10,7 @@ fs.watch('test.txt', (eventType, filename) => {
 ------
 
 1. Once per file change
-2. Twice per file change
+2. Not guaranteed; may fire multiple times
 3. Never
 4. Only on file deletion
 

@@ -14,7 +14,7 @@
       .bg { fill: #050b10; }
       .grid { stroke: rgba(242, 252, 252, 0.055); stroke-width: 1; }
       .line { stroke: url(#accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; fill: none; }
-      .box { fill: rgba(9, 20, 27, 0.96); stroke: rgba(230, 255, 252, 0.14); stroke-width: 1.2; rx: 18; }
+      .box { fill: rgba(9, 20, 27, 0.96); stroke: rgba(230, 255, 252, 0.14); stroke-width: 1.2; }
       .hot { stroke: rgba(255, 120, 189, 0.42); }
       .cool { stroke: rgba(38, 244, 223, 0.4); }
       .green { stroke: rgba(205, 233, 120, 0.42); }
@@ -36,11 +36,11 @@
   <text class="title" x="76" y="92">Build the Golden Set From Bad Days</text>
   <path class="line" d="M210 314C318 222 438 226 542 314S756 410 858 314S1028 224 1092 314"/>
   <g filter="url(#shadow)">
-    <rect class="box hot" x="72" y="190" width="270" height="170"/>
-    <rect class="box" x="326" y="360" width="300" height="170"/>
-    <rect class="box cool" x="614" y="190" width="270" height="170"/>
-    <rect class="box" x="858" y="360" width="270" height="170"/>
-    <rect class="box green" x="858" y="155" width="270" height="134"/>
+    <rect class="box hot" x="72" y="190" width="270" height="170" rx="18"/>
+    <rect class="box" x="326" y="360" width="300" height="170" rx="18"/>
+    <rect class="box cool" x="614" y="190" width="270" height="170" rx="18"/>
+    <rect class="box" x="858" y="360" width="270" height="170" rx="18"/>
+    <rect class="box green" x="858" y="155" width="270" height="150" rx="18"/>
   </g>
   <g>
     <rect class="chipPink" x="104" y="222" width="96" height="28" rx="14"/>
@@ -69,7 +69,8 @@
   <g>
     <rect class="chipGreen" x="890" y="184" width="96" height="28" rx="14"/>
     <text class="tag" x="906" y="204">ship</text>
-    <text class="label" x="890" y="250">No known breaks</text>
+    <text class="label" x="890" y="248">No known</text>
+    <text class="label" x="890" y="278">breaks</text>
   </g>
   <path class="arrow" d="M1116 311l-23-15v30z"/>
   <text class="small" x="76" y="602">The point is not a perfect test suite. The point is remembering your own failures.</text>

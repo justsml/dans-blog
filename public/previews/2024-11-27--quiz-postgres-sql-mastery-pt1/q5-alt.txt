@@ -3,10 +3,10 @@
 What is the most accurate statement about timestamptz and timestamp?
 ------
 
-1. They're exactly 8-bytes
+1. They both occupy 8 bytes, but represent different timestamp semantics
 2. They're interchangeable since Pg v10
 3. timestamptz preserves any input timezone
-4. timestamptz adjusts based on the server timezone
+4. timestamptz stores the original timezone name or offset
 5. timestamptz stores a 2-byte value for TZ
 6. timestamptz is the successor to timestamp
 
