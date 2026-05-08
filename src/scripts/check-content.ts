@@ -108,6 +108,7 @@ for (const post of posts) {
   checkTaxonomy(post);
   checkVisibility(post);
   checkDate(post);
+  checkBodyHeadings(post);
   checkRelated(post);
   checkAbsoluteInternalLinks(post);
   checkMarkdownInsideJsx(post);
@@ -258,6 +259,33 @@ function checkDate(post: PostFile) {
       `directory date ${post.directoryDate} differs from frontmatter date ${frontmatterDate}`,
     );
   }
+
+  const modified = stringValue(post.frontmatter.modified);
+  if (modified && !isValidIsoDate(modified)) {
+    add("error", post, `modified "${modified}" is not a valid YYYY-MM-DD date`);
+  }
+}
+
+function checkBodyHeadings(post: PostFile) {
+  const body = stripFencedMarkdown(post.body);
+  const lines = body.split(/\r?\n/);
+  const markdownH1 = lines.findIndex((line) => /^#\s+\S/.test(line.trim()));
+  if (markdownH1 >= 0) {
+    add(
+      "warning",
+      post,
+      `body starts or contains an H1 near line ${markdownH1 + 1}; use ## under the layout title`,
+    );
+  }
+
+  const htmlH1 = lines.findIndex((line) => /<h1\b/i.test(line));
+  if (htmlH1 >= 0) {
+    add(
+      "warning",
+      post,
+      `raw <h1> appears near line ${htmlH1 + 1}; use ## under the layout title`,
+    );
+  }
 }
 
 function checkRelated(post: PostFile) {
@@ -341,6 +369,12 @@ function isAllowedAbsoluteRoute(route: string) {
 
 function stripFencedMarkdown(body: string) {
   return body.replace(/```[\s\S]*?```/g, "");
+}
+
+function isValidIsoDate(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T00:00:00.000Z`);
+  return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
 }
 
 function stringValue(value: FrontmatterValue) {

@@ -7,6 +7,7 @@ import type { ElementHandle, Page } from "playwright";
 import * as webP from "@/shared/webP.ts";
 import { resizeAndCrop } from "../src/shared/socialBanner.ts";
 import { saveAltText } from "./siteHelpers.ts";
+import { applyScreenshotMode } from "../src/components/Screenshots/screenshotMode.ts";
 
 const log = makeLogs("screenshotter");
 const screenshotService = new ScreenshotService();
@@ -17,7 +18,7 @@ const DEFAULT_DELAY_MS = 150;
 const FEED_TIMEOUT_MS = 10_000;
 const NAVIGATION_TIMEOUT_MS = 30_000;
 const QUIZ_SELECTOR_COUNT = 30;
-const SCREENSHOT_MODE_CLASS = "screenshot-mode";
+const ELEMENT_SCREENSHOT_TIMEOUT_MS = 45_000;
 const SOCIAL_BANNER_SIZE = {
   width: 1200,
   height: 628,
@@ -164,18 +165,14 @@ function assertNotAutoRefresh(error: Error) {
   }
 }
 
-async function addClassName(page: Page, overrideClassName: string) {
-  if (overrideClassName) {
-    await page
-      .evaluate((className) => {
-        document.body.classList.add(className);
-        return document.body.classList.value;
-      }, overrideClassName)
-      .catch((error) => {
-        if (error instanceof Error) assertNotAutoRefresh(error);
-        throw error;
-      });
-  }
+async function applyScreenshotModeSafely(
+  page: Page,
+  classModifier?: string,
+) {
+  await applyScreenshotMode(page, classModifier).catch((error) => {
+    if (error instanceof Error) assertNotAutoRefresh(error);
+    throw error;
+  });
 }
 
 async function resetViewport(page: Page) {
@@ -188,7 +185,7 @@ async function takeScreenshot(ctx: Page | ElementHandle, fileName: string) {
   await ctx.screenshot({
     quality: 100,
     path: fileName,
-    timeout: 30_000,
+    timeout: ELEMENT_SCREENSHOT_TIMEOUT_MS,
   });
   if (webP.isFileSupported(fileName)) {
     try {
@@ -282,8 +279,8 @@ async function generateImages(args: ScreenshotTask) {
         for (const [selector, fileName] of Object.entries(selectorPathMap)) {
           const newFile = toAbsolutePath(fileName);
           log(`Screenshot for ${selector}: ${newFile}`);
-          await addClassName(page, SCREENSHOT_MODE_CLASS);
-          const element = await page.$(selector).catch((error) => {
+          await applyScreenshotModeSafely(page);
+          const element = await prepareElementScreenshot(page, selector).catch((error) => {
             console.error(
               `Error selecting element ${selector}: ${getErrorMessage(error)}`,
             );
@@ -320,6 +317,97 @@ async function generateImages(args: ScreenshotTask) {
   }
   const endTime = Date.now();
   console.log(`Screenshots generated in ${endTime - startTime}ms`);
+}
+
+async function prepareElementScreenshot(page: Page, selector: string) {
+  await page.waitForSelector(selector, {
+    state: "attached",
+    timeout: NAVIGATION_TIMEOUT_MS,
+  });
+
+  await page.evaluate((selector) => {
+    const element = document.querySelector<HTMLElement>(selector);
+    if (!element) return;
+
+    document
+      .querySelectorAll<HTMLElement>(
+        ".quiz-nav-bar, .quiz-score-bar, .quiz-completion-card",
+      )
+      .forEach((quizChrome) => {
+        quizChrome.style.setProperty("display", "none", "important");
+      });
+
+    const island = element.closest<HTMLElement>("astro-island");
+    const quizUI = island?.closest<HTMLElement>(".quiz-ui");
+
+    if (island && quizUI) {
+      quizUI.classList.add("quiz-slides-active");
+
+      quizUI
+        .querySelectorAll<HTMLElement>("astro-island")
+        .forEach((candidateIsland) => {
+          const containsChallenge = Boolean(
+            candidateIsland.querySelector(".challenge"),
+          );
+          if (!containsChallenge) return;
+
+          if (candidateIsland === island) {
+            candidateIsland.classList.add("quiz-slide", "quiz-slide--active");
+            candidateIsland.classList.remove("quiz-slide--hidden");
+            candidateIsland.style.setProperty("display", "block", "important");
+            candidateIsland.style.setProperty("position", "relative");
+            candidateIsland.style.setProperty("width", "100%");
+            candidateIsland.style.setProperty("height", "auto");
+            candidateIsland.style.setProperty("overflow", "visible");
+            candidateIsland.style.setProperty("opacity", "1");
+            candidateIsland.style.setProperty("pointer-events", "auto");
+            candidateIsland.style.removeProperty("clip");
+            candidateIsland.style.removeProperty("transform");
+            candidateIsland.style.removeProperty("filter");
+          } else {
+            candidateIsland.classList.add("quiz-slide", "quiz-slide--hidden");
+            candidateIsland.classList.remove("quiz-slide--active");
+            candidateIsland.style.setProperty("display", "none", "important");
+          }
+        });
+    }
+
+    element.classList.remove(
+      "challenge-enter",
+      "answer-correct-pulse",
+      "answer-incorrect-shake",
+      "pulse",
+      "shake",
+    );
+    element.style.setProperty("opacity", "1");
+    element.style.removeProperty("transform");
+    element.style.removeProperty("filter");
+    element.scrollIntoView({ block: "center", inline: "center" });
+  }, selector);
+
+  await page.waitForFunction(
+    (selector) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (!element) return false;
+
+      const rect = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
+
+      return (
+        rect.width > 0 &&
+        rect.height > 0 &&
+        style.display !== "none" &&
+        style.visibility !== "hidden" &&
+        style.opacity !== "0"
+      );
+    },
+    selector,
+    { timeout: NAVIGATION_TIMEOUT_MS },
+  );
+
+  const element = await page.$(selector);
+  await element?.scrollIntoViewIfNeeded({ timeout: NAVIGATION_TIMEOUT_MS });
+  return element;
 }
 
 function parseCliOptions(args: string[]): CliOptions {
@@ -400,8 +488,7 @@ async function preparePage(
     zoom?: number;
   },
 ) {
-  await addClassName(page, SCREENSHOT_MODE_CLASS);
-  if (classModifier) await addClassName(page, classModifier);
+  await applyScreenshotModeSafely(page, classModifier);
 
   if (zoom && zoom > 0 && zoom < 10) {
     await page.evaluate((zoom) => {

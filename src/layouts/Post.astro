@@ -74,7 +74,14 @@ const coverUrl = isImageMetadata(cover)
 
 const subTitleHtml = subTitle?.replace(/`([^`]+)`/g, "<code>$1</code>");
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
-const heroAlt = cover_alt || (title ? `Hero image for ${title}` : "");
+const stripHtml = (value: string) => value.replace(/<[^>]*>/g, "").trim();
+const heroAlt =
+  cover_alt ||
+  (cover_credit
+    ? `${title ? `Hero image for ${title}. ` : ""}${stripHtml(cover_credit)}`
+    : title
+      ? `Hero image for ${title}`
+      : "");
 
 const responsiveImgSizes_fullWidth = {
   widths: [480, 720, 960, 1280],
@@ -119,6 +126,21 @@ const shouldCropMobileBanner =
     {modTime && <meta http-equiv="last-modified" content={modTime} />}
     {modTime && <meta property="article:modified_time" content={modTime} />}
     {pubTime && <meta property="article:published_time" content={pubTime} />}
+    <PostLinkedData
+      title={title}
+      description={subTitle!}
+      date={pubTime}
+      modified={modTime}
+      slug={slug}
+      tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
+      imageUrl={coverUrl}
+    />
+    <link
+      rel="stylesheet"
+      href="/files/fonts.css"
+      media="print"
+      onload="this.media='all'"
+    />
     {/* Preload the LCP hero image — discovered at parse time, before layout */}
     {heroPreload && (
       <link
@@ -235,44 +257,30 @@ const shouldCropMobileBanner =
       editSourcePath={Astro.props.sourcePath}
     />
     <AnalyticsTag />
-  </body><PostLinkedData
-    title={title}
-    description={subTitle!}
-    date={pubTime}
-    modified={modTime}
-    slug={slug}
-    tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
-    imageUrl={coverUrl}
-  />
-  <link
-    rel="stylesheet"
-    href="/files/fonts.css"
-    media="print"
-    onload="this.media='all'"
-  />
-  <script>
-    import { installPostEnhancementLifecycle } from "../layouts/postEnhancements";
+    <script>
+      import { installPostEnhancementLifecycle } from "../layouts/postEnhancements";
 
-    installPostEnhancementLifecycle();
+      installPostEnhancementLifecycle();
 
-    /**
-     * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
-     * - Removed conflicting auto-initialization code.
-     * - **Final Window Reveal Logic**:
-     *     - **Fixed 200px Window**: The banner stays exactly 200px tall with `overflow: hidden`.
-     *     - **Native Scale (Un-resized)**: The shader now uses aspect-correct logic (similar to `object-fit: cover`). The image is NOT stretched or zoomed to fit the 200px height.
-     *     - **Interactive Pan**: As you scroll, the "window" pans over the full-scale image, revealing what was hidden.
-     *     - **Premium Polish & Accessibility**:
-     *         - **Subtle Distortion**: The liquid effects have been toned down for a more professional, sophisticated look.
-     *         - **Mouse Velocity**: The distortion now reacts to both scroll speed and **how fast you move your mouse** over the banner.
-     *         - **Reduced Motion Support**: Respects the `prefers-reduced-motion` system setting by disabling animations for an accessible experience.
-     * -   **Load & Style Polish**:
-     *     -   **Neon Borders**: Added top and bottom 1px neon pink borders (`--primary`) with a subtle glow.
-     *     -   **Jump-Free Load**: The banner now initializes its scroll position immediately, eliminating the "sliding into place" behavior on refresh.
-     *     -   **Smooth Reveal**: The effect now fades in over 800ms for a more cinematic entrance.
-     *
-     * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
-     */
-  </script>
+      /**
+       * - Added a check to **prevent double-initialization**. Previously, the script ran twice (once on load, once on hydration), causing the "flash and vanish" bug.
+       * - Removed conflicting auto-initialization code.
+       * - **Final Window Reveal Logic**:
+       *     - **Fixed 200px Window**: The banner stays exactly 200px tall with `overflow: hidden`.
+       *     - **Native Scale (Un-resized)**: The shader now uses aspect-correct logic (similar to `object-fit: cover`). The image is NOT stretched or zoomed to fit the 200px height.
+       *     - **Interactive Pan**: As you scroll, the "window" pans over the full-scale image, revealing what was hidden.
+       *     - **Premium Polish & Accessibility**:
+       *         - **Subtle Distortion**: The liquid effects have been toned down for a more professional, sophisticated look.
+       *         - **Mouse Velocity**: The distortion now reacts to both scroll speed and **how fast you move your mouse** over the banner.
+       *         - **Reduced Motion Support**: Respects the `prefers-reduced-motion` system setting by disabling animations for an accessible experience.
+       * -   **Load & Style Polish**:
+       *     -   **Neon Borders**: Added top and bottom 1px neon pink borders (`--primary`) with a subtle glow.
+       *     -   **Jump-Free Load**: The banner now initializes its scroll position immediately, eliminating the "sliding into place" behavior on refresh.
+       *     -   **Smooth Reveal**: The effect now fades in over 800ms for a more cinematic entrance.
+       *
+       * This combination decouples the page layout from the WebGL rendering, ensuring a stable, performant experience.
+       */
+    </script>
+  </body>
 
 </html>

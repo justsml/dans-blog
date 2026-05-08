@@ -1,738 +1,982 @@
-# DanLevy.net Content, Readability, Voice, and Layout Audit
+# DanLevy.net Content Audit
 
-Generated: 2026-05-08  
-Scope: `src/content/posts/**/index.md(x)`, article layout/CSS, article lists, quiz UI, and representative page components.  
-Method: five parallel review passes covering prose/readability, DanLevy.net voice, content strategy/metadata, typography/layout, and technical correctness/maintenance. No source files were edited as part of the review.
+Generated: Friday, May 8, 2026
+
+Scope: all `src/content/posts/**/index.md` and `index.mdx` files, article layout/CSS, post visibility helpers, article lists, quiz components, and representative rendered-page risks.
+
+Method: five parallel read-only review passes, plus local validation and targeted source verification. The review covered metadata/site integrity, recent AI/search/database factuality, legacy engineering/security factuality, quiz correctness, and prose/readability/layout. The only file changed by this work is this report.
 
 ## Executive Summary
 
-The blog has a strong and recognizable center of gravity: practical engineering judgment, concrete failure modes, skepticism toward fashionable abstractions, and humor that works best when it sharpens the lesson. The best recent posts, especially the 2026 AI/security/search drafts, sound like an engineer explaining the expensive mistake behind the abstraction.
+DanLevy.net has a strong center of gravity: practical engineering judgment, skepticism toward shiny defaults, concrete failure modes, and humor that usually works best when it sharpens the lesson. The strongest recent posts are the ones that name the production cost behind an abstraction: Postgres search choices, prompt injection boundaries, RAG failure modes, and eval discipline.
 
-The main risks are not that the site lacks voice or substance. The risks are drift and friction:
+The highest-priority problems are not a lack of substance. They are drift:
 
-- Some 2024-2025 refreshed posts read like vendor/blog-marketing prose rather than DanLevy.net.
-- Visibility flags, dates, taxonomy, and related links need an editorial system.
-- Several current AI/search/database posts make fast-aging claims that need verification before publication.
-- The article reading layer is visually memorable but too loud for long-form technical reading.
-- Wide tables, code blocks, quiz explanation panes, and extra in-body H1s create rendering and semantics risk.
-- A few posts are competing with each other for the same search/query intent.
+- The visibility model has contract mismatches that can leak drafts into lists while not generating routes.
+- Some current technical examples are stale or wrong: AI SDK APIs/model IDs, Postgres `unaccent()` usage, vector database dimension limits, Docker examples, and a few quiz explanations.
+- The article rendering layer is memorable but too loud for long-form technical reading; list markers, code blocks, wide tables, headings, and structured-data placement need sitewide cleanup.
+- Fast-moving AI/search/database/security claims need explicit "Last verified" notes and primary-source links.
+- Several content clusters overlap: Postgres/search/vector posts and two generative UI drafts need clear canonical roles.
+- Older posts often need historical framing rather than hiding; a few legacy snippets should not look like current production advice.
 
-Best next move: run a two-track cleanup. First, fix sitewide structural issues that improve every post: article typography, tables/code/figures, visibility rules, related links, internal link checks. Second, revise the highest-value content clusters: Search/Postgres/vector, GenUI, Pagefind/Algolia, Docker/security, quizzes, and the older Promise/Docker legacy posts worth preserving.
+Recommended order:
 
-## Top 40 Issues
+1. Fix sitewide correctness and rendering risks: visibility, routability, `Post.astro`, list markers, code/table overflow, duplicate H1 checks.
+2. Fix concrete factual bugs in active/high-value posts.
+3. Consolidate overlapping drafts and add verification notes.
+4. Run a focused editorial polish pass on the highest-traffic or soon-to-publish pieces.
+5. Add historical notes and typo fixes for legacy posts worth preserving.
 
-### 1. Normalize the editorial visibility model
+## Validation Snapshot
 
-Severity: High  
-Importance: Prevents accidental publish/unpublish bugs and confusing build behavior.  
-Files: `src/shared/postVisibility.ts`, many post frontmatters.
+- `bun run content:check`: 0 errors, 105 warnings.
+- `bun run fix-quizzes`: checked 21 quizzes successfully.
+- `bun run check`: 0 errors, 34 hints.
+- Custom read-only audits: checked 92 post entry files, duplicate slugs/redirects, future dates, visibility leaks, image references, related targets, invalid dates, and credit gaps.
+- Local frontmatter image assets: no missing active frontmatter assets found. A few naive scan hits were commented-out cover lines or sample code like `src="image.jpg"`.
+- Rendered inspection: an Astro dev server was already listening on port 4242, but page checks were unreliable because some requests timed out and `/postgres-text-search-guide/` returned `UnknownContentCollectionError`. I did not start another dev server.
 
-Problem: `publish`, `draft`, `hidden`, and `unlisted` are mixed in contradictory combinations. Examples include:
+## Top 45 Issues
 
-- `src/content/posts/2015-06-06--javascript-scope-magic/index.md:8` has `draft: true` with `publish: true`.
-- `src/content/posts/2015-06-12--love-computer-languages/index.mdx:7` has `draft: true`, `hidden: true`, and `publish: true`.
-- `src/content/posts/2026-04-16--lancedb-wasm-browser-client/index.mdx:9` has `draft: false`, `hidden: true`, and `publish: false`.
+### 1. Draft Posts Can Appear In Lists While Not Being Routable
 
-Suggested fix: define one state matrix: `published`, `unlisted`, `draft`, `archived`. Document exactly how each maps to frontmatter and PostCollections filtering. Then add a validation script that flags contradictory combinations.
+Severity: High
 
-### 2. Fix the semantic vector post publication/date mismatch
+Evidence:
 
-Severity: High  
-Importance: Prevents a future-looking slug from being routable early or sorted oddly.  
-File: `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx`
+- `src/shared/postVisibility.ts:25` defines `isVisiblePostData()` as published and not hidden, but does not exclude `draft:true`.
+- `src/shared/postsCache.ts:7` filters `_postsCollection` with `isVisiblePost`.
+- `src/pages/index.astro:28` filters home posts by `!unlisted && !hidden`, but not `!draft`.
+- `src/shared/postsCache.ts:175` generates static paths only after `isRoutablePost`, which excludes drafts.
 
-Problem: The directory says `2026-05-09`, frontmatter says `date: 2026-05-01`, and draft/hide fields are commented out at lines 9-12. On 2026-05-08, this can appear publishable despite the future directory date.
+Affected examples:
 
-Suggested fix: align directory date, frontmatter date, and intended publish state before release.
+- `src/content/posts/2015-06-06--docker-firewall-setup/index.md:4`
+- `src/content/posts/2015-06-06--javascript-scope-magic/index.md:8`
+- `src/content/posts/2015-11-22--disable-transparent-hugepages/index.md:3`
+- `src/content/posts/2017-05-01--linux-system-benchmark-scripts/index.md:8`
 
-### 3. Add an internal absolute-link checker
+Suggested fix: Either make `isVisiblePostData()` exclude drafts globally, or normalize private draft frontmatter to `publish:false`, `draft:true`, `hidden:true`, `unlisted:true`. The first option is safer because it prevents future half-configured drafts from leaking.
 
-Severity: High  
-Importance: Catches broken post links before build/deploy.  
-File: `src/content/posts/2026-05-05--prompt-injection-new-sql-injection/index.mdx:243`
+### 2. `unlisted` Says URL-Accessible But Routing Excludes It
 
-Problem: The post links to `/production-ai-is-terrifying-and-how-to-fix-it/`, but the actual Mastra security slug appears to be `/mastra-security-guardrails/`.
+Severity: High
 
-Suggested fix: add a custom check that scans Markdown/HTML absolute links and compares them to known `PostCollections` slugs.
+Evidence:
 
-### 4. Consolidate the search/Postgres/vector content cluster
+- `src/shared/postVisibility.ts:12` documents unlisted as "URL-accessible posts hidden from lists."
+- `src/shared/postVisibility.ts:29` excludes `unlisted:true` from `isRoutablePostData()`.
+- `src/shared/postsCache.ts:175` uses `isRoutablePost` for static paths.
+- `src/content/posts/2018-09-26--promise-gotchas/index.md:10` relates to `are-promises-broken`, while `src/content/posts/2018-10-06--are-promises-broken/index.md:4` is `unlisted:true`.
 
-Severity: High  
-Importance: Reduces reader confusion and search cannibalization.  
-Files:
+Suggested fix: Remove `unlisted` from `isRoutablePostData()` if the editorial model is correct. Hide unlisted posts from lists/feed/search separately.
 
-- `src/content/posts/2026-05-08--postgres-text-search-guide/index.mdx`
+### 3. `Post.astro` Emits Structured Data And Scripts After `</body>`
+
+Severity: High
+
+Evidence:
+
+- `src/layouts/Post.astro:238` closes `</body>` before `PostLinkedData`, font CSS, and the post enhancement script.
+- `src/components/Seo/PostLinkedData.astro:54` emits JSON-LD.
+
+Suggested fix: Move JSON-LD and font links into `<head>`. Keep the enhancement script inside `<body>` before the closing tag.
+
+### 4. Ordered Lists Visually Lose Their Numbers
+
+Severity: High
+
+Evidence:
+
+- `src/styles/global.css:194` applies custom `li::marker` content globally.
+- Article `ol` styling at `src/styles/global.css:241` expects decimal list behavior.
+- Procedural posts and decision rules depend on ordered-list semantics.
+
+Suggested fix: Scope arrow markers to `ul li::marker` or a specific decorative class. Add `ol li::marker { content: normal; }`.
+
+### 5. Article Typography Is Fighting Long-Form Readability
+
+Severity: High
+
+Evidence:
+
+- Article body copy uses ultra-light weight and visible tracking around `src/styles/global.css:178`.
+- All headings use `Playwrite AU NSW` at `src/styles/global.css:365`.
+- Headings use `line-height: 1.75` at `src/styles/global.css:367`.
+- The article H1 gets gradient text and multiple drop shadows at `src/styles/global.css:417`.
+
+Suggested fix: Body copy should be normal weight, normal letter spacing, and a readable measure around 65-72ch. Reserve decorative type and neon treatment for brand accents or the article H1, not every body heading.
+
+### 6. Plain Code Blocks Can Clip On Small Screens
+
+Severity: High
+
+Evidence:
+
+- Base `pre` styling around `src/styles/global.css:266` lacks durable horizontal overflow.
+- `main pre` around `src/styles/global.css:527` adds border and margins but not overflow handling.
+- Long examples like `src/content/posts/2015-02-24--security-notes-regex/index.mdx:34` are likely to overflow.
+
+Suggested fix: Set `main pre { overflow-x: auto; max-width: 100%; }` and verify quiz/code-tab surfaces separately.
+
+### 7. Wide Editorial Tables Need A Better Mobile Pattern
+
+Severity: High
+
+Evidence:
+
+- 10-column vector database matrix at `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx:332`.
+- Similar matrix at `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx:303`.
+- Tables are scrollable at `src/styles/global.css:1250`, but affordance, captions, and mobile QA are still weak.
+
+Suggested fix: Wrap large editorial tables in a visible scroll container with caption/help text. For 8+ columns, consider cards or split comparison tables.
+
+### 8. Posts Duplicate The Layout H1
+
+Severity: High
+
+Evidence:
+
+- Layout always renders frontmatter title as `<h1>` at `src/layouts/Post.astro:143`.
+- Body-level H1 examples include `src/content/posts/2024-11-08--quiz-css-core-fundamentals/index.mdx:20`, `src/content/posts/2025-09-15--serverless-database-magic/index.mdx:16`, and `src/content/posts/2024-10-23--honest-priorities/index.mdx:17`.
+
+Suggested fix: Body content should start with prose or `##`. Add a content check for body-level `# ` and raw `<h1>`.
+
+### 9. Hero Alt Text Is Mostly Generic
+
+Severity: Medium-High
+
+Evidence:
+
+- `src/layouts/Post.astro:77` falls back to `Hero image for ${title}`.
+- Local scan found most posts with cover imagery lack `cover_alt`.
+
+Suggested fix: Add `cover_alt` when the image is meaningful. Add a `cover_decorative: true` option that emits empty alt text for decorative art.
+
+### 10. Image Credits Are Inconsistent
+
+Severity: Medium
+
+Evidence:
+
+- Several legacy posts use Unsplash/Pexels-looking asset names without `cover_credit`.
+- Example: `src/content/posts/2018-09-26--promise-gotchas/index.md:11`.
+
+Suggested fix: Add missing `cover_credit` where attribution matters, or document an explicit legacy-import exception.
+
+### 11. `content:check` Shows Broad Metadata Drift
+
+Severity: Medium-High
+
+Evidence:
+
+- 105 warnings total.
+- 47 tag canonicalization warnings.
+- 28 directory/frontmatter date mismatches.
+- 23 markdown-inside-JSX warnings.
+- 7 visibility warnings.
+
+Suggested fix: Split cleanup into low-risk mechanical PRs: tag canonicalization, date alignment, visibility normalization, and MDX-in-JSX cleanup.
+
+### 12. One Post Has An Invalid Modified Date
+
+Severity: Medium
+
+Evidence: `src/content/posts/2015-06-12--love-computer-languages/index.mdx:4` has `modified: 2017-02-30`.
+
+Suggested fix: Correct to the intended real date or remove `modified` if unknown.
+
+### 13. Future-Dated Drafts Need Pre-Publish Checks
+
+Severity: Low while private, High if accidentally published
+
+Evidence:
+
+- `src/content/posts/2026-05-09--quiz-context-engineering/index.mdx:4` is dated May 9, 2026.
+- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx:4` is dated May 10, 2026.
+
+Suggested fix: Keep fully private until scheduled. Before publish, confirm date, slug, `publish`, `draft`, `hidden`, and `unlisted` flags together.
+
+### 14. AI SDK Math Tool Post Has Broken/Stale API Examples
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2026-01-06--ai-sdk-math-tool/index.mdx:97` uses `anthropic('claude-4-5-sonnet-20251115')`.
+- `src/content/posts/2026-01-06--ai-sdk-math-tool/index.mdx:100` uses `maxSteps: 5`.
+
+Factual status: likely broken/stale. Anthropic's current Sonnet 4.5 model ID is `claude-sonnet-4-5-20250929` or alias `claude-sonnet-4-5`. AI SDK v5+ moved away from `maxSteps` in favor of `stopWhen: stepCountIs(...)` for current core patterns.
+
+Suggested fix: Update the model ID and current AI SDK control flow. Also replace npm install commands with Bun commands where the post is repo-contextual.
+
+Primary sources:
+
+- https://docs.claude.com/en/docs/about-claude/models/whats-new-claude-4-5
+- https://ai-sdk.dev/docs/migration-guides/migration-guide-5-0
+- https://v6.ai-sdk.dev/cookbook/node/call-tools-multiple-steps
+
+### 15. Postgres Text Search Guide Uses `unaccent()` Where Immutability Matters
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2026-05-02--postgres-text-search-guide/index.mdx:267`
+- `src/content/posts/2026-05-02--postgres-text-search-guide/index.mdx:277`
+
+Factual status: likely fails as written in normal PostgreSQL. Generated columns and index expressions require immutable functions; `unaccent` commonly trips immutability restrictions.
+
+Suggested fix: Use an `unaccent` text search configuration for FTS, a trigger-maintained normalized column, or a carefully documented immutable wrapper if accepting upgrade/config risk.
+
+Primary sources:
+
+- https://www.postgresql.org/docs/current/ddl-generated-columns.html
+- https://www.postgresql.org/docs/15/sql-createindex.html
+- https://www.postgresql.org/docs/current/unaccent.html
+
+### 16. MongoDB Atlas Vector Dimension Limit Is Wrong
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx:316`
+- `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx:347`
+
+Factual status: MongoDB Atlas Vector Search currently documents embeddings up to 8192 dimensions, not 2048.
+
+Suggested fix: Change Atlas max dimensions to `8,192` and keep the "Last verified" note.
+
+Primary source: https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/
+
+### 17. pgvector Dimension Headroom Is Misleading In Matrices
+
+Severity: Medium-High
+
+Evidence:
+
+- `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx:303`
+- `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx:334`
+
+Factual status: pgvector can store `vector` values up to 16,000 dimensions, but HNSW/IVFFlat indexes support `vector` up to 2,000 dimensions and `halfvec` up to 4,000 dimensions. The table reads like indexed-search headroom.
+
+Suggested fix: Split "storage max" from "ANN index max," or footnote pgvector clearly.
+
+Primary source: https://github.com/pgvector/pgvector
+
+### 18. LLM Connection String Examples Are Stale For GPT-5.2 Behavior
+
+Severity: Medium-High
+
+Evidence:
+
+- `src/content/posts/2026-01-30--llm-connection-strings/index.mdx:50`
+- `src/content/posts/2026-01-30--llm-connection-strings/index.mdx:68`
+
+Factual status: OpenAI GPT-5.2 guidance says `temperature`, `top_p`, and `logprobs` are only supported with reasoning effort `none`; otherwise requests can error.
+
+Suggested fix: Add `reasoning_effort=none`, use a non-reasoning model for temperature examples, or mark parameters as illustrative rather than valid OpenAI examples.
+
+Primary source: https://platform.openai.com/docs/guides/latest-model
+
+### 19. `draft IETF RFC` Should Be `Internet-Draft`
+
+Severity: Low
+
+Evidence: `src/content/posts/2026-01-30--llm-connection-strings/index.mdx:17`.
+
+Suggested fix: Say "Internet-Draft for the `llm://` URI scheme." RFC is a later publication state.
+
+Primary source: https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/
+
+### 20. Gemini Model ID In Mastra Routing Post Is Likely Stale
+
+Severity: Medium
+
+Evidence: `src/content/posts/2026-01-02--llm-routing-mastra-ai/index.mdx:48` uses `gemini-3-pro`.
+
+Factual status: Google Gemini API currently uses `gemini-3-pro-preview`.
+
+Suggested fix: Use `gemini-3-pro-preview`, avoid hardcoded current model IDs in evergreen examples, or add a "Last verified May 8, 2026" note.
+
+Primary source: https://ai.google.dev/models/gemini
+
+### 21. Prompt Injection Post Overstates The SQL Injection Analogy
+
+Severity: Medium-High
+
+Evidence: `src/content/posts/2026-05-05--prompt-injection-new-sql-injection/index.mdx:231` says parameterized queries close SQL injection "Full stop."
+
+Factual status: Parameterized queries are the primary defense, but dynamic SQL, stored procedures, allow-lists, and escaping caveats still matter.
+
+Suggested fix: Soften to: "Parameterized queries close the common string-concatenation SQLi path when used correctly; dynamic SQL still needs allow-lists and review."
+
+Primary source: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+
+### 22. RAG Lost-In-The-Middle Claim Needs Citation And Softer Heuristic Wording
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2026-05-05--rag-pipeline-failures/index.mdx:126`
+- `src/content/posts/2026-05-05--rag-pipeline-failures/index.mdx:132`
+
+Suggested fix: Cite Liu et al. and frame beginning/end chunk placement as a heuristic to evaluate, not a rule that always works.
+
+Primary source: https://arxiv.org/abs/2307.03172
+
+### 23. 2015 Docker Server Setup Contains Unsafe/Broken Current-Looking Advice
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:45` says the commands work in production.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:95` runs unauthenticated `mongo:latest`.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:110` uses legacy `mongo` shell patterns.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:152` uses untagged Elasticsearch.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:176` includes invalid `EXPOSE [3000]` and EOL Node 12.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:217` and `:223` use legacy `--link`.
+
+Suggested fix: Add a prominent historical note. Mark snippets as 2015-era local-dev examples or update them to Compose/custom networks, pinned tags, auth/secrets, `mongosh`, `EXPOSE 3000`, and current Node LTS.
+
+Primary sources:
+
+- https://docs.docker.com/engine/deprecated/
+- https://hub.docker.com/_/mongo
+- https://hub.docker.com/_/elasticsearch
+- https://nodejs.org/en/about/eol
+
+### 24. Docker Server Setup Has Inconsistent Postgres Container Names
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:57` names the container `pg-localhost`.
+- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:77` and `:83` use `pg-server`.
+
+Suggested fix: Make names consistent or show a variable.
+
+### 25. Docker Security Post Has A Stale Docker Engine Caveat
+
+Severity: Medium
+
+Evidence: `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:298` says localhost-bound published ports may be reachable from LAN hosts and "impacts Fedora, Ubuntu, and likely others."
+
+Factual status: Docker docs now scope that L2 exposure issue to Docker Engine releases older than 28.0.0.
+
+Suggested fix: Reword the caveat around Docker Engine releases older than 28.0.0 and keep the verify-with-nmap guidance.
+
+Primary source: https://docs.docker.com/engine/network/port-publishing/
+
+### 26. Docker Security Post Recommends A Nonexistent Postgres Tag
+
+Severity: Medium
+
+Evidence: `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:63` uses `postgres:17.2.1`.
+
+Factual status: `docker manifest inspect postgres:17.2.1` failed with no manifest; `postgres:17.2` succeeded.
+
+Suggested fix: Use `postgres:17.2`, `postgres:17`, or a digest.
+
+### 27. Docker Security Post Has A Network Name Mismatch
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:393` says `auto-net`.
+- The compose example defines `db-network`.
+
+Suggested fix: Rename the prose to `db-network` or the example to `auto-net`.
+
+### 28. Axios Comparison Overcredits Native `fetch`
+
+Severity: Medium
+
+Evidence: `src/content/posts/2018-11-15--you-may-not-need-axios/index.mdx:57` marks fetch as having automatic JSON transforms.
+
+Factual status: Native `fetch` requires explicit `response.json()` and explicit `JSON.stringify()` for JSON request bodies. Axios transforms request/response data by default.
+
+Suggested fix: Change fetch to "manual helpers required" and keep the recipes as the ergonomics bridge.
+
+Primary sources:
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch
+- https://developer.mozilla.org/en-US/docs/Web/API/Response/json
+- https://axios-http.com/docs/req_config
+
+### 29. URL Regex Article Expected Output Does Not Match The Regex
+
+Severity: Medium
+
+Evidence: `src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/index.mdx:189` expects `ftp://files.server.org/index).` to become `ftp://files.server.org/index`, but running the provided regex returns `ftp://files.server.org/index).`.
+
+Suggested fix: Adjust the regex/post-processing to trim terminal punctuation, or update expected output and explain the tradeoff.
+
+### 30. ReDoS Post Downplays A Security Vulnerability
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2015-02-24--security-notes-regex/index.mdx:23` says ReDoS is not as much a security issue.
+- `src/content/posts/2015-02-24--security-notes-regex/index.mdx:27` through `:29` miss the most important structural warning signs.
+
+Suggested fix: Frame ReDoS as denial-of-service vulnerability. Mention nested quantifiers, repeated groups, overlapping alternation, timeouts, static analysis, and non-backtracking engines where appropriate.
+
+Primary source: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS
+
+### 31. Regex Quiz Mislabels Fixed-Length Lookbehind
+
+Severity: Medium
+
+Evidence: `src/content/posts/2024-11-15--quiz-regex-or-wreckage/index.mdx:309` says `/(?<!abc)\d+/g` shows variable-length lookbehind. It is fixed-length.
+
+Suggested fix: Say "fixed-length lookbehind shown here" or add a real variable-length discussion if the question is meant to teach that edge.
+
+### 32. Several Quizzes Have Predictable Answer Placement
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2024-12-28--quiz-in-the-aws-cloud/index.mdx:858`: 18 of 26 answers are option index 1, including the final run from questions 21-25.
+- `src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/index.mdx:28`: first 6 of 7 answers are option index 0.
+- `src/content/posts/2024-10-31--quiz-data-structures-algorithms/index.mdx:31`: 11 of 20 answers are option index 0.
+
+Suggested fix: Shuffle answer positions while preserving exactly one `isAnswer: true`.
+
+### 33. Markdown-Inside-JSX Warnings Are Concentrated In Quizzes
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2024-11-15--quiz-regex-or-wreckage/index.mdx:35`: 71 warnings.
+- `src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/index.mdx:43`: 69 warnings.
+- `src/content/posts/2024-11-20--quiz-bash-in-the-shell/index.mdx:34`: 54 warnings.
+
+Suggested fix: Convert risky slot bodies to MDX-safe JSX/HTML, or teach the checker which quiz slot patterns are intentionally supported.
+
+### 34. Fast-Moving Vendor/Platform Quizzes Need Verification Notes
+
+Severity: Medium
+
+Evidence:
+
+- `src/content/posts/2026-05-09--quiz-context-engineering/index.mdx:356` discusses OpenAI/Anthropic prompt caching behavior.
+- `src/content/posts/2024-12-28--quiz-in-the-aws-cloud/index.mdx:426` discusses AWS pricing/capacity/service behavior.
+
+Suggested fix: Add "Last verified: May 8, 2026" notes near fast-moving AI/AWS capability and pricing claims.
+
+### 35. Empty Hint Slots Reduce Teaching Value In Older Quizzes
+
+Severity: Low-Medium
+
+Evidence:
+
+- `src/content/posts/2024-10-31--quiz-data-structures-algorithms/index.mdx:50`: 20/20 empty hints.
+- `src/content/posts/2024-10-31--quiz-do-you-know-esnext/index.mdx:28`: 11/11 empty hints.
+
+Suggested fix: Add per-option hints for common misconceptions, or remove empty legacy hint slots.
+
+### 36. Pagefind/Algolia Post Reads Too Vendor-Blog Adjacent
+
+Severity: Medium-High
+
+Evidence: `src/content/posts/2025-03-01--you-might-not-need-algolia/index.mdx` uses generic terms such as "landscape," "robust," "streamlined," and "blazing-fast."
+
+Suggested fix: Rebuild around the concrete thesis: static/content sites probably do not need hosted search. Use the real Pagefind migration story, cost/ops constraints, and decision rules.
+
+### 37. Serverless Database Post Has Stale-Prone Market-Map Claims
+
+Severity: Medium-High
+
+Evidence:
+
+- `src/content/posts/2025-09-15--serverless-database-magic/index.mdx:34` through `:51` includes star counts and benchmark-shaped performance ranges.
+- `src/content/posts/2025-09-15--serverless-database-magic/index.mdx:79` uses `text-embedding-ada-002`.
+
+Suggested fix: Either cite methodology per measurement, or replace with qualitative ranges and a "Last verified" snapshot. Avoid exact star/perf claims unless maintained.
+
+### 38. MCQ Post Has Strong Topic, Weak House Voice
+
+Severity: Medium-High
+
+Evidence: `src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx` leans on "sophisticated tools," "unprecedented versatility," "paradigm shift," and "powerful catalysts."
+
+Suggested fix: Make the enemy lazy recall questions. Show two bad questions becoming one good one.
+
+### 39. `Replacing Myself With AI` Needs Time-Capsule Framing Or Rewrite
+
+Severity: Medium
+
+Evidence: `src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/index.mdx` uses generic AI-collaboration language compared with newer DanLevy.net voice.
+
+Suggested fix: Preserve as a 2024 artifact, or rewrite around what actually changed, what failed, and which parts still needed human taste.
+
+### 40. Postgres/Search/Vector Posts Overlap
+
+Severity: High
+
+Evidence:
+
+- `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx`
+- `src/content/posts/2026-05-02--postgres-text-search-guide/index.mdx`
 - `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx`
-- `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx`
 
-Problem: These posts repeat the "search is not one thing" thesis, vector store discussion, hybrid search, and exact-vs-semantic distinctions.
+Problem: The same "search is not one thing" thesis, hybrid search, exact-vs-semantic framing, and vector-store matrix material appears in multiple drafts/posts.
 
-Suggested fix: assign one job per post:
+Suggested fix: Assign one job per post:
 
 - Postgres text guide: implementation guide for FTS, trigrams, exact SQL.
-- FTS vs pgvector: decision article for staying in Postgres until proven otherwise.
-- Semantic vector landscape: vector/hybrid buyer's map once Postgres is not enough.
+- FTS vs pgvector: decision article for staying in Postgres until benchmarks prove otherwise.
+- Semantic vector landscape: buyer's map after Postgres is no longer enough.
 
-### 5. Consolidate the duplicate GenUI drafts
+### 41. Generative UI Has Duplicate Drafts
 
-Severity: High  
-Importance: Avoids maintaining two drifting versions of a fast-moving topic.  
-Files:
+Severity: High
+
+Evidence:
 
 - `src/content/posts/2026-05-06--llm-generative-ui-landscape/index.mdx`
 - `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx`
 
-Problem: Same topic, similar subtitles/tags, overlapping frameworks/protocols, and a second draft with missing image fields.
+Suggested fix: Choose one canonical draft before publish. Archive, delete, or redirect the other. Keep source snapshots for any verified claims you preserve.
 
-Suggested fix: keep one canonical draft. Redirect, delete, or archive the other before publication.
+### 42. GenUI/AI Tooling Claims Need Source-Backed Snapshot Treatment
 
-### 6. Create a "last verified" convention for fast-moving claims
+Severity: Medium-High
 
-Severity: High  
-Importance: AI/tooling/security/database claims age quickly.  
-Files: especially AI, search, Docker/security, OpenClaw/Tailscale, serverless database posts.
+Evidence:
 
-Problem: Posts cite current model names, protocol maturity, GitHub stars, feature caps, cost/perf numbers, product docs, and security behavior without a visible verification date.
+- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx:224` discusses AI SDK RSC and deprecated structured-output APIs.
+- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx:328` through `:340` discusses project velocity and pre-1.0 status.
 
-Suggested fix: add a small note pattern for volatile sections: "Tooling notes verified on YYYY-MM-DD." Link primary sources near claims.
+Suggested fix: Keep "Last verified May 8, 2026," cite primary docs/discussions next to each volatile claim, and avoid turning current momentum into durable verdicts.
 
-### 7. Soften prompt-injection mitigation overclaims
+Primary sources:
 
-Severity: High  
-Importance: Security credibility.  
-File: `src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx:175`
+- https://github.com/vercel/ai/discussions/3251
+- https://v6.ai-sdk.dev/docs/migration-guides/migration-guide-6-0
 
-Problem: Structural separation is called "the structural fix," and line 311 says it can "eliminate injection vectors by design." Escaping and structure reduce risk; they do not eliminate prompt injection.
+### 43. Title/Subtitle Mismatches Weaken Strong Posts
 
-Suggested fix: use "reduce," "contain," or "make easier to validate," and pair the pattern with tool permissions, output validation, and capability boundaries.
+Severity: Medium
 
-### 8. Tighten Docker security guidance
+Evidence:
 
-Severity: High  
-Importance: Avoids unsafe operational advice.  
-File: `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx`
+- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx:2`: "The LLM GenUI Landscape v2" sounds internal/drafty.
+- `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx:2`: "and Other Topics to Win Friends and Lovers" undersells a serious guide.
+- `src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx:2`: "Fight Evils with Evals!" is lighter than the thesis.
 
-Problem: Line 46 recommends pulling/building on startup to stay latest, which can introduce unreviewed breaking changes. Line 471 implies Basic Auth is enough to stop automated CSRF, which is too strong.
+Suggested fix: Let titles name the decision or enemy. Keep jokes when they clarify, not when they obscure.
 
-Suggested fix: recommend reviewed update automation such as Renovate/Dependabot plus staged rollouts. Describe Basic Auth as friction, not CSRF protection.
+### 44. Body Callouts/Blockquotes Are Overused In Some Posts
 
-### 9. Improve long-form article typography
+Severity: Medium
 
-Severity: High  
-Importance: Affects every post.  
-Files: `src/styles/global.css`, `src/styles/layout.css`
+Evidence:
 
-Problem: Article body styles use ultra-light weight and visible letter spacing across a wide measure. This makes long technical posts feel airy but tiring.
+- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:296`
+- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:298`
+- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:300`
+- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:401`
+- Global blockquote styling starts around `src/styles/global.css:258`.
 
-Suggested fix: set article body weight closer to normal, `letter-spacing: 0`, and cap prose width around 65-72ch while preserving breakout lanes for diagrams/tables.
+Suggested fix: Reserve blockquotes for thesis, external quotes, and true warnings. Convert ordinary emphasis back to paragraphs or lists.
 
-### 10. Calm the article heading system
+### 45. Captions Are Oversized And Sometimes Literal
 
-Severity: High  
-Importance: Improves scanning, especially in technical posts.  
-File: `src/styles/global.css`
+Severity: Low-Medium
 
-Problem: Body headings inherit large line-height, glow/gradient treatment, and decorative font behavior that works as brand but competes with dense technical content.
+Evidence:
 
-Suggested fix: reserve the strong neon treatment for the article H1. Use a crisp readable sans for H2-H6 with tighter spacing and stronger hierarchy.
+- `src/styles/global.css:875` sets `figcaption` to `1.475rem`.
+- `src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx:87` has a caption that describes what is visible rather than why it matters.
 
-### 11. Preserve ordered-list semantics
+Suggested fix: Reduce caption scale and rewrite captions as explanatory notes.
 
-Severity: High  
-Importance: Technical instructions and quiz explanations rely on list meaning.  
-Files: `src/styles/global.css`, `src/styles/nav.css`
+## File-By-File Remediation Backlog
 
-Problem: Global `li::marker` arrow treatment can override ordered/procedural lists.
+### `src/shared/postVisibility.ts`
 
-Suggested fix: apply arrow markers only to selected unordered lists, not all `li` globally.
+- High: Align implementation with the documented editorial visibility model.
+- High: Make unlisted posts routable if they are meant to be URL-accessible.
+- High: Decide whether drafts are ever visible. If not, exclude drafts at `isVisiblePostData()`.
 
-### 12. Add global table overflow and styling
+### `src/shared/postsCache.ts`
 
-Severity: High  
-Importance: Prevents mobile layout breakage.  
-Files: global article CSS, table-heavy posts.
+- High: Ensure `_posts`, feed posts, category counts, tag counts, related data, and static paths use consistent visibility semantics.
+- Medium: If `unlisted` remains routable, keep list/feed/search filters responsible for hiding unlisted posts.
+- Medium: Use one popularity system: frontmatter-driven or curated-list-driven.
 
-Examples:
+### `src/pages/index.astro`
 
-- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx:315`
-- `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx:329`
-
-Suggested fix: style article tables with horizontal overflow, smaller table text, readable headers, and clear cell spacing.
-
-### 13. Fix structured data/script placement in post layout
-
-Severity: High  
-Importance: Avoids HTML recovery quirks and SEO fragility.  
-File: `src/layouts/Post.astro`
-
-Problem: `PostLinkedData`, font preload link, and script are emitted after `</body>`.
-
-Suggested fix: move structured data and font links into `<head>` or before `</body>`.
-
-### 14. Remove body H1s from posts
-
-Severity: High  
-Importance: Corrects document outline and rendering hierarchy.  
-Files include:
-
-- `src/content/posts/2025-09-15--serverless-database-magic/index.mdx:16`
-- `src/content/posts/2024-10-23--honest-priorities/index.mdx:17`
-- `src/content/posts/2024-11-08--quiz-css-core-fundamentals/index.mdx:20`
-- `src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/index.mdx:20`
-
-Suggested fix: body content should generally start with prose or `##`. Add an MDX lint rule for no body `#` or `<h1>`.
-
-### 15. Fix quiz explanation/code hard widths
-
-Severity: High  
-Importance: Prevents narrow-screen overflow in quizzes.  
-File: `src/components/QuizUI/index.css`
-
-Problem: Explanation/code areas use hard-coded widths like `calc(550px - 3.3rem)`.
-
-Suggested fix: use `width: 100%; max-width: 100%; overflow-x: auto`.
-
-### 16. Add a related-link strategy
-
-Severity: High  
-Importance: Improves reader flow, SEO, and footer recommendations.  
-Files: post frontmatter, `src/layouts/Post.astro`, `src/components/Footer.astro`
-
-Problem: The `related` frontmatter feature is effectively unused.
-
-Suggested fix: add related clusters for Promises, Docker/security, Pagefind/search, Postgres/vector search, quizzes, AI agents, and leadership posts.
-
-### 17. Create a controlled taxonomy
-
-Severity: High  
-Importance: Improves category pages, search facets, and editorial consistency.  
-Files: post frontmatter, `src/content.config.ts`
-
-Problem: Categories and tags splinter: `AI` vs `ai`, `lanceDB` vs `lancedb`, `Databases` vs `Database`, singleton categories like `Regex`, `Search`, `HowTo`, `Lulz`.
-
-Suggested fix: define a controlled top-level set such as `AI`, `Code`, `Security`, `DevOps`, `Leadership`, `Quiz`, `Thoughts`. Normalize tag casing.
-
-### 18. Rewrite the Pagefind/Algolia post out of vendor-blog voice
-
-Severity: High  
-Importance: It likely matters for site search/product positioning.  
-File: `src/content/posts/2025-03-01--you-might-not-need-algolia/index.mdx`
-
-Problem: Phrases like "landscape," "robust," "streamlined," "blazing-fast," and "scales seamlessly" flatten the voice.
-
-Suggested fix: rebuild around the concrete thesis: "You probably do not need hosted search for a static/content site." Use Dan's actual migration story, cost/ops constraints, and Pagefind decision rules.
-
-### 19. Rewrite or reframe the serverless database post
-
-Severity: High  
-Importance: Current version reads like a market map and has stale-prone claims.  
-File: `src/content/posts/2025-09-15--serverless-database-magic/index.mdx`
-
-Problem: "Landscape has fundamentally shifted," "enterprise-grade," "unlock," and broad checkbox comparisons weaken the argument. It also includes precise tool stars/perf numbers and `@latest` imports.
-
-Suggested fix: narrow the thesis to object-storage-backed search for read-heavy, medium-sized, publishable data. Mark claims as a dated snapshot or refresh them.
-
-### 20. Rewrite the MCQ post around Dan's actual quiz-building insight
-
-Severity: High  
-Importance: Strong topic, weak house voice.  
-File: `src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx`
-
-Problem: Academic/education-marketing language: "sophisticated tools," "unprecedented versatility," "paradigm shift," "powerful catalysts."
-
-Suggested fix: make the enemy lazy recall questions. Show two bad questions becoming one good question.
-
-### 21. Review `Replacing Myself with AI` as an artifact or rewrite from a scar
-
-Severity: Medium-High  
-Importance: It is the clearest generic AI-draft voice.  
-File: `src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/index.mdx`
-
-Problem: "AI as collaborator," "unlocked productivity," "extraordinary outcomes," and "possibilities are endless" do not sound like current DanLevy.net.
-
-Suggested fix: either preserve as a moment-in-time artifact or rewrite around what changed, what failed, what became cheaper, and what still needs human taste.
-
-### 22. Reduce catalog density in the GenUI v2 draft
-
-Severity: Medium-High  
-Importance: Keeps a useful post readable.  
-File: `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx`
-
-Problem: The ecosystem tour becomes dense before the reader has a durable decision frame.
-
-Suggested fix: move a compact "choose this if..." decision table earlier. Make the tool catalog skimmable reference material.
-
-### 23. Rename or reframe "landscape" titles
-
-Severity: Medium-High  
-Importance: Reduces SEO-ish title energy.  
-Files:
-
-- `src/content/posts/2026-05-06--llm-generative-ui-landscape/index.mdx`
-- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx`
-- `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx`
-
-Suggested fix: title toward the enemy or decision: "Generative UI Is Four Different Problems" or "Semantic Search: pgvector, Hybrid Search, and When Postgres Stops Being Enough."
-
-### 24. Clarify "semantic vector search" opening
-
-Severity: Medium-High  
-Importance: The active draft gets meta too early.  
-File: `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx:24`
-
-Problem: "The engineers who are most persuasive..." and "This article covers..." explain the article instead of pulling the reader into the problem.
-
-Suggested fix: lead with the email lookup vs debugging article contrast and quickly state the rule: correct answer vs relevance.
-
-### 25. Verify vector database caps/cost/performance claims
-
-Severity: High  
-Importance: Very stale-prone technical comparison.  
-Files:
-
-- `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx:293`
-- `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx:327`
-
-Suggested fix: add source links and "verified on" dates. Avoid "best-in-class" wording unless sourced.
-
-### 26. Clarify Postgres trigram/prefix wording
-
-Severity: Medium  
-Importance: Technical precision.  
-File: `src/content/posts/2026-05-08--postgres-text-search-guide/index.mdx:116`
-
-Problem: The prose says "leading wildcard," but the example `ILIKE $1 || '%'` is prefix search.
-
-Suggested fix: distinguish prefix search, suffix search, and substring/leading-wildcard search. Also soften `pg_search` from "drop-in upgrade path" to "possible upgrade path."
-
-### 27. Add MDX markdown-inside-JSX checks
-
-Severity: Medium  
-Importance: Prevents literal `[link](...)` rendering.  
-Files include:
-
-- `src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/index.mdx:570`
-- `src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/index.mdx:56`
-- `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx:220`
-
-Suggested fix: convert markdown links inside raw HTML/JSX to `<a href="">` or MDX components.
-
-### 28. Display hero credits and improve hero alt text
-
-Severity: Medium  
-Importance: Accessibility and attribution polish.  
-Files: `src/layouts/Post.astro`, posts with `cover_credit`.
-
-Problem: `cover_credit` exists in frontmatter but is not displayed. Hero image alt text uses the post title even when the image is decorative.
-
-Suggested fix: add `cover_alt` and a hero figure component with optional caption/credit.
-
-### 29. Recompute hero image preload sizes by selected variant
-
-Severity: Medium  
-Importance: Performance polish.  
-File: `src/layouts/Post.astro`
-
-Problem: preload sizes always use full-width sizing even for non-full-width hero variants.
-
-Suggested fix: compute `imagesizes` from the selected hero image path.
-
-### 30. Normalize figure/caption patterns
-
-Severity: Medium  
-Importance: Improves visual explanation and consistency.  
-Files: multiple posts with diagrams/images.
-
-Problem: Some diagrams have captions, many do not, and figure styling is inconsistent.
-
-Suggested fix: introduce a reusable MDX figure pattern and CSS for caption size, contrast, spacing, image max-height, and breakout behavior.
-
-### 31. Reduce code block size and improve overflow behavior
-
-Severity: Medium  
-Importance: Long shell/YAML/security posts need durable code rendering.  
-Files: `src/styles/global.css`, `src/styles/nav.css`, `src/components/CodeTabs/codeTabs.css`
-
-Suggested fix: keep code around `.875rem-1rem`, ensure `overflow-x: auto`, and remove global negative mobile margins.
-
-### 32. Fix subtitle semantics
-
-Severity: Medium  
-Importance: Cleaner outline and accessibility.  
-File: `src/layouts/Post.astro`
-
-Problem: `subTitle` renders as an H2 even though it is a deck/summary, not a section heading.
-
-Suggested fix: render as `<p class="p-summary article-dek">`.
-
-### 33. Standardize quiz template and hydration
-
-Severity: Medium  
-Importance: Keeps quiz pages predictable.  
-Files: quiz posts and `src/components/QuizUI`
-
-Problem: Some quiz bodies duplicate H1s, some use different hydration (`client:visible` vs `client:load`), and wrapper copy drifts generic.
-
-Suggested fix: create one quiz post template with standard intro, no body H1, consistent hydration, and a subject-specific CTA.
-
-### 34. Add bottom padding for fixed quiz score bar
-
-Severity: Medium  
-Importance: Avoids content being covered.  
-File: `src/components/QuizUI/index.css`
-
-Suggested fix: add quiz content bottom padding equal to fixed score bar height and verify keyboard/focus behavior.
-
-### 35. Reduce humor density in "Beware the Single-Purpose People"
-
-Severity: Medium-High  
-Importance: Strong enemy, but the bit can crowd the lesson.  
-File: `src/content/posts/2025-04-03--beware-the-single-purpose-people/index.mdx`
-
-Problem: The opening and middle sections stack ornate jokes, labels, and metaphors before a clean practical rule.
-
-Suggested fix: open with the concrete "15 files for 100 lines" pain. Keep one sharp joke per beat, then land the rule: group code by change reason, not molecule size.
-
-### 36. Add historical framing to thin legacy posts
-
-Severity: Medium  
-Importance: Preserves old charm without misleading current readers.  
-Files include:
-
-- `src/content/posts/2015-03-12--docker-makes-everything-better/index.md`
-- `src/content/posts/2018-09-26--promise-gotchas/index.md`
-- `src/content/posts/2015-08-05--angularjs-v2-impending-schism/index.md`
-- `src/content/posts/2017-05-10--pitfalls-in-promise-docs/index.md`
-
-Suggested fix: add a short "historical note" or mark low-value fragments unlisted.
-
-### 37. Run a typo-only pass on older posts
-
-Severity: Low-Medium  
-Importance: Easy credibility cleanup while preserving voice.  
-Examples:
-
-- `src/content/posts/2015-02-24--security-notes-regex/index.mdx:15` "suprising"
-- `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx:20` "persistance"
-- `src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md:91` "Whernever"
-- `src/content/posts/2015-06-06--docker-firewall-setup/index.md:40` "Firtewall"
-- `src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/index.mdx:21` "Postres"
-
-Suggested fix: run a conservative spelling pass. Do not rewrite old personality unless the post is being refreshed.
-
-### 38. Refresh stale model/tooling examples
-
-Severity: High  
-Importance: Current claims need current proof.  
-Files:
-
-- `src/content/posts/2026-01-02--llm-routing-mastra-ai/index.mdx`
-- `src/content/posts/2026-05-06--llm-generative-ui-landscape/index.mdx`
-- `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx`
-- `src/content/posts/2025-09-15--serverless-database-magic/index.mdx`
-
-Suggested fix: verify with primary docs before publish. Where exact names/prices are not central, make examples illustrative instead of ranked.
-
-### 39. Use one popularity system
-
-Severity: Medium  
-Importance: Keeps lists and editorial priorities understandable.  
-Files: post frontmatter, `src/shared/postsCache.ts`
-
-Problem: Some posts use `popularity`, while popular posts are also hardcoded.
-
-Suggested fix: pick frontmatter-driven or curated-list-driven popularity. Document the choice.
-
-### 40. Harmonize article-card systems
-
-Severity: Medium  
-Importance: Improves list/footer polish.  
-Files:
-
-- `src/components/ArticleCard.css`
-- `src/components/AdditionalReading.css`
-- `src/components/Footer.astro`
-
-Problem: Home cards, additional reading tiles, and footer article cards restyle similar content separately and visually drift.
-
-Suggested fix: extract shared card tokens/classes for metadata, image treatment, title/subtitle clamp, and focus states.
-
-## File-by-File Remediation Backlog
+- High: Stop list pages from showing `draft:true` posts if drafts are not routable.
+- Medium: Prefer a shared visibility helper over local `!unlisted && !hidden` logic.
 
 ### `src/layouts/Post.astro`
 
-- High: Move structured data, font links, and post-enhancement script inside valid document locations.
-- Medium: Render `subTitle` as lead/deck prose instead of H2.
-- Medium: Add hero figure support with `cover_alt` and `cover_credit`.
-- Medium: Recompute preload `imagesizes` according to selected hero variant.
+- High: Move JSON-LD, font CSS, and post enhancement script into valid document locations.
+- High: Continue rendering `subTitle` as deck prose, not a heading.
+- Medium: Add hero figure support with explicit `cover_alt`, `cover_decorative`, and `cover_credit`.
+- Medium: Recompute preload `imagesizes` according to the selected hero variant.
 
 ### `src/styles/global.css`
 
-- High: Improve article body readability: normal weight, `letter-spacing: 0`, tighter readable measure.
-- High: Calm body heading styles and reserve heavy neon treatment for H1/brand moments.
-- High: Restrict custom list markers to unordered decorative lists, not ordered instructions.
-- High: Add table overflow/polish.
-- Medium: Reduce code block font scaling and remove fragile negative margins.
-- Medium: Add consistent figure/figcaption system.
+- High: Restore ordered-list markers.
+- High: Add durable `pre` overflow handling.
+- High: Improve article body readability: normal weight, no letter spacing, readable measure.
+- High: Calm H2-H6 styles.
+- Medium: Improve large table affordance.
+- Medium: Reduce caption scale.
+- Medium: Reduce blockquote/callout dominance.
 
 ### `src/styles/layout.css`
 
-- High: Revisit article content width and breakout sizing. Keep prose around 65-72ch, reserve breakout for diagrams/tables/callouts.
+- Medium: Keep prose around 65-72ch while preserving breakout lanes for diagrams/tables.
 - Medium: Tune `.inset`, `.breakout`, and `.narrow` spacing for mobile.
 
-### `src/components/QuizUI/index.css`
+### `src/components/QuizUI`
 
-- High: Remove hard-coded explanation/code widths.
-- Medium: Add bottom padding for fixed score UI.
-- Medium: Centralize reduced-motion behavior and focus/announcement states.
+- Medium: Keep `client:visible` hydration where used intentionally.
+- Medium: Add bottom padding for fixed quiz controls if content can be covered.
+- Medium: Ensure explanation/code surfaces have `overflow-x: auto`.
 
-### `src/components/ArticleCard.css`
+### `src/scripts/check-content.ts`
 
-- Medium: Let mobile titles breathe to three lines where needed.
-- Medium: Use less aggressive media crop than `16 / 4` for browsing comprehension.
-- Medium: Share card tokens with additional reading/footer cards.
+- High: Add checks for body-level H1s.
+- High: Add checks for routability/visibility contradictions.
+- Medium: Improve markdown-inside-JSX warnings so intentional quiz patterns are distinguished from true MDX footguns.
+- Medium: Add invalid date validation for frontmatter `date` and `modified`.
 
-### `src/content/posts/2026-05-09--semantic-vector-search-landscape/index.mdx`
+### `src/content/posts/2026-01-06--ai-sdk-math-tool/index.mdx`
 
-- High: Align directory date, frontmatter date, and publish flags.
-- High: Verify vector DB dimensions/cost/performance matrix with source links.
-- Medium-High: Rework opening to avoid "This article covers..." meta-prose.
-- Medium: Rename/reframe the title to match the practical seriousness of the post.
-- Medium: Separate buyer's-guide material from essay flow.
+- High: Update invalid/stale Anthropic model ID.
+- High: Update AI SDK step-control example from `maxSteps` to current pattern.
+- Medium: Replace npm install commands with Bun commands if the post is framed as repo-native.
+- Medium: Add a "Last verified" note for model/API examples.
+
+### `src/content/posts/2026-05-02--postgres-text-search-guide/index.mdx`
+
+- High: Fix `unaccent()` usage in generated columns/index expressions.
+- Medium: Clarify prefix search vs contains/leading-wildcard trigram search.
+- Medium: Add primary-source citations for Postgres FTS/trigram behavior.
 
 ### `src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx`
 
-- High: Reduce overlap with Postgres text guide and semantic vector post.
-- High: Verify vector-store comparison/cap claims.
-- Medium: Make this the "stay in Postgres until proven otherwise" decision article.
+- High: Fix MongoDB Atlas dimensions.
+- Medium-High: Clarify pgvector storage vs ANN index dimension limits.
+- High: Reduce overlap with the Postgres text guide and semantic vector landscape.
+- Medium: Keep matrix claims tied to the May 8, 2026 verification note.
 
-### `src/content/posts/2026-05-08--postgres-text-search-guide/index.mdx`
+### `src/content/posts/2026-05-01--semantic-vector-search-landscape/index.mdx`
 
-- Medium: Clarify prefix vs leading-wildcard trigram example.
-- Medium: Soften ParadeDB `pg_search` from "drop-in upgrade path" to "possible upgrade path."
-- Medium: Use this as the implementation guide, not the buyer's guide.
+- High: Fix MongoDB Atlas dimensions.
+- Medium-High: Clarify pgvector storage vs ANN index dimension limits.
+- High: Consolidate duplicated vector-store matrix material with the FTS vs pgvector post.
+- Medium: Retitle toward the concrete decision instead of "landscape" framing.
+
+### `src/content/posts/2026-01-30--llm-connection-strings/index.mdx`
+
+- Medium-High: Fix GPT-5.2 temperature/reasoning-effort examples.
+- Low: Change "draft IETF RFC" to "Internet-Draft."
+- Medium: Tighten credential-in-URL security caveats.
+
+### `src/content/posts/2026-01-02--llm-routing-mastra-ai/index.mdx`
+
+- Medium: Update `gemini-3-pro` or make model IDs illustrative.
+- Medium: Add Last verified note near current model examples.
+- Medium: Keep the thesis on routing by task and measured evals, not provider leaderboards.
+
+### `src/content/posts/2026-05-05--prompt-injection-new-sql-injection/index.mdx`
+
+- Medium-High: Soften SQL injection comparison around parameterized queries.
+- Medium: Preserve strong thesis, but keep security language defense-in-depth.
+- Medium: Verify internal links to related Mastra/security posts before publish.
+
+### `src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx`
+
+- High: Replace "eliminate injection vectors by design" style wording with "reduce risk," "constrain," or "make validation practical."
+- Medium: Add tool-permission/output-validation caveats beside prompt-structure patterns.
+
+### `src/content/posts/2026-05-05--rag-pipeline-failures/index.mdx`
+
+- Medium: Cite lost-in-the-middle research.
+- Medium: Frame chunk ordering as a heuristic to test.
+- Low: Keep as a voice exemplar for current AI posts.
+
+### `src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx`
+
+- Low-Medium: Make joke benchmark numbers explicitly hypothetical or cite real launch numbers.
+- Medium: Verify current eval tooling claims before publish.
+- Medium: Retitle if the joke fights the serious thesis.
 
 ### `src/content/posts/2026-05-06--llm-generative-ui-landscape/index.mdx`
 
-- High: Decide whether this or the 2026 version is canonical.
-- Medium-High: Verify young protocol/tool claims before publish.
+- High: Decide whether this or the May 10 version is canonical.
+- Medium-High: Verify fast-moving protocol/tool claims with primary sources.
 - Medium: Rename away from generic "landscape" if keeping.
 
 ### `src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/index.mdx`
 
 - High: Consolidate with the earlier GenUI draft.
 - Medium-High: Move decision table earlier.
-- Medium-High: Add "last verified" sources for protocol/tool claims.
-- Medium: Add/normalize image frontmatter before publish.
-- Medium: Tighten abstract ending into a practical decision rule.
+- Medium-High: Add source-backed "Last verified" notes.
+- Medium: Add image frontmatter before publish.
+- Medium: Keep catalog material skimmable so the decision frame survives.
 
-### `src/content/posts/2026-05-05--prompt-injection-new-sql-injection/index.mdx`
+### `src/content/posts/2015-04-06--docker-server-setup-notes/index.mdx`
 
-- High: Fix broken internal Mastra security link at line 243.
-- Low: Preserve as a voice exemplar for future AI/security posts.
-
-### `src/content/posts/2026-05-07--stop-hardcoding-your-prompts/index.mdx`
-
-- High: Soften "eliminate injection vectors by design" and "the structural fix."
-- Medium: Keep as a voice exemplar, but add precise security caveats.
-
-### `src/content/posts/2026-05-05--rag-pipeline-failures/index.mdx`
-
-- Low: Preserve as a voice exemplar.
-- Medium: Ensure any current RAG/tooling claims have source links before publish.
-
-### `src/content/posts/2026-05-06--llm-evals-are-broken/index.mdx`
-
-- Low: Preserve opening/voice as exemplar.
-- Medium: Verify current eval tooling claims before publish.
-
-### `src/content/posts/2026-01-02--llm-routing-mastra-ai/index.mdx`
-
-- High: Verify model names, availability, pricing, and rankings.
-- Medium: Make model IDs illustrative examples rather than durable recommendations.
-- Medium: Refocus the thesis on task routing, not provider leaderboard.
-
-### `src/content/posts/2026-01-04--mastra-mcp-tool-integrations/index.mdx`
-
-- Medium-High: Reduce product-tutorial/promotional phrasing.
-- Medium: Add failure modes: auth boundaries, tool drift, permissioning, and what MCP does not solve.
-
-### `src/content/posts/2026-01-30--llm-connection-strings/index.mdx`
-
-- Medium: Tighten security aside around credentials in URLs/logs.
-- Low: Preserve distinct thesis and humor, but keep security caveats crisp.
-
-### `src/content/posts/2025-03-01--you-might-not-need-algolia/index.mdx`
-
-- High: Rewrite vendor-blog language.
-- High: Center actual Pagefind migration/cost/indexing story.
-- Medium: Update `PageFind` spelling to `Pagefind` where applicable if that is the chosen convention.
-
-### `src/content/posts/2025-09-15--serverless-database-magic/index.mdx`
-
-- High: Narrow thesis and remove market-map language.
-- Medium-High: Refresh stale tool claims, star counts, performance ranges, and `text-embedding-ada-002`.
-- Medium: Avoid `@latest` in code examples.
-- Medium: Mark S3 Vector/status claims as dated or refresh.
-
-### `src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx`
-
-- High: Rewrite academic/marketing language into Dan's concrete quiz-building voice.
-- Medium: Show before/after examples of bad vs good MCQs.
+- High: Add historical framing or update production-looking examples.
+- High: Fix `pg-localhost` vs `pg-server` mismatch.
+- High: Replace unsafe/stale Docker patterns if refreshed: unauthenticated Mongo, `mongo` shell, untagged Elasticsearch, `EXPOSE [3000]`, EOL Node 12, and `--link`.
 
 ### `src/content/posts/2025-01-05--docker-security-tips-for-self-hosting/index.mdx`
 
-- High: Replace startup latest-pull guidance with reviewed update automation.
-- High: Reword Basic Auth/CSRF claim.
-- Medium: Fix markdown-inside-HTML/JSX patterns.
-- Medium: Normalize `macOS`, `Cloudflare`, and related spelling.
+- Medium: Update Docker Engine 28 port-publishing caveat.
+- Medium: Replace nonexistent `postgres:17.2.1` tag.
+- Medium: Fix `auto-net` vs `db-network` mismatch.
+- Medium: Convert leftover task comments that should not render as editorial copy.
+- Medium: Add Last verified note for Docker/networking behavior.
 
-### `src/content/posts/2026-01-26--securing-clawdbot-tailscale/index.mdx`
+### `src/content/posts/2018-11-15--you-may-not-need-axios/index.mdx`
 
-- Medium: Verify OpenClaw commands and audit counts against current docs.
-- Medium: Label incident/audit counts as historical.
+- Medium: Correct fetch JSON transform comparison.
+- Medium: Preserve the useful "you may not need a dependency" framing but make ergonomics tradeoffs precise.
 
-### `src/content/posts/2025-04-03--beware-the-single-purpose-people/index.mdx`
+### `src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/index.mdx`
 
-- Medium-High: Reduce opening joke density and fix typos.
-- Medium: Add before/after code organization examples.
-- Medium: Keep one sharp joke per beat, then land the rule.
+- Medium: Fix regex expected output mismatch.
+- Medium: Consider post-processing terminal punctuation instead of stretching the regex into unreadability.
+- Medium: Remove emoji-heavy section headings if refreshing for current site style.
 
-### `src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/index.mdx`
+### `src/content/posts/2015-02-24--security-notes-regex/index.mdx`
 
-- Medium-High: Decide whether to preserve as a time-capsule or rewrite.
-- Medium: Replace generic AI-collaboration claims with workflow specifics, failures, and human taste boundaries.
+- Medium: Reframe ReDoS as a security vulnerability.
+- Medium: Add modern warning signs and mitigations.
+- Low: Fix "suprising" typo.
 
-### `src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx`
+### `src/content/posts/2024-11-15--quiz-regex-or-wreckage/index.mdx`
 
-- Medium: Improve figure captions so they explain why the diagram matters.
-- Low: Frontmatter image paths are inconsistent with newer `./` style; normalize if touching.
+- Medium: Fix fixed-length lookbehind explanation.
+- Medium: Address markdown-inside-JSX warnings if touching quiz internals.
+- Low-Medium: Reduce emoji/joke density in closing if modernizing.
 
-### `src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/index.mdx`
+### `src/content/posts/2024-12-28--quiz-in-the-aws-cloud/index.mdx`
 
-- Medium: Fix markdown-inside-HTML/JSX risk around line 56.
-- Medium: Split long list paragraphs for scan mode.
+- Medium: Shuffle answer positions.
+- Medium: Add Last verified note for AWS pricing/capacity/service behavior.
+- Medium: Replace "dive deep / best practices / landscape" wrapper language with sharper challenge framing.
+
+### `src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/index.mdx`
+
+- Medium: Shuffle early answer positions.
+- Medium: Address markdown-inside-JSX warnings if refreshing.
+
+### `src/content/posts/2024-10-31--quiz-data-structures-algorithms/index.mdx`
+
+- Medium: Shuffle answer positions.
+- Low-Medium: Add per-option hints or remove empty hint slots.
+- Low: Fix "algorithms (), and time complexity."
+
+### `src/content/posts/2024-10-31--quiz-do-you-know-esnext/index.mdx`
+
+- Low-Medium: Add hints or remove empty hint slots.
+- Low: The commented-out cover line is harmless but can confuse naive asset scans; remove if cleaning frontmatter.
 
 ### `src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/index.mdx`
 
-- High: Remove any in-body H1 patterns.
-- Medium: Fix markdown links inside raw HTML/JSX.
-- Medium: Normalize `social_image` to expected desktop/social convention if that is adopted.
+- Medium: Clean markdown-inside-JSX warnings.
+- Medium: Keep code examples mobile-safe after CSS fixes.
 
 ### `src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/index.mdx`
 
 - Low-Medium: Fix "Postres" typo.
-- Medium: Standardize quiz intro/outro template.
+- Medium: Clean markdown-inside-JSX warnings over time.
 
-### `src/content/posts/2024-12-28--quiz-in-the-aws-cloud/index.mdx`
+### `src/content/posts/2024-11-20--quiz-bash-in-the-shell/index.mdx`
 
-- Medium: Replace generic "dive deep / best practices / landscape" wrapper copy with sharper challenge framing.
-- Medium: Verify current AWS service claims if refreshing.
-
-### `src/content/posts/2024-12-28--quiz-is-your-memory-rusty/index.mdx`
-
-- Low-Medium: Replace generic "Let's dive in" wrapper copy.
-- Medium: Keep code blocks readable on mobile after CSS cleanup.
+- Medium: Clean markdown-inside-JSX warnings.
+- Medium: Keep shell code examples readable on mobile.
 
 ### `src/content/posts/2026-05-09--quiz-context-engineering/index.mdx`
 
-- Medium: Keep draft flags unless publishing.
-- Low-Medium: Rephrase "cl100k (GPT-4)" as tokenizer-specific rather than universal.
+- Low while draft: Keep private flags until intended release.
+- Medium: Add Last verified note for OpenAI/Anthropic prompt caching behavior.
+- Low-Medium: Make tokenizer references model/tokenizer-specific, not universal.
+
+### `src/content/posts/2025-03-01--you-might-not-need-algolia/index.mdx`
+
+- Medium-High: Rewrite generic vendor-blog language.
+- Medium: Center the Pagefind/static-site decision rule.
+- Medium: Add Last verified note for Pagefind/Algolia capability claims.
+
+### `src/content/posts/2025-09-15--serverless-database-magic/index.mdx`
+
+- Medium-High: Replace benchmark/star counts with cited methodology or qualitative framing.
+- Medium: Update older embedding model examples.
+- Medium: Avoid `@latest` in code examples if readers might copy them.
+- Medium: Narrow the thesis to object-storage-backed read-heavy search.
+
+### `src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/index.mdx`
+
+- Medium-High: Rewrite academic/marketing prose.
+- Medium: Add before/after examples of weak vs strong multiple-choice questions.
+
+### `src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/index.mdx`
+
+- Medium: Preserve as a time capsule or rewrite in current scar-tissue voice.
+- Medium: Replace generic AI productivity language with workflow specifics.
+
+### `src/content/posts/2025-04-03--beware-the-single-purpose-people/index.mdx`
+
+- Medium: Reduce opening joke density.
+- Medium: Add concrete before/after code organization examples.
+- Medium: Fix tag canonicalization (`software development`, `code organization`).
 
 ### `src/content/posts/2025-09-10--patchy-with-a-chance-of-vulnerability/index.mdx`
 
-- Low-Medium: Source/qualify CrowdStrike hospital impact claim.
 - Low-Medium: Soften hardware-token social-engineering language.
+- Low-Medium: Source or qualify incident-impact claims.
 
-### `src/content/posts/2021-03-03--creating-collaborative-culture/index.md`
+### `src/content/posts/2024-08-29--handling-international-numbers-and-currency/index.mdx`
 
-- Medium: Add concrete team rituals, proposal examples, and failure stories if revising.
-- Low: Preserve earnest historical voice.
+- Low: Correct "locale = country per ISO 3166" framing. Locales are BCP 47 language tags with optional script/region.
 
-### `src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md`
+Primary source: https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag
 
-- Medium: Add specificity to "safety/speed/clarity/commitment."
-- Low-Medium: Fix obvious typo at line 91.
+### `src/content/posts/2023-08-18--should-you-use-named-or-default-exports/index.mdx`
+
+- Low: Fix invalid object-literal arrow example: `const Knife = () => ({ ...blade, ...handle })`.
 
 ### `src/content/posts/2015-06-12--love-computer-languages/index.mdx`
 
-- Medium: Fix invalid `modified: 2017-02-30`.
-- Medium: Decide archive/draft state and remove contradictory flags.
+- Medium: Fix invalid modified date.
+- Medium: Resolve contradictory `draft:true`, `hidden:true`, `publish:true`.
+- Low: Correct Rust compiler description if revived; Rust does not normally transpile into pure C.
 
 ### `src/content/posts/2015-06-06--javascript-scope-magic/index.md`
 
-- Medium: Decide archive/draft state and remove contradictory flags.
+- Medium: Resolve `draft:true` with `publish:true`.
 - Low: Preserve as legacy unless refreshing.
 
 ### `src/content/posts/2015-06-06--docker-firewall-setup/index.md`
 
-- Low-Medium: Fix "Firtewall" typo.
-- Medium: Historical/security note if keeping indexed.
+- Medium: Normalize draft/private flags.
+- Low: Fix "Firtewall" typo.
+- Medium: Add historical/security framing if keeping indexed.
 
-### `src/content/posts/2015-03-12--docker-makes-everything-better/index.md`
+### `src/content/posts/2015-11-22--disable-transparent-hugepages/index.md`
 
-- Medium: Add historical note or unlist.
-- Medium: Add a real ending or rule of thumb if preserving as an article.
+- Medium: Normalize draft/private flags.
+- Medium: Align directory date and frontmatter date if preserving.
+- Medium: Add historical note if keeping routable.
 
-### `src/content/posts/2018-09-26--promise-gotchas/index.md`
+### `src/content/posts/2017-05-01--linux-system-benchmark-scripts/index.md`
 
-- Medium: Starts as a snippet and at lower heading depth. Add historical note or expand.
+- Medium: Resolve `draft:true` with `publish:true`.
+- Medium: Add historical note if preserving.
 
-### `src/content/posts/2017-05-10--pitfalls-in-promise-docs/index.md`
+### `src/content/posts/2018-10-06--are-promises-broken/index.md`
 
-- Low-Medium: Add historical note around Q/Promise ecosystem claims.
+- High via platform behavior: Decide whether `unlisted:true` should still be routable, because related posts point to it.
+- Medium: Add historical note if keeping accessible.
+
+### `src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/index.mdx`
+
+- Low-Medium: Rewrite literal captions into explanatory captions.
+- Medium: Keep figure/table rendering safe after CSS changes.
+
+### `src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/index.mdx`
+
+- Medium: Remove generic phrases like "embarked on a journey" if refreshing.
+- Medium: Clean markdown-inside-JSX risk.
+
+### `src/content/posts/2021-03-03--creating-collaborative-culture/index.md`
+
+- Medium: Add concrete rituals and examples if revising.
+- Low: Preserve earnest historical voice.
+
+### `src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/index.md`
+
+- Medium: Add specificity around safety/speed/clarity/commitment if revising.
+- Low: Fix obvious typo from content-check/spelling pass.
 
 ## Recommended Cleanup Plan
 
 ### Phase 1: Structural Safety
 
-1. Define and validate editorial visibility states.
-2. Add internal absolute-link checking.
-3. Add no-body-H1 MDX check.
-4. Add markdown-inside-JSX/HTML check.
-5. Add date/slug mismatch reporting.
+1. Fix visibility/routability helpers.
+2. Move `Post.astro` structured data/scripts into valid document locations.
+3. Restore ordered-list semantics.
+4. Add no-body-H1 validation.
+5. Add invalid-date validation.
+6. Add stronger internal absolute-link and related-link checks.
 
 ### Phase 2: Reading System
 
-1. Adjust article typography: body weight, letter spacing, measure.
+1. Normalize article body typography.
 2. Calm body headings.
-3. Fix lists, tables, code blocks, figures/captions.
-4. Fix post layout placement of structured data/scripts.
-5. Fix quiz explanation widths and fixed score padding.
+3. Add reliable code/table overflow behavior.
+4. Normalize figure/caption styling.
+5. Add hero alt/credit conventions.
+6. Verify mobile rendering for wide matrices and quiz explanations.
 
-### Phase 3: Editorial Strategy
+### Phase 3: Current Technical Correctness
 
-1. Consolidate Search/Postgres/vector cluster.
-2. Consolidate GenUI drafts.
-3. Add `related` clusters.
-4. Normalize taxonomy and image metadata for high-value posts.
-5. Choose one popularity system.
+1. Fix AI SDK/model examples.
+2. Fix Postgres `unaccent()` example.
+3. Fix vector matrix limits and pgvector footnotes.
+4. Fix Docker tag/network/caveat mismatches.
+5. Fix regex/fetch/quiz correctness issues.
+6. Add "Last verified" notes to AI/search/security/cloud claims.
 
-### Phase 4: High-Value Rewrites
+### Phase 4: Editorial Consolidation
 
-1. Rewrite Pagefind/Algolia.
-2. Rewrite/refocus serverless database.
-3. Rewrite MCQ post.
-4. Tighten Docker/security guidance.
-5. Refresh model/tooling claims in AI posts.
+1. Consolidate the Postgres/search/vector cluster.
+2. Consolidate the GenUI drafts.
+3. Retitle posts where jokes obscure the practical thesis.
+4. Add related clusters for Promises, Docker/security, Postgres/search, AI agents, evals, and quizzes.
 
-### Phase 5: Legacy Preservation
+### Phase 5: Voice And Legacy Preservation
 
-1. Add historical notes to thin/stale legacy posts.
-2. Run typo-only cleanup.
-3. Unlist fragments that are not worth modernizing.
+1. Rewrite Pagefind/Algolia, serverless database, and MCQ posts in current Dan voice.
+2. Decide time-capsule vs rewrite for older AI/productivity prose.
+3. Add historical notes to old Docker/Promise/Angular/Linux posts.
+4. Run a typo-only pass that preserves legacy personality.
 
-## Validation Commands
+## Primary Sources Consulted
 
-```bash
-bun run check
-bun run test:e2e
-bun run fix-quizzes
-bun run build
-```
-
-Notes:
-
-- `bun run check` passed during the technical review with no errors, though existing warnings/hints were reported.
-- `bun run fix-quizzes` may modify quiz files; run it on a clean tree.
-- `bun run build` may update `public/_redirects`; redirects should still be managed through post frontmatter.
+- PostgreSQL generated columns: https://www.postgresql.org/docs/current/ddl-generated-columns.html
+- PostgreSQL `CREATE INDEX`: https://www.postgresql.org/docs/15/sql-createindex.html
+- PostgreSQL `unaccent`: https://www.postgresql.org/docs/current/unaccent.html
+- PostgreSQL `pg_trgm`: https://www.postgresql.org/docs/17/pgtrgm.html
+- PostgreSQL full text search controls: https://www.postgresql.org/docs/17/textsearch-controls.html
+- PostgreSQL text search indexes: https://www.postgresql.org/docs/17/textsearch-indexes.html
+- pgvector README: https://github.com/pgvector/pgvector
+- MongoDB Atlas Vector Search: https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-overview/
+- Vercel AI SDK RSC discussion: https://github.com/vercel/ai/discussions/3251
+- Vercel AI SDK 6 migration guide: https://v6.ai-sdk.dev/docs/migration-guides/migration-guide-6-0
+- AI SDK v5 migration guide: https://ai-sdk.dev/docs/migration-guides/migration-guide-5-0
+- Anthropic Claude model notes: https://docs.claude.com/en/docs/about-claude/models/whats-new-claude-4-5
+- Google Gemini models: https://ai.google.dev/models/gemini
+- OpenAI latest model guide: https://platform.openai.com/docs/guides/latest-model
+- OWASP SQL Injection Prevention Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
+- Lost in the Middle paper: https://arxiv.org/abs/2307.03172
+- Docker deprecated features: https://docs.docker.com/engine/deprecated/
+- Docker port publishing: https://docs.docker.com/engine/network/port-publishing/
+- Mongo Docker image: https://hub.docker.com/_/mongo
+- Elasticsearch Docker image: https://hub.docker.com/_/elasticsearch
+- Node.js EOL: https://nodejs.org/en/about/eol
+- MDN Fetch: https://developer.mozilla.org/en-US/docs/Web/API/Window/fetch
+- MDN `Response.json()`: https://developer.mozilla.org/en-US/docs/Web/API/Response/json
+- Axios request config: https://axios-http.com/docs/req_config
+- OWASP ReDoS: https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS
+- MDN BCP 47 language tag: https://developer.mozilla.org/en-US/docs/Glossary/BCP_47_language_tag
+- `llm://` Internet-Draft: https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/

@@ -58,7 +58,6 @@ src/content/posts/YYYY-MM-DD--slug-name/
 - `unlisted: boolean` - Accessible via URL but hidden from lists
 - `related: string[]` - Related post slugs
 - `popularity: number` - 0-1 score for sorting
-- `cover_alt: string` - Explicit hero alt text when the cover image is meaningful
 - `cover_credit: string` - Optional HTML credit rendered below hero imagery
 
 **Controlled categories**:
@@ -244,7 +243,7 @@ playwright.config.ts         # E2E tests
 - **React hydration** - Preserve `client:visible` on quiz challenges; it is a deliberate performance feature
 - **Store images with posts** - Keep images in same directory as `index.mdx`
 - **Related links** - Use `related` frontmatter with valid slugs for durable editorial linking
-- **Hero media** - Add useful `cover_alt` and `cover_credit` when a post has hero imagery
+- **Hero media** - Add useful `cover_credit` when a post has credited hero imagery
 - **Subtitles** - Post subtitles render as paragraph/dek text, not heading levels
 - **Lists** - Preserve native ordered-list semantics in markdown and CSS; do not restyle `ol` into generic block/list-item wrappers
 - **Fast-moving claims** - Add a short "Last verified" note for claims about prices, limits, model capabilities, vendors, benchmarks, or tool availability

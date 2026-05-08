@@ -147,7 +147,7 @@ const rotationData = variants.map((v) => ({
 ---
 
 <aside
-  class={`consulting-cta ${cta.accentClass}`}
+  class={`consulting-cta screenshot-hidden ${cta.accentClass}`}
   aria-label="Hire Dan Levy"
   data-cta-rotation={JSON.stringify(rotationData)}
   data-cta-slug={Astro.props.slug || 'global'}
@@ -260,7 +260,7 @@ const rotationData = variants.map((v) => ({
       el.classList.add('cta-fade-out');
 
       setTimeout(() => {
-        el.className = `consulting-cta ${v.accentClass} cta-fade-in`;
+        el.className = `consulting-cta screenshot-hidden ${v.accentClass} cta-fade-in`;
         if (kickerEl) kickerEl.textContent = v.kicker;
         if (headlineEl) headlineEl.textContent = v.headline;
         if (bodyEl) bodyEl.textContent = v.body;

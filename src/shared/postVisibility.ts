@@ -24,14 +24,14 @@ export const isPublishedPostData = (
 
 export const isVisiblePostData = (
   data?: PostVisibilityData | null,
-) => isPublishedPostData(data) && normalizePostFlag(data?.hidden) !== true;
+) =>
+  isPublishedPostData(data) &&
+  normalizePostFlag(data?.hidden) !== true &&
+  normalizePostFlag(data?.draft) !== true;
 
 export const isRoutablePostData = (
   data?: PostVisibilityData | null,
-) =>
-  isVisiblePostData(data) &&
-  normalizePostFlag(data?.unlisted) !== true &&
-  normalizePostFlag(data?.draft) !== true;
+) => isVisiblePostData(data);
 
 export const isPublishedPost = <TPost extends PostWithData>(post?: TPost | null) =>
   isPublishedPostData(post?.data);

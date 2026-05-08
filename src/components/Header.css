@@ -5,7 +5,7 @@
   --breakout-max-width: var(--site-shell-width);
   --padding-inline: 0;
   padding-inline: 0;
-  padding-block: 0.7rem;
+  padding-block: 0.55rem;
   background: transparent;
   position: relative;
   z-index: 50;
@@ -41,12 +41,12 @@
 
   h2 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1rem;
     font-weight: 400;
     color: #fff;
     text-shadow:
-      0 0 20px rgba(0, 255, 255, 0.5),
-      0 0 40px rgba(0, 255, 255, 0.3);
+      0 0 12px rgba(255, 79, 196, 0.22),
+      0 0 24px rgba(0, 245, 238, 0.12);
     transition:
       text-shadow 0.3s ease,
       transform 0.3s ease;
@@ -134,21 +134,21 @@
   @screen sm {
     nav h2 a {
       column-gap: 0.25rem;
-      font-size: 1.6rem
+      font-size: 1rem
     }
   }
 
   @screen md {
     nav h2 a {
       column-gap: 0.5rem;
-      font-size: 1.8rem
+      font-size: 1rem
     }
   }
 
   @screen lg {
     nav h2 a {
       column-gap: 0.75rem;
-      font-size: 2.2rem
+      font-size: 1rem
     }
   }
 
@@ -157,7 +157,7 @@
 .top-header .header-nav {
   align-items: center;
   grid-column: 1 / -1;
-  height: clamp(4.25rem, 7vw, 5rem);
+  height: clamp(3.1rem, 5vw, 3.6rem);
   justify-self: center;
   margin-inline: auto;
   width: min(calc(100vw - (var(--site-shell-gutter) * 2)), var(--site-shell-width));
@@ -170,7 +170,7 @@
 
 @media (max-width: 700px) {
   .top-header {
-    padding-block: 0.85rem 1rem;
+    padding-block: 0.7rem 0.85rem;
   }
 
   .top-header .header-nav {

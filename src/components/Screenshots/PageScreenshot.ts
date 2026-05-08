@@ -1,5 +1,6 @@
 import { chromium, Browser, Page } from "playwright";
 import { makeLogs } from "../LogHelper.ts";
+import { applyScreenshotMode, SCREENSHOT_MODE_CLASS } from "./screenshotMode.ts";
 
 const log = makeLogs("ScreenshotSvc");
 
@@ -47,7 +48,7 @@ class ScreenshotService {
   private browser: Browser | null = null;
   private headless = true;
   private readonly navigationTimeoutMs = 30_000;
-  private readonly overrideClassName = "screenshot-mode";
+  private readonly overrideClassName = SCREENSHOT_MODE_CLASS;
 
   public async init(): Promise<void> {
     if (this.browser) return;
@@ -121,6 +122,14 @@ class ScreenshotService {
       });
       log(`Navigated to ${url}`);
 
+      await this.applyOverrideClassName(page, overrideClassName);
+
+      if (zoom && zoom > 0 && zoom < 10) {
+        await page.evaluate((zoom) => {
+          document.body.style.scale = String(zoom);
+        }, zoom);
+      }
+
       if (scrollTo) {
         await page.waitForSelector(scrollTo);
         await page.evaluate((scrollTo) => {
@@ -132,18 +141,6 @@ class ScreenshotService {
       }
 
       if (delayMs) await page.waitForTimeout(delayMs);
-
-      if (overrideClassName) {
-        await page.evaluate((overrideClassName) => {
-          document.body.classList.add(overrideClassName);
-        }, overrideClassName);
-      }
-
-      if (zoom && zoom > 0 && zoom < 10) {
-        await page.evaluate((zoom) => {
-          document.body.style.scale = String(zoom);
-        }, zoom);
-      }
 
       let screenshotBuffer: Buffer | null = null;
 
@@ -197,6 +194,19 @@ class ScreenshotService {
       this.browser = null;
       this.pages = [];
     }
+  }
+
+  private async applyOverrideClassName(page: Page, overrideClassName?: string) {
+    if (!overrideClassName) return;
+
+    if (overrideClassName === SCREENSHOT_MODE_CLASS) {
+      await applyScreenshotMode(page);
+      return;
+    }
+
+    await page.evaluate((className) => {
+      document.body.classList.add(className);
+    }, overrideClassName);
   }
 
   private async closePage(page: Page) {
