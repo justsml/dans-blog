@@ -1,6 +1,6 @@
 ---
-title: "Transformers.jsにBeam Searchを実装する"
-subTitle: "千行のコード、数ヶ月の待機、そしてテキスト生成の核心への深潜り"
+title: "Transformers.jsでBeam Searchを実装する"
+subTitle: "千行のコード、数ヶ月間の待機、そしてテキスト生成の深掘り"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [ai, transformers, javascript, open-source, nlp, beam-search, machine-learning]
@@ -10,172 +10,174 @@ draft: true
 hidden: true
 publish: false
 popularity: 0.7
-social_image: ../desktop-social.webp
-cover_full_width: ../wide.webp
-cover_mobile: ../square.webp
-cover_icon: ../square.webp
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
 
 ---
 
-> 注意: この記事には専門用語が含まれています。`softmax`や`log probs`という言葉を聞いて、すぐに「Max、そのprobs止めてくれ」と言いたくなる方は、読むのをスキップしてもよい。
+> CW: この投稿には技術用語が含まれています。だから、`softmax`や`log probs`という言葉を見るとすぐにMaxに「もうプロブスはいい」と言いたくなるなら、この投稿は飛ばした方がいいかもしれません。
 
 ---
 
 ## 問題：`num_beams`は嘘だった
 
-`transformers.js`の生成ループの奥深くに、長らく存在していたコメントがある：
+`transformers.js`の生成ループの奥深くに、長い間そのままだったコメントがありました：
 
 ```js
 // TODO: Support beam search
 ```
 
-そしてそのすぐ下に、ループを最初のトークンで静かに抜ける`break`文があった。`num_beams > 1`で shipped されたすべてのモデル設定 — T5、BART、Whisper — は、ひっそりとgreedy decodingを受けていた。警告なし。エラーなし。ただ…間違った出力。
+その 바로下には、最初のトークンの後でループを静かに退出する`break`文がありました。`num_beams > 1`で出荷されたすべてのモデル設定（T5、BART、Whisper）は、静かにグリーディーデコーディングを受けていました。警告なし。エラーなし。ただ... 잘못した出力。
 
-これを見つけたのは、summarization pipelineをテストしていて、Pythonの参照実装と比べて出力がこんなにも劣化しているのはなぜだろうと考えていた時だった。`modeling_utils.js`まで追跡し、TODOを見つけ、「どれくらい難しいんだ？」と考えたのが間違いの始まりだった。
+要約パイプラインをテストしているときに、これがきっかけでした。なぜ出力がPythonリファレンスと比較してこんなに劣化しているのか不思議に思い、`modeling_utils.js`までトレースして、TODOを見つけ、そして「どれほど難しいだろうか」という過ちを犯しました。
 
-答えは：かなり難しい、ただし面白い意味で。
-
----
-
-## Beam Searchとは実際何か
-
-Greedy decodingは毎ステップで最高確率のトークンを選ぶ。単純、高速、頻繁に最適ではない — 口から最初に出た言葉が、いつも文の最良の始まりではない。
-
-Beam searchは代わりに`num_beams`個の候補シーケンスを同時に生存させ、各ステップで全語彙に各候補を展開し、累積log確率で上位`num_beams`に切り詰める。トークン空間を制限付き幅優先探索するようなもの。
-
-結果はグローバルに優れたシーケンス、ただし`num_beams`倍の計算量を犠牲にして。
-
-三つの変種がある：
-
-- **標準beam search** — 確定的、argmax候補を取る、全体で最良のシーケンス
-- **Diverse beam search** — beamをグループに分割、以前のグループが既に選んだトークンにペナルティを課し、出力候補がすべて同じ内容にならないようにする
-- **Beam sampling** — 確率的、beamフレームワーク内でtop-k + softmax + ランダムサンプリングを適用
-
-これら三つすべてがPRに入っている。
+答えは：結構難しい、だが興味深い方法で。
 
 ---
 
-## 実際に悩んだアーキテクチャ決定
+## Beam Searchとは何か
 
-既存のコードベースには`BeamSearchSampler`クラスがあった。関係ありそうに見えた。しかし微妙な罠があった：それは各beamから上位`num_beams`トークンだけを返す。正しそうに聞こえるが、実際のbeam searchにはそれだけでは足りないことに気付くまで。
+誰もが...
 
-正しいbeam searchは、各バッチ項目で**すべての`num_beams × vocab_size`候補**を考慮して、グローバルに最良の継続を見つける必要がある。各beamから上位数トークンを単独で見るだけではダメ — すべてのbeamを合わせてランキングしなければならない。
+グリーディーデコーディングは、各ステップで最高確率のトークンを選びます。シンプルで高速だが、しばしば最適ではない — 口から最初に出る言葉が常に文の最佳の始まりとは限りません。
 
-だから既存のサンプラーを完全にバイパスした。処理済みlogitsに直接`log_softmax`を計算し、累積beamスコアを追加し、統合候補空間で2レベルのソートを行った。より綺麗な数学、正しいセマンティクス。
+Beam searchは代わりに`num_beams`個の候補シーケンスを同時に存活させ、各シーケンスを全ボキャブラリで拡張し、累積ログ確率で上位`num_beams`に剪定します。トークン空間に対する境界付き幅優先探索のようなものです。
 
-`BeamSearchSampler`クラスはまだそこにあり、手つかずで、本来やっていた用途にはまだ有用。これは「明らかな」再利用パスが間違った場所に導くケースの一つ。
+結果はグローバルに優れたシーケンスですが、`num_beams`×の計算コストがかかります。
 
----
+3つのフレーバーがあります：
 
-## 最も厄介なバグ：KVキャッシュの再順序付け
+- **標準beam search** — 決定論的、argmax候補を取得、全体として最適なシーケンス
+- **多様なbeam search** —  beamをグループに分割し、早期グループがすでに選んだトークンにペナルティを課す sehingga出力候補がすべて同じことを言わないようにする
+- **Beam sampling** — 確率的、beamフレームワーク内でtop-k + softmax +ランダムサンプリングを適用
 
-Beam searchがシーケンスを切り詰める時、トークンを切り詰めるだけではない — どのbeamが生存するかを*再順序付け*する。Beam 3が最良の継続を生み出し克隆されるかもしれない；beam 0と2は淘汰されるかもしれない。
-
-問題は、transformerのattention mechanismからのkey-valueキャッシュが、beamによってバッチ次元に沿ってインデックスされている。出力シーケンスを再順序付けしてキャッシュを再順序付けしないと、不整合な状態になる。モデルが間違った過去にattendしている。
-
-修正は`_reorder_cache()` — 新しいbeam順序に従って過去のすべてのkey-value tensorを`index_select`で再インデックスし、古くなったtensorを dispose するメソッド。
-
-CPUの場合これは単純：typed arraysを行でスライス。GPU tensorsではもっと厄介になる — データを非同期でダウンロード（`ort_tensor.getData(true)`）し、再順序付けし、再アップロードしなければならない。両方のパスを扱うために、`tensor.js`に`index_select`（同期、CPU）と`index_select_async`を追加した。
-
-Encoder-decoderモデル（T5、BART）は*二つの*キャッシュを持つ：encoderとdecoder。encoderのPKVはdecoding中に変化しないので、そのまま渡される。再順序付けが必要なのはdecoderのPKVだけ。この区別を間違えると、非常に悪い出力を微妙に生み出す — 参照と比較するまでほぼ正しく見える類の間違い。
+すべて3つ，今PRに含まれています。
 
 ---
 
-## Diverse Beam Search：楽しい奴
+## 私が実際に頭を悩ませたアーキテクチャの決定
 
-Diverse beam searchは`diversity_penalty`を追加し、後のbeamグループが以前のグループが既に選んだトークンを選ぶのを妨げる。直感はこうだ：すべてのbeamが同じ出力に収束したら、仮説空間を本当に探索していない。
+既存のコードベースには`BeamSearchSampler`クラスがありました。関連するように見えました。しかし微妙な罠がありました：それはbeamごとに上位`num_beams`トークンだけを返していました。それが正しい聞こえますが、実際にbeam searchには十分ではありません。
 
-実装上、グループは各decodingステップ内で*逐次的に*処理されなければならない。並列ではなく。各グループが自身のスコアを計算する前に、以前のグループが何を選んだかを見る必要があるから。
+適切なbeam searchを得るには、**全`num_beams`×ボキャブラリサイズ**の候補をバッチアイテムごとに考慮してグローバルに最適な продолженияを見つける必要があります。各beamのトップトークンを分離して見ることはできません — すべてのbeamを一緒にランク付けする必要があります。
 
-最終的にこういう構造になった：
+ 그래서私は既存のサンプラーを完全にバイパスしました。処理されたlogitsに対して直接`log_softmax`を計算し、累積beamスコアを加え、 combined candidate space全体の2レベルソートを行いました。よりクリーンな数学、より正しいセマンティクス。
+
+`BeamSearchSampler`クラスはまだそこにあり、触れないまま、あなたがたぶん当初使っていた何かを続けています。これは「明白な」再利用パスがあなたを間違った場所に導くそのようなケースの1つです。
+
+---
+
+## 最も烦わしいバグ：KVキャッシュのリordering
+
+beam searchがシーケンスを剪定するとき、トークンを単にtruncateするだけでなく、**どのbeamが存活するかをリオーダー**します。Beam 3が最も良い продолжениеproducing し、cloneされるかもしれない；beam 0と2はdiscardされるかもしれない。
+
+問題は、トランスフォーマーの注意メカニズムからのキー-valueキャッシュがbatch次元沿ってbeamでインデックスされていることです。出力シーケンスをリ順序付けせずにキャッシュをリ順序付けしないなら、ステートの不整合があります。モデルは間違った過去にattendしています。
+
+修正は`_reorder_cache()` — これは新しいbeam順序に従って再インデックスするためにすべてのpast key-value tensorに対して`index_select`を呼び出し、その後古いtensorをdisposeするメソッドです。
+
+CPUについてはこれは単純です：行ごとにtyped arraysをスライスします。GPU tensorについてはもっと面倒になります — async-downloadする必要があります（`ort_tensor.getData(true)`）、リ順序付け、そしてre-upload。私は両方の`index_select`（同期、CPU）と`index_select_async`を両方のpathを処理するために`tensor.js`に追加しました。
+
+Encoder-decoderモデル（T5、BART）は**2つのキャッシュ**を持ちます：encoderとdecoder。Encoder PKVはdecoding中に変わらないので、を変更せず渡します。_decoder PKVだけがリ順序付けが必要です。 その区別を間違うと очень bad outputs、subtly — 間違っているがAlmost rightに見えるそんな種類。
+
+---
+
+## Diverse Beam Search：楽しい方
+
+Diverse beam searchは、後続のbeamグループが早期グループによってすでに選択されたトークンを選択しないようにする`diversity_penalty`を追加します。直感は：すべてのbeamが同じ出力に収束するなら、あなたは実際には仮説空間を探索していません。
+
+実装に関しては、 groupsは各decodingステップで*順番に*処理する必要があります 並列ではなく、なぜなら各グループは自分のスコアを計算する前に早期グループが何を選択したかを見る必要があるからです。
+
+私が最終的に落ち着いた構造：
 
 ```
 for each step:
   token_counts = {}
   for each group in groups:
-    extract this group's beams and logits
+    this group's beams and logitsを抽出
     for each token selected by previous groups:
       logits[token] -= diversity_penalty * token_counts[token]
-    score candidates, select top 2×group_size
+    候補をスコア化し、上位2×group_sizeを選択
     group_scorer.process(...)
-    record newly selected tokens into token_counts
+    newly selected tokensをtoken_countsに記録
 ```
 
-ここでの逐次依存は本物。並列化すると多様性保証を失う。一時バッチ処理を試そうと思ったが、それは間違いだった。
+ここでの逐次依存関係は本物です。あなたはこれをbatchingしようとする誘惑われて稍微、そしてそれは単なる過ちだったでしょう。
 
 ---
 
-## `BeamHypotheses`優先度付きキュー
+## `BeamHypotheses`優先度キュー
 
-beamが`max_length`の前にEOSトークンに達すると、「完了」になる — しかしすぐに捨てたり返したりはできない。 bounded 優先度付きキュー`BeamHypotheses`に追加する。
+beamが`max_length`前にEOSトークンにhitすると、"done"です — しかしそれを単にdiscardしたり即座に戻したりすることはできません。有界の優先度キュー called `BeamHypotheses`に追加します。
 
-キューは各バッチ項目で最大`num_beams`個の完了シーケンスを保持し、次のようにスコアリングする：
+キューはバッチアイテムごとに最大`num_beams`個のcompletedシーケンスを保持し、以下の式でスコアリング：
 
 ```
 score = sum_logprobs / (length ^ length_penalty)
 ```
 
-`length_penalty > 1.0`は長い出力を優遇；`< 1.0`は短い出力を優遇。`early_stopping`フラグは、キューが満杯になった時beamを完了と見なすか（`true`）、`max_length`まで完了と見なさないか（`"never"`）、残りのbeamが現在の最悪の完了仮説をスコアで上回る可能性がない時に完了と見なすか（`false`）を制御する。
+`length_penalty > 1.0`はより長い出力を奖励し、`< 1.0`はより短いものを奖励します。`early_stopping`フラグは、queueがいっぱいになったらbeamが完了したとみなすかどうか（`true`）、決して`max_length`まで待たない（`"never"`）、または残っているどのbeamも現在のworst hypothesisをoutscoreする 가능성이なくなったときに完了（`false`）を制御します。
 
-`false`のケースが興味深い — 残りの任意の生きているbeamが、可能な残り最大スコアを考慮しても現在の最悪仮説を上回れないかを追跡する必要がある。これは pruning 最適化で、既に良い仮説がある時に`max_length`まで走るのを防ぐ。
+`false`ケースは興味深いものです — これは、与えられた利用可能な最大remaining score、それでも生き残っているどのbeamも現在のworst hypothesisをoutscoreできるかどうかを追跡する必要があります。それは`max_length`まで走ることをpreventsする剪定最適化です你已经 хорошие hypothesesを持っているときに。
 
-これは`beam_search.js`の新ファイルにあり、合計~240行。`BeamSearchScorer`も export し、バッチ全体の`BeamHypotheses`インスタンスを管理し、`finalize()`を処理する。
+これは`beam_search.js`に住んでいます、新しいファイル、約240行。それ такжеエクスポート `BeamSearchScorer`、これはバッチ全体で`BeamHypotheses`インスタンスを管理し、`finalize()`を処理します。
 
 ---
 
-## Python参照実装とのテスト
+## Pythonリファレンスに対してテストする
 
-ここでの非自明な実装詳細すべては、HuggingFaceの`transformers`ライブラリにPythonの対応物がある。それに大きく頼った。
+ここに每一个非自明な実装の詳細には、HuggingFaceの`transformers`ライブラリに対応するPython counterpartsがあります。私はそれを大いに活用しました。
 
-追加したテストスイートは次をカバーする：
+追加したテストスイートは以下をカバーします：
 
-- Encoder-decoder（T5）とdecoder-only（LLaMAっぽい）での標準beam search
-- `num_beam_groups=2, diversity_penalty=0.5`でのDiverse beam search
-- `do_sample=true, top_k=10`でのBeam sampling
-- `num_return_sequences > 1` — 出力形状が`[N, seq_len]`になることの確認
-- 互換性のない組み合わせでの正しいエラーthrow：CFG + beam search、streaming + beam search、`num_return_sequences > num_beams`
+- Encoder-decoder（T5）とdecoder-only（LLaMA-ish）での標準beam search
+- `num_beam_groups=2, diversity_penalty=0.5`での diverse beam search
+- `do_sample=true, top_k=10`でのbeam sampling
+- `num_return_sequences > 1` — 出力shapeが`[N, seq_len]`であることを確認
+- 非互換なcombosの正しいエラーthrow：CFG + beam search、streaming + beam search、`num_return_sequences > num_beams`
 
-「正しいエラーthrow」のテストは過小評価されている。意図的な制限を文書化し、組み合わせられない機能を組み合わせようとした時にひっそりと間違った出力が出るのを防ぐ。（開発中にCFGとbeam searchを組み合わせようとしてみたから分かる。数学が成立しない。今はthrowする。）
+「正しいエラーthrow」テストは過小評価されています。それらは意図的な制限を記録し、誰かが組み合わせられない特徴を組み合わせようとするとき、静かに間違った出力を得るのをpreventsします。（私は開発中にCFGとbeam searchを組み合わせようとしたことを知っています。数学は機能しません。今throwします。）
 
 ---
 
 ## まだ欠けているもの
 
-明示的に外したいくつかのもの、`throws`でマーク：
+あなたがたぶん残しているものをマークするいくつかのもの、`throws`で：
 
-- **Diverse beam sampling**（`num_beam_groups > 1` + `do_sample`）：ここでの数学は genuinely complicatedになる。標準diverse beam searchはグループ間で逐次的；これにサンプリングを追加するには、確率的モードで多様性ペナルティをどう適用するかについて慎重な思考が必要。可能だ、ただまだ未実装。
-- **Streaming + beam search**：Streamingはトークンが生成されるたびにyieldする。Beam searchは定義上、複数ステップ進んでからどのシーケンスが最良か分かる。これらは根本的に矛盾している。今の最良beamをstreamすることはできるが、それは別の機能で独自の設計問題がある。
-
----
-
-## 誰も語らない部分：オープンソースのラグ
-
-コードは動く。テストは通る。既存のテストスイートは clean。数ヶ月reviewに置かれている。
-
-これは大きく人気のあるオープンソースプロジェクトではこうなる。Hugging Faceチームは速くshippingし、issue queueは巨大で、~1,000行の核心生成ループに触れるfeature PRは自明ではないreview commitmentだ。コメントでは responsive で、実際に見る時は genuinely engaged だ。不満ではない — 記録している。
-
-大規模OSSプロジェクトにcontributeして素早いmergeを期待しているなら：期待を調整しよう。この規模で数ヶ月は普通。コードはfork上でずっと動き続ける。
+- **Diverse beam sampling**（`num_beam_groups > 1` + `do_sample`）：数学はここで本当に複雑になります。標準のdiverse beam searchはグループ間で逐次です；それにsamplingを追加するには確率的モードでdiversityペナルティを適用する方法について慎重な思考が必要です。可能是 tetapiまだ終わっていません。
+- **Streaming + beam search**：Streamingは生成されるにつれてトークンをyieldします。Beam searchは定義上、複数のステップアウトするまではどのシーケンスが最長未知です。これらは本質的に緊張関係にあります。あなたはこれまで中最良のbeamをstreamできますが、それはそれ自体がデザイン質問を持つ別の機能です。
 
 ---
 
-## 実際に得たもの
+## 誰も話さない部分：オープンソースレイテンシ
 
-以前持っていなかったいくつか：
+コードは機能します。テストはパスします。既存のテストスイートはクリーンです。数ヶ月間レビューで座っています。
 
-1. **Beam searchの本当のメンタルモデル** — 教科書版ではなく、エッジケース付きの版。KVキャッシュがどう壊れるか。2レベルのソートがなぜ重要か。`length_penalty`が実際にスコアに何をするか。
+これは大きな、人気のオープンソースプロジェクトで一般的です。Hugging Faceチームは 빠르게shipしていて、問題キューは巨大で、そして~1,000行のfeature PRがcore生成ループに触れることはtrivialなレビューcommitmentではありません。彼らはコメントでは対応がよく、実際に見るときはengagedしています。私は不平を言っているのではなく、文書化しています。
 
-2. **JSでのtyped array数学へのより深い理解** — CPU typed arraysに`index_select`を実装するのは、web codeでほっと触れない低レベルな方法。問題ないが、JavaScriptが設計された目的ではないと感じる。
-
-3. **Python参照実装への新たな敬意** — HuggingFaceの`transformers`ライブラリは大きく、時に gnarly だが、beam searchロジックはよくコメントされ、設計決定が明確に意図的である。読むのが自分が実際に何を build すべきかを理解する最速の道だった。
-
-4. **野外のパッチ** — mergeされていなくても、存在し、動き、PR branchから使える。それで十分。
-
-これを始めたTODOコメントはforkから消えた。静かな、オタク的な満足感。
-
-JavaScriptでseq2seq仕事をしていて今日proper beam searchが欲しいなら、[PRは public](https://github.com/huggingface/transformers.js/pull/1539)。
+主要なOSSプロジェクトに貢献していて быстрыなマージを期待しているなら：期待を調整してください。このサイズの何かには数ヶ月が普通です。コードはあなたのforkで全场間機能し続けます。
 
 ---
 
-¹ そう、`num_beams=1`はただのgreedy searchだと知っている。退化ケースは well-defined だ。
+## 私が実際にそれから得たもの
 
-² Encoder-onlyモデル（BERT等）はトークンを一切生成しないので、これは何も適用されない。ただの vibes。
+私が以前持っていなかったいくつかのことがあります：
+
+1. **Beam searchの реальныйmental model** — 教科書バージョンではなく、エッジケースのあるもの。KVキャッシュが 어떻게壊れるか。2レベルソートがなぜ重要か。`length_penalty`が実際にスコアに何をするか。
+
+2. **JSでのtyped array mathへの新たな感謝** — CPU typed arraysで`index_select`を実装することは、Webコードでまれにに触れることのないlow-levelです。それはFineですが、JavaScriptのために設計されたものではなく、あなたがその感じます。
+
+3. **Pythonリファレンス実装への新たな尊敬。** HuggingFaceの`transformers`ライブラリは大きくて時に面倒ですが、beam searchロジックは хорошоコメントされ、デザイン決定は意図的に明確です。それを読むことは、私が実際に作るべきものを理解するための最速の方法でした。
+
+4. **Wildのパッチ** — まだマージされていなくても、それは存在し、機能し、人々はPRブランチからそれを使用できます。それが十分です。
+
+これを開始したTODOコメントは私のforkから消えています。それは静かでnerdyな方法で满足です。
+
+JavaScriptでseq2seq作業をしており、今日に適切なbeam searchが欲しいなら、[PRは公開](https://github.com/huggingface/transformers.js/pull/1539です。
+
+---
+
+¹ はい、`num_beams=1`はただのグリーディー検索であることを知っています。退化 casesは well-definedです。
+
+² Encoder-onlyモデル（BERTなど）はトークンをgeneratingしないので、どれもこれには適用されません。それらはただvibesです。
