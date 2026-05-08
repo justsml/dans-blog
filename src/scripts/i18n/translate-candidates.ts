@@ -13,8 +13,8 @@ import {
 } from "./utils.ts";
 
 const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/qwen-3.6-plus",
-  "openrouter/kimi-k2.6",
+  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/moonshotai/kimi-k2.6",
   "google/gemini-3-flash-preview",
 ];
 
