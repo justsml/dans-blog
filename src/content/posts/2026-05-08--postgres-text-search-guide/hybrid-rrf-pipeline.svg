@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="title desc">
+  <title id="title">Hybrid search with Reciprocal Rank Fusion</title>
+  <desc id="desc">A query fans out to full-text search and vector search, each produces ranks, and Reciprocal Rank Fusion combines them into one result list.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="11" flood-color="#0f172a" flood-opacity="0.13"/>
+    </filter>
+    <style>
+      .bg { fill: #f8fafc; }
+      .title { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+      .subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .box { fill: #ffffff; stroke: #cbd5e1; stroke-width: 2; filter: url(#shadow); }
+      .query { fill: #fff7ed; stroke: #fdba74; }
+      .fts { fill: #eff6ff; stroke: #60a5fa; }
+      .vector { fill: #f0fdf4; stroke: #86efac; }
+      .rrf { fill: #fdf2f8; stroke: #f9a8d4; }
+      .result { fill: #ecfeff; stroke: #67e8f9; }
+      .head { font: 800 24px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .body { font: 550 17px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #334155; }
+      .mono { font: 800 17px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #0f172a; }
+      .rank { font: 800 16px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #475569; }
+      .arrow { stroke: #334155; stroke-width: 3; fill: none; marker-end: url(#arrow); }
+      .thin { stroke: #94a3b8; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="660"/>
+  <text class="title" x="64" y="68">Hybrid search is two honest signals, then one merged rank</text>
+  <text class="subtitle" x="64" y="102">Do not average raw scores. FTS rank and cosine distance are different currencies.</text>
+
+  <rect class="box query" x="72" y="238" width="214" height="132" rx="20"/>
+  <text class="head" x="104" y="288">User query</text>
+  <text class="mono" x="104" y="324">"withRetry</text>
+  <text class="mono" x="104" y="350">timeout errors"</text>
+
+  <path class="arrow" d="M286 270 C350 270 350 188 418 188"/>
+  <path class="arrow" d="M286 338 C350 338 350 440 418 440"/>
+
+  <rect class="box fts" x="418" y="142" width="266" height="144" rx="20"/>
+  <text class="head" x="450" y="188">FTS / BM25</text>
+  <text class="body" x="450" y="224">Exact symbols and words</text>
+  <text class="rank" x="450" y="256">1. API reference</text>
+  <text class="rank" x="578" y="256">2. Retry guide</text>
+
+  <rect class="box vector" x="418" y="394" width="266" height="144" rx="20"/>
+  <text class="head" x="450" y="440">pgvector</text>
+  <text class="body" x="450" y="476">Conceptual neighbors</text>
+  <text class="rank" x="450" y="508">1. Network failures</text>
+  <text class="rank" x="594" y="508">2. Retry guide</text>
+
+  <path class="thin" d="M684 214 C734 214 734 294 778 294"/>
+  <path class="thin" d="M684 466 C734 466 734 366 778 366"/>
+
+  <rect class="box rrf" x="778" y="260" width="258" height="166" rx="22"/>
+  <text class="head" x="810" y="306">RRF merge</text>
+  <text class="body" x="810" y="342">Give each result credit for</text>
+  <text class="body" x="810" y="368">where it ranked in each list.</text>
+  <text class="mono" x="810" y="402">1 / (60 + rank)</text>
+
+  <path class="arrow" d="M907 426 L907 492"/>
+
+  <rect class="box result" x="736" y="492" width="342" height="110" rx="20"/>
+  <text class="head" x="768" y="538">Final results</text>
+  <text class="body" x="768" y="574">The top hit is where exact terms</text>
+  <text class="body" x="768" y="598">and semantic meaning agree.</text>
+</svg>

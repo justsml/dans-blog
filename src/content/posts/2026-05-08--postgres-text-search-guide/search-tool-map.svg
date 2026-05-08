@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="title desc">
+  <title id="title">Postgres search tool map</title>
+  <desc id="desc">A comparison of pg_trgm, full-text search, pgvector, and hybrid search by input shape and query intent.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
+    </filter>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#25324a"/>
+    </linearGradient>
+    <style>
+      .bg { fill: #f7f3ea; }
+      .card { fill: #fffdf8; stroke: #d9cdb6; stroke-width: 2; filter: url(#shadow); }
+      .title { font: 800 34px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .subtitle { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .label { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: .08em; text-transform: uppercase; fill: #ffffff; }
+      .tool { font: 800 27px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; }
+      .body { font: 500 18px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #374151; }
+      .small { font: 600 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #4b5563; }
+      .axis { font: 800 15px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #111827; letter-spacing: .06em; text-transform: uppercase; }
+      .chip { font: 800 14px ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #ffffff; }
+      .line { stroke: #9ca3af; stroke-width: 2; stroke-dasharray: 8 8; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1120" height="720" rx="0"/>
+  <text class="title" x="64" y="70">Pick the search primitive by input shape</text>
+  <text class="subtitle" x="64" y="103">The same Postgres table can support all four. The trick is matching the query to the text.</text>
+
+  <line class="line" x1="560" y1="150" x2="560" y2="640"/>
+  <line class="line" x1="76" y1="395" x2="1044" y2="395"/>
+
+  <text class="axis" x="360" y="142">Exact words matter</text>
+  <text class="axis" x="650" y="142">Meaning matters</text>
+  <text class="axis" x="78" y="388" transform="rotate(-90 78 388)">Short / structured text</text>
+  <text class="axis" x="78" y="628" transform="rotate(-90 78 628)">Long prose / chunks</text>
+
+  <rect class="card" x="112" y="168" width="408" height="186" rx="20"/>
+  <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
+  <text class="label" x="154" y="212">fuzzy</text>
+  <text class="tool" x="136" y="256">pg_trgm</text>
+  <text class="body" x="136" y="294">Names, addresses, titles, typos,</text>
+  <text class="body" x="136" y="320">autocomplete, partial strings.</text>
+  <text class="small" x="136" y="344">Orthographic similarity: spelling distance.</text>
+
+  <rect class="card" x="600" y="168" width="408" height="186" rx="20"/>
+  <rect x="624" y="192" width="116" height="28" rx="14" fill="#22c55e"/>
+  <text class="label" x="644" y="212">similar</text>
+  <text class="tool" x="624" y="256">pgvector</text>
+  <text class="body" x="624" y="294">Related items, duplicate tickets,</text>
+  <text class="body" x="624" y="320">recommendations from short descriptions.</text>
+  <text class="small" x="624" y="344">Embedding similarity: meaning distance.</text>
+
+  <rect class="card" x="112" y="436" width="408" height="186" rx="20"/>
+  <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
+  <text class="label" x="158" y="480">lexical</text>
+  <text class="tool" x="136" y="524">Full-text search</text>
+  <text class="body" x="136" y="562">Articles, docs, logs, support content</text>
+  <text class="body" x="136" y="588">where query words should appear.</text>
+  <text class="small" x="136" y="612">Lexemes, stemming, ranking, boolean filters.</text>
+
+  <rect class="card" x="600" y="436" width="408" height="186" rx="20"/>
+  <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
+  <text class="label" x="645" y="480">hybrid</text>
+  <text class="tool" x="624" y="524">FTS + pgvector</text>
+  <text class="body" x="624" y="562">Technical docs and RAG where users ask</text>
+  <text class="body" x="624" y="588">conceptual questions plus exact symbols.</text>
+  <text class="small" x="624" y="612">Run both, fuse ranks with RRF.</text>
+
+  <rect x="396" y="658" width="328" height="36" rx="18" fill="url(#header)"/>
+  <text class="chip" x="429" y="681">Start with query intent, then check text shape</text>
+</svg>
