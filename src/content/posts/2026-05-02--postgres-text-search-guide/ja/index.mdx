@@ -1,28 +1,38 @@
 ---
-title: "Postgresテキスト検索ガイド 2026"
-subTitle: "データベースにすでにある検索ツールと、それぞれの活用シーン。"
+title: "Postgres テキスト検索ガイド 2026"
+subTitle: "データベースにすでにある検索ツールと、それぞれが役に立つ場面。"
+date: 2026-05-02
+modified: 2026-05-03
+tags: [postgres, postgresql, full-text-search, trigrams, pg_trgm, databases, search, sql, pg_search]
+category: Code
+subCategory: Databases
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
 ---
 
-ほとんどのチームは、Postgresの検索ツールを1つしか使いません。3つすべてを知っているチームは、複雑さを抑えながらより優れた検索機能をリリースし、まだ必要のない専用の検索サービスへのコストのかかる寄り道を回避できます。
+ほとんどのチームは Postgres の検索ツールを一つしか使わない。三つとも知っているチームは、より少ない複雑さでより良い検索を提供できる — そして、まだ必要のない専用検索サービスへの高価な寄り道を避けられる。
 
-このガイドでは、Postgresネイティブのオプション一式について、それぞれが何をするのか、いつ適しているのか、そしてそれらをどのように階層化するのかを解説します。
+このガイドでは、Postgres ネイティブの選択肢をすべてカバーする：それぞれが何をするものか、いつ適合するのか、そしてどう組み合わせるのか。
 
 ---
 
 ## 3つのツール
 
-**全文検索**（`tsvector` / `GIN` インデックス）は語彙的（lexical）なものです。テキストをレクシーム（lexemes）にトークン化し、それらをステミング（語幹化）して、インデックスに対してクエリを照合します。「Running」と「runs」は同じレクシームに集約されます。「dog」と「dogs」も同様です。ランキング関数（`ts_rank`）は、クエリの用語が頻繁に、あるいは目立つ場所に現れるドキュメントを評価します。
+**フルテキスト検索**（`tsvector` / `GIN` インデックス）は語彙的である。テキストを字句（レンマ）にトークン化し、語幹を抽出し、クエリをインデックスと照合する。「Running」と「runs」は同じ字句に変換される。「dog」と「dogs」も同様。ランキング関数（`ts_rank`）は、クエリ語が頻繁に、または目立つ場所に出現する文書を高く評価する。
 
-**トライグラム**（`pg_trgm`）は、文字列を重なり合う3文字の断片（スライス）に分割し、2つの文字列がどれだけの断片を共有しているかを測定します。「Dan」は `" da"`, `"dan"`, `"an "` となります。「Micheal」と「Michael」はトライグラムの大部分を共有しているため、類似度が高くなります。これにより、`pg_trgm` は、全文検索が苦手とする曖昧な名前の一致、タイポの許容、オートコンプリートにおいて非常に優れた性能を発揮します。
+**トライグラム**（`pg_trgm`）は文字列を重なり合う3文字のスライスに分解し、2つの文字列がいくつのスライスを共有しているかを測る。「Dan」→ `" da"`, `"dan"`, `"an "`。「Micheal」と「Michael」はトライグラムの大部分を共有するため、類似度は高くなる。これにより、`pg_trgm` はファジーな名前マッチング、タイプ許容、オートコンプリート — まさに FTS が苦手とする領域 — で優れた性能を発揮する。
 
-**完全一致インデックス**（B-tree、ハッシュ）は、主キー、メールアドレス、ID、SKUなど、答えがバイナリ（一致するかしないか）であるものを処理します。これらは「検索」とは感じられないかもしれませんが、正解がある問題に対して曖昧な検索やセマンティック検索を使用してしまうという最悪のパターンを避けるために、この議論に含めるべきものです。
+**完全一致インデックス**（B-tree、ハッシュ）は主キー、メールアドレス、ID、SKU、答えが「一致するかしないか」の二値であるすべてのものを扱う。これらは「検索」には見えないかもしれないが、正解がある問題にファジー検索やセマンティック検索を使うのが最悪のパターンであるため、この議論に含めるべきだ。
 
-選択肢は洗練されているかどうかではなく、クエリの形状にツールを合わせることです。
+選択は洗練さについてではない。クエリの形状にツールを合わせることだ。
 
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="stm-title stm-desc">
-  <title id="stm-title">Postgres検索ツールマップ</title>
-  <desc id="stm-desc">入力形式とクエリの意図によるpg_trgm、全文検索、pgvector、ハイブリッド検索の比較。</desc>
+  <title id="stm-title">Postgres 検索ツールマップ</title>
+  <desc id="stm-desc">入力形状とクエリ意図による pg_trgm、フルテキスト検索、pgvector、ハイブリッド検索の比較。</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
@@ -47,66 +57,66 @@ subTitle: "データベースにすでにある検索ツールと、それぞれ
   </defs>
 
   <rect class="stm-bg" width="1120" height="720" rx="0"/>
-  <text class="stm-title-text" x="64" y="70">入力形式に合わせて検索プリミティブを選択する</text>
-  <text class="stm-subtitle" x="64" y="103">同じPostgresテーブルで4つすべてをサポートできます。肝心なのは、クエリをテキストに合わせることです。</text>
+  <text class="stm-title-text" x="64" y="70">入力形状で検索プリミティブを選ぶ</text>
+  <text class="stm-subtitle" x="64" y="103">同じ Postgres テーブルで4つすべてをサポートできる。重要なのはクエリとテキストの形状を合わせること。</text>
 
   <line class="stm-line" x1="560" y1="150" x2="560" y2="640"/>
   <line class="stm-line" x1="76" y1="395" x2="1044" y2="395"/>
 
-  <text class="stm-axis" x="360" y="142">正確な単語が重要</text>
+  <text class="stm-axis" x="360" y="142">語句が重要</text>
   <text class="stm-axis" x="650" y="142">意味が重要</text>
-  <text class="stm-axis" x="78" y="388" transform="rotate(-90 78 388)">短い / 構造化されたテキスト</text>
+  <text class="stm-axis" x="78" y="388" transform="rotate(-90 78 388)">短い / 構造化テキスト</text>
   <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">長い文章 / チャンク</text>
 
   <rect class="stm-card" x="112" y="168" width="408" height="186" rx="20"/>
   <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
-  <text class="stm-label" x="154" y="212">曖昧</text>
+  <text class="stm-label" x="154" y="212">ファジー</text>
   <text class="stm-tool" x="136" y="256">pg_trgm</text>
-  <text class="stm-body" x="136" y="294">名前、住所、タイトル、タイポ、</text>
+  <text class="stm-body" x="136" y="294">名前、住所、タイトル、タイプミス、</text>
   <text class="stm-body" x="136" y="320">オートコンプリート、部分文字列。</text>
-  <text class="stm-small" x="136" y="344">正書法的な類似性：スペルの距離。</text>
+  <text class="stm-small" x="136" y="344">表記類似度：スペル距離。</text>
 
   <rect class="stm-card" x="600" y="168" width="408" height="186" rx="20"/>
   <rect x="624" y="192" width="116" height="28" rx="14" fill="#22c55e"/>
   <text class="stm-label" x="644" y="212">類似</text>
   <text class="stm-tool" x="624" y="256">pgvector</text>
   <text class="stm-body" x="624" y="294">関連アイテム、重複チケット、</text>
-  <text class="stm-body" x="624" y="320">短い説明文からのレコメンデーション。</text>
-  <text class="stm-small" x="624" y="344">埋め込みの類似性：意味の距離。</text>
+  <text class="stm-body" x="624" y="320">短い説明からのレコメンデーション。</text>
+  <text class="stm-small" x="624" y="344">埋め込み類似度：意味距離。</text>
 
   <rect class="stm-card" x="112" y="436" width="408" height="186" rx="20"/>
   <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
   <text class="stm-label" x="158" y="480">語彙的</text>
-  <text class="stm-tool" x="136" y="524">全文検索</text>
-  <text class="stm-body" x="136" y="562">記事、ドキュメント、ログ、サポートコンテンツ</text>
-  <text class="stm-body" x="136" y="588">クエリの単語が含まれるべき場所。</text>
-  <text class="stm-small" x="136" y="612">レクシーム、ステミング、ランキング、ブールフィルタ。</text>
+  <text class="stm-tool" x="136" y="524">フルテキスト検索</text>
+  <text class="stm-body" x="136" y="562">記事、ドキュメント、ログ、サポート内容</text>
+  <text class="stm-body" x="136" y="588">クエリ語がそのまま出現するもの。</text>
+  <text class="stm-small" x="136" y="612">字句、語幹抽出、ランキング、ブールフィルタ。</text>
 
   <rect class="stm-card" x="600" y="436" width="408" height="186" rx="20"/>
   <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
   <text class="stm-label" x="645" y="480">ハイブリッド</text>
   <text class="stm-tool" x="624" y="524">FTS + pgvector</text>
-  <text class="stm-body" x="624" y="562">ユーザーが概念的な質問と正確な記号を</text>
-  <text class="stm-body" x="624" y="588">組み合わせて尋ねる技術ドキュメントやRAG。</text>
-  <text class="stm-small" x="624" y="612">両方を実行し、RRFでランクを融合。</text>
+  <text class="stm-body" x="624" y="562">ユーザーが概念の質問と正確なシンボルを</text>
+  <text class="stm-body" x="624" y="588">組み合わせて問う技術ドキュメントとRAG。</text>
+  <text class="stm-small" x="624" y="612">両方を実行し、RRFでランクを統合。</text>
 
   <rect x="396" y="658" width="328" height="36" rx="18" fill="url(#header)"/>
-  <text class="stm-chip" x="429" y="681">まずクエリの意図から考え、次にテキストの形式を確認する</text>
+  <text class="stm-chip" x="429" y="681">クエリ意図から始め、テキスト形状を確認</text>
 </svg>
-<figcaption>クエリの意図（正確 vs 意味的）とテキストの形式（構造化 vs 文章）でマッピングされた4つのPostgres検索プリミティブ。同じテーブルに4つのインデックスすべてを持たせることができます。選択はテーブルごとではなく、クエリごとに行います。</figcaption>
+<figcaption>4つの Postgres 検索プリミティブを、クエリ意図（正確 vs セマンティック）とテキスト形状（構造化 vs 文章）でマッピング。同じテーブルで4つのインデックスをすべて持てる — 選択はテーブル単位ではなくクエリ単位。</figcaption>
 </figure>
 
 ---
 
-## 全文検索が勝る場合
+## フルテキスト検索が勝つ場合
 
-**文章からキーワードを探す場合。** ブログ記事、ドキュメント、製品説明、サポートチケット、法的文書など。全文検索（FTS）は、自然言語テキストに対してインデックスを作成し、ランク付けされた検索を行うために設計されました。
+**キーワードで文章を検索する場合。** ブログ記事、ドキュメント、商品説明、サポートチケット、法的文書。FTS はこのコンテンツ形状のために設計された：自然言語テキストに対するインデックス付き・ランク付き検索。
 
-**キーワードベースのユーザークエリ。** ユーザーが検索語を入力したり、タグでフィルタリングしたり、キーワードでブラウズしたりする場合。FTSは、埋め込みインフラを必要とせずに、その意図をネイティブに処理します。
+**キーワードベースのユー�ークエリ。** ユーザーが検索語を入力し、タグでフィルタリングし、キーワードで閲覧する。FTS はこの意図を埋め込みインフラなしにネイティブに処理する。
 
-**外部依存のないランク付けされた結果。** FTSインデックスは高速で、決定的であり、APIコールを必要としません。関連性のシグナルは、フィールドの位置によって重み付けされた用語の頻度から得られます。
+**外部依存のないランキング付き結果。** FTS インデックスは高速で決定的で、APIコールを必要としない。関連性シグナルは、フィールド位置で重み付けされた語頻度から来る。
 
-**検索と並行したブールフィルタリング。** FTSは既存のクエリロジックと自然に調和します。
+**検索と並ぶブールフィルタリング。** FTS は既存のクエリロジックと自然に組み合わさる：
 
 ```sql
 SELECT * FROM posts
@@ -115,10 +125,10 @@ WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
   AND published_at > NOW() - INTERVAL '6 months';
 ```
 
-### FTSのセットアップ
+### FTS のセットアップ
 
 ```sql
--- 生成列により、インデックスを自動的に最新に保ちます
+-- 生成列でインデックスを自動的に最新に保つ
 ALTER TABLE posts ADD COLUMN search_vector tsvector
   GENERATED ALWAYS AS (
     setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
@@ -135,60 +145,61 @@ ORDER BY rank DESC
 LIMIT 10;
 ```
 
-`setweight` は重要度を割り当てます。`A`（タイトル）は `B`（本文）よりも優先されます。これが、ほとんどのコンテンツ検索のユースケースにおける関連性モデルのすべてです。
+`setweight` は重要度を割り当てる：`A`（タイトル）は `B`（本文）より上位。これがほとんどのコンテンツ検索ユースケースにおける関連性モデルのすべてだ。
 
-### FTSが苦手なこと
+### FTS が苦手なこと
 
-- クエリ内のタイポ — 「javascipt」は「javascript」に一致しません。
-- 人名、住所、辞書や言語設定によってステミングが予測しにくい固有名詞。
-- 特別な設定なしでの接頭辞/オートコンプリート。
-- ユーザーが用語を挙げるのではなく、概念を説明するクエリ。
+- クエリのタイプミス — 「javascipt」は「javascript」にマッチしない
+- 人名、住所、語幹抽出が予測不可能な固有名詞
+- 特別な設定なしのプレフィックス/オートコンプリート
+- ユーザーが概念を説明し、名前を挙げないクエリ
 
 ---
 
-## トライグラム（`pg_trgm`）が勝る場合
+## トライグラムが勝つ場合（`pg_trgm`）
 
-`pg_trgm` は、FTSが常に失敗する厄介な中間領域をカバーします。
+`pg_trgm` は FTS が一貫して苦手とする微妙な領域をカバーする。
 
-FTSはテキストをレクシームにトークン化し、それらをステミングします。文章の場合、これは正しいアプローチです。しかし、名前や短い識別子の場合、そうでないことが多いのです。
+FTS はテキストを字句にトークン化し語幹を抽出する。文章に対しては正しい。名前や短い識別子に対してはそうではない：
 
-- 人名（「Dan Levy」 → 辞書と言語設定によってステミング結果が変わる）
-- 会社名、住所、正確なスペルが重要な製品タイトル
-- タイポを含むクエリ — 「Micheal Jordan」、「Amaon」、「javascipt」
-- オートコンプリート / 接頭辞検索
-- 部分文字列一致（「Johnson」、「Anderson」に一致する「son」）
+- 人名（「Dan Levy」→ 辞書と言語設定によって語幹が異なる）
+- 正確なスペルが重要な企業名、住所、商品タイトル
+- タイポのあるクエリ — 「Micheal Jordan」「Amaon」「javascipt」
+- オートコンプリート / プレフィックス検索
+- 部分文字列マッチング（「son」が「Johnson」「Anderson」にマッチ）
 
-また、`pg_trgm` は言語に依存しません。これは、多様な言語的背景を持つ名前を扱う場合に重要です。FTSは言語ごとに辞書の設定が必要です。
+`pg_trgm` は言語非依存でもある。これは多様な言語的背景を持つ名前にとって重要だ。FTS は言語ごとに辞書設定が必要である。
 
-### 曖昧な名前検索
+### ファジー名前検索
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
 
--- 「Michael Jordan」で検索したときに「Micheal Jordan」を見つけます
+-- "Michael Jordan" で検索して "Micheal Jordan" を見つける
 SELECT id, name, similarity(name, $1) AS score
 FROM users
-WHERE name % $1          -- % 演算子 = 類似度の閾値（デフォルト 0.3）
+WHERE name % $1          -- % 演算子 = 類似度しきい値（デフォルト 0.3）
 ORDER BY score DESC
 LIMIT 10;
 ```
 
-`%` 演算子は `pg_trgm.similarity_threshold`（デフォルト 0.3、範囲 0–1）を使用します。名前検索の場合、0.3–0.4 あたりが、ノイズを抑えつつタイポを拾うのに適しています。
+`%` 演算子は `pg_trgm.similarity_threshold`（デフォルト 0.3、範囲 0–1）を使用する。名前検索では、0.3–0.4 がタイプミスを捕捉しつつノイズを低く抑える。
 
-### オートコンプリート、接頭辞、包含検索
+### オートコンプリート、プレフィックス、コンテインズ検索
 
 ```sql
--- オートコンプリートのための前方一致。トライグラムGINインデックスも役立ちますが、
--- 純粋な左固定の接頭辞にはB-treeパターンインデックスの方が適している場合があります。
+-- オートコンプリートのプレフィックスマッチング。
+-- トライグラム GIN インデックスは役立つが、
+-- 純粋な左固定プレフィックスには B-tree パターンインデックスの方が良い場合がある。
 SELECT name FROM users
 WHERE name ILIKE $1 || '%'
 ORDER BY name
 LIMIT 10;
 
--- 長い文字列内の部分一致のための word_similarity
--- （「Andrew Johnson III」内の「Johnson」）
+-- より長い文字列内の部分マッチに対する word_similarity
+-- （"Andrew Johnson III" の中の "Johnson"）
 SELECT id, name, word_similarity($1, name) AS score
 FROM users
 WHERE $1 <% name
@@ -196,48 +207,48 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-トライグラムGINインデックスは、特に `ILIKE '%pattern%'` の包含クエリやタイポを許容するマッチング（トライグラムインデックスがない場合は通常フルテーブルスキャンになるパターン）で威力を発揮します。
+トライグラム GIN インデックスは、`ILIKE '%pattern%'` コンテインズクエリとタイプミス許容マッチングに特に有用 — トライグラムインデックスなしでは通常フルテーブルスキャンになるパターンだ。
 
-### FTSよりも pg_trgm を選ぶべき場面
+### FTS より pg_trgm に頼るべき場面
 
 | シナリオ | 使用ツール |
 |---|---|
-| タイポを含む人名/会社名検索 | `pg_trgm` |
-| オートコンプリート / 接頭辞検索 | `pg_trgm`（または接頭辞クエリ付きFTS） |
+| タイポを含む人名/企業名検索 | `pg_trgm` |
+| オートコンプリート / プレフィックス検索 | `pg_trgm`（またはプレフィックスクエリ付きFTS） |
 | 短い文字列、識別子、コード | `pg_trgm` |
-| 記事、ドキュメント、チケットなどの文章 | FTS |
-| キーワードによるログメッセージ検索 | FTS |
-| 多言語の名前検索 | `pg_trgm`（言語に依存しない） |
+| 文章の記事、ドキュメント、チケット | FTS |
+| キーワードによるログメッセージ | FTS |
+| 多言語名前検索 | `pg_trgm`（言語非依存） |
 
 ---
 
-## 完全一致SQLが勝る場合
+## 完全一致 SQL が勝つ場合
 
-「検索」問題の中には、実際には検索ではないものもあります。
+「検索」問題の中には、そもそも検索ではないものがある。
 
-「メールアドレスが `dan@example.com` のユーザーを探す」のは等価性のチェックです。「注文番号 `ORD-12345` を探す」のは主キーのルックアップです。「`tutorial` カテゴリの投稿を日付順にリストする」のはフィルタリングされたクエリです。これらは B-tree またはハッシュインデックスで行うべきものです。
+「メール `dan@example.com` のユーザーを見つける」は等値チェックだ。「注文 `ORD-12345` を見つける」は主キールックアップだ。「`tutorial` カテゴリの投稿を日付順に一覧する」はフィルタ付きクエリだ。これらは B-tree またはハッシュインデックスに属する。
 
-ここで FTS やトライグラムを使用すると、正確性が向上することなく複雑さだけが増します。また、正確な識別子の場合、ニアミスは一致しないことよりも悪い結果を招きます。
+ここで FTS やトライグラムを使うと、正確性を向上させずに複雑さが増す — そして正確な識別子に対して、近いマッチはマッチなしより悪い。
 
 ```sql
 CREATE INDEX users_email_idx ON users (email);
 
--- 完全一致ルックアップ：高速で曖昧さがない
+-- 完全ルックアップ：高速で明確
 SELECT id, name FROM users WHERE email = $1;
 ```
 
-より広い教訓として、正解がある問題に対して近似検索を行うのはカテゴリーエラーです。それは*何か*を返しますが、それは自信満々に間違っている可能性があります。
+より広い教訓：正解のある問題に近似検索を使うのはカテゴリエラーだ。それは*何か*を返す — しかし自信満々に間違っている可能性がある。
 
 ---
 
-## これらのツールの組み合わせ
+## ツールの組み合わせ
 
-これらのツールはきれいに構成できます。どれか1つだけを選ぶ必要はありません。
+これらのツールはきれいに組み合わさる。ちょうど一つを選ぶ必要はない。
 
-**キーワードのタイポを許容する検索ボックスのための FTS + pg_trgm：**
+**キーワードのタイプミスを許容する検索ボックスに FTS + pg_trgm：**
 
 ```sql
--- タイトルのトライグラム類似度でタイポを拾い、ts_rankで本文の関連性を処理します
+-- タイトルのトライグラム類似度がタイプミスを捕捉；ts_rank が本文の関連性を処理
 SELECT id, title,
   ts_rank(search_vector, to_tsquery('simple', $1)) AS fts_rank,
   similarity(title, $1) AS trgm_score
@@ -248,10 +259,10 @@ ORDER BY (ts_rank(search_vector, to_tsquery('simple', $1)) + similarity(title, $
 LIMIT 10;
 ```
 
-**国際的なコンテンツのための FTS + `unaccent`：**
+**国際コンテンツに FTS + `unaccent`：**
 
 ```sql
--- 発音区別符号を取り除き、「José」が「Jose」に一致するようにします
+-- ダイアクリティカルマークを除去して "José" が "Jose" にマッチするようにする
 CREATE EXTENSION IF NOT EXISTS unaccent;
 
 CREATE TEXT SEARCH CONFIGURATION public.simple_unaccent (COPY = pg_catalog.simple);
@@ -268,7 +279,7 @@ FOR EACH ROW EXECUTE FUNCTION
   tsvector_update_trigger(search_vector, 'public.simple_unaccent', title, body);
 ```
 
-**国際的な名前検索のための `unaccent` + `pg_trgm`：**
+**国際名前検索に `unaccent` + `pg_trgm`：**
 
 ```sql
 ALTER TABLE users ADD COLUMN name_search text;
@@ -295,27 +306,27 @@ ORDER BY similarity(name_search, unaccent($1)) DESC
 LIMIT 10;
 ```
 
-トリガーの例では、生成列やインデックス式の中で `unaccent()` を直接使うのを避けています。これは PostgreSQL の不変性（immutability）ルールが重要だからです。`unaccent()` を独自の不変関数でラップする場合は、アップグレードや設定のリスクを許容することを文書化してください。
+トリガーの例は、`unaccent()` を生成列やインデックス式の中で使うことを避けている。そこでは PostgreSQL の不変性ルールが重要になるからだ。`unaccent()` を独自の不変関数でラップする場合、アップグレードや設定のリスクを受け入れていることを文書化すること。
 
 ---
 
-## 注目すべき拡張機能
+## 注目の拡張機能
 
-**`pg_trgm`** はほとんどの Postgres ディストリビューションに同梱されていますが、明示的な有効化が必要です。Postgres における曖昧な文字列マッチングの基盤です。
+**`pg_trgm`** はほとんどの Postgres ディストリビューションにバンドルされているが、明示的な有効化が必要。Postgres におけるファジー文字列マッチングの基盤。
 
-**`unaccent`** は、インデックス作成とクエリの前に発音区別符号を取り除きます。欧州言語のコンテンツに対して、`pg_trgm` と FTS の両方と相性が良いです。Postgres に同梱されています。
+**`unaccent`** はインデックスとクエリの前にダイアクリティカルマークを除去する。`pg_trgm` と FTS の両方とヨーロッパ言語コンテンツでうまく組み合わさる。Postgres にバンドルされている。
 
-**`pg_bigm`** は、トライグラムのアプローチをバイグラム（2文字の断片）に拡張したもので、`pg_trgm` が苦手とする CJK（中国語、日本語、韓国語）言語の結果を大幅に改善します。別途インストールが必要で、同梱はされていません。
+**`pg_bigm`** はトライグラムアプローチをバイグラム（2文字スライス）に拡張する。`pg_trgm` が苦手な CJK（中国語、日本語、韓国語）で大幅に結果が向上する。個別インストールが必要。バンドルされていない。
 
-**`pg_search`**（[ParadeDB](https://www.paradedb.com/) 製）は、標準の `GIN` / `tsvector` スタックを Tantivy ベースの BM25 インデックスに置き換えます。これにより、BM25 スコアリング（多くの場合 `ts_rank` より優れています）、FTS クエリ内での曖昧一致、ファセット検索、そして大規模テーブルでの劇的に高速なインデックス作成が可能になります。標準の FTS でランキングやパフォーマンスの限界が見えてきたときの、ドロップインのアップグレードパスとなります。
+**`pg_search`**（[ParadeDB](https://www.paradedb.com/) 製）は標準の `GIN` / `tsvector` スタックを Tantivy ベースの BM25 インデックスに置き換える。BM25 スコアリング（`ts_rank` より優れることが多い）、FTS クエリ内のファジーマッチング、ファセット検索、大規模テーブルでの劇的に高速なインデックス構築を提供する。標準の FTS がランキングやパフォーマンスの限界に達したときのドロップインアップグレードパス。
 
 ```sql
--- pg_search: 曖昧一致機能を備えた BM25 全文検索
+-- pg_search: ファジーマッチング付き BM25 フルテキスト検索
 CREATE INDEX posts_bm25_idx ON posts
   USING bm25 (id, title, body)
   WITH (key_field = 'id', text_fields = '{"title": {}, "body": {}}');
 
--- BM25 スコアリング + 曖昧一致（「javascipt」を拾う）でのクエリ
+-- BM25 スコアリング + ファジーマッチングでクエリ（"javascipt" を捕捉）
 SELECT id, title, paradedb.score(id) AS rank
 FROM posts
 WHERE posts @@@ paradedb.fuzzy_phrase(field => 'title', value => 'postgres performnce')
@@ -323,40 +334,40 @@ ORDER BY rank DESC
 LIMIT 10;
 ```
 
-**`pgvector`** は、密ベクトルの保存と類似性検索を追加します。ユーザーが名前を挙げるのではなく、欲しいものを説明する場合（セマンティック検索、RAG、関連コンテンツのレコメンデーション、多言語クエリ）に適したツールです。詳細は「[セマンティックベクトル検索の展望とハイブリッド戦略](/semantic-vector-search-landscape)」で詳しく解説しています。
+**`pgvector`** は密ベクトルの保存と類似性検索を追加する。ユーザーが名前を挙げるのではなく欲しいものを説明する場合 — セマンティック検索、RAG、関連コンテンツのレコメンデーション、多言語クエリ — に適したツールだ。[Semantic Vector Search and Hybrid Strategies](/semantic-vector-search-landscape) で深く扱っている。
 
 ---
 
-## 決定表
+## 意思決定テーブル
 
 | 検索対象 | 推奨ツール |
 |---|---|
-| 文章、記事、ドキュメント、チケット | FTS |
-| タイポを含む人名/会社名 | `pg_trgm` |
-| オートコンプリート、接頭辞検索 | `pg_trgm` |
+| 文章の記事、ドキュメント、チケット | FTS |
+| タイポを含む人名/企業名 | `pg_trgm` |
+| オートコンプリート、プレフィックス検索 | `pg_trgm` |
 | 短いコード、識別子 | `pg_trgm` |
 | キーワードによるログメッセージ | FTS |
 | 国際的な名前 | `pg_trgm` + `unaccent` |
-| 大規模コンテンツ、より良いランキング | `pg_search` (ParadeDB BM25) |
-| 主キー、正確なメールアドレス、ID | B-tree インデックス |
+| 大規模コンテンツ、より良いランキング | `pg_search`（ParadeDB BM25） |
+| 主キー、正確なメール、ID | B-tree インデックス |
 | 日付、範囲、ソート済みリスト | B-tree インデックス |
-| 権限、カテゴリ、フィルタ | 通常の WHERE 句 |
-| 質問、言い換え、概念 | pgvector（次の記事を参照） |
+| パーミッション、カテゴリ、フィルタ | 通常の WHERE 句 |
+| 質問、パラフレーズ、概念 | pgvector（次の記事を参照） |
 
-迷ったときは：スペルのばらつきがある短い文字列 → トライグラム。キーワードクエリ用の長い文章 → FTS。構造化された識別子 → 通常のインデックス。概念的または自然言語のクエリ → pgvector。
+迷ったら：スペルのばらつきがある短い文字列 → トライグラム。キーワードクエリ向けの長い文章 → FTS。構造化識別子 → 通常のインデックス。概念的・自然言語クエリ → pgvector。
 
 ---
 
 ## ハイブリッド検索：2つのシグナル、1つのランク
 
-「`withRetry timeout errors`」のようなクエリが検索ボックスに入力されたとき、そこには2種類の意図が含まれています。ユーザーが知っている正確なシンボル名（`withRetry`）と、概念的な説明（`timeout errors`）です。単一のプリミティブでは両方をカバーできません。FTS とベクトル検索を並行して実行し、そのランク付けされたリストを Reciprocal Rank Fusion でマージすることで、これが可能になります。
+`"withRetry timeout errors"` のようなクエリが検索ボックスに入力されたとき、2種類の意図を含んでいる：ユーザーが知っている正確なシンボル名（`withRetry`）と、概念的な説明（`timeout errors`）。単一のプリミティブでは両方をカバーできない。FTS とベクトル検索を並列に実行し — その後 Reciprocal Rank Fusion でランク付きリストをマージする — ことで対応できる。
 
-RRF は、各リストにおける各結果のスコアを `1 / (60 + rank)` として計算し、リスト間で合計します。定数 60 は上位ランクの優位性を和らげるため、両方のリストで2位になった結果が、一方のリストで1位になり他方で圏外になった結果に勝つことができます。重要なのは、RRF は決して手法間で生のスコアを平均しないことです。FTS のランクとコサイン距離は異なる通貨であり、算術的に組み合わせることはできません。
+RRF は各リストの各結果を `1 / (60 + rank)` としてスコアリングし、リスト間で合計する。定数 60 は上位ランクの有利さを緩和するため、両方のリストで2位の結果が、片方のリストで1位でもう片方に不在の結果を上回れる。重要なのは、RRF は決して生スコアをメソッド間で平均しない — FTS ランクとコサイン距離は異なる通貨であり、算術的に組み合わせることはできない。
 
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="rrf-title rrf-desc">
-  <title id="rrf-title">Reciprocal Rank Fusion によるハイブリッド検索</title>
-  <desc id="rrf-desc">クエリが全文検索とベクトル検索に分散され、それぞれがランクを生成し、Reciprocal Rank Fusion がそれらを1つの結果リストに統合します。</desc>
+  <title id="rrf-title">Reciprocal Rank Fusion を使ったハイブリッド検索</title>
+  <desc id="rrf-desc">クエリがフルテキスト検索とベクトル検索に分岐し、それぞれがランクを生成し、Reciprocal Rank Fusion が1つの結果リストに統合する。</desc>
   <defs>
     <marker id="rrf-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
@@ -384,11 +395,11 @@ RRF は、各リストにおける各結果のスコアを `1 / (60 + rank)` と
   </defs>
 
   <rect class="rrf-bg" width="1120" height="660"/>
-  <text class="rrf-title-text" x="64" y="68">ハイブリッド検索は2つの誠実なシグナル、そして1つの統合されたランク</text>
-  <text class="rrf-subtitle" x="64" y="102">生のスコアを平均してはいけません。FTSのランクとコサイン距離は異なる通貨です。</text>
+  <text class="rrf-title-text" x="64" y="68">ハイブリッド検索は2つの正直なシグナル、1つの統合ランク</text>
+  <text class="rrf-subtitle" x="64" y="102">生スコアを平均してはいけない。FTS ランクとコサイン距離は異なる通貨だ。</text>
 
   <rect class="rrf-box rrf-query" x="72" y="238" width="214" height="132" rx="20"/>
-  <text class="rrf-head" x="104" y="288">ユーザーのクエリ</text>
+  <text class="rrf-head" x="104" y="288">ユーザークエリ</text>
   <text class="rrf-mono" x="104" y="324">"withRetry</text>
   <text class="rrf-mono" x="104" y="350">timeout errors"</text>
 
@@ -397,8 +408,8 @@ RRF は、各リストにおける各結果のスコアを `1 / (60 + rank)` と
 
   <rect class="rrf-box rrf-fts" x="418" y="142" width="266" height="144" rx="20"/>
   <text class="rrf-head" x="450" y="188">FTS / BM25</text>
-  <text class="rrf-body" x="450" y="224">正確な記号と単語</text>
-  <text class="rrf-rank" x="450" y="256">1. API リファレンス</text>
+  <text class="rrf-body" x="450" y="224">正確なシンボルと単語</text>
+  <text class="rrf-rank" x="450" y="256">1. APIリファレンス</text>
   <text class="rrf-rank" x="578" y="256">2. リトライガイド</text>
 
   <rect class="rrf-box rrf-vector" x="418" y="394" width="266" height="144" rx="20"/>
@@ -411,23 +422,23 @@ RRF は、各リストにおける各結果のスコアを `1 / (60 + rank)` と
   <path class="rrf-thin" d="M684 466 C734 466 734 366 778 366"/>
 
   <rect class="rrf-box rrf-merge" x="778" y="260" width="258" height="166" rx="22"/>
-  <text class="rrf-head" x="810" y="306">RRFマージ</text>
-  <text class="rrf-body" x="810" y="342">各結果に対して、それぞれのリストで</text>
-  <text class="rrf-body" x="810" y="368">何位だったかに基づいて加点します。</text>
+  <text class="rrf-head" x="810" y="306">RRF 統合</text>
+  <text class="rrf-body" x="810" y="342">各結果に各リストでの</text>
+  <text class="rrf-body" x="810" y="368">順位に基づくスコアを付与。</text>
   <text class="rrf-mono" x="810" y="402">1 / (60 + rank)</text>
 
   <path class="rrf-arrow-line" d="M907 426 L907 492"/>
 
   <rect class="rrf-box rrf-result" x="736" y="492" width="342" height="110" rx="20"/>
   <text class="rrf-head" x="768" y="538">最終結果</text>
-  <text class="rrf-body" x="768" y="574">トップヒットは、正確な用語と</text>
-  <text class="rrf-body" x="768" y="598">意味的な意味が一致する場所です。</text>
+  <text class="rrf-body" x="768" y="574">最上位は正確な語句と</text>
+  <text class="rrf-body" x="768" y="598">セマンティックな意味が一致する結果。</text>
 </svg>
-<figcaption>クエリが FTS と pgvector に並行して分散されます。それぞれが独自のランク付けされたリストを生成します。RRF は各リストにおける位置によってすべてのドキュメントをスコアリングし、そのスコアを合算します。その結果、両方のシグナルが一致するドキュメントが浮上します。</figcaption>
+<figcaption>クエリが FTS と pgvector に並列に分岐する。それぞれが独自のランク付きリストを生成する。RRF は各ドキュメントを各リストでの位置でスコアリングし、合計する — 両方のシグナルが合意するドキュメントが浮上する。</figcaption>
 </figure>
 
 ```sql
--- ハイブリッド検索：FTS + pgvector を RRF でマージ
+-- ハイブリッド検索：FTS + pgvector を RRF で統合
 WITH fts AS (
   SELECT id, ts_rank(search_vector, query) AS score,
          ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
@@ -450,12 +461,12 @@ ORDER BY rrf_score DESC
 LIMIT 10;
 ```
 
-各ブランチあたりの候補プールを 60 ドキュメント（`LIMIT 60`）に設定するのが一般的な出発点です。再現率が低い場合は広げ、速度を優先する場合は狭めてください。
+ブランチごとの60文書の候補プール（`LIMIT 60`）は一般的な出発点。再現率が低い場合は広げ、速度が必要な場合は狭める。
 
 ---
 
-## 次のステップ
+## 次に読むべき記事
 
-Postgres のテキスト検索は多くの領域をカバーしますが、限界もあります。ユーザーが名前を挙げる代わりに、欲しいものを説明する場合（「飛行機で眠るのを助けてくれるもの」、「新人エンジニアとしてのデバッグの自信に関する記事」など）、語彙的な検索もトライグラム検索も失敗します。
+Postgres テキスト検索は多くをカバーするが、天井がある。ユーザーが名前を挙げるのではなく欲しいものを説明するとき — 「フライトで眠るのに役立つ何か」「新人エンジニアのデバッグ信頼性に関する記事」 — 語彙的検索もトライグラム検索も失敗する。
 
-それは、ベクトル埋め込み、セマンティック検索、そしてハイブリッドアーキテクチャの領域です。「[セマンティックベクトル検索の展望とハイブリッド戦略](/semantic-vector-search-landscape)」で詳しく解説しています。
+それがベクトル埋め込み、セマンティック検索、ハイブリッドアーキテクチャの領域だ。[Semantic Vector Search and Hybrid Strategies](/semantic-vector-search-landscape) で詳しく扱っている。
