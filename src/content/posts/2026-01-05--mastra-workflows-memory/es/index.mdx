@@ -1,46 +1,37 @@
 ---
-title: "Deja de Construir Agentes Inestables: Usa Flujos de Trabajo y Memoria"
+title: "Deja de construir agentes inestables: usa Workflows y Memoria"
 subTitle: "Patrones deterministas para modelos no deterministas."
-date: 2026-01-05
-modified: 2026-01-08
-tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestration]
-category: AI
-subCategory: Architecture
-social_image: desktop-social.webp
-cover_full_width: ./wide.webp
-cover_mobile: ./square.webp
-cover_icon: ./square.webp
 ---
 
-Los LLM tienen esta propiedad extraña: son brillantes para entender matices pero terribles para seguir recetas. Dale a GPT-4 un problema vago y razonará sobre las posibilidades. Dale una secuencia precisa de pasos, y podría saltarse el paso 3 porque el paso 5 "se sintió más relevante."
+Los LLMs tienen esta propiedad curiosa: son brillantes entendiendo matices pero terribles siguiendo recetas. Dale a GPT-4 un problema vago y razonará sobre las posibilidades. Dale una secuencia precisa de pasos, y es posible que se salte el paso 3 porque el paso 5 "parecía más relevante".
 
-Esto no es un error en el modelo. Es una característica fundamental de los sistemas probabilísticos tratando de resolver problemas deterministas.
+Esto no es un error del modelo. Es una característica fundamental de los sistemas probabilísticos intentando resolver problemas deterministas.
 
-He visto a equipos luchar con esta incompatibilidad. Construyen un agente para manejar reembolsos a clientes, le dan una docena de herramientas, y esperan que ejecute de manera confiable un proceso de negocio. A veces funciona perfectamente. A veces alucina aprobaciones que nunca ocurrieron. A veces se atasca pidiendo la misma información tres veces.
+He visto a equipos luchar con este desajuste. Construyen un agente para gestionar reembolsos de clientes, le dan una docena de herramientas y esperan que ejecute un proceso de negocio de forma fiable. A veces funciona perfectamente. A veces alucina aprobaciones que nunca ocurrieron. A veces se queda atascado pidiendo la misma información tres veces.
 
-La solución no son mejores prompts. Es saber cuándo dejar de pedirle al LLM que "piense" y empezar a decirle que "obedezca."
+La solución no son mejores prompts. Es saber cuándo dejar de pedirle al LLM que "piense" y empezar a decirle que "obedezca".
 
 ---
 
-## Cuándo lo Determinista Vence a lo Creativo
+## Cuando lo determinista vence a lo creativo
 
-Piensa en lo que ocurre cuando necesitas procesar un ticket de soporte. La lógica de negocio del mundo real se ve algo así:
+Piensa en lo que sucede cuando necesitas procesar un ticket de soporte. La lógica de negocio del mundo real se ve algo así:
 
 1. Obtener los detalles del ticket de la base de datos
 2. Verificar si el usuario es elegible para un reembolso (reglas de política)
-3. Verificar que la transacción existe y que no haya sido reembolsada ya
+3. Verificar que la transacción existe y no ha sido reembolsada ya
 4. Calcular el monto del reembolso
 5. Procesar la reversión del pago
 6. Actualizar el estado del ticket
 7. Enviar correo de confirmación
 
-Podrías entregarle esto a un LLM como un ejercicio de llamada a herramientas. En mi experiencia, eso es pedir problemas. El modelo podría decidir que los pasos 2 y 3 son "básicamente lo mismo" y saltarse uno. O podría procesar el reembolso antes de verificar la elegibilidad porque el usuario parecía molesto.
+Podrías entregar esto a un LLM como un ejercicio de llamada a herramientas (tool-calling). En mi experiencia, eso es buscar problemas. El modelo podría decidir que los pasos 2 y 3 son "básicamente lo mismo" y saltarse uno. O podría procesar el reembolso antes de verificar la elegibilidad porque el usuario parecía molesto.
 
-Los flujos de trabajo existen exactamente para este escenario. No son emocionantes, pero ese es el punto.
+Los Workflows existen exactamente para este escenario. No son emocionantes, pero ese es el punto.
 
-### Construyendo un Planificador de Actividades del Clima
+### Construyendo un planificador de actividades meteorológicas
 
-Aquí hay un ejemplo práctico que muestra el patrón. Necesitamos datos meteorológicos duros y factuales combinados con sugerencias creativas de actividades. La obtención del clima nunca debe ser creativa, pero las sugerencias sí deben serlo.
+Aquí hay un ejemplo práctico que muestra el patrón. Necesitamos datos meteorológicos reales y fácticos combinados con sugerencias de actividades creativas. La obtención del clima nunca debe ser creativa, pero las sugerencias sí.
 
 ```typescript
 // src/mastra/workflows/activity-planner.ts
@@ -49,10 +40,10 @@ import { Agent } from '@mastra/core/agent';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 
-// Step 1: Fetch weather data (Deterministic)
+// Paso 1: Obtener datos meteorológicos (Determinista)
 const fetchWeather = createStep({
   id: 'fetch-weather',
-  description: 'Fetches weather forecast for a given city',
+  description: 'Obtiene el pronóstico del tiempo para una ciudad dada',
   inputSchema: z.object({
     city: z.string(),
   }),
@@ -63,7 +54,7 @@ const fetchWeather = createStep({
     precipitationChance: z.number(),
   }),
   execute: async ({ inputData }) => {
-    // ... (fetch logic) ...
+    // ... (lógica de obtención) ...
     const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
     
     return {
@@ -75,20 +66,20 @@ const fetchWeather = createStep({
   },
 });
 
-// Step 2: Agent suggests activities (Creative)
+// Paso 2: El agente sugiere actividades (Creativo)
 const activityPlanner = new Agent({
   id: 'activity-planner-agent',
-  name: 'Activity Planner',
-  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
-    - For rain (>50% precipitation), prioritize indoor activities
-    - For extreme temperatures, consider climate-appropriate options
-    - Always include one adventurous and one relaxing option`,
+  name: 'Planificador de Actividades',
+  instructions: `Eres un experto en actividades locales. Basado en las condiciones climáticas, sugiere de 3 a 5 actividades apropiadas.
+    - Para lluvia (>50% de precipitación), prioriza actividades en interiores
+    - Para temperaturas extremas, considera opciones adecuadas al clima
+    - Incluye siempre una opción aventurera y una relajante`,
   model: openai('gpt-5'),
 });
 
 const planActivities = createStep({
   id: 'plan-activities',
-  description: 'Uses AI to suggest activities based on weather',
+  description: 'Usa IA para sugerir actividades basadas en el clima',
   inputSchema: z.object({
     location: z.string(),
     temperature: z.number(),
@@ -99,13 +90,13 @@ const planActivities = createStep({
     activities: z.string(),
   }),
   execute: async ({ inputData }) => {
-    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const prompt = `Clima en ${inputData.location}: ${inputData.temperature}°C...`;
     const response = await activityPlanner.generate(prompt);
     return { activities: response.text };
   },
 });
 
-// The Pipeline
+// El Pipeline (Tubería)
 export const activityPlannerWorkflow = createWorkflow({
   id: 'activity-planner',
   inputSchema: z.object({ city: z.string() }),
@@ -117,29 +108,29 @@ export const activityPlannerWorkflow = createWorkflow({
 activityPlannerWorkflow.commit();
 ```
 
-El LLM nunca toca la API del clima. Recibe datos de verdad como entrada, y luego hace lo que realmente le sale bien: hacer sugerencias contextuales. Si inviertes esto y dejas que el agente obtenga los datos del clima, eventualmente obtendrás un pronóstico soleado cuando en realidad está lloviendo.
+El LLM nunca toca la API del clima. Recibe datos reales como entrada y luego hace lo que realmente se le da bien: hacer sugerencias contextuales. Si inviertes esto y dejas que el agente obtenga los datos del clima, eventualmente obtendrás un pronóstico soleado cuando en realidad está lloviendo.
 
-**Cuándo considerar flujos de trabajo:**
+**Cuándo considerar los workflows:**
 - Tienes una secuencia conocida de pasos que deben ocurrir en orden
 - Necesitas observabilidad en cada etapa (logs, métricas, tiempos)
 - Necesitas lógica de reintento para APIs externas inestables
-- Las reglas de negocio no pueden ser "interpretadas" — deben seguirse exactamente
+- Las reglas de negocio no pueden ser "interpretadas": deben seguirse exactamente
 
 ---
 
-## El Problema de la Ventana de Contexto del que Nadie Habla
+## El problema de la ventana de contexto del que nadie habla
 
-Hay un patrón que sigo viendo. Alguien construye un chatbot. Funciona genial durante las pruebas. Luego en producción, los usuarios tienen conversaciones más largas y de repente el bot se pierde.
+Hay un patrón que sigo viendo. Alguien construye un chatbot. Funciona genial durante las pruebas. Luego, en producción, los usuarios tienen conversaciones más largas y, de repente, el bot se pierde.
 
-El desarrollador mira los logs y se da cuenta de que está enviando todo el historial de conversación con cada solicitud. Los 47 mensajes. Está quemando tokens y espacio de contexto por información que es mayormente irrelevante.
+El desarrollador mira los logs y se da cuenta de que están enviando todo el historial de la conversación con cada solicitud. Los 47 mensajes. Estás quemando tokens y espacio de contexto por información que es mayormente irrelevante.
 
-Peor aún, hay un fenómeno que los investigadores llaman "perdido en el medio" donde los modelos rinden peor cuando la información relevante está enterrada en un contexto largo. El modelo literalmente no puede ver el bosque por los árboles.
+Peor aún, existe un fenómeno que los investigadores llaman "perdido en el medio" (lost in the middle), donde los modelos rinden peor cuando la información relevante está enterrada en un contexto largo. El modelo literalmente no puede ver el bosque por los árboles.
 
-Enviar el historial completo de conversación se siente seguro. Le estás dando al modelo "toda la información." Pero en realidad le estás haciendo más difícil enfocarse en lo que importa.
+Enviar el historial completo de la conversación parece seguro. Le estás dando al modelo "toda la información". Pero en realidad le estás dificultando centrarse en lo que importa.
 
-### Memoria de Trabajo vs. Almacenamiento a Largo Plazo
+### Memoria de trabajo frente a almacenamiento a largo plazo
 
-El sistema de memoria de Mastra te da ambas. La memoria de trabajo mantiene los mensajes recientes en la ventana de contexto. El recuerdo semántico busca mensajes históricos cuando la consulta actual parece relacionada.
+El sistema de memoria de Mastra te ofrece ambos. La memoria de trabajo mantiene los mensajes recientes en la ventana de contexto. El recuerdo semántico busca mensajes históricos cuando la consulta actual parece relacionada.
 
 ```typescript
 // src/mastra/agents/memory-agent.ts
@@ -149,8 +140,8 @@ import { LibSQLStore } from '@mastra/libsql';
 
 export const memoryAgent = new Agent({
   id: 'memory-agent',
-  name: 'Memory Agent',
-  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  name: 'Agente con Memoria',
+  instructions: 'Eres un asistente útil con un recuerdo perfecto de nuestras conversaciones.',
   model: openai('gpt-5'),
   memory: new Memory({
     storage: new LibSQLStore({
@@ -158,9 +149,9 @@ export const memoryAgent = new Agent({
       url: 'file:../mastra.db',
     }),
     options: {
-      lastMessages: 20,  // Keep last 20 messages in context
+      lastMessages: 20,  // Mantener los últimos 20 mensajes en contexto
       semanticRecall: {
-        enabled: true,  // Use embeddings to find old stuff
+        enabled: true,  // Usar embeddings para encontrar cosas antiguas
         topK: 5,
         threshold: 0.7,
       },
@@ -169,80 +160,80 @@ export const memoryAgent = new Agent({
 });
 ```
 
-Así es como funciona esto en la práctica. Un usuario pregunta: "¿Cuál era ese restaurante italiano que recomendaste el mes pasado?"
+Así es como esto funciona en la práctica. Un usuario pregunta: "¿Cuál era ese restaurante italiano que recomendaste el mes pasado?"
 
-Sin recuerdo semántico, el agente ve los últimos 20 mensajes. La recomendación del restaurante fue el mensaje 487 de 506. Se fue. El agente dice "No tengo esa información."
+Sin recuerdo semántico, el agente ve los últimos 20 mensajes. La recomendación del restaurante fue el mensaje 487 de 506. Ha desaparecido. El agente dice: "No tengo esa información".
 
 Con recuerdo semántico:
-1. La consulta se embebe: `[0.234, -0.567, 0.891, ...]`
-2. El embedding se compara contra mensajes históricos
-3. El mensaje 487 ("Recomendaría Trattoria Bella — su carbonara es increíble") obtiene una similitud de 0.89
+1. La consulta se convierte en un embedding: `[0.234, -0.567, 0.891, ...]`
+2. El embedding se compara con los mensajes históricos
+3. El mensaje 487 ("Recomendaría Trattoria Bella; su carbonara es increíble") obtiene una puntuación de similitud de 0.89
 4. Ese mensaje se inyecta en el contexto actual
-5. El agente responde: "Recomendé Trattoria Bella. Su carbonara es lo que me llamó la atención."
+5. El agente responde: "Recomendé Trattoria Bella. Su carbonara fue lo que me llamó la atención".
 
-El agente parece tener memoria perfecta mientras solo usa una fracción de la ventana de contexto. Esto no es solo ingeniería inteligente — es funcionalmente necesario una vez que las conversaciones se extienden más allá de unas pocas docenas de mensajes.
+El agente parece tener una memoria perfecta mientras solo usa una fracción de la ventana de contexto. Esto no es solo ingeniería inteligente; es funcionalmente necesario una vez que las conversaciones se extienden más allá de unas pocas docenas de mensajes.
 
 ---
 
-## Coordinación a Través de Redes de Agentes
+## Coordinación a través de redes de agentes
 
-A veces necesitas tanto estructura como flexibilidad. Los flujos de trabajo puros son demasiado rígidos. Los agentes puros son demasiado impredecibles.
+A veces necesitas tanto estructura como flexibilidad. Los workflows puros son demasiado rígidos. Los agentes puros son demasiado impredecibles.
 
-Las redes de agentes te dan un coordinador que decide qué agente especializado o flujo de trabajo invocar basado en la tarea. Piensa en ello como un balanceador de carga inteligente para capacidades de IA.
+Las redes de agentes te ofrecen un coordinador que decide qué agente especializado o workflow invocar basándose en la tarea. Piensa en ello como un equilibrador de carga inteligente para capacidades de IA.
 
 ```typescript
 export const coordinatorAgent = new Agent({
   id: 'coordinator-agent',
-  name: 'Research Coordinator',
-  instructions: `You are a network of researchers and writers.
-    - Use researchAgent for gathering facts
-    - Use writingAgent for producing final content
-    - Use weatherTool for current weather data
-    - Use activityPlannerWorkflow for location-based planning
+  name: 'Coordinador de Investigación',
+  instructions: `Eres una red de investigadores y escritores.
+    - Usa researchAgent para recopilar datos
+    - Usa writingAgent para producir el contenido final
+    - Usa weatherTool para datos climáticos actuales
+    - Usa activityPlannerWorkflow para planificación basada en la ubicación
     
-    Always produce comprehensive, well-structured responses.`,
+    Produce siempre respuestas completas y bien estructuradas.`,
   model: openai('gpt-5'),
   
-  // Available primitives
+  // Primitivas disponibles
   agents: { researchAgent, writingAgent },
   workflows: { activityPlannerWorkflow },
   tools: { weatherTool },
   
-  // Network requires memory
+  // La red requiere memoria
   memory: new Memory({
     storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
   }),
 });
 ```
 
-Cuando consultas esta red, el coordinador analiza la solicitud y enruta en consecuencia:
+Cuando consultas esta red, el coordinador analiza la solicitud y la dirige en consecuencia:
 - "Necesito datos sobre X" activa el agente de investigación
-- "Planifica un fin de semana en Seattle" ejecuta el flujo de trabajo del planificador de actividades
-- "Escribe un informe sobre Y" activa el agente de escritura
+- "Planifica un fin de semana en Seattle" ejecuta el workflow del planificador de actividades
+- "Escribe un informe sobre Y" involucra al agente de escritura
 
-Este patrón escala mejor que intentar meter todo en un solo mega-agente. Los agentes especializados desarrollan experiencia enfocada. El coordinador maneja el enrutamiento. Cada pieza hace lo que le sale bien.
+Este patrón escala mejor que intentar meter todo en un único mega-agente. Los agentes especializados desarrollan una experiencia enfocada. El coordinador se encarga del enrutamiento. Cada pieza hace lo que se le da bien.
 
 ---
 
-## Juntándolo Todo
+## Poniéndolo todo junto
 
-Los sistemas de IA en producción real necesitan arquitectura, no solo prompts. Estás construyendo sistemas distribuidos donde algunos nodos resultan ser LLMs.
+Los sistemas de IA de producción reales necesitan arquitectura, no solo prompts. Estás construyendo sistemas distribuidos donde algunos nodos resultan ser LLMs.
 
-Los flujos de trabajo te dan garantías cuando necesitas que las cosas ocurran exactamente bien. La memoria te da contexto sin quemar tu presupuesto de tokens. Las redes de agentes te permiten componer complejidad a partir de partes más simples.
+Los workflows te dan garantías cuando necesitas que las cosas sucedan exactamente de la manera correcta. La memoria te da contexto sin quemar tu presupuesto de tokens. Las redes de agentes te permiten componer complejidad a partir de partes más simples.
 
-Nada de esto es glamoroso. Pero después de ver suficientes "agentes totalmente autónomos" fallar en producción, he llegado a apreciar la confiabilidad aburrida sobre la imprevisibilidad emocionante.
+Nada de esto es glamuroso. Pero después de ver suficientes "agentes totalmente autónomos" fallar en producción, he llegado a apreciar la fiabilidad aburrida sobre la impredecibilidad emocionante.
 
-Tu experiencia puede variar, pero en mi experiencia, los sistemas que realmente se despliegan y siguen funcionando son los que tratan a los LLMs como componentes en una arquitectura más grande en lugar de cajas mágicas que lo resuelven todo.
+Tu experiencia puede variar, pero en mi experiencia, los sistemas que realmente se lanzan y se mantienen en funcionamiento son aquellos que tratan a los LLMs como componentes en una arquitectura más grande, en lugar de cajas mágicas que lo resuelven todo.
 
 ### Recursos
 
-- [Mastra Workflows Documentation](https://mastra.ai/docs/workflows/overview)
-- [Mastra Memory Documentation](https://mastra.ai/docs/memory/overview)
-- [Full Demo Code](https://github.com/justsml/mastra-examples)
+- [Documentación de Mastra Workflows](https://mastra.ai/docs/workflows/overview)
+- [Documentación de Mastra Memory](https://mastra.ai/docs/memory/overview)
+- [Código de demostración completo](https://github.com/justsml/mastra-examples)
 
-## Lee la Serie
+## Lee la serie
 
-1. [LLM Routing](/llm-routing-mastra-ai)
-2. [Security & Guardrails](/mastra-security-guardrails)
-3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
-4. **Workflows & Memory** (Este Artículo)
+1. [Enrutamiento de LLMs](/llm-routing-mastra-ai)
+2. [Seguridad y Guardrails](/mastra-security-guardrails)
+3. [MCP e Integraciones de herramientas](/mastra-mcp-tool-integrations)
+4. **Workflows y Memoria** (Este post)
