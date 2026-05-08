@@ -1,5 +1,7 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative } from "node:path";
+import { ACTIVE_LOCALES, FUTURE_LOCALES, DEFAULT_LOCALE, isLocale } from "../shared/i18n.ts";
+import { parsePostId } from "../shared/pathHelpers.ts";
 
 const postsDir = join(process.cwd(), "src/content/posts");
 const staticRoutes = new Set([
@@ -87,6 +89,9 @@ type PostFile = {
   relPath: string;
   dirName: string;
   slug: string;
+  baseSlug: string;
+  locale: string;
+  isTranslation: boolean;
   directoryDate?: string;
   body: string;
   frontmatter: Record<string, FrontmatterValue>;
@@ -105,6 +110,7 @@ const routeBySlug = new Map(posts.map((post) => [post.slug, `/${post.slug}/`]));
 const knownPostRoutes = new Set(routeBySlug.values());
 
 for (const post of posts) {
+  checkLocalePlacement(post);
   checkTaxonomy(post);
   checkVisibility(post);
   checkDate(post);
@@ -136,27 +142,42 @@ function readPosts(): PostFile[] {
   return readdirSync(postsDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .flatMap((entry) => {
-      const mdxPath = join(postsDir, entry.name, "index.mdx");
-      const mdPath = join(postsDir, entry.name, "index.md");
-      const path = existsSync(mdxPath) ? mdxPath : existsSync(mdPath) ? mdPath : "";
-      if (!path) return [];
+      const postFiles = [readPostFile(entry.name)];
+      const translationFiles = readdirSync(join(postsDir, entry.name), {
+        withFileTypes: true,
+      })
+        .filter((child) => child.isDirectory())
+        .flatMap((child) => readPostFile(`${entry.name}/${child.name}`));
 
-      const source = readFileSync(path, "utf8");
-      const { frontmatter, body } = parseFrontmatter(source);
-      const dateMatch = entry.name.match(/^(\d{4}-\d{2}-\d{2})--(.+)$/);
-
-      return [
-        {
-          path,
-          relPath: relative(process.cwd(), path),
-          dirName: entry.name,
-          slug: dateMatch?.[2] ?? entry.name,
-          directoryDate: dateMatch?.[1],
-          body,
-          frontmatter,
-        },
-      ];
+      return [...postFiles, ...translationFiles].flatMap((post) =>
+        post == null ? [] : [post],
+      );
     });
+}
+
+function readPostFile(postDir: string): PostFile | null {
+  const mdxPath = join(postsDir, postDir, "index.mdx");
+  const mdPath = join(postsDir, postDir, "index.md");
+  const path = existsSync(mdxPath) ? mdxPath : existsSync(mdPath) ? mdPath : "";
+  if (!path) return null;
+
+  const source = readFileSync(path, "utf8");
+  const { frontmatter, body } = parseFrontmatter(source);
+  const parsed = parsePostId(`${postDir}/index`);
+  const dateMatch = parsed.baseDir.match(/^(\d{4}-\d{2}-\d{2})--(.+)$/);
+
+  return {
+    path,
+    relPath: relative(process.cwd(), path),
+    dirName: postDir,
+    slug: parsed.routeSlug,
+    baseSlug: parsed.baseSlug,
+    locale: parsed.locale,
+    isTranslation: parsed.isTranslation,
+    directoryDate: dateMatch?.[1],
+    body,
+    frontmatter,
+  };
 }
 
 function parseFrontmatter(source: string) {
@@ -197,7 +218,34 @@ function stripQuotes(value: string) {
   return value.replace(/^["']|["']$/g, "");
 }
 
+function checkLocalePlacement(post: PostFile) {
+  if (post.dirName.includes("/") && post.locale === DEFAULT_LOCALE) {
+    const folder = post.dirName.split("/").at(-1);
+    add("error", post, `nested post folder "${folder}" is not a supported locale`);
+    return;
+  }
+
+  if (post.locale === DEFAULT_LOCALE) return;
+
+  if (!isLocale(post.locale)) {
+    add("error", post, `translation folder "${post.locale}" is not a supported locale`);
+  }
+
+  if (FUTURE_LOCALES.includes(post.locale as (typeof FUTURE_LOCALES)[number])) {
+    add("warning", post, `locale "${post.locale}" is reserved for later rollout`);
+  }
+
+  if (
+    !ACTIVE_LOCALES.includes(post.locale as (typeof ACTIVE_LOCALES)[number]) &&
+    !FUTURE_LOCALES.includes(post.locale as (typeof FUTURE_LOCALES)[number])
+  ) {
+    add("error", post, `locale "${post.locale}" is not active or reserved`);
+  }
+}
+
 function checkTaxonomy(post: PostFile) {
+  if (post.isTranslation && !post.frontmatter.category) return;
+
   const category = stringValue(post.frontmatter.category);
   if (!category) {
     add("warning", post, "missing category frontmatter");
@@ -242,6 +290,8 @@ function checkVisibility(post: PostFile) {
 }
 
 function checkDate(post: PostFile) {
+  if (post.isTranslation && !post.frontmatter.date) return;
+
   const frontmatterDate = stringValue(post.frontmatter.date);
   if (!frontmatterDate) {
     add("warning", post, "missing date frontmatter");

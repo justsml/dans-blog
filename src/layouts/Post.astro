@@ -15,12 +15,26 @@ import { ShareCounters } from "../components/ShareCounters";
 import PostLinkedData from "../components/Seo/PostLinkedData.astro";
 import ConsultingCTA from "../components/ConsultingCTA.astro";
 import "@/styles/banner-webgl.css";
+import { PostCollections } from "../shared/postsCache";
+import {
+  ACTIVE_LOCALES,
+  DEFAULT_LOCALE,
+  LOCALE_DISCLOSURE,
+  LOCALE_LABELS,
+  getHtmlLang,
+  getLocalizedPostPath,
+  isActiveLocale,
+  type Locale,
+} from "../shared/i18n";
 
 type Props = {
   sourcePath: string;
   children: any[];
 
   slug: string;
+  baseSlug?: string;
+  locale?: Locale;
+  isTranslation?: boolean;
 
   frontmatter?: {
     title: string;
@@ -55,6 +69,42 @@ const {
 } = Astro.props.frontmatter! || Astro.props;
 
 const slug = Astro.props.slug;
+const baseSlug = Astro.props.baseSlug ?? slug.replace(/^[a-z]{2}\//, "");
+const locale = Astro.props.locale ?? DEFAULT_LOCALE;
+const isTranslation = Astro.props.isTranslation === true;
+const htmlLang = getHtmlLang(locale);
+const canonicalPath = getLocalizedPostPath(baseSlug, locale);
+const englishPath = getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
+const translatedLocales = ACTIVE_LOCALES.filter((candidateLocale) =>
+  Boolean(PostCollections._postsBySlug[`${candidateLocale}/${baseSlug}`]),
+);
+const alternates = [
+  { locale: DEFAULT_LOCALE, href: englishPath },
+  ...translatedLocales.map((candidateLocale) => ({
+    locale: candidateLocale,
+    href: getLocalizedPostPath(baseSlug, candidateLocale),
+  })),
+];
+const languageOptions = [
+  {
+    locale: DEFAULT_LOCALE,
+    label: LOCALE_LABELS[DEFAULT_LOCALE],
+    href: englishPath,
+    isCurrent: locale === DEFAULT_LOCALE,
+    isTranslated: true,
+  },
+  ...ACTIVE_LOCALES.map((candidateLocale) => {
+    const translatedSlug = `${candidateLocale}/${baseSlug}`;
+    const isTranslated = Boolean(PostCollections._postsBySlug[translatedSlug]);
+    return {
+      locale: candidateLocale,
+      label: LOCALE_LABELS[candidateLocale],
+      href: isTranslated ? getLocalizedPostPath(baseSlug, candidateLocale) : englishPath,
+      isCurrent: locale === candidateLocale,
+      isTranslated,
+    };
+  }),
+];
 
 const modDate = modified ? new Date(modified) : null;
 const modTime = modDate ? modDate.toISOString().split("T")[0] : "";
@@ -73,7 +123,7 @@ const coverUrl = isImageMetadata(cover)
       : socialBanner;
 
 const subTitleHtml = subTitle?.replace(/`([^`]+)`/g, "<code>$1</code>");
-const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
+const commentsKey = commentsKeyOverride || englishPath;
 const stripHtml = (value: string) => value.replace(/<[^>]*>/g, "").trim();
 const heroAlt =
   cover_alt ||
@@ -120,9 +170,15 @@ const shouldCropMobileBanner =
   cover_full_width.width / cover_full_width.height < 2.4;
 ---
 
-<html lang="en">
+<html lang={htmlLang}>
   <head>
-    <BaseHead title={title} description={`${subTitle}`} image={coverUrl} />
+    <BaseHead
+      title={title}
+      description={`${subTitle}`}
+      image={coverUrl}
+      canonicalPath={canonicalPath}
+      alternates={alternates}
+    />
     {modTime && <meta http-equiv="last-modified" content={modTime} />}
     {modTime && <meta property="article:modified_time" content={modTime} />}
     {pubTime && <meta property="article:published_time" content={pubTime} />}
@@ -132,6 +188,7 @@ const shouldCropMobileBanner =
       date={pubTime}
       modified={modTime}
       slug={slug}
+      locale={htmlLang}
       tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
       imageUrl={coverUrl}
     />
@@ -154,7 +211,12 @@ const shouldCropMobileBanner =
     )}
   </head>
   <body class="post-page">
-    <Header className="content-grid article" date={date} modified={modified} />
+    <Header
+      className="content-grid article"
+      date={date}
+      modified={modified}
+      languageOptions={languageOptions}
+    />
     <main
       data-pagefind-body
       class="content-grid article h-entry h-recipe"
@@ -185,6 +247,11 @@ const shouldCropMobileBanner =
         <div class="info">
           <CreatedModifiedLabel date={date} modified={modified} />
           <CategoryLink category={category} class:list={"p-category"} />
+          {
+            isTranslation && isActiveLocale(locale) && (
+              <p class="translation-note">{LOCALE_DISCLOSURE[locale]}</p>
+            )
+          }
         </div>
       </aside>
 
@@ -254,6 +321,7 @@ const shouldCropMobileBanner =
       currentSlug={slug}
       tags={Astro.props.frontmatter?.tags}
       category={category}
+      locale={locale}
       editSourcePath={Astro.props.sourcePath}
     />
     <AnalyticsTag />

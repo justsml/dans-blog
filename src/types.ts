@@ -105,6 +105,10 @@ export type ArticlePost = {
   id: string;
   body?: string;
   slug: string;
+  baseSlug?: string;
+  locale?: string;
+  isTranslation?: boolean;
+  sourcePostId?: string;
   collection?: string;
 
   data: {
@@ -119,6 +123,9 @@ export type ArticlePost = {
     draft?: boolean;
     redirects?: string[];
     cover?: ImageMetadata;
+    cover_full_width?: ImageMetadata;
+    cover_alt?: string;
+    cover_credit?: string;
     cover_icon: ImageMetadata;
     cover_mobile: ImageMetadata;
     date: string;
@@ -126,6 +133,7 @@ export type ArticlePost = {
     category: string;
     subCategory?: string;
     tags: string[];
+    related?: string[];
     popularity?: number;
   };
 };

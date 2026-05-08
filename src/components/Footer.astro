@@ -12,6 +12,7 @@ import type { ArticlePost } from "../types";
 import { EditOnGitHubLink } from "./EditOnGitHubLink";
 import SocialLinks from "./SocialLinks.astro";
 import SubscribeForm from "./SubscribeForm.astro";
+import { DEFAULT_LOCALE, getLocalizedPostPath, type Locale } from "../shared/i18n";
 
 type Props = {
   showSubscribeForm?: boolean;
@@ -21,6 +22,7 @@ type Props = {
   tags?: string[];
   category?: string;
   currentSlug?: string;
+  locale?: Locale;
   editSourcePath?: string;
 }
 
@@ -31,6 +33,7 @@ const {
   tags = [],
   category,
   currentSlug,
+  locale = DEFAULT_LOCALE,
   editSourcePath,
 } = Astro.props as Props;
 
@@ -102,6 +105,15 @@ function getArticleImage(article: ArticlePost) {
   if (icon && typeof icon === "object" && "src" in icon) return icon.src;
   return "";
 }
+
+function getArticleHref(article: ArticlePost) {
+  const baseSlug = article.baseSlug ?? article.slug;
+  if (locale === DEFAULT_LOCALE) return getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
+  const localizedSlug = `${locale}/${baseSlug}`;
+  return PostCollections._postsBySlug[localizedSlug]
+    ? getLocalizedPostPath(baseSlug, locale)
+    : getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
+}
 ---
 
 <footer class="content-grid site-footer" role="contentinfo" data-pagefind-ignore="all">
@@ -163,7 +175,7 @@ function getArticleImage(article: ArticlePost) {
       <div class="footer-article-grid">
         {
           footerArticles.map((article) => (
-            <a class="footer-article-card" href={`/${article.slug}/`}>
+            <a class="footer-article-card" href={getArticleHref(article)}>
               {getArticleImage(article) && (
                 <span class="footer-article-card__media">
                   <img

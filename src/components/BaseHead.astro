@@ -11,12 +11,21 @@ interface Props {
   title: string;
   description: string | undefined;
   image?: string | ImageMetadata | undefined;
+  canonicalPath?: string;
+  alternates?: Array<{ locale: string; href: string }>;
+  noindex?: boolean;
 }
 
 // const slug = Astro.url.pathname.replace(/^\/*|\/*$/g, "");
 // const isHomePage = slug === "/" || slug.length < 2;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const {
+  canonicalPath = Astro.url.pathname,
+  alternates = [],
+  noindex = false,
+} = Astro.props as Props;
+
+const canonicalURL = new URL(canonicalPath, Astro.site);
 
 let { title, description, image } = Astro.props;
 
@@ -79,6 +88,25 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
   crossorigin
 />
 <link rel="canonical" class="p-url" href={canonicalURL} />
+{
+  alternates.map((alternate) => (
+    <link
+      rel="alternate"
+      hreflang={alternate.locale}
+      href={new URL(alternate.href, Astro.site)}
+    />
+  ))
+}
+{
+  alternates.length > 0 && (
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={canonicalURL}
+    />
+  )
+}
+{noindex && <meta name="robots" content="noindex,follow" />}
 <link rel="sitemap" href="/sitemap-0.xml" />
 <link rel="manifest" href="/manifest.webmanifest" />
 {/*Primary Meta Tags*/}

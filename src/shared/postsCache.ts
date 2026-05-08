@@ -1,12 +1,19 @@
 import { getCollection } from "astro:content";
-import { fixSlugPrefix, getSlugFromId, slugify } from "./pathHelpers.ts";
+import { ACTIVE_LOCALES, DEFAULT_LOCALE, getLocalizedPostSlug } from "./i18n.ts";
+import { fixSlugPrefix, getSlugFromId, parsePostId, slugify } from "./pathHelpers.ts";
 import type { ArticlePost, QuizPost } from "../types.ts";
 import { toDate } from "./dateUtils.ts";
 import { isRoutablePost, isVisiblePost } from "./postVisibility.ts";
 
-const _postsCollection: ArticlePost[] = (
+const _rawPostsCollection: ArticlePost[] = (
   (await getCollection("posts")) as unknown as ArticlePost[]
 )
+  .map((post) => ({
+    ...post,
+    slug: getSlugFromId(post.id),
+  }));
+
+const _allPosts = buildLocalizedPosts(_rawPostsCollection)
   .filter(isVisiblePost)
   .sort(
     // @ts-expect-error - data is not always defined
@@ -14,10 +21,7 @@ const _postsCollection: ArticlePost[] = (
   )
   .reverse() as unknown as ArticlePost[];
 
-const _posts = _postsCollection.map((post) => ({
-  ...post,
-  slug: getSlugFromId(post.id),
-}));
+const _posts = _allPosts.filter((post) => post.locale === DEFAULT_LOCALE);
 
 const ignoredCategories = ["Quiz", "Snippet", "Draft"];
 
@@ -60,9 +64,17 @@ const openSourceJournalPost = {
  */
 export const PostCollections = {
   _posts,
-  _postsBySlug: _posts.reduce(
+  _allPosts,
+  _postsBySlug: _allPosts.reduce(
     (acc, post) => {
       acc[post.slug] = post;
+      return acc;
+    },
+    {} as Record<string, (typeof _allPosts)[0]>,
+  ),
+  _englishPostsByBaseSlug: _posts.reduce(
+    (acc, post) => {
+      acc[post.baseSlug ?? post.slug] = post;
       return acc;
     },
     {} as Record<string, (typeof _posts)[0]>,
@@ -120,6 +132,10 @@ export const PostCollections = {
     return posts;
   },
 
+  getAllLocalizedPosts() {
+    return PostCollections._allPosts;
+  },
+
   getQuizPosts() {
     return PostCollections._quizPosts;
   },
@@ -157,6 +173,23 @@ export const PostCollections = {
     }));
   },
 
+  getMissingTranslationRedirectSourcePosts() {
+    return _posts.flatMap((post) => {
+      const baseSlug = post.baseSlug ?? post.slug;
+      return ACTIVE_LOCALES.flatMap((locale) => {
+        const localizedSlug = getLocalizedPostSlug(baseSlug, locale);
+        if (PostCollections._postsBySlug[localizedSlug]) return [];
+
+        return [{
+          slug: baseSlug,
+          data: {
+            redirects: [`/${localizedSlug}`, `/${localizedSlug}/`],
+          },
+        }];
+      });
+    });
+  },
+
   getFeedPosts() {
     return [openSourceJournalPost, ...PostCollections._posts];
   },
@@ -168,7 +201,7 @@ export const PostCollections = {
   },
 
   getStaticPaths(
-    posts: ArticlePost[] = _posts as unknown as ArticlePost[],
+    posts: ArticlePost[] = _allPosts as unknown as ArticlePost[],
   ): Array<{
     params: Record<string, unknown>;
     props: Record<string, unknown>;
@@ -264,6 +297,56 @@ export const PostCollections = {
       .slice(0, limit);
   },
 };
+
+function buildLocalizedPosts(posts: ArticlePost[]): ArticlePost[] {
+  const englishPostsByBaseSlug = new Map<string, ArticlePost>();
+
+  for (const post of posts) {
+    const parsed = parsePostId(post.id);
+    if (parsed.locale === DEFAULT_LOCALE) {
+      englishPostsByBaseSlug.set(parsed.baseSlug, withI18nPostFields(post));
+    }
+  }
+
+  return posts.flatMap((post) => {
+    const parsed = parsePostId(post.id);
+    const basePost = englishPostsByBaseSlug.get(parsed.baseSlug);
+    const postWithI18n = withI18nPostFields(post);
+
+    if (parsed.locale === DEFAULT_LOCALE || basePost == null) {
+      return [postWithI18n];
+    }
+
+    return [
+      {
+        ...basePost,
+        ...postWithI18n,
+        slug: parsed.routeSlug,
+        data: {
+          ...basePost.data,
+          ...postWithI18n.data,
+          redirects: postWithI18n.data.redirects ?? basePost.data.redirects,
+          related: postWithI18n.data.related ?? basePost.data.related,
+          tags: postWithI18n.data.tags ?? basePost.data.tags,
+        },
+        body: postWithI18n.body,
+      } as ArticlePost,
+    ];
+  });
+}
+
+function withI18nPostFields(post: ArticlePost): ArticlePost {
+  const parsed = parsePostId(post.id);
+
+  return {
+    ...post,
+    slug: parsed.routeSlug,
+    baseSlug: parsed.baseSlug,
+    locale: parsed.locale,
+    isTranslation: parsed.isTranslation,
+    sourcePostId: parsed.baseDir,
+  } as ArticlePost;
+}
 
 function toClientSafePost(post: ArticlePost): ArticlePost {
   return {

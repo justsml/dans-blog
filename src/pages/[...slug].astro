@@ -3,20 +3,36 @@ import Post from "../layouts/Post.astro";
 import { render, type CollectionEntry } from "astro:content";
 import { PostCollections } from "../shared/postsCache";
 import { writeRedirectManifest } from "../scripts/redirectManager";
+import type { Locale } from "../shared/i18n";
 
 export async function getStaticPaths() {
   const paths = PostCollections.getStaticPaths();
-  writeRedirectManifest(PostCollections.getRedirectSourcePosts());
+  writeRedirectManifest([
+    ...PostCollections.getRedirectSourcePosts(),
+    ...PostCollections.getMissingTranslationRedirectSourcePosts(),
+  ]);
   return paths;
 }
 
-type Props = CollectionEntry<"posts"> & { slug: string };
+type Props = CollectionEntry<"posts"> & {
+  slug: string;
+  baseSlug?: string;
+  locale?: Locale;
+  isTranslation?: boolean;
+};
 
 const post = Astro.props as Props;
 const results = await render(post);
 const { Content } = results;
 ---
 
-<Post sourcePath={post.id} slug={post.slug} frontmatter={{ ...post.data }}>
+<Post
+  sourcePath={post.id}
+  slug={post.slug}
+  baseSlug={post.baseSlug}
+  locale={post.locale}
+  isTranslation={post.isTranslation}
+  frontmatter={{ ...post.data }}
+>
   <Content />
 </Post>

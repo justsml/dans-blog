@@ -13,9 +13,16 @@ type Props = {
   className?: string;
   date?: string;
   modified?: string;
+  languageOptions?: Array<{
+    locale: string;
+    label: string;
+    href: string;
+    isCurrent: boolean;
+    isTranslated: boolean;
+  }>;
 };
 
-const { className } = Astro.props;
+const { className, languageOptions = [] } = Astro.props as Props;
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const categories = getCategoryCounts().slice(0, 6);
 const popularPosts = (getPopularPosts() as MyPost[]).map(getNavPostData);
@@ -60,6 +67,26 @@ function getNavPostData(post: MyPost) {
         popularPosts={popularPosts}
         recentPosts={recentPosts}
       />
+      {
+        languageOptions.length > 0 && (
+          <nav class="header-language-menu" aria-label="Article languages">
+            {languageOptions.map((option) => (
+              <a
+                href={option.href}
+                aria-current={option.isCurrent ? "page" : undefined}
+                data-missing={!option.isTranslated ? "true" : undefined}
+                title={
+                  option.isTranslated
+                    ? `${option.label} version`
+                    : `${option.label} translation is not available yet`
+                }
+              >
+                {option.locale}
+              </a>
+            ))}
+          </nav>
+        )
+      }
     </div>
   </div>
 </header>

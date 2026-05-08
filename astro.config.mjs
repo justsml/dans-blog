@@ -47,6 +47,13 @@ export default defineConfig({
   },
   cacheDir: ".cache",
   site: siteUrl,
+  i18n: {
+    locales: ["en", "es", "hi", "ja", "zh"],
+    defaultLocale: "en",
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   markdown: {
     // remarkPlugins: [remarkMermaid],
   },

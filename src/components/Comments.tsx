@@ -15,7 +15,7 @@ export const GitHubIssueComments = ({ path }: { path: string }) => {
       script.src = "https://utteranc.es/client.js";
       script.async = true;
       script.setAttribute("repo", "justsml/dans-blog");
-      script.setAttribute("issue-term", "pathname");
+      script.setAttribute("issue-term", path || "pathname");
       script.setAttribute("label", "💬 comment");
       script.setAttribute("theme", "icy-dark");
       script.setAttribute("crossorigin", "anonymous");
