@@ -12,7 +12,7 @@ cover_mobile: ./icon_square_200.webp
 cover_icon: ./icon_square_200.webp
 ---
 
-OpenClaw (anteriormente Clawdbot/Moltbot) te ofrece un asistente de IA personal que funciona a través de WhatsApp, Slack, Discord, iMessage y otros canales. Pero si expones su gateway, controles de nodo o SSH en internet público sin autenticación sólida, estás dando a desconocidos un camino hacia acceso a la terminal en tu máquina.
+OpenClaw (anteriormente Clawdbot/Moltbot) te ofrece un asistente de IA personal que funciona a través de WhatsApp, Slack, Discord, iMessage y otros canales. Pero si expones su gateway, controles de nodo o SSH en internet público sin autenticación sólida, estás dando a desconocidos un camino hacia el acceso a la terminal de tu máquina.
 
 Esta guía muestra la configuración más segura por defecto: mantén el gateway de OpenClaw en loopback, expónlo solo a tu tailnet con Tailscale Serve, bloquea SSH y verifica desde fuera que el gateway no sea público.
 
@@ -28,9 +28,9 @@ Dependiendo de cómo lo hayas instalado y expuesto, hay tres superficies que val
 - **Puerto 18789**: Interfaz de control del gateway y API WebSocket
 - **Control de navegador/nodo**: ejecución remota de código y automatización del navegador a través del modelo de emparejamiento gateway/nodo
 
-La [documentación actual de acceso remoto de OpenClaw](https://docs.molt.bot/gateway/remote) indica que el gateway WebSocket se vincula a loopback por defecto y recomienda mantenerlo solo en loopback a menos que elijas intencionalmente una vinculación LAN/tailnet/personalizada. Eso es bueno. El riesgo aparece cuando anulas ese valor por defecto, publicas puertos de Docker, añades un proxy inverso, activas Funnel o dejas SSH abierto al mundo.
+La [documentación actual de acceso remoto de OpenClaw](https://docs.molt.bot/gateway/remote) indica que el WebSocket del gateway se vincula a loopback por defecto y recomienda mantenerlo solo en loopback a menos que elijas intencionalmente una vinculación LAN/tailnet/personalizada. Eso es bueno. El riesgo aparece cuando anulas ese valor por defecto, publicas puertos de Docker, añades un proxy inverso, activas Funnel o dejas SSH abierto al mundo.
 
-El gateway es el más importante. Es la superficie de operación de tu asistente, incluidas las rutas de invocación de herramientas. Si es accesible desde internet y falta la autenticación, es débil, se puede eludir o se filtra, un atacante podría controlar el agente o invocar herramientas con los permisos de tu usuario.
+El gateway es el más importante. Es la superficie de operación de tu asistente, incluidas las rutas de invocación de herramientas. Si es accesible desde internet y la autenticación falta, es débil, puede eludirse o filtrarse, un atacante podría controlar el agente o invocar herramientas con los permisos de tu usuario.
 
 El control del navegador es casi igual de sensible. La documentación actual de OpenClaw recomienda ejecutar el control del navegador a través de un host de nodo emparejado en la máquina del navegador y tratar el emparejamiento de nodos como acceso de operador. Si un gateway puede invocar `system.run` en un nodo emparejado, eso es ejecución remota de código en ese nodo, sujeto a la política de nodos del gateway y a las aprobaciones de ejecución del propio nodo.
 
@@ -233,7 +233,7 @@ Tailscale elimina el error más grande: la exposición pública de operadores. N
 
 **Almacenamiento de credenciales**: OpenClaw almacena transcripciones de sesiones, tokens OAuth y claves API en disco. Asegúrate de que tengan permisos de archivo adecuados (`chmod 600` para archivos, `chmod 700` para directorios de configuración privados) y no estén en control de versiones. La auditoría integrada verifica esto.
 
-**Aislamiento de plugins**: Los plugins se ejecutan con los permisos completos de tu usuario. Instala solo plugins de fuentes en las que confíes y revisa qué capacidades solicitan. La herramienta de auditoría inventaría los plugins instalados.
+**Aislamiento de plugins**: Los plugins se ejecutan con los permisos completos de tu usuario. Instala solo plugins de fuentes en las que confíes y revisa qué capacidades solicitan. La herramienta de auditoría hace un inventario de los plugins instalados.
 
 **Seguridad del dispositivo**: Si alguien compromete tu cuenta de Tailscale o roba un dispositivo en tu tailnet, puede acceder a tu instancia de OpenClaw. Habilita la [autorización de dispositivos de Tailscale](https://tailscale.com/kb/1099/device-authorization/) para requerir aprobación para nuevos dispositivos.
 
