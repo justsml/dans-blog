@@ -1,6 +1,6 @@
 ---
-title: "Transformers.js में Beam Search को Implement करना"
-subTitle: "एक हज़ार लाइनें, महीनों का इंतज़ार, और टेक्स्ट जनरेशन की गहराई में एक डीप डाइव"
+title: "Transformers.js में Beam Search लागू करना"
+subTitle: "हज़ार लाइनें, महीनों का इंतज़ार, और टेक्स्ट जेनरेशन की अंदरूनी डिप डाइव"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [ai, transformers, javascript, open-source, nlp, beam-search, machine-learning]
@@ -17,79 +17,77 @@ cover_icon: ./square.webp
 
 ---
 
-> CW: इस पोस्ट में टेक्निकल शब्दावली है। तो, अगर `softmax` या `log probs` के बारे में सुनकर आप तुरंत `Max` को अपनी `probs` के बारे में बोलने से रोकना चाहते हैं, ताै मायबे इसे छोड़ दें।
+> CW: इस पोस्ट में तकनीकी शब्दजाल है। तो अगर आपको `softmax` या `log probs` के बारे में सुनकर तुरंत `Max` से उनके `probs` बंद करने को कहना है, तो शायद यह पोस्ट छोड़ दें।
 
 ---
 
 ## समस्या: `num_beams` एक झूठ था
 
-`transformers.js` के जनरेशन लूप के अंदर, एक कमेंट था जो काफी समय से वहाँ रहा था:
+`transformers.js` के जेनरेशन लूप में, गहरी तरफ, एक कमेंट था जो बहुत समय से वहां मौजूद था:
 
 ```js
 // TODO: Support beam search
 ```
 
-और ठीक उसके नीचे, एक `break` स्टेटमेंट जो पहले टोकन के बाद लूप को चुपचाप बाहर निकाल देता था। हर मॉडल कॉन्फिग जिसमें `num_beams > 1` शिप हुआ — T5, BART, Whisper — को चुपचाप greedy decoding मिल रहा था इसके बजाय। कोई वारनिंग नहीं। कोई एरर नहीं। सिर्फ... गलत आउटपुट।
+और उसके ठीक नीचे, एक `break` स्टेटमेंट जो चुपचाप पहले टोकन के बाद लूप से बाहर निकल जाता था। हर मॉडल कॉन्फिग जो `num_beams > 1` के साथ आता था — T5, BART, Whisper — चुपचाप greedy decoding पा रहा था। कोई वार्निंग नहीं। कोई एरर नहीं। बस... गलत आउटपुट।
 
-मैंने इसे एक summarization पाइपलाइन टेस्ट करते हुए पाया और सोच रहा था कि मेरे आउटपुट Python रेफरेंस के मुकाबले कैसे इतने डिग्रेड हो गए। इसे `modeling_utils.js` में ट्रैक किया, TODO देखा, और यह गलती की कि "कैसे मुश्किल हो सकता है?"
+मैंने यह तब पाया जब एक सारांशन (summarization) पाइपलाइन टेस्ट कर रहा था और सोच रहा था कि मेरे आउटपुट Python रेफरेंस की तुलना में इतने खराब क्यों हैं। इसे `modeling_utils.js` तक ट्रेस किया, TODO देखा, और गलती कर बैठा कि "कितना मुश्किल होगा?"
 
-जवाब है: काफी मुश्किल, लेकिन interesting तरीकों में।
+जवाब है: काफी मुश्किल, लेकिन दिलचस्प तरीकों से।
 
 ---
 
 ## Beam Search वास्तव में क्या है
 
-कौन नहीं
+Greedy decoding हर स्टेप पर सबसे ज्यादा प्रोबेबिलिटी वाला टोकन चुनता है। सादा, तेज़, अक्सर सबoptimal — आपके मुंह से निकलने वाला पहला शब्द हमेशा वाक्य की सबसे अच्छी शुरुआत नहीं होता।
 
-Greedy decoding हर स्टेप पर सबसे ज्यादा-प्रॉबेबिलिटी वाला टोकन पिक करता है। सिंपल, फास्ट, अक्सर सबऑप्टिमल — आपके मुंह से निकलने वाला पहला शब्द हमेशा सेंटेंस का सबसे अच्छा स्टार्ट नहीं होता।
+Beam search इसके बजाय `num_beams` कैंडिडेट सीक्वेंस को एक साथ जीवित रखता है, हर स्टेप पर हर एक को पूरे वोकैबुलरी में विस्तारित करता है, फिर क्यूमुलेटिव लॉग-प्रोबेबिलिटी के हिसाब से टॉप `num_beams` में प्रून करता है। यह टोकन स्पेस में बाउंडेड ब्रेड्थ-फर्स्ट सर्च की तरह है।
 
-Beam search इसके बजाय `num_beams` candidate sequences को समान रूप से जीवित रखता है, हर स्टेप पर फुल वोकेबुलरी के साथ प्रत्येक को expand करता है, फिर cumulative log-probability के अनुसार टॉप `num_beams` में प्रून बैक करता है। यह टोकन स्पेस में bounded breadth-first search जैसा है।
+नतीजा ग्लोबली बेहतर सीक्वेंस, कॉस्ट पर `num_beams`× कंप्यूट।
 
-नतीजा globally बेटर sequences है, `num_beams`× कंप्यूट के खर्च पर।
+तीन फ्लेवर हैं:
 
-तीन flavors exist करती हैं:
-
-- **Standard beam search** — deterministic, argmax candidates लेता है, सबसे अच्छा overall sequence
-- **Diverse beam search** — beams को groups में split करता है, earlier groups द्वारा already चुने गए टोकन्स को penalize करता है ताकि आपके आउटपुट candidates सब एक जैसा न कहें
-- **Beam sampling** — stochastic, beam framework के भीतर top-k + softmax + random sampling apply करता है
+- **स्टैंडर्ड beam search** — डिटर्मिनिस्टिक, argmax कैंडिडेट लेता है, सबसे अच्छा ओवरऑल सीक्वेंस
+- **Diverse beam search** — बीम्स को ग्रुप्स में बांटता है, पहले से चुने गए टोकन पर पेनल्टी लगाता है ताकि आउटपुट कैंडिडेट सब एक जैसी बात न कहें
+- **Beam sampling** — स्टोचस्टिक, बीम फ्रेमवर्क के भीतर top-k + softmax + रैंडम सैंपलिंग लागू करता है
 
 तीनों अब PR में हैं।
 
 ---
 
-## वह Architecture Decision जिससे मैंने वास्तव में जूझा
+## वह आर्किटेक्चर डिसीजन जिससे मुझे असल में जूझना पड़ा
 
-Existing codebase में `BeamSearchSampler` class था। यह relevant दिखता था। लेकिन एक subtle trap था: यह प्रत्येक beam के लिए सिर्फ टॉप `num_beams` tokens return करता था। यह सही सुनता है जब तक आप यह realize न करें कि actual beam search के लिए यह enough नहीं है।
+मौजूदा कोडबेस में एक `BeamSearchSampler` क्लास थी। यह रिलेवेंट लग रही थी। लेकिन एक सबtle ट्रैप था: यह हर बीम से सबसे टॉप `num_beams` टोकन ही रिटर्न करती थी। यह तब तक सही लगता है जब तक आपको एहसास नहीं होता कि actual beam search के लिए यह काफी नहीं है।
 
-Proper beam search को **all `num_beams × vocab_size` candidates per batch item** consider करने की ज़रूरत है globally सबसे अच्ठे continuations ढूंढने के लिए। आप हर beam के टॉप few tokens को isolation में नहीं देख सकते — आपको सभी beams के साथ combined candidate space में rank करना होगा।
+प्रॉपर beam search को हर बैच आइटम के लिए **सभी `num_beams × vocab_size` कैंडिडेट** पर विचार करना होता है ताकि ग्लोबली सबसे अच्छे कंटिन्यूएशन मिल सकें। आप हर बीम के टॉप कुछ टोकन को अलग से नहीं देख सकते — आपको सभी बीम्स को एक साथ रैंक करना होता है।
 
-तो मैंने existing sampler को entirely bypass किया। Processed logits पर directly `log_softmax` computed, cumulative beam scores जोड़े, और combined candidate space में two-level sort किया। Cleaner math, correct semantics।
+इसलिए मैंने मौजूदा सैंपलर को पूरी तरह बाइपास कर दिया। प्रोसेस्ड लॉगिट्स पर सीधे `log_softmax` कंप्यूट किया, क्यूमुलेटिव बीम स्कोर जोड़े, और कंबाइंड कैंडिडेट स्पेस में दो-लेवल सॉर्ट किया। क्लीनर मैथ, करेक्ट सेमेंटिक्स।
 
-`BeamSearchSampler` class अब भी वहाँ है, untouched, अब भी वह useful है जो वह originally कर रहा था। यह एक ऐसा case है जहाँ "obvious" reuse path आपको somewhere wrong ले जाता है।
-
----
-
-## सबसे Annoying Bug: KV Cache Reordering
-
-जब beam search sequences prune करता है, यह सिर्फ tokens truncate नहीं करता — यह *reorder* करता है कि कौन से beams survive करें। Beam 3 सबसे अच्छा continuation produce कर सकता है और clone हो सकता है; beams 0 और 2 discard हो सकते हैं।
-
-समस्या यह है कि transformer's attention mechanism का key-value cache batch dimension के साथ beam द्वारा indexed है। अगर आप output sequences reorder करें cache reorder करने के बजाय, आप mismatched state के साथ हैं। मॉडल wrong past को attend कर रहा है।
-
-Fix `_reorder_cache()` है — एक method जो हर past key-value tensor पर `index_select` call करता है नए beam order के अनुसार उन्हें reindex करने के लिए, फिर stale tensors dispose करता है।
-
-CPU के लिए यह straightforward है: typed arrays को row से slice करें। GPU tensors के लिए यह और annoying हो जाता है — आपको data async-download करना होगा (`ort_tensor.getData(true)`), reorder करना होगा, और re-upload करना होगा। मैंने both `index_select` (sync, CPU) और `index_select_async` `tensor.js` में जोड़ा both paths handle करने के लिए।
-
-Encoder-decoder models (T5, BART) में *two* caches हैं: encoder और decoder। Encoder PKVs decoding के दौरान change नहीं होते, तो वे unchanged pass होते हैं। Only decoder PKVs को reordering ज़रूरत है। यह distinction गलत करने पर very bad outputs produce होते हैं, subtly — ऐसा wrong जो almost right दिखता है जब तक आप reference compare न करें।
+`BeamSearchSampler` क्लास अभी भी वहीं है, बिना छेड़े, जो कभी यह कर रही थी उसके लिए उपयोगी। यह उन केसेज में से एक है जहां "औबियस" रियूज पाथ आपको गलत जगह ले जाता है।
 
 ---
 
-## Diverse Beam Search: The Fun One
+## सबसे परेशान करने वाला बग: KV Cache Reordering
 
-Diverse beam search एक `diversity_penalty` जोड़ता है जो later beam groups को earlier groups द्वारा already चुने गए tokens select करने से discourage करता है। Intuition यह है: अगर आपके सभी beams same output पर converge करते हैं, आपने really hypothesis space explore नहीं किया।
+जब beam search सीक्वेंस को प्रून करता है, यह सिर्फ टोकन को ट्रंकेट नहीं करता — यह *reorders* करता है कि कौन से बीम्स सर्वाइव करते हैं। बीम 3 शायद सबसे अच्छा कंटिन्यूएशन प्रोड्यूस करे और क्लोन हो जाए; बीम्स 0 और 2 डिस्कार्ड हो सकते हैं।
 
-Implementation-wise, groups को प्रत्येक decoding step के भीतर *sequentially* process होना चाहिए, parallel में नहीं, क्योंकि प्रत्येक group को earlier groups ने क्या select किया देखना होगा अपने own scores compute करने से पहले।
+समस्या यह है कि ट्रांसफॉर्मर के attention मैकेनिज्म से key-value cache बैच डायमेंशन में beam के हिसाब से इंडेक्सेड है। अगर आप आउटपुट सीक्वेंस को रीऑर्डर किए बिना cache को रीऑर्डर करते हैं, तो आपके पास मिसमैच्ड स्टेट है। मॉडल गलत पास पर attend कर रहा है।
 
-Structure मैं जिसके साथ end up हुआ:
+फिक्स है `_reorder_cache()` — एक मेथड जो हर past key-value टेन्सर पर `index_select` कॉल करता है ताकि नए बीम ऑर्डर के हिसाब से उन्हें रीइंडेक्स किया जा सके, फिर स्टेल टेन्सर्स डिस्पोज करता है।
+
+CPU के लिए यह सीधे है: टाइप्ड ऐरेज़ को रो के हिसाब से स्लाइस करो। GPU टेन्सर्स के लिए यह ज्यादा परेशान करने वाला है — आपको डेटा को async-डाउनलोड करना होता है (`ort_tensor.getData(true)`), reorder करो, और री-अपलोड करो। मैंने `index_select` (sync, CPU) और `index_select_async` दोनों `tensor.js` में जोड़े दोनों पाथ्स को हैंडल करने के लिए।
+
+Encoder-decoder मॉडल (T5, BART) के *दो* caches हैं: encoder और decoder। Encoder PKVs decoding के दौरान नहीं बदलते, इसलिए वे बिना बदले पास हो जाते हैं। सिर्फ decoder PKVs को reordering की जरूरत है। उस disctinction को गलत समझना बहुत बुरा आउटपुट देता है, सबटली — वह तरह का गलत जो लगभग सही दिखता है जब तक आप रेफरेंस से तुलना नहीं करते।
+
+---
+
+## Diverse Beam Search: वह मजेदार वाला
+
+Diverse beam search एक `diversity_penalty` जोड़ता है जो बाद के बीम ग्रुप्स को पहले चुने गए टोकन से discourage करता है। इंटुइशन है: अगर आपके सभी बीम एक ही आउटपुट पर एक साथ आ जाते हैं, तो आपने hypothesis space को असल में एक्सप्लोर नहीं किया है।
+
+इम्प्लीमेंटेशन के हिसाब से, ग्रुप्स को हर decoding स्टेप में पैरेलल नहीं, बल्कि *sequentially* प्रोसेस करना होता है, क्योंकि हर ग्रुप को अपने स्कोर कंप्यूट करने से पहले देखना होता है कि पिछले ग्रुप्स ने क्या चुना।
+
+जो स्ट्रक्चर मुझे मिला:
 
 ```
 for each step:
@@ -103,81 +101,81 @@ for each step:
     record newly selected tokens into token_counts
 ```
 
-यहाँ sequential dependency real है। अगर आप इसे parallelize करें, आप diversity guarantee lose करते हैं। मैं briefly इसे वैसे भी batching try करने के लिए tempted था और यह एक mistake होता।
+यहां sequential dependency असली है। अगर आप इसे बैच करने की कोशिश करते हैं, तो आप diversity guarantee खो देते हैं। मैं एक पल के लिए बैचिंग जरूर ट्राय करना चाहा और यह गलती होती।
 
 ---
 
 ## `BeamHypotheses` Priority Queue
 
-जब एक beam `max_length` से पहले EOS token hit करता है, यह "done" है — लेकिन आप इसे सिर्फ discard नहीं कर सकते या immediately return नहीं कर सकते। आप इसे एक bounded priority queue में जोड़ते हैं जिसे `BeamHypotheses` कहते हैं।
+जब एक बीम `max_length` से पहले EOS टोकन हिट करता है, तो यह "done" है — लेकिन आप इसे सिर्फ डिस्कार्ड नहीं कर सकते या तुरंत रिटर्न नहीं कर सकते। आप इसे एक बाउंडेड priority queue में जोड़ते हैं जिसे `BeamHypotheses` कहते हैं।
 
-Queue प्रत्येक batch item के लिए `num_beams` completed sequences तक रखता है, scored by:
+कतार हर बैच आइटम के लिए `num_beams` तक पूरे किए गए सीक्वेंस रखती है, जिनका स्कोर:
 
 ```
 score = sum_logprobs / (length ^ length_penalty)
 ```
 
-`length_penalty > 1.0` longer outputs reward करता है; `< 1.0` shorter reward करता है। `early_stopping` flag control करता है कि beam done consider होगा जब queue full हो (`true`), never `max_length` तक (`"never"`), या done जब no remaining beam possibly worst completed hypothesis outscore कर सके (`false`)।
+`length_penalty > 1.0` लंबे आउटपुट को reward करता है; `< 1.0` छोटे को reward करता है। `early_stopping` फ्लैग कंट्रोल करता है कि बीम तब done मानी जाती है जब कतार भरी है (`true`), कभी नहीं जब तक `max_length` (`"never"`), या तब done जब कोई live beam शायद सबसे खराब completed hypothesis को beat नहीं कर सकता (`false`)।
 
-`false` case interesting one है — यह require करता है track करना कि क्या any live beam still current worst hypothesis beat कर सकता है maximum possible remaining score देखते हुए। यह एक pruning optimization है जो `max_length` तक run करने prevent करता है जब आप already अच्छे hypotheses रखते हैं।
+`false` केस इंटरेस्टिंग है — इसके लिए ट्रैक करना जरूरी है कि कोई live beam अभी भी वॉर्स्ट hypothesis को beat कर सकता है या नहीं अगर अधिकतम संभव remaining score मिले। यह एक प्रूनिंग ऑप्टिमाइज़ेशन है जो `max_length` तक जाने से रोकता है जब आपके पास पहले से अच्छे hypotheses हैं।
 
-यह `beam_search.js` में live करता है, new file, ~240 lines total। `BeamSearchScorer` भी export करता है, जो batch के साथ `BeamHypotheses` instances manage करता है और `finalize()` handle करता है।
+यह `beam_search.js` में है, नई फाइल, ~240 लाइन कुल। `BeamSearchScorer` भी एक्सपोर्ट करता है, जो बैच में `BeamHypotheses` इंस्टेंस मैनेज करता है और `finalize()` हैंडल करता है।
 
 ---
 
-## Python Reference के खिलाफ Testing
+## Python रेफरेंस के खिलाफ टेस्टिंग
 
-यहाँ हर non-trivial implementation detail का Python counterpart HuggingFace के `transformers` library में है। मैंने इस पर heavily lean किया।
+हर नॉन-ट्रिवियल इम्प्लीमेंटेशन डिटेल के यहां HuggingFace के `transformers` लाइब्रेरी में Python काउंटरपार्ट है। मैंने इस पर भारी निर्भरता रखी।
 
-Test suite मैंने जोड़ा जो cover करता है:
+मैंने जो टेस्ट सुइट जोड़ा वह कवर करता है:
 
-- Encoder-decoder (T5) और decoder-only (LLaMA-ish) पर Standard beam search
+- Encoder-decoder (T5) और decoder-only (LLaMA-ish) पर स्टैंडर्ड beam search
 - `num_beam_groups=2, diversity_penalty=0.5` के साथ Diverse beam search
 - `do_sample=true, top_k=10` के साथ Beam sampling
-- `num_return_sequences > 1` — output shape `[N, seq_len]` है verify करना
-- Incompatible combos के लिए Correct error throws: CFG + beam search, streaming + beam search, `num_return_sequences > num_beams`
+- `num_return_sequences > 1` — वेरिफाइ करना कि आउटपुट शेप है `[N, seq_len]`
+- गलत कॉम्बो के लिए करेक्ट एरर थ्रो: CFG + beam search, streaming + beam search, `num_return_sequences > num_beams`
 
-"Correct error throws" tests underrated हैं। वे intentional limitations document करते हैं और someone को silently wrong outputs पाने से prevent करते हैं जब वे features combine try करें जो combine नहीं हो सकते। (मैं जानता हूँ क्योंकि मैंने development के दौरान CFG और beam search combine try किया। Math work नहीं करता। अब यह throw करता है।)
-
----
-
-## क्या अब भी Missing है
-
-Few things मैंने explicitly छोड़ा, `throws` से mark किया:
-
-- **Diverse beam sampling** (`num_beam_groups > 1` + `do_sample`): Math यहाँ genuinely complicated हो जाता है। Standard diverse beam search groups के साथ sequential है; उसमें sampling जोड़ने के लिए careful thought ज़रूरत है कि stochastic mode में diversity penalty कैसे apply करें। यह doable है, सिर्फ done नहीं है।
-- **Streaming + beam search**: Streaming tokens yield करता है जैसे वे generate होते हैं। Beam search by definition नहीं जानता कौन सा sequence सबसे अच्छा है multiple steps बाद तक। ये fundamentally tension में हैं। आप सबसे अच्छे beam तक now stream कर सकते हैं, लेकिन यह अलग feature है अपने design questions के साथ।
+"करेक्ट एरर थ्रो" टेस्ट अंडररेटेड हैं। वे इंटेंशनल लिमिटेशन डॉक्यूमेंट करते हैं और किसी को गलत आउटपुट पाने से रोकते हैं जब वे फीचर्स कॉम्बो करने की कोशिश करते हैं जिन्हें कॉम्बाइन नहीं किया जा सकता। (मुझे पता है क्योंकि मैंने development के दौरान CFG और beam search कॉम्बाइन करने की कोशिश की थी। मैथ काम नहीं करता। अब एरर थ्रो करता है।)
 
 ---
 
-## वह Part जिसके बारे में कोई नहीं बोलता: Open Source Latency
+## वह जो अभी भी गायब है
 
-Code work करता है। Tests pass करते हैं। Existing test suite clean है। यह months से review में बैठा है।
+कुछ चीजें जो मैंने स्पष्ट रूप से छोड़ दीं, `throws` के साथ मार्क की:
 
-यह सिर्फ बड़े, popular open source projects के साथ ऐसा होता है। Hugging Face टीम fast ship कर रही है, issue queue enormous है, और ~1,000-line feature PR जो core generation loop touch करता है एक non-trivial review commitment है। वे comments में responsive रहे हैं और genuinely engaged जब वे इसे देखते हैं। मैं complain नहीं कर रहा — मैं document कर रहा हूँ।
-
-अगर आप एक major OSS project contribute कर रहे हैं और quick merge expect कर रहे हैं: expectations adjust करें। इस size के लिए few months normal है। Code आपके fork पर whole time work करता रहता है।
-
----
-
-## मैंने वास्तव में इससे क्या पाया
-
-Few things मैं पहले नहीं रखता था:
-
-1. **Beam search का एक real mental model** — textbook version नहीं, बल्कि edge cases वाला। KV caches कैसे break होते हैं। Why two-level sort matter करता है। `length_penalty` actually scores के साथ क्या करता है।
-
-2. **JS में typed array math के लिए और appreciation** — CPU typed arrays पर `index_select` implement करना low-level है ऐसे way में जो आप web code में rarely touch करते हैं। यह fine है, लेकिन यह वह नहीं जिसके लिए JavaScript designed था और आप वो feel करते हैं।
-
-3. **Python reference implementation के लिए renewed respect।** HuggingFace `transformers` library बड़ी है और कभी-कभी gnarly, लेकिन beam search logic well-commented है और design decisions clearly intentional हैं। इसे पढ़ना fastest way था understand करने के लिए कि मैं actually क्या build करना supposed था।
-
-4. **Wild में एक patch** — even अगर यह अब भी merged नहीं है, यह exist करता है, यह work करता है, और people इसे PR branch से use कर सकते हैं। यह enough है।
-
-TODO comment जिसने यह start किया वो मेरे fork से gone है। यह एक quiet, nerdy way में satisfying है।
-
-अगर आप JavaScript में seq2seq work कर रहे हैं और today proper beam search चाहते हैं, [PR public है](https://github.com/huggingface/transformers.js/pull/1539)।
+- **Diverse beam sampling** (`num_beam_groups > 1` + `do_sample`): मैथ यहां वास्तव में पेचीदा है। स्टैंडर्ड diverse beam search ग्रुप्स में sequential है; उसमें सैंपलिंग जोड़ना इस बारे में सावधानी से सोचने की जरूरत है कि स्टोचस्टिक मोड में diversity penalty कैसे लागू करें। यह हो सकता है, बस अभी नहीं हुआ।
+- **Streaming + beam search**: Streaming जैसे-जैसे टोकन जेनरेट होते हैं उन्हें yield करता है। Beam search परिभाषा से तब तक नहीं जानता कि कौन सा सीक्वेंस सबसे अच्छा है जब तक कई स्टेप्स बाद नहीं। ये फंडामेंटली एक-दूसरे के विरोध में हैं। आप best beam so far stream कर सकते हैं, लेकिन वह अपने डिज़ाइन सवालों वाला एक अलग फीचर है।
 
 ---
 
-¹ हाँ, मैं जानता हूँ `num_beams=1` सिर्फ greedy search है। Degenerate case well-defined है।
+## वह हिस्सा जिसके बारे में कोई बात नहीं करता: Open Source Latency
 
-² Encoder-only models (BERT, etc.) tokens generate नहीं करते, तो इनमें से कुछ भी उन पर apply नहीं होता। वे सिर्फ vibes हैं।
+कोड काम करता है। टेस्ट पास होते हैं। मौजूदा टेस्ट सुइट साफ़ है। यह महीनों से review में बैठा है।
+
+यह बड़े, पॉपुलर ओपन सोर्स प्रोजेक्ट्स के साथ बस ऐसे ही होता है। Hugging Face टीम तेज़ी से शिप कर रही है, इश्यू क्यू अत्यंत बड़ा है, और कोर जेनरेशन लूप को छूने वाला ~1,000-लाइन फीचर PR एक नॉन-ट्रिवियल रिव्यू कमिटमेंट है। कमेंट्स में वे रेस्पॉन्सिव रहे हैं और जब वे देखते हैं तो वास्तव में engaged रहते हैं। मैं शिकायत नहीं कर रहा — मैं डॉक्यूमेंट कर रहा हूं।
+
+अगर आप एक मेजर OSS प्रोजेक्ट में योगदान दे रहे हैं और त्वरित मर्ज की उम्मीद कर रहे हैं: अपनी उम्मीदों को एडजस्ट करें। इस साइज़ की चीज़ के लिए कुछ महीने सामान्य हैं। पूरे समय आपके फोर्क पर कोड अभी भी काम करता है।
+
+---
+
+## मुझे असल में इससे क्या मिला
+
+कुछ चीजें जो मेरे पास पहले नहीं थीं:
+
+1. **Beam search का असली मेंटल मॉडल** — न कि textbook वर्शन, बल्कि edge cases वाला। KV cache कैसे टूटता है। दो-लेवल सॉर्ट क्यों मायने रखता है। `length_penalty` असल में स्कोर पर क्या करता है।
+
+2. **JS में टाइप्ड ऐरे मैथ की ज्यादा सराहना** — CPU टाइप्ड ऐरेज़ पर `index_select` इम्प्लीमेंट करना वेब कोड में आप शायद ही कभी छूते हैं उस तरह से low-level है। यह ठीक है, लेकिन यह वह नहीं है जिसके लिए JavaScript डिज़ाइन किया गया था और आप उसका अहसास करते हैं।
+
+3. **Python रेफरेंस इम्प्लीमेंटेशन के लिए नई कदर।** HuggingFace `transformers` लाइब्रेरी बड़ी और कभी-कभी उलझी हुई है, लेकिन beam search लॉजिक अच्छी तरह से कमेंटेड है और डिज़ाइन डिसीजन स्पष्ट रूप से इंटेंशनल हैं। इसे पढ़ना समझने का सबसे तेज़ तरीका था कि मुझे असल में क्या बनाना था।
+
+4. **जंग में एक पैच** — भले ही अभी तक मर्ज नहीं हुआ, यह मौजूद है, यह काम करता है, और लोग PR ब्रांच से इसका उपयोग कर सकते हैं। यही काफी है।
+
+वह TODO कमेंट जिसने यह शुरू किया था, मेरे फोर्क से जा चुका है। यह शांत, नर्डी तरीके से संतोषजनक है।
+
+अगर आप JavaScript में seq2seq काम कर रहे हैं और आज प्रॉपर beam search चाहते हैं, [PR पब्लिक है](https://github.com/huggingface/transformers.js/pull/1539)।
+
+---
+
+¹ हां, मुझे पता है `num_beams=1` सिर्फ greedy search है। डिजनरेट केस अच्छी तरह से परिभाषित है।
+
+² Encoder-only मॉडल (BERT, etc.) बिल्कुल टोकन जेनरेट नहीं करते, इसलिए यह उनमें से कोई भी लागू नहीं होता। वे बस vibes हैं।
