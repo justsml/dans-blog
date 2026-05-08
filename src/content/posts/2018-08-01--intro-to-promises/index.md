@@ -7,6 +7,7 @@ modified: 2024-07-31
 category: Code
 subCategory: promises
 tags: [promises, async, javascript, composition]
+related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 cover: joe-yates-480485-unsplash.webp
 cover_mobile: w300_joe-yates-480485-unsplash.webp
 cover_icon: icon_joe-yates-480485-unsplash.webp

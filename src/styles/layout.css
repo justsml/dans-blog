@@ -155,6 +155,40 @@ article.content-grid {
   margin: 0;;
 }
 
+.content-grid > .p-summary {
+  color: var(--clr-muted-200);
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 300;
+  line-height: 1.45;
+  margin-block: 0.25rem 1.5rem;
+  text-wrap: balance;
+}
+
+.banner-wrapper,
+.hero-image-wrapper {
+  position: relative;
+}
+
+.hero-credit {
+  color: rgba(221, 232, 233, 0.68);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  margin: 0;
+  padding: 0.45rem 0.75rem;
+  text-align: right;
+}
+
+.hero-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.banner-wrapper .hero-credit {
+  grid-column: content;
+  justify-self: end;
+}
+
 .full-width> :where(astro-island, astro-slot) {
   display: unset !important;
 }

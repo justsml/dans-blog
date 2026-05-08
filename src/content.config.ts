@@ -1,6 +1,23 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
+const editorialCategories = [
+  "AI",
+  "Code",
+  "DevOps",
+  "Engineering",
+  "Guides",
+  "HowTo",
+  "Instructional Design",
+  "Leadership",
+  "Lulz",
+  "Quiz",
+  "Regex",
+  "Search",
+  "Security",
+  "Thoughts",
+] as const;
+
 export const posts = defineCollection({
   loader: glob({ pattern: "**/index.{md,mdx}", base: "./src/content/posts" }),
   // Type-check frontmatter using a schema
@@ -27,12 +44,18 @@ export const posts = defineCollection({
 
       cover: image().optional(), // z.string().optional(),
       cover_full_width: image().optional(),
+      cover_alt: z.string().optional(),
+      cover_credit: z.string().optional(),
       cover_mobile: image().optional(),
       // cover_tablet: image().optional(),
       // cover_desktop: image().optional(),
       cover_icon: image().optional(),
       
-      category: z.string().optional(),
+      /**
+       * Keep top-level taxonomy controlled. Run `bun run content:check`
+       * after adding a new category or changing visibility fields.
+       */
+      category: z.enum(editorialCategories).optional(),
       subCategory: z.string().optional(),
       tags: z.array(z.string()).optional(),
 

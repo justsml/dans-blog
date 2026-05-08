@@ -10,6 +10,7 @@ cover: junior-ferreira-735237-unsplash.webp
 cover_mobile: w300_junior-ferreira-735237-unsplash.webp
 cover_icon: icon_junior-ferreira-735237-unsplash.webp
 tags: [promises, async, visualizing, javascript, composition]
+related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 ---
 
 In order to visualize how Promises execute, let's define a new method `delay(millisecs)`.

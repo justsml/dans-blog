@@ -5,6 +5,15 @@ export type PostVisibilityData = {
   draft?: boolean | number | string | null;
 };
 
+/**
+ * Editorial visibility model:
+ *
+ * - Published/indexed: omit these flags or set publish:true.
+ * - Unlisted: set unlisted:true for URL-accessible posts hidden from lists.
+ * - Draft/private: set publish:false, draft:true, hidden:true, unlisted:true.
+ * - Archived/legacy-but-routable: keep publish:true and add historical framing
+ *   in the post body instead of using hidden/draft flags.
+ */
 type PostWithData<TData extends PostVisibilityData = PostVisibilityData> = {
   data?: TData | null;
 };

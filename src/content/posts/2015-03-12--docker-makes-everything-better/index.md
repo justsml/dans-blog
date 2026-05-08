@@ -7,12 +7,15 @@ modified: 2024-07-30
 category: DevOps
 subCategory: docker
 tags: [docker, devops, patterns]
+related: [docker-server-setup-notes, docker-rocks, docker-security-tips-for-self-hosting]
 cover: guillaume-bolduc-259596-unsplash.webp
 cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
 cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
 ---
 
 ## Docker Can Do Everything!\*
+
+> Historical note: this is a 2015 snapshot of Docker enthusiasm and local-dev habits, preserved mostly as a time capsule. Treat the commands and security posture as starting points to modernize, not production guidance.
 
 Improve your process for:
 

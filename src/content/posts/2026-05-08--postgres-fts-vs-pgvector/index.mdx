@@ -106,7 +106,7 @@ WHERE name % $1          -- % operator = similarity threshold (default 0.3)
 ORDER BY score DESC
 LIMIT 10;
 
--- Or use ILIKE with trigram index support (fast prefix/contains matching)
+-- Or use ILIKE with trigram index support for contains matching
 SELECT id, name
 FROM users
 WHERE name ILIKE '%johnson%'   -- GIN index makes this fast
@@ -115,10 +115,11 @@ LIMIT 10;
 
 The `%` operator uses `pg_trgm.similarity_threshold` (default 0.3, range 0-1). Higher values require closer matches. For name search, 0.3-0.4 is usually right: permissive enough to catch typos, strict enough to avoid noise.
 
-**Trigrams also handle prefix search and autocomplete well:**
+**Trigrams also help with prefix search and autocomplete, especially when autocomplete needs typo tolerance or contains matching:**
 
 ```sql
--- Autocomplete: fast prefix matching with index support
+-- Autocomplete: prefix matching. For pure left-anchored prefixes,
+-- compare trigram GIN against a B-tree pattern index on your data.
 SELECT name FROM users
 WHERE name ILIKE $1 || '%'
 ORDER BY name
@@ -244,7 +245,7 @@ The same tree in words:
 - **Questions, paraphrases, recommendations, related items, multilingual matching, RAG chunks** → pgvector
 - **Technical content where users need both exact symbols and conceptual answers** → Hybrid with RRF
 - **Primary keys, exact IDs, permission filters, date ranges, sorted lists** → normal SQL indexes
-- **Huge vector volume, very high concurrency, or sub-10ms p99 requirements** → evaluate dedicated vector stores
+- **Huge vector volume, very high concurrency, or latency targets Postgres cannot hit in your benchmarks** → evaluate dedicated vector stores
 
 ### FTS vs. Semantic: The Short Version
 
@@ -322,14 +323,16 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 # Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
 ```
 
-**Disk-based index** is a cost question. RAM-resident HNSW costs ~6GB of RAM per million vectors at 1536 dims, roughly $800/month for a 64GB AWS node. Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB's Lance format, Turbopuffer's object storage tier) trade 5-20ms extra latency for cheaper infrastructure. For RAG workloads where users tolerate 200-500ms end-to-end, that's often right. Redis VSS is the hard constraint: RAM-only, no disk path.
+**Disk-based index** is a cost question. RAM-resident HNSW can require several GB of RAM per million 1536-dimension vectors once raw vectors, graph overhead, and metadata are counted. Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB's Lance format, Turbopuffer's object storage tier) often trade some query latency for cheaper infrastructure. For RAG workloads where model latency already dominates, that's often worth benchmarking. Redis VSS is the hard constraint: RAM-only, no disk path.
 
-**Max dimensions** is tomorrow's migration hiding in today's choice. `text-embedding-3-large` uses 3072 dims, Jina v3 up to 8192, and research models are pushing past 16K. MongoDB Atlas caps at 2,048, already below some current models. Elasticsearch caps at 4,096. Qdrant, Weaviate, and LanceDB are effectively uncapped. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a miserable sprint.
+**Max dimensions** is tomorrow's migration hiding in today's choice. `text-embedding-3-large` uses 3072 dims, Jina v3 can emit larger embeddings, and research models keep pushing higher. Some managed services publish hard dimension caps; others document high caps or no practical cap for typical embedding models. Check current docs before committing. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a miserable sprint.
+
+_Last verified against public project docs and product pages on May 8, 2026. Treat the matrix as a snapshot: managed-service limits, pricing, hybrid-search features, and disk-index options change quickly._
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
 |---|---|---|---|---|---|---|---|---|---|
-| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 | Already on Postgres; under 10M vectors |
-| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Best-in-class | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
+| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 | Already on Postgres; moderate vector counts |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
 | **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
 | **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
 | **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
@@ -349,11 +352,11 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 A few things don't fit cleanly in a table:
 
-**Sparse vectors** are how you get BM25-quality keyword matching inside a vector index, with no separate full-text engine. Qdrant has the most mature implementation. Elasticsearch's ELSER is production-proven at enterprise scale. Weaviate supports them via BM25F. If hybrid search is critical and you can't run two systems, look for sparse vector support.
+**Sparse vectors** are how you get BM25-quality keyword matching inside a vector index, with no separate full-text engine. Qdrant and Elasticsearch have especially mature implementations here. Weaviate supports them via BM25F. If hybrid search is critical and you can't run two systems, look for sparse vector support.
 
-**Disk-based indexes** are a cost lever, not an implementation detail. RAM-resident HNSW indexes are fast but expensive: at 1536 dimensions, float32, expect ~6GB RAM per million vectors. Disk-based alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, Turbopuffer object storage, LanceDB's Lance format) trade query latency for much lower infrastructure cost. For large RAG indexes, that tradeoff is usually worth it.
+**Disk-based indexes** are a cost lever, not an implementation detail. RAM-resident HNSW indexes are fast but can get expensive as vector count, dimension count, metadata, and graph overhead grow. Disk-based alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, Turbopuffer object storage, LanceDB's Lance format) trade query latency for lower infrastructure cost. For large RAG indexes, that tradeoff is often worth testing.
 
-**Turbopuffer's multi-tenancy** is in a different class. Most databases count namespaces or indexes as a limit. Turbopuffer doesn't. Notion runs 10B+ vectors across millions of namespaces on it. If each user or organization needs isolated vector search, this changes the economics.
+**Turbopuffer's multi-tenancy** is built around very high namespace counts. Its public positioning and customer stories emphasize workloads like Notion's large, namespace-heavy corpus. If each user or organization needs isolated vector search, that architecture can change the economics, but still benchmark your own tenant shape.
 
 **LanceDB embedded mode** is the closest thing to "SQLite for vector search." It runs in-process, requires no server, and works in Lambda, Cloudflare Workers, and edge environments. The Lance columnar format makes embedded operation practical at real scale.
 
@@ -363,11 +366,11 @@ A few things don't fit cleanly in a table:
 
 **ClickHouse belongs in the conversation when search is attached to analytics.** If your source of truth is events, logs, traces, metrics, or large fact tables, ClickHouse can keep vector distance, filtering, aggregation, and now serious full-text indexing in one SQL engine. It is not a purpose-built vector database, but for analytical retrieval it can be the boring answer in the best way.
 
-**Chroma stops at dev/test.** At 100M+ vectors it degrades badly, with no disk index, real hybrid search, or HA story. It is a great prototyping tool. Don't promote the prototype into infrastructure.
+**Chroma is strongest at dev/test and small app deployments.** If you are aiming at very large corpora, HA, disk-heavy operation, or first-class hybrid search, evaluate a production-oriented store before promoting the prototype into infrastructure.
 
 ### The Simplified Decision
 
-If you've genuinely outgrown pgvector - over ~10M vectors, or sub-10ms p99 at high concurrency - choose by constraint:
+If you've genuinely outgrown pgvector - usually because benchmarks show vector count, filtering, write rate, or high-concurrency latency pushing past your Postgres envelope - choose by constraint:
 
 - **SaaS product with per-tenant isolation** → Turbopuffer
 - **Need Rust-level performance + complex metadata filtering** → Qdrant

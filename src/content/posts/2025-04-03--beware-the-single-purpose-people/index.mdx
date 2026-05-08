@@ -14,53 +14,50 @@ cover_mobile: endless-little-boxes-square-200.webp
 cover_icon: endless-little-boxes-square-200.webp
 ---
 
-In the grand, often baffling circus of software development principles, the `Single Responsibility Principle` (SRP) is frequently injected into architecture sessions, promising order and maintainability. The seductive whisper of "do one thing and do it well" has, admittedly, saved some projects from collapsing into an unholy mess of spaghetti code. It's one of those ideas that sounds so sensible, so *adult*.
+The `Single Responsibility Principle` is one of those ideas that sounds so sensible it can sneak past your judgment.
 
-<p class="inset">Inevitably you'll likely' confront the Single-Purpose People, or SPP, aka the Purity Police. These folks love to bring up "first principles," which is funny because they seem to only have one principle: "Make everything as small and atomic as possible."</p>
+Do one thing. Do it well. Keep modules focused. Give code a reason to change. Good advice.
 
-Until you hear their proclaimations about how **"any function over 5 lines** is a code smell" and that every file must contain **only one function.**
+Then someone turns the advice into a measuring tape and starts declaring that any function over five lines is a code smell.
 
-But why? Is this generally beneficial?
+<p class="inset">The problem is not SRP. The problem is treating "small" as a substitute for "cohesive."</p>
 
-<blockquote>
-In this post I'm going to explore the dark side of the Single Responsibility Principle, the unintended consequences of over-abstraction, and how the quest for purity can lead to chaos. We'll also discuss how to embrace a more pragmatic approach to code organization that prioritizes maintainability and developer sanity.
-</blockquote>
+At that point you have met the Single-Purpose People: developers who are not wrong about modularity, exactly, but have confused useful boundaries with maximum fragmentation.
 
 <figure class="inset-right">
   <figcaption>Violence in Software Architecture</figcaption>
 ![Components, components everywhere](software-patterns__the-dismembered-architecture.webp "Components, components everywhere")
 </figure>
 
-## I. Inheritance and Its Unintended Consequences
+## I. The Useful Idea Underneath
 
 > Adding a single checkbox to a form should ideally only affect one file. Not 8 files across 5 directories... I'm looking at you, React/Redux.
 
-When SRP is wielded by someone not actively trying to punish their future selves, it can offer a useful guiding idea: Code units focused on a single conceptual task *are* generally easier to wrap your head around. Testing becomes less like wrangling with an octopus. Clear boundaries *can* help you pretend you understand the eldritch complexity you've actually summoned. "Modularity! Reusability! Who dares argue such virtues?!"
+When SRP is applied with judgment, it helps. Code units focused on a single conceptual task are easier to understand. Tests can target behavior at a sensible boundary. Clear modules make it easier to change one part of the system without dragging the rest of the application into the room.
 
-Even the sainted Unix greybeards and their command-line tools get trotted out as exemplars. `ls` just lists files, right? Simple! Pure! Except, oops, lift the rug and `ls` is frantically orchestrating system calls like `opendir`, `readdir`, `closedir`, and `stat`, which themselves are whispering sweet nothings to the kernel's filesystem monstrosities¹. "Single purpose" was never about achieving molecular purity; it was about drawing a pragmatic line somewhere that made sense for the task at hand.
+Even the classic Unix examples are more pragmatic than the slogan suggests. `ls` lists files, yes, but it also coordinates calls like `opendir`, `readdir`, `closedir`, and `stat`. The useful unit is not the smallest possible operation. The useful unit is the smallest coherent thing that solves the task.
 
 <p class="inset">The original Unix philosophy was about *composition* and *simplicity*, **not about reducing everything** to a single function or file.</p>
 
-The Single-Purpose People conveniently forget this part.
+That distinction matters. "One responsibility" is not the same as "one line of behavior."
 
 ## II. Over-Abstraction: When Simplicity Turns to Chaos
 
 > Our architect insists every function longer than 5 lines is a 'code smell'. Our codebase now smells faintly of clueless desperation.
 
-My old dog Chloe was, perhaps, the original Single-Purpose Purist. Her One Thing was decomposition. Toys, shoes, the occasional sofa cushion – all meticulously reduced to their smallest constituent parts, their fundamental essence revealed. Then buried. Functionally pure, you might say. Useless for anything else, but pure.
+The failure mode is easy to spot after it has already made your week worse.
 
-This is disturbingly similar to how the Single Purpose People approach a codebase. Armed with SRP like a holy text, they embark on a righteous crusade of refactoring, splitting, and "simplifying" until the project structure resembles the aftermath of a fragmentation grenade attack in a filing cabinet factory.
-
+The codebase has more files, but less shape. Every helper has a helper. Every concept has been split across folders named after technical roles instead of product meaning. Adding a checkbox requires touching a component, a hook, a selector, an action, a reducer, a constant, a test fixture, and a barrel export that exists mostly to keep the import paths from looking guilty.
 
 <figure class="inset-left">
   <figcaption>No escape for this infinite work pattern</figcaption>
 ![Components, components everywhere](software-patterns__the-mc-escher-stack.webp "The MC Escher Pattern")
 </figure>
 
-What chaos hath they wrought?
+What did all that purity buy?
 
 -   **File System Shrapnel:** Source directories blooming into nightmarish landscapes of countless tiny files, often containing a single, tragically lonely function. Navigation becomes an exercise in spelunking.
--   **Dependency Hellraiser:** A tangled web of imports and exports so dense that tracing the execution flow requires clairvoyance, a large whiteboard, and possibly animal sacrifice. Files imported exactly once, mocking you from their solitary confinement.
+-   **Dependency Tangles:** A web of imports and exports so dense that tracing execution requires a large whiteboard and more patience than the feature deserves. Files imported exactly once sit there pretending to be reusable.
 -   **Testing Treachery:** Tests become brittle, hyper-specific sentinels guarding minuscule implementation details. Change a function signature? Watch dozens of tests crumble like ancient pottery. The test suite transforms from a safety net into a minefield.
 -   **Velocity Vanished:** Simple changes metastasize into multi-file modification sagas. Onboarding new developers involves weeks of handing them maps and compasses just to find where the `UserProfile` component *actually lives* this week. Forward progress slows to a geological crawl under the sheer weight of this "organization."
 
@@ -75,22 +72,22 @@ I’ve stared into the abyss of codebases where a straightforward 100-line featu
 ![So messy it borders on art](software-patterns__the-rube-goldberg-architecture.webp "The Rube Goldberg Pattern")
 </figure>
 
-This pathological fragmentation isn't just an aesthetic crime; it actively sabotages the poor bastards² trying to get work done:
+This pathological fragmentation is not just an aesthetic problem. It changes how developers spend their attention:
 
 **The Productivity Drain:** Forget technical debt; this is organizational debt accrued through obsessive-compulsive directory nesting. Every minor tweak becomes an archaeological dig through layers of abstraction. Time vanishes into the black hole of `cd ..` and `grep`.
 
-**The Testing Tax:** Instead of providing confidence, the test suite becomes a source of constant, soul-crushing friction. Hours melt away fixing tests broken by trivial refactors, tests that were too damn coupled to the microscopic details they were supposed to be verifying.
+**The Testing Tax:** Instead of providing confidence, the test suite becomes a source of friction. Hours melt away fixing tests broken by trivial refactors, tests that were too tightly coupled to the microscopic details they were supposed to be verifying.
 
-**The Cognitive Catastrophe:** There's a hard limit on how many disconnected pieces of information a human brain can juggle. Forcing developers to constantly piece together program flow from a dozen scattered files is like asking them to assemble a ship in a bottle during an earthquake. It actively hinders understanding and makes confident changes nearly impossible.
+**The Cognitive Load:** There is a hard limit on how many disconnected pieces of information a human brain can juggle. Forcing developers to piece together program flow from a dozen scattered files actively hinders understanding and makes confident changes harder.
 
 ## IV. Embracing Pragmatism: A Practical Alternative
 
-> I suggested we put two related functions in the same file. You'd think I'd suggested sacrificing the Scrum Master to the Old Gods based on the looks I got.
+> I suggested we put two related functions in the same file. The room reacted like I had proposed deleting staging.
 > — A recovering purist reader
 
-So, what's the escape hatch from this purity prison? It's not abandoning SRP entirely – that way lies madness of a different, Jabba the Hutt-esque variety. No, the answer is that rarest of modern software development commodities: **pragmatism**. Applying judgment instead of dogma. Imagine!
+The escape hatch is not abandoning SRP. The answer is applying it at the right level of meaning.
 
-Here’s what that looks like when you’re not mainlining the dogma:
+Here’s what that looks like in practice:
 
 -   **Focus on Cohesion, Not Atoms:** Group things that *change together* and *belong together* conceptually. A module might handle several related aspects of user authentication. That's fine. It's probably *better* than six separate files each holding one function related to login state.
 -   **Keep Kin Together:** Don't split related code unless there's a screamingly obvious, tangible benefit – like genuine reusability *in practice*, not in some hypothetical future that never arrives. Proximity matters for comprehension.
@@ -100,27 +97,25 @@ Here’s what that looks like when you’re not mainlining the dogma:
 
 <p class="inset">The objective isn't theoretical perfection worthy of a PhD thesis; it's creating code that your colleagues (and future you) can navigate, understand, and modify without wanting to set the building on fire.</p>
 
-Sometimes this means a file is 200 lines long instead of 50. Sometimes a function handles fetching data *and* transforming it slightly. Sometimes a class has *two* responsibilities that are so tightly coupled they might as well be married. Sue me. If it makes the system easier to work with *overall*, it's the right call.
+Sometimes this means a file is 200 lines long instead of 50. Sometimes a function handles fetching data *and* transforming it slightly. Sometimes a class has two responsibilities that are so tightly coupled they should live together. If it makes the system easier to work with overall, it is probably the right call.
 
 Stay relentlessly focused on the practical questions:
 - Can someone new find their way around?
 - Can we change `X` without breaking unrelated `Y`?
 - Does this test actually tell me if the feature works?
-- Are we shipping value, or just rearranging deck chairs on the SS Abstraction?
+- Are we shipping value, or just rearranging folders?
 
 ## V. Conclusion: Fostering Cohesive and Maintainable Code
 
-The Single Responsibility Principle is a useful chisel in the toolbox. It is not a chainsaw, nor a holy mandate to pulverize your codebase into atomic dust. Like any tool, its value lies entirely in the skill and judgment of the wielder.
+The Single Responsibility Principle is a useful tool. It is not a mandate to pulverize your codebase into atomic dust. Like any tool, its value depends on the judgment of the person using it.
 
-So when you encounter the Single-Purpose People, eyes gleaming with refactoring zeal, ready to wage war on any function daring to exceed three lines, take a deep breath. Remember Chloe and her disassembled toys. Remember the weeping developer and the 12-file checkbox.
+So when you encounter the Single-Purpose People, ready to wage war on any function daring to exceed three lines, take a breath. Remember the 12-file checkbox.
 
-Our job is not to construct theoretically immaculate snowflake functions. Our job is to build software that works, that solves problems, and that doesn't inflict unnecessary psychic damage on the next person who has to touch it.
+Our job is not to construct theoretically immaculate snowflake functions. Our job is to build software that works, solves problems, and does not punish the next person who has to touch it.
 
-Stay pragmatic. Focus on outcomes. And for the love of God, don't let the pursuit of perfect purity become the enemy of perfectly adequate, maintainable code. Your sanity, and your team's velocity, depend on it.
+Stay pragmatic. Focus on outcomes. Do not let the pursuit of perfect purity become the enemy of maintainable code. Your sanity, and your team's velocity, depend on it.
 
 
-¹ The irony being that achieving *actual* single purpose at the lowest levels requires immense complexity hidden just beneath the surface. It's turtles all the way down, folks.
+¹ The irony being that achieving *actual* single purpose at the lowest levels requires immense complexity hidden just beneath the surface.
 
-² Yes, I mean you and me. We're the poor bastards in this scenario.
-
-³ We're talking about conceptual purity here – the idea that a function should do only "one thing" logically. Don't confuse this with functional programming's concept of a "pure function" (no side effects), which is a different, though sometimes related, beast. The Single-Purpose People often conflate the two in their righteous quest.
+² We're talking about conceptual purity here: the idea that a function should do only "one thing" logically. Do not confuse this with functional programming's concept of a "pure function" with no side effects, which is a different, though sometimes related, idea.

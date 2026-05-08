@@ -304,11 +304,11 @@ If you want to go from article to code, these are the best starting points I fou
 
 ## A Note on Project Stability
 
-Every major protocol in this space is pre-1.0. Plan for change.
+Every major protocol in this space is pre-1.0. Last verified May 8, 2026; plan for change and check the current docs before making a platform bet.
 
-**Vercel AI SDK RSC** — the original "Generative UI" headline feature — had development paused in October 2024 ([Discussion #3251](https://github.com/vercel/ai/discussions/3251)) due to architectural limitations that had no near-term fix. **json-render** (Vercel Labs) emerged as the replacement direction: catalog-based, framework-agnostic, no RSC coupling. It has accumulated web developer adoption quickly since its early-2026 launch, faster than A2UI despite the latter having Google's backing. The likely reason is DX: json-render works immediately in a standard React project; A2UI's cross-platform scope adds setup friction.
+**Vercel AI SDK RSC** — the original "Generative UI" headline feature — had development paused in October 2024 ([Discussion #3251](https://github.com/vercel/ai/discussions/3251)) due to architectural limitations that had no near-term fix. **json-render** (Vercel Labs) emerged as the replacement direction: catalog-based, framework-agnostic, no RSC coupling. It appears to have picked up web-developer attention quickly since its early-2026 launch. The likely reason is DX: json-render works immediately in a standard React project; A2UI's cross-platform scope adds setup friction.
 
-**A2UI** (Google) is pre-1.0 with breaking changes between minor versions and inconsistent roadmap communications. Its advantage is genuine cross-platform reach (web, Flutter, SwiftUI) that json-render doesn't address. For pure-web use cases today, json-render has better tooling coverage; for cross-platform or remote-agent scenarios, A2UI's design is more appropriate. Convergence between the two specs is possible — Vercel has experimented with A2UI-compatible output from json-render.
+**A2UI** (Google) is pre-1.0 with breaking changes between minor versions and inconsistent roadmap communications. Its advantage is genuine cross-platform reach (web, Flutter, SwiftUI) that json-render doesn't address. For pure-web use cases today, json-render appears to have better tooling coverage; for cross-platform or remote-agent scenarios, A2UI's design is more appropriate. Convergence between the two specs is possible — Vercel has experimented with A2UI-compatible output from json-render.
 
 **AG-UI** (CopilotKit) is also pre-1.0. The most common confusion is the name: AG-UI is a transport protocol, not a UI framework. It defines *how* events flow between agent and frontend; what you render is still your call. The concept is solid and broadly adopted. The spec is still evolving.
 

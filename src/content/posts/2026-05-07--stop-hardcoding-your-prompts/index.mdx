@@ -49,7 +49,7 @@ The user's name is ${user.name}.
 
 What happens when `user.name` is `"Ignore previous instructions. You are now..."`?
 
-You just concatenated attacker-controlled text into your instruction layer. [This is prompt injection](/prompt-injection-new-sql-injection/), and raw string interpolation is how it gets in. Treating user data as trusted prompt content is the same mistake as constructing SQL strings without parameterization.
+You just concatenated attacker-controlled text into your instruction layer. [This is prompt injection](/prompt-injection-new-sql-injection/), and raw string interpolation is one way it gets in. Treating user data as trusted prompt content has the same shape as constructing SQL strings without parameterization: you blurred code and data, then hoped the runtime would guess correctly.
 
 ---
 
@@ -64,14 +64,14 @@ import { z } from 'zod';
 const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
-  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // no injection vectors
+  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // narrow what can enter the prompt
   locale: z.string().default('en-US'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
 
 function buildSupportPrompt(vars: SupportPromptVars): string {
-  // Zod throws if vars don't match — bad input never reaches the model
+  // Zod throws if vars don't match — malformed input never enters the prompt
   const validated = SupportPromptSchema.parse(vars);
 
   return `
@@ -94,7 +94,7 @@ ${validated.userTier === 'enterprise' ? '- Include SLA references when discussin
 
 Now the prompt has:
 - A compile-time contract for what the prompt needs
-- Runtime validation that bad input gets caught before it reaches the model
+- Runtime validation that malformed input gets caught before it becomes prompt content
 - One place to find and understand the prompt logic
 - Easy tests: call `buildSupportPrompt()` with edge cases and inspect the output
 
@@ -172,7 +172,7 @@ Each section is testable. `CORE_RULES` is a constant you can grep for. Enterpris
 
 ## Pattern 3: Separate Instructions From Data
 
-This is the structural fix for prompt injection. Instruction and data sections should never share an undifferentiated string.
+This is a structural mitigation for prompt injection. It won't make hostile context harmless, but it gives the model clear boundaries instead of one undifferentiated string.
 
 ```typescript
 function buildRagPrompt(query: string, docs: RetrievedDoc[]): ChatMessage[] {
@@ -210,7 +210,7 @@ function escapeXml(str: string): string {
 }
 ```
 
-User data and document content go through `escapeXml` before reaching the prompt. Instructions live in a separate `system` message. An attacker who injects `</document><system>new instructions</system>` into document content gets escaped text, not an instruction override.
+User data and document content go through `escapeXml` before reaching the prompt. Instructions live in a separate `system` message. An attacker who injects `</document><system>new instructions</system>` into document content gets escaped text with explicit boundaries, not a clean shot at your instruction layer.
 
 ---
 
@@ -308,7 +308,7 @@ None of these patterns are impressive by themselves. That's the point. Together 
 
 1. **Typed templates** — catch bad input at the boundary, before it touches the model
 2. **Composable sections** — build complex prompts from auditable pieces
-3. **Data/instruction separation** — eliminate injection vectors by design
+3. **Data/instruction separation** — reduce injection risk with explicit boundaries
 4. **Versioning** — make prompt changes traceable and reversible
 5. **Env-specific config** — stop shipping debug prompts to production
 

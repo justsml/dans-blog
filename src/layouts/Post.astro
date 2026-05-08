@@ -32,6 +32,8 @@ type Props = {
     social_image?: unknown;
     cover?: unknown;
     cover_full_width?: unknown;
+    cover_alt?: string;
+    cover_credit?: string;
     category?: string;
     related?: string[];
   };
@@ -42,6 +44,8 @@ const {
   subTitle,
   cover,
   cover_full_width,
+  cover_alt,
+  cover_credit,
   category,
   date,
   modified,
@@ -70,6 +74,7 @@ const coverUrl = isImageMetadata(cover)
 
 const subTitleHtml = subTitle?.replace(/`([^`]+)`/g, "<code>$1</code>");
 const commentsKey = commentsKeyOverride || new URL(Astro.request.url).pathname;
+const heroAlt = cover_alt || (title ? `Hero image for ${title}` : "");
 
 const responsiveImgSizes_fullWidth = {
   widths: [480, 720, 960, 1280],
@@ -150,7 +155,7 @@ const shouldCropMobileBanner =
       }
       {
         subTitleHtml && (
-          <h2 class="p-summary" set:html={subTitleHtml} />
+          <p class="p-summary dek" set:html={subTitleHtml} />
         )
       }
 
@@ -176,13 +181,14 @@ const shouldCropMobileBanner =
             <Image
               class="flow u-photo banner-image"
               src={cover_full_width as ImageMetadata}
-              alt={title}
+              alt={heroAlt}
               format="webp"
               quality={70}
               loading="eager"
               fetchpriority="high"
               {...responsiveImgSizes_fullWidth}
             />
+            {cover_credit && <p class="hero-credit" set:html={cover_credit} />}
           </div>
         ) : (
           cover &&
@@ -194,11 +200,12 @@ const shouldCropMobileBanner =
                 <Image
                   class="u-photo"
                   src={cover as ImageMetadata}
-                  alt={title}
+                  alt={heroAlt}
                   loading="eager"
                   fetchpriority="high"
                   {...responsiveImgSizes_breakRight}
                 />
+                {cover_credit && <p class="hero-credit" set:html={cover_credit} />}
               </div>
             </div>
           )

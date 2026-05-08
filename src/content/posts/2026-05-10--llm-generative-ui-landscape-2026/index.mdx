@@ -15,11 +15,11 @@ popularity: 0.9
 
 "Generative UI" means at least five distinct things depending on who says it.
 
-- v0, Lovable, and Bolt: AI tools that write React at design time
 - Chat interfaces that embed product cards from model tool calls
 - Runtime JSON specs the frontend renders as component trees
 - Sandboxed iframes returned by MCP tools into host apps (from ticket ordering, hotel booking to map rendering, checkout widgets)
 - Event protocols that stream agent state to the frontend
+- v0, Lovable, and Bolt: AI tools that write React at design time
 
 Those are related concepts, but they live at different layers of the stack and carry different risk profiles, different implementation costs, and different appropriate use cases. Conflating them turns every architecture discussion into a mess.
 
@@ -169,7 +169,7 @@ A2UI is security-conscious: the spec is a data format, not executable code. The 
 
 CopilotKit's "Open-JSON-UI" format is compatible with A2UI. If you're picking a spec format for a component catalog today, A2UI is the one with the broadest cross-platform backing.
 
-**A note on stability**: A2UI is pre-1.0 — v0.9 as of this writing — and has shipped breaking spec changes between minor versions. Google's communications about the roadmap have been sporadic and some renderers (Lit, Flutter) have lagged behind spec updates. Budget time for spec drift if you're building on it today. For pure-web use cases, json-render currently has more complete and stable tooling. A2UI's long-term advantage is cross-platform reach (web, Flutter, SwiftUI, Android) that json-render doesn't have.
+**A note on stability**: A2UI is pre-1.0 — v0.9 when last checked on May 8, 2026 — and has shipped breaking spec changes between minor versions. Google's communications about the roadmap have been sporadic and some renderers (Lit, Flutter) have lagged behind spec updates. Budget time for spec drift if you're building on it today. For pure-web use cases, json-render currently appears to have more complete tooling. A2UI's long-term advantage is cross-platform reach (web, Flutter, SwiftUI, Android) that json-render doesn't have.
 
 ### MCP Apps
 
@@ -244,7 +244,7 @@ The distinguishing features:
 
 If you're building a dashboard or report generation feature and want to skip the infrastructure work of designing your own catalog, json-render is the fastest path for web apps.
 
-**On momentum**: json-render launched from Vercel Labs in early 2026 and has accumulated developer adoption in the React/web space faster than A2UI despite A2UI having Google's backing. The likely reason: json-render's schema constraints are tighter (Zod-typed, shadcn components), streaming works out of the box, and it's immediately useful in a Next.js project with zero protocol overhead. That said, json-render is still pre-1.0 and the relationship between json-render and A2UI is still being worked out — Vercel has experimented with A2UI-compatible output, so convergence is possible. For cross-platform (native mobile, multiple frameworks), A2UI is the better long-term bet.
+**On momentum**: json-render launched from Vercel Labs in early 2026 and appears to have picked up web-developer attention quickly because it is immediately useful in standard React/Next.js projects. That said, json-render is still pre-1.0 and the relationship between json-render and A2UI is still being worked out — Vercel has experimented with A2UI-compatible output, so convergence is possible. For cross-platform (native mobile, multiple frameworks), A2UI is the better long-term bet.
 
 ### Hashbrown
 
@@ -310,38 +310,30 @@ Neither framework owns the UI tier. They generate the data that your frontend (P
 
 ---
 
-## Feature Reference Table
+## Feature Reference
 
-| Tool | Layer | Core function | Output model | Streaming | GitHub |
-|------|-------|--------------|-------------|-----------|--------|
-| AG-UI | Protocol | Agent↔app event stream | ~16 event types | Yes | [ag-ui-protocol/ag-ui](https://github.com/ag-ui-protocol/ag-ui) |
-| A2UI | Protocol | Declarative UI spec | JSONL component list | Incremental | [google/A2UI](https://github.com/google/A2UI) |
-| MCP Apps | Protocol | UI widgets over MCP | Sandboxed iframe resources | Via MCP | [modelcontextprotocol](https://github.com/modelcontextprotocol) |
-| CopilotKit | App framework | Agent-native product UI | All three patterns | Yes (AG-UI) | [CopilotKit/CopilotKit](https://github.com/CopilotKit/CopilotKit) |
-| Vercel AI SDK | SDK | Streaming chat and objects | useChat tools + useObject | Yes | [vercel/ai](https://github.com/vercel/ai) |
-| assistant-ui | UI primitives | Production chat UX | Tool rendering | Yes | [assistant-ui/assistant-ui](https://github.com/assistant-ui/assistant-ui) |
-| LangGraph UI | Platform integration | Graph-co-located UI | Named UI messages | Yes | [LangGraph Platform](https://docs.langchain.com/langgraph-platform/generative-ui-react) |
-| json-render | Catalog tool | Pre-built constrained catalog | JSON → shadcn/ui | Progressive | [vercel-labs/json-render](https://github.com/vercel-labs/json-render) |
-| Hashbrown | Catalog tool | Embed AI in existing app | Component selection | Yes | [liveloveapp/hashbrown](https://github.com/liveloveapp/hashbrown) |
-| OpenUI | Catalog tool | Token-efficient UI lang | OpenUI Lang | Line-by-line | [thesysdev/openui](https://github.com/thesysdev/openui) |
-| Tambo | Catalog tool | Stateful component selection | AI selects + tools | Yes | [tambo-ai/tambo](https://github.com/tambo-ai/tambo) |
-| OpenGenerativeUI | Sandbox | Visual artifacts | Sandboxed HTML/SVG/Canvas | Progressive | [CopilotKit/OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) |
-| Gradio | Python UI | ML demo interfaces | Python-defined components | No (batch) | [gradio-app/gradio](https://github.com/gradio-app/gradio) |
-| Streamlit | Python UI | AI data apps | Python-defined components | No (batch) | [streamlit/streamlit](https://github.com/streamlit/streamlit) |
-| LangChain | Backend | Structured output generation | Pydantic/JSON to frontend | Yes | [langchain-ai/langchain](https://github.com/langchain-ai/langchain) |
-| Haystack | Backend | AI pipeline orchestration | Structured data to frontend | Yes | [deepset-ai/haystack](https://github.com/deepset-ai/haystack) |
+Use the catalog above as orientation, not a shopping list. The stack usually collapses to one choice in each layer:
+
+| Need | Start here |
+|------|------------|
+| Agent-to-frontend event stream | [AG-UI](https://github.com/ag-ui-protocol/ag-ui) |
+| Declarative UI payload crossing a trust boundary | [A2UI](https://github.com/google/A2UI) or [MCP Apps](https://github.com/MCP-UI-Org/mcp-ui) |
+| App-owned chat/tool rendering | [Vercel AI SDK](https://github.com/vercel/ai), [assistant-ui](https://github.com/assistant-ui/assistant-ui), or [CopilotKit](https://github.com/CopilotKit/CopilotKit) |
+| Catalog-composed dashboards, reports, and forms | [json-render](https://github.com/vercel-labs/json-render), [Hashbrown](https://github.com/liveloveapp/hashbrown), [OpenUI](https://github.com/thesysdev/openui), or [Tambo](https://github.com/tambo-ai/tambo) |
+| Sandboxed visual artifacts | [OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) |
+| Python demos and data apps | [Gradio](https://github.com/gradio-app/gradio) or [Streamlit](https://github.com/streamlit/streamlit) |
 
 ---
 
 ## Ecosystem Velocity and Unstable Ground
 
-This space is moving fast and several projects have shipped confusing communications alongside their code.
+This space is moving fast and several projects have shipped confusing communications alongside their code. Last verified May 8, 2026; treat the project-status notes here as a timestamped read, not a permanent verdict.
 
 **Vercel AI SDK RSC** was the flagship Generative UI feature when SDK 3.0 launched. Vercel paused its development in October 2024 ([Discussion #3251](https://github.com/vercel/ai/discussions/3251)) citing architectural limitations with React Server Components that had no near-term solution. Teams that had built on it were understandably frustrated. It's still in the docs but isn't the recommended path; `useObject` is.
 
-**json-render** (Vercel Labs) is the new direction — a catalog-based, framework-agnostic alternative that avoids the RSC coupling problems. It's pre-1.0 but has gained significant web developer adoption faster than A2UI, despite A2UI launching around the same time with Google's backing. The momentum gap appears to be a DX story: json-render is immediately useful in a standard React/Next.js project, while A2UI's verbosity and cross-platform scope adds setup friction. How this shakes out as both specs mature is genuinely unclear. Vercel has probed A2UI compatibility in json-render, suggesting convergence is possible.
+**json-render** (Vercel Labs) is the new direction — a catalog-based, framework-agnostic alternative that avoids the RSC coupling problems. It's pre-1.0 and appears to have strong early interest among React/web developers. The likely DX reason: json-render is immediately useful in a standard React/Next.js project, while A2UI's cross-platform scope adds setup friction. How this shakes out as both specs mature is genuinely unclear. Vercel has probed A2UI compatibility in json-render, suggesting convergence is possible.
 
-**A2UI** (Google) is pre-1.0 (v0.9 at this writing) with breaking changes between minor versions and inconsistent Google communications about its roadmap. It's the right choice for cross-platform reach (web + Flutter + SwiftUI) that json-render doesn't address, and it has meaningful enterprise backing. For pure-web projects right now, the DX is rougher.
+**A2UI** (Google) is pre-1.0 (v0.9 when last checked) with breaking changes between minor versions and inconsistent Google communications about its roadmap. It's the right choice for cross-platform reach (web + Flutter + SwiftUI) that json-render doesn't address, and it has meaningful enterprise backing. For pure-web projects right now, the DX is rougher.
 
 **AG-UI** (CopilotKit) is also pre-1.0. The most common confusion: the name makes it sound like a UI framework. It isn't — it's a transport protocol. AG-UI defines how events flow between agent backends and your frontend; what you render in response is still your decision. That mental model is solid and broadly adopted, but the pre-1.0 spec means edge cases are still getting worked out.
 

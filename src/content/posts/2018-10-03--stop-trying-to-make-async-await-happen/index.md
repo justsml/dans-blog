@@ -7,6 +7,7 @@ modified: 2024-08-03
 category: Guides
 subCategory: promises
 tags: [promises, async, await, async-await, javascript, composition]
+related: [intro-to-promises, promise-gotchas, visualizing-promises, you-may-not-need-axios]
 cover: matt-nelson-414464-unsplash.webp
 cover_mobile: w300_matt-nelson-414464-unsplash.webp
 cover_icon: icon_matt-nelson-414464-unsplash.webp

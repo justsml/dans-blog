@@ -30,6 +30,7 @@ bun run test:e2e:ui      # Playwright UI mode
 bun run test:e2e:debug   # Playwright debug mode
 
 # Content utilities
+bun run content:check    # Validate content conventions, taxonomy, related links, and MDX footguns
 bun run screenshots      # Generate quiz question screenshots with Playwright
 bun run fix-quizzes      # Validate and fix quiz question numbering
 bun run webp-images      # Convert images to WebP format
@@ -48,15 +49,31 @@ src/content/posts/YYYY-MM-DD--slug-name/
 └── *.webp             # Images (stored with post)
 ```
 
-**Frontmatter schema**: `src/content/config.ts`
+**Frontmatter schema**: `src/content.config.ts`
 
 **Critical frontmatter fields**:
 - `redirects: string[]` - Old URLs to redirect here (auto-generates Netlify `_redirects` file)
-- `category: string` - Primary category (e.g., "JavaScript", "Quiz", "Security")
+- `category: string` - Controlled primary category from `src/content.config.ts`
 - `draft: boolean` - Hide from build
 - `unlisted: boolean` - Accessible via URL but hidden from lists
 - `related: string[]` - Related post slugs
 - `popularity: number` - 0-1 score for sorting
+- `cover_alt: string` - Explicit hero alt text when the cover image is meaningful
+- `cover_credit: string` - Optional HTML credit rendered below hero imagery
+
+**Controlled categories**:
+`AI`, `Code`, `DevOps`, `Engineering`, `Guides`, `HowTo`, `Instructional Design`, `Leadership`, `Lulz`, `Quiz`, `Regex`, `Search`, `Security`, `Thoughts`.
+
+Run `bun run content:check` after adding posts, changing categories, changing visibility fields, or editing related links.
+
+### Editorial Visibility Model
+
+Visibility helpers live in `src/shared/postVisibility.ts`.
+
+- Published/indexed: omit visibility flags or set `publish: true`.
+- Unlisted: set `unlisted: true` for URL-accessible posts hidden from lists.
+- Draft/private: set `publish: false`, `draft: true`, `hidden: true`, and `unlisted: true`.
+- Archived/legacy-but-routable: keep `publish: true` and add historical framing in the post body instead of hiding the post.
 
 ### PostCollections: Central Data Source
 
@@ -131,9 +148,9 @@ Implementation: `src/scripts/redirectManager.tsx`
 }]
 ```
 
-**Hydration**: Quiz components use `client:load` directive for interactivity.
+**Hydration**: Many quiz posts intentionally use `client:visible={{rootMargin: "150px"}}` on `<Challenge>` components. Treat those as performance features. Do not convert them to `client:load` unless the user explicitly asks for eager hydration. Some small support components, such as `CodeTabs`, may still use `client:load`.
 
-**Validation**: Run `bun run fix-quizzes` to check question numbering.
+**Validation**: Run `bun run fix-quizzes` to check question numbering. Run `bun run content:check` to catch markdown-inside-JSX issues, invalid related links, taxonomy drift, and visibility mistakes.
 
 ## Common Tasks
 
@@ -142,7 +159,9 @@ Implementation: `src/scripts/redirectManager.tsx`
 1. Create: `src/content/posts/YYYY-MM-DD--slug-name/index.mdx`
 2. Add frontmatter (minimum: `title`, `date`, `category`)
 3. Write content in MDX
-4. Run `bun run build` - routing happens automatically
+4. Prefer `related` frontmatter for editorial links to 2-5 genuinely related posts
+5. Run `bun run content:check`
+6. Run `bun run build` - routing happens automatically
 
 ### Add a Quiz
 
@@ -158,7 +177,8 @@ Implementation: `src/scripts/redirectManager.tsx`
    />
    ```
 3. Run `bun run fix-quizzes` to validate
-4. Run `bun run screenshots` for social images
+4. Preserve existing `client:visible` directives on `<Challenge>` unless eager hydration is intentional
+5. Run `bun run screenshots` for social images
 
 ### Redirect Old URLs
 
@@ -221,8 +241,24 @@ playwright.config.ts         # E2E tests
 - **Import PostCollections** - Don't call `getCollection()` directly
 - **Date-prefix directories** - Format: `YYYY-MM-DD--slug-name`
 - **Frontmatter redirects** - Never edit `public/_redirects` manually
-- **React hydration** - Use `client:load`, `client:idle`, or `client:only` directives
+- **React hydration** - Preserve `client:visible` on quiz challenges; it is a deliberate performance feature
 - **Store images with posts** - Keep images in same directory as `index.mdx`
+- **Related links** - Use `related` frontmatter with valid slugs for durable editorial linking
+- **Hero media** - Add useful `cover_alt` and `cover_credit` when a post has hero imagery
+- **Subtitles** - Post subtitles render as paragraph/dek text, not heading levels
+- **Lists** - Preserve native ordered-list semantics in markdown and CSS; do not restyle `ol` into generic block/list-item wrappers
+- **Fast-moving claims** - Add a short "Last verified" note for claims about prices, limits, model capabilities, vendors, benchmarks, or tool availability
+- **Security prose** - Avoid absolute guarantees. Prefer defense-in-depth wording: "reduces risk", "makes exploitation harder", "limits blast radius"
+- **Legacy posts** - Do not hide old routable posts just because they are dated. Add historical framing and keep redirects/routes stable
+
+## Editorial Style Notes
+
+- Dan's voice is direct, technical, and allergic to vendor-blog gloss. Keep the scar tissue, remove the brochure.
+- Prefer concrete tradeoffs and operational detail over catalog density.
+- For comparison posts, explain when a tool is a good fit before listing every feature.
+- For fast-moving AI/search/database content, distinguish measured facts from current impressions and include the verification date.
+- For quiz posts, center the teaching insight behind the questions, not only the answer key mechanics.
+- Humor works best as seasoning. If a bit starts competing with the argument, cut it back.
 
 ## Debugging
 

@@ -39,11 +39,11 @@ That's a ton of stuff! But much of it relates, and you can pick and choose what'
 
 ## 🔄 The `:latest` Dance
 
-Keeping images updated is crucial for security. However, relying on `:latest` can lead to breaking changes or vulnerabilities creeping in unnoticed.
+Keeping images updated is crucial for security. However, relying on `:latest` can introduce breaking changes or vulnerable builds without a review step.
 
 ### The Safe Way to Update
 
-Combine startup commands with `pull` or `build` to ensure you’re always running the latest image.
+Combine update commands with `pull` or `build` so you deliberately refresh images, then restart during a window where you can notice breakage.
 
 ```bash
 #!/bin/bash
@@ -72,7 +72,7 @@ Choosing the right version to pin to is a balancing act between stability and se
   image: postgres:latest
 ```
 
-Use [Dependabot](https://github.com/features/security) or [Renovate](https://github.com/renovatebot/renovate) to automate version updates and ensure you’re reviewing changes before they break production.
+Use [Dependabot](https://github.com/features/security) or [Renovate](https://github.com/renovatebot/renovate) to open reviewable update PRs. For anything you would be sad to rebuild at 2 a.m., pin to a specific version or digest and let automation tell you when to move.
 
 _Let me know about your favorite tools for keeping Docker images up-to-date!_
 
@@ -198,7 +198,7 @@ echo "New .env file generated with secure random values!"
 
 [**Canary Tokens**](https://canarytokens.org/) are a great way to detect if your secrets have been compromised (and used.) They're like a tripwire you can add to any sensitive files, urls, and tokens.
 
-Put them in every `.env` file, CI platform, password and secrets manager you use!
+Consider putting them next to the secrets you actually worry about: `.env` files, CI variables, password managers, backup folders, and cloud credentials. Don't turn this into theater; put tripwires where a real attacker or a future-you mistake would touch them.
 
 There are many types of canary "tokens" to chose, from AWS tokens, [fake credit card](https://blog.thinkst.com/2024/12/its-baaack-credit-card-canarytokens-are-now-on-your-consoles.html) numbers, Excel & Word files, Kubeconfig files, VPN credentials, even sql dump files can have a tripwire!
 
@@ -293,7 +293,7 @@ Whether you're a developer running dev servers locally, or self-hosting services
 
 Devs are often surprised to find the 'traditional' methods to secure linux servers (`iptables`, restricting tcp/ip sysctl options) can **fail silently** on Docker hosts! This is especially the case when **self-hosting-or running on a typical home network.** (For the people in the back: This can allow access to dev containers on your MacBook!!!)
 
-> ⚠️ **Warning #1:** By default, Docker (on Ubuntu/Debian) will bypass UFW/iptables rules, rendering **your firewall useless.** [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
+> ⚠️ **Warning #1:** Docker-published ports can bypass the firewall rules you thought were protecting the host, especially with UFW on Ubuntu/Debian. That does not make every firewall rule useless, but it does mean "UFW says deny" is not proof. [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
 
 > ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer limited protection in certain cases. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
 
@@ -351,14 +351,14 @@ Access controls are a critical part of securing your Docker services. This inclu
 
 ### Limiting Container Capabilities
 
-Another solid access control practice is to limit the capabilities of your containers. This can prevent several threats, from privilege escalation, data theft/exfiltration, traffic hijacking, and more.
+Another solid access control practice is to limit the capabilities of your containers. This reduces the blast radius of several threats, from privilege escalation to traffic hijacking. It is not a force field, but it removes permissions most containers never needed.
 
 **What are capabilities?** Linux kernel-defined, named permissions or abilities. (The [`capabilities`](https://man7.org/linux/man-pages/man7/capabilities.7.html) man page has a full list.) They include things like `CAP_CHOWN` (change file ownership), `CAP_NET_ADMIN` (configure network interfaces), `CAP_KILL` (kill any process), and many more.
 
 The two ways to determine needed capabilities are:
 
 1. **Trial and Error**: This slower-but-effective method has you start with no capabilities, then add them back one by one until your app works.
-2. **Find prior work**: Search for "`project-name` `cap_drop` Dockerfile", or "`project-name` `cap_drop` docker-compose.yml" to see if others have already done the work for you. Sometimes ChatGPT can conjure up the right configuration for you, too!
+2. **Find prior work**: Search for "`project-name` `cap_drop` Dockerfile", or "`project-name` `cap_drop` docker-compose.yml" to see if others have already done the work for you. An LLM can suggest a starting point, but treat it like a guess until you test the container and read the image docs.
 
 #### Capabilities Best Practice
 
@@ -396,29 +396,29 @@ Use the `--external`/`external:` option to join a **pre-existing network.** Omit
 
 ### Docker Socket Access
 
-#### ⚠️ Warning: `docker.socket` is extremely powerful and dangerous dark magic!
+#### ⚠️ Warning: `docker.sock` is basically host admin access
 
 <blockquote class="inset">⚠️ The \`:ro\` option doesn't affect I/O sent over the socket!</blockquote>
 
-It merely ensures the file (a Unix socket, not a file in the traditional sense) itself is `read-only`.
+It merely ensures the socket path itself is mounted read-only. The API calls sent through that socket can still create containers, mount host paths, and do other very exciting things you probably did not mean to delegate.
 
 {/* Any process that can "open" the socket can (probably) gain root access on the host. */}
 
 #### Socket Best Practice
 
-- 🥇 **Avoid mounting a docker socket,** there's likely a better alternative!
-- 🫣 If you must, **use a Reverse Proxy** to limit what API commands are available. Check out the `docker-socket-proxy` project originally from Tecnativa, [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy).
+- 🥇 **Avoid mounting the Docker socket,** there's likely a better alternative.
+- 🫣 If you must, **put a narrow proxy in front of it** and allow only the API endpoints the app actually needs. Check out the `docker-socket-proxy` project originally from Tecnativa, [docker-socket-proxy](https://github.com/Tecnativa/docker-socket-proxy). Then verify the denied calls are actually denied.
 - 🤢 Okay, _maybe_ sharing it is okay in a very **high-trust**, **low-risk** test environment.
 
 #### Blocking Country!
 
-Another decent idea!
+Sometimes useful, but not a real security boundary.
 
 _Talking about the geopolitical entity, not the music..._
 
-If you are hosting apps mostly for your local family & friends, you can block traffic from countries you don't expect to receive traffic from. Or only allow traffic from countries you do expect.
+If you are hosting apps mostly for your local family & friends, you can block traffic from countries you don't expect to receive traffic from. Or only allow traffic from countries you do expect. It cuts noise; it does not stop VPNs, proxies, botnets, or anyone patient.
 
-Check out this script to block all traffic from China (sorry, China):
+Check out this script to block all traffic from China:
 
 ```bash title="block-china.sh"
 curl -fsSL https://www.ipdeny.com/ipblocks/data/countries/cn.zone | \
@@ -468,7 +468,7 @@ The only way to _know_ is to check. In this case, start with the `README` and ot
 
 #### Reverse Proxy
 
-Another layer of defense is basic auth. I know it's dangerous to use without HTTPS, but sometimes it's the best you can do (legacy services), and it's often enough to stop automated Cross-Site-Request-Forgery attacks.
+Another layer of defense is basic auth. Do not use it without HTTPS. For legacy services, putting basic auth in front of an admin route is often enough to stop drive-by requests and unauthenticated crawlers from poking the thing directly.
 
 ```nginx
 # /etc/nginx/conf.d/secure-admin.conf
@@ -647,7 +647,7 @@ fswatch -r /path/to/directory
        volumes:
          - ./config:/config:ro
    ```
-   Combined with other best practices (non-root users, minimal folder permissions), the \`:ro\` volume mount option provides additional safe-guards against accidental (or malicious) changes to critical files.
+   Combined with other best practices (non-root users, minimal folder permissions), the `:ro` volume mount option provides additional safeguards against accidental changes and some write attempts from inside the container. It does not protect the host from a process that already has broader privileges.
 
 3. **Audit Container Access** regularly.
    If a container doesn’t need it a secret, port or mount, remove it!
@@ -679,7 +679,7 @@ fswatch -r /path/to/directory
 - [ ] **Network**: Only necessary ports exposed, internal networks set up.
 - [ ] **Firewall Rules**: Default deny, explicit allows, country blocks if needed.
 - [ ] **Reverse Proxy**: Nginx, Caddy or Traefik can add a layer of basic auth
-- [ ] **Canary Tokens**: Place them alongside all sensitive keys. In every `.env` you have floating around.
+- [ ] **Canary Tokens**: Place them near the sensitive files and credentials you would actually investigate if touched.
 - [ ] **Monitoring** Know thy systems with `nmap`, `lsof`, `inotifywait`, `glances`, etc.
 - [ ] **Backup Strategy**: Tested, preferably automated, and off-site.
 - [ ] **Least Privilege**: Non-root container users, read-only volumes.

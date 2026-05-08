@@ -7,6 +7,7 @@ modified: 2024-07-30
 category: Code
 subCategory: promises
 tags: [promises, async, debugging, errors, javascript, composition]
+related: [intro-to-promises, visualizing-promises, are-promises-broken, javascript-promises-quiz]
 cover: michal-parzuchowski-224092-unsplash.webp
 cover_mobile: w300_michal-parzuchowski-224092-unsplash.webp
 cover_icon: icon_michal-parzuchowski-224092-unsplash.webp

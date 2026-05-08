@@ -14,10 +14,24 @@
 }
 .article-tiles {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px, 280px));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   grid-auto-flow: row dense;
-  gap: 2rem;
+  gap: 0;
   justify-content: space-around;
+  margin-inline: auto;
+  max-width: 960px;
+
+  .article-card--related {
+    min-height: clamp(15rem, 28vw, 19rem);
+  }
+
+  .article-card--related .post-title {
+    font-size: clamp(1.08rem, 2.7cqi, 1.32rem);
+  }
+
+  .article-card--related > p {
+    -webkit-line-clamp: 2;
+  }
 
   .tile {
     background:

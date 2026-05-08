@@ -187,10 +187,11 @@ LIMIT 10;
 
 The `%` operator uses `pg_trgm.similarity_threshold` (default 0.3, range 0–1). For name search, 0.3–0.4 catches typos while keeping noise low.
 
-### Autocomplete and Prefix Search
+### Autocomplete, Prefix, and Contains Search
 
 ```sql
--- Fast prefix matching — GIN index accelerates ILIKE with leading wildcard
+-- Prefix matching for autocomplete. A trigram GIN index can help,
+-- but a B-tree pattern index may be better for pure left-anchored prefixes.
 SELECT name FROM users
 WHERE name ILIKE $1 || '%'
 ORDER BY name
@@ -205,7 +206,7 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-The GIN trigram index also accelerates `ILIKE '%pattern%'` queries — a common pattern that's a full-table scan without it.
+The trigram GIN index is especially useful for `ILIKE '%pattern%'` contains queries and typo-tolerant matching — patterns that are usually full-table scans without a trigram index.
 
 ### When to Reach for pg_trgm over FTS
 

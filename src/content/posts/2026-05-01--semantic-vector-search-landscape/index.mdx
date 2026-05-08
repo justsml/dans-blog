@@ -17,13 +17,13 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Search is not one thing.
+Search is not one thing, and semantic search is not a replacement for the rest of it.
 
 "Find user with email `dan@example.com`" and "find me articles about debugging as a new engineer" are both described as search, but they have almost nothing in common as engineering problems. The first has a correct answer and an `O(log n)` index lookup. The second has no correct answer — only relevance — and requires understanding language, intent, and meaning.
 
 The engineers who are most persuasive about search decisions — the ones who win the arguments and ship the right system — understand the whole landscape. They know which tool to reach for and why, and they can explain it clearly.
 
-This article covers the semantic layer: what vector search actually does, when it wins, and how it composes with lexical and fuzzy search into hybrid architectures that handle the full range of query types. It also covers the dedicated vector database landscape for when Postgres genuinely isn't enough.
+This article covers the semantic layer: what vector search actually does, when it wins, and where it should stay out of the way. The useful version is not "embed everything." It is knowing when vectors belong beside lexical, fuzzy, and exact-match search in a hybrid architecture.
 
 The lexical and fuzzy half of the picture — `tsvector`, `pg_trgm`, `pg_search` — is in [Postgres Text Searching Guide 2026](/postgres-text-search-guide).
 
@@ -85,7 +85,7 @@ CREATE EXTENSION IF NOT EXISTS vector;
 
 ALTER TABLE documents ADD COLUMN embedding vector(1536);
 
--- HNSW is usually the right index for datasets under ~10M vectors
+-- HNSW is usually the first index to try for moderate-size datasets
 CREATE INDEX documents_embedding_idx
   ON documents USING hnsw (embedding vector_cosine_ops);
 
@@ -234,7 +234,7 @@ Add a layer when a failure mode appears that the current layer can't fix:
 
 ## If You Do Need a Dedicated Vector Store
 
-pgvector handles most use cases well under ~10M vectors at moderate query volume. When you genuinely outgrow it — very high concurrency, sub-10ms p99 requirements, billions of vectors, or serious multi-tenant isolation needs — the dedicated vector database landscape is wide and worth understanding.
+pgvector handles a lot of application search before you need another database. The rough cutoff depends on vector count, index settings, write rate, filters, hardware, and concurrency, so treat any "under 10M vectors" rule as a starting assumption to benchmark, not a product limit. When you genuinely outgrow it — very high concurrency, very low p99 latency requirements, billions of vectors, or serious multi-tenant isolation needs — the dedicated vector database landscape is wide and worth understanding.
 
 ### What the Matrix Columns Actually Mean
 
@@ -290,16 +290,18 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 # Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
 ```
 
-**Disk-based index** is a cost lever. RAM-resident HNSW indexes run ~6GB per million vectors at 1536 dimensions — roughly $800/month for a 64GB AWS node at full capacity. Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB's Lance format, Turbopuffer's object storage tier) trade 5–20ms extra latency for much lower infrastructure cost. For RAG workloads where end-to-end latency is already 200–500ms, that's usually the right tradeoff.
+**Disk-based index** is a cost lever. RAM-resident HNSW indexes can require several GB of RAM per million 1536-dimension vectors once raw vectors, graph overhead, and metadata are counted. Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB's Lance format, Turbopuffer's object storage tier) often trade some query latency for lower infrastructure cost. For RAG workloads where model latency already dominates, that tradeoff is frequently worth benchmarking.
 
-**Max dimensions** is a migration hiding in your architecture. `text-embedding-3-large` uses 3072 dims, Jina v3 up to 8192, and research models are pushing past 16K. MongoDB Atlas caps at 2,048, already below some current production models. Elasticsearch caps at 4,096. Qdrant, Weaviate, and LanceDB are effectively uncapped. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a painful sprint.
+**Max dimensions** is a migration hiding in your architecture. `text-embedding-3-large` uses 3072 dims, Jina v3 can emit larger embeddings, and research models keep pushing higher. Some managed services publish hard dimension caps; others document high caps or no practical cap for typical embedding models. Check current docs before committing. Pick something with headroom; migrating a vector index because you hit a dimension ceiling is a painful sprint.
+
+_Last verified against public project docs and product pages on May 8, 2026. Treat the table below as a decision aid, not a substitute for checking current limits, pricing, and managed-service feature flags._
 
 ### The Landscape
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
 |---|---|---|---|---|---|---|---|---|---|
-| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 | Already on Postgres; under 10M vectors |
-| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Best-in-class | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
+| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 | Already on Postgres; moderate vector counts |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
 | **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
 | **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
 | **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
@@ -317,17 +319,17 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 
 ### A Few Things That Don't Fit in the Table
 
-**Turbopuffer's multi-tenancy** is in a different class. Most databases count namespaces as a limit. Turbopuffer doesn't. Notion runs 10B+ vectors across millions of namespaces on it. If each user or organization needs isolated vector search, this changes the economics entirely.
+**Turbopuffer's multi-tenancy** is built around very high namespace counts. Its public positioning and customer stories emphasize workloads like Notion's large, namespace-heavy corpus. If each user or organization needs isolated vector search, that architecture can change the economics, but still benchmark your own tenant shape.
 
 **LanceDB embedded mode** is the closest thing to "SQLite for vector search." It runs in-process, requires no server, and works in Lambda, Cloudflare Workers, and edge environments. The Lance columnar format makes embedded operation practical at real scale.
 
-**Chroma stops at dev/test.** At 100M+ vectors it degrades significantly — no disk index, no real hybrid search, no HA story. It's an excellent prototyping tool. Don't promote the prototype into production infrastructure.
+**Chroma is strongest at dev/test and small app deployments.** If you are aiming at very large corpora, HA, disk-heavy operation, or first-class hybrid search, evaluate a production-oriented store before promoting the prototype into infrastructure.
 
 **Vespa is what you reach for when retrieval is only half the product.** It combines lexical retrieval, nearest-neighbor search, tensors, ranking expressions, grouping, and online serving. That power is real, but so is the operational and modeling complexity. It fits search/recommendation teams more than "add semantic search to my CRUD app."
 
 **ClickHouse belongs in the conversation when search is attached to analytics.** If your source of truth is events, logs, traces, or metrics, ClickHouse keeps vector distance, filtering, aggregation, and serious full-text indexing in one SQL engine. Not a purpose-built vector database, but often the boring-right answer for analytical retrieval.
 
-**Sparse vectors are how you get BM25-quality keyword matching inside a vector index** — without running a separate full-text engine. Qdrant has the most mature implementation. Elasticsearch's ELSER is production-proven at enterprise scale. If hybrid search is critical and a two-system architecture is a deal-breaker, sparse vector support is what to look for.
+**Sparse vectors are how you get BM25-quality keyword matching inside a vector index** — without running a separate full-text engine. Qdrant and Elasticsearch have especially mature implementations here. If hybrid search is critical and a two-system architecture is a deal-breaker, sparse vector support is what to look for.
 
 ### Choosing When You've Outgrown pgvector
 

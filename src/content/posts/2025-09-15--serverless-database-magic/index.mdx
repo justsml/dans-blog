@@ -15,13 +15,21 @@ cover_credit: "©️ 2025 Dan Levy"
 
 # Not another Vector DB article
 
-The database landscape has fundamentally shifted, driven by AI applications requiring vector-based RAG (Retrieval-Augmented Generation) and multi-modal search. While Postgres/PGVector and OpenSearch/Elasticsearch remain enterprise standards, they come with significant operational overhead. Only critical business features justify this complexity.
+Here is the decision rule I wish I had used earlier:
 
-What if you could get **enterprise-grade search features** with zero servers and minimal engineering resources? A new class of databases built for **object-based storage over HTTP** (AWS S3, Cloudflare R2, Backblaze B2) makes this possible!
+<p class="inset">If your data can be rebuilt from files and users mostly read it, try an object-storage database first. If users are writing to it all day, start with a real database and stop trying to make S3 cosplay as one.</p>
+
+That is the useful line. Not "serverless is the future." Not "vector databases changed everything." Those sentences have already been printed on enough conference lanyards.
+
+AI did change the shape of a lot of search problems. Suddenly small teams wanted semantic search, hybrid ranking, document chat, multimodal lookup, and analytics over files sitting in object storage. The old answer was "run Postgres with pgvector" or "operate OpenSearch/Elasticsearch" or "buy a managed search service." Those are still good answers when the workload deserves them.
+
+But many workloads do not. They are read-heavy, rebuildable, and tolerant of a short delay between content changing and search catching up. Documentation. Catalog snapshots. Static exports. Internal knowledge bases. Local analytics. Prototype RAG systems. For those, a new class of tools has made the boring architecture unusually powerful: build an index, store it as files, serve it over HTTP.
+
+Snapshot note: the ecosystem is moving quickly. The star counts, feature labels, and performance numbers below are a September 2025 snapshot, not a timeless scoreboard. Treat them as orientation, then check the current docs before betting a production migration on any one cell.
 
 ## A database by any other name
 
-These **serverless and CDN-capable datastores** are transforming search for mid-scale use cases (1,000-1,000,000 records, or several GBs) that previously couldn't justify traditional database infrastructure:
+These serverless and CDN-capable datastores are useful for mid-scale cases, roughly 1,000 to 1,000,000 records or a few GB, where traditional database infrastructure can be more ceremony than value:
 
 - **Pagefind** (2022, ~4.5K ⭐): Pure static approach - compile once, search forever, zero backend requirements
 - **Orama** (2023, ~8K ⭐): Universal solution running everywhere from browsers to serverless functions
@@ -29,7 +37,7 @@ These **serverless and CDN-capable datastores** are transforming search for mid-
 - **LanceDB** (2023, ~4K ⭐): Enterprise multimodal capabilities with disk-based architecture
 - **DuckDB-WASM** (2019, ~23K ⭐): Full SQL analytics database running in browsers via WebAssembly
 
-Most of these tools leverage simple S3 API calls and existing IAM policies, eliminating traditional database complexity.
+The common move is simple: keep the durable data in files or object storage, then query it from a browser, edge function, worker, or lightweight service. That does not eliminate complexity. It moves the complexity into build pipelines, index freshness, cache invalidation, and client capabilities. Which is a perfectly good trade when reads dominate.
 
 ### Battle of the Checkboxes
 
@@ -42,11 +50,11 @@ Most of these tools leverage simple S3 API calls and existing IAM policies, elim
 | **Write Support** | Build-time only | Full CRUD | Full CRUD | Full CRUD | Full SQL CRUD |
 | **Performance** | Sub-100ms | 0.0001ms - 100ms | Sub-100ms | 3-5ms vector, 50ms FTS | 10ms-1s (complex SQL) |
 
-*Note: Chroma requires a server runtime and doesn't support direct S3 object storage ([issue #1736](https://github.com/chroma-core/chroma/issues/1736))
+*September 2025 snapshot: Chroma requires a server runtime and does not support direct S3 object storage in the way the object-file tools do ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
 
 ### Implementation examples
 
-The syntax differences reveal each tool's philosophy and target use case:
+The syntax differences reveal the real split: build-time search, in-memory search, vector-native storage, multimodal tables, and browser SQL are not the same product category just because they all appear in AI demos.
 
 #### Static site search with Pagefind
 ```html
@@ -192,21 +200,34 @@ const results = await collection.query({
 - Want to process CSV/Parquet files directly from S3
 - *Example: Business intelligence dashboard with ad-hoc SQL queries*
 
-## The bigger picture
+## The Decision Rule
 
-These tools **democratize capabilities previously exclusive to tech giants**. In 2020, implementing semantic search required ML teams, GPU clusters, and months of infrastructure work. Today, it's a few lines of code and a $5/month hosting bill.
+The practical question is not "which database is best?"
 
-Small teams can now ship search experiences rivaling hundred-person engineering teams. The moat around "sophisticated search" is evaporating.
+The practical question is: what kind of change must the system absorb?
 
-Even AWS recognizes this trend—their upcoming [S3 Vector](https://aws.amazon.com/about-aws/whats-new/2024/12/amazon-s3-vector-search-capability/) feature will enable native vector search directly within S3, further validating the object storage approach to modern databases.
+- **Rebuildable content:** Pagefind, Orama snapshots, Lance files, DuckDB over Parquet. Keep it static until it hurts.
+- **Frequent writes:** Postgres, Chroma server, a managed search service, or a queue-backed indexing pipeline. You need coordination, not vibes.
+- **User-specific results:** use a real backend. Object storage is not an authorization model.
+- **Analytics over files:** DuckDB is absurdly useful. Let SQL do SQL things.
+- **Multimodal or vector-heavy search:** LanceDB and Chroma are worth testing against your actual data, not against a README benchmark.
 
-That "nice-to-have" search feature you've been postponing? It's probably easier to implement than your login system now. User expectations have shifted—every search box is compared to Google or Notion. These tools make those expectations achievable without enterprise budgets.
+The happy path is cheap. The edge cases decide the architecture.
+
+## The Bigger Picture
+
+These tools reduce the minimum viable infrastructure for useful search. That matters. In 2020, "semantic search" often implied a pile of services, a lot of glue code, and someone explaining vector indexes in a meeting where half the room wanted lunch. In 2025, a small team can prototype the same product idea with files, embeddings, and a weekend.
+
+That does not mean every search box should become a RAG system. It means the first version no longer has to inherit production infrastructure before it has production evidence.
+
+Even AWS has been moving in this direction with S3-adjacent vector search work, which is a useful signal: object storage is no longer just the attic where old files go. It is becoming a query surface.
 
 ## Start experimenting
 
-1. **This weekend**: Pick a tool matching your current project and build a prototype
-2. **Think beyond text**: Consider how semantic search might unlock new user experiences
-3. **Start simple**: Begin with static approaches, but architect for future migration to dynamic solutions
+1. **Pick the update pattern first**: build-time, hourly batch, live writes, or per-user results.
+2. **Prototype with the smallest honest tool**: Pagefind for static HTML, DuckDB for analytical files, Orama for lightweight app search, LanceDB or Chroma for vector-heavy work.
+3. **Measure the ugly part**: indexing time, freshness, bundle size, permissions, and the first query after a cold start.
+4. **Promote only when pain is real**: a managed database is easier to justify after the file-based version shows exactly where it bends.
 
 *Check out my [practical Pagefind guide][1] for hands-on implementation, or explore the growing ecosystem of edge-native databases reshaping data at scale.*
 

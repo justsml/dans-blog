@@ -44,7 +44,7 @@ Bring receipts.
     What does "context window" refer to in an LLM?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     The context window is the total number of tokens a model can process in a single call — **input + output combined**. A 128K context window means your prompt + retrieved documents + conversation history + the model's response must all fit within 128,000 tokens.
 
@@ -67,10 +67,10 @@ Bring receipts.
 >
   <slot name="question">
   <div className="question">
-    Roughly how many tokens does a 100-word English paragraph use with a modern tokenizer like cl100k (GPT-4)?
+    Roughly how many tokens does a 100-word English paragraph use with a common modern tokenizer?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     The rule of thumb is **~1.3 tokens per word** for typical English prose. A 100-word paragraph ≈ 130 tokens.
 
@@ -102,11 +102,11 @@ Bring receipts.
     What is the practical effect of using the `system` role vs. the `user` role in the messages array?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    The `system` role is processed as operator-level instructions. Models are trained to give it higher adherence than user messages — it's the architectural boundary between "what the developer said" and "what the user said."
+    The `system` role is processed as higher-priority instructions. Models are trained to give it more weight than user messages — it's the architectural boundary between "what the developer said" and "what the user said."
 
-    It's not magic. It doesn't guarantee the model ignores conflicting user instructions (see: prompt injection). But it meaningfully increases the model's tendency to follow your instructions, especially for well-trained models like Claude and GPT-4+.
+    It's not magic. It doesn't guarantee the model ignores conflicting user instructions (see: prompt injection). But it meaningfully increases the model's tendency to follow your instructions, especially on models with strong instruction-following.
 
     In practice: put your persona, rules, and behavioral constraints in `system`. Put retrieved context and user data in `user`. Never put user-controlled input in `system`.
   </div>
@@ -130,7 +130,7 @@ Bring receipts.
     Research on the "Lost in the Middle" problem shows that LLMs tend to:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     The [Lost in the Middle paper (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demonstrated that LLMs reliably struggle with information placed in the middle of long contexts. Performance is significantly higher when relevant information appears at the **beginning or end** of the context window.
 
@@ -156,7 +156,7 @@ Bring receipts.
     When chunking documents for RAG, what's the most important principle?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     There's no universal correct chunk size — it depends on your content. The important principles are:
 
@@ -186,7 +186,7 @@ Bring receipts.
     In RAG systems, "hybrid search" refers to:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     Hybrid search combines **vector search** (semantic similarity via embeddings) and **keyword search** (BM25 / full-text search) because they fail in complementary ways:
 
@@ -217,7 +217,7 @@ Bring receipts.
     When building a RAG prompt with retrieved context, a good rule of thumb for context budget is:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     The context window is shared between **input and output**. If you use 90% for input, the model only has 10% of the window left to generate a response — which often causes truncated or degraded outputs.
 
@@ -245,7 +245,7 @@ Bring receipts.
     In a multi-turn chat application, what's the correct strategy when conversation history grows long?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     LLMs don't have persistent memory. Every API call is stateless — you send the full context, you get a response. The "memory" of a conversation is entirely the message history you include in each request.
 
@@ -278,7 +278,7 @@ Bring receipts.
     For most production use cases, the optimal few-shot example strategy is:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     Few-shot examples dramatically improve output consistency and format adherence. The sweet spot for most tasks is **3–5 high-quality, diverse examples**.
 
@@ -308,16 +308,16 @@ Bring receipts.
     Why do many production prompts use XML-style tags like `<document>`, `<context>`, `<instructions>`?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     XML-style tags provide **explicit structural boundaries** that models are trained to recognize and respect. They do two things:
 
-    1. **Separation**: They signal to the model where instructions end and data begins — critical for RAG and for preventing prompt injection from injected documents.
+    1. **Separation**: They signal to the model where instructions end and data begins — critical for RAG and for reducing prompt-injection risk from retrieved documents.
     2. **Parseability**: When you ask the model to respond in XML (e.g., `<answer>...</answer>`), the tags give you clean extraction points without regex hacks.
 
     This isn't XML-as-a-markup-language. It's XML as a delimiter convention that models are trained on. It works because the model has seen this pattern extensively in training, not because it's validating schemas.
 
-    Works across all major models (GPT, Claude, Gemini) — it's a training data convention, not a vendor feature.
+    Works across most instruction-tuned models often enough to be useful — it's a training data convention, not a vendor feature or a security guarantee.
   </div>
   </slot>
 </Challenge>
@@ -339,7 +339,7 @@ Bring receipts.
     Setting `temperature=0` in your LLM call means:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     `temperature=0` makes the model pick the highest-probability token at each step (greedy decoding), which produces **more consistent** outputs — but not guaranteed-identical outputs.
 
@@ -370,9 +370,9 @@ Bring receipts.
     What is "prompt caching" in the context of LLM APIs (Anthropic, OpenAI)?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
-    Prompt caching (available in Anthropic's Claude and OpenAI's recent GPT models) reuses the computed **KV cache / prompt prefix state** for static prompt prefixes. On subsequent requests with the same prefix, the model can skip re-processing those tokens — which reduces latency and can dramatically reduce cost.
+    Prompt caching reuses the computed **KV cache / prompt prefix state** for static prompt prefixes when your provider supports it. On subsequent requests with the same prefix, the model can skip re-processing those tokens — which reduces latency and can dramatically reduce cost.
 
     This is not response caching. The model still generates a fresh response every time. You're just avoiding re-tokenizing and re-computing attention for the part of the prompt that doesn't change.
 
@@ -400,7 +400,7 @@ Bring receipts.
     The most effective technique for reducing hallucination in a production AI system is:
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     Instructing a model not to hallucinate doesn't stop hallucination — the model doesn't have a reliable introspective signal for "I'm making this up." It just means the model will confidently tell you it's not making things up while making things up.
 
@@ -435,7 +435,7 @@ Bring receipts.
     What's the key distinction between context engineering and fine-tuning, and when does fine-tuning actually make sense?
   </div>
   </slot>
-  <slot name='explanation'>
+  <slot name="explanation">
   <div className="explanation">
     **Context engineering** shapes model behavior through the prompt — system instructions, few-shot examples, retrieved context. It's per-request, reversible, and requires no training.
 
