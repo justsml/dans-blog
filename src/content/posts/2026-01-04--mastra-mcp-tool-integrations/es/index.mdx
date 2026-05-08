@@ -12,23 +12,23 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-Has construido un agente de IA. Quizás incluso es bueno. Los prompts están bien diseñados, el modelo es rápido y las respuestas se sienten naturales.
+Has construido un agente de IA. Quizás incluso sea bueno. Los prompts están afinados, el modelo es rápido y las respuestas se sienten naturales.
 
 Pero entonces alguien le pide que consulte un registro de cliente en Salesforce. O que extraiga los últimos tickets de Jira. O que busque en tu documentación interna.
 
 Y tu hermoso agente simplemente... no puede.
 
-Este es el problema de integración que toda plataforma de IA termina enfrentando. Tu agente necesita manos. Necesita ojos para ver tus sistemas de negocio reales. Sin ellos, solo estás ejecutando un chatbot costoso.
+Este es el problema de integración que toda plataforma de IA termina enfrentando. Tu agente necesita manos. Necesita ojos en tus sistemas de negocio reales. Sin ellos, solo estás ejecutando un chatbot costoso.
 
-La solución tradicional consiste en escribir un wrapper personalizado de API para cada servicio que quieras conectar. Leer su documentación, manejar su autenticación, lidiar con sus límites de tasa, rezar para que no cambien sus endpoints el próximo mes. Y luego hacerlo de nuevo para el siguiente servicio. Y el siguiente.
+La solución tradicional consiste en escribir un wrapper de API personalizado para cada servicio que quieras conectar. Leer su documentación, manejar su autenticación, lidiar con sus límites de frecuencia, rezar para que no cambien sus endpoints el próximo mes. Y luego hacerlo de nuevo para el siguiente servicio. Y el siguiente.
 
-El Model Context Protocol cambia por completo este cálculo.
+El Model Context Protocol cambia este cálculo por completo.
 
 ---
 
 ## Lo que MCP Resuelve Realmente
 
-Piensa en USB antes de USB-C. Tenías Mini-USB, Micro-USB, conectores propietarios de Apple y un cajón lleno de cables que solo funcionaban con dispositivos específicos. USB-C no solo añadió un nuevo conector, sino que estableció un estándar que significaba que cualquier cable podía funcionar con cualquier dispositivo.
+Piensa en USB antes de USB-C. Tenías Mini-USB, Micro-USB, conectores propietarios de Apple y un cajón lleno de cables que solo funcionaban con dispositivos específicos. USB-C no solo añadió un nuevo conector: estableció un estándar que significaba que cualquier cable podía funcionar con cualquier dispositivo.
 
 MCP está haciendo lo mismo para las integraciones de herramientas de IA.
 
@@ -77,13 +77,13 @@ export const mcpClient = new MCPClient({
 });
 ```
 
-El cliente gestiona el ciclo de vida de la conexión, maneja el spawning de procesos para herramientas locales y mantiene conexiones HTTP para servidores remotos. No tocas sockets ni stdio directamente.
+El cliente gestiona el ciclo de vida de la conexión, maneja la generación de procesos para herramientas locales y mantiene conexiones HTTP para servidores remotos. No tocas sockets ni stdio directamente.
 
 ---
 
 ## Conexión de Herramientas a Agentes
 
-Una vez que tienes tu cliente MCP configurado, darle esas herramientas a un agente es sencillo:
+Una vez configurado tu cliente MCP, darle esas herramientas a un agente es sencillo:
 
 ```typescript
 // src/mastra/agents/navigation-agent.ts
@@ -108,7 +108,7 @@ export const navigationDirectionsAgent = new Agent({
 
 Cuando un usuario pregunta: *"¿Cuál es la mejor ruta de San Francisco a Lake Tahoe, y debería preocuparme por el clima?"*
 
-El agente lee las definiciones de herramientas disponibles, se da cuenta de que tiene acceso a herramientas de rutas de Google Maps y pronóstico del tiempo, las ejecuta con los parámetros correctos y responde con una ruta óptima más las condiciones meteorológicas actuales en el camino.
+El agente lee las definiciones de herramientas disponibles, se da cuenta de que tiene acceso a herramientas de rutas de Google Maps y pronóstico meteorológico, las ejecuta con los parámetros correctos y responde con una ruta óptima junto con las condiciones climáticas actuales en el camino.
 
 No escribiste ni una sola línea de código de la API de Google Maps ni de integración con el servicio meteorológico.
 
@@ -118,7 +118,7 @@ No escribiste ni una sola línea de código de la API de Google Maps ni de integ
 
 Aquí es fácil cometer un error de seguridad: hardcodear credenciales.
 
-Si pones una única clave de API de Google Maps en tus variables de entorno y das el trabajo por terminado, todos los usuarios comparten la misma cuota y los mismos límites de tasa. Más importante aún, si usas servicios que almacenan preferencias de usuario (como ubicaciones guardadas o rutas favoritas), todos verían los mismos datos. Esto funciona bien para demos. Es un pasivo en producción.
+Si pones una única clave de API de Google Maps en tus variables de entorno y das el trabajo por terminado, todos los usuarios comparten la misma cuota y los mismos límites de frecuencia. Más importante aún, si usas servicios que almacenan preferencias de usuario (como ubicaciones guardadas o rutas favoritas), todos verían los mismos datos. Esto funciona bien para demos. Es un pasivo en producción.
 
 Mastra lo resuelve permitiéndote crear clientes MCP de forma dinámica con credenciales específicas por usuario:
 
@@ -151,7 +151,7 @@ async function handleUserRequest(userPrompt: string, userCredentials: UserCreds)
 }
 ```
 
-Cada usuario obtiene su propio conjunto de herramientas aislado con sus propias cuotas y preferencias de API. Las ubicaciones guardadas del Usuario A permanecen privadas, el historial de rutas del Usuario B es independiente. Así es como funcionan en la práctica los agentes SaaS multi-tenant.
+Cada usuario obtiene su propio conjunto de herramientas aislado con sus propias cuotas y preferencias de API. Las ubicaciones guardadas del Usuario A permanecen privadas; el historial de rutas del Usuario B es independiente. Así es como funcionan en la práctica los agentes SaaS multi-tenant.
 
 ---
 
@@ -200,20 +200,20 @@ Esto te da un control preciso sobre exactamente cómo interactúan las herramien
 
 Escribir clientes de API personalizados para cada servicio con el que tu agente de IA necesite comunicarse nunca fue sostenible. Escala mal, se rompe a menudo y ata tu plataforma a implementaciones específicas.
 
-MCP no resuelve todos los desafíos de integración, la autenticación sigue siendo compleja, el rate limiting sigue importando y no todos los servicios tienen un servidor MCP todavía. Pero establece una base que hace que construir plataformas de agentes sea significativamente menos doloroso.
+MCP no resuelve todos los desafíos de integración: la autenticación sigue siendo compleja, la limitación de tasas sigue importando y no todos los servicios tienen un servidor MCP todavía. Pero establece una base que hace que construir plataformas de agentes sea significativamente menos doloroso.
 
 Si estás diseñando un sistema de IA que necesita interactuar con servicios externos, entender MCP probablemente valga tu tiempo.
 
 ### Recursos
 
-- [Mastra MCP Documentation](https://mastra.ai/docs/mcp/overview)
+- [Documentación de MCP de Mastra](https://mastra.ai/docs/mcp/overview)
 - [MCP Registry](https://registry.modelcontextprotocol.io)
 - [Klavis AI (Enterprise MCP)](https://klavis.ai)
-- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+- [Repositorio de Mastra en GitHub](https://github.com/mastra-ai/mastra)
 
 ## Lee la Serie
 
-1. [LLM Routing](/llm-routing-mastra-ai)
-2. [Security & Guardrails](/mastra-security-guardrails)
-3. **MCP & Tool Integrations** (Esta Publicación)
-4. [Workflows & Memory](/mastra-workflows-memory)
+1. [Enrutamiento de LLM](/llm-routing-mastra-ai)
+2. [Seguridad y Guardarraíles](/mastra-security-guardrails)
+3. **MCP e Integraciones de Herramientas** (Esta Publicación)
+4. [Flujos de Trabajo y Memoria](/mastra-workflows-memory)
