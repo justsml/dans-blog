@@ -1,6 +1,6 @@
 ---
-title: "अब LLM कनेक्शन स्ट्रिंग्स का समय है"
-subTitle: "`llm://` URLs से मॉडल और प्रोवाइडर कॉन्फ़िग सरल बनाएं"
+title: "LLM कनेक्शन स्ट्रिंग्स का समय आ गया है"
+subTitle: "`llm://` URLs से मॉडल और प्रोवाइडर कॉन्फ़िगरेशन को सरल बनाएं"
 date: 2026-01-30
 modified: 2026-02-26
 tags: [ai, llm, api, developer-experience, standards]
@@ -14,37 +14,37 @@ cover_icon: ./square-200.webp
 ---
 
 <blockquote class="inset">
-**अपडेट:** इस लेख ने [`llm://` URI स्कीम के लिए एक Internet-Draft](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/) को जन्म दिया।
+**अपडेट:** इस लेख के परिणामस्वरूप [`llm://` URI स्कीम के लिए एक Internet-Draft](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/) तैयार की गई।
 </blockquote>
 
 
-क्या आपको वे पुराने बुरे दिन याद हैं जब डेटाबेस कनेक्ट करने के लिए environment variables के एक अव्यवस्थित समूह को जुगाड़ करना पड़ता था?
+क्या आपको वो पुराने बुरे दिन याद हैं जब डेटाबेस से कनेक्ट करने का मतलब था अनगिनत एनवायरनमेंट वेरिएबल्स के साथ जूझना?
 
-यह एक नाजुक कॉन्फ़िग का ढांचा था। `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... या रुको, क्या यह `DB_USERNAME` था? `DB_PASS` है या `DB_PWD`? क्या मुझे इस बार `PG_*` प्रीफ़िक्स चाहिए? और timeout सेटिंग कहाँ जाती है?
+यह एक नाज़ुक संरचना थी। `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`... या फिर क्या यह `DB_USERNAME` था? क्या यह `DB_PASS` था या `DB_PWD`? क्या मुझे इस बार `PG_*` प्रीफिक्स चाहिए? और टाइमआउट सेटिंग कहाँ जाती है?
 
-यह कार्डों का एक नाजुक महल था, जो आपकी प्रोडक्शन बिल्ड को गिरा सकता था क्योंकि आप `HOST` को capitalize करना भूल गए।
+यह एक खतरनाक जोखरी थी, जो आपके प्रोडक्शन बिल्ड को गिरा सकती थी क्योंकि आपने `HOST` को कैपिटलाइज़ करना भूल गए।
 
-फिर, किसी के दिमाग में एक शानदार विचार आया — सिर्फ एक URL¹ इस्तेमाल करो:
+फिर, किसी को यह शानदार विचार आया कि बस एक URL¹ का उपयोग कर लिया जाए:
 
 ```bash
 postgres://user:pass@host:5432/dbname
 ```
 
-एक स्ट्रिंग। वह सब कुछ जो आपको चाहिए। सब जगह parse हो सकता है। Portable। मैं कहूँ... सुंदर?
+एक स्ट्रिंग। जो कुछ भी आपको चाहिए। सार्वभौमिक रूप से पार्स करने योग्य। पोर्टेबल। कहें तो... खूबसूरत?
 
-तो हम LLMs को 1999 की तरह क्यों समझ रहे हैं?
+तो फिर हम LLMs के साथ 1999 की तरह क्यों पेश आ रहे हैं?
 
-## Environment Variables का विस्तार
+## Env Var विस्फोट
 
-अभी, मेरी `.env` फ़ाइल छोड़े गए API keys की कब्रगाह जैसी दिखती है। `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`। और Azure की बात शुरू करो तो — आपको एक endpoint, एक deployment name, एक API version, और एक key चाहिए सिर्फ "hello" कहने के लिए।
+अभी, मेरी `.env` फाइल abandoned API keys का कब्रगाह जैसी दिखती है। `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `MISTRAL_API_KEY`, `GROQ_API_KEY`। और Azure की बात छोड़ दो—आपको एक endpoint, एक deployment name, एक API version, और बस "नमस्ते" कहने के लिए एक key चाहिए।
 
-यह सिर्फ बदसूरत नहीं है; यह friction है। हर बार जब मैं model swap करना चाहता हूँ या नया provider टेस्ट करना चाहता हूँ, मैं initialization code फिर से लिख रहा हूँ, specific parameter names की documentation खोज रहा हूँ, और अपने environment config में तीन और लाइनें जोड़ रहा हूँ।
+यह सिर्फ बदसूरत नहीं है; यह घर्षण है। हर बार जब मैं एक मॉडल बदलना चाहता हूँ या एक नया प्रोवाइडर टेस्ट करना चाहता हूँ, मुझे initialization code फिर से लिखना पड़ता है, specific parameter names के लिए दस्तावेज़ीकरण ढूंढना पड़ता है, और मेरे एनवायरनमेंट कॉन्फ़िगरेशन में तीन और लाइनें जोड़नी पड़ती हैं।
 
-क्या होगा अगर हम सिर्फ... DB URL का विचार ~~चुराएँ~~ उधार लें?
+क्या हो अगर हम बस... ~~चुरा लें~~ उधार ले लें DB URL विचार?
 
 ## LLM कनेक्शन स्ट्रिंग्स का परिचय
 
-कल्पना करो अपनी पूरी model interface को एक लाइन से configure करना:
+कल्पना करें कि आप एक ही लाइन से अपना पूरा मॉडल इंटरफ़ेस कॉन्फ़िगर करते हैं:
 
 ```bash
 llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
@@ -54,39 +54,39 @@ llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
 ---
 <br />
 
-### LLM कनेक्शन स्ट्रिंग की संरचना
+### LLM कनेक्शन स्ट्रिंग की एनाटॉमी
 
 ![LLM कनेक्शन स्ट्रिंग के भाग](./inline-url-diagram-dark.svg)
 
-Scheme है `llm://`। Host है provider का API base URL। Path है model name। और query parameters सब runtime options को handle करते हैं जो आमतौर पर आपके code में clutter करते हैं।
+स्कीम है `llm://`। Host है प्रोवाइडर का API base URL। path है मॉडल का नाम। और query parameters सभी runtime options को संभालती हैं जो आमतौर पर आपके code को गंदा करते हैं।
 
-## Auth चाहिए? बढ़िया, जोड़ दो।
+## Auth चाहिए? बहुत अच्छा, जोड़ लो।
 
-जैसे `postgres://`, हम authentication सीधे bake कर सकते हैं:
+बिल्कुल `postgres://` की तरह, हम authentication को सीधे बेक कर सकते हैं:
 
 ```bash
 llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
 ```
 
-*नोट: हाँ, credentials URLs में रखना security risk हो सकता है अगर आप उन्हें public logs में paste कर रहे हैं। लेकिन modern logging services इन patterns को scrub करने में काफ़ी अच्छे हैं, और सच कहूँ तो, क्या आप अपनी `.env` फ़ाइल से बहुत बेहतर व्यवहार कर रहे हैं? Verify करो, sanitize करो, और सावधानी से इस्तेमाल करो।*
+*नोट: हाँ, URLs में credentials डालना सुरक्षा जोखिम हो सकता है अगर आप उन्हें public logs में पेस्ट कर रहे हैं। लेकिन आधुनिक logging services इन पैटर्न को scrub करने में काफी अच्छे हैं, और honestly, क्या आप अपनी `.env` फाइल से बेहतर सलूक रहे हैं? वेरिफाई करें, sanitize करें, और सावधानी से उपयोग करें।*
 
 ## Resiliency? क्यों नहीं।
 
-कई डेटाबेस libraries multiple hosts specify करके round-robin failover support करती हैं। हमारे AI agents को भी यही reliability क्यों नहीं मिलनी चाहिए?
+कई डेटाबेस लाइब्रेरीज़ कई hosts specify करके round-robin failover सपोर्ट करती हैं। हमारे AI agents को भी वही reliability क्यों नहीं मिलनी चाहिए?
 
 ```bash
 llms://primary.gpt,backup.gpt/gpt-6?temp=0.9
 ```
 
-`llms://` में वह `s` typo नहीं है। यह plural है। अगर `primary.gpt` hang करता है, client automatically `backup.gpt` retry करता है। कोई complex router logic ज़रूरी नहीं।
+वो `llms://` में `s` टाइपो नहीं है। यह plural है। अगर `primary.gpt` hang हो जाता है, तो client automatic retry करता है `backup.gpt`। कोई complex router logic ज़रूरी नहीं।
 
-<blockquote class="inset">एक स्ट्रिंग में सब कुछ — आपकी **auth** से आपके **endpoint** तक आपके **hyperparameters** तक।</blockquote>
+<blockquote class="inset">एक स्ट्रिंग में आपका **auth**, आपका **endpoint**, और आपके **hyperparameters** — सब कुछ।</blockquote>
 
-## वैकल्पिक प्रारूप
+## वैकल्पिक फॉर्मेट
 
-मैं `llm://` के साथ बँधा नहीं हूँ। Specific scheme standard से कम important है।
+मैं `llm://` से शादीशुदा नहीं हूँ। specific scheme कम महत्व रखता है, standard itself ज़्यादा महत्वपूर्ण है।
 
-मैं एक दुनिया की कल्पना कर सकता हूँ जहाँ हम brevity के लिए provider-specific schemes इस्तेमाल करते हैं, standard structure रखते हुए:
+मैं एक ऐसी दुनिया कल्पना कर सकता हूँ जहाँ brevity के लिए provider-specific schemes का उपयोग करते हैं, जबकि standard structure बनाए रखते हैं:
 
 ```bash
 ollama://localhost:11434/llama3
@@ -94,20 +94,20 @@ vercel://anthropic/sonnet-4.5?temp=0.8&web_search={"maxUses":3}
 bedrock://us-west-2.aws/anthropic/sonnet-4.5?temp=0.8&cacheControl=ephemeral
 ```
 
-Exact syntax कुछ भी हो, core benefits अकाट्य हैं:
+exact syntax जो भी हो, core benefits निर्विवाद हैं:
 
-1.  **Portability:** अपनी पूरी config local script से cloud worker तक copy & paste करो।
-2.  **CLI Friendly:** अपने scripts में एक argument pass करो। `my-agent --model "llm://..."` बेहतर है `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...` से।
-3.  **Language Agnostic:** हर programming language में robust URL parser है। हमें validation, parsing, और sanitization free में मिलती है।
+1.  **पोर्टेबिलिटी:** अपना पूरा कॉन्फ़िगरेशन local script से cloud worker में copy & paste करें।
+2.  **CLI Friendly:** अपने scripts में एक ही argument पास करें। `my-agent --model "llm://..."` बेहतर है `my-agent --model gpt-4 --temp 0.7 --key $KEY --host ...` से।
+3.  **Language Agnostic:** हर प्रोग्रामिंग भाषा के पास एक robust URL parser है। हमें मुफ्त में validation, parsing, और sanitization मिलता है।
 
-<blockquote class="ai-response inset">डेटाबेस दुनिया ने इसे समझने में decades लगाए।<br /><b>ख़ुशी की बात, AI timelines में, यह सिर्फ लगभग आधा vibe-year पहले था।</b></blockquote>
+<blockquote class="ai-response inset">डेटाबेस की दुनिया ने इसे समझने में दशक लगाए।<br /><b>अच्छी खबर, AI timelines में, यह बस लगभग आधा vibe-year पहले की बात है।</b></blockquote>
 
-## निष्कर्ष
+## फैसला
 
-हमें एक और complex configuration standard या नया YAML-based manifest file नहीं चाहिए। हमें सिर्फ वह tool चाहिए जो पिछले 30 साल से internet के बाकी हिस्से के लिए काम कर रहा है।
+हमें एक और complex कॉन्फ़िगरेशन standard या एक नया YAML-based manifest file नहीं चाहिए। हमें बस उस एक टूल का उपयोग करना चाहिए जो पिछले 30 सालों से बाकी इंटरनेट के लिए काम कर रहा है।
 
-चलो wheel फिर से invent करना बंद करो और अपने LLM connections को वही respect देना शुरू करो जो हम अपने डेटाबेस को देते हैं। आपकी `.env` फ़ाइल (और आपकी sanity) आपको धन्यवाद देगी।
+आइए पहिया को फिर से invented करना बंद करें और अपने LLM कनेक्शनों के साथ वही सम्मान करना शुरू करें जो हम अपने डेटाबेस देते हैं। आपकी `.env` file (और आपकी sanity) आपको धन्यवाद देगी।
 
-![एक गंदा env var ड्रॉयर](./hero-concept-8-drawers.webp)
+![एक गंदी env var दराज़](./hero-concept-8-drawers.webp)
 
-{/* ¹ हाँ, मुझे पता है कि `URL` की तुलना में `URI` अधिक सही है। अगर आप इस अंतर के बारे में परेशान होने के लिए काफ़ी pedantic हैं, कृपया बाहर जाकर घास को touch करें। */}
+{/* ¹ हाँ, मुझे पता है कि `URI` `URL` से ज़्यादा सही है। अगर आप उसdistinction के बारे में इतने pedantic हैं, तो कृपया grass को छूएं। */}
