@@ -1,8 +1,8 @@
 ---
 title: "Semantic Vector Search and Other Topics to Win Friends and Lovers"
 subTitle: "The full search landscape: exact, fuzzy, semantic, hybrid — and when to layer all of them."
-date: 2026-05-09
-modified: 2026-05-09
+date: 2026-05-01
+modified: 2026-05-04
 tags: [postgres, postgresql, pgvector, vector-search, semantic-search, hybrid-search, rag, ai, databases, search, embeddings]
 category: Code
 subCategory: Databases
@@ -19,13 +19,13 @@ cover_icon: ./square.webp
 
 Search is not one thing.
 
-"Find user with email `dan@example.com`" and "find me articles about debugging as a new engineer" are both described as search, but they have almost nothing in common as engineering problems. The first has a correct answer and an O(log n) index lookup. The second requires understanding language, intent, and meaning across a corpus.
+"Find user with email `dan@example.com`" and "find me articles about debugging as a new engineer" are both described as search, but they have almost nothing in common as engineering problems. The first has a correct answer and an `O(log n)` index lookup. The second has no correct answer — only relevance — and requires understanding language, intent, and meaning.
 
-The engineers who are most persuasive about search decisions — the ones who win the arguments and ship the right system — understand the whole landscape. Not because they're contrarians, but because they know which tool to reach for and why, and they can explain it clearly to anyone who asks.
+The engineers who are most persuasive about search decisions — the ones who win the arguments and ship the right system — understand the whole landscape. They know which tool to reach for and why, and they can explain it clearly.
 
-This article covers the semantic layer: what vector search actually does, when it wins, and how it composes with lexical and fuzzy search into hybrid architectures that handle the full range of query types. And for when Postgres genuinely isn't enough: the dedicated vector database landscape.
+This article covers the semantic layer: what vector search actually does, when it wins, and how it composes with lexical and fuzzy search into hybrid architectures that handle the full range of query types. It also covers the dedicated vector database landscape for when Postgres genuinely isn't enough.
 
-If you want the Postgres-native lexical and fuzzy search tools first, start with [Postgres Text Searching Guide 2026](/postgres-text-search-guide).
+The lexical and fuzzy half of the picture — `tsvector`, `pg_trgm`, `pg_search` — is in [Postgres Text Searching Guide 2026](/postgres-text-search-guide).
 
 ---
 
