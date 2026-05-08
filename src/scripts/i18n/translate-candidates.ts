@@ -32,8 +32,11 @@ const targetRelPath = relativeToRepo(targetPath);
 
 for (const model of models) {
   const prompt = [
+    "You are a constrained translation file-rewrite worker.",
     `Translate ${relativeToRepo(sourcePath)} into ${locale}.`,
     `Write the complete translated MDX to ${targetRelPath}.`,
+    "Do not run shell commands, git commands, Bun scripts, validation scripts, or translation scripts.",
+    "Do not inspect or follow repository skills. Do not create commits. The wrapper script owns validation, reports, and Git.",
     "Preserve MDX structure, imports, component names, prop names, code blocks, URLs, asset paths, and anchors.",
     "Translate reader-facing prose, frontmatter title/subTitle, image alt text, quiz questions/options/explanations, and visible UI copy inside MDX props.",
     "Do not add commentary outside the file. Replace any previous candidate in the target file.",
@@ -45,6 +48,7 @@ for (const model of models) {
   try {
     runInherited("opencode", [
       "run",
+      "--pure",
       "--model",
       model,
       "--file",
