@@ -1095,46 +1095,55 @@ Overriding the style when generating screenshots
   }
 
   .header-nav {
-    place-self: end;
-    height: unset;
-
-    img {
-      /* class="screenshot-mode" */
-      margin: .5rem 1rem 0 0;
-
-      /* max-width: .85rem !important;
-      max-height: .85rem !important;; */
-      @screen sm {
-        margin: 1rem;
-      }
-
-    }
-
-    .banner-image {
-      margin-bottom: 2rem;
-    }
+    align-items: center !important;
+    grid-column: content !important;
+    height: 4rem !important;
+    justify-self: start !important;
+    margin: 0 !important;
+    place-self: auto !important;
+    width: auto !important;
 
     a:link,
     a:visited {
       color: var(--clr-muted-300) !important;
     }
+  }
 
-    .title {
-      font-size: 94%;
-      height: unset;
-      font-family: Raleway, sans-serif;
-      color: var(--clr-muted-300);
-      font-weight: 700;
-      padding: .5rem;
-      text-shadow: none;
-      width: 125px;
-      text-decoration: underline;
+  .top-header {
+    padding-block: 0.7rem 0.2rem !important;
+  }
 
-      @screen sm {
-        font-size: 1.75rem;
-        margin: .125rem 0rem 0rem 0rem;
-      }
-    }
+  .header-nav > h2 {
+    align-self: center !important;
+    justify-self: start !important;
+    margin: 0 !important;
+  }
+
+  .header-nav .animated-logo-type {
+    grid-template-columns: 3rem 13rem !important;
+    gap: 0.55rem !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .header-nav .animated-logo-type__avatar {
+    height: 3rem !important;
+    margin: 0 !important;
+    min-height: 3rem !important;
+    min-width: 3rem !important;
+    width: 3rem !important;
+  }
+
+  .header-nav .animated-logo-type__svg {
+    width: 13rem !important;
+  }
+
+  main.article > h1.p-name {
+    margin-block-start: 1.75rem !important;
+  }
+
+  .banner-wrapper.full-width {
+    margin-top: 0.75rem !important;
   }
 
   .quiz-ui {
