@@ -4,6 +4,20 @@
 
 ![Dan's Github Stats](https://github-readme-stats.vercel.app/api?username=justsml&count_private=true&show_icons=true&theme=tokyonight)
 
+## Article Translations
+
+Article i18n uses locale subfolders, English slugs, OpenCode/OpenRouter candidate models, and full Git provenance for every candidate, rejection, judge pass, and final polish. Start with [docs/translations.md](docs/translations.md).
+
+Common commands:
+
+```sh
+bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
+bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
+bun run i18n:validate -- --slug the-last-to-think --locale es
+```
+
+The matching Codex skill is `.agents/skills/article-i18n-provenance/SKILL.md`.
+
 
 ## TODO
 
