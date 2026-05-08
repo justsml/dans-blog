@@ -14,7 +14,7 @@ cover_icon: ./square-200.webp
 ---
 
 <blockquote class="inset">
-**Update:** This article led to a [draft IETF RFC for the `llm://` URI scheme](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
+**Update:** This article led to an [Internet-Draft for the `llm://` URI scheme](https://datatracker.ietf.org/doc/draft-levy-llm-uri-scheme/).
 </blockquote>
 
 
@@ -47,7 +47,7 @@ What if we just... ~~stole~~ borrowed the DB URL idea?
 Imagine configuring your entire model interface with a single line:
 
 ```bash
-llm://api.openai.com/gpt-5.2?temp=0.7&max_tokens=1500
+llm://api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7&max_tokens=1500
 llm://api.z.ai/glm-4.7?top_p=0.9&cache=true
 ```
 
@@ -65,7 +65,7 @@ The scheme is `llm://`. The host is the provider's API base URL. The path is the
 Just like `postgres://`, we can bake authentication right in:
 
 ```bash
-llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?temp=0.7
+llm://app-name:sk-proj-123456@api.openai.com/gpt-5.2?reasoning_effort=none&temp=0.7
 ```
 
 *Note: Yes, putting credentials in URLs can be a security risk if you're pasting them into public logs. But modern logging services are pretty good at scrubbing these patterns, and honestly, are you treating your `.env` file much better? Verify, sanitize, and use with caution.*

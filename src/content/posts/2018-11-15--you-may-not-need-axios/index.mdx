@@ -54,7 +54,7 @@ This article is a collection of the "missing" `fetch` code snippets and common u
 | Intercept request and response                  |✅        |✅         |✅       |
 | Transform request and response data             |✅        |✅         |✅       |
 | Cancel requests                                 |✅        |✅         |❌       |
-| Automatic transforms for JSON data              |✅        |✅         |✅       |
+| Automatic transforms for JSON data              |manual helpers |✅         |✅       |
 | Client side support for protecting against XSRF |✅        |✅         |✅       |
 | Progress                                        |✅        |✅         |✅       |
 | Streaming                                       |✅        |✅         |✅       |
@@ -67,6 +67,8 @@ When starting this article (late 2018, updated 2024) I assumed I'd end with a ta
 Well, as it turns out, **I overestimated the need for 3rd party http libraries.**
 
 Despite using `fetch` for several years (including for non-trivial tasks: file uploads & error/retry support) I still had misconceptions of `fetch`'s abilities and limits.
+
+Native `fetch` does not automatically parse JSON responses or stringify JSON request bodies. You call `response.json()` on the way back and `JSON.stringify()` on the way out. Axios still wins that bit of ergonomics; the argument for `fetch` is that a tiny helper often covers the gap.
 
 Well, let's check out what `fetch` can do...
 

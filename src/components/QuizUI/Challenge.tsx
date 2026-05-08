@@ -364,7 +364,7 @@ export default function Challenge({
           onClick={() => setShowExplanation(!showExplanation)}
           className={clsx("toggle-explainer", { open: showExplanation })}
         >
-          {showExplanation ? "Hide" : "Show"} Explainer{" "}
+          {showExplanation ? "Hide" : "Hint"} Explainer{" "}
         </button>
       </aside>
       <section

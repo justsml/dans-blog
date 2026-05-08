@@ -16,9 +16,9 @@ const DEFAULT_SITE_URL = "http://localhost:4242";
 const DEFAULT_RSS_PATH = "/rss.json";
 const DEFAULT_DELAY_MS = 150;
 const FEED_TIMEOUT_MS = 10_000;
-const NAVIGATION_TIMEOUT_MS = 30_000;
+const NAVIGATION_TIMEOUT_MS = 10_000;
 const QUIZ_SELECTOR_COUNT = 30;
-const ELEMENT_SCREENSHOT_TIMEOUT_MS = 45_000;
+const ELEMENT_SCREENSHOT_TIMEOUT_MS = 15_000;
 const SOCIAL_BANNER_SIZE = {
   width: 1200,
   height: 628,
@@ -320,10 +320,8 @@ async function generateImages(args: ScreenshotTask) {
 }
 
 async function prepareElementScreenshot(page: Page, selector: string) {
-  await page.waitForSelector(selector, {
-    state: "attached",
-    timeout: NAVIGATION_TIMEOUT_MS,
-  });
+  const existingElement = await page.$(selector);
+  if (!existingElement) return null;
 
   await page.evaluate((selector) => {
     const element = document.querySelector<HTMLElement>(selector);
@@ -382,6 +380,35 @@ async function prepareElementScreenshot(page: Page, selector: string) {
     element.style.setProperty("opacity", "1");
     element.style.removeProperty("transform");
     element.style.removeProperty("filter");
+
+    const panel = element.querySelector<HTMLElement>(".quiz-body-panel");
+    const options = element.querySelector<HTMLElement>(".quiz-options");
+    const explanation = element.querySelector<HTMLElement>(".explanation");
+
+    if (panel && options) {
+      panel.classList.remove("card-flip");
+      panel.style.setProperty("overflow", "visible", "important");
+      panel.style.setProperty("transform-style", "flat", "important");
+
+      options.style.setProperty("display", "grid", "important");
+      options.style.setProperty("position", "relative", "important");
+      options.style.setProperty("visibility", "visible", "important");
+      options.style.setProperty("opacity", "1", "important");
+      options.style.setProperty("transform", "none", "important");
+      options.style.setProperty("height", "auto", "important");
+
+      if (explanation) {
+        explanation.style.setProperty("display", "none", "important");
+        explanation.style.setProperty("visibility", "hidden", "important");
+      }
+
+      const optionsHeight = options.scrollHeight;
+      if (optionsHeight > 0) {
+        panel.style.setProperty("height", `${optionsHeight}px`, "important");
+        panel.style.setProperty("min-height", `${optionsHeight}px`, "important");
+      }
+    }
+
     element.scrollIntoView({ block: "center", inline: "center" });
   }, selector);
 
@@ -392,10 +419,13 @@ async function prepareElementScreenshot(page: Page, selector: string) {
 
       const rect = element.getBoundingClientRect();
       const style = window.getComputedStyle(element);
+      const options = element.querySelector<HTMLElement>(".quiz-options");
+      const optionsRect = options?.getBoundingClientRect();
 
       return (
         rect.width > 0 &&
         rect.height > 0 &&
+        Boolean(optionsRect && optionsRect.width > 0 && optionsRect.height > 0) &&
         style.display !== "none" &&
         style.visibility !== "hidden" &&
         style.opacity !== "0"
@@ -470,7 +500,24 @@ function buildQuizSelectorPathMap(basePath: string): Record<string, string> {
 function getSourceDir(sourcePath?: string) {
   if (!sourcePath) return undefined;
 
-  const sourceDir = dirname(sourcePath);
+  const normalizedSourcePath = sourcePath
+    .replace(/\\/g, "/")
+    .replace(/^\/+/, "")
+    .replace(/^src\/content\/posts\//, "")
+    .replace(/\/+$/, "");
+
+  if (
+    !normalizedSourcePath ||
+    normalizedSourcePath === "." ||
+    normalizedSourcePath.split("/").includes("..")
+  ) {
+    return undefined;
+  }
+
+  const sourceDir = path.posix.extname(normalizedSourcePath)
+    ? path.posix.dirname(normalizedSourcePath)
+    : normalizedSourcePath;
+
   return sourceDir === "." ? undefined : sourceDir;
 }
 

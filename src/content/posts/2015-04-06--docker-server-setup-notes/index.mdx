@@ -15,7 +15,7 @@ cover_icon: icon_markus-spiske-193031-unsplash.webp
 
 ## Docker Server Setup
 
-> Historical note: this is a 2015 local-development reference. It is useful for understanding the old workflow, but modern Docker Compose files, pinned image versions, and reviewed update automation are a better default today.
+> Historical note: this is a 2015 local-development reference. It is useful for understanding the old workflow, but do not treat these snippets as current production advice. Modern Docker Compose files, custom networks, pinned image versions, authentication, secrets, and reviewed update automation are safer defaults today.
 
 ### Who's this guide for?
 
@@ -42,13 +42,13 @@ This article features 1-line commands to start some of the most popular database
 
 </section>
 
-**Note:** The commands work in production. However they are mainly designed to accelerate your development workflow.
+**Note:** These commands were written as local-development shortcuts. If you adapt them for production, add authentication, secrets management, backups, network policy, pinned images, and an upgrade plan first.
 
 > **Advanced Docker Users:** If you are familiar with `docker-compose` you may want to convert the shell commands below for use in your `docker-compose.yml` files.
 
 ### Postgres Server
 
-> Start a container, naming it `pg-server`
+> Start a container, naming it `pg-localhost`
 
 ```sh
 # Store db files on a local path, outside the container
@@ -74,13 +74,13 @@ docker run \
 > Access the `psql` prompt as postgres user
 
 ```sh
-docker exec --user postgres -it pg-server psql
+docker exec --user postgres -it pg-localhost psql
 ```
 
 > Access the container's shell as root
 
 ```sh
-docker exec -it pg-server bash
+docker exec -it pg-localhost bash
 ```
 
 **Note:** The above command uses the official Alpine Linux base images. _It is not your typical debian environment._
@@ -97,7 +97,7 @@ docker run -d \
   --restart on-failure:5 \
   -p 127.0.0.1:27017:27017 \
   -v $HOME/.mongodb:/data \
-  mongo:latest \
+  mongo:7 \
   bash -c 'mongod --bind_ip 0.0.0.0'
 ```
 
@@ -107,11 +107,11 @@ Now that your server is setup, verify your data is at `$HOME/.mongodb` with:
 ls -lach $HOME/.mongodb
 ```
 
-Let's connect to the server with `mongo` CLI tool. (If you don't have it installed see below.)
+Let's connect to the server with the `mongosh` CLI tool. (If you don't have it installed see below.)
 
 ```sh
 #> Using default arguments:
-mongo
+mongosh
 ```
 
 And you should see something like this:
@@ -154,7 +154,7 @@ docker run -d \
   -p 127.0.0.1:9200:9200 \
   -p 127.0.0.1:9300:9300 \
   -v $HOME/.elastic:/data \
-  elasticsearch bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
+  docker.elastic.co/elasticsearch/elasticsearch:8.15.5 bash -c 'elasticsearch --cluster.name elastic_cluster --node.name elastic01 --path.data /data/elastic-data --path.logs /data/elastic-logs '
 ```
 
 ##### Security Notes
@@ -175,8 +175,8 @@ docker run -d \
 
 ```dockerfile
 # Example for NodeJS
-FROM node:12
-EXPOSE [3000]
+FROM node:22
+EXPOSE 3000
 COPY . /app/
 WORKDIR /app
 RUN apt-get update && apt-get dist-upgrade -yqq
@@ -214,13 +214,16 @@ docker build -t app-name-here .
 #### Create/Run Web App w/ Links to DB Servers
 
 ```sh
-docker run -d --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here
+docker network create app-local
+docker network connect app-local mongodb
+docker network connect app-local elastic
+docker run -d --name webapp01 --network app-local -p 3000:3000 app-name-here
 ```
 
 #### Run Interactively (non-daemon, in terminal)
 
 ```sh
-docker run -it --name webapp01 -p 3000:3000 --link mongo:mongo --link elastic:elastic app-name-here bash
+docker run -it --name webapp01 --network app-local -p 3000:3000 app-name-here bash
 ```
 
 #### Delete Container Instance or Image

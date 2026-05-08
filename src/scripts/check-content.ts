@@ -368,7 +368,7 @@ function isAllowedAbsoluteRoute(route: string) {
 }
 
 function stripFencedMarkdown(body: string) {
-  return body.replace(/```[\s\S]*?```/g, "");
+  return body.replace(/(```|~~~)[\s\S]*?\1/g, "");
 }
 
 function isValidIsoDate(value: string) {

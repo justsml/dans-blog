@@ -44,6 +44,7 @@ Get ready to prove your cloud expertise! 🚀
 >
   <slot name="question">
   <div className="question">
+    <p className="text-sm">Last verified: May 8, 2026. AWS limits and pricing change quickly.</p>
     What does the name `S3` mean?
   </div>
   </slot>
@@ -75,9 +76,9 @@ Get ready to prove your cloud expertise! 🚀
     "Explain DynamoDB's flexible data model"
   ]}
   options={[
-    { text: "Columns are untyped" },
-    { text: "Dynamic partition keys" },
     { text: "Store arbitrary properties", isAnswer: true },
+    { text: "Dynamic partition keys" },
+    { text: "Columns are untyped" },
     { text: "Automatically managed JSON schema" },
     { text: "Relies on RDS for schema support" },
   ]}
@@ -110,12 +111,12 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "PutItem", hint: "Creates a new item, or replaces an old item with a new item." },
-    { text: "UpdateItem", isAnswer: true },
-    { text: "BatchWriteItem", hint: "Puts (inserts) OR deletes multiple items in a single call."  },
     { text: "BatchUpdateItem", hint: "Does not exist." },
+    { text: "BatchWriteItem", hint: "Puts (inserts) OR deletes multiple items in a single call."  },
+    { text: "UpdateItem", isAnswer: true },
     { text: "BatchUpsertItem", hint: "In DynamoDB?" },
     { text: "TransactWriteItems", hint: "Combines multiple PutItem, UpdateItem, DeleteItem, and ConditionCheck operations into a single call." },
-    ]}
+  ]}
 >
   <slot name="question">
   <div className="question">
@@ -158,7 +159,7 @@ Get ready to prove your cloud expertise! 🚀
     { text: "OpenSearch", isAnswer: true },
     { text: "Neptune", hint: "Graph database with advanced query capabilities" },
     { text: "Redshift", hint: "Complex analytical queries" },
-    { text: "DocumentDB", hint: "MongoDB-compatible queries" }
+    { text: "DocumentDB", hint: "MongoDB-compatible queries" },
   ]}
 >
   <slot name="question">
@@ -193,8 +194,8 @@ Get ready to prove your cloud expertise! 🚀
   options={[
     { text: "Reduces storage costs" },
     { text: "Solves the Egress Problem" },
-    { text: "Increases read performance" },
     { text: "Provides automatic failover", isAnswer: true },
+    { text: "Increases read performance" },
     { text: "Improves geo-distributed traffic" },
   ]}
 >
@@ -233,11 +234,11 @@ Get ready to prove your cloud expertise! 🚀
     "Evaluate WebSocket implementation options"
   ]}
   options={[
-    { text: "EC2", hint: "EC2 can run your own long-lived WebSocket server process." },
+    { text: "API Gateway", isAnswer: true },
     { text: "EKS", hint: "EKS can run your own long-lived WebSocket services." },
     { text: "Lightsail", hint: "Lightsail instances can run your own WebSocket server." },
     { text: "AppSync", hint: "AppSync offers managed real-time GraphQL subscriptions over WebSockets, not arbitrary raw sockets." },
-    { text: "API Gateway", isAnswer: true },
+    { text: "EC2", hint: "EC2 can run your own long-lived WebSocket server process." },
   ]}
 >
   <slot name="question">
@@ -278,9 +279,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Make new buckets public", hint: "Least privilege, first." },
-    { text: "Use least privilege principle", isAnswer: true },
-    { text: "Move data to private blockchain", hint: "Kidding, right?" },
     { text: "Move S3 on-premises to fully control ACLs" },
+    { text: "Move data to private blockchain", hint: "Kidding, right?" },
+    { text: "Use least privilege principle", isAnswer: true },
     { text: "Use policy wildcards to ensure necessary access", hint: "😯 No!" },
   ]}
 >
@@ -324,7 +325,7 @@ Get ready to prove your cloud expertise! 🚀
     { text: "Always cheaper than provisioned" },
     { text: "Automatically scales compute capacity", isAnswer: true },
     { text: "Provides unlimited storage" },
-    { text: "Eliminates database management" }
+    { text: "Eliminates database management" },
   ]}
 >
   <slot name="question">
@@ -361,9 +362,9 @@ Get ready to prove your cloud expertise! 🚀
   options={[
     { text: "1", hint: "... I insist on batching." },
     { text: "25", hint: "That's the limit for `BatchWriteItem`." },
-    { text: "50", hint: "A bit higher for `BatchGetItem`." },
-    { text: "75", hint: "Close, but there's a round number." },
     { text: "100", isAnswer: true },
+    { text: "75", hint: "Close, but there's a round number." },
+    { text: "50", hint: "A bit higher for `BatchGetItem`." },
     { text: "200", hint: "A bit too high..." },
     { text: "Unlimited", hint: "There is a fixed limit for `BatchGetItem`." },
   ]}
@@ -436,9 +437,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Provisioned is always better" },
-    { text: "On-demand is cheaper for unpredictable workloads", isAnswer: true },
+    { text: "On-demand has unlimited capacity" },
     { text: "They perform identically" },
-    { text: "On-demand has unlimited capacity" }
+    { text: "On-demand is cheaper for unpredictable workloads", isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -477,10 +478,10 @@ Get ready to prove your cloud expertise! 🚀
     "Design for S3 partition distribution"
   ]}
   options={[
-    { text: "Use logical prefixes; randomization is not required", isAnswer: true },
     { text: "Use random/hash prefixes" },
+    { text: "Use logical prefixes; randomization is not required", isAnswer: true },
     { text: "Always use largest objects" },
-    { text: "Minimize number of objects" }
+    { text: "Minimize number of objects" },
   ]}
 >
   <slot name="question">
@@ -516,9 +517,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Manual snapshots only" },
-    { text: "Automated backups with point-in-time recovery", isAnswer: true },
     { text: "No backups needed" },
-    { text: "Weekly full backups" }
+    { text: "Automated backups with point-in-time recovery", isAnswer: true },
+    { text: "Weekly full backups" },
   ]}
 >
   <slot name="question">
@@ -556,9 +557,9 @@ Get ready to prove your cloud expertise! 🚀
     "Differentiate between caching engine features"
   ]}
   options={[
-    { text: "API-level compatibility" },
-    { text: "Identical in all aspects" },
     { text: "Redis supports more data structures & operations", isAnswer: true },
+    { text: "Identical in all aspects" },
+    { text: "API-level compatibility" },
     { text: "Memcached is always faster" },
   ]}
 >
@@ -599,9 +600,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Identical to primary key" },
-    { text: "Allows querying on non-primary attributes", isAnswer: true },
+    { text: "Free of additional cost" },
     { text: "Reduces write performance" },
-    { text: "Free of additional cost" }
+    { text: "Allows querying on non-primary attributes", isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -639,7 +640,7 @@ Get ready to prove your cloud expertise! 🚀
     { text: "Manually move objects" },
     { text: "Automatically transition objects between storage classes", isAnswer: true },
     { text: "Never delete old objects" },
-    { text: "Store everything in Standard class" }
+    { text: "Store everything in Standard class" },
   ]}
 >
   <slot name="question">
@@ -674,9 +675,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Limited to a single read replica", hint: "Think about Aurora's scalability features." },
-    { text: "Supports up to 15 read replicas", isAnswer: true },
     { text: "No read scaling possible", hint: "Does that align with Aurora's capabilities?" },
-    { text: "Unlimited read replicas", hint: "There's a practical limit to consider." }
+    { text: "Supports up to 15 read replicas", isAnswer: true },
+    { text: "Unlimited read replicas", hint: "There's a practical limit to consider." },
   ]}
 >
   <slot name="question">
@@ -711,10 +712,10 @@ Get ready to prove your cloud expertise! 🚀
     "Understand data protection mechanisms in RDS"
   ]}
   options={[
-    { text: "Encryption is optional" },
     { text: "Encrypt data at rest and in transit", isAnswer: true },
+    { text: "Encryption is optional" },
     { text: "No encryption available" },
-    { text: "Only encrypt specific columns" }
+    { text: "Only encrypt specific columns" },
   ]}
 >
   <slot name="question">
@@ -750,9 +751,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Store additional data copies" },
-    { text: "Capture item-level changes for event-driven architectures", isAnswer: true },
-    { text: "Increase write performance", hint: "Streams are " },
     { text: "DynamoDB credits for Green Vendors", hint: "Really?" },
+    { text: "Increase write performance", hint: "Streams are " },
+    { text: "Capture item-level changes for event-driven architectures", isAnswer: true },
     { text: "Alternative to Global Secondary Indexes", hint: "Are you guessing?" },
   ]}
 >
@@ -790,7 +791,7 @@ Get ready to prove your cloud expertise! 🚀
     { text: "Always use single PUT request" },
     { text: "Use Multipart Upload for large files", isAnswer: true },
     { text: "Compress before uploading" },
-    { text: "Split manually before upload" }
+    { text: "Split manually before upload" },
   ]}
 >
   <slot name="question">
@@ -826,9 +827,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "S3 Standard for all data" },
-    { text: "Mix storage classes based on access patterns", isAnswer: true },
     { text: "Always use the cheapest storage" },
-    { text: "Store everything in Glacier" }
+    { text: "Mix storage classes based on access patterns", isAnswer: true },
+    { text: "Store everything in Glacier" },
   ]}
 >
   <slot name="question">
@@ -867,10 +868,10 @@ Get ready to prove your cloud expertise! 🚀
     "Apply consistency models to real-world scenarios"
   ]}
   options={[
-    { text: "50 reads per second" },
     { text: "100 reads per second", isAnswer: true },
+    { text: "50 reads per second" },
     { text: "200 reads per second" },
-    { text: "Unlimited reads per second" }
+    { text: "Unlimited reads per second" },
   ]}
 >
   <slot name="question">
@@ -912,9 +913,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Manual intervention required" },
-    { text: "Automatic promotion based on failover priority tier", isAnswer: true },
+    { text: "Requires application reconfiguration" },
     { text: "Always fails over to oldest replica" },
-    { text: "Requires application reconfiguration" }
+    { text: "Automatic promotion based on failover priority tier", isAnswer: true },
   ]}
 >
   <slot name="question">
@@ -955,7 +956,7 @@ Get ready to prove your cloud expertise! 🚀
     { text: "Only for new objects" },
     { text: "Strong consistency for all operations", isAnswer: true },
     { text: "Eventually consistent for updates" },
-    { text: "Depends on region" }
+    { text: "Depends on region" },
   ]}
 >
   <slot name="question">
@@ -994,9 +995,9 @@ Get ready to prove your cloud expertise! 🚀
   ]}
   options={[
     { text: "Deletes items immediately at expiration" },
-    { text: "Background deletion with best-effort timing", isAnswer: true },
     { text: "Requires manual deletion trigger" },
-    { text: "Expires items but keeps them stored" }
+    { text: "Background deletion with best-effort timing", isAnswer: true },
+    { text: "Expires items but keeps them stored" },
   ]}
 >
   <slot name="question">
@@ -1034,10 +1035,10 @@ Get ready to prove your cloud expertise! 🚀
     "Optimize cost for variable workloads"
   ]}
   options={[
-    { text: "Scales instantly on demand" },
     { text: "Scaling speed depends on current and configured capacity", isAnswer: true },
+    { text: "Scales instantly on demand" },
     { text: "Only scales at preset intervals" },
-    { text: "Manual scaling only" }
+    { text: "Manual scaling only" },
   ]}
 >
   <slot name="question">

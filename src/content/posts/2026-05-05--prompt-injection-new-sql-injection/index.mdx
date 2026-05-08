@@ -228,7 +228,7 @@ An alert on "10+ action failures in 5 minutes" or "model attempted to access use
 
 ## The Uncomfortable Reality
 
-SQL injection has a clean solution: parameterize your queries and the attack vector is closed. Full stop.
+SQL injection has a clean primary defense: parameterized queries close the common string-concatenation path when used correctly. Dynamic SQL, stored procedures that build strings, identifiers, and query-shape choices still need allow-lists and review.
 
 Prompt injection doesn't have that. The ambiguity between instructions and data is baked into how language models work. You can raise the bar. You can't close the vector.
 

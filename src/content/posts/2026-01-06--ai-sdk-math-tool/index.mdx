@@ -3,7 +3,7 @@ title: "Stop Asking LLMs to Do Math"
 subTitle: "They are bad at it. Here is how to fix it."
 date: 2026-01-06
 modified: 2026-01-07
-tags: [AI, AI SDK, TypeScript, Math, Tools, Patterns]
+tags: [ai, ai-sdk, typescript, math, tools, patterns]
 category: AI
 subCategory: Engineering
 social_image: desktop-social.webp
@@ -33,7 +33,7 @@ Tool calling in modern AI SDKs lets us hand the model structured functions it ca
 I've been using [AI SDK v5 and v6](https://ai-sdk.vercel.ai/) for this, paired with CortexJS Compute Engine. The SDK handles orchestration and tool routing, while CortexJS handles anything from basic arithmetic up through calculus. It's a surprisingly clean separation of concerns.
 
 ```bash
-npm install ai @cortex-js/compute-engine zod
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
 ```
 
 ## Building the Math Tool
@@ -41,7 +41,7 @@ npm install ai @cortex-js/compute-engine zod
 The implementation is more straightforward than you might expect. What we're building is a bridge between the LLM's natural language understanding and actual mathematical computation.
 
 ```typescript
-import { generateText, tool } from 'ai';
+import { generateText, stepCountIs, tool } from 'ai';
 import { ComputeEngine } from '@cortex-js/compute-engine';
 import { z } from 'zod';
 
@@ -94,10 +94,10 @@ Let's throw something at it that would typically make a raw model hallucinate:
 import { anthropic } from '@ai-sdk/anthropic';
 
 const { text } = await generateText({
-  model: anthropic('claude-4-5-sonnet-20251115'),
+  model: anthropic('claude-sonnet-4-5'),
   prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
   tools: { mathTool },
-  maxSteps: 5, // Allow the model to use the tool X times if needed
+  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
 });
 
 console.log(text);

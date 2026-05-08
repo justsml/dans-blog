@@ -123,19 +123,21 @@ You've retrieved the right chunks. Congratulations. The model is still going to 
 
 The issue is not only what you retrieve. It is where you put it.
 
-LLMs suffer from the "lost in the middle" problem. Relevant information buried in the middle of a long context is much less likely to be used than information at the beginning or end. Papers have measured it; the effect is not subtle.
+LLMs can suffer from the "lost in the middle" problem. Liu et al. measured long-context models using relevant information less reliably when it appeared in the middle of the prompt instead of near the beginning or end.
 
 If you're shoving 20 chunks into a flat list and hoping the model synthesizes them correctly, you're leaving performance on the table.
 
 Things that actually help:
 
-**Position your most relevant chunks at the start and end.** The top-ranked result goes first, second-ranked goes last, and the rest fill the middle. Counter-intuitive, but it works.
+**Evaluate start/end placement for your most relevant chunks.** A common heuristic is top-ranked first, second-ranked last, and the rest in the middle. Counter-intuitive, but worth testing against your model and prompt shape.
 
 **Explicitly number and label your context sections.** `[Source 1]` ... `[Source 2]` gives the model anchors to reason about.
 
 **Add a retrieval confidence signal.** If your similarity score is 0.65 on a 0-1 scale, tell the model: "The following context was retrieved with moderate confidence. Acknowledge uncertainty if the answer is unclear."
 
 **Set a context budget.** Don't just pass everything you retrieved. Count tokens, prioritize by relevance score, and hard-cut at 60-70% of the model's context window. Leave room for the model to reason without thrashing.
+
+Reference: [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
 
 ---
 

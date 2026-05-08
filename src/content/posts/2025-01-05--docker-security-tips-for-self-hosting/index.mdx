@@ -60,7 +60,7 @@ Choosing the right version to pin to is a balancing act between stability and se
 # docker-compose.yml
 # ...
   # Exact version pinning, best for critical services
-  image: postgres:17.2.1
+  image: postgres:17.2
 
   # Patch version pinning, good for non-critical services
   image: postgres:17.2
@@ -295,7 +295,7 @@ Devs are often surprised to find the 'traditional' methods to secure linux serve
 
 > ⚠️ **Warning #1:** Docker-published ports can bypass the firewall rules you thought were protecting the host, especially with UFW on Ubuntu/Debian. That does not make every firewall rule useless, but it does mean "UFW says deny" is not proof. [See issue #690: Docker bypasses ufw firewall rules](https://github.com/moby/moby/issues/690).
 
-> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) may offer limited protection in certain cases. [See issue #45610: Publishing ports explicitly to private networks should not be accessible from LAN hosts](https://github.com/moby/moby/issues/45610). (Impacts Fedora, Ubuntu, and likely others.)
+> ⚠️ **Warning #2:** Binding ports to local IP addresses (e.g., `-p 127.0.0.1:8080:80`) is the right default, but Docker Engine releases older than 28.0.0 had cases where hosts on the same L2 network could still reach localhost-published ports. [Docker documents the caveat in its port publishing guide](https://docs.docker.com/engine/network/port-publishing/), and the verify-with-nmap habit below still matters.
 
 <p class="inset">If you're surprised to learn this, same!</p>
 
@@ -390,7 +390,7 @@ networks:
   db-network:
 ```
 
-Now your services can communicate with each other via the `db-network` network. The `auto-net` network will be created automatically by Docker Compose.
+Now your services can communicate with each other via the `db-network` network. Docker Compose will create that network automatically.
 
 Use the `--external`/`external:` option to join a **pre-existing network.** Omit it to create a new network.
 

@@ -264,25 +264,48 @@ LIMIT 10;
 -- Strip diacritical marks so "José" matches "Jose"
 CREATE EXTENSION IF NOT EXISTS unaccent;
 
-ALTER TABLE posts ADD COLUMN search_vector tsvector
-  GENERATED ALWAYS AS (
-    setweight(to_tsvector('simple', unaccent(coalesce(title, ''))), 'A') ||
-    setweight(to_tsvector('simple', unaccent(coalesce(body, ''))),  'B')
-  ) STORED;
+CREATE TEXT SEARCH CONFIGURATION public.simple_unaccent (COPY = pg_catalog.simple);
+
+ALTER TEXT SEARCH CONFIGURATION public.simple_unaccent
+  ALTER MAPPING FOR hword, hword_part, word
+  WITH unaccent, simple;
+
+ALTER TABLE posts ADD COLUMN search_vector tsvector;
+
+CREATE TRIGGER posts_search_vector_refresh
+BEFORE INSERT OR UPDATE OF title, body ON posts
+FOR EACH ROW EXECUTE FUNCTION
+  tsvector_update_trigger(search_vector, 'public.simple_unaccent', title, body);
 ```
 
 **`unaccent` + `pg_trgm` for international name search:**
 
 ```sql
-CREATE INDEX users_name_unaccent_trgm_idx
-  ON users USING GIN (unaccent(name) gin_trgm_ops);
+ALTER TABLE users ADD COLUMN name_search text;
+
+CREATE FUNCTION users_name_search_refresh()
+RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW.name_search := unaccent(coalesce(NEW.name, ''));
+  RETURN NEW;
+END;
+$$;
+
+CREATE TRIGGER users_name_search_refresh
+BEFORE INSERT OR UPDATE OF name ON users
+FOR EACH ROW EXECUTE FUNCTION users_name_search_refresh();
+
+CREATE INDEX users_name_search_trgm_idx
+  ON users USING GIN (name_search gin_trgm_ops);
 
 SELECT id, name
 FROM users
-WHERE unaccent(name) % unaccent($1)
-ORDER BY similarity(unaccent(name), unaccent($1)) DESC
+WHERE name_search % unaccent($1)
+ORDER BY similarity(name_search, unaccent($1)) DESC
 LIMIT 10;
 ```
+
+The trigger examples avoid using `unaccent()` inside generated-column or index expressions, where PostgreSQL's immutability rules matter. If you wrap `unaccent()` in your own immutable function, document that you are accepting upgrade/configuration risk.
 
 ---
 
