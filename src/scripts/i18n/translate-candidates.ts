@@ -123,12 +123,8 @@ function validateCandidate() {
 }
 
 function hasGitDiff(path: string) {
-  try {
-    run("git", ["diff", "--quiet", "--", path]);
-    return false;
-  } catch {
-    return true;
-  }
+  const status = run("git", ["status", "--porcelain", "--", path]);
+  return status.trim().length > 0;
 }
 
 function writeCandidateReport({
