@@ -1,19 +1,21 @@
-# Judge Decision
+# Judge Report
 
-Selected candidate: `26a900ed3ae6b6920325c5d338e701eeda789d87` (`openrouter/qwen/qwen3.6-plus`)
+Selected candidate: `26a900ed3ae6b6920325c5d338e701eeda789d87`.
 
-Why this one wins:
+## Why this one won
 
-- The candidate already preserved the MDX structure cleanly: frontmatter, emphasis, footnote marker, and the empty `<p> </p>` spacer all survive intact.
-- The translation is technically faithful to the source and keeps Dan's direct, skeptical voice without drifting into overly literal or overly decorative Spanish.
-- The few rough edges are small and easy to polish without changing meaning, so this was a low-risk choice.
+- Best technical fidelity to the source. It keeps the original argument structure, the footnote, emphasis, and pacing without unnecessary rewrites.
+- Best Spanish overall. The wording sounds native and direct instead of mechanically translated.
+- Closest to Dan's style. It keeps the blunt, editorial cadence and avoids over-polished phrasing.
+- Best MDX preservation. Frontmatter, inline emphasis, and the terminal footnote are intact.
 
-Light polish applied:
+## What the other candidates got wrong
 
-- Smoothed a couple of phrases for natural Spanish, especially around the GPS paragraph and the AI application sentence.
-- Kept the tone blunt and editorial instead of formalizing it.
-- Left the structure and line-level MDX behavior unchanged.
+- `0bdeaa2010317a9a25a0987f239d8694d70ac969` is good, but a few choices soften the edge and drift slightly from the source.
+- `d1dd37983d8fa86935f92348885b398328e100a1` contains broken mixed-language output and multiple mistranslations.
+- `03b3f60eb07d00aa98bc6fe2009a04240ca0c747` also mixes languages and paraphrases too aggressively, which hurts accuracy.
 
-Residual notes:
+## Polish applied
 
-- Some source flavor is still necessarily adapted, not translated word-for-word. That is acceptable here because the result reads naturally and stays close to the original argument.
+- Kept the selected translation as the base and smoothed punctuation and a few word choices.
+- Preserved the MDX structure exactly.
