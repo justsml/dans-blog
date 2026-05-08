@@ -1,9 +1,9 @@
 ---
-name: article-i18n-provenance
+name: article-i18n-translator
 description: Generate and judge DanLevy.net article translations with OpenCode/OpenRouter candidate models, locale-prefixed Astro routes, and full Git provenance. Use when translating posts, adding i18n candidates, judging translations, preserving messy model history, or debugging translated article routing.
 ---
 
-# Article I18n Provenance
+# Article I18n Translator
 
 Use this skill for DanLevy.net article translation work. The priority is not only a good translated page; it is a traceable history of model attempts, judge decisions, rejections, and final fixes.
 
