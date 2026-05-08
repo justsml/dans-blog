@@ -1,6 +1,6 @@
 ---
 title: "Implementando Beam Search en Transformers.js"
-subTitle: "Mil líneas, una espera de meses y una inmersión profunda en las entrañas de la generación de texto"
+subTitle: "Mil líneas, meses de espera, y una inmersión profunda en las tripas de la generación de texto"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [ai, transformers, javascript, open-source, nlp, beam-search, machine-learning]
@@ -10,28 +10,28 @@ draft: true
 hidden: true
 publish: false
 popularity: 0.7
-social_image: ../desktop-social.webp
-cover_full_width: ../wide.webp
-cover_mobile: ../square.webp
-cover_icon: ../square.webp
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
 
 ---
 
-> AT: Este post contiene jerga técnica. Así que, si escuchas sobre `softmax` o `log probs` e inmediatamente quieres decirle a `Max` que deje con sus `probs`, quizás mejor saltea este.
+> AVISO: Esta publicación contiene jerga técnica. Así que, si escuchas sobre `softmax` o `log probs` y inmediatamente quieres decirle a `Max` que pare con sus `probs`, quizás salta esta.
 
 ---
 
-## El Problema: `num_beams` Era una Mentira
+## El Problema: `num_beams` Fue una Mentira
 
-En lo más profundo del bucle de generación de `transformers.js`, había un comentario que llevaba ahí mucho tiempo:
+En lo profundo del bucle de generación de `transformers.js`, había un comentario que llevaba mucho tiempo ahí:
 
 ```js
 // TODO: Support beam search
 ```
 
-Y justo debajo, una sentencia `break` que silenciosamente expulsaba el bucle después del primer token. Cada configuración de modelo que se distribuía con `num_beams > 1` — T5, BART, Whisper — recibía decodificación greedy en lugar de beam search. Sin advertencia. Sin error. Simplemente... salida incorrecta.
+Y justo debajo, un statement `break` que expulsaba silenciosamente del bucle después del primer token. Cada configuración de modelo que se enviaba con `num_beams > 1` — T5, BART, Whisper — estaba obteniendo decodificación greedy en silencio. Sin advertencia. Sin error. Solo... salida incorrecta.
 
-Lo encontré mientras probaba un pipeline de resumen y me preguntaba por qué mis resultados estaban tan degradados comparados con la referencia en Python. Lo rastreé hasta `modeling_utils.js`, vi el TODO, y cometí el error de pensar "qué tan difícil podría ser?"
+Encontré esto mientras probaba un pipeline de resumen y me preguntaba por qué mis outputs estaban tan degradados comparado con la referencia de Python. Lo rastree hasta `modeling_utils.js`, vi el TODO, y cometí el error de pensar "¿qué tan difícil podría ser?"
 
 La respuesta es: bastante difícil, pero de formas interesantes.
 
@@ -41,143 +41,143 @@ La respuesta es: bastante difícil, pero de formas interesantes.
 
 Quién no ha
 
-La decodificación greedy selecciona el token de mayor probabilidad en cada paso. Simple, rápida, frecuentemente subóptima — la primera palabra que se te ocurre no siempre es el mejor inicio para una frase.
+La decodificación greedy selecciona el token de mayor probabilidad en cada paso. Simple, rápido, frecuentemente subóptimo — la primera palabra que sale de tu boca no siempre es el mejor comienzo de una oración.
 
-Beam search, en cambio, mantiene `num_beams` secuencias candidatas vivas simultáneamente, expandiendo cada una por el vocabulario completo en cada paso, para luego podar de vuelta a las mejores `num_beams` por log-probabilidad acumulada. Es como una búsqueda en amplitud acotada a través del espacio de tokens.
+Beam search en cambio mantiene `num_beams` secuencias candidatas vivas simultáneamente, expandiendo cada una por todo el vocabulario en cada paso, luego podando de vuelta a las mejores `num_beams` por log-probabilidad acumulada. Es como una búsqueda BFS limitada a través del espacio de tokens.
 
-El resultado son secuencias globalmente mejores, a costa de `num_beams`× el cómputo.
+El resultado son secuencias globalmente mejores, a costa de `num_beams`× la computación.
 
 Existen tres variantes:
 
-- **Beam search estándar** — determinista, toma candidatos argmax, mejor secuencia global
-- **Beam search diverso** — divide los beams en grupos, penaliza tokens ya elegidos por grupos anteriores para que tus candidatos de salida no digan todos lo mismo
-- **Beam sampling** — estocástico, aplica top-k + softmax + muestreo aleatorio dentro del framework de beams
+- **Beam search estándar** — determinista, toma candidatos argmax, mejor secuencia general
+- **Diverse beam search** — divide los beams en grupos, penaliza tokens ya elegidos por grupos anteriores para que tus candidatos de salida no digan todos lo mismo
+- **Beam sampling** — estocástico, aplica top-k + softmax + muestreo aleatorio dentro del framework de beam
 
 Las tres están ahora en el PR.
 
 ---
 
-## La Decisión de Arquitectura con la Que Realmente Luché
+## La Decisión de Arquitectura Con la Que Realmente Luché
 
-El código existente tenía una clase `BeamSearchSampler`. Parecía relevante. Pero había una trampa sutil: solo devolvía los `num_beams` tokens principales por beam. Eso suena correcto hasta que te das cuenta de que no es suficiente para beam search real.
+El codebase existente tenía una clase `BeamSearchSampler`. Parecía relevante. Pero había una trampa sutil: devolvía solo los mejores `num_beams` tokens por beam. Eso suena correcto hasta que te das cuenta de que no es suficiente para beam search real.
 
-Beam search propiamente dicho necesita considerar **todos los `num_beams × vocab_size` candidatos por elemento del batch** para encontrar las mejores continuaciones globales. No puedes simplemente mirar los mejores tokens de cada beam de forma aislada — necesitas clasificar a través de todos los beams juntos.
+Beam search proper necesita considerar **todos los candidatos `num_beams × vocab_size` por item del batch** para encontrar las mejores continuaciones globales. No puedes solo mirar los top tokens de cada beam en aislamiento — necesitas clasificar a través de todos los beams juntos.
 
-Así que omití completamente el sampler existente. Calculé `log_softmax` directamente sobre los logits procesados, agregué las puntuaciones acumuladas de los beams, e hice una ordenación de dos niveles a través del espacio combinado de candidatos. Matemática más limpia, semántica correcta.
+Así que bypassée el sampler existente por completo. Computé `log_softmax` directamente sobre los logits procesados, agregué scores de beam acumulativos, e hice un ordenamiento de dos niveles a través del espacio de candidatos combinado. Math más limpia, semántica correcta.
 
-La clase `BeamSearchSampler` sigue ahí, intacta, aún útil para lo que fuera que hacía originalmente. Este es uno de esos casos donde el camino de reutilización "obvio" te lleva por un camino equivocado.
-
----
-
-## El Bug Más Molesto: Reordenamiento del KV Cache
-
-Cuando beam search poda secuencias, no solo trunca tokens — *reordena* cuáles beams sobreviven. El beam 3 podría producir la mejor continuación y ser clonado; los beams 0 y 2 podrían ser descartados.
-
-El problema es que el cache clave-valor del mecanismo de atención del transformer está indexado a lo largo de la dimensión del batch por beam. Si reordenas las secuencias de salida sin reordenar el cache, tienes un estado desincronizado. El modelo está atendiendo al pasado equivocado.
-
-La solución es `_reorder_cache()` — un método que llama `index_select` en cada tensor de clave-valor pasado para reindexarlos según el nuevo orden de beams, y luego descarta los tensores obsoletos.
-
-Para CPU esto es directo: cortar arrays tipados por fila. Para tensores GPU se pone más molesto — tienes que descargar asincrónicamente los datos (`ort_tensor.getData(true)`), reordenar, y resubir. Agregué tanto `index_select` (sync, CPU) como `index_select_async` a `tensor.js` para manejar ambas rutas.
-
-Los modelos encoder-decoder (T5, BART) tienen *dos* caches: del encoder y del decoder. Los PKVs del encoder no cambian durante la decodificación, así que pasan sin cambios. Solo los PKVs del decoder necesitan reordenamiento. Equivocarse en esa distinción produce resultados muy malos, sutilmente — el tipo de error que parece casi correcto hasta que comparas con una referencia.
+La clase `BeamSearchSampler` sigue ahí, sin tocar, todavía útil para lo que sea que estaba haciendo originalmente. Este es uno de esos casos donde la "obvia" ruta de reutilización te lleva a algún lugar equivocado.
 
 ---
 
-## Beam Search Diverso: El Divertido
+## El Bug Más Molesto: Reordenamiento de KV Cache
 
-Beam search diverso agrega una `diversity_penalty` que desalienta a los grupos posteriores de beams de seleccionar tokens ya elegidos por grupos anteriores. La intuición es: si todos tus beams convergen en la misma salida, no has explorado realmente el espacio de hipótesis.
+Cuando beam search poda secuencias, no solo trunca tokens — *reordena* cuáles beams sobreviven. El Beam 3 podría producir la mejor continuación y ser clonado; los beams 0 y 2 podrían ser descartados.
 
-En términos de implementación, los grupos deben procesarse *secuencialmente* dentro de cada paso de decodificación, no en paralelo, porque cada grupo necesita ver qué seleccionaron los grupos anteriores antes de calcular sus propias puntuaciones.
+El problema es que el cache de key-value del mecanismo de atención del transformer está indexado a lo largo de la dimensión de batch por beam. Si reordenas las secuencias de salida sin reordenar el cache, tienes estado desajustado. El modelo está attendiendo al pasado equivocado.
 
-La estructura con la que terminé:
+La solución es `_reorder_cache()` — un método que llama a `index_select` en cada tensor key-value pasado para reindexarlos según el nuevo orden de beam, y luego disposa los tensores obsoletos.
+
+Para CPU esto es directo: slice arrays tipados por fila. Para tensores GPU se vuelve más molesto — tienes que async-descargar los datos (`ort_tensor.getData(true)`), reordenar, y re-subir. Agregué ambos `index_select` (sync, CPU) y `index_select_async` a `tensor.js` para manejar ambos caminos.
+
+Los modelos encoder-decoder (T5, BART) tienen *dos* caches: encoder y decoder. Los PKVs del encoder no cambian durante la decodificación, así que pasan sin cambios. Solo los PKVs del decoder necesitan reordenamiento. Equivocarte en esa distinción produce outputs muy malos, sutilmente — el tipo de wrong que se ve casi correcto hasta que comparas con una referencia.
+
+---
+
+## Diverse Beam Search: El Divertido
+
+Diverse beam search agrega un `diversity_penalty` que desincentiva que grupos de beams posteriores seleccionen tokens ya elegidos por grupos anteriores. La intuición es: si todos tus beams convergen en la misma salida, no has explorado realmente el espacio de hipótesis.
+
+Implementativamente, los grupos deben ser procesados *secuencialmente* dentro de cada paso de decodificación, no en paralelo, porque cada grupo necesita ver lo que los grupos anteriores seleccionaron antes de computar sus propios scores.
+
+La estructura en la que terminé:
 
 ```
-para cada paso:
+for each step:
   token_counts = {}
-  para cada grupo en grupos:
-    extraer los beams y logits de este grupo
-    para cada token seleccionado por grupos previos:
+  for each group in groups:
+    extract this group's beams and logits
+    for each token selected by previous groups:
       logits[token] -= diversity_penalty * token_counts[token]
-    puntuar candidatos, seleccionar top 2×group_size
+    score candidates, select top 2×group_size
     group_scorer.process(...)
-    registrar los tokens recién seleccionados en token_counts
+    record newly selected tokens into token_counts
 ```
 
-La dependencia secuencial aquí es real. Si la paralelizas, pierdes la garantía de diversidad. Estuve brevemente tentado de intentar batching de todas formas y habría sido un error.
+La dependencia secuencial aquí es real. Si lo paralelizas, pierdes la garantía de diversidad. Estuve tentado brevemente de intentar batching esto de todos modos y habría sido un error.
 
 ---
 
-## La Cola de Prioridad `BeamHypotheses`
+## La Cola Prioritaria `BeamHypotheses`
 
-Cuando un beam alcanza el token EOS antes de `max_length`, está "hecho" — pero no puedes simplemente descartarlo o devolverlo inmediatamente. Lo agregas a una cola de prioridad acotada llamada `BeamHypotheses`.
+Cuando un beam golpea el token EOS antes de `max_length`, está "hecho" — pero no puedes simplemente descartarlo o retornarlo inmediatamente. Lo agregas a una cola prioritaria limitada llamada `BeamHypotheses`.
 
-La cola mantiene hasta `num_beams` secuencias completadas por elemento del batch, puntuadas por:
+La cola mantiene hasta `num_beams` secuencias completadas por item del batch, puntuadas por:
 
 ```
 score = sum_logprobs / (length ^ length_penalty)
 ```
 
-`length_penalty > 1.0` premia outputs más largos; `< 1.0` premia los más cortos. El flag `early_stopping` controla si el beam se considera hecho una vez que la cola está llena (`true`), nunca hasta `max_length` (`"never"`), o hecho cuando ningún beam restante podría superar la peor hipótesis completada (`false`).
+`length_penalty > 1.0` premia outputs más largos; `< 1.0` premia más cortos. La flag `early_stopping` controla si el beam se considera hecho una vez que la cola está llena (`true`), nunca hasta `max_length` (`"never"`), o hecho cuando ningún beam vivo podría posiblemente superar al peor hipótesis completado (`false`).
 
-El caso `false` es el interesante — requiere rastrear si algún beam vivo podría aún superar la peor hipótesis actual dado el máximo puntaje restante posible. Es una optimización de poda que previene correr hasta `max_length` cuando ya tienes buenas hipótesis.
+El caso `false` es el interesante — requiere rastrear si cualquier beam vivo todavía puede vencer al peor hipótesis actual dado el máximo score posible restante. Es una optimización de poda que previene correr hasta `max_length` cuando ya tienes buenas hipótesis.
 
-Esto vive en `beam_search.js`, archivo nuevo, ~240 líneas en total. También exporta `BeamSearchScorer`, que gestiona las instancias de `BeamHypotheses` a través del batch y maneja `finalize()`.
+Esto vive en `beam_search.js`, nuevo archivo, ~240 líneas en total. También exporta `BeamSearchScorer`, que maneja las instancias de `BeamHypotheses` a través del batch y maneja `finalize()`.
 
 ---
 
-## Testeo Contra la Referencia en Python
+## Probando Contra la Referencia de Python
 
-Cada detalle de implementación no trivial aquí tiene una contraparte en Python en la librería `transformers` de HuggingFace. Me apoyé fuertemente en eso.
+Cada detalle de implementación no trivial aquí tiene un counterpart en Python en la librería `transformers` de HuggingFace. Me apoyé fuertemente en eso.
 
-El suite de tests que agregé cubre:
+El suite de tests que agregué cubre:
 
-- Beam search estándar en encoder-decoder (T5) y decoder-only (estilo LLaMA)
-- Beam search diverso con `num_beam_groups=2, diversity_penalty=0.5`
+- Beam search estándar en encoder-decoder (T5) y decoder-only (LLaMA-ish)
+- Diverse beam search con `num_beam_groups=2, diversity_penalty=0.5`
 - Beam sampling con `do_sample=true, top_k=10`
-- `num_return_sequences > 1` — verificando que la forma de salida sea `[N, seq_len]`
-- Errores correctos para combinaciones incompatibles: CFG + beam search, streaming + beam search, `num_return_sequences > num_beams`
+- `num_return_sequences > 1` — verificando que la forma del output sea `[N, seq_len]`
+- Errores lanzados correctos para combos incompatibles: CFG + beam search, streaming + beam search, `num_return_sequences > num_beams`
 
-Los tests de "errores correctos" son subestimados. Documentan las limitaciones intencionales y previenen que alguien reciba silenciosamente salidas incorrectas cuando intenta combinar features que no se pueden combinar. (Lo sé porque intenté combinar CFG y beam search durante el desarrollo. Las matemáticas no funcionan. Ahora lanza error.)
+Los tests de "errores lanzados correctos" son subestimados. Documentan las limitaciones intencionales y previenen que alguien obtenga silenciosamente outputs wrong cuando intenta combinar features que no pueden combinarse. (Lo sé porque intenté combinar CFG y beam search durante el desarrollo. La matemática no funciona. Ahora lanza error.)
 
 ---
 
-## Qué Sigue Faltando
+## Lo Que Todavía Falta
 
 Algunas cosas que dejé explícitamente fuera, marcadas con `throws`:
 
-- **Diverse beam sampling** (`num_beam_groups > 1` + `do_sample`): Las matemáticas se vuelven genuinamente complicadas aquí. Standard diverse beam search es secuencial entre grupos; agregar sampling a eso requiere pensar cuidadosamente cómo aplicar la penalización de diversidad en modo estocástico. Es factible, simplemente no está hecho.
-- **Streaming + beam search**: Streaming entrega tokens a medida que se generan. Beam search por definición no sabe cuál secuencia es la mejor hasta múltiples pasos después. Estos están fundamentalmente en tensión. Podrías stream el mejor beam hasta el momento, pero esa es una feature diferente con sus propias preguntas de diseño.
+- **Diverse beam sampling** (`num_beam_groups > 1` + `do_sample`): La matemática se complica genuinamente aquí. Standard diverse beam search es secuencial a través de grupos; agregar sampling a eso requiere pensamiento cuidadoso sobre cómo aplicar la penalidad de diversidad en modo estocástico. Es doable, simplemente no está hecho.
+- **Streaming + beam search**: Streaming yields tokens según se generan. Beam search por definición no sabe cuál secuencia es mejor hasta múltiples pasos después. Estos están fundamentalmente en tensión. Podrías hacer stream del mejor beam hasta ahora, pero es un feature diferente con sus propias preguntas de diseño.
 
 ---
 
-## Lo Que Nadie Cuenta: Latencia en Open Source
+## La Parte de la Que Nadie Habla: Latencia de Open Source
 
-El código funciona. Los tests pasan. El suite de tests existente está limpio. Lleva meses en revisión.
+El código funciona. Los tests pasan. El suite de tests existente está limpio. Lleva meses sentado en revisión.
 
-Así es simplemente como funcionan los proyectos open source grandes y populares. El equipo de Hugging Face está lanzando rápido, la cola de issues es enorme, y un PR de ~1,000 líneas tocando el bucle de generación central es un compromiso de revisión no trivial. Han sido receptivos en los comentarios y genuinamente involucrados cuando lo miran. No me quejo — estoy documentando.
+Así es simplemente como va con proyectos OSS grandes y populares. El equipo de Hugging Face está enviando rápido, la cola de issues es enorme, y un PR de ~1,000 líneas tocando el bucle de generación core es un compromiso de revisión no trivial. Han sido responsivos en comentarios y genuinamente engaged cuando lo miran. No me estoy quejando — estoy documentando.
 
-Si estás contribuyendo a un proyecto OSS importante y esperas un merge rápido: ajusta tus expectativas. Unos meses es normal para algo de este tamaño. El código sigue funcionando en tu fork todo el tiempo.
+Si estás contribuyendo a un proyecto OSS mayor y esperando un merge rápido: ajusta tus expectativas. Unos pocos meses es normal para algo de este tamaño. El código todavía funciona en tu fork todo el tiempo.
 
 ---
 
-## Lo Que Realmente Obtuve de Todo Esto
+## Lo Que Realmente Saqué de Esto
 
 Algunas cosas que no tenía antes:
 
-1. **Un modelo mental real de beam search** — no la versión del libro de texto, sino la que tiene casos límite. Cómo se rompen los KV caches. Por qué importa la ordenación de dos niveles. Qué hace realmente `length_penalty` a las puntuaciones.
+1. **Un modelo mental real de beam search** — no la versión del libro de texto, sino la de edge cases. Cómo los KV caches se rompen. Por qué importa el sort de dos niveles. Qué hace `length_penalty` realmente a los scores.
 
-2. **Más aprecio por la matemática con arrays tipados en JS** — implementar `index_select` en arrays tipados de CPU es de bajo nivel de una forma que raramente tocas en código web. Está bien, pero no es para lo que se diseñó JavaScript y se siente.
+2. **Más apreciación por la matemática de typed arrays en JS** — implementar `index_select` en CPU typed arrays es de bajo nivel de una forma que rara vez tocas en código web. Está bien, pero no es para lo que JavaScript fue diseñado y lo sientes.
 
-3. **Renovado respeto por la implementación de referencia en Python.** La librería `transformers` de HuggingFace es grande y a veces engorrosa, pero la lógica de beam search está bien comentada y las decisiones de diseño son claramente intencionales. Leerla fue la forma más rápida de entender lo que realmente se suponía que debía construir.
+3. **Respeto renovado por la implementación de referencia de Python.** La librería `transformers` de HuggingFace es grande y a veces gnarly, pero la lógica de beam search está bien comentada y las decisiones de diseño son claramente intencionales. Leerla fue la forma más rápida de entender lo que se supone debía construir.
 
-4. **Un patch en el mundo** — incluso si no está merged aún, existe, funciona, y la gente puede usarlo desde la rama del PR. Eso es suficiente.
+4. **Un patch en la naturaleza** — incluso si aún no está mergeado, existe, funciona, y la gente puede usarlo desde la rama del PR. Eso es suficiente.
 
-El comentario TODO que inició todo esto ya no está en mi fork. Eso es satisfactorio de una forma tranquila y nerd.
+El comentario TODO que inició esto está gone de mi fork. Eso es satisfactorio de una manera callada y nerdy.
 
-Si estás haciendo trabajo seq2seq en JavaScript y quieres beam search propiamente dicho hoy, [el PR es público](https://github.com/huggingface/transformers.js/pull/1539).
+Si estás haciendo trabajo seq2seq en JavaScript y quieres beam search proper hoy, [el PR es público](https://github.com/huggingface/transformers.js/pull/1539).
 
 ---
 
-¹ Sí, sé que `num_beams=1` es simplemente greedy search. El caso degenerado está bien definido.
+¹ Sí, sé que `num_beams=1` es solo greedy search. El caso degenerado está bien definido.
 
-² Los modelos solo-encoder (BERT, etc.) no generan tokens en absoluto, así que nada de esto les aplica. Son solo vibras.
+² Los modelos solo-encoder (BERT, etc.) no generan tokens en absoluto, así que nada de esto aplica para ellos. Solo son vibes.
