@@ -87,6 +87,27 @@ describe("redirect manifest generation", () => {
     );
   });
 
+  test("drops stale generated locale fallback redirects", () => {
+    expect(
+      buildRedirectManifest(
+        [post("the-last-to-think", ["/hi/the-last-to-think"])],
+        [
+          "/es/the-last-to-think /the-last-to-think 301",
+          "/hi/the-last-to-think /the-last-to-think 301",
+          "/horizontal-scroller/ /?404=horizontal-scroller 301",
+          "",
+        ].join("\n"),
+      ),
+    ).toBe(
+      [
+        "/hi/the-last-to-think /the-last-to-think 301",
+        "",
+        "/horizontal-scroller/ /?404=horizontal-scroller 301",
+        "",
+      ].join("\n"),
+    );
+  });
+
   test("throws when an existing redirect conflicts with post frontmatter", () => {
     expect(() =>
       buildRedirectManifest(

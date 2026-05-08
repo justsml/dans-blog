@@ -26,6 +26,10 @@ const {
 } = Astro.props as Props;
 
 const canonicalURL = new URL(canonicalPath, Astro.site);
+const xDefaultHref =
+  alternates.find((alternate) => alternate.locale === "en")?.href ??
+  canonicalPath;
+const xDefaultURL = new URL(xDefaultHref, Astro.site);
 
 let { title, description, image } = Astro.props;
 
@@ -102,7 +106,7 @@ const imageHeight = typeof image !== "string" ? image?.height : null;
     <link
       rel="alternate"
       hreflang="x-default"
-      href={canonicalURL}
+      href={xDefaultURL}
     />
   )
 }

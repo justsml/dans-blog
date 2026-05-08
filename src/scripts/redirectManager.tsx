@@ -5,6 +5,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, join } from "node:path";
+import { ACTIVE_LOCALES } from "../shared/i18n.ts";
 
 export type RedirectRule = {
   from: string;
@@ -138,7 +139,9 @@ function preserveExistingRedirectRules(
       if (existingRule == null) return true;
 
       const generatedRule = generatedRulesBySource.get(existingRule.from);
-      if (generatedRule == null) return true;
+      if (generatedRule == null) {
+        return !isGeneratedLocaleFallbackRedirect(existingRule);
+      }
 
       if (
         formatRedirectRule(generatedRule) === formatRedirectRule(existingRule)
@@ -159,6 +162,17 @@ function preserveExistingRedirectRules(
   return filteredPreservedLines.length > 0
     ? `${filteredPreservedLines.join("\n")}\n`
     : "";
+}
+
+function isGeneratedLocaleFallbackRedirect(rule: RedirectRule): boolean {
+  const normalizedRule = normalizeRedirectRule(rule);
+  const localePattern = ACTIVE_LOCALES.join("|");
+  const match = normalizedRule.from.match(
+    new RegExp(`^/(${localePattern})/(.+?)/?$`),
+  );
+
+  if (!match) return false;
+  return normalizeRedirectPath(match[2]) === normalizedRule.to;
 }
 
 function parseRedirectRuleLine(line: string): RedirectRule | null {
