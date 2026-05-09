@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ru/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 173.43
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ru/index.mdx: reports/i18n/postgres-fts-vs-pgvector/ru/judge.md
