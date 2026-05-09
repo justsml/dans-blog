@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: fr
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 20.29
+- Input tokens: 3
+- Output tokens: 0
+- Thinking tokens: 1
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-05-06--llm-evals-are-broken/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
