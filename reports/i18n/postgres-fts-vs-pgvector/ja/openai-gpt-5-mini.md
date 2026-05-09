@@ -3,11 +3,10 @@
 - Locale: ja
 - Model: openai/gpt-5-mini
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 78.42
+- Validation: passed
+- Runtime seconds: 145.82
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale ja
