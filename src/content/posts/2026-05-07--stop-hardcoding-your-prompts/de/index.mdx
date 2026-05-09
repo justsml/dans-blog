@@ -1,6 +1,20 @@
 ---
 title: "Hör auf, Prompts im Code zu vergraben"
 subTitle: "Prompt-Patterns, die den Produktionseinsatz überleben."
+date: 2026-05-07
+modified: 2026-05-07
+tags: [ai, llm, prompts, typescript, patterns, production, developer-experience]
+category: AI
+subCategory: Engineering
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
 ---
 
 Irgendwo in deiner Codebase gibt es einen String wie diesen:
@@ -51,7 +65,7 @@ const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
   userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // einschränken, was in den Prompt gelangen kann
-  locale: z.string().default('en-US'),
+  locale: z.string().default('de-DE'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
