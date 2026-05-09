@@ -65,7 +65,7 @@ const secondTelemetry = secondJudge == null || secondJudgeModel == null
   ? undefined
   : getRunTelemetry(secondJudgeModel, secondJudge);
 
-const shouldEscalate = secondJudge != null && /disagree|escalat|different|not agree|no estoy de acuerdo|不一致|同意しない/i.test(secondJudge.output);
+const shouldEscalate = secondJudge != null && shouldEscalateSecondJudge(secondJudge.output);
 const escalationJudge = shouldEscalate && escalationJudgeModel != null
   ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt())
   : undefined;
@@ -154,6 +154,29 @@ function getEscalationPrompt() {
     `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
     `Explain the escalation decision in reports/i18n/${slug}/${locale}/judge-escalation.md.`,
   ].join("\n");
+}
+
+function shouldEscalateSecondJudge(output: string) {
+  const normalized = output.toLowerCase();
+  const explicitNoEscalationPatterns = [
+    /no escalation required/,
+    /escalation (?:is )?not required/,
+    /no disagreement/,
+  ];
+
+  if (explicitNoEscalationPatterns.some((pattern) => pattern.test(normalized))) {
+    return false;
+  }
+
+  if (/disagree|not agree|no estoy de acuerdo|不一致|同意しない/i.test(output)) {
+    return true;
+  }
+
+  if (/\bagree\b|\bagreement\b/i.test(output)) {
+    return false;
+  }
+
+  return /escalat|different/i.test(output);
 }
 
 function getCandidateCommits() {

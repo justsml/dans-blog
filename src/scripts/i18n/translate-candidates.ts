@@ -16,22 +16,28 @@ import {
 } from "./utils.ts";
 
 const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/google/gemma-4-26b-a4b-it",
-  "openrouter/google/gemma-4-31b-it",
-  "openrouter/deepseek/deepseek-v4-pro",
+  "openrouter/google/gemini-3.1-flash-lite-preview",
+  "openrouter/z-ai/glm-5-turbo",
+  "openrouter/google/gemini-2.5-flash-lite",
+  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/qwen/qwen3-coder-flash",
   "openrouter/qwen/qwen3.6-plus",
-  "openrouter/moonshotai/kimi-k2.6",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/z-ai/glm-5.1",
   "openrouter/minimax/minimax-m2.7",
+  "openrouter/z-ai/glm-4.7-flash",
+  "openrouter/google/gemma-4-26b-a4b-it:free",
+  "openrouter/minimax/minimax-m2.5:free",
 ];
 
 const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 90;
 const MODEL_VARIANTS = new Map([
+  ["openrouter/google/gemini-3.1-flash-lite-preview", "minimal"],
   ["openrouter/deepseek/deepseek-v4-pro", "low"],
   ["openrouter/qwen/qwen3.6-plus", "low"],
+  ["openrouter/qwen/qwen3-coder-flash", "low"],
   ["openrouter/google/gemini-3-flash-preview", "minimal"],
   ["openrouter/z-ai/glm-5.1", "low"],
+  ["openrouter/z-ai/glm-5-turbo", "low"],
+  ["openrouter/z-ai/glm-4.7-flash", "low"],
 ]);
 
 type ModelPrice = {
@@ -43,10 +49,19 @@ type ModelPrice = {
 const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
   ["openrouter/google/gemma-4-26b-a4b-it", { input: 0, output: 0 }],
   ["openrouter/google/gemma-4-31b-it", { input: 0, output: 0 }],
+  ["openrouter/google/gemini-3.1-flash-lite-preview", { input: 0.1, output: 0.4 }],
+  ["openrouter/google/gemini-2.5-flash-lite", { input: 0.1, output: 0.4 }],
+  ["openrouter/deepseek/deepseek-v4-flash", { input: 0.05, output: 0.1 }],
   ["openrouter/deepseek/deepseek-v4-pro", { input: 0.2, output: 0.8 }],
+  ["openrouter/qwen/qwen3-coder-flash", { input: 0.05, output: 0.2 }],
   ["openrouter/qwen/qwen3.6-plus", { input: 0.325, output: 1.95 }],
   ["openrouter/qwen/qwen3.6-flash", { input: 0.25, output: 1.5 }],
   ["openrouter/qwen/qwen3.6-35b-a3b", { input: 0.15, output: 1 }],
+  ["openrouter/z-ai/glm-5-turbo", { input: 0.1, output: 0.4 }],
+  ["openrouter/z-ai/glm-4.7-flash", { input: 0.1, output: 0.4 }],
+  ["openrouter/minimax/minimax-m2.7", { input: 0.3, output: 1.2 }],
+  ["openrouter/google/gemma-4-26b-a4b-it:free", { input: 0, output: 0 }],
+  ["openrouter/minimax/minimax-m2.5:free", { input: 0, output: 0 }],
   ["openrouter/openai/gpt-5-mini", { input: 0.25, output: 2 }],
   ["openrouter/openai/gpt-5.4-mini", { input: 0.75, output: 4.5 }],
 ]);
