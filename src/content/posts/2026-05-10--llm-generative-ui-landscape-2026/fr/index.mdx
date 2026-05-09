@@ -120,7 +120,7 @@ La distinction canonique au sein du generative UI est **iframe HTML vs. JSON cat
 - **Iframe HTML** — le modèle écrit du HTML, SVG, Canvas ou WebGL rendu dans un sandbox isolé. Liberté d'expression maximale ; la sécurité dépend entièrement de la limite de l'iframe. Exemples : Anthropic Artifacts, OpenGenerativeUI.
 - **JSON catalog** — le modèle émet une payload structurée contrainte à un catalogue de composants défini par le développeur ; votre renderer instancie des composants pré-construits et fiables à partir de cette spec. Le modèle décide *quoi* afficher ; vous décidez *comment* le rendre. Exemples : json-render, A2UI.
 
-Au-delà de ces deux, des démos très récentes suggèrent un troisième mode où le modèle ne choisit pas des composants ou n'écrit pas du HTML sandboxé — il pilot le canvas plus directement. Des projets comme [Tencent's HunyuanWorld](https://arxiv.org/abs/2502.01999), qui génèrent des environnements 3D explorables à partir d'une seule image, et des architectures de jeu où les LLM génèrent des cartes, des PNJ et des quêtes à runtime plutôt que d'appeler un catalogue de composants, suggèrent un futur où le modèle ressemble plus à un directeur de jeu qu'à un moteur de formulaires. L'inférence LLM dans le navigateur via WebGPU ([WebLLM](https://mlc.ai/web-llm/)) pousse la même frontière localement.
+Au-delà de ces deux, des démos très récentes suggèrent un troisième mode où le modèle ne choisit pas des composants ou n'écrit pas du HTML sandboxé — il pilote le canvas plus directement. Des projets comme [Tencent's HunyuanWorld](https://arxiv.org/abs/2502.01999), qui génèrent des environnements 3D explorables à partir d'une seule image, et des architectures de jeu où les LLM génèrent des cartes, des PNJ et des quêtes à runtime plutôt que d'appeler un catalogue de composants, suggèrent un futur où le modèle ressemble plus à un directeur de jeu qu'à un moteur de formulaires. L'inférence LLM dans le navigateur via WebGPU ([WebLLM](https://mlc.ai/web-llm/)) pousse la même frontière localement.
 
 Ce territoire est véritablement excitant et véritablement précoce. Il n'y a pas encore de frameworks stables pour construire des produits de production. Je couvrirai cette approche dans un article dédié quand cela changera.
 
@@ -189,7 +189,7 @@ MCP Apps est le bon choix quand l'UI *appartient au fournisseur d'outils*, pas �
 
 **GitHub** : [CopilotKit/CopilotKit](https://github.com/CopilotKit/CopilotKit) · Exemples : [CopilotKit/generative-ui](https://github.com/CopilotKit/generative-ui)
 
-CopilotKit est le framework le plus complet pour les applications frontend natives aux agents. Il gère le cycle de vie complet : connexion aux backends d'agents via AG-UI, gestion d'état conversationnel bidirectionnel, rendu de composants generatifs UI, et 提供 shared state plumbing qui permet aux agents et aux utilisateurs de modifier les mêmes données.
+CopilotKit est le framework le plus complet pour les applications frontend natives aux agents. Il gère le cycle de vie complet : connexion aux backends d'agents via AG-UI, gestion d'état conversationnel bidirectionnel, rendu de composants generative UI, et shared state plumbing qui permet aux agents et aux utilisateurs de modifier les mêmes données.
 
 Le modèle à trois schémas se map cleanly aux API CopilotKit :
 - `useCopilotAction` avec un callback `render` → Schéma 1
@@ -403,7 +403,7 @@ Le catalogue ressemble au vocabulaire de votre produit. Il encode vos décisions
 
 **Ajouter un copilote à une app SaaS existante** : Commencez avec le Schéma 1 (outil-vers-composant). Utilisez `useChat` de Vercel AI SDK ou CopilotKit. Mappez vos 5–10 actions d'agent principales vers des composants pré-construits. Shippez cela, mesurez, puis扩展 le catalogue seulement si les utilisateurs ont démontrablement besoin d'une composition plus riche.
 
-**Génération de tableaux de bord depuis le langage naturel** : Utilisez le Schéma 2 avec json-render ou un catalogue A2UI personnalisé. Définissez un catalogue de 8–15 types de composants couvrant vos types de graphiques, cartes métriques et variantes de tableaux. Feed the schema to the model ; laissez-le composer la mise en page. Construisez une validation qui détecte les types inconnus avant qu'ils n'atteignent le renderer.
+**Génération de tableaux de bord depuis le langage naturel** : Utilisez le Schéma 2 avec json-render ou un catalogue A2UI personnalisé. Définissez un catalogue de 8–15 types de composants couvrant vos types de graphiques, cartes métriques et variantes de tableaux. Fournissez le schéma au modèle ; laissez-le composer la mise en page. Construisez une validation qui détecte les types inconnus avant qu'ils n'atteignent le renderer.
 
 **Frontend multi-agents** : Utilisez CopilotKit avec AG-UI. Le flux d'événements gère le streaming en temps réel à travers les backends d'agents ; l'état partagé gère le transfert entre agents ; le pattern HITL gère les portes d'approbation.
 
@@ -411,7 +411,7 @@ Le catalogue ressemble au vocabulaire de votre produit. Il encode vos décisions
 
 **Demos de modèles ML et apps de données (équipe Python)** : Gradio pour les démos et HuggingFace Spaces. Streamlit pour les apps de données avec une interaction plus complexe. Aucun des deux n'exige de JavaScript.
 
-**Artefacts visuels, simulations, diagrammes** : Utilisez le Schéma 3 (OpenGenerativeUI ou équivalent). Établissez une CSP iframe stricte. Treat the output like untrusted user content d'un point de vue sécurité.
+**Artefacts visuels, simulations, diagrammes** : Utilisez le Schéma 3 (OpenGenerativeUI ou équivalent). Établissez une CSP iframe stricte. Traitez la sortie comme du contenu utilisateur non fiable d'un point de vue sécurité.
 
 ---
 
