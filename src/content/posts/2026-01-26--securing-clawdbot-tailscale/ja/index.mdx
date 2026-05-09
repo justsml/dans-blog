@@ -1,6 +1,15 @@
 ---
 title: "AIアシスタント経由でシェルアクセスを奪われないために"
 subTitle: "ローカルやVPS上のOpenClaw/Moltbot環境をセキュアにする方法"
+date: 2026-01-15
+modified: 2026-01-28
+tags: [security, moltbot, clawdbot, tailscale, ai, vpn, devops, ssh]
+category: Security
+subCategory: AI Infrastructure
+draft: false
+cover_full_width: ./hero_wide.webp
+cover_mobile: ./icon_square_200.webp
+cover_icon: ./icon_square_200.webp
 ---
 
 OpenClaw（旧称 Clawdbot/Moltbot）は、WhatsApp、Slack、Discord、iMessageなどのチャンネルを越えて動作するパーソナルAIアシスタントを提供します。しかし、そのゲートウェイ、ノード制御、またはSSHを強力な認証なしに公開インターネットに晒してしまうと、第三者にあなたのマシンへのシェルアクセスを許してしまう道を作ることになります。
@@ -104,7 +113,7 @@ ServeではなくtailnetのIPに直接バインドしたい場合は、明示的
     bind: "tailnet",
     auth: {
       mode: "token",
-      token: "ここに長くランダムなトークンを入力",
+      token: "replace-with-a-long-random-token",
     },
   },
 }
@@ -138,7 +147,7 @@ ssh your-user@SERVER_TAILSCALE_IP
 # sshd_configを直接書き換えるのではなく、設定用ディレクトリにファイルを作成します。
 sudo tee /etc/ssh/sshd_config.d/99-openclaw-hardening.conf >/dev/null <<'EOF'
 PasswordAuthentication no
-PermitRootLogin no
+PerRootLogin no
 KbdInteractiveAuthentication no
 EOF
 
