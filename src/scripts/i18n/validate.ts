@@ -48,7 +48,8 @@ function assertFrontmatter(contents: string) {
 function assertProtectedTokens(sourceContents: string, targetContents: string) {
   const sourceImports = sourceContents.match(/^import\s.+$/gm) ?? [];
   for (const importLine of sourceImports) {
-    if (!targetContents.includes(importLine)) {
+    const localeImportLine = importLine.replaceAll(" from '../../../", " from '../../../../");
+    if (!targetContents.includes(importLine) && !targetContents.includes(localeImportLine)) {
       throw new Error(`Missing preserved import in ${targetPath}: ${importLine}`);
     }
   }
@@ -75,6 +76,8 @@ function assertNestedAssetPaths(targetContents: string) {
   const nestedAssetReferences = [
     ...targetContents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
     ...targetContents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
+    ...targetContents.matchAll(/:\s*\.\/(?!\.)\S+\.(?:avif|gif|jpe?g|png|svg|webp)\b/g),
+    ...targetContents.matchAll(/=["']\.\/(?!\.)[^"']+\.(?:avif|gif|jpe?g|png|svg|webp)["']/g),
   ];
 
   if (nestedAssetReferences.length === 0) return;
