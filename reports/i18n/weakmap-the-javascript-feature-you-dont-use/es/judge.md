@@ -1,23 +1,20 @@
 # Judgment
 
-Selected candidate: `d191ba271a7489d4421a182f39aa4de9d32f79ab`.
+Selected candidate: `84229cd0f045ccabb9a6257bea52c3d708121257`
 
 ## Why this one won
 
-- It is the most faithful to the source post while still sounding natural in Spanish.
-- It preserves the Markdown/MDX structure cleanly, including headings, code blocks, inline code, and the resources list.
-- Its tone is closest to Dan's direct, plainspoken style without drifting into awkward literalism.
-- It avoids several translation mistakes present in the other candidates, especially around technical terms and idiomatic phrasing.
+- It is the most natural Spanish overall. The title and subtitles read cleanly and do not feel like literal translation artifacts.
+- It preserves Dan's direct, punchy style better than the other candidates. The tone stays concrete and opinionated instead of drifting into generic explanatory Spanish.
+- It keeps the technical content accurate without overexplaining or introducing mistakes. The Map vs WeakMap behavior, GC discussion, and usage guidance are all intact.
+- It preserves MDX structure correctly: headings, code fences, inline code, and resource links are all intact, with no obvious formatting damage.
 
-## Candidate notes
+## Why the others lost
 
-- `119e2f91e923a630799bb6d3b29643c532152e3b`: readable, but it introduces some odd wording and slightly over-explains in places.
-- `1449e181d18029d4fbbaee78fbba9b180a3e3961`: fluent overall, but it smooths away some of the original punch and adds a few less direct phrases.
-- `d191ba271a7489d4421a182f39aa4de9d32f79ab`: best balance of accuracy, tone, and technical clarity.
-- `84229cd0f045ccabb9a6257bea52c3d708121257`: has the most noticeable mistranslations and unnatural wording, especially around memory management terminology.
+- `119e2f91e923a630799bb6d3b29643c532152e3b`: awkward phrasing in the title and several sentences that sound translated rather than written. It is understandable, but not as smooth.
+- `1449e181d18029d4fbbaee78fbba9b180a3e3961`: clearer than the first, but still has a more mechanical voice and several less natural choices like `código débil` and `aplicación de panel de control`.
+- `d191ba271a7489d4421a182f39aa4de9d32f79ab`: closest in tone, but it introduces some noticeable mistranslations and rough spots such as `entrecerrado` and `Recoletada como Basura`, which hurt both polish and trust.
 
 ## Light polish applied
 
-- Kept the selected candidate's structure intact.
-- Corrected a few phrasing choices to make the Spanish slightly more natural while preserving the original meaning.
-- Left code samples and MDX formatting unchanged.
+I used the selected candidate as the base and only made a minimal editorial pass to keep the Spanish consistent and readable while preserving the original MDX.
