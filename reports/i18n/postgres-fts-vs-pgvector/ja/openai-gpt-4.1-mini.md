@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ja
+- Model: openai/gpt-4.1-mini
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 108.48
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale ja
