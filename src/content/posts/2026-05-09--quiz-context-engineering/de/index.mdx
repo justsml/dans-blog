@@ -1,0 +1,473 @@
+---
+title: "Quiz: 14 Fragen zum Context Engineering"
+subTitle: "Prompt Engineering ist das, was man macht. Context Engineering ist das, was man ausliefert."
+date: 2026-05-09
+modified: 2026-05-09
+tags: [quiz, ai, llm, context-engineering, prompts, rag, tokens, advanced]
+category: Quiz
+subCategory: AI
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ./desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+import Challenge from '../../../components/QuizUI/Challenge';
+import QuizUI from '../../../components/QuizUI/QuizUI';
+
+<p class="inset">Prompt Engineering bekommt die Werbeslogans. Context Engineering bekommt die Pager-Benachrichtigungen. Wie gut kennen Sie den Teil eines KI-Systems, der tatsächlich in die Produktion geht?</p>
+
+Dieses Quiz behandelt Kontextfenster, Token-Budgets, Retrieval, Prompt-Struktur und die Fehlerquellen, die aus sauberen Demos verwirrende Produkte machen. Es beginnt sanft. Aber dabei bleibt es nicht.
+
+Bringen Sie Belege mit.
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Grundlagen"
+  title="Grundlagen zum Kontextfenster"
+  options={[
+    {text: 'Die maximale Anzahl an Anfragen pro Minute'},
+    {text: 'Das kombinierte Token-Limit für Eingabe und Ausgabe', isAnswer: true},
+    {text: 'Die Anzahl der Nachrichten in einer Konversation'},
+    {text: 'Der verfügbare Arbeitsspeicher zwischen Sitzungen'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was bezeichnet ein „Kontextfenster“ bei einem LLM?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Das Kontextfenster ist die Gesamtzahl der Token, die ein Modell in einem einzigen Aufruf verarbeiten kann – **Eingabe + Ausgabe kombiniert**. Ein 128K-Kontextfenster bedeutet, dass Ihr Prompt + abgerufene Dokumente + Konversationsverlauf + die Antwort des Modells zusammen innerhalb von 128.000 Token liegen müssen.
+
+    Es hat nichts mit Sitzungen, Arbeitsspeicher oder Ratenbegrenzungen zu tun. Wenn Sie das Limit erreichen, kürzt das Modell den Inhalt, gibt einen Fehler aus oder – was schlimmer ist – lässt stillschweigend Token weg, die Sie dort erwartet hätten.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Grundlagen"
+  title="Token-Schätzung"
+  options={[
+    {text: 'Etwa 50 Token'},
+    {text: 'Etwa 130 Token', isAnswer: true},
+    {text: 'Etwa 300 Token'},
+    {text: 'Etwa 1.000 Token'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wie viele Token verbraucht ein englischer Absatz mit 100 Wörtern bei einem modernen Tokenizer in etwa?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Die Faustregel lautet **ca. 1,3 Token pro Wort** für typische englische Prosatexte. Ein Absatz mit 100 Wörtern ≈ 130 Token.
+
+    Dies variiert je nach Inhaltstyp erheblich:
+    - Code: ~1,5–2 Token/Wort (Sonderzeichen, Leerzeichen)
+    - Technische Dokumentationen mit vielen Identifikatoren: kann höher liegen
+    - Gebräuchliche englische Wörter: oft 1 Token pro Wort
+    - Seltene Wörter, Eigennamen, nicht-englische Texte: oft 2–4 Token pro Wort
+
+    Die `tiktoken`-Bibliothek liefert Ihnen exakte Zählungen. Messen Sie immer, bevor Sie Annahmen treffen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Grundlagen"
+  title="Rolle des System-Prompts"
+  options={[
+    {text: 'Er wird zuerst verarbeitet und hat ein höheres Gewicht als Benutzernachrichten', isAnswer: true},
+    {text: 'Er ist identisch mit einer Benutzernachricht, wird aber anders dargestellt'},
+    {text: 'Er wird nur für API-Aufrufe verwendet, nicht in Chat-Interfaces'},
+    {text: 'Er bleibt über Sitzungen hinweg als Langzeitgedächtnis bestehen'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist der praktische Effekt bei der Verwendung der `system`-Rolle im Vergleich zur `user`-Rolle im Nachrichten-Array?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Die `system`-Rolle wird als Anweisung mit höherer Priorität verarbeitet. Modelle sind darauf trainiert, ihr mehr Gewicht beizumessen als Benutzernachrichten – sie bildet die architektonische Grenze zwischen „was der Entwickler sagte“ und „was der Benutzer sagte“.
+
+    Es ist keine Magie. Es garantiert nicht, dass das Modell widersprüchliche Benutzeranweisungen ignoriert (siehe: Prompt Injection). Aber es erhöht die Tendenz des Modells, Ihren Anweisungen zu folgen, erheblich – besonders bei Modellen mit starker Befolgung von Anweisungen.
+
+    In der Praxis: Platzieren Sie Ihre Persona, Regeln und Verhaltensbeschränkungen in `system`. Platzieren Sie abgerufenen Kontext und Benutzerdaten in `user`. Platzieren Sie niemals benutzergesteuerte Eingaben im `system`-Prompt.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Retrieval"
+  title="Lost in the Middle"
+  options={[
+    {text: 'Modelle performen unabhängig von der Platzierung des Kontexts gleich gut'},
+    {text: 'Modelle performen am besten mit Kontext ganz am Ende'},
+    {text: 'Modelle performen am besten mit Kontext am Anfang und Ende, am schlechtesten in der Mitte', isAnswer: true},
+    {text: 'Modelle performen am besten mit Kontext in der Mitte des Prompts'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Forschung zum „Lost in the Middle“-Problem zeigt, dass LLMs dazu neigen:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Die [„Lost in the Middle“-Studie (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) hat gezeigt, dass LLMs zuverlässig Schwierigkeiten mit Informationen haben, die in der Mitte langer Kontexte platziert sind. Die Leistung ist signifikant höher, wenn relevante Informationen am **Anfang oder am Ende** des Kontextfensters erscheinen.
+
+    Praktische Schlussfolgerung: Wenn Sie abgerufene Textabschnitte (Chunks) in einen RAG-Prompt einfügen, hängen Sie sie nicht einfach nach Relevanz geordnet an. Platzieren Sie Ihr bestes Ergebnis an den Anfang, das zweitbeste an das Ende und füllen Sie die Mitte mit weniger relevantem Material. Das klingt kontraintuitiv, ist aber nachweislich besser.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Retrieval"
+  title="Chunking-Strategie"
+  options={[
+    {text: 'Verwenden Sie die größte Chunk-Größe, die Ihr Kontextfenster erlaubt'},
+    {text: 'Verwenden Sie immer 512 Token – das ist der Standard'},
+    {text: 'Verwenden Sie überlappende Chunks, die auf Ihre Inhaltsstruktur abgestimmt sind', isAnswer: true},
+    {text: 'Die Chunk-Größe spielt keine Rolle, solange das Embedding-Modell gut ist'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist beim Chunking von Dokumenten für RAG das wichtigste Prinzip?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Es gibt keine universell richtige Chunk-Größe – das hängt von Ihrem Inhalt ab. Die wichtigen Prinzipien sind:
+
+    1. **Passen Sie die Inhaltsstruktur an.** FAQ-Seiten lassen sich gut auf Q&A-Ebene chunking. Juristische Dokumente lassen sich gut auf Klausel-Ebene chunking. Code lässt sich gut auf Funktions-Ebene chunking.
+    2. **Verwenden Sie Überlappungen.** Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite stellt sicher, dass Antworten, die an einer Grenze liegen, immer noch gefunden werden.
+    3. **Messen Sie.** Erstellen Sie ein Evaluierungs-Set und testen Sie verschiedene Chunk-Größen. Die Chunk-Größe spielt eine wichtigere Rolle als das Embedding-Modell.
+
+    „512 Token“ ist ein vernünftiger Startpunkt, aber kein Gesetz.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Retrieval"
+  title="Hybride Suche"
+  options={[
+    {text: 'Die zweimalige Ausführung derselben Abfrage zur Redundanz'},
+    {text: 'Die Verwendung von zwei verschiedenen Embedding-Modellen für dasselbe Korpus'},
+    {text: 'Die Kombination von Vektorsuche mit Stichwortsuche für besseres Retrieval', isAnswer: true},
+    {text: 'Die Suche über mehrere Vektordatenbanken gleichzeitig'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    In RAG-Systemen bezieht sich „hybride Suche“ auf:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Die hybride Suche kombiniert **Vektorsuche** (semantische Ähnlichkeit mittels Embeddings) und **Stichwortsuche** (BM25 / Volltextsuche), da sie auf komplementäre Weise versagen:
+
+    - Die Vektorsuche hat Schwierigkeiten mit exakten Begriffen: Produktnamen, Fehlercodes, Modellnummern, technischen Identifikatoren.
+    - Die Stichwortsuche hat Schwierigkeiten mit Paraphrasierungen: „Wie kündige ich“ vs. „Abonnement beenden“.
+
+    Ergebnisse aus beiden werden mittels **Reciprocal Rank Fusion (RRF)** fusioniert – ein Ranking-Algorithmus, der die Positionen aus mehreren Ranglisten kombiniert, ohne normalisierte Scores zu benötigen.
+
+    Beides ist in Postgres mit `pgvector` + `tsvector` verfügbar. Sie benötigen eventuell keinen separaten Suchdienst.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Token-Management"
+  title="Kontext-Budget"
+  options={[
+    {text: 'Nutzen Sie 95%+ des Kontextfensters, um die Informationsdichte zu maximieren'},
+    {text: 'Reservieren Sie sinnvoll Platz für die Ausgabe, anstatt das gesamte Fenster zu füllen', isAnswer: true},
+    {text: 'Das Kontext-Budget spielt nur bei Modellen unter 32K Token eine Rolle'},
+    {text: 'Das Modell kürzt automatisch, wenn das Fenster überschritten wird'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Wenn man einen RAG-Prompt mit abgerufenem Kontext baut, lautet eine gute Faustregel für das Kontext-Budget:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Das Kontextfenster wird zwischen **Eingabe und Ausgabe** geteilt. Wenn Sie 90 % für die Eingabe verbrauchen, bleiben dem Modell nur 10 % des Fensters für die Generierung einer Antwort – was oft zu abgeschnittenen oder qualitativ minderwertigen Ausgaben führt.
+
+    Eine vernünftige Heuristik: Legen Sie zuerst die erwartete Ausgabegröße fest und halten Sie dann Ihre Eingabe bequem unter dem verbleibenden Budget. Für viele RAG-Aufgaben bedeutet das, nicht mehr als **60–70 % des gesamten Kontextfensters für die Eingabe** zu verwenden (System-Prompt + Historie + abgerufener Kontext). Lassen Sie den Rest für die Generierung und als Sicherheitsmarge.
+
+    Zusätzlich performen Modelle nahe den Rändern ihres Kontextfensters schlechter – das Verständnis und das Befolgen von Anweisungen lässt nach, wenn der Kontext voll wird. Ein Betrieb bei 95 % ist technisch möglich, bietet aber nicht dasselbe Erlebnis wie bei 50 %.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Token-Management"
+  title="Verwaltung des Konversationsverlaufs"
+  options={[
+    {text: 'Senden Sie immer den vollständigen Konversationsverlauf'},
+    {text: 'Fassen Sie alte Nachrichten zusammen, wenn der Verlauf ein Token-Budget überschreitet', isAnswer: true},
+    {text: 'Löschen Sie alte Nachrichten – das Modell hat ein persistentes Gedächtnis'},
+    {text: 'Speichern Sie den Verlauf in einer Vektordatenbank und rufen Sie relevante Nachrichten ab'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist bei einer Chat-Anwendung mit mehreren Interaktionen (Multi-Turn) die richtige Strategie, wenn der Konversationsverlauf lang wird?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    LLMs haben kein persistentes Gedächtnis. Jeder API-Aufruf ist zustandslos – Sie senden den vollen Kontext, Sie erhalten eine Antwort. Das „Gedächtnis“ einer Konversation besteht vollständig aus dem Nachrichtenverlauf, den Sie in jede Anfrage einbetten.
+
+    Wenn dieser Verlauf Ihr Budget überschreitet, gibt es folgende Optionen:
+    1. **Zusammenfassen**: Komprimieren Sie alte Interaktionen in eine laufende Zusammenfassung, behalten Sie die letzten Interaktionen wortgetreu bei.
+    2. **Sliding Window**: Behalten Sie die letzten N Interaktionen, verwerfen Sie frühere.
+    3. **Selektives Retrieval**: Betten Sie Konversationsinteraktionen ein und rufen Sie relevante pro Abfrage ab (komplex, aber mächtig).
+
+    Einfaches Abschneiden – das Löschen alter Nachrichten, um Platz zu schaffen – ist die schlechteste Option, da sie stillschweigend Kontext entfernt, den das Modell eventuell benötigt.
+
+    Das Retrieval von Konversationsverläufen aus einer Vektordatenbank ist theoretisch reizvoll, aber für die meisten Chat-Apps normalerweise übertrieben. Zusammenfassung ist der pragmatische Standard.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Prompt-Struktur"
+  title="Few-Shot-Beispiele"
+  options={[
+    {text: 'Mehr Beispiele führen immer zu besseren Ergebnissen'},
+    {text: '3–5 hochwertige, diverse Beispiele im Prompt', isAnswer: true},
+    {text: 'Few-Shot-Beispiele helfen nur bei Klassifizierungsaufgaben'},
+    {text: 'Beispiele sollten nach der Benutzeranfrage stehen, nicht davor'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Für die meisten produktiven Anwendungsfälle ist die optimale Few-Shot-Strategie:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Few-Shot-Beispiele verbessern die Konsistenz der Ausgabe und die Einhaltung von Formaten dramatisch. Der „Sweet Spot“ für die meisten Aufgaben liegt bei **3–5 hochwertigen, diversen Beispielen**.
+
+    Warum nicht mehr? Jedes Beispiel kostet Token. Jenseits von 5–10 Beispielen sinkt der Grenznutzen, während die Token-Kosten weiter steigen. Mehr Beispiele erhöhen auch die Wahrscheinlichkeit, dass das Modell „overfittet“ auf die Beispiele, anstatt das zugrunde liegende Muster zu verstehen.
+
+    Warum Diversität wichtig ist: Wenn alle Ihre Beispiele denselben Eingabetyp haben, generalisiert das Modell nicht gut für Grenzfälle. Integrieren Sie Beispiele, die Ihre wichtigsten Variationen abdecken.
+
+    Platzierung: Beispiele gehören *vor* die Benutzeranfrage, als Teil des System-Prompts oder als vorgefertigte Konversationsschritte – nicht danach.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Prompt-Struktur"
+  title="XML-Tags für Struktur"
+  options={[
+    {text: 'XML-Tags sind nur in Anthropic-Modellen gültig'},
+    {text: 'XML-Tags helfen Modellen, Anweisungen von Daten zu unterscheiden und die Parsing-Genauigkeit zu verbessern', isAnswer: true},
+    {text: 'XML-Tags verlangsamen die Tokenisierung und sollten vermieden werden'},
+    {text: 'XML-Tags entsprechen Markdown-Überschriften'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Warum verwenden viele produktive Prompts XML-Tags wie `<document>`, `<context>`, `<instructions>`?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    XML-artige Tags bieten **explizite strukturelle Grenzen**, die Modelle zu erkennen und zu respektieren gelernt haben. Sie bewirken zwei Dinge:
+
+    1. **Trennung**: Sie signalisieren dem Modell, wo Anweisungen enden und Daten beginnen – entscheidend für RAG und zur Reduzierung des Prompt-Injection-Risikos durch abgerufene Dokumente.
+    2. **Parsebarkeit**: Wenn Sie das Modell bitten, in XML zu antworten (z. B. `<answer>...</answer>`), bieten die Tags saubere Extraktionspunkte ohne Regex-Hacks.
+
+    Das ist nicht XML als Auszeichnungssprache. Es ist XML als Trennzeichen-Konvention, mit der Modelle trainiert wurden. Es funktioniert, weil das Modell dieses Muster ausgiebig in den Trainingsdaten gesehen hat, nicht weil es Schemas validiert.
+
+    Es funktioniert über die meisten instruction-tuned Modelle hinweg oft genug, um nützlich zu sein – es ist eine Konvention aus den Trainingsdaten, kein Vendor-Feature oder eine Sicherheitsgarantie.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Fortgeschritten"
+  title="Temperatur und Determinismus"
+  options={[
+    {text: 'temperature=0 erzeugt immer identische Ausgaben bei gleicher Eingabe'},
+    {text: 'temperature=0 macht Ausgaben deterministischer, aber nicht garantiert identisch', isAnswer: true},
+    {text: 'temperature=0 deaktiviert die Fähigkeit des Modells, Anfragen abzulehnen'},
+    {text: 'Temperatur beeinflusst nur die Länge der Antwort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was bedeutet die Einstellung `temperature=0` bei einem LLM-Aufruf?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    `temperature=0` führt dazu, dass das Modell bei jedem Schritt das Token mit der höchsten Wahrscheinlichkeit auswählt (Greedy Decoding), was **konsistentere** Ausgaben erzeugt – aber keine garantiert identischen Ausgaben.
+
+    Quellen für Variationen bei `temperature=0`:
+    - **Nicht-Determinismus durch Fließkommazahlen** bei GPU-Berechnungen, insbesondere bei unterschiedlicher Hardware oder Batch-Größen.
+    - **Änderungen in der serverseitigen Infrastruktur** (Modell-Updates, Infrastrukturänderungen).
+    - **Lange Ausgaben** summieren kleine Variationen auf.
+
+    Für Test-Suiten und Evaluierungen, die strikten Determinismus erfordern, ist `temperature=0` die richtige Wahl – schreiben Sie nur keine Assertions, die von Byte-für-Byte identischen Ausgaben abhängen. Assertions sollten auf Struktur, Kerninhalt und Verhalten basieren, nicht auf exakten Strings.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Fortgeschritten"
+  title="Prompt Caching"
+  options={[
+    {text: 'Caching speichert Antworten und spielt sie bei identischen Anfragen ab'},
+    {text: 'Caching speichert kompilierte KV-Paare für statische Prompt-Präfixe, was die Eingabe-Token-Kosten senkt', isAnswer: true},
+    {text: 'Caching ist nur in OpenAI-Modellen verfügbar'},
+    {text: 'Caching ist automatisch und erfordert keine Entwickler-Konfiguration'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist „Prompt Caching“ im Kontext von LLM-APIs (Anthropic, OpenAI)?
+    <p className="text-sm">Zuletzt überprüft: 8. Mai 2026. Provider-Cache-Steuerungen und Preise ändern sich schnell.</p>
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Prompt Caching wiederverwendet den berechneten **KV-Cache / Prompt-Präfix-Zustand** für statische Prompt-Präfixe, wenn Ihr Provider dies unterstützt. Bei nachfolgenden Anfragen mit demselben Präfix kann das Modell das erneute Verarbeiten dieser Token überspringen – was die Latenz senkt und die Kosten drastisch reduzieren kann.
+
+    Dies ist kein Antwort-Caching. Das Modell generiert jedes Mal eine frische Antwort. Sie vermeiden lediglich das erneute Tokenisieren und Berechnen der Attention für den Teil des Prompts, der sich nicht ändert.
+
+    Am besten geeignet für: große System-Prompts, statische Dokumente, Tool-Definitionen, Few-Shot-Beispiele – alles, was über viele Anfragen hinweg gleich bleibt. Das gecachte Präfix muss am *Anfang* Ihres Prompts stehen.
+
+    Nicht dasselbe wie: semantische Deduplizierung, Antwort-Memoization oder Caching auf Anwendungsebene.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Fortgeschritten"
+  title="Grounding vs. Halluzination"
+  options={[
+    {text: 'Sagen Sie dem Modell im System-Prompt „halluziniere nicht“'},
+    {text: 'Verwenden Sie eine höhere Temperatur, um selbstbewusstere Antworten zu generieren'},
+    {text: 'Stellen Sie abgerufene Quelldokumente bereit und weisen Sie das Modell an, diese zu zitieren', isAnswer: true},
+    {text: 'Verwenden Sie ein größeres Modell – Halluzination passiert nur bei kleineren Modellen'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist die effektivste Technik, um Halluzinationen in einem produktiven KI-System zu reduzieren?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Einem Modell zu sagen, es solle nicht halluzinieren, stoppt keine Halluzination – das Modell hat kein verlässliches introspektives Signal für „Ich denke mir das gerade aus“. Es bedeutet nur, dass das Modell Ihnen selbstbewusst mitteilt, es würde sich nichts ausdenken, während es genau das tut.
+
+    Was wirklich funktioniert: **Grounding**. Geben Sie dem Modell die Informationen, die es benötigt, um korrekt zu antworten, und beschränken Sie es auf diese Informationen:
+
+    ```
+    Antworte nur unter Verwendung der bereitgestellten Dokumente.
+    Wenn die Antwort nicht in den Dokumenten enthalten ist, sage: „Ich habe nicht genügend Informationen, um das zu beantworten.“
+    ```
+
+    Validieren Sie dann die Ausgabe: Überprüfen Sie, ob die Behauptungen in der Antwort im abgerufenen Kontext vorkommen. Dies ist der Zitations-Grounding-Check – siehe die RAG-Evaluierungs-Diskussion für die Implementierung.
+
+    Größere Modelle halluzinieren im Durchschnitt weniger, aber alle Modelle halluzinieren. Grounding ist die Minderungsstrategie, nicht die Modellgröße.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Experte"
+  title="Context Engineering vs. Fine-Tuning"
+  options={[
+    {text: 'Fine-Tuning ist immer besser – Context Engineering ist eine Notlösung'},
+    {text: 'Context Engineering ist kostenlos; Fine-Tuning ist teuer; verwenden Sie immer Context Engineering'},
+    {text: 'Context Engineering ändert das Verhalten pro Anfrage; Fine-Tuning ändert die Modellgewichte dauerhaft', isAnswer: true},
+    {text: 'Das sind nur verschiedene Namen für dieselbe Technik'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Was ist der Hauptunterschied zwischen Context Engineering und Fine-Tuning und wann ergibt Fine-Tuning tatsächlich Sinn?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    **Context Engineering** formt das Modellverhalten durch den Prompt – Systemanweisungen, Few-Shot-Beispiele, abgerufener Kontext. Es passiert pro Anfrage, ist reversibel und erfordert kein Training.
+
+    **Fine-Tuning** aktualisiert die Modellgewichte anhand Ihrer Daten. Änderungen sind dauerhaft (für diesen Checkpoint) und gelten für jede Inferenz.
+
+    Fine-Tuning ist tatsächlich besser, wenn:
+    - Sie einen konsistenten Stil/ein Format benötigen, das das Modell anhand von Anweisungen allein nicht zuverlässig befolgen kann.
+    - Ihre Aufgabe wiederholbares Verhalten bei domänenspezifischen Mustern erfordert, die Prompting und Retrieval nicht lösen.
+    - Sie die Prompt-Länge reduzieren müssen – feinabgestimmtes Verhalten muss nicht bei jeder Anfrage erneut erklärt werden.
+    - Sie viele Anfragen ausführen, bei denen konsistente Few-Shot-Beispiele signifikant Token verbrauchen.
+
+    Fine-Tuning ist übertrieben, wenn:
+    - Ihre Anweisungen in einen System-Prompt passen.
+    - Sie hauptsächlich aktuelle oder proprietäre Fakten benötigen, die zum Zeitpunkt der Anfrage abgerufen werden können.
+    - Anforderungen sich häufig ändern (Sie müssten neu feinabstimmen).
+    - Sie das Context Engineering noch nicht ausgeschöpft haben.
+
+    Die richtige Reihenfolge: Meistern Sie zuerst das Context Engineering. Fine-Tuning ist erst dann sinnvoll, wenn es nachweislich nicht ausreicht.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+Wie haben Sie abgeschnitten?
+
+- **13–14**: Sie bauen produktive KI-Systeme, nicht nur Demos. Selten.
+- **9–12**: Solider Praktiker. Sie kennen die Werkzeuge; die Ränder sind noch verschwommen.
+- **5–8**: Sie haben LLMs viel genutzt, aber nicht tief über Kontextmanagement nachgedacht. Lesen Sie über Prompt Caching und hybride Suche – das wird Ihre Sicht auf Kosten verändern.
+- **0–4**: Gute Nachricht: Alles in diesem Quiz ist erlernbar und sofort praktisch anwendbar. Allein die Frage „Lost in the Middle“ zu verstehen, lohnt sich vor Ihrer nächsten RAG-Bereitstellung.
+
+Context Engineering ist die Disziplin, bewusst zu entscheiden, welche Informationen Sie in das Kontextfenster legen, wo Sie sie platzieren und wie Sie sie strukturieren. Das Modell ist der am wenigsten kontrollierbare Teil Ihres Systems. Alles drumherum gehört Ihnen.
