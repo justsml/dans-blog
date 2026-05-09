@@ -165,14 +165,23 @@
 
 .top-header .header-nav .nav-box {
   align-self: center;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  justify-self: end;
   margin-top: 0;
+  max-width: min(100%, 56rem);
   position: relative;
+  width: 100%;
+}
+
+.top-header .header-nav .nav-box .static-nav {
+  min-width: 0;
 }
 
 .header-language-menu {
   color: var(--clr-muted-100, #f4f8f8);
-  margin-block-start: 0.55rem;
-  margin-inline-start: auto;
+  block-size: 100%;
+  margin: 0;
   inline-size: max-content;
   max-width: 100%;
   position: relative;
@@ -190,22 +199,24 @@
 .header-language-trigger {
   align-items: center;
   background:
-    radial-gradient(circle at 10% 0%, rgba(0, 245, 238, 0.08), transparent 42%),
+    radial-gradient(circle at 14% 0%, rgba(0, 245, 238, 0.1), transparent 42%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
-    rgba(9, 16, 21, 0.94);
+    rgba(11, 18, 23, 0.95);
   border: 1px solid rgba(218, 246, 243, 0.16);
+  border-inline-start: 0;
+  border-radius: 0;
   box-shadow: 0 12px 30px rgba(0, 8, 12, 0.24);
   cursor: pointer;
   display: grid;
-  gap: 0.42rem;
+  gap: 0.34rem;
   grid-template-columns: auto auto;
   justify-content: center;
   line-height: 1;
-  min-height: 2.35rem;
-  min-width: 4.2rem;
-  padding: 0.48rem 0.62rem;
+  min-height: 2.75rem;
+  min-width: 4.75rem;
+  padding: 0.58rem 0.66rem;
   user-select: none;
-  width: auto;
+  width: 100%;
   transition:
     background-color 180ms ease,
     border-color 180ms ease,
@@ -215,8 +226,8 @@
 
 .header-language-current {
   color: var(--clr-muted-100, #f4f8f8);
-  font-size: 0.78rem;
-  font-weight: 760;
+  font-size: 0.84rem;
+  font-weight: 780;
   letter-spacing: 0;
   min-width: 0;
   text-transform: uppercase;
@@ -224,7 +235,9 @@
 
 .header-language-trigger .CaretDown {
   align-self: center;
-  font-size: 0.95rem;
+  color: var(--neon-pink, #ff00cc);
+  font-size: 0;
+  filter: drop-shadow(0 0 0.35rem rgba(255, 0, 204, 0.22));
 }
 
 .header-language-menu[open] .header-language-trigger,
@@ -266,7 +279,7 @@
   overflow: hidden;
   position: absolute;
   right: 0;
-  top: calc(100% + 0.35rem);
+  top: calc(100% + 0.42rem);
   width: min(17rem, calc(100vw - 2rem));
 }
 
@@ -351,12 +364,22 @@
     width: 100%;
   }
 
+  .top-header .header-nav .nav-box {
+    grid-template-columns: minmax(0, 1fr) 4.4rem;
+    max-width: 100%;
+  }
+
   .header-language-menu {
-    margin-inline-start: 0;
+    justify-self: stretch;
+  }
+
+  .header-language-trigger {
+    min-width: 0;
+    padding-inline: 0.55rem;
   }
 
   .header-language-panel {
-    left: 0;
-    right: auto;
+    left: auto;
+    right: 0;
   }
 }
