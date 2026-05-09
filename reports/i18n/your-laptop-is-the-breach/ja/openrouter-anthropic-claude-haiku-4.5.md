@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ja
+- Model: openrouter/anthropic/claude-haiku-4.5
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 41.81
+- Input tokens: 1
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000001
+- Note: Model did not create src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/index.mdx.
