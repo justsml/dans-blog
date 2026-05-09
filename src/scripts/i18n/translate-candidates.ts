@@ -238,8 +238,14 @@ function targetExistsInHead() {
 }
 
 function getUnrelatedChangedPaths(preRunChangedPaths: Set<string>) {
+  const targetDirRelPath = relativeToRepo(dirname(targetPath));
+  const targetDirStatusPath = `${targetDirRelPath}/`;
+
   return [...getChangedPaths()].filter(
-    (path) => path !== targetRelPath && !preRunChangedPaths.has(path),
+    (path) =>
+      path !== targetRelPath &&
+      path !== targetDirStatusPath &&
+      !preRunChangedPaths.has(path),
   );
 }
 
