@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: it
+- Model: openrouter/google/gemini-3.1-flash-lite-preview
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/it/index.mdx
+- Validation: passed
+- Runtime seconds: 52.12
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
