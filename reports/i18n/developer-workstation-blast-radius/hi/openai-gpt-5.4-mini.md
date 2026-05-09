@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: hi
+- Model: openai/gpt-5.4-mini
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 56.23
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
