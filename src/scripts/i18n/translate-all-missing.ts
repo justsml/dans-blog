@@ -14,14 +14,14 @@ import {
 const CHEAP_CANDIDATE_MODELS = [
   "openrouter/google/gemini-3.1-flash-lite-preview",
   "openrouter/z-ai/glm-5-turbo",
+  "openrouter/anthropic/claude-haiku-4.5",
+  "openrouter/google/gemini-3-flash-preview",
   "openrouter/google/gemini-2.5-flash-lite",
   "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/qwen/qwen3-coder-flash",
-  "openrouter/qwen/qwen3.6-plus",
   "openrouter/minimax/minimax-m2.7",
-  "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/google/gemma-4-26b-a4b-it:free",
-  "openrouter/minimax/minimax-m2.5:free",
+  "openrouter/minimax/minimax-m2.5",
+  "openrouter/moonshotai/kimi-k2.6",
 ];
 
 const JUDGE_MODEL = "openrouter/openai/gpt-5.4-mini";

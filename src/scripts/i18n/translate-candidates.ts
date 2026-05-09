@@ -18,14 +18,14 @@ import {
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/google/gemini-3.1-flash-lite-preview",
   "openrouter/z-ai/glm-5-turbo",
+  "openrouter/anthropic/claude-haiku-4.5",
+  "openrouter/google/gemini-3-flash-preview",
   "openrouter/google/gemini-2.5-flash-lite",
   "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/qwen/qwen3-coder-flash",
-  "openrouter/qwen/qwen3.6-plus",
   "openrouter/minimax/minimax-m2.7",
-  "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/google/gemma-4-26b-a4b-it:free",
-  "openrouter/minimax/minimax-m2.5:free",
+  "openrouter/minimax/minimax-m2.5",
+  "openrouter/moonshotai/kimi-k2.6",
 ];
 
 const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 90;
@@ -53,6 +53,7 @@ const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
   ["openrouter/google/gemini-2.5-flash-lite", { input: 0.1, output: 0.4 }],
   ["openrouter/deepseek/deepseek-v4-flash", { input: 0.05, output: 0.1 }],
   ["openrouter/deepseek/deepseek-v4-pro", { input: 0.2, output: 0.8 }],
+  ["openrouter/anthropic/claude-haiku-4.5", { input: 1, output: 5 }],
   ["openrouter/qwen/qwen3-coder-flash", { input: 0.05, output: 0.2 }],
   ["openrouter/qwen/qwen3.6-plus", { input: 0.325, output: 1.95 }],
   ["openrouter/qwen/qwen3.6-flash", { input: 0.25, output: 1.5 }],
@@ -60,6 +61,8 @@ const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
   ["openrouter/z-ai/glm-5-turbo", { input: 0.1, output: 0.4 }],
   ["openrouter/z-ai/glm-4.7-flash", { input: 0.1, output: 0.4 }],
   ["openrouter/minimax/minimax-m2.7", { input: 0.3, output: 1.2 }],
+  ["openrouter/minimax/minimax-m2.5", { input: 0.3, output: 1.2 }],
+  ["openrouter/moonshotai/kimi-k2.6", { input: 0.6, output: 2.5 }],
   ["openrouter/google/gemma-4-26b-a4b-it:free", { input: 0, output: 0 }],
   ["openrouter/minimax/minimax-m2.5:free", { input: 0, output: 0 }],
   ["openrouter/openai/gpt-5-mini", { input: 0.25, output: 2 }],
