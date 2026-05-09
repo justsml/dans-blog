@@ -1,0 +1,267 @@
+---
+title: "AIアシスタントにシェルアクセスを渡すな"
+subTitle: "ローカルまたはVPS上のOpenClaw/Moltbot環境を安全に守る方法"
+date: 2026-01-15
+modified: 2026-01-28
+tags: [security, moltbot, clawdbot, tailscale, ai, vpn, devops, ssh]
+category: Security
+subCategory: AI Infrastructure
+draft: false
+cover_full_width: ../hero_wide.webp
+cover_mobile: ../icon_square_200.webp
+cover_icon: ../icon_square_200.webp
+---
+
+OpenClaw（以前の Clawdbot/Moltbot）は、WhatsApp、Slack、Discord、iMessage、その他のチャンネルをまたいで動くパーソナルAIアシスタントを提供します。ただし、そのゲートウェイ、ノード制御、またはSSHを強い認証なしで公開インターネットに置くと、見知らぬ相手にあなたのマシンへのシェルアクセスまでの道を渡すことになります。
+
+このガイドでは、いちばん安全な既定値を示します。OpenClawのゲートウェイはループバックに置き、Tailscale Serveで自分のtailnetにだけ公開し、SSHを固め、外部からゲートウェイが本当に公開されていないことを確認します。
+
+このプロジェクトの急速な普及で、現実のセキュリティ懸念が見えてきました。[Shodanのスキャンでは最初の数週間で2,847件の露出したインスタンスが見つかり](https://socradar.io/blog/clawdbot-is-it-safe/)、[GitHubのセキュリティ監査イシューではコードベースに512件の指摘が報告されました](https://github.com/moltbot/moltbot/issues/1796)。その中には自動スキャナーの出力もあり、2026年1月のOpenClawへの改称以降に変わった部分もあるので、この数字は正確な現在の脆弱性数というより警告サインとして扱ってください。セキュリティの専門家である必要はありません。デプロイ前にオペレーター向けの面を外に出さないだけです。
+
+---
+
+## 何を公開しているのか
+
+インストール方法と公開方法によって、確認すべき面は3つあります。
+
+- **ポート22**: VPS上のSSHアクセス
+- **ポート18789**: ゲートウェイ管理UIとWebSocket API
+- **ブラウザ/ノード制御**: ゲートウェイ/ノードのペアリングモデルを通じたリモートノード実行とブラウザ自動化
+
+現在の[OpenClawリモートアクセスドキュメント](https://docs.molt.bot/gateway/remote)では、ゲートウェイのWebSocketは既定でループバックにバインドされ、LAN、tailnet、カスタムバインドを意図的に選ばない限り、ループバックのままにしておくことが推奨されています。これはよい設計です。危険になるのは、その既定を上書きしたり、Dockerのポートを公開したり、リバースプロキシを追加したり、Funnelを有効にしたり、SSHを世界中に開いたままにしたりするときです。
+
+ゲートウェイがいちばん重要です。これはアシスタントのオペレーター向けの面で、ツール呼び出しの経路も含みます。インターネットから到達可能で、認証が欠けていたり、弱かったり、迂回されたり、漏れていたりすると、攻撃者がエージェントを動かしたり、あなたのユーザー権限でツールを呼び出したりできる可能性があります。
+
+ブラウザ制御もかなり機密性が高いです。現在のOpenClawドキュメントでは、ブラウザ制御をブラウザマシン上のペアリング済みノードホスト経由で実行し、ノードのペアリングをオペレーターアクセスと同等に扱うことが推奨されています。ゲートウェイがペアリング済みノードで `system.run` を呼び出せるなら、それはそのノード上でのリモートコード実行であり、ゲートウェイのノードポリシーとノード自身のexec承認に従います。
+
+SSHはSSHです。パスワード認証を有効にしたまま公開VPSを動かしていれば、総当たり攻撃は避けられません。
+
+---
+
+## Tailscaleによる解決策
+
+OpenClawにとって、Tailscaleはオペレーター向けサービスを公開せずにリモートアクセスを提供します。
+
+1. OpenClawインスタンスをVPSまたはローカルマシンで動かす
+2. ゲートウェイはループバックに置いたままTailscale Serve経由で到達するか、明示的な認証付きでtailnet IPに直接バインドする
+3. サーバーと個人デバイスの両方にTailscaleを入れる
+4. OpenClawにはTailscale IPかMagicDNS名でアクセスする
+5. 自分でFunnelや他の公開プロキシを有効にしない限り、インターネット上の他人には何も見えない
+
+### OpenClawにTailscaleを管理させるべきか？
+
+OpenClawには、ゲートウェイ向けに `tailscale serve` や `tailscale funnel` を設定できる[組み込みTailscale統合](https://docs.molt.bot/gateway/tailscale)があります。
+
+**Serveモード**は、アクセスをtailnet内だけに閉じます。ゲートウェイは `127.0.0.1` にバインドされたままで、TailscaleがルーティングとHTTPSを処理します。`gateway.auth.allowTailscale` が有効なら、OpenClawはTailscaleのIDヘッダーで管理UI/WebSocketのトラフィックを認証し、`tailscale whois` で送信元を確認できます。これは大半の個人デプロイに向いたモードです。
+
+**Funnelモード**は、Tailscaleの公開エンドポイント機能でゲートウェイを公開します。Tailscale自身のドキュメントでは、Funnelはより広いインターネットからローカルサービスへトラフィックを流すものだと説明されています。OpenClawは、ゲートウェイの認証モードが `password` でない限りFunnelの起動を拒否しますが、それでもオペレーター向けの面を公開する選択に変わりはありません。
+
+OpenClawの[セキュリティドキュメント](https://docs.molt.bot/gateway/security)は、プロンプトインジェクションとツールアクセスがパーソナルアシスタントの中核リスクだと明言しています。エージェントに自分をこっそり公開させる道を与えないでください。Serveは意図して使い、本当に公開アクセスが必要でない限りFunnelは避け、`tailscale` コマンドにはexec承認を要求してください。
+
+---
+
+## OpenClawを安全にセットアップする
+
+### ステップ1: Tailscaleをインストールする
+
+VPSまたはローカルサーバー上で:
+
+```bash
+# Tailscaleをインストール
+curl -fsSL https://tailscale.com/install.sh | sh
+
+# 認証する（ログイン用のブラウザが開く）
+sudo tailscale up
+
+# Tailscale IPを取得
+tailscale ip -4
+# 出力: 100.x.x.x
+```
+
+クライアントマシンでは、公式ダウンロードページからTailscaleをインストールし、同じtailnetにサインインしてください。
+
+これで両方のマシンが同じプライベートネットワーク上にあります。Tailscale IPでVPSにpingでき、暗号化されたトンネルを経由してルーティングされます。
+
+### ステップ2: OpenClawをTailscale使用に設定する
+
+いちばん安全な現在のパターンは、ゲートウェイをループバックに置いたまま、Tailscale Serveでtailnetに公開することです。
+
+OpenClawの設定で:
+
+```js
+{
+  gateway: {
+    bind: "loopback",
+    tailscale: { mode: "serve" },
+  },
+}
+```
+
+そのあと、Serveでゲートウェイを起動します:
+
+```bash
+openclaw gateway --tailscale serve
+```
+
+OpenClawのドキュメントによれば、これでゲートウェイは `127.0.0.1` に留まり、TailscaleがHTTPSとtailnetルーティングを提供します。公開VPSのIPではなく `https://<magicdns-name>/` で開きます。
+
+Serveの代わりに直接tailnetバインドしたい場合は、明示的なゲートウェイ認証を使います:
+
+```js
+{
+  gateway: {
+    bind: "tailnet",
+    auth: {
+      mode: "token",
+      token: "replace-with-a-long-random-token",
+    },
+  },
+}
+```
+
+次に、別のtailnetデバイスから接続します:
+
+```text
+http://<tailscale-ip>:18789/
+ws://<tailscale-ip>:18789
+```
+
+Dockerや別のコンテナランタイムで動かす場合は、ポート公開にかなり注意してください。`-p 18789:18789` のような公開は、通常ホストのすべてのインターフェースにバインドします。ループバックとTailscale Serveを優先するか、コンテナがまだトラフィックを受け取れることを確認してから、ホスト側を明示的にTailscale IPにバインドしてください:
+
+```bash
+TAILSCALE_IP=$(tailscale ip -4)
+docker run ... -p "$TAILSCALE_IP:18789:18789" ...
+```
+
+Dockerを変えたあとには、外側から `nmap`、ローカルで `ss` を使って確認してください。考慮しないと、Dockerはホストファイアウォールの前提をすり抜けたり、順序を変えたりすることがあります。
+
+### ステップ3: SSHを固める
+
+Tailscaleを使っていても、SSHはきちんと守る必要があります:
+
+```bash
+# 作業中は今のSSHセッションを開いたままにする。
+# まずクライアントマシンから、Tailscale経由でSSHできることを確認する:
+ssh your-user@SERVER_TAILSCALE_IP
+
+# sshd_configを書き換えるのではなく、ドロップインファイルに硬化設定を書く。
+sudo tee /etc/ssh/sshd_config.d/99-openclaw-hardening.conf >/dev/null <<'EOF'
+PasswordAuthentication no
+PermitRootLogin no
+KbdInteractiveAuthentication no
+EOF
+
+# 再読み込みの前に検証する。ここは飛ばさない。
+sudo sshd -t
+sudo systemctl reload ssh || sudo systemctl reload sshd
+```
+
+これでパスワード認証とrootログインが無効になります。次のステップでは、UFWで `tailscale0` 経由のSSHだけを許可し、公開SSHは完全に止めます。
+
+### ステップ4: ファイアウォールルール
+
+2段目の防御としてファイアウォールを設定します:
+
+```bash
+# UFWを使う場合（Ubuntu/Debian）
+sudo ufw allow in on tailscale0
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+sudo ufw delete allow 22/tcp || true
+sudo ufw reload
+sudo ufw status verbose
+```
+
+TailscaleのUbuntuハードニングガイドも、同じ形を使っています。`tailscale0` を許可し、他の受信トラフィックを拒否し、そのうえで公開SSHがタイムアウトし、`100.x.y.z` アドレスへのSSHは引き続き動くことを確認してください。同じVPSで公開Webサイトを動かしているなら、`80/tcp` や `443/tcp` など本当に必要な公開ルールだけ残してください。
+
+---
+
+## 公開状態を確認する
+
+### 外部から開放ポートを確認する
+
+Tailscaleネットワークに参加して**いない**マシンから:
+
+```bash
+# よくある公開ポートが開いていないか確認
+nmap -p 22,80,443,18789 YOUR_PUBLIC_IP
+
+# 安全なインスタンスでの期待結果:
+# 22/tcp   filtered ssh
+# 18789/tcp filtered unknown
+```
+
+`22` や `18789` が `filtered` や `closed` ではなく `open` と出たら問題があります。`80` や `443` が開いている場合は、それが意図した公開WebサイトかTailscale Funnelエンドポイントだけで、誤ってOpenClawゲートウェイではないことを確認してください。
+
+### ローカルで何が待ち受けているか確認する
+
+OpenClawサーバー上で:
+
+```bash
+# 待ち受け中のポートとバインド先を表示
+sudo ss -tulpn | grep LISTEN
+
+# Serveを使っているなら、こういう行が理想:
+# tcp   LISTEN 0   128   127.0.0.1:18789   *:*
+#
+# 直接tailnetバインドで認証ありなら、これも許容:
+# tcp   LISTEN 0   128   100.x.y.z:18789   *:*
+#
+# これはダメ:
+# tcp   LISTEN 0   128   0.0.0.0:18789     *:*
+```
+
+`0.0.0.0` や `:::`（IPv6相当）が見えたら、そのサービスは世界に公開されています。
+
+### 組み込みセキュリティ監査
+
+OpenClawには、設定をセキュリティベストプラクティスと照らして確認する[セキュリティ監査コマンド](https://docs.molt.bot/gateway/security)があります:
+
+```bash
+openclaw security audit --deep
+openclaw security audit --deep --fix
+```
+
+監査は、ゲートウェイの公開状態、Tailscaleモード、認証設定、チャンネルアクセス、ツールポリシー、プラグインの在庫、ファイル権限をチェックします。`--fix` は便利な補助にすぎず、指摘を読む代わりにはなりません。
+
+---
+
+## これで解決しないこと
+
+Tailscaleは最大の失敗、つまりオペレーター向けの公開露出を取り除きます。しかし、すべては解決しません:
+
+**認証情報の保存**: OpenClawはセッショントランスクリプト、OAuthトークン、APIキーをディスクに保存します。ファイルには `chmod 600`、非公開設定ディレクトリには `chmod 700` を設定し、バージョン管理に入っていないことを確認してください。組み込み監査でここも見ます。
+
+**プラグインのサンドボックス化**: プラグインはあなたのユーザー権限で動きます。信頼できるソースのものだけを入れ、何の機能を要求しているか確認してください。監査ツールはインストール済みプラグインを一覧化します。
+
+**デバイスの安全性**: 誰かがTailscaleアカウントを侵害したり、tailnet上のデバイスを盗んだりしたら、OpenClawインスタンスに入られます。[Tailscaleのデバイス承認](https://tailscale.com/kb/1099/device-authorization/)を有効にして、新しいデバイスに承認を求めてください。
+
+---
+
+## デプロイメントチェックリスト
+
+OpenClaw/Moltbotインスタンスを本番対応と見なす前に:
+
+- [ ] サーバーとクライアントの両方にTailscaleがインストールされ、認証されている
+- [ ] ゲートウェイはループバックに保たれ、Tailscale Serveを使っているか、明示的な認証付きで `tailnet` にバインドされている
+- [ ] SSHはパスワード認証とrootログインを無効にするよう設定されている
+- [ ] ファイアウォール（UFWまたはiptables/nftables）が `tailscale0` を許可し、不要な公開インバウンドを拒否するよう設定されている
+- [ ] 外部nmapスキャンで全ポートが `filtered` または `closed`
+- [ ] 内部の `ss -tulpn` で、ゲートウェイが `127.0.0.1`、`::1`、またはTailscale IPだけにバインドされている
+- [ ] 認証情報ファイルに600、非公開設定ディレクトリに700の権限が設定されている
+- [ ] `openclaw security audit --deep` を実行し、すべての指摘に対処した
+- [ ] OpenClawのTailscale管理を使っている場合、exec承認が有効になっている
+- [ ] 定期バックアップが設定されている（OpenClawデータ + 設定）
+
+---
+
+## リソース
+
+- [OpenClaw Security Guide](https://docs.molt.bot/gateway/security)
+- [OpenClaw Tailscale Integration](https://docs.molt.bot/gateway/tailscale)
+- [Tailscale Serve CLI Reference](https://tailscale.com/docs/reference/tailscale-cli/serve)
+- [Tailscale Funnel](https://tailscale.com/docs/features/tailscale-funnel)
+- [Use UFW to Lock Down an Ubuntu Server](https://tailscale.com/docs/how-to/secure-ubuntu-server-with-ufw)
+- [Security Audit: 512 Findings (GitHub Issue)](https://github.com/moltbot/moltbot/issues/1796)
+- [Nmap Network Scanning Guide](https://nmap.org/book/man.html)

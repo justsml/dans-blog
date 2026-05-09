@@ -1,0 +1,133 @@
+---
+title: "Deja de Pedirle a los LLMs que Hagan Matemáticas"
+subTitle: "Son malos en eso. Aquí te explico cómo solucionarlo."
+date: 2026-01-06
+modified: 2026-01-07
+tags: [ai, ai-sdk, typescript, math, tools, patterns]
+category: AI
+subCategory: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+¿Sabes qué es lo raro de los modelos de lenguaje? Pueden explicar la mecánica cuántica, escribir poesía y depurar tu TypeScript... pero pídeles que multipliquen 18472 por 9347 y hay una buena probabilidad de que te den con total confianza un resultado que se desvíe por miles.
+
+Esto me desconcertaba hasta que comprendí qué es lo que realmente les estamos pidiendo. Le estamos pidiendo a un motor de reconocimiento de patrones que sea una calculadora. Es como pedirle a un gimnasta que cuadre tu chequera porque entiende el concepto de "equilibrio."
+
+La cuestión es que los LLMs no calculan nada. Cuando le preguntas a GPT o Claude cuánto es 2 + 2, no están sumando. Están prediciendo que "4" es el token más probable de aparecer después de "2 + 2 =". La mayoría de las veces, esto funciona muy bien porque estos patrones existen en sus datos de entrenamiento. Pero si vas más allá de la aritmética simple hacia cálculos de varios pasos o cualquier cosa con números que no fueron comunes en el entrenamiento, básicamente estás tirando los dados.
+
+Me topé con esto de frente recientemente mientras revisaba código que usaba un modelo de primera línea para calcular pagos de hipoteca. El modelo respondió con total confianza. También se equivocó por $400 al mes. Ese es el tipo de error que importa.
+
+Incluso cuando los modelos mejoran en razonamiento (se supone que GPT-5 muestra mejoras), todavía están haciendo reconocimiento sofisticado de patrones, no computación simbólica. Para el trabajo creativo y las tareas de lenguaje natural, esta naturaleza probabilística es exactamente lo que los hace mágicos. ¿Para las matemáticas? No tanto.
+
+## ¿Qué Soluciona Esto Realmente?
+
+La respuesta no es esperar modelos más inteligentes. Es darle al modelo la herramienta adecuada para el trabajo.
+
+Piensa en cómo resolverías este problema si estuvieras construyendo un sistema sin IA. No escribirías lógica matemática personalizada, buscarías una biblioteca. El mismo principio aplica aquí, excepto que ahora estamos enseñando al LLM cuándo y cómo usar esa biblioteca.
+
+La llamada a herramientas en los SDK modernos de IA nos permite entregar al modelo funciones estructuradas que puede invocar. En lugar de forzar al LLM a fingir que sabe matemáticas, le damos algo que realmente sabe: un motor de matemáticas simbólicas.
+
+He estado usando [AI SDK v5 y v6](https://ai-sdk.vercel.ai/) para esto, junto con CortexJS Compute Engine. El SDK se encarga de la orquestación y el enrutamiento de herramientas, mientras que CortexJS se encarga de todo, desde aritmética básica hasta cálculo. Es una separación de responsabilidades sorprendentemente limpia.
+
+```bash
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
+```
+
+## Construyendo la Herramienta Matemática
+
+La implementación es más sencilla de lo que podrías esperar. Lo que estamos construyendo es un puente entre la comprensión del lenguaje natural del LLM y la computación matemática real.
+
+```typescript
+import { generateText, stepCountIs, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// Initialize the engine once
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // Process all expressions in parallel (or detailed batch)
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+Algunas cosas que vale la pena destacar sobre esto:
+
+La descripción está haciendo el trabajo pesado. Ese lenguaje de "MUST be used" puede parecer agresivo, pero en mi experiencia, ser explícito con el modelo sobre cuándo usar una herramienta es la diferencia entre que funcione a veces y que funcione de manera confiable. Considéralo ingeniería de prompts a nivel de herramienta.
+
+El procesamiento por lotes mediante un array de `expressions` importa más de lo que podrías pensar. Cada llamada al modelo tiene latencia. Si estás resolviendo un sistema de ecuaciones o haciendo matemáticas de varios pasos, procesarlas individualmente crea una experiencia de usuario terrible. El procesamiento por lotes significa un solo viaje de ida y vuelta para resolver diez problemas.
+
+Usar un motor simbólico en lugar de simplemente `eval()` (por favor, no uses `eval()`) nos da una comprensión matemática real. El motor analiza la intención, maneja el formato LaTeX y puede trabajar con derivadas e integrales. No solo estamos haciendo cálculos, estamos haciendo matemáticas.
+
+El manejo de errores está delimitado por expresión. Si un cálculo falla, devolvemos ese error pero continuamos con el resto. Esto permite que el modelo vea qué funcionó y qué no, corrigiéndose potencialmente en el siguiente paso.
+
+## Poniéndolo a Trabajar
+
+Vamos a lanzarle algo que típicamente haría alucinar a un modelo crudo:
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-sonnet-4-5'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { mathTool },
+  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
+});
+
+console.log(text);
+```
+
+El modelo ve las matemáticas, reconoce que necesita precisión, llama a la herramienta, obtiene el resultado exacto y luego lo explica en lenguaje natural. Cada componente haciendo lo que mejor sabe hacer.
+
+## Más Allá de la Aritmética Básica
+
+Como estamos usando un motor simbólico, este enfoque maneja cosas que las herramientas de calculadora simples no pueden tocar.
+
+¿Quieres resolver ecuaciones algebraicas? "Resuelve estas ecuaciones: 3x + 7 = 22 y 2y - 5 = 13" funciona bien.
+
+¿Necesitas cálculo? "Encuentra la derivada de x^3 + 2x^2 y evalúala en x = 2" es solo otra llamada a la herramienta.
+
+El soporte de LaTeX es particularmente útil si estás construyendo aplicaciones educativas. El motor entiende inherentemente la entrada LaTeX y puede devolver resultados formateados para renderizado. No se requiere análisis adicional.
+
+## La Imagen Más Grande
+
+Creo que este patrón importa más allá de solo las matemáticas. Lo que realmente estamos haciendo es reconocer las limitaciones de los LLM mientras aprovechamos sus fortalezas. Son increíbles para entender la intención, analizar el lenguaje natural y orquestar flujos de trabajo. No son calculadoras ni bases de datos ni sistemas de archivos.
+
+Cada vez que intentamos hacer que un LLM haga algo determinista, estamos luchando contra su naturaleza. Pero cuando emparejamos esa comprensión del lenguaje natural con herramientas especializadas que manejan las partes deterministas? Ahí es cuando las cosas se ponen interesantes.
+
+La herramienta de matemáticas es solo un ejemplo. El mismo principio aplica para la manipulación de fechas, cálculos financieros, procesamiento de imágenes, consultas a bases de datos... en cualquier lugar donde la precisión importe más que la creatividad. Deja que el modelo entienda lo que el usuario quiere, luego delega el trabajo real a algo construido para el trabajo.
+
+Es un cambio en cómo pensamos sobre construir con IA. No "can the model do this?" sino "can the model orchestrate this?" Pequeña diferencia en la formulación, diferencia significativa en la confiabilidad.
+
+## Recursos
+
+- [Vercel AI SDK Documentation](https://ai-sdk.vercel.ai/)
+- [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
+- [Tool Calling Guide](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK Examples Repository](https://github.com/vercel/ai/tree/main/examples)
