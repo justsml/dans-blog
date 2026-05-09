@@ -4,10 +4,10 @@
 - Model: openrouter/google/gemini-3-flash-preview
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
 - Validation: rejected: touched unrelated files
-- Runtime seconds: 6.88
+- Runtime seconds: 54.18
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx: reports/i18n/postgres-fts-vs-pgvector/it/candidate-shortfall.md
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx: tmp-language-nav-desktop.png, tmp-language-nav-open.png
