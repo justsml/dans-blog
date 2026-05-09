@@ -4,7 +4,7 @@
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/index.mdx
 - Validation: rejected: opencode command failed
-- Runtime seconds: 120.02
+- Runtime seconds: 120.03
 - Input tokens: unknown
 - Output tokens: 0
 - Thinking tokens: unknown
