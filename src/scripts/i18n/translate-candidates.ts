@@ -28,7 +28,7 @@ const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/moonshotai/kimi-k2.6",
 ];
 
-const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 90;
+const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 180;
 const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
   ? "/Users/dan/.opencode/bin/opencode"
   : "opencode";
