@@ -255,7 +255,8 @@ function getChangedPaths() {
     output
       .split(/\r?\n/)
       .filter(Boolean)
-      .map((line) => line.slice(3).split(" -> ").at(-1))
+      .map((line) => line.match(/^.. ?(.+)$/)?.[1] ?? line.slice(3))
+      .map((path) => path.split(" -> ").at(-1))
       .filter((path): path is string => path != null && path.trim() !== ""),
   );
 }
