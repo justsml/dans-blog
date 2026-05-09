@@ -3,17 +3,18 @@
 - Slug: postgres-fts-vs-pgvector
 - Locale: fr
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/fr/index.mdx
-- Status: blocked
-- Reason: approved cheap non-GPT OpenCode candidate pool is exhausted before reaching the required 3 successful candidate commits.
-- Candidate MDX commits: 2
+- Status: resolved
+- Reason: a later retry with Bun on PATH and the 240s timeout produced a third successful cheap candidate.
+- Candidate MDX commits: 3
 - Required candidate commits: 3
-- Judge status: not run; do not judge with fewer than 3 successful candidates for this batch.
+- Judge status: complete; Gemini Flash and DeepSeek Flash converged on the DeepSeek V4 Flash candidate as the best base.
 - Timeout used: 180s for earlier attempts, then 240s after the timeout increase request.
 
 ## Successful Candidate Commits
 
 - `af5dcba3` openrouter/deepseek/deepseek-v4-flash
 - `cbcc5c43` openrouter/google/gemini-2.5-flash-lite
+- `acfb849c` openrouter/qwen/qwen3.6-plus
 
 ## Approved Cheap Pool Status
 
@@ -38,6 +39,6 @@ No approved cheap non-GPT models remain untried through OpenCode for this target
 - openrouter/moonshotai/kimi-k2.6: outside the current user-approved candidate pool for this run.
 - openrouter/qwen/qwen3-coder-flash: excluded by the user instruction to avoid this model family variant for translations.
 
-## Stop Condition
+## Resolution
 
-Stop here rather than burning more attempts. The target has fewer than 3 successful cheap candidates, so the two-cheap-judge process has not been run.
+The previous stop condition is superseded. The final translation was restored from the full DeepSeek V4 Flash candidate and lightly fixed according to the second cheap judge's notes. No expensive escalation model was run.
