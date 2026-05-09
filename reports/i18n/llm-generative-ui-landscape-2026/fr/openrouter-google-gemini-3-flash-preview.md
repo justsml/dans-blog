@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: fr
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 172.10
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not create src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx.
