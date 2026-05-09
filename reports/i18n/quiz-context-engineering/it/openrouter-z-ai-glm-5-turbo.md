@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: it
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/it/index.mdx
+- Validation: passed
+- Runtime seconds: 47.41
+- Input tokens: 0
+- Output tokens: 93
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000037

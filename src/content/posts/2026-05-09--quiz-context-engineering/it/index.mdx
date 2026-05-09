@@ -326,7 +326,7 @@ Porta le ricevute.
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Avanzato"
-  title="Temperatura e Determinismi"
+  title="Temperatura e Determinismo"
   options={[
     {text: 'temperature=0 produce sempre output identici per lo stesso input'},
     {text: 'temperature=0 rende gli output più deterministici ma non garantiti come identici', isAnswer: true},
@@ -341,7 +341,7 @@ Porta le ricevute.
   </slot>
   <slot name="explanation">
   <div className="explanation">
-    `temperature=0` fa sì che il modello scelga il token a probabilità più alta in ogni passaggio (greedy decoding), il che produce output **più coerenti** — ma non garantiti come identici.
+    `temperature=0` fa sì che il modello scelga il token a probabilità più alta in ogni passaggio (greedy decoding), il che produce output **più coerenti** — ma non identici.
 
     Fonti di variazione a `temperature=0`:
     - **Non-determinismo in virgola mobile** nella matematica GPU, specialmente tra hardware o batch size diversi
