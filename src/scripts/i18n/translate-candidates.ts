@@ -21,12 +21,20 @@ const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/minimax/minimax-m2.7",
 ];
 
+const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 90;
+const MODEL_VARIANTS = new Map([
+  ["openrouter/qwen/qwen3.6-plus", "low"],
+  ["openrouter/google/gemini-3-flash-preview", "minimal"],
+  ["openrouter/z-ai/glm-5.1", "low"],
+]);
+
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
 const models = parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS);
 const shouldSkipValidation = options["skip-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
+const timeoutSeconds = getTimeoutSeconds();
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
 
@@ -51,11 +59,12 @@ for (const model of models) {
       "--pure",
       "--model",
       model,
+      ...getVariantArgs(model),
       "--file",
       sourcePath,
       "--dangerously-skip-permissions",
       prompt,
-    ]);
+    ], { timeoutMs: timeoutSeconds * 1000 });
   } catch (error) {
     writeCandidateReport({
       reportPath,
@@ -160,4 +169,21 @@ function writeCandidateReport({
 
 function safeModelName(model: string) {
   return model.replace(/[^a-z0-9._-]+/gi, "-");
+}
+
+function getVariantArgs(model: string) {
+  const variant = MODEL_VARIANTS.get(model);
+  return variant == null ? [] : ["--variant", variant];
+}
+
+function getTimeoutSeconds() {
+  const rawValue = optionalString(options, "timeout-seconds");
+  if (rawValue == null) return DEFAULT_OPENCODE_TIMEOUT_SECONDS;
+
+  const parsedValue = Number(rawValue);
+  if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
+    throw new Error(`--timeout-seconds must be a positive integer. Received "${rawValue}".`);
+  }
+
+  return parsedValue;
 }

@@ -119,15 +119,24 @@ export function run(command: string, args: string[], options: { input?: string }
   return result.stdout.trim();
 }
 
-export function runInherited(command: string, args: string[]) {
+export function runInherited(
+  command: string,
+  args: string[],
+  options: { timeoutMs?: number } = {},
+) {
   const result = spawnSync(command, args, {
     cwd: process.cwd(),
     encoding: "utf8",
     stdio: "inherit",
+    timeout: options.timeoutMs,
   });
 
   if (result.status !== 0) {
-    throw new Error(`Command failed: ${command} ${args.join(" ")}`);
+    const timeoutNote =
+      result.error?.name === "TimeoutError" || result.signal === "SIGTERM"
+        ? ` after ${options.timeoutMs}ms`
+        : "";
+    throw new Error(`Command failed${timeoutNote}: ${command} ${args.join(" ")}`);
   }
 }
 

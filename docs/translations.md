@@ -57,6 +57,7 @@ bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
 bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
 bun run i18n:validate -- --slug the-last-to-think --locale es
 bun run i18n:promote -- --slug the-last-to-think --locale es
+bun run i18n:report:models
 ```
 
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
@@ -69,6 +70,29 @@ bun run i18n:translate:candidates -- \
   --locale es \
   --models openrouter/z-ai/glm-5.1,openrouter/minimax/minimax-m2.7
 ```
+
+OpenCode calls default to a 90 second timeout. Override it per run when needed:
+
+```sh
+bun run i18n:translate:candidates -- \
+  --slug the-last-to-think \
+  --locale es \
+  --timeout-seconds 60
+
+bun run i18n:judge -- \
+  --slug the-last-to-think \
+  --locale es \
+  --timeout-seconds 90
+```
+
+Thinking-capable models are run with cheap reasoning variants by default:
+
+- `openrouter/qwen/qwen3.6-plus`: `--variant low`
+- `openrouter/google/gemini-3-flash-preview`: `--variant minimal`
+- `openrouter/z-ai/glm-5.1`: `--variant low`
+- OpenAI GPT-5-class judges: `--variant low`
+
+`bun run i18n:report:models` regenerates `reports/i18n/model-performance.md`, including aggregate model stats, winner counts, and article/locale winner tables.
 
 ## Candidate Models
 

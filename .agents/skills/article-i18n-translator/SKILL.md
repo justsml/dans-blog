@@ -45,12 +45,16 @@ Judge with a cheap OpenAI-class model first, currently:
    bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
    ```
 
+   OpenCode calls default to a 90 second timeout. Use `--timeout-seconds 60` or `--timeout-seconds 90` explicitly for batch work. Thinking-capable models should stay cheap: Qwen and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
+
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:
 
    ```sh
    bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
    ```
+
+   GPT-5-class judges run with `--variant low` by default. Keep judge timeouts at 60 or 90 seconds unless there is a deliberate reason to let one run longer.
 
 5. If the judge breaks inherited asset paths, fix them with parent-relative paths and commit as `i18n final(...)`.
 6. Validate:
@@ -82,3 +86,9 @@ Judge with a cheap OpenAI-class model first, currently:
 - `judge-summary.md` should list candidate SHAs and omit rejected/no-output commits from candidate comparisons.
 
 For the full project playbook, read `docs/translations.md`.
+
+Regenerate model performance stats with:
+
+```sh
+bun run i18n:report:models
+```

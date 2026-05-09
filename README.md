@@ -14,9 +14,12 @@ Common commands:
 bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
 bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
 bun run i18n:validate -- --slug the-last-to-think --locale es
+bun run i18n:report:models
 ```
 
-The matching Codex skill is `.agents/skills/article-i18n-provenance/SKILL.md`.
+Candidate and judge OpenCode calls default to 90 second timeouts; use `--timeout-seconds 60` or `--timeout-seconds 90` for batch work. Thinking-capable models run with low/minimal variants by default.
+
+The matching Codex skill is `.agents/skills/article-i18n-translator/SKILL.md`.
 
 
 ## TODO

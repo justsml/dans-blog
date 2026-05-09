@@ -18,6 +18,7 @@ const locale = requireActiveLocale(options);
 const judgeModel = optionalString(options, "model") ?? "openai/gpt-5.4";
 const selectedCommit = optionalString(options, "select");
 const shouldSkipCommit = options["no-commit"] === true;
+const timeoutSeconds = getTimeoutSeconds();
 const { targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
 
@@ -47,9 +48,10 @@ runInherited("opencode", [
   "run",
   "--model",
   judgeModel,
+  ...getVariantArgs(judgeModel),
   "--dangerously-skip-permissions",
   prompt,
-]);
+], { timeoutMs: timeoutSeconds * 1000 });
 
 runInherited("bun", ["run", "i18n:validate", "--slug", slug, "--locale", locale]);
 
@@ -98,4 +100,28 @@ function commitChangesTarget(commit: string) {
     commit,
   ]);
   return changedFiles.split(/\r?\n/).includes(targetRelPath);
+}
+
+function getVariantArgs(model: string) {
+  if (model.includes("gpt-5") || model.includes("qwen") || model.includes("glm")) {
+    return ["--variant", "low"];
+  }
+
+  if (model.includes("gemini-3")) {
+    return ["--variant", "minimal"];
+  }
+
+  return [];
+}
+
+function getTimeoutSeconds() {
+  const rawValue = optionalString(options, "timeout-seconds");
+  if (rawValue == null) return 90;
+
+  const parsedValue = Number(rawValue);
+  if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
+    throw new Error(`--timeout-seconds must be a positive integer. Received "${rawValue}".`);
+  }
+
+  return parsedValue;
 }
