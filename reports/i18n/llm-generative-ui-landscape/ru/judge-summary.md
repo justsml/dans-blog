@@ -24,6 +24,6 @@
 - Estimated cost: unknown
 
 ## Candidates
-- 9b0512124ce8abc9e0158157d1f07dc86a3827a5 i18n candidate(ru): llm-generative-ui-landscape via openrouter/qwen/qwen3.6-plus
-- 14241743847b0a10d89a31c6de40cb458168cc73 i18n candidate(ru): llm-generative-ui-landscape via openrouter/deepseek/deepseek-v4-flash
-- a35824df1d77d1e3a2b417b03e76e4c133380c15 i18n candidate(ru): llm-generative-ui-landscape via openrouter/google/gemini-3-flash-preview
+- 39e5ccd045e138b639834d2572ad92dd7143bb0c i18n candidate(ru): llm-generative-ui-landscape via openrouter/qwen/qwen3.6-plus
+- 367d949078cc08d24ba6099ef1011312785780f4 i18n candidate(ru): llm-generative-ui-landscape via openrouter/deepseek/deepseek-v4-flash
+- b03c3310ac7e459bd2cac648eff427743d834fb2 i18n candidate(ru): llm-generative-ui-landscape via openrouter/google/gemini-3-flash-preview
