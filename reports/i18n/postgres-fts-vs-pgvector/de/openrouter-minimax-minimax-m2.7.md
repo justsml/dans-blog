@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: de
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx
+- Validation: passed
+- Runtime seconds: 177.18
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
