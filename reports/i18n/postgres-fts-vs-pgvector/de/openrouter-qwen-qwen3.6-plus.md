@@ -4,13 +4,13 @@
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx
 - Validation: rejected: opencode command failed
-- Runtime seconds: 180.04
+- Runtime seconds: 240.20
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed after 180000ms: /Users/dan/.opencode/bin/opencode run --pure --model openrouter/qwen/qwen3.6-plus --variant low --file /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx --dangerously-skip-permissions You are a constrained translation file-rewrite worker.
+- Note: Command failed after 240000ms: /Users/dan/.opencode/bin/opencode run --pure --model openrouter/qwen/qwen3.6-plus --variant low --file /private/tmp/dans-blog-de-pgvector/src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx --dangerously-skip-permissions You are a constrained translation file-rewrite worker.
 Translate src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx into de.
 Write the complete translated MDX to src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx.
 Do not run shell commands, git commands, Bun scripts, validation scripts, or translation scripts.
