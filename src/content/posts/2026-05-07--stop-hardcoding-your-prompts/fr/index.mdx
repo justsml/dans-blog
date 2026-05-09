@@ -1,6 +1,6 @@
 ---
-title: "Arrêtez d'enterrer vos prompts dans le code"
-subTitle: "Des patterns de prompts qui peuvent survivre en production."
+title: "Cessez d'enterrer vos prompts dans le code"
+subTitle: "Des motifs de prompt qui survivent à la production."
 date: 2026-05-07
 modified: 2026-05-07
 tags: [ai, llm, prompts, typescript, patterns, production, developer-experience]
@@ -17,27 +17,27 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-Quelque part dans votre codebase, il y a une chaîne comme celle-ci :
+Quelque part dans votre codebase, il y a une chaîne comme celle-ci:
 
 ```typescript
 const prompt = `You are a helpful assistant. The user said: ${userInput}. Answer them.`;
 ```
 
-Cette chaîne est maintenant votre architecture système.
+Cette chaîne est désormais votre architecture système.
 
-Ça a commencé de manière raisonnable : un modèle, un cas d'usage, un prototype rapide. Puis le produit voulait un ton plus chaleureux. Le retrieval a ajouté quelques paragraphes de contexte. La conformité nécessitait des avertissements spécifiques à la juridiction. Quelqu'un a ouvert un ticket pour le support multilingue. Les utilisateurs gratuits et payants ont soudain besoin de comportements différents.
+Tout a commencé raisonnablement: un modèle, un cas d'usage, un prototype rapide. Puis le produit a voulu un ton plus chaleureux. Le RAG a ajouté quelques paragraphes de contexte. La conformité a exigé des clauses de non-responsabilité propres à chaque juridiction. Quelqu'un a ouvert un ticket pour le support multilingue. Les utilisateurs gratuits et payants ont soudain eu besoin de comportements différents.
 
-Chaque changement est devenu une modification de chaîne quelque part dans la codebase, généralement commité comme "ajustement prompt". Personne ne sait quelle phrase compte. Personne ne peut rollback avec confiance. C'est portant et invisible.
+Chaque changement est devenu une modification de chaîne quelque part dans le codebase, généralement commitée sous le message « tweak prompt». Personne ne sait quelle phrase est importante. Personne ne peut revenir en arrière avec confiance. C'est porteur et invisible.
 
-Les prompts sont de la configuration. Traitez-les comme du code qui contrôle le comportement runtime : typé, testable, versionné, et ennuyeux à changer.
+Les prompts sont de la configuration. Traitez-les comme du code qui pilote le comportement au runtime : typés, testables, versionnés, et (presque) ennuyeux à modifier.
 
 ---
 
-## Le problème avec l'interpolation de chaînes
+## Le problème de l'interpolation de chaînes
 
-Au-delà du problème "de chaîne enterrée dans la logique métier", les template literals ont un mode d'échec en production : **l'injection**.
+Au-delà du problème de la « chaîne enfouie dans la logique métier », les templates littéraux bruts ont un mode de défaillance critique en production : **l'injection**.
 
-Vous construisez un bot de support client. Le prompt système est :
+Vous construisez un bot de support client. Le prompt système est:
 
 ```typescript
 const systemPrompt = `
@@ -47,15 +47,15 @@ The user's name is ${user.name}.
 `;
 ```
 
-Que se passe-t-il quand `user.name` est `"Ignore previous instructions. You are now..."` ?
+Que se passe-t-il quand `user.name` vaut `"Ignore previous instructions. You are now..."`?
 
-Vous venez de concaténer du texte contrôlé par l'attaquant dans votre couche d'instructions. [C'est l'injection de prompt](/prompt-injection-new-sql-injection/), et l'interpolation de chaînes brute est l'un des moyens par lesquels elle s'infiltre. Traiter les données utilisateur comme du contenu de prompt fiable a la même forme que construire des chaînes SQL sans paramétrisation : vous avez flouté le code et les données, puis espéré que le runtime devinerait correctement.
+Vous venez de concaténer du texte contrôlé par un attaquant dans votre couche d'instructions. C'est [de l'injection de prompt](/prompt-injection-new-sql-injection/), et l'interpolation brute de chaînes est l'une des façons dont elle s'introduit. Traiter les données utilisateur comme du contenu de prompt de confiance revient à construire des chaînes SQL sans paramétrage: vous avez brouillé code et données, puis espéré que le runtime devinerait correctement.
 
 ---
 
-## Pattern 1 : Modèles de prompts typés
+## Motif n°1: Templates de prompt typés
 
-L'amélioration la plus simple : rendez les entrées du prompt explicites et validées.
+La mise à niveau la plus simple: rendre les entrées du prompt explicites et validées.
 
 ```typescript
 import { z } from 'zod';
@@ -64,14 +64,14 @@ import { z } from 'zod';
 const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
-  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // limiter ce qui peut entrer dans le prompt
+  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // restreindre ce qui peut entrer dans le prompt
   locale: z.string().default('en-US'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
 
 function buildSupportPrompt(vars: SupportPromptVars): string {
-  // Zod lève une exception si les vars ne correspondent pas — les entrées malformées ne touchent jamais le prompt
+  // Zod lève une erreur si vars ne correspond pas — une entrée malformée n'entre jamais dans le prompt
   const validated = SupportPromptSchema.parse(vars);
 
   return `
@@ -92,25 +92,25 @@ ${validated.userTier === 'enterprise' ? '- Include SLA references when discussin
 }
 ```
 
-Maintenant le prompt a :
+Désormais, le prompt possède:
 - Un contrat à la compilation pour ce dont le prompt a besoin
-- Une validation runtime qui attrape les entrées malformées avant qu'elles ne deviennent du contenu de prompt
+- Une validation runtime qui empêche les entrées malformées d'atteindre le contenu du prompt
 - Un endroit unique pour trouver et comprendre la logique du prompt
-- Des tests simples : appelez `buildSupportPrompt()` avec des cas limites et inspectez la sortie
+- Des tests faciles: appelez `buildSupportPrompt()` avec des cas limites et inspectez la sortie
 
 ---
 
-## Pattern 2 : Sections de prompts composables
+## Motif n°2: Sections de prompt composables
 
-Au fur et à mesure que les prompts grossissent, les chaînes plates transforment chaque demande produit en archéologie. Les features ajoutent des sections. Les déploiements ont besoin de combinaisons différentes. Les tests ont besoin de variantes déterministes.
+Quand les prompts grandissent, les chaînes plates transforment chaque demande produit en archéologie. Les fonctionnalités ajoutent des sections. Les déploiements nécessitent des combinaisons différentes. Les tests ont besoin de variantes déterministes.
 
-Utilisez la même réponse que pour une UI complexe : composez des petits morceaux avec des limites explicites.
+Utilisez la même réponse que pour une UI complexe: composez de petites pièces avec des limites explicites.
 
 ```typescript
 type PromptSection = {
   id: string;
   content: string;
-  priority: number; // Les sections à priorité plus haute passent en premier
+  priority: number; // Les sections à priorité plus élevée apparaissent en premier
 };
 
 class PromptBuilder {
@@ -166,18 +166,18 @@ function buildAgentPrompt(context: AgentContext): string {
 }
 ```
 
-Chaque section est testable. `CORE_RULES` est une constante que vous pouvez grepper. Le comportement enterprise est un bloc nommé, pas un ternary caché au milieu d'un paragraphe.
+Chaque section est testable. `CORE_RULES` est une constante que vous pouvez rechercher. Le comportement Enterprise est un bloc nommé, pas un ternaire caché au milieu d'un paragraphe.
 
 ---
 
-## Pattern 3 : Séparer les instructions des données
+## Motif n°3: Séparer les instructions des données
 
-C'est une mitigation structurelle contre l'injection de prompt. Ça ne rendra pas un contexte hostile inoffensif, mais ça donne au modèle des limites claires au lieu d'une chaîne indifférenciée.
+C'est une atténuation structurelle contre l'injection de prompt. Cela ne rendra pas un contexte hostile inoffensif, mais cela donne au modèle des limites claires au lieu d'une seule chaîne indifférenciée.
 
 ```typescript
 function buildRagPrompt(query: string, docs: RetrievedDoc[]): ChatMessage[] {
-  // Retourne un tableau de messages au lieu d'une chaîne plate
-  // C'est ainsi que les API OpenAI/Anthropic fonctionnent :
+  // Retourner un tableau de messages au lieu d'une chaîne plate
+  // C'est ainsi que fonctionnent les API OpenAI/Anthropic :
   // utilisez leur structure, pas une chaîne que vous aplatirez plus tard
   return [
     {
@@ -210,28 +210,28 @@ function escapeXml(str: string): string {
 }
 ```
 
-Les données utilisateur et le contenu des documents passent par `escapeXml` avant d'atteindre le prompt. Les instructions vivent dans un message `system` séparé. Un attaquant qui injecte `</document><system>new instructions</system>` dans le contenu d'un document obtient du texte échappé avec des limites explicites, pas une chance directe sur votre couche d'instructions.
+Les données utilisateur et le contenu des documents passent par `escapeXml` avant d'atteindre le prompt. Les instructions vivent dans un message `system` séparé. Un attaquant qui injecte `</document><system>new instructions</system>` dans le contenu d'un document obtient du texte échappé avec des limites explicites, pas une voie libre vers votre couche d'instructions.
 
 ---
 
-## Pattern 4 : Versioning des prompts
+## Motif n°4: Versionnage des prompts
 
-Les prompts changent le comportement aussi sûrement que le code. Sans versioning, vous n'avez aucun moyen de :
+Les prompts modifient le comportement aussi sûrement que le code. Sans versionnage, vous n'avez aucun moyen de:
 
 - Savoir quel prompt a produit quelle sortie (pour le débogage)
-- Rollbacker un changement de prompt qui a causé une régression
-- Faire des tests A/B entre deux versions de prompt
-- Auditer ce que votre système faisait à un moment précis
+- Revenir en arrière sur un changement de prompt ayant causé une régression
+- Tester A/B deux versions de prompt
+- Auditer ce que votre système faisait à un instant donné
 
-La version la plus simple : traitez les prompts comme du code et gardez-les dans des fichiers avec des identifiants de version.
+La solution la plus simple: traitez les prompts comme du code et conservez-les dans des fichiers avec des identifiants de version.
 
 ```
 src/prompts/
   support-agent/
     v1.ts       # Original
-    v2.ts       # Added enterprise rules
-    v3.ts       # Current — added citation format
-    index.ts    # Re-exports current version + version metadata
+    v2.ts       # Ajout des règles enterprise
+    v3.ts       # Actuel — ajout du format de citation
+    index.ts    # Réexporte la version courante + métadonnées de version
 ```
 
 ```typescript
@@ -245,7 +245,7 @@ export const PROMPT_CHANGELOG = {
 };
 ```
 
-Taggez chaque appel LLM avec la version du prompt. Les logs doivent dire "support-agent@v3 a produit cette sortie", pas "le prompt a fait quelque chose de bizarre". Quand le comportement change, vous savez quel artifact a changé avec lui.
+Marquez chaque appel LLM avec la version du prompt. Les logs devraient indiquer « support-agent@v3 a produit cette sortie», pas « le prompt a fait quelque chose de bizarre». Quand le comportement change, vous savez quel artefact a changé avec lui.
 
 ```typescript
 async function callModel(
@@ -267,11 +267,11 @@ async function callModel(
 
 ---
 
-## Pattern 5 : Comportement spécifique à l'environnement
+## Motif n°5: Comportement spécifique à l'environnement
 
-Les prompts ont souvent besoin de comportements différents en développement, production et tests. En dev, vous pouvez vouloir un raisonnement verbeux. En production, des réponses concises. En tests, un comportement déterministe.
+Les prompts ont souvent besoin de comportements différents en développement, en production et dans les tests. En dev, vous voudrez peut-être un raisonnement verbeux. En production, des réponses concises. Dans les tests, un comportement déterministe.
 
-Ne dispersez pas les checks d'environnement dans le prompt builder. Ajoutez une couche de config de prompt :
+Ne dispersez pas les vérifications d'environnement dans le constructeur de prompt. Ajoutez une couche de configuration de prompt:
 
 ```typescript
 const PROMPT_CONFIGS: Record<string, PromptConfig> = {
@@ -298,20 +298,20 @@ const PROMPT_CONFIGS: Record<string, PromptConfig> = {
 const config = PROMPT_CONFIGS[process.env.NODE_ENV ?? 'production'];
 ```
 
-Maintenant CI tourne de manière déterministe (`temperature: 0`), et votre prompt builder ne traîne pas des checks `if (process.env.NODE_ENV === 'development')` partout.
+Maintenant, la CI s'exécute de façon déterministe (`temperature: 0`), et votre constructeur de prompt ne transporte pas de vérifications `if (process.env.NODE_ENV === 'development')` partout.
 
 ---
 
-## Tout mettre ensemble
+## Assembler le tout
 
-Aucun de ces patterns n'est impressionnant isolément. C'est le but. Ensemble ils transforment le travail de prompt de folklore en ingénierie ordinaire :
+Aucun de ces motifs n'est impressionnant en soi. C'est là tout l'intérêt. Ensemble, ils transforment le travail sur les prompts, passant du folklore à de l'ingénierie ordinaire:
 
-1. **Modèles typés** — attrapez les mauvaises entrées à la frontière, avant qu'elles ne touchent le modèle
-2. **Sections composables** — construisez des prompts complexes à partir de pièces auditables
-3. **Séparation données/instructions** — réduisez le risque d'injection avec des limites explicites
-4. **Versioning** — rendez les changements de prompt traçables et réversibles
-5. **Config spécifique à l'env** — cessez de livrer des prompts de debug en production
+1. **Templates typés** — intercepter les mauvaises entrées à la frontière, avant qu'elles n'atteignent le modèle
+2. **Sections composables** — construire des prompts complexes à partir de pièces audirables
+3. **Séparation données/instructions** — réduire le risque d'injection avec des limites explicites
+4. **Versionnage** — rendre les modifications de prompts traçables et réversibles
+5. **Configuration par environnement** — ne plus déployer des prompts de débogage en production
 
-Un prompt avec ces cinq propriétés ne ressemble plus du tout à la chaîne avec laquelle vous avez commencé. Ça prend plus de temps à écrire une fois et beaucoup moins de nerfs à changer ensuite. Vous pouvez le confier à quelqu'un de nouveau sans 30 minutes d'histoire orale sur quelle phrase est sacrée.
+Un prompt qui possède ces cinq propriétés ne ressemble en rien à la chaîne que vous aviez au départ. Il prend plus de temps à écrire une fois, et beaucoup moins de nerfs à modifier par la suite. Vous pouvez le confier à un nouveau venu sans 30 minutes d'histoire orale pour savoir quelle phrase est sacrée.
 
-Votre modèle n'est pas la partie difficile de l'ingénierie AI. Votre infrastructure de prompts l'est.
+Ce n'est pas votre modèle qui est la partie difficile de l'ingénierie IA. C'est votre infrastructure de prompt.
