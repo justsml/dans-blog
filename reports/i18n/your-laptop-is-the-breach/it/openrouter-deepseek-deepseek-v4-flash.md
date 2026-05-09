@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/it/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 144.93
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2026-05-09--your-laptop-is-the-breach/it/index.mdx.
