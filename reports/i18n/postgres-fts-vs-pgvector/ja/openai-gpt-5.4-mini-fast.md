@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ja
+- Model: openai/gpt-5.4-mini-fast
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 78.78
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown

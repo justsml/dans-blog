@@ -1,0 +1,386 @@
+---
+title: "Postgres検索: FTS、トライグラム、pgvector"
+subTitle: "すでに道具はそろっている。クエリの形に合うものを選べ。"
+---
+
+チームがAI機能を追加するとき、まず専用のベクトルデータベースに手を伸ばしがちだ。
+
+Pinecone、Weaviate、Qdrant、Chroma。新しいサービス、新しい依存関係、新しい接続プール、新しい請求書。そして整合性を保つべきデータの源が2つになる。
+
+その一方で、すでにPostgreSQLはある。PostgreSQLには `pgvector` がある。しかも全文検索も2008年から標準搭載だ。
+
+専用ベクトルストアが本領を発揮するのは、大規模かつ高いクエリ量だ。でも多くのアプリは、最初の検索システムを十分に使い切る前に2つ目を持ち込む。そうやって、将来のスケーリング問題が今日の同期バグに変わる。
+
+では、FTSはいつ使うべきか。pgvectorはいつ使うべきか。そして両方をいつ使うべきか。
+
+---
+
+## それぞれが実際にやっていること
+
+全文検索 (`tsvector` / `GIN` インデックス) は字句ベースだ。テキストを語彙に分解し、語幹化し、クエリをインデックスに照合する。`running` と `runs` は同じ語彙にまとまる。`dog` と `dogs` も同じだ。ランキング関数 (`ts_rank`) は、クエリ語が頻繁に、または目立つ場所に出てくる文書を高く評価する。
+
+pgvector は意味ベースだ。埋め込みモデルが理解した chunk の *意味* を表す、高密度なベクトル - 数値の並び - を保存する。類似検索は、その高次元空間で近いベクトルを探す。`dog` と `canine` は近くに並ぶ。だが「走る」というスポーツと「走る」というプロセスは、近くならないかもしれない。
+
+実務上の違いはこうだ。FTS は「この単語を含む文書はどれか？」に答える。ベクトル検索は「この内容にだいたい近い意味の文書はどれか？」に答える。
+
+![短い曖昧文字列には pg_trgm、正確な文章クエリには全文検索、意味的な一致には pgvector、長文で両方のシグナルが必要な場合にはハイブリッド検索を使う、という検索ツールの地図。](../search-tool-map.svg)
+
+_最初に切り分けるべきなのは「古い検索 vs. AI検索」ではない。テキストの形と、どんな答えなら正しいのかだ。_
+
+---
+
+## 全文検索が勝つ場面
+
+**厳密に一致すべき用語を探している。** 製品SKU、エラーコード、モデル番号、ユーザー名、法務条項の参照。`SKU-AX-44192` は意味的に何かに似ているわけではない。一致するかしないかだけだ。ベクトル検索は自信満々に `SKU-AX-44193` を返すかもしれない。それでは困る。
+
+**クエリがキーワードベースだ。** ユーザーは検索ボックスに入力し、タグで絞り込み、ブログ記事をキーワードで探す。FTS はその意図の形に合わせて作られている。
+
+**GPUや埋め込み基盤なしでランキング結果がほしい。** FTS のインデックスは高速で、決定的で、外部API呼び出しを必要としない。`tsvector` 列を追加し、GIN インデックスを作れば終わりだ。
+
+**検索と同時にブール条件を組み合わせたい。** `WHERE to_tsvector(body) @@ to_tsquery('postgres') AND category = 'tutorial' AND published_at > NOW() - INTERVAL '6 months'` のように、既存のクエリロジックと自然に合成できる。
+
+```sql
+-- インデックスを作成
+ALTER TABLE posts ADD COLUMN search_vector tsvector
+  GENERATED ALWAYS AS (
+    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('english', coalesce(body, '')), 'B')
+  ) STORED;
+
+CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
+
+-- クエリ
+SELECT title, ts_rank(search_vector, query) AS rank
+FROM posts, to_tsquery('english', 'postgres & performance') query
+WHERE search_vector @@ query
+ORDER BY rank DESC
+LIMIT 10;
+```
+
+`GENERATED ALWAYS AS` の列にしておけば、インデックスは自動で更新される。`setweight` でタイトル一致の重みを本文一致より高くできる。仕組みはこれだけだ。
+
+---
+
+## トライグラムが勝つ場面 (`pg_trgm`)
+
+Postgres のもう1つの道具として、`pg_trgm` がある。これは全文検索でもベクトル検索でもない。曖昧な文字列一致だ。そして、両者が苦手な中間地帯を埋めてくれる。
+
+**用途は、名前、住所、識別子、そして টাইポのある短い文字列だ。**
+
+FTS はテキストを語彙に分解し、語幹化する。散文には効くが、次のようなものには不向きだ。
+- 人名 (`Dan Levy` → 言語設定によって `dan levi`, `leiv` などに語幹化される)
+- 会社名、住所、製品名のように正確な綴りが重要なもの
+- タイポを含むクエリ - `Micheal Jordan`、`Amaon`、`javascipt`
+- オートコンプリート / プレフィックス検索
+- 部分文字列一致 (`son` で `Johnson` や `Anderson` を探すようなケース)
+
+pgvector もここには向いていない。`Micheal Jordan` を埋め込んで近いベクトルを探すことはできるが、埋め込み空間は綴りではなく意味で整理される。最近傍は `basketball legend` かもしれないし、`Michael B. Jordan` かもしれない。ユーザー本人のレコードとは限らない。
+
+`pg_trgm` は文字列を3文字ずつの重なりに分割し、2つの文字列がどれだけトライグラムを共有しているかを測る。`Dan` は `" da"`, `"dan"`, `"an "` になる。`Micheal` と `Michael` は多くのトライグラムを共有するので、類似度は高い。
+
+```sql
+-- 拡張を有効化する（通常はすでに利用可能）
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+-- names 列に GIN インデックスを作成。高速なトライグラム類似検索が可能になる
+CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
+
+-- 曖昧な名前検索: "Michael Jordan" を検索して "Micheal Jordan" を拾う
+SELECT id, name, similarity(name, $1) AS score
+FROM users
+WHERE name % $1          -- % 演算子 = 類似度しきい値（デフォルト 0.3）
+ORDER BY score DESC
+LIMIT 10;
+
+-- あるいはトライグラム対応の ILIKE を使って contains 検索する
+SELECT id, name
+FROM users
+WHERE name ILIKE '%johnson%'   -- GIN インデックスで高速化される
+LIMIT 10;
+```
+
+`%` 演算子は `pg_trgm.similarity_threshold`（デフォルト 0.3、範囲 0-1）を使う。値を上げるほどより近い一致だけを許す。名前検索なら、0.3〜0.4 くらいがちょうどいいことが多い。タイポを拾うには十分に寛容で、ノイズを出しすぎない。
+
+**トライグラムはプレフィックス検索やオートコンプリートにも効く。特に、タイポ耐性や contains 検索が必要な場合だ。**
+
+```sql
+-- オートコンプリート: プレフィックス一致。純粋な左端固定の prefix なら、
+-- トライグラム GIN と B-tree のパターンインデックスをデータに応じて比較する。
+SELECT name FROM users
+WHERE name ILIKE $1 || '%'
+ORDER BY name
+LIMIT 10;
+
+-- より細かい制御: 長い文字列の中にある部分一致には word_similarity を使う
+-- （"Andrew Johnson III" の中の "Johnson" を探すのに便利）
+SELECT id, name, word_similarity($1, name) AS score
+FROM users
+WHERE $1 <% name          -- <% 演算子 = word_similarity しきい値
+ORDER BY score DESC
+LIMIT 10;
+```
+
+**FTS ではなく `pg_trgm` を選ぶ場面:**
+
+| シナリオ | 使うもの |
+|---|---|
+| タイポのある人名 / 会社名検索 | `pg_trgm` |
+| オートコンプリート / プレフィックス検索 | `pg_trgm`（または prefix クエリ付きの FTS） |
+| 短い文字列、コード、識別子の検索 | `pg_trgm` |
+| 散文記事、ドキュメントの検索 | FTS |
+| ログメッセージからキーワードを探す | FTS |
+| 多言語の名前検索 | `pg_trgm`（言語非依存だから） |
+
+`pg_trgm` は FTS とも組み合わせられる。トライグラムで曖昧な前処理をしてから `ts_rank` で並べ替えたり、トライグラム類似度とベクトルスコアを組み合わせたりできる。
+
+---
+
+## pgvector が勝つ場面
+
+**RAG を作っている。** RAG は意味検索に依存する。ユーザーの質問に意味が近い文書 chunk を見つける必要があり、表現が違っていてもよい。ベクトル検索はそのためにある。FTS では言い換え、同義語、概念的な一致を取りこぼす。
+
+**ユーザーが探したいものを説明していて、検索語そのものは知らない。** `something light for a summer evening` に、わかりやすいワインのキーワードはない。`new manager as confidence builder` に関する記事を探すには、FTS では届かない意味理解が必要だ。
+
+**似ているアイテムを探している。** 関連商品の推薦、似たサポートチケット、重複バグ報告。`この問題に似た issue を探して` はベクトル操作だ。新しい issue を埋め込み、最近傍を取る。
+
+**多言語コンテンツ。** 多言語データで学習した埋め込みなら、言語をまたいで一致させられる。FTS は言語ごとの設定が必要で、言語横断のクエリは苦手だ。
+
+```sql
+-- セットアップ
+CREATE EXTENSION IF NOT EXISTS vector;
+
+ALTER TABLE documents ADD COLUMN embedding vector(1536);
+CREATE INDEX documents_embedding_idx
+  ON documents USING ivfflat (embedding vector_cosine_ops)
+  WITH (lists = 100);
+
+-- クエリ: semantic search
+SELECT id, title, 1 - (embedding <=> $1::vector) AS similarity
+FROM documents
+ORDER BY embedding <=> $1::vector
+LIMIT 10;
+```
+
+注意: `ivfflat` は近似だ。高速だが、再現率を多少速度と引き換えにする。小さめのデータセット（およそ 100万行未満）なら、`hnsw` のほうが良いことが多い。
+
+```sql
+CREATE INDEX documents_embedding_idx
+  ON documents USING hnsw (embedding vector_cosine_ops);
+```
+
+---
+
+<a id="when-you-need-both"></a>
+## 両方必要なとき
+
+技術文書は、この単純な切り分けが崩れる場所だ。ユーザーは `timeouts の設定方法` を検索するが、`withRetry()` のような関数名や `ECONNRESET` のようなエラーコードも探す。
+
+ベクトル検索は概念的なクエリを扱う。FTS は正確な用語を扱う。どちらか一方だけでは、両方をうまく満たせない。
+
+解決策はハイブリッド検索だ。両方を走らせて、結果を融合する。
+
+**Reciprocal Rank Fusion (RRF)** がここでは標準的なアルゴリズムだ。2つのシステムのスコアを正規化する必要がない。順位だけを組み合わせる。
+
+```sql
+-- Reciprocal Rank Fusion を使ったハイブリッド検索
+WITH fts_results AS (
+  SELECT id, ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
+  FROM documents, to_tsquery('english', $1) query
+  WHERE search_vector @@ query
+  LIMIT 50
+),
+vector_results AS (
+  SELECT id, ROW_NUMBER() OVER (ORDER BY embedding <=> $2::vector) AS rank
+  FROM documents
+  ORDER BY embedding <=> $2::vector
+  LIMIT 50
+),
+rrf AS (
+  SELECT
+    COALESCE(f.id, v.id) AS id,
+    COALESCE(1.0 / (60 + f.rank), 0) + COALESCE(1.0 / (60 + v.rank), 0) AS rrf_score
+  FROM fts_results f
+  FULL OUTER JOIN vector_results v ON f.id = v.id
+)
+SELECT d.id, d.title, rrf.rrf_score
+FROM rrf
+JOIN documents d ON d.id = rrf.id
+ORDER BY rrf_score DESC
+LIMIT 10;
+```
+
+分母の `60` は RRF の定数だ。大きくすると順位差の影響が弱まり、小さくすると差が強調される。デフォルトの 60 は、たいていのケースでうまくいく。
+
+これで1つのクエリで2回検索し、順位を融合し、キーワードシグナルと意味シグナルの両方で上位に来る結果を優遇できる。
+
+![1つのクエリが全文検索と pgvector に分岐し、それぞれがランキング結果を返し、Reciprocal Rank Fusion が2つのリストをまとめるハイブリッド検索パイプライン。](../hybrid-rrf-pipeline.svg)
+
+_RRF が価値を持つのは、`ts_rank` とコサイン距離を同じ生スコアとして無理に比較しなくてよいからだ。問うのはただ、「この結果はそれぞれのリストでどれだけ上位だったか？」だけだ。_
+
+---
+
+## 実践的な決定木
+
+検索戦略を選ぶときは、まず **入力の形** を見て、次に **ユーザーがどんなクエリをしているか** を見る。`綴りの揺れがある短い文字列` と `正確な用語が重要な長文` は同じ問題ではないし、どちらも `ドキュメント chunk に対する質問` とは違う。
+
+![テキストの形とユーザーの検索方法に応じて pg_trgm、全文検索、pgvector、ハイブリッド検索、専用ベクトルDBを選ぶ決定木。](../search-decision-tree.svg)
+
+文章でまとめるとこうだ。
+
+- **名前、住所、タイトル、オートコンプリート、タイポが起きやすい短い文字列** → `pg_trgm`
+- **既知の単語、エラーコード、SKU、関数名、タグ、カテゴリ、フィルタ** → FTS
+- **質問、言い換え、推薦、関連項目、多言語一致、RAG chunk** → pgvector
+- **技術コンテンツで、正確な記号と概念的な答えの両方が必要** → RRF を使うハイブリッド
+- **主キー、正確なID、権限フィルタ、日付範囲、ソート済みリスト** → 通常のSQLインデックス
+- **巨大なベクトル量、非常に高い同時実行数、または Postgres ではベンチマークを満たせないレイテンシ目標** → 専用ベクトルストアを評価する
+
+### FTS と Semantic の短い版
+
+「FTS とベクトル検索のどちらを使うべきか？」という問いは、たいてい次の1点に集約される。**関連文書に出てくる単語を、あらかじめ予測できるか？**
+
+できるなら - ユーザーが既知の用語、カテゴリ、関数名、製品コードで検索するなら - FTS のほうが速く、安く、予測しやすい。なぜ一致したのかも説明できる。
+
+できないなら - ユーザーが概念を説明する、質問する、別の言語で探すなら - ベクトル検索が正しい道具だ。単語ではなく意味に一致する。
+
+悩ましい中間は、技術コンテンツに対する自然言語クエリだ。`connection drops をどう扱えばいい？` という検索には、`network failures に対する retry logic の実装` という記事が必要かもしれない。単語は重ならないが、意味は高く関連している。そこにベクトル検索の出番がある。
+
+もう1つの悩ましいケースは **名前や固有名詞** だ。FTS もベクトル検索も、これにはあまり強くない。
+- FTS は `Michael` を検索して `Micheal` を拾えない - トークンが違うから
+- ベクトル検索は、学習データにあまり出てこない名前だと見逃すかもしれない
+- `pg_trgm` はこれを正しく扱う: 意味ではなく、綴りの近さを見るからだ
+
+実務では、多くのコンテンツ検索ボックスはキーワードと速度のために FTS を必要とし、名前検索の有無によってはハイブリッドや `pg_trgm` も必要になる。本当の意味での semantic search 機能は、たいてい pgvector を意味する。RAG は常に pgvector だ。
+
+---
+
+## 専用ベクトルストアが本当に必要なら
+
+pgvector を本当に超えてしまうシステムもある。そのとき市場はノイズが多い。ここで重要なのは次の点だ。
+
+### 機能マトリクス
+
+表を読む前に、いくつかの列を補足しておく。
+
+**Hybrid search** は、BM25 のキーワード検索とベクトル類似検索を1つのクエリで走らせ、Reciprocal Rank Fusion でまとめることを意味する。`withRetry timeout` のような語句は、関数名そのものにも、`network failures の retry logic` に関する文書にも一致できる。ハイブリッドがなければ、どちらか一方を選ぶか、自分で2つのクエリを融合する必要がある。pgvector の「Manual (RRF via SQL)」は [上で示した方法](#when-you-need-both) のことだ。動くが、自分で書く必要がある。
+
+**Sparse vectors** は BM25 よりさらに踏み込む。SPLADE の sparse vector は、およそ3万次元（語彙ごとに1次元）で、約98% がゼロだ。非ゼロ位置が、どの語がどれだけ重要かを示す。`dogs` のクエリは `canine` や `pet` も重み付けする。BM25 級のキーワード精度に、ベクトルインデックス内での語拡張を足したものだ。この列が false なら、正確な用語検索には別の FTS レイヤーが必要だ。
+
+```python
+# SPLADE: 約30,000次元のうち、非ゼロは約60。必要な語彙位置だけが反応する
+def encode_splade(text: str) -> dict:
+    tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    with torch.no_grad():
+        output = model(**tokens)
+    vec = torch.log1p(torch.relu(output.logits)).max(dim=1).values.squeeze()
+    return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
+```
+
+**SQL / SQL-like** は、実際にはフィルタリングの話だ。ベクトル検索はフィルタなしではデモにすぎない。テナントスコープ、日付範囲、権限、カテゴリは結局必要になる。完全なSQL（pgvector）は、それらを既存の join と同じ場所に表現できる。専用DB は JSON フィルタオブジェクト（Qdrant、Pinecone）、クエリDSL（Elasticsearch、Milvus）、あるいは GraphQL（Weaviate）を使う。どれも動くが、フィルタロジックが複雑になるほど SQL のほうが魅力的になる。
+
+```sql
+-- pgvector: ベクトル類似度は WHERE の中の1つの式にすぎない
+SELECT id, title, 1 - (embedding <=> $1) AS score
+FROM documents
+WHERE tenant_id = $2 AND category = ANY($3::text[]) AND created_at > NOW() - INTERVAL '90 days'
+ORDER BY embedding <=> $1 LIMIT 10;
+```
+
+```python
+# Qdrant: 同等のフィルタを Python オブジェクトで表す。機能的だが、記述は増える
+results = client.query_points(
+    collection_name="documents", query=query_embedding,
+    query_filter=models.Filter(must=[
+        models.FieldCondition(key="tenant_id", match=models.MatchValue(value=tenant_id)),
+        models.FieldCondition(key="category",  match=models.MatchAny(any=categories)),
+        models.FieldCondition(key="created_at", range=models.DatetimeRange(gte=cutoff)),
+    ]),
+    limit=10,
+)
+```
+
+**Multimodal native** とは、「画像埋め込みを保存できる」ことではない。そこはどのDBも float 配列は扱える。本当に意味があるのは、DB自体がテキスト以外の埋め込みモデルを同梱していて、画像URLを渡すだけでベクトル化までやってくれることだ。この領域の多くのDBは埋め込み非依存なので、そのパイプラインは自前で持つことになる。Marqo や Weaviate（CLIP / ImageBind モジュール経由）がそこをつないでくれる。
+
+```python
+# Marqo: 生の画像をPOSTし、テキストで検索する。外部の埋め込みステップがいらない
+mq.index("products").add_documents(
+    [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
+    tensor_fields=["image"]
+)
+results = mq.index("products").search(q="lightweight shoes for summer")
+# キーワードが一切重ならなくても shoe-001 が返る。CLIP がクロスモーダル一致を処理する
+```
+
+**Disk-based index** はコストの問題だ。RAM 常駐の HNSW インデックスは高速だが、1百万件あたり数GBのRAMを食うことがある。生のベクトル、グラフのオーバーヘッド、メタデータを足し込むとそうなる。ディスクネイティブな代替（Milvus DiskANN、Elasticsearch DiskBBQ、LanceDB の Lance format、Turbopuffer の object storage tier）は、検索レイテンシを少し犠牲にしてインフラを安くできることが多い。RAG ワークロードではモデルのレイテンシがすでに支配的なことが多いので、そのトレードオフはベンチマークする価値がある。Redis VSS は制約がはっきりしている。RAM 専用で、ディスク経路がない。
+
+**Max dimensions** は、今日の選択に隠れた明日の移行コストだ。`text-embedding-3-large` は 3072 次元を使うし、Jina v3 はさらに大きい埋め込みを出せる。研究モデルは、今後も次元数を押し上げるだろう。マネージドサービスの中には厳しい次元上限を公開しているものもあるし、典型的な埋め込みモデルでは実質的に上限がないとするものもある。決める前に最新ドキュメントを確認しよう。余裕のあるものを選べ。次元上限に引っかかってベクトルインデックスを移行するのは、かなり嫌なスプリントになる。
+
+_2026年5月8日時点で公開されているプロジェクトドキュメントと製品ページで確認済み。表はスナップショットとして扱ってほしい。マネージドサービスの制限、価格、ハイブリッド検索機能、ディスク索引オプションはすぐ変わる。_
+
+| Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
+|---|---|---|---|---|---|---|---|---|---|
+| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | すでにPostgres上にあり、中規模のベクトル数で十分な場合 |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | 大規模なフィルタ付きクエリ; 複雑なメタデータ |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL ベースのアクセスパターン; 組み込みベクトル化 |
+| **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | マネージドの手軽さ; 運用担当がいない |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | billion-scale; エンタープライズのオンプレ |
+| **[Chroma](https://github.com/chroma-core/chroma)** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | ローカル開発とプロトタイピング向け |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | エッジ / サーバーレス; multimodal lakehouse |
+| **[Orama](https://github.com/oramasearch/orama)** | Embedded / Cloud | Apache 2.0 | ✅ Full-text + vector | ❌ | ❌ | ❌ | ❌ | Varies | JS/edge アプリ; 軽量なサイト / アプリ検索 |
+| **[Turbopuffer](https://turbopuffer.com/)** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | マルチテナントSaaS; 数百万の namespace |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | すでに Elastic スタックがある; ハイブリッド enterprise search |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS ネイティブ; OSS の Elastic 代替 |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | Self-host / Cloud | Apache 2.0 | ✅ Native | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | 実質的に無制限 | 検索 + ランキング + レコメンドシステム |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | Self-host / Cloud | Apache 2.0 | Manual | ❌ | ✅ Full SQL | ❌ | ✅ Columnar + HNSW | Varies | OLAP の横でベクトル検索を使う分析 / ログ用途 |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | すでに MongoDB を使っている; document + vector を1つに |
+| **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | 超低レイテンシ; キャッシュ層のベクトル検索 |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | multimodal を最初から: image + text + video |
+
+### マトリクスの読み方
+
+表にそのまま収まらない点がいくつかある。
+
+**Sparse vectors** は、別の全文検索エンジンを持たずに、ベクトルインデックスの中で BM25 級のキーワードマッチを実現する方法だ。Qdrant と Elasticsearch は、特に実装が成熟している。Weaviate は BM25F 経由で対応している。ハイブリッド検索が重要で、しかも2つのシステムを運用できないなら、sparse vector 対応を見よう。
+
+**Disk-based indexes** は、実装詳細ではなくコストレバーだ。RAM 常駐の HNSW は速いが、ベクトル数、次元数、メタデータ、グラフのオーバーヘッドが増えると高くつく。ディスクベースの代替（Milvus DiskANN、Elasticsearch DiskBBQ、Turbopuffer の object storage、LanceDB の Lance format）は、検索レイテンシを下げる代わりにインフラコストを下げる。大規模RAGでは、そのトレードオフを試す価値があることが多い。
+
+**Turbopuffer のマルチテナンシー** は、非常に多い namespace 数を前提にしている。公開されている訴求や導入事例は、Notion のような巨大で namespace が多いコーパスを強く意識している。ユーザーや組織ごとに分離されたベクトル検索が必要なら、そのアーキテクチャは経済性を変えうる。ただし、あなた自身のテナント形状で必ずベンチマークしてほしい。
+
+**LanceDB の embedded mode** は、「ベクトル検索版 SQLite」に最も近い。プロセス内で動き、サーバーを必要とせず、Lambda、Cloudflare Workers、エッジ環境で使える。Lance のカラム型フォーマットが、実運用レベルで embedded を成立させている。
+
+**Orama は検索 UX 基盤であって、データ倉庫ではない。** JavaScript アプリ、エッジ、またはマネージドのサイト / アプリ検索層として、軽量な全文 / ベクトル / ハイブリッド検索エンジンが欲しいなら非常に優秀だ。billion-vector の検索、重い分析、複雑なフィルタ join に選ぶものではない。
+
+**Vespa は、検索がプロダクトの半分にすぎないときに選ぶものだ。** lexical retrieval、nearest-neighbor search、tensor、ranking expression、grouping、online serving をまとめて持つ。その力は本物だが、運用とモデリングの複雑さも本物だ。CRUD アプリに semantic search を足したいチームより、検索 / レコメンドチーム向きだ。
+
+**ClickHouse は、検索が分析にくっついているときに会話に入ってくる。** ソースオブトゥルースがイベント、ログ、トレース、メトリクス、大きな fact table なら、ClickHouse はベクトル距離、フィルタ、集計、そして今や本格的な全文インデックスまで、1つの SQL エンジンに置ける。専用のベクトルDBではないが、分析的 retrieval では、最も地味で最良の答えになりうる。
+
+**Chroma は dev/test と小さなアプリ配備で最も強い。** 巨大コーパス、HA、ディスク主体の運用、第一級のハイブリッド検索を狙うなら、プロトタイプを本番インフラに昇格させる前に、より本番向けのストアを評価したほうがいい。
+
+### 単純化した決定
+
+本当に pgvector を超えたなら - たいていはベクトル数、フィルタ、書き込み率、高同時実行時のレイテンシが Postgres の許容範囲を超えたとベンチマークで示されたときだが - 制約で選ぶ。
+
+- **テナント分離が必要な SaaS** → Turbopuffer
+- **Rust レベルの性能 + 複雑なメタデータフィルタが必要** → Qdrant
+- **すでに Elastic / ELK スタック上にある** → DiskBBQ 付き Elasticsearch
+- **AWS 環境で OSS が欲しい** → OpenSearch
+- **本格的なランキングが必要な検索 / レコメンド基盤** → Vespa
+- **分析、オブザーバビリティ、ログ / イベント検索** → ClickHouse
+- **オンプレ / self-hosted で billion-scale** → Milvus
+- **エッジ / サーバーレス / multimodal** → LanceDB
+- **小さな JS アプリ、ドキュメントサイト、エッジネイティブ検索 UX** → Orama
+- **運用ゼロ、すぐ動く、コストは二の次** → Pinecone
+- **multimodal-first（画像、動画、音声）** → Marqo
+- **すでに MongoDB を使っている** → Atlas Vector Search
+- **すでに Postgres 上にあり、もっと余裕が必要** → Supabase Vector か Neon（どちらも pgvector 管理付きで、ツールがより整っている）
+
+---
+
+## やってはいけないこと
+
+正解があるものに対して、曖昧な文字列検索としてベクトル検索を使わないこと。
+
+`Find me the user with email dan@example.com` はベクトル検索の問題ではない。`Find me the order with ID ORD-12345` も同じだ。`ORD-12345` を埋め込んで orders テーブルにコサイン類似度をかければ、何かは返るだろう。でもそれが正しいとは限らない。これは厳密一致の問題だ。主キーか通常のインデックスを使え。
+
+ベクトル検索は、データセットの中で「最も似ているもの」を返す。たとえ関連するものが1つもなくてもだ。良い答えが存在しないことは、ベクトル検索にはわからない。関連文書ならそれでいい。だが、特定のレコード検索では致命的だ。誤った近似一致は、空の結果より悪い。
+
+何のための道具かを知ろう。そうした道具の多くは、すでにあなたの Postgres インストールの中にある。合う場面で使えばいい。
