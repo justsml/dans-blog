@@ -4,7 +4,7 @@
 - Locale: it
 - Judge model: openrouter/openai/gpt-5.4-mini
 - Second judge model: openrouter/openai/gpt-5-mini
-- Escalation judge model: not run
+- Escalation judge model: manual review after contradictory second judge report
 - Selected commit hint: judge selected
 
 ## Primary Judge Telemetry
@@ -22,6 +22,10 @@
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
+
+## Escalation
+- The second judge said "Decision: Agree" but recommended a different candidate SHA.
+- See reports/i18n/llm-generative-ui-landscape-2026/it/judge-escalation.md.
 
 ## Candidates
 - d9ff52e40c2af5cbb4bad146f40a98db55cf228c i18n candidate(it): llm-generative-ui-landscape-2026 via openrouter/google/gemini-3.1-flash-lite-preview

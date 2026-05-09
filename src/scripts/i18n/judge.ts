@@ -65,7 +65,10 @@ const secondTelemetry = secondJudge == null || secondJudgeModel == null
   ? undefined
   : getRunTelemetry(secondJudgeModel, secondJudge);
 
-const shouldEscalate = secondJudge != null && shouldEscalateSecondJudge(secondJudge.output);
+const shouldEscalate = secondJudge != null && shouldEscalateSecondJudge({
+  primaryOutput: primaryJudge.output,
+  secondOutput: secondJudge.output,
+});
 const escalationJudge = shouldEscalate && escalationJudgeModel != null
   ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt())
   : undefined;
@@ -156,8 +159,20 @@ function getEscalationPrompt() {
   ].join("\n");
 }
 
-function shouldEscalateSecondJudge(output: string) {
-  const normalized = output.toLowerCase();
+function shouldEscalateSecondJudge({
+  primaryOutput,
+  secondOutput,
+}: {
+  primaryOutput: string;
+  secondOutput: string;
+}) {
+  const primarySelection = parseSelectedCommit(primaryOutput);
+  const secondSelection = parseSelectedCommit(secondOutput);
+  if (primarySelection != null && secondSelection != null && primarySelection !== secondSelection) {
+    return true;
+  }
+
+  const normalized = secondOutput.toLowerCase();
   const explicitNoEscalationPatterns = [
     /no escalation required/,
     /escalation (?:is )?not required/,
@@ -168,15 +183,31 @@ function shouldEscalateSecondJudge(output: string) {
     return false;
   }
 
-  if (/disagree|not agree|no estoy de acuerdo|不一致|同意しない/i.test(output)) {
+  if (/disagree|not agree|no estoy de acuerdo|不一致|同意しない/i.test(secondOutput)) {
     return true;
   }
 
-  if (/\bagree\b|\bagreement\b/i.test(output)) {
+  if (/\bagree\b|\bagreement\b/i.test(secondOutput)) {
     return false;
   }
 
-  return /escalat|different/i.test(output);
+  return /escalat|different/i.test(secondOutput);
+}
+
+function parseSelectedCommit(output: string) {
+  const selectedPatterns = [
+    /selected candidate:\s*`?([a-f0-9]{40})/i,
+    /recommendation:\s*(?:\r?\n)?accept[^\r\n]*?`?([a-f0-9]{40})/i,
+    /accept the selected translation[^\r\n]*?`?([a-f0-9]{40})/i,
+    /accept[^\r\n]*?\(commit\s+`?([a-f0-9]{40})/i,
+  ];
+
+  for (const pattern of selectedPatterns) {
+    const match = output.match(pattern);
+    if (match?.[1] != null) return match[1];
+  }
+
+  return undefined;
 }
 
 function getCandidateCommits() {
