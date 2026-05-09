@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: es
+- Model: openrouter/google/gemini-3.1-flash-lite-preview
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/es/index.mdx
+- Validation: passed
+- Runtime seconds: 50.12
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
