@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ru/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 180.06
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ru/index.mdx: src/content/posts/2026-05-09--developer-workstation-blast-radius/de/index.mdx, reports/i18n/developer-workstation-blast-radius/de/judge.md
