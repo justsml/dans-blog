@@ -3,11 +3,10 @@
 - Locale: ru
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ru/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 5.88
+- Validation: passed
+- Runtime seconds: 143.13
 - Input tokens: unknown
-- Output tokens: unknown
+- Output tokens: 0
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model did not create src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ru/index.mdx.
