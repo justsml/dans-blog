@@ -6,7 +6,7 @@
 
 The current `de/index.mdx` is based on candidate **e84807f** (openrouter/google/gemini-3-flash-preview) with only minor post-processing:
 - Full frontmatter fields added (date, tags, category, image paths with `../` prefix, etc.)
-- `locale` default changed from `'en-US'` to `'de-DE'`
+- Code-block defaults such as `locale: 'en-US'` preserved from the source article
 
 The body text is identical between e84807f and the current file. The translation is high quality — natural German that preserves Dan's direct, technical voice.
 
@@ -23,6 +23,6 @@ The body text is identical between e84807f and the current file. The translation
 - `"Hör auf, Prompts im Code zu vergraben"` — captures the imperative tone of "Stop Burying" better than 88c4cb1's `"Verstecke Prompts nicht im Code"`
 - `"Prompt-Patterns, die den Produktionseinsatz überleben."` — natural, idiomatic subtitle
 - `"Compiler-Zeit-Vertrag"` — slightly unusual for "compile-time contract" but perfectly understandable in context
-- `locale: 'de-DE'` — correct adaptation for a German audience
+- `locale: 'en-US'` — preserved from the source code block rather than localized inside executable sample code
 
 No escalation needed. The selected translation (e84807f) is the best candidate and was properly polished with frontmatter before landing.

@@ -65,7 +65,7 @@ const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
   userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // einschränken, was in den Prompt gelangen kann
-  locale: z.string().default('de-DE'),
+  locale: z.string().default('en-US'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
