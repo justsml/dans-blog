@@ -120,6 +120,9 @@ for (const model of models) {
   const unrelatedChangedPaths = getUnrelatedChangedPaths(preRunChangedPaths);
 
   if (unrelatedChangedPaths.length > 0) {
+    if (unrelatedChangedPaths.every(isHarmlessGeneratedPath)) {
+      cleanupUnrelatedPaths(unrelatedChangedPaths);
+    } else {
     cleanupRejectedTarget();
     cleanupUnrelatedPaths(unrelatedChangedPaths);
     writeCandidateReport({
@@ -137,10 +140,12 @@ for (const model of models) {
     }
 
     continue;
+    }
   }
 
   if (!opencodeResult.ok) {
     cleanupRejectedTarget();
+    cleanupUnrelatedPaths(getUnrelatedChangedPaths(preRunChangedPaths).filter(isHarmlessGeneratedPath));
     writeCandidateReport({
       reportPath,
       model,
@@ -307,6 +312,10 @@ function cleanupUnrelatedPaths(paths: string[]) {
       rmSync(`${process.cwd()}/${path}`, { recursive: true, force: true });
     }
   }
+}
+
+function isHarmlessGeneratedPath(path: string) {
+  return /^tmp-language-nav-.+\.png$/.test(path);
 }
 
 function pathExistsInHead(path: string) {
