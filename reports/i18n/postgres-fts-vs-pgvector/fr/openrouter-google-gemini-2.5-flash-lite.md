@@ -3,11 +3,10 @@
 - Locale: fr
 - Model: openrouter/google/gemini-2.5-flash-lite
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/fr/index.mdx
-- Validation: rejected: touched unrelated files
-- Runtime seconds: 163.05
+- Validation: passed
+- Runtime seconds: 185.52
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/fr/index.mdx: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx
