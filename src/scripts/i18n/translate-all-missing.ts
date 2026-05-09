@@ -41,9 +41,11 @@ const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const candidateModels = parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS);
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 3);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
+const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
 const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 180);
 const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 180);
 const shouldDryRun = options["dry-run"] === true;
+const shouldPush = options["push"] === true;
 
 const tasks = getMissingTranslationTasks();
 const limitedTasks = limit == null ? tasks : tasks.slice(0, limit);
@@ -62,6 +64,9 @@ if (shouldDryRun) {
 for (const [index, task] of limitedTasks.entries()) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
   processTask(task);
+  if (shouldPush) {
+    runInherited("git", ["push", "origin", "main"]);
+  }
 }
 
 function processTask(task: Task) {
@@ -133,7 +138,17 @@ function getMissingTranslationTasks() {
   const postsDir = join(process.cwd(), "src/content/posts");
   const tasks: Task[] = [];
 
-  for (const entry of readdirSync(postsDir, { withFileTypes: true })) {
+  const postEntries = readdirSync(postsDir, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .filter((entry) => {
+      const postDir = join(postsDir, entry.name);
+      return existsSync(join(postDir, "index.mdx")) || existsSync(join(postDir, "index.md"));
+    })
+    .sort((a, b) => b.name.localeCompare(a.name));
+
+  const scopedPostEntries = latestPosts == null ? postEntries : postEntries.slice(0, latestPosts);
+
+  for (const entry of scopedPostEntries) {
     if (!entry.isDirectory()) continue;
 
     const postDir = join(postsDir, entry.name);
