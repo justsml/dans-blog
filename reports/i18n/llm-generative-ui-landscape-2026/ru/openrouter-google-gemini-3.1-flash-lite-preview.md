@@ -3,11 +3,10 @@
 - Locale: ru
 - Model: openrouter/google/gemini-3.1-flash-lite-preview
 - Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/index.mdx
-- Validation: rejected: touched unrelated files
-- Runtime seconds: 41.59
+- Validation: passed
+- Runtime seconds: 84.11
 - Input tokens: unknown
-- Output tokens: 0
+- Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Model changed files outside src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/index.mdx: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/
