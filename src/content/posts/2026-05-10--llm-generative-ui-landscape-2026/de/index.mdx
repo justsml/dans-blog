@@ -1,9 +1,19 @@
 ---
-title: "Die LLM GenUI-Landschaft 2026"
-subTitle: "Vom Tool-zu-Komponenten-Rendering bis zur offenen Generierung – eine Landkarte aller Ansätze und wann sich deren Komplexität lohnt."
+title: "Die LLM-GenUI-Landschaft v2"
+subTitle: "Vom Tool-zu-Komponenten-Rendering bis zur offenen Generierung – eine Karte aller Ansätze und wann sich ihre Komplexität lohnt."
+date: 2026-05-10
+modified: 2026-05-10
+tags: [ai, llm, generative-ui, agents, frontend, protocols, react, ag-ui, a2ui, copilotkit, json-render, mcp]
+category: AI
+subCategory: Frontend
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.9
 ---
 
-"Generative UI" bedeutet mindestens fünf verschiedene Dinge, je nachdem, wer es sagt.
+„Generative UI" bedeutet mindestens fünf verschiedene Dinge, je nachdem, wer es sagt.
 
 - Chat-Interfaces, die Produktkarten aus Modell-Tool-Aufrufen einbetten
 - Runtime-JSON-Specs, die das Frontend als Komponentenbäume rendert
@@ -35,7 +45,7 @@ Generative UI zur Laufzeit bedeutet: **Das Modell bestimmt basierend auf dem Sta
 
 Nicht die Worte. Das Interface.
 
-Der einfachste Fall: Ihr Flugbuchungs-Assistent ruft ein `search_flights` Tool auf. Anstatt einfachen Text zurückzugeben ("Hier sind drei Optionen..."), rendert er eine `<FlightResultsCard>` Komponente mit auswählbaren Flügen, Sitzklassen-Toggeln und einem "Buchen"-Button. Das Modell hat entschieden, dass eine strukturierte Karte hier die richtige Antwort ist. Der Entwickler hat entschieden, wie diese Karte aussieht und was "Buchen" bewirkt.
+Der einfachste Fall: Ihr Flugbuchungs-Assistent ruft ein `search_flights` Tool auf. Anstatt einfachen Text zurückzugeben ("Hier sind drei Optionen..."), rendert er eine `<FlightResultsCard>` Komponente mit auswählbaren Flügen, Sitzklassen-Toggles und einem "Buchen"-Button. Das Modell hat entschieden, dass eine strukturierte Karte hier die richtige Antwort ist. Der Entwickler hat entschieden, wie diese Karte aussieht und was "Buchen" bewirkt.
 
 Der komplexere Fall: Ein Finanzanalyse-Agent erhält eine Frage zu einem Portfolio und entscheidet sich, eine Antwort aus einer `MetricGroup` mit Kennzahlen, einem `RiskBreakdown` Chart, einer `ScenarioComparison` Tabelle und einem `PolicyNotice` zusammenzustellen. Das Modell hat dieses Layout aus einem Katalog vorab genehmigter Komponenten zusammengesetzt. Der Entwickler hat jede Komponente definiert. Das Modell hat gewählt, welche es verwendet und welche Daten es hineinsteckt.
 
@@ -87,7 +97,7 @@ Das Modell gibt einen typisierten JSON-Baum aus, der auf Komponenten aus einem v
 
 Das Modell hat dieses Layout komponiert. Eine `MetricGroup`, ein `LineChart`, ein `InsightCallout`. Aber Sie haben definiert, was jeder Komponententyp bedeutet, welche Props er akzeptiert und wie er gerendert wird. Wenn das Modell versucht, `{ "type": "custom_untested_thing" }` auszugeben, fängt Ihre Schema-Validierung dies ab und der Renderer ignoriert oder lehnt es ab.
 
-Dies ist das Muster hinter `json-render`, `A2UI`, `Hashbrown`, `OpenUI` und `Tambo`. Die zentrale Ingenieursleistung ist hier das **Katalog-Design** — die Entscheidung, welche Komponententypen existieren, wie ihre Schemata aussehen und was das Modell komponieren darf und was nicht.
+Das ist das Muster hinter `json-render`, `A2UI`, `Hashbrown`, `OpenUI` und `Tambo`. Die zentrale Ingenieursleistung ist hier das **Katalog-Design** — die Entscheidung, welche Komponententypen existieren, wie ihre Schemata aussehen und was das Modell komponieren darf und was nicht.
 
 **Geeignet, wenn**: Die Struktur dessen, was Sie zeigen wollen, sich legitim basierend auf den Daten oder der Benutzeranfrage ändert. Dashboards, die sich an das anpassen, was in den Zahlen auffällig ist. Berichte, die je nach Kontext unterschiedliche Abschnitte zeigen. Workflow-Panels, die sich ändern, je nachdem, in welchem Schritt sich ein Agent befindet.
 
@@ -110,7 +120,7 @@ Die klassische Unterscheidung innerhalb von Generative UI ist **Iframe-HTML vs. 
 - **Iframe-HTML** — das Modell schreibt HTML, SVG, Canvas oder WebGL, das in einer isolierten Sandbox gerendert wird. Maximale Ausdrucksfreiheit; die Sicherheit hängt vollständig von der Iframe-Grenze ab. Beispiele: Anthropic Artifacts, OpenGenerativeUI.
 - **JSON-Katalog** — das Modell gibt ein strukturiertes Payload aus, das auf einen vom Entwickler definierten Komponenten-Katalog beschränkt ist; Ihr Renderer instanziiert vertrauenswürdige, vorgefertigte Komponenten aus dieser Spezifikation. Das Modell entscheidet, *was* gezeigt wird; Sie entscheiden, *wie* es gerendert wird. Beispiele: json-render, A2UI.
 
-Darüber hinaus deuten sehr neue Demos auf einen dritten Modus hin, in dem das Modell keine Komponenten auswählt oder sandboxed HTML schreibt — sondern den Canvas direkt steuert. Projekte wie [Tencents HunyuanWorld](https://arxiv.org/abs/2502.01999), das erkundbare 3D-Umgebungen aus einem einzigen Bild generiert, und Spielarchitekturen, in denen LLMs Karten, NPCs und Quests zur Laufzeit generieren, anstatt einen Komponenten-Katalog aufzurufen, deuten auf eine Zukunft hin, in der das Modell eher wie ein Spiele-Regisseur als ein Formular-Renderer agiert. In-Browser-LLM-Inferenz via WebGPU ([WebLLM](https://mlc.ai/web-llm/)) treibt dieselbe Entwicklung lokal voran.
+Darüber hinaus deuten sehr neue Demos auf einen dritten Modus hin, in dem das Modell keine Komponenten auswählt oder sandboxed HTML schreibt — sondern den Canvas direkt steuert. Projekte wie [Tencents HunyuanWorld](https://arxiv.org/abs/2502.01999), das erkundbare 3D-Umgebungen aus einem einzigen Bild generiert, und Spielarchitekturen, in denen LLMs zur Laufzeit Karten, NPCs und Quests generieren, anstatt einen Komponenten-Katalog aufzurufen, deuten auf eine Zukunft hin, in der das Modell eher wie ein Spiele-Regisseur als ein Formular-Renderer agiert. In-Browser-LLM-Inferenz via WebGPU ([WebLLM](https://mlc.ai/web-llm/)) treibt dieselbe Entwicklung lokal voran.
 
 Dieses Territorium ist wirklich spannend und steckt noch in den Kinderschuhen. Es gibt noch keine stabilen Frameworks, um damit Produktionsprodukte zu bauen. Ich werde diesen Ansatz in einem eigenen Artikel behandeln, sobald sich das ändert.
 
@@ -155,7 +165,7 @@ A2UI verwendet ein flaches JSONL-Format: ein Komponenten-Deskriptor pro Zeile, j
 {"id":"t1","type":"data_table","cols":["Month","MRR","Net New"],"data_ref":"monthly"}
 ```
 
-A2UI ist sicherheitsbewusst: Die Spezifikation ist ein Datenformat, kein ausführbarer Code. Der Komponenten-Katalog wird vom Entwickler vordefiniert; der Agent kann nur auf Typen in diesem Katalog verweisen. Ein A2UI-Renderer, der einen unbekannten Typnamen erhält, ignoriert diesen.
+A2UI ist sicherheitsbewusst: Die Spezifikation ist ein Datenformat, kein ausführbarer Code. Der Komponenten-Katalog wird vom Entwickler vorab definiert; der Agent kann nur auf Typen in diesem Katalog verweisen. Ein A2UI-Renderer, der einen unbekannten Typnamen erhält, ignoriert diesen.
 
 Das "Open-JSON-UI"-Format von CopilotKit ist kompatibel mit A2UI. Wenn Sie heute ein Spezifikationsformat für einen Komponenten-Katalog wählen, ist A2UI dasjenige mit der breitesten plattformübergreifenden Unterstützung.
 
@@ -290,7 +300,7 @@ Das Modell der vollständigen Skript-Wiederholung klingt ineffizient, ist aber �
 
 ### LangChain und Haystack
 
-Dies sind Backend-Orchestrierungs-Frameworks, keine UI-Frameworks. Sie erscheinen in jeder ehrlichen Generative-UI-Landkarte, weil sie typischerweise die Schicht sind, in der strukturierte Ausgaben generiert werden, bevor sie an ein Frontend gesendet werden.
+Dies sind Backend-Orchestrierungs-Frameworks, keine UI-Frameworks. Sie erscheinen in jeder ehrlichen Generative-UI-Landkarte, weil sie typischerweise die Schicht sind, in der strukturierte Outputs generiert werden, bevor sie an ein Frontend gesendet werden.
 
 **LangChain** ([langchain-ai/langchain](https://github.com/langchain-ai/langchain)): `.with_structured_output()` für jedes LLM ermöglicht Pydantic-gestützte JSON-Generierung. Der `@tool` Decorator mit automatischer Schema-Generierung ist der sauberste Weg, um zu definieren, welche Tools das Modell aufrufen darf. LangChain liefert strukturierte Ergebnisse an die jeweilige Frontend-Schicht.
 
@@ -325,7 +335,7 @@ Dieser Bereich bewegt sich schnell, und mehrere Projekte haben neben ihrem Code 
 
 **A2UI** (Google) ist Pre-1.0 (v0.9 bei der letzten Prüfung) mit Breaking Changes zwischen Minor-Versionen und einer inkonsistenten Kommunikation von Google zur Roadmap. Es ist die richtige Wahl für plattformübergreifende Reichweite (Web + Flutter + SwiftUI), die `json-render` nicht abdeckt, und es hat eine bedeutende Unterstützung durch Unternehmen. Für reine Web-Projekte ist die DX momentan mühsamer.
 
-**AG-UI** (CopilotKit) ist ebenfalls Pre-1.0. Die häufigste Verwirrung: Der Name klingt wie ein UI-Framework. Das ist es nicht — es ist ein Transportprotokoll. AG-UI definiert, wie Ereignisse zwischen Agenten-Backends und Ihrem Frontend fließen; was Sie als Reaktion darauf rendern, bleibt Ihre Entscheidung. Das mentale Modell ist solide und weit verbreitet, aber der Pre-1.0-Status bedeutet, dass an Edge-Cases noch gearbeitet wird.
+**AG-UI** (CopilotKit) ist ebenfalls Pre-1.0. Die häufigste Verwirrung: der Name klingt wie ein UI-Framework. Das ist es nicht — es ist ein Transportprotokoll. AG-UI definiert, wie Ereignisse zwischen Agenten-Backends und Ihrem Frontend fließen; was Sie als Reaktion darauf rendern, bleibt Ihre Entscheidung. Das mentale Modell ist solide und weit verbreitet, aber der Pre-1.0-Status bedeutet, dass an Edge-Cases noch gearbeitet wird.
 
 Das praktische Fazit: **Jeder wichtige Akteur hier ist Pre-1.0**. Planen Sie API-Änderungen ein. Die Muster — Tool-zu-Komponenten, Katalog-Komposition, sandboxed Generierung — sind stabil genug, um darauf aufzubauen. Die spezifischen Protokollentscheidungen sind es nicht.
 
@@ -383,7 +393,7 @@ Der Katalog klingt wie das Vokabular Ihres Produkts. Er kodiert Ihre UX-Entschei
 
 **Falle: Generative UI verwenden, wo statische UI ausreicht.** Wenn die Struktur dessen, was Sie zeigen wollen, zur Entwicklungszeit bekannt ist — und das ist sie meistens —, ist Muster 1 mit vorgefertigten Komponenten schneller, sicherer und konsistenter. Generative UI verdient ihre Komplexität dann, wenn die Struktur tatsächlich basierend auf den Daten oder dem Aufgabenkontext variiert.
 
-**Falle: Barrierefreiheit überspringen.** LLMs halluzinieren WCAG-Verletzungen. Sie werden `role="region"` auf interaktiven Elementen ausgeben, Formulare mit fehlenden Labels generieren und Kontrastverhältnisse produzieren, die bei WCAG AA durchfallen. Ihre Komponentenbibliothek mag vollständig barrierefrei sein; KI-generierte Kompositionen dieser Komponenten sind es nicht automatisch. Testen Sie den gesamten Render-Pfad, nicht nur die Komponenten isoliert.
+**Falle: Barrierefreiheit überspringen.** LLMs halluzinieren WCAG-Verstöße. Sie werden `role="region"` auf interaktiven Elementen ausgeben, Formulare mit fehlenden Labels generieren und Kontrastverhältnisse produzieren, die bei WCAG AA durchfallen. Ihre Komponentenbibliothek mag vollständig barrierefrei sein; KI-generierte Kompositionen dieser Komponenten sind es nicht automatisch. Testen Sie den gesamten Render-Pfad, nicht nur die Komponenten isoliert.
 
 **Falle: Protokoll und Framework verwechseln.** AG-UI ist kein Frontend-Framework. A2UI ist keine React-Library. Sie sind Wire-Formate und Ereignisprotokolle. Sie benötigen immer noch ein Frontend-Framework, um sie zu implementieren. CopilotKit implementiert AG-UI und A2UI. `json-render` implementiert das A2UI/Open-JSON-UI Katalog-Muster. Dies sind verschiedene Ebenen.
 
