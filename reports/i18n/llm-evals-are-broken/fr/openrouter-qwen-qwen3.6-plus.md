@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 106.42
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
