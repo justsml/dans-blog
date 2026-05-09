@@ -1,0 +1,124 @@
+---
+title: "WeakMapでメモリリークを止めよう"
+subTitle: "弱い参照で弱いコードを修正する！"
+date: 2025-12-29
+modified: 2026-01-12
+tags: [javascript, memory, garbage-collection, performance, patterns]
+category: Code
+subCategory: Best Practices
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+コードを1行変えただけでメモリ使用量が50%落ちる瞬間を見たことがあるだろうか？ダッシュボードアプリが1時間あたり100MBもメモリを食いつぶしていたのが、まる1日クリーンに動作するようになった。あの瞬間をChrome DevToolsのPerformance Monitorで目撃した。
+
+その1行の変更: `new Map()` が `new WeakMap()` になっただけ。
+
+それだけだ。APIの表面は同じ、使い方も同じ。でも裏側の動作は完全に違う。なぜこれが動くのかを理解するには、ほとんどのJavaScript開発者が考えたこともないこと、つまり「誰ももうそのデータを見ていないときに何が起こるか」を理解する必要がある。
+
+## 参照が「錨」になるとき
+
+JavaScriptの通常のMapは、キーを宝物のように扱う。一度放进去すると、Mapはそれを鉄の握力で掴んで離さない。ガベージコレクタはこの関係を見て、「明らかにまだこのオブジェクトが必要だ。触らないでおこう」と考える。
+
+この保護本能が問題になるのは、一時的なもののメタデータを保存している場合だ。削除されるDOMノード。期限切れになるユーザーセッション。アンマウントされるコンポーネントインスタンス。Mapは、これらのオブジェクトがもう不要だと知らない。ただ参照を持っているから、生き続けさせるだけだ。
+
+```javascript
+const cache = new Map();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// elementはDOMから消えたが、cacheがメモリに保持し続けている
+```
+
+ガベージコレクタは `element` を掃除できない。なぜなら `cache` がまだそれを指しているからだ。これは「強い参照」と呼ばれ、長時間動作するシングルページアプリでは、最終的にブラウザをクラッシュさせるリークになる。
+
+## WeakMapがルールを変える
+
+WeakMapの動作は違う。キーを永住者ではなく一時滞在者として扱う。WeakMapに何かを保存するとき、本質的にこう言っているのと同じだ。「このオブジェクトにこのデータを紐付けたい。でも、このオブジェクトが生き続ける理由にはなりたくない」と。
+
+オブジェクトをメモリに留めている唯一のものがWeakMapだけなら、ガベージコレクタはそれを回収してよい。オブジェクトが消えれば、WeakMapのエントリも一緒に消える。手動のクリーンアップは不要だ。
+
+```javascript
+const cache = new WeakMap();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// elementはガベージコレクトされる
+// cacheのエントリも自動的に消滅する
+```
+
+10万個のDOMノードを作成し、それぞれにメタデータを保存してからすべて削除するベンチマークを走らせてみた。Mapを使うとブラウザは150〜200MBを保持した。WeakMapだと70〜80MBに落ちた。同じコード、同じ機能で、メモリフットプリントは半分だ。
+
+## 何を諦めるか
+
+WeakMapには、制限のように感じる制約がある。でも、それが魔法を可能にしているのだと気づくまで。
+
+**WeakMapをイテレートすることはできない。** `forEach` も `keys()` も `values()` もない。考えてみれば当然だ。イテートの途中でガベージコレクタがエントリを削除するかもしれない。そんな状況に対処したいだろうか？
+
+サイズも確認できない。`.size` プロパティも `.length` もない。これもやはり、移り変わる値だからだ。尋ねた瞬間と答えが返ってきた瞬間で数が変わっているかもしれない。
+
+**キーはオブジェクトでなければならない。** 文字列も数値もプリミティブ値は使えない。これは弱い参照の仕組みに根本的に関わる。プリミティブ値は、値そのものから切り離されたアイデンティティを持たないからだ。
+
+これらはバグではない。デザインだ。WeakMapは1つの特定の job のために作られている。オブジェクトがクリーンアップされるのを妨げずに、オブジェクトにメタデータを紐付けること。イテレーションやプリミティブキーやエントリのカウントが必要な場合は、おそらく別の問題を解いていて、通常のMapを使うべきだ。
+
+## 実際に役立つ場面
+
+「プライベートデータ」パターンは、JavaScriptに `#private` フィールドがなかった頃、WeakMapの本来のユースケースだった。ライブラリはクラスの外側にWeakMapを作成し、インスタンスからアクセスできないデータを保存するために使った。
+
+```javascript
+const privateData = new WeakMap();
+
+class User {
+  constructor(name) {
+    privateData.set(this, { name });
+  }
+
+  getName() {
+    return privateData.get(this).name;
+  }
+}
+```
+
+Userインスタンスがガベージコレクトされると、プライベートデータも一緒に消える。クリーンアップコードは不要だ。
+
+メモ化ももう1つの自然なフィットだ。特にプリミティブ値ではなくオブジェクト入力に基づいて結果をキャッシュする場合。高コストな計算がconfigオブジェクトを入力として取るなら、WeakMapを使えばキャッシュがconfigより長生きすることを心配する必要がない。
+
+```javascript
+const cache = new WeakMap();
+
+function expensiveCalc(obj) {
+  if (cache.has(obj)) return cache.get(obj);
+  
+  const result = heavyMath(obj);
+  cache.set(obj, result);
+  return result;
+}
+```
+
+キャッシュはキャッシュされるオブジェクトが生きている間だけ存在する。`obj` がどこからも参照されなくなると、キャッシュされた結果とcacheエントリは一緒に消える。
+
+## いつ使うべきか
+
+モダンなWebアプリでのメモリリークは、掃除されるべきだったものへの古い参照が原因であることが多い。長時間動作するもの、1日中開きっぱなしのダッシュボード、何時間も動作するチャットアプリ、リフレッシュされない管理パネルを作っているなら、古いデータに何が起こるかを考える必要がある。
+
+WeakMapは、DOMノード、コンポーネントインスタンス、またはライフタイムを自分でコントロールできないオブジェクトにデータを紐付ける場合に特に便利だ。何かを参照に基づいて保存していて、その参照が消える可能性があるなら、WeakMapはクリーンアップをずっと簡単にしてくれる。
+
+通常のMapは、エビクションポリシー付きの実際のキャッシュを構築している場合、エントリをイテレートする必要がある場合、プリミティブキーを使う場合、またはオブジェクトとの紐付けではなくデータそのものが重要な場合は、引き続き正しい選択だ。
+
+`WeakMap` の良いところは、必要なときはだいたい明らかだという点だ。オブジェクトが破棄されたときにmapのエントリを削除するクリーンアップコードを書いているなら、それはサインだ。いつものを削除すればいいのかわからなくてメモリが無制限に増えるのを心配しているなら、それもサインだ。
+
+時々、最高の機能とは、考えなくてもただ動くものだ。
+
+## リソース
+
+- [MDN: WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+- [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
+- [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)
+- [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
