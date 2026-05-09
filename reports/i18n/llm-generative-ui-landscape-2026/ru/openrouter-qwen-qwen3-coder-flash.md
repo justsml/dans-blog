@@ -6,7 +6,7 @@
 - Validation: rejected: opencode command failed
 - Runtime seconds: 120.03
 - Input tokens: unknown
-- Output tokens: unknown
+- Output tokens: 0
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
