@@ -19,7 +19,7 @@ related:
 
 Abrir un PDF no debería ser un incidente de producción.
 
-Hacer clic en un enlace en un SMS no debería convertirse en un compromiso de copia de seguridad.
+Hacer clic en un enlace en un SMS no debería convertirse en el compromiso de una copia de seguridad.
 
 Instalar una "utilidad rápida" desde un resultado de búsqueda no debería entregar a nadie tu consola en la nube, tu código fuente, tus tokens de CI, tus exportaciones de base de datos y la copia de producción que olvidaste que estaba en `~/Downloads`.
 
@@ -211,7 +211,7 @@ No resolverá todos los problemas de credenciales. No protegerá un secreto que 
 
 ### 3. Plantar tokens canarios donde el robo dolería
 
-Los [Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) son cables trampa digitales. Colocas un secreto, documento, clave de API, URL o credencial falso pero plausible en algún lugar donde un atacante pueda buscar. Si se toca, recibes una alerta.
+Los [Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) son trampas activadoras digitales. Colocas un secreto, documento, clave de API, URL o credencial falso pero plausible en algún lugar donde un atacante pueda buscar. Si se toca, recibes una alerta.
 
 El truco es ponerlos donde una brecha real navegaría naturalmente:
 
@@ -258,7 +258,7 @@ Usa reglas de permitir y denegar a nivel de proyecto. Mantén los archivos sensi
 
 Este es el mapa de seguridad de estaciones de trabajo que preferiría ver antes que otra diapositiva de capacitación anual.
 
-| Capa | Mal defecto | Mejor defecto |
+| Capa | Valor predeterminado malo | Valor predeterminado mejor |
 | --- | --- | --- |
 | Sistema de archivos | Proyectos, secretos, descargas, copias de seguridad y herramientas comparten un contexto de usuario. | Ejecuta el trabajo del proyecto en Dev Containers con montajes estrechos. |
 | Secretos | Archivos `.env` en texto plano y tokens de larga duración. | Secretos locales cifrados, tokens con alcance, duraciones cortas, autenticación respaldada por hardware. |
@@ -269,7 +269,7 @@ Este es el mapa de seguridad de estaciones de trabajo que preferiría ver antes 
 
 El punto no es comprar cinco herramientas.
 
-El punto es dejar de tratar la estación de trabajo como un blob de confianza.
+El punto es dejar de tratar la estación de trabajo como una masa de confianza.
 
 ## Una nota sobre las copias de seguridad
 
