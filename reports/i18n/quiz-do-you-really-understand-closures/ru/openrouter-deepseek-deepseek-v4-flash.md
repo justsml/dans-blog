@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/ru/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 81.13
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-do-you-really-understand-closures --locale ru
