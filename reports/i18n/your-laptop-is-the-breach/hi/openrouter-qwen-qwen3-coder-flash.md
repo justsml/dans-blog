@@ -3,11 +3,11 @@
 - Locale: hi
 - Model: openrouter/qwen/qwen3-coder-flash
 - Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx
-- Validation: rejected: touched unrelated files
-- Runtime seconds: 295.64
+- Validation: passed
+- Runtime seconds: 257.00
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model changed files outside src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx: reports/i18n/your-laptop-is-the-breach/ru/judge-second.md
+- Note: Direct scoped retry after the wrapper rejected an otherwise successful write because another parallel worker had an unrelated dirty report file.
