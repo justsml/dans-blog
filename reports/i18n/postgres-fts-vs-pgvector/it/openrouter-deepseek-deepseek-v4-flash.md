@@ -3,11 +3,11 @@
 - Locale: it
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/it/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 2.01
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 138.58
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model did not create src/content/posts/2026-05-08--postgres-fts-vs-pgvector/it/index.mdx.
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/it/index.mdx: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ru/index.mdx
