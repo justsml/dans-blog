@@ -3,11 +3,10 @@
 - Locale: de
 - Model: openrouter/google/gemini-3.1-flash-lite-preview
 - Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 67.53
+- Validation: passed
+- Runtime seconds: 56.62
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: bun run i18n:validate --slug llm-generative-ui-landscape-2026 --locale de
