@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, rmSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname } from "node:path";
 import {
@@ -153,7 +153,30 @@ for (const model of models) {
     continue;
   }
 
-  const validationStatus = shouldSkipValidation ? "skipped" : validateCandidate();
+  let validationStatus = "skipped";
+  if (!shouldSkipValidation) {
+    try {
+      validationStatus = validateCandidate();
+    } catch (error) {
+      cleanupRejectedTarget();
+      writeCandidateReport({
+        reportPath,
+        model,
+        validationStatus: "rejected: validation failed",
+        telemetry,
+        note: error instanceof Error ? error.message : String(error),
+      });
+
+      if (!shouldSkipCommit) {
+        gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
+          relativeToRepo(reportPath),
+        ]);
+      }
+
+      continue;
+    }
+  }
+
   writeCandidateReport({ reportPath, model, validationStatus, telemetry });
 
   if (!shouldSkipCommit) {
@@ -172,6 +195,24 @@ function validateCandidate() {
 function hasGitDiff(path: string) {
   const status = run("git", ["status", "--porcelain", "--", path]);
   return status.trim().length > 0;
+}
+
+function cleanupRejectedTarget() {
+  if (targetExistsInHead()) {
+    writeTextFile(targetPath, run("git", ["show", `HEAD:${targetRelPath}`]));
+    return;
+  }
+
+  rmSync(dirname(targetPath), { recursive: true, force: true });
+}
+
+function targetExistsInHead() {
+  try {
+    run("git", ["cat-file", "-e", `HEAD:${targetRelPath}`]);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function writeCandidateReport({
