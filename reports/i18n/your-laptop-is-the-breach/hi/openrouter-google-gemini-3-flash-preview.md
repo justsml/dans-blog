@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: hi
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 126.41
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
