@@ -1,6 +1,6 @@
 ---
-title: "Ihr Laptop ist die Sicherheitslücke"
-subTitle: "Entwickler-Workstations sind jetzt Zugangsdaten-Speicher. Behandeln Sie sie wie Produktion."
+title: "Dein Laptop ist die Verletzung"
+subTitle: "Entwickler-Workstations sind jetzt Credential-Lager. Behandle sie wie Production."
 date: 2026-05-09
 modified: 2026-05-09
 tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, production]
@@ -17,310 +17,310 @@ related:
   - mastra-security-guardrails
 ---
 
-Eine PDF zu öffnen sollte kein Produktionsvorfall sein.
+Das Öffnen einer PDF sollte kein Production-Incident sein.
 
-Auf einen Link in einer SMS zu klicken sollte nicht zu einer Backup-Kompromittierung führen.
+Auf einen Link in einer SMS zu klicken sollte keine Backup-Kompromittierung werden.
 
-Ein „kleines Hilfsprogramm" aus einem Suchergebnis zu installieren sollte niemandem Ihre Cloud-Konsole, Ihren Quellcode, Ihre CI-Token, Ihre Datenbankexporte und die Kopie der Produktionsdaten in die Hand geben, die Sie in `~/Downloads` vergessen haben.
+Die Installation eines "schnellen Dienstprogramms" aus einem Suchergebnis sollte nicht jemandem deine Cloud-Konsole, deinen Quellcode, deine CI-Token, deine Datenbankexporte und die Production-Kopie geben, die du vergessen hast, dass sie in `~/Downloads` liegt.
 
-Und doch sind wir genau da, weil der moderne Entwickler-Laptop kein Laptop mehr ist. Er ist ein Zugangsdaten-Lager mit Tastatur.
+Und dennoch sind wir hier, weil der moderne Developer-Laptop kein Laptop mehr ist. Es ist ein Credential-Lager mit einer Tastatur.
 
-Er hat Browsersitzungen. SSH-Schlüssel. `.env`-Dateien. GitHub-Token. Paketmanager-Auth. Cloud-CLIs. Passwortmanager-Browsererweiterungen. KI-Coding-Tools mit Shell-Zugriff. Lokale Datenbanken. Alte Backups. Einmalige Exporte. Zufällige PDFs von Anbietern. Vielleicht eine Krypto-Wallet, falls das Universum Humor gewählt hat.
+Es hat Browser-Sessions. SSH-Schlüssel. `.env`-Dateien. GitHub-Token. Package-Manager-Authentifizierung. Cloud-CLIs. Passwort-Manager-Browser-Erweiterungen. KI-Coding-Tools mit Shell-Zugriff. Lokale Datenbanken. Alte Backups. Einmalige Exporte. Zufällige PDFs von Anbietern. Vielleicht ein Krypto-Wallet, wenn das Universum sich für Komödie entschieden hat.
 
-Das alte mentale Modell war: Produktion ist gefährlich, lokal ist bequem.
+Das alte Gedankenmodell war: Production ist gefährlich, lokal ist praktisch.
 
-Dieses Modell ist erledigt.
+Dieses Modell ist vorbei.
 
 <p class="inset">
-Die Frage ist nicht, ob Sie jeden schlechten Klick vermeiden können. Die Frage ist, ob ein einziger schlechter Klick alles lesen, alles nutzen und verschwinden kann, bevor Sie es merken.
+Die Frage ist nicht, ob du jeden schlechten Klick vermeiden kannst. Die Frage ist, ob ein schlechter Klick alles lesen, alles verwenden und verschwinden kann, bevor du es merkst.
 </p>
 
-Zuletzt geprüft: 9. Mai 2026. Die Bedrohungsbeispiele und das Tool-Verhalten unten ändern sich schnell, also behandeln Sie die Produktdetails als aktuelle Notizen, nicht als Evangelium.
+Zuletzt überprüft: 9. Mai 2026. Die Threat-Beispiele und das Werkzeugverhalten unten ändern sich schnell. Behandle die Produktdetails als aktuelle Notizen, nicht als Dogma.
 
 ---
 
-## Die Bedrohungsstufe richtig setzen
+## Stelle die Bedrohungsstufe Fest
 
-Die meisten Menschen setzen die Bedrohungsstufe zu niedrig an, weil sie sich einen dramatischen Angriff vorstellen.
+Die meisten Menschen stellen die Bedrohungsstufe zu niedrig ein, weil sie sich einen dramatischen Angriff vorstellen.
 
-Sie stellen sich eine Zero-Day in einem PDF-Parser vor. Einen staatlichen Akteur mit Termineinladung und Monokel. Etwas so Exotisches, dass gewöhnliche Ingenieursdisziplin irrelevant wirkt.
+Sie stellen sich einen Zero-Day in einem PDF-Parser vor. Sie stellen sich einen Nationalstaat mit einer Kalendereinladung und einem Monokel vor. Sie stellen sich etwas Exotisches vor, das exotisch genug ist, dass normale Engineering-Disziplin irrelevant wirkt.
 
 Die langweilige Version ist nützlicher.
 
-Ein Entwickler bekommt eine Nachricht, die normal genug aussieht:
+Ein Entwickler erhält eine Nachricht, die normal genug aussieht:
 
 - eine PDF-Rechnung von einem Auftragnehmer
-- eine SMS über eine Lieferung oder eine Kontowarnung
+- eine SMS über eine Lieferung oder Kontokenwarnung
 - ein gefälschtes CAPTCHA, das ihn auffordert, einen Befehl einzufügen
-- eine vergiftete Suchanzeige für ein Tool, das er ohnehin installieren wollte
-- eine Browsererweiterung, die unauffällig ein bisschen zu viel verlangt
-- ein Pull Request, der eine Dev-Dependency mit einem Postinstall-Skript hinzufügt
-- eine KI-Coding-Sitzung, die mehr vom Dateisystem liest als nötig
+- eine vergiftete Suchanzeige für ein Werkzeug, das er ohnehin installieren wollte
+- eine Browser-Erweiterung, die leise um etwas zu viel bittet
+- ein Pull Request, der eine Dev-Abhängigkeit mit einem Postinstall-Skript hinzufügt
+- eine KI-Coding-Session, die mehr des Dateisystems als erforderlich liest
 
-Manche dieser Pfade installieren Malware. Manche stehlen Zugangsdaten direkt per Phishing. Manche brauchen überhaupt keine lokale Schwachstelle, weil der Nutzer dazu verleitet wird, den Befehl des Angreifers von Hand auszuführen.
+Einige dieser Pfade installieren Malware. Einige stehlen Credentials direkt durch Phishing. Einige benötigen überhaupt keinen lokalen Exploit, weil der Benutzer getäuscht wird, den Befehl des Angreifers von Hand auszuführen.
 
-Microsofts Lumma-Stealer-Artikel ist eine nützliche Momentaufnahme der aktuellen Form. Er listet Phishing-E-Mails, Malvertising, Drive-by-Downloads auf kompromittierten Sites, getarnte Anwendungen, Missbrauch legitimer Dienste, gefälschte CAPTCHA-Flows und Malware-Loader als Verbreitungswege für eine produktive Infostealer-Familie auf. Der interessante Teil ist nicht Lumma als Markenname. Der interessante Teil ist die Verbreitungsstrategie: Angreifer brauchen keine einzige perfekte Tür, wenn Nutzer den ganzen Tag durch eine Stadt halbvertrauenswürdiger Türen laufen.
+Microsofts Lumma-Stealer-Bericht ist eine nützliche Momentaufnahme der aktuellen Form. Er listet Phishing-E-Mails, Malvertising, Drive-by-Downloads auf kompromittierten Websites, trojanisierte Anwendungen, Missbrauch legitimer Dienste, gefälschte CAPTCHA-Flows und Malware-Loader als Lieferwege für eine produktive Infostealer-Familie auf. Der interessante Teil ist nicht Lumma als Markenname. Der interessante Teil ist die Verteilungsstrategie: Angreifer brauchen keine eine perfekte Tür, wenn Benutzer den ganzen Tag über eine Stadt voller halbverschlossener Türen gehen.
 
-CISAs Phishing-Leitfaden macht denselben Punkt auf der menschlichen Ebene: Phishing ist nicht mehr nur E-Mail. Es taucht als Textnachrichten, Direktnachrichten, Anrufe, Kollaborationstools und an anderen Orten auf, an denen „das sieht plausibel aus" zu viel Arbeit leistet.
+CISAs Phishing-Leitfaden macht denselben Punkt auf der menschlichen Ebene: Phishing ist nicht mehr nur E-Mail. Es taucht als Textnachrichten, Direktnachrichten, Telefoneanrufe, Kollaborations-Tools und anderen Stellen auf, wo "das sieht plausibel aus" zu viel Arbeit leistet.
 
-Setzen Sie die Bedrohungsstufe also so:
+Stelle die Bedrohungsstufe so fest:
 
-> Gehen Sie davon aus, dass ein Prozess ein paar Minuten als Sie laufen kann.
+> Nehmen Sie an, dass ein Prozess ein paar Minuten lang als Sie laufen kann.
 
 Nicht als Root. Nicht für immer. Nicht mit filmischer Persistenz.
 
-Einfach als Sie.
+Nur als du.
 
-Das reicht bereits.
+Das ist bereits genug.
 
-## Die Festplatte ist die Beute
+## Die Festplatte ist der Preis
 
-Infostealer versuchen nicht, Ihre CPU zu bewundern.
+Infostealers versuchen nicht, deine CPU zu bewundern.
 
-Sie wollen die Festplatte. Genauer gesagt, die Teile der Festplatte, in denen sich nützliches Vertrauen ansammelt.
+Sie wollen die Festplatte. Genauer gesagt, wollen sie die Teile der Festplatte, wo nützliches Vertrauen sich ansammelt.
 
-Microsoft sagt, Lumma könne Daten aus Browsern, Anwendungen, Krypto-Wallets und anderen lokalen Speichern stehlen. Sein Störungsbericht besagt, dass Lumma verwendet wurde, um Passwörter, Kreditkarten, Bankkonten und Wallets zu stehlen, und dass Microsoft weltweit mehr als 394.000 infizierte Windows-Rechner zwischen dem 16. März und dem 16. Mai 2025 identifizierte.
+Microsoft sagt, dass Lumma Daten aus Browsern, Anwendungen, Kryptowährungs-Wallets und anderen lokalen Speichern stehlen kann. Der Disruption-Bericht sagt, dass Lumma verwendet wurde, um Passwörter, Kreditkarten, Bankkonten und Wallets zu stehlen, und dass Microsoft zwischen dem 16. März und dem 16. Mai 2025 weltweit mehr als 394.000 infizierte Windows-Computer identifizierte.
 
-Mandiants Snowflake-Untersuchung ist die gruseligere betriebswirtschaftliche Lektion. In der UNC5537-Kampagne berichtete Mandiant, dass jeder von ihr untersuchte Vorfall auf kompromittierte Kundenzugangsdaten zurückzuführen war — nicht auf einen Einbruch in Snowflakes Unternehmensumgebung. Die Zugangsdaten wurden hauptsächlich durch Infostealer-Infektionen auf Nicht-Snowflake-Systemen erbeutet. Einige Zugangsdaten datierten auf 2020 zurück. Mindestens 79,7 % der in der Kampagne verwendeten Konten hatten eine vorherige Zugangsdaten-Exposition.
+Mandiant's Snowflake-Untersuchung ist die beängstigendere Geschäftslehrveranstaltung. In der UNC5537-Kampagne berichtete Mandiant, dass jeder Incident, auf den es antwortete, auf kompromittierte Kundencredentials zurückzuführen war, nicht auf einen Bruch in Snowflakes Enterprise-Umgebung. Die Credentials wurden hauptsächlich aus Infostealer-Infektionen auf Nicht-Snowflake-Systemen erhalten. Einige Credentials stammten aus 2020. Mindestens 79,7% der in der Kampagne verwendeten Konten hatten vorherige Credential-Exposition.
 
-Das ist der Teil, der Ihnen unbequem im Stuhl werden sollte.
+Das ist der Teil, der deinen Stuhl unbequem machen sollte.
 
-Der Angreifer musste das Lagerhaus nicht knacken. Er fand alte Schlüssel in einer Schublade und stellte fest, dass die Schlösser nie ausgewechselt worden waren.
+Der Angreifer musste das Lagerhaus nicht brechen. Sie fanden alte Schlüssel in einer Schublade und entdeckten, dass die Schlösser nie geändert worden waren.
 
-Für Entwickler ist die Schublade meistens keine einzige Schublade. Es ist ein Gerümpelkammer:
+Für Entwickler ist die Schublade normalerweise nicht eine Schublade. Es ist ein Rumpelkammer:
 
-| Lokales Artefakt | Warum Angreifer es wollen |
+| Lokales Artifact | Warum Angreifer es kümmert |
 | --- | --- |
-| Browser-Cookies und gespeicherte Sitzungen | Sie können die Login-Zeremonie umgehen und manchmal MFA-Reibung reduzieren. |
-| `.env`-Dateien | Sie enthalten oft API-Schlüssel, Datenbank-URLs, JWT-Secrets und Token von Drittanbietern. |
-| Cloud-CLI-Konfiguration | Sie kann eine Laptop-Kompromittierung in Infrastrukturzugriff verwandeln. |
-| Git-Zugangsdaten | Quellcode wird zur Landkarte von Systemen, Secrets und Deploy-Pfaden. |
+| Browser-Cookies und gespeicherte Sessions | Sie können die Login-Zeremonie umgehen und manchmal MFA-Reibung reduzieren. |
+| `.env`-Dateien | Sie enthalten oft API-Schlüssel, Datenbank-URLs, JWT-Secrets und Third-Party-Token. |
+| Cloud-CLI-Konfiguration | Es kann eine Laptop-Kompromittierung in Infrastruktur-Zugriff verwandeln. |
+| Git-Credentials | Quellcode wird zu einer Karte von Systemen, Secrets und Deployment-Pfaden. |
 | SSH-Schlüssel | Immer noch überall, immer noch mächtig, immer noch zwischen Maschinen kopiert. |
-| Datenbank-Dumps | Backups sind oft schlechter geschützt als Produktion und vollständiger als Logs. |
-| KI-Coding-Kontext | Dem Assistenten wurden möglicherweise sensible Dateien, Befehlshistorie oder zusätzliche Verzeichnisse gegeben. |
-| Paketmanager-Token | Lieferkettenzugriff ist nicht hypothetisch, wenn Ihr Publishing-Token lokal liegt. |
+| Datenbankdumps | Backups sind oft weniger geschützt als Production und vollständiger als Logs. |
+| KI-Coding-Kontext | Der Assistent könnte sensible Dateien, Befehls-Geschichte oder zusätzliche Verzeichnisse erhalten haben. |
+| Package-Manager-Token | Supply-Chain-Zugriff ist nicht hypothetisch, wenn dein Veröffentlichungs-Token lokal ist. |
 
-Backups verdienen hier besondere Missachtung.
+Backups verdienen hier besondere Verachtung.
 
-Teams schützen Produktionsdatenbanken mit IAM, Netzwerk-Controls, Audit-Logs und einer kleinen Zeremonie mit Aufsicht. Dann exportiert jemand dieselben Daten nach `customer-backup-final-2.sql.gz`, lädt sie auf eine Workstation und vergisst, dass sie existieren.
+Teams schützen Production-Datenbanken mit IAM, Netzwerk-Kontrollen, Audit-Logs und einer kleinen Zeremonie der Erwachsenen-Überwachung. Dann exportiert jemand dieselben Daten auf `customer-backup-final-2.sql.gz`, lässt sie auf einem Workstation fallen und vergisst, dass sie existieren.
 
-Diese Datei kann sensiblere Daten enthalten als die Produktion — weil sie leichter zu kopieren ist, leichter zu durchsuchen und unwahrscheinlicher überwacht wird.
+Diese Datei könnte mehr sensible Daten enthalten als Production, weil sie einfacher zu kopieren, einfacher zu durchsuchen und weniger wahrscheinlich überwacht wird.
 
-Backups sind nicht sicherer, weil sie inaktiv sind.
+Backups sind nicht sicherer, weil sie inert sind.
 
-Sie sind einfach Produktion ohne Alarmsystem.
+Sie sind nur Production ohne Alarmsystem.
 
-## Das vollständige Übernahmemuster
+## Das vollständige Takeover-Muster
 
-Der Begriff „Datenleck" ist zu klein für das, was oft folgt.
+Der Ausdruck "Datenleck" ist zu klein für das, was oft folgt.
 
 Der hässliche Pfad sieht so aus:
 
-1. Initialer Kontakt: Der Nutzer öffnet eine Datei, klickt auf einen Link, installiert ein Tool, führt einen kopierten Befehl aus oder landet auf einer kompromittierten Seite.
-2. Lokaler Scrape: Die Malware oder der schädliche Prozess liest Browser-Speicher, lokale Config, `.env`-Dateien, Token, SSH-Schlüssel, History und Projektverzeichnisse.
-3. Cloud-Pivot: Gültige Zugangsdaten öffnen Zugang zu SaaS, Cloud, GitHub, CI, Chat oder Data-Warehouses.
-4. Backup-Sweep: Lokale Exporte, Cloud-Buckets, CI-Artefakte und Datenbank-Snapshots werden gezogen, weil sie weicher sind als Produktion.
-5. Persistenz durch Legitimität: Der Angreifer erstellt neue Schlüssel, OAuth-Apps, Deploy-Token, Personal-Access-Token oder Service-Accounts.
-6. Erpressung oder stiller Weiterverkauf: Daten werden direkt monetarisiert, als Zugang verkauft oder für eine spätere Kampagne aufgehoben.
+1. Initialer Kontakt: Der Benutzer öffnet eine Datei, klickt einen Link, installiert ein Werkzeug, führt einen kopierten Befehl aus oder landet auf einer kompromittierten Seite.
+2. Lokale Erfassung: Die Malware oder der bösartige Prozess liest Browser-Speicher, lokale Konfiguration, `.env`-Dateien, Token, SSH-Schlüssel, Verlauf und Projektverzeichnisse.
+3. Cloud-Pivot: Gültige Credentials öffnen SaaS-, Cloud-, GitHub-, CI-, Chat- oder Data-Warehouse-Zugriff.
+4. Backup-Sweep: Lokale Exporte, Cloud-Buckets, CI-Artifacts und Datenbank-Snapshots werden gezogen, weil sie weicher als Production sind.
+5. Persistenz durch Legitimität: Der Angreifer erstellt neue Schlüssel, OAuth-Apps, Deploy-Token, Personal Access Tokens oder Service Accounts.
+6. Erpressung oder stille Weiterverkauf: Daten werden direkt monetarisiert, als Zugriff verkauft oder für eine spätere Kampagne gespeichert.
 
-Der Übergang von Schritt zwei zu Schritt drei ist der Grund, warum das nicht nur ein Workstation-Problem ist.
+Der Übergang von Schritt zwei zu Schritt drei ist der Grund, warum dies nicht nur ein Workstation-Problem ist.
 
-Ihr Laptop ist ein Identitätsbroker. Er beweist jedem System, das Sie nutzen, wer Sie sind. Wenn ein Angreifer genug davon stehlen kann, kann er auftauchen und aussehen wie Sie.
+Dein Laptop ist ein Identitäts-Broker. Es beweist, wer du bist, in jedem System, das du verwendest. Wenn ein Angreifer genug diesen Beweis stehlen kann, können sie als du aussehen.
 
-MFA hilft. Hardware-Keys helfen mehr. Device-Posture-Checks, Session-Binding, IP-Allow-Listen und Conditional Access helfen alle. Aber wenn Ihr lokaler Rechner langlebige Token, gecachte Sitzungen, Plaintext-Secrets und unüberwachte Backups enthält, fragen Sie trotzdem einen einzelnen Endpunkt, viel institutionelles Vertrauen zu tragen.
+MFA hilft. Hardware-Schlüssel helfen mehr. Device-Posture-Checks, Session-Binding, IP-Zulassungslisten und bedingter Zugriff helfen alle. Aber wenn deine lokale Maschine langlebige Token, gecachte Sessions, Plaintext-Secrets und unbewachte Backups enthält, fragst du immer noch einen Endpoint, viel institutionelles Vertrauen zu tragen.
 
 Das Ziel ist nicht perfekte Sicherheit.
 
-Das Ziel ist, den einfachen Weg unbrauchbar zu machen.
+Das Ziel ist, den einfachen Pfad zu stoppen.
 
-## Entwicklertools haben den Explosionsradius vergrößert
+## Developer-Tools Machten den Blast-Radius Größer
 
-Das Unbequeme ist, dass die besten Entwicklertools auch die Einsätze erhöht haben.
+Der unbequeme Teil ist, dass die besten Developer-Tools auch die Einsätze erhöht haben.
 
-Container machten lokale Umgebungen reproduzierbar. Paketmanager machten Dependency-Installation reibungslos. Cloud-CLIs machten Infrastruktur programmierbar. KI-Coding-Tools machten das Terminal konversationell.
+Container machten lokale Umgebungen reproduzierbar. Package-Manager machte Dependency-Installation reibungslos. Cloud-CLIs machten Infrastruktur programmierbar. KI-Coding-Tools machten das Terminal zu einem Gespräch.
 
 Alles gut.
 
-Auch: alles gefährlich, wenn es auf eine Workstation voller Secrets gerichtet ist.
+Auch: Alles gefährlich, wenn es auf einen Workstation voller Secrets gerichtet ist.
 
-Eine Supply-Chain-Kompromittierung in einer Dev-Dependency muss nicht zwingend bis in die Produktion gelangen, um relevant zu sein. Ein bösartiges Postinstall-Skript auf einer Entwickler-Maschine kann lokale Dateien lesen, Umgebungsvariablen inspizieren und nach Hause telefonieren. Ein kompromittiertes CLI-Plugin kann dasselbe. Ein hilfreicher KI-Agent mit breiten Dateisystem- und Shell-Permissions kann eine schlechte Anweisung, eine schlechte Dependency oder eine schlechte Annahme verstärken.
+Eine Supply-Chain-Kompromittierung in einer Dev-Abhängigkeit muss möglicherweise nicht zur Production versenden, um wichtig zu sein. Ein bösartiges Postinstall-Skript, das auf einer Developer-Maschine läuft, kann lokale Dateien lesen, Umgebungsvariablen inspizieren und nach Hause telefonieren. Ein kompromittiertes CLI-Plugin kann dasselbe tun. Ein hilfreicher KI-Agent mit breiten Dateisystem- und Shell-Permissions kann eine schlechte Anweisung, eine schlechte Abhängigkeit oder eine schlechte Annahme verstärken.
 
-Deshalb ist „Sei vorsichtig" so ein schwacher Rat. Er verlangt vom Menschen, die Grenze zu sein.
+Das ist der Grund, warum "sei vorsichtig" so schwache Beratung ist. Es fragt den Menschen, die Grenze zu sein.
 
 Menschen sind keine Grenzen. Menschen sind Verkehr.
 
-Grenzen sind langweilige Dinge wie Dateisystem-Isolation, verschlüsselte-ruhende-Secrets, Default-Deny-Egress, kurzlebige Credentials, hardwaregestützte Auth und Alarme, die feuern, wenn ein gefälschtes Secret berührt wird.
+Grenzen sind langweilige Dinge wie Dateisystem-Isolation, verschlüsselte Secrets, Standard-Deny-Ausgang, kurzlebige Credentials, Hardware-gestützte Authentifizierung und Warnungen, die abgefeuert werden, wenn ein gefälschtes Secret berührt wird.
 
-Dort werden die Lösungen interessant.
+Das ist, wo die Lösungen interessant werden.
 
-## Der bessere Rahmen: Lesen, Nutzen, Exfiltrieren
+## Der bessere Rahmen: Lesen, Verwenden, Exfiltrieren
 
 Jede Workstation-Verteidigung sollte drei Fragen beantworten:
 
 1. Was kann dieser Prozess lesen?
-2. Welche Credentials kann er nutzen?
-3. Wohin kann er Daten senden?
+2. Welche Credentials kann er verwenden?
+3. Wo kann er Daten senden?
 
-Die meisten Workstation-Sicherheitsratschläge fokussieren sich zu sehr auf die erste Frage. Software aktualisieren. Keine verdächtigen Anhänge öffnen. Antivirus nutzen. Gut, ja, offensichtlich.
+Die meisten Workstation-Sicherheitsberatungen konzentrieren sich zu sehr auf die erste Frage. Halte Software aktualisiert. Öffne keine verdächtigen Anhänge. Verwende Antivirus. Gut, ja, natürlich.
 
-Aber wenn ein schädlicher Prozess läuft, entscheiden die zweite und dritte Frage, ob Sie einen schlechten Nachmittag oder einen unternehmensweiten Vorfall haben.
+Aber wenn ein bösartiger Prozess läuft, entscheiden die zweite und dritte Frage, ob du einen schlechten Nachmittag oder einen unternehmensweiten Incident hast.
 
 Kann er `~/.aws/credentials` lesen?
 
-Kann er ein GitHub-Token nutzen?
+Kann er ein GitHub-Token verwenden?
 
-Kann er Ihre Passwortmanager-Erweiterung öffnen?
+Kann er deine Passwort-Manager-Erweiterung öffnen?
 
-Kann er 3 GB zu einem zufälligen Host hochladen, ohne dass es jemand merkt?
+Kann er 3 GB auf einen Zufalls-Host hochladen, ohne dass jemand es bemerkt?
 
-Kann er den Backup-Ordner lesen?
+Kann er die Backup-Ordner lesen?
 
-Kann er Ihren KI-Agenten bitten, Secrets aus einem anderen Verzeichnis zusammenzufassen, weil dieses Verzeichnis vor drei Monaten als „zusätzlicher Kontext" hinzugefügt wurde?
+Kann er deinen KI-Agent bitten, Secrets aus einem anderen Verzeichnis zu zusammengefasst, weil dieses Verzeichnis vor drei Monaten als "zusätzlicher Kontext" enthalten war?
 
-Dieser Rahmen hält die Arbeit praktisch. Er verwandelt die Bedrohung von einer Nebelmaschine in eine Checkliste mit Zähnen.
+Dieser Rahmen hält die Arbeit praktisch. Es verwandelt die Bedrohung von einer Nebelmaschine in eine Checkliste mit Zähnen.
 
-## Was ich zuerst tun würde
+## Was Ich Zuerst Tun Würde
 
-Wenn ich ein Entwickler-Workstation-Programm straffen müsste, ohne das Unternehmen in einen traurigen Flughafen zu verwandeln, würde ich mit diesen Schichten anfangen.
+Wenn ich ein Developer-Workstation-Programm straffer machen würde, ohne das Unternehmen in einen traurigen Flughafen zu verwandeln, würde ich mit diesen Schichten beginnen.
 
-### 1. Riskante Arbeit in Dev Containers verlagern
+### 1. Risky Work In Dev Containers Verschieben
 
-Nutzen Sie [Development Containers](https://github.com/devcontainers/spec) für Projektarbeit, die Dependencies, Build-Tools, Paketinstallation oder KI-gestützte Shell-Befehle benötigt. Das Versprechen der Spec ist einfach: einen Container als vollwertige Entwicklungsumgebung nutzen, die die Tools und Runtimes für eine Codebasis beherbergen kann.
+Verwende [Development Containers](https://github.com/devcontainers/spec) für Projektarbeit, die Abhängigkeiten, Build-Tools, Package-Installation oder KI-gestützte Shell-Befehle benötigt. Das Versprechen der Spezifikation ist einfach: Verwende einen Container als vollwertige Entwicklungsumgebung, die die Tools und Runtimes für einen Codebase halten kann.
 
-Das gibt Ihnen eine brauchbare Grenze. Keine magische Grenze. Eine brauchbare.
+Das gibt dir eine nützliche Grenze. Keine magische Grenze. Eine nützliche.
 
-Der Gewinn ist, dass `npm install`, `pip install`, `go generate`, `cargo build` und was auch immer das Modell ausführen will, in einem Workspace stattfinden können, der nicht automatisch Ihr gesamtes Home-Verzeichnis besitzt.
+Der Gewinn ist, dass `npm install`, `pip install`, `go generate`, `cargo build` und was auch immer das Modell laufen möchte, in einem Arbeitsbereich passieren kann, der nicht automatisch dein ganzes Home-Verzeichnis besitzt.
 
-Mounten Sie das Repo. Mounten Sie nur die Secrets, die dieses Projekt braucht. Vermeiden Sie es, `~/.ssh`, `~/.aws`, `~/Downloads`, `~/Documents` und den ganzen Home-Ordner aus Bequemlichkeit zu mounten.
+Mounte das Repo. Mounte nur die Secrets, die für dieses Projekt benötigt werden. Vermeide das Mounte von `~/.ssh`, `~/.aws`, `~/Downloads`, `~/Documents` und dem ganzen Home-Ordner aus Bequemlichkeitsgründen.
 
-Wenn das Projekt Credentials braucht, injizieren Sie scoped Credentials. Bevorzugen Sie kurzlebige Token. Bevorzugen Sie Read-Only-Zugriff wo möglich.
+Wenn das Projekt Credentials benötigt, injiziere scoped Credentials. Bevorzuge kurzlebige Token. Bevorzuge Read-Only-Zugriff, wenn möglich.
 
-Der Container ist nicht da, um Docker anspruchsvoll wirken zu lassen. Er ist da, um „dieser Prozess kann als ich laufen" weniger katastrophal zu machen.
+Der Container ist nicht da, um Docker sich hochentwickelt zu fühlen. Er ist da, um "dieser Prozess kann als ich laufen" weniger katastrophal zu machen.
 
-### 2. Lokale Secrets verschlüsseln statt `.env` anzubeten
+### 2. Verschlüssle Lokale Secrets Anstatt `.env` zu Verehren
 
-Plaintext-`.env`-Dateien sind praktisch, weil Dateien praktisch sind.
+Plaintext `.env`-Dateien sind praktisch, weil Dateien praktisch sind.
 
-Angreifer mögen auch Dateien.
+Angreifer genießen auch Dateien.
 
-[VarLock](https://varlock.dev/guides/secrets/) ist interessant, weil es Sensibilität als strukturierte Metadaten statt als Regex-Ratespiel behandelt. Seine Dokumentation beschreibt das explizite Markieren sensibler Werte, das Verschlüsseln lokaler Secrets mit `varlock()`, das Redacten sensibler Werte in der Konsolenausgabe und das Scannen nach Plaintext-Vorkommen bekannter sensibler Werte.
+[VarLock](https://varlock.dev/guides/secrets/) ist interessant, weil es Empfindlichkeit als strukturierte Metadaten behandelt, anstatt ein Regex-Ratespiel. Seine Dokumentation beschreibt das Markieren sensibler Werte explizit, das Verschlüsseln lokaler Secrets mit `varlock()`, das Redigieren sensibler Werte aus der Konsolenausgabe und das Scannen nach Plaintext-Vorkommen bekannter sensibler Werte.
 
 Das ist die richtige Richtung: Secrets sollten wissen, dass sie Secrets sind.
 
-Es wird nicht jedes Credential-Problem lösen. Es wird kein Secret schützen, das bereits in einen kompromittierten Prozess geladen wurde. Aber es reduziert die Anzahl wertvoller Plaintext-Dateien, die herumliegen und darauf warten, jemand anderes Inventar zu werden.
+Es wird nicht jedes Credential-Problem lösen. Es wird ein Secret nicht schützen, das bereits in einen kompromittierten Prozess geladen wurde. Aber es reduziert die Anzahl der wertvollen Plaintext-Dateien, die herumsitzen und auf jemand anderen's Bestand warten.
 
-### 3. Canary Tokens dort platzieren, wo Diebstahl wehtun würde
+### 3. Pflanzen Sie Canary-Token, Wo Diebstahl Verletzungen Würde
 
-[Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) sind digitale Stolperdrähte. Sie platzieren ein gefälschtes, aber plausibles Secret, Dokument, API-Key, URL oder Credential irgendwo, wo ein Angreifer suchen könnte. Wenn es berührt wird, bekommen Sie einen Alarm.
+[Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) sind digitale Stolperdrähte. Du platzierst ein gefälschtes, aber plausibles Secret, Dokument, API-Schlüssel, URL oder Credential irgendwo, wo ein Angreifer hinschauen könnte. Wenn es berührt wird, bekommst du einen Warnalarm.
 
-Der Trick ist, sie dort zu platzieren, wo eine echte Kompromittierung natürlich suchen würde:
+Der Trick ist, sie dort zu platzieren, wo eine echte Kompromittierung natürlicherweise suchen würde:
 
 - neben `.env`-Dateien
-- in einer gefälschten `~/backups/customer-export.sql`
+- inside einer gefälschten `~/backups/customer-export.sql`
 - in einem gefälschten AWS-Profil
-- in einer alt aussehenden Passwort-Tabelle
-- in CI-Variablen, die wie deprecated Credentials benannt sind
-- in Dokumentation, die ein Eindringling während der Reconnaissance öffnen würde
+- in einem Alt-aussehende Passwort-Tabelle
+- in CI-Variablen, die wie veraltete Credentials benannt sind
+- in Dokumentation, die ein Eindringling während der Aufklärung öffnen würde
 
 Canaries verhindern keinen Diebstahl. Sie komprimieren die Erkennungszeit.
 
-Das ist wichtig, weil viele Breaches nicht in der ersten Minute gewonnen werden. Sie werden in den stillen Stunden danach gewonnen, wenn das erste Credential funktioniert hat.
+Das zählt, weil viele Verstöße nicht in der ersten Minute gewonnen werden. Sie werden in den stillen Stunden nach der ersten erfolgreichem Credential gewonnen.
 
-### 4. Eine ausgehende Firewall einrichten
+### 4. Fügen Sie Eine Ausgehende Firewall Hinzu
 
-Die meisten Leute denken „Firewall" und stellen sich eingehende Verbindungen vor. Das verfehlt das Workstation-Problem.
+Die meisten Menschen denken "Firewall" und stellen sich eingehende Verbindungen vor. Das vermisst das Workstation-Problem.
 
-Wenn Malware lokale Secrets lesen kann, ist die nächste Frage, ob sie sie nach außen senden kann.
+Wenn Malware lokale Secrets lesen kann, ist die nächste Frage, ob sie sie versenden kann.
 
-Auf macOS ist [LuLu](https://objective-see.org/products/lulu.html) die kostenlose Open-Source-Option, die bei unbekannten ausgehenden Verbindungen alarmiert und nur ausgehenden Traffic überwacht. [Little Snitch](https://obdev.at/products/littlesnitch/) ist die ausgereifte kommerzielle Option mit Verbindungsalarmen, Netzwerk-Monitoring, Profilen und per-App/Domain-Sichtbarkeit.
+Auf macOS ist [LuLu](https://objective-see.org/products/lulu.html) die kostenlose, Open-Source-Option, die auf unbekannte ausgehende Verbindungen warnt und nur ausgehenden Verkehr überwacht. [Little Snitch](https://obdev.at/products/littlesnitch/) ist die polierte kommerzielle Option mit Verbindungswarnungen, Netzwerk-Monitoring, Profilen und Pro-App/Domain-Sichtbarkeit.
 
-Auf Windows und Linux ist [Portmaster](https://safing.io/) eine Evaluierung wert, weil es eine Open-Source-Anwendungsfirewall mit per-App-Regeln ist. Die Windows Defender Firewall unterstützt ebenfalls ausgehende Regeln, obwohl Microsofts eigener Leitfaden anmerkt, dass Default-Deny-Ausgehend im Allgemeinen für Hochsicherheitsumgebungen gedacht ist, weil es eine sorgfältige Anwendungs-Inventarisierung und Regelverwaltung erfordert.
+Auf Windows und Linux ist [Portmaster](https://safing.io/) wert, bewertet zu werden, weil es eine Open-Source-Anwendungs-Firewall mit pro-Anwendungs-Regeln ist. Windows Defender Firewall unterstützt auch ausgehende Regeln, obwohl Microsofts eigene Anleitung anmerkt, dass Standard-Deny-Ausgang im Allgemeinen für hochsichere Umgebungen ist, weil es eine sorgfältige Anwendungs-Bestandsaufnahme und Regelmanagement erfordert.
 
-Diese Schicht ist am Anfang nervig.
+Diese Schicht ist anfangs ärgerlich.
 
-Das ist kein Grund, sie zu überspringen. Das ist ein Grund, sie mit Profilen, Allowlists und Erwartungen auszurollen. Das Ziel ist nicht, den ganzen Tag heldenhaft auf „Ablehnen" zu klicken. Das Ziel ist, zu bemerken, wenn `invoice-viewer`, `postinstall` oder `python` mit einer Domain sprechen will, die an Ihrem Dienstag nichts zu suchen hat.
+Das ist kein Grund, sie zu überspringen. Das ist ein Grund, sie mit Profilen, Zulassungslisten und Erwartungen einzusetzen. Das Ziel ist nicht, den ganzen Tag heroisch "Ablehnen" zu klicken. Das Ziel ist zu bemerken, wenn `invoice-viewer`, `postinstall` oder `python` mit einer Domain sprechen möchte, die in deinem Dienstag kein Geschäft hat.
 
-### 5. KI-Coding-Tools wie Junior-Admins mit Amnesie behandeln
+### 5. Behandele KI-Coding-Tools Wie Junior-Admins Mit Amnesie
 
-KI-Coding-Tools sind nicht schlecht. Ich nutze sie. Ich mag sie.
+KI-Coding-Tools sind nicht schlecht. Ich verwende sie. Ich mag sie.
 
-Aber sie sind Tools mit Lesezugriff, Schreibzugriff, Shell-Zugriff, Netzwerkzugriff und einem Talent für selbstbewussten Schwung.
+Aber sie sind Tools mit Read-Zugriff, Write-Zugriff, Shell-Zugriff, Netzwerk-Zugriff und ein Talent für selbstbewussten Schwung.
 
-Anthropic's Claude-Code-Dokumentation beschreibt Permissions für Tools, Dateien, Domains und verwaltete Policies und unterscheidet Permissions von Sandboxing. Permissions entscheiden, was der Agent nutzen darf. Sandboxing bietet OS-Level-Enforcement für Bash-Dateisystem- und Netzwerkzugriff.
+Anthropic's Claude Code-Dokumentation beschreibt Permissions für Tools, Dateien, Domains und verwaltete Policies und unterscheidet Permissions von Sandboxing. Permissions entscheiden, was der Agent verwenden darf. Sandboxing bietet OS-Level-Durchsetzung für Bash-Dateisystem und Netzwerk-Zugriff.
 
 Diese Unterscheidung ist der wichtige Teil.
 
-Policy-Text ist keine Sandbox. Ein Permission-Prompt ist keine Sandbox. Ein nettes Modell ist keine Sandbox.
+Policy-Text ist kein Sandbox. Ein Permission-Prompt ist kein Sandbox. Ein nettes Modell ist kein Sandbox.
 
-Nutzen Sie projektweite Allow- und Deny-Regeln. Halten Sie sensible Dateien aus Arbeitsverzeichnissen raus. Führen Sie riskante Befehle in Containern aus. Geben Sie einem Agenten nicht Ihr gesamtes Home-Verzeichnis, weil er vielleicht „Kontext" braucht. Kontext ist nicht kostenlos. Manchmal ist Kontext Ihr Incident-Report, vorgeschrieben.
+Verwende Project-Level-Allow- und Deny-Regeln. Halte sensible Dateien aus Arbeitsverzeichnissen heraus. Führe risikobehaftete Befehle in Containern aus. Gib einem Agent nicht dein ganzes Home-Verzeichnis, weil er möglicherweise "Kontext" benötigt. Kontext ist nicht kostenlos. Manchmal ist Kontext dein Incident-Report, vorgeschrieben.
 
-## Die Tabelle, die ich in jedem Team-Wiki will
+## Die Tabelle, Die Ich In Jedem Team-Wiki Will
 
-Das ist die Workstation-Sicherheits-Landkarte, die ich lieber sehen würde als eine weitere jährliche Schulungsfolie.
+Das ist die Workstation-Sicherheits-Karte, die ich lieber sehen würde als einen weiteren jährlichen Trainings-Slide.
 
-| Schicht | Schlechter Standard | Besserer Standard |
+| Layer | Schlechter Standard | Besserer Standard |
 | --- | --- | --- |
-| Dateisystem | Projekte, Secrets, Downloads, Backups und Tools teilen sich einen User-Kontext. | Projektarbeit in Dev Containers mit engen Mounts. |
-| Secrets | Plaintext-`.env`-Dateien und langlebige Token. | Verschlüsselte lokale Secrets, scoped Token, kurze Laufzeiten, hardwaregestützte Auth. |
-| Erkennung | Hoffen, dass EDR vor Ende der Exfiltration bemerkt. | Canary Tokens an hochwertigen lokalen und Cloud-Standorten. |
-| Netzwerk | Jeder Prozess kann nach außen kommunizieren, es sei denn, Reputation blockiert. | Ausgehende Anwendungsfirewall mit Regeln für riskante Tools. |
-| KI-Agenten | Breite Read/Write/Shell-Permissions im Haupt-Workstation-Kontext. | Projekt-scoped Permissions plus sandboxed Commands. |
-| Backups | Lokale Dumps und Exporte werden wie tote Dateien behandelt. | Verschlüsseln, expiren, isolieren und Zugriff auf Backup-Artefakte überwachen. |
+| Dateisystem | Projekte, Secrets, Downloads, Backups und Tools teilen sich einen Benutzer-Kontext. | Führe Projektarbeit in Dev Containern mit engen Mounts aus. |
+| Secrets | Plaintext `.env`-Dateien und langlebige Token. | Verschlüsselte lokale Secrets, scoped Tokens, kurze Lifetimes, Hardware-gestützte Authentifizierung. |
+| Detection | Hoffnung auf EDR bemerkt vor Exfiltration beendet. | Canary-Token in hochwertigen lokalen und Cloud-Standorten. |
+| Netzwerk | Jeder Prozess kann sich verbinden, wenn nicht von Reputation blockiert. | Ausgehende Anwendungs-Firewall mit Regeln für risikobehaftete Tools. |
+| KI-Agents | Breite Read/Write/Shell-Permissions im Haupt-Workstation-Kontext. | Project-scoped Permissions plus sandboxed Befehle. |
+| Backups | Lokale Dumps und Exporte wie tote Dateien behandelt. | Verschlüssle, verfalle, isoliere und überwache Zugriff auf Backup-Artifacts. |
 
-Es geht nicht darum, fünf Tools zu kaufen.
+Der Punkt ist nicht, fünf Tools zu kaufen.
 
-Es geht darum, die Workstation nicht mehr als vertrauenswürdigen Blob zu behandeln.
+Der Punkt ist, die Workstation nicht mehr als vertrauenswürdigen Blob zu behandeln.
 
-## Ein Hinweis zu Backups
+## Eine Notiz Zu Backups
 
-Backups sind der Ort, an dem Sicherheitsprogramme sich selbst anlügen.
+Backups sind, wo Sicherheitsprogramme sich selbst anlügen.
 
-Sie sind notwendig. Sie sind auch gefährlich. Ein Backup ist oft die portabelste Form der Sache, die man am wenigsten portabel haben will.
+Sie sind notwendig. Sie sind auch gefährlich. Ein Backup ist oft die tragbarste Form des Dinges, das du am wenigsten tragbar möchtest.
 
-Für Entwickler-Maschinen:
+Für Developer-Maschinen:
 
-- Produktions-Exporte nicht lokal speichern, es sei denn, es gibt einen echten Bedarf.
-- Lokale Backups und Datenbank-Dumps verschlüsseln.
-- Exporten Ablaufdaten geben.
-- Canary-Zeilen oder -Dokumente an backup-ähnlichen Orten platzieren.
-- Backups aus breiten Dev-Container-Mounts heraushalten.
-- Sie aus KI-Tool-Kontext heraushalten.
-- Jede Credential rotieren, die in einem Backup auftaucht.
+- Lagere Production-Exporte nicht lokal, wenn es keinen echten Bedarf gibt.
+- Verschlüssle lokale Backups und Datenbankdumps.
+- Füge Ablaufdaten zu Exporten hinzu.
+- Lege Canary-Zeilen oder Dokumente an Backup-ähnlichen Orten.
+- Halte Backups aus breiten Dev Container Mounts heraus.
+- Halte sie aus KI-Tool-Kontext heraus.
+- Rotiere jeden Credential, der in einem Backup erscheint.
 
-Wenn das Backup Credentials enthält, ist es nicht nur ein Backup. Es ist ein verzögertes Übernahme-Kit.
+Wenn das Backup Credentials enthält, ist es nicht nur ein Backup. Es ist ein verzögertes Takeover-Kit.
 
 ## Der praktische Standard
 
-Der Standard sollte nicht „Klicken Sie niemals auf etwas Seltsames" sein.
+Der Standard sollte nicht "klicke nie auf etwas Komisches" sein.
 
-Das ist Rat für ein Poster, nicht für ein System.
+Das ist Beratung für ein Poster, nicht ein System.
 
 Der praktische Standard ist:
 
-- eine schlechte PDF sollte nicht alle Projekt-Secrets lesen können
-- eine bösartige Dependency sollte keine Cloud-Credentials aus anderen Projekten sehen
+- eine schlechte PDF sollte nicht alle Projekt-Secrets lesen
+- eine bösartige Abhängigkeit sollte Cloud-Credentials aus anderen Projekten nicht sehen
 - ein KI-Tool-Fehler sollte nicht das ganze Home-Verzeichnis durchqueren
-- ein Infostealer sollte keine Plaintext-Backups und langlebige Token finden
-- ein unbekannter Prozess sollte keine sensiblen Daten ohne lokalen Alarm hochladen
-- eine gestohlene Credential sollte ablaufen, an MFA scheitern, an Device-Checks scheitern oder einen Canary treffen, bevor sie eine vollständige Übernahme wird
+- ein Infostealer sollte keine Plaintext-Backups und langlebigen Token finden
+- ein unbekannter Prozess sollte sensible Daten nicht ohne lokalen Alarm hochladen
+- ein gestohlener Credential sollte verfallen, MFA fehlschlagen, Device-Checks fehlschlagen oder einen Canary treffen, bevor er zu einem vollständigen Takeover wird
 
-Sicherheit wird besser, wenn wir aufhören, von Menschen Perfektion zu verlangen, und anfangen, Kompromittierung weniger profitabel zu machen.
+Sicherheit wird besser, wenn wir Menschen aufhören zu fragen, perfekt zu sein, und anfangen, Kompromittierungen weniger rentabel zu machen.
 
-Ihr Laptop ist jetzt Teil der Produktion.
+Dein Laptop ist jetzt Teil der Production.
 
-Geben Sie ihm produktionsähnliche Grenzen.
+Gib ihm Production-förmige Grenzen.
 
-## Quellen und weiterführende Literatur
+## Quellen Und Nützliche Lektüre
 
-- [Verizon 2026 DBIR-Übersicht](https://www.verizon.com/business/resources/reports/dbir/)
-- [Mandiant: UNC5537 zielt auf Snowflake-Kundeninstanzen](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
-- [Microsoft: Lumma Stealer – Lieferungstechniken und Fähigkeiten](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
-- [Microsoft DCU: Lumma Stealer stören](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
+- [Verizon 2026 DBIR Übersicht](https://www.verizon.com/business/resources/reports/dbir/)
+- [Mandiant: UNC5537 Ziele Snowflake-Kundeninstanzen](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Microsoft: Lumma-Stealer-Liefertechniken und Funktionen](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+- [Microsoft DCU: Lumma Stealer unterbrechen](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
 - [CISA: Phishing erkennen und melden](https://www.cisa.gov/secure-our-world/recognize-and-report-phishing)
-- [Development Containers – Spezifikation](https://github.com/devcontainers/spec)
-- [VarLock – Secrets-Management](https://varlock.dev/guides/secrets/)
-- [Thinkst Canarytokens – Übersicht](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
+- [Development Containers Spezifikation](https://github.com/devcontainers/spec)
+- [VarLock Secrets Management](https://varlock.dev/guides/secrets/)
+- [Thinkst Canarytokens Übersicht](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
 - [Objective-See LuLu](https://objective-see.org/products/lulu.html)
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
-- [Claude Code – Permissions](https://code.claude.com/docs/en/permissions)
+- [Claude Code Permissions](https://code.claude.com/docs/en/permissions)
