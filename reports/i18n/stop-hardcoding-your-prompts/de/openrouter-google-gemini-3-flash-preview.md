@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: de
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/de/index.mdx
+- Validation: passed
+- Runtime seconds: 51.44
+- Input tokens: 2026
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
