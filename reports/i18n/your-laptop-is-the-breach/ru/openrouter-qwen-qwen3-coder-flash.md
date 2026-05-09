@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ru
+- Model: openrouter/qwen/qwen3-coder-flash
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 180.04
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/
