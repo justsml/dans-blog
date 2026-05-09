@@ -1,0 +1,410 @@
+---
+title: "Shrink Your Developer Workstation Blast Radius"
+subTitle: "Dev Containers, encrypted secrets, canary tokens, and outbound firewalls for people who still need to get work done."
+date: 2026-05-09
+modified: 2026-05-09
+tags: [security, devcontainers, secrets, canarytokens, varlock, firewall, ai-agents, developer-experience, best-practices]
+category: Security
+subCategory: Best Practices
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+related:
+  - your-laptop-is-the-breach
+  - docker-security-for-admins-and-maintainers
+  - docker-security-tips-for-self-hosting
+---
+
+Security advice for developer laptops usually fails in one of two ways.
+
+It is either enterprise wallpaper:
+
+> Use endpoint protection, patch regularly, avoid suspicious links, report incidents promptly.
+
+All true. Also not enough.
+
+Or it is survivalist nonsense where the answer is to stop using browsers, JavaScript, Wi-Fi, package managers, vendors, PDFs, chat, code editors, phones, and joy.
+
+Also not useful.
+
+The practical goal is smaller:
+
+> If something runs as you, it should not automatically inherit everything you are trusted to do.
+
+That is the workstation blast-radius problem.
+
+This is a guide to reducing it without making development feel like typing through wet cement.
+
+Last verified: May 9, 2026. Tool behavior, pricing, and platform support change, so check current docs before standardizing across a team.
+
+---
+
+## The Shape of the Defense
+
+You need four layers:
+
+| Layer | Job |
+| --- | --- |
+| Isolation | Keep project tools and risky commands away from the rest of the machine. |
+| Secret handling | Reduce plaintext credentials and make sensitive values harder to leak accidentally. |
+| Detection | Plant tripwires where attackers or bad automation would naturally look. |
+| Egress control | Notice and block unexpected outbound connections. |
+
+Do not start by trying to solve every laptop threat.
+
+Start with the path attackers actually enjoy: run something, read secrets, send them out, use them before anyone notices.
+
+## 1. Put Projects in Dev Containers
+
+[Dev Containers](https://github.com/devcontainers/spec) let you use a container as a full-featured development environment. That sounds like developer-experience infrastructure, and it is. But it is also a security boundary when you use it with discipline.
+
+The lazy configuration mounts too much:
+
+```jsonc
+// Too convenient. Too much blast radius.
+{
+  "name": "app",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
+  "mounts": [
+    "source=${localEnv:HOME},target=/host-home,type=bind"
+  ]
+}
+```
+
+That turns the container into a weirdly-shaped version of your host account.
+
+Use narrow mounts instead:
+
+```jsonc
+// .devcontainer/devcontainer.json
+{
+  "name": "app",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
+  "workspaceFolder": "/workspaces/app",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspaces/app,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "NODE_ENV": "development"
+  },
+  "postCreateCommand": "bun install"
+}
+```
+
+This is not a perfect sandbox. Containers share a kernel. Docker has sharp edges. Mounts can punch holes straight through the model.
+
+But for most developer workflows, the win is immediate: project commands see the project, not your whole digital attic.
+
+### What to Mount
+
+Mount the repo.
+
+Maybe mount a project-specific cache.
+
+Do not mount these by default:
+
+- `~/.ssh`
+- `~/.aws`
+- `~/.config/gcloud`
+- `~/.azure`
+- `~/Downloads`
+- `~/Documents`
+- password manager exports
+- database dumps
+- backup folders
+- random “temp” folders that have existed since 2021
+
+If a project needs cloud access, inject a credential made for that project. Short-lived is better. Read-only is better. A token that can only access a dev account is better than your personal admin identity wandering into the container with a tiny suitcase.
+
+### AI Coding Tools Belong Here Too
+
+AI coding tools make Dev Containers more important, not less.
+
+Anthropic’s [Claude Code permission docs](https://code.claude.com/docs/en/permissions) split the world into permissions and sandboxing: permissions control tools, files, and domains; sandboxing provides OS-level enforcement for Bash filesystem and network access.
+
+That distinction is the whole ballgame.
+
+If an agent can run shell commands, install packages, inspect files, and follow instructions, put the shell work inside a constrained project environment. Keep the host boring.
+
+Good default:
+
+- start the agent in the repo, not your home directory
+- deny sensitive paths explicitly
+- use a Dev Container for install/build/test commands
+- avoid adding broad “extra directories” as context
+- review any generated command that touches credentials, auth config, package publishing, or cloud resources
+
+The model does not need your `~/Documents` folder to fix a TypeScript error.
+
+## 2. Replace Plaintext `.env` Sprawl
+
+`.env` files are not evil.
+
+They are just files. That is the problem.
+
+Files get copied. Files get indexed. Files get mounted. Files get read by scripts that were only supposed to lint CSS. Files get included in debugging zips. Files get pasted into chat because someone wanted help and forgot the last twelve lines.
+
+Use the boring hierarchy:
+
+1. No secret needed: put the value in `.env.example`.
+2. Local-only secret: encrypt it at rest.
+3. Shared development secret: put it in a real secrets manager or password manager.
+4. Production secret: do not put it on developer laptops unless there is a very specific reason.
+
+[VarLock](https://varlock.dev/guides/secrets/) is appealing because it makes sensitivity explicit. Its docs describe marking values with `@sensitive`, encrypting local values with `varlock()`, redacting sensitive values from console output, and scanning project files for plaintext occurrences of known sensitive values.
+
+The shape is better than “run a regex against the repo and hope the secret looks secret-shaped.”
+
+Example direction:
+
+```dotenv
+# .env.schema
+# @defaultSensitive=false
+
+PUBLIC_APP_NAME=
+
+# @sensitive
+STRIPE_SECRET_KEY=
+
+# @sensitive
+DATABASE_URL=
+```
+
+Local override:
+
+```dotenv
+# .env.local
+PUBLIC_APP_NAME=demo
+STRIPE_SECRET_KEY=varlock(local:...)
+DATABASE_URL=varlock(local:...)
+```
+
+This does not mean secrets are safe once loaded into a compromised process. Nothing does. But it does mean the filesystem has fewer plaintext prizes.
+
+That matters against infostealers, malicious dependencies, over-broad AI context, accidental commits, and the humble `console.log(process.env)` moment.
+
+## 3. Add Canary Tokens Where a Thief Would Look
+
+Most monitoring tells you when something known-bad happened.
+
+Canary tokens tell you when something weird touched something it should not know exists.
+
+[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) describes them as digital tripwires. They can be documents, URLs, API keys, VPN profiles, QR codes, and other fake assets that alert when accessed.
+
+The placement is the art.
+
+Do not scatter random bait and declare victory. Put canaries where credential theft, backup theft, or reconnaissance would naturally go.
+
+### Local Canaries
+
+Create a fake backup:
+
+```text
+~/backups/customer-prod-export-2024.sql
+```
+
+Put a canary URL or token inside it:
+
+```sql
+-- legacy analytics webhook
+-- https://canarytokens.example.invalid/static/abc123
+```
+
+Create a fake credentials file:
+
+```text
+~/Documents/passwords-old.csv
+```
+
+Or a fake AWS profile:
+
+```ini
+# ~/.aws/credentials
+[billing-prod-legacy]
+aws_access_key_id = AKIA...
+aws_secret_access_key = ...
+```
+
+Use a real AWS canary token type when available so the alert fires on attempted use, not just file open.
+
+### Repo Canaries
+
+Put canaries near places attackers inspect after source access:
+
+- internal runbooks
+- deprecated deployment docs
+- old migration notes
+- fake service credentials in a clearly non-production `.env.canary`
+- fake backup restore instructions
+
+This is not security by obscurity. This is an alarm in a hallway.
+
+### CI and Cloud Canaries
+
+Good cloud tripwire locations:
+
+- a fake CI secret
+- a fake deploy token
+- a fake database user with no privileges
+- an unused object storage path
+- a fake kubeconfig
+- a fake API key documented in a runbook
+
+Make the alert actionable. A canary that emails an unattended inbox is a decorative string.
+
+At minimum, the alert should tell you:
+
+- which token fired
+- where it was planted
+- what system touched it
+- what to rotate
+- who owns the response
+
+## 4. Put a Gate on Outbound Traffic
+
+If something malicious runs locally, exfiltration needs a network path.
+
+Most developer laptops allow outbound traffic by default. That is convenient. It also means an unknown process can often send data to an unknown place without a local decision point.
+
+Outbound firewalls are the seatbelt layer.
+
+They will not stop every crash. They will make some crashes survivable. They will also complain at inconvenient times until you teach them what normal looks like.
+
+### macOS
+
+[LuLu](https://objective-see.org/products/lulu.html) is free and open source. Objective-See describes it as blocking unknown outgoing connections, and its docs note that LuLu only monitors outgoing traffic.
+
+It is a good first choice if you want simple outbound prompts and can tolerate some setup friction.
+
+[Little Snitch](https://obdev.at/products/littlesnitch/) is commercial and more polished. It shows connection alerts, lets you allow or deny app connections, and gives you a network monitor with app, domain, country, port, protocol, and traffic visibility.
+
+It is the stronger choice if you want profiles, rule management, and a UI people may actually keep using after week two.
+
+### Windows
+
+Windows Defender Firewall supports outbound rules and rule precedence for inbound and outbound traffic. Microsoft’s guidance is sober: changing outbound rules to blocked can be considered in high-security environments, but it requires inventorying apps and creating rules for what needs network connectivity.
+
+Translation: possible, powerful, and easy to make annoying.
+
+[Portmaster](https://safing.io/) is also worth evaluating on Windows. Safing describes it as an open-source application firewall that monitors network connections and sets per-application blocking rules.
+
+### Linux
+
+Portmaster supports common Linux packages. OpenSnitch is another Linux application firewall worth evaluating, though the project state and distro packaging should be checked before standardizing.
+
+For servers, use normal server controls. For developer laptops, the key feature is application-level visibility. “Block all outbound except 443” is not enough when every interesting exfiltration path also speaks 443.
+
+## 5. Give Backups Adult Supervision
+
+Backups are not cold. They are sensitive data in portable form.
+
+Developer machines should not become backup archives unless that is the job.
+
+Rules I would actually enforce:
+
+- Production exports require an owner and an expiration date.
+- Local database dumps must be encrypted.
+- Any export containing credentials triggers credential rotation or scrubbing.
+- Backup folders are not mounted into Dev Containers by default.
+- Backup folders are denied to AI coding tools by default.
+- At least one canary lives in backup-like storage.
+- Old exports get deleted by automation, not vibes.
+
+Simple local convention:
+
+```bash
+mkdir -p ~/sensitive-exports
+chmod 700 ~/sensitive-exports
+```
+
+Better convention:
+
+- encrypted volume or encrypted archive
+- clear naming with expiration
+- documented deletion
+- no sync to consumer cloud drives unless approved
+
+Example:
+
+```bash
+age -r age1yourpublickeyhere -o customer-export-2026-05-09.sql.gz.age customer-export.sql.gz
+shred -u customer-export.sql.gz
+```
+
+Do not turn this into a ritual. The best backup policy is the one where developers rarely need production exports in the first place.
+
+## 6. Build a Workstation Default
+
+Here is a sane baseline for an individual developer:
+
+| Area | Baseline |
+| --- | --- |
+| Browser | No saved production passwords. Use a password manager and hardware-backed MFA for important accounts. |
+| Projects | Use Dev Containers for projects with package installs, untrusted code, or AI-driven shell work. |
+| Secrets | No plaintext production secrets on disk. Encrypt local dev secrets where practical. |
+| Cloud | Short-lived credentials. Separate dev and prod identities. No personal admin token by default. |
+| GitHub | Fine-grained tokens. Review package publishing tokens. Use org SSO and hardware keys. |
+| AI tools | Project-scoped access, deny sensitive paths, run commands in containers when practical. |
+| Backups | Encrypt, expire, isolate, and monitor. Keep out of broad mounts and AI context. |
+| Network | Outbound firewall in alert or monitor mode first, then rules for risky tools. |
+| Detection | Canary tokens in backup, credential, CI, cloud, and documentation locations. |
+
+For a team, add:
+
+- a standard `.devcontainer` template
+- a secrets policy that distinguishes local, shared dev, staging, and prod
+- canary-token placement conventions
+- documented outbound firewall profiles
+- fast credential rotation playbooks
+- onboarding that explains the threat model without theater
+
+The goal is not to make every developer a security engineer.
+
+The goal is to make the safer path the normal path.
+
+## What to Do This Week
+
+If this feels too big, do five things:
+
+1. Pick one high-risk repo and add a Dev Container with narrow mounts.
+2. Move one plaintext `.env.local` secret to encrypted local storage or a password manager.
+3. Plant one canary token in a fake backup file and route alerts somewhere visible.
+4. Install LuLu, Little Snitch, Portmaster, or equivalent in monitor mode and watch what actually talks.
+5. Find local production exports and either delete, encrypt, or expire them.
+
+That is enough to start.
+
+Security work often fails because it tries to arrive as a cathedral. Bring a door first. Then a lock. Then an alarm. Then a habit.
+
+The workstation does not have to be perfectly trusted.
+
+It has to stop being infinitely trusted by accident.
+
+## Image Plan
+
+Potential cover directions:
+
+- Diagrammatic map: a laptop in the center with four constrained rings labeled isolation, secrets, detection, and egress. Best for a practical guide.
+- Editorial metaphor: a workbench with keys, documents, and network cables under glass domes, with one cable leading to a warning light. Best for the series visual identity.
+- Failure-mode scene: a local backup folder glowing like production infrastructure while tiny alert tripwires surround it. Best if the post leans harder into backup risk.
+
+Suggested asset set once a direction is chosen:
+
+- `desktop-social.webp` at 1200x630
+- `wide.webp` at 1600x900
+- `square.webp` at 800x800
+
+## Sources and Useful Reading
+
+- [Development Containers specification](https://github.com/devcontainers/spec)
+- [Claude Code permissions](https://code.claude.com/docs/en/permissions)
+- [VarLock secrets management](https://varlock.dev/guides/secrets/)
+- [Thinkst Canarytokens overview](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
+- [Objective-See LuLu](https://objective-see.org/products/lulu.html)
+- [Little Snitch](https://obdev.at/products/littlesnitch/)
+- [Portmaster](https://safing.io/)
+- [Microsoft: Windows Firewall rules](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
+- [Mandiant: UNC5537 Targets Snowflake Customer Instances](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
