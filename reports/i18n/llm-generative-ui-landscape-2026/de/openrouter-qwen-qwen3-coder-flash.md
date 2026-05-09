@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: de
+- Model: openrouter/qwen/qwen3-coder-flash
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 150.08
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx: reports/i18n/llm-generative-ui-landscape-2026/fr/openrouter-deepseek-deepseek-v4-flash.md
