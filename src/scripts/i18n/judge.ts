@@ -177,7 +177,9 @@ function shouldEscalateSecondJudge({
   const normalized = secondOutput.toLowerCase();
   const explicitNoEscalationPatterns = [
     /no escalation required/,
+    /no escalation needed/,
     /escalation (?:is )?not required/,
+    /escalation (?:is )?not needed/,
     /no disagreement/,
   ];
 
