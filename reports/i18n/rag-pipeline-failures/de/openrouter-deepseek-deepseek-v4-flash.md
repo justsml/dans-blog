@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 137.78
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
