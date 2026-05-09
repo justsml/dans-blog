@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: de
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/de/index.mdx
+- Validation: passed
+- Runtime seconds: 169.37
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
