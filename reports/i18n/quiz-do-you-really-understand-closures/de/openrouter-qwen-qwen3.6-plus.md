@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 99.77
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-do-you-really-understand-closures --locale de
