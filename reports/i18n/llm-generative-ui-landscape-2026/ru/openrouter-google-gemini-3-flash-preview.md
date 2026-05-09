@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: ru
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/ru/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 42.45
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Command failed: bun run i18n:validate --slug llm-generative-ui-landscape-2026 --locale ru
