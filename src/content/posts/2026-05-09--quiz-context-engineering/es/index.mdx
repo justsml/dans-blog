@@ -1,0 +1,473 @@
+---
+title: "Quiz: 14 Preguntas sobre Ingeniería de Contexto"
+subTitle: "El prompt engineering es lo que haces. La ingeniería de contexto es lo que entregas."
+date: 2026-05-09
+modified: 2026-05-09
+tags: [quiz, ai, llm, context-engineering, prompts, rag, tokens, advanced]
+category: Quiz
+subCategory: AI
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">El prompt engineering se lleva los titulares. La ingeniería de contexto se lleva la guardia. ¿Qué tan bien conoces la parte de un sistema de IA que realmente llega a producción?</p>
+
+Este quiz cubre ventanas de contexto, presupuestos de tokens, recuperación, estructura de prompts y los modos de fallo que convierten demos limpios en productos confusos. Empieza suave. No se queda ahí.
+
+Trae pruebas.
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Fundamentos"
+  title="Fundamentos de la Ventana de Contexto"
+  options={[
+    {text: 'El número máximo de peticiones por minuto'},
+    {text: 'El límite combinado de tokens para entrada y salida', isAnswer: true},
+    {text: 'La cantidad de mensajes en una conversación'},
+    {text: 'La memoria disponible entre sesiones'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿A qué se refiere "ventana de contexto" en un LLM?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    La ventana de contexto es el número total de tokens que un modelo puede procesar en una sola llamada — **entrada + salida combinadas**. Una ventana de contexto de 128K significa que tu prompt + documentos recuperados + historial de conversación + la respuesta del modelo deben caber dentro de 128.000 tokens.
+
+    No tiene nada que ver con sesiones, memoria o límites de tasa. Cuando alcanzas el límite, el modelo o trunca, devuelve un error o — peor aún — descarta tokens silenciosamente que no esperabas.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Fundamentos"
+  title="Estimación de Tokens"
+  options={[
+    {text: 'Unos 50 tokens'},
+    {text: 'Unos 130 tokens', isAnswer: true},
+    {text: 'Unos 300 tokens'},
+    {text: 'Unos 1000 tokens'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Aproximadamente cuántos tokens usa un párrafo en inglés de 100 palabras con un tokenizador moderno común?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    La regla general es **~1,3 tokens por palabra** para prosa típica en inglés. Un párrafo de 100 palabras ≈ 130 tokens.
+
+    Esto varía significativamente según el tipo de contenido:
+    - Código: ~1,5–2 tokens/palabra (caracteres especiales, espacios en blanco)
+    - Documentación técnica con muchos identificadores: puede ser mayor
+    - Palabras comunes en inglés: a menudo 1 token cada una
+    - Palabras raras, nombres, texto en otros idiomas: a menudo 2–4 tokens cada una
+
+    La biblioteca `tiktoken` te da conteos exactos. Mide siempre antes de suponer.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Fundamentos"
+  title="Rol del System Prompt"
+  options={[
+    {text: 'Se procesa primero y tiene más peso que los mensajes de usuario', isAnswer: true},
+    {text: 'Es idéntico a un mensaje de usuario pero se muestra diferente'},
+    {text: 'Solo se usa en llamadas a la API, no en interfaces de chat'},
+    {text: 'Persiste entre sesiones como memoria a largo plazo'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál es el efecto práctico de usar el rol `system` frente al rol `user` en el array de mensajes?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    El rol `system` se procesa como instrucciones de mayor prioridad. Los modelos están entrenados para darle más peso que a los mensajes de usuario: es el límite arquitectónico entre "lo que dijo el desarrollador" y "lo que dijo el usuario".
+
+    No es magia. No garantiza que el modelo ignore instrucciones conflictivas del usuario (véase: prompt injection). Pero aumenta significativamente la tendencia del modelo a seguir tus instrucciones, especialmente en modelos con fuerte capacidad de seguimiento de instrucciones.
+
+    En la práctica: pon tu persona, reglas y restricciones de comportamiento en `system`. Pon el contexto recuperado y los datos del usuario en `user`. Nunca pongas entrada controlada por el usuario en `system`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Recuperación"
+  title="Perdido en el Medio"
+  options={[
+    {text: 'Los modelos rinden igual de bien independientemente de dónde se coloque el contexto'},
+    {text: 'Los modelos rinden mejor con el contexto al final'},
+    {text: 'Los modelos rinden mejor con el contexto al principio y al final, y peor en el medio', isAnswer: true},
+    {text: 'Los modelos rinden mejor con el contexto en el medio del prompt'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    La investigación sobre el problema "Lost in the Middle" muestra que los LLM tienden a:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    El paper [Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demostró que los LLM luchan de manera confiable con la información colocada en el medio de contextos largos. El rendimiento es significativamente mayor cuando la información relevante aparece al **principio o al final** de la ventana de contexto.
+
+    Implicación práctica: cuando insertas chunks recuperados en un prompt RAG, no los agregues simplemente en orden de relevancia. Pon tu resultado mejor clasificado primero, el segundo mejor al final, y llena el medio con material de menor clasificación. Es contra-intuitivo, pero mediblemente mejor.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Recuperación"
+  title="Estrategia de Fragmentación"
+  options={[
+    {text: 'Usar el tamaño de fragmento más grande que permita tu ventana de contexto'},
+    {text: 'Usar siempre 512 tokens: es el estándar'},
+    {text: 'Usar fragmentos superpuestos cuyo tamaño coincida con la estructura de tu contenido', isAnswer: true},
+    {text: 'El tamaño del fragmento no importa mientras el modelo de embeddings sea bueno'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Al fragmentar documentos para RAG, ¿cuál es el principio más importante?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    No hay un tamaño de fragmento universalmente correcto: depende de tu contenido. Los principios importantes son:
+
+    1. **Adapta la estructura de tu contenido.** Las páginas de FAQ se fragmentan bien a nivel de pregunta + respuesta. Los documentos legales se fragmentan bien a nivel de cláusula. El código se fragmenta bien a nivel de función.
+    2. **Usa superposición.** Un fragmento de 512 tokens con 64 tokens de superposición a cada lado significa que las respuestas que cruzan un límite siguen siendo recuperadas.
+    3. **Mide.** Construye un conjunto de evaluación y prueba varios tamaños de fragmento. El tamaño del fragmento importa más que el modelo de embeddings.
+
+    "512 tokens" es un punto de partida razonable, no una ley.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Recuperación"
+  title="Búsqueda Híbrida"
+  options={[
+    {text: 'Ejecutar la misma consulta dos veces por redundancia'},
+    {text: 'Usar dos modelos de embeddings diferentes sobre el mismo corpus'},
+    {text: 'Combinar búsqueda vectorial con búsqueda por palabras clave para una mejor recuperación', isAnswer: true},
+    {text: 'Buscar simultáneamente en múltiples bases de datos vectoriales'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    En sistemas RAG, la "búsqueda híbrida" se refiere a:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    La búsqueda híbrida combina **búsqueda vectorial** (similitud semántica mediante embeddings) y **búsqueda por palabras clave** (BM25 / búsqueda de texto completo) porque fallan de forma complementaria:
+
+    - La búsqueda vectorial tiene dificultades con términos exactos: nombres de productos, códigos de error, números de modelo, identificadores técnicos
+    - La búsqueda por palabras clave tiene dificultades con la paráfrasis: "cómo cancelo" vs. "finalizar suscripción"
+
+    Los resultados de ambas se fusionan usando **Reciprocal Rank Fusion (RRF)** — un algoritmo de ranking que combina posiciones de múltiples listas ordenadas sin necesidad de puntuaciones normalizadas.
+
+    Ambas están disponibles en Postgres con `pgvector` + `tsvector`. Puede que no necesites un servicio de búsqueda aparte.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Gestión de Tokens"
+  title="Presupuesto de Contexto"
+  options={[
+    {text: 'Usar más del 95 % de la ventana de contexto para maximizar la información'},
+    {text: 'Reservar un margen significativo para la salida en lugar de llenar toda la ventana', isAnswer: true},
+    {text: 'El presupuesto de contexto solo importa para modelos menores a 32K tokens'},
+    {text: 'El modelo trunca automáticamente cuando se excede la ventana'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Al construir un prompt RAG con contexto recuperado, una buena regla general para el presupuesto de contexto es:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90 % para la entrada, el modelo solo le queda el 10 % de la ventana para generar una respuesta, lo que a menudo causa salidas truncadas o degradadas.
+
+    Una heurística razonable: decide primero el tamaño de salida esperado, luego mantén tu entrada cómodamente por debajo del presupuesto restante. Para muchas tareas RAG, eso significa usar no más del **60–70 % de la ventana de contexto total para la entrada** (prompt de sistema + historial + contexto recuperado). Deja el resto para generación y margen de seguridad.
+
+    Además, los modelos rinden peor cerca de los límites de su ventana de contexto: la comprensión y el seguimiento de instrucciones se degradan a medida que el contexto se llena. Ejecutar al 95 % es técnicamente posible. No es la misma experiencia que ejecutar al 50 %.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Gestión de Tokens"
+  title="Gestión del Historial de Conversación"
+  options={[
+    {text: 'Enviar siempre el historial de conversación completo'},
+    {text: 'Resumir mensajes antiguos cuando el historial excede un presupuesto de tokens', isAnswer: true},
+    {text: 'Borrar mensajes antiguos: el modelo tiene memoria persistente'},
+    {text: 'Almacenar el historial en una base de datos vectorial y recuperar los turnos relevantes'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    En una aplicación de chat multi-turno, ¿cuál es la estrategia correcta cuando el historial de conversación crece?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Los LLM no tienen memoria persistente. Cada llamada a la API es sin estado: envías el contexto completo, recibes una respuesta. La "memoria" de una conversación es enteramente el historial de mensajes que incluyes en cada petición.
+
+    Cuando ese historial crece más allá de tu presupuesto, las opciones son:
+    1. **Resumir**: Comprime los turnos más antiguos en un resumen continuo, mantén los turnos recientes textualmente
+    2. **Ventana deslizante**: Mantén los últimos N turnos, descarta los anteriores
+    3. **Recuperación selectiva**: Genera embeddings de los turnos de conversación y recupera los relevantes por consulta (complejo pero potente)
+
+    El truncamiento simple — cortar mensajes antiguos para que quepan — es la peor opción porque elimina silenciosamente contexto que el modelo podría necesitar.
+
+    La recuperación del historial de conversación desde una base de datos vectorial es teóricamente atractiva, pero suele ser excesivo para la mayoría de aplicaciones de chat. El resumen es la opción pragmática por defecto.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Estructura del Prompt"
+  title="Ejemplos Few-Shot"
+  options={[
+    {text: 'Más ejemplos siempre producen mejores resultados'},
+    {text: '3–5 ejemplos de alta calidad y diversos en el prompt', isAnswer: true},
+    {text: 'Los ejemplos few-shot solo ayudan en tareas de clasificación'},
+    {text: 'Los ejemplos deberían ir después de la consulta del usuario, no antes'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Para la mayoría de casos de uso en producción, la estrategia óptima de ejemplos few-shot es:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Los ejemplos few-shot mejoran drásticamente la consistencia de la salida y el cumplimiento del formato. El punto ideal para la mayoría de tareas es **3–5 ejemplos de alta calidad y diversos**.
+
+    ¿Por qué no más? Cada ejemplo cuesta tokens. Más allá de 5–10 ejemplos, el beneficio marginal cae mientras el costo en tokens sigue aumentando. Más ejemplos también aumentan la probabilidad de que el modelo haga over-fitting a los ejemplos en lugar de comprender el patrón subyacente.
+
+    Por qué importa la diversidad: si todos tus ejemplos son del mismo tipo de entrada, el modelo no generalizará bien en casos extremos. Incluye ejemplos que cubran tus variaciones más importantes.
+
+    Colocación: los ejemplos van *antes* de la consulta del usuario, como parte del prompt de sistema o como turnos de conversación prellenados — no después.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Estructura del Prompt"
+  title="Etiquetas XML para Estructura"
+  options={[
+    {text: 'Las etiquetas XML solo son válidas en modelos de Anthropic'},
+    {text: 'Las etiquetas XML ayudan a los modelos a distinguir instrucciones de datos y mejoran la precisión del parsing', isAnswer: true},
+    {text: 'Las etiquetas XML ralentizan la tokenización y deberían evitarse'},
+    {text: 'Las etiquetas XML son equivalentes a encabezados markdown'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Por qué muchos prompts de producción usan etiquetas al estilo XML como `<document>`, `<context>`, `<instructions>`?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Las etiquetas al estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:
+
+    1. **Separación**: Indican al modelo dónde terminan las instrucciones y comienzan los datos — crítico para RAG y para reducir el riesgo de prompt injection desde documentos recuperados.
+    2. **Parseabilidad**: Cuando pides al modelo que responda en XML (p. ej., `<answer>...</answer>`), las etiquetas te dan puntos de extracción limpios sin artilugios de regex.
+
+    Esto no es XML como lenguaje de marcado. Es XML como convención de delimitadores en la que los modelos están entrenados. Funciona porque el modelo ha visto este patrón extensivamente durante el entrenamiento, no porque esté validando esquemas.
+
+    Funciona en la mayoría de los modelos afinados por instrucciones con suficiente frecuencia como para ser útil: es una convención de los datos de entrenamiento, no una característica del proveedor ni una garantía de seguridad.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Avanzado"
+  title="Temperatura y Determinismo"
+  options={[
+    {text: 'temperature=0 siempre produce salidas idénticas para la misma entrada'},
+    {text: 'temperature=0 hace las salidas más deterministas pero no garantiza que sean idénticas', isAnswer: true},
+    {text: 'temperature=0 desactiva la capacidad del modelo para rechazar peticiones'},
+    {text: 'temperature solo afecta la longitud de la respuesta'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Poner `temperature=0` en tu llamada al LLM significa:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    `temperature=0` hace que el modelo elija el token de mayor probabilidad en cada paso (decodificación greedy), lo que produce salidas **más consistentes** — pero no garantiza que sean idénticas.
+
+    Fuentes de variación con temperature=0:
+    - **No-determinismo de punto flotante** en operaciones de GPU, especialmente entre diferentes hardwares o tamaños de batch
+    - **Cambios en la infraestructura del servidor** (actualizaciones de modelo, infraestructura de servicio)
+    - **Salidas largas** acumulan pequeñas variaciones
+
+    Para suites de pruebas y evaluaciones que necesitan determinismo estricto, `temperature=0` es la elección correcta — solo no escribas aserciones que dependan de salidas idénticas byte a byte. Asegura estructura, contenido clave y comportamiento, no cadenas exactas.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Avanzado"
+  title="Caché de Prompts"
+  options={[
+    {text: 'El caché almacena respuestas y las reproduce para consultas idénticas'},
+    {text: 'El caché almacena pares KV compilados para prefijos de prompt estáticos, reduciendo el costo de tokens de entrada', isAnswer: true},
+    {text: 'El caché solo está disponible en modelos de OpenAI'},
+    {text: 'El caché es automático y no requiere configuración del desarrollador'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Qué es el "caché de prompts" en el contexto de las APIs de LLM (Anthropic, OpenAI)?
+    <p className="text-sm">Última verificación: 8 de mayo de 2026. Los controles de caché y los precios de los proveedores cambian rápidamente.</p>
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    El caché de prompts reutiliza el **KV cache / estado del prefijo del prompt** computado para prefijos de prompt estáticos cuando tu proveedor lo admite. En solicitudes posteriores con el mismo prefijo, el modelo puede omitir el reprocesamiento de esos tokens — lo que reduce la latencia y puede reducir drásticamente el costo.
+
+    Esto no es caché de respuestas. El modelo sigue generando una respuesta nueva cada vez. Solo estás evitando retokenizar y recomputar la atención para la parte del prompt que no cambia.
+
+    Se usa mejor para: prompts de sistema grandes, documentos estáticos, definiciones de herramientas, ejemplos few-shot — cualquier cosa que sea la misma en muchas solicitudes. El prefijo en caché debe estar al *inicio* de tu prompt.
+
+    No es lo mismo que: deduplicación semántica, memorización de respuestas, o caché en la capa de aplicación.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Avanzado"
+  title="Grounding vs. Alucinación"
+  options={[
+    {text: 'Decirle al modelo "no alucines" en el prompt de sistema'},
+    {text: 'Usar una temperatura más alta para generar respuestas más confiadas'},
+    {text: 'Proveer documentos fuente recuperados e instruir al modelo para que los cite', isAnswer: true},
+    {text: 'Usar un modelo más grande: la alucinación solo ocurre en modelos pequeños'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    La técnica más efectiva para reducir la alucinación en un sistema de IA en producción es:
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    Instruir a un modelo para que no alucine no detiene la alucinación: el modelo no tiene una señal introspectiva confiable de "me lo estoy inventando". Solo significa que el modelo te dirá con confianza que no se está inventando cosas mientras se las inventa.
+
+    Lo que realmente funciona: **grounding**. Dale al modelo la información que necesita para responder correctamente y restríngelo a esa información:
+
+    ```
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    ```
+
+    Luego valida la salida: verifica que las afirmaciones de la respuesta aparezcan en el contexto recuperado. Esta es la verificación de grounding por citas — véase la discusión de evaluación RAG para la implementación.
+
+    Los modelos más grandes alucinan menos en promedio, pero todos los modelos alucinan. El grounding es la estrategia de mitigación, no el tamaño del modelo.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Experto"
+  title="Ingeniería de Contexto vs. Fine-Tuning"
+  options={[
+    {text: 'El fine-tuning siempre es mejor: la ingeniería de contexto es un parche'},
+    {text: 'La ingeniería de contexto es gratis; el fine-tuning es caro; usa siempre ingeniería de contexto'},
+    {text: 'La ingeniería de contexto cambia el comportamiento por petición; el fine-tuning cambia los pesos del modelo de forma permanente', isAnswer: true},
+    {text: 'Son nombres diferentes para la misma técnica'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ¿Cuál es la distinción clave entre ingeniería de contexto y fine-tuning, y cuándo tiene sentido el fine-tuning?
+  </div>
+  </slot>
+  <slot name="explanation">
+  <div className="explanation">
+    **Ingeniería de contexto**: moldea el comportamiento del modelo a través del prompt — instrucciones de sistema, ejemplos few-shot, contexto recuperado. Es por petición, reversible y no requiere entrenamiento.
+
+    **Fine-tuning** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese checkpoint) y se aplican a cada inferencia.
+
+    El fine-tuning es genuinamente mejor cuando:
+    - Necesitas un estilo/formato consistente que el modelo no puede seguir de forma confiable solo con instrucciones
+    - Tu tarea requiere comportamiento repetible sobre patrones específicos del dominio que el prompting y la recuperación no resuelven
+    - Necesitas reducir la longitud del prompt: el comportamiento afinado no necesita ser explicado en cada petición
+    - Estás ejecutando muchas peticiones donde ejemplos few-shot consistentes están consumiendo tokens significativos
+
+    El fine-tuning es un exceso cuando:
+    - Tus instrucciones caben en un prompt de sistema
+    - Principalmente necesitas hechos actuales o propietarios que pueden recuperarse en el momento de la petición
+    - Los requisitos cambian frecuentemente (necesitarías volver a hacer fine-tuning)
+    - No has agotado primero la ingeniería de contexto
+
+    El orden correcto: domina primero la ingeniería de contexto. Haz fine-tuning cuando se demuestre que no es suficiente.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+¿Qué tal te fue?
+
+- **13–14**: Estás construyendo sistemas de IA en producción, no solo haciendo demos. Raro.
+- **9–12**: Practicante sólido. Conoces las herramientas; los bordes siguen borrosos.
+- **5–8**: Has usado mucho los LLM pero no has pensado profundamente sobre la gestión de contexto. Lee sobre caché de prompts y búsqueda híbrida: cambiarán la forma en que piensas sobre los costos.
+- **0–4**: Buenas noticias: todo en este quiz es aprendible e inmediatamente práctico. Solo la pregunta de "lost in the middle" vale la pena entenderla antes de tu próximo despliegue RAG.
+
+La ingeniería de contexto es la disciplina de ser intencional sobre qué información pones en la ventana, dónde la pones y cómo la estructuras. El modelo es la parte menos controlable de tu sistema. Todo lo demás es tuyo.

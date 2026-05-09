@@ -1,0 +1,422 @@
+---
+title: "El Panorama del GenUI con LLMs v2"
+subTitle: "Desde la renderización de herramientas hasta componentes hasta generación abierta — un mapa de cada enfoque y cuándo cada uno justifica su complejidad."
+date: 2026-05-10
+modified: 2026-05-10
+tags: [ai, llm, generative-ui, agents, frontend, protocols, react, ag-ui, a2ui, copilotkit, json-render, mcp]
+category: AI
+subCategory: Frontend
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.9
+---
+
+"UI generativa" significa al menos cinco cosas distintas dependiendo de quién lo diga.
+
+- Interfaces de chat que incrustan tarjetas de productos desde llamadas a herramientas del modelo
+- Especificaciones JSON en tiempo de ejecución que el frontend renderiza como árboles de componentes
+- Iframes aislados devueltos por herramientas MCP en aplicaciones host (desde pedidos de tickets, reservas de hoteles hasta renderizado de mapas, widgets de checkout)
+- Protocolos de eventos que transmiten el estado del agente al frontend
+- v0, Lovable y Bolt: herramientas de IA que escriben React en tiempo de diseño
+
+Estos son conceptos relacionados, pero viven en capas diferentes de la pila y tienen perfiles de riesgo diferentes, costos de implementación diferentes y casos de uso apropiados diferentes. Confundirlos convierte cada discusión de arquitectura en un desastre.
+
+Este es el mapa que quiero cuando estoy decidiendo dónde en la pila llegar.
+
+---
+
+## Lo que UI Generativa No Es
+
+Antes de definir lo que es, tres cosas a dejar de lado:
+
+**Generación de código en tiempo de diseño** — v0, Lovable, Bolt, Cursor componiendo componentes React. Estas herramientas generan código que los desarrolladores revisan y confirman. La IA se ejecuta en tiempo de desarrollo. Lo que se envía es estático desde la perspectiva del usuario. Esta es una gran categoría de herramientas. No es lo que significa "UI generativa en tiempo de ejecución".
+
+**Autocompletado de formularios asistido por IA** — el modelo completando valores de campos desde el contexto. La estructura de la interfaz sigue siendo fija; solo el contenido se mueve. Este es un patrón útil. No es UI generativa.
+
+**IA escribiendo HTML puro en una página** — el modelo outputting `<div>` y `<button>` strings que se inyectan vía `innerHTML` o `dangerouslySetInnerHTML`. Esto *es* UI generativa en tiempo de ejecución en el sentido más técnico. También es la versión más peligrosa, y la que cada marco maduro en este espacio existe para evitar. El markup sin procesar generado por IA significa riesgo de XSS, atributos inaccesibles, estilizado inconsistente y estructura alucinada. El resto de este artículo trata sobre hacer algo mejor que esto.
+
+---
+
+## Una Definición de Trabajo
+
+La UI generativa en tiempo de ejecución significa: **el modelo determina qué componente de interfaz o composición de componentes ve el usuario, basado en el estado de la conversación o tarea.**
+
+No las palabras. La interfaz.
+
+El caso más simple: tu asistente de reserva de vuelos llama a una herramienta `search_flights`. En lugar de devolver texto plano ("Aquí hay tres opciones..."), renderiza un componente `<FlightResultsCard>` con vuelos seleccionables, toggles de clase de asiento y un botón "Reservar". El modelo decidió que una tarjeta estructurada era la respuesta correcta aquí. El desarrollador decidió cómo se ve esa tarjeta y qué hace "Reservar".
+
+El caso más complejo: un agente de análisis financiero recibe una pregunta sobre un portafolio y decide componer una respuesta con un `MetricGroup` mostrando números clave, un gráfico `RiskBreakdown`, una tabla `ScenarioComparison` y un `PolicyNotice`. El modelo ensambló ese diseño a partir de un catálogo de componentes preaprobados. El desarrollador definió cada componente. El modelo eligió cuáles usar y qué datos poner en ellos.
+
+Ambos casos son UI generativa. Difieren en cuánta libertad de composición tiene el modelo, lo que determina tanto la riqueza de las salidas posibles como la complejidad de lo que puede salir mal.
+
+---
+
+## Los Tres Patrones
+
+Todo el espacio se colapsa en tres patrones, cada uno con una gramática de salida diferente.
+
+![Un diagrama de espectro mostrando tres patrones: solo llamadas a herramientas a la izquierda (más seguro), catálogo de componentes en el medio y generación abierta a la derecha (más expresivo).](../output-grammar-spectrum.svg)
+
+_Cada decisión de UI generativa es un punto en este espectro. Comienza por la izquierda._
+
+### Patrón 1: Renderización de herramienta a componente
+
+El modelo llama a una herramienta nombrada. Tu aplicación tiene un mapa de nombres de herramientas a componentes. La llamada a la herramienta dispara la renderización de un componente.
+
+```tsx
+// El modelo llama: { name: "show_flight_results", args: { flights: [...] } }
+
+useCopilotAction({
+  name: "show_flight_results",
+  render: ({ args }) => <FlightResultsCard flights={args.flights} />,
+});
+```
+
+Este es el patrón más seguro porque el layout nunca viene del modelo. El modelo decide *cuándo* mostrar un componente y *qué datos* poblarlo. Tus desarrolladores siguen siendo dueños del código del componente, el diseño visual, la implementación de accesibilidad y cada caso extremo en la lógica de renderizado.
+
+El `useChat` de Vercel AI SDK con handlers de herramientas hace esto. La renderización de herramientas de assistant-ui hace esto. La "UI Generativa Estática" de CopilotKit es este patrón. La mayoría de las UIs de copiloto en producción que funcionan de forma fiable están haciendo esto.
+
+**Apropiado cuando**: el conjunto de cosas que podrías querer mostrar es conocible en tiempo de desarrollo. Confirmaciones de reserva, resultados de búsqueda, resúmenes de cuenta, widgets de aprobación. Si puedes enumerar los escenarios, este patrón los cubre.
+
+### Patrón 2: Composición de catálogo de componentes
+
+El modelo emite un árbol JSON tipado que referencia componentes de un catálogo definido por el desarrollador. Tu frontend tiene un renderizador que recorre el árbol e instancia cada componente.
+
+```json
+[
+  { "type": "metric_group", "metrics": [
+    { "label": "MRR", "value": "$82,400", "delta": "+12%" },
+    { "label": "Churn", "value": "2.1%", "delta": "-0.4%" }
+  ]},
+  { "type": "line_chart", "title": "30-day growth", "data_ref": "mrr_series" },
+  { "type": "insight_callout", "text": "Expansion revenue driving the delta — avg seat count up 18%." }
+]
+```
+
+El modelo compuso ese layout. Un `MetricGroup`, un `LineChart`, un `InsightCallout`. Pero tú definiste qué significa cada tipo de componente, qué props acepta y cómo se renderiza. Si el modelo intenta emitir `{ "type": "custom_untested_thing" }`, tu validación de schema lo atrapa y el renderer lo ignora o rechaza.
+
+Este es el patrón detrás de `json-render`, `A2UI`, `Hashbrown`, `OpenUI` y `Tambo`. El trabajo clave de ingeniería es **diseño de catálogo** — decidir qué tipos de componentes existen, cómo se ven sus schemas y qué el modelo tiene y no tiene permitido componer.
+
+**Apropiado cuando**: la estructura de lo que quieres mostrar varía legítimamente basada en los datos o la solicitud del usuario. Dashboards que se adaptan a lo que es notable en los números. Reportes que muestran secciones diferentes dependiendo del contexto. Paneles de flujo de trabajo que cambian basados en en qué paso está el agente.
+
+### Patrón 3: Generación abierta
+
+El modelo escribe HTML, SVG, Canvas o WebGL que se renderiza dentro de un iframe aislado con una Política de Seguridad de Contenido estricta.
+
+Esto es apropiado para cosas donde ningún catálogo de componentes fijos servirá: visualizaciones de algoritmos, diagramas arquitectónicos, gráficos ad hoc, arte generativo, simulaciones educativas. El límite del iframe está haciendo el trabajo de seguridad aquí; quítalo y estás de vuelta en el problema de inyección de HTML crudo del inicio de este artículo.
+
+`CopilotKit/OpenGenerativeUI` es la mejor implementación de referencia actual de este patrón. El sandbox elimina scripts, limita el paso de mensajes y mantiene el artefacto generado lejos del estado privilegiado de tu aplicación.
+
+**Apropiado cuando**: genuinamente necesitas salida visual arbitraria — diagramas explicativos únicos, simulaciones dinámicas, artefactos creativos. No uses esto para UI transaccional. Una confirmación de checkout no necesita un iframe aislado.
+
+### Más allá de los tres patrones: LLMs controlando píxeles directamente
+
+Hay una cuarta dirección emergente que no encaja limpiamente en ninguno de estos patrones: LLMs controlando **experiencias inmersivas estilo juego** controlando la salida visual más directamente que un iframe aislado.
+
+La distinción canónica dentro de UI generativa es **iframe HTML vs. catálogo JSON**:
+
+- **Iframe HTML** — el modelo escribe HTML, SVG, Canvas o WebGL que renderiza en un sandbox aislado. Libertad expresiva máxima; la seguridad depende enteramente del límite del iframe. Ejemplos: Anthropic Artifacts, OpenGenerativeUI.
+- **Catálogo JSON** — el modelo emite un payload estructurado restringido a un catálogo de componentes definido por el desarrollador; tu renderer instancia componentes confiables y pre-construidos desde esa especificación. El modelo decide *qué* mostrar; tú decides *cómo* renderiza. Ejemplos: json-render, A2UI.
+
+Más allá de estos, demos muy recientes sugieren un tercer modo donde el modelo no está eligiendo componentes o escribiendo HTML en sandbox — está controlando el canvas más directamente. Proyectos como [Tencent's HunyuanWorld](https://arxiv.org/abs/2502.01999), que genera ambientes 3D explorables desde una sola imagen, y arquitecturas de juegos donde LLMs generan mapas, NPCs y quests en tiempo de ejecución en lugar de llamar a un catálogo de componentes, sugieren un futuro donde el modelo es más como un director de juego que un renderizador de formularios. La inferencia LLM en navegador vía WebGPU ([WebLLM](https://mlc.ai/web-llm/)) está empujando la misma frontera localmente.
+
+Este territorio es genuinamente emocionante y genuinamente temprano. No hay marcos estables para construir productos de producción todavía. Cubriré este enfoque en un artículo dedicado una vez que eso cambie.
+
+---
+
+## El Ecosistema Completo
+
+![Un diagrama de cuatro capas mapeando cada herramienta majeure de UI generativa: protocolos (AG-UI, A2UI, MCP Apps) en la cima, shells de aplicaciones JavaScript a continuación (CopilotKit, Vercel AI SDK, assistant-ui, LangGraph), luego herramientas de catálogo JavaScript (json-render, Hashbrown, OpenUI, Tambo), y luego herramientas Python abajo (Gradio, Streamlit, LangChain, Haystack).](../full-stack-map.svg)
+
+_Cuatro capas. Los protocolos definen el formato de conexión. Los shells de aplicaciones manejan estado y renderización. Las herramientas de catálogo restringen lo que el modelo puede generar. Las herramientas Python son una pista paralela para flujos de trabajo de datos y ML._
+
+---
+
+## Los Protocolos: AG-UI y A2UI
+
+AG-UI y A2UI son los dos estándares principales en la capa de protocolo. Resuelven problemas diferentes y no son competidores.
+
+### AG-UI
+
+**GitHub**: [ag-ui-protocol/ag-ui](https://github.com/ag-ui-protocol/ag-ui)
+
+AG-UI es un protocolo basado en eventos para la comunicación entre agentes de IA y aplicaciones frontend. Define unos 16 tipos de eventos: `TEXT_MESSAGE_START`, `TEXT_MESSAGE_CONTENT`, `TOOL_CALL_START`, `TOOL_CALL_END`, `STATE_SNAPSHOT`, `STATE_DELTA`, etc. El transporte depende de ti — SSE, WebSockets, webhooks, todos funcionan. El formato es deliberadamente flexible para permitir una adopción amplia.
+
+AG-UI no define cómo se ve tu UI. Define cómo se comunica el agente *con* tu frontend. Piensa en él como la capa de protocolo de cable que permite que tu aplicación React se suscriba a un agente LangGraph de la misma manera que se suscribe a un agente CrewAI, sin cambiar el código del frontend.
+
+CopilotKit creó AG-UI a partir de su trabajo con LangGraph y CrewAI. Ha sido adoptado por LangChain, Mastra, PydanticAI y otros. Microsoft ha publicado una guía de integración de AG-UI. Si estás construyendo un frontend multi-agente y necesitas desacoplar los frameworks de backend del código del frontend, AG-UI es la respuesta.
+
+**Una aclaración que confunde a la gente**: AG-UI no es un framework de UI. No te dice qué renderizar. Te dice *que* el agente dijo algo, llamó a una herramienta o actualizó el estado compartido. Lo que renderizas en respuesta sigue siendo tu decisión.
+
+### A2UI
+
+**GitHub**: [google/A2UI](https://github.com/google/A2UI) · Spec: [a2ui.org](https://a2ui.org/)
+
+A2UI es la especificación declarativa de Google para lo que envían los agentes cuando quieren mostrar UI. Donde AG-UI responde "¿cómo se comunica el agente?", A2UI responde "¿qué formato usa el agente para describir un layout de componentes?".
+
+A2UI usa un formato JSONL plano: un descriptor de componente por línea, cada uno con un ID, un tipo y datos. Plano es intencional. Los árboles anidados requieren que el modelo conozca la estructura completa antes de poder empezar a transmitir. Una lista plana permite que el modelo emita cada componente mientras "piensa" sobre él, lo que significa que tu frontend puede comenzar a renderizar la primera tarjeta de métricas mientras el modelo todavía está decidiendo si agregar un gráfico.
+
+```jsonl
+{"id":"h1","type":"kpi_card","title":"MRR","value":"$82,400","delta":"+12%"}
+{"id":"h2","type":"kpi_card","title":"Churn","value":"2.1%","delta":"-0.4%"}
+{"id":"c1","type":"line_chart","title":"30-day MRR","data_ref":"mrr_series"}
+{"id":"t1","type":"data_table","cols":["Month","MRR","Net New"],"data_ref":"monthly"}
+```
+
+A2UI es consciente de la seguridad: la especificación es un formato de datos, no código ejecutable. El catálogo de componentes es predefinido por el desarrollador; el agente solo puede referenciar tipos en ese catálogo. Un renderer A2UI que recibe un nombre de tipo desconocido lo ignora.
+
+El formato "Open-JSON-UI" de CopilotKit es compatible con A2UI. Si estás eligiendo un formato de especificación para un catálogo de componentes hoy, A2UI es el que tiene el respaldo multiplataforma más amplio.
+
+**Una nota sobre estabilidad**: A2UI es pre-1.0 — v0.9 cuando se verificó por última vez el 8 de mayo de 2026 — y ha enviado cambios de especificación que rompen entre versiones menores. Las comunicaciones de Google sobre la hoja de ruta han sido esporádicas y algunos renderers (Lit, Flutter) se han quedado detrás de las actualizaciones de la especificación. Presupuesto tiempo para deriva de especificación si estás construyendo sobre ella hoy. Para casos de uso web puros, json-render actualmente parece tener tooling más completo. La ventaja a largo plazo de A2UI es alcance multiplataforma (web, Flutter, SwiftUI, Android) que json-render no tiene.
+
+### MCP Apps
+
+**GitHub**: [modelcontextprotocol](https://github.com/modelcontextprotocol) · Relacionado: [mcp-ui](https://github.com/MCP-UI-Org/mcp-ui)
+
+MCP comenzó como un protocolo para conectar LLMs a herramientas y datos. La extensión Apps permite que las herramientas MCP devuelvan no solo datos, sino artefactos UI interactivos: componentes React, formularios, dashboards, mapas.
+
+El modelo de seguridad es estricto y eso es el punto: todo renderiza en un iframe aislado con permisos stripped, las plantillas están pre-declaradas para que la app host pueda revisarlas, y toda comunicación es auditable JSON-RPC. Este es el modelo correcto para proveedores de herramientas — un servidor MCP de Shopify puede devolver un widget de checkout; un servicio de mapeo puede devolver un mapa embebible. La app host no es dueña ni confía en el código de ese widget.
+
+MCP Apps es la elección correcta cuando la UI *pertenece al proveedor de la herramienta*, no a tu aplicación. Para UI que vive en el dominio de tu aplicación, quédate con el Patrón 1 o 2.
+
+---
+
+## Los Marcos JavaScript/TypeScript
+
+### CopilotKit
+
+**GitHub**: [CopilotKit/CopilotKit](https://github.com/CopilotKit/CopilotKit) · Ejemplos: [CopilotKit/generative-ui](https://github.com/CopilotKit/generative-ui)
+
+CopilotKit es el marco más completo para aplicaciones frontend nativas de agentes. Maneja el ciclo de vida completo: conectando a backends de agentes sobre AG-UI, gestionando estado de conversación bidireccional, renderizando componentes UI generativos, y proporcionando la fontanería de estado compartido que permite que agentes y usuarios modifiquen los mismos datos.
+
+El modelo de tres patrones mapea limpiamente a las APIs de CopilotKit:
+- `useCopilotAction` con un callback `render` → Patrón 1
+- Renderización A2UI/Open-JSON-UI → Patrón 2
+- Artefactos aislados `OpenGenerativeUI` → Patrón 3
+
+La característica importante de CopilotKit que está sub-discutida es **estado compartido y humano-en-el-bucle**: el agente puede leer y escribir estado de la aplicación, el usuario puede leerlo y escribirlo, y los cambios fluyen bidireccionalmente. Esto es lo que hace que los copilot UIs se sientan como una colaboración real en lugar de una caja de chat enganchada a un producto.
+
+### Vercel AI SDK
+
+**GitHub**: [vercel/ai](https://github.com/vercel/ai) · Docs: [ai-sdk.dev](https://ai-sdk.dev/)
+
+El Vercel AI SDK es la línea base de facto TypeScript para apps de IA. Para UI generativa específicamente:
+
+**`useObject`** transmite un objeto JSON estructurado desde el servidor mientras se genera. Defines un schema Zod; el SDK parsea el JSON parcial y dispara re-renderizaciones cuando llegan los campos. Este es el camino más suave al Patrón 2 en una app Next.js.
+
+```tsx
+const { object: dashboard } = useObject({
+  api: "/api/generate-dashboard",
+  schema: z.object({
+    title: z.string(),
+    metrics: z.array(z.object({ label: z.string(), value: z.number() })),
+    insights: z.array(z.string()),
+  }),
+});
+```
+
+**`useChat` con tool handlers** → Patrón 1. El modelo llama herramientas; mapeas nombres de herramientas a componentes.
+
+**AI Elements** ([elements.ai-sdk.dev](https://elements.ai-sdk.dev/)) proporciona primitivas UI listas para usar paired con el SDK.
+
+**Una nota sobre la trayectoria confusa aquí**: En octubre de 2024, Vercel anunció en [GitHub Discussion #3251](https://github.com/vercel/ai/discussions/3251) que AI SDK RSC — el patrón de streaming de React Server Components promocionado como la característica principal de "UI Generativa" en SDK 3.0 — fue pausado indefinidamente debido a "varias limitaciones de larga data" sin buenas soluciones a corto plazo. Equipos que habían construido estrategias de producto alrededor de RSC streaming fueron tomados por sorpresa. Las APIs `generateObject`/`streamObject` también fueron más tarde deprecadas en SDK 6.0. La migración recomendada desde AI SDK RSC es el patrón `useObject` de arriba, o json-render para generación basada en catálogo.
+
+### assistant-ui
+
+**GitHub**: [assistant-ui/assistant-ui](https://github.com/assistant-ui/assistant-ui)
+
+assistant-ui es un conjunto de primitivas React componibles para construir interfaces de chat de calidad de producción. Es la respuesta correcta cuando necesitas UX de chat pulida — burbujas de mensajes, tokens streaming, acciones de copiar/editar/regenerar, estados de pensamiento — y quieres traer tu propio backend y tu propia renderización de herramientas.
+
+Funciona bien pareado con cualquier backend (OpenAI, Anthropic, modelos locales, endpoints personalizados) y maneja renderización de llamadas a herramientas vía un modelo familiar de slot/render prop.
+
+### json-render
+
+**GitHub**: [vercel-labs/json-render](https://github.com/vercel-labs/json-render) · Docs: [json-render.dev](https://json-render.dev/)
+
+json-render operacionaliza el Patrón 2 con un enfoque opinionado y con todo incluido. Obtienes un catálogo de componentes pre-construido (componentes shadcn/ui con schemas Zod), un renderer, y un loop de generación ajustado donde el modelo está restringido al catálogo por schema.
+
+Las características distinguidoras:
+- **Renderización multi-target**: la misma especificación JSON puede renderizar a una app web React, una app mobile React Native, un PDF, un email HTML, o un video Remotion. Esto es genuinamente útil para reportes.
+- **Renderización progresiva**: los componentes aparecen mientras el modelo los transmite, no después de que llega la especificación completa.
+- **Restricciones de schema ajustadas**: el catálogo está diseñado para que el modelo no pueda alucinar tipos de componentes válidos pero desconocidos.
+
+Si estás construyendo una función de generación de dashboards o reportes y quieres saltarte el trabajo de infraestructura de diseñar tu propio catálogo, json-render es el camino más rápido para apps web.
+
+**Sobre el momentum**: json-render lanzó desde Vercel Labs a principios de 2026 y parece haber captado atención de desarrolladores web rápidamente porque es inmediatamente útil en proyectos React/Next.js estándar. Dicho esto, json-render todavía es pre-1.0 y la relación entre json-render y A2UI todavía se está trabajando — Vercel ha experimentado con salida compatible con A2UI, así que la convergencia es posible. Para multiplataforma (mobile nativo, múltiples marcos), A2UI es la mejor apuesta a largo plazo.
+
+### Hashbrown
+
+**GitHub**: [liveloveapp/hashbrown](https://github.com/liveloveapp/hashbrown)
+
+Hashbrown toma un enfoque distintivo: en lugar de construir una capa de interfaz de IA separada, incrusta la selección de componentes con IA directamente en tu app React o Angular existente. Expones los componentes de tu app al LLM; el LLM selecciona cuáles renderizar y puede invocar herramientas del lado cliente.
+
+Esta es la herramienta correcta cuando quieres infundir inteligencia en superficies de producto que no son "chat" — una página de producto que adapta su layout, un panel de configuración que surfacea las opciones correctas, un editor de workflow que sugiere el próximo paso.
+
+### OpenUI
+
+**GitHub**: [thesysdev/openui](https://github.com/thesysdev/openui) · Docs: [openui.com](https://www.openui.com/)
+
+OpenUI reemplaza JSON con un formato parecido a código orientado por líneas ("OpenUI Lang") que está diseñado para renderización progresiva y eficiencia de tokens. La afirmación es aproximadamente 67% menos tokens que JSON equivalente para layouts complejos.
+
+El tradeoff es madurez del ecosistema — OpenUI es más nuevo y el tooling es más delgado que enfoques basados en JSON. Pero si el costo de tokens es una restricción significativa y estás generando layouts complejos en alta frecuencia, la eficiencia del formato es real.
+
+### Tambo
+
+**GitHub**: [tambo-ai/tambo](https://github.com/tambo-ai/tambo)
+
+Tambo se centra en selección de componentes con estado: la IA selecciona componentes y puede interactuar con ellos a través de herramientas del lado cliente, manteniendo estado de componentes a través de la conversación. Bueno para casos de uso donde elementos UI persisten a través de turnos — un componente de filtro que el usuario ajusta mientras la IA continúa razonando sobre los datos filtrados.
+
+---
+
+## La Capa Python
+
+El ecosistema Python aborda las interfaces de IA de manera diferente. Estas herramientas están optimizadas para demos de modelos ML, aplicaciones de datos e internal tooling — no apps de consumo de producción con composición de layout dirigida por agentes.
+
+Eso no es un golpe. Para los casos de uso correctos, Gradio y Streamlit son las únicas herramientas que necesitas.
+
+### Gradio
+
+**GitHub**: [gradio-app/gradio](https://github.com/gradio-app/gradio) · PyPI: `gradio`
+
+El valor central de Gradio: escribes una función Python; Gradio la envuelve en una UI web. La clase `Interface` son 3 líneas para un clasificador de imágenes. `ChatInterface` son 10 líneas para un chatbot. `Blocks` te da control de layout fino cuando lo necesitas.
+
+La "UI generativa" en Gradio está definida por el desarrollador Python, no por el modelo. La visibilidad y configuración de componentes pueden cambiar dinámicamente basada en salidas del modelo, pero el catálogo de componentes es estático — no estás pidiendo al modelo que componga layouts.
+
+Gradio es el default para HuggingFace Spaces y el ecosistema de demos de ML. Tiene millones de descargas mensuales y impulsa una fracción grande del paisaje de demos de IA.
+
+**Alcanza Gradio cuando**: eres un desarrollador Python construyendo un demo de modelo ML, un prototipo de investigación, o una herramienta interna, y no quieres tocar JavaScript.
+
+### Streamlit
+
+**GitHub**: [streamlit/streamlit](https://github.com/streamlit/streamlit)
+
+El modelo de Streamlit es más opinionado: un script Python corre de punta a punta en cada interacción. Llamas `st.chat_message()`, `st.dataframe()`, `st.plotly_chart()`. El marco maneja el layout.
+
+El modelo de re-ejecución de script completo suena ineficiente pero es sorprendentemente ergonómico para chatbots de IA que acumulan historial de conversación — el script completo se re-ejecuta, el historial de chat está en estado de sesión, y la salida es determinista. Streamlit ahora tiene soporte de primera partido para la mayoría de proveedores mayores de LLM y se integra nativamente con Snowflake Cortex.
+
+**Alcanza Streamlit cuando**: estás construyendo una app de datos con IA, herramienta de reportes interna, o dashboard potenciado por ML en Python y quieres el camino de deployment más simple posible.
+
+### LangChain y Haystack
+
+Estos son marcos de orquestación de backend, no marcos de UI. Aparecen en cualquier mapa honesto de stack de UI generativa porque son típicamente la capa donde las salidas estructuradas se generan antes de ser enviadas a un frontend.
+
+**LangChain** ([langchain-ai/langchain](https://github.com/langchain-ai/langchain)): `.with_structured_output()` en cualquier LLM te da generación JSON restringida por Pydantic. El decorador `@tool` con generación automática de schema es la forma más limpia de definir qué herramientas puede llamar el modelo. LangChain feed resultados estructurados hacia cualquier capa de frontend que estés usando.
+
+**Haystack** ([deepset-ai/haystack](https://github.com/deepset-ai/haystack)): arquitectura de pipeline modular con soporte fuerte de RAG. Hayhooks envuelve pipelines de Haystack como endpoints HTTP — incluyendo endpoints compatibles con MCP. Si tu UI generativa necesita un backbone de retrieval, la arquitectura de pipeline de Haystack lo maneja limpiamente.
+
+Ningún marco own la capa UI. Generan los datos que tu frontend (Patrón 1, 2 o 3) renderiza.
+
+---
+
+## Referencia de Características
+
+Usa el catálogo arriba como orientación, no como lista de compras. El stack usualmente se colapsa a una elección en cada capa:
+
+| Necesidad | Empieza aquí |
+|------|------------|
+| Event stream de agente a frontend | [AG-UI](https://github.com/ag-ui-protocol/ag-ui) |
+| Payload UI declarativo cruzando un límite de confianza | [A2UI](https://github.com/google/A2UI) o [MCP Apps](https://github.com/MCP-UI-Org/mcp-ui) |
+| Chat/renderización de herramientas owned por la app | [Vercel AI SDK](https://github.com/vercel/ai), [assistant-ui](https://github.com/assistant-ui/assistant-ui), o [CopilotKit](https://github.com/CopilotKit/CopilotKit) |
+| Dashboards, reportes y formularios compuestos por catálogo | [json-render](https://github.com/vercel-labs/json-render), [Hashbrown](https://github.com/liveloveapp/hashbrown), [OpenUI](https://github.com/thesysdev/openui), o [Tambo](https://github.com/tambo-ai/tambo) |
+| Artefactos visuales aislados | [OpenGenerativeUI](https://github.com/CopilotKit/OpenGenerativeUI) |
+| Demos de Python y apps de datos | [Gradio](https://github.com/gradio-app/gradio) o [Streamlit](https://github.com/streamlit/streamlit) |
+
+---
+
+## Velocidad del Ecosistema y Terreno Inestable
+
+Este espacio se mueve rápido y varios proyectos han enviado comunicaciones confusas junto con su código. Último verificado el 8 de mayo de 2026; trata las notas de estado del proyecto aquí como una lectura con marca de tiempo, no un veredicto permanente.
+
+**Vercel AI SDK RSC** fue la característica insignia de UI Generativa cuando el SDK 3.0 lanzó. Vercel pausó su desarrollo en octubre de 2024 ([Discussion #3251](https://github.com/vercel/ai/discussions/3251)) citando limitaciones arquitectónicas con React Server Components que no tenían solución a corto plazo. Equipos que habían construido sobre él estaban comprensiblemente frustrados. Todavía está en los docs pero no es el camino recomendado; `useObject` es.
+
+**json-render** (Vercel Labs) es la nueva dirección — una alternativa basada en catálogo, agnóstica de marco que evita los problemas de acoplamiento de RSC. Es pre-1.0 y parece tener fuerte interés temprano entre desarrolladores React/web. La razón probable de DX: json-render es inmediatamente útil en un proyecto React/Next.js estándar, mientras que el alcance multiplataforma de A2UI añade fricción de setup. Cómo esto se desarrolla mientras ambos specs maduran es genuinamente unclear. Vercel ha sondado compatibilidad con A2UI en json-render, sugiriendo que la convergencia es posible.
+
+**A2UI** (Google) es pre-1.0 (v0.9 cuando se verificó por última vez) con cambios que rompen entre versiones menores y comunicaciones inconsistentes de Google sobre su hoja de ruta. Es la elección correcta para alcance multiplataforma (web + Flutter + SwiftUI) que json-render no aborda, y tiene respaldo empresarial significativo. Para proyectos web puros ahora mismo, el DX es más áspero.
+
+**AG-UI** (CopilotKit) también es pre-1.0. La confusión más común: el nombre lo hace sonar como un marco de UI. No lo es — es un protocolo de transporte. AG-UI define cómo los eventos fluyen entre backends de agentes y tu frontend; lo que renderizas en respuesta sigue siendo tu decisión. Ese modelo mental es sólido y ampliamente adoptado, pero el spec pre-1.0 significa que los casos extremos todavía se están trabajando.
+
+La consecuencia práctica: **cada actor principal aquí es pre-1.0**. Planifica para cambios de API. Los patrones — herramienta a componente, composición de catálogo, generación aislada — son lo suficientemente estables para construir sobre ellos. Las elecciones de protocolo específicas no lo son.
+
+---
+
+## Diseño del Catálogo de Componentes: El Trabajo Real de Ingeniería
+
+La mayor parte de la complejidad interesante en el Patrón 2 no está en el renderer — está en el catálogo.
+
+El catálogo es **una decisión de producto codificada como schema**. Responde: ¿cuáles son los objetos UI significativos en este dominio? No "¿qué componentes React existen?" sino "¿qué necesita realmente ver e interactuar el usuario en este contexto?"
+
+**El modo de falla demasiado granular**: expones `Row`, `Column`, `Text`, `Button`, `Icon`. Ahora el modelo tiene que ser un ingeniero frontend. Generará layout mediocre que no coincide con tu sistema de diseño, perderá estados vacíos, producirá markup inaccesible, y cambiará su enfoque de respuesta en respuesta porque nada en el catálogo restringe la salida al lenguaje visual de tu producto.
+
+**El modo de falla demasiado grueso**: expones `WeatherCard`, `FlightCard`, `HotelCard`. El modelo no puede adaptarse cuando el usuario pide algo que no mapea a una tarjeta pre-cocida. Cae de vuelta a texto.
+
+**El medio útil**: componentes a nivel de dominio con slots restringidos.
+
+Un catálogo de app de viajes podría verse así:
+
+```
+TripSummary         — itinerary de un vistazo
+FlightOptionList    — opciones de vuelo seleccionables con precios
+HotelComparison     — tarjetas de hoteles lado a lado
+TravelerForm        — collect traveler details
+PolicyNotice        — llamado de regla regulatoria/de tarifa
+BookingConfirmation — confirmación final con botón de acción
+```
+
+Un catálogo de app de finanzas podría verse así:
+
+```
+PortfolioSnapshot   — posiciones clave y P&L
+TransactionTable    — transactions filtrables y paginadas
+RiskBreakdown       — métricas de asignación y volatilidad
+ScenarioComparison  — modelado de escenario lado a lado
+ApprovalGate        — acción requiriendo confirmación humana
+```
+
+El catálogo suena como el vocabulario de tu producto. Codifica tus decisiones de UX, tus requisitos de accesibilidad, tu manejo de estados vacíos y tus patrones de acciones peligrosas en código de componentes. El modelo obtiene permitido arreglar esas piezas. Tú todavía decides cómo se ve cada pieza y qué se le permite hacer.
+
+**Reglas de diseño de schema que reducen alucinaciones**:
+
+1. Mantén los valores de enum cortos y obvios. `"type": "bar_chart"` no `"type": "data-visualization-bar-type-vertical"`.
+2. Haz imposible la composición inválida. Si un `PolicyNotice` solo puede aparecer al final de un layout, no lo pongas en el mismo nivel de schema que cosas que pueden aparecer en cualquier lugar.
+3. Usa campos requeridos generosamente. Un campo opcional es un campo que el modelo podría omitir y tu renderer tiene que manejar como null.
+4. Prueba el catálogo contra prompts reales antes de enviar. Guarda las especificaciones generadas; revísalas por violaciones de schema, valores de campo alucinados y composiciones que son técnicamente válidas pero semánticamente incorrectas.
+
+---
+
+## Trampas Comunes
+
+**Trampa: tratar JSON válido como comportamiento seguro.** La validación de schema confirma la estructura. No dice nada sobre si la acción adjunta a un botón coincide con su etiqueta, si un total coincide con los datos de los que se deriva, o si un componente de UI está haciendo algo que el usuario no esperaba. Las especificaciones de UI generada necesitan revisión semántica, no solo validación de schema. Como mínimo, las acciones destructivas deben requerir un componente de confirmación, y las etiquetas en esos componentes deben ser probadas contra las acciones que disparan.
+
+**Trampa: exponer primitivas de diseño en lugar de primitivas de producto.** Si el modelo tiene que decidir si usar padding de 16px o 20px, le has dado la abstraction level equivocada. Los componentes de dominio deben codificar el gusto del producto. El modelo debería estar componiendo comportamiento, no gestionando detalles de presentación.
+
+**Trampa: usar UI generativa donde UI estática servirá.** Si la estructura de lo que quieres mostrar es conocible en tiempo de desarrollo — y usualmente lo es — el Patrón 1 con componentes pre-construidos es más rápido, más seguro y más consistente. UI generativa justifica su complejidad cuando la estructura genuinamente varía basada en los datos o contexto de la tarea.
+
+**Trampa: saltarse la accesibilidad.** Los LLMs alucinan violaciones WCAG. Emitirán `role="region"` en elementos interactivos, generarán formularios con etiquetas faltantes y producirán ratios de contraste que fallan WCAG AA. Tu librería de componentes puede ser completamente accesible; las composiciones de esos componentes generadas por IA no son automáticamente accesibles. Prueba la ruta de renderización completa, no solo los componentes en aislamiento.
+
+**Trampa: confundir el protocolo y el marco.** AG-UI no es un marco de frontend. A2UI no es una librería React. Son formatos wire y protocolos de eventos. Todavía necesitas un marco de frontend para implementarlos. CopilotKit implementa AG-UI y A2UI. json-render implementa el patrón de catálogo A2UI/Open-JSON-UI. Estas son capas diferentes.
+
+---
+
+## Recomendaciones por Caso de Uso
+
+**Agregando un copilot a una app SaaS existente**: Empieza con el Patrón 1 (herramienta a componente). Usa `useChat` de Vercel AI SDK o CopilotKit. Mapea tus top 5–10 acciones de agente a componentes pre-construidos. Envía eso, mídelo, y luego expande el catálogo solo si los usuarios demuestran necesitar composición más rica.
+
+**Generación de dashboard desde lenguaje natural**: Usa el Patrón 2 con json-render o un catálogo A2UI custom. Define un catálogo de 8–15 tipos de componentes cubriendo tus tipos de gráficos, tarjetas de métricas y variantes de tablas. Alimenta el schema al modelo; deja que componga el layout. Construye validación que atrape tipos desconocidos antes de que lleguen al renderer.
+
+**Frontend multi-agente**: Usa CopilotKit con AG-UI. El event stream maneja streaming en tiempo real a través de backends de agentes; el estado compartido maneja el handover entre agentes; el patrón HITL maneja las puertas de aprobación.
+
+**Construyendo dentro de ChatGPT u otro host MCP**: Usa MCP Apps. Define tu herramienta como una herramienta de datos que fetch y razona, y una herramienta de render separada que solicita un widget. Mantén la lógica de negocio fuera de la plantilla del widget.
+
+**Demos de modelos ML y apps de datos (equipo Python)**: Gradio para demos y HuggingFace Spaces. Streamlit para apps de datos con interacción más compleja. Ninguno requiere JavaScript.
+
+**Artefactos visuales, simulaciones, diagramas**: Usa el Patrón 3 (OpenGenerativeUI o equivalente). Establece CSP de iframe estricto. Trata la salida como contenido de usuario no confiable desde una perspectiva de seguridad.
+
+---
+
+Los marcos están madurando rápido. La convergencia de protocolos (AG-UI para streaming, A2UI/Open-JSON-UI para specs de catálogo) todavía está en progreso, pero la forma está volviéndose lo suficientemente clara para construir sobre ella.
+
+Los desafíos de ingeniería que más importan ahora mismo no son selección de marcos. Son diseño de catálogo — decidir qué tiene permitido decir el modelo, lo que requiere claridad de producto más que habilidad técnica. Son validación semántica — probando que la UI generada hace lo que dice, no solo que pasa validación de schema. Y es la brecha de accesibilidad — construir catálogos donde cada componente, y cada composición de componentes, cumpla con la barra de accesibilidad que sostendrías para UI escrita a mano.
+
+El modelo hará lo que le digas que haga dentro de la gramática que le des. Haz la gramática deliberada.
