@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/de/index.mdx
+- Validation: passed
+- Runtime seconds: 151.60
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
