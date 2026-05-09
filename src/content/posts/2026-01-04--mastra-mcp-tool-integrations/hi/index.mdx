@@ -1,0 +1,219 @@
+---
+title: "आपका AI एजेंट इसके बिना बेकार है"
+subTitle: "क्यों MCP आर्टिफिशियल इंटेलिजेंस का USB-C है।"
+date: 2026-01-04
+modified: 2026-01-08
+tags: [AI, MCP, Tools, Integrations, Mastra, Salesforce, APIs]
+category: AI
+subCategory: Integration
+social_image: desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+आपने एक AI एजेंट बनाया है। शायद यह अच्छा भी है। प्रॉम्प्ट टाइट हैं, मॉडल तेज़ है, और रिस्पॉन्स नेचुरल लगते हैं।
+
+लेकिन फिर कोई इससे Salesforce में किसी कस्टमर रिकॉर्ड को चेक करने के लिए कहता है। या नवीनतम Jira टिकट्स निकालने के लिए। या आपकी इंटरनल डॉक्युमेंटेशन खोजने के लिए।
+
+और आपका सुंदर एजेंट बस... नहीं कर पाता।
+
+यह इंटीग्रेशन समस्या है जिसका सामना हर AI प्लेटफॉर्म को आखिरकार करना पड़ता है। आपके एजेंट को हाथ चाहिए। उसे आपके असल बिज़नेस सिस्टम में आँखें चाहिए। उनके बिना, आप बस एक महँगा चैटबॉट चला रहे हैं।
+
+पारंपरिक समाधान? हर उस सर्विस के लिए कस्टम API रैपर लिखें जिससे आप कनेक्ट होना चाहते हैं। उनकी डॉक्स पढ़ें, उनके ऑथ को हैंडल करें, उनकी रेट लिमिट्स से जूझें, प्रार्थना करें कि वे अगले महीने अपने एंडपॉइंट्स न बदलें। फिर अगली सर्विस के लिए फिर से करें। और फिर अगली के लिए।
+
+मॉडल कंटेक्स्ट प्रोटोकॉल इस समीकरण को पूरी तरह बदल देता है।
+
+---
+
+## MCP वास्तव में क्या हल करता है
+
+USB-C से पहले USB के बारे में सोचें। आपके पास Mini-USB था, Micro-USB था, प्रोप्राइटरी Apple कनेक्टर्स थे, और केबल्स का एक दराज़ जो केवल विशिष्ट डिवाइसों के साथ काम करता था। USB-C ने सिर्फ़ एक नया कनेक्टर नहीं जोड़ा — इसने एक स्टैंडर्ड स्थापित किया जिसका मतलब था कि कोई भी केबल किसी भी डिवाइस के साथ काम कर सकती है।
+
+MCP AI टूल इंटीग्रेशन के लिए वही करने वाला है।
+
+अपने एजेंट को Salesforce, HubSpot, GitHub या किसी अन्य सर्विस से कनेक्ट करने के लिए कस्टम कोड लिखने के बजाय, आप प्रोटोकॉल को एक बार इम्प्लीमेंट करते हैं (या प्री-बिल्ट सर्वर डाउनलोड करते हैं), और कोई भी MCP-कम्पैटिबल एजेंट तुरंत उससे बात कर सकता है।
+
+प्रोटोकॉल कम्युनिकेशन लेयर को हैंडल करता है। आप बस यह परिभाषित करते हैं कि आपके टूल क्या करते हैं और उन्हें किन डेटा की ज़रूरत है।
+
+---
+
+## एकाधिक इंटीग्रेशन सेट अप करना
+
+Mastra में [`MCPClient`](https://mastra.ai/docs/mcp/overview) के ज़रिए नेटिव MCP सपोर्ट है। आप लोकल टूल (चाइल्ड प्रोसेस के रूप में चलने वाले) और रिमोट सर्विस (अपने इंफ्रास्ट्रक्चर पर चलने वाले) दोनों को कनेक्ट कर सकते हैं।
+
+यहाँ Google Maps को रूटिंग के लिए, एक वेदर सर्विस, और लोकल Wikipedia सर्च को कनेक्ट करने वाला एक यथार्थवादी प्रोडक्शन सेटअप है:
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // Local tool (Stdio)
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // Maps & Navigation (Remote/HTTP)
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // Weather Service Integration
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+क्लाइंट कनेक्शन लाइफसाइकल को मैनेज करता है, लोकल टूल के लिए प्रोसेस स्पॉनिंग को हैंडल करता है, और रिमोट सर्वर के लिए HTTP कनेक्शन बनाए रखता है। आपको सॉकेट या stdio को सीधे छूने की ज़रूरत नहीं है।
+
+---
+
+## एजेंट्स से टूल कनेक्ट करना
+
+एक बार आपका MCP क्लाइंट कॉन्फ़िगर हो जाने के बाद, उन टूल को एजेंट को देना सीधा है:
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
+  model: openai('gpt-5'),
+  tools: await mcpClient.getTools(), // <--- This is the magic line
+});
+```
+
+जब कोई उपयोगकर्ता पूछता है: *"सैन फ्रांसिस्को से लेक ताहो जाने का सबसे अच्छा रास्ता कौन सा है, और क्या मुझे मौसम की चिंता करनी चाहिए?"*
+
+एजेंट उपलब्ध टूल डिफ़िनिशन पढ़ता है, उसे एहसास होता है कि उसके पास Google Maps रूटिंग और वेदर फ़ोरकास्ट टूल तक पहुँच है, उन्हें सही पैरामीटर के साथ एक्ज़ीक्यूट करता है, और इष्टतम रास्ता के साथ-साथ रास्ते में वर्तमान मौसम स्थितियों के साथ उत्तर देता है।
+
+आपने Google Maps API कोड या वेदर सर्विस इंटीग्रेशन की एक भी लाइन नहीं लिखी।
+
+---
+
+## प्रति-उपयोगकर्ता प्रमाणीकरण
+
+यहाँ एक सुरक्षा गलती करना आसान है: क्रेडेंशियल्स को हार्डकोड करना।
+
+अगर आप अपने एनवायरनमेंट वेरिएबल्स में एक Google Maps API कुंजी डालते हैं और इसे दिन का काम मान लेते हैं, तो हर उपयोगकर्ता एक ही कोटा और रेट लिमिट साझा करता है। और भी महत्वपूर्ण बात — अगर आप ऐसी सर्विसेज़ का उपयोग कर रहे हैं जो उपयोगकर्ता प्राथमिकताएँ स्टोर करती हैं (जैसे सेव्ड लोकेशन या फेवरेट रूट), तो सभी को एक ही डेटा दिखेगा। यह डेमो के लिए ठीक काम करता है। प्रोडक्शन में यह एक दायित्व है।
+
+Mastra इसे हैंडल करता है, आपको उपयोगकर्ता-विशिष्ट क्रेडेंशियल्स के साथ गतिशील रूप से MCP क्लाइंट बनाने देता है:
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // Create a client for THIS specific user
+  const userMcp = new MCPClient({
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // User's specific API key or token
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('navigationDirectionsAgent');
+  
+  // Inject tools at runtime
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  return response;
+}
+```
+
+प्रत्येक उपयोगकर्ता को अपनी API कोटा और प्राथमिकताओं वाला आइसोलेटेड टूलसेट मिलता है। उपयोगकर्ता A के सेव्ड लोकेशन प्राइवेट रहते हैं, उपयोगकर्ता B का रूट इतिहास अलग है। मल्टी-टेनेंट SaaS एजेंट्स प्रैक्टिस में ऐसे काम करते हैं।
+
+---
+
+## कंपोजिट टूल बनाना
+
+कभी-कभी आपको एकाधिक MCP टूल को एक सिंगल ऑपरेशन में मिलाने की ज़रूरत होती है। शायद आप एक ऐसा रास्ता प्लान करना चाहते हैं जो रियल-टाइम ट्रैफ़िक और मौसम स्थितियों दोनों को ध्यान में रखता हो।
+
+आप MCP टूल को कस्टम टूल डिफ़िनिशन में रैप कर सकते हैं:
+
+```typescript
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Plans optimal route considering traffic and weather conditions',
+  execute: async ({ context, mastra }) => {
+    // Get the raw tools
+    const tools = await mcpClient.getTools();
+    
+    // 1. Get base route from Google Maps
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
+    });
+    
+    // 2. Check weather along the route
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
+    });
+    
+    // 3. Return enhanced route with weather warnings
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    };
+  },
+});
+```
+
+यह आपको यह नियंत्रण देता है कि टूल बिल्कुल कैसे इंटरैक्ट करते हैं, जबकि अभी भी भारी उठाने के लिए MCP प्रोटोकॉल का उपयोग किया जाता है।
+
+---
+
+## यह कहाँ ले जाता है
+
+हर उस सर्विस के लिए कस्टम API क्लाइंट लिखना जिनसे आपके AI एजेंट को बात करनी है, कभी भी टिकाऊ नहीं था। यह ख़राब तरीके से स्केल करता है, अक्सर टूटता है, और आपके प्लेटफ़ॉर्म को विशिष्ट इम्प्लीमेंटेशन से बाँध देता है।
+
+MCP हर इंटीग्रेशन चुनौती को हल नहीं करता — ऑथ अभी भी जटिल है, रेट लिमिटिंग अभी भी मायने रखती है, और अभी हर सर्विस के पास MCP सर्वर नहीं है। लेकिन यह एक नींव स्थापित करता है जो एजेंट प्लेटफ़ॉर्म बनाना काफ़ी कम दर्दनाक बनाता है।
+
+अगर आप एक AI सिस्टम की आर्किटेक्चरिंग कर रहे हैं जिसे बाहरी सर्विसेज़ के साथ इंटरैक्ट करने की ज़रूरत है, तो MCP को समझना शायद आपके समय के लायक है।
+
+### Resources
+
+- [Mastra MCP Documentation](https://mastra.ai/docs/mcp/overview)
+- [MCP Registry](https://registry.modelcontextprotocol.io)
+- [Klavis AI (Enterprise MCP)](https://klavis.ai)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## श्रृंखला पढ़ें
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. **MCP & Tool Integrations** (यह पोस्ट)
+4. [Workflows & Memory](/mastra-workflows-memory)
