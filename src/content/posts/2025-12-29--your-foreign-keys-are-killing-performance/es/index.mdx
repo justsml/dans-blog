@@ -29,7 +29,7 @@ Déjame darte un ejemplo concreto. Estás construyendo un sistema de monitorizac
 
 ¿Pones claves foráneas conectándolo todo? Pensemos en qué cambia realmente y cuáles son las consecuencias:
 
-Los estados de EE. UU. probablemente no van a cambiar. Wyoming no va a cambiar de nombre anytime soon. No necesitas una clave foránea para validar códigos de estado en cada inserción cuando sabes que los datos de referencia son estáticos. Eso es sobrecarga inútil.
+Los estados de EE. UU. probablemente no van a cambiar. Wyoming no va a cambiar de nombre pronto. No necesitas una clave foránea para validar códigos de estado en cada inserción cuando sabes que los datos de referencia son estáticos. Eso es sobrecarga inútil.
 
 Las estaciones meteorológicas se añaden, se mueven y se desmantelan. Pero aquí va una pregunta: ¿quieres que las lecturas históricas "pierdan" su estación si alguien elimina accidentalmente un registro de estación? Quizás realmente quieras que esos datos permanezcan intactos incluso si la estación desaparece. Eso significaría que estás tratando las lecturas como una instantánea histórica en lugar de una referencia viva, lo cual cambia si una clave foránea tiene sentido siquiera.
 
