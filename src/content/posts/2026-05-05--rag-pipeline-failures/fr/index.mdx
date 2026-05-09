@@ -1,6 +1,6 @@
 ---
-title: "Cinq façons dont RAG échoue en production"
-subTitle: "La démo fonctionnait. Les vrais utilisateurs sont là où le pipeline casse."
+title: "Cinq façons dont le RAG échoue en production"
+subTitle: "La démo fonctionnait. C'est avec de vrais utilisateurs que le pipeline casse."
 date: 2026-05-04
 modified: 2026-05-05
 tags: [ai, rag, vector-search, llm, production, embeddings, architecture]
@@ -19,43 +19,43 @@ cover_icon: ../square.webp
 
 La démo RAG a toujours l'air géniale.
 
-Vous intégrez des documents, lancez un magasin vectoriel, le connectez au chat, et regardez le modèle citer votre base de connaissances interne comme s'il y travaillait depuis des années. Magnifique. Les décideurs sont impressionnés. Quelqu'un dit « expédions ça. »
+Vous embeddez quelques docs, lancez un stockage vectoriel, branchez le tout à un chat, et regardez le modèle citer votre base de connaissances interne comme s'il y travaillait depuis des années. Magnifique. Les parties prenantes sont impressionnées. Quelqu'un dit « mettons ça en production. »
 
-Six semaines plus tard, les utilisateurs reçoivent des réponses fausses avec assurance. Les tickets de support s'accumulent. Le système *fonctionne*, juste pas de la manière dont les gens en ont besoin.
+Six semaines plus tard, les utilisateurs reçoivent des réponses fausses avec une confiance absolue. Les tickets de support s'accumulent. Le système *fonctionne*, mais pas comme les gens en ont besoin.
 
-L'échec n'est généralement pas une erreur dramatique unique. Ce sont cinq erreurs ennuyeuses empilées ensemble.
-
----
-
-## 1. Vos morceaux ont la mauvaise taille
-
-Cet échec ne plante pas. Il rend juste chaque réponse légèrement pire jusqu'à ce que toute la fonctionnalité semble peu fiable.
-
-La recherche vectorielle récupère des *morceaux*, pas des documents. Tout ce que vous divisez de votre matériel source devient l'unité de vérité du récupérateur. Si les morceaux sont mauvais, le modèle répond avec les mauvais fragments.
-
-**Trop petits** : Le morceau contient une réponse partielle. L'embedding capture le bon sujet, mais le texte récupéré manque de contexte. Vous récupérez « Le délai d'expiration maximum est de 30 secondes » sans la phrase précédente qui dit « lors de l'utilisation de l'API legacy. »
-
-**Trop grands** : L'embedding devient une moyenne floue de nombreuses idées. La recherche sémantique est confuse car le morceau parle de plusieurs choses, et le vecteur résultant ne représente proprement aucune d'entre elles.
-
-La taille de morceau correcte dépend entièrement de votre contenu. Les documents techniques, les contrats juridiques et les transcriptions de support se découpent différemment. Il n'y a pas de réponse universelle.
-
-Que faire : mesurer. Construisez un ensemble d'évaluation de paires question/réponse à partir de votre corpus. Essayez des morceaux de 256, 512 et 1024 tokens. Mesurez la précision de la récupération : le bon morceau apparaît-il dans le top 5 ? Vous apprendrez rapidement que la taille du morceau compte plus que le modèle d'embedding sur lequel vous vous êtes agonisé.
-
-Utilisez aussi le chevauchement. Un morceau de 512 tokens avec 64 tokens de chevauchement de chaque côté signifie que les réponses traversant les limites sont toujours récupérées. La plupart des bibliothèques vectorielles le supportent. La plupart des gens le sautent.
+L'échec n'est généralement pas une erreur spectaculaire. C'est cinq erreurs ennuyeuses empilées les unes sur les autres.
 
 ---
 
-## 2. Vos embeddings deviennent obsolètes (et vous ne le remarquerez pas)
+## 1. Vos fragments ont la mauvaise taille
 
-Imaginez que votre entreprise change de marque. Ou renomme un produit. Ou met à jour ses prix. Ou déprécie une API.
+Cet échec ne fait pas planter. Il rend juste chaque réponse un peu moins bonne jusqu'à ce que toute la fonctionnalité semble peu fiable.
 
-Vous mettez à jour la documentation mais ne ré-embédez pas les morceaux. L'index vectoriel représente toujours l'ancien contenu.
+La recherche vectorielle récupère des *fragments*, pas des documents. Quelle que soit la façon dont vous avez découpé votre source, cela devient l'unité de vérité du récupérateur. Si les fragments sont mal conçus, le modèle répond avec les mauvais extraits.
 
-Les utilisateurs posent des questions sur les nouveaux prix. Les embeddings les dirigent vers l'ancien contenu. Le modèle lit l'ancien contenu et explique avec assurance les anciens prix. Le support reçoit un ticket.
+**Trop petits** : Le fragment contient une réponse partielle. L'embedding capture le bon sujet, mais le texte récupéré manque de contexte. Vous récupérez « Le délai d'attente maximal est de 30 secondes » sans la phrase précédente qui dit « lors de l'utilisation de l'API héritée. »
 
-Chaque système RAG sérieux finit par y faire face. La solution semble évidente - ré-embéder quand le contenu change - mais les équipes construisent rarement ce pipeline avant le premier incident.
+**Trop grands** : L'embedding devient une moyenne floue de nombreuses idées. La recherche sémantique s'embrouille parce que le fragment parle de plusieurs choses, et le vecteur résultant n'en représente aucune proprement.
 
-Vous avez besoin d'un ré-indexage incrémental avec empreinte de contenu :
+La bonne taille de fragment dépend entièrement de votre contenu. Les docs techniques, les contrats juridiques et les transcriptions de support se fragmentent tous différemment. Il n'y a pas de réponse universelle.
+
+Que faire : mesurer. Construisez un ensemble d'évaluation de paires question/réponse à partir de votre corpus. Essayez des fragments de 256, 512 et 1024 tokens. Mesurez la précision de la récupération : le bon fragment apparaît-il dans le top 5 ? Vous apprendrez vite que la taille des fragments importe plus que le modèle d'embedding sur lequel vous vous êtes torturé.
+
+Utilisez aussi le chevauchement. Un fragment de 512 tokens avec 64 tokens de chevauchement de chaque côté permet de récupérer les réponses qui chevauchent les limites. La plupart des bibliothèques vectorielles le supportent. La plupart des gens l'ignorent.
+
+---
+
+## 2. Vos embeddings deviennent obsolètes (et vous ne le remarquez pas)
+
+Imaginez que votre entreprise change de nom. Ou renomme un produit. Ou met à jour ses prix. Ou déprécie une API.
+
+Vous mettez à jour la documentation mais ne ré-embeddez pas les fragments. L'index vectoriel représente toujours l'ancien contenu.
+
+Les utilisateurs demandent les nouveaux tarifs. Les embeddings les dirigent vers l'ancien contenu. Le modèle lit l'ancien contenu et explique avec confiance les anciens tarifs. Le support reçoit un ticket.
+
+Tout système RAG sérieux rencontre cela un jour. La solution semble évidente — ré-embedder quand le contenu change — mais les équipes construisent rarement ce pipeline avant le premier incident.
+
+Vous avez besoin d'une ré-indexation incrémentale avec empreinte de contenu :
 
 ```typescript
 import { createHash } from 'crypto';
@@ -68,7 +68,7 @@ async function upsertDocument(doc: Document, vectorStore: VectorStore) {
   const existing = await vectorStore.getBySourceId(doc.id);
 
   if (existing?.fingerprint === fingerprint) {
-    return; // Le contenu est inchangé, ignorer le ré-embedding
+    return; // Contenu inchangé, ignorer le ré-embedding
   }
 
   const chunks = chunkDocument(doc);
@@ -91,73 +91,73 @@ Ré-indexez à l'écriture, empreinte sur le contenu, pas sur les horodatages. L
 
 ---
 
-## 3. Précision vs Rappel de la récupération : vous optimisez le mauvais
+## 3. Précision vs. rappel de récupération : vous optimisez le mauvais objectif
 
-La plupart des tutoriels RAG montrent comment récupérer les top-K morceaux. Ils n'expliquent pas le compromis entre deux objectifs qui pointent dans des directions opposées.
+La plupart des tutoriels RAG montrent comment récupérer les top-K fragments. Ils n'expliquent pas le compromis entre deux objectifs qui pointent dans des directions opposées.
 
-**Rappel élevé** : Retournez tout ce qui pourrait être pertinent. Les utilisateurs obtiennent toujours une réponse. Mais la fenêtre de contexte du modèle est pleine de bruit tangentiellement lié, et il hallucine pour combler les lacunes entre les fragments.
+**Rappel élevé** : Renvoyez tout ce qui pourrait être pertinent. Les utilisateurs ont toujours une réponse. Mais la fenêtre de contexte du modèle est pleine de bruit tangentiel, et il hallucine pour combler les écarts entre les fragments.
 
-**Précision élevée** : Retournez uniquement les morceaux les plus pertinents. Le modèle fonctionne avec un contexte propre et ciblé. Mais si le bon morceau n'est pas dans le top 3, le modèle n'a pas l'information et invente quelque chose avec assurance quand même.
+**Haute précision** : Ne renvoyez que les fragments les plus pertinents. Le modèle travaille avec un contexte propre et ciblé. Mais si le bon fragment n'est pas dans le top 3, le modèle n'a pas l'information et invente avec confiance quelque chose quand même.
 
-Les modes d'échec semblent identiques aux utilisateurs : des réponses fausses. Mais les causes, et les correctifs, sont opposés.
+Les modes d'échec semblent identiques aux utilisateurs : des réponses fausses. Mais les causes, et les correctifs, sont opposés.
 
-Deux techniques qui aident vraiment :
+Deux techniques qui aident vraiment :
 
-**Reclassement** : Récupérez plus de candidats (top-20), puis utilisez un modèle cross-encodeur pour les reclasser par pertinence avant de les passer au LLM. Les cross-encodeurs sont plus lents que la similarité vectorielle mais considérablement plus précis à l'étape de classement finale.
+**Reranking** : Récupérez plus de candidats (top-20), puis utilisez un modèle cross-encoder pour les reclasser par pertinence avant de les passer au LLM. Les cross-encoders sont plus lents que la similarité vectorielle mais nettement plus précis pour l'étape de classement finale.
 
 ```typescript
 import { Reranker } from '@mastra/rag';
 
 const results = await vectorStore.search(queryEmbedding, { topK: 20 });
 const reranked = await reranker.rank(query, results);
-const context = reranked.slice(0, 5); // Maintenant le top-5 signifie quelque chose
+const context = reranked.slice(0, 5); // Maintenant top-5 signifie vraiment quelque chose
 ```
 
-**Recherche hybride** : Combinez la recherche vectorielle (similarité sémantique) avec la recherche par mots-clés (BM25). Ils échouent de manières différentes. La recherche vectorielle peine avec les termes spécifiques, les noms de modèles et les identifiants. La recherche par mots-clés peine avec le paraphrasage et les synonymes. Ensemble, ils couvrent les angles morts de l'autre.
+**Recherche hybride** : Combinez la recherche vectorielle (similarité sémantique) avec la recherche par mots-clés (BM25). Elles échouent de différentes manières. La recherche vectorielle a du mal avec les termes spécifiques, les noms de modèles et les identifiants. La recherche par mots-clés a du mal avec la paraphrase et les synonymes. Ensemble, elles couvrent leurs angles morts respectifs.
 
 ---
 
 ## 4. Votre fenêtre de contexte a la mauvaise forme
 
-Vous avez récupéré les bons morceaux. Félicitations. Le modèle va quand même se tromper.
+Vous avez récupéré les bons fragments. Félicitations. Le modèle va quand même se tromper.
 
 Le problème n'est pas seulement ce que vous récupérez. C'est où vous le placez.
 
-Les LLM peuvent souffrir du problème « perdu au milieu ». Liu et al. ont mesuré que les modèles de contexte long utilisaient les informations pertinentes de manière moins fiable quand elles apparaissaient au milieu de l'invite plutôt que près du début ou de la fin.
+Les LLM peuvent souffrir du problème du « perdu au milieu ». Liu et al. ont mesuré que les modèles à contexte long utilisent les informations pertinentes de manière moins fiable quand elles apparaissent au milieu du prompt plutôt qu'au début ou à la fin.
 
-Si vous empilez 20 morceaux dans une liste plate en espérant que le modèle les synthétisera correctement, vous laissez de la performance sur la table.
+Si vous fourrez 20 fragments dans une liste plate en espérant que le modèle les synthétise correctement, vous laissez de la performance sur la table.
 
-Ce qui aide vraiment :
+Ce qui aide vraiment :
 
-**Évaluez le placement début/fin pour vos morceaux les plus pertinents.** Une heuristique courante est : le mieux classé d'abord, le deuxième classé dernier, et le reste au milieu. Contre-intuitif, mais vaut le test contre votre modèle et la forme de votre invite.
+**Évaluez le placement début/fin pour vos fragments les plus pertinents.** Une heuristique courante : le premier classé en premier, le second classé en dernier, et le reste au milieu. Contre-intuitif, mais mérite d'être testé avec votre modèle et la forme de votre prompt.
 
-**Numérotez et étiquetez explicitement vos sections de contexte.** `[Source 1]` ... `[Source 2]` donne au modèle des ancres pour raisonner.
+**Numérotez et étiquetez explicitement vos sections de contexte.** `[Source 1]` … `[Source 2]` donne des ancres au modèle pour raisonner.
 
-**Ajoutez un signal de confiance de récupération.** Si votre score de similarité est de 0,65 sur une échelle de 0 à 1, dites au modèle : « Le contexte suivant a été récupéré avec une confiance modérée. Reconnaissez l'incertitude si la réponse n'est pas claire. »
+**Ajoutez un signal de confiance de récupération.** Si votre score de similarité est de 0,65 sur une échelle 0-1, dites au modèle : « Le contexte suivant a été récupéré avec une confiance modérée. Reconnaissez l'incertitude si la réponse n'est pas claire. »
 
-**Définissez un budget de contexte.** Ne passez pas simplement tout ce que vous avez récupéré. Comptez les tokens, priorisez par score de pertinence, et coupez dur à 60-70 % de la fenêtre de contexte du modèle. Laissez de la place au modèle pour raisonner sans s'embourber.
+**Fixez un budget de contexte.** Ne passez pas tout ce que vous avez récupéré. Comptez les tokens, priorisez par score de pertinence, et coupez à 60-70 % de la fenêtre de contexte du modèle. Laissez de la place au modèle pour raisonner sans pagayer.
 
-Référence : [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
+Référence : [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
 
 ---
 
-## 5. Vous n'avez aucune idée quand ça se trompe
+## 5. Vous ne savez pas quand ça se trompe
 
-C'est l'échec silencieux : la réponse revient, l'UI a l'air saine, et le contenu est faux.
+C'est l'échec silencieux : la réponse arrive, l'interface a l'air saine, et le contenu est faux.
 
-Avec une API traditionnelle, les échecs sont visibles : HTTP 500, timeout, erreur de validation de schéma. Vous savez immédiatement. Les échecs RAG sont plus silencieux : le système retourne une réponse, elle a l'air plausible, et elle est fausse.
+Avec une API traditionnelle, les échecs sont visibles : HTTP 500, timeout, erreur de validation de schéma. Vous savez immédiatement. Les échecs RAG sont plus silencieux : le système renvoie une réponse, elle a l'air plausible, et elle est fausse.
 
-Vous ne saurez peut-être pas que votre pipeline RAG échoue jusqu'à ce que les utilisateurs vous le disent. Souvent, ils ne le font pas. Ils arrêtent simplement de lui faire confiance et retournent à Ctrl+F.
+Vous ne saurez peut-être pas que votre pipeline RAG échoue tant que les utilisateurs ne vous le disent pas. Souvent, ils ne le font pas. Ils cessent simplement de lui faire confiance et retournent au Ctrl+F.
 
-La configuration minimale d'observabilité viable pour un système RAG en production :
+La configuration d'observabilité minimale pour un système RAG en production :
 
-**Journalisez votre chaîne de récupération.** Chaque requête, ce qui a été récupéré (IDs de morceaux + scores), et ce que le modèle a produit. Vous en avez besoin pour déboguer quoi que ce soit.
+**Enregistrez votre chaîne de récupération.** Chaque requête, ce qui a été récupéré (IDs des fragments + scores), et ce que le modèle a produit. Vous en avez besoin pour déboguer quoi que ce soit.
 
-**Suivez les métriques de récupération.** Rang réciproque moyen (MRR) et NDCG si vous avez des étiquettes de vérité terrain. Au minimum, suivez les distributions de scores de similarité — si votre score de récupération P50 chute, la qualité de votre index a chuté.
+**Suivez les métriques de récupération.** Le rang réciproque moyen (MRR) et le NDCG si vous avez des étiquettes de vérité terrain. Au minimum, suivez les distributions des scores de similarité — si votre score P50 de récupération chute, la qualité de votre index a baissé.
 
-**Construisez une boucle de feedback.** Même un pouce vers le haut/bas sur les réponses, connecté à la requête et aux morceaux récupérés, vous donne un signal d'entraînement. Sans cela, vous volez à l'aveugle.
+**Construisez une boucle de rétroaction.** Même un pouce vers le haut/bas sur les réponses, relié à la requête et aux fragments récupérés, vous donne un signal d'entraînement. Sans cela, vous volez à l'aveugle.
 
-**Exécutez des évaluations périodiques.** Un ensemble de test de 50 à 100 questions avec des réponses correctes connues, exécuté hebdomadairement, capturera les régressions avant les utilisateurs. Un tableur et un script suffisent pour commencer.
+**Exécutez des évaluations périodiques.** Un ensemble de test de 50 à 100 questions avec des réponses correctes connues, exécuté chaque semaine, détectera la régression avant que les utilisateurs ne le fassent. Un tableur et un script suffisent pour commencer.
 
 ```typescript
 async function runEval(
@@ -173,11 +173,11 @@ async function runEval(
   );
 
   const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
-  console.log(`Score d'éval : ${(avgScore * 100).toFixed(1)}%`);
-  
-  // Alerter si le score tombe sous le seuil
+  console.log(`Score d'évaluation : ${(avgScore * 100).toFixed(1)}%`);
+
+  // Alerter si le score descend sous le seuil
   if (avgScore < 0.75) {
-    await notifyTeam(`Le score d'éval RAG a chuté à ${(avgScore * 100).toFixed(1)}%`);
+    await notifyTeam(`Le score d'évaluation RAG est tombé à ${(avgScore * 100).toFixed(1)}%`);
   }
 
   return results;
@@ -188,10 +188,10 @@ async function runEval(
 
 ## Le vrai problème
 
-Ces échecs ne concernent pas principalement le modèle d'embedding ou la base de données vectorielle. Ils concernent le système autour d'eux.
+Ces échecs ne concernent pas principalement le modèle d'embedding ou la base de données vectorielle. Ils concernent le système qui les entoure.
 
-Les démos RAG fonctionnent car les conditions de démo sont contrôlées : documents propres, questions bien formées, évaluateurs tolérants. La production échoue car aucune de ces conditions ne tient.
+Les démos RAG fonctionnent parce que les conditions de démo sont contrôlées : documents propres, questions bien formulées, évaluateurs tolérants. La production échoue parce qu'aucune de ces conditions ne tient.
 
-Chaque échec ci-dessus est diagnostiquable, mais seulement si vous mesurez. Les équipes RAG fiables ne font rien d'exotique. Elles traitent la qualité de la récupération comme un vrai sous-système au lieu d'un artefact de démo.
+Chaque échec ci-dessus est diagnostiquable, mais seulement si vous mesurez. Les équipes RAG fiables ne font rien d'exotique. Elles traitent la qualité de la récupération comme un véritable sous-système au lieu d'un artefact de démo.
 
-Configurez la boucle d'évaluation d'abord. Tout le reste est plus facile une fois que vous pouvez le mesurer.
+Mettez en place la boucle d'évaluation d'abord. Tout le reste est plus facile une fois que vous pouvez le mesurer.

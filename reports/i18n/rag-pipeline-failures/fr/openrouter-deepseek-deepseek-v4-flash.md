@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 35.18
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
