@@ -23,7 +23,7 @@ pgvector es semántico. Almacena un vector denso (una lista de números) que rep
 
 La diferencia práctica: FTS responde a "¿qué documentos contienen estas palabras?". La búsqueda vectorial responde a "¿qué documentos significan aproximadamente esto?".
 
-![Un mapa de herramientas de búsqueda que muestra pg_trgm para cadenas cortas difusas, búsqueda de texto completo para consultas de prosa exacta, pgvector para coincidencia semántica y búsqueda híbrida para contenido largo que necesita señales tanto exactas como semánticas.](./search-tool-map.svg)
+![Un mapa de herramientas de búsqueda que muestra pg_trgm para cadenas cortas difusas, búsqueda de texto completo para consultas de prosa exacta, pgvector para coincidencia semántica y búsqueda híbrida para contenido largo que necesita señales tanto exactas como semánticas.](../search-tool-map.svg)
 
 _La primera división no es "búsqueda antigua vs. búsqueda de IA". Es la forma del texto y qué tipo de respuesta sería correcta._
 
@@ -212,7 +212,7 @@ El `60` en el denominador es la constante RRF — valores más altos reducen la 
 
 Esto ejecuta dos búsquedas en una sola consulta, fusiona los rangos y premia los resultados donde las señales de palabras clave y semánticas coinciden.
 
-![Un pipeline de búsqueda híbrida donde una consulta se divide en búsqueda de texto completo y pgvector, cada una produce resultados clasificados y Reciprocal Rank Fusion combina las dos listas.](./hybrid-rrf-pipeline.svg)
+![Un pipeline de búsqueda híbrida donde una consulta se divide en búsqueda de texto completo y pgvector, cada una produce resultados clasificados y Reciprocal Rank Fusion combina las dos listas.](../hybrid-rrf-pipeline.svg)
 
 _RRF es valioso porque evita fingir que `ts_rank` y la distancia de coseno son puntuaciones crudas comparables. Solo pregunta: "¿qué tan arriba apareció este resultado en cada lista?"_
 
@@ -222,7 +222,7 @@ _RRF es valioso porque evita fingir que `ts_rank` y la distancia de coseno son p
 
 Al elegir una estrategia de búsqueda, comienza con la **forma de la entrada** y luego pregunta **qué tipo de consulta está haciendo el usuario**. "Cadena corta con variación ortográfica" no es el mismo problema que "prosa larga donde los términos exactos importan", y ambos difieren de "pregunta sobre fragmentos de documentos".
 
-![Un árbol de decisión que elige pg_trgm, búsqueda de texto completo, pgvector, búsqueda híbrida o una base de datos de vectores dedicada según la forma del texto y la manera en que los usuarios lo consultan.](./search-decision-tree.svg)
+![Un árbol de decisión que elige pg_trgm, búsqueda de texto completo, pgvector, búsqueda híbrida o una base de datos de vectores dedicada según la forma del texto y la manera en que los usuarios lo consultan.](../search-decision-tree.svg)
 
 El mismo árbol en palabras:
 

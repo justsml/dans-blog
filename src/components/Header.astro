@@ -23,6 +23,9 @@ type Props = {
 };
 
 const { className, languageOptions = [] } = Astro.props as Props;
+const currentLanguage =
+  languageOptions.find((option) => option.isCurrent) ?? languageOptions[0];
+const currentLanguageCode = currentLanguage?.locale.toUpperCase();
 const { getCategoryCounts, getPopularPosts, getRecentPosts } = PostCollections;
 const categories = getCategoryCounts().slice(0, 6);
 const popularPosts = (getPopularPosts() as MyPost[]).map(getNavPostData);
@@ -68,23 +71,33 @@ function getNavPostData(post: MyPost) {
         recentPosts={recentPosts}
       />
       {
-        languageOptions.length > 0 && (
-          <nav class="header-language-menu" aria-label="Article languages">
-            {languageOptions.map((option) => (
-              <a
-                href={option.href}
-                aria-current={option.isCurrent ? "page" : undefined}
-                data-missing={!option.isTranslated ? "true" : undefined}
-                title={
-                  option.isTranslated
-                    ? `${option.label} version`
-                    : `${option.label} translation is not available yet`
-                }
-              >
-                {option.locale}
-              </a>
-            ))}
-          </nav>
+        languageOptions.length > 0 && currentLanguage && (
+          <details class="header-language-menu">
+            <summary
+              class="header-language-trigger"
+              aria-label={`Article language: ${currentLanguage.label}`}
+            >
+              <span class="header-language-current">{currentLanguageCode}</span>
+              <span class="CaretDown" aria-hidden="true">⌄</span>
+            </summary>
+            <nav class="header-language-panel" aria-label="Article languages">
+              {languageOptions.map((option) => (
+                <a
+                  href={option.href}
+                  aria-current={option.isCurrent ? "page" : undefined}
+                  data-missing={!option.isTranslated ? "true" : undefined}
+                  title={
+                    option.isTranslated
+                      ? `${option.label} version`
+                      : `${option.label} translation is not available yet`
+                  }
+                >
+                  <span class="header-language-name">{option.label}</span>
+                  <span class="header-language-code">{option.locale}</span>
+                </a>
+              ))}
+            </nav>
+          </details>
         )
       }
     </div>

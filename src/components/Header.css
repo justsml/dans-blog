@@ -166,6 +166,170 @@
 .top-header .header-nav .nav-box {
   align-self: center;
   margin-top: 0;
+  position: relative;
+}
+
+.header-language-menu {
+  color: var(--clr-muted-100, #f4f8f8);
+  margin-block-start: 0.55rem;
+  margin-inline-start: auto;
+  inline-size: max-content;
+  max-width: 100%;
+  position: relative;
+  z-index: 320;
+}
+
+.header-language-menu > summary {
+  list-style: none;
+}
+
+.header-language-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.header-language-trigger {
+  align-items: center;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(0, 245, 238, 0.08), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 48%),
+    rgba(9, 16, 21, 0.94);
+  border: 1px solid rgba(218, 246, 243, 0.16);
+  box-shadow: 0 12px 30px rgba(0, 8, 12, 0.24);
+  cursor: pointer;
+  display: grid;
+  gap: 0.42rem;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  line-height: 1;
+  min-height: 2.35rem;
+  min-width: 4.2rem;
+  padding: 0.48rem 0.62rem;
+  user-select: none;
+  width: auto;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.header-language-current {
+  color: var(--clr-muted-100, #f4f8f8);
+  font-size: 0.78rem;
+  font-weight: 760;
+  letter-spacing: 0;
+  min-width: 0;
+  text-transform: uppercase;
+}
+
+.header-language-trigger .CaretDown {
+  align-self: center;
+  font-size: 0.95rem;
+}
+
+.header-language-menu[open] .header-language-trigger,
+.header-language-trigger:hover,
+.header-language-trigger:focus-visible {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 245, 238, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), transparent 48%),
+    rgba(9, 16, 21, 0.98);
+  border-color: color-mix(in srgb, rgb(0, 245, 238) 42%, transparent);
+  box-shadow:
+    0 18px 42px rgba(0, 8, 12, 0.32),
+    0 0 24px rgba(0, 245, 238, 0.13);
+  outline: none;
+}
+
+.header-language-menu[open] .CaretDown {
+  color: var(--neon-cyan, #00ffff);
+  filter: drop-shadow(0 0 4px rgba(0, 245, 238, 0.48));
+}
+
+.header-language-menu[open] .CaretDown::before {
+  transform: translateY(0.18rem) rotate(225deg);
+}
+
+.header-language-panel {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(0, 245, 238, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 35%),
+    rgba(5, 9, 12, 0.98);
+  border: 1px solid rgba(218, 246, 243, 0.16);
+  box-shadow:
+    0 24px 58px rgba(0, 8, 12, 0.36),
+    0 0 42px rgba(0, 245, 238, 0.08);
+  display: grid;
+  gap: 0;
+  margin: 0;
+  min-width: min(17rem, calc(100vw - 2rem));
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.35rem);
+  width: min(17rem, calc(100vw - 2rem));
+}
+
+.header-language-panel::before {
+  background:
+    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent),
+    linear-gradient(90deg, rgb(0, 245, 238), rgb(255, 107, 157));
+  content: "";
+  height: 1px;
+  inset: 0 0 auto;
+  opacity: 0.66;
+  position: absolute;
+}
+
+.top-header .header-language-panel a {
+  align-items: center;
+  border-bottom: 1px solid rgba(218, 246, 243, 0.1);
+  color: rgba(244, 248, 248, 0.88);
+  display: grid;
+  font-size: 0.88rem;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  line-height: 1.1;
+  padding: 0.72rem 0.82rem;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.top-header .header-language-panel a::after {
+  display: none;
+}
+
+.top-header .header-language-panel a:last-child {
+  border-bottom: 0;
+}
+
+.top-header .header-language-panel a:hover,
+.top-header .header-language-panel a:focus-visible,
+.top-header .header-language-panel a[aria-current="page"] {
+  background: rgba(0, 245, 238, 0.075);
+  color: var(--clr-muted-100, #f4f8f8);
+  outline: none;
+}
+
+.top-header .header-language-panel a[aria-current="page"] {
+  box-shadow: inset 3px 0 0 rgb(255, 107, 157);
+}
+
+.top-header .header-language-panel a[data-missing="true"] {
+  color: rgba(221, 232, 233, 0.48);
+}
+
+.header-language-name {
+  min-width: 0;
+}
+
+.header-language-code {
+  color: rgba(221, 232, 233, 0.54);
+  font-size: 0.66rem;
+  font-weight: 680;
+  text-transform: uppercase;
 }
 
 @media (max-width: 700px) {
@@ -185,5 +349,14 @@
   .top-header .header-nav .nav-box {
     justify-self: stretch;
     width: 100%;
+  }
+
+  .header-language-menu {
+    margin-inline-start: 0;
+  }
+
+  .header-language-panel {
+    left: 0;
+    right: auto;
   }
 }
