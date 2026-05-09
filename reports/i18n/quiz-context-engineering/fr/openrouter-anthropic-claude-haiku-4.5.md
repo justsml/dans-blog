@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: fr
+- Model: openrouter/anthropic/claude-haiku-4.5
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 85.94
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
