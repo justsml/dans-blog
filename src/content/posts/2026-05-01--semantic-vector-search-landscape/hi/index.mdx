@@ -1,70 +1,70 @@
 ---
-title: "Semantic Vector Search और दोस्त और प्रेमियों को जीतने के लिए अन्य विषय"
-subTitle: "संपूर्ण search landscape: exact, fuzzy, semantic, hybrid — और इन्हें कब layer करें।"
+title: "सेमांटिक वेक्टर सर्च और दोस्त तथा प्रेमियों को जीतने के लिए अन्य विषय"
+subTitle: "संपूर्ण सर्च लैंडस्केप: एक्जैक्ट, फ़ज़ी, सेमांटिक, हाइब्रिड — और इन्हें कब लेयर करें।"
 ---
 
-Search एक चीज़ नहीं है, और semantic search बाकी सबका replacement नहीं है।
+सर्च एक ही चीज़ नहीं है, और सेमांटिक सर्च बाकी सबकी जगह नहीं ले सकता।
 
-"Find user with email `dan@example.com`" और "find me articles about debugging as a new engineer" — दोनों को search कहा जाता है, लेकिन engineering problems के रूप में इनका आपस में लगभग कुछ भी common नहीं है। पहले का एक सही उत्तर है और `O(log n)` index lookup। दूसरे का कोई सही उत्तर नहीं है — केवल relevance है — और इसमें भाषा, intent और meaning को समझने की ज़रूरत होती है।
+"ईमेल `dan@example.com` वाले यूज़र को खोजो" और "मुझे नए इंजीनियर के रूप में डीबगिंग पर लेख दिखाओ" — दोनों को सर्च कहा जाता है, लेकिन इंजीनियरिंग समस्याओं के रूप में इनमें लगभग कुछ भी समान नहीं है। पहले का एक सही जवाब है और `O(log n)` इंडेक्स लुकअप। दूसरे का कोई सही जवाब नहीं है — केवल रिलेवेंस है — और इसके लिए भाषा, इरादा और अर्थ को समझने की ज़रूरत होती है।
 
-Search decisions के बारे में सबसे ज़्यादा persuasive engineers — जो arguments जीतते हैं और सही system ship करते हैं — वे पूरे landscape को समझते हैं। उन्हें पता होता है कि किस tool को कब और क्यों reach करना है, और वे इसे स्पष्ट रूप से समझा भी सकते हैं।
+वे इंजीनियर जो सर्च के फ़ैसलों पर सबसे ज़्यादा प्रभावी तर्क देते हैं — जो बहस जीतते हैं और सही सिस्टम शिप करते हैं — वे पूरे लैंडस्केप को समझते हैं। उन्हें पता होता है कि किस टूल को कब और क्यों इस्तेमाल करना है, और वे इसे साफ़-साफ़ समझा भी सकते हैं।
 
-यह article semantic layer को कवर करता है: vector search वास्तव में क्या करता है, यह कब जीतता है, और कहाँ इसे रास्ते से हटकर रहना चाहिए। उपयोगी version "embed everything" नहीं है। यह जानना है कि vectors lexical, fuzzy और exact-match search के बगल में hybrid architecture में कब belong करते हैं।
+यह लेख सेमांटिक लेयर को कवर करता है: वेक्टर सर्च वास्तव में क्या करता है, यह कब बेहतर होता है, और कहाँ इसे रास्ते से हटकर रहना चाहिए। उपयोगी संस्करण "सब कुछ एम्बेड करो" नहीं है। यह जानना है कि वेक्टर्स लेक्सिकल, फ़ज़ी और एक्जैक्ट-मैच सर्च के बगल में एक हाइब्रिड आर्किटेक्चर में कब फिट होते हैं।
 
-Lexical और fuzzy half की तस्वीर — `tsvector`, `pg_trgm`, `pg_search` — [Postgres Text Searching Guide 2026](/postgres-text-search-guide) में है।
-
----
-
-## Terms at a Glance
-
-**Embedding** — एक model द्वारा produced floating-point numbers की dense list, जो text (या image, audio, आदि) के एक piece को high-dimensional space में एक point के रूप में represent करती है। Semantically related content पास-पास land करता है; unrelated content दूर land करता है।
-
-**Lexical search** — exact word और token matching पर आधारित search। तेज़, deterministic, और known terms के लिए सही। Synonyms, paraphrases, या cross-language equivalents को समझ नहीं सकता।
-
-**Semantic search** — meaning पर आधारित search, tokens पर नहीं। "how do I handle timeouts" query "configuring retry policies" शीर्षक वाले document से match कर सकती है — कोई shared words नहीं, लेकिन geometrically close embeddings।
-
-**Vector** — numbers की एक list। search contexts में, embedding model का output। "Vector search" query vector के सबसे नज़दीक vectors को geometric distance से खोजता है।
-
-**FTS (Full-Text Search)** — Postgres का built-in lexical search, `tsvector` / `tsquery` द्वारा संचालित। Text को tokenize, stem और index करता है keyword queries के लिए। Prose और exact-term lookup के लिए मज़बूत; meaning के लिए blind।
-
-**BM25** — Lexical search के लिए ranking algorithm (Elasticsearch, Qdrant और अन्य द्वारा उपयोग किया जाता है)। Term frequency को score करता है, यह weighted against करता है कि term corpus में कितना rare है। Raw keyword matching से बेहतर; अभी भी lexical।
-
-**HNSW (Hierarchical Navigable Small World)** — Vector search के लिए standard approximate nearest-neighbor index। तेज़, high-recall similarity queries के लिए layered proximity graph बनाता है। pgvector, Qdrant, Weaviate और ज़्यादातर अन्य इसे use करते हैं।
-
-**RRF (Reciprocal Rank Fusion)** — Multiple retrieval systems से ranked result lists को merge करने का algorithm। केवल rank position का उपयोग करता है — score normalization की ज़रूरत नहीं। जो result दोनों FTS और vector lists में ऊँचा rank करता है, उसे stronger combined score मिलता है।
+लेक्सिकल और फ़ज़ी आधी तस्वीर — `tsvector`, `pg_trgm`, `pg_search` — [Postgres Text Searching Guide 2026](/postgres-text-search-guide) में है।
 
 ---
 
-## Semantic Search वास्तव में क्या करता है
+## मुख्य शब्द एक नज़र में
 
-Vector embeddings text (या images, audio, आदि) को numbers की एक list में convert करते हैं — high-dimensional space में एक point। एक embedding model को train किया जाता है ताकि semantically related text उस space में पास-पास land करे। "Dog" और "canine" पास आते हैं। "Running a marathon" और "running a Python script" एक word share करने के बावजूद दूर आते हैं।
+**एम्बेडिंग** — एक मॉडल द्वारा उत्पन्न फ्लोटिंग-पॉइंट संख्याओं की घनी सूची, जो टेक्स्ट (या इमेज, ऑडियो, आदि) के एक टुकड़े को उच्च-आयामी स्थान में एक बिंदु के रूप में दर्शाती है। सेमांटिक रूप से संबंधित सामग्री पास-पास आती है; असंबंधित सामग्री दूर जाती है।
 
-उस space में similarity search उन documents को खोजता है जिनका *meaning* query के meaning के सबसे नज़दीक है, चाहे exact word overlap हो या न हो।
+**लेक्सिकल सर्च** — सटीक शब्द और टोकन मिलान पर आधारित सर्च। तेज़, निर्धारित, और ज्ञात शब्दों के लिए सही। समानार्थी शब्दों, पैराफ़्रेज़ या क्रॉस-भाषा समकक्षों को नहीं समझता।
 
-इसका मतलब:
-- "How do I configure request timeouts?" एक article titled "Setting connection limits and retry policies" से match कर सकता है — कोई overlapping keywords नहीं, high conceptual relevance
-- "Something light for a summer evening" product description में कोई keywords appear किए बिना wine recommendation से match कर सकता है
-- अंग्रेज़ी में query French, Spanish या Japanese documents से match कर सकती है यदि embedding model multilingually trained था
+**सेमांटिक सर्च** — अर्थ पर आधारित सर्च, टोकन पर नहीं। "how do I handle timeouts" क्वेरी "configuring retry policies" शीर्षक वाले दस्तावेज़ से मैच कर सकती है — कोई साझा शब्द नहीं, लेकिन उनके एम्बेडिंग ज्यामितीय रूप से करीब हैं।
 
-Lexical search (`tsvector`, `pg_trgm`) यह कुछ भी नहीं कर सकता। यह words और characters पर operate करता है, meaning पर नहीं। Tools interchangeable नहीं हैं — वे अलग problems solve करते हैं।
+**वेक्टर** — संख्याओं की एक सूची। सर्च संदर्भों में, एम्बेडिंग मॉडल का आउटपुट। "वेक्टर सर्च" ज्यामितीय दूरी द्वारा क्वेरी वेक्टर के सबसे नज़दीकी वेक्टर खोजता है।
+
+**FTS (फुल-टेक्स्ट सर्च)** — Postgres का बिल्ट-इन लेक्सिकल सर्च, `tsvector` / `tsquery` द्वारा संचालित। कीवर्ड क्वेरी के लिए टेक्स्ट को टोकनाइज़, स्टेम और इंडेक्स करता है। गद्य और सटीक-शब्द लुकअप के लिए मज़बूत; अर्थ से अंधा।
+
+**BM25** — लेक्सिकल सर्च के लिए एक रैंकिंग एल्गोरिदम (Elasticsearch, Qdrant और अन्य द्वारा उपयोग किया जाता है)। शब्द आवृत्ति को स्कोर करता है, जो इसके विपरीत वजनित होता है कि शब्द कॉर्पस में कितना दुर्लभ है। कच्चे कीवर्ड मिलान से बेहतर; फिर भी लेक्सिकल।
+
+**HNSW (हायरार्किकल नेविगेबल स्मॉल वर्ल्ड)** — वेक्टर सर्च के लिए स्टैंडर्ड अनुमानित निकटतम-पड़ोसी इंडेक्स। तेज़, उच्च-रिकॉल समानता क्वेरी के लिए एक स्तरित निकटता ग्राफ़ बनाता है। pgvector, Qdrant, Weaviate और अधिकांश अन्य इसका उपयोग करते हैं।
+
+**RRF (रैसिप्रोकल रैंक फ्यूजन)** — कई रिट्रीवल सिस्टम से रैंक किए गए परिणाम सूचियों को मर्ज करने का एक एल्गोरिदम। केवल रैंक स्थिति का उपयोग करता है — स्कोर सामान्यीकरण की आवश्यकता नहीं। एक परिणाम जो FTS और वेक्टर दोनों सूचियों में ऊँचा रैंक करता है, उसे एक मज़बूत संयुक्त स्कोर मिलता है जो केवल एक में हावी होने वाले से बेहतर होता है।
 
 ---
 
-## pgvector कब जीतता है
+## सेमांटिक सर्च वास्तव में क्या करता है
 
-**RAG बनाना।** Retrieval-Augmented Generation user के question के सबसे नज़दीक meaning वाले document chunks को retrieve करता है, फिर उन्हें language model को context के रूप में pass करता है। यह retrieval step एक vector operation है। FTS paraphrases, synonyms और conceptual matches को miss कर देगा जो relevant chunk अलग तरह से express कर सकता है। pgvector का standalone vector store पर advantage: यह आपके existing Postgres instance के अंदर चलता है — कोई separate service deploy, operate या sync करने की ज़रूरत नहीं।
+वेक्टर एम्बेडिंग टेक्स्ट (या इमेज, ऑडियो, आदि) को संख्याओं की एक सूची में बदलते हैं — उच्च-आयामी स्थान में एक बिंदु। एक एम्बेडिंग मॉडल को इस तरह प्रशिक्षित किया जाता है कि सेमांटिक रूप से संबंधित टेक्स्ट उस स्थान में पास-पास आए। "Dog" और "canine" करीब आते हैं। "Running a marathon" और "running a Python script" एक शब्द साझा करने के बावजूद दूर जाते हैं।
 
-**Users बताते हैं कि उन्हें क्या चाहिए, search क्या करना है यह नहीं।** "Articles about building confidence as a new manager" — relevant posts में reliably appear करने वाले keywords नहीं हैं। "A lightweight framework for handling side effects" — documentation में वे exact words शायद न हों। Vector search spelling को नहीं, intent को match करता है।
+उस स्थान में समानता सर्च उन दस्तावेज़ों को खोजता है जिनका *अर्थ* क्वेरी के अर्थ के सबसे नज़दीक है, चाहे सटीक शब्द ओवरलैप हो या न हो।
 
-**Similar items खोजना।** Related products, similar support tickets, duplicate bug reports, articles you might also like। "Find issues similar to this one" एक nearest-neighbor search है — item को embed करो, geometric neighbors खोजो। एक important caveat: vector search हमेशा results return करता है, भले ही कुछ genuinely similar न हो। Dedup और recommendation use cases के लिए, minimum similarity threshold से filter करो (e.g., cosine similarity ≥ 0.80) ताकि low-confidence matches को meaningful के रूप में surface न किया जाए।
+इसका मतलब है:
+- "How do I configure request timeouts?" एक लेख से मैच कर सकता है जिसका शीर्षक "Setting connection limits and retry policies" है — कोई ओवरलैपिंग कीवर्ड नहीं, उच्च अवधारणात्मक प्रासंगिकता
+- "Something light for a summer evening" प्रोडक्ट विवरण में कोई कीवर्ड दिखाई दिए बिना वाइन सिफ़ारिश से मैच कर सकता है
+- अंग्रेज़ी में एक क्वेरी फ्रेंच, स्पेनिश या जापानी में प्रासंगिक दस्तावेज़ों से मैच कर सकती है यदि एम्बेडिंग मॉडल बहुभाषी रूप से प्रशिक्षित था
 
-**Semantic deduplication।** RAG या search के लिए content index करने से पहले, अक्सर corpus में near-duplicates identify करने होते हैं — articles revised multiple times, support tickets filed twice, knowledge base entries जो significantly overlap करती हैं। Documents को embed करो और cosine similarity से threshold-filter करो near-duplicates को flag या merge करने के लिए, ताकि वे index को pollute न करें। यह retrieval को multiple near-identical chunks return करने और context window को dilute करने से रोकता है।
+लेक्सिकल सर्च (`tsvector`, `pg_trgm`) यह कुछ भी नहीं कर सकता। यह शब्दों और अक्षरों पर काम करता है, अर्थ पर नहीं। ये टूल इंटरचेंजेबल नहीं हैं — वे अलग-अलग समस्याएँ हल करते हैं।
 
-**Multilingual search।** Multilingual embedding models semantically equivalent content को languages के across nearby vectors में map करते हैं। "perder peso" के लिए Spanish query "sustainable weight loss habits" पर English article से match कर सकती है — कोई shared tokens नहीं, same underlying meaning। FTS को per-language dictionary configuration चाहिए और cross-language queries को poorly handle करता है। `pg_trgm` language-agnostic है लेकिन orthographic है, semantic नहीं।
+---
 
-### Setting Up pgvector
+## जब pgvector बेहतर होता है
 
-Extension install से similarity query तक, setup कुछ SQL statements है:
+**RAG बनाना।** रिट्रीवल-ऑगमेंटेड जनरेशन उन दस्तावेज़ chunks को पुनः प्राप्त करता है जिनका अर्थ उपयोगकर्ता के प्रश्न के सबसे नज़दीक होता है, फिर उन्हें एक भाषा मॉडल को संदर्भ के रूप में पास करता है। यह रिट्रीवल चरण एक वेक्टर ऑपरेशन है। FTS पैराफ़्रेज़, समानार्थी शब्दों और अवधारणात्मक मिलानों को चूक जाएगा जो एक प्रासंगिक chunk अलग तरीके से व्यक्त कर सकता है। pgvector का स्टैंडअलोन वेक्टर स्टोर पर लाभ: यह आपके मौजूदा Postgres इंस्टेंस के अंदर चलता है — कोई अलग सेवा तैनात, संचालित या डेटा सिंक करने की आवश्यकता नहीं।
+
+**उपयोगकर्ता बताते हैं कि उन्हें क्या चाहिए, न कि क्या सर्च करना है।** "Articles about building confidence as a new manager" में कोई ऐसे कीवर्ड नहीं हैं जो विश्वसनीय रूप से प्रासंगिक पोस्ट में दिखाई दें। "A lightweight framework for handling side effects" शायद दस्तावेज़ में उन सटीक शब्दों का उपयोग नहीं करता। वेक्टर सर्च इरादे से मैच करता है, वर्तनी से नहीं।
+
+**समान आइटम खोजना।** संबंधित उत्पाद, समान सपोर्ट टिकट, डुप्लीकेट बग रिपोर्ट, लेख जो आपको भी पसंद आ सकते हैं। "इसके समान मुद्दे खोजो" एक निकटतम-पड़ोसी सर्च है — आइटम को एम्बेड करो, इसके ज्यामितीय पड़ोसियों को खोजो। एक महत्वपूर्ण चेतावनी: वेक्टर सर्च हमेशा परिणाम देता है, भले ही कुछ वास्तव में समान न हो। डुप्लीकेट और सिफ़ारिश के उपयोग के मामलों के लिए, न्यूनतम समानता थ्रेशोल्ड (जैसे, cosine similarity ≥ 0.80) द्वारा फ़िल्टर करें ताकि कम-विश्वास वाले मिलानों को सार्थक के रूप में प्रस्तुत करने से बचा जा सके।
+
+**सेमांटिक डुप्लीकेट हटाना।** RAG या सर्च के लिए सामग्री इंडेक्स करने से पहले, आपको अक्सर कॉर्पस में निकट-डुप्लीकेट की पहचान करने की आवश्यकता होती है — कई बार संशोधित लेख, दो बार दर्ज किए गए सपोर्ट टिकट, नॉलेज बेस प्रविष्टियाँ जो काफी ओवरलैप करती हैं। दस्तावेज़ों को एम्बेड करें और cosine similarity द्वारा थ्रेशोल्ड-फ़िल्टर करें ताकि निकट-डुप्लीकेट को फ्लैग या मर्ज किया जा सके इससे पहले कि वे आपके इंडेक्स को प्रदूषित करें। यह रिट्रीवल को कई निकट-समान chunks लौटाने और संदर्भ विंडो को कमज़ोर करने से रोकता है।
+
+**बहुभाषी सर्च।** बहुभाषी एम्बेडिंग मॉडल भाषाओं में समानार्थी सामग्री को नज़दीकी वेक्टर में मैप करते हैं। स्पेनिश में "perder peso" के लिए एक क्वेरी "sustainable weight loss habits" पर एक अंग्रेज़ी लेख से मैच कर सकती है — कोई साझा टोकन नहीं, समान अंतर्निहित अर्थ। FTS को प्रति-भाषा शब्दकोश कॉन्फ़िगरेशन की आवश्यकता होती है और क्रॉस-भाषा क्वेरी को खराब तरीके से संभालता है। `pg_trgm` भाषा-अज्ञेय है लेकिन वर्णात्मक, सेमांटिक नहीं।
+
+### pgvector सेट अप करना
+
+एक्सटेंशन इंस्टॉल से समानता क्वेरी तक, सेटअप कुछ SQL स्टेटमेंट्स का है:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS vector;
@@ -82,32 +82,32 @@ ORDER BY embedding <=> $1::vector
 LIMIT 10;
 ```
 
-`<=>` cosine distance है। `1 - cosine_distance` cosine similarity देता है (1.0 = identical, 0.0 = orthogonal)। `ivfflat` (पुराना, faster-to-build alternative) के लिए, `lists = sqrt(row_count)` को starting point के रूप में use करो।
+`<=>` cosine distance है। `1 - cosine_distance` cosine similarity देता है (1.0 = समान, 0.0 = लंबवत)। `ivfflat` (पुराना, तेज़ी से बनने वाला विकल्प) के लिए, `lists = sqrt(row_count)` को एक प्रारंभिक बिंदु के रूप में उपयोग करें।
 
-### pgvector क्या अच्छे से handle नहीं करता
+### pgvector क्या अच्छी तरह नहीं संभालता
 
-- Exact token matching — product SKUs, error codes, function names। `ORD-12345` किसी भी चीज़ से semantically similar नहीं है। Embedding-based search `ORD-12344` या nothing relevant return कर सकता है। FTS या B-tree index का उपयोग करो।
-- Names और proper nouns। Embedding space meaning से organize होता है, spelling से नहीं। "Micheal Jordan" user record vector space में "Michael Jordan" के ज़रूरी पास नहीं land करेगा।
-- Short strings जहाँ character-level similarity meaning से ज़्यादा मायने रखती है। `pg_trgm` इसे handle करता है।
-- Queries जहाँ exact term appear होना चाहिए। BM25 और FTS known-term matching के लिए ज़्यादा reliable हैं।
+- सटीक टोकन मिलान — उत्पाद SKU, त्रुटि कोड, फ़ंक्शन नाम। `ORD-12345` किसी भी चीज़ से सेमांटिक रूप से समान नहीं है। एक एम्बेडिंग-आधारित सर्च `ORD-12344` या कुछ भी प्रासंगिक नहीं लौटा सकता है। FTS या B-tree इंडेक्स का उपयोग करें।
+- नाम और संज्ञा। एम्बेडिंग स्थान अर्थ से व्यवस्थित होता है, वर्तनी से नहीं। "Micheal Jordan" उपयोगकर्ता रिकॉर्ड वेक्टर स्थान में "Michael Jordan" के पास नहीं आ सकता है।
+- छोटे स्ट्रिंग जहाँ अक्षर-स्तर समानता अर्थ से ज़्यादा मायने रखती है। `pg_trgm` इसे संभालता है।
+- क्वेरी जहाँ सटीक शब्द दिखाई देना चाहिए। BM25 और FTS ज्ञात-शब्द मिलान के लिए अधिक विश्वसनीय हैं।
 
 ---
 
-## Hybrid Search: दोनों का case
+## हाइब्रिड सर्च: दोनों का मामला
 
-Technical documentation सबसे clear example है जहाँ कोई एक tool अकेले पर्याप्त नहीं है।
+तकनीकी दस्तावेज़ सबसे स्पष्ट उदाहरण है जहाँ कोई एक टूल अकेले पर्याप्त नहीं है।
 
-"how to configure timeouts" search करने वाले users को conceptual matching चाहिए: "Setting retry policies and connection limits" शीर्षक article में कोई overlapping keywords नहीं हैं लेकिन यह exactly वही है जो उन्हें चाहिए।
+"how to configure timeouts" खोजने वाले उपयोगकर्ताओं को अवधारणात्मक मिलान की आवश्यकता होती है: "Setting retry policies and connection limits" शीर्षक वाला एक लेख में कोई ओवरलैपिंग कीवर्ड नहीं हैं लेकिन यह वास्तव में वही है जो उन्हें चाहिए।
 
-वे same users `withRetry()`, `ECONNRESET` और `ERR_SOCKET_TIMEOUT` भी search करते हैं। ये exact strings appear होने चाहिए — semantic matching उन्हें reliably नहीं खोज सकता, और false positive (conceptually similar लेकिन सही API नहीं) actively misleading है।
+वही उपयोगकर्ता `withRetry()`, `ECONNRESET`, और `ERR_SOCKET_TIMEOUT` भी खोजते हैं। ये सटीक स्ट्रिंग्स दिखाई देनी चाहिए — सेमांटिक मिलान उन्हें विश्वसनीय रूप से नहीं ढूंढ सकता, और एक झूठा सकारात्मक (अवधारणात्मक रूप से समान लेकिन सही API नहीं) सक्रिय रूप से भ्रामक है।
 
-Vector search conceptual queries को handle करता है। FTS exact terms को handle करता है। कोई भी अकेले दोनों को अच्छे से handle नहीं करता।
+वेक्टर सर्च अवधारणात्मक क्वेरी को संभालता है। FTS सटीक शब्दों को संभालता है। कोई भी अकेले दोनों को अच्छी तरह नहीं संभालता।
 
-Solution hybrid search है: दोनों run करो और results को fuse करो।
+समाधान हाइब्रिड सर्च है: दोनों चलाओ और परिणामों को फ्यूज़ करो।
 
-### Reciprocal Rank Fusion
+### रैसिप्रोकल रैंक फ्यूजन
 
-**Reciprocal Rank Fusion (RRF)** different retrieval systems से ranked lists को combine करने का standard algorithm है। इसे systems के across scores को normalize करने की ज़रूरत नहीं — यह केवल rank positions का उपयोग करता है। जो result *दोनों* lists में ऊँचा appear होता है, उसे उस result से stronger combined score मिलता है जो केवल एक में dominate करता है।
+**रैसिप्रोकल रैंक फ्यूजन (RRF)** विभिन्न रिट्रीवल सिस्टम से रैंक की गई सूचियों को जोड़ने का स्टैंडर्ड एल्गोरिदम है। इसे सिस्टम में स्कोर सामान्यीकरण की आवश्यकता नहीं है — यह केवल रैंक स्थितियों का उपयोग करता है। एक परिणाम जो *दोनों* सूचियों में ऊँचा दिखाई देता है, उसे एक मज़बूत संयुक्त स्कोर मिलता है जो केवल एक में हावी होने वाले से बेहतर होता है।
 
 ```sql
 WITH fts_results AS (
@@ -139,13 +139,13 @@ ORDER BY rrf_score DESC
 LIMIT 10;
 ```
 
-Denominator में `60` RRF constant है। Higher values rank-position differences को dampen करते हैं; lower values amplify करते हैं। Default 60 ज़्यादातर content types के लिए अच्छा काम करता है।
+हर में `60` RRF स्थिरांक है। उच्च मान रैंक-स्थिति के अंतरों को कम करते हैं; निचले मान उन्हें बढ़ाते हैं। 60 का डिफ़ॉल्ट अधिकांश सामग्री प्रकारों के लिए अच्छी तरह काम करता है।
 
-RRF `ts_rank` (log-frequency score) को cosine distance (geometric measure) के against normalize करने की harder problem से बचता है। वे comparable नहीं हैं। RRF केवल पूछता है: "यह result हर list में कितना ऊँचा appear हुआ?"
+RRF `ts_rank` (एक लॉग-आवृत्ति स्कोर) को cosine distance (एक ज्यामितीय माप) के विरुद्ध सामान्यीकरण की कठिन समस्या से बचता है। वे तुलनीय नहीं हैं। RRF केवल पूछता है: "यह परिणाम प्रत्येक सूची में कितना ऊँचा दिखाई दिया?"
 
-### Trigrams के साथ भी Hybrid Search
+### ट्राइग्राम के साथ भी हाइब्रिड सर्च
 
-User-facing search over mixed content के लिए — जहाँ users एक ही session में person name, concept या exact term search कर सकते हैं — three-way fusion सबको handle करता है:
+मिश्रित सामग्री पर उपयोगकर्ता-सामना सर्च के लिए — जहाँ उपयोगकर्ता एक ही सत्र में एक व्यक्ति का नाम, एक अवधारणा, या एक सटीक शब्द खोज सकते हैं — तीन-तरफ़ा फ्यूजन उन सभी को संभालता है:
 
 ```sql
 WITH trgm_results AS (
@@ -186,50 +186,50 @@ ORDER BY rrf_score DESC
 LIMIT 10;
 ```
 
-यह handle करता है: fuzzy name matches (trigrams), exact keyword matches (FTS), और conceptual queries (vector)। एक ही search box तीनों user intents को serve कर सकता है।
+यह संभालता है: फ़ज़ी नाम मिलान (ट्राइग्राम), सटीक कीवर्ड मिलान (FTS), और अवधारणात्मक क्वेरी (वेक्टर)। एक ही सर्च बॉक्स तीनों उपयोगकर्ता इरादों की सेवा कर सकता है।
 
 ---
 
-## Multi-Layer Hybrid Architectures
+## मल्टी-लेयर हाइब्रिड आर्किटेक्चर
 
-Real applications में शायद ही कभी single search surface होता है। उनके पास multiple होते हैं, हर एक की अलग ज़रूरत:
+वास्तविक अनुप्रयोगों में शायद ही कभी एक ही सर्च सतह होती है। उनमें कई होती हैं, प्रत्येक की एक अलग आवश्यकता होती है:
 
-| Surface | Users क्या query करते हैं | Recommended layers |
+| सतह | उपयोगकर्ता क्या क्वेरी करते हैं | अनुशंसित लेयर |
 |---|---|---|
-| Blog / documentation search | Keywords + concepts | FTS + pgvector (RRF) |
-| User/customer name lookup | Typos वाले names | `pg_trgm` |
-| Product search | Names, descriptions, "similar to" | `pg_trgm` + FTS + pgvector |
-| Support ticket dedup | "Issues similar to this one" | pgvector only |
-| Internal SKU/order search | Exact identifiers | B-tree index |
-| RAG over large knowledge base | Natural language questions | pgvector (chunked docs) |
-| E-commerce "you might also like" | Behavioral + semantic similarity | pgvector |
-| Autocomplete | Prefix, spelling-tolerant | `pg_trgm` |
+| ब्लॉग / दस्तावेज़ सर्च | कीवर्ड + अवधारणाएँ | FTS + pgvector (RRF) |
+| उपयोगकर्ता/ग्राहक नाम लुकअप | टाइपो वाले नाम | `pg_trgm` |
+| उत्पाद सर्च | नाम, विवरण, "इसके समान" | `pg_trgm` + FTS + pgvector |
+| सपोर्ट टिकट डुप्लीकेट हटाना | "इसके समान मुद्दे" | केवल pgvector |
+| आंतरिक SKU/ऑर्डर सर्च | सटीक पहचानकर्ता | B-tree इंडेक्स |
+| बड़े नॉलेज बेस पर RAG | प्राकृतिक भाषा प्रश्न | pgvector (chunked docs) |
+| ई-कॉमर्स "आपको यह भी पसंद आ सकता है" | व्यवहारिक + सेमांटिक समानता | pgvector |
+| ऑटोकंप्लीट | उपसर्ग, वर्तनी-सहिष्णु | `pg_trgm` |
 
-ये hypothetical नहीं हैं। ज़्यादातर content-heavy applications को कम से कम दो distinct search surfaces चाहिए अलग query shapes के साथ। Temptation एक approach pick करके उसे हर जगह use करने की होती है — अब usually vector search, क्योंकि यह fashionable choice है। इससे expensive embeddings उन problems के लिए बनते हैं जहाँ trigram index faster, cheaper और ज़्यादा correct होता।
+ये काल्पनिक नहीं हैं। अधिकांश सामग्री-भारी अनुप्रयोगों को कम से कम दो अलग-अलग सर्च सतहों की आवश्यकता होती है जिनमें अलग-अलग क्वेरी आकार होते हैं। प्रलोभन एक दृष्टिकोण चुनना और उसे हर जगह उपयोग करना है — आमतौर पर अब वेक्टर सर्च, क्योंकि यह फैशनेबल विकल्प है। इससे महंगी एम्बेडिंग उन समस्याओं के लिए बनती हैं जहाँ एक ट्राइग्राम इंडेक्स तेज़, सस्ता और अधिक सही होता।
 
-### Rule of Thumb
+### थंब रूल
 
-Layer तब add करो जब कोई failure mode appear हो जिसे current layer fix नहीं कर सकता:
+जब एक विफलता मोड दिखाई दे जो वर्तमान लेयर ठीक नहीं कर सकती, तब एक लेयर जोड़ें:
 
-- Users typos match न होने की complaint करते हैं → `pg_trgm` add करो
-- Users concept से search करते हैं और relevant results miss करते हैं → pgvector add करो
-- Users exact symbols या codes search करते हैं और conceptual results मिलते हैं → FTS add करो या check करो कि vector search पर over-rely तो नहीं कर रहे
-- Latency problem बनती है → pre-filtering, approximate indexes, या dedicated store evaluate करो
+- उपयोगकर्ता शिकायत करते हैं कि टाइपो मैच नहीं हो रहे → `pg_trgm` जोड़ें
+- उपयोगकर्ता अवधारणा से खोजते हैं और प्रासंगिक परिणाम चूक जाते हैं → pgvector जोड़ें
+- उपयोगकर्ता सटीक प्रतीकों या कोड खोजते हैं और इसके बजाय अवधारणात्मक परिणाम प्राप्त करते हैं → FTS जोड़ें या जाँचें कि क्या आप वेक्टर सर्च पर अत्यधिक निर्भर हैं
+- विलंबता एक समस्या बन जाती है → प्री-फ़िल्टरिंग, अनुमानित इंडेक्स, या एक समर्पित स्टोर का मूल्यांकन करें
 
 ---
 
-## यदि Dedicated Vector Store चाहिए
+## यदि आपको वास्तव में एक समर्पित वेक्टर स्टोर की आवश्यकता है
 
-pgvector काफी application search को handle कर लेता है इससे पहले कि आपको दूसरे database की ज़रूरत हो। Rough cutoff vector count, index settings, write rate, filters, hardware और concurrency पर depend करता है, इसलिए "under 10M vectors" rule को product limit नहीं, benchmark के लिए starting assumption के रूप में treat करो। जब आप genuinely outgrow करो — very high concurrency, very low p99 latency requirements, billions of vectors, या serious multi-tenant isolation needs — dedicated vector database landscape wide है और समझने योग्य है।
+pgvector काफी अनुप्रयोग सर्च को संभालता है इससे पहले कि आपको एक और डेटाबेस की आवश्यकता हो। रफ़ कटऑफ़ वेक्टर गणना, इंडेक्स सेटिंग्स, लेखन दर, फ़िल्टर, हार्डवेयर और समवर्तिता पर निर्भर करता है, इसलिए किसी भी "10M वेक्टर से कम" नियम को एक प्रारंभिक धारणा के रूप में मानें जिसे बेंचमार्क करना है, न कि एक उत्पाद सीमा। जब आप वास्तव में इससे बाहर निकल जाते हैं — बहुत उच्च समवर्तिता, बहुत कम p99 विलंबता आवश्यकताएँ, अरबों वेक्टर, या गंभीर मल्टी-टेनेंट अलगाव आवश्यकताएँ — समर्पित वेक्टर डेटाबेस लैंडस्केप व्यापक है और समझने योग्य है।
 
-### Matrix Columns वास्तव में क्या mean करते हैं
+### मैट्रिक्स कॉलम वास्तव में क्या मतलब रखते हैं
 
-**Hybrid search** का मतलब BM25 keyword search और vector similarity एक query में run होते हैं, RRF के माध्यम से merged। इसके बिना, या तो एक search mode pick करो या दो queries को yourself fuse करो।
+**हाइब्रिड सर्च** का अर्थ है BM25 कीवर्ड सर्च और वेक्टर समानता एक क्वेरी में चलती है, RRF के माध्यम से मर्ज की जाती है। इसके बिना, या तो आप एक सर्च मोड चुनते हैं या दो क्वेरी को स्वयं फ्यूज़ करते हैं।
 
-**Sparse vectors** BM25 से आगे जाते हैं। SPLADE sparse vector में ~30,000 dimensions होते हैं (vocabulary term के लिए एक), ~98% zeros। Non-zero positions बताते हैं कि कौन से terms matter हैं और कितना। "dogs" query "canine" और "pet" को भी weight करती है — BM25-level precision plus term expansion vector index के अंदर। यदि यह column false है, तो exact-term queries के लिए separate FTS layer चाहिए।
+**स्पार्स वेक्टर** BM25 से आगे जाते हैं। एक SPLADE स्पार्स वेक्टर में ~30,000 आयाम होते हैं (प्रति शब्दावली शब्द एक), ~98% शून्य। गैर-शून्य स्थितियाँ बताती हैं कि कौन से शब्द मायने रखते हैं और कितना। "dogs" के लिए एक क्वेरी "canine" और "pet" को भी वजन देती है — BM25-स्तर की सटीकता प्लस वेक्टर इंडेक्स के अंदर शब्द विस्तार। यदि यह कॉलम गलत है, तो आपको सटीक-शब्द क्वेरी के लिए एक अलग FTS लेयर की आवश्यकता है।
 
 ```python
-# SPLADE: ~30,000 dims, ~60 non-zero — केवल relevant vocabulary positions fire
+# SPLADE: ~30,000 dims, ~60 non-zero — केवल प्रासंगिक शब्दावली स्थितियाँ सक्रिय होती हैं
 def encode_splade(text: str) -> dict:
     tokens = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
     with torch.no_grad():
@@ -238,10 +238,10 @@ def encode_splade(text: str) -> dict:
     return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
 ```
 
-**SQL / SQL-like** वास्तव में filtering के बारे में है। Filtering के बिना vector search एक demo है। अभी भी tenant scope, date ranges, permissions और category filters चाहिए। Full SQL (pgvector, LanceDB) इसे existing joins के बगल में express करता है। Purpose-built databases JSON filter objects (Qdrant, Pinecone), query DSL (Elasticsearch, Milvus), या GraphQL (Weaviate) use करते हैं। वे काम करते हैं; filter logic complex होता जाता है तो SQL ज़्यादा attractive बनता है।
+**SQL / SQL-like** वास्तव में फ़िल्टरिंग के बारे में है। फ़िल्टरिंग के बिना वेक्टर सर्च एक डेमो है। आपको अभी भी टेनेंट स्कोप, तिथि सीमा, अनुमतियाँ और श्रेणी फ़िल्टर की आवश्यकता है। पूर्ण SQL (pgvector, LanceDB) इसे आपके मौजूदा जोइन के बगल में व्यक्त करता है। उद्देश्य-निर्मित डेटाबेस JSON फ़िल्टर ऑब्जेक्ट (Qdrant, Pinecone), एक क्वेरी DSL (Elasticsearch, Milvus), या GraphQL (Weaviate) का उपयोग करते हैं। वे काम करते हैं; SQL अधिक आकर्षक बन जाता है क्योंकि फ़िल्टर तर्क जटिल हो जाता है।
 
 ```sql
--- pgvector: vector similarity बस एक और expression है
+-- pgvector: वेक्टर समानता बस एक और अभिव्यक्ति है
 SELECT id, title, 1 - (embedding <=> $1) AS score
 FROM documents
 WHERE tenant_id = $2
@@ -252,7 +252,7 @@ LIMIT 10;
 ```
 
 ```python
-# Qdrant: Python object के रूप में equivalent filter — same result, more ceremony
+# Qdrant: एक Python ऑब्जेक्ट के रूप में समकक्ष फ़िल्टर — समान परिणाम, अधिक औपचारिकता
 results = client.query_points(
     collection_name="documents", query=query_embedding,
     query_filter=models.Filter(must=[
@@ -264,99 +264,99 @@ results = client.query_points(
 )
 ```
 
-**Multimodal native** का मतलब database non-text content के लिए embedding models ship करता है। आप raw image URL देते हैं; vectorization को handle करता है। ज़्यादातर databases embedding-agnostic हैं — embedding pipeline आपकी ज़िम्मेदारी। Marqo और Weaviate (CLIP/ImageBind modules के माध्यम से) इस loop को close करते हैं।
+**मल्टीमोडल नेटिव** का अर्थ है कि डेटाबेस गैर-टेक्स्ट सामग्री के लिए एम्बेडिंग मॉडल शिप करता है। आप इसे एक कच्ची इमेज URL देते हैं; यह वेक्टराइज़ेशन को संभालता है। अधिकांश डेटाबेस एम्बेडिंग-अज्ञेय हैं — एम्बेडिंग पाइपलाइन आपकी ज़िम्मेदारी है। Marqo और Weaviate (CLIP/ImageBind मॉड्यूल के माध्यम से) इस लूप को बंद करते हैं।
 
 ```python
-# Marqo: raw images POST करो, text से query करो — कोई external embedding step नहीं
+# Marqo: कच्ची इमेज POST करो, टेक्स्ट से क्वेरी करो — कोई बाहरी एम्बेडिंग चरण नहीं
 mq.index("products").add_documents(
     [{"id": "shoe-001", "image": "https://cdn.example.com/shoes/001.jpg"}],
     tensor_fields=["image"]
 )
 results = mq.index("products").search(q="lightweight shoes for summer")
-# zero keyword overlap के बावजूद shoe-001 return करता है — CLIP cross-modal match को handle करता है
+# शून्य कीवर्ड ओवरलैप के बावजूद shoe-001 लौटाता है — CLIP क्रॉस-मोडल मिलान को संभालता है
 ```
 
-**Disk-based index** cost lever है। RAM-resident HNSW indexes को प्रति million 1536-dimension vectors कई GB RAM लग सकते हैं एक बार raw vectors, graph overhead और metadata count किए जाएँ। Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB का Lance format, Turbopuffer का object storage tier) अक्सर query latency trade करते हैं lower infrastructure cost के लिए। RAG workloads के जहाँ model latency already dominate करती है, वह tradeoff अक्सर benchmark करने योग्य होता है।
+**डिस्क-आधारित इंडेक्स** एक लागत लीवर है। RAM-निवासी HNSW इंडेक्स को प्रति मिलियन 1536-आयाम वेक्टर कई GB RAM की आवश्यकता हो सकती है एक बार कच्चे वेक्टर, ग्राफ़ ओवरहेड और मेटाडेटा की गणना की जाए। डिस्क-नेटिव विकल्प (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB का Lance प्रारूप, Turbopuffer का ऑब्जेक्ट स्टोरेज स्तर) अक्सर कुछ क्वेरी विलंबता को कम इंफ्रास्ट्रक्चर लागत के लिए व्यापार करते हैं। RAG वर्कलोड के लिए जहाँ मॉडल विलंबता पहले से ही हावी है, वह व्यापार अक्सर बेंचमार्क करने योग्य होता है।
 
-**Max dimensions** आपके architecture में छिपा migration है। `text-embedding-3-large` 3072 dims use करता है, Jina v3 बड़े embeddings emit कर सकता है, और research models higher push करते रहते हैं। कुछ managed services hard dimension caps publish करते हैं; अन्य high caps या typical embedding models के लिए no practical cap document करते हैं। Commit करने से पहले current docs check करो। Headroom के साथ कुछ pick करो; dimension ceiling hit करने के बाद vector index migrate करना painful sprint है।
+**अधिकतम आयाम** आपके आर्किटेक्चर में छिपा हुआ माइग्रेशन है। `text-embedding-3-large` 3072 dims का उपयोग करता है, Jina v3 बड़े एम्बेडिंग उत्सर्जित कर सकता है, और अनुसंधान मॉडल लगातार उच्च धकेलते रहते हैं। कुछ प्रबंधित सेवाएँ कठोर आयाम सीमा प्रकाशित करती हैं; अन्य उच्च सीमा या विशिष्ट एम्बेडिंग मॉडल के लिए कोई व्यावहारिक सीमा दस्तावेज़ करती हैं। प्रतिबद्धता से पहले वर्तमान दस्तावेज़ जाँचें। कुछ हेडरूम के साथ चुनें; एक आयाम सीमा से टकराने के बाद एक वेक्टर इंडेक्स को माइग्रेट करना एक दर्दनाक स्प्रिंट है।
 
-_8 मई, 2026 को public project docs और product pages के against last verified। Table को decision aid के रूप में treat करो, current limits, pricing और managed-service feature flags check करने का substitute नहीं।_
+_8 मई, 2026 को सार्वजनिक प्रोजेक्ट दस्तावेज़ों और प्रोडक्ट पेजों के विरुद्ध अंतिम बार सत्यापित। नीचे दी गई तालिका को एक निर्णय सहायक के रूप में देखें, वर्तमान सीमाओं, मूल्य निर्धारण और प्रबंधित-सेवा सुविधा ध्वजों की जाँच करने के विकल्प के रूप में नहीं।_
 
-### The Landscape
+### लैंडस्केप
 
-| Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
+| डेटाबेस | तैनाती | लाइसेंस | हाइब्रिड सर्च | स्पार्स वेक्टर | SQL / SQL-like | मल्टीमोडल | डिस्क इंडेक्स | अधिकतम आयाम | स्वीट स्पॉट |
 |---|---|---|---|---|---|---|---|---|---|
-| **[pgvector](https://github.com/pgvector/pgvector)** | Self-host / managed (Supabase, Neon, RDS) | OSS (PostgreSQL) | Manual (RRF via SQL) | ❌ | ✅ Full SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | Already on Postgres; moderate vector counts |
-| **[Qdrant](https://github.com/qdrant/qdrant)** | Self-host / Cloud | Apache 2.0 | ✅ Native BM25 | ✅ Mature support | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | Filtered queries at scale; complex metadata |
-| **[Weaviate](https://github.com/weaviate/weaviate)** | Self-host / Cloud | BSD 3 | ✅ Native BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ via modules | ✅ | 65,535 | GraphQL access patterns; built-in vectorization |
-| **[Pinecone](https://www.pinecone.io/)** | Cloud only | Proprietary | ✅ (added 2024) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | Managed simplicity; no ops team |
-| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | Self-host / Cloud (Zilliz) | Apache 2.0 | ✅ Native | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | Billion-scale; enterprise on-prem |
-| **[Chroma](https://github.com/chroma-core/chroma)** | Embedded / self-host | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | Local dev and prototyping only |
-| **[LanceDB](https://github.com/lancedb/lancedb)** | Embedded / Cloud | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ Native | ✅ (Lance format) | Unlimited | Edge / serverless; multimodal lakehouse |
-| **[Orama](https://github.com/oramasearch/orama)** | Embedded / Cloud | Apache 2.0 | ✅ Full-text + vector | ❌ | ❌ | ❌ | ❌ | Varies | JS/edge apps; lightweight site/app search |
-| **[Turbopuffer](https://turbopuffer.com/)** | Cloud only (serverless) | Proprietary | ✅ BM25 + vector | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | Multi-tenant SaaS; millions of namespaces |
-| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | Self-host / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | Already on Elastic stack; hybrid enterprise search |
-| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | Self-host / AWS managed | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-native; open-source Elastic alternative |
-| **[Vespa](https://github.com/vespa-engine/vespa)** | Self-host / Cloud | Apache 2.0 | ✅ Native | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | Effectively unbounded | Search + ranking + recommendation systems |
-| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | Self-host / Cloud | Apache 2.0 | Manual | ❌ | ✅ Full SQL | ❌ | ✅ Columnar + HNSW | Varies | Analytics/logs with vector search beside OLAP |
-| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | Cloud / self-host | SSPL | ✅ Built-in | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | Already on MongoDB; document + vector in one |
-| **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
-| **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
+| **[pgvector](https://github.com/pgvector/pgvector)** | सेल्फ-होस्ट / प्रबंधित (Supabase, Neon, RDS) | OSS (PostgreSQL) | मैनुअल (RRF via SQL) | ❌ | ✅ फुल SQL | ❌ | ✅ HNSW on disk | 16,000 storage; 2,000 indexed `vector` | पहले से Postgres पर; मध्यम वेक्टर गणना |
+| **[Qdrant](https://github.com/qdrant/qdrant)** | सेल्फ-होस्ट / क्लाउड | Apache 2.0 | ✅ नेटिव BM25 | ✅ परिपक्व सहायता | ❌ (REST/gRPC) | ❌ | ✅ | 65,535 | स्केल पर फ़िल्टर किए गए क्वेरी; जटिल मेटाडेटा |
+| **[Weaviate](https://github.com/weaviate/weaviate)** | सेल्फ-होस्ट / क्लाउड | BSD 3 | ✅ नेटिव BM25 + RRF | ✅ | ❌ (GraphQL / gRPC) | ✅ मॉड्यूल के माध्यम से | ✅ | 65,535 | GraphQL एक्सेस पैटर्न; बिल्ट-इन वेक्टराइज़ेशन |
+| **[Pinecone](https://www.pinecone.io/)** | केवल क्लाउड | मालिकाना | ✅ (2024 में जोड़ा गया) | ✅ | ❌ | ❌ | ✅ (serverless) | 20,000 | प्रबंधित सरलता; कोई ऑप्स टीम नहीं |
+| **[Milvus](https://github.com/milvus-io/milvus) / [Zilliz](https://zilliz.com/)** | सेल्फ-होस्ट / क्लाउड (Zilliz) | Apache 2.0 | ✅ नेटिव | ✅ | ✅ SQL-like (Milvus Query Language) | ✅ | ✅ DiskANN | 32,768 | बिलियन-स्केल; एंटरप्राइज़ ऑन-प्रेम |
+| **[Chroma](https://github.com/chroma-core/chroma)** | एम्बेडेड / सेल्फ-होस्ट | Apache 2.0 | ❌ | ❌ | ❌ | ❌ | ❌ | 65,535 | केवल लोकल dev और प्रोटोटाइपिंग |
+| **[LanceDB](https://github.com/lancedb/lancedb)** | एम्बेडेड / क्लाउड | Apache 2.0 | ✅ | ❌ | ✅ SQL via DataFusion | ✅ नेटिव | ✅ (Lance format) | असीमित | एज / serverless; मल्टीमोडल lakehouse |
+| **[Orama](https://github.com/oramasearch/orama)** | एम्बेडेड / क्लाउड | Apache 2.0 | ✅ फुल-टेक्स्ट + वेक्टर | ❌ | ❌ | ❌ | ❌ | विभिन्न | JS/edge ऐप्स; हल्की साइट/ऐप सर्च |
+| **[Turbopuffer](https://turbopuffer.com/)** | केवल क्लाउड (serverless) | मालिकाना | ✅ BM25 + वेक्टर | ❌ | ❌ | ❌ | ✅ (object storage) | 16,000 | मल्टी-टेनेंट SaaS; लाखों नेमस्पेस |
+| **[Elasticsearch](https://github.com/elastic/elasticsearch)** | सेल्फ-होस्ट / Elastic Cloud | SSPL / AGPLv3 | ✅ RRF + ELSER sparse | ✅ (ELSER) | ✅ Query DSL | ❌ | ✅ DiskBBQ | 4,096 | पहले से Elastic स्टैक पर; हाइब्रिड एंटरप्राइज़ सर्च |
+| **[OpenSearch](https://github.com/opensearch-project/OpenSearch)** | सेल्फ-होस्ट / AWS प्रबंधित | Apache 2.0 | ✅ RRF + Neural Search | ✅ | ✅ Query DSL | ❌ | ✅ FAISS + HNSW | 16,000 | AWS-नेटिव; ओपन-सोर्स Elastic विकल्प |
+| **[Vespa](https://github.com/vespa-engine/vespa)** | सेल्फ-होस्ट / क्लाउड | Apache 2.0 | ✅ नेटिव | ✅ Tensors / lexical ranking | ✅ YQL | ✅ Tensors | ✅ | प्रभावी रूप से असीमित | सर्च + रैंकिंग + सिफ़ारिश सिस्टम |
+| **[ClickHouse](https://github.com/ClickHouse/ClickHouse)** | सेल्फ-होस्ट / क्लाउड | Apache 2.0 | मैनुअल | ❌ | ✅ फुल SQL | ❌ | ✅ Columnar + HNSW | विभिन्न | OLAP के बगल में एनालिटिक्स/लॉग वेक्टर सर्च |
+| **[MongoDB Atlas](https://github.com/mongodb/mongo)** | क्लाउड / सेल्फ-होस्ट | SSPL | ✅ बिल्ट-इन | ❌ | ✅ MQL + aggregation | ❌ | ✅ HNSW | 8,192 | पहले से MongoDB पर; एक में दस्तावेज़ + वेक्टर |
+| **[Redis (VSS)](https://github.com/redis/redis)** | सेल्फ-होस्ट / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ केवल RAM | 32,768 | अल्ट्रा-लो लेटेंसी; कैश-लेयर वेक्टर सर्च |
+| **[Marqo](https://github.com/marqo-ai/marqo)** | क्लाउड / सेल्फ-होस्ट | Apache 2.0 | ✅ | ❌ | ❌ | ✅ नेटिव फोकस | ✅ | विभिन्न | एंड-टू-एंड मल्टीमोडल: इमेज + टेक्स्ट + वीडियो |
 
-### Table में Fit न होने वाली कुछ चीज़ें
+### तालिका में फिट न होने वाली कुछ चीज़ें
 
-**Turbopuffer का multi-tenancy** very high namespace counts के around built है। इसकी public positioning और customer stories Notion के large, namespace-heavy corpus जैसे workloads पर emphasize करती हैं। यदि हर user या organization को isolated vector search चाहिए, वह architecture economics को change कर सकता है, लेकिन अपनी tenant shape को अभी भी benchmark करो।
+**Turbopuffer का मल्टी-टेनेंसी** बहुत उच्च नेमस्पेस गणना के आसपास बना है। इसकी सार्वजनिक स्थिति और ग्राहक कहानियाँ Notion के बड़े, नेमस्पेस-भारी कॉर्पस जैसे वर्कलोड पर ज़ोर देती हैं। यदि प्रत्येक उपयोगकर्ता या संगठन को अलग वेक्टर सर्च की आवश्यकता होती है, तो वह आर्किटेक्चर अर्थशास्त्र को बदल सकता है, लेकिन फिर भी अपने स्वयं के टेनेंट आकार का बेंचमार्क करें।
 
-**LanceDB embedded mode** "SQLite for vector search" के सबसे नज़दीक चीज़ है। यह in-process चलता है, कोई server require नहीं करता, और Lambda, Cloudflare Workers और edge environments में काम करता है। Lance columnar format embedded operation को real scale पर practical बनाता है।
+**LanceDB एम्बेडेड मोड** "वेक्टर सर्च के लिए SQLite" के सबसे नज़दीक की चीज़ है। यह इन-प्रोसेस चलता है, कोई सर्वर की आवश्यकता नहीं होती, और Lambda, Cloudflare Workers और एज वातावरण में काम करता है। Lance कॉलमर प्रारूप एम्बेडेड संचालन को वास्तविक स्केल पर व्यावहारिक बनाता है।
 
-**Chroma dev/test और small app deployments में सबसे मज़बूत है।** यदि आप very large corpora, HA, disk-heavy operation, या first-class hybrid search को target कर रहे हैं, prototype को infrastructure में promote करने से पहले production-oriented store evaluate करो।
+**Chroma dev/test और छोटे ऐप तैनाती में सबसे मज़बूत है।** यदि आप बहुत बड़े कॉर्पस, HA, डिस्क-भारी संचालन, या फर्स्ट-क्लास हाइब्रिड सर्च को लक्षित कर रहे हैं, तो प्रोटोटाइप को इंफ्रास्ट्रक्चर में बढ़ाने से पहले एक उत्पादन-उन्मुख स्टोर का मूल्यांकन करें।
 
-**Vespa वहाँ reach करते हैं जब retrieval केवल आधा product है।** यह lexical retrieval, nearest-neighbor search, tensors, ranking expressions, grouping और online serving को combine करता है। वह power real है, लेकिन operational और modeling complexity भी real है। यह search/recommendation teams के लिए fit होता है "add semantic search to my CRUD app" से ज़्यादा।
+**Vespa वहाँ पहुँचते हैं जब रिट्रीवल केवल आधा उत्पादन है।** यह लेक्सिकल रिट्रीवल, निकटतम-पड़ोसी सर्च, टेंसर, रैंकिंग अभिव्यक्तियों, समूहन और ऑनलाइन सर्विंग को जोड़ता है। वह शक्ति वास्तविक है, लेकिन परिचालन और मॉडलिंग जटिलता भी वास्तविक है। यह "मेरे CRUD ऐप में सेमांटिक सर्च जोड़ो" से अधिक सर्च/सिफ़ारिश टीमों के लिए फिट होता है।
 
-**ClickHouse conversation में belong करता है जब search analytics से attached है।** यदि आपका source of truth events, logs, traces या metrics है, ClickHouse vector distance, filtering, aggregation और serious full-text indexing को एक SQL engine में रखता है। Purpose-built vector database नहीं, लेकिन अक्सर analytical retrieval के लिए boring-right answer।
+**ClickHouse बातचीत में शामिल होता है जब सर्च एनालिटिक्स से जुड़ा होता है।** यदि आपका सत्य का स्रोत इवेंट, लॉग, ट्रेस या मेट्रिक्स है, तो ClickHouse वेक्टर दूरी, फ़िल्टरिंग, एकत्रीकरण और गंभीर फुल-टेक्स्ट इंडेक्सिंग को एक SQL इंजन में रखता है। एक उद्देश्य-निर्मित वेक्टर डेटाबेस नहीं, लेकिन अक्सर एनालिटिकल रिट्रीवल के लिए उबाऊ-सही जवाब।
 
-**Sparse vectors जिस तरीके से BM25-quality keyword matching vector index के अंदर मिलता है** — separate full-text engine run किए बिना। Qdrant और Elasticsearch में यहाँ especially mature implementations हैं। यदि hybrid search critical है और two-system architecture deal-breaker है, sparse vector support को look करना चाहिए।
+**स्पार्स वेक्टर वह तरीका है जिससे आप BM25-गुणवत्ता वाला कीवर्ड मिलान एक वेक्टर इंडेक्स के अंदर प्राप्त करते हैं** — एक अलग फुल-टेक्स्ट इंजन चलाए बिना। Qdrant और Elasticsearch में यहाँ विशेष रूप से परिपक्व कार्यान्वयन हैं। यदि हाइब्रिड सर्च महत्वपूर्ण है और एक दो-सिस्टम आर्किटेक्चर डील-ब्रेकर है, तो स्पार्स वेक्टर सहायता को देखना चाहिए।
 
-### Choosing जब pgvector से outgrow हो चुके हैं
+### चुनना जब आप pgvector से आगे निकल चुके हैं
 
-- **SaaS product with per-tenant isolation** → Turbopuffer
-- **Complex metadata filtering at scale** → Qdrant
-- **Already on Elastic/ELK stack** → Elasticsearch with DiskBBQ
-- **AWS shop that wants open-source** → OpenSearch
-- **Search/recommendation platform with serious ranking needs** → Vespa
-- **Analytics, observability, log/event search** → ClickHouse
-- **Billion-scale on-prem / self-hosted** → Milvus
-- **Edge / serverless / multimodal** → LanceDB
-- **Small JS app, docs site, or edge-native search UX** → Orama
-- **Zero ops, cost is secondary** → Pinecone
-- **Multimodal-first (images, video, audio)** → Marqo
-- **Already on MongoDB** → Atlas Vector Search
-- **Already on Postgres, need more headroom** → Supabase Vector or Neon (both pgvector managed, with better tooling)
-
----
-
-## One Thing जो नहीं करना है
-
-Vector search को fuzzy text search के रूप में use मत करो उन चीज़ों के लिए जिनके correct answers हैं।
-
-"Find me the user with email `dan@example.com`" vector search problem नहीं है। "Find the order with ID `ORD-12345`" भी नहीं। `ORD-12345` को embed करना और cosine similarity से search करना *something* return करेगा — लेकिन यह ग़लत हो सकता है। Identifier का एक सही उत्तर है। Identifier पर approximate match एक bug है।
-
-Vector search आपके dataset में *most similar* चीज़ return करता है, भले ही कुछ actually relevant न हो। यह नहीं जानता कि जब कोई good answer exist नहीं करता। यह related documents के लिए ठीक है। यह exact record lookup के लिए serious problem है, जहाँ confident wrong answer empty result से बदतर है।
-
-Same दूसरी direction में लागू होता है: FTS को उन queries के लिए use मत करो जहाँ user concept describe कर रहा है। "articles about making hard decisions under uncertainty" में कोई reliable keywords नहीं हैं। FTS या तो noise return करेगा या nothing। Query shape के लिए सही tool का उपयोग करो।
+- **प्रति-टेनेंट अलगाव वाला SaaS उत्पाद** → Turbopuffer
+- **स्केल पर जटिल मेटाडेटा फ़िल्टरिंग** → Qdrant
+- **पहले से Elastic/ELK स्टैक पर** → Elasticsearch with DiskBBQ
+- **AWS शॉप जो ओपन-सोर्स चाहता है** → OpenSearch
+- **गंभीर रैंकिंग आवश्यकताओं वाला सर्च/सिफ़ारिश प्लेटफ़ॉर्म** → Vespa
+- **एनालिटिक्स, ऑब्ज़र्वेबिलिटी, लॉग/इवेंट सर्च** → ClickHouse
+- **बिलियन-स्केल ऑन-प्रेम / सेल्फ-होस्टेड** → Milvus
+- **एज / serverless / मल्टीमोडल** → LanceDB
+- **छोटा JS ऐप, docs site, या एज-नेटिव सर्च UX** → Orama
+- **शून्य ऑप्स, लागत द्वितीयक है** → Pinecone
+- **मल्टीमोडल-फर्स्ट (इमेज, वीडियो, ऑडियो)** → Marqo
+- **पहले से MongoDB पर** → Atlas Vector Search
+- **पहले से Postgres पर, और हेडरूम चाहिए** → Supabase Vector या Neon (दोनों pgvector प्रबंधित, बेहतर टूलिंग के साथ)
 
 ---
 
-## Full Picture
+## वह एक चीज़ जो नहीं करनी है
 
-ज़्यादातर production search systems को एक से ज़्यादा layer चाहिए:
+उन चीज़ों के लिए फ़ज़ी टेक्स्ट सर्च के रूप में वेक्टर सर्च का उपयोग न करें जिनके सही जवाब होते हैं।
 
-- **`pg_trgm`** names, typos, autocomplete के लिए
-- **FTS / `pg_search`** keyword-based prose search के लिए
-- **pgvector** semantic और conceptual queries के लिए
-- **RRF fusion** उन surfaces के लिए जहाँ users query types mix करते हैं
-- **Regular indexes** exact identifiers, filters और sorted lists के लिए
+"मुझे ईमेल `dan@example.com` वाला उपयोगकर्ता खोजो" एक वेक्टर सर्च समस्या नहीं है। "ID `ORD-12345` वाला ऑर्डर खोजो" भी नहीं। `ORD-12345` को एम्बेड करना और cosine similarity से खोजना *कुछ* लौटाएगा — लेकिन यह ग़लत हो सकता है। एक पहचानकर्ता का एक सही जवाब होता है। एक पहचानकर्ता पर अनुमानित मिलान एक बग है।
 
-ये competing tools नहीं हैं। ये complementary हैं। Well-built search system हर query shape के लिए सही layer pick करता है — और जब query shapes overlap करते हैं, यह multiple layers run करता है और results को fuse करता है।
+वेक्टर सर्च आपके डेटासेट में *सबसे समान* चीज़ लौटाता है, भले ही कुछ वास्तव में प्रासंगिक न हो। यह नहीं जानता कि जब कोई अच्छा जवाब मौजूद नहीं है। यह संबंधित दस्तावेज़ों के लिए ठीक है। यह सटीक रिकॉर्ड लुकअप के लिए एक गंभीर समस्या है, जहाँ एक आत्मविश्वास से ग़लत जवाब एक खाली परिणाम से बदतर है।
 
-जो teams good search features ship करती हैं वे पूरे stack को समझती हैं। जो नहीं समझतीं वे vector database reach करती हैं, everything embed करती हैं, और wonder करती हैं कि exact lookups कभी-कभी ग़लत record क्यों return करते हैं।
+वही दूसरी दिशा में लागू होता है: उन क्वेरी के लिए FTS का उपयोग न करें जहाँ उपयोगकर्ता एक अवधारणा का वर्णन कर रहा है। "articles about making hard decisions under uncertainty" में कोई विश्वसनीय कीवर्ड नहीं हैं। FTS या तो शोर लौटाएगा या कुछ नहीं। क्वेरी आकार के लिए सही टूल का उपयोग करें।
+
+---
+
+## पूरी तस्वीर
+
+अधिकांश उत्पादन सर्च सिस्टम को एक से अधिक लेयर की आवश्यकता होती है:
+
+- **`pg_trgm`** नामों, टाइपो, ऑटोकंप्लीट के लिए
+- **FTS / `pg_search`** कीवर्ड-आधारित गद्य सर्च के लिए
+- **pgvector** सेमांटिक और अवधारणात्मक क्वेरी के लिए
+- **RRF fusion** उन सतहों के लिए जहाँ उपयोगकर्ता क्वेरी प्रकार मिलाते हैं
+- **रेगुलर इंडेक्स** सटीक पहचानकर्ताओं, फ़िल्टर और क्रमबद्ध सूचियों के लिए
+
+ये प्रतिस्पर्धी टूल नहीं हैं। ये पूरक हैं। एक अच्छी तरह से निर्मित सर्च सिस्टम प्रत्येक क्वेरी आकार के लिए सही लेयर चुनता है — और जब क्वेरी आकार ओवरलैप करते हैं, तो यह कई लेयर चलाता है और परिणामों को फ्यूज़ करता है।
+
+वे टीमें जो अच्छे सर्च फीचर शिप करती हैं वे पूरे स्टैक को समझती हैं। जो नहीं समझतीं वे एक वेक्टर डेटाबेस तक पहुँचती हैं, सब कुछ एम्बेड करती हैं, और आश्चर्य करती हैं कि सटीक लुकअप कभी-कभी ग़लत रिकॉर्ड क्यों लौटाते हैं।
