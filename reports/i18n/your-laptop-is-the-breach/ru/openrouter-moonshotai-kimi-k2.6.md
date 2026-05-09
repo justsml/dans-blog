@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ru
+- Model: openrouter/moonshotai/kimi-k2.6
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 194.40
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
