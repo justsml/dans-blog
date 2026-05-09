@@ -1,0 +1,197 @@
+---
+title: "Cinque modi in cui RAG fallisce in produzione"
+subTitle: "La demo funzionava. È con gli utenti reali che la pipeline si rompe."
+date: 2026-05-04
+modified: 2026-05-05
+tags: [ai, rag, vector-search, llm, production, embeddings, architecture]
+category: AI
+subCategory: Architecture
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+La demo RAG sembra sempre ottima.
+
+Incorpori dei documenti, avvii un vettore store, lo colleghi alla chat e guardi il modello citare la knowledge base interna come se ci lavorasse da anni. Splendido. Gli stakeholder sono impressionati. Qualcuno dice: "spediamolo in produzione."
+
+Sei settimane dopo, gli utenti ricevono risposte chiaramente sbagliate. I ticket di supporto si accumulano. Il sistema *funziona*, solo non nel modo in cui le persone ne hanno bisogno.
+
+Il fallimento di solito non è un errore drammatico. Sono cinque errori noiosi impilati uno sull'altro.
+
+---
+
+## 1. I tuoi chunk hanno la dimensione sbagliata
+
+Questo fallimento non manda tutto in crash. Rende solo ogni risposta leggermente peggiore, fino a quando l'intera funzionalità sembra inaffidabile.
+
+La ricerca vettoriale recupera *chunk*, non documenti. Qualunque sia il modo in cui dividi il materiale sorgente, diventa l'unità di verità del retriever. Se i chunk sono sbagliati, il modello risponde con i frammenti sbagliati.
+
+**Troppo piccoli**: Il chunk contiene una risposta parziale. L'embedding cattura l'argomento giusto, ma il testo recuperato manca di contesto. Recuperi "Il timeout massimo è di 30 secondi" senza la frase precedente che dice "quando si usa l'API legacy."
+
+**Troppo grandi**: L'embedding diventa una media sfocata di molte idee. La ricerca semantica si confonde perché il chunk parla di più cose e il vettore risultante non rappresenta nessuna di esse in modo pulito.
+
+La dimensione giusta del chunk dipende interamente dal tuo contenuto. Documenti tecnici, contratti legali e trascrizioni di supporto richiedono chunk diversi. Non esiste una risposta universale.
+
+Cosa fare: misurare. Costruisci un set di valutazione di coppie domanda/risposta dal tuo corpus. Prova chunk da 256, 512 e 1024 token. Misura la precisione del retrieval: il chunk giusto appare tra i primi 5? Imparerai rapidamente che la dimensione del chunk conta più del modello di embedding su cui ti sei arrovellato.
+
+Usa anche la sovrapposizione. Un chunk da 512 token con 64 token di sovrapposizione su ciascun lato significa che le risposte che attraversano i confini vengono comunque recuperate. La maggior parte delle librerie vettoriali lo supporta. La maggior parte delle persone lo salta.
+
+---
+
+## 2. I tuoi embedding diventano obsoleti (e non te ne accorgerai)
+
+Immagina che la tua azienda cambi branding. O rinomini un prodotto. O aggiorni i prezzi. O deprechi un'API.
+
+Aggiorni la documentazione ma non re-incorpori i chunk. L'indice vettoriale rappresenta ancora il vecchio contenuto.
+
+Gli utenti chiedono dei nuovi prezzi. Gli embedding li indirizzano al vecchio contenuto. Il modello legge il vecchio contenuto e spiega con sicurezza i vecchi prezzi. Il supporto riceve un ticket.
+
+Ogni serio sistema RAG ci sbatte prima o poi. La soluzione sembra ovvia: re-incorporare quando il contenuto cambia, ma i team raramente costruiscono quella pipeline prima del primo incidente.
+
+Hai bisogno di re-indicizzazione incrementale con fingerprinting del contenuto:
+
+```typescript
+import { createHash } from 'crypto';
+
+async function upsertDocument(doc: Document, vectorStore: VectorStore) {
+  const fingerprint = createHash('sha256')
+    .update(doc.content)
+    .digest('hex');
+
+  const existing = await vectorStore.getBySourceId(doc.id);
+
+  if (existing?.fingerprint === fingerprint) {
+    return; // Contenuto invariato, salta il re-embedding
+  }
+
+  const chunks = chunkDocument(doc);
+  const embeddings = await embedBatch(chunks);
+
+  await vectorStore.upsert(
+    chunks.map((chunk, i) => ({
+      id: `${doc.id}:${i}`,
+      sourceId: doc.id,
+      fingerprint,
+      vector: embeddings[i],
+      text: chunk.text,
+      metadata: { ...doc.metadata, updatedAt: new Date() },
+    }))
+  );
+}
+```
+
+Re-indicizza in scrittura, fingerprint sul contenuto, non sui timestamp. I documenti vengono aggiornati nel tuo CMS tutto il tempo senza che il contenuto effettivo cambi.
+
+---
+
+## 3. Precisione vs. Recall del retrieval: stai ottimizzando quella sbagliata
+
+La maggior parte dei tutorial su RAG mostra come recuperare i top-K chunk. Non spiegano il compromesso tra due obiettivi che puntano in direzioni opposte.
+
+**Alta recall**: Restituisci tutto ciò che potrebbe essere rilevante. Gli utenti ottengono sempre una risposta. Ma la finestra di contesto del modello è piena di rumore tangenzialmente correlato e il modello allucina per colmare le lacune tra i frammenti.
+
+**Alta precisione**: Restituisci solo i chunk più rilevanti. Il modello lavora con un contesto pulito e mirato. Ma se il chunk giusto non è nei primi 3, il modello non ha le informazioni e inventa qualcosa con sicurezza comunque.
+
+Le modalità di fallimento appaiono identiche agli utenti: risposte sbagliate. Ma le cause e le soluzioni sono opposte.
+
+Due tecniche che aiutano davvero:
+
+**Reranking**: Recupera più candidati (top-20), quindi usa un modello cross-encoder per riordinarli per rilevanza prima di passarli all'LLM. I cross-encoder sono più lenti della similarità vettoriale ma drasticamente più accurati nella fase di ranking finale.
+
+```typescript
+import { Reranker } from '@mastra/rag';
+
+const results = await vectorStore.search(queryEmbedding, { topK: 20 });
+const reranked = await reranker.rank(query, results);
+const context = reranked.slice(0, 5); // Ora i primi 5 hanno davvero un senso
+```
+
+**Ricerca ibrida**: Combina la ricerca vettoriale (similarità semantica) con la ricerca per parole chiave (BM25). Falliscono in modi diversi. La ricerca vettoriale ha difficoltà con termini specifici, nomi di modelli e ID. La ricerca per parole chiave ha difficoltà con il paraphrasing e i sinonimi. Insieme, coprono i punti ciechi l'uno dell'altra.
+
+---
+
+## 4. La tua finestra di contesto ha la forma sbagliata
+
+Hai recuperato i chunk giusti. Congratulazioni. Il modello sbaglierà comunque.
+
+Il problema non è solo cosa recuperi. È dove lo metti.
+
+Gli LLM possono soffrire del problema "lost in the middle" (persi nel mezzo). Liu et al. hanno misurato che i modelli con contesto lungo usano le informazioni rilevanti in modo meno affidabile quando appaiono nel mezzo del prompt invece che vicino all'inizio o alla fine.
+
+Se stai infilando 20 chunk in un elenco piatto e speri che il modello li sintetizzi correttamente, stai lasciando prestazioni sul tavolo.
+
+Cose che aiutano davvero:
+
+**Valuta il posizionamento all'inizio/fine per i chunk più rilevanti.** Un'euristica comune è: primo classificato all'inizio, secondo classificato alla fine e il resto nel mezzo. Controintuitivo, ma vale la pena testarlo sul tuo modello e sulla forma del prompt.
+
+**Numera ed etichetta esplicitamente le tue sezioni di contesto.** `[Fonte 1]` ... `[Fonte 2]` dà al modello ancoraggi su cui ragionare.
+
+**Aggiungi un segnale di confidence del retrieval.** Se il tuo punteggio di similarità è 0,65 su una scala 0-1, dici al modello: "Il seguente contesto è stato recuperato con confidenza moderata. Riconosci l'incertezza se la risposta non è chiara."
+
+**Imposta un budget di contesto.** Non passare semplicemente tutto ciò che hai recuperato. Conta i token, dai priorità per punteggio di rilevanza e taglia duramente al 60-70% della finestra di contesto del modello. Lascia spazio al modello per ragionare senza andare in thrashing.
+
+Riferimento: [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
+
+---
+
+## 5. Non hai idea di quando sta sbagliando
+
+Questo è il fallimento silenzioso: la risposta torna, l'UI sembra sana e il contenuto è sbagliato.
+
+Con un'API tradizionale, i fallimenti sono visibili: HTTP 500, timeout, errore di validazione dello schema. Lo sai immediatamente. I fallimenti di RAG sono più silenziosi: il sistema restituisce una risposta, sembra plausibile ed è sbagliata.
+
+Potresti non sapere che la tua pipeline RAG sta fallendo fino a quando gli utenti non te lo dicono. Spesso non lo fanno. Smettono semplicemente di fidarsi e tornano a Ctrl+F.
+
+La configurazione minima di osservabilità per un sistema RAG in produzione:
+
+**Registra la tua catena di retrieval.** Ogni query, cosa è stato recuperato (ID chunk + punteggi) e cosa ha prodotto il modello. Ti serve per debuggare qualsiasi cosa.
+
+**Traccia le metriche di retrieval.** Mean Reciprocal Rank (MRR) e NDCG se hai etichette ground-truth. Come minimo, traccia le distribuzioni dei punteggi di similarità: se il tuo punteggio di retrieval P50 scende, la qualità del tuo indice è scesa.
+
+**Costruisci un feedback loop.** Anche un pollice su/giù sulle risposte, collegato alla query e ai chunk recuperati, ti dà un segnale di training. Senza di esso, stai volando alla cieca.
+
+**Esegui eval periodiche.** Un set di test di 50-100 domande con risposte corrette note, eseguito settimanalmente, catturerà le regressioni prima degli utenti. Un foglio di calcolo e uno script sono sufficienti per iniziare.
+
+```typescript
+async function runEval(
+  testCases: { query: string; expectedAnswer: string }[],
+  pipeline: RAGPipeline
+) {
+  const results = await Promise.all(
+    testCases.map(async ({ query, expectedAnswer }) => {
+      const response = await pipeline.query(query);
+      const score = await scoreResponse(response, expectedAnswer);
+      return { query, score, response };
+    })
+  );
+
+  const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
+  console.log(`Punteggio eval: ${(avgScore * 100).toFixed(1)}%`);
+  
+  // Alert se il punteggio scende sotto la soglia
+  if (avgScore < 0.75) {
+    await notifyTeam(`Il punteggio eval RAG è sceso al ${(avgScore * 100).toFixed(1)}%`);
+  }
+
+  return results;
+}
+```
+
+---
+
+## Il problema reale
+
+Questi fallimenti non riguardano principalmente il modello di embedding o il database vettoriale. Riguardano il sistema intorno a loro.
+
+Le demo RAG funzionano perché le condizioni della demo sono controllate: documenti puliti, domande ben formate, evaluatori tolleranti. La produzione fallisce perché nessuna di queste condizioni vale.
+
+Ogni fallimento sopra è diagnosticabile, ma solo se stai misurando. I team RAG affidabili non fanno nulla di esotico. Trattano la qualità del retrieval come un sottosistema reale invece che come un artefatto da demo.
+
+Configura prima il loop di eval. Tutto il resto è più facile una volta che puoi misurarlo.
