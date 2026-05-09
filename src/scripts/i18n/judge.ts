@@ -3,6 +3,7 @@ import {
   gitCommit,
   optionalString,
   parseArgs,
+  parseList,
   relativeToRepo,
   requireActiveLocale,
   requireString,
@@ -20,6 +21,7 @@ const judgeModel = optionalString(options, "model") ?? "openrouter/openai/gpt-5.
 const secondJudgeModel = optionalString(options, "second-model");
 const escalationJudgeModel = optionalString(options, "escalate-model");
 const selectedCommit = optionalString(options, "select");
+const candidateModels = parseList(optionalString(options, "candidate-models"), []);
 const shouldSkipCommit = options["no-commit"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { targetPath, reportDir } = getPostPaths(slug, locale);
@@ -217,7 +219,13 @@ function getCandidateCommits() {
     .split(/\r?\n/)
     .filter(Boolean)
     .filter((commit) => commitChangesTarget(commit))
+    .filter((commit) => candidateModels.length === 0 || candidateModels.includes(getCandidateModel(commit)))
     .reverse();
+}
+
+function getCandidateModel(commit: string) {
+  const subject = run("git", ["show", "-s", "--format=%s", commit]);
+  return subject.match(/ via (.+)$/)?.[1] ?? "";
 }
 
 function commitChangesTarget(commit: string) {
@@ -245,7 +253,7 @@ function getVariantArgs(model: string) {
 
 function getTimeoutSeconds() {
   const rawValue = optionalString(options, "timeout-seconds");
-  if (rawValue == null) return 90;
+  if (rawValue == null) return 180;
 
   const parsedValue = Number(rawValue);
   if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
