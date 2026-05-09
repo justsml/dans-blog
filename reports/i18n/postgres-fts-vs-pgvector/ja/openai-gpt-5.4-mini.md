@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ja
+- Model: openai/gpt-5.4-mini
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 75.13
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not create src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx.
