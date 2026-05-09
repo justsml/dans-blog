@@ -62,6 +62,27 @@ bun run i18n:report:models
 
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
 
+By default, candidate generation is idempotent per slug, locale, and model: if the model already has a report at `reports/i18n/{slug}/{locale}/{safe-model-name}.md`, the script skips that language+model combo. Pass `--overwrite` to intentionally rerun and replace that model's target-file output:
+
+```sh
+bun run i18n:translate:candidates -- \
+  --slug the-last-to-think \
+  --locale es \
+  --models openrouter/qwen/qwen3.6-plus \
+  --overwrite
+```
+
+Every future candidate report includes run telemetry:
+
+- runtime seconds
+- input tokens
+- output tokens
+- thinking/reasoning tokens
+- cached input tokens
+- estimated cost when the model has known pricing in `translate-candidates.ts`
+
+Token fields are best-effort because provider and OpenCode output formats vary. Unknown token counts are still written explicitly so model reports keep a stable shape.
+
 To run a subset:
 
 ```sh
@@ -102,11 +123,24 @@ Current OpenRouter set:
 
 ```text
 openrouter/qwen/qwen3.6-plus
+openrouter/google/gemma-4-26b-a4b-it
+openrouter/google/gemma-4-31b-it
+openrouter/deepseek/deepseek-v4-pro
 openrouter/moonshotai/kimi-k2.6
 openrouter/google/gemini-3-flash-preview
 openrouter/z-ai/glm-5.1
 openrouter/minimax/minimax-m2.7
 ```
+
+The Gemma 4 26B A4B and Gemma 4 31B entries were the cheapest paid runnable options from the requested model list at the time of the OpenRouter/OpenCode check. OpenRouter's public API listed `qwen/qwen3.6-35b-a3b` as cheaper than DeepSeek V4 Pro, but OpenCode rejected that model ID with `ProviderModelNotFoundError`, so the runnable third addition is `openrouter/deepseek/deepseek-v4-pro`. `gpt-5.5-mini` was not present in OpenRouter's model list, and OpenCode exposed `anthropic/claude-haiku-4.5` rather than `anthropic/claude-haiku-latest`.
+
+Qwen/OpenAI availability notes from the same check:
+
+- OpenCode exposed `openrouter/qwen/qwen3.6-plus` and `openrouter/qwen/qwen-3.6-27b`.
+- OpenRouter's public API exposed `qwen/qwen3.6-plus`, `qwen/qwen3.6-35b-a3b`, and `qwen/qwen3.6-flash`.
+- OpenCode did not expose `qwen/qwen3.6-flash`, and it rejected `qwen/qwen3.6-35b-a3b`.
+- OpenCode exposed `openrouter/openai/gpt-5-mini` and `openrouter/openai/gpt-5.4-mini`.
+- OpenRouter's public API exposed `openai/gpt-5-mini` and `openai/gpt-5.4-mini`, but not `openai/gpt-5.5-mini`.
 
 `minimax-m2.6` was requested during setup, but `opencode models openrouter` did not expose that model ID. The closest available MiniMax candidate at the time was `openrouter/minimax/minimax-m2.7`.
 

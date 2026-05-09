@@ -24,13 +24,16 @@ Default candidate models live in `src/scripts/i18n/translate-candidates.ts`.
 
 Current OpenRouter candidates:
 
+- `openrouter/google/gemma-4-26b-a4b-it`
+- `openrouter/google/gemma-4-31b-it`
+- `openrouter/deepseek/deepseek-v4-pro`
 - `openrouter/qwen/qwen3.6-plus`
 - `openrouter/moonshotai/kimi-k2.6`
 - `openrouter/google/gemini-3-flash-preview`
 - `openrouter/z-ai/glm-5.1`
 - `openrouter/minimax/minimax-m2.7`
 
-Note: `minimax-m2.6` was requested, but OpenCode's OpenRouter catalog did not expose that ID during setup. Use the nearest available MiniMax model unless the catalog changes.
+Note: the Gemma 4 26B A4B and Gemma 4 31B entries were added as the cheapest paid runnable options from the requested model list at the time of the OpenRouter/OpenCode check. OpenRouter's public API listed `qwen/qwen3.6-35b-a3b` as cheaper than DeepSeek V4 Pro, but OpenCode rejected that model ID with `ProviderModelNotFoundError`, so the runnable third addition is `openrouter/deepseek/deepseek-v4-pro`. `gpt-5.5-mini` was not present in OpenRouter's model list, and OpenCode exposed `anthropic/claude-haiku-4.5` rather than `anthropic/claude-haiku-latest`. `minimax-m2.6` was requested earlier, but OpenCode's OpenRouter catalog did not expose that ID during setup. Use the nearest available MiniMax model unless the catalog changes.
 
 Judge with a cheap OpenAI-class model first, currently:
 
@@ -45,7 +48,11 @@ Judge with a cheap OpenAI-class model first, currently:
    bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
    ```
 
+   Candidate generation skips existing slug+locale+model reports by default. Use `--overwrite` only when you intentionally want to rerun that model and replace its target-file output.
+
    OpenCode calls default to a 90 second timeout. Use `--timeout-seconds 60` or `--timeout-seconds 90` explicitly for batch work. Thinking-capable models should stay cheap: Qwen and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
+
+   Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from OpenCode/provider output; write `unknown` rather than omitting unavailable fields.
 
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:

@@ -1,6 +1,6 @@
 # I18n Model Performance
 
-Generated from `reports/i18n` and Git history at `2026-05-08T19:11:36-06:00`.
+Generated from `reports/i18n` and Git history at `2026-05-08T19:38:08-06:00`.
 
 ## Model Stats
 
@@ -8,9 +8,13 @@ Generated from `reports/i18n` and Git history at `2026-05-08T19:11:36-06:00`.
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
 | openrouter/qwen/qwen3.6-plus | 61 | 50 | 11 | 49 | 24 | 49% | 8 | 7 | 9 |
 | openrouter/moonshotai/kimi-k2.6 | 61 | 49 | 12 | 48 | 14 | 29% | 5 | 5 | 4 |
-| openrouter/google/gemini-3-flash-preview | 61 | 42 | 19 | 42 | 4 | 10% | 1 | 1 | 2 |
+| openrouter/google/gemini-3-flash-preview | 61 | 44 | 17 | 44 | 6 | 14% | 1 | 2 | 3 |
 | openrouter/z-ai/glm-5.1 | 60 | 49 | 11 | 49 | 4 | 8% | 1 | 2 | 1 |
 | openrouter/minimax/minimax-m2.7 | 60 | 40 | 20 | 40 | 3 | 8% | 2 | 1 | 0 |
+| openrouter/deepseek/deepseek-v4-pro | 2 | 1 | 1 | 1 | 1 | 100% | 1 | 0 | 0 |
+| openrouter/google/gemma-4-26b-a4b-it | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 |
+| openrouter/google/gemma-4-31b-it | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 |
+| openrouter/qwen/qwen3.6-35b-a3b | 1 | 0 | 1 | 0 | 0 | 0% | 0 | 0 | 0 |
 
 ## Winners By Article
 
@@ -31,7 +35,7 @@ Generated from `reports/i18n` and Git history at `2026-05-08T19:11:36-06:00`.
 | prompt-injection-new-sql-injection | minimax/minimax-m2.7 (b31ff955) | qwen/qwen3.6-plus (fc6d16e4) | qwen/qwen3.6-plus (b7ba0dd7) | 3 |  |
 | quiz-context-engineering | unjudged |  |  | 0 | es: no judged winner |
 | quiz-do-you-really-understand-closures | unjudged | unjudged | unjudged | 0 | es: no judged winner; hi: no judged winner; ja: no judged winner |
-| rag-pipeline-failures | unjudged | unjudged | unjudged | 0 | es: no judged winner; hi: no judged winner; ja: no judged winner |
+| rag-pipeline-failures | deepseek/deepseek-v4-pro (bb802ee8) | google/gemini-3-flash-preview (47bd782c) | google/gemini-3-flash-preview (94c02858) | 3 |  |
 | securing-clawdbot-tailscale | qwen/qwen3.6-plus (243137a0) | qwen/qwen3.6-plus (e8c037ce) | qwen/qwen3.6-plus (6e3019e2) | 3 |  |
 | semantic-vector-search-landscape | qwen/qwen3.6-plus (8e35a85c) | moonshotai/kimi-k2.6 (af140620) | moonshotai/kimi-k2.6 (4fd17cca) | 3 |  |
 | the-last-to-think | qwen/qwen3.6-plus (26a900ed) | google/gemini-3-flash-preview (09fa8793) | qwen/qwen3.6-plus | 3 |  |
@@ -85,9 +89,9 @@ Generated from `reports/i18n` and Git history at `2026-05-08T19:11:36-06:00`.
 | quiz-do-you-really-understand-closures | es |  |  | 0 | 5 | 5 |  |
 | quiz-do-you-really-understand-closures | hi |  |  | 0 | 5 | 5 |  |
 | quiz-do-you-really-understand-closures | ja |  |  | 0 | 5 | 5 |  |
-| rag-pipeline-failures | es |  |  | 0 | 5 | 5 |  |
-| rag-pipeline-failures | hi |  |  | 0 | 5 | 5 |  |
-| rag-pipeline-failures | ja |  |  | 0 | 5 | 5 |  |
+| rag-pipeline-failures | es | openrouter/deepseek/deepseek-v4-pro | `bb802ee8` | 1 | 9 | 8 | openrouter/openai/gpt-5.4-mini |
+| rag-pipeline-failures | hi | openrouter/google/gemini-3-flash-preview | `47bd782c` | 1 | 6 | 5 | openrouter/openai/gpt-5.4-mini |
+| rag-pipeline-failures | ja | openrouter/google/gemini-3-flash-preview | `94c02858` | 1 | 5 | 4 | openrouter/openai/gpt-5.4-mini |
 | securing-clawdbot-tailscale | es | openrouter/qwen/qwen3.6-plus | `243137a0` | 5 | 5 | 0 | openrouter/openai/gpt-5.4-mini |
 | securing-clawdbot-tailscale | hi | openrouter/qwen/qwen3.6-plus | `e8c037ce` | 5 | 5 | 0 | openrouter/openai/gpt-5.4-mini |
 | securing-clawdbot-tailscale | ja | openrouter/qwen/qwen3.6-plus | `6e3019e2` | 5 | 5 | 0 | openrouter/openai/gpt-5.4-mini |
