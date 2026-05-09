@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 158.88
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
