@@ -4,13 +4,13 @@
 - Model: openrouter/google/gemini-3.1-flash-lite-preview
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
 - Validation: rejected: opencode command failed
-- Runtime seconds: 0.00
+- Runtime seconds: 94.03
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: opencode run --pure --model openrouter/google/gemini-3.1-flash-lite-preview --variant minimal --file /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx --dangerously-skip-permissions You are a constrained translation file-rewrite worker.
+- Note: Command failed after 90000ms: opencode run --pure --model openrouter/google/gemini-3.1-flash-lite-preview --variant minimal --file /Users/dan/code/oss/dans-blog/src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx --dangerously-skip-permissions You are a constrained translation file-rewrite worker.
 Translate src/content/posts/2026-05-08--postgres-fts-vs-pgvector/index.mdx into hi.
 Write the complete translated MDX to src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx.
 Do not run shell commands, git commands, Bun scripts, validation scripts, or translation scripts.
