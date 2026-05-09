@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/it/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 117.34
+- Input tokens: 90
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000005
+- Note: Command failed: bun run i18n:validate --slug llm-generative-ui-landscape --locale it
