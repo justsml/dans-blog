@@ -3,11 +3,11 @@
 - Locale: de
 - Model: openrouter/anthropic/claude-haiku-4.5
 - Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx
-- Validation: rejected: touched unrelated files
-- Runtime seconds: 150.09
+- Validation: rejected: target file unchanged
+- Runtime seconds: 128.64
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model changed files outside src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/it/
+- Note: Model did not leave a diff in src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
