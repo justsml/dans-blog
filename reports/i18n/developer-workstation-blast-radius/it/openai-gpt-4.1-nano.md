@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: it
+- Model: openai/gpt-4.1-nano
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 35.92
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-05-09--developer-workstation-blast-radius/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
