@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ja
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 42.70
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
