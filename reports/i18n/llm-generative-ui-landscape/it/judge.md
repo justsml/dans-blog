@@ -23,3 +23,6 @@ Gemini 3 Flash Preview delivered the most idiomatic and punchy Italian translati
 - Verified relative image paths (`../landscape-map.webp`) for the localized directory structure.
 - Corrected minor terminology consistency (ensuring "Tool-to-component rendering" stays consistent with the diagram).
 
+## Resolution Note
+
+The first judge correctly selected Gemini 3 Flash Preview (`960b0d8`) as the best candidate, but its attempted polish truncated the article. The second judge caught the truncation. The final repair restores the complete Gemini 3 candidate body, preserves the localized full frontmatter used by the other locales, and keeps the selected candidate intact.
