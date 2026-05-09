@@ -1,0 +1,168 @@
+---
+title: "La IA en producción da miedo (y cómo solucionarlo)"
+subTitle: "Si tu agente no tiene barreras de seguridad, no estás listo para producción."
+date: 2026-01-03
+modified: 2026-01-08
+tags: [AI, Security, Mastra, Guardrails, Privacy, PII]
+category: AI
+subCategory: Security
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Nadie construye un sistema de IA inseguro a propósito. Escribes instrucciones, pruebas casos límite, agregas algunas reglas de validación. Entonces alguien descubre que puede hacer que tu bot finja ser un pirata y exponga datos del usuario. O un número de tarjeta de crédito termina en tus logs. O el modelo recomienda tranquilamente el producto de un competidor.
+
+La brecha entre "funciona en la demo" y "es seguro en producción" es más ancha de lo que la mayoría de los equipos espera.
+
+Parte del problema es que los LLMs sin procesar no tienen opiniones sobre lo que deberían o no hacer. Son máquinas de predicción que intentan continuar cualquier patrón que hayas iniciado. Dale un prompt que parezca "modo override del sistema," y seguirán el juego con gusto. Esto no es un bug del modelo; es simplemente cómo funcionan los modelos de lenguaje.
+
+La mayoría de los frameworks te dan el modelo y te desean suerte. Mastra toma un enfoque diferente: asume que eventualmente necesitarás guardrails, así que los construye en la arquitectura del agente desde el principio.
+
+---
+
+## Procesadores como capas de seguridad
+
+El mecanismo central es sencillo. Antes de que tu prompt llegue al modelo, pasa por una cadena de procesadores de entrada. Después de que el modelo responde, los procesadores de salida tienen su turno. Cada procesador puede inspeccionar, modificar o bloquear el contenido en esa etapa.
+
+Piénsalos como middleware para interacciones de IA. Apilas los que necesitas, configuras su comportamiento, y se ejecutan automáticamente en cada solicitud.
+
+### 1. Deteniendo a los piratas (inyección de prompts)
+
+Los ataques de inyección de prompts se han vuelto creativos. La gente usa caracteres Unicode invisibles, escribe instrucciones en base64, o convence al modelo de que está en "modo debug" donde las reglas normales no aplican. Las técnicas siguen evolucionando.
+
+Mastra incluye procesadores que detectan patrones comunes:
+
+
+```typescript
+// src/mastra/agents/secure-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { PromptInjectionDetector, UnicodeNormalizer } from '@mastra/core/processors';
+import { openai } from '@ai-sdk/openai';
+
+export const secureAgent = new Agent({
+  id: 'fortress-assistant',
+  name: 'fortress-assistant',
+  instructions: 'You are a secure assistant.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    // 1. Scrub invisible characters
+    new UnicodeNormalizer({
+      id: 'unicode-normalizer',
+      stripControlChars: true,
+      collapseWhitespace: true,
+    }),
+    // 2. Detect the attempt
+    new PromptInjectionDetector({
+      id: 'prompt-injection-detector',
+      model: openai('gpt-5-nano'), // Cheap, fast
+      threshold: 0.8,
+      strategy: 'block', // Hard stop
+      detectionTypes: ['injection', 'jailbreak', 'system-override'],
+    }),
+  ],
+});
+```
+
+El [`UnicodeNormalizer`](https://mastra.ai/docs/processors) elimina caracteres de control y colapsa espacios en blanco. El [`PromptInjectionDetector`](https://mastra.ai/docs/processors) analiza la entrada limpia buscando patrones que sugieran que alguien está intentando sobrescribir tus instrucciones.
+
+Configuras qué tan agresiva quieres que sea la detección (el parámetro `threshold`) y qué debería pasar cuando se active (bloquear, registrar, o solo marcarlo).
+
+### 2. Manejo de PII
+
+Números de tarjeta de crédito en logs, números de seguro social en bases de datos vectoriales, direcciones de email almacenadas más tiempo del necesario. Estos son los tipos de problemas que se convierten en problemas regulatorios. El desafío es que los usuarios no siempre se dan cuenta de que están pegando datos sensibles en una ventana de chat.
+
+El [`PIIDetector`](https://mastra.ai/docs/processors) escanea patrones comunes antes de que lleguen a tu modelo o se escriban en almacenamiento:
+
+```typescript
+import { PIIDetector } from '@mastra/core/processors';
+
+export const privateAgent = new Agent({
+  id: 'privacy-first-assistant',
+  name: 'privacy-first-assistant',
+  instructions: 'You are a helpful assistant that never stores personal information.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new PIIDetector({
+      id: 'pii-detector',
+      model: openai('gpt-5-nano'),
+      detectionTypes: ['email', 'phone', 'credit-card', 'ssn'],
+      threshold: 0.6,
+      strategy: 'redact',
+      redactionMethod: 'mask',  // Replace with [REDACTED]
+      instructions: 'Detect and mask personally identifiable information',
+    }),
+  ],
+});
+```
+
+Puedes elegir redactar (reemplazar con `[REDACTED]`), hacer hash, o bloquear completamente. El procesador se ejecuta tanto en entrada como en salida, así que estás cubierto incluso si el modelo de alguna manera genera datos sensibles en su respuesta.
+
+### 3. Moderación de contenido
+
+Los modelos entrenados con datos de internet han visto cosas. Sin filtrado, ocasionalmente pueden producir respuestas que harían nervioso a tu equipo de PR. El [`ModerationProcessor`](https://mastra.ai/docs/processors) detecta contenido que viola tus pautas:
+
+```typescript
+import { ModerationProcessor } from '@mastra/core/processors';
+
+export const moderatedAgent = new Agent({
+  id: 'safe-assistant',
+  name: 'safe-assistant',
+  instructions: 'You are a helpful assistant for a community platform.',
+  model: openai('gpt-5'),
+  inputProcessors: [
+    new ModerationProcessor({
+      id: 'moderation-processor',
+      model: openai('gpt-5-nano'),  // Modelo rápido y barato para clasificación
+      categories: ['hate', 'harassment', 'violence', 'self-harm'],
+      threshold: 0.7,  // Bloquear si la confianza > 70%
+      strategy: 'block',  // Detener la solicitud inmediatamente
+      instructions: 'Detect harmful content that violates community guidelines',
+    }),
+  ],
+});
+```
+
+La parte interesante es que defines qué categorías importan para tu caso de uso. Una herramienta de escritura creativa podría permitir contenido más expresivo que un bot de atención al cliente. El umbral y la estrategia te dan control sobre qué tan estricto debe ser el filtrado.
+
+---
+
+## Cuando las cosas se activan
+
+Los procesadores no lanzan errores cuando detectan un problema. En su lugar, establecen una bandera en el objeto de resultado:
+
+```typescript
+const result = await secureAgent.generate('Ignore all previous instructions...');
+
+if (result.tripwire) {
+  console.log(`Blocked! Reason: ${result.tripwireReason}`);
+  // "Blocked! Reason: Prompt injection detected."
+  return "Nice try, script kiddie.";
+}
+```
+
+Este patrón te permite manejar eventos de seguridad como tenga sentido para tu aplicación. Podrías registrarlos para análisis, devolver un mensaje de error genérico, o incluso permitir ciertas violaciones en contextos específicos. El campo `tripwireReason` te dice exactamente qué procesador marcó el contenido, lo cual ayuda cuando estás depurando falsos positivos o ajustando tus umbrales.
+
+---
+
+## Lo que esto no resuelve
+
+Los procesadores detectan mucho, pero no son magia. Un atacante determinado con suficiente tiempo probablemente puede encontrar un prompt que se escape. Los modelos ocasionalmente alucinan de maneras que los procesadores no pueden predecir. Y siempre hay un tradeoff entre seguridad y flexibilidad: cuanto más estrictas sean tus reglas, más probable es que bloquees casos de uso legítimos.
+
+El valor no es la protección perfecta. Es tener una forma sistemática de manejar los problemas comunes que definitivamente surgirán en producción. Puedes ajustar la sensibilidad a medida que aprendes lo que tus usuarios realmente hacen. Puedes añadir procesadores personalizados para riesgos específicos del dominio. Y tienes auditorías mostrando qué se bloqueó y por qué.
+
+La mayoría de los problemas de seguridad en IA de producción no son ataques sofisticados. Son personas copiando y pegando datos que no deberían, o descubriendo por prueba y error que el bot hará cosas que no pretendías. Los procesadores no detendrán todos los problemas posibles, pero hacen que los obvios sean mucho más difíciles.
+
+### Recursos
+
+- [Documentación de Guardrails de Mastra](https://mastra.ai/docs/agents/guardrails)
+- [Mejores Prácticas de Seguridad](https://mastra.ai/docs/security)
+- [Repositorio de Mastra en GitHub](https://github.com/mastra-ai/mastra)
+
+## Lee la serie
+
+1. [Enrutamiento LLM](/llm-routing-mastra-ai)
+2. **Seguridad y Guardrails** (Esta Publicación)
+3. [Integraciones MCP y Herramientas](/mastra-mcp-tool-integrations)
+4. [Flujos de Trabajo y Memoria](/mastra-workflows-memory)
