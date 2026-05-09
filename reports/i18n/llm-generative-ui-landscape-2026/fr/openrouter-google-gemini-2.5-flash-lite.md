@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: fr
+- Model: openrouter/google/gemini-2.5-flash-lite
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 180.13
+- Input tokens: unknown
+- Output tokens: 1
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx, src/content/posts/2026-05-09--your-laptop-is-the-breach/it/
