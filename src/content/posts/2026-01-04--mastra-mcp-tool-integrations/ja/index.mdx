@@ -1,0 +1,219 @@
+---
+title: "この仕組みなしでは、あなたのAIエージェントは無駄である"
+subTitle: "MCPが人工知能におけるUSB-Cである理由。"
+date: 2026-01-04
+modified: 2026-01-08
+tags: [AI, MCP, Tools, Integrations, Mastra, Salesforce, APIs]
+category: AI
+subCategory: Integration
+social_image: desktop-social.webp
+cover_full_width: ./wide.webp
+cover_mobile: ./square.webp
+cover_icon: ./square.webp
+---
+
+AIエージェントを構築したとしましょう。もしかしたら、それは良いものかもしれません。プロンプトは洗練され、モデルは高速で、レスポンスも自然に感じられる。
+
+しかし、誰かがSalesforceで顧客レコードを確認するように頼んだり、最新のJiraチケットを取得したり、社内ドキュメントを検索するように求めたりしたらどうなるでしょうか。
+
+そして、あなたの美しいエージェントは…ただ立ち止まるだけです。
+
+これは、すべてのAIプラットフォームが最終的に直面する統合問題です。エージェントには手が必要です。実際のビジネスシステムへの目が必要です。それらがなければ、あなたは高額なチャットボットを動かしているだけに過ぎません。
+
+従来の解決策は？接続したいすべてのサービスに対してカスタムAPIラッパーを書くことです。ドキュメントを読み、認証を処理し、レート制限に対処し、来月エンドポイントが変更されないことを祈るのです。そして、次のサービスでもそれを繰り返します。また次のサービスでも。
+
+Model Context Protocol（MCP）は、この計算式を完全に変えます。
+
+---
+
+## MCPが実際に解決するもの
+
+USB-C以前のUSBのことを考えてみてください。Mini-USB、Micro-USB、Apple独自のコネクタ、そして特定のデバイスでしか使えないケーブルの引き出しがいっぱいありました。USB-Cは新しいコネクタを追加しただけでなく、どのケーブルでもどのデバイスでも使える標準を確立したのです。
+
+MCPは、AIツール統合において同じことを行います。
+
+エージェントをSalesforce、HubSpot、GitHub、またはその他のサービスに接続するためにカスタムコードを書く代わりに、プロトコルを一度実装する（または事前に構築されたサーバーをダウンロードする）だけで、MCP互換のすべてのエージェントがすぐに接続できるようになります。
+
+プロトコルが通信層を処理します。あなたはツールが何をするか、どのようなデータが必要かを定義するだけです。
+
+---
+
+## 複数の統合の設定
+
+Mastraは[`MCPClient`](https://mastra.ai/docs/mcp/overview)を通じてネイティブなMCPサポートを提供しています。ローカルツール（子プロセスとして実行）とリモートサービス（独自のインフラで実行）の両方を接続できます。
+
+以下は、ルーティング用のGoogle Maps、天気サービス、ローカルのWikipedia検索を接続する現実的な本番環境の設定例です：
+
+```typescript
+// src/mastra/mcp/index.ts
+import { MCPClient } from '@mastra/mcp';
+
+export const mcpClient = new MCPClient({
+  servers: {
+    // ローカルツール（Stdio）
+    wikipedia: {
+      command: 'npx',
+      args: ['-y', 'wikipedia-mcp'],
+    },
+    // マップ＆ナビゲーション（リモート/HTTP）
+    googleMaps: {
+      url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+      requestInit: {
+        headers: {
+          Authorization: `Bearer ${process.env.GOOGLE_MAPS_API_KEY}`,
+        },
+      },
+    },
+    // 天気サービス統合
+    weather: {
+      url: new URL('https://mcp.weatherapi.dev/v1'),
+      requestInit: {
+        headers: {
+          'X-API-Key': process.env.WEATHER_API_KEY!,
+        },
+      },
+    },
+  },
+});
+```
+
+クライアントは接続ライフサイクルを管理し、ローカルツールのプロセス生成を処理し、リモートサーバーのHTTP接続を維持します。ソケットやstdioを直接触る必要はありません。
+
+---
+
+## エージェントへのツールの接続
+
+MCPクライアントの設定が完了したら、それらのツールをエージェントに渡すのは簡単です：
+
+```typescript
+// src/mastra/agents/navigation-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { mcpClient } from '../mcp';
+
+export const navigationDirectionsAgent = new Agent({
+  id: 'navigation-directions-agent',
+  name: 'Navigation & Directions Assistant',
+  instructions: `You are a helpful navigation assistant that provides route planning and travel advice.
+    - Always confirm the start and destination locations
+    - Use Google Maps tools to find optimal routes
+    - Check weather conditions along the route
+    - Provide estimated travel times and suggest alternatives if weather is poor
+    - Include relevant details like traffic, road conditions, and points of interest
+    - Keep responses clear and actionable`,
+  model: openai('gpt-5'),
+  tools: await mcpClient.getTools(), // <--- これが魔法の一行です
+});
+```
+
+ユーザーが次のように尋ねた場合：*「サンフランシスコからタホ湖への最適なルートは何ですか？天気を心配すべきですか？」*
+
+エージェントは利用可能なツールの定義を読み、Google Mapsのルーティングと天気予報ツールにアクセスできることを認識し、それらを適切なパラメータで実行し、最適なルートと道中の現在の天気状況で回答します。
+
+あなたはGoogle Maps APIコードや天気サービス統合のコードを一行も書いていません。
+
+---
+
+## ユーザーごとの認証
+
+ここで犯しやすいセキュリティ上の間違いがあります：資格情報のハードコーディングです。
+
+環境変数にGoogle Maps APIキーを1つ置いて、それで終わりとしてしまうと、すべてのユーザーが同じクォータとレート制限を共有することになります。さらに重要なのは、保存された場所やお気に入りのルートなどのユーザー設定を保存するサービスを使用している場合、全員が同じデータを見てしまうということです。これはデモでは問題なく動作します。しかし、本番環境では責任問題になります。
+
+Mastraは、ユーザー固有の資格情報でMCPクライアントを動的に作成することでこれに対処します：
+
+```typescript
+async function handleUserRequest(userPrompt: string, userCredentials: UserCreds) {
+  // このユーザー専用のクライアントを作成
+  const userMcp = new MCPClient({
+    servers: {
+      googleMaps: {
+        url: new URL(process.env.GOOGLE_MAPS_MCP_URL!),
+        requestInit: {
+          headers: {
+            // ユーザー固有のAPIキーまたはトークン
+            Authorization: `Bearer ${userCredentials.mapsApiKey}`,
+            'X-User-ID': userCredentials.userId,
+          },
+        },
+      },
+    },
+  });
+
+  const agent = mastra.getAgent('navigationDirectionsAgent');
+  
+  // ランタイムでツールを注入
+  const response = await agent.generate(userPrompt, {
+    toolsets: await userMcp.getToolsets(),
+  });
+
+  return response;
+}
+```
+
+各ユーザーは、独自のAPIクォータと設定を持つ隔離されたツールセットを取得します。ユーザーAの保存された場所はプライベートに保たれ、ユーザーBのルート履歴は別々です。これが、マルチテナントSaaSエージェントが実際に機能する方法です。
+
+---
+
+## 複合ツールの構築
+
+複数のMCPツールを1つの操作に組み合わせる必要がある場合があります。リアルタイムの交通状況と道中の天気状況の両方を考慮したルートを計画したい場合などです。
+
+MCPツールをカスタムツール定義でラップできます：
+
+```typescript
+export const smartRouteTool = createTool({
+  id: 'smart-route-planner',
+  description: 'Plans optimal route considering traffic and weather conditions',
+  execute: async ({ context, mastra }) => {
+    // 生のツールを取得
+    const tools = await mcpClient.getTools();
+    
+    // 1. Google Mapsから基本ルートを取得
+    const routeData = await tools.googleMaps_getDirections.execute({ 
+      context: { 
+        origin: context.origin,
+        destination: context.destination 
+      } 
+    });
+    
+    // 2. ルート沿いの天気を確認
+    const weatherData = await tools.weather_getForecast.execute({
+      context: { coordinates: routeData.waypoints }
+    });
+    
+    // 3. 天気警告付きの強化されたルートを返す
+    return { 
+      ...routeData, 
+      weatherAlerts: weatherData.alerts,
+      recommendation: weatherData.severe ? 'Consider delaying trip' : 'Safe to travel'
+    };
+  },
+});
+```
+
+これにより、MCPプロトコルを重厚な処理に活用しながら、ツールがどのように相互作用するかを細かく制御できます。
+
+---
+
+## この先にあるもの
+
+AIエージェントが接続する必要のあるすべてのサービスに対してカスタムAPIクライアントを書くことは、決して持続可能ではありませんでした。スケーラビリティが悪く、頻繁に壊れ、プラットフォームを特定の実装に縛り付けます。
+
+MCPはすべての統合課題を解決するわけではありません—認証はまだ複雑で、レート制限はまだ重要で、すべてのサービスがMCPサーバーを持っているわけではありません。しかし、エージェントプラットフォームの構築を大幅に楽にする基盤を確立します。
+
+外部サービスと対話する必要があるAIシステムを設計しているなら、MCPを理解することはあなたの時間に見合う価値があるはずです。
+
+### リソース
+
+- [Mastra MCP Documentation](https://mastra.ai/docs/mcp/overview)
+- [MCP Registry](https://registry.modelcontextprotocol.io)
+- [Klavis AI (Enterprise MCP)](https://klavis.ai)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## シリーズを読む
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. **MCP & Tool Integrations**（この投稿）
+4. [Workflows & Memory](/mastra-workflows-memory)
