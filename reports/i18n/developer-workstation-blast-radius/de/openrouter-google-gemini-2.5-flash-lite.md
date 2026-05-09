@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: de
+- Model: openrouter/google/gemini-2.5-flash-lite
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/de/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 11.45
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2026-05-09--developer-workstation-blast-radius/de/index.mdx.
