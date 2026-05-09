@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: de
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/de/index.mdx
+- Validation: passed
+- Runtime seconds: 61.48
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
