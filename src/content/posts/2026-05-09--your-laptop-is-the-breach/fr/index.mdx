@@ -1,6 +1,6 @@
 ---
-title: "Votre ordinateur portable est une porte d'entrée pour les pirates"
-subTitle: "Les stations de travail des développeurs sont devenues des entrepôts d'identifiants. Traitez-les comme des environnements de production."
+title: "Votre portable est la brèche"
+subTitle: "Les stations de travail des développeurs sont des coffres-forts d'identifiants. Traitez-les comme de la production."
 date: 2026-05-09
 modified: 2026-05-09
 tags: [security, developer-experience, infostealers, credentials, devcontainers, supply-chain, ai-agents, production]
@@ -17,143 +17,143 @@ related:
   - mastra-security-guardrails
 ---
 
-Ouvrir un PDF ne devrait pas déclencher un incident de production.
+Ouvrir un PDF ne devrait pas devenir un incident de production.
 
-Cliquer sur un lien dans un SMS ne devrait pas compromettre vos sauvegardes.
+Cliquer sur un lien dans un SMS ne devrait pas se traduire par une compromission de sauvegarde.
 
-Installer un « petit utilitaire pratique » trouvé dans un résultat de recherche ne devrait pas offrir à un inconnu vos accès cloud, votre code source, vos jetons CI, vos exports de base de données, ni cette copie de la production que vous aviez oubliée dans `~/Downloads`.
+Installer un « petit utilitaire » trouvé dans un résultat de recherche ne devrait pas offrir à quiconque votre console cloud, votre code source, vos jetons CI, vos exports de base de données, et la copie de production que vous aviez oubliée dans `~/Downloads`.
 
-Pourtant, nous en sommes là, car l'ordinateur portable du développeur moderne n'est plus vraiment un ordinateur portable. C'est un entrepôt d'identifiants doté d'un clavier.
+Et pourtant nous y sommes, parce que le portable du développeur moderne n'est plus un portable. C'est un entrepôt d'identifiants avec un clavier.
 
-Il contient des sessions de navigateur. Des clés SSH. Des fichiers `.env`. Des jetons GitHub. Des authentifications de gestionnaires de paquets. Des CLI cloud. Des extensions de navigateur de gestionnaires de mots de passe. Des outils de codage IA avec accès au shell. Des bases de données locales. De vieilles sauvegardes. Des exports ponctuels. Des PDF aléatoires provenant de fournisseurs. Peut-être même un portefeuille crypto, si l'univers a choisi de faire preuve d'humour.
+Il contient des sessions de navigateur. Des clés SSH. Des fichiers `.env`. Des jetons GitHub. L'authentification des gestionnaires de paquets. Des CLI cloud. Des extensions de gestionnaires de mots de passe. Des outils de codage IA avec accès au shell. Des bases de données locales. De vieilles sauvegardes. Des exports ponctuels. Des PDF aléatoires de fournisseurs. Peut-être un portefeuille crypto, si l'univers a choisi la comédie.
 
-L'ancien modèle mental était : la production est dangereuse, l'environnement local est pratique.
+L'ancien modèle mental était : la production est dangereuse, le local est pratique.
 
-Ce modèle est dépassé.
+Ce modèle est mort.
 
 <p class="inset">
-La question n'est pas de savoir si vous pouvez éviter chaque mauvais clic. La question est de savoir si un seul mauvais clic permet de tout lire, de tout utiliser et de partir avant que vous ne vous en rendiez compte.
+La question n'est pas de savoir si vous pouvez éviter chaque mauvais clic. La question est de savoir si un seul mauvais clic peut tout lire, tout utiliser, et partir avant que vous ne vous en rendiez compte.
 </p>
 
-Dernière vérification : 9 mai 2026. Les exemples de menaces et le comportement des outils évoluent rapidement, considérez donc les détails des produits comme des notes actuelles, pas comme des vérités absolues.
+Dernière vérification : 9 mai 2026. Les exemples de menaces et le comportement des outils ci-dessous évoluent rapidement, donc traitez les détails produit comme des notes actuelles, pas comme des vérités gravées dans le marbre.
 
 ---
 
-## Définir le niveau de menace
+## Fixer le niveau de menace
 
-La plupart des gens règlent le niveau de menace trop bas parce qu'ils imaginent une attaque spectaculaire.
+La plupart des gens fixent le niveau de menace trop bas parce qu'ils imaginent une attaque spectaculaire.
 
-Ils imaginent une vulnérabilité « zero-day » dans un analyseur PDF. Ils imaginent un État-nation avec une invitation de calendrier et un monocle. Ils imaginent quelque chose d'assez exotique pour que la discipline technique ordinaire semble non pertinente.
+Ils imaginent un zero-day dans un parseur PDF. Ils imaginent un État-nation avec une invitation calendrier et un monocle. Ils imaginent quelque chose d'assez exotique pour que la discipline technique ordinaire semble hors sujet.
 
 La version ennuyeuse est plus utile.
 
 Un développeur reçoit un message qui semble assez normal :
 
-- une facture PDF d'un entrepreneur
-- un SMS concernant une livraison ou un avertissement de compte
+- une facture PDF d'un sous-traitant
+- un SMS concernant une livraison ou une alerte de compte
 - un faux CAPTCHA qui demande de coller une commande
-- une publicité de recherche empoisonnée pour un outil qu'il avait l'intention d'installer de toute façon
-- une extension de navigateur qui demande discrètement un peu trop d'autorisations
-- une pull request qui ajoute une dépendance de développement avec un script postinstall
-- une session de codage IA qui lit plus de fichiers que la tâche ne l'exigeait
+- une publicité empoisonnée pour un outil qu'il comptait installer de toute façon
+- une extension de navigateur qui demande discrètement un peu trop de permissions
+- une pull request qui ajoute une dépendance de dev avec un script postinstall
+- une session de codage IA qui a lu davantage de fichiers que la tâche ne l'exigeait
 
-Certains de ces chemins installent des logiciels malveillants. Certains volent des identifiants directement par hameçonnage (phishing). Certains n'ont même pas besoin d'exploit local, car l'utilisateur est piégé et exécute lui-même la commande de l'attaquant.
+Certains de ces vecteurs installent des malwares. D'autres volent des identifiants directement par hameçonnage. Certains n'ont même pas besoin d'exploit local, puisque l'utilisateur est manipulé pour exécuter la commande de l'attaquant lui-même.
 
-Le rapport de Microsoft sur Lumma Stealer est un instantané utile de la situation actuelle. Il énumère les e-mails de phishing, la malvertising (publicité malveillante), les téléchargements furtifs sur des sites compromis, les applications piégées, l'abus de services légitimes, les faux flux CAPTCHA et les chargeurs de logiciels malveillants comme vecteurs de distribution pour une famille d'infostealers prolifique. La partie intéressante n'est pas la marque Lumma. La partie intéressante est la stratégie de distribution : les attaquants n'ont pas besoin d'une porte parfaite lorsque les utilisateurs passent par une cité de portes à moitié fiables toute la journée.
+Le billet de Microsoft sur Lumma Stealer offre un instantané utile de la situation actuelle. Il répertorie les e-mails de phishing, la malvertising, les téléchargements furtifs sur des sites compromis, les applications trojanisées, l'abus de services légitimes, les faux flux CAPTCHA et les chargeurs de malwares comme vecteurs de distribution pour une seule famille d'infostealers prolifique. La partie intéressante n'est pas Lumma en tant que marque. C'est la stratégie de distribution : les attaquants n'ont pas besoin d'une porte parfaite quand les utilisateurs franchissent toute la journée une ville de portes à demi confiance.
 
-Le guide de phishing de la CISA souligne le même point au niveau humain : le phishing n'est plus seulement une affaire d'e-mails. Il se présente sous forme de SMS, de messages directs, d'appels téléphoniques, d'outils de collaboration et partout ailleurs où « cela semble plausible » fait tout le travail.
+Les recommandations de la CISA sur le phishing font le même point au niveau humain : le phishing, ce n'est plus que les e-mails. Il apparaît sous forme de SMS, de messages directs, d'appels téléphoniques, d'outils collaboratifs, et partout ailleurs où « ça a l'air plausible » fait tout le travail.
 
-Alors, définissez le niveau de menace comme ceci :
+Donc fixez le niveau de menace comme ceci :
 
-> Supposez qu'un processus puisse agir en votre nom pendant quelques minutes.
+> Supposez qu'un processus peut agir en votre nom pendant quelques minutes.
 
-Pas en tant que root. Pas pour toujours. Pas avec une persistance cinématographique.
+Pas en tant que root. Pas indéfiniment. Pas avec une persistance de film d'espion.
 
 Juste en tant que vous.
 
 C'est déjà suffisant.
 
-## Le disque dur est le prix
+## Le disque dur est la cible
 
 Les infostealers ne sont pas là pour admirer votre CPU.
 
-Ils veulent le disque. Plus précisément, ils veulent les parties du disque où s'accumule la confiance utile.
+Ils veulent le disque. Plus précisément, les zones du disque où s'accumule la confiance exploitable.
 
-Microsoft indique que Lumma peut voler des données provenant de navigateurs, d'applications, de portefeuilles de cryptomonnaie et d'autres stockages locaux. Son rapport indique que Lumma a été utilisé pour voler des mots de passe, des cartes de crédit, des comptes bancaires et des portefeuilles, et que Microsoft a identifié plus de 394 000 ordinateurs Windows infectés dans le monde entre le 16 mars et le 16 mai 2025.
+Microsoft indique que Lumma peut dérober des données issues des navigateurs, des applications, des portefeuilles de cryptomonnaies et d'autres magasins locaux. Son billet de perturbation précise que Lumma a servi à dérober des mots de passe, des cartes bancaires, des comptes bancaires et des portefeuilles, et que Microsoft a identifié plus de 394 000 ordinateurs Windows infectés dans le monde entre le 16 mars et le 16 mai 2025.
 
-L'enquête de Mandiant sur Snowflake est la leçon commerciale la plus effrayante. Dans la campagne UNC5537, Mandiant a rapporté que chaque incident auquel elle a répondu remontait à des identifiants clients compromis, et non à une brèche dans l'environnement d'entreprise de Snowflake. Les identifiants ont été obtenus principalement à partir d'infections par infostealer sur des systèmes non Snowflake. Certains identifiants dataient de 2020. Au moins 79,7 % des comptes utilisés dans la campagne avaient été exposés auparavant.
+L'enquête de Mandiant sur Snowflake est la leçon business qui fait plus peur. Dans la campagne UNC5537, Mandiant rapporte que chaque incident auquel il a répondu remontait à des identifiants clients compromis, pas à une faille de l'environnement entreprise de Snowflake. Les identifiants provenaient principalement d'infections par infostealer sur des systèmes extérieurs à Snowflake. Certains identifiants dataient de 2020. Au moins 79,7 % des comptes utilisés dans la campagne avaient fait l'objet d'une exposition antérieure.
 
-C'est la partie qui devrait rendre votre chaise inconfortable.
+C'est la partie qui devrait vous mettre mal à l'aise dans votre chaise.
 
-L'attaquant n'a pas eu besoin de briser l'entrepôt. Il a trouvé de vieilles clés dans un tiroir de bureau et a découvert que les serrures n'avaient jamais été changées.
+L'attaquant n'a pas eu besoin de forcer l'entrepôt. Il a trouvé de vieilles clés dans un tiroir et découvert que les serrures n'avaient jamais été changées.
 
-Pour les développeurs, le tiroir de bureau n'est généralement pas un seul tiroir. C'est un débarras :
+Pour les développeurs, le tiroir n'est généralement pas unique. C'est une pièces à désordre :
 
-| Artefact local | Pourquoi cela intéresse les attaquants |
+| Artefact local | Pourquoi les attaquants s'y intéressent |
 | --- | --- |
-| Cookies et sessions enregistrées | Ils peuvent contourner la cérémonie de connexion et parfois réduire la friction du MFA. |
-| Fichiers `.env` | Ils contiennent souvent des clés API, des URL de bases de données, des secrets JWT et des jetons tiers. |
-| Configuration CLI Cloud | Cela peut transformer une compromission d'ordinateur portable en accès à l'infrastructure. |
-| Identifiants Git | Le code source devient une carte des systèmes, des secrets et des chemins de déploiement. |
-| Clés SSH | Partout, puissantes, souvent copiées d'une machine à l'autre. |
+| Cookies et sessions sauvegardées | Ils peuvent contourner l'étape de connexion et parfois réduire la friction du MFA. |
+| Fichiers `.env` | Ils contiennent souvent des clés API, des URL de base de données, des secrets JWT et des jetons tiers. |
+| Configuration CLI cloud | Une compromission de portable peut devenir un accès infrastructure. |
+| Identifiants Git | Le code source devient une cartographie des systèmes, des secrets et des chemins de déploiement. |
+| Clés SSH | Toujours omniprésentes, toujours puissantes, toujours copiées entre machines. |
 | Dumps de bases de données | Les sauvegardes sont souvent moins protégées que la production et plus complètes que les logs. |
-| Contexte de codage IA | L'assistant peut avoir eu accès à des fichiers sensibles, à l'historique des commandes ou à des dossiers supplémentaires. |
-| Jetons de gestionnaire de paquets | L'accès à la chaîne d'approvisionnement n'est pas hypothétique si votre jeton de publication est local. |
+| Contexte de codage IA | L'assistant a peut-être eu accès à des fichiers sensibles, à l'historique de commandes ou à des répertoires supplémentaires. |
+| Jetons de gestionnaire de paquets | L'accès à la chaîne d'approvisionnement n'est pas hypothétique si votre jeton de publication est en local. |
 
-Les sauvegardes méritent ici un manque de respect particulier.
+Les sauvegardes méritent un traitement particulier ici.
 
-Les équipes protègent les bases de données de production avec IAM, des contrôles réseau, des logs d'audit et une petite cérémonie de supervision adulte. Puis quelqu'un exporte ces mêmes données vers `customer-backup-final-2.sql.gz`, les dépose sur une station de travail et oublie leur existence.
+Les équipes protègent les bases de données de production avec de l'IAM, des contrôles réseau, des logs d'audit et une petite cérémonie de supervision. Puis quelqu'un exporte les mêmes données dans `customer-backup-final-2.sql.gz`, les pose sur une station de travail, et oublie qu'elles existent.
 
-Ce fichier peut contenir des données plus sensibles que la production car il est plus facile à copier, plus facile à rechercher et moins susceptible d'être surveillé.
+Ce fichier peut contenir des données plus sensibles que la production, parce qu'il est plus facile à copier, plus facile à fouiller, et moins susceptible d'être surveillé.
 
 Les sauvegardes ne sont pas plus sûres parce qu'elles sont inertes.
 
-Ce sont juste de la production sans système d'alarme.
+C'est de la production sans système d'alarme.
 
-## Le modèle de prise de contrôle complète
+## Le schéma de prise de contrôle totale
 
-L'expression « fuite de données » est trop petite pour ce qui suit souvent.
+L'expression « fuite de données » est trop petite pour ce qui s'ensuit souvent.
 
-Le chemin laid ressemble à ceci :
+Le chemin laid ressemble à ça :
 
-1. Premier contact : l'utilisateur ouvre un fichier, clique sur un lien, installe un outil, exécute une commande copiée ou atterrit sur une page compromise.
-2. Scrape local : le logiciel malveillant ou le processus malveillant lit les stores de navigateur, les configurations locales, les fichiers `.env`, les jetons, les clés SSH, l'historique et les répertoires de projet.
-3. Pivot Cloud : des identifiants valides ouvrent l'accès au SaaS, au cloud, à GitHub, à la CI, au chat ou à l'entrepôt de données.
-4. Balayage des sauvegardes : les exports locaux, les buckets cloud, les artefacts CI et les snapshots de bases de données sont extraits car ils sont moins protégés que la production.
-5. Persistance par la légitimité : l'attaquant crée de nouvelles clés, des applications OAuth, des jetons de déploiement, des jetons d'accès personnels ou des comptes de service.
-6. Extorsion ou revente discrète : les données sont monétisées directement, vendues comme accès ou conservées pour une campagne ultérieure.
+1. Contact initial : l'utilisateur ouvre un fichier, clique sur un lien, installe un outil, exécute une commande copiée, ou atterrit sur une page compromise.
+2. Extraction locale : le malware ou le processus malveillant lit les magasins de navigateur, la configuration locale, les fichiers `.env`, les jetons, les clés SSH, l'historique et les répertoires de projet.
+3. Pivot cloud : des identifiants valides ouvrent l'accès au SaaS, au cloud, GitHub, la CI, le chat ou l'entrepôt de données.
+4. Balayage des sauvegardes : les exports locaux, les buckets cloud, les artefacts CI et les snapshots de base de données sont aspirés parce qu'ils sont plus mous que la production.
+5. Persistance par légitimité : l'attaquant crée de nouvelles clés, des applications OAuth, des jetons de déploiement, des personal access tokens ou des comptes de service.
+6. Extorsion ou revente silencieuse : les données sont monétisées directement, vendues comme accès, ou mises de côté pour une future campagne.
 
 Le passage de l'étape deux à l'étape trois explique pourquoi ce n'est pas seulement un problème de station de travail.
 
-Votre ordinateur portable est un courtier en identité. Il prouve qui vous êtes à chaque système que vous utilisez. Si un attaquant peut voler suffisamment de ces preuves, il peut apparaître en se faisant passer pour vous.
+Votre portable est un courtier d'identité. Il prouve qui vous êtes à chaque système que vous utilisez. Si un attaquant peut subtiliser suffisamment de ces preuves, il peut se présenter en se faisant passer pour vous.
 
-Le MFA aide. Les clés matérielles aident encore plus. Les vérifications de posture de périphérique, la liaison de session, les listes d'autorisation IP et l'accès conditionnel aident tous. Mais si votre machine locale contient des jetons à longue durée de vie, des sessions en cache, des secrets en texte clair et des sauvegardes non surveillées, vous demandez toujours à un seul point de terminaison de porter beaucoup de confiance institutionnelle.
+Le MFA aide. Les clés matérielles aident encore plus. Les vérifications de posture appareil, la liaison de session, les listes d'IP autorisées et l'accès conditionnel aident aussi. Mais si votre machine locale contient des jetons longue durée, des sessions en cache, des secrets en clair et des sauvegardes sans surveillance, vous demandez quand même à un seul endpoint de porter une confiance institutionnelle massive.
 
-Le but n'est pas une sécurité parfaite.
+L'objectif n'est pas la sécurité parfaite.
 
-Le but est d'empêcher le chemin facile de fonctionner.
+L'objectif est de faire échouer le chemin facile.
 
-## Les outils de développement ont agrandi la surface d'attaque
+## Les outils de développement ont élargi la zone de blast
 
-La partie inconfortable est que les meilleurs outils de développement ont également augmenté les enjeux.
+La partie inconfortable, c'est que les meilleurs outils de développement ont aussi augmenté les enjeux.
 
-Les conteneurs ont rendu les environnements locaux reproductibles. Les gestionnaires de paquets ont rendu l'installation des dépendances fluide. Les CLI cloud ont rendu l'infrastructure programmable. Les outils de codage IA ont rendu le terminal conversationnel.
+Les conteneurs ont rendu les environnements locaux reproductibles. Les gestionnaires de paquets ont rendu l'installation des dépendances sans friction. Les CLI cloud ont rendu l'infrastructure programmable. Les outils de codage IA ont rendu le terminal conversationnel.
 
-Tout cela est bon.
+Tout bon.
 
-Mais tout cela est dangereux lorsqu'il est utilisé sur une station de travail pleine de secrets.
+Aussi : tout dangereux quand on le pointe vers une station de travail pleine de secrets.
 
-Une compromission de la chaîne d'approvisionnement dans une dépendance de développement n'a pas besoin d'atteindre la production pour être importante. Un script postinstall malveillant s'exécutant sur la machine d'un développeur peut lire des fichiers locaux, inspecter des variables d'environnement et appeler l'extérieur. Un plugin CLI compromis peut faire la même chose. Un agent de codage IA utile avec de larges permissions sur le système de fichiers et le shell peut amplifier une mauvaise instruction, une mauvaise dépendance ou une mauvaise hypothèse.
+Une compromission de la chaîne d'approvisionnement dans une dépendance de dev n'a pas besoin d'arriver en production pour compter. Un script postinstall malveillant exécuté sur la machine d'un développeur peut lire les fichiers locaux, inspecter les variables d'environnement et appeler l'extérieur. Un plugin CLI compromis peut faire pareil. Un agent de codage IA bienveillant avec des permissions larges sur le filesystem et le shell peut amplifier une mauvaise instruction, une mauvaise dépendance ou une mauvaise supposition.
 
-C'est pourquoi « soyez prudent » est un conseil si faible. Il demande à l'humain d'être la limite.
+C'est pourquoi « faites attention » est un conseil si faible. Il demande à l'humain d'être la frontière.
 
-Les humains ne sont pas des limites. Les humains sont du trafic.
+Les humains ne sont pas des frontières. Les humains sont du trafic.
 
-Les limites sont des choses ennuyeuses comme l'isolation du système de fichiers, les secrets chiffrés au repos, l'interdiction de sortie par défaut, les identifiants éphémères, l'authentification matérielle et des alertes qui se déclenchent lorsqu'un faux secret est touché.
+Les frontières, ce sont des choses ennuyeuses : isolation du filesystem, secrets chiffrés au repos, egress en deny-by-default, identifiants éphémères, authentification matérielle, et des alertes qui se déclenchent quand on touche un faux secret.
 
 C'est là que les solutions deviennent intéressantes.
 
-## Le meilleur cadre : Lire, Utiliser, Exfiltrer
+## Le bon cadre : Lire, Utiliser, Exfiltrer
 
 Chaque défense de station de travail devrait répondre à trois questions :
 
@@ -161,9 +161,9 @@ Chaque défense de station de travail devrait répondre à trois questions :
 2. Quels identifiants peut-il utiliser ?
 3. Où peut-il envoyer des données ?
 
-La plupart des conseils de sécurité sur les stations de travail se concentrent trop sur la première question. Mettez à jour les logiciels. N'ouvrez pas les pièces jointes suspectes. Utilisez un antivirus. Bien, oui, évidemment.
+La plupart des conseils de sécurité de station de travail sur-concentrent sur la première question. Mettez les logiciels à jour. N'ouvrez pas les pièces jointes suspectes. Utilisez un antivirus. Oui, bon, évidemment.
 
-Mais si un processus malveillant s'exécute, les deuxième et troisième questions décident si vous passez un mauvais après-midi ou si vous vivez un incident à l'échelle de l'entreprise.
+Mais si un processus malveillant tourne, les deuxième et troisième questions déterminent si vous passez un mauvais après-midi ou si vous vivez un incident à l'échelle de l'entreprise.
 
 Peut-il lire `~/.aws/credentials` ?
 
@@ -171,123 +171,123 @@ Peut-il utiliser un jeton GitHub ?
 
 Peut-il ouvrir votre extension de gestionnaire de mots de passe ?
 
-Peut-il télécharger 3 Go vers un hôte aléatoire sans que personne ne le remarque ?
+Peut-il uploader 3 Go vers un hôte aléatoire sans que personne ne s'en rende compte ?
 
 Peut-il lire le dossier de sauvegarde ?
 
-Peut-il demander à votre agent IA de résumer les secrets d'un autre répertoire parce que ce répertoire a été inclus comme « contexte supplémentaire » il y a trois mois ?
+Peut-il demander à votre agent IA de résumer des secrets d'un autre répertoire parce que ce répertoire a été inclus comme « contexte supplémentaire » il y a trois mois ?
 
-Ce cadre rend le travail pratique. Il transforme la menace, d'une machine à brouillard en une liste de contrôle avec des dents.
+Ce cadre rend le travail concret. Il transforme la menace d'une machine à brouillard en une checklist avec des dents.
 
 ## Ce que je ferais en premier
 
-Si je devais renforcer un programme de station de travail de développeur sans transformer l'entreprise en un aéroport triste, je commencerais par ces couches.
+Si je devais durcir un programme de stations de travail développeur sans transformer l'entreprise en un aéroport triste, je commencerais par ces couches.
 
-### 1. Déplacer les travaux à risque dans des conteneurs de développement
+### 1. Confier les travaux risqués aux conteneurs de développement
 
-Utilisez les [Development Containers](https://github.com/devcontainers/spec) pour le travail de projet qui nécessite des dépendances, des outils de construction, l'installation de paquets ou des commandes shell assistées par IA. La promesse de la spécification est simple : utilisez un conteneur comme environnement de développement complet qui peut contenir les outils et les runtimes pour une base de code.
+Utilisez les [Development Containers](https://github.com/devcontainers/spec) pour les travaux de projet nécessitant des dépendances, des outils de build, l'installation de paquets ou des commandes shell assistées par IA. La promesse de la spec est simple : utilisez un conteneur comme environnement de développement complet, capable de contenir les outils et runtimes d'une codebase.
 
-Cela vous donne une limite utile. Pas une limite magique. Une limite utile.
+Cela vous donne une frontière utile. Pas magique. Utile.
 
-L'avantage est que `npm install`, `pip install`, `go generate`, `cargo build` et tout ce que le modèle veut exécuter peuvent se produire dans un espace de travail qui ne possède pas automatiquement tout votre dossier personnel.
+L'avantage, c'est que `npm install`, `pip install`, `go generate`, `cargo build` et tout ce que le modèle veut exécuter peuvent se produire dans un workspace qui ne possède pas automatiquement tout votre répertoire personnel.
 
-Montez le repo. Montez uniquement les secrets nécessaires pour ce projet. Évitez de monter `~/.ssh`, `~/.aws`, `~/Downloads`, `~/Documents` et tout le dossier personnel par commodité.
+Montez le repo. Montez uniquement les secrets nécessaires pour ce projet. Évitez de monter `~/.ssh`, `~/.aws`, `~/Downloads`, `~/Documents` et le dossier personnel entier par commodité.
 
-Si le projet a besoin d'identifiants, injectez des identifiants limités. Préférez les jetons à courte durée de vie. Préférez un accès en lecture seule lorsque cela est possible.
+Si le projet a besoin d'identifiants, injectez des identifiants scopeés. Préférez les jetons courte durée. Préférez l'accès en lecture seule quand c'est possible.
 
-Le conteneur n'est pas là pour rendre Docker sophistiqué. Il est là pour rendre le fait que « ce processus peut agir en mon nom » moins catastrophique.
+Le conteneur n'est pas là pour donner un air sophistiqué à Docker. Il est là pour rendre « ce processus peut agir en mon nom » moins catastrophique.
 
-### 2. Chiffrer les secrets locaux au lieu de vénérer les `.env`
+### 2. Chiffrer les secrets locaux au lieu de vénérer le `.env`
 
-Les fichiers `.env` en texte clair sont pratiques parce que les fichiers sont pratiques.
+Les fichiers `.env` en clair sont pratiques parce que les fichiers sont pratiques.
 
 Les attaquants aiment aussi les fichiers.
 
-[VarLock](https://varlock.dev/guides/secrets/) est intéressant car il traite la sensibilité comme des métadonnées structurées plutôt que comme un jeu de devinettes regex. Ses guides décrivent comment marquer explicitement les valeurs sensibles, chiffrer les secrets locaux avec `varlock()`, masquer les valeurs sensibles dans la sortie de la console et analyser les occurrences en texte clair des secrets connus.
+[VarLock](https://varlock.dev/guides/secrets/) est intéressant parce qu'il traite la sensibilité comme des métadonnées structurées plutôt que comme une devinette regex. Sa documentation décrit le marquage explicite des valeurs sensibles, le chiffrement des secrets locaux avec `varlock()`, le masquage des valeurs sensibles dans la sortie console, et la détection des occurrences en clair de secrets connus.
 
 C'est la bonne direction : les secrets devraient savoir qu'ils sont des secrets.
 
-Cela ne résoudra pas tous les problèmes d'identifiants. Cela ne protégera pas un secret qui a déjà été chargé dans un processus compromis. Mais cela réduit le nombre de fichiers en texte clair précieux qui traînent en attendant de devenir l'inventaire de quelqu'un d'autre.
+Ça ne résoudra pas tous les problèmes d'identifiants. Ça ne protégera pas un secret déjà chargé dans un processus compromis. Mais ça réduit le nombre de fichiers en clair précieux qui traînent en attendant de devenir l'inventaire de quelqu'un d'autre.
 
-### 3. Planter des jetons canari là où le vol ferait mal
+### 3. Semer des jetons canari là où le vol ferait mal
 
-Les [Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) sont des pièges numériques. Vous placez un faux secret, document, clé API, URL ou identifiant plausible là où un attaquant pourrait regarder. S'il est touché, vous recevez une alerte.
+Les [Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) sont des pièges numériques. Vous placez un faux secret, document, clé API, URL ou identifiant plausible là où un attaquant pourrait chercher. S'il est touché, vous recevez une alerte.
 
-L'astuce consiste à les placer là où une compromission réelle naviguerait naturellement :
+L'astuce, c'est de les placer là où une vraie compromission naviguerait naturellement :
 
 - à côté des fichiers `.env`
 - dans un faux `~/backups/customer-export.sql`
 - dans un faux profil AWS
-- dans une vieille feuille de calcul de mots de passe
-- dans des variables CI nommées comme des identifiants obsolètes
+- dans une vieille feuille de mots de passe
+- dans des variables CI nommées comme des identifiants dépréciés
 - dans la documentation qu'un intrus ouvrirait pendant la reconnaissance
 
-Les canaris n'empêchent pas le vol. Ils compressent le temps de détection.
+Les canaris ne préviennent pas le vol. Ils compriment le temps de détection.
 
-Cela compte parce que de nombreuses brèches ne sont pas gagnées dans la première minute. Elles sont gagnées dans les heures calmes après que le premier identifiant fonctionne.
+C'est important parce que beaucoup de brèches ne se gagnent pas dans la première minute. Elles se gagnent dans les heures calmes qui suivent le fonctionnement du premier identifiant.
 
 ### 4. Ajouter un pare-feu sortant
 
-La plupart des gens pensent « pare-feu » et imaginent les connexions entrantes. Cela manque le problème de la station de travail.
+Quand la plupart des gens pensent « pare-feu », ils imaginent les connexions entrantes. Ça rate le problème de la station de travail.
 
-Si un logiciel malveillant peut lire des secrets locaux, la question suivante est de savoir s'il peut les envoyer à l'extérieur.
+Si un malware peut lire les secrets locaux, la question suivante est de savoir s'il peut les envoyer au-dehors.
 
-Sur macOS, [LuLu](https://objective-see.org/products/lulu.html) est l'option libre et open-source qui alerte sur les connexions sortantes inconnues et ne surveille que le trafic sortant. [Little Snitch](https://obdev.at/products/littlesnitch/) est l'option commerciale polie avec des alertes de connexion, une surveillance réseau, des profils et une visibilité par application/domaine.
+Sur macOS, [LuLu](https://objective-see.org/products/lulu.html) est l'option gratuite et open-source qui alerte sur les connexions sortantes inconnues et surveille uniquement le trafic sortant. [Little Snitch](https://obdev.at/products/littlesnitch/) est l'option commerciale aboutie avec des alertes de connexion, du monitoring réseau, des profils et une visibilité par application et domaine.
 
-Sur Windows et Linux, [Portmaster](https://safing.io/) vaut la peine d'être évalué car il s'agit d'un pare-feu d'application open-source avec des règles par application. Le pare-feu Windows Defender prend également en charge les règles sortantes, bien que les conseils de Microsoft notent que le blocage sortant par défaut est généralement réservé aux environnements de haute sécurité car il nécessite un inventaire des applications et une gestion des règles minutieux.
+Sur Windows et Linux, [Portmaster](https://safing.io/) mérite d'être évalué : c'est un pare-feu applicatif open-source avec des règles par application. Le pare-feu Windows Defender supporte aussi les règles sortantes, bien que les propres recommandations de Microsoft notent que le deny-by-default sortant est généralement réservé aux environnements à haute sécurité, car il nécessite un inventaire applicatif minutieux et une gestion des règles rigoureuse.
 
-Cette couche est ennuyeuse au début.
+Cette couche est agaçante au début.
 
-Ce n'est pas une raison pour l'ignorer. C'est une raison pour la déployer avec des profils, des listes d'autorisation et des attentes. Le but n'est pas de cliquer héroïquement sur « refuser » toute la journée. Le but est de remarquer quand `invoice-viewer`, `postinstall` ou `python` veut parler à un domaine qui n'a rien à faire dans votre mardi.
+Ce n'est pas une raison pour la sauter. C'est une raison pour la déployer avec des profils, des listes d'autorisation et des attentes claires. L'objectif n'est pas de cliquer « refuser » en héros toute la journée. L'objectif est de remarquer quand `invoice-viewer`, `postinstall` ou `python` veut parler à un domaine qui n'a rien à faire dans votre mardi.
 
-### 5. Traiter les outils de codage IA comme des administrateurs juniors avec une amnésie
+### 5. Traiter les outils de codage IA comme des admins juniors amnésiques
 
-Les outils de codage IA ne sont pas mauvais. Je les utilise. Je les aime.
+Les outils de codage IA ne sont pas mauvais. Je les utilise. Je les apprécie.
 
-Mais ce sont des outils avec accès en lecture, accès en écriture, accès au shell, accès réseau et un talent pour une dynamique confiante.
+Mais ce sont des outils avec accès en lecture, accès en écriture, accès au shell, accès réseau et un talent pour l'élan en confiance.
 
-La documentation de Claude Code d'Anthropic décrit les permissions pour les outils, les fichiers, les domaines et les politiques gérées, et ils distinguent les permissions de la mise en bac à sable (sandboxing). Les permissions décident de ce que l'agent peut utiliser. Le sandboxing fournit une application au niveau du système d'exploitation pour l'accès Bash au système de fichiers et au réseau.
+La documentation de Claude Code d'Anthropic décrit les permissions pour les outils, fichiers, domaines et politiques gérées, et elle distingue les permissions du sandboxing. Les permissions décident de ce que l'agent peut utiliser. Le sandboxing fournit une application au niveau OS pour l'accès Bash au filesystem et au réseau.
 
 Cette distinction est la partie importante.
 
-Un texte de politique n'est pas un bac à sable. Une invite de permission n'est pas un bac à sable. Un modèle gentil n'est pas un bac à sable.
+Un texte de politique n'est pas un sandbox. Une invite de permission n'est pas un sandbox. Un modèle poli n'est pas un sandbox.
 
-Utilisez des règles d'autorisation et de refus au niveau du projet. Gardez les fichiers sensibles hors des répertoires de travail. Exécutez les commandes risquées à l'intérieur de conteneurs. Ne donnez pas à un agent tout votre dossier personnel parce qu'il pourrait avoir besoin de « contexte ». Le contexte n'est pas gratuit. Parfois, le contexte est votre rapport d'incident, pré-écrit.
+Utilisez des règles allow/deny au niveau du projet. Gardez les fichiers sensibles en dehors des répertoires de travail. Exécutez les commandes risquées dans des conteneurs. Ne confiez pas à un agent tout votre répertoire personnel sous prétexte qu'il pourrait avoir besoin de « contexte ». Le contexte n'est pas gratuit. Parfois, le contexte, c'est votre rapport d'incident, pré-écrit.
 
-## Le tableau que je veux dans chaque wiki d'équipe
+## Le tableau que je voudrais dans chaque wiki d'équipe
 
-Ceci est la carte de sécurité de la station de travail que je préfère voir plutôt qu'une autre diapositive de formation annuelle.
+C'est la cartographie de sécurité de station de travail que je préfèrerais voir à une nouvelle diapositive de formation annuelle.
 
-| Couche | Mauvaise valeur par défaut | Meilleure valeur par défaut |
+| Couche | Mauvais défaut | Meilleur défaut |
 | --- | --- | --- |
-| Système de fichiers | Projets, secrets, téléchargements, sauvegardes et outils partagent tous un seul contexte utilisateur. | Exécutez le travail de projet dans des Dev Containers avec des montages étroits. |
-| Secrets | Fichiers `.env` en texte clair et jetons à longue durée de vie. | Secrets locaux chiffrés, jetons limités, durées de vie courtes, authentification matérielle. |
-| Détection | Espérer que l'EDR remarque avant la fin de l'exfiltration. | Jetons canari dans des emplacements locaux et cloud de grande valeur. |
-| Réseau | Tout processus peut appeler l'extérieur à moins d'être bloqué par la réputation. | Pare-feu d'application sortant avec des règles pour les outils risqués. |
-| Agents IA | Larges permissions lecture/écriture/shell dans le contexte principal de la station de travail. | Permissions limitées au projet et commandes mises en bac à sable. |
+| Filesystem | Projets, secrets, téléchargements, sauvegardes et outils partagent un seul contexte utilisateur. | Faites tourner le travail de projet dans des Dev Containers avec des montages étroits. |
+| Secrets | Fichiers `.env` en clair et jetons longue durée. | Secrets locaux chiffrés, jetons scopeés, durées de vie courtes, authentification matérielle. |
+| Détection | Espérer que l'EDR remarque avant la fin de l'exfiltration. | Jetons canari dans des emplacements locaux et cloud à forte valeur. |
+| Réseau | N'importe quel processus peut appeler au-dehors sauf blocage par réputation. | Pare-feu applicatif sortant avec des règles pour les outils risqués. |
+| Agents IA | Permissions larges lecture/écriture/shell dans le contexte principal de la station de travail. | Permissions scopeées au projet et commandes sandboxées. |
 | Sauvegardes | Dumps et exports locaux traités comme des fichiers morts. | Chiffrer, faire expirer, isoler et surveiller l'accès aux artefacts de sauvegarde. |
 
-Le but n'est pas d'acheter cinq outils.
+L'objectif n'est pas d'acheter cinq outils.
 
-Le but est d'arrêter de traiter la station de travail comme une masse de confiance.
+L'objectif est d'arrêter de traiter la station de travail comme une masse de confiance indifférenciée.
 
 ## Une note sur les sauvegardes
 
 Les sauvegardes sont l'endroit où les programmes de sécurité vont pour se mentir à eux-mêmes.
 
-Elles sont nécessaires. Elles sont aussi dangereuses. Une sauvegarde est souvent la forme la plus portable de la chose que vous voulez le moins rendre portable.
+Elles sont nécessaires. Elles sont aussi dangereuses. Une sauvegarde est souvent la forme la plus portable de ce que vous voudriez le moins portable.
 
 Pour les machines de développement :
 
-- Ne stockez pas les exports de production localement à moins qu'il n'y ait un réel besoin.
+- Ne stockez pas d'exports de production en local sauf nécessité réelle.
 - Chiffrez les sauvegardes locales et les dumps de bases de données.
 - Ajoutez des dates d'expiration aux exports.
-- Mettez des lignes ou documents canari dans les endroits de sauvegarde.
-- Gardez les sauvegardes hors des montages larges des Dev Containers.
-- Gardez-les hors du contexte des outils IA.
-- Faites pivoter tout identifiant qui apparaît à l'intérieur d'une sauvegarde.
+- Placez des lignes ou documents canari dans les endroits qui ressemblent à des sauvegardes.
+- Gardez les sauvegardes en dehors des montages larges des Dev Containers.
+- Gardez-les en dehors du contexte des outils IA.
+- Faites tourner tout identifiant figurant dans une sauvegarde.
 
-Si la sauvegarde contient des identifiants, ce n'est pas juste une sauvegarde. C'est un kit de prise de contrôle retardé.
+Si la sauvegarde contient des identifiants, ce n'est pas qu'une sauvegarde. C'est un kit de prise de contrôle à retardement.
 
 ## La norme pratique
 
@@ -297,30 +297,30 @@ C'est un conseil pour une affiche, pas pour un système.
 
 La norme pratique est :
 
-- un mauvais PDF ne devrait pas lire tous les secrets du projet
+- un mauvais PDF ne devrait pas pouvoir lire tous les secrets du projet
 - une dépendance malveillante ne devrait pas voir les identifiants cloud d'autres projets
-- une erreur d'outil IA ne devrait pas traverser tout le dossier personnel
-- un infostealer ne devrait pas trouver des sauvegardes en texte clair et des jetons à longue durée de vie
-- un processus inconnu ne devrait pas télécharger des données sensibles sans une alarme locale
-- un identifiant volé devrait expirer, échouer au MFA, échouer aux vérifications de périphérique ou toucher un canari avant de devenir une prise de contrôle complète
+- une erreur d'outil IA ne devrait pas traverser tout le répertoire personnel
+- un infostealer ne devrait pas trouver de sauvegardes en clair et des jetons longue durée
+- un processus inconnu ne devrait pas pouvoir uploader des données sensibles sans déclencher une alarme locale
+- un identifiant volé devrait expirer, échouer au MFA, échouer aux vérifications appareil ou toucher un canari avant de devenir une prise de contrôle complète
 
-La sécurité s'améliore quand nous arrêtons de demander aux humains d'être parfaits et commençons à rendre la compromission moins rentable.
+La sécurité s'améliore quand on arrête de demander aux humains d'être parfaits et qu'on rend la compromission moins rentable.
 
-Votre ordinateur portable fait partie de la production maintenant.
+Votre portable fait partie de la production maintenant.
 
-Donnez-lui des limites de forme production.
+Donnez-lui des frontières à la mesure de la production.
 
 ## Sources et lectures utiles
 
 - [Vue d'ensemble du DBIR Verizon 2026](https://www.verizon.com/business/resources/reports/dbir/)
-- [Mandiant : UNC5537 cible les instances Snowflake des clients](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
-- [Microsoft : Techniques de livraison et capacités de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
-- [Microsoft DCU : Perturber Lumma Stealer](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
-- [CISA : Reconnaître et signaler le phishing](https://www.cisa.gov/secure-our-world/recognize-and-report-phishing)
-- [Spécification des Development Containers](https://github.com/devcontainers/spec)
+- [Mandiant : UNC5537 cible les instances client de Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Microsoft : techniques de livraison et capacités de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+- [Microsoft DCU : perturbation de Lumma Stealer](https://blogs.microsoft.com/on-the-issues/2025/05/21/microsoft-leads-global-action-against-favored-cybercrime-tool/)
+- [CISA : reconnaître et signaler le phishing](https://www.cisa.gov/secure-our-world/recognize-and-report-phishing)
+- [Spécification Development Containers](https://github.com/devcontainers/spec)
 - [Gestion des secrets VarLock](https://varlock.dev/guides/secrets/)
-- [Vue d'ensemble des Canarytokens de Thinkst](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
+- [Vue d'ensemble des Canarytokens Thinkst](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
 - [Objective-See LuLu](https://objective-see.org/products/lulu.html)
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
-- [Permissions de Claude Code](https://code.claude.com/docs/en/permissions)
+- [Permissions Claude Code](https://code.claude.com/docs/en/permissions)
