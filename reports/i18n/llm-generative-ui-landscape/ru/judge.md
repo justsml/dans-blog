@@ -26,5 +26,5 @@
 
 ## Final Polish Actions
 1. Selected Qwen candidate as the base.
-2. Updated frontmatter visibility flags to `false/true` (publish/draft) to make the post live.
+2. Preserved the source article visibility flags (`draft: true`, `unlisted: true`, `hidden: true`, `publish: false`) to match English and the existing localized versions.
 3. Verified asset paths (all parent-relative `../`).

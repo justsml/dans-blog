@@ -6,7 +6,7 @@ I agree with the first judge's selection of **qwen3.6-plus (9b051212)** as the b
 
 ## Disagreement / Escalation
 
-**The file on disk (HEAD `a35824df`) contains gemini-3-flash-preview output, not the selected qwen candidate.** The judge selected qwen but subsequent candidate commits overwrote it. This file needs to be reverted to the qwen base with the frontmatter fixes from judge.md applied.
+**The file on disk (HEAD `a35824df`) contains gemini-3-flash-preview output, not the selected qwen candidate.** The judge selected qwen but subsequent candidate commits overwrote it. This file needs to be reverted to the qwen base while preserving the source article visibility flags.
 
 ## Candidate Comparison
 
@@ -35,5 +35,5 @@ Systematic over-translation of technical terms:
 ## Required Action
 
 1. Reset `src/content/posts/2026-05-06--llm-generative-ui-landscape/ru/index.mdx` to the qwen candidate content (`9b051212`)
-2. Apply frontmatter fixes from the first judge (set `draft: false`, `unlisted: false`, `hidden: false`, `publish: true`)
+2. Preserve the source visibility flags (`draft: true`, `unlisted: true`, `hidden: true`, `publish: false`)
 3. Commit as `i18n final(ru): polish llm-generative-ui-landscape`
