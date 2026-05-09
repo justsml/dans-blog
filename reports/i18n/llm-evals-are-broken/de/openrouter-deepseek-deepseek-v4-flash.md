@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/de/index.mdx
+- Validation: passed
+- Runtime seconds: 49.07
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
