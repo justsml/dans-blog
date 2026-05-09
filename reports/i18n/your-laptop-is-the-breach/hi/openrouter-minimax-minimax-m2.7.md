@@ -4,10 +4,10 @@
 - Model: openrouter/minimax/minimax-m2.7
 - Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx
 - Validation: rejected: touched unrelated files
-- Runtime seconds: 150.06
-- Input tokens: unknown
+- Runtime seconds: 300.05
+- Input tokens: 0
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model changed files outside src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/
+- Note: Model changed files outside src/content/posts/2026-05-09--your-laptop-is-the-breach/hi/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/index.mdx, reports/i18n/your-laptop-is-the-breach/ja/judge-second.md, reports/i18n/your-laptop-is-the-breach/ja/judge.md
