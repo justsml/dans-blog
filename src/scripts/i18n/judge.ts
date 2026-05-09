@@ -181,6 +181,7 @@ function shouldEscalateSecondJudge({
     /escalation (?:is )?not required/,
     /escalation (?:is )?not needed/,
     /no disagreement/,
+    /no changes? (?:to [^\r\n]+ )?needed/,
   ];
 
   if (explicitNoEscalationPatterns.some((pattern) => pattern.test(normalized))) {
@@ -204,6 +205,9 @@ function parseSelectedCommit(output: string) {
     /recommendation:\s*(?:\r?\n)?accept[^\r\n]*?`?([a-f0-9]{40})/i,
     /accept the selected translation[^\r\n]*?`?([a-f0-9]{40})/i,
     /accept[^\r\n]*?\(commit\s+`?([a-f0-9]{40})/i,
+    /selected[^\r\n]*?\(`?([a-f0-9]{40})`?\)/i,
+    /current[^\r\n]*?\(commit\s+`?([a-f0-9]{40})`?\)/i,
+    /keep[^\r\n]*?\(commit\s+`?([a-f0-9]{40})`?\)/i,
   ];
 
   for (const pattern of selectedPatterns) {

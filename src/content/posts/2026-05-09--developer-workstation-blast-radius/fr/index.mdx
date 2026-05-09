@@ -1,6 +1,6 @@
 ---
-title: "Réduisez la zone d'impact de votre poste de développement"
-subTitle: "Conteneurs Dev, secrets chiffrés, canary tokens et pare-feu sortants pour ceux qui doivent encore travailler."
+title: "Réduisez le rayon d'impact de votre poste de développeur"
+subTitle: "Dev Containers, secrets chiffrés, tokens canaris et pare-feu sortants pour ceux qui doivent quand même faire du travail."
 date: 2026-05-09
 modified: 2026-05-09
 tags: [security, devcontainers, secrets, canarytokens, varlock, firewall, ai-agents, developer-experience, best-practices]
@@ -17,27 +17,27 @@ related:
   - docker-security-tips-for-self-hosting
 ---
 
-Les conseils de sécurité pour les portables de développeurs échouent généralement de l'une des deux façons.
+Les conseils de sécurité pour les ordinateurs portables de développeurs échouent généralement de l'une des deux manières suivantes.
 
-C'est soit du papier peint d'entreprise :
+Soit c'est de la paperasse d'entreprise :
 
 > Utilisez une protection de point de terminaison, patchez régulièrement, évitez les liens suspects, signalez les incidents rapidement.
 
 Tout cela est vrai. Mais ce n'est pas suffisant.
 
-Ou bien c'est des absurdités de survivaliste où la réponse est d'arrêter d'utiliser les navigateurs, JavaScript, Wi-Fi, gestionnaires de packages, fournisseurs, PDFs, chat, éditeurs de code, téléphones, et la joie.
+Ou alors c'est du discours survivaliste où la réponse est d'arrêter d'utiliser les navigateurs, JavaScript, le Wi-Fi, les gestionnaires de paquets, les fournisseurs, les PDF, le chat, les éditeurs de code, les téléphones et la joie.
 
-Pas utile non plus.
+Pas plus utile.
 
-L'objectif pratique est plus petit :
+L'objectif pratique est plus modeste :
 
-> Si quelque chose s'exécute en votre nom, il ne devrait pas automatiquement hériter de tout ce à quoi vous avez accès.
+> Si quelque chose s'exécute en tant que vous, il ne devrait pas automatiquement hériter de tout ce pour quoi vous êtes autorisé.
 
-Voilà le problème de la zone d'impact du poste de travail.
+C'est le problème du rayon d'impact de la station de travail.
 
-Ceci est un guide pour la réduire sans faire sentir le développement comme taper à travers du ciment humide.
+Voici un guide pour le réduire sans que le développement ne donne l'impression de taper à travers du ciment mouillé.
 
-Dernière vérification : 9 mai 2026. Le comportement des outils, les prix et le support des plateformes changent, donc vérifiez les docs actuelles avant de standardiser sur une équipe.
+Dernière vérification : 9 mai 2026. Le comportement des outils, les prix et la prise en charge des plateformes changent, alors consultez la documentation actuelle avant de standardiser au sein d'une équipe.
 
 ---
 
@@ -47,23 +47,23 @@ Vous avez besoin de quatre couches :
 
 | Couche | Rôle |
 | --- | --- |
-| Isolation | Garder les outils de projet et les commandes risquées à l'écart du reste de la machine. |
-| Gestion des secrets | Réduire les identifiants en clair et rendre les valeurs sensibles plus difficiles à fuir accidentellement. |
-| Détection | Planter des fils déclencheurs là où les attaquants ou la mauvaise automatisation regarderaient naturellement. |
-| Contrôle des sorties | Remarquer et bloquer les connexions sortantes inattendues. |
+| Isolation | Éloignez les outils de projet et les commandes à risque du reste de la machine. |
+| Gestion des secrets | Réduisez les identifiants en texte brut et rendez les valeurs sensibles plus difficiles à fuir accidentellement. |
+| Détection | Placez des tripwires là où les attaquants ou une mauvaise automatisation chercheraient naturellement. |
+| Contrôle des sorties | Détectez et bloquez les connexions sortantes inattendues. |
 
-Ne commencez pas en essayant de résoudre toutes les menaces du portable.
+Ne commencez pas par essayer de résoudre chaque menace sur un ordinateur portable.
 
-Commencez par le chemin que les attaquants aiment vraiment : exécuter quelque chose, lire les secrets, les envoyer, les utiliser avant que quelqu'un ne remarque.
+Commencez par le chemin que les attaquants apprécient vraiment : exécuter quelque chose, lire les secrets, les envoyer, les utiliser avant que quiconque ne s'en aperçoive.
 
-## 1. Mettez les projets dans des conteneurs Dev
+## 1. Placez les projets dans des Dev Containers
 
-Les [conteneurs Dev](https://github.com/devcontainers/spec) vous permettent d'utiliser un conteneur comme environnement de développement complet. Ça ressemble à de l'infrastructure d'expérience développeur, et c'est le cas. Mais c'est aussi une frontière de sécurité quand vous l'utilisez avec discipline.
+Les [Dev Containers](https://github.com/devcontainers/spec) vous permettent d'utiliser un conteneur comme environnement de développement complet. Cela ressemble à de l'infrastructure d'expérience développeur, et c'en est. Mais c'est aussi une frontière de sécurité lorsque vous l'utilisez avec discipline.
 
 La configuration paresseuse monte trop de choses :
 
 ```jsonc
-// Trop pratique. Trop de zone d'impact.
+// Trop pratique. Trop de rayon d'impact.
 {
   "name": "app",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
@@ -73,9 +73,9 @@ La configuration paresseuse monte trop de choses :
 }
 ```
 
-Cela transforme le conteneur en une version étrangement formatée de votre compte hôte.
+Cela transforme le conteneur en une version bizarrement façonnée de votre compte hôte.
 
-Utilisez des montages plus restreints à la place :
+Utilisez plutôt des montages étroits :
 
 ```jsonc
 // .devcontainer/devcontainer.json
@@ -93,71 +93,71 @@ Utilisez des montages plus restreints à la place :
 }
 ```
 
-Ce n'est pas un bac à sable parfait. Les conteneurs partagent un noyau. Docker a des arêtes vives. Les montages peuvent percer des trous directement à travers le modèle.
+Ce n'est pas un sandbox parfait. Les conteneurs partagent un noyau. Docker a des arêtes vives. Les montages peuvent percer des trous directement à travers le modèle.
 
-Mais pour la plupart des flux de travail de développeur, le gain est immédiat : les commandes de projet voient le projet, pas tout votre grenier numérique.
+Mais pour la plupart des workflows de développeur, le gain est immédiat : les commandes du projet voient le projet, pas tout votre grenier numérique.
 
-### Que monter
+### Quoi monter
 
 Montez le repo.
 
-Peut-être un cache spécifique au projet.
+Montez peut-être un cache spécifique au projet.
 
-Ne montez pas ces choses par défaut :
+Ne montez pas ceux-ci par défaut :
 
 - `~/.ssh`
 - `~/.aws`
 - `~/.config/gcloud`
 - `~/.azure`
-- `~/Téléchargements`
+- `~/Downloads`
 - `~/Documents`
 - exports de gestionnaire de mots de passe
 - dumps de base de données
 - dossiers de sauvegarde
 - dossiers "temp" aléatoires qui existent depuis 2021
 
-Si un projet a besoin d'un accès cloud, injectez un identifiant fait pour ce projet. Quelque chose de court durée est mieux. En lecture seule est mieux. Un token qui ne peut accéder qu'à un compte dev est mieux que votre identité d'admin personnelle qui erre dans le conteneur avec une petite valise.
+Si un projet a besoin d'accès cloud, injectez un identifiant créé pour ce projet. De courte durée, c'est mieux. En lecture seule, c'est mieux. Un token qui ne peut accéder qu'à un compte de développement est mieux que votre identité d'administration personnelle qui se promène dans le conteneur avec une petite valise.
 
 ### Les outils de codage IA appartiennent ici aussi
 
-Les outils de codage IA rendent les conteneurs Dev plus importants, pas moins.
+Les outils de codage IA rendent les Dev Containers plus importants, pas moins.
 
-Les [docs de permissions de Claude Code d'Anthropic](https://code.claude.com/docs/en/permissions) divisent le monde en permissions et sandboxing : les permissions contrôlent les outils, fichiers et domaines ; le sandboxing fournit une application au niveau OS pour l'accès au système de fichiers Bash et réseau.
+La [documentation des permissions de Claude Code](https://code.claude.com/docs/en/permissions) d'Anthropic divise le monde en permissions et sandboxing : les permissions contrôlent les outils, les fichiers et les domaines ; le sandboxing fournit une isolation au niveau du système d'exploitation pour l'accès au système de fichiers et au réseau Bash.
 
-Cette distinction est toute la partie importante.
+Cette distinction est tout le jeu.
 
-Si un agent peut exécuter des commandes shell, installer des packages, inspecter des fichiers, et suivre des instructions, mettez le travail shell à l'intérieur d'un environnement de projet contraint. Gardez l'hôte ennuyeux.
+Si un agent peut exécuter des commandes shell, installer des paquets, inspecter des fichiers et suivre des instructions, placez le travail shell à l'intérieur d'un environnement de projet contraint. Gardez l'hôte ennuyeux.
 
-Par défaut correct :
+Bon défaut :
 
-- démarrez l'agent dans le repo, pas votre répertoire home
-- denying explicitement les chemins sensibles
-- utilisez un conteneur Dev pour les commandes install/build/test
-- évoutez d'ajouter des "répertoires supplémentaires" larges comme contexte
-- révisez toute commande générée qui touche aux identifiants, config auth, publication de packages, ou ressources cloud
+- démarrez l'agent dans le repo, pas dans votre répertoire personnel
+- refusez les chemins sensibles explicitement
+- utilisez un Dev Container pour les commandes d'installation/build/test
+- évitez d'ajouter de larges "répertoires supplémentaires" larges comme contexte
+- révisez toute commande générée qui touche aux identifiants, à la configuration d'authentification, à la publication de paquets ou aux ressources cloud
 
 Le modèle n'a pas besoin de votre dossier `~/Documents` pour corriger une erreur TypeScript.
 
-## 2. Remplacez le chaos des `.env` en clair
+## 2. Remplacez la prolifération de `.env` en texte brut
 
 Les fichiers `.env` ne sont pas mauvais.
 
-Ils sont juste des fichiers. C'est le problème.
+Ce sont juste des fichiers. C'est le problème.
 
-Les fichiers sont copiés. Les fichiers sont indexés. Les fichiers sont montés. Les fichiers sont lus par des scripts qui étaient seulement censés lintier du CSS. Les fichiers sont inclus dans des zips de débogage. Les fichiers sont collés dans le chat parce que quelqu'un voulait de l'aide et a oublié les douze dernières lignes.
+Les fichiers sont copiés. Les fichiers sont indexés. Les fichiers sont montés. Les fichiers sont lus par des scripts qui ne devaient que lint du CSS. Les fichiers sont inclus dans des zips de débogage. Les fichiers sont collés dans un chat parce que quelqu'un voulait de l'aide et a oublié les douze dernières lignes.
 
 Utilisez la hiérarchie ennuyeuse :
 
-1. Aucun secret nécessaire : mettez la valeur dans `.env.example`.
+1. Aucun secret nécessaire : placez la valeur dans `.env.example`.
 2. Secret local uniquement : chiffrez-le au repos.
-3. Secret de développement partagé : mettez-le dans un vrai gestionnaire de secrets ou mot de passe.
-4. Secret de production : ne le mettez pas sur les portables de développeurs sauf s'il y a une raison très spécifique.
+3. Secret de développement partagé : placez-le dans un véritable gestionnaire de secrets ou un gestionnaire de mots de passe.
+4. Secret de production : ne le placez pas sur les ordinateurs portables des développeurs sauf s'il y a une raison très spécifique.
 
-[VarLock](https://varlock.dev/guides/secrets/) est attrayant parce qu'il rend la sensibilité explicite. Ses docs décrivent marquer des valeurs avec `@sensitive`, chiffrer les valeurs locales avec `varlock()`, rediger les valeurs sensibles depuis la sortie console, et scanner les fichiers de projet pour des occurrences en clair de valeurs sensibles connues.
+[VarLock](https://varlock.dev/guides/secrets/) est attrayant car il rend la sensibilité explicite. Sa documentation décrit le marquage des valeurs avec `@sensitive`, le chiffrement des valeurs locales avec `varlock()`, la rédaction des valeurs sensibles dans la sortie console et l'analyse des fichiers du projet pour détecter les occurrences en texte brut de valeurs sensibles connues.
 
-La forme est meilleure que "exécuter une regex contre le repo et espérer que le secret a une forme de secret."
+La forme est meilleure que "exécuter une regex contre le repo et espérer que le secret ressemble à un secret".
 
-Direction d'exemple :
+Exemple de direction :
 
 ```dotenv
 # .env.schema
@@ -181,21 +181,21 @@ STRIPE_SECRET_KEY=varlock(local:...)
 DATABASE_URL=varlock(local:...)
 ```
 
-Cela ne signifie pas que les secrets sont sûrs une fois chargés dans un processus compromis. Rien ne le fait. Mais cela signifie que le système de fichiers a moins de prix en clair.
+Cela ne signifie pas que les secrets sont en sécurité une fois chargés dans un processus compromis. Rien ne le fait. Mais cela signifie que le système de fichiers a moins de prix en texte brut.
 
-Cela compte contre les infostealers, dépendances malveillantes, contexte IA trop large, commits accidentels, et le moment humble de `console.log(process.env)`.
+Cela compte contre les infostealers, les dépendances malveillantes, le contexte IA trop large, les commits accidentels et l'humble moment `console.log(process.env)`.
 
-## 3. Ajoutez des canary tokens là où un voleur regarderait
+## 3. Ajoutez des tokens canaris là où un voleur chercherait
 
-La plupart de la surveillance vous dit quand quelque chose de connu-mauvais s'est produit.
+La plupart des monitoring vous disent quand quelque chose de connu comme mauvais s'est produit.
 
-Les canary tokens vous disent quand quelque chose d'étrange a touché quelque chose qu'il ne devrait pas savoir existe.
+Les tokens canaris vous disent quand quelque chose de bizarre a touché quelque chose qu'il ne devrait pas savoir exister.
 
-[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) les décrit comme des fils déclencheurs numériques. Ils peuvent être des documents, URLs, clés API, profils VPN, codes QR, et autres faux actifs qui alertent quand accédés.
+[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) les décrit comme des tripwires numériques. Ils peuvent être des documents, des URL, des clés API, des profils VPN, des codes QR et d'autres faux actifs qui alertent lorsqu'ils sont consultés.
 
-Le placement est l'art.
+Le placement est un art.
 
-Ne dispersez pas appât aléatoire et déclarez la victoire. Mettez des canaris là où le vol d'identifiants, le vol de sauvegarde, ou la reconnaissance irait naturellement.
+Ne dispersez pas d'appâts aléatoires et ne déclarez pas victoire. Placez des canaris là où le vol d'identifiants, le vol de sauvegarde ou la reconnaissance irait naturellement.
 
 ### Canaris locaux
 
@@ -205,20 +205,20 @@ Créez une fausse sauvegarde :
 ~/backups/customer-prod-export-2024.sql
 ```
 
-Mettez une URL ou token canari dedans :
+Placez une URL ou un token canari à l'intérieur :
 
 ```sql
--- webhook analytics legacy
+-- webhook d'analyse hérité
 -- https://canarytokens.example.invalid/static/abc123
 ```
 
-Créez un fichier d'identifiants factice :
+Créez un faux fichier d'identifiants :
 
 ```text
 ~/Documents/passwords-old.csv
 ```
 
-Ou un profil AWS factice :
+Ou un faux profil AWS :
 
 ```ini
 # ~/.aws/credentials
@@ -227,32 +227,32 @@ aws_access_key_id = AKIA...
 aws_secret_access_key = ...
 ```
 
-Utilisez un vrai type de token canari AWS quand disponible pour que l'alerte se déclenche sur l'utilisation tentée, pas juste l'ouverture de fichier.
+Utilisez un vrai type de token canari AWS lorsque disponible afin que l'alerte se déclenche lors de la tentative d'utilisation, pas seulement à l'ouverture du fichier.
 
 ### Canaris de repo
 
-Mettez des canaris près des endroits que les attaquants inspectent après l'accès source :
+Placez des canaris près des endroits que les attaquants inspectent après l'accès au code source :
 
 - runbooks internes
-- docs de déploiement dépréciées
-- notes de migration anciennes
-- identifiants de service factices dans un `.env.canary` clairement non-production
-- instructions de restauration de sauvegarde factices
+- docs de déploiement obsolètes
+- anciennes notes de migration
+- faux identifiants de service dans un `.env.canary` clairement non-production
+- fausses instructions de restauration de sauvegarde
 
 Ce n'est pas de la sécurité par l'obscurité. C'est une alarme dans un couloir.
 
 ### Canaris CI et Cloud
 
-Bons emplacements de fil déclencheur cloud :
+Bons emplacements de tripwire cloud :
 
-- un secret CI factice
-- un token de déploiement factice
-- un utilisateur de base de données factice sans privilèges
-- un chemin de stockage objet inutilisé
-- un kubeconfig factice
-- une clé API factice documentée dans un runbook
+- un faux secret CI
+- un faux token de déploiement
+- un faux utilisateur de base de données sans privilèges
+- un chemin de stockage d'objets inutilisé
+- un faux kubeconfig
+- une fausse clé API documentée dans un runbook
 
-Rendez l'alerte actionnable. Un canari qui envoie un email à une boîte non surveillée est une corde décorative.
+Rendez l'alerte exploitable. Un canari qui envoie un email à une boîte de réception non surveillée est une chaîne décorative.
 
 Au minimum, l'alerte devrait vous dire :
 
@@ -262,55 +262,55 @@ Au minimum, l'alerte devrait vous dire :
 - quoi faire tourner
 - qui possède la réponse
 
-## 4. Mettez une porte sur le trafic sortant
+## 4. Placez une barrière sur le trafic sortant
 
 Si quelque chose de malveillant s'exécute localement, l'exfiltration a besoin d'un chemin réseau.
 
-La plupart des portables de développeurs autorisent le trafic sortant par défaut. C'est pratique. Cela signifie aussi qu'un processus inconnu peut souvent envoyer des données vers un endroit inconnu sans point de décision local.
+La plupart des ordinateurs portables de développeurs autorisent le trafic sortant par défaut. C'est pratique. Cela signifie aussi qu'un processus inconnu peut souvent envoyer des données vers un endroit inconnu sans point de décision local.
 
-Les pare-feu sortants sont la couche ceinture de sécurité.
+Les pare-feu sortants sont la couche de ceinture de sécurité.
 
-Ils n'arrêteront pas tous les crashs. Ils rendront certains crashs survivables. Ils se plaindront aussi à des moments inappropriés jusqu'à ce que vous leur appreniez à quoi ressemble normal.
+Ils n'arrêteront pas chaque crash. Ils rendront certains crashs survivables. Ils se plaindront aussi à des moments inopportuns jusqu'à ce que vous leur appreniez à quoi ressemble la normale.
 
 ### macOS
 
-[LuLu](https://objective-see.org/products/lulu.html) est gratuit et open source. Objective-See le décrit comme bloquant les connexions sortantes inconnues, et ses docs notent que LuLu surveille seulement le trafic sortant.
+[LuLu](https://objective-see.org/products/lulu.html) est gratuit et open source. Objective-See le décrit comme bloquant les connexions sortantes inconnues, et sa documentation note que LuLu ne surveille que le trafic sortant.
 
-C'est un bon premier choix si vous voulez des invites sortantes simples et pouvez tolérer un peu de friction de setup.
+C'est un bon premier choix si vous voulez des invites sortantes simples et pouvez tolérer quelques frictions de configuration.
 
-[Little Snitch](https://obdev.at/products/littlesnitch/) est commercial et plus poli. Il montre les alertes de connexion, vous permet d'autoriser ou refuser les connexions d'app, et vous donne un moniteur réseau avec app, domaine, pays, port, protocole, et visibilité trafic.
+[Little Snitch](https://obdev.at/products/littlesnitch/) est commercial et plus poli. Il affiche des alertes de connexion, vous permet d'autoriser ou de refuser les connexions d'applications, et vous donne un moniteur réseau avec visibilité sur l'application, le domaine, le pays, le port, le protocole et le trafic.
 
-C'est le choix plus fort si vous voulez des profils, gestion de règles, et une interface que les gens peuvent vraiment continuer à utiliser après la deuxième semaine.
+C'est le choix le plus fort si vous voulez des profils, une gestion des règles et une interface que les gens pourraient réellement continuer à utiliser après la semaine deux.
 
 ### Windows
 
-Windows Defender Firewall supporte les règles sortantes et la priorité de règles pour le trafic entrant et sortant. Les guidance de Microsoft sont sobres : changer les règles sortantes en bloqué peut être considéré dans les environnements à haute sécurité, mais cela nécessite d'inventorier les apps et créer des règles pour ce qui a besoin de connectivité réseau.
+Le pare-feu Windows Defender prend en charge les règles sortantes et la précédence des règles pour le trafic entrant et sortant. Les conseils de Microsoft sont sobres : changer les règles sortantes en bloqué peut être envisagé dans des environnements de haute sécurité, mais cela nécessite d'inventorier les applications et de créer des règles pour ce qui a besoin de connectivité réseau.
 
 Traduction : possible, puissant, et facile de rendre ennuyeux.
 
-[Portmaster](https://safing.io/) vaut aussi l'évaluation sur Windows. Safing le décrit comme un pare-feu application open-source qui surveille les connexions réseau et établit des règles de blocage par-application.
+[Portmaster](https://safing.io/) vaut également la peine d'être évalué sur Windows. Safing le décrit comme un pare-feu applicatif open-source qui surveille les connexions réseau et définit des règles de blocage par application.
 
 ### Linux
 
-Portmaster supporte les paquets Linux communs. OpenSnitch est un autre pare-feu application Linux qui vaut l'évaluation, bien que l'état du projet et l'emballage distro devraient être vérifiés avant de standardiser.
+Portmaster prend en charge les paquets Linux courants. OpenSnitch est un autre pare-feu applicatif Linux qui vaut la peine d'être évalué, bien que l'état du projet et le packaging des distributions doivent être vérifiés avant de standardiser.
 
-Pour les serveurs, utilisez les contrôles serveur normaux. Pour les portables de développeurs, la fonction clé est la visibilité au niveau application. "Bloquer tout sortant sauf 443" n'est pas suffisant quand chaque chemin d'exfiltration intéressant parle aussi 443.
+Pour les serveurs, utilisez les contrôles de serveur normaux. Pour les ordinateurs portables de développeur, la fonctionnalité clé est la visibilité au niveau de l'application. "Bloquer tout le trafic sortant sauf 443" n'est pas suffisant quand chaque chemin d'exfiltration intéressant parle aussi 443.
 
-## 5. Donnez aux sauvegardes une supervision d'adulte
+## 5. Donnez une supervision adulte aux sauvegardes
 
 Les sauvegardes ne sont pas froides. Ce sont des données sensibles sous forme portable.
 
-Les machines de développeur ne devraient pas devenir des archives de sauvegarde sauf si c'est le travail.
+Les machines des développeurs ne devraient pas devenir des archives de sauvegarde sauf si c'est le travail.
 
-Règles que je ferais vraiment appliquer :
+Règles que j'appliquerais vraiment :
 
 - Les exports de production nécessitent un propriétaire et une date d'expiration.
 - Les dumps de base de données locaux doivent être chiffrés.
-- Tout export contenant des identifiants déclenche la rotation ou le nettoyage des identifiants.
-- Les dossiers de sauvegarde ne sont pas montés dans les conteneurs Dev par défaut.
+- Tout export contenant des identifiants déclenche une rotation ou un nettoyage des identifiants.
+- Les dossiers de sauvegarde ne sont pas montés dans les Dev Containers par défaut.
 - Les dossiers de sauvegarde sont refusés aux outils de codage IA par défaut.
-- Au moins un canari vit dans le stockage de type sauvegarde.
-- Les vieux exports sont supprimés par automatisation, pas par vibes.
+- Au moins un canari vit dans un stockage de type sauvegarde.
+- Les anciens exports sont supprimés par automatisation, pas par vibes.
 
 Convention locale simple :
 
@@ -319,12 +319,12 @@ mkdir -p ~/sensitive-exports
 chmod 700 ~/sensitive-exports
 ```
 
-Convention meilleure :
+Meilleure convention :
 
 - volume chiffré ou archive chiffrée
-- nom clair avec expiration
+- nommage clair avec expiration
 - suppression documentée
-- pas de sync vers les cloud drives grand public sauf approuvé
+- pas de synchronisation vers des drives cloud grand public sauf si approuvé
 
 Exemple :
 
@@ -333,64 +333,64 @@ age -r age1yourpublickeyhere -o customer-export-2026-05-09.sql.gz.age customer-e
 shred -u customer-export.sql.gz
 ```
 
-Ne transformez pas ça en rituel. La meilleure politique de sauvegarde est celle où les développeurs ont rarement besoin d'exports de production en premier lieu.
+Ne transformez pas cela en rituel. La meilleure politique de sauvegarde est celle où les développeurs ont rarement besoin d'exports de production en premier lieu.
 
 ## 6. Construisez un défaut de poste de travail
 
 Voici une base saine pour un développeur individuel :
 
-| Zone | Défaut |
+| Zone | Base |
 | --- | --- |
-| Navigateur | Aucun mot de passe de production sauvegardé. Utilisez un gestionnaire de mots de passe et MFA basé sur matériel pour les comptes importants. |
-| Projets | Utilisez les conteneurs Dev pour les projets avec installs de packages, code non-fiable, ou travail shell piloté par IA. |
-| Secrets | Aucun secret de production en clair sur disque. Chiffrez les secrets dev locaux quand pratique. |
-| Cloud | Identifiants de courte durée. Séparez les identités dev et prod. Aucun token d'admin personnel par défaut. |
-| GitHub | Tokens fins. Révisez les tokens de publication de packages. Utilisez org SSO et clés matérielles. |
-| Outils IA | Accès scoped au projet, deny chemins sensibles, exécutez commandes dans des conteneurs quand pratique. |
-| Sauvegardes | Chiffrez, expirez, isolez, et surveillez. Gardez hors des montages larges et contexte IA. |
-| Réseau | Pare-feu sortant en mode alerte ou monitor d'abord, puis règles pour les outils risqués. |
-| Détection | Canary tokens dans sauvegarde, identifiant, CI, cloud, et emplacements documentation. |
+| Navigateur | Pas de mots de passe de production sauvegardés. Utilisez un gestionnaire de mots de passe et MFA matériel pour les comptes importants. |
+| Projets | Utilisez des Dev Containers pour les projets avec installation de paquets, code non fiable ou travail shell piloté par IA. |
+| Secrets | Pas de secrets de production en texte brut sur disque. Chiffrez les secrets de développement locaux quand c'est pratique. |
+| Cloud | Identifiants de courte durée. Séparez les identités dev et prod. Pas de token d'administration personnel par défaut. |
+| GitHub | Tokens à granularité fine. Révisez les tokens de publication de paquets. Utilisez SSO d'org et clés matérielles. |
+| Outils IA | Accès scoped au projet, refusez les chemins sensibles, exécutez les commandes dans des conteneurs quand c'est pratique. |
+| Sauvegardes | Chiffrez, expirez, isolez et surveillez. Gardez hors des montages larges et du contexte IA. |
+| Réseau | Pare-feu sortant en mode alerte ou moniteur d'abord, puis règles pour les outils à risque. |
+| Détection | Tokens canaris dans les emplacements de sauvegarde, identifiants, CI, cloud et documentation. |
 
 Pour une équipe, ajoutez :
 
-- un modèle `.devcontainer` standard
-- une politique de secrets qui distingue local, dev partagé, staging, et prod
-- conventions de placement de canary-token
-- profils de pare-feu sortant documentés
-- playbooks de rotation d'identifiants rapides
-- onboarding qui explique le threat model sans théâtre
+- un template `.devcontainer` standard
+- une politique de secrets qui distingue local, dev partagé, staging et prod
+- des conventions de placement de tokens canaris
+- des profils de pare-feu sortants documentés
+- des playbooks de rotation rapide d'identifiants
+- un onboarding qui explique le modèle de menace sans théâtre
 
-L'objectif n'est pas de faire de chaque développeur un ingénieur de sécurité.
+L'objectif n'est pas de faire de chaque développeur un ingénieur sécurité.
 
-L'objectif est de faire du chemin plus sûr le chemin normal.
+L'objectif est de rendre le chemin plus sûr le chemin normal.
 
 ## Que faire cette semaine
 
-Si ça semble trop grand, faites cinq choses :
+Si cela semble trop gros, faites cinq choses :
 
-1. Choisissez un repo à haut risque et ajoutez un conteneur Dev avec montages restreints.
-2. Déplacez un secret `.env.local` en clair vers un stockage local chiffré ou un gestionnaire de mots de passe.
-3. Plantez un token canari dans un fichier de sauvegarde factice et routez les alertes quelque part de visible.
-4. Installez LuLu, Little Snitch, Portmaster, ou équivalent en mode monitor et regardez ce qui parle vraiment.
-5. Trouvez les exports de production locaux et soit supprimez, chiffrez, ou expirez-les.
+1. Choisissez un repo à haut risque et ajoutez un Dev Container avec des montages étroits.
+2. Déplacez un secret `.env.local` en texte brut vers un stockage local chiffré ou un gestionnaire de mots de passe.
+3. Plantez un token canari dans un faux fichier de sauvegarde et routez les alertes quelque part de visible.
+4. Installez LuLu, Little Snitch, Portmaster ou équivalent en mode moniteur et observez ce qui parle vraiment.
+5. Trouvez les exports de production locaux et soit supprimez-les, chiffrez-les ou expirez-les.
 
-C'est assez pour commencer.
+C'est suffisant pour commencer.
 
-Le travail de sécurité échoue souvent parce qu'il essaie d'arriver comme une cathédrale. Apportez une porte d'abord. Puis une serrure. Puis une alarme. Puis une habitude.
+Le travail de sécurité échoue souvent parce qu'il essaie d'arriver comme une cathédrale. Apportez d'abord une porte. Puis une serrure. Puis une alarme. Puis une habitude.
 
-Le poste de travail n'a pas à être parfaitement de confiance.
+Le poste de travail n'a pas besoin d'être parfaitement fiable.
 
-Il a à arrêter d'être infiniment de confiance par accident.
+Il doit arrêter d'être infiniment fiable par accident.
 
 ## Plan d'image
 
 Directions de couverture potentielles :
 
-- Carte diagrammatique : un portable au centre avec quatre anneaux contraints étiquetés isolation, secrets, détection, et egress. Meilleur pour un guide pratique.
-- Métaphore éditoriale : un établi avec clés, documents, et câbles réseau sous des dômes de verre, avec un câble menant à un voyant d'alerte. Meilleur pour l'identité visuelle de série.
-- Scène de mode d'échec : un dossier de sauvegarde local brillant comme infrastructure de production tandis que de petits fils déclencheurs d'alerte l'entourent. Meilleur si le post s'appuie plus dur sur le risque de sauvegarde.
+- Carte diagrammatique : un ordinateur portable au centre avec quatre anneaux contraints étiquetés isolation, secrets, détection et egress. Meilleur pour un guide pratique.
+- Métaphore éditoriale : un établi avec des clés, des documents et des câbles réseau sous des dômes en verre, avec un câble menant à un voyant d'avertissement. Meilleur pour l'identité visuelle de la série.
+- Scène de mode d'échec : un dossier de sauvegarde local brillant comme une infrastructure de production tandis que de minuscules tripwires d'alerte l'entourent. Meilleur si le post insiste davantage sur le risque de sauvegarde.
 
-Ensemble d'assets suggéré une fois une direction choisie :
+Jeu d'actifs suggéré une fois la direction choisie :
 
 - `desktop-social.webp` à 1200x630
 - `wide.webp` à 1600x900
@@ -398,13 +398,13 @@ Ensemble d'assets suggéré une fois une direction choisie :
 
 ## Sources et lectures utiles
 
-- [Spécification Development Containers](https://github.com/devcontainers/spec)
-- [Permissions Claude Code](https://code.claude.com/docs/en/permissions)
-- [Gestion de secrets VarLock](https://varlock.dev/guides/secrets/)
-- [Aperçu Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
+- [Spécification des Development Containers](https://github.com/devcontainers/spec)
+- [Permissions de Claude Code](https://code.claude.com/docs/en/permissions)
+- [Gestion des secrets VarLock](https://varlock.dev/guides/secrets/)
+- [Aperçu de Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
 - [Objective-See LuLu](https://objective-see.org/products/lulu.html)
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
-- [Microsoft : Règles Windows Firewall](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
-- [Mandiant : UNC5537 cible des instances clients Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
-- [Microsoft : Techniques de livraison et capacités de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
+- [Microsoft : Règles du pare-feu Windows](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
+- [Mandiant : UNC5537 cible les instances clientes Snowflake](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Microsoft : Techniques et capacités de livraison de Lumma Stealer](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
