@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: ja
+- Model: openrouter/minimax/minimax-m2.5
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/ja/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 30.59
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-09--developer-workstation-blast-radius/ja/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
