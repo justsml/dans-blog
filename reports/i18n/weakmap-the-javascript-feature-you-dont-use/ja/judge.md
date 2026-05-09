@@ -1,24 +1,22 @@
-# Judge Report: weakmap-the-javascript-feature-you-dont-use (ja)
+# Judge Result
 
-## Selected Candidate
+Selected candidate: `3a82ddad4ab9a5a8aa8d99797ec463cb8399818b` (`openrouter/google/gemini-3-flash-preview`)
 
-- `c1d3df1552e6085207cae4f3a9b4ec1971412ca5` - openrouter/qwen/qwen3.6-plus
+## Why this one won
 
-## Why This Won
+- It preserves the article's technical claims without introducing obvious mistranslations or missing sections.
+- The prose is the most natural Japanese of the four, with a good balance between directness and readability.
+- It keeps Dan's blunt, practical tone better than the other candidates, which drifted either too literal or too loose.
+- MDX structure is intact: frontmatter, code fences, headings, and links all survive cleanly.
 
-- It stayed closest to the source structure and argument flow, which matters for a technical essay where the sequencing is part of the teaching.
-- The Japanese reads direct and natural without drifting into overly explanatory or editorialized phrasing.
-- MDX preservation is solid: headings, fenced code blocks, inline code, and link list all survive intact.
-- It keeps Dan's blunt, practical tone better than the more polished but more verbose alternatives.
+## Notes on the other candidates
 
-## Notes on the Other Candidates
+- `c1d3df1552e6085207cae4f3a9b4ec1971412ca5` was understandable, but it had several awkward phrasings and some unnatural wording that made the article feel translated.
+- `814a06c082327eee91a893fffb43cb987fbe030b` was the most stylistically energetic, but it introduced too much paraphrase and a few tone shifts away from the source.
+- `78f78d067c697d0a7932a6027acf9da472ea048e` was readable, but it had more compression and some phrasing that felt less precise than the winner.
 
-- `814a06c082327eee91a893fffb43cb987fbe030b` was readable, but it leaned more literal and inserted some clunky phrasing that dulled the voice.
-- `3a82ddad4ab9a5a8aa8d99797ec463cb8399818b` was the most polished Japanese, but it over-localized several passages and softened the punch.
-- `78f78d067c697d0a7932a6027acf9da472ea048f` had the strongest directness in places, but it was less consistent and had a few awkward choices that made it feel less stable overall.
+## Light polish applied
 
-## Light Polish Applied
-
-- Normalized a few Japanese turns of phrase for flow while keeping the original meaning.
-- Kept code samples and API terminology unchanged.
-- Preserved the original MDX layout and resource links.
+- Normalized a few phrases to keep the Japanese direct and consistent.
+- Kept English technical terms where they read better in context, while preserving the source meaning.
+- Left MDX and links unchanged.
