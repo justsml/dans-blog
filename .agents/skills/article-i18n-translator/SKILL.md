@@ -11,7 +11,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 
 - Use Bun scripts only. Never use npm or yarn.
 - Keep English slugs permanently. English routes stay unprefixed, translated routes use `/{locale}/{base-slug}/`.
-- Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{es,hi,ja}/index.mdx`.
+- Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{es,hi,ja,ru,de,fr,it}/index.mdx`.
 - Preserve full Git history. Commit candidate outputs, rejected attempts, judge passes, and final fixes as normal commits. Do not squash.
 - Do not edit `public/_redirects` by hand. Let build-generated redirects update it.
 - Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths.
@@ -38,6 +38,8 @@ Note: the Gemma 4 26B A4B and Gemma 4 31B entries were added as the cheapest pai
 Judge with a cheap OpenAI-class model first, currently:
 
 - `openrouter/openai/gpt-5.4-mini`
+
+For higher-risk batches, add a second cheap judge with `--second-model openrouter/openai/gpt-5-mini`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
 
 ## Standard Workflow
 

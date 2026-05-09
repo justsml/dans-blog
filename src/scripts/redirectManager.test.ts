@@ -93,6 +93,10 @@ describe("redirect manifest generation", () => {
         [post("the-last-to-think", ["/hi/the-last-to-think"])],
         [
           "/es/the-last-to-think /the-last-to-think 301",
+          "/ru/the-last-to-think /the-last-to-think 301",
+          "/de/the-last-to-think /the-last-to-think 301",
+          "/fr/the-last-to-think /the-last-to-think 301",
+          "/it/the-last-to-think /the-last-to-think 301",
           "/hi/the-last-to-think /the-last-to-think 301",
           "/horizontal-scroller/ /?404=horizontal-scroller 301",
           "",

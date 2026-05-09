@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { ACTIVE_LOCALES } from "../../shared/i18n.ts";
 import { run } from "./utils.ts";
 
 type Candidate = {
@@ -30,7 +31,7 @@ type ModelStat = {
 
 const REPORT_ROOT = join(process.cwd(), "reports/i18n");
 const OUTPUT_PATH = join(REPORT_ROOT, "model-performance.md");
-const LOCALES = ["es", "hi", "ja"];
+const LOCALES = [...ACTIVE_LOCALES];
 
 const results = collectResults();
 const modelStats = collectModelStats(results);
@@ -225,8 +226,8 @@ function renderReport({
     "",
     "## Model Stats",
     "",
-    "| Model | Attempts | Passed | Rejected | Judged candidates | Wins | Win rate | ES wins | HI wins | JA wins |",
-    "| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |",
+    markdownRow(["Model", "Attempts", "Passed", "Rejected", "Judged candidates", "Wins", "Win rate", ...LOCALES.map((locale) => `${locale.toUpperCase()} wins`)]),
+    markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:", ...LOCALES.map(() => "---:")]),
     ...modelStats.map((item) =>
       markdownRow([
         escapeCell(item.model),
@@ -236,16 +237,14 @@ function renderReport({
         item.judgedCandidates,
         item.wins,
         `${Math.round(item.winRate * 100)}%`,
-        item.winsByLocale.es ?? 0,
-        item.winsByLocale.hi ?? 0,
-        item.winsByLocale.ja ?? 0,
+        ...LOCALES.map((locale) => item.winsByLocale[locale] ?? 0),
       ]),
     ),
     "",
     "## Winners By Article",
     "",
-    "| Article | ES | HI | JA | Locales judged | Notes |",
-    "| --- | --- | --- | --- | ---: | --- |",
+    markdownRow(["Article", ...LOCALES.map((locale) => locale.toUpperCase()), "Locales judged", "Notes"]),
+    markdownRow(["---", ...LOCALES.map(() => "---"), "---:", "---"]),
     ...articleRows.map(([slug, locales]) => {
       const localeResults = [...locales.values()];
       const notes = localeResults

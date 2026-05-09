@@ -1,6 +1,6 @@
 export const DEFAULT_LOCALE = "en" as const;
 
-export const ACTIVE_LOCALES = ["es", "hi", "ja"] as const;
+export const ACTIVE_LOCALES = ["es", "hi", "ja", "ru", "de", "fr", "it"] as const;
 export const FUTURE_LOCALES = ["zh"] as const;
 export const SUPPORTED_LOCALES = [
   DEFAULT_LOCALE,
@@ -16,6 +16,10 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   es: "Español",
   hi: "हिन्दी",
   ja: "日本語",
+  ru: "Русский",
+  de: "Deutsch",
+  fr: "Français",
+  it: "Italiano",
   zh: "中文",
 };
 
@@ -23,6 +27,10 @@ export const LOCALE_DISCLOSURE: Record<ActiveLocale, string> = {
   es: "Traducido con IA y revisado por precisión técnica.",
   hi: "AI से अनुवादित और तकनीकी सटीकता के लिए समीक्षा की गई।",
   ja: "AIで翻訳し、技術的な正確性を確認済みです。",
+  ru: "Переведено с помощью ИИ и проверено на техническую точность.",
+  de: "Mit KI übersetzt und auf technische Genauigkeit geprüft.",
+  fr: "Traduit par IA et vérifié pour l’exactitude technique.",
+  it: "Tradotto con IA e verificato per accuratezza tecnica.",
 };
 
 export function isLocale(value: string | undefined): value is Locale {

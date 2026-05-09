@@ -39,12 +39,22 @@ describe("i18n post routing helpers", () => {
     expect(getLocalizedPostPath("postgres-text-search-guide", "ja")).toBe(
       "/ja/postgres-text-search-guide/",
     );
+    expect(getLocalizedPostPath("postgres-text-search-guide", "ru")).toBe(
+      "/ru/postgres-text-search-guide/",
+    );
+    expect(getLocalizedPostPath("postgres-text-search-guide", "de")).toBe(
+      "/de/postgres-text-search-guide/",
+    );
   });
 
   test("extracts locale and base slug from route slugs", () => {
     expect(getLocaleFromRouteSlug("hi/postgres-text-search-guide")).toBe("hi");
+    expect(getLocaleFromRouteSlug("fr/postgres-text-search-guide")).toBe("fr");
     expect(getLocaleFromRouteSlug("postgres-text-search-guide")).toBe("en");
     expect(getBaseSlugFromRouteSlug("hi/postgres-text-search-guide")).toBe(
+      "postgres-text-search-guide",
+    );
+    expect(getBaseSlugFromRouteSlug("it/postgres-text-search-guide")).toBe(
       "postgres-text-search-guide",
     );
     expect(getBaseSlugFromRouteSlug("postgres-text-search-guide")).toBe(

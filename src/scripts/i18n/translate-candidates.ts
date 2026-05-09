@@ -65,6 +65,7 @@ const targetRelPath = relativeToRepo(targetPath);
 mkdirSync(dirname(targetPath), { recursive: true });
 
 for (const model of models) {
+  const preRunChangedPaths = getChangedPaths();
   const prompt = [
     "You are a constrained translation file-rewrite worker.",
     `Translate ${relativeToRepo(sourcePath)} into ${locale}.`,
@@ -95,6 +96,27 @@ for (const model of models) {
       prompt,
     ], timeoutSeconds * 1000);
   const telemetry = getCandidateTelemetry(model, opencodeResult);
+  const unrelatedChangedPaths = getUnrelatedChangedPaths(preRunChangedPaths);
+
+  if (unrelatedChangedPaths.length > 0) {
+    cleanupRejectedTarget();
+    cleanupUnrelatedPaths(unrelatedChangedPaths);
+    writeCandidateReport({
+      reportPath,
+      model,
+      validationStatus: "rejected: touched unrelated files",
+      telemetry,
+      note: `Model changed files outside ${targetRelPath}: ${unrelatedChangedPaths.join(", ")}`,
+    });
+
+    if (!shouldSkipCommit) {
+      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
+        relativeToRepo(reportPath),
+      ]);
+    }
+
+    continue;
+  }
 
   if (!opencodeResult.ok) {
     writeCandidateReport({
@@ -209,6 +231,42 @@ function cleanupRejectedTarget() {
 function targetExistsInHead() {
   try {
     run("git", ["cat-file", "-e", `HEAD:${targetRelPath}`]);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function getUnrelatedChangedPaths(preRunChangedPaths: Set<string>) {
+  return [...getChangedPaths()].filter(
+    (path) => path !== targetRelPath && !preRunChangedPaths.has(path),
+  );
+}
+
+function getChangedPaths() {
+  const output = run("git", ["status", "--porcelain"]);
+  return new Set(
+    output
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .map((line) => line.slice(3).split(" -> ").at(-1))
+      .filter((path): path is string => path != null && path.trim() !== ""),
+  );
+}
+
+function cleanupUnrelatedPaths(paths: string[]) {
+  for (const path of paths) {
+    if (pathExistsInHead(path)) {
+      writeTextFile(`${process.cwd()}/${path}`, run("git", ["show", `HEAD:${path}`]));
+    } else {
+      rmSync(`${process.cwd()}/${path}`, { recursive: true, force: true });
+    }
+  }
+}
+
+function pathExistsInHead(path: string) {
+  try {
+    run("git", ["cat-file", "-e", `HEAD:${path}`]);
     return true;
   } catch {
     return false;

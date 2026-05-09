@@ -5,7 +5,7 @@ This project translates articles with competing LLM candidates, a cheap judge pa
 ## Routing Contract
 
 - English stays unprefixed: `/the-last-to-think/`.
-- Translations use locale prefixes: `/es/the-last-to-think/`, `/hi/the-last-to-think/`, `/ja/the-last-to-think/`.
+- Translations use locale prefixes: `/es/the-last-to-think/`, `/hi/the-last-to-think/`, `/ja/the-last-to-think/`, `/ru/the-last-to-think/`, `/de/the-last-to-think/`, `/fr/the-last-to-think/`, `/it/the-last-to-think/`.
 - Slugs remain English permanently.
 - Translation files live beside the English article:
 
@@ -14,6 +14,10 @@ This project translates articles with competing LLM candidates, a cheap judge pa
   src/content/posts/YYYY-MM-DD--slug/es/index.mdx
   src/content/posts/YYYY-MM-DD--slug/hi/index.mdx
   src/content/posts/YYYY-MM-DD--slug/ja/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/ru/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/de/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/fr/index.mdx
+  src/content/posts/YYYY-MM-DD--slug/it/index.mdx
   ```
 
 - Missing translated URLs redirect to English instead of rendering duplicate English content.
@@ -150,7 +154,20 @@ For judging, start cheap:
 openrouter/openai/gpt-5.4-mini
 ```
 
-Escalate only when the judge output is structurally broken, misses obvious translation problems, or cannot compare candidates.
+Judge summaries include runtime, token, thinking-token, cached-token, and estimated-cost fields using the same telemetry shape as candidate reports.
+
+Use a second judge when a batch is high-risk, when candidates are close, or when a candidate comes from a model with a weak history for that locale:
+
+```sh
+bun run i18n:judge -- \
+  --slug the-last-to-think \
+  --locale es \
+  --model openrouter/openai/gpt-5.4-mini \
+  --second-model openrouter/openai/gpt-5-mini \
+  --escalate-model openrouter/anthropic/claude-sonnet-4.6
+```
+
+Escalation runs only when the second judge report appears to disagree and an `--escalate-model` is provided. Use a smarter judge such as `openrouter/anthropic/claude-sonnet-4.6` or `openrouter/google/gemini-3-pro-preview` only when the cheaper judges disagree, the judge output is structurally broken, it misses obvious translation problems, or it cannot compare candidates.
 
 ## Git Provenance
 

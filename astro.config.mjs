@@ -48,7 +48,7 @@ export default defineConfig({
   cacheDir: ".cache",
   site: siteUrl,
   i18n: {
-    locales: ["en", "es", "hi", "ja", "zh"],
+    locales: ["en", "es", "hi", "ja", "ru", "de", "fr", "it", "zh"],
     defaultLocale: "en",
     routing: {
       prefixDefaultLocale: false,
