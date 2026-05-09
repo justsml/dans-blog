@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ru
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 155.67
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/
