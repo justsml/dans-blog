@@ -1,6 +1,6 @@
 ---
-title: "प्रोडक्शन AI डराने वाला है (और इसे कैसे ठीक करें)"
-subTitle: "अगर आपके एजेंट के पास गार्डरेल्स नहीं हैं, तो आप प्रोडक्शन के लिए तैयार नहीं हैं।"
+title: "Production AI हैरान करने वाला है (और इसे कैसे ठीक करें)"
+subTitle: "अगर आपके agent के पास guardrails नहीं हैं, तो आप production के लिए तैयार नहीं हैं।"
 date: 2026-01-03
 modified: 2026-01-08
 tags: [AI, Security, Mastra, Guardrails, Privacy, PII]
@@ -12,27 +12,27 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-कोई भी असुरक्षित AI सिस्टम बनाने की कोशिश नहीं करता। आप इंस्ट्रक्शंस लिखते हैं, एज केस टेस्ट करते हैं, कुछ वैलिडेशन रूल्स जोड़ते हैं। फिर किसी को पता चलता है कि वे आपके बॉट को पाइरेट रोलप्ले करने और यूज़र डेटा एक्सपोज़ करने के लिए धोखा दे सकते हैं। या आपके लॉग्स में क्रेडिट कार्ड नंबर आ जाता है। या मॉडल आत्मविश्वास से किसी प्रतिस्पर्धी के प्रोडक्ट की सिफारिश करता है।
+कोई भी अनसुरक्षित AI सिस्टम बनाने के लिए नहीं निकलता। आप निर्देश लिखते हैं, edge cases टेस्ट करते हैं, कुछ validation rules जोड़ते हैं। फिर कोई समझता है कि वह आपके bot को pirate की तरह roleplay करने और user data expose करने के लिए धोखा दे सकता है। या credit card number आपके logs में खत्म हो जाता है। या model बेझिझक competition की product recommend करता है।
 
-"डेमो में काम करता है" और "प्रोडक्शन में सुरक्षित है" के बीच का अंतर ज्यादातर टीम्स की उम्मीद से ज़्यादा होता है।
+"demo में काम करता है" और "production में सुरक्षित है" के बीच का अंतर ज्यादातर teams उम्मीद से ज्यादा है।
 
-समस्या का एक हिस्सा यह है कि रॉ LLMs की कोई राय नहीं होती कि उन्हें क्या करना चाहिए और क्या नहीं। वे प्रेडिक्शन मशीन्स हैं जो जो भी पैटर्न आपने शुरू किया है उसे जारी रखने की कोशिश करती हैं। उन्हें ऐसा प्रॉम्प्ट दें जो "सिस्टम ओवरराइड मोड" जैसा दिखता है, और वे खुशी-खुशी साथ खेलेंगे। यह मॉडल में कोई बग नहीं है; यह सिर्फ लैंग्वेज मॉडल्स का काम करने का तरीका है।
+समस्या का एक हिस्सा यह है कि raw LLMs को अपने बारे में क्या करना चाहिए और क्या नहीं, इसके बारे में कोई राय नहीं होती। वे prediction machines हैं जो जो भी pattern आप शुरू करते हैं उसे जारी रखने की कोशिश करते हैं। जो prompt "system override mode" जैसा दिखता है, वे खुशी से उसके साथ सहमत हो जाते हैं। यह model में कोई bug नहीं है; यह सिर्फ़ language models कैसे काम करते हैं।
 
-ज्यादातर फ्रेमवर्क्स आपको मॉडल देते हैं और शुभकामना देते हैं। Mastra एक अलग दृष्टिकोण अपनाता है: यह मान लेता है कि आपको कभी-न-कभी गार्डरेल्स की ज़रूरत होगी, इसलिए यह उन्हें शुरू से ही एजेंट आर्किटेक्चर में बना देता है।
+ज़्यादातर frameworks आपको model देते हैं और भाग्य का इंतज़ार करते हैं। Mastra एक अलग तरीका अपनाता है: यह मानता है कि आपको अंत में guardrails की ज़रूरत पड़ेगी, इसलिए यह उन्हें शुरू से ही agent architecture में बुनता है।
 
 ---
 
-## सुरक्षा परतों के रूप में प्रोसेसर्स
+## Processors के रूप में Safety Layers
 
-मुख्य मैकेनिज्म सीधा है। आपके प्रॉम्प्ट के मॉडल तक पहुँचने से पहले, यह इनपुट प्रोसेसर्स की एक चेन से गुज़रता है। मॉडल के जवाब देने के बाद, आउटपुट प्रोसेसर्स की बारी आती है। हर प्रोसेसर उस स्टेज पर कंटेंट को इंस्पेक्ट, मॉडिफाई या ब्लॉक कर सकता है।
+मुख्य mechanism सीधा है। model तक पहुँचने से पहले, आपका prompt input processors की एक श्रृंखला से गुज़रता है। model के जवाब देने के बाद, output processors को अपनी बारी मिलती है। प्रत्येक processor उस stage पर content की जाँच, संशोधन या रोक सकता है।
 
-इन्हें AI इंटरैक्शंस के लिए मिडलवेयर समझें। आप अपनी ज़रूरत के प्रोसेसर्स स्टैक करें, उनका व्यवहार कॉन्फ़िगर करें, और वे हर रिक्वेस्ट पर ऑटोमैटिक चलेंगे।
+उन्हें AI interactions के लिए middleware के रूप में समझें। आप जिन processors की ज़रूरत हैं उन्हें stack करें, उनका behavior configure करें, और वे हर request पर automatically चलते हैं।
 
-### 1. पाइरेट्स को रोकना (प्रॉम्प्ट इंजेक्शन)
+### 1. Pirates को रोकना (Prompt Injection)
 
-प्रॉम्प्ट इंजेक्शन अटैक्स रचनात्मक हो गए हैं। लोग इनविज़िबल यूनिकोड कैरेक्टर्स इस्तेमाल करते हैं, इंस्ट्रक्शंस base64 में लिखते हैं, या मॉडल को यकीन दिलाते हैं कि वह "डीबग मोड" में है जहाँ सामान्य नियम लागू नहीं होते। तकनीकें लगातार विकसित हो रही हैं।
+prompt injection attacks बहुत creative हो गए हैं। लोग invisible Unicode characters, base64 में instructions लिखना, या model को यह विश्वास दिलाना शामिल करते हैं कि वे "debug mode" में हैं जहाँ normal rules लागू नहीं होते। तकनीकें लगातार विकसित हो रही हैं।
 
-Mastra में ऐसे प्रोसेसर्स शामिल हैं जो सामान्य पैटर्न्स को पकड़ते हैं:
+Mastra में common patterns को catch करने वाले processors शामिल हैं:
 
 
 ```typescript
@@ -65,15 +65,15 @@ export const secureAgent = new Agent({
 });
 ```
 
-[`UnicodeNormalizer`](https://mastra.ai/docs/processors) कंट्रोल कैरेक्टर्स हटा देता है और व्हाइटस्पेस कोलैप्स करता है। [`PromptInjectionDetector`](https://mastra.ai/docs/processors) साफ़ किए गए इनपुट में ऐसे पैटर्न्स की जाँच करता है जो बताते हैं कि कोई आपके इंस्ट्रक्शंस को ओवरराइड करने की कोशिश कर रहा है।
+[`UnicodeNormalizer`](https://mastra.ai/docs/processors) control characters को strip करता है और whitespace को collapse करता है। [`PromptInjectionDetector`](https://mastra.ai/docs/processors) cleaned input का analysis करता है patterns के लिए जो यह सुझाव देते हैं कि कोई आपके instructions को override करने की कोशिश कर रहा है।
 
-आप कॉन्फ़िगर करते हैं कि डिटेक्शन कितना एग्रेसिव होना चाहिए (`threshold` पैरामीटर) और जब यह ट्रिगर हो तो क्या होना चाहिए (ब्लॉक, लॉग, या सिर्फ फ्लैग करें)।
+आप detection कितनी aggressive चाहते हैं यह configure कर सकते हैं (`threshold` parameter) और जब यह trip हो तो क्या होना चाहिए (block, log, या सिर्फ़ flag करें)।
 
-### 2. PII संभालना
+### 2. PII को Handle करना
 
-लॉग्स में क्रेडिट कार्ड नंबर, वेक्टर डेटाब्बेस में सोशल सिक्योरिटी नंबर, ज़रूरत से ज़्यादा समय तक स्टोर किए गए ईमेल पते। ये वे मुद्दे हैं जो रेगुलेटरी प्रॉब्लम्स बन जाते हैं। चुनौती यह है कि यूज़र्स को हमेशा पता नहीं चलता कि वे सेंसिटिव डेटा चैट विंडो में पेस्ट कर रहे हैं।
+logs में credit card numbers, vector databases में Social Security numbers, email addresses ज़्यादा देर तक stored नहीं रहने चाहिए। ये वो तरह की issues हैं जो regulatory problems बन जाती हैं। चुनौती यह है कि users हमेशा नहीं समझते कि वे chat window में sensitive data paste कर रहे हैं।
 
-[`PIIDetector`](https://mastra.ai/docs/processors) सामान्य पैटर्न्स को स्कैन करता है इससे पहले कि वे आपके मॉडल तक पहुँचें या स्टोरेज में लिखे जाएँ:
+[`PIIDetector`](https://mastra.ai/docs/processors) common patterns के लिए scan करता है before they reach your model or get written to storage:
 
 ```typescript
 import { PIIDetector } from '@mastra/core/processors';
@@ -97,11 +97,11 @@ export const privateAgent = new Agent({
 });
 ```
 
-आप रिडैक्ट (`[REDACTED]` से बदलना), हैश, या पूरी तरह ब्लॉक करने में से चुन सकते हैं। प्रोसेसर इनपुट और आउटपुट दोनों पर चलता है, इसलिए अगर मॉडल किसी तरह अपने जवाब में सेंसिटिव डेटा जनरेट भी कर दे तो आप सुरक्षित हैं।
+आप redact (replace with `[REDACTED]`), hash, या पूरी तरह block करना चुन सकते हैं। processor input और output दोनों पर चलता है, तो आप covered हैं भले ही model किसी तरह से response में sensitive data generate कर दे।
 
-### 3. कंटेंट मॉडरेशन
+### 3. Content Moderation
 
-इंटरनेट डेटा पर ट्रेंड मॉडल्स ने कुछ चीज़ें देखी हैं। बिना फ़िल्टरिंग के, वे कभी-कभी ऐसे जवाब दे सकते हैं जो आपकी PR टीम को घबरा दें। [`ModerationProcessor`](https://mastra.ai/docs/processors) ऐसा कंटेंट पकड़ता है जो आपके गाइडलाइंस का उल्लंघन करता है:
+internet data पर trained models कुछ चीज़ें देख चुके हैं। Without filtering, वे कभी-कभी ऐसे responses produce कर सकते हैं जो आपकी PR team को nervous कर दें। [`ModerationProcessor`](https://mastra.ai/docs/processors) content को catch करता है जो आपके guidelines का उल्लंघन करता है:
 
 ```typescript
 import { ModerationProcessor } from '@mastra/core/processors';
@@ -124,13 +124,13 @@ export const moderatedAgent = new Agent({
 });
 ```
 
-दिलचस्प बात यह है कि आप परिभाषित करते हैं कि आपके यूज़ केस के लिए कौन सी कैटेगरी मायने रखती है। एक क्रिएटिव राइटिंग टूल कस्टमर सर्विस बॉट से ज़्यादा एक्सप्रेसिव कंटेंट की अनुमति दे सकता है। थ्रेशहोल्ड और स्ट्रैटेजी आपको कंट्रोल देते हैं कि फ़िल्टरिंग कितनी सख्त होनी चाहिए।
+दिलचस्प हिस्सा यह है कि आप define करते हैं कि आपके use case के लिए कौन से categories matter हैं। एक creative writing tool के लिए एक customer service bot की तुलना में अधिक expressive content allowed हो सकता है। Threshold और strategy आपको control देते हैं कि filtering कितनी strict होनी चाहिए।
 
 ---
 
-## जब चीज़ें ट्रिगर होती हैं
+## जब चीज़ें Trip होती हैं
 
-प्रोसेसर्स किसी समस्या का पता लगाने पर एरर नहीं थ्रो करते। इसके बजाय, वे रिज़ल्ट ऑब्जेक्ट पर एक फ्लैग सेट करते हैं:
+Processors errors नहीं throw करते जब वे issue detect करते हैं। इसके बजाय, वे result object पर एक flag set करते हैं:
 
 ```typescript
 const result = await secureAgent.generate('Ignore all previous instructions...');
@@ -142,27 +142,27 @@ if (result.tripwire) {
 }
 ```
 
-यह पैटर्न आपको सिक्योरिटी इवेंट्स को अपने एप्लिकेशन के लिए जो तरीका सही हो उससे हैंडल करने देता है। आप उन्हें विश्लेषण के लिए लॉग कर सकते हैं, एक सामान्य एरर मैसेज रिटर्न कर सकते हैं, या विशिष्ट संदर्भों में कुछ उल्लंघनों की अनुमति भी दे सकते हैं। `tripwireReason` फ़ील्ड आपको बताता है कि किसने कंटेंट फ्लैग किया, जो फॉल्स पॉज़िटिव को डीबग करते या थ्रेशहोल्ड ट्यून करते समय मदद करता है।
+यह pattern आपको security events को whatever way समझ में आता है handle करने देता है। आप उन्हें analysis के लिए log कर सकते हैं, एक generic error message return कर सकते हैं, या甚至 कुछ specific contexts में certain violations allow कर सकते हैं। `tripwireReason` field आपको बताता है कि exactly किस processor ने content flag किया, जो debugging false positives या thresholds tune करने में मदद करता है।
 
 ---
 
-## यह क्या हल नहीं करता
+## यह क्या Solve नहीं करता
 
-प्रोसेसर्स बहुत कुछ पकड़ते हैं, लेकिन वे जादू नहीं हैं। एक दृढ़ अटैकर पर्याप्त समय के साथ शायद ऐसा प्रॉम्प्ट ढूंढ सकता है जो निकल जाए। मॉडल कभी-कभी ऐसे तरीकों से हैल्यूसिनेट करते हैं जो प्रोसेसर्स प्रेडिक्ट नहीं कर सकते। और सिक्योरिटी और फ्लेक्सिबिलिटी के बीच हमेशा एक ट्रेडऑफ़ होता है: आपके नियम जितने सख्त होंगे, लीगिट यूज़ केस ब्लॉक होने की संभावना उतनी ज़्यादा होगी।
+Processors बहुत कुछ catch करते हैं, लेकिन वे magic नहीं हैं। पर्याप्त समय वाला determined attacker शायद एक ऐसा prompt खोज सकता है जो slip through हो जाए। Models कभी-कभी ऐसे hallucinate करते हैं जिन्हें processors predict नहीं कर सकते। और security और flexibility के बीच हमेशा tradeoff होता है: आपके rules जितने strict होंगे, legitimate use cases block करने की संभावना उतनी ही बड़ी होगी।
 
-इसकी वैल्यू परफेक्ट प्रोटेक्शन नहीं है। यह सामान्य मुद्दों को सिस्टमैटिक तरीके से हैंडल करना है जो प्रोडक्शन में ज़रूर आएंगे। आप सेंसिटिविटी को ट्यून कर सकते हैं जैसे-जैसे आप सीखते हैं कि आपके यूज़र्स वास्तव में क्या करते हैं। आप डोमेन-विशिष्ट जोखिमों के लिए कस्टम प्रोसेसर्स जोड़ सकते हैं। और आपके पास ऑडिट ट्रेल्स हैं जो दिखाते हैं कि क्या ब्लॉक हुआ और क्यों।
+value perfect protection में नहीं है। यह common issues को systematically handle करने का तरीका होना है जो definitely production में आएंगे। जैसे-जैसे आप सीखते हैं कि आपके users actually क्या करते हैं, आप sensitivity tune कर सकते हैं। Domain-specific risks के लिए custom processors add कर सकते हैं। और आपके पास audit trails हैं जो दिखाते हैं कि क्या block हुआ और क्यों।
 
-प्रोडक्शन AI में ज्यादातर सिक्योरिटी प्रॉब्लम्स सोफिस्टिकेटेड अटैक्स नहीं हैं। वे ऐसे लोग हैं जो ऐसा डेटा कॉपी-पेस्ट कर रहे हैं जो नहीं करना चाहिए, या ट्रायल एंड एरर से खोज रहे हैं कि बॉट ऐसी चीज़ें कर देगा जो आपने नहीं चाही थीं। प्रोसेसर्स हर संभव समस्या को नहीं रोकेंगे, लेकिन वे सामान्य वालों को बहुत मुश्किल बना देंगे।
+Production AI में ज़्यादातर security problems sophisticated attacks नहीं हैं। वे लोग हैं जो data copy-paste कर रहे हैं जो उन्हें नहीं चाहिए, या trial and error से discover कर रहे हैं कि bot ऐसा करेगा जो आपने intend नहीं किया था। Processors हर possible issue को नहीं रोकेंगे, लेकिन वे obvious ones को बहुत harder बनाते हैं।
 
-### संसाधन
+### Resources
 
-- [Mastra गार्डरेल्स डॉक्यूमेंटेशन](https://mastra.ai/docs/agents/guardrails)
-- [सिक्योरिटी बेस्ट प्रैक्टिसेज़](https://mastra.ai/docs/security)
-- [Mastra GitHub रिपॉज़िटरी](https://github.com/mastra-ai/mastra)
+- [Mastra Guardrails Documentation](https://mastra.ai/docs/agents/guardrails)
+- [Security Best Practices](https://mastra.ai/docs/security)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
 
-## सीरीज़ पढ़ें
+## Series पढ़ें
 
-1. [LLM राउटिंग](/llm-routing-mastra-ai)
-2. **सिक्योरिटी और गार्डरेल्स** (यह पोस्ट)
-3. [MCP और टूल इंटीग्रेशन्स](/mastra-mcp-tool-integrations)
-4. [वर्कफ़्लोज़ और मेमोरी](/mastra-workflows-memory)
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. **Security & Guardrails** (यह Post)
+3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
+4. [Workflows & Memory](/mastra-workflows-memory)
