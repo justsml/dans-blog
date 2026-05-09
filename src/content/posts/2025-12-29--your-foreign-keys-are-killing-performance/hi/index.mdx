@@ -1,6 +1,6 @@
 ---
-title: "Foreign Keys: यह पूछना बंद करें कि क्या वे तेज़ हैं"
-subTitle: "सवाल यह है कि आप असल में किस चीज़ के लिए optimize कर रहे हैं।"
+title: "Foreign Keys: यह पूछना बंद करें कि क्या वे fast हैं"
+subTitle: "सवाल यह है कि आप वास्तव में किस चीज़ के लिए optimize कर रहे हैं।"
 date: 2025-12-29
 modified: 2026-01-10
 tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
@@ -11,41 +11,41 @@ cover_mobile: ./square.webp
 cover_icon: ./square.webp
 ---
 
-सबसे महंगा database optimization जो मैंने कभी देखा, वो किसी ने Foreign Keys हटाकर शुरू किया था।
+सबसे महँगा database optimization जो मैंने कभी देखा, वो किसी ने Foreign Keys हटाकर शुरू किया था।
 
-इसलिए नहीं कि उन्होंने कोई bottleneck measure किया हो। इसलिए नहीं कि writes सच में slow थे। बल्कि इसलिए कि उन्होंने कहीं पढ़ा था कि "Foreign Keys scale नहीं करते।" छह महीने बाद, उनके पास 2 अरब orphaned records थे, एक billing system जो deleted users को charge कर रहा था, और analytics जो 40% गलत थे।
+इसलिए नहीं कि उन्होंने कोई bottleneck measure किया था। इसलिए नहीं कि writes वास्तव में slow थे। बल्कि इसलिए कि उन्होंने कहीं पढ़ा था कि "Foreign Keys scale नहीं करते।" छह महीने बाद, उनके पास 2 billion orphaned records थे, एक billing system जो deleted users को charge कर रहा था, और analytics जो 40% गलत थे।
 
-जब उन्होंने constraints वापस जोड़ने की कोशिश की? Database पहले से corrupt data को validate करने की कोशिश में रुक गया।
+जब उन्होंने constraints वापस add करने की कोशिश की? Database पहले से ही corrupted data को validate करने की कोशिश में रुक गया।
 
-Web development में यह बहुत फैली हुई धारणा है कि Foreign Keys inherently slow होते हैं, कि वे training wheels हैं जिन्हें आप "real" systems पर जाकर हटा देते हैं। लेकिन इससे constraint का असली मकसद ही छूट जाता है। आप fast और slow के बीच चुनाव नहीं कर रहे। आप अलग-अलग failure modes के बीच चुनाव कर रहे हैं।
+Web development में यह प्रचलित विचार है कि Foreign Keys inherently slow हैं, कि ये training wheels हैं जिन्हें आप "real" systems पर पहुँचकर हटा देते हैं। लेकिन यह पूरे point को miss कर रहा है कि constraint किसके लिए है। आप fast और slow के बीच नहीं चुन रहे। आप different failure modes के बीच चुन रहे हैं।
 
-ऐसे सोचो: safety glass, seatbelts, और airbags सब तुम्हारी car में weight जोड़ते हैं। वे ज़रूर गाड़ी को slow और कम fuel efficient बनाते हैं। लेकिन आप 0-60 time optimize करने के लिए उन्हें नहीं निकालते, क्योंकि आप किसी और चीज़ के लिए optimize कर रहे होते हैं।
+इसके बारे में ऐसे सोचें: safety glass, seatbelts, और airbags सभी आपकी car में weight जोड़ते हैं। वे absolutely आपकी vehicle को slower और less fuel efficient बनाते हैं। लेकिन आप 0-60 time optimize करने के लिए उन्हें नहीं निकालते, क्योंकि आप किसी और चीज़ के लिए optimize कर रहे हैं।
 
-सवाल यह नहीं है कि Foreign Keys तुम्हें slow करते हैं या नहीं। बेशक करते हैं। सवाल यह है कि बदले में तुम्हें क्या मिलता है, और क्या तुम्हें सच में उसकी ज़रूरत है।
+सवाल यह नहीं है कि Foreign Keys आपको slow करते हैं या नहीं। बेशक करते हैं। सवाल यह है कि बदले में आपको क्या मिलता है, और क्या आपको वास्तव में इसकी ज़रूरत है।
 
-## तुम असल में क्या trade कर रहे हो
+## आप वास्तव में क्या trade कर रहे हैं
 
-एक concrete example देता हूँ। तुम एक weather monitoring system बना रहे हो जिसमें weather stations, sensor devices, sensor readings, और US states के लिए tables हैं।
+मुझे एक concrete example दें। आप एक weather monitoring system बना रहे हैं जिसमें weather stations, sensor devices, sensor readings, और US states के लिए tables हैं।
 
-क्या तुम सब कुछ Foreign Key से जोड़ दोगे? सोचते हैं कि असल में क्या बदलता है और उसके consequences क्या हैं:
+क्या आप सब कुछ Foreign Key से bind करेंगे? आइए सोचें कि वास्तव में क्या बदलता है और consequences क्या हैं:
 
-US States शायद नहीं बदल रहे। Wyoming का नाम जल्दी नहीं बदला जा रहा। जब reference data static है, तो हर insert पर state codes validate करने के लिए Foreign Key की ज़रूरत नहीं है। वह pointless overhead है।
+US States शायद नहीं बदल रहे। Wyoming का नाम जल्दी नहीं बदला जा रहा। आपको हर insert पर state codes validate करने के लिए Foreign Key की ज़रूरत नहीं है जब आप जानते हैं कि reference data static है। यह pointless overhead है।
 
-Weather stations add, move, और decommission होते हैं। लेकिन सवाल यह है: क्या तुम चाहते हो कि historical readings अपना station "खो" दें अगर कोई गलती से station record delete कर दे? शायद तुम चाहते हो कि वह data intact रहे, भले ही station चला जाए। इसका मतलब है कि तुम readings को live reference की बजाय historical snapshot मान रहे हो, और यह बदल देता है कि Foreign Key का मतलब बनता भी है या नहीं।
+Weather stations add, move, और decommission होते हैं। लेकिन यह सवाल है: क्या आप चाहते हैं कि historical readings अपना station "खो" दें अगर कोई accidentally station record delete कर दे? शायद आप वास्तव में चाहते हैं कि वह data तब भी intact रहे जब station गायब हो। इसका मतलब है कि आप readings को historical snapshot की तरह treat कर रहे हैं, live reference की जगह, जो Foreign Key को appropriate बनाता है या नहीं।
 
-Sensor readings हर minute हज़ारों बार insert हो रहे हैं। हर Foreign Key check का मतलब एक lookup। हर lookup तुम्हारी tables पर contention पैदा करता है। अगर slow validation का मतलब है कि तुम्हारी insert queue backed up हो जाती है और तुम real-time data खो देते हो, तो यह orphaned record होने से अलग तरह का data loss है।
+Sensor readings हर minute हज़ारों बार insert हो रहे हैं। हर Foreign Key check का मतलब एक lookup। हर lookup आपकी tables पर contention पैदा करती है। अगर slow validation का मतलब है कि आपकी insert queue backed up हो जाती है और आप real-time data खो देते हैं, तो यह orphaned record होने से अलग तरह का data loss है।
 
-तुम देख सकते हो कि यह कहाँ जा रहा है। चुनाव performance बनाम correctness के abstract concepts के बारे में नहीं है। यह इस बारे में है कि अपनी actual constraints और actual consequences को देखते हुए किस specific failure को तुम ज़्यादा सहन कर सकते हो।
+आप देख सकते हैं कि यह कहाँ जा रहा है। चुनाव performance versus correctness as abstract concepts के बारे में नहीं है। यह about है कि आप अपने actual constraints और actual consequences को देखते हुए किस specific failure को tolerate करना ज़्यादा willing हैं।
 
-अगर गलत references का मतलब corrupted billing data या regulatory violations है, तो शायद तुम्हें Foreign Keys चाहिए, performance cost की परवाह किए बिना। अगर slow validation का मतलब है कि तुम real-time sensor data हमेशा के लिए खो देते हो क्योंकि queue overflow हो गई, तो शायद validation गलत tradeoff है।
+अगर wrong references का मतलब corrupted billing data या regulatory violations है, तो शायद आप Foreign Keys चाहते हैं जो आपको protect करें performance cost के बावजूद। अगर slow validation का मतलब है कि आप real-time sensor data हमेशा के लिए खो देते हैं क्योंकि आपकी queue overflow हो जाती है, तो शायद validation गलत tradeoff है।
 
-## जब Fast Writes सच में matter करते हैं
+## जब Fast Writes वास्तव में matter करते हैं
 
-तो तुमने तय कर लिया कि तुम्हें maximum write speed चाहिए। Queue pile up हो रही है, transactions timeout हो रहे हैं, और Foreign Key checks legitimately problems पैदा कर रहे हैं जिन्हें तुमने actually measure किया है, सिर्फ theorize नहीं किया।
+तो आपने फैसला किया है कि आपको maximum write speed चाहिए। आपकी queue pile up हो रही है, transactions timeout हो रहे हैं, और Foreign Key checks legitimately problems पैदा कर रहे हैं जिन्हें आपने actually measured है (sirf theorized नहीं)।
 
-तुम्हारे पास कुछ options हैं। तुम अपना transaction isolation level `SERIALIZABLE` से `READ COMMITTED` में बदल सकते हो, जो faster है लेकिन कुछ consistency guarantees trade करता है। तुम अपने commits batch कर सकते हो, एक-एक row की जगह 1000 rows per transaction insert करके FK overhead amortize कर सकते हो। या तुम denormalize कर सकते हो, एक append-only log structure में जहाँ तुम references validate करने की कोशिश ही नहीं कर रहे।
+आपके पास कुछ options हैं। आप अपने transaction isolation level `SERIALIZABLE` से `READ COMMITTED` में बदल सकते हैं, जो faster है लेकिन कुछ consistency guarantees trade करता है। आप अपने commits batch कर सकते हैं, 1000 rows per transaction insert करके एक-एक करने की जगह ताकि FK overhead amortize हो। या आप denormalize कर सकते हैं, एक append-only log structure में जहाँ आप references validate करने की कोशिश ही नहीं कर रहे।
 
-वह तीसरा option cheating नहीं है। वह बस एक अलग design है:
+वह third option cheating नहीं है। यह बस एक different design है:
 
 ```sql
 CREATE TABLE sensor_log (
@@ -58,85 +58,85 @@ CREATE INDEX ON sensor_log USING GIN (data);
 CREATE INDEX ON sensor_log (recorded_at);
 ```
 
-कोई joins नहीं। कोई Foreign Key checks नहीं। बस data append करो और time range या JSONB blob पर GIN index से query करो। क्या यह "best practice" है? शायद उस sense में नहीं जिसमें database textbooks सिखाते हैं। क्या यह काम करता है जब तुम एक Raspberry Pi पर 50,000 rows per minute insert कर रहे होते हो? बिल्कुल।
+No joins. No Foreign Key checks. बस append data और query by time range या JSONB blob पर GIN index। क्या यह "best practice" है? शायद नहीं उस sense में जो database textbooks teach हैं। क्या यह काम करता है जब आप एक Raspberry Pi पर 50,000 rows per minute insert कर रहे हैं? Absolutely.
 
-Disconnect तब आता है जब लोग "best practice" को moral imperative की तरह treat करते हैं, बजाय एक ऐसे pattern के जो common scenarios में अच्छी तरह काम करता है लेकिन शायद तुम्हारे case में fit न हो।
+Disconnect तब होता है जब लोग "best practice" को moral imperative की तरह treat करते हैं उन scenarios के pattern की जगह जो common हैं लेकिन शायद आपके fit नहीं हैं।
 
-## Normalization का trap
+## Normalization trap
 
-Database courses normalization सिखाना पसंद करते हैं। हर कीमत पर duplication से बचो। Third Normal Form या कुछ नहीं।
+Database courses normalization सिखाने के लिए love करती हैं। हर cost पर duplication बचें। Third Normal Form या bust।
 
-तो तुम्हारे पास कुछ ऐसा बनता है: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+तो आप कुछ ऐसा end करते हैं: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
 
-सिर्फ यह जवाब देने के लिए छह table joins: "क्या मैंने पिछले Christmas पर red shirt order की थी या blue?" और भगवान न करे तुम्हें product name भी चाहिए, क्योंकि वह catalog hierarchy में तीन और joins दूर है।
+छह table joins सिर्फ यह जवाब देने के लिए कि "क्या मैंने पिछले Christmas पर red shirt या blue shirt order की थी?" और heaven forbid आपको product name चाहिए, क्योंकि वह catalog hierarchy में तीन और joins दूर है।
 
-लेकिन रुकिए। इसका justification आमतौर पर यह होता है: "क्या होगा अगर brand Blue का label बदल दे?" अगर ऐसा होता है, तो क्या तुम सच में चाहते हो कि historical orders retroactively color बदल लें? बिल्कुल नहीं। जब किसी ने वह order दिया था, उन्होंने "Blue T-Shirt, Size M" उसी moment पर खरीदी थी, किसी abstract catalog reference के रूप में नहीं जो बाद में update हो सकती है।
+लेकिन रुकिए। Justification आमतौर पर "क्या होगा अगर brand बदल दे कि वे Blue को कैसे label करते हैं?" होती है। अगर ऐसा होता है, तो क्या आप वास्तव में चाहते हैं कि historical orders retroactively color बदल लें? Of course not। जिसने वह order दिया, उसने एक "Blue T-Shirt, Size M" खरीदा जैसा वह उस moment existed था, catalog entry के किसी abstract reference की जगह जो शायद later update हो।
 
-यह dwell करने लायक है क्योंकि यह subtle है। कुछ data fundamentally snapshot है, reference नहीं। जब तुम snapshot data को live reference की तरह treat करते हो, तो तुम joins की इस absurd proliferation में फँस जाते हो, उस चीज़ को reconstruct करने के लिए जिसे write time पर ही denormalize कर देना चाहिए था।
+यह dwell करने लायक है क्योंकि यह subtle है। कुछ data fundamentally snapshot है, reference नहीं। जब आप snapshot data को live reference की तरह treat करते हैं, तो आप इस absurd proliferation of joins के साथ end होते हैं कुछ reconstruct करने के लिए जो actually write time पर denormalized होना चाहिए था।
 
-`{"color": "blue", "size": "M"}` सीधे order पर store कर दो। काम खत्म।
+`{"color": "blue", "size": "M"}` directly order पर store करें। आपका काम हो गया।
 
-### Snapshot data को पहचानना
+### Snapshot data को recognize करना
 
-तुम कैसे जानते हो कि कुछ snapshot होना चाहिए? अपने से पूछो कि क्या यह point-in-time record है:
+आपको कैसे पता चलेगा कि कुछ snapshot होना चाहिए? खुद से पूछें कि यह point-in-time record है या नहीं:
 
-Orders product details को purchase time पर जैसी थीं वैसी capture करते हैं। Audit logs user state record करते हैं जब उन्होंने कोई action perform किया। History tables update से पहले record state preserve करती हैं। Event streams capture करती हैं कि क्या हुआ, कब हुआ, किस data के साथ।
+Orders product details capture करते हैं जैसे वे purchase time पर existed थे। Audit logs user state record करते हैं जब उन्होंने कोई action perform किया। History tables update से पहले record state preserve करती हैं। Event streams capture करते हैं कि क्या हुआ, कब हुआ, किस data के साथ।
 
-अगर जवाब "हाँ, यह किसी moment in time को record कर रहा है" है, तो इसे normalize करना बंद करो। Snapshot करना शुरू करो।
+अगर जवाब "हाँ, यह एक moment in time record कर रहा है," तो इसे normalize करना बंद करें। Snapshot करना शुरू करें।
 
 ### Opaque blobs
 
-Snapshots के अलावा एक और category है: data जिसे तुम कभी query नहीं करते। तुम बस इसे store करते हो और whole retrieve करते हो।
+Snapshots से परे एक और category है: data जिसे आप कभी query नहीं करते। आप बस इसे store करते हैं और whole retrieve करते हैं।
 
-LLM model configurations जैसे `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` कुछ ऐसा नहीं है जिसे तुम temperature से query करो। तुम पूरा config request ID से fetch करते हो जब ज़रूरत हो। Decode होने के बाद JWT payloads, debugging के लिए API request/response logs, theme settings और notification flags वाले user preference objects। ये सब opaque blobs हैं। तुम्हें normalization की ज़रूरत नहीं है। Foreign Keys की ज़रूरत नहीं है। इन्हें JSONB में डालो और आगे बढ़ो।
+LLM model configurations जैसे `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` something नहीं हैं जिसे आप temperature से query करें। आप entire config by request ID fetch करते हैं जब आपको चाहिए। JWT payloads decoding के बाद, API request/response logs debugging के लिए, user preference objects theme settings और notification flags के साथ। ये सब opaque blobs हैं। आपको normalization की ज़रूरत नहीं। Foreign Keys की ज़रूरत नहीं। उन्हें JSONB में ठूंसकर आगे बढ़ जाइए।
 
-6-table join यह पता लगाने के लिए कि कौन सी color shirt order हुई थी? यह proper normalization नहीं है। यह confused thinking है कि तुम reference store कर रहे हो या value।
+6-table join यह पता लगाने के लिए कि किस color shirt order की गई थी? यह proper normalization नहीं है। यह confused thinking है कि आप reference store कर रहे हैं या value.
 
-(हालांकि सावधान रहो: यह spectacularly backfire कर सकता है अगर तुम्हें बाद में उस data को query करना पड़े। देखो [The JSONB Seduction](/the-jsonb-seduction) कि यह approach कब अपना nightmare पैदा करती है।)
+(हालांकि careful रहें: यह spectacularly backfire हो सकता है अगर आपको बाद में वह data query करना पड़े। [The JSONB Seduction](/the-jsonb-seduction) देखें कि यह approach कब अपना nightmare पैदा करती है।)
 
 ## Scale context है
 
-लोग कहेंगे "Foreign Keys don't scale." लेकिन scale पूरी तरह relative है तुम्हारे hardware और architecture के लिए।
+लोग कहेंगे "Foreign Keys don't scale." लेकिन scale पूरी तरह relative है आपके hardware और architecture के लिए।
 
-एक Raspberry Pi जो microSD card पर 10,000 sensor readings per minute log कर रहा है? वह उस hardware के लिए legitimately high scale है। AWS Aurora provisioned IOPS के साथ billions of rows handle कर रहा है? तुम Foreign Keys के साथ आराम से काम चला सकते हो।
+एक Raspberry Pi जो microSD card पर 10,000 sensor readings per minute log कर रहा है? वह उस hardware के लिए legitimately high scale है। AWS Aurora provisioned IOPS के साथ billions of rows handle कर रहा है? आप Foreign Keys के साथ आसानी से निकल सकते हैं।
 
-Actual hard limit row count या write volume के बारे में नहीं है। वह sharding है।
+Actual hard limit row count या write volume के बारे में नहीं है। यह sharding है।
 
-जब तुम्हारी `Users` table Server A पर है और `Orders` table Server B पर, Foreign Keys physically काम नहीं कर सकते। Database के पास network boundaries पर constraint enforce करने का कोई mechanism नहीं है। उस point पर, तुम पहले से background jobs चला रहे हो orphans ढूँढने के लिए और eventual consistency patterns implement कर रहे हो।
+जब आपकी `Users` table Server A पर है और आपकी `Orders` table Server B पर, Foreign Keys physically काम नहीं कर सकते। Database के पास network boundaries पर constraint enforce करने की mechanism नहीं है। उस point पर, आप पहले से ही orphans find करने के लिए background jobs run कर रहे हैं और eventual consistency patterns implement कर रहे हैं।
 
-यह multi-tenant SaaS में होता है जहाँ compliance के लिए हर tenant को अपना isolated database मिलता है, या IoT deployments में जहाँ 50,000 edge devices हैं और हर एक locally SQLite चला रही है। एक बार वहाँ पहुँच गए, Foreign Keys off the table हैं, literally, performance considerations की परवाह किए बिना।
+यह multi-tenant SaaS में होता है जहाँ each tenant को compliance के लिए अपना isolated database मिलता है, या IoT deployments में जहाँ आपके पास 50,000 edge devices हैं जिनमें से हर एक locally SQLite run कर रहा है। एक बार जब आप वहाँ पहुँच जाते हैं, Foreign Keys off the table हैं (literally) performance considerations के बावजूद।
 
-लेकिन जब तक तुम उस architectural boundary तक नहीं पहुँचते, शायद Netflix की problems के लिए prematurely optimize मत करो जब तुम एक 10-user internal tool बना रहे हो।
+लेकिन जब तक आप उस architectural boundary तक नहीं पहुँचते, शायद Netflix की problems के लिए prematurely optimize न करें जब आप एक 10-user internal tool build कर रहे हैं।
 
-## Practice में यह असल में कैसा दिखता है
+## Practice में यह वास्तव में कैसा दिखता है
 
-"Should I use Foreign Keys" पूछने की जगह, ये तीन सवाल पूछो:
+"Should I use Foreign Keys" पूछने की जगह, ये तीन चीज़ें पूछें:
 
-अगर यह reference गलत है तो क्या टूटता है? क्या यह lawsuit है, corrupted billing, regulatory violation? या यह सिर्फ एक missing join है जो तुम्हारे analytics dashboard में null return करता है?
+अगर यह reference गलत है तो क्या टूटता है? क्या यह lawsuit है, corrupted billing, regulatory violation? या यह सिर्फ एक missing join है जो आपके analytics dashboard में null return करता है?
 
-अगर validation slow है तो क्या टूटता है? क्या तुम irreplaceable real-time data खो देते हो? या तुम्हारी queries बस 50 milliseconds ज़्यादा लेती हैं?
+अगर validation slow है तो क्या टूटता है? क्या आप irreplaceable real-time data खो देते हैं? या आपकी queries बस extra 50 milliseconds लेती हैं?
 
-क्या यह data snapshot है या reference? क्या तुम record कर रहे हो कि कुछ किसी specific moment पर कैसा दिखता था, या तुम authoritative current value की ओर point कर रहे हो?
+क्या यह data snapshot है या reference? क्या आप record कर रहे हैं कि किसी चीज़ की किसी specific moment पर क्या दिखती थी, या आप authoritative current value की ओर point कर रहे हैं?
 
-वहाँ से, patterns pretty naturally emerge करते हैं:
+वहाँ से, patterns pretty naturally emerge करती हैं:
 
-Financial transactions, authentication sessions, कुछ भी जहाँ data corruption का मतलब legal liability है, शायद Foreign Keys चाहते हैं performance overhead की परवाह किए बिना।
+Financial transactions, authentication sessions, कुछ भी जहाँ data corruption का मतलब legal liability है probably Foreign Keys चाहते हैं performance overhead के बावजूद।
 
-High-volume logs, append-only time series data, कुछ भी जहाँ तुम million events per minute लिख रहे हो, शायद हर write पर validation overhead की ज़रूरत नहीं है।
+High-volume logs, append-only time series data, कुछ भी जहाँ आप million events per minute लिख रहे हैं probably हर write पर validation overhead की ज़रूरत नहीं।
 
-Historical snapshots जैसे orders और audit logs, data जिसे तुम हमेशा complete blob की तरह fetch करते हो जैसे user preferences, schemas जिन्हें तुम control नहीं करते जैसे external APIs से webhook payloads... ये अक्सर denormalized बेहतर काम करते हैं।
+Historical snapshots like orders और audit logs, data जिसे आप always complete blob की तरह fetch करते हैं जैसे user preferences, schemas जिन्हें आप control नहीं करते जैसे external APIs से webhook payloads... ये often denormalized बेहतर काम करते हैं।
 
-लेकिन ध्यान दो कि मैंने "शायद" और "अक्सर" कहा। क्योंकि context matters, और तुम्हारा context मेरे से अलग है।
+लेकिन notice करें कि मैंने "probably" और "often" कहा। क्योंकि context matters, और आपका context mine से different है।
 
 ## Final thoughts
 
-Foreign Keys performance problem नहीं हैं। वे write speed और data integrity के बीच tradeoff हैं, और क्या यह tradeoff sense बनाता है यह पूरी तरह तुम्हारे specific bottlenecks और specific consequences पर depend करता है।
+Foreign Keys performance problem नहीं हैं। वे write speed और data integrity के बीच tradeoff हैं, और क्या उस tradeoff का sense बनता है यह पूरी तरह depends करता है आपके specific bottlenecks और आपके specific consequences पर।
 
-Real issue तब है जब लोग Foreign Keys हटाते हैं क्योंकि उन्होंने कहीं "web scale" के बारे में पढ़ा, बिना actually measure किए कि उन्हें write performance problem है भी या नहीं, या यह consider किए बिना कि वे क्या छोड़ रहे हैं। तुम Netflix की architecture को greenfield project पर cargo-cult कर देते हो जो 100 transactions per day process करता है।
+Real issue तब है जब लोग Foreign Keys हटाते हैं किसी चीज़ के बारे में पढ़ने की वजह से "web scale" के बारे में बिना actually measure किए कि उनकी write performance problem है या नहीं या यह consider किए बिना कि वे क्या छोड़ रहे हैं। आप end up करते हैं Netflix का architecture cargo-culting एक greenfield project पर जो 100 transactions per day process करता है।
 
-शायद performance cost तुम्हारे use case के लिए worth it है। शायद नहीं। लेकिन कम से कम वह decision इस बात पर करो कि तुम वास्तव में किसके लिए optimize कर रहे हो, न कि इस बात पर कि तुम्हें क्या लगता है कि तुम्हें किसके लिए optimize करना चाहिए।
+शायद performance cost आपके use case के लिए worth it है। शायद नहीं। लेकिन कम से कम यह decision based करें इस पर कि आप वास्तव में किसके लिए optimize कर रहे हैं, इस पर नहीं कि आप think कर रहे हैं कि आपको किसके लिए optimize करना चाहिए।
 
-तुम किसके लिए optimize कर रहे हो?
+आप किसके लिए optimize कर रहे हैं?
 
 ## Resources
 
