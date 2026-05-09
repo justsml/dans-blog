@@ -21,6 +21,7 @@ const target = readFileSync(targetPath, "utf8");
 
 assertFrontmatter(target);
 assertProtectedTokens(source, target);
+assertNestedAssetPaths(target);
 
 runInherited("bun", ["run", "content:check"]);
 
@@ -68,6 +69,19 @@ function assertProtectedTokens(sourceContents: string, targetContents: string) {
       `${targetPath} changed fenced code block count from ${sourceFences} to ${targetFences}`,
     );
   }
+}
+
+function assertNestedAssetPaths(targetContents: string) {
+  const nestedAssetReferences = [
+    ...targetContents.matchAll(/]\(\.\/(?!\.)[^)]+\)/g),
+    ...targetContents.matchAll(/src=["']\.\/(?!\.)[^"']+["']/g),
+  ];
+
+  if (nestedAssetReferences.length === 0) return;
+
+  throw new Error(
+    `${targetPath} uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.`,
+  );
 }
 
 function escapeRegExp(value: string) {
