@@ -1,52 +1,52 @@
 ---
-title: "अपने डेवलपर वर्कस्टेशन का ब्लास्ट रेडियस घटाएँ"
-subTitle: "Dev Containers, एन्क्रिप्टेड secrets, canary tokens, और outbound firewalls उन लोगों के लिए जो फिर भी काम करते रहना चाहते हैं."
+title: "अपना डेवलपर वर्कस्टेशन ब्लास्ट-रैडियस घटाएँ"
+subTitle: "डेव कंटेनर, एन्क्रिप्टेड सीक्रेट्स, कैनरी टोकन, और आउटबाउन्ड फायरवॉल — उन लोगों के लिए जो काम भी करते हैं।"
 ---
 
-डेवलपर लैपटॉप के लिए सुरक्षा सलाह आमतौर पर दो में से एक तरीके से फेल होती है।
+डेवलपर लैपटॉप के लिए सुरक्षा सलाह आम तौर पर दो तरीकों में असफल होती है।
 
-या तो वह एंटरप्राइज़ वॉलपेपर होती है:
+यह या तो एंटरप्राइज़ वॉलपेपर जैसा होता है:
 
-> endpoint protection का उपयोग करें, नियमित रूप से patch करें, संदिग्ध links से बचें, घटनाओं की promptly रिपोर्ट करें।
+> एंडपॉइंट प्रोटेक्शन का उपयोग करें, नियमित रूप से पैच करें, संदिग्ध लिंक से बचें, घटनाओं की तुरंत रिपोर्ट करें।
 
-सब सही है। फिर भी काफी नहीं।
+सब कुछ सही है। पर यह पर्याप्त नहीं है।
 
-या फिर वह survivalist किस्म की बकवास होती है, जहां जवाब यह होता है कि browsers, JavaScript, Wi-Fi, package managers, vendors, PDFs, chat, code editors, phones, और joy सब बंद कर दो।
+या यह सर्वाइवलिस्ट अतार्किकता होती है जहाँ उत्तर यह होता है कि ब्राउज़र्स, जावास्क्रिप्ट, वाई-फाई, पैकेज मैनेजर, वेंडर्स, पीडीऍफ़, चैट, कोड एडिटर्स, फोन, और खुशी का उपयोग बंद कर दें।
 
-वह भी उपयोगी नहीं।
+यह भी उपयोगी नहीं है।
 
 व्यावहारिक लक्ष्य छोटा है:
 
-> अगर कुछ आपके रूप में चल रहा है, तो उसे अपने-आप वह सब inherit नहीं करना चाहिए जो करने पर आपको भरोसा है।
+> अगर कोई चीज़ आपके रूप में चलती है, तो उसे अपने सब अधिकार स्वतः न मिलें।
 
-यही workstation blast-radius समस्या है।
+यही वर्कस्टेशन ब्लास्ट-रैडियस समस्या है।
 
-यह गाइड उस radius को कम करने के बारे में है, बिना development को गीले cement में टाइप करने जैसा बनाए।
+यह एक मार्गदर्शिका है जो इसे घटाने के तरीकों के बारे में है — बिना विकास को गीला सीमेंट जैसा धीमा किए।
 
-अंतिम सत्यापन: 9 मई, 2026. टूल व्यवहार, pricing, और platform support बदलते रहते हैं, इसलिए टीम-स्तर पर standardize करने से पहले current docs देख लें।
+अंतिम सत्यापन: 9 मई, 2026. टूल व्यवहार, मूल्य निर्धारण, और प्लेटफ़ॉर्म समर्थन बदलते रहते हैं, इसलिए किसी नीति को टीम पर लागू करने से पहले वर्तमान डॉक्स जांचें।
 
 ---
 
-## रक्षा का ढांचा
+## रक्षा की रूपरेखा
 
-आपको चार परतें चाहिए:
+आपको चार परतों की जरूरत है:
 
-| परत | काम |
+| Layer | Job |
 | --- | --- |
-| Isolation | Project tools और risky commands को बाकी मशीन से दूर रखें। |
-| Secret handling | Plaintext credentials कम करें और sensitive values को गलती से leak करना कठिन बनाएं। |
-| Detection | ऐसे tripwires लगाएं जहां attackers या खराब automation स्वाभाविक रूप से देखेंगे। |
-| Egress control | Unexpected outbound connections को नोटिस करें और रोकें। |
+| Isolation | प्रोजेक्ट टूल्स और जोखिम भरे कमांड्स को मशीन के बाकी हिस्से से दूर रखें। |
+| Secret handling | प्लेनटेक्स्ट क्रेडेंशियल्स को कम करें और संवेदनशील मानों को लीक होने से मुश्किल बनाएं। |
+| Detection | ऐसे ट्रिपवायर लगाएँ जहाँ हमलावर या खराब ऑटोमेशन स्वाभाविक रूप से देखेगा। |
+| Egress control | अनपेक्षित आउटबाउंड कनेक्शनों को नोटिस और ब्लॉक करें। |
 
-हर laptop threat को एक साथ हल करने की कोशिश से शुरुआत मत करें।
+हर लैपटॉप खतरे को एक बार में हल करने की कोशिश से शुरू मत कीजिए।
 
-उस रास्ते से शुरू करें जिसे attackers पसंद करते हैं: कुछ चलाओ, secrets पढ़ो, बाहर भेजो, और किसी के notice करने से पहले उनका उपयोग कर लो।
+हमेशा उस रास्ते से शुरू करें जिसे हमलावर पसंद करते हैं: कुछ चलाएँ, सीक्रेट पढ़ें, उन्हें बाहर भेजें, और बिना किसी नज़रअंदाज़ के उपयोग कर लें।
 
-## 1. Projects को Dev Containers में रखें
+## 1. प्रोजेक्ट्स को डेव कंटेनरों में रखें
 
-[Dev Containers](https://github.com/devcontainers/spec) आपको container को एक full-featured development environment के रूप में उपयोग करने देते हैं। यह developer-experience infrastructure जैसा लगता है, और है भी। लेकिन जब इसे discipline के साथ इस्तेमाल किया जाए, तो यह security boundary भी है।
+[Dev Containers](https://github.com/devcontainers/spec) आपको कंटेनर को एक पूर्ण-विशेषतायुक्त विकास वातावरण के रूप में उपयोग करने देते हैं। यह डेवलपर-एक्सपीरियंस इंफ्रास्ट्रक्चर जैसा लगता है, और वह भी है। पर अनुशासन के साथ उपयोग करने पर यह एक सुरक्षा सीमा भी बन सकता है।
 
-ढीली configuration बहुत ज़्यादा माउंट करती है:
+आलसी कॉन्फ़िगरेशन बहुत ज्यादा माउंट कर देता है:
 
 ```jsonc
 // Too convenient. Too much blast radius.
@@ -59,9 +59,9 @@ subTitle: "Dev Containers, एन्क्रिप्टेड secrets, canary 
 }
 ```
 
-यह container को आपके host account के अजीब-से आकार वाले संस्करण में बदल देता है।
+यह कंटेनर को आपके होस्ट अकाउंट का अजीब आकार का एक रूप बना देता है।
 
-इसके बजाय narrow mounts इस्तेमाल करें:
+तंग माउंट्स का उपयोग करें:
 
 ```jsonc
 // .devcontainer/devcontainer.json
@@ -79,17 +79,17 @@ subTitle: "Dev Containers, एन्क्रिप्टेड secrets, canary 
 }
 ```
 
-यह perfect sandbox नहीं है। Containers kernel साझा करते हैं। Docker के sharp edges हैं। Mounts model में सीधे छेद कर सकते हैं।
+यह परफेक्ट सैंडबॉक्स नहीं है। कंटेनर एक कर्नेल साझा करते हैं। Docker के तेज़ किनारे होते हैं। माउंट्स मॉडल में सीधे छेद कर सकते हैं।
 
-लेकिन ज़्यादातर developer workflows के लिए फायदा तुरंत मिलता है: project commands project देखते हैं, आपका पूरा digital attic नहीं।
+पर अधिकांश डेवलपर वर्कफ़्लो के लिए, लाभ तुरंत दिखता है: प्रोजेक्ट कमांड केवल प्रोजेक्ट देखते हैं, न कि आपकी पूरी डिजिटल अलमारी।
 
 ### क्या माउंट करें
 
-Repo माउंट करें।
+रिपॉजिटरी को माउंट करें।
 
-शायद project-specific cache भी माउंट करें।
+शायद प्रोजेक्ट-विशिष्ट कैश को माउंट करें।
 
-डिफ़ॉल्ट रूप से ये चीज़ें माउंट न करें:
+इनको डिफ़ॉल्ट रूप से माउंट न करें:
 
 - `~/.ssh`
 - `~/.aws`
@@ -97,53 +97,53 @@ Repo माउंट करें।
 - `~/.azure`
 - `~/Downloads`
 - `~/Documents`
-- password manager exports
-- database dumps
-- backup folders
-- random “temp” folders जो 2021 से मौजूद हैं
+- पासवर्ड मैनेजर एक्सपोर्ट
+- डेटाबेस डंप
+- बैकअप फ़ोल्डर
+- 2021 से मौजूद कोई भी रैंडम “टेम्प” फ़ोल्डर
 
-अगर किसी project को cloud access चाहिए, तो उस project के लिए बना credential inject करें। Short-lived बेहतर है। Read-only बेहतर है। ऐसा token जो केवल dev account access कर सके, आपके personal admin identity के container में छोटे suitcase के साथ घुसने से बेहतर है।
+यदि किसी प्रोजेक्ट को क्लाउड एक्सेस की आवश्यकता है, तो उस प्रोजेक्ट के लिए बनाए हुए क्रेडेंशियल इंजेक्ट करें। छोटी-आयु (short-lived) बेहतर है। केवल-पढ़ने (read-only) बेहतर है। एक टोकन जो केवल एक डेव अकाउंट तक पहुँचता है, आपकी व्यक्तिगत एडमिन पहचान को कंटेनर में भटका हुआ छोड़ने से बेहतर है।
 
-### AI Coding Tools भी यहीं आते हैं
+### AI कोडिंग टूल्स भी यहीं होने चाहिए
 
-AI coding tools Dev Containers को कम नहीं, और ज़्यादा महत्वपूर्ण बनाते हैं।
+AI कोडिंग टूल्स Dev Containers को और ज़रूरी बनाते हैं, न कि कम।
 
-Anthropic की [Claude Code permission docs](https://code.claude.com/docs/en/permissions) दुनिया को permissions और sandboxing में बांटती हैं: permissions tools, files, और domains नियंत्रित करती हैं; sandboxing Bash filesystem और network access के लिए OS-level enforcement देती है।
+Anthropic की [Claude Code permission docs](https://code.claude.com/docs/en/permissions) दुनिया को अनुमतियों और सैंडबॉक्सिंग में बाँटती हैं: अनुमतियाँ टूल्स, फाइलें, और डोमेन कंट्रोल करती हैं; सैंडबॉक्सिंग बैश फ़ाइलसिस्टम और नेटवर्क एक्सेस के लिए OS-स्तरीय प्रवर्तन देती है।
 
-यही असली फर्क है।
+यह अंतर पूरा खेल है।
 
-अगर कोई agent shell commands चला सकता है, packages install कर सकता है, files inspect कर सकता है, और instructions follow कर सकता है, तो shell work को constrained project environment के अंदर रखें। Host को boring रखें।
+यदि कोई एजेंट शेल कमांड चला सकता है, पैकेज इंस्टॉल कर सकता है, फाइलें निरीक्षण कर सकता है, और निर्देशों का पालन कर सकता है, तो शेल का काम एक सीमित प्रोजेक्ट वातावरण के अंदर रखें। होस्ट को उबाऊ रखें।
 
-अच्छा default:
+अच्छा डिफ़ॉल्ट:
 
-- agent को repo में शुरू करें, home directory में नहीं
-- sensitive paths explicitly deny करें
-- install/build/test commands के लिए Dev Container का उपयोग करें
-- broad “extra directories” को context में जोड़ने से बचें
-- credentials, auth config, package publishing, या cloud resources को छूने वाले किसी भी generated command की समीक्षा करें
+- एजेंट को होम डायरेक्टरी में शुरू न करें — रिपॉ में शुरू करें
+- संवेदनशील पथों को स्पष्ट रूप से अस्वीकार करें
+- इंस्टॉल/बिल्ड/टेस्ट कमांड्स के लिए Dev Container का उपयोग करें
+- व्यापक “extra directories” को संदर्भ के रूप में जोड़ने से बचें
+- किसी भी जनरेट किए गए कमांड की समीक्षा करें जो क्रेडेंशियल्स, ऑथ कॉन्फ़िग, पैकेज पब्लिशिंग, या क्लाउड संसाधनों को छूता हो
 
-TypeScript error ठीक करने के लिए model को आपके `~/Documents` folder की ज़रूरत नहीं है।
+मॉडल को एक TypeScript त्रुटि ठीक करने के लिए `~/Documents` की ज़रूरत नहीं है।
 
-## 2. Plaintext `.env` Sprawl को बदलें
+## 2. प्लेनटेक्स्ट `.env` फैलाव बदलें
 
-`.env` files बुरी नहीं हैं।
+`.env` फ़ाइलें बुरी नहीं हैं।
 
-वे सिर्फ files हैं। वही समस्या है।
+वे बस फाइलें हैं। और यही समस्या है।
 
-Files copy हो जाते हैं। Files index हो जाते हैं। Files mount हो जाते हैं। Files ऐसे scripts पढ़ लेते हैं जिन्हें सिर्फ CSS lint करना था। Files debugging zips में शामिल हो जाते हैं। Files chat में paste हो जाते हैं क्योंकि किसी को मदद चाहिए थी और आख़िरी बारह lines भूल गईं।
+फाइलें कॉपी होती हैं। फाइलें इंडेक्स होती हैं। फाइलें माउंट होती हैं। फाइलें उन स्क्रिप्ट्स द्वारा पढ़ी जाती हैं जिन्हें केवल CSS लिंट करना चाहिए था। फाइलें डिबगिंग ज़िप्स में शामिल हो जाती हैं। फाइलें चैट में पेस्ट हो जाती हैं क्योंकि किसी ने मदद के लिए भूल से आख़री बार बारह लाइनें भी साझा कर दीं।
 
-निम्न boring hierarchy अपनाएँ:
+निरस हाइरार्की का उपयोग करें:
 
-1. Secret की ज़रूरत नहीं: value को `.env.example` में रखें।
-2. Local-only secret: उसे rest में encrypt करें।
-3. Shared development secret: उसे real secrets manager या password manager में रखें।
-4. Production secret: जब तक कोई बहुत खास वजह न हो, उसे developer laptops पर मत रखें।
+1. सीक्रेट की जरूरत नहीं: वैल्यू `.env.example` में रखें।
+2. लोकल-ओनली सीक्रेट: इसे एन्क्रिप्ट करके रखो।
+3. साझा विकास सीक्रेट: असली सीक्रेट्स मैनेजर या पासवर्ड मैनेजर में रखें।
+4. प्रोडक्शन सीक्रेट: डेवलपर लैपटॉप पर तब तक न रखें जब तक बहुत स्पष्ट कारण न हो।
 
-[VarLock](https://varlock.dev/guides/secrets/) इसलिए आकर्षक है क्योंकि यह sensitivity को स्पष्ट बनाता है। इसके docs `@sensitive` से values mark करने, `varlock()` से local values encrypt करने, console output से sensitive values redact करने, और known sensitive values की plaintext occurrences के लिए project files scan करने का वर्णन करते हैं।
+[VarLock](https://varlock.dev/guides/secrets/) आकर्षक है क्योंकि यह संवेदनशीलता को स्पष्ट बनाता है। इसके डॉक्स `@sensitive` के साथ मानों को चिह्नित करने, लोकल मानों को `varlock()` से एन्क्रिप्ट करने, कंसोल आउटपुट से संवेदनशील मानों को रेडैक्ट करने, और प्रोजेक्ट फाइलों में प्लेनटेक्स्ट के ज्ञात उदाहरणों की स्कैनिंग का वर्णन करते हैं।
 
-यह shape “repo पर regex चलाओ और hope करो कि secret secret-shaped दिखे” से बेहतर है।
+यह रूप “रेपो पर रेगेक्स चलाओ और उम्मीद करो कि सीक्रेट किसी सीक्रेट-जैसे पैटर्न में दिखेगा” से बेहतर है।
 
-उदाहरण दिशा:
+उदाहरण निर्देश:
 
 ```dotenv
 # .env.schema
@@ -158,7 +158,7 @@ STRIPE_SECRET_KEY=
 DATABASE_URL=
 ```
 
-Local override:
+लोकल ओवरराइड:
 
 ```dotenv
 # .env.local
@@ -167,44 +167,44 @@ STRIPE_SECRET_KEY=varlock(local:...)
 DATABASE_URL=varlock(local:...)
 ```
 
-इसका मतलब यह नहीं कि secrets compromised process में लोड हो जाने के बाद सुरक्षित हैं। कुछ भी नहीं है। लेकिन इसका मतलब यह है कि filesystem पर plaintext prizes कम हैं।
+इसका मतलब यह नहीं है कि एक बार किसी प्रक्रिया में लोड हो जाने के बाद सीक्रेट्स सुरक्षित हैं। कुछ भी पूरी तरह सुरक्षित नहीं करता। पर इसका मतलब यह है कि फ़ाइलसिस्टम पर कम प्लेनटेक्स्ट इनाम रहेंगे।
 
-यह infostealers, malicious dependencies, over-broad AI context, accidental commits, और उस साधारण `console.log(process.env)` पल के खिलाफ मायने रखता है।
+यह इन्फोस्टीलर्स, दुर्भावनापूर्ण निर्भरताओं, बहुत-व्यापक AI संदर्भ, आकस्मिक कमिट्स, और `console.log(process.env)` क्षण के खिलाफ मायने रखता है।
 
-## 3. Canary Tokens उन जगहों पर रखें जहां चोर देखेगा
+## 3. जहाँ चोर देखेगा वहाँ कैनरी टोकन लगाएँ
 
-अधिकांश monitoring आपको तब बताती है जब कुछ known-bad हुआ होता है।
+अधिकांश मॉनिटरिंग आपको तब बताती है जब कुछ पहले से ही ज्ञात-खराब हुआ हो।
 
-Canary tokens आपको तब बताते हैं जब किसी अजीब चीज़ ने ऐसी चीज़ छुई जिसे उसे पता ही नहीं होना चाहिए था।
+कैनरी टोकन आपको बताता है जब कुछ अजीब किसी ऐसी चीज़ को छूता है जिसका उसे पता नहीं होना चाहिए।
 
-[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) इन्हें digital tripwires के रूप में वर्णित करता है। ये documents, URLs, API keys, VPN profiles, QR codes, और अन्य fake assets हो सकते हैं जो access होने पर alert करते हैं।
+[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) उन्हें डिजिटल ट्रिपवायर के रूप में वर्णित करता है। वे दस्तावेज़, URL, API कीज़, VPN प्रोफाइल, QR कोड, और अन्य फेक एसेट हो सकते हैं जो एक्सेस होने पर अलर्ट करते हैं।
 
-Placement ही कला है।
+प्लेसमेंट कला है।
 
-Random bait न फैलाएँ और victory घोषित न करें। Canary उन्हीं जगहों पर रखें जहां credential theft, backup theft, या reconnaissance स्वाभाविक रूप से जाएगा।
+याद रखें: बेतरतीब बेट लगाने और जीत की घोषणा करने से काम नहीं चलेगा। उन जगहों पर कैनरी रखें जहाँ क्रेडेंशियल चोरी, बैकअप चोरी, या टोपी-खोज (reconnaissance) स्वाभाविक रूप से होगी।
 
-### स्थानीय Canaries
+### लोकल कैनरीज़
 
-एक fake backup बनाएं:
+एक नकली बैकअप बनाइए:
 
 ```text
 ~/backups/customer-prod-export-2024.sql
 ```
 
-उसमें canary URL या token डालें:
+इसके अंदर एक कैनरी URL या टोकन डालें:
 
 ```sql
 -- legacy analytics webhook
 -- https://canarytokens.example.invalid/static/abc123
 ```
 
-एक fake credentials file बनाएं:
+एक नकली क्रेडेंशियल फ़ाइल बनाइए:
 
 ```text
 ~/Documents/passwords-old.csv
 ```
 
-या fake AWS profile:
+या एक नकली AWS प्रोफ़ाइल:
 
 ```ini
 # ~/.aws/credentials
@@ -213,104 +213,104 @@ aws_access_key_id = AKIA...
 aws_secret_access_key = ...
 ```
 
-जब उपलब्ध हो, real AWS canary token type इस्तेमाल करें ताकि alert attempted use पर बजे, सिर्फ file open पर नहीं।
+जब उपलब्ध हो तो वास्तविक AWS कैनरी टोकन प्रकार का उपयोग करें ताकि अलर्ट फ़ाइल खुलने पर नहीं बल्कि प्रयुक्त होने पर फ़ायर हो।
 
-### Repo Canaries
+### रेपो कैनरीज़
 
-Source access के बाद attackers जिन जगहों की जांच करते हैं, उनके पास canaries रखें:
+स्रोत-एक्सेस के बाद हमलावर जहाँ निरीक्षण करता है, उन जगहों के पास कैनरी रखें:
 
-- internal runbooks
-- deprecated deployment docs
-- पुराने migration notes
-- fake service credentials एक साफ़ तौर पर non-production `.env.canary` में
-- fake backup restore instructions
+- आंतरिक रनबुक
+- अप्रचलित डिप्लॉयमेंट डॉक्स
+- पुराने माइग्रेशन नोट्स
+- स्पष्ट रूप से नॉन-प्रोडक्शन `.env.canary` में फेक सर्विस क्रेडेंशियल्स
+- फेक बैकअप रिस्टोर निर्देश
 
-यह security by obscurity नहीं है। यह hallway में लगा alarm है।
+यह सुरक्षा-अज्ञेयता नहीं है। यह हॉलवे में एक अलार्म है।
 
-### CI और Cloud Canaries
+### CI और क्लाउड कैनरीज़
 
-अच्छी cloud tripwire locations:
+अच्छी क्लाउड ट्रिपवायर लोकेशन्स:
 
-- fake CI secret
-- fake deploy token
-- fake database user जिसके पास कोई privileges न हों
-- unused object storage path
-- fake kubeconfig
-- runbook में documented fake API key
+- एक नकली CI सीक्रेट
+- एक नकली डिप्लॉय टोकन
+- नॉन-प्रिविलेज्ड नकली डेटाबेस यूज़र
+- एक अनउपयोग किए गया ऑब्जेक्ट स्टोरेज पथ
+- एक नकली kubeconfig
+- किसी रनबुक में दस्तावेजीकृत नकली API की
 
-Alert को actionable बनाएं। ऐसा canary जो unattended inbox पर email भेजता है, decorative string है।
+अलर्ट को कार्रवाईयोग्य बनाइए। एक कैनरी जो एक अनदेखे इनबॉक्स को ईमेल करती है, सिर्फ़ सजावटी स्ट्रिंग है।
 
-कम से कम alert आपको यह बताए:
+कम से कम, अलर्ट को बताना चाहिए:
 
-- कौन-सा token fire हुआ
-- वह कहाँ रखा गया था
-- किस system ने उसे touch किया
-- क्या rotate करना है
-- response का owner कौन है
+- किस टोकन ने फ़ायर किया
+- इसे कहाँ लगाया गया था
+- किस सिस्टम ने इसे छुआ
+- क्या रोटेट करना है
+- उत्तर के लिए कौन जिम्मेदार है
 
-## 4. Outbound Traffic पर Gate लगाएँ
+## 4. आउटबाउंड ट्रैफ़िक पर गेट लगाइए
 
-अगर कोई malicious चीज़ locally चलती है, तो exfiltration के लिए network path चाहिए।
+यदि कुछ लोकलली दुर्भावनापूर्ण चलता है, तो एक्सफ़िल्ट्रेशन के लिए नेटवर्क पथ की जरूरत होती है।
 
-ज़्यादातर developer laptops outbound traffic को डिफ़ॉल्ट रूप से allow करते हैं। यह सुविधाजनक है। इसका मतलब यह भी है कि कोई unknown process अक्सर बिना local decision point के unknown जगह डेटा भेज सकता है।
+अधिकांश डेवलपर लैपटॉप डिफ़ॉल्ट रूप से आउटबाउंड ट्रैफ़िक की अनुमति देते हैं। यह सुविधाजनक है। यह भी मतलब है कि एक अज्ञात प्रक्रिया अक्सर डेटा को एक अज्ञात जगह पर भेज सकती है बिना लोकल निर्णय-बिंदु के।
 
-Outbound firewalls seatbelt layer हैं।
+आउटबाउंड फायरवॉल सीटबेल्ट परत हैं।
 
-वे हर crash नहीं रोकेंगे। वे कुछ crashes को survivable बनाएंगे। वे तब तक inconvenient times पर शिकायत भी करेंगे जब तक आप उन्हें normal व्यवहार सिखा नहीं देते।
+ये हर क्रैश को नहीं रोकेंगे। पर वे कुछ क्रैश को जीवित रहनेयोग्य बनाएंगे। वे कुछ असुविधाजनक समय पर शिकायत भी करेंगे जब तक आप उन्हें यह न सिखाएँ कि सामान्य क्या है।
 
 ### macOS
 
-[LuLu](https://objective-see.org/products/lulu.html) free और open source है। Objective-See इसे unknown outgoing connections block करने वाला बताता है, और इसकी docs note करती हैं कि LuLu सिर्फ outgoing traffic monitor करता है।
+[LuLu](https://objective-see.org/products/lulu.html) मुफ़्त और ओपन सोर्स है। Objective-See इसे अनजान आउटगोइंग कनेक्शन्स को ब्लॉक करने वाला बताता है, और उसके डॉक्स नोट करते हैं कि LuLu केवल आउटगोइंग ट्रैफ़िक की निगरानी करता है।
 
-अगर आप simple outbound prompts चाहते हैं और setup friction सह सकते हैं, तो यह अच्छा first choice है।
+यदि आप सरल आउटबाउंड प्रॉम्प्ट चाहते हैं और कुछ सेटअप घर्षण सहन कर सकते हैं तो यह एक अच्छा पहला विकल्प है।
 
-[Little Snitch](https://obdev.at/products/littlesnitch/) commercial और ज़्यादा polished है। यह connection alerts दिखाता है, आपको app connections allow या deny करने देता है, और app, domain, country, port, protocol, और traffic visibility के साथ network monitor देता है।
+[Little Snitch](https://obdev.at/products/littlesnitch/) वाणिज्यिक और अधिक परिष्कृत है। यह कनेक्शन अलर्ट दिखाता है, आपको ऐप कनेक्शन्स की अनुमति देने या नकारने देता है, और आपको ऐप, डोमेन, देश, पोर्ट, प्रोटोकॉल, और ट्रैफ़िक दृश्यता के साथ एक नेटवर्क मॉनिटर देता है।
 
-अगर आप profiles, rule management, और ऐसी UI चाहते हैं जिसे लोग week two के बाद भी इस्तेमाल करते रहें, तो यह मजबूत विकल्प है।
+यदि आप प्रोफ़ाइल, नियम प्रबंधन, और एक UI चाहते हैं जिसे लोग दूसरे सप्ताह के बाद भी रखने की उम्मीद रखते हैं, तो यह मजबूत विकल्प है।
 
 ### Windows
 
-Windows Defender Firewall outbound rules और inbound तथा outbound traffic के लिए rule precedence support करता है। Microsoft की guidance सीधी है: outbound rules को blocked करना high-security environments में विचारणीय हो सकता है, लेकिन इसके लिए उन apps की inventory और rules बनाना ज़रूरी है जिन्हें network connectivity चाहिए।
+Windows Defender Firewall आउटबाउंड नियमों और नियम प्राथमिकता का समर्थन करता है। Microsoft की मार्गदर्शिका सावधान है: आउटबाउंड नियमों को ब्लॉक करने पर विचार उच्च-सुरक्षा वातावरण में किया जा सकता है, पर इसके लिए ऐप्स की सूची बनानी और जो कनेक्टिविटी चाहिए उन के लिए नियम बनाना ज़रूरी होगा।
 
-अनुवाद: संभव है, शक्तिशाली है, और इसे झंझटपूर्ण बनाना आसान है।
+अनुवाद: संभव है, शक्तिशाली है, और चिढ़ाने वाला बनाना आसान है।
 
-[Portmaster](https://safing.io/) Windows पर भी देखने लायक है। Safing इसे एक open-source application firewall बताता है जो network connections monitor करता है और per-application blocking rules सेट करता है।
+[Portmaster](https://safing.io/) भी Windows पर मूल्यांकन के लायक है। Safing इसे एक ओपन-सोर्स एप्लिकेशन फ़ायरवॉल बताता है जो नेटवर्क कनेक्शन्स की निगरानी करता है और प्रति-एप्लिकेशन ब्लॉकिंग नियम सेट करता है।
 
 ### Linux
 
-Portmaster सामान्य Linux packages को support करता है। OpenSnitch एक और Linux application firewall है जिसे देखना चाहिए, हालांकि standardize करने से पहले project state और distro packaging जांचनी चाहिए।
+Portmaster सामान्य Linux पैकेजों का समर्थन करता है। OpenSnitch भी एक Linux एप्लिकेशन फ़ायरवॉल है जिसे मूल्यांकन योग्य माना जाना चाहिए, हालांकि प्रोजेक्ट की स्थिति और वितरण-पैकेजिंग को मानक बनाने से पहले जाँचना चाहिए।
 
-Servers के लिए normal server controls इस्तेमाल करें। Developer laptops के लिए मुख्य feature application-level visibility है। “सिर्फ 443 छोड़कर सब outbound block कर दो” पर्याप्त नहीं है, क्योंकि दिलचस्प exfiltration paths में से हर एक भी 443 बोलता है।
+सर्वरों के लिए, सामान्य सर्वर नियंत्रण का उपयोग करें। डेवलपर लैपटॉप्स के लिए, मुख्य फीचर एप्लिकेशन-स्तरीय दृश्यता है। “सब आउटबाउंड को 443 के अलावा ब्लॉक करें” तब भी पर्याप्त नहीं है जब हर रोचक एक्सफ़िल्ट्रेशन पाथ 443 पर भी बोलता हो।
 
-## 5. Backups को वयस्क निगरानी दें
+## 5. बैकअप को वयस्क निगरानी दें
 
-Backups ठंडे नहीं होते। वे portable form में sensitive data होते हैं।
+बैकअप ठंडे नहीं होते। वे पोर्टेबल रूप में संवेदनशील डेटा होते हैं।
 
-Developer machines को backup archives नहीं बनना चाहिए, जब तक वही काम न हो।
+डेवलपर मशीनों को बैकअप आर्काइव बनने की अनुमति नहीं होनी चाहिए जब तक कि वह काम न हो।
 
-जो नियम मैं वास्तव में लागू करूँगा:
+वो नियम जो मैं वास्तव में लागू करना चाहूँगा:
 
-- Production exports के लिए owner और expiration date होना चाहिए।
-- Local database dumps encrypted होने चाहिए।
-- किसी भी export में credentials हों तो credential rotation या scrubbing trigger होना चाहिए।
-- Backup folders Dev Containers में डिफ़ॉल्ट रूप से mount नहीं होने चाहिए।
-- Backup folders AI coding tools से डिफ़ॉल्ट रूप से deny होने चाहिए।
-- Backup जैसी storage में कम से कम एक canary होना चाहिए।
-- पुराने exports automation से delete हों, vibes से नहीं।
+- प्रोडक्शन एक्सपोर्ट्स के लिए एक मालिक और समाप्ति तिथि आवश्यक होनी चाहिए।
+- लोकल डेटाबेस डंप्स को एन्क्रिप्ट किया जाना चाहिए।
+- किसी भी एक्सपोर्ट में क्रेडेंशियल्स हों तो क्रेडेंशियल रोटेशन या स्क्रबिंग ट्रिगर होती है।
+- बैकअप फ़ोल्डर डिफ़ॉल्ट रूप से Dev Containers में माउंट न हों।
+- बैकअप फ़ोल्डर AI कोडिंग टूल्स के लिए डिफ़ॉल्ट रूप से अस्वीकार किए जाएँ।
+- कम-से-कम एक कैनरी बैकअप-प्रकार स्टोरेज में रहे।
+- पुराने एक्सपोर्ट्स ऑटोमेशन द्वारा हटाए जाएँ, न कि वाइब्स द्वारा।
 
-साधारण local convention:
+सरल लोकल कन्वेंशन:
 
 ```bash
 mkdir -p ~/sensitive-exports
 chmod 700 ~/sensitive-exports
 ```
 
-बेहतर convention:
+बेहतर कन्वेंशन:
 
-- encrypted volume या encrypted archive
-- expiration के साथ clear naming
-- documented deletion
-- approved न हो तो consumer cloud drives में sync नहीं
+- एन्क्रिप्टेड वॉल्यूम या एन्क्रिप्टेड आर्काइव
+- समाप्ति के साथ स्पष्ट नामकरण
+- दस्तावेजीकृत हटाना
+- उपभोक्ता क्लाउड ड्राइव्स पर बिना अनुमोदन के सिंक न करें
 
 उदाहरण:
 
@@ -319,78 +319,78 @@ age -r age1yourpublickeyhere -o customer-export-2026-05-09.sql.gz.age customer-e
 shred -u customer-export.sql.gz
 ```
 
-इसे ritual मत बनाइए। सबसे अच्छी backup policy वही है जिसमें developers को production exports की ज़रूरत बहुत कम पड़े।
+इसे एक अनुष्ठान न बनाइए। सबसे अच्छी बैकअप नीति वही है जहाँ डेवलपर्स को शायद ही कभी प्रोडक्शन एक्सपोर्ट्स की ज़रूरत पड़े।
 
-## 6. एक Workstation Default बनाएं
+## 6. एक वर्कस्टेशन डिफ़ॉल्ट बनाइए
 
-एक individual developer के लिए एक समझदार baseline यह है:
+यहाँ एक व्यक्तिगत डेवलपर के लिए एक समझदार बेसलाइन है:
 
-| क्षेत्र | बेसलाइन |
+| Area | Baseline |
 | --- | --- |
-| Browser | No saved production passwords. महत्वपूर्ण खातों के लिए password manager और hardware-backed MFA उपयोग करें। |
-| Projects | package installs, untrusted code, या AI-driven shell work वाले projects के लिए Dev Containers का उपयोग करें। |
-| Secrets | disk पर plaintext production secrets न रखें. जहाँ व्यावहारिक हो local dev secrets encrypt करें। |
-| Cloud | Short-lived credentials. dev और prod identities अलग रखें. डिफ़ॉल्ट रूप से personal admin token न रखें। |
-| GitHub | Fine-grained tokens. package publishing tokens की समीक्षा करें. org SSO और hardware keys उपयोग करें। |
-| AI tools | Project-scoped access, sensitive paths deny करें, और जब संभव हो commands को containers में चलाएँ। |
-| Backups | Encrypt करें, expire करें, isolate करें, और monitor करें. Broad mounts और AI context से बाहर रखें। |
-| Network | Outbound firewall पहले alert या monitor mode में, फिर risky tools के लिए rules। |
-| Detection | Backup, credential, CI, cloud, और documentation locations में canary tokens। |
+| Browser | कोई सेव्ड प्रोडक्शन पासवर्ड न रखें। एक पासवर्ड मैनेजर और हार्डवेयर-बैक्ड MFA का उपयोग करें महत्वपूर्ण खातों के लिए। |
+| Projects | पैकेज इंस्टॉल, अनट्रस्टेड कोड, या AI-चालित शेल वर्क वाले प्रोजेक्ट्स के लिए Dev Containers का उपयोग करें। |
+| Secrets | डिस्क पर कोई प्लेनटेक्स्ट प्रोडक्शन सीक्रेट न रखें। जहां व्यावहारिक हो, लोकल डेव सीक्रेट्स एन्क्रिप्ट करें। |
+| Cloud | छोटी-आयु क्रेडेंशियल्स। डेव और प्रोड आइडेंटिटीज़ अलग रखें। डिफ़ॉल्ट रूप से निजी एडमिन टोकन न रखें। |
+| GitHub | फाइन-ग्रेन्ड टोकन। पैकेज पब्लिशिंग टोकन की समीक्षा करें। ऑर्ग SSO और हार्डवेयर कीज़ का उपयोग करें। |
+| AI tools | प्रोजेक्ट-स्कोप्ड एक्सेस, संवेदनशील पथों को अस्वीकार करें, जहाँ व्यावहारिक हो वहां कंटेनरों में कमांड चलाएँ। |
+| Backups | एन्क्रिप्ट, समाप्ति, पृथक, और मॉनिटर करें। व्यापक माउंट्स और AI संदर्भ से बाहर रखें। |
+| Network | पहले अलर्ट या मॉनिटर मोड में आउटबाउंड फायरवॉल, फिर जोखिमभरे टूल्स के लिए नियम बनाएं। |
+| Detection | बैकअप, क्रेडेंशियल, CI, क्लाउड, और डॉक्स लोकेशन्स में कैनरी टोकन रखें। |
 
-टीम के लिए, यह जोड़ें:
+एक टीम के लिए, जोड़िए:
 
-- standard `.devcontainer` template
-- एक secrets policy जो local, shared dev, staging, और prod में फर्क करे
-- canary-token placement conventions
-- documented outbound firewall profiles
-- तेज़ credential rotation playbooks
-- onboarding जो threat model समझाए, theater नहीं
+- एक मानक `.devcontainer` टेम्पलेट
+- एक सीक्रेट्स नीति जो लोकल, साझा डेव, स्टेजिंग, और प्रोड को अलग करे
+- कैनरी-टोकन प्लेसमेंट कन्वेंशन्स
+- दस्तावेजीकृत आउटबाउंड फ़ायरवॉल प्रोफ़ाइल
+- तेज़ क्रेडेंशियल रोटेशन प्लेबुक्स
+- थ्रेट मॉडल को थिएटर नहीं बनाते हुए ऑनबोर्डिंग
 
-लक्ष्य हर developer को security engineer बनाना नहीं है।
+लक्ष्य हर डेवलपर को सुरक्षा इंजीनियर बनाना नहीं है।
 
-लक्ष्य safer path को normal path बनाना है।
+लक्ष्य यह है कि सुरक्षित पथ सामान्य पथ बने।
 
-## इस हफ्ते क्या करें
+## इस सप्ताह क्या करें
 
-अगर यह बहुत बड़ा लग रहा है, तो ये पाँच चीज़ें करें:
+अगर यह बड़ा लगता है, तो पाँच चीज़ें कीजिए:
 
-1. एक high-risk repo चुनें और narrow mounts के साथ Dev Container जोड़ें।
-2. एक plaintext `.env.local` secret को encrypted local storage या password manager में move करें।
-3. एक fake backup file में एक canary token लगाएँ और alerts किसी visible जगह भेजें।
-4. LuLu, Little Snitch, Portmaster, या equivalent को monitor mode में install करें और देखें कि वास्तव में कौन बात कर रहा है।
-5. local production exports ढूँढें और उन्हें delete, encrypt, या expire करें।
+1. एक उच्च-जोखिम रिपो चुनें और उसमें संकुचित माउंट्स के साथ एक Dev Container जोड़ें।
+2. एक प्लेनटेक्स्ट `.env.local` सीक्रेट को एन्क्रिप्टेड लोकल स्टोरेज या पासवर्ड मैनेजर में स्थानांतरित करें।
+3. एक नकली बैकअप फ़ाइल में एक कैनरी टोकन लगाएँ और अलर्ट्स को किसी दिखाई देने योग्य जगह पर रूट करें।
+4. LuLu, Little Snitch, Portmaster, या समकक्ष को मॉनिटर मोड में इंस्टॉल करें और देखें कि असल में क्या बात कर रहा है।
+5. लोकल प्रोडक्शन एक्सपोर्ट्स खोजें और या तो डिलीट, एन्क्रिप्ट, या एक्सपायर कर दें।
 
-शुरुआत के लिए इतना काफी है।
+यह शुरू करने के लिए पर्याप्त है।
 
-Security work अक्सर इसलिए fail करता है क्योंकि वह cathedral बनकर आने की कोशिश करता है। पहले एक door लाओ। फिर lock। फिर alarm। फिर habit।
+सुरक्षा का काम अक्सर इसलिए फेल होता है क्योंकि यह सब कुछ एक कैथेड्रल की तरह पूरा करने की कोशिश करता है। पहले एक दरवाज़ा लाएँ। फिर एक ताला। फिर एक अलार्म। फिर एक आदत।
 
-वर्कस्टेशन को perfectly trusted होने की ज़रूरत नहीं है।
+वर्कस्टेशन को पूरी तरह भरोसेमंद बनाना ज़रूरी नहीं है।
 
-उसे बस accident से infinitely trusted होना बंद करना है।
+बल्कि, यह जरूरी है कि वह आकस्मिक रूप से अनंत विश्वास का स्रोत न बने।
 
-## छवि योजना
+## इमेज योजना
 
-संभावित cover directions:
+संभावित कवर दिशाएँ:
 
-- Diagram जैसा map: केंद्र में laptop, और चार constrained rings labeled isolation, secrets, detection, और egress. Practical guide के लिए सबसे अच्छा।
-- Editorial metaphor: glass domes के नीचे keys, documents, और network cables वाला workbench, जिसमें एक cable warning light तक जाती है। Series visual identity के लिए सबसे अच्छा।
-- Failure-mode scene: local backup folder जो production infrastructure की तरह चमक रहा हो, और उसके चारों ओर छोटे alert tripwires हों। अगर post backup risk पर ज़्यादा झुकता है तो बेहतर।
+- आरेखात्मक मानचित्र: केंद्र में एक लैपटॉप और चार संकुचित रिंग्स जिन्हें isolation, secrets, detection, और egress लेबल किए गए हों। व्यावहारिक गाइड के लिए सर्वोत्तम।
+- संपादकीय रूपक: एक कार्यक्षेत्र जिसमें चाबियाँ, दस्तावेज़, और नेटवर्क केबल ग्लास डोम्स के नीचे हों, और एक केबल चेतावनी लाइट की ओर ले जा रहा हो। सीरीज़ की दृश्य पहचान के लिए बेहतर।
+- फेलियर-मोड सीन: एक लोकल बैकअप फ़ोल्डर जो प्रोडक्शन इन्फ्रास्ट्रक्चर की तरह चमक रहा हो जबकि छोटे अलार्म ट्रिपवायर उसके आसपास हों। अगर पोस्ट बैकअप जोखिम पर ज़्यादा जोर दे रही है तो यह बेहतर।
 
-निर्देश चुने जाने के बाद सुझाया गया asset set:
+एक बार दिशा चुनी जाए तो सुझाया गया एसेट सेट:
 
-- `desktop-social.webp` at 1200x630
-- `wide.webp` at 1600x900
-- `square.webp` at 800x800
+- `desktop-social.webp` 1200x630 पर
+- `wide.webp` 1600x900 पर
+- `square.webp` 800x800 पर
 
-## स्रोत और उपयोगी पढ़ाई
+## स्रोत और उपयोगी पठनीय सामग्री
 
-- [Development Containers विनिर्देश](https://github.com/devcontainers/spec)
-- [Claude Code अनुमतियाँ](https://code.claude.com/docs/en/permissions)
+- [Development Containers specification](https://github.com/devcontainers/spec)
+- [Claude Code permissions](https://code.claude.com/docs/en/permissions)
 - [VarLock secrets management](https://varlock.dev/guides/secrets/)
 - [Thinkst Canarytokens overview](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases)
 - [Objective-See LuLu](https://objective-see.org/products/lulu.html)
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Microsoft: Windows Firewall rules](https://learn.microsoft.com/en-us/windows/security/operating-system-security/network-security/windows-firewall/rules)
-- [Mandiant: UNC5537 Snowflake customer instances को निशाना बनाता है](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
+- [Mandiant: UNC5537 Targets Snowflake Customer Instances](https://cloud.google.com/blog/topics/threat-intelligence/unc5537-snowflake-data-theft-extortion)
 - [Microsoft: Lumma Stealer delivery techniques and capabilities](https://www.microsoft.com/en-us/security/blog/2025/05/21/lumma-stealer-breaking-down-the-delivery-techniques-and-capabilities-of-a-prolific-infostealer/)
