@@ -13,19 +13,19 @@ import {
 
 const CHEAP_CANDIDATE_MODELS = [
   "openrouter/google/gemini-3.1-flash-lite-preview",
-  "openrouter/z-ai/glm-5-turbo",
-  "openrouter/anthropic/claude-haiku-4.5",
   "openrouter/google/gemini-3-flash-preview",
   "openrouter/google/gemini-2.5-flash-lite",
   "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/qwen/qwen3-coder-flash",
+  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/z-ai/glm-5-turbo",
+  "openrouter/z-ai/glm-4.7-flash",
   "openrouter/minimax/minimax-m2.7",
   "openrouter/minimax/minimax-m2.5",
-  "openrouter/moonshotai/kimi-k2.6",
 ];
 
-const JUDGE_MODEL = "openrouter/openai/gpt-5.4-mini";
-const SECOND_JUDGE_MODEL = "openrouter/openai/gpt-5-mini";
+const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
+const SECOND_JUDGE_MODEL = "openrouter/deepseek/deepseek-v4-flash";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
 
 type Task = {
@@ -41,8 +41,8 @@ const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const candidateModels = parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS);
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 3);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
-const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 150);
-const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 150);
+const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 180);
+const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 180);
 const shouldDryRun = options["dry-run"] === true;
 
 const tasks = getMissingTranslationTasks();

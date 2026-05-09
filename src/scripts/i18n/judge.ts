@@ -17,7 +17,7 @@ import { existsSync } from "node:fs";
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
-const judgeModel = optionalString(options, "model") ?? "openrouter/openai/gpt-5.4-mini";
+const judgeModel = optionalString(options, "model") ?? "openrouter/google/gemini-3-flash-preview";
 const secondJudgeModel = optionalString(options, "second-model");
 const escalationJudgeModel = optionalString(options, "escalate-model");
 const selectedCommit = optionalString(options, "select");
