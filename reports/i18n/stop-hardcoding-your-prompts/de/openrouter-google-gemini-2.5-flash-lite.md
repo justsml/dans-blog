@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: de
+- Model: openrouter/google/gemini-2.5-flash-lite
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/de/index.mdx
+- Validation: passed
+- Runtime seconds: 146.39
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
