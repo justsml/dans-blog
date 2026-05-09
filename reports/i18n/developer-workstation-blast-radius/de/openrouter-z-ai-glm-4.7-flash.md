@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: de
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/de/index.mdx
+- Validation: passed
+- Runtime seconds: 99.02
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
