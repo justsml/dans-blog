@@ -41,7 +41,7 @@ Die richtige Chunk-Größe hängt vollständig von deinem Inhalt ab. Technische 
 
 Was zu tun ist: messen. Erstelle ein Eval-Set aus Frage-Antwort-Paaren aus deinem Korpus. Probiere 256, 512 und 1024-Token-Chunks. Miss die Retrieval-Präzision: Erscheint der richtige Chunk in den Top 5? Du lernst schnell, dass die Chunk-Größe wichtiger ist als das Embedding-Modell, über das du dir den Kopf zerbrochen hast.
 
-Verwende außerdem Overlap (Überlappung). Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite bedeutet, dass boundary-spanning Antworten trotzdem abgerufen werden. Die meisten Vektor-Bibliotheken unterstützen das. Die meisten Leute lassen es weg.
+Verwende außerdem Overlap (Überlappung). Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite bedeutet, dass Antworten über Chunk-Grenzen hinweg trotzdem abgerufen werden. Die meisten Vektor-Bibliotheken unterstützen das. Die meisten Leute lassen es weg.
 
 ---
 
@@ -93,7 +93,7 @@ Indiziere beim Schreiben neu, erstelle Fingerprints auf Basis des Inhalts, nicht
 
 ## 3. Retrieval Precision vs. Recall: Du optimierst das Falsche
 
-Die meisten RAG-Tutorials zeigen, wie man die Top-K-Chunks abruft. Sie erklären nicht den Tradeoff zwischen zwei Zielen, die in entgegengesetzte Richtungen zeigen.
+Die meisten RAG-Tutorials zeigen, wie man die Top-K-Chunks abruft. Sie erklären nicht den Zielkonflikt zwischen zwei Zielen, die in entgegengesetzte Richtungen zeigen.
 
 **Hoher Recall**: Gib alles zurück, was relevant sein könnte. Nutzer bekommen immer eine Antwort. Aber das Kontextfenster des Modells ist voll von tangential verwandtem Rauschen, und es halluziniert, um die Lücken zwischen Fragmenten zu füllen.
 
