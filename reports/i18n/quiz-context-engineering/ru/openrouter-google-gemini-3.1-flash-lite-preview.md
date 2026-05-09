@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: ru
+- Model: openrouter/google/gemini-3.1-flash-lite-preview
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 59.79
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
