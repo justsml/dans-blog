@@ -41,7 +41,7 @@ El tamaño correcto del fragmento depende completamente de tu contenido. Documen
 
 Qué hacer: medir. Construye un conjunto de evaluación de pares pregunta/respuesta de tu corpus. Prueba fragmentos de 256, 512 y 1024 tokens. Mide la precisión de recuperación: ¿aparece el fragmento correcto entre los primeros 5? Aprenderás rápido que el tamaño del fragmento importa más que el modelo de embedding por el que tanto te preocupaste.
 
-Usa también solapamiento. Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado significa que las respuestas que cruzan límites aún se recuperan. La mayoría de las librerías vectoriales lo soportan. La mayoría de la gente lo omite.
+Usa también solapamiento. Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado significa que las respuestas que cruzan límites aún se recuperan. La mayoría de las librerías vectoriales lo soporta. La mayoría de la gente lo omite.
 
 ---
 
@@ -49,13 +49,13 @@ Usa también solapamiento. Un fragmento de 512 tokens con 64 tokens de solapamie
 
 Imagina que tu empresa cambia de marca. O renombra un producto. O actualiza sus precios. O depreca una API.
 
-Actualizas la documentación pero no re-generas los embeddings de los fragmentos. El índice vectorial todavía representa el contenido antiguo.
+Actualizas la documentación pero no vuelves a generar los embeddings de los fragmentos. El índice vectorial todavía representa el contenido antiguo.
 
 Los usuarios preguntan por los nuevos precios. Los embeddings los dirigen al contenido antiguo. El modelo lee el contenido antiguo y explica con seguridad los precios viejos. Soporte recibe un ticket.
 
-Todo sistema RAG serio se topa con esto eventualmente. La solución suena obvia — re-generar embeddings cuando el contenido cambia — pero los equipos rara vez construyen ese pipeline antes del primer incidente.
+Todo sistema RAG serio se topa con esto eventualmente. La solución suena obvia - volver a generar embeddings cuando el contenido cambia - pero los equipos rara vez construyen ese pipeline antes del primer incidente.
 
-Necesitas re-indexación incremental con huella digital de contenido:
+Necesitas reindexación incremental con huella digital de contenido:
 
 ```typescript
 import { createHash } from 'crypto';
@@ -87,7 +87,7 @@ async function upsertDocument(doc: Document, vectorStore: VectorStore) {
 }
 ```
 
-Re-indexa al escribir, usa huella digital sobre el contenido, no sobre marcas de tiempo. Los documentos se actualizan en tu CMS todo el tiempo sin que el contenido real cambie.
+Reindexa al escribir, usa huella digital sobre el contenido, no sobre marcas de tiempo. Los documentos se actualizan en tu CMS todo el tiempo sin que el contenido real cambie.
 
 ---
 
@@ -133,7 +133,7 @@ Cosas que realmente ayudan:
 
 **Numera y etiqueta explícitamente tus secciones de contexto.** `[Fuente 1]` ... `[Fuente 2]` le da al modelo anclas para razonar.
 
-**Añade una señal de confianza de recuperación.** Si tu puntuación de similitud es 0.65 en una escala de 0-1, dile al modelo: "El siguiente contexto fue recuperado con confianza moderada. Reconoce la incertidumbre si la respuesta no es clara."
+**Añade una señal de confianza de recuperación.** Si tu puntuación de similitud es 0.65 en una escala de 0-1, dile al modelo: "El siguiente contexto fue recuperado con confianza moderada. Reconoce la incertidumbre si la respuesta no está clara."
 
 **Establece un presupuesto de contexto.** No pases todo lo que recuperaste. Cuenta tokens, prioriza por puntuación de relevancia y corta tajantemente al 60-70% de la ventana de contexto del modelo. Deja espacio para que el modelo razone sin saturarse.
 
