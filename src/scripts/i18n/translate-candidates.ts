@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, rmSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname } from "node:path";
 import {
@@ -29,6 +29,9 @@ const DEFAULT_CANDIDATE_MODELS = [
 ];
 
 const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 90;
+const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
+  ? "/Users/dan/.opencode/bin/opencode"
+  : "opencode";
 const MODEL_VARIANTS = new Map([
   ["openrouter/google/gemini-3.1-flash-lite-preview", "minimal"],
   ["openrouter/deepseek/deepseek-v4-pro", "low"],
@@ -137,6 +140,7 @@ for (const model of models) {
   }
 
   if (!opencodeResult.ok) {
+    cleanupRejectedTarget();
     writeCandidateReport({
       reportPath,
       model,
@@ -228,8 +232,24 @@ for (const model of models) {
 }
 
 function validateCandidate() {
+  normalizeCandidateForLocale();
   runInherited("bun", ["run", "i18n:validate", "--slug", slug, "--locale", locale]);
   return "passed";
+}
+
+function normalizeCandidateForLocale() {
+  if (!existsSync(targetPath)) return;
+
+  const normalized = readFileSync(targetPath, "utf8")
+    .replaceAll("](./", "](../")
+    .replaceAll('src="./', 'src="../')
+    .replaceAll("src='./", "src='../")
+    .replaceAll('="./', '="../')
+    .replaceAll("='./", "='../")
+    .replace(/^(\s*[A-Za-z0-9_-]+:\s*)\.\/(?!\.)/gm, "$1../")
+    .replaceAll(" from '../../../", " from '../../../../");
+
+  writeTextFile(targetPath, normalized);
 }
 
 function hasGitDiff(path: string) {
@@ -374,7 +394,7 @@ type OpenCodeResult = {
 
 function runOpenCode(args: string[], timeoutMs: number): OpenCodeResult {
   const startTime = Date.now();
-  const result = spawnSync("opencode", args, {
+  const result = spawnSync(OPENCODE_COMMAND, args, {
     cwd: process.cwd(),
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -398,7 +418,7 @@ function runOpenCode(args: string[], timeoutMs: number): OpenCodeResult {
     output: `${stdout}\n${stderr}`,
     errorMessage: result.status === 0
       ? undefined
-      : `Command failed${timeoutNote}: opencode ${args.join(" ")}`,
+      : `Command failed${timeoutNote}: ${OPENCODE_COMMAND} ${args.join(" ")}`,
   };
 }
 

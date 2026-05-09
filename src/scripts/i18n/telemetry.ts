@@ -1,4 +1,5 @@
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 
 export type ModelPrice = {
   input: number;
@@ -24,6 +25,10 @@ export type CommandResult = {
   errorMessage?: string;
 };
 
+const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
+  ? "/Users/dan/.opencode/bin/opencode"
+  : "opencode";
+
 const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
   ["openrouter/google/gemma-4-26b-a4b-it", { input: 0, output: 0 }],
   ["openrouter/google/gemma-4-31b-it", { input: 0, output: 0 }],
@@ -37,8 +42,9 @@ const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
 ]);
 
 export function runMeasuredCommand(command: string, args: string[], timeoutMs: number): CommandResult {
+  const resolvedCommand = command === "opencode" ? OPENCODE_COMMAND : command;
   const startTime = Date.now();
-  const result = spawnSync(command, args, {
+  const result = spawnSync(resolvedCommand, args, {
     cwd: process.cwd(),
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
@@ -62,7 +68,7 @@ export function runMeasuredCommand(command: string, args: string[], timeoutMs: n
     output: `${stdout}\n${stderr}`,
     errorMessage: result.status === 0
       ? undefined
-      : `Command failed${timeoutNote}: ${command} ${args.join(" ")}`,
+      : `Command failed${timeoutNote}: ${resolvedCommand} ${args.join(" ")}`,
   };
 }
 
