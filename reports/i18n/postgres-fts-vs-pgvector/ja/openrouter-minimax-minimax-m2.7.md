@@ -3,11 +3,11 @@
 - Locale: ja
 - Model: openrouter/minimax/minimax-m2.7
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 3.52
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 159.96
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model did not create src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx.
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/ja/index.mdx: src/components/Header.astro, src/components/Header.css, tmp-language-nav-desktop.png
