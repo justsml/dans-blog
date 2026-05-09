@@ -1,0 +1,463 @@
+---
+title: "Квиз: Вы действительно понимаете замыкания в JavaScript?"
+subTitle: "Многие разработчики думают, что понимают. Большинство ошибается."
+date: 2026-05-01
+modified: 2026-05-05
+tags: [javascript, closures, quiz, fundamentals, scope, advanced]
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Замыкания — одна из тех концепций, которую, как *думает* каждый JavaScript-разработчик, он понимает — ровно до того момента, пока не перестаёт понимать. Этот квиз покажет, где заканчивается ваше реальное знание.</p>
+
+Замыкания встречаются в обработчиках событий, фабричных функциях, React-хуках, паттерне модулей и практически повсюду. Они не являются чем-то экзотическим. Это ткань, из которой соткан JavaScript.
+
+Вопросы начинаются вполне разумно, а затем начинают снимать половицы одну за другой.
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка"
+  title="Классический счётчик"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const tick = makeCounter();
+    console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` замыкается на `count`. Каждый вызов инкрементирует и возвращает **одну и ту же** переменную `count`. Три вызова дают `1, 2, 3`.
+
+    Ключевое слово: **одну и ту же**. `count` не копируется в замыкание. Замыкание хранит **живую ссылку** на привязку переменной. В этом и есть вся суть.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка"
+  title="Отдельные замыкания"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), b());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Каждый вызов `makeCounter()` создаёт **новый контекст выполнения** со своим собственным `count`. `a` и `b` замыкаются на **разные** привязки `count`. Они не разделяют состояние.
+
+    Результат: `1, 1`
+
+    Именно так замыкания используются для создания приватного состояния — каждый «экземпляр» независим.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Классическая ловушка"
+  title="var в цикле"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined x5'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет выведено через 100 мс?
+    ```javascript
+    for (var i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` имеет функциональную область видимости. Существует ровно **один** `i` — все пять колбэков замыкаются на одну и ту же привязку. К моменту срабатывания таймаутов цикл завершён, и `i` равен `5`.
+
+    Пять колбэков. Один `i`. Значение: `5`. Выводится пять раз.
+
+    Решение — использовать `let` (блочная область видимости, новая привязка на каждой итерации) или обернуть в IIFE для захвата текущего значения:
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Классическая ловушка"
+  title="let решает проблему (или нет?)"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError: i is not defined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Тот же цикл, другое ключевое слово. Что будет выведено?
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `let` в цикле `for` работает особым образом. Спецификация говорит: каждая итерация получает свою **собственную новую привязку** `i`. Это как если бы цикл тайно делал так:
+
+    ```javascript
+    { let i = 0; setTimeout(() => console.log(i), 100) }
+    { let i = 1; setTimeout(() => console.log(i), 100) }
+    // ...
+    ```
+
+    Таким образом, пять колбэков замыкаются на пять различных переменных. Результат: `0, 1, 2, 3, 4`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Замыкания и объекты"
+  title="Мутация объекта"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```javascript
+    function wrap() {
+      const obj = { x: 1 };
+      const getObj = () => obj;
+      obj.x = 99;
+      return getObj;
+    }
+    const get = wrap();
+    console.log(get(), get());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Замыкание захватывает **привязку** `obj`, а не снимок объекта. Объект мутирует после создания замыкания, но `obj` по-прежнему указывает на ту же ссылку. Оба вызова возвращают один и тот же мутировавший объект: `{ x: 99 }`.
+
+    Это ловит тех, кто предполагает, что замыкания «замораживают» значения. Они этого не делают. Они захватывают **ссылки**.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Продвинутый"
+  title="Протухшее замыкание в React"
+  options={[
+    {text: 'Выводит текущее значение count при каждом клике'},
+    {text: 'Всегда выводит 0', isAnswer: true},
+    {text: 'Выводит NaN'},
+    {text: "Код не скомпилируется"},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какое поведение демонстрирует этот React-компонент при многократном нажатии на кнопку?
+    ```jsx
+    function Counter() {
+      const [count, setCount] = useState(0);
+
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log('count is', count);
+        }, 1000);
+        return () => clearInterval(id);
+      }, []); // пустой массив зависимостей
+
+      return <button onClick={() => setCount(c => c + 1)}>
+        Click ({count})
+      </button>;
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Классическое протухшее замыкание (stale closure). `useEffect` выполняется один раз (пустой массив зависимостей) и создаёт интервал, который замыкается на `count` таким, каким он был в момент монтирования: `0`. Сколько бы раз вы ни нажимали, замыкание интервала никогда не увидит обновлённое значение.
+
+    Надпись на кнопке обновляется корректно — это свежий рендер. Но `console.log` навсегда застрял на `0`.
+
+    Исправьте, добавив `count` в массив зависимостей (пересоздаст интервал) или используя ref:
+    ```jsx
+    const countRef = useRef(count);
+    useEffect(() => { countRef.current = count; }, [count]);
+    // затем используйте countRef.current внутри интервала
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Продвинутый"
+  title="Паттерн модуля"
+  options={[
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Подождите — читайте внимательно. Что произойдёт на самом деле?
+    ```javascript
+    const bank = (() => {
+      let balance = 0;
+      return {
+        deposit: (n) => (balance += n),
+        withdraw: (n) => (balance -= n),
+        getBalance: () => balance,
+      };
+    })();
+
+    bank.deposit(100);
+    bank.withdraw(40);
+    console.log(bank.getBalance());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ответ: `60`.
+
+    Это **паттерн модуля** — IIFE, возвращающая объект замыканий. Все три метода замыкаются на одну и ту же привязку `balance`. Она по-настоящему приватная: вы не можете получить доступ к `balance` снаружи.
+
+    ```javascript
+    console.log(bank.balance); // undefined
+    ```
+
+    До появления классов это был *главный* способ инкапсуляции состояния в JavaScript. Вы до сих пор встретите его в легаси-кодобазах и утилитах.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Эксперт"
+  title="Утечка памяти через замыкание"
+  options={[
+    {text: 'Выводит длину массива данных'},
+    {text: 'Создаёт утечку памяти', isAnswer: true},
+    {text: 'Выбрасывает RangeError'},
+    {text: 'Ничего необычного — всё в порядке'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    В чём проблема этого кода?
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      element.addEventListener('click', () => {
+        console.log('clicked!', data.length);
+      });
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Обработчик события замыкается на `data`, поэтому массив остаётся достижимым до тех пор, пока достижим обработчик. Если `element` живёт долго и обработчик никогда не удаляется, этот большой массив тоже остаётся в памяти.
+
+    `element` находится в DOM. Обработчик удерживает `data`. Сборщик мусора не может его освободить.
+
+    Решение: не захватывайте большие данные в долгоживущих обработчиках, если это действительно не нужно, и удаляйте обработчики при уничтожении связанного UI:
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      // делаем что-то с data...
+
+      const onClick = () => {
+        console.log('clicked!');
+      };
+
+      element.addEventListener('click', onClick);
+      return () => element.removeEventListener('click', onClick);
+    }
+    ```
+
+    Современный V8 справляется с этим лучше, чем раньше. Но в долгоживущих SPA с множеством обработчиков этот паттерн всё ещё создаёт проблемы.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Эксперт"
+  title="Ловушка this"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```javascript
+    const user = {
+      name: 'Dan',
+      greetArrow: () => console.log(this?.name),
+      greetRegular() {
+        const inner = () => console.log(this?.name);
+        inner();
+      },
+    };
+
+    user.greetArrow();
+    const fn = user.greetRegular;
+    fn();
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Две тонкие ловушки:
+
+    **`greetArrow`**: Стрелочные функции не имеют собственного `this`. Они захватывают `this` из лексического окружения — в данном случае из области видимости модуля/глобальной области, а не из `user`. Поэтому `this?.name` равно `undefined`.
+
+    **`fn()`**: `greetRegular` вызывается без получателя (`fn()`, а не `user.greetRegular()`). В строгом режиме `this` равно `undefined`. В нестрогом режиме — глобальный объект. В любом случае `this?.name` равно `undefined`.
+
+    Если бы вы вызвали `user.greetRegular()` напрямую, получили бы `'Dan'` — потому что тогда `this` привязан к `user`.
+
+    Результат: `undefined, undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Бонус"
+  title="Мемоизация через замыкание"
+  options={[
+    {text: 'Вызывает expensive() 3 раза'},
+    {text: 'Вызывает expensive() 1 раз', isAnswer: true},
+    {text: 'Вызывает expensive() 2 раза'},
+    {text: 'Выбрасывает: Maximum call stack exceeded'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Сколько раз на самом деле вызывается `expensive()`?
+    ```javascript
+    function memoize(fn) {
+      const cache = new Map();
+      return (arg) => {
+        if (cache.has(arg)) return cache.get(arg);
+        const result = fn(arg);
+        cache.set(arg, result);
+        return result;
+      };
+    }
+
+    let calls = 0;
+    const expensive = (n) => { calls++; return n * 2; };
+    const fast = memoize(expensive);
+
+    fast(5);
+    fast(5);
+    fast(5);
+    console.log(calls);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Мемоизированная функция замыкается на `cache`. Первый вызов (`fast(5)`) не находит значения в кеше, вызывает `expensive` и сохраняет результат. Второй и третий вызовы попадают в кеш и возвращаются немедленно.
+
+    `calls` равен `1`.
+
+    Это замыкания в реальном деле. `cache` приватен (нельзя получить доступ снаружи `memoize`), персистентен (живёт, пока существует `fast`) и разделяется между всеми вызовами `fast`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+Как ваши результаты?
+
+- **9-10**: Вы действительно понимаете замыкания. Наверное, с вами страшно парно программировать.
+- **6-8**: Крепко. Вопросы про протухшие замыкания и `this` вас споткнули — это честно.
+- **3-5**: Вы знаете концепцию, но края размыты. Почитайте документацию MDN про цепочку областей видимости.
+- **0-2**: Вы думали, что знаете замыкания. Теперь знаете. В этом и был смысл.
+
+Протухшее замыкание в React (#6) и ловушка с `this` (#8) — это те самые вопросы, которые вызывают реальные баги в продакшене. Если они показались незнакомыми, стоит вернуться к ним — они встречаются в код-ревью чаще любой другой проблемы, связанной с замыканиями.
