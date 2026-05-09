@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 75.53
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
