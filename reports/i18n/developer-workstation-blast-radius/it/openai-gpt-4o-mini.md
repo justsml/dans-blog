@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: it
+- Model: openai/gpt-4o-mini
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/it/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 106.24
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Command failed: bun run i18n:validate --slug developer-workstation-blast-radius --locale it
