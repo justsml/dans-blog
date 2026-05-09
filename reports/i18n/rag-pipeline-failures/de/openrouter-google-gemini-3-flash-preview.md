@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: de
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 19.24
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
