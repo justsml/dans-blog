@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: de
+- Model: openrouter/moonshotai/kimi-k2.6
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 150.04
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/de/index.mdx: src/content/posts/2026-05-09--your-laptop-is-the-breach/ja/
