@@ -1,0 +1,197 @@
+---
+title: "Cinco formas en que RAG falla en producción"
+subTitle: "La demo funcionó. Los usuarios reales son donde el pipeline se rompe."
+date: 2026-05-04
+modified: 2026-05-05
+tags: [ai, rag, vector-search, llm, production, embeddings, architecture]
+category: AI
+subCategory: Architecture
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.8
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+La demo de RAG siempre se ve genial.
+
+Incrustas algunos documentos, levantas una base de datos vectorial, la conectas al chat y ves cómo el modelo cita tu base de conocimiento interna como si hubiera trabajado allí durante años. Hermoso. Los stakeholders quedan impresionados. Alguien dice "mandemos esto a producción".
+
+Seis semanas después, los usuarios reciben respuestas con una seguridad equivocada. Los tickets de soporte se acumulan. El sistema *funciona*, solo que no de la forma en que la gente lo necesita.
+
+El fallo no suele ser un error dramático. Son cinco errores aburridos apilados uno sobre otro.
+
+---
+
+## 1. Tus fragmentos tienen el tamaño incorrecto
+
+Este fallo no revienta nada. Simplemente empeora cada respuesta un poco hasta que toda la funcionalidad se siente poco fiable.
+
+La búsqueda vectorial recupera *fragmentos*, no documentos. Lo que sea en que dividas tu material original se convierte en la unidad de verdad del recuperador. Si los fragmentos están mal, el modelo responde con los fragmentos equivocados.
+
+**Demasiado pequeños**: El fragmento contiene una respuesta parcial. El embedding captura el tema correcto, pero al texto recuperado le falta contexto. Recuperas "El tiempo máximo de espera es de 30 segundos" sin la oración anterior que dice "al usar la API legacy".
+
+**Demasiado grandes**: El embedding se convierte en un promedio borroso de muchas ideas. La búsqueda semántica se confunde porque el fragmento trata sobre varias cosas, y el vector resultante no representa ninguna de ellas con claridad.
+
+El tamaño correcto del fragmento depende completamente de tu contenido. Documentación técnica, contratos legales y transcripciones de soporte se fragmentan de manera distinta. No hay una respuesta universal.
+
+Qué hacer: medir. Construye un conjunto de evaluación de pares pregunta/respuesta de tu corpus. Prueba fragmentos de 256, 512 y 1024 tokens. Mide la precisión de recuperación: ¿aparece el fragmento correcto entre los primeros 5? Aprenderás rápido que el tamaño del fragmento importa más que el modelo de embedding por el que tanto te preocupaste.
+
+Usa también solapamiento. Un fragmento de 512 tokens con 64 tokens de solapamiento en cada lado significa que las respuestas que cruzan límites aún se recuperan. La mayoría de las librerías vectoriales lo soportan. La mayoría de la gente lo omite.
+
+---
+
+## 2. Tus embeddings se vuelven obsoletos (y no te darás cuenta)
+
+Imagina que tu empresa cambia de marca. O renombra un producto. O actualiza sus precios. O depreca una API.
+
+Actualizas la documentación pero no re-generas los embeddings de los fragmentos. El índice vectorial todavía representa el contenido antiguo.
+
+Los usuarios preguntan por los nuevos precios. Los embeddings los dirigen al contenido antiguo. El modelo lee el contenido antiguo y explica con seguridad los precios viejos. Soporte recibe un ticket.
+
+Todo sistema RAG serio se topa con esto eventualmente. La solución suena obvia — re-generar embeddings cuando el contenido cambia — pero los equipos rara vez construyen ese pipeline antes del primer incidente.
+
+Necesitas re-indexación incremental con huella digital de contenido:
+
+```typescript
+import { createHash } from 'crypto';
+
+async function upsertDocument(doc: Document, vectorStore: VectorStore) {
+  const fingerprint = createHash('sha256')
+    .update(doc.content)
+    .digest('hex');
+
+  const existing = await vectorStore.getBySourceId(doc.id);
+
+  if (existing?.fingerprint === fingerprint) {
+    return; // Content unchanged, skip re-embedding
+  }
+
+  const chunks = chunkDocument(doc);
+  const embeddings = await embedBatch(chunks);
+
+  await vectorStore.upsert(
+    chunks.map((chunk, i) => ({
+      id: `${doc.id}:${i}`,
+      sourceId: doc.id,
+      fingerprint,
+      vector: embeddings[i],
+      text: chunk.text,
+      metadata: { ...doc.metadata, updatedAt: new Date() },
+    }))
+  );
+}
+```
+
+Re-indexa al escribir, usa huella digital sobre el contenido, no sobre marcas de tiempo. Los documentos se actualizan en tu CMS todo el tiempo sin que el contenido real cambie.
+
+---
+
+## 3. Precisión vs. exhaustividad en la recuperación: estás optimizando la incorrecta
+
+La mayoría de los tutoriales de RAG muestran cómo recuperar los K fragmentos principales. No explican el equilibrio entre dos objetivos que apuntan en direcciones opuestas.
+
+**Alta exhaustividad**: Devuelve todo lo que podría ser relevante. Los usuarios siempre obtienen una respuesta. Pero la ventana de contexto del modelo está llena de ruido tangencialmente relacionado, y alucina para rellenar los huecos entre fragmentos.
+
+**Alta precisión**: Solo devuelve los fragmentos más relevantes. El modelo trabaja con contexto limpio y enfocado. Pero si el fragmento correcto no está entre los 3 primeros, el modelo no tiene la información e igualmente inventa algo con total seguridad.
+
+Los modos de fallo parecen idénticos para los usuarios: respuestas incorrectas. Pero las causas, y las soluciones, son opuestas.
+
+Dos técnicas que realmente ayudan:
+
+**Reordenamiento**: Recupera más candidatos (top-20), luego usa un modelo cross-encoder para reordenarlos por relevancia antes de pasarlos al LLM. Los cross-encoders son más lentos que la similitud vectorial pero dramáticamente más precisos en el paso final de ordenamiento.
+
+```typescript
+import { Reranker } from '@mastra/rag';
+
+const results = await vectorStore.search(queryEmbedding, { topK: 20 });
+const reranked = await reranker.rank(query, results);
+const context = reranked.slice(0, 5); // Now top-5 actually means something
+```
+
+**Búsqueda híbrida**: Combina búsqueda vectorial (similitud semántica) con búsqueda por palabras clave (BM25). Fallan de maneras distintas. La búsqueda vectorial sufre con términos específicos, nombres de modelos e IDs. La búsqueda por palabras clave sufre con paráfrasis y sinónimos. Juntas, cubren los puntos ciegos de la otra.
+
+---
+
+## 4. Tu ventana de contexto tiene la forma incorrecta
+
+Has recuperado los fragmentos correctos. Felicidades. El modelo aún va a equivocarse.
+
+El problema no es solo qué recuperas. Es dónde lo colocas.
+
+Los LLMs pueden sufrir el problema de "perderse en el medio". Liu et al. midieron que los modelos de contexto largo usan la información relevante de forma menos fiable cuando aparece en el medio del prompt en lugar de cerca del principio o del final.
+
+Si estás metiendo 20 fragmentos en una lista plana y esperando que el modelo los sintetice correctamente, estás dejando rendimiento sobre la mesa.
+
+Cosas que realmente ayudan:
+
+**Evalúa la colocación al inicio/final para tus fragmentos más relevantes.** Una heurística común es el mejor clasificado primero, el segundo mejor al final, y el resto en el medio. Contraintuitivo, pero vale la pena probarlo con tu modelo y la forma de tu prompt.
+
+**Numera y etiqueta explícitamente tus secciones de contexto.** `[Fuente 1]` ... `[Fuente 2]` le da al modelo anclas para razonar.
+
+**Añade una señal de confianza de recuperación.** Si tu puntuación de similitud es 0.65 en una escala de 0-1, dile al modelo: "El siguiente contexto fue recuperado con confianza moderada. Reconoce la incertidumbre si la respuesta no es clara."
+
+**Establece un presupuesto de contexto.** No pases todo lo que recuperaste. Cuenta tokens, prioriza por puntuación de relevancia y corta tajantemente al 60-70% de la ventana de contexto del modelo. Deja espacio para que el modelo razone sin saturarse.
+
+Referencia: [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
+
+---
+
+## 5. No tienes ni idea de cuándo se equivoca
+
+Este es el fallo silencioso: la respuesta llega, la interfaz se ve saludable, y el contenido es incorrecto.
+
+Con una API tradicional, los fallos son visibles: HTTP 500, timeout, error de validación de esquema. Lo sabes de inmediato. Los fallos de RAG son más silenciosos: el sistema devuelve una respuesta, parece plausible, y está mal.
+
+Puede que no sepas que tu pipeline RAG está fallando hasta que los usuarios te lo digan. A menudo no lo hacen. Simplemente dejan de confiar en él y vuelven a Ctrl+F.
+
+La configuración mínima de observabilidad para un sistema RAG en producción:
+
+**Registra tu cadena de recuperación.** Cada consulta, qué se recuperó (IDs de fragmentos + puntuaciones), y qué produjo el modelo. Necesitas esto para depurar cualquier cosa.
+
+**Monitoriza métricas de recuperación.** Mean reciprocal rank (MRR) y NDCG si tienes etiquetas de referencia. Como mínimo, sigue las distribuciones de puntuación de similitud — si tu puntuación P50 de recuperación baja, la calidad de tu índice bajó.
+
+**Construye un ciclo de retroalimentación.** Incluso un pulgar arriba/abajo en las respuestas, conectado de vuelta a la consulta y los fragmentos recuperados, te da señal de entrenamiento. Sin ello, vuelas a ciegas.
+
+**Ejecuta evaluaciones periódicas.** Un conjunto de prueba de 50-100 preguntas con respuestas correctas conocidas, ejecutado semanalmente, detectará regresiones antes que los usuarios. Una hoja de cálculo y un script bastan para empezar.
+
+```typescript
+async function runEval(
+  testCases: { query: string; expectedAnswer: string }[],
+  pipeline: RAGPipeline
+) {
+  const results = await Promise.all(
+    testCases.map(async ({ query, expectedAnswer }) => {
+      const response = await pipeline.query(query);
+      const score = await scoreResponse(response, expectedAnswer);
+      return { query, score, response };
+    })
+  );
+
+  const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
+  console.log(`Eval score: ${(avgScore * 100).toFixed(1)}%`);
+  
+  // Alert if score drops below threshold
+  if (avgScore < 0.75) {
+    await notifyTeam(`RAG eval score dropped to ${(avgScore * 100).toFixed(1)}%`);
+  }
+
+  return results;
+}
+```
+
+---
+
+## El problema real
+
+Estos fallos no tienen que ver principalmente con el modelo de embedding o la base de datos vectorial. Tienen que ver con el sistema a su alrededor.
+
+Las demos de RAG funcionan porque las condiciones de la demo están controladas: documentos limpios, preguntas bien formuladas, evaluadores tolerantes. Producción falla porque ninguna de esas condiciones se mantiene.
+
+Cada fallo descrito arriba es diagnosticable, pero solo si estás midiendo. Los equipos de RAG fiables no hacen nada exótico. Tratan la calidad de recuperación como un subsistema real en lugar de un artefacto de demo.
+
+Configura el ciclo de evaluación primero. Todo lo demás es más fácil una vez que puedes medirlo.
