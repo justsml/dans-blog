@@ -3,11 +3,11 @@
 - Locale: it
 - Model: openrouter/google/gemini-3-flash-preview
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/it/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 2.75
+- Validation: rejected: validation failed
+- Runtime seconds: 53.84
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Model did not create src/content/posts/2026-05-08--postgres-fts-vs-pgvector/it/index.mdx.
+- Note: Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale it
