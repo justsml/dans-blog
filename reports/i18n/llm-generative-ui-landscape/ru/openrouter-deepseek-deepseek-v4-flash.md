@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 82.33
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
