@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: es
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 10.55
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx.
