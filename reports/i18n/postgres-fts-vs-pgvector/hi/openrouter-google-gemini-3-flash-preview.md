@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: hi
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 48.92
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale hi
