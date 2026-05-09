@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: fr
+- Model: openrouter/qwen/qwen-3.6-27b
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 7.26
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-05-09--developer-workstation-blast-radius/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
