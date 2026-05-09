@@ -3,7 +3,7 @@ title: "Cinq façons dont le RAG échoue en production"
 subTitle: "La démo fonctionnait. Avec de vrais utilisateurs, le pipeline casse."
 date: 2026-05-04
 modified: 2026-05-05
-tags: [ia, rag, recherche-vectorielle, llm, production, embeddings, architecture]
+tags: [ai, rag, vector-search, llm, production, embeddings, architecture]
 category: AI
 subCategory: Architecture
 draft: true
@@ -19,9 +19,9 @@ cover_icon: ../square.webp
 
 La démo RAG est toujours belle.
 
-Vous intégrez quelques documents, vous lancez un vecteur de recherche, vous le branchez à un chat, et vous voyez le modèle citer votre base de connaissances internes comme s'il y avait travaillé des années. Magnifique. Les parties prenantes sont impressionnées. Quelqu'un dit : "mettons ça en production."
+Vous intégrez quelques documents, vous lancez un stockage vectoriel, vous le branchez à un chat, et vous voyez le modèle citer votre base de connaissances interne comme s'il y avait travaillé des années. Magnifique. Les parties prenantes sont impressionnées. Quelqu'un dit : "mettons ça en production."
 
-Six semaines plus tard, les utilisateurs obtiennent des réponses fausses avec assurance. Les tickets de support s'accumulent. Le système *fonctionne*, juste pas de la façon dont les gens en ont besoin.
+Six semaines plus tard, les utilisateurs obtiennent des réponses fausses avec assurance. Les tickets de support s'accumulent. Le système *fonctionne*, juste pas de la façon dont les gens ont besoin.
 
 L'échec est rarement une erreur dramatique. Ce sont cinq erreurs banales empilées ensemble.
 
@@ -31,29 +31,29 @@ L'échec est rarement une erreur dramatique. Ce sont cinq erreurs banales empil�
 
 Cet échec ne fait pas planter. Il rend juste chaque réponse légèrement moins bonne jusqu'à ce que toute la fonctionnalité semble peu fiable.
 
-La recherche vectorielle récupère des *morceaux*, pas des documents. Peu importe comment vous divisez votre matière source, cela devient l'unité de vérité du récupérateur. Si les morceaux sont mauvais, le modèle répond avec les mauvais fragments.
+La recherche vectorielle récupère des *morceaux*, pas des documents. Peu importe comment vous divisez votre contenu source, cela devient l'unité de vérité du récupérateur. Si les morceaux sont mauvais, le modèle répond avec les mauvais fragments.
 
-**Trop petits** : Le morceau contient une réponse partielle. L'intégration capture le bon sujet, mais le texte récupéré manque de contexte. Vous récupérez "Le délai maximum est de 30 secondes" sans la phrase avant qui dit "lors de l'utilisation de l'API héritée."
+**Trop petits** : Le morceau contient une réponse partielle. L'embedding capture le bon sujet, mais le texte récupéré manque de contexte. Vous récupérez "Le délai maximum est de 30 secondes" sans la phrase avant qui dit "lors de l'utilisation de l'API héritée."
 
-**Trop grands** : L'intégration devient une moyenne floue de nombreuses idées. La recherche sémantique est confuse car le morceau concerne plusieurs choses, et le vecteur résultant ne représente proprement aucune d'entre elles.
+**Trop grands** : L'embedding devient une moyenne floue de nombreuses idées. La recherche sémantique est confuse car le morceau concerne plusieurs choses, et le vecteur résultant ne représente proprement aucune d'entre elles.
 
 La bonne taille de morceau dépend entièrement de votre contenu. Les documents techniques, les contrats juridiques et les transcriptions de support se découpent différemment. Il n'y a pas de réponse universelle.
 
-Que faire : mesurez. Créez un ensemble d'évaluation de paires question/réponse à partir de votre corpus. Essayez des morceaux de 256, 512 et 1024 jetons. Mesurez la précision de récupération : le bon morceau apparaît-il dans les 5 premiers ? Vous apprendrez rapidement que la taille du morceau compte plus que le modèle d'intégration sur lequel vous vous êtes torturé.
+Que faire : mesurez. Créez un ensemble d'évaluation de paires question/réponse à partir de votre corpus. Essayez des morceaux de 256, 512 et 1024 tokens. Mesurez la précision de récupération : le bon morceau apparaît-il dans les 5 premiers ? Vous apprendrez rapidement que la taille du morceau compte plus que le modèle d'embedding sur lequel vous vous êtes torturé.
 
-Utilisez aussi un chevauchement. Un morceau de 512 jetons avec 64 jetons de chevauchement de chaque côté signifie que les réponses qui traversent les limites sont quand même récupérées. La plupart des bibliothèques vectorielles le supportent. La plupart des gens sautent cette étape.
+Utilisez aussi un chevauchement. Un morceau de 512 tokens avec 64 tokens de chevauchement de chaque côté signifie que les réponses qui traversent les limites sont quand même récupérées. La plupart des bibliothèques vectorielles le supportent. La plupart des gens sautent cette étape.
 
 ---
 
-## 2. Vos intégrations deviennent périmées (et vous ne le remarquerez pas)
+## 2. Vos embeddings deviennent périmés (et vous ne le remarquerez pas)
 
 Imaginez que votre entreprise change de marque. Ou renomme un produit. Ou met à jour ses prix. Ou déprécie une API.
 
-Vous mettez à jour la documentation mais vous ne réintégrez pas les morceaux. L'index vectoriel représente toujours l'ancien contenu.
+Vous mettez à jour la documentation mais vous ne ré-embeddez pas les morceaux. L'index vectoriel représente toujours l'ancien contenu.
 
-Les utilisateurs demandent les nouveaux prix. Les intégrations les dirigent vers l'ancien contenu. Le modèle lit l'ancien contenu et explique avec assurance les anciens prix. Le support reçoit un ticket.
+Les utilisateurs demandent les nouveaux prix. Les embeddings les dirigent vers l'ancien contenu. Le modèle lit l'ancien contenu et explique avec assurance les anciens prix. Le support reçoit un ticket.
 
-Chaque système RAG sérieux rencontre cela finement. La solution semble évidente : réintégrez quand le contenu change, mais les équipes construisent rarement ce pipeline avant le premier incident.
+Chaque système RAG sérieux finit par rencontrer cela. La solution semble évidente : ré-embeddez quand le contenu change, mais les équipes construisent rarement ce pipeline avant le premier incident.
 
 Vous avez besoin de ré-indexation incrémentielle avec empreinte de contenu :
 
@@ -68,7 +68,7 @@ async function upsertDocument(doc: Document, vectorStore: VectorStore) {
   const existing = await vectorStore.getBySourceId(doc.id);
 
   if (existing?.fingerprint === fingerprint) {
-    return; // Contenu inchangé, sautez la réintégration
+    return; // Contenu inchangé, sautez le ré-embedding
   }
 
   const chunks = chunkDocument(doc);
@@ -103,7 +103,7 @@ Les modes d'échec ressemblent aux utilisateurs : des réponses fausses. Mais le
 
 Deux techniques qui aident vraiment :
 
-**Reclassement** : Récupérez plus de candidats (top-20), puis utilisez un modèle de croisé pour les reclasse par pertinence avant de passer au LLM. Les croisés sont plus lents que la similarité vectorielle mais considérablement plus précis à l'étape de classement final.
+**Reclassement** : Récupérez plus de candidats (top-20), puis utilisez un modèle cross-encoder pour les reclasser par pertinence avant de passer au LLM. Les cross-encoders sont plus lents que la similarité vectorielle mais considérablement plus précis à l'étape de classement final.
 
 ```typescript
 import { Reranker } from '@mastra/rag';
@@ -113,7 +113,7 @@ const reranked = await reranker.rank(query, results);
 const context = reranked.slice(0, 5); // Maintenant top-5 signifie vraiment quelque chose
 ```
 
-**Recherche hybride** : Combine la recherche vectorielle (similarité sémantique) avec la recherche par mots-clés (BM25). Elles échouent de façons différentes. La recherche vectorielle struggle avec les termes spécifiques, les noms de modèles et les IDs. La recherche par mots-clés struggle avec les paraphrases et les synonymes. Ensemble, elles couvrent les angles morts de l'autre.
+**Recherche hybride** : Combinez la recherche vectorielle (similarité sémantique) avec la recherche par mots-clés (BM25). Elles échouent de façons différentes. La recherche vectorielle a du mal avec les termes spécifiques, les noms de modèles et les identifiants. La recherche par mots-clés a du mal avec les paraphrases et les synonymes. Ensemble, elles couvrent leurs angles morts respectifs.
 
 ---
 
@@ -133,7 +133,7 @@ Les choses qui aident vraiment :
 
 **Numérotez et étiquetez explicitement vos sections de contexte.** `[Source 1]` ... `[Source 2]` donne au modèle des ancres pour raisonner.
 
-**Ajoutez un signal de confiance de récupération.** Si votre score de similarité est 0.65 sur une échelle 0-1, dites-le au modèle : "Le contexte suivant a été récupéré avec une confiance modérée. Reconnaissez l'incertitude si la réponse n'est pas claire."
+**Ajoutez un signal de confiance de récupération.** Si votre score de similarité est 0,65 sur une échelle 0-1, dites-le au modèle : "Le contexte suivant a été récupéré avec une confiance modérée. Reconnaissez l'incertitude si la réponse n'est pas claire."
 
 **Définissez un budget de contexte.** Ne passez pas tout ce que vous avez récupéré. Comptez les jetons, priorisez par score de pertinence, et coupez dur à 60-70% de la fenêtre de contexte du modèle. Laissez de la place pour que le modèle raisonne sans vaciller.
 
@@ -155,9 +155,9 @@ La configuration d'observabilité viable minimale pour un système RAG en produc
 
 **Suivez les métriques de récupération.** MRR et NDCG si vous avez des étiquettes de vérité terrain. Au minimum, suivez les distributions de scores de similarité - si votre score de récupération P50 baisse, la qualité de votre index a baissé.
 
-**Construisez une boucle de rétroaction.** Même un pouce haut/bas sur les réponses, connecté back à la requête et aux morceaux récupérés, vous donne un signal d'entraînement. Sans cela, vous volez à l'aveugle.
+**Construisez une boucle de rétroaction.** Même un pouce haut/bas sur les réponses, relié à la requête et aux morceaux récupérés, vous donne un signal d'entraînement. Sans cela, vous avancez à l'aveugle.
 
-**Exécutez des évaluations périodiques.** Un ensemble de test de 50-100 questions avec des réponses correctes connues, exécutées hebdomadairement, capturera la régression avant les utilisateurs. Une feuille de calcul et un script suffisent pour commencer.
+**Exécutez des évaluations périodiques.** Un ensemble de test de 50-100 questions avec des réponses correctes connues, exécuté chaque semaine, détectera la régression avant les utilisateurs. Une feuille de calcul et un script suffisent pour commencer.
 
 ```typescript
 async function runEval(
@@ -188,7 +188,7 @@ async function runEval(
 
 ## Le vrai problème
 
-Ces échecs ne sont pas principalement sur le modèle d'intégration ou la base de données vectorielle. Ils sont sur le système autour d'eux.
+Ces échecs ne concernent pas principalement le modèle d'embedding ou la base de données vectorielle. Ils concernent le système autour d'eux.
 
 Les démos RAG fonctionnent parce que les conditions de démo sont contrôlées : documents propres, questions bien formées, évaluateurs tolérants. La production échoue parce qu'aucune de ces conditions ne tient.
 
