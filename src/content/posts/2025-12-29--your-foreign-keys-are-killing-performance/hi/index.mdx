@@ -1,51 +1,43 @@
 ---
-title: "Foreign Keys: यह मत पूछो कि क्या ये Fast हैं"
-subTitle: "पूछो कि आप वास्तव में किस चीज़ के लिए optimize कर रहे हैं।"
-date: 2025-12-29
-modified: 2026-01-10
-tags: [postgres, postgresql, databases, performance, foreign-keys, constraints, indexing]
-category: Code
-subCategory: Databases
-cover_full_width: ./wide.webp
-cover_mobile: ./square.webp
-cover_icon: ./square.webp
+title: "फॉरेन कीज़ (Foreign Keys): यह पूछना बंद करें कि क्या वे तेज़ हैं"
+subTitle: "पूछें कि आप वास्तव में किसके लिए ऑप्टिमाइज़ कर रहे हैं।"
 ---
 
-सबसे महँगा database optimization जो मैंने कभी देखा, वो किसी ने Foreign Keys हटाकर शुरू किया था।
+मैंने जो सबसे महंगा डेटाबेस ऑप्टिमाइज़ेशन देखा था, उसकी शुरुआत तब हुई जब किसी ने सभी फॉरेन कीज़ (Foreign Keys) को हटा दिया।
 
-इसलिए नहीं कि उन्होंने कोई bottleneck measure किया हो। इसलिए नहीं कि writes वास्तव में slow थे। बल्कि इसलिए कि उन्होंने कहीं पढ़ा था कि "Foreign Keys scale नहीं करते।" छह महीने बाद, उनके पास 2 billion orphaned records थे, एक billing system जो deleted users को charge कर रहा था, और analytics जो 40% गलत थे।
+इसलिए नहीं कि उन्होंने किसी बाधा (bottleneck) को मापा था। इसलिए भी नहीं कि राइट्स (writes) वास्तव में धीमे थे। बल्कि इसलिए क्योंकि उन्होंने कहीं पढ़ा था कि "फॉरेन कीज़ स्केल नहीं होतीं।" छह महीने बाद, उनके पास 2 अरब अनाथ (orphaned) रिकॉर्ड थे, एक बिलिंग सिस्टम जो हटाए गए उपयोगकर्ताओं से शुल्क ले रहा था, और एनालिटिक्स जो 40% गलत थे।
 
-जब उन्होंने constraints वापस add करने की कोशिश की? Database रुक सा गया क्योंकि पहले से ही corrupted data को validate करने की कोशिश कर रहा था।
+जब उन्होंने बाधाओं को वापस जोड़ने की कोशिश की? तो डेटाबेस उस मौजूदा डेटा को वैलिडेट करने की कोशिश में ठप हो गया जो पहले से ही दूषित (corrupted) था।
 
-Web development में यह idea बहुत फैला हुआ है कि Foreign Keys inherently slow हैं, कि यह training wheels हैं जिन्हें आप "real" systems में जाकर हटा देते हैं। लेकिन इससे constraint का असली मकसद ही समझ में नहीं आता। आप fast और slow के बीच नहीं चुन रहे हैं। आप अलग-अलग failure modes के बीच चुन रहे हैं।
+वेब डेवलपमेंट में यह व्यापक विचार है कि फॉरेन कीज़ स्वाभाविक रूप से धीमी होती हैं, कि वे सीखने के पहिये (training wheels) हैं जिन्हें आप "वास्तविक" सिस्टम में आने पर हटा देते हैं। लेकिन यह इस बात को पूरी तरह से भूल जाना है कि एक बाधा (constraint) किस लिए होती है। आप तेज़ और धीमे के बीच चयन नहीं कर रहे हैं। आप अलग-अलग फेल्योर मोड (failure modes) के बीच चयन कर रहे हैं।
 
-इसे इस तरह सोचिए: safety glass, seatbelts, और airbags आपकी car का वज़न बढ़ाते हैं। ये बिल्कुल आपकी गाड़ी को slow और कम fuel efficient बनाते हैं। लेकिन आप उन्हें 0-60 time optimize करने के लिए नहीं निकालते, क्योंकि आप कुछ और पूरी तरह से optimize कर रहे हैं।
+इसके बारे में इस तरह सोचें: सेफ्टी ग्लास, सीट बेल्ट और एयरबैग सभी आपकी कार का वजन बढ़ाते हैं। वे निश्चित रूप से आपके वाहन को धीमा और कम ईंधन-कुशल बनाते हैं। लेकिन आप अपनी 0-60 की गति को बेहतर बनाने के लिए उन्हें उखाड़ नहीं फेंकते, क्योंकि आप किसी और चीज़ के लिए ऑप्टिमाइज़ कर रहे हैं।
 
-सवाल यह नहीं है कि क्या Foreign Keys आपको slow करते हैं। बेशक करते हैं। सवाल यह है कि इसके बदले में आपको क्या मिलता है, और क्या आपको वास्तव में इसकी ज़रूरत है।
+सवाल यह नहीं है कि फॉरेन कीज़ आपको धीमा करती हैं या नहीं। बेशक वे करती हैं। सवाल यह है कि बदले में आपको क्या मिलता है, और क्या आपको वास्तव में इसकी आवश्यकता है।
 
-## आप वास्तव में क्या Trade कर रहे हैं
+## आप वास्तव में किसका सौदा कर रहे हैं
 
-मैं आपको एक concrete example देता हूँ। आप एक weather monitoring system बना रहे हैं जिसमें weather stations, sensor devices, sensor readings, और US states के लिए tables हैं।
+मैं आपको एक ठोस उदाहरण देता हूँ। आप वेदर स्टेशनों, सेंसर डिवाइस, सेंसर रीडिंग और अमेरिकी राज्यों के टेबल के साथ एक मौसम निगरानी प्रणाली बना रहे हैं।
 
-क्या आप सब कुछ Foreign Key से जोड़ देंगे? सोचिए कि वास्तव में क्या बदलता है और परिणाम क्या हैं:
+क्या आप हर चीज़ को फॉरेन की के साथ जोड़ते हैं? आइए सोचें कि वास्तव में क्या बदलता है और उसके परिणाम क्या होते हैं:
 
-US States शायद नहीं बदल रहे हैं। Wyoming का नाम जल्दी बदलने वाला नहीं है। जब आप जानते हैं कि reference data static है, तो हर insert पर state codes validate करने के लिए Foreign Key की कोई ज़रूरत नहीं है। यह pointless overhead है।
+अमेरिकी राज्य (US States) शायद नहीं बदल रहे हैं। व्योमिंग का नाम जल्द ही नहीं बदला जाने वाला है। जब आप जानते हैं कि संदर्भ डेटा स्थिर (static) है, तो आपको हर इंसर्ट पर स्टेट कोड को वैलिडेट करने के लिए फॉरेन की की आवश्यकता नहीं है। यह व्यर्थ का ओवरहेड है।
 
-Weather stations add, move, और decommission होते रहते हैं। लेकिन एक सवाल: क्या आप चाहते हैं कि अगर कोई गलती से station record delete कर दे, तो historical readings अपना station "खो" दें? शायद आप वास्तव में चाहते हैं कि वो data intact रहे भले ही station चला गया हो। इसका मतलब है कि आप readings को live reference के बजाय historical snapshot treat कर रहे हैं, जो यह बदल देता है कि Foreign Key का कोई मतलब भी है या नहीं।
+वेदर स्टेशन जोड़े जाते हैं, हटाए जाते हैं और बंद कर दिए जाते हैं। लेकिन यहाँ एक सवाल है: क्या आप चाहते हैं कि ऐतिहासिक रीडिंग अपना स्टेशन "खो" दें यदि कोई गलती से स्टेशन रिकॉर्ड हटा देता है? शायद आप वास्तव में चाहते हैं कि स्टेशन चले जाने पर भी वह डेटा बरकरार रहे। इसका मतलब यह होगा कि आप रीडिंग को लाइव संदर्भ (live reference) के बजाय ऐतिहासिक स्नैपशॉट (historical snapshot) के रूप में मान रहे हैं, जो यह बदल देता है कि फॉरेन की का कोई मतलब है भी या नहीं।
 
-Sensor readings हर minute में हज़ारों बार insert हो रही हैं। हर Foreign Key check का मतलब एक lookup है। हर lookup आपकी tables पर contention बनाता है। अगर slow validation का मतलब है कि आपका insert queue backup हो जाए और आप real-time data खो दें, तो यह एक अलग तरह का data loss है, orphaned record होने से अलग।
+सेंसर रीडिंग प्रति मिनट हजारों बार इंसर्ट की जा रही हैं। प्रत्येक फॉरेन की चेक का अर्थ है एक लुकअप। प्रत्येक लुकअप आपके टेबल पर कंटेंशन (contention) पैदा करता है। यदि धीमे वैलिडेशन का मतलब है कि आपकी इंसर्ट कतार (queue) पीछे रह जाती है और आप रीयल-टाइम डेटा खो देते हैं, तो यह अनाथ रिकॉर्ड होने की तुलना में एक अलग प्रकार का डेटा नुकसान है।
 
-आप देख सकते हैं कि यह कहाँ जा रहा है। यह choice performance बनाम correctness के abstract concepts के बारे में नहीं है। यह इस बारे में है कि given your actual constraints और actual consequences, किस specific failure को tolerate करने के लिए आप ज़्यादा तैयार हैं।
+आप देख सकते हैं कि यह कहाँ जा रहा है। चुनाव अमूर्त अवधारणाओं के रूप में प्रदर्शन बनाम सटीकता के बारे में नहीं है। यह इस बारे में है कि आपकी वास्तविक बाधाओं और वास्तविक परिणामों को देखते हुए आप किस विशिष्ट विफलता को सहन करने के लिए अधिक इच्छुक हैं।
 
-अगर गलत references का मतलब corrupted billing data या regulatory violations है, तो आप शायद Foreign Keys चाहते हैं, चाहे performance cost कुछ भी हो। अगर slow validation का मतलब है कि आप real-time sensor data हमेशा के लिए खो देते हैं क्योंकि आपका queue overflow हो गया, तो शायद validation गलत tradeoff है।
+यदि गलत संदर्भों का मतलब दूषित बिलिंग डेटा या नियामक उल्लंघन (regulatory violations) है, तो आप शायद प्रदर्शन लागत की परवाह किए बिना फॉरेन कीज़ द्वारा सुरक्षा चाहते हैं। यदि धीमे वैलिडेशन का मतलब है कि आप अपनी कतार ओवरफ्लो होने के कारण रीयल-टाइम सेंसर डेटा हमेशा के लिए खो देते हैं, तो शायद वैलिडेशन गलत सौदा है।
 
-## जब Fast Writes वास्तव में Matter करते हैं
+## जब तेज़ राइट्स (Writes) वास्तव में मायने रखते हैं
 
-तो आपने decide कर लिया कि आपको maximum write speed चाहिए। आपकी queue pile up हो रही है, transactions timeout हो रहे हैं, और Foreign Key checks legitimately problems cause कर रहे हैं जिन्हें आपने actually measure किया है (सिर्फ theorize नहीं)।
+तो आपने तय किया है कि आपको अधिकतम राइट स्पीड की आवश्यकता है। आपकी कतार जमा हो रही है, ट्रांजेक्शन टाइम आउट हो रहे हैं, और फॉरेन की चेक वास्तव में ऐसी समस्याएँ पैदा कर रहे हैं जिन्हें आपने वास्तव में मापा है (सिर्फ सिद्धांत नहीं बनाया है)।
 
-आपके पास कुछ options हैं। आप अपना transaction isolation level `SERIALIZABLE` से `READ COMMITTED` में बदल सकते हैं, जो faster है लेकिन कुछ consistency guarantees trade कर देता है। आप अपने commits batch कर सकते हैं, एक transaction में एक row के बजाय 1000 rows insert करके FK overhead amortize कर सकते हैं। या आप denormalize कर सकते हैं, append-only log structure में जहाँ आप references validate करने की कोशिश ही नहीं कर रहे हैं।
+आपके पास कुछ विकल्प हैं। आप अपने ट्रांजेक्शन आइसोलेशन लेवल को `SERIALIZABLE` से `READ COMMITTED` में बदल सकते हैं, जो तेज़ है लेकिन कुछ कंसिस्टेंसी गारंटी का सौदा करता है। आप अपने कमिट्स को बैच (batch) कर सकते हैं, फॉरेन की ओवरहेड को कम करने के लिए प्रति ट्रांजेक्शन एक के बजाय 1000 पंक्तियाँ इंसर्ट कर सकते हैं। या आप एक अपेंड-ओनली लॉग स्ट्रक्चर (append-only log structure) में डीनॉर्मलाइज़ (denormalize) कर सकते हैं जहाँ आप संदर्भों को वैलिडेट करने की कोशिश भी नहीं कर रहे हैं।
 
-वो तीसरा option cheating नहीं है, वैसे। यह बस एक अलग design है:
+वैसे, वह तीसरा विकल्प धोखाधड़ी नहीं है। यह सिर्फ एक अलग डिज़ाइन है:
 
 ```sql
 CREATE TABLE sensor_log (
@@ -58,89 +50,89 @@ CREATE INDEX ON sensor_log USING GIN (data);
 CREATE INDEX ON sensor_log (recorded_at);
 ```
 
-No joins. No Foreign Key checks. बस append data और query by time range या JSONB blob पर GIN index। क्या यह "best practice" है? शायद उस अर्थ में नहीं जिसमें database textbooks सिखाते हैं। क्या यह काम करता है जब आप Raspberry Pi पर हर minute 50,000 rows insert कर रहे हों? बिल्कुल।
+कोई जॉइन्स (joins) नहीं। कोई फॉरेन की चेक नहीं। बस डेटा जोड़ें और टाइम रेंज या JSONB ब्लॉब पर GIN इंडेक्स द्वारा क्वेरी करें। क्या यह "सर्वोत्तम अभ्यास" (best practice) है? डेटाबेस पाठ्यपुस्तकें जिस तरह से पढ़ाती हैं, उस अर्थ में शायद नहीं। क्या यह तब काम करता है जब आप रास्पबेरी पाई (Raspberry Pi) पर प्रति मिनट 50,000 पंक्तियाँ इंसर्ट कर रहे होते हैं? बिल्कुल।
 
-Disconnection तब होता है जब लोग "best practice" को moral imperative की तरह treat करते हैं, बजाय इसके कि यह एक pattern है जो common scenarios में अच्छी तरह काम करता है लेकिन शायद आपके case में fit न हो।
+विच्छेद तब होता है जब लोग "सर्वोत्तम अभ्यास" को एक नैतिक अनिवार्यता के रूप में मानते हैं, न कि एक पैटर्न के रूप में जो सामान्य परिदृश्यों में अच्छा काम करता है लेकिन शायद आपके परिदृश्य में फिट न हो।
 
-## The Normalization Trap
+## नॉर्मलाइज़ेशन का जाल (The Normalization Trap)
 
-Database courses normalization से प्यार करते हैं। हर कीमत पर duplication avoid करो। Third Normal Form या कुछ नहीं।
+डेटाबेस कोर्स नॉर्मलाइज़ेशन (normalization) सिखाना पसंद करते हैं। हर कीमत पर डुप्लीकेशन से बचें। थर्ड नॉर्मल फॉर्म (3NF) या कुछ नहीं।
 
-तो आपको कुछ ऐसा मिलता है: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+तो अंत में आपके पास कुछ ऐसा होता है: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
 
-"क्या मैंने पिछले Christmas red shirt मँगवाया था या blue?" जानने के लिए छह table joins। और अगर आपको product name भी चाहिए, तो यह catalog hierarchy में तीन joins और दूर है।
+सिर्फ "क्या मैंने पिछली क्रिसमस पर लाल शर्ट मंगवाई थी या नीली?" का जवाब देने के लिए छह टेबल जॉइन्स। और भगवान न करे कि आपको प्रोडक्ट का नाम शामिल करना पड़े, क्योंकि वह कैटलॉग पदानुक्रम (hierarchy) में तीन जॉइन्स और दूर है।
 
-लेकिन रुकिए। Justification आमतौर पर यह होता है: "What if brand Blue label बदल दे?" अगर ऐसा होता है, क्या आप वास्तव में चाहते हैं कि historical orders retroactively color बदल दें? बिल्कुल नहीं। जब किसी ने वो order place किया, तो उन्होंने "Blue T-Shirt, Size M" खरीदा था जैसा कि उस समय existed करता था, किसी abstract catalog entry का reference नहीं जो बाद में update हो सकती है।
+लेकिन रुकिए। औचित्य आमतौर पर यह होता है कि "क्या होगा अगर ब्रांड यह बदल दे कि वे ब्लू (Blue) को कैसे लेबल करते हैं?" यदि ऐसा होता है, तो क्या आप वास्तव में चाहते हैं कि ऐतिहासिक ऑर्डर पूर्वव्यापी रूप से रंग बदल दें? बिल्कुल नहीं। जब किसी ने वह ऑर्डर दिया था, तो उन्होंने "Blue T-Shirt, Size M" खरीदी थी जैसा कि वह उस समय मौजूद थी, न कि किसी कैटलॉग प्रविष्टि के अमूर्त संदर्भ के रूप में जो बाद में अपडेट हो सकती है।
 
-इस पर थोड़ा रुकना worth है क्योंकि यह subtle है। कुछ data fundamentally snapshot है, reference नहीं। जब आप snapshot data को live reference की तरह treat करते हैं, तो आपको joins की absurd proliferation करनी पड़ती है कुछ reconstruct करने के लिए जो write time पर सीधे denormalize हो सकता था।
+इस पर विचार करना उचित है क्योंकि यह सूक्ष्म है। कुछ डेटा मौलिक रूप से एक स्नैपशॉट है, संदर्भ नहीं। जब आप स्नैपशॉट डेटा को ऐसे मानते हैं जैसे कि वह एक लाइव संदर्भ हो, तो आप उस चीज़ को फिर से बनाने के लिए जॉइन्स के इस बेतुके प्रसार के साथ समाप्त होते हैं जिसे राइट टाइम पर डीनॉर्मलाइज़ किया जाना चाहिए था।
 
-Order पर सीधे `{"color": "blue", "size": "M"}` store कर दीजिए। काम खत्म।
+ऑर्डर पर सीधे `{"color": "blue", "size": "M"}` स्टोर करें। आपका काम हो गया।
 
-### Snapshot Data को पहचानना
+### स्नैपशॉट डेटा को पहचानना
 
-आप कैसे जानते हैं कि कब कुछ snapshot होना चाहिए? खुद से पूछिए कि क्या यह point-in-time record है:
+आप कैसे जानते हैं कि कब कुछ स्नैपशॉट होना चाहिए? अपने आप से पूछें कि क्या यह पॉइंट-इन-टाइम रिकॉर्ड है:
 
-Orders product details capture करते हैं जैसे कि purchase time पर existed करते थे। Audit logs user state record करते हैं जब उन्होंने कोई action perform किया। History tables record state preserve करते हैं update से पहले। Event streams capture करते हैं क्या हुआ, कब, किस data के साथ।
+ऑर्डर खरीद के समय मौजूद उत्पाद विवरणों को कैप्चर करते हैं। ऑडिट लॉग उपयोगकर्ता की स्थिति को रिकॉर्ड करते हैं जब उन्होंने कोई कार्रवाई की थी। हिस्ट्री टेबल अपडेट से पहले रिकॉर्ड की स्थिति को सुरक्षित रखते हैं। इवेंट स्ट्रीम कैप्चर करते हैं कि क्या हुआ, कब हुआ, किस डेटा के साथ हुआ।
 
-अगर जवाब "हाँ, यह एक moment in time record कर रहा है" है, तो इसे normalize करना बंद करिए। Snapshot करना शुरू करिए।
+यदि उत्तर "हाँ, यह समय के एक क्षण को रिकॉर्ड कर रहा है" है, तो इसे नॉर्मलाइज़ करना बंद करें। इसे स्नैपशॉट करना शुरू करें।
 
-### Opaque Blobs
+### अपारदर्शी ब्लॉब्स (Opaque Blobs)
 
-Snapshots के अलावा एक और category है: data जिसे आप कभी query नहीं करते। आप बस उसे store और retrieve करते हैं whole।
+स्नैपशॉट से परे एक और श्रेणी है: वह डेटा जिसे आप कभी क्वेरी नहीं करते हैं। आप बस इसे स्टोर करते हैं और इसे पूरा पुनः प्राप्त करते हैं।
 
-LLM model configurations जैसे `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` कुछ ऐसा नहीं है जिसे आप temperature से query करें। आप पूरा config request ID से fetch करते हैं जब आपको ज़रूरत होती है। Decode होने के बाद JWT payloads, debugging के लिए API request/response logs, user preference objects जिसमें theme settings और notification flags हों। ये सब opaque blobs हैं। आपको normalization की ज़रूरत नहीं है। आपको Foreign Keys की ज़रूरत नहीं है। JSONB में डालिए और आगे बढ़िए।
+LLM मॉडल कॉन्फ़िगरेशन जैसे `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` ऐसी चीज़ नहीं हैं जिन्हें आप टेम्परेचर द्वारा क्वेरी करते हैं। जब आपको आवश्यकता होती है तो आप अनुरोध आईडी (request ID) द्वारा पूरे कॉन्फ़िगरेशन को प्राप्त करते हैं। डिकोडिंग के बाद JWT पेलोड, डिबगिंग के लिए API अनुरोध/प्रतिक्रिया लॉग, थीम सेटिंग्स और नोटिफिकेशन फ्लैग के साथ यूजर प्रेफरेंस ऑब्जेक्ट। ये सभी अपारदर्शी ब्लॉब्स (opaque blobs) हैं। आपको नॉर्मलाइज़ेशन की आवश्यकता नहीं है। आपको फॉरेन कीज़ की आवश्यकता नहीं है। उन्हें JSONB में डालें और अपने जीवन में आगे बढ़ें।
 
-6-table join यह जानने के लिए कि कौन सी color shirt order हुई थी? यह proper normalization नहीं है। यह confused thinking है इस बारे में कि आप reference store कर रहे हैं या value।
+यह पता लगाने के लिए 6-टेबल जॉइन कि किस रंग की शर्ट ऑर्डर की गई थी? वह उचित नॉर्मलाइज़ेशन नहीं है। वह इस बारे में भ्रमित सोच है कि क्या आप संदर्भ (reference) स्टोर कर रहे हैं या मूल्य (value)।
 
-(हालाँकि सावधान रहिए: यह बुरी तरह backfire कर सकता है अगर आपको बाद में उस data को query करने की ज़रूरत पड़े। देखिए [The JSONB Seduction](/the-jsonb-seduction) कब यह approach अपना nightmare बना देता है।)
+(हालांकि सावधान रहें: यदि आपको बाद में उस डेटा को क्वेरी करने की आवश्यकता है तो यह विपरीत परिणाम दे सकता है। देखें [The JSONB Seduction](/the-jsonb-seduction) कि यह दृष्टिकोण कब अपना बुरा सपना खुद बनाता है।)
 
-## Scale एक Context है
+## स्केल एक संदर्भ है
 
-आप सुनेंगे लोग कहते हैं "Foreign Keys scale नहीं करते।" लेकिन scale पूरी तरह आपके hardware और architecture पर relative है।
+आप लोगों को यह कहते हुए सुनेंगे कि "फॉरेन कीज़ स्केल नहीं होतीं।" लेकिन स्केल पूरी तरह से आपके हार्डवेयर और आर्किटेक्चर के सापेक्ष है।
 
-एक Raspberry Pi जो microSD card पर हर minute 10,000 sensor readings log कर रहा है? उस hardware के लिए यह legitimately high scale है। AWS Aurora with provisioned IOPS जो billions of rows handle कर रहा है? आप बिना पसीना बहाए Foreign Key कर सकते हैं।
+एक रास्पबेरी पाई जो माइक्रोएसडी कार्ड पर प्रति मिनट 10,000 सेंसर रीडिंग लॉग कर रही है? उस हार्डवेयर के लिए वह वास्तव में हाई स्केल है। अरबों पंक्तियों को संभालने वाला प्रोविजन्ड IOPS के साथ AWS Aurora? आप बिना पसीना बहाए फॉरेन कीज़ के माध्यम से अपना रास्ता बना सकते हैं।
 
-Actual hard limit row count या write volume के बारे में नहीं है। यह sharding के बारे में है।
+वास्तविक हार्ड लिमिट रो काउंट (row count) या राइट वॉल्यूम (write volume) के बारे में नहीं है। वह शार्डिंग (sharding) है।
 
-जब आपकी `Users` table Server A पर रहती है और आपकी `Orders` table Server B पर, Foreign Keys physically काम नहीं कर सकते। Database के पास network boundaries across constraints enforce करने का कोई mechanism नहीं है। उस point पर, आप पहले ही background jobs चला रहे हैं orphans ढूँढने के लिए और eventual consistency patterns implement कर रहे हैं।
+जब आपकी `Users` टेबल सर्वर ए (Server A) पर रहती है और आपकी `Orders` टेबल सर्वर बी (Server B) पर रहती है, तो फॉरेन कीज़ भौतिक रूप से काम नहीं कर सकतीं। डेटाबेस के पास नेटवर्क सीमाओं के पार किसी बाधा को लागू करने का कोई तंत्र नहीं है। उस बिंदु पर, आप पहले से ही अनाथों को खोजने के लिए बैकग्राउंड जॉब चला रहे हैं और इवेंचुअल कंसिस्टेंसी (eventual consistency) पैटर्न लागू कर रहे हैं।
 
-यह multi-tenant SaaS में होता है जहाँ हर tenant को compliance के लिए अपना isolated database मिलता है, या IoT deployments में जहाँ आपके पास 50,000 edge devices हैं हर एक locally SQLite चला रही है। एक बार वहाँ पहुँच गए, Foreign Keys performance considerations के बावजूद table से बाहर हैं (literally)।
+यह मल्टी-टेनेंट SaaS में होता है जहाँ अनुपालन के लिए प्रत्येक टेनेंट को अपना अलग डेटाबेस मिलता है, या IoT डिप्लॉयमेंट में जहाँ आपके पास स्थानीय रूप से SQLite चलाने वाले 50,000 एज डिवाइस होते हैं। एक बार जब आप वहाँ पहुँच जाते हैं, तो प्रदर्शन के विचारों के बावजूद फॉरेन कीज़ मेज से बाहर (शाब्दिक रूप से) हो जाती हैं।
 
-लेकिन जब तक आप वो architectural boundary hit नहीं करते, शायद Netflix की problems के लिए prematurely optimize न करें जब आप एक 10-user internal tool बना रहे हों।
+लेकिन जब तक आप उस आर्किटेक्चरल सीमा तक नहीं पहुँचते, तब तक शायद नेटफ्लिक्स की समस्याओं के लिए समय से पहले ऑप्टिमाइज़ न करें जब आप 10-यूजर वाला आंतरिक टूल बना रहे हों।
 
-## Practice में यह वास्तव में कैसा दिखता है
+## व्यवहार में यह वास्तव में कैसा दिखता है
 
-"Should I use Foreign Keys" पूछने के बजाय, ये तीन चीज़ें पूछने की कोशिश करिए:
+"क्या मुझे फॉरेन कीज़ का उपयोग करना चाहिए" पूछने के बजाय, इन तीन चीजों को पूछने का प्रयास करें:
 
-अगर यह reference गलत हो जाए तो क्या टूटता है? क्या यह lawsuit है, corrupted billing, regulatory violation? या सिर्फ analytics dashboard में एक missing join है जो null return करता है?
+यदि यह संदर्भ गलत है तो क्या टूटता है? क्या यह मुकदमा, दूषित बिलिंग, नियामक उल्लंघन है? या यह सिर्फ एक गायब जॉइन है जो आपके एनालिटिक्स डैशबोर्ड में नल (null) लौटाता है?
 
-अगर validation slow हो तो क्या टूटता है? क्या आप irreplaceable real-time data खो देते हैं? या आपकी queries बस 50 milliseconds extra लेती हैं?
+यदि वैलिडेशन धीमा है तो क्या टूटता है? क्या आप अपूरणीय रीयल-टाइम डेटा खो देते हैं? या आपकी क्वेरीज़ में बस अतिरिक्त 50 मिलीसेकंड लगते हैं?
 
-क्या यह data snapshot है या reference? क्या आप किसी specific moment पर कुछ कैसा दिखता था record कर रहे हैं, या आप authoritative current value की तरफ point कर रहे हैं?
+क्या यह डेटा एक स्नैपशॉट है या संदर्भ? क्या आप रिकॉर्ड कर रहे हैं कि किसी विशिष्ट क्षण में कुछ कैसा दिखता था, या आप आधिकारिक वर्तमान मूल्य की ओर इशारा कर रहे हैं?
 
-वहाँ से, patterns pretty naturally emerge होते हैं:
+वहाँ से, पैटर्न काफी स्वाभाविक रूप से उभर कर आते हैं:
 
-Financial transactions, authentication sessions, कुछ भी जहाँ data corruption का मतलब legal liability है, शायद Foreign Keys चाहते हैं चाहे performance overhead कुछ भी हो।
+वित्तीय लेनदेन, प्रमाणीकरण सत्र, कुछ भी जहाँ डेटा भ्रष्टाचार का अर्थ कानूनी दायित्व है, प्रदर्शन ओवरहेड की परवाह किए बिना शायद फॉरेन कीज़ चाहता है।
 
-High-volume logs, append-only time series data, कुछ भी जहाँ आप हर minute million events write कर रहे हैं, शायद validation overhead की ज़रूरत नहीं है हर write पर।
+हाई-वॉल्यूम लॉग, अपेंड-ओनली टाइम सीरीज़ डेटा, कुछ भी जहाँ आप प्रति मिनट दस लाख इवेंट लिख रहे हैं, शायद हर राइट पर वैलिडेशन ओवरहेड की आवश्यकता नहीं है।
 
-Historical snapshots जैसे orders और audit logs, data जिसे आप हमेशा complete blob के रूप में fetch करते हैं जैसे user preferences, schemas जो आप control नहीं करते जैसे external APIs से webhook payloads... ये अक्सर denormalized होकर better काम करते हैं।
+ऑर्डर और ऑडिट लॉग जैसे ऐतिहासिक स्नैपशॉट, डेटा जिसे आप हमेशा एक पूर्ण ब्लॉब के रूप में प्राप्त करते हैं जैसे यूजर प्रेफरेंस, स्कीमा जिन्हें आप नियंत्रित नहीं करते हैं जैसे बाहरी API से वेबहुक पेलोड… ये अक्सर डीनॉर्मलाइज़्ड रूप में बेहतर काम करते हैं।
 
-लेकिन notice कीजिए मैंने "probably" और "often" कहा। क्योंकि context matters, और आपका context मेरे से अलग है।
+लेकिन ध्यान दें कि मैंने "शायद" और "अक्सर" कहा है। क्योंकि संदर्भ मायने रखता है, और आपका संदर्भ मेरे संदर्भ से अलग है।
 
-## Final Thoughts
+## अंतिम विचार
 
-Foreign Keys एक performance problem नहीं हैं। वे write speed और data integrity के बीच एक tradeoff हैं, और क्या यह tradeoff sense बनाता है यह पूरी तरह आपके specific bottlenecks और आपके specific consequences पर निर्भर करता है।
+फॉरेन कीज़ कोई प्रदर्शन समस्या नहीं हैं। वे राइट स्पीड और डेटा अखंडता (integrity) के बीच एक सौदा हैं, और क्या वह सौदा समझ में आता है यह पूरी तरह से आपकी विशिष्ट बाधाओं और आपके विशिष्ट परिणामों पर निर्भर करता है।
 
-Asli issue तब होता है जब लोग Foreign Keys हटाते हैं क्योंकि उन्होंने कहीं "web scale" के बारे में पढ़ा, बिना actually measure किए कि उनके पास write performance problem है या यह सोचे कि वो क्या छोड़ रहे हैं। आप Netflix की architecture को cargo-cult करते हैं, एक greenfield project पर जो दिन में 100 transactions process करता है।
+असली मुद्दा तब होता है जब लोग "वेब स्केल" के बारे में पढ़ी गई किसी चीज़ के कारण फॉरेन कीज़ को हटा देते हैं, बिना वास्तव में यह मापे कि क्या उन्हें राइट प्रदर्शन की समस्या है या वे क्या छोड़ रहे हैं। आप नेटफ्लिक्स के आर्किटेक्चर को एक ऐसे ग्रीनफील्ड प्रोजेक्ट पर कार्गो-कल्ट (cargo-culting) करना शुरू कर देते हैं जो प्रति दिन 100 लेनदेन प्रोसेस करता है।
 
-शायद performance cost आपके use case के लिए worth है। शायद नहीं। लेकिन कम से कम यह decision उस आधार पर लीजिए जिसके लिए आप वास्तव में optimize कर रहे हैं, न कि जिसके लिए आपको लगता है कि आप optimize करना चाहिए।
+हो सकता है कि आपके उपयोग के मामले के लिए प्रदर्शन लागत इसके लायक हो। हो सकता है कि यह न हो। लेकिन कम से कम वह निर्णय इस आधार पर लें कि आप वास्तव में किसके लिए ऑप्टिमाइज़ कर रहे हैं, न कि इस आधार पर कि आपको क्या लगता है कि आपको किसके लिए ऑप्टिमाइज़ करना चाहिए।
 
-आप किस चीज़ के लिए optimize कर रहे हैं?
+आप किसके लिए ऑप्टिमाइज़ कर रहे हैं?
 
-## Resources
+## संसाधन
 
-- [PostgreSQL Foreign Key Constraints Documentation](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
-- [PostgreSQL Performance Tips](https://www.postgresql.org/docs/current/performance-tips.html)
-- [Use The Index, Luke! - Foreign Keys](https://use-the-index-luke.com/sql/clustering/data-clustering)
-- [Database Normalization vs Denormalization](https://www.postgresql.org/docs/current/tutorial-concepts.html)
+- [PostgreSQL फॉरेन की बाधाएं प्रलेखन (Documentation)](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [PostgreSQL प्रदर्शन युक्तियाँ](https://www.postgresql.org/docs/current/performance-tips.html)
+- [इंडेक्स का प्रयोग करें, ल्यूक! - फॉरेन कीज़](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [डेटाबेस नॉर्मलाइज़ेशन बनाम डीनॉर्मलाइज़ेशन](https://www.postgresql.org/docs/current/tutorial-concepts.html)
