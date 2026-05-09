@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: fr
+- Model: openrouter/minimax/minimax-m2.5
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 127.88
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug llm-generative-ui-landscape-2026 --locale fr
