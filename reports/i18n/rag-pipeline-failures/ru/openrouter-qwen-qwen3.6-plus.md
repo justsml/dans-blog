@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 75.86
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
