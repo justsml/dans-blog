@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: it
+- Model: openrouter/anthropic/claude-haiku-4.5
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 151.19
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
