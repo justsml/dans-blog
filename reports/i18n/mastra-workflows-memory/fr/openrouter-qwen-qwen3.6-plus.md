@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 205.95
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
