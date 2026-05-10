@@ -1,6 +1,6 @@
 ---
-title: "Quiz: ¿Realmente entiendes los closures de JavaScript?"
-subTitle: "La mayoría de los desarrolladores creen que sí. La mayoría se equivoca."
+title: "Quiz: ¿Realmente Entiendes los Closures de JavaScript?"
+subTitle: "La mayoría de los desarrolladores cree que sí. La mayoría está equivocado."
 date: 2026-05-01
 modified: 2026-05-05
 tags: [javascript, closures, quiz, fundamentals, scope, advanced]
@@ -19,11 +19,11 @@ cover_icon: ../square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Los closures son uno de esos conceptos que todo desarrollador de JavaScript *cree* entender — hasta el momento en que no lo hace. Este quiz encontrará los bordes de lo que realmente sabes.</p>
+<p class="inset">Los closures son uno de esos conceptos que todo desarrollador de JavaScript *cree* entender — justo hasta el momento en que no lo hace. Este quiz encontrará los límites de lo que realmente sabes.</p>
 
-Los closures aparecen en manejadores de eventos, factory functions, hooks de React, patrones de módulos y en casi todos los demás lugares. No son exóticos. Son el tejido del que está hecho JavaScript.
+Los closures aparecen en event handlers, factory functions, React hooks, patrones de módulo, y prácticamente en todas partes. No son exóticos. Son la tela con la que está tejido JavaScript.
 
-Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas del suelo.
+Las preguntas comienzan razonables y luego empiezan a quitar tablones del piso.
 
 <QuizUI>
 
@@ -31,7 +31,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Calentamiento"
-  title="Contador clásico"
+  title="Contador Clásico"
   options={[
     {text: '0, 0, 0'},
     {text: '0, 1, 2'},
@@ -41,7 +41,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    ¿Qué registra esto?
+    ¿Qué imprime esto?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -54,9 +54,9 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` hace closure sobre `count`. Cada llamada incrementa y retorna la *misma* variable `count`. Las tres llamadas producen `1, 2, 3`.
+    `tick` cierra sobre `count`. Cada llamada incrementa y devuelve la *misma* variable `count`. Las tres llamadas producen `1, 2, 3`.
 
-    La palabra clave: *misma*. `count` no se copia en el closure. El closure mantiene una **referencia activa** al enlace de la variable. Ese es todo el asunto.
+    La palabra clave: *misma*. `count` no se copia en el closure. El closure mantiene una **referencia en vivo** al binding de la variable. Ahí está todo el asunto.
   </div>
   </slot>
 </Challenge>
@@ -65,7 +65,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Calentamiento"
-  title="Closures separados"
+  title="Closures Separados"
   options={[
     {text: '1, 1', isAnswer: true},
     {text: '1, 2'},
@@ -75,7 +75,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    ¿Qué registra esto?
+    ¿Qué imprime esto?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -89,11 +89,11 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` fresco. `a` y `b` hacen closure sobre enlaces `count` *diferentes*. No comparten estado.
+    Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` fresco. `a` y `b` cierran sobre bindings de `count` *diferentes*. No comparten estado.
 
     Resultado: `1, 1`
 
-    Por eso se usan closures para construir estado privado: cada "instancia" es independiente.
+    Por esto los closures se usan para construir estado privado — cada "instancia" es independiente.
   </div>
   </slot>
 </Challenge>
@@ -101,8 +101,8 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="La trampa clásica"
-  title="var en un bucle"
+  group="La Trampa Clásica"
+  title="var en un Bucle"
   options={[
     {text: '0, 1, 2, 3, 4'},
     {text: '5, 5, 5, 5, 5', isAnswer: true},
@@ -112,7 +112,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    ¿Qué se registra después de 100ms?
+    ¿Qué se imprime después de 100ms?
     ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -122,11 +122,11 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` tiene alcance de función. Hay exactamente **un** `i` — los cinco callbacks hacen closure sobre el mismo enlace. Cuando los timeouts se ejecutan, el bucle ha terminado y `i` vale `5`.
+    `var` tiene ámbito de función. Hay exactamente **un** `i` — los cinco callbacks cierran sobre el mismo binding. Para cuando los timeouts disparan, el bucle ha terminado y `i` es `5`.
 
-    Cinco callbacks. Un `i`. Valor: `5`. Registrado cinco veces.
+    Cinco callbacks. Un `i`. Valor: `5`. Impreso cinco veces.
 
-    La solución es `let` (alcance de bloque, nuevo enlace en cada iteración) o envolver en una IIFE para capturar el valor actual:
+    La solución es `let` ( ámbito de bloque, nuevo binding en cada iteración) o encerrar en un IIFE para capturar el valor actual:
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -139,8 +139,8 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="La trampa clásica"
-  title="let lo arregla (¿o no?)"
+  group="La Trampa Clásica"
+  title="let lo Arregla (¿O No?)"
   options={[
     {text: '0, 1, 2, 3, 4', isAnswer: true},
     {text: '5, 5, 5, 5, 5'},
@@ -150,7 +150,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    Mismo bucle, distinta palabra clave. ¿Qué se registra?
+    Mismo bucle, diferente keyword. ¿Qué se imprime?
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -160,7 +160,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su propio **nuevo enlace** de `i`. Es como si el bucle hiciera esto en secreto:
+    `let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su propio **nuevo binding** de `i`. Es como si el bucle secretamente hiciera esto:
 
     ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
@@ -168,7 +168,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
     // ...
     ```
 
-    Así que los cinco callbacks hacen closure sobre cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
+    Así que los cinco callbacks cierran sobre cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
   </div>
   </slot>
 </Challenge>
@@ -176,8 +176,8 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Closures y objetos"
-  title="Mutación de objetos"
+  group="Closures y Objetos"
+  title="Mutación de Objetos"
   options={[
     {text: '{ x: 1 }, { x: 1 }'},
     {text: '{ x: 1 }, { x: 99 }'},
@@ -187,7 +187,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    ¿Qué registra esto?
+    ¿Qué imprime esto?
     ```javascript
     function wrap() {
       const obj = { x: 1 };
@@ -202,9 +202,9 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El closure captura el **enlace** `obj`, no una instantánea del objeto. El objeto se muta después de crear el closure, pero `obj` sigue apuntando a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.
+    El closure captura el **binding** `obj`, no una instantánea del objeto. El objeto mismo es mutado después de que el closure se crea — pero `obj` todavía apunta a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.
 
-    Esto pilla a quienes asumen que los closures "congelan" valores. No lo hacen. Capturan **referencias**.
+    Esto muerde a personas que asumen que los closures "congelan" valores. No lo hacen. Capturan **referencias**.
   </div>
   </slot>
 </Challenge>
@@ -213,17 +213,17 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Avanzado"
-  title="Closure stale en React"
+  title="Stale Closure en React"
   options={[
-    {text: 'Registra el count actual en cada clic'},
-    {text: 'Siempre registra 0', isAnswer: true},
-    {text: 'Registra NaN'},
+    {text: 'Imprime el count actual en cada click'},
+    {text: 'Siempre imprime 0', isAnswer: true},
+    {text: 'Imprime NaN'},
     {text: "Esto no compila"},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Qué comportamiento muestra este componente de React al hacer clic en el botón varias veces?
+    ¿Qué comportamiento muestra este componente de React cuando el botón se presiona múltiples veces?
     ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
@@ -244,15 +244,15 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Closure stale clásico. El `useEffect` se ejecuta una vez (array de dependencias vacío) y crea un intervalo que hace closure sobre `count` tal como estaba en el montaje: `0`. No importa cuántas veces hagas clic, el closure del intervalo nunca ve el valor actualizado.
+    Stale closure clásico. El `useEffect` se ejecuta una vez (array de deps vacío) y crea un intervalo que cierra sobre `count` como era en el momento del mount: `0`. No importa cuántas veces hagas click, el closure del intervalo nunca ve el valor actualizado.
 
-    La etiqueta del botón se actualiza correctamente — eso es un render fresco. Pero `console.log` queda atrapado para siempre en `0`.
+    El label del botón se actualiza correctamente — eso es un render fresco. Pero `console.log` está atrapado en `0` para siempre.
 
-    Arréglalo añadiendo `count` al array de dependencias (recrea el intervalo) o usando una ref:
+    Solución: agregar `count` al array de deps (recrea el intervalo) o usar un ref:
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // luego usa countRef.current dentro del intervalo
+    // luego usar countRef.current dentro del intervalo
     ```
   </div>
   </slot>
@@ -262,7 +262,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Avanzado"
-  title="Patrón módulo"
+  title="Patrón de Módulo"
   options={[
     {text: '60', isAnswer: true},
     {text: 'TypeError: balance is not defined'},
@@ -272,7 +272,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    Espera — lee con atención. ¿Qué ocurre realmente?
+    Espera — lee con cuidado. ¿Qué sucede realmente?
     ```javascript
     const bank = (() => {
       let balance = 0;
@@ -293,13 +293,13 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   <div className="explanation">
     La respuesta es `60`.
 
-    Este es el **Patrón Módulo** — una IIFE que devuelve un objeto de closures. Los tres métodos hacen closure sobre el mismo enlace `balance`. Es genuinamente privado: no puedes acceder a `balance` desde fuera.
+    Este es el **Patrón de Módulo** — un IIFE que retorna un objeto de closures. Los tres métodos cierran sobre el mismo binding `balance`. Es genuinamente privado: no puedes acceder a `balance` desde fuera.
 
     ```javascript
     console.log(bank.balance); // undefined
     ```
 
-    Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Todavía lo verás en codebases legacy y bibliotecas de utilidades.
+    Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Todavía la verás en codebases legacy y librerías de utilidades.
   </div>
   </slot>
 </Challenge>
@@ -308,10 +308,10 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Experto"
-  title="Fuga de memoria por closure"
+  title="Memory Leak de Closure"
   options={[
-    {text: 'Registra la longitud del array de datos'},
-    {text: 'Crea una fuga de memoria', isAnswer: true},
+    {text: 'Imprime la longitud del array data'},
+    {text: 'Crea un memory leak', isAnswer: true},
     {text: 'Lanza un RangeError'},
     {text: 'Nada inusual — esto está bien'},
   ]}
@@ -331,15 +331,15 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El listener de eventos hace closure sobre `data`, así que el array permanece accesible mientras el listener sea accesible. Si `element` es de larga vida y el listener nunca se elimina, ese gran array también se mantiene.
+    El event listener cierra sobre `data`, así que el array permanece alcanzable mientras el listener sea alcanzable. Si `element` tiene larga vida y el listener nunca se remueve, ese gran array también se retiene.
 
-    `element` está en el DOM. El listener retiene `data`. El GC no puede recogerlo.
+    `element` está en el DOM. El listener sostiene `data`. GC no puede recolectarlo.
 
-    Solución: no captures datos grandes en listeners de larga vida a menos que realmente los necesites, y elimina los listeners cuando se destruya la UI propietaria:
+    Solución: no capturar datos grandes en listeners de larga vida a menos que realmente los necesites, y remover listeners cuando el UI que los posee se destruye:
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
-      // haz algo con data...
+      // hacer algo con data...
 
       const onClick = () => {
         console.log('clicked!');
@@ -350,7 +350,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
     }
     ```
 
-    V8 moderno es mejor en esto que antes. Pero en SPAs de larga vida con muchos listeners de eventos, este patrón sigue mordiendo a la gente.
+    V8 moderno es mejor en esto de lo que solía ser. Pero en SPAs de larga vida con muchos event listeners, este patrón todavía muerde a las personas.
   </div>
   </slot>
 </Challenge>
@@ -359,7 +359,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Experto"
-  title="La trampa de this"
+  title="La Trampa del this"
   options={[
     {text: 'Dan, Dan'},
     {text: 'Dan, undefined'},
@@ -369,7 +369,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 >
   <slot name="question">
   <div className="question">
-    ¿Qué registra esto?
+    ¿Qué imprime esto?
     ```javascript
     const user = {
       name: 'Dan',
@@ -390,11 +390,11 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   <div className="explanation">
     Dos trampas sutiles:
 
-    **`greetArrow`**: Las arrow functions no tienen su propio `this`. Capturan `this` del ámbito léxico envolvente — que aquí es el ámbito módulo/global, no `user`. Así que `this?.name` es `undefined`.
+    **`greetArrow`**: Las arrow functions no tienen su propio `this`. Capturan `this` del ámbito léxico que las encierra — que aquí es el ámbito global/del módulo, no `user`. Así que `this?.name` es `undefined`.
 
-    **`fn()`**: `greetRegular` se llama sin receptor (`fn()` no `user.greetRegular()`). En modo estricto, `this` es `undefined`. En modo sloppy, es el objeto global. De cualquier forma, `this?.name` es `undefined`.
+    **`fn()`**: `greetRegular` se llama sin receptor (`fn()` no `user.greetRegular()`). En modo strict, `this` es `undefined`. En modo sloppy, es el objeto global. De cualquier manera, `this?.name` es `undefined`.
 
-    Si hubieras llamado `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` se enlaza a `user`.
+    Si hubieras llamado `user.greetRegular()` directamente, obtendrías `'Dan'` — porque entonces `this` está ligado a `user`.
 
     Resultado: `undefined, undefined`.
   </div>
@@ -405,7 +405,7 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Bonus"
-  title="Memoización vía closure"
+  title="Memoización via Closure"
   options={[
     {text: 'Llama a expensive() 3 veces'},
     {text: 'Llama a expensive() 1 vez', isAnswer: true},
@@ -440,11 +440,11 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función memoizada hace closure sobre `cache`. La primera llamada (`fast(5)`) falla en el cache, llama a `expensive` y almacena el resultado. La segunda y tercera llamadas aciertan en el cache y retornan inmediatamente.
+    La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) falla en cache, llama a `expensive`, y almacena el resultado. Las segunda y tercera llamadas golpean el cache y retornan inmediatamente.
 
     `calls` es `1`.
 
-    Aquí los closures hacen trabajo real. `cache` es privado (no se puede acceder desde fuera de `memoize`), persistente (vive mientras `fast` exista) y compartido entre todas las llamadas a `fast`.
+    Esto es closures haciendo trabajo real. `cache` es privado (no puede accederse desde fuera de `memoize`), persistente (vive mientras `fast` exista), y compartido entre todas las llamadas a `fast`.
   </div>
   </slot>
 </Challenge>
@@ -453,11 +453,13 @@ Las preguntas empiezan de forma razonable y luego comienzan a quitar las tablas 
 
 ---
 
-¿Qué tal lo hiciste?
+¿Cómo te fue?
 
-- **9-10**: Realmente entiendes los closures. Probablemente da miedo hacer pair-programming contigo.
-- **6-8**: Sólido. Las preguntas de closure stale / `this` te pillaron, lo cual es honesto.
-- **3-5**: Conoces el concepto pero los bordes son borrosos. Ve a leer la documentación de cadena de alcances de MDN.
-- **0-2**: Creías que entendías los closures. Ahora sí. Ese es el punto.
+- **9-10**: Realmente entiendes closures. Probablemente da miedo programar en pair contigo.
+- **6-8**: Solido. Las preguntas de stale closure / `this` te hicieron tropezar, lo cual es honesto.
+- **3-5**: Conoces el concepto pero los bordes están borrosos. Ve a leer los docs de MDN sobre scope chain.
+- **0-2**: Creías conocer closures. Ahora sí los conoces. Ese es el punto.
 
-El closure stale en React (#6) y la trampa de `this` (#8) son los que causan bugs reales en producción. Si te resultaron desconocidos, vale la pena revisarlos — aparecen en code review más que cualquier otro tema relacionado con closures.
+El stale closure en React (#6) y la trampa del `this` (#8) son las que causan bugs reales en producción. Si te parecieron desconocidos, valen la pena revisarlos — aparecen en code review más que cualquier otro tema relacionado con closures.
+
+(Fin del archivo - total 463 líneas)
