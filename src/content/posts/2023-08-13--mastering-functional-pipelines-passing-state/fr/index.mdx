@@ -1,0 +1,195 @@
+---
+social_image: ../desktop-social.webp
+title: "Maître des Pipelines : Transmettre l'État"
+subTitle: Bonjour Closure, Mon Vieil Ami.
+date: 2023-08-09
+modified: 2024-07-30
+tags: [typescript,closure,stateful,scoping,hoisting,functional,pipeline]
+category: Guides
+subCategory: JavaScript
+cover: sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+
+## Maître des Pipelines : Transmettre l'État
+
+Avez-vous rencontré des difficultés pour transmettre l'état à l'aide de pipelines fonctionnels ?
+
+L'organisation (ou l'absence d'organisation) de votre code impacte directement la facilité avec laquelle l'état est transmis.
+
+Dans cet article, nous explorerons une technique efficace pour transmettre l'état à travers un pipeline. Au fil du chemin, nous améliorerons l'organisation et la lisibilité de notre code.
+
+L'extrait « réel » suivant sera au cœur de cet article : une fonction de paiement qui accepte un `userId` et un tableau de `products`. Elle retourne une chaîne de Promesses qui exécute 4 fonctions en séquence.
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+Attendez une seconde, ce code est en fait plutôt correct, en ce qui concerne les pipelines en JS !
+
+Il souffre néanmoins de quelques problèmes subtils qui peuvent se combiner en difficultés plus importantes.
+
+Un problème est que nous transmettons répétitivement `userId` à chaque fonction (pourtant logiquement liées). Maintenant, combinez cela avec un autre problème facilement manqué par les développeurs et TypeScript aussi : inverser les arguments numériques crée facilement un bug silencieux. (Voir `applyTaxes` et `purchaseProducts`. _Est-ce `userId` ou `amount` qui vient en premier ?_)
+
+Avant de décider comment améliorer ce code, identifions quelques avantages et inconvénients.
+
+### Avantages et inconvénients
+
+#### Avantages
+
+- Bonne utilisation d'une closure ! `userId` et `products` transmis une seule fois !
+- Nommage cohérent des arguments.
+- Composition relativement efficace et succincte de 4 fonctions clés pour le paiement.
+- Contrôle d'erreur « gratuit ». (Les erreurs remontent de n'importe quelles fonctions imbriquées, rejetant la Promesse retournée par `checkout()`.)
+
+#### Inconvénients
+
+- Transmettre `userId` de manière répétitive est fastidieux.
+- Les fonctions n'acceptent pas un seul paramètre (unaire). _Cela affecte la composabilité. Voir l'[exemple final](#checkout-with-further-improvements) pour comprendre pourquoi ?_
+- Pas toujours évident de savoir ce que chaque fonction retourne. (Est-ce le résultat de l'envoi d'email, ou cette variable `result` ? Ou ?)
+- Pas évident de savoir comment ajouter des fonctionnalités (par exemple : disons que nous devons charger la réduction/crédit/points du client, etc.)
+- Les noms de paramètres « temporaires » (comme dans chaque `.then(param => {})`) ajoutent parfois du contexte. Cependant, avec le temps, ils deviendront probablement des nids à noms obsolètes.
+
+### Solution, partie 1 : Créez un module !
+
+Cette technique consiste à organiser des fonctions liées dans un seul module (par exemple `CartHelpers`). Elle n'impose pas un motif spécifique. Explorez les [fonctions factory](#carthelpers-factory), les [Classes](#carthelpers-class), les Closures, les Mixins, etc. Trouvez ce qui a du sens pour votre projet et votre équipe.
+
+#### Factory CartHelpers
+
+Exemple d'un module `CartHelpers`, où `userId` est transmis une seule fois, et toutes les méthodes acceptent un seul argument.
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### Classe CartHelpers
+
+Si les classes sont votre truc, c'est facile à adapter :
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+Quelques bénéfices immédiats :
+
+- Éliminer la transmission répétitive de variables.
+  - DRY : `CartHelpers` abstraie l'argument répété `userId`.
+  - Chaque méthode accepte **_uniquement_** les arguments nécessaires. Rendre `cart.applyTaxes(subTotal)` entièrement sans surprise à la lecture.
+- Les fonctions à argument unique dans `CartHelpers` sont plus lisibles, avec un objectif plus clair.
+
+En regroupant des fonctions liées, nous créons une opportunité de réduire la surface exposée (par ex. `checkout()`, les méthodes 'publiques' de `CartHelpers`.)
+
+> Moins de surface exposée === moins de charge cognitive, meilleurs tests et maintenabilité.
+> _Concevez des systèmes avec intention et focus. ✨_
+
+#### Utilisation de Checkout et CartHelpers
+
+Voyons maintenant comment la fonction `checkout()` se présente :
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### Checkout avec améliorations supplémentaires
+
+> Peut-on améliorer davantage ? Oui ! Nous n'avons pas à répéter les arguments du tout !
+
+Lorsque les arguments d'une fonction sont fournis par la sortie de fonctions précédentes, vous pouvez simplifier le code encore plus.
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 Les fonctions s'empilent comme des Lego et se lisent comme du « Français normal » ! 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**Si combiner des paramètres en arguments uniques (objet) semble peu naturel,** pensez à découper vos fonctions **OU** à les regrouper dans des modules au périmètre plus approprié.
+
+#### Par où commencer ?
+
+Trouvez des fonctions liées, et regroupez-les. (par ex. `CartHelpers`.)
+
+Une partie du défi pour trouver des modules logiques possibles est d'identifier le code lié en premier lieu.
+
+##### Qu'est-ce qui rend des fonctions liées ?
+
+Une astuce pratique : trouvez la répétition dans les paramètres des fonctions. Demandez-vous s'il y a une relation en jeu ? Ou une responsabilité sous-jacente ?
+
+- ✅ Fonctions avec des arguments communs répétés. (par ex. Si 4 méthodes acceptent `userRewards`, il y a de fortes chances que vous ayez besoin d'un module `Rewards` ou autre.)
+- ✅ Fonctions dont les arguments sont fournis directement par la sortie de fonctions précédentes. (Séquences d'étapes. par ex. `Extract`, `Transform`, `Load`.)
+- ❌ Tout ce qui est vaguement lié au domaine fonctionnel, « l'achat de produits ? »
+- ❌ Fonctions avec un préfixe ou suffixe commun dans le nommage ?
+- ❌ Fonctions qui nécessitent de gros objets comme arguments, alors qu'elles n'utilisent que quelques valeurs à l'intérieur de ces objets. (par ex. `applyTaxes({ user, business, rewards, kitchenSink })` vs `applyTaxes({ subTotal })`)
+
+Bien qu'il n'y ait pas de « bonne réponse » unique pour concevoir des modules, il aide d'identifier 2-3 options d'organisation — faites un plan, écrivez du code « imaginaire », demandez-vous « est-ce que ça me plaît ? »
+
+<aside>
+📌 Il faut souvent quelques tentatives d'organisation de modules avant que votre modèle de domaine ne se dessine. Ne vous torturez pas pour le rendre parfait.
+</aside>
+
+> Vous pourriez sentir que `cart.sendReceipt()` n'a pas sa place avec les méthodes liées au paiement. Peut-être que `customerNotifications.sendReceipt()` serait un meilleur foyer pour les messages clients. Si `CartHelper` est suffisamment important, il peut agir comme un **_contrôleur_** appelant en interne tous les **_services_** nécessaires, comme `customerNotifications`.
+
+#### Comment savoir si vous aidez ?
+
+Si la lisibilité n'en souffre pas lorsque vous éliminez les arguments ad-hoc, **FÉLICITATIONS !!!** Vous avez probablement construit un module avec un périmètre clair et durable !
+
+- Supprimer les arguments intermédiaires a tendance à forcer l'émergence de « couches ».
+- Il _devrait_ être difficile de déposer du code ad-hoc au mauvais endroit !
+
+Alors, cela soulève la question : où ajoutons-nous des fonctionnalités ?
+
+À mon expérience, il y a 2 stratégies principales à évaluer pour ajouter des fonctionnalités :
+
+1. Étendre/refactoriser la méthode existante. (Lorsque le nouveau code est suffisamment proche du code existant.)
+2. Créer une nouvelle (5ème) fonction à l'emplacement souhaité dans la chaîne. (En supposant que le nouveau code est indépendant des fonctions existantes.)
+
+En fin de compte, cela facilite la décision de l'emplacement des nouvelles fonctionnalités. (par ex. `cart.applyDiscounts()`, `cart.applyTaxes()`, `rewards.getBalance()`.)
+
+### Conclusion
+
+Transmettre l'état à travers un pipeline complexe peut être délicat. Cependant, avec un peu de pratique de refactorisation, vous vous retrouverez à écrire du code plus lisible, avec moins de charge cognitive.
+
+Des questions ? Des commentaires ? Des remarques ? N'hésitez pas à me contacter sur [@justsml](https://x.com/justsml) ou par [email](mailto:dan@danlevy.net).
+
+#### Restez à l'écoute pour la prochaine partie de la série
+
+Nous explorerons l'externalisation de l'état et l'extension des fonctionnalités de notre module !
+
+#### Lectures connexes
+
+- [Des difficultés similaires existent dans le monde React piloté par les composants.](https://kyleshevlin.com/quit-your-yapping)
