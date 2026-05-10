@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: it
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 174.74
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
