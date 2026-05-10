@@ -1,0 +1,134 @@
+---
+title: "Votre horodatage est un mensonge"
+subTitle: "Ce qu'un billet de train m'a appris sur le stockage du temps dans les bases de données"
+date: 2025-12-29
+modified: 2026-01-12
+tags: [postgres, postgresql, databases, timestamps, timezones, microservices, debugging]
+category: Code
+subCategory: Databases
+social_image: desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Je réservais un train de New York à Chicago quand j'ai compris pourquoi les types d'horodatage dans Postgres sont si déroutants. Le billet affichait :
+
+- Départ : 8h00 EST
+- Arrivée : 19h30 CST  
+- Durée : 11 heures 30 minutes
+
+Trois façons différentes de parler du temps, toutes sur le même billet. Et chacune doit être stockée différemment dans une base de données.
+
+## La question que personne ne pose d'abord
+
+`TIMESTAMP` et `TIMESTAMPTZ` dans Postgres occupent exactement 8 octets avec la même précision à la microseconde. Alors pourquoi avoir deux types ?
+
+Parce que « quelle heure est-il ? » dépend entièrement de ce que vous essayez de dire.
+
+Quand je monte dans ce train à New York, je dois savoir qu'il part à 8h00 Eastern. C'est le numéro sur l'horloge de la gare que je dois retrouver. Quand mon ami vient me chercher à Chicago, elle doit savoir que j'arrive à 19h30 Central — c'est le numéro sur *son* horloge. Et si j'essaie de savoir si j'aurai le temps de lire mon livre, j'ai besoin de savoir que c'est un voyage de onze heures et demie.
+
+Même train. Même trajet. Trois représentations complètement différentes du temps.
+
+## Ce que TIMESTAMPTZ fait réellement
+
+Voici l'astuce avec `TIMESTAMPTZ` — et ce n'est pas ce que la plupart des gens pensent. Il ne stocke pas le fuseau horaire. Le nom est trompeur.
+
+Ce qu'il fait, c'est convertir l'heure que vous lui donnez en UTC avant de la stocker, puis la reconvertir dans le fuseau horaire de votre session quand vous la lisez. La partie « TZ » ne concerne pas le stockage, elle concerne le **support de conversion**.
+
+Disons que vous stockez ce départ de train. Quelqu'un à Tokyo interroge votre base de données et voit le départ en JST. Quelqu'un à Londres le voit en GMT. Tout le monde regarde le même moment absolu, simplement exprimé dans son fuseau horaire configuré. C'est parfait pour enregistrer des événements : « quand ce paiement a-t-il été traité ? » ou « quand cette requête API s'est-elle produite ? »
+
+Mais qu'en est-il de ce billet de train ? Vous ne voulez pas que l'heure de départ change juste parce que quelqu'un l'interroge depuis un fuseau horaire différent. Le train part à 8h00 Eastern, point final. Ce n'est pas un moment absolu dans le temps — c'est une promesse sur ce que dira l'horloge de Grand Central.
+
+## Stocker ce que vous voulez vraiment dire
+
+Pour ce trajet en train, vous devez stocker différentes choses selon les objectifs :
+
+- Les moments absolus (`departs_at` et `arrives_at` en `TIMESTAMPTZ`)
+- Le contexte d'affichage (`origin_timezone` et `destination_timezone` en texte)
+- La durée (un `INTERVAL` entre les deux moments)
+
+Maintenant, votre application peut faire ce que fait le billet de train : afficher « Départ 8h00 EST » en convertissant le moment absolu dans le fuseau horaire d'origine, afficher « Arrivée 19h30 CST » en convertissant dans le fuseau horaire de destination, et afficher « Durée : 11h 30min » directement depuis l'intervalle.
+
+La personne qui réserve le billet depuis Tokyo voit les mêmes heures locales à chaque gare. C'est ce qu'elle a besoin de savoir.
+
+## Pourquoi votre application de suivi de vol s'est trompée
+
+Vous avez remarqué comment certaines applications de suivi de vol affichent votre fuseau horaire pendant le vol ? Comme si vous étiez au-dessus de l'Atlantique et qu'il disait « Heure actuelle : 16h32 GMT. » Qui s'en soucie ? Vous n'êtes pas à Greenwich, vous êtes à 11 000 mètres quelque part au-dessus de l'océan.
+
+Ce que vous voulez vraiment voir :
+- Temps écoulé depuis le décollage
+- Temps restant jusqu'à la destination  
+- Quelle heure il sera *là-bas* à l'atterrissage
+
+Aucun de ceux-ci n'est une conversion de fuseau horaire. Les deux premiers sont des **intervalles** — des durées, pas des moments. Le dernier est une conversion de fuseau horaire, mais vers un lieu spécifique, pas « votre fuseau horaire actuel ».
+
+Vous voyez ? Deux calculs d'intervalle (`NOW() - actual_departure` et `estimated_arrival - NOW()`), une conversion de fuseau horaire vers un lieu spécifique (`AT TIME ZONE destination_timezone`). Votre fuseau horaire actuel n'entre pas en ligne de compte.
+
+## Quand l'heure murale est ce dont vous avez vraiment besoin
+
+Les hôtels ne se soucient pas des moments absolus dans le temps. Ils se soucient des lectures d'horloge à leur emplacement.
+
+« Enregistrement après 15h00 » ne signifie pas « enregistrement 15 heures après minuit UTC. » Cela signifie « chaque fois que l'horloge de notre lobby indique 15h00, vous pouvez vous enregistrer. » Si vos serveurs sont en Virginie mais que l'hôtel est à Paris, vous voulez toujours que cette règle se déclenche à 15h00 *heure de Paris*.
+
+Le type `TIME` (sans date ni fuseau horaire) représente exactement cela : « une lecture sur une horloge. » Associez-le à un champ de texte de fuseau horaire (« Europe/Paris »), et vous pouvez appliquer des politiques d'heure murale indépendamment de l'emplacement de vos serveurs. Mais vous voudrez aussi des colonnes `TIMESTAMPTZ` pour savoir quand des clients spécifiques se sont réellement enregistrés et ont quitté — ce sont des moments absolus que votre backend doit suivre.
+
+## Le problème du calendrier
+
+J'ai un rappel récurrent défini pour 9h00 : « Examiner les priorités quotidiennes. » Je veux ce rappel à 9h00 *où que je sois*. Si je voyage, il devrait toujours se déclencher à 9h00 heure locale.
+
+Mais j'ai aussi un événement de calendrier : « Réunion d'équipe à 10h00 EST. » Mon coéquipier à Berlin doit voir « 16h00 CET » pour ce même événement. Même réunion, différentes heures d'affichage, parce que celui-ci est un moment absolu auquel nous participons tous.
+
+Deux types d'événements différents, deux stratégies de stockage différentes. La réunion obtient un `TIMESTAMPTZ`. Le rappel obtient un `TIME` plus mon paramètre de fuseau horaire actuel. Évitez d'essayer de forcer les deux dans le même champ.
+
+## Ce qui casse en production
+
+Même avec les bons types, la précision peut vous mordre. Postgres stocke les microsecondes : `10:00:00.123456`. L'objet `Date` de JavaScript utilise les millisecondes : `10:00:00.123`.
+
+Donc cette requête pourrait mystérieusement ne retourner aucune ligne :
+
+```sql
+SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
+```
+
+La base de données a `10:00:00.123456` et votre code passe `10:00:00.123`. Selon la façon dont votre pilote le gère, ceux-ci pourraient ne pas correspondre.
+
+N'utilisez pas l'égalité exacte pour les horodatages. Utilisez des requêtes de plage, ou — mieux — ne recherchez pas d'enregistrements par leur horodatage de création du tout. Utilisez une contrainte unique appropriée ou une clé d'idempotence.
+
+## Règles pratiques
+
+**Privilégiez TIMESTAMPTZ par défaut.** En cas de doute, utilisez `TIMESTAMPTZ`. Il gère les déploiements multi-régions, l'heure d'été et les changements futurs de fuseau horaire automatiquement. C'est la même taille de stockage que `TIMESTAMP`, donc il n'y a pas de pénalité.
+
+**Stockez le contexte séparément.** Si vous devez afficher « Départ 8h00 EST » à côté du moment réel, stockez à la fois le `TIMESTAMPTZ` et le `origin_timezone` comme colonnes séparées. N'essayez pas d'encoder tout dans un seul champ.
+
+**Pensez aux intervalles.** Beaucoup de exigences liées au temps concernent en fait la durée, pas les moments. « Depuis combien de temps ceci est-il en attente ? » « Quand cela expirera-t-il ? » Utilisez des opérations `INTERVAL`, pas des conversions de fuseau horaire.
+
+**Exécutez tout en UTC.** Vos serveurs doivent être configurés en UTC. Vos sessions de base de données doivent utiliser UTC par défaut. Ne convertissez en heures locales que lors de l'affichage aux utilisateurs, et seulement quand vous savez quel fuseau horaire importe.
+
+**Exigez les informations de fuseau horaire des clients.** Si un client envoie `2026-01-15T10:00:00` sans décalage, rejetez-le. Exigez le format ISO-8601 avec soit `Z` soit un décalage explicite comme `-05:00`. Ne devinez pas.
+
+## Appliquer les bonnes valeurs par défaut
+
+Si `TIMESTAMPTZ` est votre valeur par défaut (et il devrait l'être), envisagez de l'appliquer au niveau de la base de données. Un déclencheur qui rejette les colonnes `TIMESTAMP WITHOUT TIME ZONE` semble extrême, mais détecter « oublié d'ajouter TZ » lors de la création du schéma est mieux que de le déboguer six mois plus tard quand quelqu'un ajoute une nouvelle table et oublie.
+
+## Ce que ce billet de train m'a appris
+
+Le temps dans les bases de données n'est pas difficile parce que les horodatages sont compliqués. Il est difficile parce que nous stockons généralement plusieurs préoccupations dans un seul champ, ou que nous ne pensons pas à ce que nous essayons réellement de montrer aux utilisateurs.
+
+Ce billet de train avait raison : heure de départ dans le fuseau horaire d'origine, heure d'arrivée dans le fuseau horaire de destination, et durée comme élément entièrement séparé. Trois informations différentes, chacune significative à sa manière.
+
+Votre base de données peut faire la même chose. Stockez les moments absolus en `TIMESTAMPTZ`. Stockez le contexte d'affichage (fuseaux horaires, emplacements) comme colonnes séparées. Utilisez des types `INTERVAL` pour les durées. Laissez Postgres faire les conversions quand vous en avez besoin, mais soyez explicite sur quel fuseau horaire importe pour quel objectif.
+
+La plupart du temps, cela signifie `TIMESTAMPTZ` et UTC partout, avec des conversions de fuseau horaire uniquement au moment de l'affichage. Mais quand vous avez besoin d'heures murales ou de plannings récurrents, les types `TIMESTAMP` ou `TIME` existent exactement pour cette raison.
+
+La clé est de savoir quelle question vous essayez de répondre : « Quand cela s'est-il produit ? » contre « À quelle heure dois-je être là ? » contre « Combien de temps cela prendra-t-il ? » Ce sont toutes des questions différentes sur le temps, et elles ont souvent besoin de stratégies de stockage différentes.
+
+Réfléchissez à ce que vos utilisateurs ont besoin de voir. Ensuite, stockez les données qui vous permettent de leur montrer exactement cela.
+
+## Ressources
+
+- [Documentation des types Date/Heure PostgreSQL](https://www.postgresql.org/docs/current/datatype-datetime.html)
+- [Bonnes pratiques pour les horodatages PostgreSQL](https://wiki.postgresql.org/wiki/Don%27t_Do_This#Date.2FTime_storage)
+- [Format de date et heure ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+- [Base de données des fuseaux horaires (IANA)](https://www.iana.org/time-zones)
+- [Gérer les horodatages dans les systèmes distribués](https://www.postgresql.org/docs/current/functions-datetime.html)
