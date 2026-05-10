@@ -1,5 +1,5 @@
 ---
-title: "Postgres Textsuch-Leitfaden 2026"
+title: "Leitfaden zur Postgres-Textsuche 2026"
 subTitle: "Die Suchwerkzeuge, die bereits in deiner Datenbank stecken – und wann sich jedes einzelne lohnt."
 date: 2026-05-02
 modified: 2026-05-03
@@ -21,9 +21,9 @@ Dieser Leitfaden behandelt die gesamte Palette Postgres-nativer Optionen: was je
 
 ## Die drei Werkzeuge
 
-**Volltextsuche** (`tsvector` / `GIN`-Index) ist lexikalisch. Sie zerlegt Text in Lexeme, reduziert sie auf ihren Wortstamm und gleicht Abfragen mit dem Index ab. »Running« und »runs« fallen auf dasselbe Lexem. Ebenso »dog« und »dogs«. Die Rank-Funktion (`ts_rank`) belohnt Dokumente, in denen Suchbegriffe häufig oder prominent vorkommen.
+**Volltextsuche** (`tsvector` / `GIN`-Index) ist lexikalisch. Sie zerlegt Text in Lexeme, reduziert sie auf ihren Wortstamm und gleicht Abfragen mit dem Index ab. »Running« und »runs« fallen auf dasselbe Lexem. Ebenso »dog« und »dogs«. Die Ranking-Funktion (`ts_rank`) belohnt Dokumente, in denen Suchbegriffe häufig oder prominent vorkommen.
 
-**Trigrams** (`pg_trgm`) zerlegen Zeichenketten in überlappende 3-Zeichen-Abschnitte und messen, wie viele Abschnitte zwei Zeichenketten gemeinsam haben. »Dan« → `" da"`, `"dan"`, `"an "`. »Micheal« und »Michael« teilen die meisten ihrer Trigramme, die Ähnlichkeit ist also hoch. Das macht `pg_trgm` exzellent für unscharfe Namenssuche, Tippfehlertoleranz und Autovervollständigung – den Bereich, in dem die Volltextsuche schwächelt.
+**Trigramme** (`pg_trgm`) zerlegen Zeichenketten in überlappende 3-Zeichen-Abschnitte und messen, wie viele Abschnitte zwei Zeichenketten gemeinsam haben. »Dan« → `" da"`, `"dan"`, `"an "`. »Micheal« und »Michael« teilen die meisten ihrer Trigramme, die Ähnlichkeit ist also hoch. Das macht `pg_trgm` exzellent für unscharfe Namenssuche, Tippfehlertoleranz und Autovervollständigung – den Bereich, in dem die Volltextsuche schwächelt.
 
 **Exakt-Match-Indizes** (B-Baum, Hash) behandeln Primärschlüssel, E-Mail-Adressen, IDs, Artikelnummern und alles, bei dem die Antwort binär ist: Es passt oder es passt nicht. Sie fühlen sich nicht wie »Suche« an, gehören aber in diese Betrachtung, weil das schlechteste Muster darin besteht, unscharfe oder semantische Suche für Probleme einzusetzen, die richtige Antworten haben.
 
@@ -128,7 +128,7 @@ WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
 ### Volltextsuche einrichten
 
 ```sql
--- Die Generated Column hält den Index automatisch aktuell
+-- Die generierte Spalte hält den Index automatisch aktuell
 ALTER TABLE posts ADD COLUMN search_vector tsvector
   GENERATED ALWAYS AS (
     setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
@@ -466,6 +466,6 @@ Der 60-Dokumente-Kandidatenpool pro Zweig (`LIMIT 60`) ist ein üblicher Ausgang
 
 ## Wie es weitergeht
 
-Die Postgres-Textsuche deckt viel ab, aber sie hat eine Obergrenze. Wenn Nutzer beschreiben, was sie wollen, statt es zu benennen – »etwas, das mir im Flug beim Schlafen hilft«, »Artikel über Debugging-Selbstvertrauen als Junior-Entwickler« – versagen sowohl die lexikalische als auch die Trigramm-Suche.
+Die Postgres-Textsuche deckt viel ab, aber sie hat eine Obergrenze. Wenn Nutzer beschreiben, was sie wollen, statt es zu benennen – »etwas, das mir auf einem Flug beim Schlafen hilft«, »Artikel über Debugging-Selbstvertrauen als Junior-Entwickler« – versagen sowohl die lexikalische als auch die Trigramm-Suche.
 
 Das ist das Terrain von Vektor-Embeddings, semantischer Suche und hybriden Architekturen. Behandelt in [Semantische Vektorsuche und Hybridstrategien](/semantic-vector-search-landscape).
