@@ -81,6 +81,7 @@ const models = validateCandidateModels(parseList(optionalString(options, "models
 const shouldSkipValidation = options["skip-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
+const shouldAllowConcurrentWorktree = options["allow-concurrent-worktree"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
@@ -96,6 +97,8 @@ for (const model of models) {
     "Do not run shell commands, git commands, Bun scripts, validation scripts, or translation scripts.",
     "Do not inspect or follow repository skills. Do not create commits. The wrapper script owns validation, reports, and Git.",
     "Preserve MDX structure, imports, component names, prop names, code blocks, URLs, asset paths, and anchors.",
+    "Preserve every import line from the source post. Locale files live one directory deeper, so adjust only relative import depth when required.",
+    "For quiz posts, preserve Challenge/QuizUI imports and every component tag/prop name exactly; translate only reader-facing string values.",
     "Translate reader-facing prose, frontmatter title/subTitle, image alt text, quiz questions/options/explanations, and visible UI copy inside MDX props.",
     "Do not add commentary outside the file. Replace any previous candidate in the target file.",
     "Keep frontmatter lean: localized title/subTitle/body and optional localized cover_alt only unless a field must override English.",
@@ -124,7 +127,7 @@ for (const model of models) {
   const telemetry = getCandidateTelemetry(model, opencodeResult);
   const unrelatedChangedPaths = getUnrelatedChangedPaths(preRunChangedPaths);
 
-  if (unrelatedChangedPaths.length > 0) {
+  if (!shouldAllowConcurrentWorktree && unrelatedChangedPaths.length > 0) {
     if (unrelatedChangedPaths.every(isHarmlessGeneratedPath)) {
       cleanupUnrelatedPaths(unrelatedChangedPaths);
     } else {
