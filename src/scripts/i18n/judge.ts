@@ -37,6 +37,7 @@ const candidateSummary = candidateCommits
   .join("\n");
 
 const prompt = [
+  "You are a constrained translation judge.",
   `Judge the ${locale} translation candidates for ${slug}.`,
   `Candidate commits:`,
   candidateSummary,
@@ -47,6 +48,8 @@ const prompt = [
   `Use git show <sha>:${targetRelPath} to inspect candidates.`,
   `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
   `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
+  `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
+  `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
 ].join("\n");
 
 const primaryJudge = runJudgeCommand(judgeModel, prompt);
@@ -58,7 +61,10 @@ const primaryTelemetry = getRunTelemetry(judgeModel, primaryJudge);
 
 const secondJudge = secondJudgeModel == null
   ? undefined
-  : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt());
+  : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(), [
+    targetPath,
+    `${reportDir}/judge.md`,
+  ].filter((path) => existsSync(path)));
 if (secondJudge != null && !secondJudge.ok) {
   throw new Error(secondJudge.errorMessage);
 }
@@ -125,12 +131,13 @@ if (!shouldSkipCommit) {
   ]);
 }
 
-function runJudgeCommand(model: string, judgePrompt: string) {
+function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {
   return runMeasuredCommand("opencode", [
   "run",
   "--model",
   model,
   ...getVariantArgs(model),
+  ...files.flatMap((file) => ["--file", file]),
   "--dangerously-skip-permissions",
   judgePrompt,
   ], timeoutSeconds * 1000);
@@ -138,12 +145,18 @@ function runJudgeCommand(model: string, judgePrompt: string) {
 
 function getSecondJudgePrompt() {
   return [
+    `You are a constrained second-pass reviewer for the selected ${locale} translation of ${slug}.`,
+    `Do not run shell commands, git commands, package installation, build, or validation commands.`,
+    `Read the attached selected translation and primary judge report.`,
+    `Only inspect candidate commits if the selected translation appears structurally broken or obviously mistranslated.`,
+    ``,
     `Review the selected ${locale} translation for ${slug}.`,
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Inspect ${targetRelPath} and the candidates with git show.`,
+    `Check for MDX/frontmatter breakage, untranslated reader-facing prose, major terminology errors, and obvious tone regressions.`,
     `Write your agreement or disagreement in reports/i18n/${slug}/${locale}/judge-second.md.`,
+    `Keep the report concise. If acceptable, include the exact phrase "No escalation required".`,
     `Do not edit ${targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
   ].join("\n");
 }
