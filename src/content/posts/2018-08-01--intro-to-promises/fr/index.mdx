@@ -1,0 +1,104 @@
+---
+social_image: ../desktop-social.webp
+title: "Introduction aux Promesses"
+subTitle: Les Promesses JavaScript, c'est amusant !
+date: 2018-08-01
+modified: 2024-07-31
+category: Code
+subCategory: promises
+tags: [promises, async, javascript, composition]
+related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+cover: joe-yates-480485-unsplash.webp
+cover_mobile: w300_joe-yates-480485-unsplash.webp
+cover_icon: icon_joe-yates-480485-unsplash.webp
+---
+
+## Les Promesses... C'est quoi leur truc ?
+
+Chaque fois que vous exécutez du code informatique, il n'y a que 2 issues possibles : **succès** ou **échec**.
+
+Si ce code est de nature asynchrone, il peut être plus difficile de dépendre fiablement de ce résultat.
+
+**Les `Promesses`** offrent une solution élégante pour gérer cela.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> Note : Bien que les Promesses devraient se résoudre ou être rejetées, il peut arriver qu'elles ne fassent ni l'un ni l'autre. Cela peut faire planter les applications et être très difficile à déboguer.
+
+
+### D'où viennent les Promesses ?
+
+Bien souvent, vous n'aurez pas besoin de créer une promesse vous-même. Les API natives comme `fetch` et les bibliothèques populaires comme `axios` retournent déjà des Promesses.
+
+Cependant, si vous devez créer une promesse, il y a 2 façons de le faire :
+
+
+
+### Créer des Promesses #1/2 :
+
+La façon la plus simple de créer une Promesse est d'utiliser la méthode utilitaire : `Promise.resolve()`.
+
+Vous pouvez envelopper (ou « convertir ») n'importe quelle valeur en une Promesse en utilisant `Promise.resolve(value)`.
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Créer des Promesses #2/2 :
+
+Une autre méthode plus flexible : utiliser le constructeur `Promise`.
+
+`new Promise(callback)` accepte une fonction `callback` avec l'interface suivante :
+
+```js
+new Promise(function(resolve, reject) {
+  // The arguments `resolve` and `reject` are both functions.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` must get executed when the promise is fulfilled
+  // `reject(Error)` must get executed if the promise is rejected
+})
+```
+
+### API des Promesses
+
+L'API des Promesses se compose en réalité d'un petit nombre de méthodes.
+
+2 méthodes d'instance, et 4 méthodes statiques/utilitaires.
+
+#### Méthodes d'instance de Promise
+
+Accéder aux valeurs d'une promesse ne fonctionnera pas avec les astuces habituelles (par exemple `console.log(promise)`).
+
+Toutes les Promesses retournent soit un succès (via `.then(fn)`) soit un échec (via `.catch(fn)`).
+
+#### Méthodes utilitaires de Promise
+
+* `Promise.resolve(value)` - Convertit n'importe quelle valeur en une Promesse
+* `Promise.reject(Error)` - Crée une Promesse échouée, déclenche les `.catch()` suivants
+* `Promise.all([...promises])` - Attend que TOUTES les Promesses d'un tableau se terminent
+* `Promise.race([...promises])` - Se résout dès que la première promesse se résout
