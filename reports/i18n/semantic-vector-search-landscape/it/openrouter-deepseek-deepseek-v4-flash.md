@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx
+- Validation: passed
+- Runtime seconds: 134.97
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
