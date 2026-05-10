@@ -246,7 +246,11 @@ for (const model of models) {
 
 function validateCandidate() {
   normalizeCandidateForLocale();
-  runInherited("bun", ["run", "i18n:validate", "--slug", slug, "--locale", locale]);
+  const validateArgs = ["run", "i18n:validate", "--slug", slug, "--locale", locale];
+  if (shouldAllowConcurrentWorktree) {
+    validateArgs.push("--skip-global");
+  }
+  runInherited("bun", validateArgs);
   return "passed";
 }
 

@@ -10,6 +10,7 @@ import {
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
+const shouldSkipGlobalChecks = options["skip-global"] === true;
 const { sourcePath, targetPath } = getPostPaths(slug, locale);
 
 if (!existsSync(targetPath)) {
@@ -22,6 +23,10 @@ const target = readFileSync(targetPath, "utf8");
 assertFrontmatter(target);
 assertProtectedTokens(source, target);
 assertNestedAssetPaths(target);
+
+if (shouldSkipGlobalChecks) {
+  process.exit(0);
+}
 
 runInherited("bun", ["run", "content:check"]);
 
