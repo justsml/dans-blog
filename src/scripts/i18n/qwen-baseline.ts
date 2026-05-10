@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
@@ -61,56 +61,72 @@ if (shouldDryRun) {
 
 for (const [index, task] of limitedTasks.entries()) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
+  const releaseTaskLock = shouldConcurrentWorktree ? claimTask(task) : undefined;
+  if (shouldConcurrentWorktree && releaseTaskLock == null) {
+    console.log(`Skipping ${task.locale}/${task.slug}; another worker already claimed it.`);
+    continue;
+  }
+
+  if (shouldConcurrentWorktree && hasSuccessfulQwenReport(task.reportPath)) {
+    console.log(`Skipping ${task.locale}/${task.slug}; Qwen report was completed by another worker.`);
+    releaseTaskLock?.();
+    continue;
+  }
+
   if (!shouldConcurrentWorktree) {
     runInherited("git", ["pull", "--rebase", "origin", "main"]);
     requireCleanWorktree();
   }
 
-  const beforeHead = run("git", ["rev-parse", "HEAD"]);
-  const args = [
-    "run",
-    "i18n:translate:candidates",
-    "--",
-    "--slug",
-    task.slug,
-    "--locale",
-    task.locale,
-    "--models",
-    QWEN_BASELINE_MODEL,
-    "--timeout-seconds",
-    String(timeoutSeconds),
-  ];
-  if (shouldConcurrentWorktree) {
-    args.push("--no-commit", "--allow-concurrent-worktree");
-  }
-  runInherited("bun", args);
+  try {
+    const beforeHead = run("git", ["rev-parse", "HEAD"]);
+    const args = [
+      "run",
+      "i18n:translate:candidates",
+      "--",
+      "--slug",
+      task.slug,
+      "--locale",
+      task.locale,
+      "--models",
+      QWEN_BASELINE_MODEL,
+      "--timeout-seconds",
+      String(timeoutSeconds),
+    ];
+    if (shouldConcurrentWorktree) {
+      args.push("--no-commit", "--allow-concurrent-worktree");
+    }
+    runInherited("bun", args);
 
-  if (shouldConcurrentWorktree) {
-    if (!hasSuccessfulQwenReport(task.reportPath) || !hasGitDiff(task.targetPath, task.reportPath)) {
-      console.log("No successful Qwen diff to commit; cleaning rejected or unchanged artifacts.");
-      restorePathToHead(task.targetPath);
-      restorePathToHead(task.reportPath);
+    if (shouldConcurrentWorktree) {
+      if (!hasSuccessfulQwenReport(task.reportPath) || !hasGitDiff(task.targetPath, task.reportPath)) {
+        console.log("No successful Qwen diff to commit; cleaning rejected or unchanged artifacts.");
+        restorePathToHead(task.targetPath);
+        restorePathToHead(task.reportPath);
+        continue;
+      }
+
+      withRepoLock(() => {
+        runInherited("git", ["add", relativeToRepo(task.targetPath), relativeToRepo(task.reportPath)]);
+        runInherited("git", ["commit", "-m", `i18n candidate(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+        if (shouldPush) {
+          runInherited("git", ["push", "origin", "HEAD:main"]);
+        }
+      });
       continue;
     }
 
-    withRepoLock(() => {
-      runInherited("git", ["add", relativeToRepo(task.targetPath), relativeToRepo(task.reportPath)]);
-      runInherited("git", ["commit", "-m", `i18n candidate(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
-      if (shouldPush) {
-        runInherited("git", ["push", "origin", "HEAD:main"]);
-      }
-    });
-    continue;
-  }
+    const afterHead = run("git", ["rev-parse", "HEAD"]);
+    if (afterHead === beforeHead) {
+      console.log("No commit created; Qwen report already satisfied or model produced no change.");
+      continue;
+    }
 
-  const afterHead = run("git", ["rev-parse", "HEAD"]);
-  if (afterHead === beforeHead) {
-    console.log("No commit created; Qwen report already satisfied or model produced no change.");
-    continue;
-  }
-
-  if (shouldPush) {
-    runInherited("git", ["push", "origin", "HEAD:main"]);
+    if (shouldPush) {
+      runInherited("git", ["push", "origin", "HEAD:main"]);
+    }
+  } finally {
+    releaseTaskLock?.();
   }
 }
 
@@ -190,6 +206,34 @@ function withRepoLock(callback: () => void) {
   } finally {
     rmSync(lockDir, { recursive: true, force: true });
   }
+}
+
+function claimTask(task: Task) {
+  const lockRoot = join(process.cwd(), ".git", "i18n-qwen-baseline-tasks");
+  mkdirSync(lockRoot, { recursive: true });
+
+  const lockDir = join(lockRoot, `${safeLockPart(task.slug)}-${task.locale}.lock`);
+  try {
+    mkdirSync(lockDir);
+  } catch {
+    if (!isStaleLock(lockDir)) return undefined;
+    rmSync(lockDir, { recursive: true, force: true });
+    mkdirSync(lockDir);
+  }
+
+  return () => rmSync(lockDir, { recursive: true, force: true });
+}
+
+function isStaleLock(lockDir: string) {
+  try {
+    return Date.now() - statSync(lockDir).mtimeMs > 60 * 60 * 1000;
+  } catch {
+    return true;
+  }
+}
+
+function safeLockPart(value: string) {
+  return value.replace(/[^a-z0-9._-]+/gi, "-");
 }
 
 function restorePathToHead(path: string) {
