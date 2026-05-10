@@ -1,0 +1,124 @@
+---
+social_image: ../desktop-social.webp
+title: "Comprendre les nombres et les devises internationales"
+subTitle: "La monnaie localisée expliquée !"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [engineering, internationalization, localization, currency, numbers]
+category: HowTo
+subCategory: Internationalization
+cover_full_width: currency-banner-wide.webp
+cover_mobile: currency-banner-pic__w200.webp
+cover_icon: currency-banner-pic__w200.webp
+---
+
+- [Monnaie : Localisation (L10n) et Internationalisation (i18n)](#monnaie-localisation-l10n-et-internationalisation-i18n)
+- [Concepts clés](#concepts-clés)
+  - [Les nombres sont locaux 🏘️](#les-nombres-sont-locaux-️)
+  - [La devise est mondiale 🌎](#la-devise-est-mondiale-️)
+  - [Quand la locale compte](#quand-la-locale-compte)
+- [Une solution](#une-solution)
+- [Prochaines étapes](#prochaines-étapes)
+
+## Monnaie : Localisation (L10n) et Internationalisation (i18n)
+
+Ce ne sont pas seulement des mots pour dominer une partie de Scrabble. La _localisation_ et l'_internationalisation_ désignent le processus qui permet à un produit de **se sentir comme chez lui dans un autre pays.**
+
+<p class="breakout quote">Afficher une devise dans un format local incorrect est un signe révélateur : vous n'avez fait aucun effort.<br/>Si vous ne savez pas afficher un prix, comment gérerez-vous l'expédition ?</p>
+
+L'internationalisation est un vaste sujet, couvrant tout, de la traduction de texte au formatage des dates. Dans cet article, nous nous concentrerons sur un sous-thème particulier : **le formatage des nombres et des devises.**
+
+Explorons le formatage dans trois pays de la zone euro, aux États-Unis et en Inde :
+
+- `€1 234 567,89` Irlande 🇮🇪
+- `1.234.567,89 €` Allemagne 🇩🇪
+- `1 234 567,89 €` France 🇫🇷
+- `1 234 567,89 $` États-Unis 🇺🇸
+- `₹12 34 567,89` Inde 🇮🇳
+
+Le chaos, n'est-ce pas ? Des symboles, des espaces et des signes de ponctuation volent de partout ! C'est incroyable que l'UE arrive à se mettre d'accord sur quoi que ce soit ! 😅
+
+## Concepts clés
+
+Avant de plonger dans les solutions, que voulons-nous dire par « les nombres sont locaux » ?
+
+### Les nombres sont locaux 🏘️
+
+Chaque locale ([pays selon la norme ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) définit des règles pour le formatage des nombres.
+
+Les règles de formatage des nombres incluent :
+
+- Décimale : virgule, point.
+- Milliers : virgule, point, espace.
+- Position et espacement du symbole monétaire.
+
+### La devise est mondiale 🌎
+
+Une `currency` (devise) fait référence à une unité spécifique de monnaie. (Voir [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) pour la liste.)
+
+- Spécifie un symbole : `$`, `€`, `£`, `¥`. (Souvent réutilisé.)
+- Possède toujours un code à 3 lettres : `USD`, `EUR`, `GBP`, `JPY`.
+- Peut être utilisée/échangée dans « n'importe quel » pays. En théorie.
+- La conversion entre devises nécessite des données de taux de change.
+- La valeur ne change pas en fonction de la locale.
+
+### Quand la locale compte
+
+La plupart des API REST e-commerce/paiement traitent en `price` (prix) + `currencyCode` (code devise). Pourquoi pas de locales ?
+
+Les locales sont généralement définies au niveau du système d'exploitation ou du périphérique, et les navigateurs les rendent disponibles via `navigator.language`. Comme chacun de vos utilisateurs pourrait avoir une locale différente, il est logique de formater les nombres et les devises côté client.
+
+## Une solution
+
+Bonne nouvelle ! Les langages de programmation modernes ont un support intégré pour cela. En JavaScript, nous avons la classe [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) et `Intl.NumberFormat` !
+
+Regardons un exemple de code :
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Si vous devez faire des choses plus avancées, comme calculer des taxes, appliquer des réductions ou convertir entre des devises, vous voudrez utiliser une bibliothèque comme [dinero.js](https://v2.dinerojs.com/).
+
+## Prochaines étapes
+
+Selon vos besoins spécifiques, vous souhaiterez peut-être explorer des concepts connexes :
+
+- Meilleures pratiques pour la locale utilisateur. Détecter et permettre les remplacements. (Par exemple, un menu déroulant de pays.)
+- Persistance des nombres entiers (stocker les centimes, pas les euros/dollars).
+- Calculs monétaires. (Par exemple, appliquer un coupon de `20 % de réduction`, calculer `sous-total + taxes`, etc.)
+- Taux de change en temps réel. (Pour les achats au détail, les échanges forex/devises.)
+
+<p class="breakout quote">Faites-moi savoir si vous souhaitez voir un futur article sur ces sujets !</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: 
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supports money math, exchange rates, formatting, and parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) is my preferred Rust library.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) is my current Golang choice.
+ */}
