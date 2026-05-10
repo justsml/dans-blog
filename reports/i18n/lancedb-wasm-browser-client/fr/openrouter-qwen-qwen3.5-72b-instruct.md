@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/qwen/qwen3.5-72b-instruct
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.23
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
