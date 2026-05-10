@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 104.15
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
