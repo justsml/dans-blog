@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: developer-workstation-blast-radius
+- Locale: es
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 130.03
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ja/index.mdx
