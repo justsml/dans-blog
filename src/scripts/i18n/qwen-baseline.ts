@@ -104,7 +104,20 @@ for (const [index, task] of limitedTasks.entries()) {
     if (shouldConcurrentWorktree) {
       args.push("--no-commit", "--allow-concurrent-worktree");
     }
-    runInherited("bun", args);
+    try {
+      runInherited("bun", args);
+    } catch (error) {
+      if (!shouldConcurrentWorktree) throw error;
+
+      console.log(
+        `Qwen task failed; cleaning ${task.locale}/${task.slug} artifacts and continuing. ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+      restorePathToHead(task.targetPath);
+      restorePathToHead(task.reportPath);
+      continue;
+    }
 
     if (shouldConcurrentWorktree) {
       if (!hasSuccessfulQwenReport(task.reportPath) || !hasGitDiff(task.targetPath, task.reportPath)) {
