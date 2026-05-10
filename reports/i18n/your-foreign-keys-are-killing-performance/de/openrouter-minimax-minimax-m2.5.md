@@ -4,10 +4,10 @@
 - Model: openrouter/minimax/minimax-m2.5
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx
 - Validation: rejected: unknown
-- Runtime seconds: 0.16
+- Runtime seconds: 0.09
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 6000 tokens, but can only afford 726. To increase, visit https://openrouter.ai/settings/keys and create a key with a higher daily limit","code":402,"metadata":{"provider_name":null}},"user_id":"user_2pzehDUA0Dk91FO7jPDvof7W5Qm"}
+- Note: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 500 tokens, but can only afford 350. To increase, visit https://openrouter.ai/settings/keys and create a key with a higher daily limit","code":402,"metadata":{"provider_name":null}},"user_id":"user_2pzehDUA0Dk91FO7jPDvof7W5Qm"}
