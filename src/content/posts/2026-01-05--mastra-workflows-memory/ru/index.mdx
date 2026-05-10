@@ -1,6 +1,6 @@
 ---
 title: "Хватит создавать ненадёжных агентов: используйте Workflows и Memory"
-subTitle: "Детерминированные паттерны для нестохастических моделей."
+subTitle: "Детерминированные паттерны для недетерминированных моделей."
 date: 2026-01-05
 modified: 2026-01-08
 tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestration]
@@ -49,7 +49,7 @@ import { Agent } from '@mastra/core/agent';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
 
-// Шаг 1: Получение данных о погоде (Детерминированный)
+// Step 1: Fetch weather data (Deterministic)
 const fetchWeather = createStep({
   id: 'fetch-weather',
   description: 'Fetches weather forecast for a given city',
@@ -75,7 +75,7 @@ const fetchWeather = createStep({
   },
 });
 
-// Шаг 2: Агент предлагает активности (Креативный)
+// Step 2: Agent suggests activities (Creative)
 const activityPlanner = new Agent({
   id: 'activity-planner-agent',
   name: 'Activity Planner',
@@ -105,7 +105,7 @@ const planActivities = createStep({
   },
 });
 
-// Конвейер (Pipeline)
+// Pipeline
 export const activityPlannerWorkflow = createWorkflow({
   id: 'activity-planner',
   inputSchema: z.object({ city: z.string() }),
@@ -158,9 +158,9 @@ export const memoryAgent = new Agent({
       url: 'file:../mastra.db',
     }),
     options: {
-      lastMessages: 20,  // Держать последние 20 сообщений в контексте
+      lastMessages: 20,  // Keep last 20 messages in context
       semanticRecall: {
-        enabled: true,  // Использовать эмбеддинги для поиска старых данных
+        enabled: true,  // Use embeddings to find old stuff
         topK: 5,
         threshold: 0.7,
       },
@@ -203,12 +203,12 @@ export const coordinatorAgent = new Agent({
     Always produce comprehensive, well-structured responses.`,
   model: openai('gpt-5'),
   
-  // Доступные примитивы
+  // Available primitives
   agents: { researchAgent, writingAgent },
   workflows: { activityPlannerWorkflow },
   tools: { weatherTool },
   
-  // Сети требуется память
+  // Network requires memory
   memory: new Memory({
     storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
   }),
@@ -242,7 +242,7 @@ Workflows дают гарантии, когда вам нужно, чтобы в
 
 ## Читать серию
 
-1. [LLM Routing](/llm-routing-mastra-ai)
-2. [Security & Guardrails](/mastra-security-guardrails)
-3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
-4. **Workflows & Memory** (Этот пост)
+1. [Маршрутизация LLM](/llm-routing-mastra-ai)
+2. [Безопасность и Guardrails](/mastra-security-guardrails)
+3. [MCP и интеграция инструментов](/mastra-mcp-tool-integrations)
+4. **Workflows и Memory** (Этот пост)
