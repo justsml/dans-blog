@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: you-might-not-need-algolia
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-03-01--you-might-not-need-algolia/it/index.mdx
+- Validation: passed
+- Runtime seconds: 40.73
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

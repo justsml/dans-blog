@@ -1,0 +1,97 @@
+---
+title: "Forse Non Hai Bisogno di Algolia™"
+social_image: desktop-social.webp
+subTitle: "I siti statici probabilmente non hanno bisogno di ricerca ospitata"
+tags: ["search", "algolia", "pagefind", "cdn"]
+date: 2025-03-01
+modified: 2025-03-05
+category: Search
+cover_full_width: synth-wave-city-wide.webp
+cover_mobile: synth-wave-city-200-square.webp
+cover_icon: synth-wave-city-200-square.webp
+cover_credit: Image by Dan Levy
+---
+
+La maggior parte delle decisioni sulla ricerca del sito inizia troppo tardi.
+
+Quando qualcuno dice "dovremmo usare Algolia", il team di solito ha saltato la domanda utile: che tipo di contenuto stiamo cercando?
+
+Se la risposta è "pagine HTML che già costruiamo", [Pagefind](https://pagefind.app/) dovrebbe essere la prima cosa che provi. Non perché Algolia sia brutto. Algolia è molto bravo in un sacco di problemi difficili. Ma se il tuo indice di ricerca cambia quando il sito viene distribuito, un servizio di ricerca ospitato potrebbe essere cosplay dell'infrastruttura.
+
+<p class="inset">Usa Pagefind quando il tuo contenuto ricercabile viene generato al momento della build. Passa ad Algolia quando la ricerca deve accettare scritture live, regole di business, classifiche specifiche per utente o garanzie operative che la tua build statica non può fornire.</p>
+
+Questa regola copre più siti di quanto le persone si aspettino: blog, documentazione, siti di marketing, manuali interni, guide ai prodotti, cataloghi di corsi e un numero sorprendente di "app" che pubblicano principalmente pagine.
+
+## La Forma Del Problema
+
+Algolia ti fornisce un sistema di ricerca esterno. Crei record, li spingi in un indice, configuri la classifica, colleghi un'interfaccia utente e mantieni la cosa sincronizzata con la tua fonte di verità.
+
+Pagefind guarda l'HTML che hai già spedito e costruisce un indice di ricerca statico accanto ad esso.
+
+Questa distinzione sembra noiosa finché non mantieni l'integrazione.
+
+Con Algolia, il tuo sito ha una seconda copia del tuo contenuto. Ora devi rispondere a domande come:
+
+- La distribuzione è finita ma l'aggiornamento dell'indice non è riuscito?
+- Quali campi sono canonici: i campi CMS, la pagina renderizzata o il record di ricerca?
+- Chi possiede le modifiche alla classifica quando smettono di corrispondere alla pagina?
+- Cosa succede quando si scopre che il livello gratuito non è la forma reale del tuo traffico?
+
+A volte queste domande ne valgono la pena. Per un marketplace, un portale di supporto o un grande catalogo e-commerce, probabilmente lo sono. Per un sito di documentazione statica, sono spesso complessità autoinflitte.
+
+## Pagefind Funziona Perché Rifiuta Il Sistema Extra
+
+Il trucco di Pagefind non è magia. È gusto.
+
+Aspetta fino a quando le tue pagine esistono, indicizza l'HTML finito e scrive una collezione di asset statici che puoi mettere sullo stesso CDN del resto del tuo sito. Il browser scarica solo i chunk di cui ha bisogno. Non c'è alcun server di ricerca da tenere caldo, nessuna quota di crawler da guardare e nessuna pipeline di webhook che cerca di ricordare cosa è cambiato.
+
+Questo rende il modo di guasto molto più facile da capire:
+
+- Se la pagina è stata distribuita, il contenuto indicizzato proveniva da quella pagina.
+- Se la pagina non è stata distribuita, gli utenti non possono vederla comunque.
+- Se la ricerca è sbagliata, il problema di solito è nel tuo markup renderizzato o nella configurazione di Pagefind, non in un lavoro di sincronizzazione distante.
+
+Ecco perché mi piace per i siti di contenuti. L'indice segue l'artefatto.
+
+## Come Appare Veramente La Configurazione
+
+Per un sito statico semplice, il flusso di lavoro è piacevolmente noioso:
+
+- **CLI**: Scansiona i file HTML del tuo sito, genera un indice e distribuiscilo su un CDN globale, tutto in pochi minuti.
+- **Generatori di Siti Statici**: Usa i plugin di PageFind per Astro o Hugo per automatizzare il processo di indicizzazione.
+- **Soluzioni Personalizzate**: Utilizza l'API di PageFind per creare esperienze di ricerca su misura che si adattano ai tuoi requisiti unici.
+
+<figure>
+  <figcaption>Indicizzazione del mio sito con PageFind CLI</figcaption>
+  ![Indicizzazione del mio sito con PageFind](PageFind-Cleaner-better-15fps-720p2.webp "Indicizzazione del mio sito con PageFind")
+</figure>
+
+La guida [Getting Started](https://pagefind.app/docs/) è sufficiente per iniziare. Il test migliore è operativo: puoi ricostruire l'indice in CI, distribuire l'output e spiegare ogni ricerca mancante ispezionando l'HTML renderizzato?
+
+## Dove Algolia Vince Ancora
+
+Pagefind non è un piccolo Algolia nascosto in un trench. È una risposta diversa.
+
+Usa Algolia, OpenSearch, ricerca Postgres o un altro sistema live quando il tuo indice di ricerca deve cambiare indipendentemente da una distribuzione del sito.
+
+Questo include:
+
+- conteggi di inventario che cambiano ogni pochi minuti
+- permessi per utente o risultati privati
+- classifiche personalizzate guidate da ricavi, freschezza, popolarità o esperimenti
+- ricerca federata attraverso sistemi che non si renderizzano in un unico sito statico
+- supporto operativo e analitico che un'azienda si aspetta da un fornitore gestito
+
+Questi sono bisogni reali. Fingere che Pagefind li gestisca perché è veloce sarebbe l'altro tipo di voce del blog del fornitore.
+
+## La Decisione Che Uso
+
+Fai prima una domanda:
+
+> L'indice di ricerca può essere ricostruito dallo stesso output statico che gli utenti stanno navigando?
+
+Se sì, inizia con Pagefind. Ottieni ricerca privata per impostazione predefinita, asset CDN-friendly e un account di servizio in meno con opinioni.
+
+Se no, nomina la cosa che rende l'indice live: inventario, permessi, personalizzazione, analitica, classifica o frequenza di scrittura. Quindi scegli il database o il servizio di ricerca che possiede quel lavoro esplicitamente.
+
+Algolia non è il cattivo qui. Il cattivo è adottare un secondo sistema prima di dimostrare che il primo artefatto era insufficiente.
