@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/de/index.mdx
+- Validation: passed
+- Runtime seconds: 75.10
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
