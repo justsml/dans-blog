@@ -1,0 +1,104 @@
+---
+social_image: ../desktop-social.webp
+title: "Promises का परिचय"
+subTitle: JavaScript Promises मज़ेदार हैं!
+date: 2018-08-01
+modified: 2024-07-31
+category: Code
+subCategory: promises
+tags: [promises, async, javascript, composition]
+related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+cover: joe-yates-480485-unsplash.webp
+cover_mobile: w300_joe-yates-480485-unsplash.webp
+cover_icon: icon_joe-yates-480485-unsplash.webp
+---
+
+## Promises... उनका क्या चक्कर है?
+
+जब भी आप कोई कंप्यूटर कोड चलाते हैं, तो 2 संभावित परिणाम होते हैं: **सफलता** या **विफलता**।
+
+अगर वह कोड async प्रकृति का है, तो उस परिणाम पर भरोसा करना मुश्किल हो सकता है।
+
+**`Promises`** इससे निपटने का एक सुविधाजनक तरीका प्रदान करते हैं।
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-या तो-> |
+                        |            |
+                <-------+            +-------->
+                |विफलता?              सफलता?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> साइड नोट: जबकि Promises को resolve या reject होना चाहिए, वे दोनों में से किसी भी स्थिति में फ़ेल हो सकते हैं। इससे ऐप्स हैंग हो सकते हैं, और इसे डिबग करना बहुत मुश्किल हो सकता है।
+
+
+### Promises कहाँ से आते हैं?
+
+बहुत बार आपको अपनी promise खुद बनाने की ज़रूरत नहीं होगी। `fetch` जैसे Native APIs और `axios` जैसी लोकप्रिय libraries पहले से ही Promises return करती हैं।
+
+लेकिन अगर आपको promise बनानी ही है, तो ऐसा करने के 2 तरीके हैं:
+
+
+
+### Creating Promises #1/2:
+
+Promise बनाने का सबसे आसान तरीका है helper method का उपयोग करना: `Promise.resolve()`।
+
+आप `Promise.resolve(value)` का उपयोग करके किसी भी value को Promise में wrap (या "convert") कर सकते हैं।
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Creating Promises #2/2:
+
+एक और अधिक लचीला तरीका: `Promise` constructor का उपयोग करें।
+
+`new Promise(callback)` एक `callback` function स्वीकार करता है जिसका interface निम्नलिखित है:
+
+```js
+new Promise(function(resolve, reject) {
+  // arguments `resolve` और `reject` दोनों function हैं।
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` तब execute होना चाहिए जब promise fulfill हो
+  // `reject(Error)` तब execute होना चाहिए यदि promise reject हो
+})
+```
+
+### Promises API
+
+Promises API वास्तव में methods की एक छोटी संख्या है।
+
+2 instance functions, और 4 static/utility functions।
+
+#### Promise instance methods
+
+promise से values को access करना usual tricks (यानी `console.log(promise)`) का उपयोग करके काम नहीं करेगा।
+
+सभी Promises या तो success (`.then(fn)` के माध्यम से) या failure (`.catch(fn)` के माध्यम से) return करते हैं।
+
+#### Promise utility methods
+
+* `Promise.resolve(value)` - किसी भी value को Promise में convert करें
+* `Promise.reject(Error)` - एक failure Promise value बनाता है, subsequent `.catch()` को trigger करता है
+* `Promise.all([...promises])` - Promises की एक array के पूरा होने की प्रतीक्षा करें
+* `Promise.race([...promises])` - जैसे ही पहली promise resolve होती है, resolve हो जाता है
