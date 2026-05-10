@@ -1,0 +1,97 @@
+---
+title: "Sie brauchen Algolia™ vielleicht gar nicht"
+social_image: desktop-social.webp
+subTitle: "Statische Sites benötigen wahrscheinlich keinen gehosteten Suchdienst"
+tags: ["search", "algolia", "pagefind", "cdn"]
+date: 2025-03-01
+modified: 2025-03-05
+category: Search
+cover_full_width: synth-wave-city-wide.webp
+cover_mobile: synth-wave-city-200-square.webp
+cover_icon: synth-wave-city-200-square.webp
+cover_credit: Image by Dan Levy
+---
+
+Die meisten Entscheidungen zur Sitesuche beginnen zu spät.
+
+Wenn jemand sagt: „Wir sollten Algolia nutzen", hat das Team meist die eigentliche Frage übersprungen: Welche Art von Inhalten durchsuchen wir überhaupt?
+
+Wenn die Antwort „HTML-Seiten, die wir bereits generieren" lautet, sollte [Pagefind](https://pagefind.app/) das Erste sein, was du ausprobierst. Nicht, weil Algolia schlecht wäre. Algolia ist bei einer Reihe kniffliger Probleme sehr gut. Aber wenn sich dein Suchindex nur ändert, wenn deine Site deployed wird, ist ein gehosteter Suchdienst vielleicht Infrastruktur-Kosmetik.
+
+<p class="inset">Nutze Pagefind, wenn dein durchsuchbarer Inhalt zur Build-Zeit generiert wird. Greif zu Algolia, wenn die Suche Live-Schreibvorgänge, Geschäftsregeln, benutzerspezifisches Ranking oder operative Garantien benötigt, die dein statischer Build nicht liefern kann.</p>
+
+Diese Regel trifft auf mehr Sites zu, als die meisten erwarten: Blogs, Dokumentationen, Marketing-Seiten, interne Handbücher, Produktleitfäden, Kurskataloge und eine überraschende Zahl von „Apps", die im Wesentlichen Seiten veröffentlichen.
+
+## Die Form des Problems
+
+Algolia liefert dir ein externes Suchsystem. Du erstellst Datensätze, pushst sie in einen Index, konfigurierst das Ranking, bindest eine UI ein und hältst das Ganze synchron mit deiner Quellquelle.
+
+Pagefind schaut sich das HTML an, das du bereits ausgeliefert hast, und baut einen statischen Suchindex daneben.
+
+Dieser Unterschied klingt langweilig, bis du die Integration wartest.
+
+Mit Algolia hast du eine zweite Kopie deiner Inhalte auf deiner Site. Jetzt musst du Fragen beantworten wie:
+
+- Ist der Deploy abgeschlossen, aber das Index-Update fehlgeschlagen?
+- Welche Felder sind kanonisch: die CMS-Felder, die gerenderte Seite oder der Suchdatensatz?
+- Wer kümmert sich um Ranking-Anpassungen, wenn sie nicht mehr zur Seite passen?
+- Was passiert, wenn sich das Free-Tier nicht als die tatsächliche Form deines Traffics erweist?
+
+Manchmal sind diese Fragen es wert. Für einen Marktplatz, ein Support-Portal oder einen großen E-Commerce-Katalog sind sie es wahrscheinlich. Für eine statische Dokumentations-Site sind sie oft selbstverschuldete Komplexität.
+
+## Pagefind funktioniert, weil es das zusätzliche System verweigert
+
+Pagefinds Trick ist keine Magie. Es ist Geschmackssache.
+
+Es wartet, bis deine Seiten existieren, indexiert das fertige HTML und schreibt eine Sammlung statischer Assets, die du auf demselben CDN wie den Rest deiner Site ablegen kannst. Der Browser lädt nur dieChunks herunter, die er braucht. Es gibt keinen Suchserver, der warmgehalten werden muss, kein Crawler-Quota, das beobachtet werden will, und keine Webhook-Pipeline, die sich merken muss, was sich geändert hat.
+
+Das macht den Fehlerfall viel leichter verständlich:
+
+- Wenn die Seite deployed wurde, stammen die indexierten Inhalte von dieser Seite.
+- Wenn die Seite nicht deployed wurde, können Nutzer sie ohnehin nicht sehen.
+- Wenn die Suche falsch funktioniert, liegt das Problem meist in deinem gerenderten Markup oder der Pagefind-Konfiguration, nicht in einem fernen Synchronisierungs-Job.
+
+Deshalb mag ich es für Content-Sites. Der Index folgt dem Artifact.
+
+## Wie die Einrichtung tatsächlich aussieht
+
+Für eine einfache statische Site ist der Workflow angenehm unspektakulär:
+
+- **CLI**: Durchsuche die HTML-Dateien deiner Site, generiere einen Index und deploye ihn auf ein globales CDN – alles in wenigen Minuten.
+- **Static Site Generators**: Nutze PageFind-Plugins für Astro oder Hugo, um den Indexierungsprozess zu automatisieren.
+- **Custom Solutions**: Verwende die PageFind-API, um maßgeschneiderte Sucherlebnisse zu bauen, die zu deinen spezifischen Anforderungen passen.
+
+<figure>
+  <figcaption>Indexierung meiner Site mit dem PageFind CLI</figcaption>
+  ![Indexierung meiner Site mit PageFind](PageFind-Cleaner-better-15fps-720p2.webp "Indexierung meiner Site mit PageFind")
+</figure>
+
+Der [Getting Started](https://pagefind.app/docs/)-Guide reicht aus, um loszulegen. Der bessere Test ist operativ: Kannst du den Index in CI neu bauen, das Output deployen und jeden Search-Miss erklären, indem du das gerenderte HTML inspizierst?
+
+## Wo Algolia immer noch gewinnt
+
+Pagefind ist kein kleines Algolia im Trenchcoat. Es ist eine andere Antwort.
+
+Nutze Algolia, OpenSearch, Postgres-Suche oder ein anderes Live-System, wenn sich dein Suchindex unabhängig von einem Site-Deploy ändern muss.
+
+Das umfasst:
+
+- Lagerbestände, die sich alle paar Minuten ändern
+- Benutzer-spezifische Berechtigungen oder private Ergebnisse
+- Custom Ranking, getrieben von Umsatz, Aktualität, Popularität oder Experimenten
+- Federated Search über Systeme hinweg, die nicht in eine statische Site gerendert werden
+- Analytics und Operations-Support, den ein Business von einem Managed Vendor erwartet
+
+Das sind echte Anforderungen. So zu tun, als könne Pagefind sie bedienen, nur weil es schnell ist, wäre die andere Art von Vendor-Blog-Stimme.
+
+## Die Entscheidung, die ich verwende
+
+Stell zuerst eine Frage:
+
+> Kann der Suchindex aus demselben statischen Output neu gebaut werden, den Nutzer gerade durchsuchen?
+
+Wenn ja, beginne mit Pagefind. Du bekommst eine standardmäßig private Suche, CDN-freundliche Assets und einen Service-Account weniger, der mitreden will.
+
+Wenn nein, benenne das Ding, das den Index live hält: Lagerbestand, Berechtigungen, Personalisierung, Analytics, Ranking oder Schreibfrequenz. Dann wähle die Datenbank oder den Suchdienst, der diesen Job explizit übernimmt.
+
+Algolia ist hier nicht der Bösewicht. Der Bösewicht ist, ein zweites System einzuführen, bevor bewiesen ist, dass das erste Artifact nicht ausreichte.
