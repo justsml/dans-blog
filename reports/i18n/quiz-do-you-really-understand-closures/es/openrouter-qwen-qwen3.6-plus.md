@@ -3,5 +3,10 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/es/index.mdx
-- Validation: rejected: missing output file
-- Note: Model did not create src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/es/index.mdx.
+- Validation: passed
+- Runtime seconds: 95.74
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
