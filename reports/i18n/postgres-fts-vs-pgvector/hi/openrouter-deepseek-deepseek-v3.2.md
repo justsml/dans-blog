@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: hi
+- Model: openrouter/deepseek/deepseek-v3.2
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 240.02
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx: reports/i18n/stop-hardcoding-your-prompts/hi/judge.md
