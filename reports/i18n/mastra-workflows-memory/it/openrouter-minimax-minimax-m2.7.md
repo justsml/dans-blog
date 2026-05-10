@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: it
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/it/index.mdx
+- Validation: passed
+- Runtime seconds: 64.08
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
