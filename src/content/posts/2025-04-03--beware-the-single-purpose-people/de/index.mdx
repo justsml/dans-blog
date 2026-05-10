@@ -1,0 +1,121 @@
+---
+language: German
+title: "Hüte dich vor den Ein-Zweck-Menschen"
+subTitle: "So rein, dass es wehtut"
+category: Code
+subCategory: Best Practices
+date: 2025-04-14
+modified: 2025-04-15
+tags: [software development, code organization, maintainability, testing, dogma, pragmatism]
+
+social_image: desktop-social.webp
+cover_full_width: endless-little-boxes.webp
+cover_mobile: endless-little-boxes-square-200.webp
+cover_icon: endless-little-boxes-square-200.webp
+---
+
+Das `Single Responsibility Principle` ist eine jener Ideen, die so vernünftig klingen, dass sie an deinem Urteilsvermögen vorbeirutschen können.
+
+Mach eine Sache. Mach sie gut. Halte Module fokussiert. Gib Code einen Grund, sich zu ändern. Guter Rat.
+
+Dann verwandelt jemand diesen Rat in ein Maßband und verkündet, jede Funktion über fünf Zeilen sei ein Code Smell.
+
+<p class="inset">Das Problem ist nicht SRP. Das Problem ist, „klein" als Ersatz für „kohärent" zu behandeln.</p>
+
+An diesem Punkt hast du die Ein-Zweck-Menschen getroffen: Entwickler, die mit Modularität nicht unbedingt falsch liegen, aber nützliche Grenzen mit maximaler Fragmentierung verwechselt haben.
+
+<figure class="inset-right">
+  <figcaption>Gewalt in der Softwarearchitektur</figcaption>
+![Komponenten, Komponenten überall](software-patterns__the-dismembered-architecture.webp "Komponenten, Komponenten überall")
+</figure>
+
+## I. Die nützliche Idee darunter
+
+> Das Hinzufügen einer einzigen Checkbox zu einem Formular sollte idealerweise nur eine Datei betreffen. Nicht 8 Dateien über 5 Verzeichnisse verteilt ... Ich schaue dich an, React/Redux.
+
+Wenn SRP mit Urteilskraft angewendet wird, hilft es. Code-Einheiten, die auf eine einzelne konzeptuelle Aufgabe fokussiert sind, sind leichter zu verstehen. Tests können Verhalten an einer sinnvollen Grenze ansprechen. Klare Module erleichtern es, einen Teil des Systems zu ändern, ohne den Rest der Anwendung mit in den Raum zu zerren.
+
+Sogar die klassischen Unix-Beispiele sind pragmatischer, als der Slogan vermuten lässt. `ls` listet Dateien, ja, aber es koordiniert auch Aufrufe wie `opendir`, `readdir`, `closedir` und `stat`. Die nützliche Einheit ist nicht die kleinstmögliche Operation. Die nützliche Einheit ist die kleinste kohärente Sache, die die Aufgabe löst.
+
+<p class="inset">Die ursprüngliche Unix-Philosophie handelte von *Komposition* und *Einfachheit*, **nicht davon, alles** auf eine einzelne Funktion oder Datei zu reduzieren.</p>
+
+Diese Unterscheidung ist wichtig. „Eine Verantwortung" ist nicht dasselbe wie „eine Zeile Verhalten."
+
+## II. Über-Abstraktion: Wenn Einfachheit in Chaos umschlägt
+
+> Unser Architekt besteht darauf, dass jede Funktion länger als 5 Zeilen ein 'Code Smell' ist. Unsere Codebasis riecht jetzt leicht nach ahnungsloser Verzweiflung.
+
+Der Fehlermodus ist leicht zu erkennen, nachdem er deine Woche bereits verschlechtert hat.
+
+Die Codebasis hat mehr Dateien, aber weniger Form. Jeder Helper hat einen Helper. Jedes Konzept wurde über Ordner verteilt, die nach technischen Rollen benannt sind, statt nach Produktbedeutung. Das Hinzufügen einer Checkbox erfordert das Anfassen einer Komponente, eines Hooks, eines Selectors, einer Action, eines Reducers, einer Konstante, einer Test-Fixture und eines Barrel-Exports, der meist nur existiert, damit die Import-Pfade nicht schuldbewusst aussehen.
+
+<figure class="inset-left">
+  <figcaption>Kein Ausweg aus diesem unendlichen Arbeitsmuster</figcaption>
+![Komponenten, Komponenten überall](software-patterns__the-mc-escher-stack.webp "Das MC-Escher-Muster")
+</figure>
+
+Was hat all diese Reinheit gebracht?
+
+-   **Dateisystem-Splitter:** Quellverzeichnisse, die zu grauenhaften Landschaften unzähliger winziger Dateien aufblühen, die oft eine einzelne, tragisch einsame Funktion enthalten. Navigation wird zu einer Übung in Speläologie.
+-   **Abhängigkeitsverhedderung:** Ein Netz aus Imports und Exports so dicht, dass die Verfolgung der Ausführung ein großes Whiteboard und mehr Geduld erfordert, als das Feature verdient. Dateien, die genau einmal importiert werden, sitzen dort und tun so, als seien sie wiederverwendbar.
+-   **Test-Tücke:** Tests werden brüchig, hyper-spezifische Wächter, die winzige Implementierungsdetails bewachen. Ändere eine Funktionssignatur? Beobachte, wie Dutzende Tests wie antike Keramik zerbröseln. Die Test-Suite verwandelt sich von einem Sicherheitsnetz in ein Minenfeld.
+-   **Geschwindigkeit verschwunden:** Einfache Änderungen metastasieren zu Multi-Datei-Modifikations-Sagas. Die Einarbeitung neuer Entwickler beinhaltet Wochen, in denen man ihnen Karten und Kompasse übergibt, nur um zu finden, wo die `UserProfile`-Komponente *diese Woche wirklich lebt*. Der Vorwärtsfluss verlangsamt sich zu einem geologischen Kriechen unter dem schieren Gewicht dieser „Organisation."
+
+Ich habe in den Abgrund von Codebasen gestarrt, in denen ein geradliniges 100-Zeilen-Feature über 15+ Dateien viviseziert wurde, jede ein „reines" kleines Engelchen mit vielleicht ein oder zwei Funktionen. Der kognitive Sprengstoff, zu versuchen, dieses Durcheinander im Kopf zu halten, hat jeden theoretischen Gewinn aus der Trennung völlig zunichte gemacht. Es war nicht einfacher; es war nur verstreut.
+
+## III. Der Preis der Perfektion: Auswirkungen auf Entwickler
+
+> Wir verbringen mehr Zeit mit Debatten über Dateistruktur und Namenskonventionen als mit dem tatsächlichen Liefern von Features. Ist das Agile?
+
+<figure class="inset-left">
+  <figcaption>So chaotisch, dass es an Kunst grenzt</figcaption>
+![So chaotisch, dass es an Kunst grenzt](software-patterns__the-rube-goldberg-architecture.webp "Das Rube-Goldberg-Muster")
+</figure>
+
+Diese pathologische Fragmentierung ist nicht nur ein ästhetisches Problem. Sie verändert, wie Entwickler ihre Aufmerksamkeit einsetzen:
+
+**Der Produktivitätsabfluss:** Vergiss technische Schulden; dies sind organisationale Schulden, die durch zwanghaftes Verzeichnis-Nesting angehäuft wurden. Jede kleine Anpassung wird zu einer archäologischen Grabung durch Schichten von Abstraktion. Zeit verschwindet im schwarzen Loch von `cd ..` und `grep`.
+
+**Die Test-Steuer:** Statt Vertrauen zu geben, wird die Test-Suite zur Quelle von Reibung. Stunden schmelzen dahin, um Tests zu fixen, die durch triviale Refaktorings gebrochen wurden – Tests, die zu eng an den mikroskopischen Details klebten, die sie eigentlich verifizieren sollten.
+
+**Die kognitive Last:** Es gibt eine harte Grenze dafür, wie viele getrennte Informationen ein menschliches Gehirn gleichzeitig jonglieren kann. Entwickler dazu zu zwingen, den Programmablauf aus einem Dutzend verstreuter Dateien zusammenzusetzen, behindert aktiv das Verständnis und macht sichere Änderungen schwerer.
+
+## IV. Pragmatismus umarmen: Eine praktische Alternative
+
+> Ich schlug vor, zwei verwandte Funktionen in dieselbe Datei zu legen. Der Raum reagierte, als hätte ich vorgeschlagen, Staging zu löschen.
+> — Ein sich erholender puristischer Leser
+
+Der Ausweg ist nicht, SRP aufzugeben. Die Antwort ist, es auf der richtigen Bedeutungsebene anzuwenden.
+
+So sieht das in der Praxis aus:
+
+-   **Fokussiere auf Kohäsion, nicht auf Atome:** Gruppiere Dinge, die sich *zusammen ändern* und konzeptuell *zusammengehören*. Ein Modul könnte mehrere verwandte Aspekte der Benutzerauthentifizierung behandeln. Das ist in Ordnung. Es ist wahrscheinlich *besser* als sechs separate Dateien, die jeweils eine Funktion zum Login-Zustand halten.
+-   **Behalte Verwandtes zusammen:** Trenne verwandten Code nicht, es sei denn, es gibt einen schreiend offensichtlichen, greifbaren Vorteil – wie echte Wiederverwendbarkeit *in der Praxis*, nicht in einer hypothetischen Zukunft, die nie eintrifft. Nähe ist entscheidend für das Verständnis.
+-   **Lass die Realität entscheiden:** Organisiere basierend auf den tatsächlichen Features und Workflows deiner Anwendung, nicht nach einem abstrakten Ideal funktionaler Reinheit³. Macht diese Struktur es jemandem leichter oder schwerer, `Feature X` zu verstehen und zu ändern?
+-   **Denk an das Meatware:** Erinnere dich an den armen Entwickler. Welche Organisation minimiert das mentale Jonglieren, das erforderlich ist, um am Code zu arbeiten? Optimiere für menschliches Verständnis.
+-   **Teste, was zählt:** Schreibe Tests, die Verhalten an einer sinnvollen Grenze verifizieren, nicht Tests, die intim mit der internen Verdrahtung jeder winzigen Funktion verlötet sind. Ziele auf Vertrauen, nicht nur auf Coverage-Prozent-Theater.
+
+<p class="inset">Das Ziel ist nicht theoretische Perfektion, würdig einer PhD-Arbeit; es ist, Code zu schaffen, den deine Kollegen (und das zukünftige Ich) navigieren, verstehen und ändern können, ohne das Gebäude anzünden zu wollen.</p>
+
+Manchmal bedeutet das, eine Datei ist 200 Zeilen lang statt 50. Manchmal holt eine Funktion Daten *und* transformiert sie leicht. Manchmal hat eine Klasse zwei Verantwortlichkeiten, die so eng gekoppelt sind, dass sie zusammen leben sollten. Wenn es das System insgesamt handhabbarer macht, ist es wahrscheinlich die richtige Entscheidung.
+
+Bleib unerbittlich fokussiert auf die praktischen Fragen:
+- Kann jemand Neues sich zurechtfinden?
+- Können wir `X` ändern, ohne das nicht verwandte `Y` zu brechen?
+- Sagt mir dieser Test tatsächlich, ob das Feature funktioniert?
+- Liefern wir Wert, oder sortieren wir nur Ordner um?
+
+## V. Fazit: Kohärenten und wartbaren Code fördern
+
+Das Single Responsibility Principle ist ein nützliches Werkzeug. Es ist kein Mandat, deine Codebasis zu atomarem Staub zu pulverisieren. Wie jedes Werkzeug hängt sein Wert vom Urteil der Person ab, die es benutzt.
+
+Wenn du also den Ein-Zweck-Menschen begegnest, bereit, Krieg gegen jede Funktion zu führen, die es wagt, drei Zeilen zu überschreiten, atme tief durch. Erinnere dich an die 12-Dateien-Checkbox.
+
+Unser Job ist nicht, theoretisch makellose Schneeflocken-Funktionen zu konstruieren. Unser Job ist, Software zu bauen, die funktioniert, Probleme löst und den nächsten Menschen, der sie anfassen muss, nicht bestraft.
+
+Bleib pragmatisch. Fokussiere auf Ergebnisse. Lass das Streben nach perfekter Reinheit nicht zum Feind von wartbarem Code werden. Deine Vernunft und die Geschwindigkeit deines Teams hängen davon ab.
+
+
+¹ Die Ironie dabei ist, dass das Erreichen *tatsächlicher* Ein-Zweckigkeit auf den untersten Ebenen immense Komplexität erfordert, die direkt unter der Oberfläche verborgen liegt.
+
+² Hier geht es um konzeptuelle Reinheit: die Idee, dass eine Funktion logisch nur „eine Sache" tun sollte. Verwechsle das nicht mit dem Konzept der „pure function" aus der funktionalen Programmierung ohne Seiteneffekte, was eine andere, manchmal verwandte Idee ist.
