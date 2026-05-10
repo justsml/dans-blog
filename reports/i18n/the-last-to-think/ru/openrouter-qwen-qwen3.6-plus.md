@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-05-31--the-last-to-think/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 27.88
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
