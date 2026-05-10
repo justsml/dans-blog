@@ -1,0 +1,148 @@
+---
+title: ¡Un truco infalible para acelerar los equipos de desarrollo!
+subTitle: ¡Los ingenieros senior lo odian!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+social_image: ../desktop-social.webp
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> on <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+{/* Add html5 toggle element */}
+
+<details>
+<summary>Tabla de Contenidos</summary>
+
+- [Pensar en Claves](#thinking-in-keys)
+  - [Diseñar con Claves](#designing-with-keys)
+  - [¿Clave-Valor como Grafos y Árboles?](#kvs-as-graphs--trees)
+  - [Cuándo Usar Patrones Clave-Valor](#when-to-use-kv-patterns)
+  - [Cuándo Evitar Patrones Clave-Valor](#when-to-avoid-kv-patterns)
+  - [Cuando Necesitas Más que Clave-Valor](#when-you-need-more-than-kv)
+- [Próximos Pasos](#next-steps)
+  - [Fact Service - Proyecto de Referencia](#fact-service---reference-project)
+- [Conclusión](#conclusion)
+  - [Lecturas Adicionales](#further-reading)
+
+</details>
+
+Al diseñar un nuevo sistema o funcionalidad, es fácil perderse en el diseño del esquema de datos. En este artículo compartiré un truco sencillo que ha dado frutos a lo largo de mi carrera.
+
+<section class="breakout">
+  _Prueba_ la forma más simple posible de persistencia de datos al diseñar un nuevo sistema o funcionalidad.
+</section>
+
+Con demasiada frecuencia, veo equipos recurrir a SQL o MongoDB como su única opción para almacenamiento de datos. Claro, nadie pierde el empleo por elegir SQL. Pero ¿y si te dijera que existe una forma más simple, rápida y económica de empezar?
+
+Un almacén Clave-Valor (KV) podría ser todo lo que necesitas. Algo como Redis o S3.
+
+No siempre es la opción correcta, pero quizá **más a menudo de lo que crees.**
+
+Un almacenamiento simple puede acelerar moderadamente el desarrollo *temprano* al reutilizar código de la capa de datos y evitar costes relacionados con la iteración en el diseño de esquemas y migraciones. La iteración ocurrirá de todos modos; deja que el código la gestione el mayor tiempo posible. Mejor evitar lidiar con cambios en dos lugares.
+
+Las ganancias de rendimiento son notables ya que las búsquedas por `clave` están altamente optimizadas, y las escrituras se benefician de actualizaciones por lotes.
+
+{/* Avoid KV patterns if you need JOINs or to query by properties in your dataset. Or in cases where you have an unbounded/infinitely growing datasets. (`Logs`, `Signups`, etc.) */}
+
+## Pensar en Claves
+
+Puede resultar extraño diseñar primero con un patrón Clave-Valor, especialmente si estás acostumbrado a diseñar sistemas con jerarquías de objetos o diagramas entidad-relación e implementarlos directamente en SQL.
+
+¡Probablemente ya has ***usado*** patrones Clave-Valor antes! Están por todas partes, desde configuraciones y URLs hasta el almacenamiento de objetos tipo S3. Cada vez que trabajas con datos mediante un valor `ID` único, ¿adivina qué? ¡Otro patrón Clave-Valor! (Aunque no necesariamente un almacén KV.)
+
+### Diseñar con Claves
+
+Virtualmente todos los datos _pueden_ representarse usando patrones Clave-Valor. (De hecho, muchas bases de datos de orden superior se construyen sobre patrones KV de nivel inferior.) Veamos algunos ejemplos:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+Quizá lo hayas notado, pero el `ID` suele ser una clave en sí mismo. Este es un patrón común en almacenes KV. La clave suele ser una composición del tipo de entidad y el identificador único (por ejemplo, `user/123`, `user:456`).
+
+### ¿Clave-Valor como Grafos y Árboles?
+
+Puede ser útil representar estructuras de datos complejas como grafos o árboles usando patrones Clave-Valor. (De nuevo, las URLs REST son un gran ejemplo de esto.)
+
+La jerarquía de claves (`user/420` -> `user/420/friends`) codifica naturalmente una relación de grafo entre el `user` y sus `friends`.
+
+Esta es una forma rápida y económica de serializar estructuras de datos en grafo. Especialmente si no necesitas la complejidad de una base de datos de grafos (como Neo4j).
+
+<figure>
+![Grafo de user/123](../KVsCanBeGraphs.webp)
+<figcaption>Grafo de user/123</figcaption>
+</figure>
+
+### Cuándo Usar Patrones Clave-Valor
+
+- Cuando necesitas escala masiva. (Miles de millones o incluso billones de pares Clave-Valor.)
+- Cuando accedes principalmente a los datos mediante una clave única.
+- Cuando necesitas estructuras de datos simples.
+- Cuando tienes datos con una estructura de jerarquía, grafo o árbol.
+
+### Cuándo Evitar Patrones Clave-Valor
+
+No almacenes cosas como comentarios de blog en un _**único**_ par Clave-Valor. Por ejemplo, `post/666 -> {comments: [...demasiados...]}`. En su lugar, podrías usar `post/666/comments/1`, o `post/666/comments/<UUID>`, etc. O directamente una tabla SQL.
+
+- Cuando necesitas buscar por propiedades (no por Clave o ID) en tu conjunto de datos.
+- Cuando necesitas hacer JOINs de datos entre múltiples entidades.
+- Cuando necesitas aplicar restricciones o relaciones complejas.
+
+### Cuando Necesitas Más que Clave-Valor
+
+A medida que los requisitos del proyecto evolucionan naturalmente, puede que necesites hacer más de lo que tu almacén KV soporta. En ese punto, tendrás que considerar migrar a un almacén de datos más complejo.
+
+{/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo-spatial, Streams, and Sorted Sets) that can help you meet some requirements. */}
+
+La buena noticia es que migrar un único almacén KV a SQL es relativamente más fácil que migrar un esquema SQL complejo a un almacén KV. (Con múltiples tablas, índices, restricciones, etc.) He hecho esto muchas veces con un script de 50 líneas.
+
+De forma anecdótica, he descubierto que la calidad de los diseños SQL es mayor si empiezas con un patrón Clave-Valor primero. Te obliga a pensar realmente en los datos de una forma diferente y a entender mejor _exactamente_ qué necesitas de SQL.
+
+## Próximos Pasos
+
+¡La mejor forma de aprender es probarlo! Si te interesa explorar este patrón más a fondo, te recomiendo **construir cosas** con Redis, DynamoDB o S3.
+Todos son excelentes almacenes Clave-Valor con diferentes compromisos.
+
+### Fact Service - Proyecto de Referencia
+
+Echa un vistazo a mi proyecto Open Source ["Fact Service", una referencia en GitHub](https://github.com/justsml/fact-service).
+
+Es una API RESTful independiente que implementa un servicio de datos Clave-Valor.
+
+Cuenta con numerosos [adaptadores de datos](https://github.com/justsml/fact-service/tree/main/lib/providers).
+Incluye adaptadores para Postgres, Redis, DynamoDB, Firestore y Cassandra. (¡Con [comandos de Docker](https://github.com/justsml/fact-service/tree/main/lib/providers) para empezar rápidamente!)
+
+Fact Service está pensado como un proyecto de inicio y aprendizaje. ¡Haz un fork y construye tu propio servicio de datos KV!
+
+## Conclusión
+
+¡Espero que este artículo te haya resultado útil! Si tienes alguna pregunta o comentario, no dudes en escribir o mencionarme en [Twitter](https://x.com/justsml).
+
+### Créditos
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Lecturas Adicionales
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
