@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: ja
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 79.48
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
