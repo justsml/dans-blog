@@ -1,6 +1,6 @@
 ---
 title: "Hör auf, LLMs Mathe machen zu lassen"
-subTitle: "Sie sind schlecht darin. So behebt man das Problem."
+subTitle: "Sie können es nicht. Hier erfährst du, wie man es richtig macht."
 date: 2026-01-06
 modified: 2026-01-07
 tags: [ai, ai-sdk, typescript, math, tools, patterns]
@@ -12,33 +12,33 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-Weißt du, was an Sprachmodellen seltsam ist? Sie können Quantenmechanik erklären, Gedichte schreiben und dein TypeScript debuggen – aber frag sie, 18472 mal 9347 zu rechnen, und es steht gut, dass sie dir selbstsichtig etwas liefern, das um Tausende danebenliegt.
+Du weißt, was seltsam an Sprachmodellen ist? Sie können Quantenmechanik erklären, Gedichte schreiben und deinen TypeScript-Code debuggen … aber bitte sie, 18472 mit 9347 zu multiplizieren, und mit anständiger Wahrscheinlichkeit bekommst du etwas, das um Tausender daneben liegt.
 
-Das hat mich lange ratlos gemacht, bis ich begriff, was wir ihnen eigentlich abverlangen. Wir bitten eine Mustererkennungs-Maschine, ein Taschenrechner zu sein. Das ist, als würde man einen Turner bitten, die Buchhaltung zu führen, nur weil er den Begriff „Balance" versteht.
+Das hat mich früher verwirrt, bis ich verstanden habe, was wir da eigentlich von ihnen verlangen. Wir bitten eine Mustererkennungs-Engine, ein Taschenrechner zu sein. Das ist, als würdest du einen Turner bitten, dein Kontoauszug zu prüfen, nur weil er das Konzept von „Gleichgewicht" versteht.
 
-Die Sache ist: LLMs berechnen nichts. Wenn du GPT oder Claude fragst, was 2 + 2 ist, rechnen sie nicht. Sie prognostizieren, dass „4" das Token ist, das am wahrscheinlichsten auf „2 + 2 =" folgt. Meistens funktioniert das gut, weil diese Muster in ihren Trainingsdaten vorkommen. Aber sobald du über einfache Arithmetik hinausgehst – mehrstufige Berechnungen oder Zahlen, die im Training selten waren – würfelst du im Grunde.
+Die Sache ist: LLMs rechnen gar nichts. Wenn du GPT oder Claude fragst, was 2 + 2 ergibt, addieren sie nicht. Sie sagen voraus, dass „4" das Token ist, das am wahrscheinlichsten nach „2 + 2 =" kommt. Meistens funktioniert das prima, weil diese Muster in ihren Trainingsdaten existieren. Aber gehst du über einfache Arithmetik hinaus zu mehrschrittigen Berechnungen oder Zahlen, die im Training nicht üblich waren, würfelst du im Grunde nur.
 
-Ich bin vor Kurzem genau damit gegen die Wand gefahren, als ich Code reviewed habe, der ein Top-Modell für die Berechnung von Hypothekenzahlungen einsetzte. Das Modell antwortete mit voller Überzeugung. Es lag auch 400 $ pro Monat falsch. Das ist die Art von Fehler, die ins Gewicht fällt.
+Ich bin vor Kurzem bei der Durchsicht von Code, der ein Top-Modell zur Berechnung von Hypothekenzahlungen verwendete, direkt darauf gestoßen. Das Modell antwortete mit voller Überzeugung. Es lag trotzdem um 400 $ pro Monat daneben. Das ist die Art von Fehler, die zählt.
 
-Selbst wenn Modelle beim logischen Schlussfolgern besser werden (GPT-5 soll Verbesserungen zeigen), bleibt es ausgefeilte Mustererkennung, keine symbolische Berechnung. Für kreative Arbeit und natürliche Sprache ist diese probabilistische Natur genau das, was sie so mächtig macht. Für Mathe? Eher nicht.
+Selbst wenn Modelle besser im logischen Denken werden (GPT-5 zeigt angeblich Verbesserungen), betreiben sie immer noch anspruchsvolle Mustererkennung, kein symbolisches Rechnen. Für kreative Arbeit und natürliche Sprachaufgaben ist diese probabilistische Natur genau das, was sie magisch macht. Für Mathematik? Eher nicht.
 
-## Was löst das Problem wirklich?
+## Was löst das tatsächlich?
 
-Die Antwort lautet nicht, auf schlauere Modelle zu warten. Sie lautet, dem Modell das richtige Werkzeug für die Aufgabe zu geben.
+Die Antwort ist nicht, auf schlauere Modelle zu warten. Sondern dem Modell das richtige Werkzeug für die Aufgabe zu geben.
 
-Überleg, wie du das Problem in einem Nicht-AI-System lösen würdest. Du würdest keine eigene Mathe-Logik schreiben, sondern auf eine Bibliothek zurückgreifen. Dasselbe Prinzip gilt hier – nur dass wir dem LLM jetzt beibringen, wann und wie es diese Bibliothek benutzt.
+Überleg mal, wie du dieses Problem lösen würdest, wenn du ein System ohne KI bauen würdest. Du würdest keine eigene Mathematiklogik schreiben, sondern eine Bibliothek heranziehen. Gleiches Prinzip hier – nur dass wir dem LLM jetzt beibringen, wann und wie es diese Bibliothek nutzen soll.
 
-Tool Calling in modernen AI-SDKs erlaubt uns, dem Modell strukturierte Funktionen zu übergeben, die es aufrufen kann. Anstatt das LLM so tun zu lassen, als wüsste es Mathe, geben wir ihm etwas, das es tatsächlich kann: eine symbolische Mathe-Engine.
+Tool Calling in modernen AI SDKs erlaubt es uns, dem Modell strukturierte Funktionen zu übergeben, die es aufrufen kann. Statt das LLM zu zwingen, so zu tun, als könne es rechnen, geben wir ihm etwas, das es wirklich kann: eine symbolische Mathematik-Engine.
 
-Ich setze dafür das [AI SDK v5 und v6](https://ai-sdk.vercel.ai/) ein, kombiniert mit der CortexJS Compute Engine. Das SDK übernimmt Orchestrierung und Tool-Routing, CortexJS alles von einfacher Arithmetik bis hin zur Analysis. Eine überraschend saubere Trennung der Zuständigkeiten.
+Ich nutze dafür [AI SDK v5 und v6](https://ai-sdk.vercel.ai/) in Kombination mit CortexJS Compute Engine. Das SDK übernimmt Orchestrierung und Tool-Routing, während CortexJS alles von einfacher Arithmetik bis zur Analysis abdeckt. Eine überraschend saubere Trennung der Verantwortlichkeiten.
 
 ```bash
 bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
 ```
 
-## Das Mathe-Werkzeug bauen
+## Das Math-Tool bauen
 
-Die Implementierung ist geradliniger, als man denken könnte. Was wir hier bauen, ist eine Brücke zwischen dem natürlichen Sprachverständnis des LLM und tatsächlicher mathematischer Berechnung.
+Die Implementierung ist einfacher, als du vielleicht denkst. Wir bauen im Grunde eine Brücke zwischen dem natürlichsprachlichen Verständnis des LLMs und echter mathematischer Berechnung.
 
 ```typescript
 import { generateText, stepCountIs, tool } from 'ai';
@@ -56,7 +56,7 @@ const mathTool = tool({
     ),
   }),
   execute: async ({ expressions }) => {
-    // Alle Ausdrücke parallel verarbeiten (oder im detaillierten Batch)
+    // Alle Ausdrücke parallel verarbeiten
     return expressions.map(expression => {
       try {
         const result = ce.parse(expression).evaluate();
@@ -76,19 +76,19 @@ const mathTool = tool({
 });
 ```
 
-Ein paar Punkte, die hier erwähnenswert sind:
+Ein paar Dinge, die hier erwähnenswert sind:
 
-Die Beschreibung leistet Schwerstarbeit. Die Formulierung „MUST be used" mag aggressiv wirken, aber in meiner Erfahrung ist der Unterschied zwischen „funktioniert manchmal" und „funktioniert zuverlässig" oft eine explizite Ansage an das Modell, wann es ein Werkzeug einsetzen soll. Nenn es Prompt-Engineering auf Tool-Ebene.
+Die Beschreibung leistet Schwerstarbeit. Dieses „MUST be used" mag aggressiv klingen, aber meiner Erfahrung nach ist die explizite Ansage, wann das Modell ein Tool nutzen soll, der Unterschied zwischen „funktioniert manchmal" und „funktioniert zuverlässig". Betrachte es als Prompt Engineering auf Tool-Ebene.
 
-Die Batch-Verarbeitung über ein `expressions`-Array ist wichtiger, als man denkt. Jeder Modellaufruf hat Latenz. Wenn du ein Gleichungssystem löst oder mehrstufige Mathe betreibst, erzeugst du mit einzelnen Aufrufen eine miserable User Experience. Batching bedeutet: ein Roundtrip für zehn Probleme.
+Die Batch-Verarbeitung über ein `expressions`-Array ist wichtiger, als du denkst. Jeder Modellaufruf hat Latenz. Wenn du ein Gleichungssystem löst oder mehrschrittige Mathematik betreibst, erzeugt die Einzelverarbeitung eine miserable Benutzererfahrung. Batching bedeutet einen Round-Trip, um zehn Probleme zu lösen.
 
-Eine symbolische Engine statt einfach `eval()` zu benutzen (bitte niemals `eval()` verwenden) gibt uns echtes mathematisches Verständnis. Die Engine parsiert Intention, verarbeitet LaTeX-Formatierung und kann mit Ableitungen und Integralen umgehen. Wir rechnen nicht nur – wir betreiben Mathematik.
+Der Einsatz einer symbolischen Engine statt bloßem `eval()` (bitte benutze kein `eval()`) gibt uns echtes mathematisches Verständnis. Die Engine analysiert die Absicht, verarbeitet LaTeX-Formatierung und kann mit Ableitungen und Integralen arbeiten. Wir machen nicht nur Berechnungen, wir betreiben Mathematik.
 
-Die Fehlerbehandlung ist pro Ausdruck gekapselt. Wenn eine Berechnung fehlschlägt, wird dieser Fehler zurückgegeben, aber die restlichen Ausdrücke werden weiterverarbeitet. So sieht das Modell, was funktioniert hat und was nicht, und kann sich im nächsten Schritt potenziell selbst korrigieren.
+Die Fehlerbehandlung ist pro Ausdruck begrenzt. Schlägt eine Berechnung fehl, geben wir diesen Fehler zurück, machen aber mit dem Rest weiter. So sieht das Modell, was funktioniert hat und was nicht, und kann sich im nächsten Schritt möglicherweise selbst korrigieren.
 
-## Das Werkzeug in der Praxis
+## In der Praxis
 
-Werfen wir etwas hinein, bei dem ein nacktes Modell typischerweise halluzinieren würde:
+Werfen wir etwas darauf, bei dem ein reines Modell normalerweise hallucinieren würde:
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
@@ -97,37 +97,37 @@ const { text } = await generateText({
   model: anthropic('claude-sonnet-4-5'),
   prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
   tools: { mathTool },
-  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
+  stopWhen: stepCountIs(5), // Bis zu fünf Modell-/Tool-Schritte erlauben
 });
 
 console.log(text);
 ```
 
-Das Modell erkennt die Mathe-Aufgabe, sieht, dass es Präzision braucht, ruft das Tool auf, erhält das korrekte Ergebnis und erklärt es dann in natürlicher Sprache. Jede Komponente macht das, was sie am besten kann.
+Das Modell sieht die Mathematik, erkennt, dass es Präzision braucht, ruft das Tool auf, bekommt das genaue Ergebnis und erklärt es dann in natürlicher Sprache. Jede Komponente macht das, was sie am besten kann.
 
-## Über einfache Arithmetik hinaus
+## Jenseits einfacher Arithmetik
 
-Da wir eine symbolische Engine verwenden, kann dieser Ansatz Dinge leisten, die einfache Taschenrechner-Tools nicht können.
+Da wir eine symbolische Engine verwenden, bewältigt dieser Ansatz Dinge, die einfache Rechner-Tools nicht anrühren können.
 
-Algebraische Gleichungen lösen? „Löse diese Gleichungen: 3x + 7 = 22 und 2y - 5 = 13" funktioniert einwandfrei.
+Algebraische Gleichungen lösen? „Solve these equations: 3x + 7 = 22 and 2y - 5 = 13" funktioniert problemlos.
 
-Analysis gefällig? „Finde die Ableitung von x^3 + 2x^2 und evaluiere sie bei x = 2" ist einfach ein weiterer Tool-Aufruf.
+Analysis nötig? „Find the derivative of x^3 + 2x^2 and evaluate it at x = 2" ist nur ein weiterer Tool-Aufruf.
 
-Die LaTeX-Unterstützung ist besonders nützlich, wenn du Bildungs-Apps baust. Die Engine versteht LaTeX-Eingaben nativ und kann Ergebnisse formatiert zum Rendern zurückgeben. Kein zusätzliches Parsen nötig.
+Die LaTeX-Unterstützung ist besonders nützlich, wenn du Bildungs-Apps baust. Die Engine versteht LaTeX-Eingabe von Haus aus und kann Ergebnisse formatierter für die Darstellung zurückgeben. Kein zusätzliches Parsen nötig.
 
 ## Das große Ganze
 
-Ich denke, dieses Muster ist wichtiger als nur für Mathe. Was wir hier eigentlich tun, ist, die Grenzen von LLMs anzuerkennen und gleichzeitig ihre Stärken zu nutzen. Sie sind hervorragend darin, Intentionen zu verstehen, natürliche Sprache zu parsen und Workflows zu orchestrieren. Sie sind keine Taschenrechner, keine Datenbanken, keine Dateisysteme.
+Ich denke, dieses Muster geht über Mathematik hinaus. Was wir hier wirklich tun, ist, die Grenzen von LLMs anzuerkennen und gleichzeitig ihre Stärken zu nutzen. Sie sind unglaublich gut darin, Absichten zu verstehen, natürliche Sprache zu parsen und Arbeitsabläufe zu orchestrieren. Sie sind keine Taschenrechner, Datenbanken oder Dateisysteme.
 
-Jedes Mal, wenn wir versuchen, ein LLM etwas Deterministisches tun zu lassen, kämpfen wir gegen seine Natur. Aber wenn wir dieses Sprachverständnis mit spezialisierten Werkzeugen kombinieren, die die deterministischen Teile übernehmen? Dann wird es interessant.
+Jedes Mal, wenn wir versuchen, ein LLM etwas Deterministisches tun zu lassen, kämpfen wir gegen seine Natur. Aber wenn wir dieses natürlichsprachliche Verständnis mit spezialisierten Werkzeugen kombinieren, die die deterministischen Teile übernehmen? Dann wird es interessant.
 
-Das Mathe-Werkzeug ist nur ein Beispiel. Dasselbe Prinzip gilt für Datumsmanipulation, Finanzberechnungen, Bildverarbeitung, Datenbankabfragen – überall dort, wo Präzision wichtiger ist als Kreativität. Lass das Modell verstehen, was der Nutzer will, und übergib die eigentliche Arbeit an etwas, das dafür gebaut wurde.
+Das Math-Tool ist nur ein Beispiel. Das gleiche Prinzip gilt für Datumsmanipulation, Finanzberechnungen, Bildverarbeitung, Datenbankabfragen … überall dort, wo Präzision mehr zählt als Kreativität. Lass das Modell verstehen, was der Benutzer will, und übergib die eigentliche Arbeit dann an etwas, das dafür gebaut wurde.
 
-Es ist eine Verschiebung in der Art, wie wir über AI-Entwicklung denken. Nicht „Kann das Modell das?" sondern „Kann das Modell das orchestrieren?" Kleiner Unterschied in der Formulierung, großer Unterschied in der Zuverlässigkeit.
+Es ist ein Perspektivwechsel in der Art, wie wir über das Bauen mit KI denken. Nicht „Kann das Modell das?" sondern „Kann das Modell das orchestrieren?" Kleiner Unterschied in der Formulierung, großer Unterschied in der Zuverlässigkeit.
 
 ## Ressourcen
 
-- [Vercel AI SDK Dokumentation](https://sdk.vercel.ai/docs)
+- [Vercel AI SDK Documentation](https://sdk.vercel.ai/docs)
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
-- [Tool Calling Leitfaden](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
-- [AI SDK Beispiele-Repository](https://github.com/vercel/ai/tree/main/examples)
+- [Tool Calling Guide](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK Examples Repository](https://github.com/vercel/ai/tree/main/examples)
