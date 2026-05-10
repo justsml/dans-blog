@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 10.13
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx.
