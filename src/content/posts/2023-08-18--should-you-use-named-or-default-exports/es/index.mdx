@@ -1,0 +1,99 @@
+---
+social_image: ../desktop-social.webp
+title: "Exportaciones ESM: ¿nombradas o por defecto?"
+subTitle: ¿Nombrar o no nombrar?
+date: 2023-08-10
+modified: 2024-08-01
+tags: [typescript,javascript,modules]
+category: Guides
+subCategory: JavaScript
+cover: austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_mobile: w300_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+cover_icon: icon_austin-kirk-cHX_Eih2hkY-unsplash-cropped.webp
+---
+
+## ¿Deberías usar exportaciones `named` o `default` en JavaScript?
+
+No faltan artículos con opiniones tajantes sobre este tema.
+
+La mayoría juzga `default export` como "terrible". Otros sostienen que `default` debería ganar (por ejemplo, la guía de estilo de AirBnb).
+
+A menudo culpan a cosas **enteramente temporales**: errores de auto-importación del IDE, capacidades de tree-shaking de un bundler en particular, o la mera posibilidad de errores tipográficos al nombrar una importación.
+
+¿Acaso hemos perdido el punto de `export`ar en primer lugar?
+
+**El código es comunicación. ✨**
+
+> Le estamos enviando una señal a los `import`ers _sobre cómo usar algo._
+
+### Entonces, ¿qué estamos diciendo?
+
+En términos generales, hay 2 formas de exportar cosas en JavaScript moderno:
+
+- Un `export default` declara audazmente "Esta es **_LA COSA MÁS IMPORTANTE_**." Además, "cualquier exportación nombrada solo juega un rol secundario."
+- Una `exportación nombrada` dice que es "definitivamente **_UNA COSA_**." También plantea algunas preguntas, "¿tienes otros compañeros por ahí?" Seguimiento: "¿Están invitados o son obligatorios?"
+
+Por supuesto, puedes combinar ambos o usar diferentes enfoques para distintas partes de tu base de código. [Ver más ejemplos al final del artículo.](#summary)
+
+### Argumentos débiles, amigo
+
+Abordemos algunos de los "problemas temporales" comunes con los que la gente se encuentra.
+
+- Argumento #1: Las exportaciones nombradas aseguran consistencia en los nombres. [fuente](https://blog.neufund.org/why-we-have-banned-default-exports-and-you-should-do-the-same-d51fdc2cf2ad)
+  - No, no lo hacen. ¿Quizás estás buscando una regla de lint?
+  - (Odio ser quien te lo diga, ¡pero espera a ver lo que pueden hacer las variables!)
+
+```tsx
+// ¡Puedes usar alias con ambas!
+import { Knife as Handle } from "./knife.js"; // 🔪
+import { default as Handle } from "./knife.js"; // 🔪
+import Handle from "./knife.js"; // 🔪
+```
+
+- Argumento #2: Usa `import * as soManyKnives from './kinves.js'` para combinar exportaciones nombradas. (Sin enlace, el autor se retractó.)
+  - Función interesante. No es el punto.
+  - Ahora dime, ¿cómo sostengo tu invento otra vez? Sin intención del autor.
+- Argumento #3: Las exportaciones nombradas tienen mejor soporte de importación o renombrado en el IDE. [fuente](https://www.bundleapps.io/blog/use-named-exports-over-default-exports-in-javascript)
+
+  - Incorrecto (ya no más). Configura/actualiza tus herramientas.
+  - El soporte existe desde hace más de 3 años en [VS Code](https://github.com/microsoft/vscode/pull/94480), IntelliJ, etc.
+  - Aun así, hay algunas "buenas prácticas" para usar con `default exports` y obtener la mejor experiencia de IDE y refactorización.
+  - ✅ `export default function UserService() {}` - siempre prefiere funciones nombradas.
+  - ❌ `export default function() { }` - las funciones anónimas no están implícitamente ligadas a su nombre de archivo. Si no nombras la cosa, es difícil pedirle a la computadora que la cambie.
+  - **Nota:** Por razones históricas, no puedes combinar `export default` con una expresión `const`.
+
+    ```tsx
+    export default const Knife = () => {...blade, ...handle}
+    // ^ ❌ No soportado ❌ ^
+    // No se puede exportar default const ....
+    // ==========================
+
+    // Sin embargo, una vez declarada, puedes exportar una variable const como default.
+    const Knife = () => {...blade, ...handle}
+    export default Knife;
+    // ^ ✅ Válido
+
+    // Para completar:
+    export default class anyoneStillUseThese {}
+    // ^ ✅ También es válido exportar una clase como default
+    ```
+
+<section className="scroll-x">
+## Resumen
+
+En realidad hay muchas combinaciones de formas en que podríamos exportar cosas, cada una cuenta una historia diferente:
+
+| Default (Exports) | Named (Exports) | Private Fns | Patrón                                                   | Significado                                                       |
+| ----------------- | --------------- | ----------- | --------------------------------------------------------- | ----------------------------------------------------------------- |
+| ✅                | ❌              | ❌          | Una exportación por defecto.                              | "¡Presentando UNA función con un solo propósito!"                 |
+| ❌                | ✅              | ❌          | Una exportación nombrada.                                 | "Por favor, no me renombres."                                     |
+| ✅                | ✅              | ✅          | Exportación por defecto + múltiples funciones 'privadas' no exportadas | "Aquí hay algo de lógica relacionada. Además, espera comportamiento tipo clase." |
+| ❌                | ❌              | ✅          | Múltiples exportaciones nombradas, nombre de archivo genérico. | "Un conjunto de cosas vagamente relacionadas, sin jerarquía implícita." |
+| ✅                | ✅              | ❌          | Una única exportación nombrada TAMBIÉN exportada como default. | "No puedes equivocarte al importarme."                            |
+</section>
+
+**Algo en lo que pensar:** ¿Qué estamos diciendo cuando el nombre del archivo coincide o no con una de sus exportaciones? (Por ejemplo, un `utils.js` con muchas funciones.)
+
+### Conclusión
+
+Si el código es comunicación, por favor `export`a como si en verdad te importara. 💞
