@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/it/index.mdx
+- Validation: passed
+- Runtime seconds: 32.65
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
