@@ -1,0 +1,59 @@
+---
+social_image: ../desktop-social.webp
+title: "Docker === Amour"
+subTitle: Docker peut tout faire !
+date: 2015-02-26
+modified: 2024-07-30
+category: DevOps
+subCategory: docker
+tags: [docker, devops, patterns]
+related: [docker-server-setup-notes, docker-rocks, docker-security-tips-for-self-hosting]
+cover: guillaume-bolduc-259596-unsplash.webp
+cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
+---
+
+## Docker peut tout faire !\*
+
+> Note historique : ceci est un instantané de l'enthousiasme pour Docker en 2015 et de ses habitudes de développement local, conservé principalement comme capsule temporelle. Considérez les commandes et la posture de sécurité comme des points de départ à moderniser, et non comme des directives de production.
+
+Améliorez vos processus pour :
+
+1. Tester des outils de développement et des serveurs avec PRATIQUEMENT ZÉRO risque de casser les dépendances sur votre machine
+1. Tester vos logiciels
+1. Vous pousse à écrire du code plus idempotent et modulaire... (j'expliquerai comment concrétiser cela dans un suivi)
+
+Il peut sembler y avoir un volume énorme de nouvelles choses à apprendre, **ne laissez pas ça vous empêcher** de commencer.
+
+### Notes
+
+- Si vous voyez une commande `docker run` avec l'option `-d` ou `-it` :
+  - `-it` ou `-i -t` exécutera la commande configurée de manière interactive
+  - `-d` démarrera le conteneur Docker comme un « daemon », c'est-à-dire un service en arrière-plan.
+
+---
+
+### EXEMPLES
+
+### nginx
+
+```bash
+# Note : utilisation de dossiers partagés basés sur l'hôte
+# (les dossiers partagés ne sont pas possibles avec la commande VOLUME du Dockerfile)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Données locales, isolées au sein de l'instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> Crédits : [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker rendra votre vie plus facile tout au long du _cycle de vie_ du développement logiciel.
+
+> - À peu de choses près

@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 30.21
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
