@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: javascript-scope-magic
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-06--javascript-scope-magic/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 27.43
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
