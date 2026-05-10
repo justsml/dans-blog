@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: pitfalls-in-promise-docs
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2017-05-10--pitfalls-in-promise-docs/es/index.mdx
+- Validation: passed
+- Runtime seconds: 40.56
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
