@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx
+- Validation: passed
+- Runtime seconds: 158.27
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
