@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-is-your-memory-rusty
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v3.2
+- Target: src/content/posts/2024-12-28--quiz-is-your-memory-rusty/de/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 124.88
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-12-28--quiz-is-your-memory-rusty/de/index.mdx.
