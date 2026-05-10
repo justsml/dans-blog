@@ -13,11 +13,11 @@ cover_icon: ../square.webp
 
 L'optimisation de base de données la plus coûteuse que j'aie jamais vue a commencé par quelqu'un qui supprimait toutes les clés étrangères.
 
-Pas parce qu'il avait mesuré un goulot d'étranglement. Pas parce que les écritures étaient réellement lentes. Parce qu'il avait lu quelque part que "les clés étrangères ne passent pas à l'échelle." Six mois plus tard, ils avaient 2 milliards d'enregistrements orphelins, un système de facturation qui facturait des utilisateurs supprimés, et des analyses qui étaient décalées de 40%.
+Pas parce qu'il avait mesuré un goulot d'étranglement. Pas parce que les écritures étaient réellement lentes. Parce qu'il avait lu quelque part que « les clés étrangères ne passent pas à l'échelle ». Six mois plus tard, ils avaient 2 milliards d'enregistrements orphelins, un système de facturation qui facturait des utilisateurs supprimés, et des analyses qui étaient décalées de 40%.
 
 Quand ils ont essayé de remettre les contraintes ? La base de données s'est arrêtée net en essayant de valider des données existantes déjà corrompues.
 
-Il y a cette idée répandue dans le développement web que les clés étrangères sont intrinsèquement lentes, qu'elles sont des roues d'apprentissage qu'on enlève une fois qu'on passe aux systèmes "réels". Mais ça rate complètement l'objectif d'une contrainte. Vous ne choisissez pas entre rapide et lent. Vous choisissez entre différents modes d'échec.
+Il y a cette idée répandue dans le développement web que les clés étrangères sont intrinsèquement lentes, qu'elles sont des roues d'apprentissage qu'on enlève une fois qu'on passe aux systèmes « réels ». Mais ça rate complètement l'objectif d'une contrainte. Vous ne choisissez pas entre rapide et lent. Vous choisissez entre différents modes d'échec.
 
 Pensez-y comme ceci : le verre de sécurité, les ceintures et les airbags ajoutent tous du poids à votre voiture. Ils rendent absolument votre véhicule plus lent et moins économe en carburant. Mais vous ne les arrachez pas pour optimiser votre temps de 0 à 100 km/h, parce que vous optimisez pour quelque chose d'entièrement différent.
 
@@ -31,7 +31,7 @@ Tout relier avec des clés étrangères ? Réfléchissons à ce qui change réel
 
 Les états américains ne changent probablement pas. Le Wyoming ne sera pas renommé de sitôt. Vous n'avez pas besoin d'une clé étrangère pour valider les codes d'état à chaque insertion quand vous savez que les données de référence sont statiques. C'est une surcharge inutile.
 
-Les stations météo sont ajoutées, déplacées et déclassées. Mais voici une question : voulez-vous que les lectures historiques "perdent" leur station si quelqu'un supprime accidentellement un enregistrement de station ? Peut-être voulez-vous que ces données restent intactes même si la station a disparu. Cela signifierait que vous traitez les lectures comme un instantané historique plutôt qu'une référence en direct, ce qui change si une clé étrangère a même du sens.
+Les stations météo sont ajoutées, déplacées et déclassées. Mais voici une question : voulez-vous que les lectures historiques « perdent » leur station si quelqu'un supprime accidentellement un enregistrement de station ? Peut-être voulez-vous que ces données restent intactes même si la station a disparu. Cela signifierait que vous traitez les lectures comme un instantané historique plutôt qu'une référence en direct, ce qui change si une clé étrangère a même du sens.
 
 Les lectures de capteurs sont insérées des milliers de fois par minute. Chaque vérification de clé étrangère signifie une recherche. Chaque recherche crée de la contention sur vos tables. Si une validation lente signifie que votre file d'attente d'insertions s'accumule et que vous perdez des données en temps réel, c'est une perte de données différente d'avoir un enregistrement orphelin.
 
@@ -58,19 +58,19 @@ CREATE INDEX ON sensor_log USING GIN (data);
 CREATE INDEX ON sensor_log (recorded_at);
 ```
 
-Pas de jointures. Pas de vérifications de clés étrangères. Juste ajoutez des données et interrogez par plage de temps ou index GIN sur le blob JSONB. Est-ce "une bonne pratique" ? Probablement pas dans le sens où les manuels de bases de données l'enseignent. Est-ce que ça fonctionne quand vous insérez 50 000 lignes par minute sur un Raspberry Pi ? Absolument.
+Pas de jointures. Pas de vérifications de clés étrangères. Juste ajoutez des données et interrogez par plage de temps ou index GIN sur le blob JSONB. Est-ce « une bonne pratique » ? Probablement pas dans le sens où les manuels de bases de données l'enseignent. Est-ce que ça fonctionne quand vous insérez 50 000 lignes par minute sur un Raspberry Pi ? Absolument.
 
-Le décalage se produit quand les gens traitent "les bonnes pratiques" comme un impératif moral plutôt qu'un modèle qui fonctionne bien dans des scénarios courants mais qui pourrait ne pas correspondre au vôtre.
+Le décalage se produit quand les gens traitent « les bonnes pratiques » comme un impératif moral plutôt qu'un modèle qui fonctionne bien dans des scénarios courants mais qui pourrait ne pas correspondre au vôtre.
 
 ## Le piège de la normalisation
 
-Les cours de bases de données adorent enseigner la normalisation. Évitez la duplication à tout prix. Troisième forme normale ou rien.
+Les cours de bases de données adorent enseigne la normalisation. Évitez la duplication à tout prix. Troisième forme normale ou rien.
 
 Donc vous vous retrouvez avec quelque chose comme : `Commandes` → `ArticlesCommande` → `Produits` → `Variantes` → `Couleurs` → `Tailles`
 
-Six jointures de tables juste pour répondre à "Est-ce que j'ai commandé le t-shirt rouge ou le bleu l'année dernière à Noël ?" Et que Dieu vous vienne en aide si vous devez inclure le nom du produit, car c'est trois jointures de plus dans la hiérarchie du catalogue.
+Six jointures de tables juste pour répondre à « Est-ce que j'ai commandé le t-shirt rouge ou le bleu l'année dernière à Noël ? » Et que Dieu vous vienne en aide si vous devez inclure le nom du produit, car c'est trois jointures de plus dans la hiérarchie du catalogue.
 
-Mais attendez. La justification est généralement "Et si la marque change la façon dont elle étiquette le Bleu ?" Si cela arrive, voulez-vous vraiment que les commandes historiques changent rétroactivement de couleur ? Bien sûr que non. Quand quelqu'un a passé cette commande, il a acheté un "T-Shirt Bleu, Taille M" tel qu'il existait à ce moment précis, pas comme une référence abstraite à une entrée de catalogue qui pourrait être mise à jour plus tard.
+Mais attendez. La justification est généralement « Et si la marque change la façon dont elle étiquette le Bleu ? » Si cela arrive, voulez-vous vraiment que les commandes historiques changent rétroactivement de couleur ? Bien sûr que non. Quand quelqu'un a passé cette commande, il a acheté un « T-Shirt Bleu, Taille M » tel qu'il existait à ce moment précis, pas comme une référence abstraite à une entrée de catalogue qui pourrait être mise à jour plus tard.
 
 Cela vaut la peine d'y réfléchir car c'est subtil. Certaines données sont fondamentalement un instantané, pas une référence. Quand vous traitez des données d'instantané comme si c'était une référence en direct, vous finissez avec cette prolifération absurde de jointures pour reconstruire quelque chose qui aurait dû être simplement dénormalisé au moment de l'écriture.
 
@@ -82,7 +82,7 @@ Comment savoir quand quelque chose devrait être un instantané ? Demandez-vous 
 
 Les commandes capturent les détails des produits tels qu'ils existaient au moment de l'achat. Les journaux d'audit enregistrent l'état de l'utilisateur quand il a effectué une action. Les tables d'historique préservent l'état d'un enregistrement avant une mise à jour. Les flux d'événements capturent ce qui s'est passé, quand, avec quelles données.
 
-Si la réponse est "oui, cela enregistre un moment dans le temps", arrêtez de le normaliser. Commencez à le capturer comme instantané.
+Si la réponse est « oui, cela enregistre un moment dans le temps », arrêtez de le normaliser. Commencez à le capturer comme instantané.
 
 ### Blobs opaques
 
@@ -92,11 +92,11 @@ Les configurations de modèles LLM comme `{"model": "gpt-4", "temperature": 0.7,
 
 Les 6 jointures de tables pour savoir de quelle couleur était le t-shirt commandé ? Ce n'est pas une normalisation correcte. C'est une pensée confuse sur le fait de savoir si vous stockez une référence ou une valeur.
 
-(Mais attention : cela peut se retourner spectaculairement contre vous si vous devez interroger ces données plus tard. Voir [La Séduction du JSONB](/the-jsonb-seduction) pour quand cette approche crée son propre cauchemar.)
+(Mais attention : cela peut se retourner spectacularment contre vous si vous devez interroger ces données plus tard. Voir [La séduction du JSONB](/the-jsonb-seduction) pour quand cette approche crée son propre cauchemar.)
 
 ## L'échelle est contextuelle
 
-Vous entendrez les gens dire "Les clés étrangères ne passent pas à l'échelle." Mais l'échelle est complètement relative à votre matériel et architecture.
+Vous entendrez les gens dire « Les clés étrangères ne passent pas à l'échelle. » Mais l'échelle est complètement relative à votre matériel et architecture.
 
 Un Raspberry Pi enregistrant 10 000 lectures de capteurs par minute sur une carte microSD ? C'est légitimement une grande échelle pour ce matériel. AWS Aurora avec des IOPS provisionnés gérant des milliards de lignes ? Vous pouvez utiliser des clés étrangères sans problème.
 
@@ -110,7 +110,7 @@ Mais jusqu'à ce que vous atteigniez cette limite architecturale, peut-être ne 
 
 ## À quoi cela ressemble réellement en pratique
 
-Au lieu de demander "devrais-je utiliser des clés étrangères", essayez de demander ces trois choses :
+Au lieu de demander « devrais-je utiliser des clés étrangères », essayez de demander ces trois choses :
 
 Qu'est-ce qui casse si cette référence est fausse ? Est-ce un procès, des données de facturation corrompues, une violation réglementaire ? Ou est-ce juste une jointure manquante qui renvoie null dans votre tableau de bord d'analyse ?
 
@@ -126,13 +126,13 @@ Les journaux à haut volume, les données de séries temporelles en ajout unique
 
 Les instantanés historiques comme les commandes et les journaux d'audit, les données que vous récupérez toujours comme un blob complet comme les préférences utilisateur, les schémas que vous ne contrôlez pas comme les charges utiles de webhook d'APIs externes… ces données fonctionnent souvent mieux dénormalisées.
 
-Mais remarquez que j'ai dit "probablement" et "souvent". Parce que le contexte compte, et votre contexte est différent du mien.
+Mais remarquez que j'ai dit « probablement » et « souvent ». Parce que le contexte compte, et votre contexte est différent du mien.
 
 ## Dernières réflexions
 
 Les clés étrangères ne sont pas un problème de performance. C'est un compromis entre la vitesse d'écriture et l'intégrité des données, et si ce compromis a du sens dépend entièrement de vos goulots d'étranglement spécifiques et de vos conséquences spécifiques.
 
-Le vrai problème, c'est quand les gens suppriment les clés étrangères à cause de quelque chose qu'ils ont lu sur "l'échelle web" sans mesurer réellement s'ils ont un problème de performance d'écriture ou considérer ce qu'ils abandonnent. Vous finissez par appliquer aveuglément l'architecture de Netflix à un projet nouveau qui traite 100 transactions par jour.
+Le vrai problème, c'est quand les gens suppriment les clés étrangères à cause de quelque chose qu'ils ont lu sur « l'échelle web » sans mesurer réellement s'ils ont un problème de performance d'écriture ou considérer ce qu'ils abandonnent. Vous finissez par appliquer aveuglément l'architecture de Netflix à un projet nouveau qui traite 100 transactions par jour.
 
 Peut-être que le coût en performance en vaut la peine pour votre cas d'utilisation. Peut-être que non. Mais au moins prenez cette décision en fonction de ce que vous optimisez réellement, pas de ce que vous pensez devoir optimiser.
 

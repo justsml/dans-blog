@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/minimax/minimax-m2.5
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 31.05
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
