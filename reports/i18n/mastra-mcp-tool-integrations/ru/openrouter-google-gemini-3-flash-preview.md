@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: ru
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.84
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
