@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: de
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-30--llm-connection-strings/de/index.mdx
+- Validation: passed
+- Runtime seconds: 45.50
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
