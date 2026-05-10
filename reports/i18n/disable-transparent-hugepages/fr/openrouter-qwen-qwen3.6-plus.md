@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: disable-transparent-hugepages
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-11-22--disable-transparent-hugepages/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 25.80
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

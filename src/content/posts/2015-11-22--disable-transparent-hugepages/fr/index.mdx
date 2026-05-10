@@ -1,0 +1,21 @@
+---
+title: "MongoDB : Désactiver les pages géantes transparentes"
+subTitle: Un correctif pour Debian/Ubuntu
+---
+
+### disable-transparent-hugepages correctif pour Debian/Ubuntu
+
+> Vous obtenez « WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'. » ?
+
+Exécutez les commandes suivantes pour appliquer rapidement ce que [MongoDB décrit plus en détail](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/).
+
+```sh
+## Currently just debian
+sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
+sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+sudo update-rc.d disable-transparent-hugepages defaults
+```
+
+#### Références
+
+1.  [https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)
