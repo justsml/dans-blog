@@ -1,0 +1,124 @@
+---
+social_image: ../desktop-social.webp
+title: "Понимание международных чисел и валют"
+subTitle: "Локализованные деньги объяснены!"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [engineering, internationalization, localization, currency, numbers]
+category: HowTo
+subCategory: Internationalization
+cover_full_width: currency-banner-wide.webp
+cover_mobile: currency-banner-pic__w200.webp
+cover_icon: currency-banner-pic__w200.webp
+---
+
+- [Деньги: локализация (L10n) и интернационализация (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Ключевые понятия](#critical-concepts)
+  - [Числа локальны 🏘️](#numbers-are-local-️)
+  - [Валюта глобальна 🌎](#currency-is-global-️)
+  - [Когда локаль имеет значение](#when-locale-matters)
+- [Решение](#a-solution)
+- [Следующие шаги](#next-steps)
+
+## Money: Localization (L10n) and Internationalization (i18n)
+
+Эти слова нужны не только для победы в игре «Эрудит» — _локализация_ и _интернационализация_ обозначают процесс, благодаря которому продукт **чувствует себя как дома в другой стране.**
+
+<p class="breakout quote">Показ валюты в неверном локальном формате — верный признак: вы не приложили никаких усилий.<br/>Если вы не можете отформатировать цену, как вы справитесь с доставкой?</p>
+
+Интернационализация — обширная тема, охватывающая всё от перевода текстов до форматирования дат. В этой статье мы сосредоточимся на одной конкретной подтеме — **форматировании чисел и валют.**
+
+Давайте рассмотрим форматирование на примере трёх стран еврозоны, США и Индии:
+
+- `€1,234,567.89` Ирландия 🇮🇪
+- `1.234.567,89 €` Германия 🇩🇪
+- `1 234 567,89 €` Франция 🇫🇷
+- `$1,234,567.89` США 🇺🇸
+- `₹12,34,567.89` Индия 🇮🇳
+
+Хаос! Верно? Символы, пробелы и знаки препинания летят во все стороны! Поразительно, как ЕС вообще может прийти к согласию! 😅
+
+## Critical Concepts
+
+Прежде чем перейти к решениям, что мы подразумеваем под «числа локальны»?
+
+### Numbers are Local 🏘️
+
+Каждая локаль ([страна по ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) определяет правила форматирования чисел.
+
+Правила форматирования чисел включают:
+
+- Десятичный разделитель: запятая, точка.
+- Разделитель тысяч: запятая, точка, пробел.
+- Позиция и пробел символа валюты.
+
+### Currency is Global 🌎
+
+`Валюта` относится к конкретной денежной единице. (См. [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) для списка.)
+
+- Определяет символ: `$`, `€`, `£`, `¥`. (Часто используется повторно.)
+- Всегда имеет трёхбуквенный код: `USD`, `EUR`, `GBP`, `JPY`.
+- Может использоваться/обмениваться в «любой» стране. Теоретически.
+- Конвертация между валютами требует данных о курсах обмена.
+- Значение не меняется в зависимости от локали.
+
+### When Locale Matters
+
+Большинство REST API для электронной коммерции и платежей работают с `price` + `currencyCode`. Почему нет локалей?
+
+Локали обычно устанавливаются на уровне ОС/устройства, и браузеры предоставляют их через `navigator.language`. Поскольку у каждого вашего пользователя может быть своя локаль, имеет смысл форматировать числа и валюту на стороне клиента.
+
+## A Solution
+
+Хорошие новости! Современные языки программирования имеют встроенную поддержку этого. В JavaScript у нас есть класс [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) и `Intl.NumberFormat`!
+
+Давайте посмотрим на код:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Если вам нужно делать более сложные вещи, например рассчитывать налоги, применять скидки или конвертировать между валютами, вам стоит использовать библиотеку, такую как [dinero.js](https://v2.dinerojs.com/).
+
+## Next Steps
+
+В зависимости от ваших конкретных потребностей, вы можете изучить связанные концепции:
+
+- Лучшие практики работы с локалью пользователя. Обнаружение + возможность переопределения. (Например, выпадающий список стран.)
+- Хранение целых чисел (храните центы, а не доллары.)
+- Математика с деньгами. (Например, применение купона `20% off`, расчёт `subTotal + taxes` и т. д.)
+- Курсы обмена в реальном времени. (Для розничных покупок, форекс/валютных бирж.)
+
+<p class="breakout quote">Сообщите, если хотите увидеть будущую статью по этим темам!</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: 
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supports money math, exchange rates, formatting, and parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) is my preferred Rust library.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) is my current Golang choice.
+ */}
