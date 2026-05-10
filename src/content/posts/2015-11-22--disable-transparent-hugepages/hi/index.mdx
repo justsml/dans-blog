@@ -1,0 +1,31 @@
+---
+social_image: ../desktop-social.webp
+draft: true
+title: "MongoDB: ट्रांसपेरेंट विशाल पेज अक्षम करें"
+subTitle: Debian/Ubuntu के लिए समाधान
+date: 2015-12-22
+modified: 2016-01-20
+category: DevOps
+subCategory: mongodb
+tags: [devops, mongodb, performance, tuning]
+cover: ../victor-garcia-645096-unsplash.webp
+cover_mobile: ../w300_victor-garcia-645096-unsplash.webp
+cover_icon: ../icon_victor-garcia-645096-unsplash.webp
+---
+
+### Debian/Ubuntu के लिए disable-transparent-hugepages समाधान
+
+> क्या आपको यह चेतावनी मिल रही है: "WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'." ?
+
+MongoDB द्वारा विस्तार से वर्णित कार्य को शीघ्रता से करने के लिए निम्नलिखित कमांड चलाएं।
+
+```sh
+## वर्तमान में केवल debian
+sudo curl -sSL -o /etc/init.d/disable-transparent-hugepages https://gist.githubusercontent.com/justsml/5e8f10892070072c4ffb/raw/disable-transparent-hugepages
+sudo chmod 755 /etc/init.d/disable-transparent-hugepages
+sudo update-rc.d disable-transparent-hugepages defaults
+```
+
+#### संदर्भ
+
+1.  [https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/](https://docs.mongodb.org/v3.0/tutorial/transparent-huge-pages/)
