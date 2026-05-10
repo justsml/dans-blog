@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 209.10
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
