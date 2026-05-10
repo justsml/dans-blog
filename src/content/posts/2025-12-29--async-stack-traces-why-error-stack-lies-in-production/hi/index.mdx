@@ -1,0 +1,94 @@
+---
+title: "Async Stack Traces: `Error.stack` आपको झूठ क्यों बोलता है"
+subTitle: "Microtask queue ने मेरा होमवर्क (और मेरा debugging context) खा लिया।"
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
+category: Code
+subCategory: Best Practices
+social_image: desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+रात के 2 बज रहे हैं। PagerDuty अलार्म बज रहा है।
+
+आप लॉग खोलते हैं और यह देखते हैं:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+बस इतना ही। न फंक्शन का नाम। न लाइन नंबर। न फाइल पाथ। बस 'processTicksAndRejections'।
+
+Async JavaScript में आपका स्वागत है, जहाँ stack traces काल्पनिक हैं और line numbers मायने नहीं रखते।
+
+---
+
+## Stack Traces क्यों टूटते हैं
+
+Synchronous code में, Call Stack एक सुंदर वंशावली है। A ने B को बुलाया, B ने C को। जब C क्रैश होता है, आप ठीक से देख सकते हैं कि आप वहाँ कैसे पहुँचे।
+
+Async code (`async/await`) में, हर `await` keyword एक suspension point है।
+
+जब आप `await` करते हैं, आपका फंक्शन stack से अलग हो जाता है। इसे Microtask Queue नामक cryogenic freezer में डाल दिया जाता है। Stack अब खाली है (या कुछ और कर रहा है)।
+
+जब Promise resolve होता है, आपका फंक्शन thaw होकर वापस stack पर फेंक दिया जाता है। लेकिन इतिहास चला गया है।
+
+Engine को कोई अंदाज़ा नहीं है कि 500 milliseconds पहले `await` को किसने बुलाया था। उसे बस इतना पता है कि उसे एक task run करना है।
+
+---
+
+## इसे ठीक करने का V8 का प्रयास
+
+Node.js मदद करने की कोशिश करता है। हमारे पास है:
+
+1.  `Error.captureStackTrace()`: Stack को *creation* समय पर capture करता है। बेकार अगर error बाद में throw किया जाए।
+2.  `--async-stack-traces`: एक flag जो Node.js को promise chains का 'shadow stack' रखने देता है।
+    *   लागत: यह आपके ऐप को 30% धीमा कर देता है।
+    *   परिणाम: यह मदद करता है, लेकिन जल्दी ही noisy हो जाता है।
+
+---
+
+## असली समाधान: AsyncLocalStorage
+
+अगर आप production में बचना चाहते हैं, तो stack traces देखना बंद करें। Causality देखें।
+
+हमें execution के 'thread' से context (User ID, Request ID) जोड़ना होगा, भले ही यह Stack और Microtask Queue के बीच कूदे।
+
+Node.js के पास इसके लिए एक builtin tool है: `AsyncLocalStorage`।
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. Wrap the request
+context.run({ requestId: '123' }, () => {
+  // 2. Call deep async code
+  await processOrder();
+});
+
+// 3. Deep inside processOrder:
+async function processOrder() {
+  await db.query();
+  
+  // Magic! We can still see the requestId
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+कोई फर्क नहीं पड़ता कि बीच में कितने `await` होते हैं। Context बच जाता है।
+
+---
+
+## Production Playbook
+
+1.  `err.stack` पर भरोसा करना बंद करें। यह design से ही अपूर्ण है।
+2.  Structured logging का उपयोग करें। `AsyncLocalStorage` का उपयोग करके हर log line से `requestId` जोड़ें।
+3.  Trace करें, stack नहीं। OpenTelemetry का उपयोग करें। यह services के बीच causal chain को visualize करता है, जो वास्तव में आपकी चिंता का विषय है।
+
+आपका code async है। आपका debugging context नहीं होना चाहिए।
