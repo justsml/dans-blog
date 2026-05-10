@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/it/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 114.94
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-destructuring-delights --locale it --skip-global
