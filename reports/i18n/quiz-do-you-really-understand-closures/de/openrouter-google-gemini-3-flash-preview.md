@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.61
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
