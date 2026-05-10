@@ -1,6 +1,6 @@
 ---
 title: "Quiz: Verstehen Sie JavaScript-Closures wirklich?"
-subTitle: "Die meisten Entwickler denken, dass sie es tun. Die meisten liegen falsch."
+subTitle: "Die meisten Entwickler glauben das. Die meisten liegen falsch."
 date: 2026-05-01
 modified: 2026-05-05
 tags: [javascript, closures, quiz, fundamentals, scope, advanced]
@@ -19,7 +19,7 @@ cover_icon: ../square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Closures (Abschlüsse) sind eines jener Konzepte, die jeder JavaScript-Entwickler *zu verstehen glaubt* — bis der Moment kommt, in dem er es nicht tut. Dieses Quiz findet die Grenzen dessen, was Sie tatsächlich wissen.</p>
+<p class="inset">Closures sind eines jener Konzepte, die jeder JavaScript-Entwickler *zu verstehen glaubt* — bis der Moment kommt, in dem er es nicht tut. Dieses Quiz findet die Grenzen dessen, was Sie wirklich wissen.</p>
 
 Closures tauchen in Event-Handlern, Factory-Funktionen, React-Hooks, Modul-Mustern und so ziemlich überall sonst auf. Sie sind nicht exotisch. Sie sind der Stoff, aus dem JavaScript gewebt ist.
 
@@ -54,9 +54,9 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` schließt über `count` ab. Jeder Aufruf inkrementiert und gibt dieselbe `count`-Variable zurück. Die drei Aufrufe produzieren `1, 2, 3`.
+    `tick` erfasst `count`. Jeder Aufruf inkrementiert und gibt dieselbe `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.
 
-    Das Schlüsselwort: *dieselbe*. `count` wird nicht in den Closure kopiert. Der Closure hält eine **Live-Referenz** auf das Variablen-Binding. Das ist der ganze Punkt.
+    Das Schlüsselwort: *dieselbe*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf das Variablen-Binding. Das ist der ganze Punkt.
   </div>
   </slot>
 </Challenge>
@@ -89,7 +89,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Jeder Aufruf von `makeCounter()` erstellt einen **neuen Ausführungskontext** mit einer eigenen frischen `count`. `a` und `b` schließen über *verschiedene* `count`-Bindings ab. Sie teilen sich keinen Zustand.
+    Jeder Aufruf von `makeCounter()` erstellt einen **neuen Ausführungskontext** mit einer eigenen frischen `count`. `a` und `b` erfassen *verschiedene* `count`-Bindings. Sie teilen sich keinen Zustand.
 
     Ergebnis: `1, 1`
 
@@ -122,11 +122,11 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` ist funktions-gescoped. Es gibt genau **ein** `i` — alle fünf Callbacks schließen über dasselbe Binding ab. Wenn die Timeouts feuern, ist die Schleife fertig und `i` ist `5`.
+    `var` hat Funktions-Scope. Es gibt genau **ein** `i` — alle fünf Callbacks erfassen dasselbe Binding. Wenn die Timeouts feuern, ist die Schleife fertig und `i` ist `5`.
 
     Fünf Callbacks. Ein `i`. Wert: `5`. Fünfmal ausgegeben.
 
-    Die Lösung ist `let` (block-gescoped, neues Binding pro Iteration) oder das Umschließen in einem IIFE, um den aktuellen Wert zu erfassen:
+    Die Lösung ist `let` (Block-Scope, neues Binding pro Iteration) oder das Umschließen in einem IIFE, um den aktuellen Wert zu erfassen:
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -168,7 +168,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
     // ...
     ```
 
-    Also schließen die fünf Callbacks über fünf verschiedene Variablen ab. Ergebnis: `0, 1, 2, 3, 4`.
+    Also erfassen die fünf Callbacks fünf verschiedene Variablen. Ergebnis: `0, 1, 2, 3, 4`.
   </div>
   </slot>
 </Challenge>
@@ -230,13 +230,13 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
 
       useEffect(() => {
         const id = setInterval(() => {
-          console.log('count ist', count);
+          console.log('count is', count);
         }, 1000);
         return () => clearInterval(id);
-      }, []); // leeres Abhängigkeitsarray
+      }, []); // empty deps
 
       return <button onClick={() => setCount(c => c + 1)}>
-        Klick ({count})
+        Click ({count})
       </button>;
     }
     ```
@@ -244,15 +244,15 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Klassische "Stale Closure" (veralteter Abschluss). Der `useEffect` läuft einmal (leeres Dep-Array) und erstellt ein Intervall, das über `count` so abschließt, wie es zum Mount-Zeitpunkt war: `0`. Egal wie oft Sie klicken, die Closure des Intervalls sieht niemals den aktualisierten Wert.
+    Klassische "Stale Closure". Der `useEffect` läuft einmal (leeres Dep-Array) und erstellt ein Intervall, das `count` so erfasst, wie es zum Mount-Zeitpunkt war: `0`. Egal wie oft Sie klicken, die Closure des Intervalls sieht niemals den aktualisierten Wert.
 
     Die Button-Beschriftung aktualisiert sich korrekt — das ist ein frischer Render. Aber `console.log` ist für immer bei `0` gefangen.
 
-    Fixen Sie es, indem Sie `count` zum Dep-Array hinzufügen (reaktiviert das Intervall) oder eine Ref verwenden:
+    Fixen Sie es, indem Sie `count` zum Dep-Array hinzufügen (erstellt das Intervall neu) oder eine Ref verwenden:
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // dann countRef.current innerhalb des Intervalls verwenden
+    // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -293,7 +293,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   <div className="explanation">
     Die Antwort ist `60`.
 
-    Das ist das **Modul-Muster** — eine IIFE, die ein Objekt aus Closures zurückgibt. Alle drei Methoden schließen über dasselbe `balance`-Binding ab. Es ist wirklich privat: Sie können von außen nicht auf `balance` zugreifen.
+    Das ist das **Modul-Muster** — eine IIFE, die ein Objekt aus Closures zurückgibt. Alle drei Methoden erfassen dasselbe `balance`-Binding. Es ist wirklich privat: Sie können von außen nicht auf `balance` zugreifen.
 
     ```javascript
     console.log(bank.balance); // undefined
@@ -331,7 +331,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der Event-Listener schließt über `data` ab, also bleibt das Array erreichbar, solange der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener niemals entfernt wird, bleibt auch dieses große Array im Speicher.
+    Der Event-Listener erfasst `data`, also bleibt das Array erreichbar, solange der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener niemals entfernt wird, bleibt auch dieses große Array im Speicher.
 
     `element` ist im DOM. Der Listener hält `data`. Der Garbage Collector kann es nicht einsammeln.
 
@@ -339,7 +339,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
-      // etwas mit data machen...
+      // do something with data...
 
       const onClick = () => {
         console.log('clicked!');
@@ -440,7 +440,7 @@ Die Fragen beginnen vernünftig und fangen dann an, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die memoisierte Funktion schließt über `cache` ab. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und kehren sofort zurück.
+    Die memoisierte Funktion erfasst `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und kehren sofort zurück.
 
     `calls` ist `1`.
 
