@@ -1,6 +1,6 @@
 ---
-title: "Recherche vectorielle serverless"
-subTitle: "Construire un client de recherche vectorielle pour navigateur avec Rust, WASM et TypeScript"
+title: "Recherche Vectorielle Sans Serveur"
+subTitle: "Construire un Client de Recherche Vectorielle pour Navigateur avec Rust, WASM et TypeScript"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [rust, wasm, lancedb, vector-search, open-source, webassembly, typescript, ai]
@@ -16,45 +16,45 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-## Le problème : vous ne pouvez pas rechercher une table Lance depuis un navigateur
+## Le Problème : Impossible de Chercher dans une Table Lance Depuis un Navigateur
 
-LanceDB est une base de données vectorielle fantastique. Elle est largement plus simple et moins coûteuse que les bases de données traditionnelles. Vous pouvez publier des tables avec des colonnes vectorielles, des colonnes de recherche en texte integral (FTS), héberger les fichiers sur S3 ou un CDN, et interroger les données directement sur S3 depuis un serveur Node.js. Aucun démon requis.
+LanceDB est une base de données vectorielle fantastique. Elle est bien plus simple et moins chère que les bases de données traditionnelles. Vous pouvez publier des tables avec des colonnes vectorielles, des colonnes de recherche en texte intégral (FTS), héberger les fichiers sur S3 ou un CDN, et interroger les données directement via S3 depuis un serveur Node.js. Aucun démon requis.
 
-Ce que vous ne *pouviez* pas faire — avant ce PR — était d'ouvrir cette table directement depuis un navigateur et d'exécuter une recherche. Vous auriez besoin d'un serveur au milieu : un Lambda, un conteneur, *quelque chose* capable d'exécuter Rust, Node.js/WASM ou Python.
+Ce que vous *ne pouviez pas* faire — avant cette PR — c'était ouvrir cette table directement depuis un navigateur et lancer une recherche. Il vous fallait un serveur intermédiaire : une Lambda, un conteneur, *quelque chose* capable d'exécuter Rust, Node.js/WASM, ou Python.
 
-L'objectif était ambitieux, mais axé sur un résultat final significatif : **des index vectoriels héberges en HTTP, directement interrogeables, en lecture seule.**
+L'objectif était ambitieux, mais ciblé sur un résultat concret : **des index vectoriels directement consultables, en lecture seule, hébergés sur HTTP.**
 
 ---
 
-## L'architecture
+## L'Architecture
 
-L'implémentation comporte trois couches :
+Trois couches composent l'implémentation :
 
 ### 1. Artefacts de publication Rust (`web_publish.rs`)
 
-Avant qu'un navigateur puisse rechercher une table Lance, il doit savoir ce qui est sûr de rechercher. Le format interne de Lance comporte des fonctionnalités qui ne sont pas portables pour le navigateur — les fichiers delta, les bases externes, les types d'index que le runtime WASM ne peut pas exécuter. Au lieu de laisser le navigateur découvrir cela au moment de la recherche (mauvaise approche), l'étape de publication produit des fichiers sidecar explicites :
+Avant qu'un navigateur puisse chercher dans une table Lance, il doit savoir ce qui est sûr à chercher. Le format interne de Lance a certaines fonctionnalités non portables dans un navigateur — fichiers delta, bases externes, types d'index que le runtime WASM ne peut pas exécuter. Plutôt que de laisser le navigateur découvrir ces problèmes au moment de la recherche (mauvaise idée), l'étape de publication produit des fichiers sidecar explicites :
 
-- `_web.json` — annonce le schéma et quelles colonnes sont interrogeables depuis le navigateur (colonnes vectorielles avec des types de distance supportées, colonnes FTS)
-- `_snapshot.json` — une vue à un instant donné du jeu de données que le client navigateur peut consommer sans comprendre le protocole complet d'évolution du jeu de données
-- `_latest.manifest` / `_latest.version` — pointeurs stables que le navigateur interroge pour détecter l'obsolescence
+- `_web.json` — annonce le schéma et les colonnes consultables depuis un navigateur (colonnes vectorielles avec types de distance supportés, colonnes FTS)
+- `_snapshot.json` — un instantané du jeu de données à un instant T que le client navigateur peut consommer sans comprendre le protocole complet d'évolution du jeu de données
+- `_latest.manifest` / `_latest.version` — des pointeurs stables que le navigateur interroge pour détecter l'obsolescence
 
-Le flag `isComplete` dans le snapshot est la valve de sécurité. Si le jeu de données dépend de bases externes ou de fichiers de données que le chemin du navigateur ne peut pas lire de manière sécurisée, `isComplete=false` et le navigateur le rejette tôt avec une erreur claire au lieu de produire des résultats sottement incorrects.
+Le drapeau `isComplete` dans l'instantané est la soupape de sécurité. Si le jeu de données dépend de bases externes ou de fichiers de données que le chemin navigateur ne peut pas lire en toute sécurité, `isComplete=false` et le navigateur le rejette immédiatement avec une erreur claire au lieu de produire des résultats subtilement erronés.
 
-C'est la partie dont je suis le plus heureux de l'avoir construite en Rust plutôt qu'en JavaScript. Le jugement sur ce qui est sûr pour le navigateur reside là ou les métadonnées de la table existent réellement.
+C'est la partie dont je suis le plus content d'avoir implémentée en Rust plutôt qu'en JavaScript. Le jugement sur ce qui est sûr pour le navigateur réside là où se trouve réellement la métadonnée de la table.
 
 ### 2. Crate Rust `lancedb-wasm`
 
-C'est le runtime WebAssembly : un object store basé sur `fetch`, un moteur de recherche côté navigateur, et un évaluateur d'expressions pour les prédicats de filtre.
+C'est le runtime WebAssembly : un magasin d'objets (object store) basé sur `fetch`, un moteur de recherche côté navigateur, et un évaluateur d'expressions pour les prédicats de filtre.
 
-L'object store fetch (`fetch_object_store.rs`) implémente le trait `ObjectStore` de Lance via des requêtes HTTP range. Les lectures internes de Lance sont déjà structurées comme des lectures par plages d'octets, ce qui se mappe proprement aux headers `Range: bytes=N-M`. C'était la partie la plus satisfaisante du projet — l'architecture existente était presque parfaitement conçue pour cela, j'ai juste eu à le raccorder.
+Le magasin d'objets fetch (`fetch_object_store.rs`) implémente le trait `ObjectStore` de Lance via des requêtes HTTP par plages d'octets (range requests). Les lectures internes de Lance sont déjà structurées comme des récupérations d'octets par plage, ce qui s'adapte parfaitement aux en-têtes `Range: bytes=N-M`. Ce fut la partie la plus satisfaisante du projet — l'architecture existante était presque parfaitement conçue pour cela, il suffisait de la câbler.
 
-Le moteur navigateur (`browser.rs`) gère la recherche : plus proches voisins vectoriels, recherche en texte integral, et recherche hybride (vectorielle + FTS avec fusion RRF). Les expressions de filtre (`browser_expr.rs`) évaluent les prédicats de filtre Lance côté client en Rust pur, compilé en WASM.
+Le moteur de recherche navigateur (`browser.rs`) gère la recherche : plus proche voisin vectoriel, plein texte, et hybride (vecteur + FTS avec fusion RRF). Les expressions de filtrage (`browser_expr.rs`) évaluent les prédicats de filtre Lance côté client en Rust pur, compilé en WASM.
 
-Le rejet des fonctionnalités est strict et intentionnel. Distance `hamming` ? Rejeté d'emblée avec un message clair — pas silencieusement incorrect, pas un panic runtime. `fastSearch` sur un snapshot incomplet ? Rejeté. Layouts de base-path non supportés ? Rejeté. L'objectif était de fermer en cas d'échec : si le chemin du navigateur ne peut pas honoré le contrat, il le dit.
+Le rejet des fonctionnalités non supportées est strict et intentionnel. Distance `hamming` ? Rejetée d'emblée avec un message clair — pas d'erreur silencieuse, pas de panic au runtime. `fastSearch` sur un instantané incomplet ? Rejeté. Dispositions de chemins de base non supportées ? Rejetées. L'objectif était de « faillir de manière sécurisée » (fail closed) : si le chemin navigateur ne peut pas honorer le contrat, il le dit.
 
 ### 3. Paquet TypeScript `@lancedb/lancedb-web`
 
-La surface de l'API publique est intentionnellement petite :
+La surface de l'API publique est intentionnellement réduite :
 
 ```typescript
 import { searchTable } from "@lancedb/lancedb-web";
@@ -65,60 +65,60 @@ const results = await searchTable("https://my-cdn.example.com/my-table", "semant
 });
 ```
 
-En coulisses, `searchTable()` préfère un chemin d'exécution basé sur un Worker pour que la recherche ne bloque pas le thread principal. Le module WASM s'exécute dans le Worker ; les résultats reviennent via un protocole typé (`worker_protocol.ts`). Il y a aussi un export optionnel `./transformers` qui enveloppe `@xenova/transformers` pour générer des embeddings de requête côté client — ainsi vous pouvez passer d'une requête texte brute aux résultats de recherche vectorielle sans jamais quitter le navigateur.
+Sous le capot, `searchTable()` privilégie un chemin d'exécution basé sur un Worker afin que la recherche ne bloque pas le thread principal. Le module WASM s'exécute dans le Worker ; les résultats reviennent via un protocole typé (`worker_protocol.ts`). Il existe également un export optionnel `./transformers` qui enveloppe `@xenova/transformers` pour générer des embeddings de requête côté client — vous pouvez ainsi passer d'une requête textuelle brute à des résultats de recherche vectorielle sans jamais quitter le navigateur.
 
 ---
 
-## Les parties difficiles
+## Les Points Difficiles
 
-### Les lectures par plages HTTP ne sont pas gratuites
+### Les lectures par plage via HTTP ne sont pas gratuites
 
-Les modèles de lecture de Lance supposent un object store qui peut gérer efficacement de nombreuses petites requêtes par plages. S3 et GCS sont conçues pour cela. Les navigateurs... le sont mostly aussi, mais `fetch` avec les headers `Range` a quelques particularités que les abstractions d'object store Rust existantes n'ont pas à gérer.
+Les motifs de lecture de Lance supposent un magasin d'objets capable de gérer efficacement de nombreuses petites récupérations par plage. S3 et GCS sont conçus pour cela. Les navigateurs... le sont aussi en grande partie, mais `fetch` avec des en-têtes `Range` a quelques particularités dont les abstractions existantes du magasin d'objets Rust n'ont pas à se soucier.
 
-Le problème principal est que les navigateurs sometimes font du buffering ou des requêtes aggressives, et vous ne pouvez pas contrôler le pooling des connexions TCP comme vous le pouvez dans un processus natif. Pour les grands index vectoriels, cela compte. L'implémentation actuelle est correcte ; qu'elle soit suffisamment rapide pour une utilisation en production sur de grandes tables est quelque chose qui sera déterminé lors de la revue.
+Le problème principal est que les navigateurs ont parfois tendance à mettre en mémoire tampon ou à re-demander agressivement, et vous ne pouvez pas contrôler le pooling de connexions TCP comme dans un processus natif. Pour les grands index vectoriels, cela compte. L'implémentation actuelle est correcte ; savoir si elle est assez rapide pour une utilisation en production sur de grandes tables se déterminera pendant la revue.
 
 ### La question de la génération des sidecars
 
-Le PR soulève ceci explicitement comme une question pour les mainteneurs, car il y a un vrai compromis de conception : les fichiers sidecar du navigateur (`_web.json`, `_snapshot.json`) doivent-ils être émis *automatiquement* à chaque commit de table, ou doit-il y avoir un appel explicite `publish()` ?
+La PR soulève explicitement cette question pour les mainteneurs, car il y a un véritable compromis de conception : les fichiers sidecar pour navigateur (`_web.json`, `_snapshot.json`) doivent-ils être émis *automatiquement* à chaque commit de table, ou doit-il y avoir un appel explicite `publish()` ?
 
-Automatique est plus ergonomique — vous avez le support du navigateur gratuitement. Mais cela signifie que chaque écriture locale a un peu de surcharge supplémentaire, et cela couple le contrat du navigateur au chemin de commit central d'une manière qui pourrait compliquer les changements futurs vers l'un ou l'autre.
+L'automatique est plus ergonomique — vous obtenez le support navigateur gratuitement. Mais cela signifie que chaque écriture locale a un léger surcoût, et cela couple le contrat navigateur au chemin de commit principal d'une manière qui pourrait compliquer les futures modifications de l'un ou l'autre.
 
-`publish` explicite est plus correct d'un point de vue contrat — vous dites "cette version est prête pour le navigateur" — mais c'est facile à oubliER, ce qui signifie que les tables qui *devraient* être interrogeables depuis le navigateur ne le sont pas silencieusement.
+La publication explicite est plus correcte d'un point de vue contractuel — vous déclarez « cette version est prête pour le navigateur » — mais il est facile de l'oublier, ce qui fait que des tables qui *devraient* être consultables depuis un navigateur ne le sont pas silencieusement.
 
-J'ai penché pour automatique, avec les échecs de sidecar loggant un avertissement plutôt que de faire échouer le commit. Mais je suis sincèrement incertain, et je l'ai signalé dans le PR.
+J'ai penché pour l'automatique, avec des échecs de sidecar qui enregistrent un avertissement plutôt que de faire échouer le commit. Mais je suis sincèrement incertain, et je l'ai signalé dans la PR.
 
-### Qu'est-ce qui compte comme "sûr pour le navigateur" ?
+### Qu'est-ce qui est « sûr pour le navigateur » ?
 
-Le flag `isComplete` et la logique de filtrage des colonnes dans `web_publish.rs` encodent un jugement sur ce que le navigateur peut gérer. Ce jugement doit rester synchronisé avec les capacités réelles du runtime WASM. Si quelqu'un ajoute un nouveau type d'index à Lance que le navigateur ne peut pas exécuter, le code de publication doit savoir l'exclure — sinon vous annoncerez une capacité que le navigateur échouera à honorer au moment de la recherche.
+Le drapeau `isComplete` et la logique de filtrage des colonnes dans `web_publish.rs` codent un jugement sur ce que le navigateur peut gérer. Ce jugement doit rester synchronisé avec les capacités réelles du runtime WASM. Si quelqu'un ajoute un nouveau type d'index à Lance que le navigateur ne peut pas exécuter, le code de publication doit savoir l'exclure — sinon vous annoncerez une capacité que le navigateur ne pourra pas honorer au moment de la recherche.
 
-Le bon correctif ici est probablement un registre de capacités partagé entre le chemin de publication et le runtime, pour qu'ils ne divergent pas. Je l'ai implémenté comme des constantes parallèles pour l'instant, ce qui est pratique mais fragile. C'est probablement la chose que je voudrais améliorer ensuite.
+La bonne solution ici est probablement un registre de capacités partagé entre le chemin de publication et le runtime, pour éviter toute dérive. Je l'ai implémenté avec des constantes parallèles pour l'instant, ce qui est expédient mais fragile. C'est probablement ce que j'aimerais améliorer ensuite.
 
 ---
 
-## Le dilemme du wrapper Transformers
+## Le Dilemme de l'Enveloppe Transformers
 
-L'export `./transformers` est une fonctionnalité de qualité de vie : il prend une requête texte, l'exécute через un modèle d'embedding local via `@xenova/transformers`, et remet le vecteur résultant au moteur de recherche Lance. Recherche sémantique serverless-zero depuis une page HTML statique.
+L'exportation `./transformers` est une fonctionnalité de confort : elle prend une requête textuelle, la fait passer par un modèle d'embedding local via `@xenova/transformers`, et transmet le vecteur résultant au moteur de recherche LanceDB. Recherche sémantique zéro serveur depuis une page HTML statique.
 
-C'est aussi la chose dont je suis le moins sûr qu'elle appartienne à ce PR. Elle est réellement utile et elle est déjà implémentée, mais c'est une dépendance et une surface d'API séparée de la question de recherche navigateur centrale. Les mainteneurs pourraient raisonnablement vouloirposer l'API de base `searchTable()` d'abord et itérer sur les embeddings séparément.
+C'est aussi la chose dont je suis le moins certain qu'elle appartienne à cette PR. C'est véritablement utile et déjà implémenté, mais c'est une dépendance et une surface d'API distincte de la question centrale de la recherche dans le navigateur. Les mainteneurs pourraient raisonnablement vouloir atterrir d'abord sur l'API de base `searchTable()` et itérer sur les embeddings séparément.
 
 J'ai demandé. On verra.
 
 ---
 
-## Ce que je ferais différemment
+## Ce Que Je Ferais Différemment
 
-**Scoper plus tôt.** Le PR fait 14 500 lignes. C'est beaucoup à réviser en une seule fois. J'aurais pulander d'abord le format des artefacts de publication, puis le runtime WASM, puis le paquet TypeScript. Trois plus petits PRs auraient été plus fáciles à fusionner. Je ne l'ai pas fait parce que je voulais valider l'histoire de bout en bout avant de proposer une des pièces — ce qui était logique pour la confiance, mais rend la charge de révision élevée.
+**Délimiter le périmètre plus tôt.** La PR fait 14 500 lignes. C'est beaucoup à revoir d'un seul coup. J'aurais pu atterrir d'abord le format d'artefact de publication, puis le runtime WASM, puis le paquet TypeScript. Trois PR plus petites auraient été plus faciles à fusionner. Je ne l'ai pas fait parce que je voulais valider l'histoire complète de bout en bout avant de proposer l'une ou l'autre des pièces — ce qui avait du sens pour la confiance, mais alourdit la charge de revue.
 
-**Écrire le registre de capacités d'abord.** Le risque de dérive entre `web_publish.rs` et `browser.rs` est réel. Commencer par un type de capacité partagé entre les deux côtés aurait été plus propre que des listes de constantes parallèles dont je dois me souvenir de garder synchronisées.
+**Écrire le registre de capacités en premier.** Le risque de dérive entre `web_publish.rs` et `browser.rs` est réel. Commencer par un type de capacité partagé que les deux côtés référencent aurait été plus propre que des listes de constantes parallèles que je dois penser à maintenir synchronisées.
 
-**Nommer les choses moins astucieusement.** `_web.json` est un bon nom pour un format interne. Il devient un nom porté dès le moment où quelqu'un le met en cache ou construit des outils autour. J'aurais dû passer plus de temps sur le nommage avant de soumettre — c'est une de ces choses qui est beaucoup moins chère à changer avant que quelqu'un d'autre n'y dépende.
+**Nommer les choses moins astucieusement.** `_web.json` est un nom acceptable pour un format interne. Il devient un nom porteur de charge dès que quelqu'un le met en cache ou construit des outils autour. J'aurais dû passer plus de temps sur le nommage avant de soumettre — c'est une de ces choses qui est bien moins coûteuse à changer avant que quiconque ne dépende dessus.
 
 ---
 
-## Le point plus large
+## Le Point Plus Large
 
-La chose qui a rendu ce projet traçable est que l'architecture interne de Lance était déjà bien structurée pour les lectures par plages. L'abstraction de l'object store est propre. Le format des métadonnées est explicite. Le concept de snapshot m'a donné un endroit naturel pour exprimer "c'est une vue sûre pour le navigateur de ce jeu de données."
+Ce qui a rendu ce projet réalisable, c'est que l'architecture interne de Lance était déjà bien structurée pour les lectures par plage. L'abstraction du magasin d'objets est propre. Le format des métadonnées est explicite. Le concept d'instantané m'a donné un endroit naturel pour exprimer « ceci est une vue sécurisée pour navigateur de ce jeu de données. »
 
-Les bonnes frontières d'abstraction ne facilitent pas seulement le raisonnement sur le code interne — elles rendent possible pour quelqu'un comme moi de arriver de l'extérieur du projet et de brancher un nouvel environnement d'exécution sans toucher le noyau. C'est une vraie vertu de conception, et elle a fait que les 14 000 lignes ressemblent plus à remplir une forme qu'à se battre contre la base de code.
+Les bonnes frontières d'abstraction ne facilitent pas seulement le raisonnement sur le code interne — elles permettent à quelqu'un comme moi d'arriver de l'extérieur du projet et de brancher un nouvel environnement d'exécution sans toucher au cœur. C'est une véritable vertu de conception, et elle a fait ressentir les 14 000 lignes plus comme un remplissage de forme que comme un combat contre la base de code.
 
-Le PR est [ici](https://github.com/lancedb/lancedb/pull/3247) si vous voulez voir les détails. J'attend toujours la révision. Les mainteneurs ont été chaleureux et je suis prudemment optimiste.
+La PR est [ici](https://github.com/lancedb/lancedb/pull/3247) si vous voulez voir les détails. J'attends toujours la revue. Les mainteneurs ont été chaleureux et je suis prudemment optimiste.
