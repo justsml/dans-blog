@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: fr
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 21.61
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
