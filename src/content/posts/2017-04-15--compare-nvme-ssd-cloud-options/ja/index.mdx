@@ -1,0 +1,55 @@
+---
+social_image: ../desktop-social.webp
+title: "NVMe SSDクラウドオプションを比較"
+subTitle: "NVMe SSD対決：AWS、DigitalOcean、Packet.net"
+date: 2017-04-15
+modified: 2020-01-30
+category: DevOps
+subCategory: programming
+tags: [cloud, servers, architecture, scaling, digital-ocean, amazon-web-services, google-cloud-engine, azure, packet.net, ovh.net, ssd, io]
+cover: solaiman-hossen-553024-unsplash.webp
+cover_mobile: w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: icon_solaiman-hossen-553024-unsplash.webp
+---
+
+## クラウドパフォーマンスを最大70%向上
+
+> 以下の主要ホスティングプロバイダーに関する一般的な注釈とセクション（2017年半ば時点）。
+
+- [AWS（Amazon Web Services）、EC2（Elastic Compute Cloud）、EBS（Elastic Block Storage）など](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### Amazon Web Services / EC2 / EBS / S3
+
+> TLDR；AWSは通常制限の厳しいハードウェアと複雑な価格帯を提供しますが、**i3.large**（およびそれ以上）のハードウェアは価格対I/Oパフォーマンスの面で最も効率的であり、かつ全体のパフォーマンスで最速です。
+
+> EC2 **i3.large**（**475GB NVMe SSD**搭載）の通常価格は約**$110/月！** > <br />
+> **i3.2xlarge**（**1.9TB NVMe**搭載）は約**$450/月** * > <br /> > \_*USA/2018\_
+
+<br />
+<br />
+
+### 直接比較
+
+\[[フルスクリーンデータ表示](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[EC2の価格を見る](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](ec2-updated-prices-2018.webp)
+
+**i3.\*xlarge**シリーズのみが競争力のある価格のNVMeストレージ（超高速+1GB/s）を提供している点に注目してください。私が発見した主要な制限要因は実際のネットワーク速度でした。「最大10Gb/s」と謳われているサーバーが1Gb/s（60-80MB/s）にすら到達できない状況でした。
+
+ネットワークテストには同一アベイラビリティゾーン内の最大9つの追加インスタンスを使用しました。異常なデータポイントは0に置き換えました。1-2サンプルのみ収集されているため、追加のテストが必要です。
+
+\[[フルスクリーンデータ表示](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### クレジット
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
