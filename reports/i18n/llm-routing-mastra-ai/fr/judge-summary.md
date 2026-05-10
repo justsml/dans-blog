@@ -6,6 +6,13 @@
 - Second judge model: not run
 - Escalation judge model: not run
 - Selected commit hint: judge selected
+- Result: model judging blocked by OpenRouter credit/max_tokens errors; final file is based on candidate `2deb04ba730126f90d4e8af01ab044ec934af9f7` with a manual structural/terminology polish commit.
+
+## Judge Failure Notes
+
+- Primary cheap judge `openrouter/google/gemini-3-flash-preview` failed with an OpenRouter credit/max_tokens error.
+- Second cheap judge `openrouter/deepseek/deepseek-v4-flash` failed with an OpenRouter credit/max_tokens error.
+- Escalation judge `openrouter/anthropic/claude-sonnet-4.6` was attempted only after the cheap judge outputs were structurally broken, and it also failed with an OpenRouter credit/max_tokens error.
 
 ## Primary Judge Telemetry
 - Runtime seconds: 1.82
