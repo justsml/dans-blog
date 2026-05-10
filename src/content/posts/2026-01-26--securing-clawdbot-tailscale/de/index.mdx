@@ -16,7 +16,7 @@ OpenClaw (früher Clawdbot/Moltbot) gibt dir einen persönlichen KI-Assistenten,
 
 Diese Anleitung zeigt den sichersten Standard: Lasse das OpenClaw-Gateway auf Loopback, gib es nur mit Tailscale Serve für dein Tailnet frei, schotte SSH ab und überprüfe von außen, dass das Gateway nicht öffentlich ist.
 
-Die schnelle Verbreitung des Projekts hat echte Sicherheitsbedenken offengelegt: [Shodan-Scans fanden 2.847 offene Instanzen](https://socradar.io/blog/clawdbot-is-it-safe/) in den ersten Wochen, und ein [GitHub-Sicherheitsaudit meldete 512 Befunde](https://github.com/moltbot/moltbot/issues/1796) im Codebestand. Einiges davon stammte von automatischen Scannern, und einiges hat sich seit der Umbenennung zu OpenClaw im Januar 2026 geändert. Betrachte die Zahl also eher als Warnsignal denn als präzise aktuelle Verwundbarkeitszählung. Du musst kein Sicherheitsexperte sein – du musst nur vermeiden, Operator-Oberflächen zu veröffentlichen, bevor du deployst.
+Die schnelle Verbreitung des Projekts hat echte Sicherheitsbedenken offengelegt: [Shodan-Scans fanden 2.847 offene Instanzen](https://socradar.io/blog/clawdbot-is-it-safe/) in den ersten Wochen, und ein [GitHub-Sicherheitsaudit meldete 512 Befunde](https://github.com/moltbot/moltbot/issues/1796) im Codebestand. Einiges davon stammte von automatischen Scannern, und einiges hat sich seit der Umbenennung zu OpenClaw im Januar 2026 geändert. Betrachte die Zahl also eher als Warnsignal denn als präzise aktuelle Schwachstellenzahl. Du musst kein Sicherheitsexperte sein – du musst nur vermeiden, Operator-Oberflächen zu veröffentlichen, bevor du es bereitstellst.
 
 ---
 
@@ -24,17 +24,17 @@ Die schnelle Verbreitung des Projekts hat echte Sicherheitsbedenken offengelegt:
 
 Abhängig davon, wie du installiert und freigegeben hast, gibt es drei Oberflächen, die eine Überprüfung wert sind:
 
-- **Port 22**: SSH-Zugriff auf einer VPS
+- **Port 22**: SSH-Zugriff auf einem VPS
 - **Port 18789**: Gateway-Control-UI und WebSocket-API
 - **Browser-/Node-Steuerung**: Remote-Node-Ausführung und Browser-Automatisierung über das Gateway/Node-Paarungsmodell
 
 Die aktuellen [OpenClaw-Remote-Access-Dokumente](https://docs.molt.bot/gateway/remote) besagen, dass der Gateway-WebSocket standardmäßig an Loopback bindet, und empfehlen, ihn nur dort zu belassen, es sei denn, du wählst bewusst ein LAN-/Tailnet-/benutzerdefiniertes Binding. Das ist gut. Das Risiko entsteht, wenn du diese Voreinstellung überschreibst, Docker-Ports veröffentlichst, einen Reverse-Proxy hinzufügst, Funnel aktivierst oder SSH weltweit offen lässt.
 
-Das Gateway ist das Große. Es ist die Operator-Oberfläche für deinen Assistenten, einschließlich der Tool-Aufruf-Pfade. Wenn es aus dem Internet erreichbar ist und die Authentifizierung fehlt, schwach, umgangen oder durchgesickert ist, kann ein Angreifer möglicherweise den Agenten steuern oder Tools mit den Berechtigungen deines Benutzers aufrufen.
+Das Gateway ist der wichtigste Punkt. Es ist die Operator-Oberfläche für deinen Assistenten, einschließlich der Tool-Aufruf-Pfade. Wenn es aus dem Internet erreichbar ist und die Authentifizierung fehlt, schwach, umgangen oder durchgesickert ist, kann ein Angreifer möglicherweise den Agenten steuern oder Tools mit den Berechtigungen deines Benutzerkontos aufrufen.
 
-Die Browser-Steuerung ist fast genauso sensibel. Die aktuellen OpenClaw-Dokumente empfehlen, die Browser-Steuerung über einen gepaarten Node-Host auf dem Browser-Rechner auszuführen und die Node-Paarung wie Operator-Zugriff zu behandeln. Wenn ein Gateway `system.run` auf einem gepaarten Node aufrufen kann, ist das entfernte Codeausführung auf diesem Node, vorbehaltlich der Gateway-Node-Richtlinie und der eigenen Ausführungsgenehmigungen des Nodes.
+Die Browser-Steuerung ist fast genauso sensibel. Die aktuellen OpenClaw-Dokumente empfehlen, die Browser-Steuerung über einen gepaarten Node-Host auf dem Browser-Rechner auszuführen und die Node-Paarung wie Operator-Zugriff zu behandeln. Wenn ein Gateway `system.run` auf einem gepaarten Node aufrufen kann, bedeutet das Remote-Code-Ausführung auf diesem Node, vorbehaltlich der Gateway-Node-Richtlinie und der eigenen Ausführungsgenehmigungen des Nodes.
 
-SSH ist SSH. Wenn du mit aktivierter Passwort-Authentifizierung arbeitest, sind Brute-Force-Versuche auf einer öffentlichen VPS unvermeidlich.
+SSH ist SSH. Wenn du mit aktivierter Passwort-Authentifizierung arbeitest, sind Brute-Force-Versuche auf einem öffentlichen VPS unvermeidlich.
 
 ---
 
@@ -42,7 +42,7 @@ SSH ist SSH. Wenn du mit aktivierter Passwort-Authentifizierung arbeitest, sind 
 
 Für OpenClaw bietet Tailscale Remote-Zugriff, ohne Operator-Dienste zu veröffentlichen:
 
-1. Deine OpenClaw-Instanz läuft auf einer VPS oder einem lokalen Rechner
+1. Deine OpenClaw-Instanz läuft auf einem VPS oder einem lokalen Rechner
 2. Das Gateway bleibt an Loopback gebunden und wird über Tailscale Serve erreicht, oder es bindet direkt an die Tailnet-IP mit expliziter Authentifizierung
 3. Du installierst Tailscale sowohl auf dem Server als auch auf deinen persönlichen Geräten
 4. Du greifst über die Tailscale-IP oder den MagicDNS-Namen auf OpenClaw zu
@@ -185,7 +185,7 @@ Von einem Rechner aus, der sich NICHT in deinem Tailscale-Netzwerk befindet:
 
 ```bash
 # Prüfen, ob gängige öffentliche Ports freigegeben sind
-nmap -p 22,80,443,18789 DEINE_ÖFFENTLICHE_IP
+nmap -p 22,80,443,18789 DEINE_OEFFENTLICHE_IP
 
 # Erwartete Ausgabe für eine gesicherte Instanz:
 # 22/tcp   filtered ssh
@@ -216,7 +216,7 @@ Wenn du `0.0.0.0` oder `:::` (IPv6-Äquivalent) siehst, ist dieser Dienst weltwe
 
 ### Integriertes Sicherheitsaudit
 
-OpenClaw enthält einen [Sicherheitsaudit-Befehl](https://docs.molt.bot/gateway/security), der deine Konfiguration auf Sicherheitsbest Practices überprüft:
+OpenClaw enthält einen [Sicherheitsaudit-Befehl](https://docs.molt.bot/gateway/security), der deine Konfiguration auf Sicherheits-Best-Practices überprüft:
 
 ```bash
 openclaw security audit --deep
@@ -233,7 +233,7 @@ Tailscale beseitigt den größten Fehler: die öffentliche Freigabe von Operator
 
 **Credential-Speicherung**: OpenClaw speichert Sitzungstranskripte, OAuth-Tokens und API-Schlüssel auf der Festplatte. Stelle sicher, dass diese die richtigen Dateiberechtigungen haben (`chmod 600` für Dateien, `chmod 700` für private Konfigurationsverzeichnisse) und nicht in der Versionsverwaltung liegen. Das integrierte Audit überprüft dies.
 
-**Plugin-Sandboxing**: Plugins laufen mit den vollen Berechtigungen deines Benutzers. Installiere nur Plugins aus vertrauenswürdigen Quellen und überprüfe, welche Fähigkeiten sie anfordern. Das Audit-Tool erfasst installierte Plugins.
+**Plugin-Sandboxing**: Plugins laufen mit den vollen Berechtigungen deines Benutzerkontos. Installiere nur Plugins aus vertrauenswürdigen Quellen und überprüfe, welche Fähigkeiten sie anfordern. Das Audit-Tool erfasst installierte Plugins.
 
 **Gerätesicherheit**: Wenn jemand dein Tailscale-Konto kompromittiert oder ein Gerät in deinem Tailnet stiehlt, kann er auf deine OpenClaw-Instanz zugreifen. Aktiviere die [Tailscale-Geräteautorisierung](https://tailscale.com/kb/1099/device-authorization/), um eine Genehmigung für neue Geräte zu verlangen.
 
@@ -246,7 +246,7 @@ Bevor du deine OpenClaw/Moltbot-Instanz als produktionsreif betrachtest:
 - [ ] Tailscale auf Server und Client installiert und authentifiziert
 - [ ] Gateway auf Loopback mit Tailscale Serve belassen oder an `tailnet` mit expliziter Authentifizierung gebunden
 - [ ] SSH konfiguriert, um Passwort-Authentifizierung und Root-Login zu deaktivieren
-- [ ] Firewall (UFW oder iptables/nftables) so konfiguriert, dass `tailscale0` erlaubt und unnötiger öffentlicher Eingang blockiert wird
+- [ ] Firewall (UFW oder iptables/nftables) so konfiguriert, dass `tailscale0` erlaubt und unnötiger öffentlicher eingehender Verkehr blockiert wird
 - [ ] Externer nmap-Scan zeigt alle Ports als `filtered` oder `closed`
 - [ ] Internes `ss -tulpn` zeigt Gateway nur an `127.0.0.1`, `::1` oder der Tailscale-IP gebunden
 - [ ] Credential-Dateien haben 600er-Berechtigungen und private Konfigurationsverzeichnisse haben 700er-Berechtigungen
