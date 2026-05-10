@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/it/index.mdx
+- Validation: passed
+- Runtime seconds: 100.50
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
