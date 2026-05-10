@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/hi/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 72.41
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug from-zero-to-regex-hero-extract-url-like-strings --locale hi --skip-global
