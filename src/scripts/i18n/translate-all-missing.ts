@@ -12,15 +12,13 @@ import {
 } from "./utils.ts";
 
 const CHEAP_CANDIDATE_MODELS = [
-  "openrouter/google/gemini-3.1-flash-lite-preview",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/google/gemini-2.5-flash-lite",
-  "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/qwen/qwen3.6-plus",
-  "openrouter/qwen/qwen3.5-flash-02-23",
+  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/minimax/minimax-m2.7",
   "openrouter/z-ai/glm-5-turbo",
   "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/minimax/minimax-m2.7",
+  "openrouter/google/gemini-3-flash-preview",
+  "openrouter/deepseek/deepseek-v3.2",
   "openrouter/minimax/minimax-m2.5",
 ];
 
@@ -38,7 +36,7 @@ const options = parseArgs();
 const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE_LOCALES])
   .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
-const candidateModels = parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS);
+const candidateModels = validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS));
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 3);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
@@ -208,4 +206,21 @@ function parsePositiveInteger(rawValue: string | undefined, fallback: number) {
 function parseOptionalPositiveInteger(rawValue: string | undefined) {
   if (rawValue == null) return undefined;
   return parsePositiveInteger(rawValue, 1);
+}
+
+function validateCandidateModels(models: string[]) {
+  const forbiddenModels = models.filter((model) =>
+    model.includes("-fast") ||
+    model.startsWith("openrouter/openai/") ||
+    model.startsWith("openrouter/anthropic/"),
+  );
+
+  if (forbiddenModels.length > 0) {
+    throw new Error([
+      "Translation candidates must use cheap non-GPT/non-Anthropic models and must not use -fast variants.",
+      `Forbidden model(s): ${forbiddenModels.join(", ")}`,
+    ].join(" "));
+  }
+
+  return models;
 }

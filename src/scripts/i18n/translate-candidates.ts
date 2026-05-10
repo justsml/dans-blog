@@ -16,15 +16,13 @@ import {
 } from "./utils.ts";
 
 const DEFAULT_CANDIDATE_MODELS = [
-  "openrouter/google/gemini-3.1-flash-lite-preview",
-  "openrouter/google/gemini-3-flash-preview",
-  "openrouter/google/gemini-2.5-flash-lite",
-  "openrouter/deepseek/deepseek-v4-flash",
   "openrouter/qwen/qwen3.6-plus",
-  "openrouter/qwen/qwen3.5-flash-02-23",
+  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/minimax/minimax-m2.7",
   "openrouter/z-ai/glm-5-turbo",
   "openrouter/z-ai/glm-4.7-flash",
-  "openrouter/minimax/minimax-m2.7",
+  "openrouter/google/gemini-3-flash-preview",
+  "openrouter/deepseek/deepseek-v3.2",
   "openrouter/minimax/minimax-m2.5",
 ];
 
@@ -77,7 +75,7 @@ const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
-const models = parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS);
+const models = validateCandidateModels(parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS));
 const shouldSkipValidation = options["skip-validation"] === true;
 const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
@@ -102,9 +100,12 @@ for (const model of models) {
   ].join("\n");
 
   const reportPath = `${reportDir}/${safeModelName(model)}.md`;
-  if (!shouldOverwrite && existsSync(reportPath)) {
+  if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
     console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
     continue;
+  }
+  if (!shouldOverwrite && existsSync(reportPath)) {
+    console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
   }
 
   const opencodeResult = runOpenCode([
@@ -366,6 +367,27 @@ function writeCandidateReport({
 
 function safeModelName(model: string) {
   return model.replace(/[^a-z0-9._-]+/gi, "-");
+}
+
+function validateCandidateModels(models: string[]) {
+  const forbiddenModels = models.filter((model) =>
+    model.includes("-fast") ||
+    model.startsWith("openrouter/openai/") ||
+    model.startsWith("openrouter/anthropic/"),
+  );
+
+  if (forbiddenModels.length > 0) {
+    throw new Error([
+      "Translation candidates must use cheap non-GPT/non-Anthropic models and must not use -fast variants.",
+      `Forbidden model(s): ${forbiddenModels.join(", ")}`,
+    ].join(" "));
+  }
+
+  return models;
+}
+
+function isRejectedReport(reportPath: string) {
+  return readFileSync(reportPath, "utf8").includes("- Validation: rejected:");
 }
 
 function getVariantArgs(model: string) {
