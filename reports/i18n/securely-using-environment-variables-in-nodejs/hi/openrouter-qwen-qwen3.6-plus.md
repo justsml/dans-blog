@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 36.65
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
