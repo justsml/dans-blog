@@ -1,0 +1,124 @@
+---
+social_image: ../desktop-social.webp
+title: "Internationale Zahlen und Währungen verstehen"
+subTitle: "Lokalisiertes Geld erklärt!"
+draft: false
+date: 2024-08-28
+modified: 2024-09-03
+tags: [engineering, internationalization, localization, currency, numbers]
+category: HowTo
+subCategory: Internationalisierung
+cover_full_width: currency-banner-wide.webp
+cover_mobile: currency-banner-pic__w200.webp
+cover_icon: currency-banner-pic__w200.webp
+---
+
+- [Geld: Lokalisierung (L10n) und Internationalisierung (i18n)](#geld-lokalisierung-l10n-und-internationalisierung-i18n)
+- [Wichtige Konzepte](#wichtige-konzepte)
+  - [Zahlen sind lokal 🏘️](#zahlen-sind-lokal-️)
+  - [Währung ist global 🌎](#währung-ist-global-️)
+  - [Wenn das Gebietsschema wichtig wird](#wenn-das-gebietsschema-wichtig-wird)
+- [Eine Lösung](#eine-lösung)
+- [Nächste Schritte](#nächste-schritte)
+
+## Geld: Lokalisierung (L10n) und Internationalisierung (i18n)
+
+Sie sind nicht nur dafür da, eine Partie Scrabble zu gewinnen. _Lokalisierung_ und _Internationalisierung_ bezeichnen den Prozess, ein Produkt **in einem anderen Land wie zu Hause wirken zu lassen.**
+
+<p class="breakout quote">Eine Währung im falschen lokalen Format anzuzeigen ist ein totes Indiz: Du hast dir keine Mühe gegeben.<br/>Wenn du keinen Preis formatieren kannst, wie sollst du dann mit dem Versand umgehen?</p>
+
+Internationalisierung ist ein großes Thema, das alles von Textübersetzung bis hin zur Datumsformatierung abdeckt. In diesem Beitrag konzentrieren wir uns auf ein bestimmtes Unterthema: **die Formatierung von Zahlen und Währungen.**
+
+Schauen wir uns die Formatierung in drei Euro-Ländern sowie den USA und Indien an:
+
+- `€1.234.567,89` Irland 🇮🇪
+- `1.234.567,89 €` Deutschland 🇩🇪
+- `1 234 567,89 €` Frankreich 🇫🇷
+- `$1,234,567.89` USA 🇺🇸
+- `₹12,34,567.89` Indien 🇮🇳
+
+Chaos, nicht wahr? Symbole, Leerzeichen und Satzzeichen fliegen nur so durch die Gegend! Es ist erstaunlich, worauf sich die EU überhaupt einigen kann! 😅
+
+## Wichtige Konzepte
+
+Bevor wir uns mit Lösungen befassen: Was bedeutet „Zahlen sind lokal"?
+
+### Zahlen sind lokal 🏘️
+
+Jedes Gebietsschema ([Land gemäß ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) definiert Regeln für die Formatierung von Zahlen.
+
+Regeln zur Zahlenformatierung umfassen:
+
+- Dezimaltrennzeichen: Komma, Punkt.
+- Tausendertrennzeichen: Komma, Punkt, Leerzeichen.
+- Währungssymbol-Position und -Abstand.
+
+### Währung ist global 🌎
+
+Eine `Währung` bezieht sich auf eine bestimmte Geldeinheit. (Siehe [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) für eine Liste.)
+
+- Definiert ein Symbol: `$`, `€`, `£`, `¥`. (Oft mehrfach verwendet.)
+- Hat immer einen 3-stelligen Code: `USD`, `EUR`, `GBP`, `JPY`.
+- Kann in „jedem" Land verwendet/getauscht werden. Theoretisch.
+- Die Umrechnung zwischen Währungen erfordert Wechselkursdaten.
+- Der Wert ändert sich nicht basierend auf dem Gebietsschema.
+
+### Wenn das Gebietsschema wichtig wird
+
+Die meisten E-Commerce-/Zahlungs-REST-APIs arbeiten mit `price` + `currencyCode`. Warum keine Gebietsschemata?
+
+Gebietsschemata werden typischerweise auf Betriebssystem-/Geräteebene festgelegt, und Browser machen sie über `navigator.language` verfügbar. Da jeder deiner Nutzer ein anderes Gebietsschema haben könnte, ist es nur sinnvoll, Zahlen und Währungen clientseitig zu formatieren.
+
+## Eine Lösung
+
+Ok, gute Nachricht! Moderne Programmiersprachen haben eingebaute Unterstützung dafür. In JavaScript gibt es die [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl)-Klasse und `Intl.NumberFormat`!
+
+Schauen wir uns etwas Code an:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Wenn du komplexere Aufgaben erledigen musst, wie Steuerberechnungen, Rabattanwendungen oder Währungsumrechnungen, solltest du eine Bibliothek wie [dinero.js](https://v2.dinerojs.com/) verwenden.
+
+## Nächste Schritte
+
+Je nach deinen konkreten Anforderungen solltest du verwandte Konzepte erkunden:
+
+- Best Practices für Nutzer-Gebietsschemata. Erkennen und Überschreibungsmöglichkeiten zulassen. (Z. B. ein Länder-Dropdown.)
+- Speichern ganzer Zahlen (Cents speichern, nicht Dollar.)
+- Geld-Mathematik. (Z. B. einen `20 % Rabatt`-Gutschein anwenden, `Zwischensumme + Steuern` berechnen usw.)
+- Aktuelle Wechselkurse. (Für Einzelhandelskäufe, Forex-/Währungsumrechnungen.)
+
+<p class="breakout quote">Lass mich wissen, wenn du einen zukünftigen Artikel zu diesen Themen sehen möchtest!</p>
+
+{/* ## Empfehlungen
+
+Einige Bibliotheken können bei diesen Aufgaben helfen:
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) unterstützt Geldmathematik, Wechselkurse, Formatierung und Parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) ist meine bevorzugte Rust-Bibliothek.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) ist meine aktuelle Wahl für Golang.
+ */}
