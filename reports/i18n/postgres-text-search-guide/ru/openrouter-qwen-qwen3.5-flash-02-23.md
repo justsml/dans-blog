@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: ru
+- Model: openrouter/qwen/qwen3.5-flash-02-23
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 55.94
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
