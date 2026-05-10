@@ -3,11 +3,11 @@
 - Locale: de
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 1.54
-- Input tokens: 25035
-- Output tokens: unknown
+- Validation: rejected: unknown
+- Runtime seconds: 48.83
+- Input tokens: 2481
+- Output tokens: 4576
 - Thinking tokens: unknown
-- Cached input tokens: unknown
-- Estimated cost: $0.001252
-- Note: Model did not create src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx.
+- Cached input tokens: 0
+- Estimated cost: unknown
+- Note: Model output did not look like a complete German MDX translation.
