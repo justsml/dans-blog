@@ -3,11 +3,11 @@
 - Locale: de
 - Model: openrouter/deepseek/deepseek-v3.2
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx
-- Validation: passed
-- Runtime seconds: 13.68
-- Input tokens: 1299
-- Output tokens: 432
+- Validation: rejected: unknown
+- Runtime seconds: 0.10
+- Input tokens: unknown
+- Output tokens: unknown
 - Thinking tokens: unknown
-- Cached input tokens: 0
+- Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Applied 4 targeted polish replacement(s): Adds technical precision by specifying 'Constraints', aligning with the article's focus.; 'Arten von Fehlern' is more natural and clearer German than the technical term 'Fehlermodi' in this context.; Simplifies sentence structure for a more direct, less wordy flow.; Removes redundant 'Art von' for a more concise and direct statement.
+- Note: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 200 tokens, but can only afford 139. To increase, visit https://openrouter.ai/settings/keys and create a key with a higher daily limit","code":402,"metadata":{"provider_name":null}},"user_id":"user_2pzehDUA0Dk91FO7jPDvof7W5Qm"}
