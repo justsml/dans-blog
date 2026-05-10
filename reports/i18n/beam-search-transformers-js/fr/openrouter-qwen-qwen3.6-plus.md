@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 63.71
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
