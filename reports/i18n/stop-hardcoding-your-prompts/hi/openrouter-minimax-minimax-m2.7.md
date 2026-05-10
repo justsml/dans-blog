@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: hi
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 41.47
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
