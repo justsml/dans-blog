@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: passed
+- Runtime seconds: 100.50
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

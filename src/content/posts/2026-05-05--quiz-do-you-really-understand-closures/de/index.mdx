@@ -1,15 +1,29 @@
 ---
-title: "Quiz: Verstehst du JavaScript-Closures wirklich?"
-subTitle: "Die meisten Entwickler denken das. Die meisten Entwickler liegen falsch."
+title: "Quiz: Verstehst du wirklich JavaScript Closures?"
+subTitle: "Die meisten Entwickler glauben, sie verstehen sie. Die meisten Developers irren sich."
+date: 2026-05-01
+modified: 2026-05-05
+tags: [javascript, closures, quiz, fundamentals, scope, advanced]
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
 ---
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Closures (Abschlüsse) sind eines dieser Konzepte, von denen jeder JavaScript-Entwickler *glaubt*, sie zu verstehen – bis zu dem Moment, in dem er es nicht mehr tut. Dieses Quiz wird die Grenzen dessen finden, was du wirklich weißt.</p>
+<p class="inset">Closures sind eines dieser Konzepte, von denen jeder JavaScript-Entwickler *glaubt*, sie zu verstehen — bis zu dem Moment, in dem er es eben nicht tut. Dieses Quiz findet die Grenzen von dem, was du wirklich weißt.</p>
 
-Closures begegnen dir in Event-Handlern, Factory-Funktionen, React-Hooks, Modul-Mustern und so ziemlich überall sonst. Sie sind nicht exotisch. Sie sind das Gewebe, aus dem JavaScript gewoben ist.
+Closures tauchen in Event-Handlern, Fabriksfunktionen, React Hooks, Modul-Mustern und praktisch überall sonst auf. Sie sind nicht exotisch. Sie sind der Stoff, aus dem JavaScript gemacht ist.
 
-Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen wegzuziehen.
+Die Fragen starten harmlos und werden dann zunehmend haarig.
 
 <QuizUI>
 
@@ -27,7 +41,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Was wird hier ausgegeben?
+    Was wird geloggt?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -40,9 +54,9 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` schließt über `count` ab. Jeder Aufruf inkrementiert und gibt dieselbe `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.
+    `tick` schließt über `count`. Jeder Aufruf erhöht und gibt *dieselbe* `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.
 
-    Das Schlüsselwort: *dieselbe*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf das Variablen-Binding. Das ist das ganze Geheimnis.
+    Das Schlüsselwort: *dieselbe*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **lebendige Referenz** auf die Variable-Bindung. Das ist der ganze Deal.
   </div>
   </slot>
 </Challenge>
@@ -51,7 +65,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Aufwärmen"
-  title="Getrennte Closures"
+  title="Separate Closures"
   options={[
     {text: '1, 1', isAnswer: true},
     {text: '1, 2'},
@@ -61,7 +75,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Was wird hier ausgegeben?
+    Was wird geloggt?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -75,11 +89,11 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Jeder Aufruf von `makeCounter()` erstellt einen **neuen Ausführungskontext** mit seinem eigenen frischen `count`. `a` und `b` schließen über *verschiedene* `count`-Bindings ab. Sie teilen sich keinen Zustand.
+    Jeder Aufruf von `makeCounter()` erzeugt einen **neuen Ausführungskontext** mit seinem eigenen frischen `count`. `a` und `b` schließen über *unterschiedliche* `count`-Bindungen. Sie teilen keinen Zustand.
 
     Ergebnis: `1, 1`
 
-    Das ist der Grund, warum Closures verwendet werden, um privaten Zustand zu erzeugen – jede "Instanz" ist unabhängig.
+    Das ist der Grund, warum Closures verwendet werden, um privaten Zustand aufzubauen — jede "Instanz" ist unabhängig.
   </div>
   </slot>
 </Challenge>
@@ -98,7 +112,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Was wird nach 100ms protokolliert?
+    Was wird nach 100ms geloggt?
     ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -108,11 +122,11 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` hat einen Funktions-Scope. Es gibt genau **ein** `i` — alle fünf Callbacks schließen über dasselbe Binding ab. Bis die Timeouts feuern, ist die Schleife beendet und `i` ist `5`.
+    `var` ist funktions-scoped. Es gibt genau **eine** `i` — alle fünf Callbacks schließen über dieselbe Bindung. Wenn die Timeouts feuern, ist die Schleife längst fertig und `i` ist `5`.
 
-    Fünf Callbacks. Ein `i`. Wert: `5`. Fünfmal ausgegeben.
+    Fünf Callbacks. Eine `i`. Wert: `5`. Fünf Mal geloggt.
 
-    Die Lösung ist `let` (Block-Scope, neues Binding bei jeder Iteration) oder das Einwickeln in eine IIFE, um den aktuellen Wert zu erfassen:
+    Die Lösung ist `let` (block-scoped, neue Bindung pro Iteration) oder ein IIFE, das den aktuellen Wert einfängt:
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -126,7 +140,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Die klassische Falle"
-  title="let löst es (oder etwa nicht?)"
+  title="let löst es (oder doch nicht?)"
   options={[
     {text: '0, 1, 2, 3, 4', isAnswer: true},
     {text: '5, 5, 5, 5, 5'},
@@ -136,7 +150,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Gleiche Schleife, anderes Schlüsselwort. Was wird ausgegeben?
+    Dieselbe Schleife, anderes Keyword. Was wird geloggt?
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -146,7 +160,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `let` in einer `for`-Schleife ist speziell. Die Spezifikation besagt: Jede Iteration erhält ihr eigenes **neues Binding** von `i`. Es ist so, als würde die Schleife heimlich Folgendes tun:
+    `let` in einer `for`-Schleife ist speziell. Die Spec sagt: jede Iteration bekommt ihre eigene **neue Bindung** von `i`. Es ist, als ob die Schleife heimlich das hier tut:
 
     ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
@@ -154,7 +168,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
     // ...
     ```
 
-    Die fünf Callbacks schließen also über fünf verschiedene Variablen ab. Ergebnis: `0, 1, 2, 3, 4`.
+    Also schließen die fünf Callbacks über fünf verschiedene Variablen. Ergebnis: `0, 1, 2, 3, 4`.
   </div>
   </slot>
 </Challenge>
@@ -173,7 +187,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Was wird hier ausgegeben?
+    Was wird geloggt?
     ```javascript
     function wrap() {
       const obj = { x: 1 };
@@ -188,9 +202,9 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die Closure erfasst das **Binding** `obj`, nicht einen Schnappschuss des Objekts. Das Objekt selbst wird mutiert, nachdem die Closure erstellt wurde – aber `obj` zeigt immer noch auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.
+    Die Closure erfasst die **Bindung** `obj`, nicht eine Momentaufnahme des Objekts. Das Objekt selbst wird mutiert, nachdem die Closure erstellt wurde — aber `obj` zeigt immer noch auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.
 
-    Das trifft Leute, die annehmen, dass Closures Werte "einfrieren". Das tun sie nicht. Sie erfassen **Referenzen**.
+    Das erwischt Leute, die annehmen, Closures "einfrieren" Werte. Tun sie nicht. Sie erfassen **Referenzen**.
   </div>
   </slot>
 </Challenge>
@@ -199,30 +213,30 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Fortgeschritten"
-  title="Veraltete Closure in React"
+  title="Stale Closure in React"
   options={[
-    {text: 'Gibt bei jedem Klick den aktuellen Stand aus'},
-    {text: 'Gibt immer 0 aus', isAnswer: true},
-    {text: 'Gibt NaN aus'},
-    {text: "Das lässt sich nicht kompilieren"},
+    {text: 'Loggt den aktuellen Count bei jedem Klick'},
+    {text: 'Loggt immer 0', isAnswer: true},
+    {text: 'Loggt NaN'},
+    {text: "Das kompiliert nicht"},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrmals angeklickt wird?
+    Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrfach geklickt wird?
     ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
 
       useEffect(() => {
         const id = setInterval(() => {
-          console.log('count ist', count);
+          console.log('count is', count);
         }, 1000);
         return () => clearInterval(id);
-      }, []); // leeres Abhängigkeitsarray
+      }, []); // leere deps
 
       return <button onClick={() => setCount(c => c + 1)}>
-        Klick ({count})
+        Click ({count})
       </button>;
     }
     ```
@@ -230,15 +244,15 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ein klassischer Fall von "Stale Closure" (veralteter Abschluss). Der `useEffect` wird einmal ausgeführt (leeres Dep-Array) und erstellt ein Intervall, das über `count` so abschließt, wie es zum Zeitpunkt des Mountens war: `0`. Egal wie oft du klickst, die Closure des Intervalls sieht nie den aktualisierten Wert.
+    Klassische stale Closure. Der `useEffect` läuft einmal (leerer Dep-Array) und erstellt ein Intervall, das über `count` schließt, wie es zum Mount-Zeitpunkt war: `0`. Egal wie oft du klickst, das Intervall in der Closure sieht den aktualisierten Wert nie.
 
-    Die Beschriftung des Buttons aktualisiert sich korrekt – das ist ein frischer Render-Vorgang. Aber das `console.log` ist für immer bei `0` gefangen.
+    Das Button-Label aktualisiert sich korrekt — das ist ein neuer Render. Aber `console.log` ist für immer bei `0` gefangen.
 
-    Behebe es, indem du `count` zum Dep-Array hinzufügst (reaktiviert das Intervall) oder ein Ref verwendest:
+    Lösung: `count` zum Dep-Array hinzufügen (erstellt das Intervall neu) oder einen Ref verwenden:
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // dann countRef.current innerhalb des Intervalls verwenden
+    // dann countRef.current im Intervall verwenden
     ```
   </div>
   </slot>
@@ -248,7 +262,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Fortgeschritten"
-  title="Modul-Muster"
+  title="Module Pattern"
   options={[
     {text: '60', isAnswer: true},
     {text: 'TypeError: balance is not defined'},
@@ -258,7 +272,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Warte – lies genau. Was passiert hier wirklich?
+    Moment — genau lesen. Was passiert wirklich?
     ```javascript
     const bank = (() => {
       let balance = 0;
@@ -279,13 +293,13 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   <div className="explanation">
     Die Antwort ist `60`.
 
-    Dies ist das **Module Pattern** – eine IIFE, die ein Objekt aus Closures zurückgibt. Alle drei Methoden schließen über dasselbe `balance`-Binding ab. Es ist wirklich privat: Du kannst nicht von außen auf `balance` zugreifen.
+    Das ist das **Module Pattern** — eine IIFE, die ein Objekt aus Closures zurückgibt. Alle drei Methoden schließen über dieselbe `balance`-Bindung. Es ist wirklich privat: du kannst `balance` von außen nicht zugreifen.
 
     ```javascript
     console.log(bank.balance); // undefined
     ```
 
-    Vor der Einführung von Klassen war dies *der* Weg, um Zustand in JavaScript zu kapseln. Man sieht es immer noch in älteren Codebasen und Utility-Bibliotheken.
+    Bevor es Klassen gab, war das *der* Weg, Zustand in JavaScript zu kapseln. Du wirst es noch in Legacy-Codebasen und Utility-Bibliotheken sehen.
   </div>
   </slot>
 </Challenge>
@@ -296,10 +310,10 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   group="Experte"
   title="Closure Memory Leak"
   options={[
-    {text: 'Es protokolliert die Länge des Daten-Arrays'},
-    {text: 'Es erzeugt ein Speicherleck', isAnswer: true},
+    {text: 'Es loggt die Länge des data-Arrays'},
+    {text: 'Es erzeugt ein Memory Leak', isAnswer: true},
     {text: 'Es wirft einen RangeError'},
-    {text: 'Nichts Ungewöhnliches – das ist in Ordnung'},
+    {text: 'Nichts Ungewöhnliches — das ist in Ordnung'},
   ]}
 >
   <slot name="question">
@@ -317,15 +331,15 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der Event-Listener schließt über `data` ab, sodass das Array so lange erreichbar bleibt, wie der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener nie entfernt wird, bleibt auch dieses große Array im Speicher.
+    Der Event-Listener schließt über `data`, also bleibt das Array erreichbar, solange der Listener erreichbar ist. Wenn `element` langlebig ist und der Listener nie entfernt wird, wird dieses große Array ebenfalls retained.
 
-    `element` ist im DOM. Der Listener hält `data`. Der Garbage Collector kann es nicht einsammeln.
+    `element` ist im DOM. Der Listener hält `data`. GC kann es nicht einsammeln.
 
-    Lösung: Erfasse keine großen Datenmengen in langlebigen Listenern, es sei denn, du brauchst sie wirklich, und entferne Listener, wenn die zugehörige UI abgebaut wird:
+    Lösung: Große Daten nicht in langlebigen Listenern einfangen, wenn du sie nicht wirklich brauchst, und Listener entfernen, wenn die zugehörige UI abgebaut wird:
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
-      // mache etwas mit data...
+      // do something with data...
 
       const onClick = () => {
         console.log('clicked!');
@@ -336,7 +350,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
     }
     ```
 
-    Moderne V8-Engines sind darin besser geworden als früher. Aber in langlebigen SPAs mit vielen Event-Listenern trifft dieses Muster die Leute immer noch.
+    Modernes V8 ist besser darin als früher. Aber in langlebigen SPAs mit vielen Event-Listenern beißt dieses Muster immer noch zu.
   </div>
   </slot>
 </Challenge>
@@ -345,7 +359,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Experte"
-  title="Die this-Falle"
+  title="The this Trap"
   options={[
     {text: 'Dan, Dan'},
     {text: 'Dan, undefined'},
@@ -355,7 +369,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Was wird hier ausgegeben?
+    Was wird geloggt?
     ```javascript
     const user = {
       name: 'Dan',
@@ -376,11 +390,11 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   <div className="explanation">
     Zwei subtile Fallen:
 
-    **`greetArrow`**: Arrow-Funktionen haben kein eigenes `this`. Sie erfassen `this` aus dem umschließenden lexikalischen Scope – was hier der Modul-/globale Scope ist, nicht `user`. Daher ist `this?.name` gleich `undefined`.
+    **`greetArrow`**: Arrow Functions haben kein eigenes `this`. Sie erfassen `this` aus dem umgebenden lexikalischen Scope — der hier der Modul-/Global-Scope ist, nicht `user`. Also ist `this?.name` `undefined`.
 
-    **`fn()`**: `greetRegular` wird ohne Empfänger aufgerufen (`fn()` statt `user.greetRegular()`). Im Strict Mode ist `this` gleich `undefined`. Im Sloppy Mode ist es das globale Objekt. In jedem Fall ist `this?.name` gleich `undefined`.
+    **`fn()`**: `greetRegular` wird ohne Receiver aufgerufen (`fn()` nicht `user.greetRegular()`). Im Strict Mode ist `this` `undefined`. Im Sloppy Mode ist es das globale Objekt. So oder so ist `this?.name` `undefined`.
 
-    Hättest du `user.greetRegular()` direkt aufgerufen, hättest du `'Dan'` erhalten – denn dann ist `this` an `user` gebunden.
+    Wenn du `user.greetRegular()` direkt aufgerufen hättest, würdest du `'Dan'` bekommen — weil dann `this` an `user` gebunden ist.
 
     Ergebnis: `undefined, undefined`.
   </div>
@@ -391,7 +405,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Bonus"
-  title="Memoisierung via Closure"
+  title="Memoization via Closure"
   options={[
     {text: 'Ruft expensive() 3 Mal auf'},
     {text: 'Ruft expensive() 1 Mal auf', isAnswer: true},
@@ -401,7 +415,7 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 >
   <slot name="question">
   <div className="question">
-    Wie oft wird `expensive()` tatsächlich aufgerufen?
+    Wie oft wird `expensive()` wirklich aufgerufen?
     ```javascript
     function memoize(fn) {
       const cache = new Map();
@@ -426,11 +440,11 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die memoisierte Funktion schließt über `cache` ab. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort das Ergebnis zurück.
+    Die memoizierte Funktion schließt über `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort zurück.
 
     `calls` ist `1`.
 
-    Hier leisten Closures echte Arbeit. `cache` ist privat (kann nicht von außerhalb von `memoize` zugegriffen werden), persistent (lebt so lange wie `fast` existiert) und wird über alle Aufrufe von `fast` hinweg geteilt.
+    Das sind Closures, die echte Arbeit leisten. `cache` ist privat (kann von außerhalb `memoize` nicht zugegriffen werden), persistent (lebt solange `fast` existiert) und wird von allen Aufrufen von `fast` geteilt.
   </div>
   </slot>
 </Challenge>
@@ -439,11 +453,11 @@ Die Fragen fangen vernünftig an und beginnen dann, den Boden unter den Füßen 
 
 ---
 
-Wie hast du abgeschnitten?
+Wie bist du zurechtgekommen?
 
-- **9-10**: Du kennst Closures wirklich. Wahrscheinlich ist es beängstigend, mit dir zusammen zu programmieren.
-- **6-8**: Solide. Die Fragen zu Stale Closures / `this` haben dich erwischt, was ehrlich ist.
-- **3-5**: Du kennst das Konzept, aber die Ränder sind unscharf. Lies dir die MDN-Dokumentation zur Scope-Chain durch.
-- **0-2**: Du dachtest, du kennst Closures. Jetzt tust du es. Das ist der Punkt.
+- **9-10**: Du verstehst wirklich Closures. Programmier-Partner sollten sich vor dir fürchten.
+- **6-8**: Solide. Die stale Closure / `this`-Fragen haben dich erwischt, was ehrlich ist.
+- **3-5**: Du kennst das Konzept, aber die Ränder sind unscharf. Geh die MDN Scope-Chain-Docs durch.
+- **0-2**: Du dachtest, du kennst Closures. Jetzt tust du es. Dafür ist das hier.
 
-Die Stale Closure in React (#6) und die `this`-Falle (#8) sind diejenigen, die echte Bugs in der Produktion verursachen. Wenn dir diese unbekannt vorkamen, lohnt es sich, sie noch einmal anzuschauen – sie tauchen in Code-Reviews häufiger auf als jedes andere Closure-Problem.
+Die stale Closure in React (#6) und die `this`-Falle (#8) sind die, die echte Produktions-Bugs verursachen. Wenn die dir unbekannt vorkamen, sind sie eine Wiederholung wert — sie tauchen im Code-Review häufiger auf als jedes andere Closure-bezogene Problem.
