@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-trying-to-make-async-await-happen
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-10-03--stop-trying-to-make-async-await-happen/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 84.70
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
