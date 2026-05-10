@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: it
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/it/index.mdx
+- Validation: passed
+- Runtime seconds: 38.72
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
