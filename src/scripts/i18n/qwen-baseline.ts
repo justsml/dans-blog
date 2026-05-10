@@ -114,16 +114,38 @@ for (const [index, task] of limitedTasks.entries()) {
           error instanceof Error ? error.message : String(error)
         }`,
       );
+      if (hasRejectedQwenReport(task.reportPath)) {
+        withRepoLock(() => {
+          runInherited("git", ["add", relativeToRepo(task.reportPath)]);
+          runInherited("git", ["commit", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+          if (shouldPush) {
+            runInherited("git", ["push", "origin", "HEAD:main"]);
+          }
+        });
+      }
       restorePathToHead(task.targetPath);
-      restorePathToHead(task.reportPath);
+      if (!hasRejectedQwenReport(task.reportPath)) {
+        restorePathToHead(task.reportPath);
+      }
       continue;
     }
 
     if (shouldConcurrentWorktree) {
       if (!hasSuccessfulQwenReport(task.reportPath) || !hasGitDiff(task.targetPath, task.reportPath)) {
         console.log("No successful Qwen diff to commit; cleaning rejected or unchanged artifacts.");
+        if (hasRejectedQwenReport(task.reportPath)) {
+          withRepoLock(() => {
+            runInherited("git", ["add", relativeToRepo(task.reportPath)]);
+            runInherited("git", ["commit", "-m", `i18n rejected(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
+            if (shouldPush) {
+              runInherited("git", ["push", "origin", "HEAD:main"]);
+            }
+          });
+        }
         restorePathToHead(task.targetPath);
-        restorePathToHead(task.reportPath);
+        if (!hasRejectedQwenReport(task.reportPath)) {
+          restorePathToHead(task.reportPath);
+        }
         continue;
       }
 
@@ -207,6 +229,11 @@ function hasSuccessfulQwenReport(reportPath: string) {
   if (!existsSync(reportPath)) return false;
   const contents = readFileSync(reportPath, "utf8");
   return !contents.includes("- Validation: rejected:");
+}
+
+function hasRejectedQwenReport(reportPath: string) {
+  if (!existsSync(reportPath)) return false;
+  return readFileSync(reportPath, "utf8").includes("- Validation: rejected:");
 }
 
 function requireCleanWorktree() {
