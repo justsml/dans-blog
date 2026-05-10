@@ -1,6 +1,6 @@
 ---
-title: "Arrêtez de Demander aux LLMs de Faire des Maths"
-subTitle: "Ils sont nuls à ça. Voici comment corriger ça."
+title: "Arrêtez de demander aux LLM de faire des maths"
+subTitle: "Ils sont nuls en calcul. Voici comment régler le problème."
 date: 2026-01-06
 modified: 2026-01-07
 tags: [ai, ai-sdk, typescript, math, tools, patterns]
@@ -12,33 +12,33 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-Vous savez ce qui est bizarre avec les modèles de langage ? Ils peuvent expliquer la mécanique quantique, écrire de la poésie, et débugger votre TypeScript... mais demandez-leur de multiplier 18472 par 9347 et il y a de bonnes chances qu'ils vous répondent avec assurance quelque chose de faux de plusieurs milliers.
+Vous savez ce qui est bizarre avec les modèles de langage ? Ils peuvent expliquer la mécanique quantique, écrire de la poésie et déboguer votre TypeScript… mais demandez-leur de multiplier 18472 par 9347 et il y a de bonnes chances qu'ils vous donnent avec assurance un résultat erroné de plusieurs milliers.
 
-Ça me déconcertait jusqu'à ce que je réalise ce qu'on leur demande vraiment. On demande à un moteur de reconnaissance de motifs d'être une calculatrice. C'est comme demander à un gymnaste de gérer votre compte en banque parce qu'il comprend le concept d'« équilibre ».
+Ça m'a laissé perplexe jusqu'à ce que je réalise ce qu'on leur demande vraiment. On demande à un moteur de reconnaissance de motifs de jouer les calculatrices. C'est comme demander à un gymnaste de gérer votre chéquier parce qu'il connaît le concept d'« équilibre ».
 
-Le truc, c'est que les LLMs ne calculent rien. Quand vous demandez à GPT ou Claude ce que vaut 2 + 2, ils n'additionnent pas. Ils prédisent que « 4 » est le token le plus susceptible d'apparaître après « 2 + 2 = ». La plupart du temps, ça fonctionne parce que ces motifs existent dans leurs données d'entraînement. Mais poussez au-delà de l'arithmétique simple dans des calculs multi-étapes ou avec des nombres peu courants dans l'entraînement, et vous lancez essentiellement les dés.
+Le fait est que les LLM ne calculent rien. Quand vous demandez à GPT ou Claude ce que font 2 + 2, ils n'additionnent pas. Ils prédisent que « 4 » est le token le plus susceptible d'apparaître après « 2 + 2 = ». La plupart du temps, ça fonctionne très bien car ces motifs existent dans leurs données d'entraînement. Mais dépassez l'arithmétique simple pour des calculs en plusieurs étapes ou des nombres qui n'étaient pas courants dans l'entraînement, et vous lancez essentiellement les dés.
 
-J'ai rencontré ce problème récemment en révisant du code qui utilisait un modèle haut de gamme pour calculer des mensualités de prêt immobilier. Le modèle a répondu avec une assurance totale. Il se trompait aussi de 400$/mois. C'est le genre d'erreur qui compte.
+Je me suis heurté à ce problème en examinant récemment du code qui utilisait un modèle haut de gamme pour calculer des mensualités de prêt immobilier. Le modèle a répondu avec une confiance totale. Il avait aussi tort de 400 $ par mois. C'est le genre d'erreur qui compte.
 
-Même si les modèles s'améliorent en raisonnement (GPT-5 montrerait apparemment des améliorations), ils font toujours de la reconnaissance de motifs sophistiquée, pas du calcul symbolique. Pour le travail créatif et les tâches en langage naturel, cette nature probabiliste est exactement ce qui les rend magiques. Pour les maths ? Pas vraiment.
+Même si les modèles s'améliorent en raisonnement (GPT-5 montre des progrès), ils font toujours de la reconnaissance de motifs sophistiquée, pas du calcul symbolique. Pour le travail créatif et les tâches en langage naturel, cette nature probabiliste est exactement ce qui les rend magiques. Pour les maths ? Pas tellement.
 
-## Ce Qui Résout Vraiment le Problème
+## Qu'est-ce qui résout vraiment le problème ?
 
-La réponse n'est pas d'attendre des modèles plus intelligents. C'est de donner au modèle le bon outil pour le travail.
+La réponse, ce n'est pas d'attendre des modèles plus intelligents. C'est de donner au modèle le bon outil pour le travail.
 
-Pensez à comment vous résoudriez ce problème si vous construisiez un système non-IA. Vous n'écririez pas de logique mathématique personnalisée, vous utiliseriez une bibliothèque. Le même principe s'applique ici, sauf qu'on enseigne maintenant au LLM quand et comment utiliser cette bibliothèque.
+Pensez à la façon dont vous résoudriez ce problème si vous construisiez un système non-IA. Vous n'écririez pas de logique mathématique personnalisée, vous prendriez une bibliothèque. Le même principe s'applique ici, sauf qu'on apprend maintenant au LLM quand et comment utiliser cette bibliothèque.
 
-L'appel d'outils dans les SDK AI modernes nous permet de donner au modèle des fonctions structurées qu'il peut invoquer. Au lieu de forcer le LLM à prétendre qu'il sait faire des maths, on lui donne quelque chose qui le fait vraiment : un moteur de calcul symbolique.
+L'appel d'outils dans les SDK IA modernes permet de fournir au modèle des fonctions structurées qu'il peut invoquer. Au lieu de forcer le LLM à faire semblant de connaître les maths, on lui donne quelque chose qui sait vraiment faire : un moteur de calcul symbolique.
 
-J'utilise [AI SDK v5 et v6](https://ai-sdk.vercel.ai/) pour cela, couplé avec CortexJS Compute Engine. Le SDK gère l'orchestration et le routage des outils, tandis que CortexJS gère tout, de l'arithmétique de base jusqu'au calcul. C'est une séparation des préoccupations étonnamment propre.
+J'utilise [AI SDK v5 et v6](https://ai-sdk.vercel.ai/) pour ça, couplé au moteur de calcul CortexJS Compute Engine. Le SDK gère l'orchestration et le routage des outils, tandis que CortexJS gère tout, de l'arithmétique de base au calcul intégral. C'est une séparation des responsabilités étonnamment propre.
 
 ```bash
 bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
 ```
 
-## Construire l'Outil Math
+## Construire l'outil mathématique
 
-L'implémentation est plus simple que vous ne pourriez l'imaginer. Ce qu'on construit, c'est un pont entre la compréhension du langage naturel du LLM et le calcul mathématique réel.
+L'implémentation est plus simple qu'on pourrait le penser. Ce que nous construisons est un pont entre la compréhension du langage naturel par le LLM et le calcul mathématique réel.
 
 ```typescript
 import { generateText, stepCountIs, tool } from 'ai';
@@ -66,9 +66,9 @@ const mathTool = tool({
           latex: result.latex,
         };
       } catch (error) {
-        return {
+        return { 
           expression,
-          error: (error as Error).message
+          error: (error as Error).message 
         };
       }
     });
@@ -76,19 +76,19 @@ const mathTool = tool({
 });
 ```
 
-Quelques choses méritent d'être notées :
+Quelques points méritent d'être soulignés :
 
-La description fait beaucoup de travail. Ce langage « MUST be used » peut sembler agressif, mais selon mon expérience, être explicite avec le modèle sur quand utiliser un outil fait la différence entre un fonctionnement occasionnel et un fonctionnement fiable. Considérez ça comme du prompt engineering au niveau de l'outil.
+La description fait le gros du travail. Ce langage « MUST be used » peut sembler agressif, mais selon mon expérience, être explicite avec le modèle sur quand utiliser un outil fait la différence entre un fonctionnement occasionnel et un fonctionnement fiable. Considérez ça comme du prompt engineering au niveau de l'outil.
 
-Le traitement par lots via un tableau `expressions` compte plus que vous ne le pensez. Chaque appel au modèle a de la latence. Si vous résolvez un système d'équations ou faites des maths multi-étapes, les traiter individuellement crée une mauvaise expérience utilisateur. Le traitement par lots signifie un seul aller-retour pour résoudre dix problèmes.
+Le traitement par lots via un tableau `expressions` compte plus qu'on ne le pense. Chaque appel de modèle a une latence. Si vous résolvez un système d'équations ou faites des maths en plusieurs étapes, les traiter individuellement crée une expérience utilisateur terrible. Le lot signifie un seul aller-retour pour résoudre dix problèmes.
 
-Utiliser un moteur symbolique plutôt que juste `eval()` (s'il vous plaît, n'utilisez pas `eval()`) nous donne une vraie compréhension mathématique. Le moteur analyse l'intention, gère le formatage LaTeX, et peut travailler avec des dérivées et des intégrales. Nous ne faisons pas que des calculs, nous faisons des mathématiques.
+Utiliser un moteur symbolique plutôt qu'un simple `eval()` (s'il vous plaît, n'utilisez pas `eval()`) nous donne une véritable compréhension mathématique. Le moteur analyse l'intention, gère le formatage LaTeX et peut travailler avec des dérivées et des intégrales. On ne fait pas que des calculs, on fait des mathématiques.
 
-La gestion des erreurs est scopée par expression. Si un calcul échoue, on retourne cette erreur mais on continue avec le reste. Cela permet au modèle de voir ce qui a fonctionné et ce qui n'a pas fonctionné, avec une possible auto-correction à l'étape suivante.
+La gestion des erreurs est ciblée par expression. Si un calcul échoue, on retourne cette erreur mais on continue avec le reste. Cela permet au modèle de voir ce qui a fonctionné et ce qui a échoué, et potentiellement de se corriger à l'étape suivante.
 
-## Le Mettre en Pratique
+## Le mettre au travail
 
-Testons quelque chose qui ferait normalement halluciner un modèle brut :
+Lançons-lui quelque chose qui ferait typiquement halluciner un modèle brut :
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
@@ -103,31 +103,31 @@ const { text } = await generateText({
 console.log(text);
 ```
 
-Le modèle voit le math, reconnaît qu'il a besoin de précision, appelle l'outil, obtient le résultat précis, et ensuite l'explique en langage naturel. Chaque composant faisant ce qu'il fait de mieux.
+Le modèle voit le calcul, reconnaît qu'il a besoin de précision, appelle l'outil, obtient le résultat exact, puis l'explique en langage naturel. Chaque composant fait ce qu'il fait de mieux.
 
-## Au-delà de l'Arithmétique de Base
+## Au-delà de l'arithmétique de base
 
-Puisqu'on utilise un moteur symbolique, cette approche gère des choses qu'un simple outil calculatrice ne peut pas toucher.
+Puisque nous utilisons un moteur symbolique, cette approche gère des choses que les simples outils de calculatrice ne peuvent pas toucher.
 
-Vous voulez résoudre des équations algébriques ? « Résolvez ces équations : 3x + 7 = 22 et 2y - 5 = 13 » fonctionne bien.
+Vous voulez résoudre des équations algébriques ? « Résolvez ces équations : 3x + 7 = 22 et 2y - 5 = 13 » fonctionne très bien.
 
-Besoin de calcul ? « Trouvez la dérivée de x^3 + 2x^2 et évaluez-la en x = 2 » est juste un autre appel d'outil.
+Besoin de calcul intégral ? « Trouvez la dérivée de x^3 + 2x^2 et évaluez-la en x = 2 » n'est qu'un autre appel d'outil.
 
-Le support LaTeX est particulièrement utile si vous construisez des applications éducatives. Le moteur comprend intrinsèquement l'entrée LaTeX et peut retourner des résultats formatés pour le rendu. Pas de parsing supplémentaire nécessaire.
+Le support LaTeX est particulièrement utile si vous construisez des applications éducatives. Le moteur comprend nativement les entrées LaTeX et peut retourner des résultats formatés pour le rendu. Aucun analyseur supplémentaire requis.
 
-## Le Tableau Plus Grand
+## La vue d'ensemble
 
-Je pense que ce patrón compte au-delà des maths simplement. Ce qu'on fait vraiment, c'est reconnaître les limitations des LLMs tout en exploitant leurs forces. Ils sont incroyables pour comprendre l'intention, parser le langage naturel, et orchestrer des workflows. Ils ne sont pas des calculatrices, des bases de données, ou des systèmes de fichiers.
+Je pense que ce schéma compte au-delà des simples maths. Ce que nous faisons vraiment, c'est reconnaître les limites des LLM tout en exploitant leurs forces. Ils sont incroyables pour comprendre l'intention, analyser le langage naturel et orchestrer des flux de travail. Ils ne sont pas des calculatrices, des bases de données ou des systèmes de fichiers.
 
-Chaque fois qu'on essaie de faire faire à un LLM quelque chose de déterministe, on combat sa nature. Mais quand on couple cette compréhension du langage naturel avec des outils spécialisés qui gèrent les parties déterministes ? C'est là que les choses deviennent intéressantes.
+Chaque fois que nous essayons de faire faire quelque chose de déterministe à un LLM, nous combattons sa nature. Mais quand on couple cette compréhension du langage naturel avec des outils spécialisés qui gèrent les parties déterministes ? C'est là que les choses deviennent intéressantes.
 
-L'outil math n'est qu'un exemple. Le même principe s'applique à la manipulation de dates, aux calculs financiers, au traitement d'images, aux requêtes de base de données... partout où la précision compte plus que la créativité. Laissez le modèle comprendre ce que l'utilisateur veut, puis confiez le travail réel à quelque chose conçu pour ça.
+L'outil mathématique n'est qu'un exemple. Le même principe s'applique à la manipulation de dates, aux calculs financiers, au traitement d'images, aux requêtes de base de données… partout où la précision compte plus que la créativité. Laissez le modèle comprendre ce que l'utilisateur veut, puis passez le travail réel à quelque chose conçu pour le faire.
 
-C'est un changement dans notre façon de penser la construction avec l'IA. Pas « le modèle peut-il faire ça ? » mais « le modèle peut-il orchestrer ça ? » Petite différence de formulation, différence significative en fiabilité.
+C'est un changement dans notre façon de penser la construction avec l'IA. Pas « le modèle peut-il faire ça ? » mais « le modèle peut-il orchestrer ça ? » Petite différence de formulation, différence significative de fiabilité.
 
 ## Ressources
 
 - [Documentation Vercel AI SDK](https://sdk.vercel.ai/docs)
 - [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
-- [Guide d'Appel d'Outils](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
-- [Dépôt d'Exemples AI SDK](https://github.com/vercel/ai/tree/main/examples)
+- [Guide d'appel d'outils](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [Dépôt d'exemples AI SDK](https://github.com/vercel/ai/tree/main/examples)
