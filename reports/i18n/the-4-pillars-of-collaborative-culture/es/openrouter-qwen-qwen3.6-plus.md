@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/es/index.mdx
+- Validation: passed
+- Runtime seconds: 51.48
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
