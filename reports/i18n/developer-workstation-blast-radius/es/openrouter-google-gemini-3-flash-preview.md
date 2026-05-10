@@ -3,11 +3,11 @@
 - Locale: es
 - Model: openrouter/google/gemini-3-flash-preview
 - Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 11.54
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 25.87
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Model did not create src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx.
+- Note: Model changed files outside src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
