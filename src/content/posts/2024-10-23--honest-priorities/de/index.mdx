@@ -1,0 +1,115 @@
+---
+social_image: ../desktop-social.webp
+title:  "Die Prioritätenfalle"
+subTitle: Ist Multiple Choice die beste Wahl?
+category: Thoughts
+subCategory: Agile
+date: 2024-10-23
+modified: 2024-10-24
+tags: [agile, leadership, priority, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> on <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+## Die `Priority`-Dropdown-Falle
+
+<aside className="breakout">
+💡 Mit dem Wachstum einer Organisation schwillt auch das Backlog unweigerlich an. Irgend wird der Umfang der Liste Priorisierung *erzwingen*.
+</aside>
+
+## Eine Startup-Geschichte
+
+Es kommt immer gleich: Deine Jira-Admins haben eine Lösung parat – ein `Priority`-Dropdown! (Pro-Tipp für Enterprise-Entwickler: Vielleicht auch `Priority2` oder `P-Level` genannt.)
+
+Seltsamerweise entscheiden sich 100 % der Unternehmen zwischen `P1, P2, P3, P4` oder `Low, Med, High, Critical` – als gäbe es keine anderen Optionen.
+
+Eine fest kodierte Liste mit vier Werten? Okay. Probieren wir es ein paar Wochen aus …
+
+### 2 Tage später
+
+In einer *für-niemanden-überraschenden* Wendung entdeckt die Organisation ein Ticket mit einer neuen, höheren Priorität – was einen kleinen Hack erforderlich macht: das Hinzufügen von `P0` oder `Critical Max+`!
+
+### 3 Tage später
+
+*Unser Chef hatte ein paar aufregende Meetings & Erkenntnisse auf der Konferenz!*
+
+Irgendwie hat er eine noch höhere Priorität als `P0` entdeckt!
+
+Seitdem tüftelt das Team, wie diese neue Priorität zu benennen ist.
+
+Vielleicht `-1`? Nein, nein. Das ist zu verwirrend (`P-1` vs. `P1`). Oder wie wär's mit `P0,5`?
+
+<p className="breakout">In einem „inspirierten" Moment erfindet das Team eine noch höhere Priorität: die Doppel-Null!<br />Fortan bekannt als die `P00`-Priorität.</p>
+
+{/* *Endlich können wir alles auf der Welt sauber in unser Prioritäten-Dropdown einordnen! (…böses Lachen…)* */}
+
+### Vor der Flut
+
+Bevor es jemand merkt, ertrinkt das Team irgendwie in `P00`-Tickets!
+
+<b>Wie können wir dieses alberne Spiel der Engineering-Theater vermeiden?</b>
+
+## Was wäre, wenn Priorität kein Multiple Choice wäre?
+
+Wie könnten wir ein sich ständig wandelndes, flexibles menschliches Konzept wie `Priority` besser abbilden?
+
+- In der realen Welt verschieben sich Prioritäten ständig und entwickeln sich weiter – basierend auf neuen Informationen, Marktveränderungen und Unternehmenszielen.
+- Oft gibt es ein komplexes Zusammenspiel aus Dringlichkeit, Wichtigkeit, Ressourcenverfügbarkeit und Kosten-/Risikoanalyse, das ein simples Dropdown nicht abbilden kann – schon gar nicht über längere Zeit. (Ticket-Verfall.)
+- Verschiedene Stakeholder haben widersprüchliche Vorstellungen davon, was eine hohe Priorität ausmacht, was einen Einheitsansatz ungeeignet macht.
+
+## Also, was nun?
+
+Es gibt mehrere alternative Ansätze, die es wert sind, erkundet zu werden – von wenig bis viel Aufwand:
+
+- Um mehr Spielraum nach oben und unten zu schaffen, wähle einen „neutralen" Startwert, z. B. 100 oder 1.000. Du kannst die Zahl immer erhöhen oder verringern.
+    - Oder bleibe bei null als Start, wobei höhere Zahlen eine höhere Priorität haben.
+- Implementiere ein multidimensionales Priorisierungssystem, das Faktoren wie Geschäftswert, Dringlichkeit und benötigten Aufwand berücksichtigt. (Erstelle einen `Composite`-Score, um Sortierung und Filterung zu erleichtern.)
+- Nutze eine dynamische Priorisierungsmethode, z. B. die [MoSCoW-Methode](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won't have), die regelmäßige Neubewertung ermöglicht. (Siehe auch das [Kano-Modell](https://en.wikipedia.org/wiki/Kano_model).)
+
+## Zusammenfassung
+
+So viel wird auf Priorität gesetzt, obwohl sie so schnell verfällt. Gestern noch `CRITICAL`-Tickets werden wahrscheinlich nicht nächstes Quartals `CRITICAL`-Tickets sein.
+
+Im Laufe der Zeit werden ältere High-Priority-Tickets resistent gegen Bereinigung und Wartung. Wer möchte schon die `Priority` von etwas senken, das einst als ***essenziell*** deklariert wurde? Geschweige denn, besagte irrelevante Tickets zu löschen … (Entsetzen! Denk an das Backlog!)
+
+Ich habe bei mehreren Unternehmen erlebt, dass `Severity` & `Priority` verwechselt wurden. `Severity` beschreibt ***Dringlichkeit*** (oder Zeitkritikalität.)
+
+`Priority ≠ Severity`. Es kann sinnvoll sein, 3–5 Schweregrade zu definieren (häufig zur Einhaltung von Service Level Agreements verwendet.)
+
+Die Dringlichkeitsstufen helfen, von `keinerlei Kundenbeeinträchtigung` bis hin zu `teilweisem/komplettem Serviceausfall` zu kommunizieren.
+
+## Ein Wort der Warnung
+
+Die Einführung eines unbeschränkten Prioritätsfelds erfordert ein wenig Planung & Disziplin!
+
+Wer Frontend-Entwicklung kennt, hat vielleicht einen `z-index`-Krieg erlebt.
+
+Im Wesentlichen lässt `z-index` Designer *jede* positive Ganzzahl setzen, um sicherzustellen, dass ihre Widgets „über" Inhalten mit niedrigerem `z-index` angezeigt werden.
+
+Schon ein kleines Komponenten-Update könnte den z-index ihres `<Dialog />` ändern – und ihn plötzlich unsichtbar machen. Diese Situationen wurden schnell chaotisch, als unsere Drittanbieter-Komponenten, Feature-Arbeiten und anderen Teambeiträge versuchten, sich gegenseitig mit `z-index` zu übertrumpfen.
+
+`Z-index` war einst auf ~32.000 begrenzt. Allerdings habe ich kürzlich ein Snippet mit einer Milliarde `z-index: 1000000000` gesehen!
+
+Die Inflation muss `z-index` hart treffen.
+
+## Diskussion
+
+- Ist das ein lohnendes Gedankenexperiment?
+- Ist die Idee einer ständig steigenden Priorität erschreckend? Angstauslösend?
+- Ist es unvermeidlich, dass dieser Ansatz irgendwann 64-Bit-Integer-Grenzen überschreitet?
+- Können andere Felder (neben `Severity` oder `Urgency`) diese Diskussion bereichern?
+- Wie viel Schuld verdient Jira? Oder Anerkennung?
+
+Wir könnten ins Internet schreien: „Wer räumt schon all diese `P00`-Tickets auf?"
+
+Oder du wirst ***echt*** mit deinem Backlog.
+
+- Akzeptiere, dass 90 % deiner 1.000 Tickets niemals bearbeitet werden. Das ist okay.
+- Archiviere Tickets, die monatelang unberührt blieben. Jegliche anfängliche Priorität/Dringlichkeit ist nicht mehr aktuell. Archivierte Issues können oft wiederhergestellt werden.
+- Wenn ein Issue wieder relevant wird, ist das cool; seine Priorität hat sich einfach erhöht.
+- Anekdotisch habe ich null Schaden durch das Verwerfen älterer & unvollständiger Tickets festgestellt.
+- Endloses Anhängen an ein Backlog-as-Database verpasst die Chance, dein Team & deine Organisation auf das zu fokussieren, was wirklich zählt. (Dinge vor uns. Während Backlogs inhärent in die Vergangenheit blicken.)
+- Ein tiefes Backlog endet wie ein Bizzaro-Trophäenzimmer, das den Mist feiert, den du niemals ausliefern wirst.
