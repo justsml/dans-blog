@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 133.83
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
