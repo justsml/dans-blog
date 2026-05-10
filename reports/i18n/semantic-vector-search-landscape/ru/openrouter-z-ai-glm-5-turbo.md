@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: ru
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 89.38
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
