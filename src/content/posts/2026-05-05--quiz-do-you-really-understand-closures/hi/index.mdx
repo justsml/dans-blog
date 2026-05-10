@@ -1,5 +1,5 @@
 ---
-title: "क्विज़: क्या आप वास्तव में जावास्क्रिप्ट क्लोज़र समझते हैं?"
+title: "क्विज़: क्या आप सच में JavaScript Closures समझते हैं?"
 subTitle: "ज़्यादातर डेवलपर्स सोचते हैं कि वे समझते हैं। ज़्यादातर डेवलपर्स गलत हैं।"
 date: 2026-05-01
 modified: 2026-05-05
@@ -19,19 +19,19 @@ cover_icon: ../square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">क्लोज़र उन अवधारणाओं में से एक है जिन्हें हर जावास्क्रिप्ट डेवलपर *सोचता है* कि वह समझता है — ठीक उस क्षण तक जब तक वह नहीं समझता। यह क्विज़ आपको दिखाएगा कि आप वास्तव में क्या जानते हैं।</p>
+<p class="inset">Closures उन अवधारणाओं में से एक है जिन्हें हर JavaScript डेवलपर *सोचता है* कि वह समझता है — ठीक उस क्षण तक जब तक वह नहीं समझता। यह क्विज़ आपको दिखाएगा कि आप वास्तव में क्या जानते हैं।</p>
 
-क्लोज़र इवेंट हैंडलर्स, फैक्टरी फ़ंक्शंस, रिएक्ट हुक्स, मॉड्यूल पैटर्न और लगभग हर जगह दिखाई देते हैं। वे विदेशी नहीं हैं। वे वह फैब्रिक हैं जिससे जावास्क्रिप्ट बुनी गई है।
+Closures event handlers, factory functions, React hooks, module patterns और लगभग हर जगह दिखाई देते हैं। ये कोई अजनबी चीज़ नहीं हैं। ये वो कपड़ा है जिससे JavaScript बना है।
 
-सवाल उचित शुरुआत करते हैं और फिर फ़्लोरबोर्ड हटाना शुरू करते हैं।
+सवाल उचित शुरुआत करते हैं और फिर ज़मीन खींचने लगते हैं।
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="वार्मअप"
-  title="क्लासिक काउंटर"
+  group="Warmup"
+  title="Classic Counter"
   options={[
     {text: '0, 0, 0'},
     {text: '0, 1, 2'},
@@ -54,9 +54,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` `count` पर क्लोज़ करता है। हर कॉल उसी `count` वेरिएबल को बढ़ाता है और लौटाता है। तीनों कॉल `1, 2, 3` उत्पन्न करते हैं।
+    `tick` `count` पर close करता है। हर call उसी `count` variable को increment करके return करता है। तीन calls `1, 2, 3` देती हैं।
 
-    महत्वपूर्ण शब्द: *वही*। `count` क्लोज़र में कॉपी नहीं होता। क्लोज़र वेरिएबल बाइंडिंग का **लाइव रेफरेंस** रखता है। यही सारा मामला है।
+    मुख्य शब्द: *उसी*। `count` closure में copy नहीं होता। Closure variable binding का **live reference** रखता है। यही पूरा मामला है।
   </div>
   </slot>
 </Challenge>
@@ -64,8 +64,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="वार्मअप"
-  title="अलग-अलग क्लोज़र"
+  group="Warmup"
+  title="Separate Closures"
   options={[
     {text: '1, 1', isAnswer: true},
     {text: '1, 2'},
@@ -89,11 +89,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `makeCounter()` का हर कॉल अपने ताज़ा `count` के साथ एक **नया एक्जीक्यूशन कॉन्टेक्स्ट** बनाता है। `a` और `b` *अलग-अलग* `count` बाइंडिंग पर क्लोज़ करते हैं। वे स्टेट शेयर नहीं करते।
+    `makeCounter()` की हर call अपने ताज़ा `count` के साथ एक **नया execution context** बनाती है। `a` और `b` *अलग-अलग* `count` bindings पर close होते हैं। ये state share नहीं करते।
 
     परिणाम: `1, 1`
 
-    इसीलिए क्लोज़र का उपयोग प्राइवेट स्टेट बनाने के लिए किया जाता है — हर "इंस्टेंस" स्वतंत्र होता है।
+    इसीलिए closures का उपयोग private state बनाने के लिए किया जाता है — हर "instance" स्वतंत्र होता है।
   </div>
   </slot>
 </Challenge>
@@ -101,8 +101,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="द क्लासिक ट्रैप"
-  title="लूप में var"
+  group="The Classic Trap"
+  title="var in a Loop"
   options={[
     {text: '0, 1, 2, 3, 4'},
     {text: '5, 5, 5, 5, 5', isAnswer: true},
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    100ms के बाद क्या लॉग होता है?
+    100ms के बाद क्या log होता है?
     ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -122,11 +122,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` फ़ंक्शन-स्कोप्ड होता है। बिल्कुल **एक** `i` होता है — सभी पाँच कॉलबैक उसी बाइंडिंग पर क्लोज़ करते हैं। जब टाइमआउट फायर होते हैं, तब तक लूप पूरा हो चुका होता है और `i` `5` होता है।
+    `var` function-scoped है। बिल्कुल **एक** ही `i` है — सभी पाँच callbacks उसी binding पर close होते हैं। जब तक timeouts fire होते हैं, loop खत्म हो चुका होता है और `i` की value `5` है।
 
-    पाँच कॉलबैक। एक `i`। मान: `5`। पाँच बार लॉग हुआ।
+    पाँच callbacks। एक `i`। value: `5`। पाँच बार log हुआ।
 
-    ठीक करने के लिए `let` (ब्लॉक-स्कोप्ड, हर इटरेशन पर नई बाइंडिंग) या वर्तमान वैल्यू कैप्चर करने के लिए IIFE में रैप करें:
+    Fix है `let` (block-scoped, हर iteration में नई binding) या current value capture करने के लिए IIFE में wrap करना:
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -139,8 +139,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="द क्लासिक ट्रैप"
-  title="let इसे ठीक करता है (या करता है?)"
+  group="The Classic Trap"
+  title="let Fixes It (Or Does It?)"
   options={[
     {text: '0, 1, 2, 3, 4', isAnswer: true},
     {text: '5, 5, 5, 5, 5'},
@@ -150,7 +150,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    वही लूप, अलग कीवर्ड। क्या लॉग होता है?
+    वही loop, अलग keyword। क्या log होता है?
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -160,7 +160,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `for` लूप में `let` विशेष होता है। स्पेक कहता है: हर इटरेशन को `i` की अपनी **नई बाइंडिंग** मिलती है। यह ऐसा है जैसे लूप गुप्त रूप से यह करता है:
+    `for` loop में `let` ख़ास है। Spec कहता है: हर iteration को `i` की **नई binding** मिलती है। ऐसा लगता है जैसे loop चुपचाप ये कर रहा हो:
 
     ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
@@ -168,7 +168,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     // ...
     ```
 
-    तो पाँचों कॉलबैक पाँच अलग-अलग वेरिएबल पर क्लोज़ करते हैं। परिणाम: `0, 1, 2, 3, 4`।
+    तो पाँच callbacks पाँच अलग variables पर close होते हैं। परिणाम: `0, 1, 2, 3, 4`।
   </div>
   </slot>
 </Challenge>
@@ -176,8 +176,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="क्लोज़र और ऑब्जेक्ट्स"
-  title="ऑब्जेक्ट म्यूटेशन"
+  group="Closures & Objects"
+  title="Object Mutation"
   options={[
     {text: '{ x: 1 }, { x: 1 }'},
     {text: '{ x: 1 }, { x: 99 }'},
@@ -202,9 +202,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    क्लोज़र `obj` की **बाइंडिंग** कैप्चर करता है, ऑब्जेक्ट का स्नैपशॉट नहीं। ऑब्जेक्ट को क्लोज़र बनने के बाद म्यूटेट किया जाता है — लेकिन `obj` अभी भी उसी रेफरेंस को पॉइंट करता है। दोनों कॉल एक ही म्यूटेटेड ऑब्जेक्ट लौटाते हैं: `{ x: 99 }`।
+    Closure `obj` की **binding** capture करता है, object का snapshot नहीं। Object को closure बनने के बाद mutate किया जाता है — लेकिन `obj` अभी भी उसी reference को point करता है। दोनों calls उसी mutated object को return करती हैं: `{ x: 99 }`।
 
-    यह उन लोगों को काटता है जो सोचते हैं कि क्लोज़र वैल्यूज को "फ्रीज़" कर देते हैं। वे ऐसा नहीं करते। वे **रेफरेंसेज** कैप्चर करते हैं।
+    यह उन लोगों को काटता है जो सोचते हैं कि closures values "freeze" करते हैं। ऐसा नहीं होता। ये **references** capture करते हैं।
   </div>
   </slot>
 </Challenge>
@@ -212,18 +212,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="एडवांस्ड"
-  title="रिएक्ट में स्टेल क्लोज़र"
+  group="Advanced"
+  title="Stale Closure in React"
   options={[
-    {text: 'हर क्लिक पर करंट काउंट लॉग करता है'},
-    {text: 'हमेशा 0 लॉग करता है', isAnswer: true},
-    {text: 'NaN लॉग करता है'},
-    {text: "यह कंपाइल नहीं होगा"},
+    {text: 'हर click पर current count log करता है'},
+    {text: 'हमेशा 0 log करता है', isAnswer: true},
+    {text: 'NaN log करता है'},
+    {text: 'यह compile नहीं होगा'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    जब बटन पर कई बार क्लिक किया जाता है तो यह रिएक्ट कंपोनेंट क्या व्यवहार प्रदर्शित करता है?
+    बटन को कई बार click करने पर यह React component क्या व्यवहार दिखाता है?
     ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
@@ -233,7 +233,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           console.log('count is', count);
         }, 1000);
         return () => clearInterval(id);
-      }, []); // खाली डिप्स
+      }, []); // empty deps
 
       return <button onClick={() => setCount(c => c + 1)}>
         Click ({count})
@@ -244,15 +244,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    क्लासिक स्टेल क्लोज़र। `useEffect` एक बार चलता है (खाली डिप एरे) और एक इंटरवल बनाता है जो माउंट समय पर `count` पर क्लोज़ करता है: `0`। आप चाहे कितनी भी बार क्लिक करें, इंटरवल का क्लोज़र अपडेटेड वैल्यू कभी नहीं देखता।
+    Classic stale closure। `useEffect` एक बार चलता है (empty dep array) और एक interval बनाता है जो mount होने के समय के `count` पर close होता है: `0`। चाहे कितनी भी बार click करो, interval का closure updated value कभी नहीं देखता।
 
-    बटन लेबल सही से अपडेट होता है — वह फ्रेश रेंडर है। लेकिन `console.log` हमेशा के लिए `0` पर फंसा रहता है।
+    Button label सही अपडेट होता है — वो एक fresh render है। लेकिन `console.log` हमेशा `0` पर फँसा रहता है।
 
-    इसे ठीक करने के लिए `count` को डिप एरे में जोड़ें (इंटरवल को दोबारा बनाता है) या ref का उपयोग करें:
+    Fix करने के लिए dep array में `count` जोड़ें (interval दोबारा बनेगा) या ref इस्तेमाल करें:
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // फिर इंटरवल के अंदर countRef.current का उपयोग करें
+    // फिर interval में countRef.current इस्तेमाल करें
     ```
   </div>
   </slot>
@@ -261,8 +261,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="एडवांस्ड"
-  title="मॉड्यूल पैटर्न"
+  group="Advanced"
+  title="Module Pattern"
   options={[
     {text: '60', isAnswer: true},
     {text: 'TypeError: balance is not defined'},
@@ -272,7 +272,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    रुकिए — ध्यान से पढ़ें। वास्तव में क्या होता है?
+    रुकिए — ध्यान से पढ़ें। असल में क्या होता है?
     ```javascript
     const bank = (() => {
       let balance = 0;
@@ -291,15 +291,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    उत्तर है `60`।
+    जवाब `60` है।
 
-    यह **मॉड्यूल पैटर्न** है — एक IIFE जो क्लोज़र का ऑब्जेक्ट लौटाता है। तीनों मेथड एक ही `balance` बाइंडिंग पर क्लोज़ करती हैं। यह वास्तव में प्राइवेट है: आप बाहर से `balance` तक नहीं पहुंच सकते।
+    यह **Module Pattern** है — एक IIFE जो closures का एक object return करता है। तीनों methods उसी `balance` binding पर close होती हैं। यह genuinely private है: बाहर से `balance` access नहीं कर सकते।
 
     ```javascript
     console.log(bank.balance); // undefined
     ```
 
-    क्लासेज़ से पहले, यह जावास्क्रिप्ट में स्टेट को एनकैप्सुलेट करने का *तरीका* था। आप इसे अभी भी लेगसी कोडबेस और यूटिलिटी लाइब्रेरीज में देखेंगे।
+    Classes से पहले, JavaScript में state encapsulate करने का यही *तरीका* था। Legacy codebases और utility libraries में आज भी ये दिखता है।
   </div>
   </slot>
 </Challenge>
@@ -307,18 +307,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="एक्सपर्ट"
-  title="क्लोज़र मेमोरी लीक"
+  group="Expert"
+  title="Closure Memory Leak"
   options={[
-    {text: 'यह डेटा एरे की लंबाई लॉग करता है'},
-    {text: 'यह मेमोरी लीक बनाता है', isAnswer: true},
-    {text: 'यह RangeError थ्रो करता है'},
+    {text: 'यह data array की length log करता है'},
+    {text: 'यह एक memory leak बनाता है', isAnswer: true},
+    {text: 'यह RangeError throw करता है'},
     {text: 'कुछ भी असामान्य नहीं — यह ठीक है'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    इस कोड में क्या समस्या है?
+    इस code में क्या समस्या है?
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
@@ -331,11 +331,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    इवेंट लिसनर `data` पर क्लोज़ करता है, इसलिए एरे तब तक रीचेबल रहता है जब तक लिसनर रीचेबल रहता है। अगर `element` लॉन्ग-लिव्ड है और लिसनर कभी हटाया नहीं जाता, तो वह बड़ा एरे भी रिटेन रहता है।
+    Event listener `data` पर close होता है, इसलिए array तब तक reachable रहती है जब तक listener reachable है। अगर `element` long-lived है और listener कभी हटाया नहीं जाता, तो वो बड़ी array भी retain रहती है।
 
-    `element` DOM में है। लिसनर `data` को होल्ड करता है। GC इसे कलेक्ट नहीं कर सकता।
+    `element` DOM में है। Listener `data` को पकड़े हुए है। GC इसे collect नहीं कर सकता।
 
-    ठीक करें: लॉन्ग-लिव्ड लिसनर्स में बड़ा डेटा कैप्चर न करें जब तक आपको वास्तव में ज़रूरत न हो, और जब ओनिंग UI टॉर्न डाउन हो तो लिसनर्स हटा दें:
+    Fix: long-lived listeners में बड़ा data तब तक capture मत करो जब तक ज़रूरत न हो, और जब owning UI tear down हो तो listeners हटाओ:
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
@@ -350,7 +350,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     }
     ```
 
-    आधुनिक V8 इस मामले में पहले से बेहतर है। लेकिन कई इवेंट लिसनर्स वाले लॉन्ग-लिव्ड SPA में, यह पैटर्न अभी भी लोगों को काटता है।
+    Modern V8 पहले से बेहतर है। लेकिन बहुत सारे event listeners वाले long-lived SPAs में, ये pattern अभी भी लोगों को काटता है।
   </div>
   </slot>
 </Challenge>
@@ -358,8 +358,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="एक्सपर्ट"
-  title="द this ट्रैप"
+  group="Expert"
+  title="The this Trap"
   options={[
     {text: 'Dan, Dan'},
     {text: 'Dan, undefined'},
@@ -369,7 +369,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    यह क्या लॉग करता है?
+    यह क्या log करता है?
     ```javascript
     const user = {
       name: 'Dan',
@@ -388,13 +388,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    दो सूक्ष्म ट्रैप:
+    दो सूक्ष्म traps:
 
-    **`greetArrow`**: ऐरो फ़ंक्शंस का अपना `this` नहीं होता। वे `this` को एनक्लोजिंग लेक्सिकल स्कोप से कैप्चर करते हैं — जो यहाँ `user` नहीं, बल्कि मॉड्यूल/ग्लोबल स्कोप है। तो `this?.name` `undefined` है।
+    **`greetArrow`**: Arrow functions का अपना `this` नहीं होता। ये `this` को enclosing lexical scope से capture करते हैं — जो यहाँ `user` नहीं, module/global scope है। तो `this?.name` `undefined` है।
 
-    **`fn()`**: `greetRegular` को रिसीवर के बिना कहा जाता है (`fn()` न कि `user.greetRegular()`)। स्ट्रिक्ट मोड में, `this` `undefined` होता है। स्लोपी मोड में, यह ग्लोबल ऑब्जेक्ट होता है। किसी भी स्थिति में, `this?.name` `undefined` है।
+    **`fn()`**: `greetRegular` को receiver के बिना call किया जाता है (`fn()` न कि `user.greetRegular()`)। Strict mode में, `this` `undefined` है। Sloppy mode में, ये global object है। दोनों ही स्थिति में, `this?.name` `undefined` है।
 
-    अगर आपने `user.greetRegular()` को सीधे कहा होता, तो आपको `'Dan'` मिलता — क्योंकि तब `this` `user` से बाउंड होता।
+    अगर आप सीधे `user.greetRegular()` call करते, तो आपको `'Dan'` मिलता — क्योंकि तब `this` `user` से bound होता।
 
     परिणाम: `undefined, undefined`।
   </div>
@@ -404,18 +404,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="बोनस"
-  title="क्लोज़र के माध्यम से मेमोइज़ेशन"
+  group="Bonus"
+  title="Memoization via Closure"
   options={[
-    {text: 'expensive() को 3 बार कॉल करता है'},
-    {text: 'expensive() को 1 बार कॉल करता है', isAnswer: true},
-    {text: 'expensive() को 2 बार कॉल करता है'},
-    {text: 'थ्रो करता है: Maximum call stack exceeded'},
+    {text: 'expensive() को 3 बार call करता है'},
+    {text: 'expensive() को 1 बार call करता है', isAnswer: true},
+    {text: 'expensive() को 2 बार call करता है'},
+    {text: 'Throws: Maximum call stack exceeded'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    `expensive()` वास्तव में कितनी बार कॉल होता है?
+    `expensive()` असल में कितनी बार call होता है?
     ```javascript
     function memoize(fn) {
       const cache = new Map();
@@ -440,11 +440,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    मेमोइज़्ड फ़ंक्शन `cache` पर क्लोज़ करता है। पहला कॉल (`fast(5)`) कैश मिस करता है, `expensive` को कॉल करता है, और रिजल्ट स्टोर करता है। दूसरा और तीसरा कॉल कैश हिट करते हैं और तुरंत रिटर्न करते हैं।
+    Memoized function `cache` पर close होता है। पहली call (`fast(5)`) cache miss होती है, `expensive` को call करती है, और result store करती है। दूसरी और तीसरी call cache hit होती हैं और तुरंत return होती हैं।
 
-    `calls` `1` है।
+    `calls` है `1`।
 
-    यह क्लोज़र वास्तविक काम कर रहे हैं। `cache` प्राइवेट है (`memoize` के बाहर से एक्सेस नहीं किया जा सकता), पर्सिस्टेंट है (`fast` के अस्तित्व में रहने तक जीवित रहता है), और `fast` के सभी कॉल में शेयर्ड है।
+    यही closures का असली काम है। `cache` private है (`memoize` के बाहर से access नहीं हो सकता), persistent है (`fast` जितना रहता है तब तक ज़िंदा रहता है), और `fast` की सभी calls में shared है।
   </div>
   </slot>
 </Challenge>
@@ -453,11 +453,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 ---
 
-आपने कैसा प्रदर्शन किया?
+कैसा रहा?
 
-- **9-10**: आप वास्तव में क्लोज़र जानते हैं। संभवतः आपके साथ पेयर-प्रोग्रामिंग करना डरावना है।
-- **6-8**: ठोस। स्टेल क्लोज़र / `this` के सवालों ने आपको फंसाया, जो ईमानदारी है।
-- **3-5**: आप अवधारणा जानते हैं लेकिन किनारे धुंधले हैं। MDN स्कोप चेन डॉक्स पढ़ें।
-- **0-2**: आप सोचते थे कि आप क्लोज़र जानते हैं। अब आप जानते हैं। यही तो मुद्दा है।
+- **9-10**: आप सच में closures समझते हैं। शायद pair-program करना डरावना होगा।
+- **6-8**: मज़बूत। Stale closure / `this` वाले सवालों में अटके, जो ईमानदारी है।
+- **3-5**: Concept तो समझते हैं लेकिन किनारे धुंधले हैं। MDN scope chain docs पढ़ें।
+- **0-2**: आप सोचते थे कि closures समझते हैं। अब समझ गए। यही तो मकसद था।
 
-रिएक्ट में स्टेल क्लोज़र (#6) और `this` ट्रैप (#8) वे हैं जो वास्तविक प्रोडक्शन बग पैदा करते हैं। अगर वे अपरिचित लगे, तो उन पर फिर से विचार करने लायक हैं — वे किसी भी अन्य क्लोज़र-संबंधित मुद्दे से ज़्यादा कोड रिव्यू में दिखाई देते हैं।
+React में stale closure (#6) और `this` trap (#8) वे हैं जो असली production bugs पैदा करते हैं। अगर ये अपरिचित लगे, तो इन्हें दोबारा देखने लायक हैं — code review में ये closure-related किसी भी दूसरी issue से ज़्यादा आते हैं।
