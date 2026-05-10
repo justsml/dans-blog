@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 21.23
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
