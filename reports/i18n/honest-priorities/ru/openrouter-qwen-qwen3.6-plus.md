@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-10-23--honest-priorities/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 249.18
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
