@@ -4,7 +4,7 @@
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
 - Validation: rejected: missing output file
-- Runtime seconds: 1.50
+- Runtime seconds: 2.38
 - Input tokens: 25035
 - Output tokens: unknown
 - Thinking tokens: unknown
