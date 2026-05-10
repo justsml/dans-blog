@@ -14,6 +14,10 @@ import {
 import { getRunTelemetry, renderTelemetryLines, runMeasuredCommand } from "./telemetry.ts";
 import { existsSync } from "node:fs";
 
+const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
+  ? "/Users/dan/.opencode/bin/opencode"
+  : "opencode";
+
 const options = parseArgs();
 const slug = requireString(options, "slug");
 const locale = requireActiveLocale(options);
@@ -132,7 +136,7 @@ if (!shouldSkipCommit) {
 }
 
 function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {
-  return runMeasuredCommand("opencode", [
+  return runMeasuredCommand(OPENCODE_COMMAND, [
   "run",
   "--model",
   model,
