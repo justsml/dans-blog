@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: it
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/it/index.mdx
+- Validation: passed
+- Runtime seconds: 56.54
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
