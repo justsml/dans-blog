@@ -1,6 +1,6 @@
 ---
-title: "Postgres Search: FTS, Trigrams, और pgvector"
-subTitle: "आपके पास पहले से ही टूल मौजूद हैं। क्वेरी के हिसाब से सही चुनें।"
+title: "Postgres खोज: FTS, Trigrams, और pgvector"
+subTitle: "टूल्स आपके पास पहले से हैं। क्वेरी से मेल खाने वाला चुनें।"
 date: 2026-05-08
 modified: 2026-05-08
 tags: [postgres, postgresql, pgvector, full-text-search, vector-search, trigrams, pg_trgm, databases, ai, search]
@@ -17,41 +17,41 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-AI फीचर्स जोड़ने वाली टीमें अक्सर सबसे पहले एक समर्पित vector database की तरफ देखती हैं।
+AI फीचर्स जोड़ने वाली टीमें अक्सर सबसे पहले एक समर्पित वेक्टर डेटाबेस की तरफ बढ़ती हैं।
 
-Pinecone, Weaviate, Qdrant, Chroma। नई सर्विस, नई dependency, नया connection pool, नया बिल, और अब दो sources of truth को सिंक रखना।
+Pinecone, Weaviate, Qdrant, Chroma। नई सर्विस, नई डिपेंडेंसी, नया कनेक्शन पूल, नया बिल, और अब दो sources of truth को ईमानदार रखना।
 
-इसी बीच, आपके पास पहले से PostgreSQL है। आपके पास पहले से `pgvector` है। और इसमें 2008 से built-in excellent full-text search भी है।
+इसी बीच, उनके पास PostgreSQL पहले से मौजूद है। PostgreSQL में `pgvector` पहले से है। 2008 से इसमें बेहतरीन full-text search भी बिल्ट-इन है।
 
-Dedicated vector stores बड़े scale और high query volume पर अपनी कीमत साबित करते हैं। लेकिन ज़्यादातर applications पहले search system को अच्छे से push करने से पहले ही दूसरे की तरफ बढ़ जाते हैं। ऐसे में future की scaling problem आज की synchronization bug बन जाती है।
+समर्पित वेक्टर स्टोर्स बड़े स्केल और हाई क्वेरी वॉल्यूम पर अपनी कीमत साबित करते हैं। लेकिन ज़्यादातर ऐप्लिकेशन पहले सिस्टम को ज़्यादा टेस्ट करने से पहले ही दूसरे सर्च सिस्टम की तरफ बढ़ जाते हैं। यही वजह है कि भविष्य की स्केलिंग समस्या आज के synchronization bug में बदल जाती है।
 
-तो: FTS कब इस्तेमाल करें, pgvector कब, और दोनों कब?
+तो: FTS कब उपयोग करें, pgvector कब उपयोग करें, और दोनों कब उपयोग करें?
 
 ---
 
-## हर एक असल में क्या करता है
+## हर एक वास्तव में क्या करता है
 
-Full-text search (`tsvector` / `GIN` index) lexical है। यह text को lexemes में tokenize करता है, उन्हें stem करता है, और queries को index के ख़िलाफ़ match करता है। "Running" और "runs" एक ही lexeme में collapse हो जाते हैं। "dog" और "dogs" भी। Ranking function (`ts_rank`) उन documents को ज़्यादा अंक देता है जहाँ query terms बार-बार या prominent जगह पर आते हैं।
+Full-text search (`tsvector` / `GIN` इंडेक्स) lexical है। यह टेक्स्ट को lexemes में tokenize करता है, उन्हें stem करता है, और क्वेरी को इंडेक्स से मैच करता है। "Running" और "runs" एक ही lexeme में collapse हो जाते हैं। "dog" और "dogs" भी ऐसा ही करते हैं। रैंकिंग फंक्शन (`ts_rank`) उन डॉक्यूमेंट्स को इनाम देता है जहाँ क्वेरी टर्म्स बार-बार या प्रमुख स्थान पर आती हैं।
 
-pgvector semantic है। यह एक dense vector store करता है — numbers की एक list — जो एक embedding model द्वारा समझे गए chunk के *meaning* को represent करती है। Similarity search उस high-dimensional space में nearby vectors ढूंढता है। "Dog" और "canine" एक-दूसरे के करीब आ जाते हैं। "Running" (खेल) और "running" (process चलाना) शायद नहीं।
+pgvector semantic है। यह एक dense vector — नंबरों की एक सूची — स्टोर करता है, जो embedding model द्वारा समझे गए chunk के *अर्थ* को दर्शाता है। समानता खोज उस उच्च-आयामी स्थान में निकटतम वेक्टर ढूंढती है। "Dog" और "canine" एक-दूसरे के पास आ जाते हैं। "Running" (खेल) और "running" (प्रोसेस) शायद नहीं।
 
-Practical difference: FTS जवाब देता है "किन documents में ये words हैं?" Vector search जवाब देता है "किन documents का मतलब लगभग यही है?"
+व्यावहारिक अंतर: FTS जवाब देता है "किन डॉक्यूमेंट्स में ये शब्द हैं?" वेक्टर खोज जवाब देती है "किन डॉक्यूमेंट्स का अर्थ लगभग यह है?"
 
-![एक search tool map जो pg_trgm को short fuzzy strings के लिए, full-text search को exact prose queries के लिए, pgvector को semantic matching के लिए, और hybrid search को long content के लिए दिखाता है जिसे exact और semantic दोनों signals चाहिए।](../search-tool-map.svg)
+![एक सर्च टूल मैप जो छोटे fuzzy strings के लिए pg_trgm, exact prose queries के लिए full-text search, semantic matching के लिए pgvector, और लंबी सामग्री के लिए hybrid search (exact और semantic दोनों सिग्नल) दिखाता है।](../search-tool-map.svg)
 
-_पहला split "पुराना search vs. AI search" नहीं है। यह text की shape और सही जवाब किस तरह का होगा, इस पर निर्भर करता है।_
+_पहला विभाजक "पुरानी खोज बनाम AI खोज" नहीं है। यह टेक्स्ट का आकार है और किस तरह का जवाब सही होगा।_
 
 ---
 
 ## जब Full-Text Search जीतता है
 
-**आप ऐसे terms search कर रहे हैं जो exactly match होने चाहिए।** Product SKUs, error codes, model numbers, usernames, legal clause references। `SKU-AX-44192` किसी से semantically similar नहीं है। यह या तो match करता है या नहीं। Vector search भरोसे से `SKU-AX-44193` return कर सकता है। यह वो नहीं है जो आप चाहते।
+**आप ऐसे टर्म्स खोज रहे हैं जो बिल्कुल सही होने चाहिए।** प्रोडक्ट SKU, एरर कोड, मॉडल नंबर, यूज़रनेम, लीगल क्लॉज़ रेफ़रेंस। `SKU-AX-44192` किसी भी चीज़ से semantically similar नहीं है। यह या तो मैच करता है या नहीं। वेक्टर खोज आत्मविश्वास से `SKU-AX-44193` लौटा सकती है। यह वह नहीं है जो आप चाहते हैं।
 
-**आपकी queries keyword-based हैं।** Users search box में type करते हैं, tag से filter करते हैं, या keyword से blog posts search करते हैं। FTS उस shape के intent के लिए बना है।
+**आपकी क्वेरीज़ keyword-आधारित हैं।** यूज़र्स सर्च बॉक्स में टाइप करते हैं, टैग से फ़िल्टर करते हैं, या कीवर्ड से ब्लॉग पोस्ट खोजते हैं। FTS उस intent के लिए बनाया गया है।
 
-**आपको GPU या embedding infrastructure के बिना ranked results चाहिए।** FTS indexes fast, deterministic हैं, और किसी external API call की ज़रूरत नहीं। एक `tsvector` column add करें, GIN index बनाएं, और हो गया।
+**आपको GPU या embedding infrastructure के बिना ranked results चाहिए।** FTS इंडेक्स तेज़, deterministic हैं, और बाहरी API कॉल की ज़रूरत नहीं है। एक `tsvector` कॉलम जोड़ें, GIN इंडेक्स बनाएं, और काम पूरा।
 
-**आप search के साथ boolean filtering कर रहे हैं।** `WHERE to_tsvector(body) @@ to_tsquery('postgres') AND category = 'tutorial' AND published_at > NOW() - INTERVAL '6 months'` — यह आपके existing query logic के साथ naturally compose होता है।
+**आप सर्च के साथ boolean filtering कर रहे हैं।** `WHERE to_tsvector(body) @@ to_tsquery('postgres') AND category = 'tutorial' AND published_at > NOW() - INTERVAL '6 months'` — यह आपकी मौजूदा क्वेरी लॉजिक के साथ स्वाभाविक रूप से काम करता है।
 
 ```sql
 -- Create the index
@@ -71,26 +71,26 @@ ORDER BY rank DESC
 LIMIT 10;
 ```
 
-`GENERATED ALWAYS AS` column index को automatically updated रखता है। `setweight` title matches को body matches से ज़्यादा rank देता है। बस इतना ही setup है।
+`GENERATED ALWAYS AS` कॉलम इंडेक्स को स्वचालित रूप से अपडेट रखता है। `setweight` टाइटल मैच को बॉडी मैच से ऊँचा रैंक देता है। बस इतना ही सेटअप है।
 
 ---
 
 ## जब Trigrams जीतते हैं (pg_trgm)
 
-एक third Postgres tool है जिसे अक्सर छोड़ दिया जाता है: `pg_trgm`। यह न full-text search है न vector search। यह fuzzy string matching है, और उस awkward middle को cover करता है जिसे दोनों tools ठीक से handle नहीं कर पाते।
+एक तीसरा Postgres टूल है जिसे अक्सर छोड़ दिया जाता है: `pg_trgm`। यह न तो full-text search है और न ही वेक्टर खोज। यह fuzzy string matching है, और उस awkward middle को कवर करता है जिसे दोनों टूल्स ठीक से हैंडल नहीं करते।
 
-**Use case: names, addresses, identifiers, और typos वाले short strings।**
+**उपयोग का मामला: नाम, पते, आइडेंटिफ़ायर, और typos वाले छोटे strings।**
 
-FTS text को lexemes में tokenize और stem करता है। यह prose के लिए काम करता है, लेकिन इनके लिए बुरा fit है:
-- Person names ("Dan Levy" → language config पर depend करके "dan levi", "leiv" में stem हो सकता है)
-- Company names, addresses, product titles जहाँ exact spelling matter करता है
-- Typos वाले queries — "Micheal Jordan", "Amaon", "javascipt"
-- Autocomplete / prefix search
-- Partial string matching ("son" से "Johnson", "Anderson" match करना)
+FTS टेक्स्ट को lexemes में tokenize और stem करता है। यह prose के लिए काम करता है, लेकिन इनके लिए ख़राब है:
+- व्यक्ति के नाम ("Dan Levy" → "dan levi", "leiv" में stem, भाषा कॉन्फ़िगरेशन पर निर्भर)
+- कंपनी के नाम, पते, प्रोडक्ट टाइटल जहाँ सही spelling मायने रखती है
+- Typos वाली क्वेरीज़ — "Micheal Jordan", "Amaon", "javascipt"
+- Autocomplete / prefix खोज
+- आंशिक string मिलान ("son" का "Johnson", "Anderson" से मिलान)
 
-pgvector भी यहाँ सही choice नहीं है। आप "Micheal Jordan" embed कर सकते हैं और nearest vector ढूंढ सकते हैं, लेकिन embedding space names को meaning से organize करता है, spelling से नहीं। Nearest neighbor "basketball legend" या "Michael B. Jordan" हो सकता है, typo वाले user record नहीं।
+pgvector भी यहाँ ख़राब विकल्प है। आप "Micheal Jordan" को embed करके निकटतम वेक्टर ढूंढ सकते हैं, लेकिन embedding space नामों को अर्थ से व्यवस्थित करता है, spelling से नहीं। निकटतम neighbor "basketball legend" या "Michael B. Jordan" हो सकता है, typo वाले यूज़र रिकॉर्ड नहीं।
 
-`pg_trgm` strings को overlapping 3-character slices में तोड़ता है और measure करता है कि दो strings कितने trigrams share करते हैं। "Dan" → `" da"`, `"dan"`, `"an "`. "Micheal" और "Michael" अपने ज़्यादातर trigrams share करते हैं, इसलिए similarity high है।
+`pg_trgm` strings को overlapping 3-character slices में तोड़ता है और मापता है कि दो strings कितने trigrams साझा करते हैं। "Dan" → `" da"`, `"dan"`, `"an "`। "Micheal" और "Michael" अपने ज़्यादातर trigrams साझा करते हैं, इसलिए समानता उच्च है।
 
 ```sql
 -- Enable the extension (usually already available)
@@ -113,9 +113,9 @@ WHERE name ILIKE '%johnson%'   -- GIN index makes this fast
 LIMIT 10;
 ```
 
-`%` operator `pg_trgm.similarity_threshold` (default 0.3, range 0-1) use करता है। Higher values closer matches मांगते हैं। Name search के लिए 0.3-0.4 आमतौर पर सही है: typos पकड़ने के लिए काफ़ी permissive, noise से बचने के लिए काफ़ी strict।
+`%` ऑपरेटर `pg_trgm.similarity_threshold` (डिफ़ॉल्ट 0.3, रेंज 0-1) का उपयोग करता है। उच्च मान करीब के मैच की माँग करते हैं। नाम खोज के लिए 0.3-0.4 आमतौर पर सही है: typos पकड़ने के लिए पर्याप्त उदार, शोर से बचने के लिए पर्याप्त सख़्त।
 
-**Trigrams prefix search और autocomplete में भी मदद करते हैं, ख़ास तौर पर जब autocomplete को typo tolerance या contains matching चाहिए:**
+**Trigrams prefix खोज और autocomplete में भी मदद करते हैं, ख़ास तब जब autocomplete को typo tolerance या contains matching की ज़रूरत हो:**
 
 ```sql
 -- Autocomplete: prefix matching. For pure left-anchored prefixes,
@@ -134,30 +134,30 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-**`pg_trgm` कब चुनें FTS के बजाय:**
+**FTS के ऊपर `pg_trgm` कब चुनें:**
 
-| Scenario | Use |
+| परिदृश्य | उपयोग |
 |---|---|
-| Person/company name search with typos | `pg_trgm` |
-| Autocomplete / prefix search | `pg_trgm` (या prefix queries के साथ FTS) |
-| Searching short strings, codes, identifiers | `pg_trgm` |
-| Searching prose articles, documentation | FTS |
-| Searching log messages for keywords | FTS |
-| Multilingual name search | `pg_trgm` (यह language-agnostic है) |
+| Typos के साथ व्यक्ति/कंपनी नाम खोज | `pg_trgm` |
+| Autocomplete / prefix खोज | `pg_trgm` (या prefix queries के साथ FTS) |
+| छोटे strings, कोड, आइडेंटिफ़ायर खोज | `pg_trgm` |
+| Prose आर्टिकल्स, दस्तावेज़ीकरण खोज | FTS |
+| लॉग मैसेज में कीवर्ड खोज | FTS |
+| बहुभाषी नाम खोज | `pg_trgm` (भाषा-स्वतंत्र) |
 
-`pg_trgm` FTS के साथ compose भी होता है। Trigrams को fuzzy pre-filter के लिए use करें और `ts_rank` से rank करें, या trigram similarity को vector score के साथ combine करें।
+`pg_trgm` FTS के साथ भी काम करता है। fuzzy pre-filter के लिए trigrams उपयोग करें और `ts_rank` से रैंक करें, या trigram समानता को वेक्टर स्कोर के साथ जोड़ें।
 
 ---
 
 ## जब pgvector जीतता है
 
-**आप RAG बना रहे हैं।** RAG semantic retrieval पर depend करता है: उन document *chunks* को ढूंढना जिनका meaning user के question के closest है, भले ही wording अलग हो। Vector search इसके लिए purpose-built है। FTS paraphrases, synonyms, और conceptual matches miss कर देगा।
+**आप RAG बना रहे हैं।** RAG semantic retrieval पर निर्भर करता है: ऐसे document *chunks* ढूंढें जिनका अर्थ यूज़र के सवाल के सबसे करीब हो, भले ही शब्दावली अलग हो। वेक्टर खोज इसके लिए purpose-built है। FTS paraphrases, synonyms, और conceptual matches को छोड़ देगा।
 
-**Users बताते हैं कि उन्हें क्या चाहिए, search क्या करना है नहीं।** "Something light for a summer evening" के कोई obvious wine keywords नहीं हैं। "Articles about building confidence as a new manager" को semantic understanding चाहिए जो FTS provide नहीं कर सकता।
+**यूज़र्स बताते हैं कि उन्हें क्या चाहिए, न कि क्या खोजना है।** "किसी गर्मियों की शाम के लिए हल्का" — इसमें कोई स्पष्ट वाइन कीवर्ड नहीं है। "नए मैनेजर के रूप में आत्मविश्वास बनाने के बारे में आर्टिकल्स" — इसके लिए semantic understanding चाहिए जो FTS नहीं दे सकता।
 
-**आप similar items ढूंढ रहे हैं।** Related products, similar support tickets, duplicate bug reports। "Find me issues similar to this one" एक vector operation है। आप new issue को embed करते हैं और उसके nearest neighbors ढूंढते हैं।
+**आप similar items ढूंढ रहे हैं।** संबंधित प्रोडक्ट्स, समान सपोर्ट टिकट, डुप्लीकेट बग रिपोर्ट। "मुझे इस जैसे issues ढूंढकर दें" एक वेक्टर ऑपरेशन है। आप नए issue को embed करते हैं और उसके nearest neighbors ढूंढते हैं।
 
-**Multilingual content।** Multilingual data पर trained vector embeddings languages के across match कर सकते हैं। FTS को language-specific configurations चाहिए और cross-language queries को poorly handle करता है।
+**बहुभाषी सामग्री।** बहुभाषी डेटा पर ट्रेन किए गए वेक्टर embeddings भाषाओं के बीच मैच कर सकते हैं। FTS को भाषा-विशिष्ट कॉन्फ़िगरेशन की ज़रूरत होती है और cross-language क्वेरीज़ को ख़राब हैंडल करता है।
 
 ```sql
 -- Setup
@@ -175,7 +175,7 @@ ORDER BY embedding <=> $1::vector
 LIMIT 10;
 ```
 
-Note: `ivfflat` approximate है — fast है लेकिन speed के बदले कुछ recall trade करता है। Smaller datasets (~1M rows से कम) के लिए `hnsw` अक्सर बेहतर है:
+नोट: `ivfflat` approximate है — यह तेज़ है लेकिन गति के लिए कुछ recall की कुर्बानी देता है। छोटे डेटासेट (~1M rows से कम) के लिए `hnsw` अक्सर बेहतर होता है:
 
 ```sql
 CREATE INDEX documents_embedding_idx
@@ -186,13 +186,13 @@ CREATE INDEX documents_embedding_idx
 
 ## जब दोनों की ज़रूरत हो
 
-Technical documentation वो जगह है जहाँ simple split टूटता है। Users "how to configure timeouts" search करते हैं, लेकिन `withRetry()` जैसे function names और `ECONNRESET` जैसे error codes भी search करते हैं।
+तकनीकी दस्तावेज़ीकरण वह जगह है जहाँ सरल विभाजन टूटता है। यूज़र्स "how to configure timeouts" खोजते हैं, लेकिन वे `withRetry()` जैसे फंक्शन नाम और `ECONNRESET` जैसे एरर कोड भी खोजते हैं।
 
-Vector search conceptual queries handle करता है। FTS exact terms handle करता है। अकेले दोनों में से कोई भी दोनों को अच्छे से handle नहीं कर पाता।
+वेक्टर खोज conceptual queries हैंडल करती है। FTS exact terms हैंडल करता है। अकेले कोई भी दोनों को अच्छे से हैंडल नहीं करता।
 
-Solution hybrid search है: दोनों run करें और results को fuse करें।
+समाधान है hybrid search: दोनों चलाएं और परिणामों को fuse करें।
 
-**Reciprocal Rank Fusion (RRF)** यहाँ standard algorithm है। इसके लिए दो systems के scores को normalize करने की ज़रूरत नहीं; यह rank positions को combine करता है।
+**Reciprocal Rank Fusion (RRF)** यहाँ मानक एल्गोरिदम है। इसके लिए दो सिस्टम के स्कोर को normalize करने की ज़रूरत नहीं है; यह रैंक पोज़िशन को जोड़ता है।
 
 ```sql
 -- Hybrid search with Reciprocal Rank Fusion
@@ -222,61 +222,61 @@ ORDER BY rrf_score DESC
 LIMIT 10;
 ```
 
-Denominator में `60` RRF constant है — higher values rank differences के influence को कम करते हैं, lower values amplify करते हैं। Default 60 ज़्यादातर cases में अच्छा काम करता है।
+हर में `60` RRF constant है — उच्च मान रैंक अंतर के प्रभाव को कम करते हैं, निम्न मान उन्हें बढ़ाते हैं। 60 का डिफ़ॉल्ट ज़्यादातर मामलों में अच्छा काम करता है।
 
-यह एक query में दो searches run करता है, ranks को fuse करता है, और उन results को reward करता है जहाँ keyword और semantic signals agree करते हैं।
+यह एक क्वेरी में दो खोज चलाता है, रैंकों को fuse करता है, और उन परिणामों को इनाम देता है जहाँ keyword और semantic सिग्नल सहमत होते हैं।
 
-![एक hybrid search pipeline जहाँ एक query full-text search और pgvector दोनों में fan out होता है, हर एक ranked results produce करता है, और Reciprocal Rank Fusion दोनों lists को combine करता है।](../hybrid-rrf-pipeline.svg)
+![एक hybrid search pipeline जहाँ एक क्वेरी full-text search और pgvector दोनों में जाती है, हर एक ranked परिणाम देता है, और Reciprocal Rank Fusion दोनों सूचियों को जोड़ता है।](../hybrid-rrf-pipeline.svg)
 
-_RRF इसलिए valuable है क्योंकि यह `ts_rank` और cosine distance को comparable raw scores मानने का नाटक नहीं करता। यह सिर्फ़ पूछता है, "यह result हर list में कितना ऊपर आया?"_
-
----
-
-## Practical Decision Tree
-
-Search strategy चुनते वक़्त, **input की shape** से शुरू करें, फिर पूछें **user किस तरह का query बना रहा है**। "Short string with spelling variation" वो problem नहीं है जो "long prose where exact terms matter" है, और दोनों "question over document chunks" से अलग हैं।
-
-![एक decision tree जो pg_trgm, full-text search, pgvector, hybrid search, या dedicated vector database को text की shape और users के query करने के तरीके के basis पर चुनता है।](../search-decision-tree.svg)
-
-वही tree words में:
-
-- **Names, addresses, titles, autocomplete, या typo-prone short strings** → `pg_trgm`
-- **Known words, error codes, SKUs, function names, tags, categories, filters** → FTS
-- **Questions, paraphrases, recommendations, related items, multilingual match, RAG chunks** → pgvector
-- **Technical content जहाँ users को exact symbols और conceptual answers दोनों चाहिए** → Hybrid with RRF
-- **Primary keys, exact IDs, permission filters, date ranges, sorted lists** → normal SQL indexes
-- **Huge vector volume, very high concurrency, या latency targets जो आपके benchmarks में Postgres hit नहीं कर पा रहा** → dedicated vector stores evaluate करें
-
-### FTS vs. Semantic: Short Version
-
-"FTS use करूं या vector search?" का सवाल आमतौर पर इस पर आ जाता है: **क्या आप जानते हैं कि relevant documents में कौन से words आएंगे?**
-
-अगर हाँ — users known terms, categories, function names, product codes search कर रहे हैं — FTS faster, cheaper, और more predictable है। यह बताता है कि result क्यों match हुआ।
-
-अगर नहीं — users concept describe कर रहे हैं, question पूछ रहे हैं, या different language में search कर रहे हैं — vector search सही tool है। यह words नहीं, meaning match करता है।
-
-Tricky middle case natural language queries over technical content है। कोई "how do I handle connection drops" search कर रहा हो तो उसे "implementing retry logic for network failures" title वाला article चाहिए — कोई overlapping words नहीं, high semantic relevance। यहाँ vector search अपनी कीमत साबित करता है।
-
-दूसरा tricky case **names और proper nouns** है। न FTS न vector search इनमें great हैं:
-- FTS "Michael" search करते वक़्त "Micheal" miss कर देगा — different tokens
-- Vector search name पूरी तरह miss कर सकता है अगर वह training data में frequently appear नहीं करता
-- `pg_trgm` इसे सही से handle करता है: orthographic similarity, न semantic न lexical
-
-Practice में, ज़्यादातर content-heavy search boxes को speed और keywords के लिए FTS चाहिए, और users names search करते हैं तो hybrid या `pg_trgm` की ज़रूरत पड़ सकती है। True semantic search feature का मतलब आमतौर पर pgvector है। RAG का मतलब हमेशा pgvector है।
+_RRF इसलिए मूल्यवान है क्योंकि यह `ts_rank` और cosine distance को comparable raw scores मानने का नाटक करने से बचता है। यह केवल पूछता है, "यह परिणाम हर सूची में कितना ऊपर आया?"_
 
 ---
 
-## अगर Dedicated Vector Store की ज़रूरत पड़े
+## व्यावहारिक निर्णय वृक्ष
 
-कुछ systems genuinely pgvector से बड़े हो जाते हैं। जब ऐसा होता है, market noisy है। यहाँ वो matter करता है जो top options में important है।
+खोज रणनीति चुनते समय, **इनपुट के आकार** से शुरू करें, फिर पूछें **यूज़र किस तरह की क्वेरी बना रहा है**। "Spelling variation वाला छोटा string" उतनी ही समस्या नहीं है जितनी "लंबी prose जहाँ exact terms मायने रखते हैं," और दोनों "document chunks पर सवाल" से अलग हैं।
 
-### Feature Matrix
+![एक निर्णय वृक्ष जो टेक्स्ट के आकार और यूज़र्स के क्वेरी करने के तरीके के आधार पर pg_trgm, full-text search, pgvector, hybrid search, या समर्पित वेक्टर डेटाबेस चुनता है।](../search-decision-tree.svg)
 
-Table को समझने से पहले कुछ columns का unpack ज़रूरी है।
+शब्दों में वही ट्री:
 
-**Hybrid search** का मतलब है BM25 keyword search और vector similarity एक query में run होते हैं, Reciprocal Rank Fusion से merged। "withRetry timeout" function name को exactly match कर सकता है *और* "retry logic for network failures" के documents semantically भी। Hybrid के बिना, आपको एक search mode चुनना पड़ता है या दो queries को खुद fuse करना पड़ता है। pgvector का "Manual (RRF via SQL)" [ऊपर दिखाया गया approach](#when-you-need-both) है: काम करता है, लेकिन आपको खुद लिखना पड़ता है।
+- **नाम, पते, टाइटल, autocomplete, या typo-prone छोटे strings** → `pg_trgm`
+- **ज्ञात शब्द, एरर कोड, SKU, फंक्शन नाम, टैग, कैटेगरी, फ़िल्टर** → FTS
+- **सवाल, paraphrases, अनुशंसाएँ, संबंधित items, बहुभाषी मिलान, RAG chunks** → pgvector
+- **तकनीकी सामग्री जहाँ यूज़र्स को exact symbols और conceptual दोनों जवाब चाहिए** → Hybrid with RRF
+- **Primary keys, exact IDs, permission फ़िल्टर, date ranges, sorted lists** → सामान्य SQL इंडेक्स
+- **बहुत बड़ा वेक्टर वॉल्यूम, बहुत उच्च concurrency, या वे latency targets जो Postgres आपके benchmarks में हिट नहीं कर सकता** → समर्पित वेक्टर स्टोर्स का मूल्यांकन करें
 
-**Sparse vectors** BM25 से आगे जाते हैं। SPLADE sparse vector में ~30,000 dimensions होते हैं (vocabulary term के लिए एक), ~98% zeros। Non-zero positions बताते हैं कि कौन से terms matter करते हैं और कितना। "dogs" query "canine" और "pet" को भी weight देती है: BM25-level keyword precision plus term expansion inside a vector index। अगर यह column false है, तो exact-term queries के लिए external FTS layer चाहिए।
+### FTS बनाम Semantic: संक्षिप्त संस्करण
+
+"मुझे FTS उपयोग करना चाहिए या वेक्टर खोज?" का सवाल आमतौर पर इस पर आता है: **क्या आप जानते हैं कि संबंधित डॉक्यूमेंट्स में कौन से शब्द आएंगे?**
+
+अगर हाँ — यूज़र्स ज्ञात टर्म्स, कैटेगरी, फंक्शन नाम, प्रोडक्ट कोड खोजते हैं — FTS तेज़, सस्ता, और अधिक अनुमानित है। यह बताता है कि परिणाम क्यों मैच हुआ।
+
+अगर नहीं — यूज़र्स concept का वर्णन करते हैं, सवाल पूछते हैं, या अलग भाषा में खोजते हैं — वेक्टर खोज सही टूल है। यह शब्दों से नहीं, अर्थ से मैच करता है।
+
+मुश्किल middle है तकनीकी सामग्री पर natural language क्वेरीज़। कोई "how do I handle connection drops" खोज रहा हो, उसे "implementing retry logic for network failures" शीर्षक वाला आर्टिकल चाहिए — कोई overlapping शब्द नहीं, उच्च semantic relevance। यहीं वेक्टर खोज अपनी कीमत साबित करती है।
+
+दूसरा मुश्किल मामला है **नाम और proper nouns**। न तो FTS और न ही वेक्टर खोज इनमें अच्छे हैं:
+- FTS "Michael" खोजते समय "Micheal" को छोड़ देगा — अलग tokens
+- वेक्टर खोज नाम को पूरी तरह छोड़ देगा अगर यह ट्रेनिंग डेटा में बार-बार नहीं आता
+- `pg_trgm` इसे सही तरीके से हैंडल करता है: orthographic समानता, semantic या lexical नहीं
+
+व्यावहारिक रूप से, ज़्यादातर content-heavy सर्च बॉक्स को गति और कीवर्ड के लिए FTS चाहिए, और hybrid या `pg_trgm` की ज़रूरत हो सकती है — यह इस बात पर निर्भर करता है कि यूज़र्स नाम खोज रहे हैं या नहीं। असली semantic search फीचर आमतौर पर pgvector का मतलब है। RAG हमेशा pgvector का मतलब है।
+
+---
+
+## अगर आपको समर्पित वेक्टर स्टोर की ज़रूरत हो
+
+कुछ सिस्टम वास्तव में pgvector से बड़े हो जाते हैं। जब ऐसा होता है, बाज़ार शोरगुल वाला होता है। यहाँ शीर्ष विकल्पों में वह चीज़ है जो मायने रखती है।
+
+### फीचर मैट्रिक्स
+
+टेबल को समझदार बनाने से पहले कुछ कॉलम को खोलने की ज़रूरत है।
+
+**Hybrid search** का मतलब है BM25 keyword खोज और वेक्टर समानता एक क्वेरी में चलती हैं, Reciprocal Rank Fusion के माध्यम से merged। "withRetry timeout" फंक्शन नाम से बिल्कुल *और* "retry logic for network failures" के बारे में डॉक्यूमेंट्स से sematically मैच कर सकता है। Hybrid के बिना, आप एक खोज मोड चुनते हैं या दो क्वेरीज़ को खुद fuse करते हैं। pgvector का "Manual (RRF via SQL)" [ऊपर दिखाया गया दृष्टिकोण](#when-you-need-both) है: यह काम करता है, लेकिन आपको खुद लिखना होता है।
+
+**Sparse vectors** BM25 से आगे जाते हैं। SPLADE sparse vector में ~30,000 dimensions (प्रति vocabulary term एक) होते हैं, ~98% zeros। गैर-शून्य पद बताते हैं कि कौन से टर्म्स मायने रखते हैं और कितना। "dogs" के लिए क्वेरी "canine" और "pet" को भी weight करती है: vector index के अंदर BM25-स्तर की keyword precision plus term expansion। अगर यह कॉलम false है, तो exact-term क्वेरीज़ के लिए आपको बाहरी FTS लेयर की ज़रूरत होगी।
 
 ```python
 # SPLADE: ~30,000 dims total, ~60 non-zero — only the relevant vocabulary positions fire
@@ -288,7 +288,7 @@ def encode_splade(text: str) -> dict:
     return {"indices": vec.nonzero().squeeze().tolist(), "values": vec[vec != 0].tolist()}
 ```
 
-**SQL / SQL-like** really filtering के बारे में है। Filtering के बिना vector search demo है, application नहीं: आपको अभी भी tenant scope, date ranges, permissions, और categories चाहिए। Full SQL (pgvector) उसे आपके existing joins के बगल में express करता है। Purpose-built DBs JSON filter objects (Qdrant, Pinecone), query DSL (Elasticsearch, Milvus), या GraphQL (Weaviate) use करते हैं। काम करते हैं; SQL ज़्यादा attractive होता है जब filter logic उलझता है।
+**SQL / SQL-like** वास्तव में filtering के बारे में है। Filtering के बिना वेक्टर खोज demo है, application नहीं: आपको अभी भी tenant scope, date ranges, permissions, और categories चाहिए। पूर्ण SQL (pgvector) इसे आपके मौजूदा joins के बगल में व्यक्त करता है। Purpose-built DB JSON filter objects (Qdrant, Pinecone), query DSL (Elasticsearch, Milvus), या GraphQL (Weaviate) उपयोग करते हैं। वे काम करते हैं; SQL अधिक आकर्षक होता जाता है जैसे-जैसे filter logic उलझता है।
 
 ```sql
 -- pgvector: vector similarity is just another expression in WHERE
@@ -311,7 +311,7 @@ results = client.query_points(
 )
 ```
 
-**Multimodal native** का मतलब "image embeddings store कर सकता है" नहीं है; हर database float arrays store कर सकता है। इसका मतलब है database non-text content के लिए embedding models ship करता है, ताकि आप उसे raw image URL दें और वह vectorization handle करे। ज़्यादातर databases यहाँ embedding-agnostic हैं, तो आपको वह pipeline खुद own करना पड़ता है। Marqo और Weaviate (CLIP/ImageBind modules के ज़रिए) loop close करते हैं।
+**Multimodal native** का मतलब "image embeddings स्टोर कर सकता है" नहीं है; हर डेटाबेस float arrays स्टोर करता है। इसका मतलब है कि डेटाबेस गैर-टेक्स्ट सामग्री के लिए embedding models के साथ आता है, ताकि आप इसे raw image URL दें और यह vectorization संभाल ले। यहाँ ज़्यादातर डेटाबेस embedding-agnostic हैं, इसलिए वह pipeline आपकी ज़िम्मेदारी है। Marqo और Weaviate (CLIP/ImageBind modules के माध्यम से) loop बंद करते हैं।
 
 ```python
 # Marqo: POST raw images, query with text — no external embedding step needed
@@ -323,11 +323,11 @@ results = mq.index("products").search(q="lightweight shoes for summer")
 # Returns shoe-001 despite zero keyword overlap — CLIP handles the cross-modal match
 ```
 
-**Disk-based index** एक cost question है। RAM-resident HNSW को प्रति million 1536-dimension vectors कई GB RAM लग सकती है — raw vectors, graph overhead, और metadata count करने के बाद। Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB का Lance format, Turbopuffer का object storage tier) अक्सर query latency के बदले cheaper infrastructure trade करते हैं। RAG workloads के जहाँ model latency already dominate करती है, benchmark करना अक्सर worth it है। Redis VSS hard constraint है: RAM-only, कोई disk path नहीं।
+**Disk-based index** एक cost question है। RAM-resident HNSW को raw vectors, graph overhead, और metadata गिनने के बाद प्रति million 1536-dimension vectors कई GB RAM की ज़रूरत हो सकती है। Disk-native alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, LanceDB का Lance format, Turbopuffer की object storage tier) अक्सर कुछ query latency को सस्ते infrastructure के लिए trade करते हैं। RAG workloads के लिए जहाँ model latency पहले से dominate करती है, यह benchmark करने लायक होता है। Redis VSS hard constraint है: RAM-only, कोई disk path नहीं।
 
-**Max dimensions** tomorrow's migration है जो आज की choice में छुपा है। `text-embedding-3-large` 3072 dims use करता है, Jina v3 बड़े embeddings emit कर सकता है, और research models higher push करते जा रहे हैं। कुछ managed services hard dimension caps publish करते हैं; दूसरे high caps या typical embedding models के लिए कोई practical cap document नहीं करते। Commit करने से पहले current docs check करें। Headroom वाला कुछ चुनें; dimension ceiling hit करने के बाद vector index migrate करना miserable sprint है।
+**Max dimensions** कल का migration है जो आज के choice में छिपा है। `text-embedding-3-large` 3072 dims उपयोग करता है, Jina v3 बड़े embeddings emit कर सकता है, और research models लगातार ऊँचाई बढ़ा रहे हैं। कुछ managed services hard dimension caps publish करती हैं; अन्य उच्च caps या typical embedding models के लिए कोई practical cap नहीं document करतीं। Commit करने से पहले current docs जाँचें। कुछ headroom वाला चुनें; dimension ceiling hit करने के कारण vector index migrate करना एक दुखद sprint है।
 
-_Last verified against public project docs and product pages on May 8, 2026. Matrix को snapshot मानें: managed-service limits, pricing, hybrid-search features, और disk-index options तेज़ी से बदलते हैं।_
+_सार्वजनिक प्रोजेक्ट docs और प्रोडक्ट पेजों के आधार पर 8 मई, 2026 को अंतिम सत्यापन। मैट्रिक्स को snapshot मानें: managed-service limits, pricing, hybrid-search features, और disk-index options तेज़ी से बदलते हैं।_
 
 | Database | Deployment | License | Hybrid Search | Sparse Vectors | SQL / SQL-like | Multimodal | Disk Index | Max Dims | Sweet Spot |
 |---|---|---|---|---|---|---|---|---|---|
@@ -348,52 +348,52 @@ _Last verified against public project docs and product pages on May 8, 2026. Mat
 | **[Redis (VSS)](https://github.com/redis/redis)** | Self-host / Redis Cloud | RSALv2 / SSPL | ✅ (RediSearch) | ✅ | ❌ | ❌ | ❌ RAM-only | 32,768 | Ultra-low latency; cache-layer vector search |
 | **[Marqo](https://github.com/marqo-ai/marqo)** | Cloud / self-host | Apache 2.0 | ✅ | ❌ | ❌ | ✅ Native focus | ✅ | Varies | End-to-end multimodal: image + text + video |
 
-### Reading the Matrix
+### मैट्रिक्स को पढ़ना
 
-कुछ चीज़ें table में cleanly fit नहीं होतीं:
+कुछ चीज़ें टेबल में साफ़ फ़िट नहीं होतीं:
 
-**Sparse vectors** वो तरीका है जिससे आपको separate full-text engine के बिना vector index के अंदर BM25-quality keyword matching मिलती है। Qdrant और Elasticsearch के implementations यहाँ ख़ास mature हैं। Weaviate BM25F के ज़रिए support करता है। अगर hybrid search critical है और दो systems run नहीं कर सकते, तो sparse vector support देखें।
+**Sparse vectors** वह तरीका है जिससे आप vector index के अंदर BM25-quality keyword matching पाते हैं, बिना किसी अलग full-text engine के। Qdrant और Elasticsearch में यहाँ ख़ास mature implementations हैं। Weaviate BM25F के माध्यम से उन्हें सपोर्ट करता है। अगर hybrid search critical है और आप दो सिस्टम नहीं चला सकते, तो sparse vector support ढूंढें।
 
-**Disk-based indexes** cost lever हैं, implementation detail नहीं। RAM-resident HNSW indexes fast हैं लेकिन vector count, dimension count, metadata, और graph overhead बढ़ने के साथ expensive हो सकते हैं। Disk-based alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, Turbopuffer object storage, LanceDB का Lance format) query latency के बदले lower infrastructure cost trade करते हैं। बड़े RAG indexes के लिए, यह tradeoff अक्सर test करने लायक है।
+**Disk-based indexes** एक cost lever हैं, implementation detail नहीं। RAM-resident HNSW indexes तेज़ हैं लेकिन vector count, dimension count, metadata, और graph overhead बढ़ने के साथ महंगे हो सकते हैं। Disk-based alternatives (Milvus DiskANN, Elasticsearch DiskBBQ, Turbopuffer object storage, LanceDB का Lance format) query latency को कम infrastructure cost के लिए trade करते हैं। बड़े RAG indexes के लिए, यह tradeoff अक्सर टेस्ट करने लायक होता है।
 
-**Turbopuffer का multi-tenancy** बहुत high namespace counts के around बना है। इसकी public positioning और customer stories Notion के large, namespace-heavy corpus जैसे workloads पर ज़ोर देती हैं। अगर हर user या organization को isolated vector search चाहिए, तो वह architecture economics बदल सकता है, लेकिन अपना tenant shape खुद benchmark करें।
+**Turbopuffer की multi-tenancy** बहुत उच्च namespace counts के इर्द-गिर्द बनी है। इसकी सार्वजनिक positioning और customer stories Notion के बड़े, namespace-heavy corpus जैसे workloads पर ज़ोर देती हैं। अगर हर यूज़र या संगठन को isolated vector search चाहिए, तो वह architecture economics बदल सकता है, लेकिन फिर भी अपने tenant shape को benchmark करें।
 
-**LanceDB embedded mode** "vector search के लिए SQLite" के सबसे करीब है। यह in-process run करता है, किसी server की ज़रूरत नहीं, और Lambda, Cloudflare Workers, और edge environments में काम करता है। Lance columnar format embedded operation को real scale पर practical बनाता है।
+**LanceDB embedded mode** "वेक्टर खोज के लिए SQLite" के सबसे करीब है। यह in-process चलता है, किसी सर्वर की ज़रूरत नहीं है, और Lambda, Cloudflare Workers, और edge environments में काम करता है। Lance columnar format embedded operation को असल स्केल पर व्यावहारिक बनाता है।
 
-**Orama search UX infrastructure है, warehouse नहीं।** यह तब excellent है जब आपको JavaScript app में, edge पर, या managed site/app search layer के लिए tiny full-text/vector/hybrid search engine चाहिए। यह billion-vector retrieval, heavy analytics, या complex filtered joins के लिए वो tool नहीं है जो मैं चुनूंगा।
+**Orama search UX infrastructure है, warehouse नहीं।** यह तब उत्कृष्ट है जब आपको JavaScript app में, edge पर, या managed site/app search लेयर के रूप में एक छोटा full-text/vector/hybrid search engine चाहिए। यह वह टूल नहीं है जिसे मैं billion-vector retrieval, heavy analytics, या complex filtered joins के लिए चुनूँगा।
 
-**Vespa वो है जिसकी तरफ आप तब देखते हैं जब retrieval सिर्फ़ आधा product है।** यह lexical retrieval, nearest-neighbor search, tensors, ranking expressions, grouping, और online serving को combine करता है। उस power real है, लेकिन operational और modeling complexity भी। यह search/recommendation teams के लिए fit है, "add semantic search to my CRUD app" के लिए नहीं।
+**Vespa वह है जिसकी तरफ आप तब बढ़ते हैं जब retrieval केवल आधा प्रोडक्ट है।** यह lexical retrieval, nearest-neighbor search, tensors, ranking expressions, grouping, और online serving को जोड़ता है। वह शक्ति असली है, लेकिन operational और modeling complexity भी उतनी ही है। यह "मेरे CRUD app में semantic search जोड़ें" से ज़्यादा search/recommendation teams के लिए फ़िट बैठता है।
 
-**ClickHouse conversation में तब आता है जब search analytics से attached है।** अगर आपका source of truth events, logs, traces, metrics, या large fact tables हैं, तो ClickHouse vector distance, filtering, aggregation, और अब serious full-text indexing को एक SQL engine में रख सकता है। यह purpose-built vector database नहीं है, लेकिन analytical retrieval के लिए best way में boring answer हो सकता है।
+**ClickHouse उस बातचीत में आता है जब search analytics से जुड़ा हो।** अगर आपका source of truth events, logs, traces, metrics, या बड़ी fact tables हैं, तो ClickHouse vector distance, filtering, aggregation, और अब गंभीर full-text indexing को एक SQL engine में रख सकता है। यह purpose-built वेक्टर डेटाबेस नहीं है, लेकिन analytical retrieval के लिए यह सबसे अच्छे तरीके से boring answer हो सकता है।
 
-**Chroma dev/test और small app deployments में सबसे strong है।** अगर आप very large corpora, HA, disk-heavy operation, या first-class hybrid search की तरफ बढ़ रहे हैं, तो prototype को infrastructure में promote करने से पहले production-oriented store evaluate करें।
+**Chroma dev/test और छोटे app deployments में सबसे मज़बूत है।** अगर आप बहुत बड़े corpora, HA, disk-heavy operation, या first-class hybrid search की तरफ बढ़ रहे हैं, तो prototype को infrastructure में promote करने से पहले production-oriented store का मूल्यांकन करें।
 
-### Simplified Decision
+### सरलीकृत निर्णय
 
-अगर आपने genuinely pgvector से बड़ा हो गए हैं — आमतौर पर क्योंकि benchmarks दिखाते हैं कि vector count, filtering, write rate, या high-concurrency latency आपके Postgres envelope से बाहर push कर रहे हैं — तो constraint के basis पर चुनें:
+अगर आपने वास्तव में pgvector से बड़े हो गए हैं — आमतौर पर क्योंकि benchmarks दिखाते हैं कि vector count, filtering, write rate, या high-concurrency latency आपके Postgres envelope से बाहर जा रहे हैं — तो constraint के अनुसार चुनें:
 
-- **SaaS product with per-tenant isolation** → Turbopuffer
+- **Per-tenant isolation वाला SaaS प्रोडक्ट** → Turbopuffer
 - **Rust-level performance + complex metadata filtering चाहिए** → Qdrant
-- **Already on Elastic/ELK stack** → Elasticsearch with DiskBBQ
-- **AWS shop जो open-source चाहता है** → OpenSearch
-- **Search/recommendation platform with serious ranking needs** → Vespa
+- **पहले से Elastic/ELK stack पर हैं** → Elasticsearch with DiskBBQ
+- **AWS shop जो open-source चाहती है** → OpenSearch
+- **गंभीर ranking needs वाला search/recommendation platform** → Vespa
 - **Analytics, observability, या log/event search** → ClickHouse
 - **Billion-scale on-prem / self-hosted** → Milvus
 - **Edge / serverless / multimodal** → LanceDB
-- **Small JS app, docs site, या edge-native search UX** → Orama
-- **Zero ops, just works, cost secondary है** → Pinecone
+- **छोटा JS app, docs site, या edge-native search UX** → Orama
+- **Zero ops, बस काम करता है, cost secondary है** → Pinecone
 - **Multimodal-first (images, video, audio)** → Marqo
-- **Already on MongoDB** → Atlas Vector Search
-- **Already on Postgres, ज़्यादा headroom चाहिए** → Supabase Vector या Neon (दोनों pgvector managed, बेहतर tooling के साथ)
+- **पहले से MongoDB पर हैं** → Atlas Vector Search
+- **पहले से Postgres पर हैं, ज़्यादा headroom चाहिए** → Supabase Vector या Neon (दोनों pgvector managed, बेहतर tooling के साथ)
 
 ---
 
-## एक चीज़ जो नहीं करनी
+## एक चीज़ जो नहीं करनी है
 
-Fuzzy text search के लिए vector search use न करें उन चीज़ों के लिए जिनके correct answers हैं।
+वेक्टर खोज को उन चीज़ों के लिए fuzzy text search के रूप में उपयोग न करें जिनके सही जवाब हैं।
 
-"Find me the user with email `dan@example.com`" vector search problem नहीं है। "Find me the order with ID `ORD-12345`" भी नहीं। `ORD-12345` embed करना और cosine similarity से orders table के ख़िलाफ़ match करना *कुछ* return करेगा, लेकिन ग़लत हो सकता है। ये exact-match problems हैं। Primary key या regular index use करें।
+"मुझे `dan@example.com` email वाला यूज़र ढूंढकर दें" वेक्टर खोज की समस्या नहीं है। "मुझे `ORD-12345` ID वाला ऑर्डर ढूंढकर दें" भी नहीं। `ORD-12345` को embed करना और आपके orders table के खिलाफ cosine similarity करना *कुछ* लौटाएगा, लेकिन यह ग़लत हो सकता है। ये exact-match समस्याएँ हैं। अपनी primary key या नियमित इंडेक्स उपयोग करें।
 
-Vector search dataset में *most similar* चीज़ return करता है, तब भी जब कुछ relevant न हो। यह नहीं जानता कि कोई good answer नहीं है। Related documents के लिए यह ठीक है। Specific record lookup के लिए catastrophic है, जहाँ ग़लत near-match empty result से बदतर है।
+वेक्टर खोज आपके डेटासेट में *सबसे similar* चीज़ लौटाती है, तब भी जब कुछ भी relevant न हो। इसे पता नहीं होता कि कोई अच्छा जवाब नहीं है। संबंधित डॉक्यूमेंट्स के लिए यह ठीक है। यह specific record lookup के लिए विनाशकारी है, जहाँ ग़लत near-match खाली परिणाम से बदतर है।
 
-पता हो कि हर tool किस काम के लिए है। ज़्यादातर आपके Postgres installation में पहले से मौजूद हैं। जहाँ fit हों, वहाँ use करें।
+पता लगाएं कि हर टूल किस काम के लिए है। उनमें से ज़्यादातर आपकी Postgres installation में पहले से मौजूद हैं। उन्हें वहाँ उपयोग करें जहाँ वे फ़िट बैठते हैं।

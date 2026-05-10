@@ -4,9 +4,9 @@
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
 - Validation: passed
-- Runtime seconds: 148.58
+- Runtime seconds: 182.20
 - Input tokens: unknown
-- Output tokens: unknown
+- Output tokens: 0
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
