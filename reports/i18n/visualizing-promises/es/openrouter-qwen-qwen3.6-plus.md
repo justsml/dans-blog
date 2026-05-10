@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-09-30--visualizing-promises/es/index.mdx
+- Validation: passed
+- Runtime seconds: 30.92
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
