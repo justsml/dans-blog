@@ -1,6 +1,6 @@
 ---
 title: "Smetti di Chiedere agli LLM di Fare Matematica"
-subTitle: "Fanno schifo. Ecco come risolverlo."
+subTitle: "Sono scarsi. Ecco come risolvere."
 date: 2026-01-06
 modified: 2026-01-07
 tags: [ai, ai-sdk, typescript, math, tools, patterns]
@@ -12,33 +12,33 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-Sapevi una cosa strana sui modelli linguistici? Sanno spiegare la meccanica quantistica, scrivere poesia, e fare debug del tuo TypeScript... ma chiedi loro di moltiplicare 18472 per 9347 e c'è una discreta possibilità che ti diano, con totale sicurezza, qualcosa che sbaglia di migliaia.
+Sai cosa c'è di strano nei modelli linguistici? Possono spiegare la meccanica quantistica, scrivere poesie e fare il debug del tuo TypeScript... ma chiedi loro di moltiplicare 18472 per 9347 e c'è una buona probabilità che ti rispondano con sicurezza sbagliando di migliaia.
 
-Questo mi lasciava perplesso finché non ho capito cosa stiamo realmente chiedendo loro di fare. Stiamo chiedendo a un motore di pattern-matching di essere una calcolatrice. È come chiedere a un ginnasta di fare il bilancio familiare perché capisce il concetto di "bilancio".
+Una volta mi lasciava perplesso, finché non ho capito cosa stiamo effettivamente chiedendo loro di fare. Stiamo chiedendo a un motore di riconoscimento di pattern di fare il calcolatore. È come chiedere a un ginnasta di tenere la tua contabilità perché conosce il concetto di "equilibrio".
 
-Il fatto è che gli LLM non calcolano niente. Quando chiedi a GPT o Claude quanto fa 2 + 2, non stanno sommando. Stanno predendo che "4" è il token più probabile che appaia dopo "2 + 2 =". La maggior parte delle volte funziona benissimo perché questi pattern esistono nei loro dati di training. Ma spingiti oltre la semplice aritmetica verso calcoli multi-step o qualsiasi cosa con numeri che non erano comuni nel training, e stai essenzialmente lanciando dadi.
+Il fatto è che gli LLM non calcolano nulla. Quando chiedi a GPT o Claude quanto fa 2 + 2, non stanno sommando. Stanno prevedendo che "4" è il token più probabile da apparire dopo "2 + 2 =". Nella maggior parte dei casi funziona benissimo, perché questi pattern esistono nei loro dati di addestramento. Ma spingiti oltre l'aritmetica semplice verso calcoli multi-step o qualsiasi cosa con numeri che non erano comuni nell'addestramento, e stai essenzialmente lanciando i dadi.
 
-Mi sono scontrato con questo problema di recente mentre revisionavo del codice che usava un modello top-of-the-line per calcolare rate di mutuo. Il modello ha risposto con totale sicurezza. Sbagliava anche di $400/mese. Questo è il tipo di errore che conta.
+Mi ci sono sbattuto la testa di recente mentre revisionavo del codice che usava un modello di alto livello per calcolare rate di mutui. Il modello ha risposto con totale sicurezza. Sbagliava anche di 400 dollari al mese. È il tipo di errore che conta.
 
-Anche mentre i modelli migliorano nel ragionamento (GPT-5 apparentemente mostra miglioramenti), stanno ancora facendo sophisticated pattern matching, non calcolo simbolico. Per il lavoro creativo e i task in linguaggio naturale, questa natura probabilistica è esattamente ciò che li rende magici. Per la matematica? Non proprio.
+Anche man mano che i modelli migliorano nel ragionamento (si dice che GPT-5 mostri miglioramenti), stanno pur sempre facendo un sofisticato riconoscimento di pattern, non calcolo simbolico. Per il lavoro creativo e le attività di linguaggio naturale, questa natura probabilistica è esattamente ciò che li rende magici. Per la matematica? Non proprio.
 
-## Cosa Risolve Davvero Questo?
+## Cosa Risolve Davvero il Problema?
 
-La risposta non sta nell'aspettare modelli più intelligenti. Sta nel dare al modello lo strumento giusto per il lavoro.
+La risposta non è aspettare modelli più intelligenti. È dare al modello lo strumento giusto per il lavoro.
 
-Pensa a come risolveresti questo problema se stessi costruendo un sistema non-AI. Non scriveresti logica matematica custom, useresti una libreria. Lo stesso principio si applica qui, tranne che ora stiamo insegnando all'LLM quando e come usare quella libreria.
+Pensa a come risolveresti questo problema se stessi costruendo un sistema non-AI. Non scriveresti logica matematica custom, useresti una libreria. Lo stesso principio si applica qui, solo che ora stiamo insegnando all'LLM quando e come usare quella libreria.
 
-Il tool calling negli AI SDK moderni ci permette di dare al modello funzioni strutturate che può invocare. Invece di costringere l'LLM a fingere di sapere la matematica, gli diamo qualcosa che effettivamente la sa fare: un motore matematico simbolico.
+Le tool call nei moderni SDK AI ci permettono di fornire al modello funzioni strutturate che può invocare. Invece di costringere l'LLM a fingere di sapere la matematica, gli diammo qualcosa che la sa davvero: un motore di matematica simbolica.
 
-Ho usato [AI SDK v5 e v6](https://ai-sdk.vercel.ai/) per questo, insieme a CortexJS Compute Engine. L'SDK gestisce l'orchestrazione e il routing dei tool, mentre CortexJS gestisce qualsiasi cosa, dall'aritmetica base fino al calcolo. È una separazione delle responsabilità sorprendentemente pulita.
+Ho usato [AI SDK v5 e v6](https://ai-sdk.vercel.ai/) per questo, insieme a CortexJS Compute Engine. L'SDK gestisce orchestrazione e routing degli strumenti, mentre CortexJS gestisce qualsiasi cosa, dall'aritmetica di base fino al calcolo infinitesimale. È una separazione dei compiti sorprendentemente pulita.
 
 ```bash
 bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
 ```
 
-## Costruire il Math Tool
+## Costruire lo Strumento Matematico
 
-L'implementazione è più diretta di quanto potresti aspettarti. Quello che stiamo costruendo è un ponte tra la comprensione del linguaggio naturale dell'LLM e il calcolo matematico effettivo.
+L'implementazione è più diretta di quanto potresti pensare. Quello che stiamo costruendo è un ponte tra la comprensione del linguaggio naturale dell'LLM e il calcolo matematico effettivo.
 
 ```typescript
 import { generateText, stepCountIs, tool } from 'ai';
@@ -76,19 +76,19 @@ const mathTool = tool({
 });
 ```
 
-Alcune cose che vale la pena notare:
+Qualche cosa da notare:
 
-La description fa un lavoro pesante. Quel linguaggio "MUST be used" potrebbe sembrare aggressivo, ma nella mia esperienza, essere espliciti con il modello su quando usare un tool è la differenza tra farlo funzionare a volte e farlo funzionare sempre. Consideratela prompt engineering a livello di tool.
+La descrizione fa il grosso del lavoro. Quel linguaggio "MUST be used" può sembrare aggressivo, ma nella mia esperienza, essere espliciti con il modello su quando usare uno strumento è la differenza tra funzionare a volte e funzionare in modo affidabile. Consideralo prompt engineering a livello di strumento.
 
-Il batch processing tramite array `expressions` conta più di quanto potresti pensare. Ogni chiamata al modello ha latenza. Se stai risolvendo un sistema di equazioni o facendo matematica multi-step, processarli individualmente crea una pessima esperienza utente. Il batching significa un solo round-trip per risolvere dieci problemi.
+L'elaborazione batch tramite un array `expressions` conta più di quanto potresti pensare. Ogni chiamata al modello ha latenza. Se stai risolvendo un sistema di equazioni o facendo matematica multi-step, elaborarli singolarmente crea una terribile esperienza utente. Il batch significa un solo round-trip per risolvere dieci problemi.
 
-Usare un motore simbolico invece di solo `eval()` (per favore non usare `eval()`) ci dà una vera comprensione matematica. Il motore parsifica l'intento, gestisce la formattazione LaTeX, e può lavorare con derivate e integrali. Non stiamo solo facendo calcoli, stiamo facendo matematica.
+Usare un motore simbolico invece di un semplice `eval()` (per favore non usare `eval()`) ci dà una vera comprensione matematica. Il motore analizza l'intento, gestisce la formattazione LaTeX e può lavorare con derivate e integrali. Non stiamo solo facendo calcoli, stiamo facendo matematica.
 
-L'error handling è scoped per espressione. Se un calcolo fallisce, restituiamo quell'errore ma continuiamo con il resto. Questo permette al modello di vedere cosa ha funzionato e cosa no, potenzialmente auto-correggendosi nel prossimo step.
+La gestione degli errori è limitata a ogni espressione. Se un calcolo fallisce, restituiamo quell'errore ma continuiamo con il resto. Questo permette al modello di vedere cosa ha funzionato e cosa no, potenzialmente auto-correggendosi nel passaggio successivo.
 
 ## Metterlo al Lavoro
 
-Proviamo qualcosa che tipicamente farebbe hallucinare un modello raw:
+Proviamo con qualcosa che tipicamente farebbe allucinare un modello grezzo:
 
 ```typescript
 import { anthropic } from '@ai-sdk/anthropic';
@@ -103,27 +103,27 @@ const { text } = await generateText({
 console.log(text);
 ```
 
-Il modello vede la matematica, riconosce che serve precisione, chiama il tool, ottiene il risultato accurato, e poi lo spiega in linguaggio naturale. Ogni componente che fa ciò che sa fare meglio.
+Il modello vede la matematica, riconosce che ha bisogno di precisione, chiama lo strumento, ottiene il risultato accurato e poi lo spiega in linguaggio naturale. Ogni componente fa ciò che sa fare meglio.
 
-## Oltre l'Aritmetica Base
+## Oltre l'Aritmetica di Base
 
-Dal momento che stiamo usando un motore simbolico, questo approccio gestisce cose che semplici tool calcolatrici non possono affrontare.
+Dato che usiamo un motore simbolico, questo approccio gestisce cose che i semplici strumenti calcolatrice non possono toccare.
 
-Vuoi risolvere equazioni algebriche? "Risolvi queste equazioni: 3x + 7 = 22 e 2y - 5 = 13" funziona bene.
+Vuoi risolvere equazioni algebriche? "Risolvi queste equazioni: 3x + 7 = 22 e 2y - 5 = 13" funziona benissimo.
 
-Serve il calcolo? "Trova la derivata di x^3 + 2x^2 e valutala in x = 2" è solo un altro tool call.
+Ti serve il calcolo infinitesimale? "Trova la derivata di x^3 + 2x^2 e valutala per x = 2" è solo un'altra chiamata allo strumento.
 
-Il supporto LaTeX è particolarmente utile se stai costruendo app educative. Il motore capisce intrinsecamente l'input LaTeX e può restituire risultati formattati per il rendering. Nessun parsing aggiuntivo necessario.
+Il supporto LaTeX è particolarmente utile se stai costruendo app educative. Il motore comprende nativamente l'input LaTeX e può restituire risultati formattati per il rendering. Nessuna analisi aggiuntiva richiesta.
 
 ## Il Quadro Più Ampio
 
-Penso che questo pattern conti oltre la semplice matematica. Quello che stiamo realmente facendo è riconoscere le limitazioni degli LLM mentre sfruttiamo i loro punti di forza. Sono incredibili nel capire l'intento, parsare il linguaggio naturale, e orchestrare workflow. Non sono calcolatori, database, o file system.
+Penso che questo pattern conti oltre la sola matematica. Quello che stiamo davvero facendo è riconoscere i limiti degli LLM sfruttandone i punti di forza. Sono incredibili nel comprendere l'intento, analizzare il linguaggio naturale e orchestrare flussi di lavoro. Non sono calcolatrici, database o file system.
 
-Ogni volta che proviamo a far fare a un LLM qualcosa di deterministico, stiamo combattendo contro la sua natura. Ma quando accoppiamo quella comprensione del linguaggio naturale con tool specializzati che gestiscono le parti deterministiche? È lì che le cose si fanno interessanti.
+Ogni volta che proviamo a far fare a un LLM qualcosa di deterministico, stiamo combattendo la sua natura. Ma quando accoppiamo quella comprensione del linguaggio naturale con strumenti specializzati che gestiscono le parti deterministiche? È lì che le cose si fanno interessanti.
 
-Il math tool è solo un esempio. Lo stesso principio si applica alla manipolazione di date, calcoli finanziari, processing di immagini, query a database... ovunque la precisione conta più della creatività. Lascia che il modello capisca cosa vuole l'utente, poi passa il lavoro effettivo a qualcosa costruito per quello.
+Lo strumento matematico è solo un esempio. Lo stesso principio si applica alla manipolazione di date, calcoli finanziari, elaborazione di immagini, query di database... ovunque la precisione conti più della creatività. Lascia che il modello capisca cosa vuole l'utente, poi passa il lavoro effettivo a qualcosa costruito per quello scopo.
 
-È un cambiamento nel modo di pensare il building con AI. Non "il modello può fare questo?" ma "il modello può orchestrare questo?" Piccola differenza nella formulazione, significativa differenza nell'affidabilità.
+È un cambiamento nel modo di pensare alla costruzione con l'AI. Non "il modello può fare questo?" ma "il modello può orchestrare questo?" Piccola differenza nella formulazione, significativa differenza nell'affidabilità.
 
 ## Risorse
 
