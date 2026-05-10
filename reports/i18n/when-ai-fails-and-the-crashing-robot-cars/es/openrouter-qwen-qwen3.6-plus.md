@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/es/index.mdx
+- Validation: passed
+- Runtime seconds: 60.91
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
