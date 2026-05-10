@@ -2,21 +2,13 @@
 
 - Slug: llm-routing-mastra-ai
 - Locale: fr
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Second judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/anthropic/claude-sonnet-4.6
+- Second judge model: not run
 - Escalation judge model: not run
 - Selected commit hint: judge selected
 
 ## Primary Judge Telemetry
-- Runtime seconds: 1.47
-- Input tokens: unknown
-- Output tokens: unknown
-- Thinking tokens: unknown
-- Cached input tokens: unknown
-- Estimated cost: unknown
-
-## Second Judge Telemetry
-- Runtime seconds: 1.44
+- Runtime seconds: 1.82
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
