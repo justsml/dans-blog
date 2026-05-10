@@ -1,4 +1,5 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
 import { dirname, join } from "node:path";
 import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n.ts";
 import {
@@ -194,13 +195,26 @@ function withRepoLock(callback: () => void) {
 function restorePathToHead(path: string) {
   const relativePath = relativeToRepo(path);
   if (pathExistsInHead(relativePath)) {
-    const contents = run("git", ["show", `HEAD:${relativePath}`]);
+    const contents = readPathFromHead(relativePath);
     mkdirSync(dirname(path), { recursive: true });
-    writeFileSync(path, `${contents}\n`, "utf8");
+    writeFileSync(path, contents);
     return;
   }
 
   rmSync(path, { recursive: true, force: true });
+}
+
+function readPathFromHead(relativePath: string) {
+  const result = spawnSync("git", ["show", `HEAD:${relativePath}`], {
+    cwd: process.cwd(),
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+
+  if (result.status !== 0) {
+    throw new Error(`Command failed: git show HEAD:${relativePath}\n${result.stderr.toString("utf8")}`);
+  }
+
+  return result.stdout;
 }
 
 function pathExistsInHead(relativePath: string) {
