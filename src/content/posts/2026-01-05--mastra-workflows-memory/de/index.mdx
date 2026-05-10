@@ -1,0 +1,248 @@
+---
+title: "Schluss mit instabilen Agenten: Workflows & Memory nutzen"
+subTitle: "Deterministische Muster für nicht-deterministische Modelle."
+date: 2026-01-05
+modified: 2026-01-08
+tags: [AI, Workflows, Memory, Mastra, Agent Networks, Orchestrierung]
+category: AI
+subCategory: Architektur
+socialImage: desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+LLMs haben diese seltsame Eigenschaft: Sie sind brillant darin, Nuancen zu verstehen, aber katastrophal darin, Rezepte zu befolgen. Gib GPT-4 ein vages Problem und es wird Möglichkeiten durchdenken. Gib ihm eine präzise Abfolge von Schritten und es könnte Schritt 3 überspringen, weil Schritt 5 "relevanter wirkte."
+
+Das ist kein Bug im Modell. Es ist eine grundlegende Eigenschaft probabilistischer Systeme, die deterministische Probleme lösen sollen.
+
+Ich habe Teams dabei zugesehen, wie sie mit dieser Diskrepanz kämpfen. Sie bauen einen Agenten für Kundenrückerstattungen, statten ihn mit einem Dutzend Tools aus und erwarten, dass er einen Geschäftsprozess zuverlässig ausführt. Manchmal funktioniert es perfekt. Manchmal halluziniert er Genehmigungen, die nie stattfanden. Manchmal fragt er dreimal nach derselben Information.
+
+Die Lösung sind nicht bessere Prompts. Es ist zu wissen, wann man aufhört, das LLM zum "Denken" aufzufordern, und ihm stattdessen sagt: "Befolge."
+
+---
+
+## Wenn Deterministisch Kreativ schlägt
+
+Überlege, was passiert, wenn ein Support-Ticket bearbeitet werden muss. Echte Geschäftslogik sieht ungefähr so aus:
+
+1. Ticket-Details aus der Datenbank abrufen
+2. Prüfen, ob der Nutzer für eine Rückerstattung berechtigt ist (Richtlinienregeln)
+3. Verifizieren, dass die Transaktion existiert und noch nicht erstattet wurde
+4. Rückerstattungsbetrag berechnen
+5. Zahlungsrückbuchung durchführen
+6. Ticket-Status aktualisieren
+7. Bestätigungs-E-Mail senden
+
+Man könnte das einem LLM als Tool-Calling-Übung übergeben. Meiner Erfahrung nach sucht man sich damit Ärger. Das Modell könnte entscheiden, dass Schritte 2 und 3 "im Grunde dasselbe" sind, und einen überspringen. Oder es verarbeitet die Rückerstattung, bevor es die Berechtigung prüft, weil der Nutzer verärgert wirkte.
+
+Workflows existieren genau für dieses Szenario. Sie sind nicht aufregend, aber das ist der Punkt.
+
+### Einen Wetter-Aktivitätsplaner bauen
+
+Hier ist ein praktisches Beispiel, das das Muster zeigt. Wir brauchen harte, faktenbasierte Wetterdaten gepaart mit kreativen Aktivitätsvorschlägen. Das Wetter-Abfrage darf niemals kreativ sein, aber die Vorschläge sollten es sein.
+
+```typescript
+// src/mastra/workflows/activity-planner.ts
+import { createWorkflow, createStep } from '@mastra/core/workflows';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { z } from 'zod';
+
+// Schritt 1: Wetterdaten abrufen (Deterministisch)
+const fetchWeather = createStep({
+  id: 'fetch-weather',
+  description: 'Fetches weather forecast for a given city',
+  inputSchema: z.object({
+    city: z.string(),
+  }),
+  outputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  execute: async ({ inputData }) => {
+    // ... (fetch logic) ...
+    const weather = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code&daily=precipitation_probability_mean`).then(r => r.json());
+    
+    return {
+      location: inputData.city,
+      temperature: weather.current.temperature_2m,
+      conditions: getWeatherCondition(weather.current.weather_code),
+      precipitationChance: weather.daily.precipitation_probability_mean[0],
+    };
+  },
+});
+
+// Schritt 2: Agent schlägt Aktivitäten vor (Kreativ)
+const activityPlanner = new Agent({
+  id: 'activity-planner-agent',
+  name: 'Activity Planner',
+  instructions: `You are a local activities expert. Based on weather conditions, suggest 3-5 appropriate activities.
+    - For rain (>50% precipitation), prioritize indoor activities
+    - For extreme temperatures, consider climate-appropriate options
+    - Always include one adventurous and one relaxing option`,
+  model: openai('gpt-5'),
+});
+
+const planActivities = createStep({
+  id: 'plan-activities',
+  description: 'Uses AI to suggest activities based on weather',
+  inputSchema: z.object({
+    location: z.string(),
+    temperature: z.number(),
+    conditions: z.string(),
+    precipitationChance: z.number(),
+  }),
+  outputSchema: z.object({
+    activities: z.string(),
+  }),
+  execute: async ({ inputData }) => {
+    const prompt = `Weather in ${inputData.location}: ${inputData.temperature}°C...`;
+    const response = await activityPlanner.generate(prompt);
+    return { activities: response.text };
+  },
+});
+
+// Die Pipeline
+export const activityPlannerWorkflow = createWorkflow({
+  id: 'activity-planner',
+  inputSchema: z.object({ city: z.string() }),
+  outputSchema: z.object({ activities: z.string() }),
+})
+  .then(fetchWeather)
+  .then(planActivities);
+
+activityPlannerWorkflow.commit();
+```
+
+Das LLM fasst die Wetter-API niemals an. Es erhält Ground-Truth-Daten als Eingabe und tut dann das, wofür es tatsächlich gut ist: kontextbezogene Vorschläge machen. Wenn man das umdreht und den Agenten die Wetterdaten abfragen lässt, wird man irgendwann ein sonniges Wetter bekommen, wenn es tatsächlich regnet.
+
+**Wann Workflows in Betracht ziehen:**
+- Es gibt eine bekannte Abfolge von Schritten, die in der richtigen Reihenfolge erfolgen müssen
+- Observability in jeder Phase ist erforderlich (Logs, Metriken, Timing)
+- Retry-Logik für instabile externe APIs ist nötig
+- Geschäftsregeln dürfen nicht "interpretiert" werden – sie müssen exakt befolgt werden
+
+---
+
+## Das Context-Window-Problem, über das niemand spricht
+
+Dieses Muster sehe ich immer wieder. Jemand baut einen Chatbot. Er funktioniert beim Testen großartig. Dann in Produktion führen Nutzer längere Gespräche und plötzlich verliert der Bot den Faden.
+
+Der Entwickler schaut in die Logs und stellt fest, dass der gesamte Gesprächsverlauf mit jeder Anfrage mitgesendet wird. Alle 47 Nachrichten. Token und Context-Space werden für Informationen verbrannt, die größtenteils irrelevant sind.
+
+Schlimmer noch: Es gibt ein Phänomen, das Forscher "lost in the middle" nennen, bei dem Modelle schlechter abschneiden, wenn relevante Informationen in einem langen Kontext vergraben sind. Das Modell sieht buchstäblich den Wald vor lauter Bäumen nicht.
+
+Den vollständigen Gesprächsverlauf zu senden fühlt sich sicher an. Man gibt dem Modell "alle Informationen." Aber man erschwert es dem Modell tatsächlich, sich auf das Wesentliche zu konzentrieren.
+
+### Working Memory vs. Langzeitspeicher
+
+Das Memory-System von Mastra bietet beides. Working Memory hält aktuelle Nachrichten im Context Window. Semantic Recall durchsucht historische Nachrichten, wenn die aktuelle Anfrage thematisch passt.
+
+```typescript
+// src/mastra/agents/memory-agent.ts
+import { Agent } from '@mastra/core/agent';
+import { Memory } from '@mastra/memory';
+import { LibSQLStore } from '@mastra/libsql';
+
+export const memoryAgent = new Agent({
+  id: 'memory-agent',
+  name: 'Memory Agent',
+  instructions: 'You are a helpful assistant with perfect recall of our conversations.',
+  model: openai('gpt-5'),
+  memory: new Memory({
+    storage: new LibSQLStore({
+      id: 'memory-agent-store',
+      url: 'file:../mastra.db',
+    }),
+    options: {
+      lastMessages: 20,  // Keep last 20 messages in context
+      semanticRecall: {
+        enabled: true,  // Use embeddings to find old stuff
+        topK: 5,
+        threshold: 0.7,
+      },
+    },
+  }),
+});
+```
+
+So spielt sich das in der Praxis ab. Ein Nutzer fragt: "Was war das italienische Restaurant, das du letzten Monat empfohlen hast?"
+
+Ohne Semantic Recall sieht der Agent die letzten 20 Nachrichten. Die Restaurant-Empfehlung war Nachricht 487 von 506. Sie ist weg. Der Agent sagt: "Ich habe diese Information nicht."
+
+Mit Semantic Recall:
+1. Die Anfrage wird eingebettet: `[0.234, -0.567, 0.891, ...]`
+2. Die Einbettung wird mit historischen Nachrichten verglichen
+3. Nachricht 487 ("Ich würde Trattoria Bella empfehlen – ihre Carbonara ist unglaublich") erzielt eine Ähnlichkeit von 0,89
+4. Diese Nachricht wird in den aktuellen Kontext eingespeist
+5. Der Agent antwortet: "Ich habe Trattoria Bella empfohlen. Ihre Carbonara hat mich besonders beeindruckt."
+
+Der Agent scheint ein perfektes Gedächtnis zu haben, während er nur einen Bruchteil des Context Windows nutzt. Das ist nicht nur clevere Technik – es ist funktional notwendig, sobald Gespräche über ein paar Dutzend Nachrichten hinausgehen.
+
+---
+
+## Koordination durch Agent Networks
+
+Manchmal braucht man sowohl Struktur als auch Flexibilität. Reine Workflows sind zu starr. Reine Agenten sind zu unberechenbar.
+
+Agent Networks geben dir einen Koordinator, der basierend auf der Aufgabe entscheidet, welcher spezialisierte Agent oder Workflow aufgerufen wird. Denk daran wie einen intelligenten Load Balancer für AI-Fähigkeiten.
+
+```typescript
+export const coordinatorAgent = new Agent({
+  id: 'coordinator-agent',
+  name: 'Research Coordinator',
+  instructions: `You are a network of researchers and writers.
+    - Use researchAgent for gathering facts
+    - Use writingAgent for producing final content
+    - Use weatherTool for current weather data
+    - Use activityPlannerWorkflow for location-based planning
+    
+    Always produce comprehensive, well-structured responses.`,
+  model: openai('gpt-5'),
+  
+  // Available primitives
+  agents: { researchAgent, writingAgent },
+  workflows: { activityPlannerWorkflow },
+  tools: { weatherTool },
+  
+  // Network requires memory
+  memory: new Memory({
+    storage: new LibSQLStore({ id: 'network-store', url: 'file:../network.db' }),
+  }),
+});
+```
+
+Wenn man dieses Network abfragt, analysiert der Koordinator die Anfrage und leitet entsprechend weiter:
+- "Ich brauche Fakten über X" triggert den Research-Agenten
+- "Plane ein Wochenende in Seattle" führt den Activity-Planner-Workflow aus
+- "Schreibe einen Bericht über Y" aktiviert den Writing-Agenten
+
+Dieses Muster skaliert besser, als zu versuchen, alles in einen einzigen Mega-Agenten zu stopfen. Spezialisierte Agenten entwickeln fokussierte Expertise. Der Koordinator übernimmt das Routing. Jedes Teil tut das, wofür es gut ist.
+
+---
+
+## Zusammenspiel
+
+Echte Produktions-AI-Systeme brauchen Architektur, nicht nur Prompts. Man baut verteilte Systeme, bei denen einige Knoten zufällig LLMs sind.
+
+Workflows geben dir Garantien, wenn Dinge exakt richtig ablaufen müssen. Memory gibt dir Kontext, ohne dein Token-Budget zu verbrennen. Agent Networks lassen dich Komplexität aus einfacheren Teilen zusammensetzen.
+
+Nichts davon ist glamourös. Aber nachdem ich genug "vollständig autonome Agenten" in Produktion scheitern gesehen habe, schätze ich langweilige Zuverlässigkeit mehr als aufregende Unvorhersehbarkeit.
+
+Deine Erfahrungen mögen variieren, aber meiner Meinung nach sind die Systeme, die tatsächlich shipped und am Laufen bleiben, diejenigen, die LLMs als Komponenten in einer größeren Architektur behandeln und nicht als magische Boxen, die alles lösen.
+
+### Ressourcen
+
+- [Mastra Workflows Documentation](https://mastra.ai/docs/workflows/overview)
+- [Mastra Memory Documentation](https://mastra.ai/docs/memory/overview)
+- [Full Demo Code](https://github.com/justsml/mastra-examples)
+
+## Die Serie lesen
+
+1. [LLM Routing](/llm-routing-mastra-ai)
+2. [Security & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool Integrations](/mastra-mcp-tool-integrations)
+4. **Workflows & Memory** (Dieser Beitrag)
