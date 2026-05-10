@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: hi
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 19.97
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Command failed: bun run i18n:validate --slug stop-hardcoding-your-prompts --locale hi
