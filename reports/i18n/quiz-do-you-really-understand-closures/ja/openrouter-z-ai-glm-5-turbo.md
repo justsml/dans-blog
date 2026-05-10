@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: ja
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 58.59
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
