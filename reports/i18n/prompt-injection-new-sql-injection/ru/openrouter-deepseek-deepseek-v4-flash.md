@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: prompt-injection-new-sql-injection
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-05--prompt-injection-new-sql-injection/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 65.25
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
