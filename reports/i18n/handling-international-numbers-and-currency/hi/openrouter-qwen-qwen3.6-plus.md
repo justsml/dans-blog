@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 50.60
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
