@@ -85,11 +85,11 @@ Automatisch ist ergonomischer — man bekommt Browser-Support gratis. Aber jeder
 
 Explizites Publish ist aus Vertragssicht korrekter — man sagt „diese Version ist browser-bereit" — aber es ist leicht zu vergessen, was bedeutet, dass Tabellen, die browser-durchsuchbar *sein sollten*, es stillschweigend nicht sind.
 
-Ich tendiere zu automatisch, wobei Sidecar-Fehler nur eine Warnung loggen statt den Commit fehlschlagen zu lassen. Aber ich bin genuinely unsicher und habe es im PR gekennzeichnet.
+Ich tendiere zu automatisch, wobei Sidecar-Fehler nur eine Warnung loggen statt den Commit fehlschlagen zu lassen. Aber ich bin wirklich unsicher und habe es im PR gekennzeichnet.
 
 ### Was zählt als „browser-sicher"?
 
-Das `isComplete`-Flag und die Spaltenfilter-Logik in `web_publish.rs` kodieren eine Einschätzung darüber, what der Browser leisten kann. Diese Einschätzung muss mit den tatsächlichen Fähigkeiten der WASM-Laufzeit synchron bleiben. Wenn jemand einen neuen Indextyp zu Lance hinzufügt, den der Browser nicht ausführen kann, muss der Publish-Code das wissen, um ihn auszuschließen — sonst bewirbt man eine Fähigkeit, die der Browser zur Suchzeit nicht einhalten kann.
+Das `isComplete`-Flag und die Spaltenfilter-Logik in `web_publish.rs` kodieren eine Einschätzung darüber, was der Browser leisten kann. Diese Einschätzung muss mit den tatsächlichen Fähigkeiten der WASM-Laufzeit synchron bleiben. Wenn jemand einen neuen Indextyp zu Lance hinzufügt, den der Browser nicht ausführen kann, muss der Publish-Code das wissen, um ihn auszuschließen — sonst bewirbt man eine Fähigkeit, die der Browser zur Suchzeit nicht einhalten kann.
 
 Die richtige Lösung hier ist wahrscheinlich eine Capability-Registry, die zwischen Publish-Pfad und Runtime geteilt wird, sodass sie nicht auseinanderdriften können. Ich habe es vorerst als parallele Konstanten implementiert — expedient, aber fragil. Das ist wahrscheinlich das, was ich als nächstes verbessern würde.
 
@@ -99,7 +99,7 @@ Die richtige Lösung hier ist wahrscheinlich eine Capability-Registry, die zwisc
 
 Der `./transformers`-Export ist eine Quality-of-Life-Funktion: Er nimmt eine Textanfrage, führt sie über ein lokales Embedding-Modell via `@xenova/transformers` aus und übergibt den resultierenden Vektor an die LanceDB-Suchmaschine. Serverlose semantische Suche von einer statischen HTML-Seite aus.
 
-Es ist auch das, bei dem ich am frohesten bin, ihn in Rust statt in JavaScript gebaut zu haben. Es ist genuinely nützlich und bereits implementiert, aber es ist eine Abhängigkeit und eine API-Oberfläche, die getrennt von der eigentlichen Browser-Suche-Frage steht. Die Maintainer könnten vernünftigerweise wollen, dass zuerst die Basis-`searchTable()`-API gelandet wird und die Embeddings separat iteriert werden.
+Es ist auch das, bei dem ich mir am wenigsten sicher bin, ob es in diesen PR gehört. Es ist wirklich nützlich und bereits implementiert, aber es ist eine Abhängigkeit und eine API-Oberfläche, die getrennt von der eigentlichen Browser-Suche-Frage steht. Die Maintainer könnten vernünftigerweise wollen, dass zuerst die Basis-`searchTable()`-API gelandet wird und die Embeddings separat iteriert werden.
 
 Ich habe gefragt. Mal sehen.
 
@@ -109,7 +109,7 @@ Ich habe gefragt. Mal sehen.
 
 **Früher scopen.** Der PR umfasst 14.500 Zeilen. Das ist viel, um es auf einmal zu reviewen. Ich hätte zuerst das Publish-Artefakt-Format landen können, dann die WASM-Laufzeit, dann das TypeScript-Paket. Drei kleinere PRs wären leichter zu mergen gewesen. Ich habe das nicht gemacht, weil ich die vollständige End-to-End-Story validieren wollte, bevor ich irgendeinen Teil vorschlage — was für das Vertrauen sinnvoll war, aber die Review-Last hoch macht.
 
-**Die Capability-Registry zuerst schreiben.** Das Drift-Risiko zwischen `web_publish.rs` und `browser.rs` ist real. Mit einem gemeinsamen Capability-Typ zu beginnen, auf den beide Seiten referenzieren, wäre sauberer gewesen als parallele Konstanten listen, die ich synchron halten muss.
+**Die Capability-Registry zuerst schreiben.** Das Drift-Risiko zwischen `web_publish.rs` und `browser.rs` ist real. Mit einem gemeinsamen Capability-Typ zu beginnen, auf den beide Seiten referenzieren, wäre sauberer gewesen als parallele Konstantenlisten, die ich synchron halten muss.
 
 **Dinge weniger clever benennen.** `_web.json` ist ein feiner Name für ein internes Format. Er wird zu einem belasteten Namen, sobald jemand ihn cached oder Tooling darum baut. Ich hätte mehr Zeit auf das Naming verwenden sollen, bevor ich submitted — das ist eine der Sachen, die viel günstiger zu ändern sind, bevor jemand anderes davon abhängt.
 
@@ -121,4 +121,4 @@ Was dieses Projekt machbar gemacht hat, ist, dass Lances interne Architektur ber
 
 Gute Abstraktionsgrenzen machen internen Code nicht nur leichter nachvollziehbar — sie ermöglichen es jemandem wie mir, von außerhalb des Projekts zu kommen und eine neue Ausführungsumgebung anzudocken, ohne den Core anzufassen. Das ist eine echte Design-Tugend, und es hat die 14.000 Zeilen eher nach einem Ausfüllen einer vorgegebenen Form wirken lassen als nach einem Kampf mit der Codebasis.
 
-Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), falls jemand die Details sehen möchte. Warte noch auf Review. Die Maintainer waren warmherzig und ich bin cautiously optimistisch.
+Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), falls jemand die Details sehen möchte. Warte noch auf Review. Die Maintainer waren warmherzig und ich bin vorsichtig optimistisch.
