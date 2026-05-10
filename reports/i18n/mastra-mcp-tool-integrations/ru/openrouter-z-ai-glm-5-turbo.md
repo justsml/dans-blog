@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: ru
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.41
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
