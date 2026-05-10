@@ -3,11 +3,10 @@
 - Locale: es
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 15.45
+- Validation: passed
+- Runtime seconds: 93.00
 - Input tokens: unknown
-- Output tokens: unknown
+- Output tokens: 0
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model did not create src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx.
