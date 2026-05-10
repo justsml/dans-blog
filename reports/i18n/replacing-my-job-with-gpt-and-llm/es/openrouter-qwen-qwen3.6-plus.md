@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/es/index.mdx
+- Validation: passed
+- Runtime seconds: 85.86
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
