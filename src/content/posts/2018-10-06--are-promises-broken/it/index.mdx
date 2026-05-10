@@ -1,0 +1,234 @@
+---
+social_image: ../desktop-social.webp
+title: Promesse rotte?
+unlisted: true
+subTitle: Errori che cadono, risultati persi...
+date: 2018-10-06
+modified: 2024-12-11
+tags: [promises, javascript, errors, programming]
+category: Code
+subCategory: promises
+cover: lennart-heim-766366-unsplash.webp
+cover_mobile: w300_lennart-heim-766366-unsplash.webp
+cover_icon: icon_lennart-heim-766366-unsplash.webp
+---
+
+## Le Promise di JavaScript sono rotte?
+
+### Nei tempi antichi
+
+Uno dei miti più comuni sulle Promise riguarda i **presunti** problemi con la gestione degli errori.
+
+**Molti anni fa** le Promise _erano_ davvero disastrose con gli errori. **È stato fatto un grande lavoro per risolvere il problema.**
+
+> E così, **è stato risolto**, anche **ampiamente implementato**.
+
+#### La gente ha festeggiato
+
+E purtroppo, alcuni non se ne sono accorti.
+
+### Ai giorni nostri
+
+Il mito persiste ancora, lo vedo ovunque: [articoli popolari su medium](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9), [su dzone](#redacted), e [molti](https://medium.com/@avaq/broken-promises-2ae92780f33) altri fonti.
+
+Ammetto che anche le risorse e la documentazione "ufficiali" offrono spesso [esempi deboli e cattive abitudini](/promise-gotchas/). Questi vengono spesso usati per "dimostrare" il caso contro le Promise. Alcuni suggeriscono persino "rimedi" che peggiorano di molto le cose. (nota: link rimosso)
+
+<!-- Uno di questi consigli che ho visto più volte: non usare mai `.catch`, e invece usare un evento globale `"unhandledRejection"`. **NON** farlo mai. unhandledRejection è progettato per la pulizia dei riferimenti globali, come le connessioni al database, prima di un'imminente chiusura.) -->
+
+<br />
+<br />
+
+## Regole per restare nei guai
+
+1. [Le Promise hanno bisogno di qualcosa a cui aggrapparsi](#1-le-promise-hanno-bisogno-di-qualcosa-a-cui-aggrapparsi)
+    * **Sempre** `return` dalle tue funzioni.
+1. [Usa istanze `Error` reali](#2-usa-istanze-error-reali)
+    * **Sempre** usa istanze `Error`.
+1. [Gestisci gli errori dove ha senso](#3-gestisci-gli-errori-dove-ha-senso)
+    * **Sempre** usa `.catch()`, almeno una volta.
+1. [Aggiungi chiarezza con funzioni nominate 🦄✨](#4-aggiungi-chiarezza-con-funzioni-nominate-)
+    * __Preferisci__ funzioni nominate.
+
+-------------------------------------------
+
+
+#### #1 Le Promise hanno bisogno di qualcosa a cui aggrapparsi
+
+È fondamentale che tu faccia **sempre `return`** dalle tue funzioni.
+
+Le funzioni callback delle Promise seguono un certo schema in `.then(callback)` e `.catch(callback)`.
+
+Ogni valore restituito viene passato alla callback del `.then()` successivo.
+
+```js
+function addTen(number) {
+  return number + 10;
+}
+
+Promise.resolve(10)  // 10
+  .then(addTen)      // 20
+  .then(addTen)      // 30
+  .then(addTen)      // 40
+  .then(console.log) // logs "40"
+```
+
+> Bonus del "sempre restituire": il codice è molto più facile da testare con unit test.
+
+**Domanda:** Quanti stati distinti di Promise (risolti e rifiutati) sono stati creati?
+
+**Domanda:** Quante promise sono state create nell'esempio precedente?
+
+#### #2 Usa istanze `Error` reali
+
+JavaScript ha un comportamento interessante intorno agli errori (che si applica al codice asincrono **e** sincrono.)
+
+<a href="https://repl.it/@justsml/throwing-errors-in-javascript" target="_blank">[<i>vedi esempio su repl.it: `throwing errors in javascript`</i>]</a>
+<img alt="throwing errors in javascript" src="throwing-errors-in-javascript.webp" />
+
+
+Per **ottenere dettagli utili sul numero di riga** e sullo stack di chiamate, devi usare istanze `Error`. Lanciare stringhe non funziona come in Python o Ruby.
+
+Mentre JavaScript **sembra** gestire `throw "stringa"`, come vedrai la stringa nel tuo handler `catch`. Tuttavia, i dati sono tutto ciò che vedrai*. Nessun [stack frame](https://en.wikipedia.org/wiki/Call_stack#Stack_and_frame_pointers) precedente sarà incluso.
+
+Esempi corretti con `new Error`:
+
+```js
+throw new Error('message')           // ✅
+Promise.reject(new Error('message')) // ✅
+throw Error('message')               // ✅
+Promise.reject(Error('message'))     // ✅
+```
+
+I seguenti sono anti-pattern comuni:
+
+```js
+throw 'error message'  // ❌
+Promise.reject(-42)    // ❌
+```
+
+<iframe height="400px" width="100%" src="https://repl.it/@justsml/throwing-errors-in-javascript?lite=true" scrolling="no" frameborder="no" allowtransparency="true" allowfullscreen="true" sandbox="allow-forms allow-pointer-lock allow-popups allow-same-origin allow-scripts allow-modals"></iframe>
+
+#### #3 Gestisci gli errori dove ha senso
+
+Le Promise offrono un modo elegante per gestire gli errori, usando `.catch()`. È fondamentalmente un tipo speciale di `.then()` - dove vengono gestiti gli errori dai `.then()` precedenti. Vediamo un esempio...
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .catch(() => console.log('will not get hit'))
+  .then(() => throw new Error('totes fail'))
+  .catch(() => console.log('WILL get hit'))
+```
+
+Mentre `.catch()` può sembrare un handler di eventi DOM (es. `click`, `keypress`). Il suo posizionamento è importante, poiché può solo "catturare" gli errori lanciati **sopra di esso.**
+
+**Sovrascrivere gli errori è relativamente banale** Restituisci un valore non-errore nella tua callback `.catch()`, la catena di Promise passa a eseguire le callback `.then()` in sequenza. (Effettivamente.)
+
+Prova a seguire la sequenza del seguente esempio:
+
+```js
+Promise.resolve(42)
+  .then(() => 'hello')
+  .then(() => throw new Error('totes fail'))
+  .catch(() => {
+    return 99
+  })
+  .then(num => num + 1)
+  .then(console.log) // expected output: 100
+```
+
+**La sequenza è ciò che è importante da comprendere.**
+
+Anche se è un esempio sciocco, è progettato per **illustrare come errori e dati fluiscono** nelle Promise.
+
+Ecco un riepilogo della sequenza:
+
+1. 42 è il valore iniziale.
+1. `hello` viene sempre restituito dal metodo successivo.
+1. ignoriamo il valore precedente e lanciamo un errore con il messaggio `'totes fail'`.
+1. `.catch()` intercetta l'errore, invece restituisce `99` che sarà gestito da qualsiasi `.then()` successivo.
+1. incrementa il `num`, restituendo `100`
+1. il metodo `console.log` riceve `100` e lo stampa! :tada:
+
+
+**Domanda:** Cosa succede quando ci sono 2 `.catch()` in sequenza? Il secondo può mai essere eseguito? Riesci a pensare a un caso d'uso?
+
+**Domanda:** Come può `.catch()` ignorare gli errori? Come potresti impedire che gli errori forzino un'uscita anticipata da `Promise.all`?
+
+
+#### #4 Aggiungi chiarezza con funzioni nominate 🦄✨
+
+Confronta la **leggibilità** dei seguenti 2 esempi:
+
+**Anonimo:** ❌
+
+```js
+Promise.resolve(10)          // 10
+  .then(x => x * 2)          // 20
+  .then(x => x / 4)          // 5
+  .then(x => x * x)          // 25
+  .then(x => x.toFixed(2))   // "25.00"
+  .then(x => console.log(x)) // expected output: "25.00"
+```
+
+
+**Nominato:** ✅
+
+```js
+Promise.resolve(10) // 10
+  .then(double)     // 20
+  .then(quarter)    // 5
+  .then(square)     // 25
+  .then(format)     // "25.00"
+  .then(log)        // expected output: "25.00"
+
+const double = x => x * 2
+const quarter = x => x / 4
+const square = x => x * x
+const format = x => x.toFixed(2)
+const log = x => console.log(x)
+
+```
+
+**BONUS:** ✅
+
+> Compatibile con i metodi degli Array!!!
+
+Puoi riutilizzare le tue funzioni nominate con i nostri amici di `Array.prototype.` Inclusi `.map()`, `.filter()`, `.every()`, `.some()`, `.find()`!
+
+Pipeline di collection #FTW:
+
+```js
+// È LA STESSA COSA :mindblown:
+
+[10, 20]           // [ 10, 20 ]
+  .map(double)     // [ 20, 40 ]
+  .map(quarter)    // [ 5, 10 ]
+  .map(square)     // [ 25, 100 ]
+  .map(format)     // [ "25.00", "100.00" ]
+  .map(log)        // expected 2 lines of output: "25.00", "100.00"
+
+```
+
+E se non vuoi fare questo tipo di coding lineare... Beh, hai funzioni semplici!
+
+Puoi usarle come ti serve:
+
+```js
+// Pattern di annidamento
+// ❌ per favore non farlo, comunque
+
+const result = format(square(quarter(double(10))))
+
+log(result)
+// expected output: "25.00"
+```
+
+
+**Perché l'annidamento di funzioni è un anti-pattern?**
+
+1. Non è leggibile per tante persone
+2. I diff di git non rivelano facilmente chi ha cambiato cosa
+3. Difficile da debuggare o loggare dal mezzo delle funzioni annidate
+
+

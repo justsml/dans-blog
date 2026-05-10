@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-10-06--are-promises-broken/it/index.mdx
+- Validation: passed
+- Runtime seconds: 105.89
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
