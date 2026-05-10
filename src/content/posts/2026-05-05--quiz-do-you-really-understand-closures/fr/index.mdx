@@ -1,5 +1,5 @@
 ---
-title: "Quiz : Comprenez-vous Vraiment les Closures JavaScript ?"
+title: "Quiz : Maîtrisez-vous vraiment les fermetures JavaScript ?"
 subTitle: "La plupart des développeurs pensent que oui. La plupart se trompent."
 date: 2026-05-01
 modified: 2026-05-05
@@ -19,11 +19,11 @@ cover_icon: ../square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Les closures sont l'un de ces concepts que chaque développeur JavaScript *pense* comprendre — jusqu'au moment où il ne comprend plus. Ce quiz révélera les limites de ce que vous savez réellement.</p>
+<p class="inset">Les fermetures sont l'un de ces concepts que tout développeur JavaScript *pense* comprendre — jusqu'au moment où ce n'est plus le cas. Ce quiz va explorer les limites de ce que vous savez vraiment.</p>
 
-Les closures apparaissent dans les gestionnaires d'événements, les factory functions, les hooks React, les patterns module, et à peu près partout ailleurs. Elles ne sont pas exotiques. Elles constituent le tissu dont le JavaScript est fait.
+Les fermetures apparaissent dans les gestionnaires d'événements, les fonctions d'usine, les hooks React, les motifs de module, et à peu près partout ailleurs. Ce n'est pas exotique. C'est le tissu même dont JavaScript est tissé.
 
-Les questions commencent raisonnablement, puis commencent à retirer le plancher.
+Les questions commencent raisonnablement puis retirent les planchers les unes après les autres.
 
 <QuizUI>
 
@@ -41,7 +41,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que cela affiche ?
+    Qu'affiche ce code ?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -54,9 +54,9 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` ferme sur `count`. Chaque appel incrémente et retourne la *même* variable `count`. Les trois appels produisent `1, 2, 3`.
+    `tick` capture `count`. Chaque appel incrémente et retourne la **même** variable `count`. Les trois appels produisent `1, 2, 3`.
 
-    Le mot clé : *même*. `count` n'est pas copié dans la closure. La closure conserve une **référence vivante** à la liaison de variable. C'est tout le principe.
+    Le mot clé : **même**. `count` n'est pas copiée dans la fermeture. La fermeture conserve une **référence vive** vers la liaison de la variable. C'est tout l'enjeu.
   </div>
   </slot>
 </Challenge>
@@ -65,7 +65,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Échauffement"
-  title="Closures Séparées"
+  title="Fermetures Séparées"
   options={[
     {text: '1, 1', isAnswer: true},
     {text: '1, 2'},
@@ -75,7 +75,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que cela affiche ?
+    Qu'affiche ce code ?
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -89,11 +89,11 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count`. `a` et `b` ferment sur des liaisons `count` *différentes`. Ils ne partagent pas d'état.
+    Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec son propre `count` tout neuf. `a` et `b` capturent des liaisons `count` *différentes*. Elles ne partagent pas d'état.
 
     Résultat : `1, 1`
 
-    C'est pourquoi les closures servent à construire un état privé — chaque « instance » est indépendante.
+    C'est pourquoi les fermetures sont utilisées pour construire un état privé — chaque « instance » est indépendante.
   </div>
   </slot>
 </Challenge>
@@ -112,7 +112,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce qui est affiché après 100ms ?
+    Qu'est-ce qui est affiché après 100 ms ?
     ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -122,11 +122,11 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` est scopé à la fonction. Il y a exactement **un seul** `i` — les cinq callbacks ferment sur la même liaison. Quand les timeouts se déclenchent, la boucle est terminée et `i` vaut `5`.
+    `var` a une portée de fonction. Il y a exactement **un** `i` — les cinq callbacks capturent la même liaison. Quand les minuteries se déclenchent, la boucle est terminée et `i` vaut `5`.
 
     Cinq callbacks. Un `i`. Valeur : `5`. Affiché cinq fois.
 
-    La solution est `let` (scopé au bloc, nouvelle liaison à chaque itération) ou l'enveloppement dans une IIFE pour capturer la valeur courante :
+    La solution est `let` (portée de bloc, nouvelle liaison à chaque itération) ou l'utilisation d'une IIFE pour capturer la valeur courante :
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -140,17 +140,17 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Le Piège Classique"
-  title="let Résout le Problème (Ou Pas ?)"
+  title="let Résout-Il le Problème ? (Pas Si Simple)"
   options={[
     {text: '0, 1, 2, 3, 4', isAnswer: true},
     {text: '5, 5, 5, 5, 5'},
     {text: '4, 4, 4, 4, 4'},
-    {text: 'ReferenceError: i is not defined'},
+    {text: 'ReferenceError : i n\'est pas défini'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Même boucle, mot-clé différent. Qu'est-ce qui s'affiche ?
+    Même boucle, mot-clé différent. Qu'affiche-t-elle ?
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -160,7 +160,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `let` dans une boucle `for` est spécial. Le spec dit : chaque itération obtient sa propre **nouvelle liaison** de `i`. C'est comme si la boucle faisait secrètement ceci :
+    `let` dans une boucle `for` est spécial. La spécification dit : chaque itération obtient sa **nouvelle liaison** de `i`. C'est comme si la boucle faisait secrètement ceci :
 
     ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
@@ -168,7 +168,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
     // ...
     ```
 
-    Les cinq callbacks ferment donc sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.
+    Les cinq callbacks capturent donc cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.
   </div>
   </slot>
 </Challenge>
@@ -176,18 +176,18 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={4}
-  group="Closures & Objets"
+  group="Fermetures et Objets"
   title="Mutation d'Objet"
   options={[
-    {text: '{ x: 1 }, { x: 1 }'},
-    {text: '{ x: 1 }, { x: 99 }'},
-    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
-    {text: '{ x: 99 }, { x: 1 }'},
+    {text: '{ x : 1 }, { x : 1 }'},
+    {text: '{ x : 1 }, { x : 99 }'},
+    {text: '{ x : 99 }, { x : 99 }', isAnswer: true},
+    {text: '{ x : 99 }, { x : 1 }'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que cela affiche ?
+    Qu'affiche ce code ?
     ```javascript
     function wrap() {
       const obj = { x: 1 };
@@ -202,9 +202,9 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La closure capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui-même est muté après la création de la closure — mais `obj` pointe toujours vers la même référence. Les deux appels retournent le même objet muté : `{ x: 99 }`.
+    La fermeture capture la **liaison** `obj`, pas un instantané de l'objet. L'objet lui-même est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels retournent le même objet muté : `{ x: 99 }`.
 
-    Cela piège ceux qui supposent que les closures « gèlent » les valeurs. Elles ne le font pas. Elles capturent des **références**.
+    Cet écueil piège ceux qui pensent que les fermetures « figent » les valeurs. Ce n'est pas le cas. Elles capturent des **références**.
   </div>
   </slot>
 </Challenge>
@@ -213,17 +213,17 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Avancé"
-  title="Closure Obsolète dans React"
+  title="Fermeture Obsolète dans React"
   options={[
-    {text: 'Affiche le count courant à chaque clic'},
+    {text: 'Affiche le count actuel à chaque clic'},
     {text: 'Affiche toujours 0', isAnswer: true},
     {text: 'Affiche NaN'},
-    {text: "Ne compile pas"},
+    {text: 'Ce code ne compile pas'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Quel comportement ce composant React présente-t-il quand on clique plusieurs fois sur le bouton ?
+    Quel comportement ce composant React a-t-il lorsqu'on clique plusieurs fois sur le bouton ?
     ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
@@ -244,15 +244,15 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Closure obsolète classique. Le `useEffect` s'exécute une fois (dep array vide) et crée un interval qui ferme sur `count` tel qu'il était au moment du montage : `0`. Peu importe combien de fois vous cliquez, la closure de l'intervalle ne voit jamais la valeur mise à jour.
+    Fermeture obsolète classique. Le `useEffect` s'exécute une fois (tableau de dépendances vide) et crée un intervalle qui capture `count` tel qu'il était au montage : `0`. Peu importe combien de fois vous cliquez, la fermeture de l'intervalle ne voit jamais la valeur mise à jour.
 
-    Le label du bouton se met à jour correctement — c'est un rendu frais. Mais `console.log` reste piégé à `0` pour toujours.
+    Le libellé du bouton se met à jour correctement — c'est un nouveau rendu. Mais `console.log` reste piégé à `0` pour toujours.
 
-    Corrigez-le en ajoutant `count` au dep array (recrée l'intervalle) ou en utilisant une ref :
+    Correction : ajouter `count` au tableau de dépendances (recrée l'intervalle) ou utiliser une ref :
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // puis utilisez countRef.current dans l'intervalle
+    // puis utiliser countRef.current dans l'intervalle
     ```
   </div>
   </slot>
@@ -262,17 +262,17 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Avancé"
-  title="Pattern Module"
+  title="Motif de Module"
   options={[
     {text: '60', isAnswer: true},
-    {text: 'TypeError: balance is not defined'},
+    {text: 'TypeError : balance n\'est pas définie'},
     {text: '-40'},
     {text: '100'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Attendez — lisez attentivement. Que se passe-t-il réellement ?
+    Attendez — lisez attentivement. Que se passe-t-il vraiment ?
     ```javascript
     const bank = (() => {
       let balance = 0;
@@ -293,13 +293,13 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   <div className="explanation">
     La réponse est `60`.
 
-    C'est le **Pattern Module** — une IIFE qui retourne un objet de closures. Les trois méthodes ferment sur la même liaison `balance`. Elle est vraiment privée : vous ne pouvez pas accéder à `balance` depuis l'extérieur.
+    C'est le **Motif de Module** — une IIFE qui retourne un objet de fermetures. Les trois méthodes capturent la même liaison `balance`. C'est réellement privé : vous ne pouvez pas accéder à `balance` de l'extérieur.
 
     ```javascript
     console.log(bank.balance); // undefined
     ```
 
-    Avant les classes, c'était *la* façon d'encapsuler l'état en JavaScript. Vous le verrez encore dans les codebases legacy et les bibliothèques utilitaires.
+    Avant les classes, c'était *la* façon d'encapsuler l'état en JavaScript. On le voit encore dans les bases de code legacy et les bibliothèques utilitaires.
   </div>
   </slot>
 </Challenge>
@@ -308,12 +308,12 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Expert"
-  title="Fuite Mémoire par Closure"
+  title="Fuite Mémoire par Fermeture"
   options={[
-    {text: 'Il affiche la longueur du tableau de données'},
-    {text: 'Il crée une fuite mémoire', isAnswer: true},
-    {text: 'Il lance une RangeError'},
-    {text: 'Rien d\'inhabituel — c\'est correct'},
+    {text: 'Elle affiche la longueur du tableau data'},
+    {text: 'Elle crée une fuite mémoire', isAnswer: true},
+    {text: 'Elle lève une RangeError'},
+    {text: 'Rien d\'anormal — ce code est correct'},
   ]}
 >
   <slot name="question">
@@ -331,15 +331,15 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'event listener ferme sur `data`, donc le tableau reste joignable aussi longtemps que le listener est joignable. Si `element` est de longue durée et que le listener n'est jamais supprimé, ce gros tableau est conservé aussi.
+    L'écouteur d'événement capture `data`, donc le tableau reste accessible tant que l'écouteur est accessible. Si `element` a une longue durée de vie et que l'écouteur n'est jamais retiré, ce grand tableau est conservé aussi.
 
-    `element` est dans le DOM. Le listener retient `data`. Le GC ne peut pas le collecter.
+    `element` est dans le DOM. L'écouteur retient `data`. Le GC ne peut pas la collecter.
 
-    Correction : ne capturez pas de gros données dans des listeners de longue durée sauf si vous en avez vraiment besoin, et supprimez les listeners quand l'UI propriétaire est démontée :
+    Correction : ne capturez pas de grandes données dans des écouteurs longue durée sauf si nécessaire, et retirez les écouteurs quand l'UI propriétaire est détruite :
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
-      // faites quelque chose avec data...
+      // faire quelque chose avec data...
 
       const onClick = () => {
         console.log('clicked!');
@@ -350,7 +350,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
     }
     ```
 
-    V8 moderne est meilleur là-dessus qu'avant. Mais dans les SPAs de longue durée avec beaucoup d'event listeners, ce pattern mord encore les gens.
+    V8 moderne gère mieux cela qu'avant. Mais dans les SPA longue durée avec beaucoup d'écouteurs d'événements, ce motif piège encore du monde.
   </div>
   </slot>
 </Challenge>
@@ -369,7 +369,7 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 >
   <slot name="question">
   <div className="question">
-    Qu'est-ce que cela affiche ?
+    Qu'affiche ce code ?
     ```javascript
     const user = {
       name: 'Dan',
@@ -390,11 +390,11 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   <div className="explanation">
     Deux pièges subtils :
 
-    **`greetArrow`** : Les fonctions fléchées n'ont pas leur propre `this`. Elles capturent `this` du scope lexical englobant — ici le scope module/global, pas `user`. Donc `this?.name` est `undefined`.
+    **`greetArrow`** : Les fonctions fléchées n'ont pas leur propre `this`. Elles capturent `this` de la portée lexicale englobante — ici la portée du module/globale, pas `user`. Donc `this?.name` est `undefined`.
 
-    **`fn()`** : `greetRegular` est appelé sans récepteur (`fn()` et non `user.greetRegular()`). En mode strict, `this` est `undefined`. En mode sloppy, c'est l'objet global. Dans les deux cas, `this?.name` est `undefined`.
+    **`fn()`** : `greetRegular` est appelée sans récepteur (`fn()` et non `user.greetRegular()`). En mode strict, `this` est `undefined`. En mode non-strict, c'est l'objet global. Dans les deux cas, `this?.name` est `undefined`.
 
-    Si vous aviez appelé `user.greetRegular()` directement, vous obtiendriez `'Dan'` — parce que `this` serait lié à `user`.
+    Si vous aviez appelé `user.greetRegular()` directement, vous auriez obtenu `'Dan'` — car `this` serait alors lié à `user`.
 
     Résultat : `undefined, undefined`.
   </div>
@@ -405,12 +405,12 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Bonus"
-  title="Mémorisation via Closure"
+  title="Mémoïsation par Fermeture"
   options={[
     {text: 'Appelle expensive() 3 fois'},
     {text: 'Appelle expensive() 1 fois', isAnswer: true},
     {text: 'Appelle expensive() 2 fois'},
-    {text: 'Lance : Maximum call stack exceeded'},
+    {text: 'Lève une erreur : Maximum call stack exceeded'},
   ]}
 >
   <slot name="question">
@@ -440,11 +440,11 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La fonction mémorisée ferme sur `cache`. Le premier appel (`fast(5)`) manque le cache, appelle `expensive`, et stocke le résultat. Les deuxième et troisième appels touchent le cache et retournent immédiatement.
+    La fonction mémoïsée capture `cache`. Le premier appel (`fast(5)`) rate le cache, appelle `expensive`, et stocke le résultat. Les deuxième et troisième appels touchent le cache et retournent immédiatement.
 
     `calls` vaut `1`.
 
-    Ici, les closures font du vrai travail. `cache` est privé (inaccessible depuis l'extérieur de `memoize`), persistant (vit aussi longtemps que `fast` existe), et partagé entre tous les appels à `fast`.
+    C'est le travail concret des fermetures. `cache` est privé (inaccessible depuis l'extérieur de `memoize`), persistant (vit aussi longtemps que `fast` existe), et partagé entre tous les appels à `fast`.
   </div>
   </slot>
 </Challenge>
@@ -453,11 +453,11 @@ Les questions commencent raisonnablement, puis commencent à retirer le plancher
 
 ---
 
-Comment avez-vous réussi ?
+Comment vous en êtes-vous sortis ?
 
-- **9-10** : Vous connaissez vraiment les closures. Probablement effrayant en pair-programming.
-- **6-8** : Solide. Les questions closure obsolète / `this` vous ont piégé, ce qui est honnête.
-- **3-5** : Vous connaissez le concept mais les bords sont flous. Allez lire la doc MDN sur la chaîne de scopes.
-- **0-2** : Vous pensiez connaître les closures. Maintenant vous savez. C'est le but.
+- **9–10** : Vous maîtrisez vraiment les fermetures. Probablement intimidant en programmation en binôme.
+- **6–8** : Solide. La fermeture obsolète / les questions sur `this` vous ont piégé, ce qui est honnête.
+- **3–5** : Vous connaissez le concept mais les limites sont floues. Allez lire la documentation MDN sur la chaîne de portée.
+- **0–2** : Vous pensiez connaître les fermetures. Maintenant c'est le cas. C'est tout l'intérêt.
 
-La closure obsolète dans React (n°6) et le piège du `this` (n°8) sont ceux qui causent de vrais bugs en production. Si ceux-là vous semblent peu familiers, ils valent la peine d'être revus — ils apparaissent en code review plus que tout autre problème lié aux closures.
+La fermeture obsolète dans React (#6) et le piège du `this` (#8) sont ceux qui causent de vrais bugs en production. Si ceux-ci vous semblaient peu familiers, ils méritent qu'on s'y attarde — ils apparaissent en revue de code plus que tout autre problème lié aux fermetures.
