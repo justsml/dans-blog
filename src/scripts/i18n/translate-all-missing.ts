@@ -65,7 +65,7 @@ for (const [index, task] of limitedTasks.entries()) {
   console.log(`\n[${index + 1}/${limitedTasks.length}] ${task.locale}/${task.slug}`);
   processTask(task);
   if (shouldPush) {
-    runInherited("git", ["push", "origin", "main"]);
+    runInherited("git", ["push", "origin", "HEAD:main"]);
   }
 }
 
