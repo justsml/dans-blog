@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: hi
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 95.90
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx: src/content/posts/2026-05-06--llm-evals-are-broken/ja/index.mdx, reports/i18n/llm-evals-are-broken/ja/judge.md
