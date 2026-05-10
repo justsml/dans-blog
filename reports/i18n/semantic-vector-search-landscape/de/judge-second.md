@@ -1,29 +1,21 @@
-# i18n Second Judge Report: `semantic-vector-search-landscape` → de
+# i18n Second Judge Report: `semantic-vector-search-landscape` → de (Second Pass)
 
-## Summary of Agreement
+## Agreement with Primary Judge
 
-I **agree** with the primary judge's selection of the DeepSeek candidate (`f8a778a73a55c1a4c383c678b39f1fabe74293d0`). 
+I **agree** with the primary judge's selection of Qwen (`a5cf7f8`) — the polished file at `src/content/posts/2026-05-01--semantic-vector-search-landscape/de/index.mdx` is the Qwen-based translation.
 
-DeepSeek's translation is superior in technical precision, stylistic consistency, and idiomatic flow. It correctly identifies "Embeddings" as the industry-standard term in German tech circles, whereas translations like "Einbettung" (MiniMax) feel overly academic or localized in a way that obscures meaning for professional engineers.
+## Findings
 
-## Review of Candidates
+**MDX/frontmatter**: No issues. Frontmatter keys and structure are intact. Asset paths correctly use `../` for the localized directory depth. Code fences, table pipes, horizontal rules, and JSX syntax are all well-formed.
 
-### DeepSeek (`f8a778a7`) - **Selected & Agreed**
-- **Terminology**: Correct usage of "unscharfe Suche" (fuzzy), "Kosinus-Ähnlichkeit", and "Mandanten" (tenants).
-- **Voice**: Maintains a professional "Sie" which matches the persona of the blog.
-- **Title**: "um Freunde und Liebste zu gewinnen" is the most natural-sounding German equivalent that preserves the playful Dale Carnegie reference.
-- **Precision**: Preserves English technical terms (BM25, RRF, HNSW) exactly where a German engineer would expect them.
+**Untranslated prose**: None found. All reader-facing prose is in German. Proper nouns and technical terms (pgvector, pg_trgm, HNSW, RRF, BM25, SPLADE, etc.) are correctly preserved.
 
-### Qwen (`a5cf7f8a`) - **Rejected**
-- **Semantic Drift**: Translating "Lovers" as "Liebhaber" in the title is technically accurate but semantically shifted in German toward sexual/affair connotations, whereas the original title is a playful variation of a self-help trope.
-- **Grammar/Style**: Uses "du" which is less standard for this blog's technical guides.
-- **Typos**: "unverwandte" (line 34) is awkward compared to "nicht verwandte".
+**Terminology**: Sound throughout. "Embedding", "Vektorsuche", "Cosine-Distanz", "lexikalische Suche", "hybride Suche", "Token-Matching" all use standard German tech conventions. One minor note: `unverwandte` (line 34) is an unusual construction — conventional German would prefer `nicht verwandte` or `unzusammenhängende`. The meaning is clear and it does not degrade comprehension.
 
-### MiniMax (`f0e3ede4`) - **Rejected**
-- **Translation Quality**: Extremely poor. It leaves English words like "belong" (line 22) and "Varies" (table) directly in the prose. 
-- **Grammar**: "die halbe Produkt" is a gender mismatch (should be "das halbe Produkt").
-- **Consistency**: Switches between "Sie" and "du" mid-text.
+**Tone**: Preserves Dan's direct, punchy, slightly cynical voice. Imperative forms ("Verwende", "Füge", "Betrachte") match the original's register. The Dale Carnegie title wordplay translates naturally.
 
-## Final Verification
+**Code blocks / Tables**: Fully preserved with correct escaping and pipe alignment.
 
-The polished version in `src/content/posts/2026-05-01--semantic-vector-search-landscape/de/index.mdx` correctly incorporates the single typo fix identified by the primary judge ("embedde" vs "embeddde"). No further escalation is required.
+## Conclusion
+
+No escalation required. The translation is production-ready.
