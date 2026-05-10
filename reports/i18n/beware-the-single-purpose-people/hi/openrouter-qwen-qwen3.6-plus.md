@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 110.72
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
