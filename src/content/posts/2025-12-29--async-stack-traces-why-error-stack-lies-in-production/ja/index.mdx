@@ -1,0 +1,94 @@
+---
+title: "非同期スタックトレース: `Error.stack` が嘘をつく理由"
+subTitle: "マイクロタスクキューが僕の宿題（とデバッグコンテキスト）を食べてしまった。"
+date: 2025-12-29
+modified: 2025-12-30
+tags: [javascript, async, debugging, node.js, v8, performance]
+category: Code
+subCategory: Best Practices
+social_image: desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+深夜2時。PagerDutyのアラームが鳴り響いている。
+
+ログを開くと、こんな表示がある:
+
+```
+Error: Cannot read properties of undefined (reading 'id')
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+```
+
+これだけだ。関数名もない。行番号もない。ファイルパスもない。「processTicksAndRejections」があるだけ。
+
+非同期JavaScriptの世界へようこそ。ここではスタックトレースはでっち上げで、行番号は意味を持たない。
+
+---
+
+## スタックトレースが壊れる理由
+
+同期コードでは、コールスタックは美しい系図だ。AがBを呼び、BがCを呼んだ。Cがクラッシュすると、どうやってそこに辿り着いたか正確にわかる。
+
+非同期コード（`async/await`）では、`await` キーワードのすべてが一時停止ポイントになる。
+
+`await` すると、関数はスタックから剥ぎ取られる。マイクロタスクキューという冷凍保存庫に放り込まれるのだ。スタックは空になる（あるいは別のことをしている）。
+
+Promiseが解決すると、関数は解凍されてスタックに戻される。だが、履歴は消えている。
+
+エンジンには500ミリ秒前に誰が `await` を呼び出したかなどわからない。実行すべきタスクがあることしか知らないのだ。
+
+---
+
+## V8の修正への試み
+
+Node.jsは助け舟を出そうとする。使えるものは:
+
+1.  `Error.captureStackTrace()`: *作成時* のスタックをキャプチャする。エラーが後でスローされる場合は役に立たない。
+2.  `--async-stack-traces`: Node.jsにPromiseチェーンの「影のスタック」を保持させるフラグ。
+    *   コスト: アプリが30%遅くなる。
+    *   結果: 役立つが、すぐにノイズだらけになる。
+
+---
+
+## 本当の解決策: AsyncLocalStorage
+
+本番環境を生き延びたいなら、スタックトレースを見るのはやめよう。因果性を見よう。
+
+コンテキスト（ユーザーID、リクエストID）を「実行のスレッド」に紐付ける必要がある。スタックとマイクロタスクキューを行き来してもだ。
+
+Node.jsにはこのための組み込みツールがある: `AsyncLocalStorage`。
+
+```javascript
+import { AsyncLocalStorage } from 'async_hooks';
+
+const context = new AsyncLocalStorage();
+
+// 1. リクエストをラップする
+context.run({ requestId: '123' }, () => {
+  // 2. 深い非同期コードを呼び出す
+  await processOrder();
+});
+
+// 3. processOrderの奥深くで:
+async function processOrder() {
+  await db.query();
+  
+  // 魔法だ! まだrequestIdが見える
+  const { requestId } = context.getStore();
+  console.log(`[${requestId}] Failed to process order`);
+}
+```
+
+その間に何回の `await` が起きようと関係ない。コンテキストは生き残る。
+
+---
+
+## 本番環境のプレイブック
+
+1.  `err.stack` を信用するのをやめよう。設計上不完全なのだ。
+2.  構造化ログを使おう。`AsyncLocalStorage` を使って、すべてのログ行に `requestId` を紐付けよう。
+3.  スタックではなくトレースしよう。OpenTelemetryを使おう。サービス間の因果チェーンを可視化してくれる。それが本当に欲しいものだ。
+
+コードは非同期だ。デバッグコンテキストはそうであるべきではない。
