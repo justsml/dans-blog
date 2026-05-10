@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: fr
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 88.13
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
