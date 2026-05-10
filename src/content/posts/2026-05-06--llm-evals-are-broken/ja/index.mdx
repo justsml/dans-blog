@@ -1,0 +1,265 @@
+---
+title: "闇を評価で討ち滅ぼせ！"
+subTitle: "ベンチマークはベンチマークを測る。あなたのシステムには独自の指標が必要だ。"
+date: 2026-05-01
+modified: 2026-05-06
+tags: [ai, llm, evals, testing, production, quality, observability]
+category: AI
+subCategory: Engineering
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+新しいモデルが登場するたび、ベンチマークのタキシードを着ている。
+
+MMLU: 92.4%。HumanEval: 87.2%。LLeMU: 88.7%。MATH: 73.6%。AGI: 127%！
+
+しかし、AIを使ってプロセスやプロダクトを構築している99%の企業にとって、**それらは何の意味も持たない。**
+
+重要なのは何か？**あなたのワークロード**はどうか？良くなっているのか、悪くなっているのか？それを知る唯一の合理的な方法は、自分のシステムの特定のタスク、データ、故障モードを反映したEval（LLM用のテスト）を書くことだ。
+
+<blockquote class="breakout">
+  <p>ベンチマークは嘘をついているわけではない。誰か別の人の質問に答えているだけだ。</p>
+</blockquote>
+
+---
+
+## 「雰囲気ベース評価」の本当のコスト
+
+標準的なアプローチ：モデルを変更して出荷し、苦情チャンネルを監視し、騒ぎが大きくなったらロールバックする。
+
+これで見逃されるものはほとんどすべてだ：
+
+**大きな失敗しか捕捉できない。** 自信満々の誤った回答をもらってもそれと気づかないユーザー？沈黙。回答が悪化して機能を使わなくなったユーザー？沈黙。サポートチケットやエラー率は、品質低下のごく一部しか捉えられない。
+
+**改善と退行を区別できない。** 新しいモデルがタスクAでは良くなりタスクBでは悪くなった場合、タスクBの苦情は「AIが全体的に悪くなった」というフィードバックと見分けがつかない。何を修正すべきかわからない。
+
+**ユーザーをテストインフラとして使っている。** そんな契約は誰もしていない。
+
+---
+
+## Evalのスペクトラム（そしてほとんどのチームが間違える場所）
+
+評価アプローチは「速いが脆い」から「高価だが妥当」までのスペクトラム上に存在する。
+
+<figure class="breakout">
+
+![決定論的チェック、LLM-as-judge、人間による評価を速度・コスト・妥当性で比較したスペクトラム図](../eval-spectrum.svg)
+
+<figcaption>その故障を正直に捕捉できる中で、最も安価な評価方法を使おう。</figcaption>
+</figure>
+
+**LLM-as-judge**は現在の人気者だ：強力なモデルに別のモデルの出力を採点させる。速い、スケーラブル、安い。問題は、採点モデルのバイアスを内包し、ゲーム可能で、循環依存を生むことだ。GPT-5でGPT-5の出力を採点しているなら、「GPT-5がGPT-5とどの程度一致するか」を測定していることになる。それは無意味ではないが、あなたが思っているものとは違う。
+
+**人間による評価**は誰もが避けようとする黄金基準だ。人間に出力を評価させるのは高価で、遅く、評価者間でばらつきがあり、スケジュール調整が面倒だ。しかし、自分のシステムが実際の人間にとって有用かどうかを検証できる唯一の方法でもある。
+
+**タスク固有の自動チェック**こそ、ほとんどのチームがもっと時間をかけるべき領域だ。華やかさはないが、速く、決定論的で、自分のシステムにとって重要なことに直結している。
+
+---
+
+## 実際に機能するもの
+
+### 1. 出荷前に失敗を定義する
+
+モデルやプロンプトを変更する前に、「悪い状態」が具体的にどのようなものかを書き出そう。
+
+「出力は正確であるべき」ではない。それはテストではない。例えば次のように：
+
+- 構造化JSON出力はエラーなくパースできなければならない
+- レスポンス内のすべての引用は、取得されたコンテキストに逐語的に存在しなければならない
+- レスポンスは競合他社の製品名に言及してはならない
+- SQLクエリは構文として有効で、スキーマに存在するテーブルのみを参照しなければならない
+- 感情分類が既存のテストセットで肯定から否定に3%以上反転してはならない
+
+これらはプログラム的にチェックできる。判定モデルは不要だ。
+
+**Evalハーネス：決定論的チェック**
+
+```typescript
+type EvalResult = { passed: boolean; reason?: string };
+
+const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
+  // JSON must parse
+  validJson: (output) => {
+    try {
+      JSON.parse(output);
+      return { passed: true };
+    } catch (e) {
+      return { passed: false, reason: `Invalid JSON: ${e.message}` };
+    }
+  },
+
+  // No hallucinated citations — every claim must appear in context
+  groundedCitations: (output, { retrievedChunks }) => {
+    const claims = extractCitations(output);
+    const ungrounded = claims.filter(
+      (claim) => !retrievedChunks.some((chunk) => chunk.includes(claim))
+    );
+    return ungrounded.length === 0
+      ? { passed: true }
+      : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
+  },
+
+  // Response length sanity check — catch truncation or runaway generation
+  reasonableLength: (output) => {
+    const words = output.split(/\s+/).length;
+    return words >= 10 && words <= 2000
+      ? { passed: true }
+      : { passed: false, reason: `Word count ${words} out of bounds` };
+  },
+};
+```
+
+### 2. 最悪の日々から黄金セットを構築する
+
+最高の評価データは、恥ずかしいものだ：誰かがチケットを起票し、幻覚をスクリーンショットに収め、あるいは静かに機能を使わなくなった出力だ。
+
+ユーザーが不良出力を報告するたび、幻覚をフラグするたび、手動で失敗に気づくたびに、それを黄金セットに追加しよう：入力、コンテキスト、正しい振る舞い。50〜100件を維持し、すべてのモデル変更時に実行する。
+
+最初は手作業に感じられる。6ヶ月後には、どんな公開ベンチマークもゲームできないテストスイートができあがる。なぜならすべてのケースが自分自身の失敗履歴から来ているからだ。
+
+<figure class="breakout">
+
+![本番インシデントが黄金ケースになり、CI eval実行、そしてブロックされた退行または承認されたリリースに至るワークフロー図](../golden-set-lifecycle.svg)
+
+<figcaption>黄金セットは恥ずかしい出来事を退行テストスイートに変える。</figcaption>
+</figure>
+
+**黄金ケースの構造**
+
+```typescript
+interface GoldenCase {
+  id: string;
+  input: string;
+  context: Record<string, unknown>;
+  expectedBehavior: {
+    mustContain?: string[];
+    mustNotContain?: string[];
+    structureCheck?: (output: string) => boolean;
+    minSimilarityToReference?: number; // 参照回答とのコサイン類似度
+  };
+  sourceIncident?: string; // バグ報告やチケットへのリンク
+}
+```
+
+### 3. 受け入れテストだけでなく、退行テストも
+
+ほとんどのチームはモデル変更を検討するときだけEvalを実行する。それは受け入れテストだ：「この新しいものは十分良いか？」
+
+退行テストも必要だ：「これまで動いていたものを壊していないか？」
+
+プロンプト変更のたびに黄金セットを実行しよう。モデル変更だけでなく。うまく動いていたプロンプトも、新しいツールを追加したり、RAG検索戦略を変更したり、コンテキストテンプレートを更新したりすると、静かに劣化する。ベースラインがなければ気づけない。[Langfuse](https://langfuse.com/)のようなツールは、Evalスコアを本番トレースに紐付けるので、退行がインシデント報告だけでなくダッシュボードにも現れる。
+
+<details>
+<summary>Evalハーネス：ベースラインと候補の比較</summary>
+
+```typescript
+async function compareModelVersions(
+  goldenCases: GoldenCase[],
+  baselinePipeline: Pipeline,
+  candidatePipeline: Pipeline
+) {
+  const results = await Promise.all(
+    goldenCases.map(async (tc) => {
+      const [baseline, candidate] = await Promise.all([
+        baselinePipeline.run(tc.input, tc.context),
+        candidatePipeline.run(tc.input, tc.context),
+      ]);
+
+      return {
+        id: tc.id,
+        baselinePassed: runEvals(baseline, tc.expectedBehavior),
+        candidatePassed: runEvals(candidate, tc.expectedBehavior),
+        regression: /* ベースライン合格 */ && /* 候補不合格 */,
+        improvement: /* ベースライン不合格 */ && /* 候補合格 */,
+      };
+    })
+  );
+
+  const regressions = results.filter((r) => r.regression);
+  const improvements = results.filter((r) => r.improvement);
+
+  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+
+  if (regressions.length > 0) {
+    console.error('Blocking regressions found:');
+    regressions.forEach((r) => console.error(` - ${r.id}`));
+  }
+
+  return { regressions, improvements };
+}
+```
+
+</details>
+
+候補が既知の失敗で退行した場合、アップグレードの会話は素晴らしく具体的になる：どのケースが改善され、どのケースが壊れ、そのトレードオフに価値があるか。
+
+### 4. LLM-as-Judgeは唯一つのことに使う
+
+LLM-as-judgeが有用なのは、決定論的な正解がない自由形式の出力だ：「このレスポンスは役に立つか？」「この要約はキーポイントを保持しているか？」「この説明は初心者に適切か？」
+
+そこに使おう。決定論的な答えには使わない。使うときは、採点ルーブリックを明示的にしよう：
+
+**Evalハーネス：ルーブリックベースの判定**
+
+```typescript
+async function judgeHelpfulness(
+  userQuery: string,
+  modelResponse: string
+): Promise<{ score: number; reasoning: string }> {
+  const judgePrompt = `
+You are evaluating a customer support response.
+
+User question: ${userQuery}
+Response: ${modelResponse}
+
+Rate the response on a scale of 1-5:
+5 = Directly answers the question with accurate, actionable information
+4 = Answers the question but could be more specific or actionable
+3 = Partially addresses the question; key information is missing
+2 = Tangentially related but doesn't answer the question
+1 = Off-topic, factually wrong, or harmful
+
+Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
+`;
+
+  const result = await judgeModel.generate(judgePrompt);
+  return JSON.parse(result);
+}
+```
+
+明示的なルーブリックは評価者のばらつきを減らし、解釈可能な出力を与え、判定が間違っていた場合の監査を容易にする。[Autoevals](https://github.com/braintrustdata/autoevals)や[Braintrust](https://www.braintrust.dev/)のようなライブラリは、一般的なタスク用の既製ルーブリックを提供している — ゼロから書く前に拝借する価値がある。
+
+---
+
+## 知っておくべきツール
+
+すべてをゼロから構築する必要はない。いくつかのツールはEvalインフラ問題で真剣な進歩を遂げている：
+
+**[Braintrust](https://www.braintrust.dev/)** — 実験トラッキング、データセット管理、スコアリング関数を備えた本格的なEvalプラットフォーム。プロンプト、モデル、デプロイメントごとにEval実行を整理し、リリース間だけでなく経時的な品質の差分を確認できる。オープンソースの**[Autoevals](https://github.com/braintrustdata/autoevals)**ライブラリと相性が良く、一般的なタスク（事実正確性、有用性、有害性、意味的類似性）向けのモデル採点関数が同梱されている。
+
+**[Langfuse](https://langfuse.com/)** — アプリとモデルの間に位置するオープンソースのLLM可観測性ツール。すべての呼び出しをトレースし、Evalスコア（人間または自動）を個々のスパンに紐付け、本番トラフィックの品質傾向を表面化する。個別のEvalハーネスではなく、可観測性とEvalを同じツールで行いたい場合に適している。
+
+**[Evalite](https://www.evalite.dev/)** — Matt PocockによるTypeScriptネイティブのEvalフレームワーク。低セレモニー：タスクを定義し、スコアラーを定義し、既存のテスト環境で実行する。別途ML実験プラットフォームではなく、ユニットテストのようにEvalを扱いたいチームを対象としている。
+
+**[promptfoo](https://www.promptfoo.dev/)** — プロンプト比較とレッドチーミングに特化したCLIファーストのEvalランナー。YAMLで簡単に設定でき、ほとんどのモデルプロバイダと統合し、プロンプトインジェクションやその他の敵対的入力の検出機能を内蔵している。
+
+**[deepeval](https://docs.confident-ai.com/)** — 豊富な組み込みメトリクス（G-Eval、RAG忠実度、回答妥当性、幻覚検出）を備えたPythonのEvalフレームワーク。生成品質だけでなく検索品質の評価が必要なRAGパイプラインに有用だ。
+
+適切なツールはスタックと開始位置によって異なる。フレームワークの選択よりも重要なのは、Evalを一貫して、すべての重要な変更時に実行するという規律そのものだ。
+
+---
+
+## 心地悪い部分
+
+ほとんどのチームがこれを避けるのは、厄介な質問を早期に突きつけるからだ：「良い状態」とは具体的にどのようなものか？
+
+これは新しいAI機能にとっては本当に難しい。しかし、信頼性を重視するなら避けて通れない。信頼できるAIを出荷しているチームは、重要なコードパスに対して行うことと同じことをしている：期待される振る舞いを定義し、テストし、それらのテストを継続的に実行する。
+
+ベンチマークは嘘をついているわけではない。誰か別の人の質問に答えているだけだ。それをプロダクトのロードマップとして読むのをやめ、自分のシステムに合ったテストを書こう。
+
+あなたのユーザーはダッシュボードより先に気づく。まずテストスイートを構築しよう。
