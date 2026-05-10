@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/de/index.mdx
+- Validation: passed
+- Runtime seconds: 56.76
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

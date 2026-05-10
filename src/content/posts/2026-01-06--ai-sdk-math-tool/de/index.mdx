@@ -1,0 +1,133 @@
+---
+title: "Hör auf, LLMs Mathe machen zu lassen"
+subTitle: "Sie sind schlecht darin. So behebt man das Problem."
+date: 2026-01-06
+modified: 2026-01-07
+tags: [ai, ai-sdk, typescript, math, tools, patterns]
+category: AI
+subCategory: Engineering
+social_image: desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Weißt du, was an Sprachmodellen seltsam ist? Sie können Quantenmechanik erklären, Gedichte schreiben und dein TypeScript debuggen – aber frag sie, 18472 mal 9347 zu rechnen, und es steht gut, dass sie dir selbstsichtig etwas liefern, das um Tausende danebenliegt.
+
+Das hat mich lange ratlos gemacht, bis ich begriff, was wir ihnen eigentlich abverlangen. Wir bitten eine Mustererkennungs-Maschine, ein Taschenrechner zu sein. Das ist, als würde man einen Turner bitten, die Buchhaltung zu führen, nur weil er den Begriff „Balance" versteht.
+
+Die Sache ist: LLMs berechnen nichts. Wenn du GPT oder Claude fragst, was 2 + 2 ist, rechnen sie nicht. Sie prognostizieren, dass „4" das Token ist, das am wahrscheinlichsten auf „2 + 2 =" folgt. Meistens funktioniert das gut, weil diese Muster in ihren Trainingsdaten vorkommen. Aber sobald du über einfache Arithmetik hinausgehst – mehrstufige Berechnungen oder Zahlen, die im Training selten waren – würfelst du im Grunde.
+
+Ich bin vor Kurzem genau damit gegen die Wand gefahren, als ich Code reviewed habe, der ein Top-Modell für die Berechnung von Hypothekenzahlungen einsetzte. Das Modell antwortete mit voller Überzeugung. Es lag auch 400 $ pro Monat falsch. Das ist die Art von Fehler, die ins Gewicht fällt.
+
+Selbst wenn Modelle beim logischen Schlussfolgern besser werden (GPT-5 soll Verbesserungen zeigen), bleibt es ausgefeilte Mustererkennung, keine symbolische Berechnung. Für kreative Arbeit und natürliche Sprache ist diese probabilistische Natur genau das, was sie so mächtig macht. Für Mathe? Eher nicht.
+
+## Was löst das Problem wirklich?
+
+Die Antwort lautet nicht, auf schlauere Modelle zu warten. Sie lautet, dem Modell das richtige Werkzeug für die Aufgabe zu geben.
+
+Überleg, wie du das Problem in einem Nicht-AI-System lösen würdest. Du würdest keine eigene Mathe-Logik schreiben, sondern auf eine Bibliothek zurückgreifen. Dasselbe Prinzip gilt hier – nur dass wir dem LLM jetzt beibringen, wann und wie es diese Bibliothek benutzt.
+
+Tool Calling in modernen AI-SDKs erlaubt uns, dem Modell strukturierte Funktionen zu übergeben, die es aufrufen kann. Anstatt das LLM so tun zu lassen, als wüsste es Mathe, geben wir ihm etwas, das es tatsächlich kann: eine symbolische Mathe-Engine.
+
+Ich setze dafür das [AI SDK v5 und v6](https://ai-sdk.vercel.ai/) ein, kombiniert mit der CortexJS Compute Engine. Das SDK übernimmt Orchestrierung und Tool-Routing, CortexJS alles von einfacher Arithmetik bis hin zur Analysis. Eine überraschend saubere Trennung der Zuständigkeiten.
+
+```bash
+bun add ai @ai-sdk/anthropic @cortex-js/compute-engine zod
+```
+
+## Das Mathe-Werkzeug bauen
+
+Die Implementierung ist geradliniger, als man denken könnte. Was wir hier bauen, ist eine Brücke zwischen dem natürlichen Sprachverständnis des LLM und tatsächlicher mathematischer Berechnung.
+
+```typescript
+import { generateText, stepCountIs, tool } from 'ai';
+import { ComputeEngine } from '@cortex-js/compute-engine';
+import { z } from 'zod';
+
+// Engine einmal initialisieren
+const ce = new ComputeEngine();
+
+const mathTool = tool({
+  description: 'Evaluate mathematical expressions and solve equations with guaranteed accuracy. MUST be used for all mathematical operations to verify correctness - do not attempt mental math. Supports arithmetic, algebra, calculus, and complex operations. Can process multiple expressions at once.',
+  parameters: z.object({
+    expressions: z.array(z.string()).describe(
+      'Array of mathematical expressions in LaTeX or plain notation, e.g. ["2 + 2", "\\frac{x^2 + 1}{x - 1}", "\\int x^2 dx"]'
+    ),
+  }),
+  execute: async ({ expressions }) => {
+    // Alle Ausdrücke parallel verarbeiten (oder im detaillierten Batch)
+    return expressions.map(expression => {
+      try {
+        const result = ce.parse(expression).evaluate();
+        return {
+          expression,
+          result: result.toString(),
+          latex: result.latex,
+        };
+      } catch (error) {
+        return { 
+          expression,
+          error: (error as Error).message 
+        };
+      }
+    });
+  },
+});
+```
+
+Ein paar Punkte, die hier erwähnenswert sind:
+
+Die Beschreibung leistet Schwerstarbeit. Die Formulierung „MUST be used" mag aggressiv wirken, aber in meiner Erfahrung ist der Unterschied zwischen „funktioniert manchmal" und „funktioniert zuverlässig" oft eine explizite Ansage an das Modell, wann es ein Werkzeug einsetzen soll. Nenn es Prompt-Engineering auf Tool-Ebene.
+
+Die Batch-Verarbeitung über ein `expressions`-Array ist wichtiger, als man denkt. Jeder Modellaufruf hat Latenz. Wenn du ein Gleichungssystem löst oder mehrstufige Mathe betreibst, erzeugst du mit einzelnen Aufrufen eine miserable User Experience. Batching bedeutet: ein Roundtrip für zehn Probleme.
+
+Eine symbolische Engine statt einfach `eval()` zu benutzen (bitte niemals `eval()` verwenden) gibt uns echtes mathematisches Verständnis. Die Engine parsiert Intention, verarbeitet LaTeX-Formatierung und kann mit Ableitungen und Integralen umgehen. Wir rechnen nicht nur – wir betreiben Mathematik.
+
+Die Fehlerbehandlung ist pro Ausdruck gekapselt. Wenn eine Berechnung fehlschlägt, wird dieser Fehler zurückgegeben, aber die restlichen Ausdrücke werden weiterverarbeitet. So sieht das Modell, was funktioniert hat und was nicht, und kann sich im nächsten Schritt potenziell selbst korrigieren.
+
+## Das Werkzeug in der Praxis
+
+Werfen wir etwas hinein, bei dem ein nacktes Modell typischerweise halluzinieren würde:
+
+```typescript
+import { anthropic } from '@ai-sdk/anthropic';
+
+const { text } = await generateText({
+  model: anthropic('claude-sonnet-4-5'),
+  prompt: 'Calculate 18472 × 9347, divide by 127, then take the square root of the result.',
+  tools: { mathTool },
+  stopWhen: stepCountIs(5), // Allow up to five model/tool steps
+});
+
+console.log(text);
+```
+
+Das Modell erkennt die Mathe-Aufgabe, sieht, dass es Präzision braucht, ruft das Tool auf, erhält das korrekte Ergebnis und erklärt es dann in natürlicher Sprache. Jede Komponente macht das, was sie am besten kann.
+
+## Über einfache Arithmetik hinaus
+
+Da wir eine symbolische Engine verwenden, kann dieser Ansatz Dinge leisten, die einfache Taschenrechner-Tools nicht können.
+
+Algebraische Gleichungen lösen? „Löse diese Gleichungen: 3x + 7 = 22 und 2y - 5 = 13" funktioniert einwandfrei.
+
+Analysis gefällig? „Finde die Ableitung von x^3 + 2x^2 und evaluiere sie bei x = 2" ist einfach ein weiterer Tool-Aufruf.
+
+Die LaTeX-Unterstützung ist besonders nützlich, wenn du Bildungs-Apps baust. Die Engine versteht LaTeX-Eingaben nativ und kann Ergebnisse formatiert zum Rendern zurückgeben. Kein zusätzliches Parsen nötig.
+
+## Das große Ganze
+
+Ich denke, dieses Muster ist wichtiger als nur für Mathe. Was wir hier eigentlich tun, ist, die Grenzen von LLMs anzuerkennen und gleichzeitig ihre Stärken zu nutzen. Sie sind hervorragend darin, Intentionen zu verstehen, natürliche Sprache zu parsen und Workflows zu orchestrieren. Sie sind keine Taschenrechner, keine Datenbanken, keine Dateisysteme.
+
+Jedes Mal, wenn wir versuchen, ein LLM etwas Deterministisches tun zu lassen, kämpfen wir gegen seine Natur. Aber wenn wir dieses Sprachverständnis mit spezialisierten Werkzeugen kombinieren, die die deterministischen Teile übernehmen? Dann wird es interessant.
+
+Das Mathe-Werkzeug ist nur ein Beispiel. Dasselbe Prinzip gilt für Datumsmanipulation, Finanzberechnungen, Bildverarbeitung, Datenbankabfragen – überall dort, wo Präzision wichtiger ist als Kreativität. Lass das Modell verstehen, was der Nutzer will, und übergib die eigentliche Arbeit an etwas, das dafür gebaut wurde.
+
+Es ist eine Verschiebung in der Art, wie wir über AI-Entwicklung denken. Nicht „Kann das Modell das?" sondern „Kann das Modell das orchestrieren?" Kleiner Unterschied in der Formulierung, großer Unterschied in der Zuverlässigkeit.
+
+## Ressourcen
+
+- [Vercel AI SDK Dokumentation](https://sdk.vercel.ai/docs)
+- [CortexJS Compute Engine](https://cortexjs.io/compute-engine/)
+- [Tool Calling Leitfaden](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
+- [AI SDK Beispiele-Repository](https://github.com/vercel/ai/tree/main/examples)
