@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-connection-strings
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-30--llm-connection-strings/de/index.mdx
+- Validation: passed
+- Runtime seconds: 36.73
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
