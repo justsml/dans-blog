@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v3.2
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 95.65
+- Input tokens: 30678
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
