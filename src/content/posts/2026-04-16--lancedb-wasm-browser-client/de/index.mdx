@@ -1,6 +1,6 @@
 ---
 title: "Serverlose Vektorsuche"
-subTitle: "Ein Vektorsuch-Browser-Client mit Rust, WASM und TypeScript"
+subTitle: "Aufbau eines Vektor-Such-Browser-Clients mit Rust, WASM und TypeScript"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [rust, wasm, lancedb, vector-search, open-source, webassembly, typescript, ai]
@@ -16,13 +16,13 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-## Das Problem: Man kann eine Lance-Tabelle nicht im Browser durchsuchen
+## Das Problem: Man kann eine Lance-Tabelle nicht aus dem Browser durchsuchen
 
-LanceDB ist eine fantastische Vektordatenbank. Sie ist deutlich einfacher und günstiger als herkömmliche Datenbanken. Man kann Tabellen mit Vektorspalten und Volltextsuchspalten (FTS) veröffentlichen, die Dateien auf S3 oder einem CDN hosten und die Daten direkt über S3 von einem Node.js-Server abfragen. Kein Daemon erforderlich.
+LanceDB ist eine fantastische Vektordatenbank. Sie ist wesentlich einfacher und billiger als traditionelle Datenbanken. Man kann Tabellen mit Vektorspalten und Volltextsuche (FTS) veröffentlichen, die Dateien auf S3 oder einem CDN hosten und Daten direkt über S3 von einem Node.js-Server aus abfragen. Kein Daemon erforderlich.
 
-Was man *nicht* konnte — vor diesem PR — war, diese Tabelle direkt aus einem Browser heraus zu öffnen und eine Suche durchzuführen. Man bräuchte einen Server dazwischen: eine Lambda-Funktion, einen Container, *irgendetwas*, das Rust, Node.js/WASM oder Python ausführen kann.
+Was man *nicht* konnte – vor diesem PR – war, diese Tabelle direkt aus einem Browser zu öffnen und eine Suche durchzuführen. Man brauchte einen Server dazwischen: eine Lambda, einen Container, *irgendetwas*, das Rust, Node.js/WASM oder Python ausführen kann.
 
-Das Ziel war ambitioniert, aber klar fokussiert auf ein konkretes Ergebnis: **direkt durchsuchbare, schreibgeschützte, über HTTP bereitgestellte Vektorindizes.**
+Das Ziel war ehrgeizig, aber auf ein bedeutungsvolles Endergebnis fokussiert: **direkt durchsuchbare, schreibgeschützte, HTTP-gehostete Vektorindizes.**
 
 ---
 
@@ -30,95 +30,95 @@ Das Ziel war ambitioniert, aber klar fokussiert auf ein konkretes Ergebnis: **di
 
 Die Implementierung besteht aus drei Schichten:
 
-### 1. Rust-Publish-Artefakte (`web_publish.rs`)
+### 1. Rust-Veröffentlichungsartefakte (`web_publish.rs`)
 
-Bevor ein Browser eine Lance-Tabelle durchsuchen kann, muss er wissen, was überhaupt durchsuchbar ist. Lances internes Format enthält einige Features, die nicht browserportabel sind — Delta-Dateien, externe Basen, Indextypen, die die WASM-Laufzeit nicht ausführen kann. Anstatt den Browser das zur Suchzeit entdecken zu lassen (schlecht), erzeugt der Publish-Schritt explizite Begleitdateien:
+Bevor ein Browser eine Lance-Tabelle durchsuchen kann, muss er wissen, was sicher durchsucht werden kann. Lances internes Format hat einige Funktionen, die nicht browser-portabel sind – Delta-Dateien, externe Basen, Indextypen, die die WASM-Laufzeit nicht ausführen kann. Anstatt dass der Browser dies zur Suchzeit entdeckt (schlecht), erzeugt der Veröffentlichungsschritt explizite Sidecar-Dateien:
 
-- `_web.json` — bewirbt das Schema und welche Spalten browser-durchsuchbar sind (Vektorspalten mit unterstützten Distanztypen, FTS-Spalten)
-- `_snapshot.json` — eine Momentaufnahme des Datensatzes, die der Browser-Client konsumieren kann, ohne das volle Datensatz-Evolutionsprotokoll zu verstehen
-- `_latest.manifest` / `_latest.version` — stabile Zeiger, die der Browser abfragt, um Verfall zu erkennen
+- `_web.json` – wirbt das Schema und welche Spalten browser-durchsuchbar sind (Vektorspalten mit unterstützten Distanztypen, FTS-Spalten)
+- `_snapshot.json` – eine Momentaufnahme des Datensatzes, die der Browser-Client konsumieren kann, ohne das vollständige Protokoll der Datenentwicklung zu verstehen
+- `_latest.manifest` / `_latest.version` – stabile Zeiger, die der Browser abfragt, um Veraltung zu erkennen
 
-Das `isComplete`-Flag im Snapshot ist das Sicherheitsventil. Wenn der Datensatz auf externen Basen oder Datendateien beruht, die der Browser-Pfad nicht sicher lesen kann, setzt es `isComplete=false` und der Browser lehnt frühzeitig mit einer klaren Fehlermeldung ab — statt subtil falsche Ergebnisse zu produzieren.
+Das `isComplete`-Flag im Snapshot ist das Sicherheitsventil. Wenn der Datensatz von externen Basen oder Datendateien abhängt, die der Browser-Pfad nicht sicher lesen kann, ist `isComplete=false` und der Browser lehnt ihn frühzeitig mit einer klaren Fehlermeldung ab, anstatt subtil falsche Ergebnisse zu liefern.
 
-Das ist der Teil, bei dem ich am frohesten bin, ihn in Rust statt in JavaScript gebaut zu haben. Die Entscheidung darüber, was browser-sicher ist, lebt dort, wo die Tabellenmetadaten tatsächlich liegen.
+Das ist der Teil, bei dem ich am frohsten bin, dass ich ihn in Rust und nicht in JavaScript gebaut habe. Die Beurteilung, was browser-sicher ist, lebt dort, wo die Tabellenmetadaten tatsächlich beheimatet sind.
 
 ### 2. `lancedb-wasm` Rust-Crate
 
-Das ist die WebAssembly-Laufzeit: ein `fetch`-basierter Object Store, eine browserseitige Suchmaschine und ein Ausdrucks-Evaluator für Filter-Prädikate.
+Dies ist die WebAssembly-Laufzeit: ein `fetch`-gestützter Objektspeicher, eine browser-seitige Suchmaschine und ein Ausdrucksauswerter für Filterprädikate.
 
-Der Fetch-Object-Store (`fetch_object_store.rs`) implementiert Lances `ObjectStore`-Trait über HTTP-Range-Requests. Lances interne Lesevorgänge sind bereits als strukturierte Byte-Range-Abrufe angelegt, was sich nahtlos auf `Range: bytes=N-M`-Header abbildet. Das war der befriedigendste Teil des Projekts — die bestehende Architektur war fast perfekt dafür ausgelegt, ich musste sie nur noch verdrahten.
+Der Fetch-Objektspeicher (`fetch_object_store.rs`) implementiert Lances `ObjectStore`-Trait über HTTP-Bereichsanfragen. Lances interne Lesevorgänge sind bereits als strukturierte Byte-Bereichsabrufe (`Range: bytes=N-M`-Header) organisiert, was sich sauber darauf abbilden lässt. Das war der befriedigendste Teil des Projekts – die bestehende Architektur war dafür fast perfekt ausgelegt, ich musste sie nur noch anschließen.
 
-Die Browser-Engine (`browser.rs`) verarbeitet die Suche: Vektor-Nächste-Nachbar-Suche, Volltextsuche und hybride Suche (Vektor + FTS mit RRF-Fusion). Filterausdrücke (`browser_expr.rs`) evaluieren Lance-Filter-Prädikate clientseitig in purem Rust, kompiliert nach WASM.
+Die Browser-Engine (`browser.rs`) übernimmt die Suche: nächste Nachbarn (Vektor), Volltext- und Hybridsuche (Vektor + FTS mit RRF-Fusion). Filterausdrücke (`browser_expr.rs`) werten Lance-Filterprädikate client-seitig in reinem Rust aus, kompiliert zu WASM.
 
-Die Feature-Ablehnung ist strikt und intentional. `hamming`-Distanz? Wird upfront abgelehnt mit einer klaren Meldung — nicht stillschweigend falsch, kein Runtime-Panic. `fastSearch` auf einem unvollständigen Snapshot? Abgelehnt. Nicht unterstützte Base-Path-Layouts? Abgelehnt. Das Ziel war, im Zweifel abzulehnen: Wenn der Browser-Pfad den Vertrag nicht erfüllen kann, sagt er das auch.
+Die Feature-Ablehnung ist streng und beabsichtigt. `hamming`-Distanz? Wird sofort mit einer klaren Nachricht abgelehnt – nicht stillschweigend falsch, kein Laufzeit-Panic. `fastSearch` auf einem unvollständigen Snapshot? Abgelehnt. Nicht unterstützte Basis-Pfad-Layouts? Abgelehnt. Das Ziel war, geschlossen zu scheitern: wenn der Browser-Pfad den Vertrag nicht erfüllen kann, sagt er das.
 
 ### 3. `@lancedb/lancedb-web` TypeScript-Paket
 
-Die öffentliche API-Oberfläche ist intentional klein:
+Die öffentliche API-Oberfläche ist bewusst klein:
 
 ```typescript
 import { searchTable } from "@lancedb/lancedb-web";
 
-const results = await searchTable("https://my-cdn.example.com/my-table", "semantic search query", {
+const results = await searchTable("https://my-cdn.example.com/my-table", "semantische Suchanfrage", {
   select: ["title", "url", "score"],
   limit: 10,
 });
 ```
 
-Unter der Haube bevorzugt `searchTable()` einen Worker-gestützten Ausführungspfad, damit die Suche den Main-Thread nicht blockiert. Das WASM-Modul läuft im Worker; Ergebnisse fließen über ein typisiertes Protokoll zurück (`worker_protocol.ts`). Es gibt außerdem einen optionalen `./transformers`-Export, der `@xenova/transformers` wrapped, um Query-Embeddings clientseitig zu erzeugen — man kann also von einer reinen Textanfrage zu Vektorsuchergebnissen kommen, ohne jemals den Browser zu verlassen.
+Intern bevorzugt `searchTable()` einen Worker-gestützten Ausführungspfad, damit die Suche den Hauptthread nicht blockiert. Das WASM-Modul läuft im Worker; Ergebnisse fließen über ein typisiertes Protokoll zurück (`worker_protocol.ts`). Es gibt auch einen optionalen `./transformers`-Export, der `@xenova/transformers` kapselt, um Abfrage-Embeddings client-seitig zu erzeugen – sodass man von einer rohen Textabfrage zu Vektorsuchergebnissen gelangt, ohne jemals den Browser zu verlassen.
 
 ---
 
 ## Die schwierigen Teile
 
-### Range-Lesevorgänge über HTTP sind nicht kostenlos
+### Bereichslesevorgänge über HTTP sind nicht kostenlos
 
-Lances Lesemuster setzen einen Object Store voraus, der viele kleine Range-Abrufe effizient handhaben kann. S3 und GCS sind dafür ausgelegt. Browser... meistens auch, aber `fetch` mit `Range`-Headern hat einige Eigenheiten, um die sich die bestehenden Rust-Object-Store-Abstraktionen nicht kümmern müssen.
+Lances Lesemuster gehen von einem Objektspeicher aus, der viele kleine Bereichsabrufe effizient verarbeiten kann. S3 und GCS sind dafür ausgelegt. Browser... meistens auch, aber `fetch` mit `Range`-Headern hat einige Eigenheiten, um die sich die bestehenden Rust-Objektspeicher-Abstraktionen nicht kümmern müssen.
 
-Das Hauptproblem ist, dass Browser manchmal aggressiv puffern oder neu anfordern, und man kann TCP-Connection-Pooling nicht so kontrollieren wie in einem nativen Prozess. Bei großen Vektorindizes spielt das eine Rolle. Die aktuelle Implementierung ist korrekt; ob sie für den Produktiveinsatz bei großen Tabellen schnell genug ist, wird sich im Review zeigen.
+Das Hauptproblem ist, dass Browser manchmal aggressiv puffern oder erneut anfordern, und man kann die TCP-Verbindungspooling nicht so steuern wie in einem nativen Prozess. Bei großen Vektorindizes ist das relevant. Die aktuelle Implementierung ist korrekt; ob sie für den Produktionseinsatz bei großen Tabellen schnell genug ist, wird sich während des Reviews zeigen.
 
-### Die Frage der Sidecar-Generierung
+### Die Frage der Sidecar-Erzeugung
 
-Der PR stellt diese Frage explizit an die Maintainer, weil hier ein echtes Design-Tradeoff liegt: Sollten die browserseitigen Begleitdateien (`_web.json`, `_snapshot.json`) *automatisch* bei jedem Table-Commit erzeugt werden, oder sollte es einen expliziten `publish()`-Aufruf geben?
+Der PR wirft dies explizit als Frage an die Betreuer auf, denn es gibt einen echten Design-Kompromiss: sollen Browser-Sidecar-Dateien (`_web.json`, `_snapshot.json`) *automatisch* bei jedem Tabellen-Commit erzeugt werden, oder soll es einen expliziten `publish()`-Aufruf geben?
 
-Automatisch ist ergonomischer — man bekommt Browser-Support gratis. Aber jeder lokale Write hat dann etwas zusätzlichen Overhead, und es koppelt den Browser-Vertrag an den Core-Commit-Pfad auf eine Weise, die zukünftige Änderungen an beiden Seiten verkomplizieren könnte.
+Automatisch ist ergonomischer – man bekommt Browser-Unterstützung kostenlos. Aber es bedeutet, dass jeder lokale Schreibvorgang ein wenig zusätzlichen Aufwand hat, und es koppelt den Browser-Vertrag an den zentralen Commit-Pfad, was zukünftige Änderungen an einem von beiden erschweren könnte.
 
-Explizites Publish ist aus Vertragssicht korrekter — man sagt „diese Version ist browser-bereit" — aber es ist leicht zu vergessen, was bedeutet, dass Tabellen, die browser-durchsuchbar *sein sollten*, es stillschweigend nicht sind.
+Explizites Veröffentlichen ist aus Vertragssicht korrekter – man sagt damit "diese Version ist browser-bereit" – aber es wird leicht vergessen, was bedeutet, dass Tabellen, die *eigentlich* browser-durchsuchbar sein sollten, stillschweigend nicht durchsuchbar sind.
 
-Ich tendiere zu automatisch, wobei Sidecar-Fehler nur eine Warnung loggen statt den Commit fehlschlagen zu lassen. Aber ich bin genuinely unsicher und habe es im PR gekennzeichnet.
+Ich tendierte zur automatischen Variante, wobei Sidecar-Fehler eine Warnung protokollieren, anstatt den Commit scheitern zu lassen. Aber ich bin wirklich unsicher und habe es im PR markiert.
 
-### Was zählt als „browser-sicher"?
+### Was gilt als "browser-sicher"?
 
-Das `isComplete`-Flag und die Spaltenfilter-Logik in `web_publish.rs` kodieren eine Einschätzung darüber, was der Browser leisten kann. Diese Einschätzung muss mit den tatsächlichen Fähigkeiten der WASM-Laufzeit synchron bleiben. Wenn jemand einen neuen Indextyp zu Lance hinzufügt, den der Browser nicht ausführen kann, muss der Publish-Code das wissen, um ihn auszuschließen — sonst bewirbt man eine Fähigkeit, die der Browser zur Suchzeit nicht einhalten kann.
+Das `isComplete`-Flag und die Spaltenfilterlogik in `web_publish.rs` kodieren ein Urteil darüber, was der Browser verarbeiten kann. Dieses Urteil muss mit den tatsächlichen Fähigkeiten der WASM-Laufzeit synchron bleiben. Wenn jemand einen neuen Indextyp zu Lance hinzufügt, den der Browser nicht ausführen kann, muss der Veröffentlichungscode wissen, dass er ihn ausschließen muss – sonst wirbt man eine Fähigkeit an, die der Browser zur Suchzeit nicht einhalten kann.
 
-Die richtige Lösung hier ist wahrscheinlich eine Capability-Registry, die zwischen Publish-Pfad und Runtime geteilt wird, sodass sie nicht auseinanderdriften können. Ich habe es vorerst als parallele Konstanten implementiert — expedient, aber fragil. Das ist wahrscheinlich das, was ich als nächstes verbessern würde.
+Die richtige Lösung hier wäre wahrscheinlich ein Fähigkeitsregister, das zwischen dem Veröffentlichungspfad und der Laufzeit geteilt wird, damit sie nicht auseinanderdriften können. Ich habe es vorerst als parallele Konstanten implementiert, was praktisch, aber zerbrechlich ist. Das ist wahrscheinlich das, was ich als Nächstes verbessern möchte.
 
 ---
 
 ## Das Transformers-Wrapper-Dilemma
 
-Der `./transformers`-Export ist eine Quality-of-Life-Funktion: Er nimmt eine Textanfrage, führt sie über ein lokales Embedding-Modell via `@xenova/transformers` aus und übergibt den resultierenden Vektor an die LanceDB-Suchmaschine. Serverlose semantische Suche von einer statischen HTML-Seite aus.
+Der `./transformers`-Export ist ein Komfortmerkmal: Er nimmt eine Textabfrage, lässt sie durch ein lokales Embedding-Modell via `@xenova/transformers` laufen und übergibt den resultierenden Vektor an die LanceDB-Suchmaschine. Serverlose semantische Suche aus einer statischen HTML-Seite.
 
-Es ist auch das, bei dem ich mir am unsichersten bin, ob es in diesen PR gehört. Es ist genuinely nützlich und bereits implementiert, aber es ist eine Abhängigkeit und eine API-Oberfläche, die getrennt von der eigentlichen Browser-Suche-Frage steht. Die Maintainer könnten vernünftigerweise wollen, dass zuerst die Basis-`searchTable()`-API gelandet wird und die Embeddings separat iteriert werden.
+Es ist auch das, von dem ich am wenigsten sicher bin, dass es in diesen PR gehört. Es ist wirklich nützlich und bereits implementiert, aber es ist eine Abhängigkeit und eine API-Oberfläche, die getrennt von der grundlegenden Browser-Suchfrage ist. Die Betreuer könnten vernünftigerweise zuerst die grundlegende `searchTable()`-API landen lassen und die Embeddings separat weiterentwickeln.
 
-Ich habe gefragt. Mal sehen.
+Ich habe gefragt. Wir werden sehen.
 
 ---
 
 ## Was ich anders machen würde
 
-**Früher scopen.** Der PR umfasst 14.500 Zeilen. Das ist viel, um es auf einmal zu reviewen. Ich hätte zuerst das Publish-Artefakt-Format landen können, dann die WASM-Laufzeit, dann das TypeScript-Paket. Drei kleinere PRs wären leichter zu mergen gewesen. Ich habe das nicht gemacht, weil ich die vollständige End-to-End-Story validieren wollte, bevor ich irgendeinen Teil vorschlage — was für das Vertrauen sinnvoll war, aber die Review-Last hoch macht.
+**Früher eingrenzen.** Der PR hat 14.500 Zeilen. Das ist viel auf einmal zu reviewen. Ich hätte zuerst das Veröffentlichungsartefakt-Format landen können, dann die WASM-Laufzeit, dann das TypeScript-Paket. Drei kleinere PRs wären leichter zu mergen gewesen. Ich habe das nicht getan, weil ich zuerst die gesamte End-to-End-Geschichte validieren wollte, bevor ich einzelne Teile vorschlage – was für das Vertrauen sinnvoll war, aber die Review-Last erhöht.
 
-**Die Capability-Registry zuerst schreiben.** Das Drift-Risiko zwischen `web_publish.rs` und `browser.rs` ist real. Mit einem gemeinsamen Capability-Typ zu beginnen, auf den beide Seiten referenzieren, wäre sauberer gewesen als parallele Konstantenlisten, die ich synchron halten muss.
+**Das Fähigkeitsregister zuerst schreiben.** Das Driftrisiko zwischen `web_publish.rs` und `browser.rs` ist real. Mit einem gemeinsamen Fähigkeitstyp zu beginnen, auf den beide Seiten verweisen, wäre sauberer gewesen als parallele Konstantenlisten, die ich merken muss synchron zu halten.
 
-**Dinge weniger clever benennen.** `_web.json` ist ein feiner Name für ein internes Format. Er wird zu einem belasteten Namen, sobald jemand ihn cached oder Tooling darum baut. Ich hätte mehr Zeit auf das Naming verwenden sollen, bevor ich submitted — das ist eine der Sachen, die viel günstiger zu ändern sind, bevor jemand anderes davon abhängt.
+**Weniger clevere Namen vergeben.** `_web.json` ist ein guter Name für ein internes Format. Es wird in dem Moment ein lasttragender Name, in dem jemand es cached oder Werkzeuge darum herum baut. Ich hätte mir vor der Einreichung mehr Zeit für die Namensgebung nehmen sollen – das ist eine dieser Sachen, die viel billiger zu ändern sind, bevor jemand anderes davon abhängt.
 
 ---
 
 ## Der größere Punkt
 
-Was dieses Projekt machbar gemacht hat, ist, dass Lances interne Architektur bereits gut für Range-Lesevorgänge strukturiert war. Die Object-Store-Abstraktion ist sauber. Das Metadatenformat ist explizit. Das Snapshot-Konzept gab mir einen natürlichen Ort, um „das ist eine browser-sichere Ansicht dieses Datensatzes" auszudrücken.
+Was dieses Projekt handhabbar machte, ist, dass Lances interne Architektur bereits gut für Bereichslesevorgänge strukturiert war. Die Objektspeicher-Abstraktion ist sauber. Das Metadatenformat ist explizit. Das Snapshot-Konzept gab mir einen natürlichen Ort, um auszudrücken: "Dies ist eine browser-sichere Ansicht dieses Datensatzes."
 
-Gute Abstraktionsgrenzen machen internen Code nicht nur leichter nachvollziehbar — sie ermöglichen es jemandem wie mir, von außerhalb des Projekts zu kommen und eine neue Ausführungsumgebung anzudocken, ohne den Core anzufassen. Das ist eine echte Design-Tugend, und es hat die 14.000 Zeilen eher nach einem Ausfüllen einer vorgegebenen Form wirken lassen als nach einem Kampf mit der Codebasis.
+Gute Abstraktionsgrenzen machen internen Code nicht nur leichter nachvollziehbar – sie ermöglichen es jemandem wie mir, von außerhalb des Projekts zu kommen und eine neue Ausführungsumgebung einzustecken, ohne den Kern zu berühren. Das ist eine echte Design-Tugend, und sie ließ die 14.000 Zeilen mehr nach dem Ausfüllen einer Form fühlen als nach dem Kampf gegen die Codebasis.
 
-Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), falls jemand die Details sehen möchte. Warte noch auf Review. Die Maintainer waren warmherzig und ich bin cautiously optimistisch.
+Der PR ist [hier](https://github.com/lancedb/lancedb/pull/3247), wenn Sie die Details sehen möchten. Warte noch auf Review. Die Betreuer waren warmherzig und ich bin vorsichtig optimistisch.
