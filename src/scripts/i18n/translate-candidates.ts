@@ -257,7 +257,7 @@ function validateCandidate() {
 function normalizeCandidateForLocale() {
   if (!existsSync(targetPath)) return;
 
-  const normalized = readFileSync(targetPath, "utf8")
+  const normalized = ensureSourceImports(readFileSync(targetPath, "utf8"))
     .replaceAll("](./", "](../")
     .replaceAll('src="./', 'src="../')
     .replaceAll("src='./", "src='../")
@@ -267,6 +267,26 @@ function normalizeCandidateForLocale() {
     .replaceAll(" from '../../../", " from '../../../../");
 
   writeTextFile(targetPath, normalized);
+}
+
+function ensureSourceImports(targetContents: string) {
+  const sourceImports = readFileSync(sourcePath, "utf8").match(/^import\s.+$/gm) ?? [];
+  const missingImports = sourceImports
+    .filter((importLine) => {
+      const localeImportLine = importLine.replaceAll(" from '../../../", " from '../../../../");
+      return !targetContents.includes(importLine) && !targetContents.includes(localeImportLine);
+    })
+    .map((importLine) => importLine.replaceAll(" from '../../../", " from '../../../../"));
+
+  if (missingImports.length === 0) return targetContents;
+
+  const frontmatterEnd = targetContents.indexOf("\n---", 3);
+  if (!targetContents.startsWith("---") || frontmatterEnd === -1) {
+    return `${missingImports.join("\n")}\n\n${targetContents}`;
+  }
+
+  const insertAt = frontmatterEnd + "\n---".length;
+  return `${targetContents.slice(0, insertAt)}\n${missingImports.join("\n")}${targetContents.slice(insertAt)}`;
 }
 
 function hasGitDiff(path: string) {
