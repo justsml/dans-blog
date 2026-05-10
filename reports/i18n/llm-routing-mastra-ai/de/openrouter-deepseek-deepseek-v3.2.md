@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v3.2
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx
+- Validation: passed
+- Runtime seconds: 78.72
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
