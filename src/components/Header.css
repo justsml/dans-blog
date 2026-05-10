@@ -301,7 +301,7 @@
   display: grid;
   font-size: 0.88rem;
   gap: 0.65rem;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   line-height: 1.1;
   padding: 0.72rem 0.82rem;
   text-decoration: none;
@@ -334,6 +334,11 @@
   color: rgba(221, 232, 233, 0.48);
 }
 
+.top-header .header-language-panel a[data-missing="true"]:hover,
+.top-header .header-language-panel a[data-missing="true"]:focus-visible {
+  color: rgba(244, 248, 248, 0.74);
+}
+
 .header-language-name {
   min-width: 0;
 }
@@ -342,6 +347,17 @@
   color: rgba(221, 232, 233, 0.54);
   font-size: 0.66rem;
   font-weight: 680;
+  text-transform: uppercase;
+}
+
+.header-language-status {
+  align-self: center;
+  border: 1px solid rgba(255, 107, 157, 0.34);
+  color: rgba(255, 181, 218, 0.82);
+  font-size: 0.62rem;
+  font-weight: 760;
+  line-height: 1;
+  padding: 0.24rem 0.34rem;
   text-transform: uppercase;
 }
 

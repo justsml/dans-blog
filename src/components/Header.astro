@@ -94,6 +94,11 @@ function getNavPostData(post: MyPost) {
                 >
                   <span class="header-language-name">{option.label}</span>
                   <span class="header-language-code">{option.locale}</span>
+                  {
+                    !option.isTranslated && (
+                      <span class="header-language-status">Unavailable</span>
+                    )
+                  }
                 </a>
               ))}
             </nav>
