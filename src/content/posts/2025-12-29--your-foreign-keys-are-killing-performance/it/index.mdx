@@ -1,0 +1,138 @@
+---
+title: "Chiavi Esterne: Smetti di chiederti se sono veloci"
+subTitle: "Chiediti per cosa stai ottimizzando davvero."
+---
+
+L'ottimizzazione di database più costosa che abbia mai visto è iniziata con qualcuno che ha rimosso tutte le chiavi esterne (Foreign Keys).
+
+Non perché avessero misurato un collo di bottiglia. Non perché le scritture fossero effettivamente lente. Ma perché avevano letto da qualche parte che "le chiavi esterne non scalano". Sei mesi dopo, avevano 2 miliardi di record orfani, un sistema di fatturazione che addebitava costi a utenti eliminati e analisi sballate del 40%.
+
+Quando hanno provato a reinserire i vincoli? Il database si è bloccato cercando di convalidare dati esistenti che erano già corrotti.
+
+Esiste questa idea pervasiva nello sviluppo web che le chiavi esterne siano intrinsecamente lente, che siano come le rotelline della bicicletta da rimuovere una volta passati a sistemi "veri". Ma questo significa mancare completamente il punto di cosa sia un vincolo. Non stai scegliendo tra veloce e lento. Stai scegliendo tra diverse modalità di fallimento.
+
+Pensala così: vetro di sicurezza, cinture di sicurezza e airbag aggiungono peso alla tua auto. Rendono assolutamente il veicolo più lento e meno efficiente nei consumi. Ma non li strappi via per ottimizzare il tuo tempo da 0 a 100 km/h, perché stai ottimizzando per qualcos'altro del tutto.
+
+La domanda non è se le chiavi esterne ti rallentino. Certo che lo fanno. La domanda è cosa ottieni in cambio e se ne hai effettivamente bisogno.
+
+## Cosa stai scambiando davvero
+
+Lascia che ti faccia un esempio concreto. Stai costruendo un sistema di monitoraggio meteorologico con tabelle per stazioni meteo, dispositivi sensori, letture dei sensori e stati degli USA.
+
+Metti chiavi esterne ovunque? Pensiamo a cosa cambia effettivamente e quali sono le conseguenze:
+
+Gli stati degli USA probabilmente non cambiano. Il Wyoming non cambierà nome a breve. Non hai bisogno di una chiave esterna per convalidare i codici di stato su ogni inserimento quando sai che i dati di riferimento sono statici. È un sovraccarico inutile.
+
+Le stazioni meteorologiche vengono aggiunte, spostate e dismesse. Ma ecco una domanda: vuoi che le letture storiche "perdano" la loro stazione se qualcuno elimina accidentalmente il record di una stazione? Forse vuoi che quei dati rimangano intatti anche se la stazione non c'è più. Ciò significherebbe che stai trattando le letture come un'istantanea storica piuttosto che come un riferimento live, il che cambia il senso stesso di una chiave esterna.
+
+Le letture dei sensori vengono inserite migliaia di volte al minuto. Ogni controllo di chiave esterna significa una ricerca. Ogni ricerca crea contesa sulle tue tabelle. Se una convalida lenta significa che la tua coda di inserimento si accumula e perdi dati in tempo reale, questo è un tipo di perdita di dati diverso dall'avere un record orfano.
+
+Puoi vedere dove stiamo andando. La scelta non riguarda le prestazioni contro la correttezza come concetti astratti. Riguarda quale fallimento specifico sei più disposto a tollerare date le tue reali limitazioni e le reali conseguenze.
+
+Se riferimenti errati significano dati di fatturazione corrotti o violazioni normative, probabilmente vuoi che le chiavi esterne ti proteggano indipendentemente dal costo in termini di prestazioni. Se una convalida lenta significa perdere per sempre dati dei sensori in tempo reale perché la tua coda trabocca, allora forse la convalida è lo scambio sbagliato.
+
+## Quando la velocità di scrittura conta davvero
+
+Quindi hai deciso che ti serve la massima velocità di scrittura. La tua coda si sta accumulando, le transazioni vanno in timeout e i controlli delle chiavi esterne stanno legittimamente causando problemi che hai effettivamente misurato (non solo teorizzato).
+
+Hai alcune opzioni. Potresti cambiare il livello di isolamento della transazione da `SERIALIZABLE` a `READ COMMITTED`, che è più veloce ma rinuncia ad alcune garanzie di coerenza. Potresti inviare i commit a blocchi (batch), inserendo 1000 righe per transazione invece di una alla volta per ammortizzare il sovraccarico delle FK. Oppure potresti denormalizzare in una struttura di log append-only dove non cerchi nemmeno di convalidare i riferimenti.
+
+La terza opzione non è barare, tra l'altro. È solo un design diverso:
+
+```sql
+CREATE TABLE sensor_log (
+  id BIGSERIAL PRIMARY KEY,
+  recorded_at TIMESTAMPTZ NOT NULL,
+  data JSONB NOT NULL  -- { station_id, sensor_id, temp, humidity, ... }
+);
+
+CREATE INDEX ON sensor_log USING GIN (data);
+CREATE INDEX ON sensor_log (recorded_at);
+```
+
+Nessuna join. Nessun controllo di chiave esterna. Basta aggiungere i dati e interrogare per intervallo di tempo o tramite indice GIN sul blob JSONB. È una "best practice"? Probabilmente no nel senso in cui viene insegnata nei libri di testo di database. Funziona quando inserisci 50.000 righe al minuto su un Raspberry Pi? Assolutamente sì.
+
+Il distacco avviene quando le persone trattano la "best practice" come un imperativo morale piuttosto che come un pattern che funziona bene in scenari comuni ma che potrebbe non adattarsi al tuo.
+
+## La trappola della normalizzazione
+
+I corsi di database amano insegnare la normalizzazione. Evitare la duplicazione a tutti i costi. Terza Forma Normale o niente.
+
+Così finisci con qualcosa tipo: `Ordini` → `ArticoliOrdine` → `Prodotti` → `Varianti` → `Colori` → `Taglie`
+
+Sei join di tabelle solo per rispondere a "Ho ordinato la maglietta rossa o quella blu lo scorso Natale?". E Dio non voglia che tu debba includere il nome del prodotto, perché quello è a tre join di distanza nella gerarchia del catalogo.
+
+Ma aspetta. La giustificazione di solito è "E se il brand cambia il modo in cui etichetta il Blu?". Se succede, vuoi davvero che gli ordini storici cambino retroattivamente colore? Certamente no. Quando qualcuno ha effettuato quell'ordine, ha comprato una "Maglietta Blu, Taglia M" così come esisteva in quel momento, non come un riferimento astratto a una voce di catalogo che potrebbe essere aggiornata in seguito.
+
+Vale la pena soffermarsi su questo perché è sottile. Alcuni dati sono fondamentalmente un'istantanea (snapshot), non un riferimento. Quando tratti i dati snapshot come se fossero un riferimento live, finisci con questa assurda proliferazione di join per ricostruire qualcosa che avrebbe dovuto essere semplicemente denormalizzato al momento della scrittura.
+
+Memorizza `{"colore": "blu", "taglia": "M"}` direttamente sull'ordine. Fatto.
+
+### Riconoscere i dati Snapshot
+
+Come fai a sapere quando qualcosa dovrebbe essere uno snapshot? Chiediti se si tratta di un record riferito a un preciso momento nel tempo:
+
+Gli ordini catturano i dettagli del prodotto come esistevano al momento dell'acquisto. I log di audit registrano lo stato dell'utente quando ha eseguito un'azione. Le tabelle storiche preservano lo stato del record prima di un aggiornamento. Gli stream di eventi catturano cosa è successo, quando, con quali dati.
+
+Se la risposta è "sì, questo sta registrando un momento nel tempo", smetti di normalizzarlo. Inizia a farne uno snapshot.
+
+### Blob opachi
+
+C'è un'altra categoria oltre agli snapshot: dati su cui non fai mai query specifiche. Li memorizzi e li recuperi interi.
+
+Le configurazioni dei modelli LLM come `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` non sono qualcosa che interroghi per temperatura. Recuperi l'intera configurazione tramite l'ID della richiesta quando ne hai bisogno. I payload JWT dopo la decodifica, i log delle richieste/risposte API per il debug, gli oggetti delle preferenze utente con le impostazioni del tema e i flag di notifica. Questi sono tutti blob opachi. Non hai bisogno di normalizzazione. Non hai bisogno di chiavi esterne. Buttali in un JSONB e vai avanti con la tua vita.
+
+La join tra 6 tabelle per scoprire di che colore era la maglietta ordinata? Quella non è corretta normalizzazione. È confusione mentale sul fatto che tu stia memorizzando un riferimento o un valore.
+
+(Attenzione però: questo può ritorcersi contro in modo spettacolare se in seguito avrai bisogno di interrogare quei dati. Vedi [La seduzione del JSONB](/the-jsonb-seduction) per quando questo approccio crea il proprio incubo.)
+
+## La scala è contesto
+
+Sentirai dire che "le chiavi esterne non scalano". Ma la scala è completamente relativa al tuo hardware e alla tua architettura.
+
+Un Raspberry Pi che registra 10.000 letture di sensori al minuto su una scheda microSD? Quella è legittimamente un'alta scala per quell'hardware. AWS Aurora con IOPS provisionati che gestisce miliardi di righe? Puoi usare chiavi esterne senza problemi.
+
+Il vero limite fisico non riguarda il numero di righe o il volume di scrittura. È lo sharding.
+
+Quando la tua tabella `Utenti` vive sul Server A e la tua tabella `Ordini` vive sul Server B, le chiavi esterne fisicamente non possono funzionare. Il database non ha alcun meccanismo per applicare un vincolo attraverso i confini della rete. A quel punto, stai già eseguendo processi in background per trovare orfani e implementando pattern di consistenza eventuale.
+
+Questo accade nel SaaS multi-tenant dove ogni tenant riceve il proprio database isolato per conformità, o in distribuzioni IoT dove hai 50.000 dispositivi edge ciascuno che esegue SQLite localmente. Una volta lì, le chiavi esterne sono fuori discussione (letteralmente), indipendentemente dalle considerazioni sulle prestazioni.
+
+Ma finché non raggiungi quel confine architetturale, magari non ottimizzare prematuramente per i problemi di Netflix quando stai costruendo uno strumento interno per 10 utenti.
+
+## Come appare tutto questo in pratica
+
+Invece di chiedere "dovrei usare le chiavi esterne", prova a chiedere queste tre cose:
+
+Cosa si rompe se questo riferimento è sbagliato? È una causa legale, una fatturazione corrotta, una violazione normativa? O è solo una join mancante che restituisce null nella tua dashboard di analisi?
+
+Cosa si rompe se la convalida è lenta? Perdi dati irripetibili in tempo reale? O le tue query richiedono solo 50 millisecondi in più?
+
+Questi dati sono uno snapshot o un riferimento? Stai registrando l'aspetto di qualcosa in un momento specifico o stai puntando al valore autorevole corrente?
+
+Da qui, i pattern emergono in modo naturale:
+
+Transazioni finanziarie, sessioni di autenticazione, tutto ciò in cui la corruzione dei dati significa responsabilità legale probabilmente richiede chiavi esterne indipendentemente dal sovraccarico di prestazioni.
+
+Log ad alto volume, dati di serie temporali append-only, tutto ciò in cui scrivi un milione di eventi al minuto probabilmente non ha bisogno del sovraccarico di convalida su ogni scrittura.
+
+Snapshot storici come ordini e log di audit, dati che recuperi sempre come un blob completo come le preferenze utente, schemi che non controlli come i payload dei webhook da API esterne... questi spesso funzionano meglio denormalizzati.
+
+Ma nota che ho detto "probabilmente" e "spesso". Perché il contesto conta, e il tuo contesto è diverso dal mio.
+
+## Considerazioni finali
+
+Le chiavi esterne non sono un problema di prestazioni. Sono uno scambio tra velocità di scrittura e integrità dei dati, e se quello scambio abbia senso dipende interamente dai tuoi specifici colli di bottiglia e dalle tue specifiche conseguenze.
+
+Il vero problema è quando le persone rimuovono le chiavi esterne per via di qualcosa che hanno letto riguardo alla "scala web" senza misurare effettivamente se hanno un problema di prestazioni in scrittura o considerare a cosa stanno rinunciando. Finisci per copiare l'architettura di Netflix su un progetto nuovo che elabora 100 transazioni al giorno.
+
+Forse il costo in termini di prestazioni vale la pena per il tuo caso d'uso. Forse no. Ma almeno prendi quella decisione in base a ciò per cui stai ottimizzando davvero, non a ciò per cui pensi di dover ottimizzare.
+
+Per cosa stai ottimizzando?
+
+## Risorse
+
+- [Documentazione dei vincoli di chiave esterna di PostgreSQL](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [Suggerimenti sulle prestazioni di PostgreSQL](https://www.postgresql.org/docs/current/performance-tips.html)
+- [Use The Index, Luke! - Chiavi Esterne](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [Normalizzazione vs Denormalizzazione del Database](https://www.postgresql.org/docs/current/tutorial-concepts.html)
