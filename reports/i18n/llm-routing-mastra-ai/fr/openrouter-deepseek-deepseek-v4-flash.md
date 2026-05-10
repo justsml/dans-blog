@@ -4,7 +4,7 @@
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx
 - Validation: passed
-- Runtime seconds: 23.60
+- Runtime seconds: 31.27
 - Input tokens: unknown
 - Output tokens: 0
 - Thinking tokens: unknown
