@@ -4,7 +4,7 @@
 - Model: openrouter/minimax/minimax-m2.7
 - Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/ru/index.mdx
 - Validation: rejected: target file unchanged
-- Runtime seconds: 1.54
+- Runtime seconds: 1.42
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
