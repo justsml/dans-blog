@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/fr/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 91.46
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-can-you-count-to-bigint --locale fr --skip-global
