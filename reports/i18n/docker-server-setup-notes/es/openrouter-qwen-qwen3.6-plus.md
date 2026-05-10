@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: docker-server-setup-notes
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-04-06--docker-server-setup-notes/es/index.mdx
+- Validation: passed
+- Runtime seconds: 250.12
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
