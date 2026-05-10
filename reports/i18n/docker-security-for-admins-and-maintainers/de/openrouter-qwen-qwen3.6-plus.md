@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/de/index.mdx
+- Validation: passed
+- Runtime seconds: unknown
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Recovered from an interrupted concurrent Qwen baseline run; local structural validation passed with --skip-global.
