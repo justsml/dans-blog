@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 53.36
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
