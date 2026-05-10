@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: de
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/de/index.mdx
+- Validation: passed
+- Runtime seconds: 42.19
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
