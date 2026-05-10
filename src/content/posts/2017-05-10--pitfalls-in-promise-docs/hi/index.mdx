@@ -1,0 +1,65 @@
+---
+social_image: ../desktop-social.webp
+title: "प्रॉमिस डॉक्स में कमियाँ"
+subTitle: लोकप्रिय डॉक्स से होने वाली समस्याओं से बचना
+date: 2017-05-10
+modified: 2024-07-30
+category: Code
+subCategory: promises
+tags: [programming, patterns, promises, functional river]
+cover: craig-whitehead-433328-unsplash.webp
+cover_mobile: w300_craig-whitehead-433328-unsplash.webp
+cover_icon: icon_craig-whitehead-433328-unsplash.webp
+---
+
+> Google सर्च रिज़ल्ट्स और लोकप्रिय लाइब्रेरीज़ में प्रॉमिस एंटी-पैटर्न को पहचानना।
+
+![craig-whitehead-433328-unsplash.webp](craig-whitehead-433328-unsplash.webp)
+
+मुझे एक बात मान लेनी चाहिए: मैं भी उन 'एंटी-पैटर्न' को लिखने का दोषी रहा हूँ जिनकी मैं नीचे आलोचना कर रहा हूँ, जैसा कि मुझे यकीन है कि बहुत से JS डेवलपर्स भी होंगे। मैंने जो कुछ भी यहाँ बताया है वह व्यक्तिगत नहीं है या मूल लेखकों को लक्षित भी नहीं है। मैं तो बस आम पैटर्न का कोड रिव्यू कर रहा हूँ - मेरा उद्देश्य अपनी प्राथमिकताओं और आलोचनात्मक सोच की प्रक्रिया को समझाना है।
+
+> उम्मीद है कि इस प्रोजेक्ट को समझने के बाद आप खराब प्रॉमिसेज़ के चेतावनी संकेतों को पहचान पाएँगे।
+
+1. [CallbackHell.com](#callbackhellcom)
+1. [StrongLoop](#strongloop)
+1. [RisingStack](#risingstack)
+1. [Q Library](#qlibrary)
+
+--------------------------
+### CallbackHell.com
+> **CREDIT:** http://callbackhell.com/
+![CallbackHell.com](callbackhell.webp)
+
+----------------------
+### StrongLoop
+> **CREDIT:** `https://strongloop.com/strongblog/node-js-callback-hell-promises-generators/`
+![strong loop](strongloop.webp)
+
+
+----------------
+### RisingStack
+> **CREDIT:** https://blog.risingstack.com/node-js-async-best-practices-avoiding-callback-hell-node-js-at-scale/
+यह एक काफी अच्छा आर्टिकल है। मुझे बस 1 चिंता है:
+
+![Rising Stack](risingstack.webp)
+
+------------------------
+### Q Library
+> **CREDIT:** https://github.com/kriskowal/q
+
+Q लाइब्रेरी "प्रॉमिसेज़" से जुड़ी सबसे ज़्यादा इस्तेमाल होने वाली और सबसे पुरानी लाइब्रेरीज़ में से एक है। इसलिए यह पुराने उदाहरणों और बैकवर्ड्स कम्पैटिबिलिटी बनाए रखने की ज़रूरत से जूझती है।
+**मैं "प्रॉमिसेज़ से जुड़ी" इसलिए कहता हूँ क्योंकि मेरा मानना है कि Q वास्तव में `deferred` पैटर्न के बारे में है।**
+
+यह प्रॉमिसेज़ जैसा दिख सकता है, फिर भी मैं ज़िद करता हूँ कि यह है नहीं। इसका सरफ़ेस एरिया गलत कारणों से बहुत ज़्यादा बड़ा है। साथ ही नेमिंग कन्वेंशन नामों को असंगत रूप से छोटा करता है, जिससे इंटरफ़ेस को याद रखना मुश्किल हो जाता है। `when` और `done` जैसे मेथड्स ज़रूरी नहीं हैं।
+
+निष्कर्ष: `deferred` पैटर्न एक दर्दनाक एंटी-पैटर्न है - यह आम कॉलबैक तरीक़े की तुलना में लगभग कुछ भी बेहतर नहीं करता।
+
+![q first example](qlibrary-1.webp)
+
+![q xmlHTTP deferred anti-pattern](qlibrary-2.webp)
+
+
+> कृपया इस आर्टिकल के साथी GitHub प्रोजेक्ट को देखें (और स्टार करें), [Escape From Callback Mountain](https://github.com/justsml/escape-from-callback-mountain)
+
+
+> प्रोजेक्ट का लक्ष्य: JavaScript में बेहतर फ़ंक्शनल लैंग्वेज पैटर्न पर शोध और विकास।
