@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-09-26--promise-gotchas/es/index.mdx
+- Validation: passed
+- Runtime seconds: 25.02
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
