@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: securing-clawdbot-tailscale
+- Locale: ru
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-26--securing-clawdbot-tailscale/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 52.17
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
