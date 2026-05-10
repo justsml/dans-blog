@@ -17,6 +17,7 @@ const QWEN_REPORT_FILE = "openrouter-qwen-qwen3.6-plus.md";
 type Task = {
   slug: string;
   locale: ActiveLocale;
+  sourcePath: string;
   targetPath: string;
   reportPath: string;
 };
@@ -79,6 +80,7 @@ for (const [index, task] of limitedTasks.entries()) {
   }
 
   try {
+    const taskTimeoutSeconds = getTaskTimeoutSeconds(task);
     const beforeHead = run("git", ["rev-parse", "HEAD"]);
     const args = [
       "run",
@@ -91,8 +93,11 @@ for (const [index, task] of limitedTasks.entries()) {
       "--models",
       QWEN_BASELINE_MODEL,
       "--timeout-seconds",
-      String(timeoutSeconds),
+      String(taskTimeoutSeconds),
     ];
+    if (taskTimeoutSeconds !== timeoutSeconds) {
+      console.log(`Using ${taskTimeoutSeconds}s timeout for large source ${task.slug}.`);
+    }
     if (shouldConcurrentWorktree) {
       args.push("--no-commit", "--allow-concurrent-worktree");
     }
@@ -150,7 +155,7 @@ function getQwenBaselineTasks() {
       if (shouldMissingOnly && existsSync(targetPath)) continue;
       if (hasSuccessfulQwenReport(reportPath)) continue;
       if (!shouldRetryRejected && existsSync(reportPath)) continue;
-      tasks.push({ slug, locale, targetPath, reportPath });
+      tasks.push({ slug, locale, sourcePath: getSourcePostPath(postDir), targetPath, reportPath });
     }
   }
 
@@ -165,6 +170,20 @@ function getQwenBaselineTasks() {
 
 function hasSourcePost(postDir: string) {
   return existsSync(join(postDir, "index.mdx")) || existsSync(join(postDir, "index.md"));
+}
+
+function getSourcePostPath(postDir: string) {
+  const mdxPath = join(postDir, "index.mdx");
+  if (existsSync(mdxPath)) return mdxPath;
+  return join(postDir, "index.md");
+}
+
+function getTaskTimeoutSeconds(task: Task) {
+  const lineCount = readFileSync(task.sourcePath, "utf8").split(/\r?\n/).length;
+  if (lineCount > 1500) return Math.max(timeoutSeconds, 1200);
+  if (lineCount > 900) return Math.max(timeoutSeconds, 900);
+  if (lineCount > 600) return Math.max(timeoutSeconds, 600);
+  return timeoutSeconds;
 }
 
 function hasSuccessfulQwenReport(reportPath: string) {
