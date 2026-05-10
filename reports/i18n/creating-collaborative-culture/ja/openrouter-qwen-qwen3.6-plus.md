@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 32.60
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
