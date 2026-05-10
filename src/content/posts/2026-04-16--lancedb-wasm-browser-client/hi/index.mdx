@@ -1,6 +1,6 @@
 ---
-title: "सर्वरलेस वेक्टर खोज"
-subTitle: "Rust, WASM और TypeScript के साथ वेक्टर सर्च ब्राउज़र क्लाइंट बनाना"
+title: "Serverless Vector Search"
+subTitle: "Rust, WASM aur TypeScript ke saath Browser Vector Search Client banana"
 date: 2026-04-16
 modified: 2026-04-16
 tags: [rust, wasm, lancedb, vector-search, open-source, webassembly, typescript, ai]
@@ -16,45 +16,45 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-## समस्या: आप ब्राउज़र से Lance टेबल को खोज नहीं सकते
+## Problem: Aap Browser se Lance Table Search Nahin Kar Sakte
 
-LanceDB एक शानदार वेक्टर डेटाबेस है। यह पारंपरिक डेटाबेस की तुलना में बहुत सरल और सस्ता है। आप वेक्टर कॉलम, फ़ुल-टेक्स्ट सर्च (FTS) कॉलम वाली टेबल प्रकाशित कर सकते हैं, फ़ाइलों को S3 या CDN पर होस्ट कर सकते हैं, और Node.js सर्वर से सीधे S3 के ऊपर डेटा क्वेरी कर सकते हैं। किसी डेमन की ज़रूरत नहीं।
+LanceDB ek fantastic vector database hai. Yeh traditional databases se bahut simpler aur cheaper hai. Aap tables ko vector columns, full-text search (FTS) columns ke saath publish kar sakte hain, files ko S3 ya CDN par host kar sakte hain, aur Node.js server se directly S3 par query kar sakte hain. Koi daemon nahin chahiye.
 
-जो आप *नहीं* कर सकते थे — इस PR से पहले — वह था उस टेबल को सीधे ब्राउज़र से खोलकर सर्च चलाना। आपको बीच में एक सर्वर चाहिए होता: एक Lambda, एक कंटेनर, *कुछ* जो Rust, Node.js/WASM, या Python चला सके।
+Jo aap *nahin* kar sakte the — is PR se pehle — wo tha browser se directly table kholna aur search chalana. Aapko beech mein ek server chahiye hota: Lambda, container, *kuch* jo Rust, Node.js/WASM, ya Python chalata ho.
 
-लक्ष्य महत्वाकांक्षी था, लेकिन एक सार्थक अंतिम परिणाम पर केंद्रित: **सीधे खोजने योग्य, केवल-पढ़ने के लिए, HTTP-होस्टेड वेक्टर इंडेक्स।**
+Goal ambitious tha, lekin focused meaningful end result par: **directly searchable, read-only, HTTP-hosted vector indexes.**
 
 ---
 
-## आर्किटेक्चर
+## Architecture
 
-इम्प्लीमेंटेशन में तीन परतें हैं:
+Implementation mein teen layers hain:
 
-### 1. Rust प्रकाशन आर्टिफैक्ट (`web_publish.rs`)
+### 1. Rust publish artifacts (`web_publish.rs`)
 
-इससे पहले कि ब्राउज़र Lance टेबल को खोज सके, उसे यह जानना होगा कि खोजना सुरक्षित है या नहीं। Lance के आंतरिक फ़ॉर्मेट में कुछ विशेषताएं हैं जो ब्राउज़र-पोर्टेबल नहीं हैं — डेल्टा फ़ाइलें, एक्सटर्नल बेस, इंडेक्स प्रकार जो WASM रनटाइम निष्पादित नहीं कर सकता। ब्राउज़र को सर्च टाइम पर यह पता लगाने देने (बुरा) के बजाय, प्रकाशन चरण स्पष्ट साइडकार फ़ाइलें बनाता है:
+Browser koi Lance table search kar sake, usse pehle use yeh jaanna zaroori hai ki kya search safe hai. Lance ka internal format kuch features rakhta hai jo browser-portable nahin hain — delta files, external bases, wo index types jo WASM runtime execute nahin kar sakta. Browser ko search time par yeh discover karne deney ki bajay (jo buri baat hai), publish step explicit sidecar files produce karta hai:
 
-- `_web.json` — स्कीमा और ब्राउज़र-खोजने योग्य कॉलम (समर्थित दूरी प्रकारों वाले वेक्टर कॉलम, FTS कॉलम) का विज्ञापन करता है
-- `_snapshot.json` — डेटासेट का एक पॉइंट-इन-टाइम व्यू जिसे ब्राउज़र क्लाइंट पूरे डेटासेट एवोल्यूशन प्रोटोकॉल को समझे बिना उपभोग कर सकता है
-- `_latest.manifest` / `_latest.version` — स्थिर पॉइंटर्स जिन्हें ब्राउज़र पुरानापन जांचने के लिए पोल करता है
+- `_web.json` — schema advertise karta hai aur konsay columns browser-searchable hain (vector columns supported distance types ke saath, FTS columns)
+- `_snapshot.json` — dataset ka point-in-time view jo browser client consume kar sakta hai bina full dataset evolution protocol ko samjhey
+- `_latest.manifest` / `_latest.version` — stable pointers jo browser staleness detect karne ke liye poll karta hai
 
-स्नैपशॉट में `isComplete` फ़्लैग सेफ्टी वाल्व है। यदि डेटासेट उन एक्सटर्नल बेस या डेटा फ़ाइलों पर निर्भर करता है जिन्हें ब्राउज़र पथ सुरक्षित रूप से नहीं पढ़ सकता, तो `isComplete=false` और ब्राउज़र इसे जल्दी स्पष्ट एरर के साथ अस्वीकार कर देता है, बजाय चुपचाप गलत परिणाम देने के।
+Snapshot mein `isComplete` flag safety valve hai. Agar dataset external bases ya data files par depend karta hai jo browser path safely read nahin kar sakta, toh `isComplete=false` aur browser early reject kar deta hai clear error ke saath instead of subtly wrong results produce karney ki bajay.
 
-यह वह हिस्सा है जिसके लिए मुझे सबसे अधिक खुशी है कि मैंने इसे JavaScript के बजाय Rust में बनाया। इस बारे में निर्णय कि ब्राउज़र-सुरक्षित क्या है, वहीं रहता है जहाँ टेबल मेटाडेटा वास्तव में रहता है।
+Yeh wo part hai jiska main sabse khush hoon ki Maine Rust mein build kiya, JavaScript mein nahin. Yeh judgment about browser-safe kahan hai yeh wahi decide karta hai jahan table metadata actually rehta hai.
 
-### 2. `lancedb-wasm` Rust क्रेट
+### 2. `lancedb-wasm` Rust crate
 
-यह WebAssembly रनटाइम है: एक `fetch`-समर्थित ऑब्जेक्ट स्टोर, एक ब्राउज़र-साइड सर्च इंजन, और फ़िल्टर प्रेडिकेट के लिए एक एक्सप्रेशन इवैल्यूएटर।
+Yeh WebAssembly runtime hai: `fetch`-backed object store, browser-side search engine, aur filter predicates ke liye expression evaluator.
 
-फ़ेच ऑब्जेक्ट स्टोर (`fetch_object_store.rs`) Lance के `ObjectStore` ट्रेट को HTTP रेंज रिक्वेस्ट पर इम्प्लीमेंट करता है। Lance की आंतरिक रीड पहले से ही रेंज्ड बाइट-रेंज फ़ेच के रूप में संरचित होती हैं, जो `Range: bytes=N-M` हेडर पर साफ़ रूप से मैप होती है। यह प्रोजेक्ट का सबसे संतोषजनक हिस्सा था — मौजूदा आर्किटेक्चर इसके लिए लगभग पूरी तरह से डिज़ाइन किया गया था, मुझे बस इसे वायर अप करना था।
+Fetch object store (`fetch_object_store.rs`) Lance ke `ObjectStore` trait ko HTTP range requests par implement karta hai. Lance ke internal reads already structured hain as ranged byte-range fetches, jo cleanly `Range: bytes=N-M` headers par map hota hai. Yeh sabse satisfying part tha — existing architecture almost perfectly designed tha iske liye, mujhe bas wire karna tha.
 
-ब्राउज़र इंजन (`browser.rs`) सर्च को संभालता है: वेक्टर नियरेस्ट-नेबर, फ़ुल-टेक्स्ट, और हाइब्रिड (वेक्टर + FTS, RRF फ़्यूज़न के साथ)। फ़िल्टर एक्सप्रेशन (`browser_expr.rs`) Lance फ़िल्टर प्रेडिकेट को क्लाइंट-साइड शुद्ध Rust में इवैल्यूएट करते हैं, जो WASM में कंपाइल होता है।
+Browser engine (`browser.rs`) search handle karta hai: vector nearest-neighbor, full-text, aur hybrid (vector + FTS with RRF fusion). Filter expressions (`browser_expr.rs`) pure Rust mein client-side evaluate karta hai Lance filter predicates ko, WASM mein compiled.
 
-फ़ीचर अस्वीकृति सख्त और जानबूझकर है। `hamming` दूरी? स्पष्ट संदेश के साथ तुरंत अस्वीकार — चुपचाप गलत नहीं, रनटाइम पैनिक नहीं। अपूर्ण स्नैपशॉट पर `fastSearch`? अस्वीकार। असमर्थित बेस-पथ लेआउट? अस्वीकार। लक्ष्य था बंद होने पर विफल होना: यदि ब्राउज़र पथ अनुबंध का पालन नहीं कर सकता, तो वह ऐसा कहता है।
+Feature rejection strict aur intentional hai. `hamming` distance? Upfront reject with clear message — not silently wrong, not runtime panic. `fastSearch` incomplete snapshot par? Reject. Unsupported base-path layouts? Reject. Goal tha fail closed: agar browser path contract honor nahin kar sakta, toh wo bolta hai.
 
-### 3. `@lancedb/lancedb-web` TypeScript पैकेज
+### 3. `@lancedb/lancedb-web` TypeScript package
 
-सार्वजनिक API सतह जानबूझकर छोटी है:
+Public API surface intentionally small hai:
 
 ```typescript
 import { searchTable } from "@lancedb/lancedb-web";
@@ -65,60 +65,60 @@ const results = await searchTable("https://my-cdn.example.com/my-table", "semant
 });
 ```
 
-हुड के नीचे, `searchTable()` वर्कर-समर्थित निष्पादन पथ पसंद करता है ताकि सर्च मुख्य थ्रेड को ब्लॉक न करे। WASM मॉड्यूल वर्कर में चलता है; परिणाम एक टाइप किए गए प्रोटोकॉल (`worker_protocol.ts`) पर वापस आते हैं। एक वैकल्पिक `./transformers` एक्सपोर्ट भी है जो क्लाइंट-साइड एम्बेडिंग जनरेट करने के लिए `@xenova/transformers` को रैप करता है — ताकि आप ब्राउज़र से कभी बाहर निकले बिना रॉ टेक्स्ट क्वेरी से वेक्टर सर्च परिणामों तक जा सकें।
+Under the hood, `searchTable()` Worker-backed execution path prefer karta hai taaki search main thread ko block na kare. WASM module Worker mein run hota hai; results typed protocol (`worker_protocol.ts`) par wapas aate hain. Ek optional `./transformers` export bhi hai jo query embeddings generate karne ke liye `@xenova/transformers` ko wrap karta hai client-side — taaki aap raw text query se vector search results tak kabhi browser chorh kar bhaag saken.
 
 ---
 
-## कठिन हिस्से
+## The Hard Parts
 
-### HTTP पर रेंज्ड रीड मुफ्त नहीं हैं
+### Ranged reads over HTTP free nahin hain
 
-Lance के रीड पैटर्न एक ऑब्जेक्ट स्टोर मानते हैं जो कई छोटे रेंज्ड फ़ेच को कुशलता से संभाल सके। S3 और GCS इसके लिए डिज़ाइन किए गए हैं। ब्राउज़र... ज़्यादातर भी ऐसे ही हैं, लेकिन `Range` हेडर के साथ `fetch` की कुछ विचित्रताएं हैं जिनकी मौजूदा Rust ऑब्जेक्ट स्टोर एब्स्ट्रैक्शन को परवाह नहीं करनी पड़ती।
+Lance ke read patterns ek object store assume karte hain jo efficiently many small ranged fetches handle kar sake. S3 aur GCS iske liye designed hain. Browsers... mostly bhi hain, lekin `fetch` with `Range` headers kuch quirks rakhta hai jo existing Rust object store abstractions ko care nahin karna padta.
 
-मुख्य मुद्दा यह है कि ब्राउज़र कभी-कभी आक्रामक रूप से बफ़र या फिर से अनुरोध करते हैं, और आप TCP कनेक्शन पूलिंग को उस तरह से नियंत्रित नहीं कर सकते जैसे आप नेटिव प्रोसेस में कर सकते हैं। बड़े वेक्टर इंडेक्स के लिए यह मायने रखता है। वर्तमान इम्प्लीमेंटेशन सही है; क्या यह बड़ी टेबलों पर प्रोडक्शन उपयोग के लिए पर्याप्त तेज़ है, यह समीक्षा के दौरान स्पष्ट होगा।
+Main issue yeh hai ki browsers kabhi-kabhi aggressively buffer ya re-request karte hain, aur aap TCP connection pooling control nahin kar sakte jaisa aap native process mein kar sakte hain. Large vector indices ke liye yeh matter karta hai. Current implementation correct hai; agar yeh large tables par production use ke liye fast enough hai ya nahin yeh review ke dauran shake niklega.
 
-### साइडकार जनरेशन का प्रश्न
+### Sidecar generation question
 
-PR में मेंटेनर्स के लिए एक प्रश्न के रूप में यह स्पष्ट रूप से उठाया गया है, क्योंकि एक वास्तविक डिज़ाइन ट्रेडऑफ़ है: क्या ब्राउज़र साइडकार फ़ाइलों (`_web.json`, `_snapshot.json`) को हर टेबल कमिट पर *स्वचालित रूप से* उत्सर्जित किया जाए, या एक स्पष्ट `publish()` कॉल होनी चाहिए?
+PR yeh explicitly question karta hai maintainers ke liye, kyunki ek real design tradeoff hai: browser sidecar files (`_web.json`, `_snapshot.json`) har table commit par *automatically* emit honi chahiye, ya explicit `publish()` call honi chahiye?
 
-स्वचालित अधिक एर्गोनॉमिक है — आपको मुफ्त में ब्राउज़र सपोर्ट मिलता है। लेकिन इसका मतलब है कि हर स्थानीय राइट में थोड़ा अतिरिक्त ओवरहेड है, और यह ब्राउज़र अनुबंध को कोर कमिट पथ से इस तरह जोड़ता है जो किसी भी हिस्से में भविष्य के बदलावों को जटिल बना सकता है।
+Automatic more ergonomic hai — aap free mein browser support get karte ho. Lekin iska matlab har local write mein extra overhead hai, aur yeh browser contract ko core commit path se couple karta hai aise tarike se jo future changes ko complicate kar sakta hai.
 
-स्पष्ट प्रकाशन अनुबंध के दृष्टिकोण से अधिक सही है — आप कह रहे हैं "यह संस्करण ब्राउज़र-तैयार है" — लेकिन इसे भूलना आसान है, जिसका अर्थ है कि जिन टेबलों को *खोजने योग्य* होना चाहिए वे चुपचाप नहीं हैं।
+Explicit publish more correct hai contract standpoint se — aap bol rahe ho "yeh version browser-ready hai" — lekin isko forget karna easy hai, matlab jo tables *should* be browser-searchable wo silently nahin hain.
 
-मैं स्वचालित की ओर झुका, साइडकार विफलताओं के साथ कमिट को विफल करने के बजाय चेतावनी लॉग करता है। लेकिन मैं वास्तव में अनिश्चित हूं, और मैंने इसे PR में फ़्लैग किया।
+Maine automatic ki taraf lean kiya, sidecar failures warning log karke. But I'm genuinely uncertain, aur maine PR mein flag kiya.
 
-### "ब्राउज़र-सुरक्षित" क्या माना जाता है?
+### "Browser-safe" kya count hota hai?
 
-`isComplete` फ़्लैग और `web_publish.rs` में कॉलम फ़िल्टरिंग लॉजिक इस बारे में एक निर्णय को एन्कोड करता है कि ब्राउज़र क्या संभाल सकता है। उस निर्णय को WASM रनटाइम की वास्तविक क्षमताओं के साथ सिंक में रहना होगा। यदि कोई Lance में एक नया इंडेक्स प्रकार जोड़ता है जिसे ब्राउज़र निष्पादित नहीं कर सकता, तो प्रकाशन कोड को उसे बाहर करना जानना होगा — अन्यथा आप एक क्षमता का विज्ञापन करेंगे जिसे ब्राउज़र सर्च टाइम पर पूरा करने में विफल होगा।
+`isComplete` flag aur column filtering logic `web_publish.rs` mein ek judgment encode karta hai ki browser kya handle kar sakta hai. Yeh judgment WASM runtime ki actual capabilities ke saath sync mein rehni chahiye. Agar koi Lance mein naya index type add kare jo browser execute nahin kar sakta, toh publish code ko pata hona chahiye ki ise exclude karna hai — warna aap capability advertise karenge jo browser search time par honor karne mein fail karega.
 
-यहां सही समाधान शायद एक क्षमता रजिस्ट्री है जो प्रकाशन पथ और रनटाइम के बीच साझा होती है, ताकि वे बहाव न कर सकें। मैंने इसे अभी के लिए समानांतर स्थिरांक के रूप में लागू किया, जो त्वरित लेकिन नाजुक है। यह शायद वह चीज़ है जिसे मैं आगे सुधारना चाहूंगा।
-
----
-
-## ट्रांसफॉर्मर्स रैपर दुविधा
-
-`./transformers` एक्सपोर्ट एक गुणवत्ता-सुविधा है: यह एक टेक्स्ट क्वेरी लेता है, इसे `@xenova/transformers` के माध्यम से एक स्थानीय एम्बेडिंग मॉडल से चलाता है, और परिणामी वेक्टर को LanceDB सर्च इंजन को देता है। एक स्थिर HTML पेज से शून्य-सर्वर सिमैंटिक सर्च।
-
-यह वह चीज़ भी है जिसके बारे में मुझे सबसे कम यकीन है कि यह इस PR में है। यह वास्तव में उपयोगी है और यह पहले से ही लागू है, लेकिन यह एक निर्भरता और एक API सतह है जो कोर ब्राउज़र सर्च प्रश्न से अलग है। मेंटेनर्स उचित रूप से पहले बेस `searchTable()` API को लैंड करना और एम्बेडिंग पर अलग से पुनरावृत्ति करना चाह सकते हैं।
-
-मैंने पूछा। हम देखेंगे।
+Right fix shayad ek capability registry hai jo publish path aur runtime ke beech shared ho, taaki wo drift na kar sake. Maine abhi ke liye parallel constants implement kiya, jo expedient hai lekin fragile. Yeh probably wo cheez hai jisko main next improve karna chahunga.
 
 ---
 
-## मैं क्या अलग करता
+## The Transformers Wrapper Dilemma
 
-**पहले स्कोप करता।** PR 14,500 लाइनों का है। यह एक बार में समीक्षा करने के लिए बहुत कुछ है। मैं पहले प्रकाशन आर्टिफैक्ट फ़ॉर्मेट, फिर WASM रनटाइम, फिर TypeScript पैकेज लैंड कर सकता था। तीन छोटे PR मर्ज करना आसान होता। मैंने ऐसा नहीं किया क्योंकि मैं किसी भी टुकड़े को प्रस्तावित करने से पहले पूर्ण एंड-टू-एंड कहानी को मान्य करना चाहता था — जो आत्मविश्वास के लिए समझ में आया, लेकिन समीक्षा का बोझ बढ़ा देता है।
+ `./transformers` export ek quality-of-life feature hai: yeh text query leta hai, `@xenova/transformers` via local embedding model se run karta hai, aur resulting vector LanceDB search engine ko deta hai. Static HTML page se zero-server semantic search.
 
-**पहले क्षमता रजिस्ट्री लिखता।** `web_publish.rs` और `browser.rs` के बीच बहाव का जोखिम वास्तविक है। एक साझा क्षमता प्रकार से शुरू करना जिसे दोनों पक्ष संदर्भित करते हैं, समानांतर स्थिरांक सूचियों की तुलना में साफ़ होता जिन्हें मुझे सिंक में रखना याद रखना होगा।
+Yeh bhi wo cheez hai jiske baare mein main sabse uncertain hoon ki iska PR mein hona chahiye ya nahin. Yeh genuinely useful hai aur yeh implement bhi hai, lekin yeh ek dependency aur API surface hai jo core browser search question se alag hai. Maintainers reasonably pehle base `searchTable()` API land karne aur embeddings par separately iterate karna chaah sakte hain.
 
-**चीज़ों को कम चालाकी से नाम देता।** `_web.json` एक आंतरिक प्रारूप के लिए एक अच्छा नाम है। यह उस पल एक लोड-बियरिंग नाम बन जाता है जब कोई इसे कैश करता है या इसके चारों ओर टूलिंग बनाता है। मुझे सबमिट करने से पहले नामकरण पर अधिक समय बिताना चाहिए था — यह उन चीज़ों में से एक है जो किसी और के इस पर निर्भर होने से पहले बदलना बहुत सस्ता है।
+Maine poocha. Dekhte hain.
 
 ---
 
-## व्यापक बिंदु
+## Main Kya Alag Karta
 
-जिस चीज़ ने इस प्रोजेक्ट को संभव बनाया वह यह है कि Lance की आंतरिक आर्किटेक्चर पहले से ही रेंज्ड रीड के लिए अच्छी तरह से संरचित थी। ऑब्जेक्ट स्टोर एब्स्ट्रैक्शन साफ़ है। मेटाडेटा प्रारूप स्पष्ट है। स्नैपशॉट अवधारणा ने मुझे "यह इस डेटासेट का ब्राउज़र-सुरक्षित दृश्य है" व्यक्त करने के लिए एक प्राकृतिक स्थान दिया।
+**Scope pehle define karna chahiye tha.** PR 14,500 lines ka hai. Yeh ek shot mein review karna bahut hai. Maine pehle publish artifact format land kar sakta tha, phir WASM runtime, phir TypeScript package. Teen smaller PRs merge karna easier hota. Maine yeh nahin kiya kyunki maine pehle full end-to-end story validate karna chaahiye tha kisi bhi piece ko propose karne se pehle — jo confidence ke liye made sense tha, lekin review burden high banata hai.
 
-अच्छी एब्स्ट्रैक्शन सीमाएं केवल आंतरिक कोड को तर्क करने में आसान नहीं बनाती हैं — वे मेरे जैसे किसी व्यक्ति के लिए प्रोजेक्ट के बाहर से आना और कोर को छुए बिना एक नया निष्पादन वातावरण प्लग इन करना संभव बनाती हैं। यह एक वास्तविक डिज़ाइन गुण है, और इसने 14,000 लाइनों को कोडबेस से लड़ने के बजाय एक आकार भरने जैसा महसूस कराया।
+**Capability registry pehle likhna chahiye tha.** `web_publish.rs` aur `browser.rs` ke beech drift risk real hai. Shared capability type se shuru karna jo dono sides reference karein cleanest tha parallel constant lists ki jagah jo mujhe remember karna padta hai sync mein rakhna.
 
-PR [यहां](https://github.com/lancedb/lancedb/pull/3247) है यदि आप विवरण देखना चाहते हैं। अभी भी समीक्षा का इंतजार है। मेंटेनर्स गर्मजोशी से रहे हैं और मैं सतर्कतापूर्वक आशावादी हूं।
+**Kam clever names dena chahiye tha.** `_web.json` internal format ke liye fine name hai. Yeh load-bearing name ban jata hai jab koi isko cache kare ya iske baare mein tooling build kare. Submit karne se pehle naming par zyada time spend karna chahiye tha — yeh un cheezon mein se hai jo kisi aur ke depend hone se pehle change karna bahut cheaper hai.
+
+---
+
+## Broader Point
+
+Jo is project ko tractable banaya wo yeh hai ki Lance ka internal architecture ranged reads ke liye pehle se well-structured tha. Object store abstraction clean hai. Metadata format explicit hai. Snapshot concept ne mujhe natural jagah di "yeh dataset ka browser-safe view hai" express karne ke liye.
+
+Good abstraction boundaries sirf internal code ko easier nahi banate reasoning ke liye — wo isko possible bhi banate hain ke koi outside project se aaye aur new execution environment plug in kar sake bina core ko touch kiye. Yeh real design virtue hai, aur isne 14,000 lines ko shape fill karne jaisa feel karaya codebase se ladhne ki bajay.
+
+PR [yahan](https://github.com/lancedb/lancedb/pull/3247) hai agar aap details dekhna chahte hain. Review ka intezaar hai. Maintainers warm rahe hain aur main cautiously optimistic hoon.
