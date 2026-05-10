@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: semantic-vector-search-landscape
+- Locale: it
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 38.26
+- Input tokens: unknown
+- Output tokens: 25
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
+- Note: Model did not leave a diff in src/content/posts/2026-05-01--semantic-vector-search-landscape/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
