@@ -12,14 +12,14 @@ import {
 } from "./utils.ts";
 
 const CHEAP_CANDIDATE_MODELS = [
+  "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/z-ai/glm-5-turbo",
   "openrouter/z-ai/glm-4.7-flash",
+  "openrouter/minimax/minimax-m2.5",
   "openrouter/google/gemini-3-flash-preview",
   "openrouter/deepseek/deepseek-v3.2",
-  "openrouter/minimax/minimax-m2.5",
   "openrouter/minimax/minimax-m2.7",
-  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/z-ai/glm-5-turbo",
 ];
 
 const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";

@@ -58,13 +58,21 @@ The translation pipeline is wrapped with Bun scripts:
 
 ```sh
 bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
-bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
+bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3-flash-preview
 bun run i18n:validate -- --slug the-last-to-think --locale es
 bun run i18n:promote -- --slug the-last-to-think --locale es
 bun run i18n:report:models
 ```
 
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
+
+For broad baseline coverage, run the low-confidence Qwen queue directly on `main`:
+
+```sh
+bun run i18n:qwen:baseline -- --push
+```
+
+That queue is resumable. It skips slug+locale pairs that already have a successful `openrouter/qwen/qwen3.6-plus` report, pulls/rebases before each item, and can be scoped with `--limit`, `--latest-posts`, `--locales`, or `--slugs`.
 
 By default, candidate generation is idempotent per slug, locale, and model: if the model already has a report at `reports/i18n/{slug}/{locale}/{safe-model-name}.md`, the script skips that language+model combo. Pass `--overwrite` to intentionally rerun and replace that model's target-file output:
 
@@ -96,18 +104,18 @@ bun run i18n:translate:candidates -- \
   --models openrouter/z-ai/glm-5.1,openrouter/minimax/minimax-m2.7
 ```
 
-OpenCode calls default to a 90 second timeout. Override it per run when needed:
+OpenCode calls default to a 240 second timeout. Override it per run when needed:
 
 ```sh
 bun run i18n:translate:candidates -- \
   --slug the-last-to-think \
   --locale es \
-  --timeout-seconds 60
+  --timeout-seconds 240
 
 bun run i18n:judge -- \
   --slug the-last-to-think \
   --locale es \
-  --timeout-seconds 90
+  --timeout-seconds 240
 ```
 
 Thinking-capable models are run with cheap reasoning variants by default:
@@ -115,7 +123,6 @@ Thinking-capable models are run with cheap reasoning variants by default:
 - `openrouter/qwen/qwen3.6-plus`: `--variant low`
 - `openrouter/google/gemini-3-flash-preview`: `--variant minimal`
 - `openrouter/z-ai/glm-5.1`: `--variant low`
-- OpenAI GPT-5-class judges: `--variant low`
 
 `bun run i18n:report:models` regenerates `reports/i18n/model-performance.md`, including aggregate model stats, winner counts, and article/locale winner tables.
 
@@ -123,35 +130,35 @@ Thinking-capable models are run with cheap reasoning variants by default:
 
 Default candidate models are defined in `src/scripts/i18n/translate-candidates.ts`.
 
-Current OpenRouter set:
+Current low-cost OpenRouter set:
 
 ```text
 openrouter/qwen/qwen3.6-plus
-openrouter/google/gemma-4-26b-a4b-it
-openrouter/google/gemma-4-31b-it
-openrouter/deepseek/deepseek-v4-pro
-openrouter/moonshotai/kimi-k2.6
-openrouter/google/gemini-3-flash-preview
-openrouter/z-ai/glm-5.1
+openrouter/deepseek/deepseek-v4-flash
+openrouter/z-ai/glm-4.7-flash
+openrouter/minimax/minimax-m2.5
 openrouter/minimax/minimax-m2.7
+openrouter/google/gemini-3-flash-preview
+openrouter/deepseek/deepseek-v3.2
+openrouter/z-ai/glm-5-turbo
 ```
 
-The Gemma 4 26B A4B and Gemma 4 31B entries were the cheapest paid runnable options from the requested model list at the time of the OpenRouter/OpenCode check. OpenRouter's public API listed `qwen/qwen3.6-35b-a3b` as cheaper than DeepSeek V4 Pro, but OpenCode rejected that model ID with `ProviderModelNotFoundError`, so the runnable third addition is `openrouter/deepseek/deepseek-v4-pro`. `gpt-5.5-mini` was not present in OpenRouter's model list, and OpenCode exposed `anthropic/claude-haiku-4.5` rather than `anthropic/claude-haiku-latest`.
+OpenRouter pricing checked on 2026-05-10 showed `openrouter/qwen/qwen3.6-plus` cheaper than `openrouter/z-ai/glm-5-turbo`, so GLM 5 Turbo is kept as a later fallback instead of an early default.
 
-Qwen/OpenAI availability notes from the same check:
+Older batches also used Gemma, DeepSeek V4 Pro, Kimi, GLM 5.1, and OpenAI mini judges. Keep those reports as provenance, but do not treat them as the default path for new broad translation coverage.
+
+Qwen availability notes from earlier checks:
 
 - OpenCode exposed `openrouter/qwen/qwen3.6-plus` and `openrouter/qwen/qwen-3.6-27b`.
 - OpenRouter's public API exposed `qwen/qwen3.6-plus`, `qwen/qwen3.6-35b-a3b`, and `qwen/qwen3.6-flash`.
 - OpenCode did not expose `qwen/qwen3.6-flash`, and it rejected `qwen/qwen3.6-35b-a3b`.
-- OpenCode exposed `openrouter/openai/gpt-5-mini` and `openrouter/openai/gpt-5.4-mini`.
-- OpenRouter's public API exposed `openai/gpt-5-mini` and `openai/gpt-5.4-mini`, but not `openai/gpt-5.5-mini`.
 
 `minimax-m2.6` was requested during setup, but `opencode models openrouter` did not expose that model ID. The closest available MiniMax candidate at the time was `openrouter/minimax/minimax-m2.7`.
 
 For judging, start cheap:
 
 ```text
-openrouter/openai/gpt-5.4-mini
+openrouter/google/gemini-3-flash-preview
 ```
 
 Judge summaries include runtime, token, thinking-token, cached-token, and estimated-cost fields using the same telemetry shape as candidate reports.
@@ -162,8 +169,8 @@ Use a second judge when a batch is high-risk, when candidates are close, or when
 bun run i18n:judge -- \
   --slug the-last-to-think \
   --locale es \
-  --model openrouter/openai/gpt-5.4-mini \
-  --second-model openrouter/openai/gpt-5-mini \
+  --model openrouter/google/gemini-3-flash-preview \
+  --second-model openrouter/deepseek/deepseek-v3.2 \
   --escalate-model openrouter/anthropic/claude-sonnet-4.6
 ```
 

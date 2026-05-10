@@ -13,6 +13,7 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 - Keep English slugs permanently. English routes stay unprefixed, translated routes use `/{locale}/{base-slug}/`.
 - Store translated files next to the English post: `src/content/posts/YYYY-MM-DD--slug/{es,hi,ja,ru,de,fr,it}/index.mdx`.
 - Preserve full Git history. Commit candidate outputs, rejected attempts, judge passes, and final fixes as normal commits. Do not squash.
+- For broad baseline coverage, run Qwen directly on `main` with `bun run i18n:qwen:baseline -- --push`. It is resumable and skips slug+locale pairs that already have a successful Qwen report.
 - Do not edit `public/_redirects` by hand. Let build-generated redirects update it.
 - Preserve MDX structure, imports, components, props, code blocks, URLs, anchors, and asset paths.
 - Translate reader-facing prose, frontmatter `title` and `subTitle`, image alt text, quiz text, options, and explanations.
@@ -22,24 +23,34 @@ Use this skill for DanLevy.net article translation work. The priority is not onl
 
 Default candidate models live in `src/scripts/i18n/translate-candidates.ts`.
 
-Current OpenRouter candidates:
+Current low-cost OpenRouter candidates:
+
+- `openrouter/qwen/qwen3.6-plus`
+- `openrouter/deepseek/deepseek-v4-flash`
+- `openrouter/z-ai/glm-4.7-flash`
+- `openrouter/minimax/minimax-m2.5`
+- `openrouter/minimax/minimax-m2.7`
+- `openrouter/google/gemini-3-flash-preview`
+- `openrouter/deepseek/deepseek-v3.2`
+- `openrouter/z-ai/glm-5-turbo`
+
+GLM 5 Turbo is now a fallback, not an early default; OpenRouter pricing checked on 2026-05-10 showed Qwen 3.6 Plus cheaper than GLM 5 Turbo.
+
+Older candidates retained in history:
 
 - `openrouter/google/gemma-4-26b-a4b-it`
 - `openrouter/google/gemma-4-31b-it`
 - `openrouter/deepseek/deepseek-v4-pro`
-- `openrouter/qwen/qwen3.6-plus`
 - `openrouter/moonshotai/kimi-k2.6`
-- `openrouter/google/gemini-3-flash-preview`
 - `openrouter/z-ai/glm-5.1`
-- `openrouter/minimax/minimax-m2.7`
 
 Note: the Gemma 4 26B A4B and Gemma 4 31B entries were added as the cheapest paid runnable options from the requested model list at the time of the OpenRouter/OpenCode check. OpenRouter's public API listed `qwen/qwen3.6-35b-a3b` as cheaper than DeepSeek V4 Pro, but OpenCode rejected that model ID with `ProviderModelNotFoundError`, so the runnable third addition is `openrouter/deepseek/deepseek-v4-pro`. `gpt-5.5-mini` was not present in OpenRouter's model list, and OpenCode exposed `anthropic/claude-haiku-4.5` rather than `anthropic/claude-haiku-latest`. `minimax-m2.6` was requested earlier, but OpenCode's OpenRouter catalog did not expose that ID during setup. Use the nearest available MiniMax model unless the catalog changes.
 
-Judge with a cheap OpenAI-class model first, currently:
+Judge with Gemini Flash by default:
 
-- `openrouter/openai/gpt-5.4-mini`
+- `openrouter/google/gemini-3-flash-preview`
 
-For higher-risk batches, add a second cheap judge with `--second-model openrouter/openai/gpt-5-mini`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
+For higher-risk batches, add a second cheap judge explicitly with `--second-model`. Escalate with `--escalate-model openrouter/anthropic/claude-sonnet-4.6` or `--escalate-model openrouter/google/gemini-3-pro-preview` only when the second judge disagrees or the cheap judge output is structurally suspect. Judge summaries should record runtime, tokens, thinking tokens, cached tokens, and estimated cost.
 
 ## Standard Workflow
 
@@ -60,10 +71,10 @@ For higher-risk batches, add a second cheap judge with `--second-model openroute
 4. Judge only real candidate commits that changed the translated MDX:
 
    ```sh
-   bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
+   bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3-flash-preview
    ```
 
-   GPT-5-class judges run with `--variant low` by default. Keep judge timeouts at 240 seconds for this translation pipeline unless there is a deliberate reason to shorten one.
+   Keep judge timeouts at 240 seconds for this translation pipeline unless there is a deliberate reason to shorten one.
 
 5. If the judge breaks inherited asset paths, fix them with parent-relative paths and commit as `i18n final(...)`.
 6. Validate:
