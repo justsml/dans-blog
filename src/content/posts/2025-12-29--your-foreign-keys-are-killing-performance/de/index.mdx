@@ -11,13 +11,13 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-Die teuerste Datenbankoptimierung, die ich je gesehen habe, begann damit, dass jemand alle Fremdschlüssel entfernte.
+Die teuerste Datenbankoptimierung, die ich je gesehen habe, begann damit, dass jemand alle Fremdschlüssel-Constraints entfernte.
 
 Nicht weil sie einen Engpass gemessen hatten. Nicht weil Schreibvorgänge tatsächlich langsam waren. Sondern weil sie irgendwo gelesen hatten: „Fremdschlüssel skalieren nicht.“ Sechs Monate später hatten sie 2 Milliarden verwaiste Datensätze, ein Abrechnungssystem, das gelöschte Benutzer belastete, und Analysen, die um 40% daneben lagen.
 
 Als sie versuchten, die Constraints wieder hinzuzufügen? Die Datenbank kam zum Stillstand, weil sie versuchte, bereits korrupte Daten zu validieren.
 
-Es gibt diese weit verbreitete Vorstellung in der Webentwicklung, dass Fremdschlüssel grundsätzlich langsam sind – so eine Art Stützräder, die man abmontiert, sobald man zu „echten“ Systemen aufsteigt. Aber das verfehlt völlig den Sinn eines Constraints. Du entscheidest dich nicht zwischen schnell und langsam. Du entscheidest dich zwischen verschiedenen Fehlermodi.
+Es gibt diese weit verbreitete Vorstellung in der Webentwicklung, dass Fremdschlüssel grundsätzlich langsam sind – so eine Art Stützräder, die man abmontiert, sobald man zu „echten“ Systemen aufsteigt. Aber das verfehlt völlig den Sinn eines Constraints. Du entscheidest dich nicht zwischen schnell und langsam. Du entscheidest dich zwischen verschiedenen Arten von Fehlern.
 
 Stell es dir so vor: Sicherheitsglas, Sicherheitsgurte und Airbags machen dein Auto schwerer. Sie machen dein Fahrzeug definitiv langsamer und weniger spritsparend. Aber du reißt sie nicht raus, um deine 0-100-Zeit zu optimieren, weil du für etwas ganz anderes optimierst.
 
@@ -33,9 +33,9 @@ US-Bundesstaaten ändern sich wahrscheinlich nicht. Wyoming wird nicht so bald u
 
 Wetterstationen werden hinzugefügt, verschoben und stillgelegt. Aber hier eine Frage: Möchtest du, dass historische Messwerte ihre Station „verlieren“, wenn jemand versehentlich einen Stationsdatensatz löscht? Vielleicht möchtest du, dass diese Daten intakt bleiben, auch wenn die Station weg ist. Das würde bedeuten, dass du Messwerte als historischen Schnappschuss behandelst, nicht als Live-Referenz – und das ändert, ob ein Fremdschlüssel überhaupt Sinn ergibt.
 
-Sensorwerte werden tausende Male pro Minute eingefügt. Jede Fremdschlüsselprüfung bedeutet einen Lookup. Jeder Lookup erzeugt Konflikte auf deinen Tabellen. Wenn langsame Validierung dazu führt, dass deine Einfüge-Warteschlange überläuft und du Echtzeitdaten verlierst, ist das eine andere Art von Datenverlust als ein verwaister Datensatz.
+Sensorwerte werden tausende Male pro Minute eingefügt. Jede Fremdschlüsselprüfung bedeutet einen Lookup. Jeder Lookup erzeugt Konflikte auf deinen Tabellen. Wenn langsame Validierung dazu führt, dass deine Einfüge-Warteschlange überläuft und du Echtzeitdaten verlierst, ist das ein anderer Datenverlust als ein verwaister Datensatz.
 
-Du siehst, worauf das hinausläuft. Die Wahl geht nicht um Performance gegen Korrektheit als abstrakte Konzepte. Es geht darum, welchen spezifischen Fehler du eher tolerieren kannst – angesichts deiner tatsächlichen Randbedingungen und tatsächlichen Konsequenzen.
+Du siehst, worauf das hinausläuft. Es geht nicht um Performance gegen Korrektheit als abstrakte Konzepte. Es geht darum, welchen spezifischen Fehler du eher tolerieren kannst – angesichts deiner tatsächlichen Randbedingungen und tatsächlichen Konsequenzen.
 
 Wenn falsche Referenzen korrupte Abrechnungsdaten oder Verstöße gegen Vorschriften bedeuten, willst du wahrscheinlich Fremdschlüssel, die dich schützen – egal wie hoch der Performance-Preis ist. Wenn langsame Validierung bedeutet, dass du Echtzeit-Sensordaten für immer verlierst, weil deine Warteschlange überläuft, dann ist Validierung vielleicht der falsche Kompromiss.
 

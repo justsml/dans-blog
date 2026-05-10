@@ -3,11 +3,11 @@
 - Locale: de
 - Model: openrouter/deepseek/deepseek-v3.2
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx
-- Validation: rejected: unknown
-- Runtime seconds: 0.16
-- Input tokens: unknown
-- Output tokens: unknown
+- Validation: passed
+- Runtime seconds: 13.68
+- Input tokens: 1299
+- Output tokens: 432
 - Thinking tokens: unknown
-- Cached input tokens: unknown
+- Cached input tokens: 0
 - Estimated cost: unknown
-- Note: {"error":{"message":"Prompt tokens limit exceeded: 6460 > 1889. To increase, visit https://openrouter.ai/settings/keys and create a key with a higher daily limit","code":402,"metadata":{"provider_name":null}},"user_id":"user_2pzehDUA0Dk91FO7jPDvof7W5Qm"}
+- Note: Applied 4 targeted polish replacement(s): Adds technical precision by specifying 'Constraints', aligning with the article's focus.; 'Arten von Fehlern' is more natural and clearer German than the technical term 'Fehlermodi' in this context.; Simplifies sentence structure for a more direct, less wordy flow.; Removes redundant 'Art von' for a more concise and direct statement.
