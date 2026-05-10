@@ -4,7 +4,7 @@
 - Locale: de
 - Judge model: openrouter/google/gemini-3-flash-preview
 - Second judge model: openrouter/deepseek/deepseek-v4-flash
-- Escalation judge model: not run
+- Escalation judge model: openrouter/anthropic/claude-sonnet-4.6 attempted after primary judge output was structurally unusable; failed due OpenRouter credit/max-token limit
 - Selected commit hint: judge selected
 
 ## Primary Judge Telemetry
@@ -22,6 +22,12 @@
 - Thinking tokens: 2026
 - Cached input tokens: 2026
 - Estimated cost: unknown
+
+## Escalation Attempt
+- Model: openrouter/anthropic/claude-sonnet-4.6
+- Status: failed before producing judge output
+- Reason: OpenRouter reported insufficient credits/max-token allowance; the key could only afford 669 tokens for a request capped at 32000.
+- Result: no Sonnet selection was used; final polish followed the concrete issues identified by the successful second judge.
 
 ## Candidates
 - ebb5087cc5476a9ca3b866cd067dbdae08558d88 i18n candidate(de): llm-routing-mastra-ai via openrouter/deepseek/deepseek-v4-flash
