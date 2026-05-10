@@ -2,22 +2,14 @@
 
 - Slug: mastra-mcp-tool-integrations
 - Locale: ru
-- Judge model: openrouter/google/gemini-3-flash-preview
-- Second judge model: openrouter/deepseek/deepseek-v4-flash
+- Judge model: openrouter/anthropic/claude-sonnet-4.6
+- Second judge model: not run
 - Escalation judge model: not run
 - Selected commit hint: judge selected
 
 ## Primary Judge Telemetry
-- Runtime seconds: 1.41
+- Runtime seconds: 1.66
 - Input tokens: unknown
-- Output tokens: unknown
-- Thinking tokens: unknown
-- Cached input tokens: unknown
-- Estimated cost: unknown
-
-## Second Judge Telemetry
-- Runtime seconds: 1.37
-- Input tokens: 21914
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
