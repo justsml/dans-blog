@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-02-24--security-notes-regex/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 46.44
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
