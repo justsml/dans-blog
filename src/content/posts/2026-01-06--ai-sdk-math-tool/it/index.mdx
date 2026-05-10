@@ -6,7 +6,7 @@ modified: 2026-01-07
 tags: [ai, ai-sdk, typescript, math, tools, patterns]
 category: AI
 subCategory: Engineering
-social_image: desktop-social.webp
+social_image: ../desktop-social.webp
 cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
@@ -16,7 +16,7 @@ Sai cosa c'è di strano nei modelli linguistici? Possono spiegare la meccanica q
 
 Una volta mi lasciava perplesso, finché non ho capito cosa stiamo effettivamente chiedendo loro di fare. Stiamo chiedendo a un motore di riconoscimento di pattern di fare il calcolatore. È come chiedere a un ginnasta di tenere la tua contabilità perché conosce il concetto di "equilibrio".
 
-Il fatto è che gli LLM non calcolano nulla. Quando chiedi a GPT o Claude quanto fa 2 + 2, non stanno sommando. Stanno prevedendo che "4" è il token più probabile da apparire dopo "2 + 2 =". Nella maggior parte dei casi funziona benissimo, perché questi pattern esistono nei loro dati di addestramento. Ma spingiti oltre l'aritmetica semplice verso calcoli multi-step o qualsiasi cosa con numeri che non erano comuni nell'addestramento, e stai essenzialmente lanciando i dadi.
+Il fatto è che gli LLM non calcolano nulla. Quando chiedi a GPT o Claude quanto fa 2 + 2, non stanno sommando. Stanno prevedendo che "4" è il token più probabile dopo "2 + 2 =". Nella maggior parte dei casi funziona benissimo, perché questi pattern esistono nei loro dati di addestramento. Ma spingiti oltre l'aritmetica semplice verso calcoli multi-step o qualsiasi cosa con numeri che non erano comuni nell'addestramento, e stai essenzialmente lanciando i dadi.
 
 Mi ci sono sbattuto la testa di recente mentre revisionavo del codice che usava un modello di alto livello per calcolare rate di mutui. Il modello ha risposto con totale sicurezza. Sbagliava anche di 400 dollari al mese. È il tipo di errore che conta.
 
@@ -28,7 +28,7 @@ La risposta non è aspettare modelli più intelligenti. È dare al modello lo st
 
 Pensa a come risolveresti questo problema se stessi costruendo un sistema non-AI. Non scriveresti logica matematica custom, useresti una libreria. Lo stesso principio si applica qui, solo che ora stiamo insegnando all'LLM quando e come usare quella libreria.
 
-Le tool call nei moderni SDK AI ci permettono di fornire al modello funzioni strutturate che può invocare. Invece di costringere l'LLM a fingere di sapere la matematica, gli diammo qualcosa che la sa davvero: un motore di matematica simbolica.
+Le tool call nei moderni SDK AI ci permettono di fornire al modello funzioni strutturate che può invocare. Invece di costringere l'LLM a fingere di sapere la matematica, gli diamo qualcosa che la sa davvero: un motore di matematica simbolica.
 
 Ho usato [AI SDK v5 e v6](https://ai-sdk.vercel.ai/) per questo, insieme a CortexJS Compute Engine. L'SDK gestisce orchestrazione e routing degli strumenti, mentre CortexJS gestisce qualsiasi cosa, dall'aritmetica di base fino al calcolo infinitesimale. È una separazione dei compiti sorprendentemente pulita.
 
