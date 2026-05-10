@@ -1,0 +1,140 @@
+---
+social_image: ../desktop-social.webp
+title: "Umgebungsvariablen in NodeJS verwenden"
+subTitle: `dotenv` verwenden
+date: 2018-11-13
+modified: 2020-07-30
+tags: [dotenv, api-keys, secrets, tokens, security, nodejs]
+category: Code
+subCategory: howto
+cover: john-salvino-417565-unsplash.webp
+cover_mobile: w300_john-salvino-417565-unsplash.webp
+cover_icon: icon_john-salvino-417565-unsplash.webp
+---
+
+## Geheimnisse und API-Token sicher handhaben
+
+### Verwandter Artikel: [Protect Your Tokens](/protect-your-tokens/)
+
+Kurze Zusammenfassung des Unterschieds zwischen `secret` und `non-secret`:
+
+* 🔒 `Geheime Schlüssel` MÜSSEN einen eigenen Server (z. B. Node/Express/Heroku) verwenden, um Anfragen an API-Dienste Dritter zu verbergen (Proxy).
+* 🌍 `Nicht-geheime Schlüssel` beschreibt Schlüssel, die an den Browser gesendet werden können.
+
+<br />
+
+---------------------------------------------
+
+> In diesem Artikel konzentrieren wir uns auf den Umgang mit 🔒 `Geheimen Schlüsseln` mithilfe von **Umgebungsvariablen**.
+
+[Codebeispiele finden Sie unten.](#️-code-example)
+
+#### Übersicht
+
+So greifen Sie sicher auf Geheimnisse in Ihrem NodeJS-Code zu:
+
+1. Ersetzen Sie hartcodierte Schlüssel durch Umgebungsvariablen, z. B. `process.env.API_SECRET`
+1. Verwenden Sie eine Bibliothek wie [`dotenv`](https://github.com/motdotla/dotenv) zusammen mit einer `.env`-Datei. Fügen Sie Ihre zuvor hartcodierten Geheimnisse in die `.env`-Datei ein.
+1. Prüfen Sie, ob die `.env`-Zeile in Ihrer `.gitignore`-Datei vorhanden ist!
+
+> **NICHT** auf bereitgestellten Servern eine `.env`-Datei erstellen. Verwenden Sie das vom Hosting-Service (z. B. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2) bereitgestellte Tool zur Verwaltung von Umgebungsvariablen, z. B. **Dashboard oder Befehlszeile.**
+
+### Codebeispiel
+
+Wir definieren einige Dateien.
+
+1. `.env`
+1. `./db/connection.js`
+1. `./api/users.js`
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+Zuerst installieren Sie das Paket [`dotenv`](https://www.npmjs.com/package/dotenv).
+
+```bash
+npm install dotenv
+```
+
+Erstellen Sie als Nächstes eine `.env`-Datei im Stammverzeichnis Ihres Projekts.
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+
+❌ **NIEMALS** die `.env`-Datei committen.
+
+❌ Vermeiden Sie das Erstellen von `.env` auf Servern.
+
+Schlagen Sie in der Dokumentation Ihres Hosting-Anbieters nach, wie Sie _Umgebungsvariablen_ einrichten.
+
+So stellen Sie sicher, dass Ihre `.gitignore` eine `.env`-Zeile enthält:
+
+```bash
+# Automatically update .gitignore
+# Run in terminal:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# note: no output will print
+```
+
+Die Datei `./db/connection.js` stellt eine gemeinsame `pg.Pool`-Instanz bereit. Sie wird zum Abfragen der Datenbank verwendet.
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ Load .env file
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ only for showing debug connection vars
+
+// pg automatically uses PG* env variables
+module.exports = new pg.Pool();
+```
+
+Der Ordner `./api` enthält Schnittstellen zu Ihren Tabellen/Views.
+
+Hier ist ein Beispiel für `./api/users.js` für die Tabelle `users`.
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+-  Committen Sie niemals Ihre `.env`-Geheimnisse in Git!
+-  Teilen Sie `.env`-Dateien nicht im Team. *
+
+\* Jeder neue Entwicklungs-Laptop oder -Desktop sollte **neue Zugriffsschlüssel und Token generieren.**
+Wenn dies nicht möglich ist, gehen Sie mit größter Sorgfalt beim Teilen Ihrer `.env`-Datei vor (in Fällen, in denen ein Dienst alle älteren Schlüssel ungültig machen könnte oder Sie ein begrenztes API-Zugriffstoken haben.)
+
+#### ⚠️ Wichtig: Verwenden Sie im Zweifelsfall immer einen sicheren Nachrichtendienst (vorzugsweise mit Unterstützung für automatisch ablaufende Nachrichten.)
+
+Viel Erfolg und lassen Sie mich wissen, wenn Sie Fragen haben! 🎉
