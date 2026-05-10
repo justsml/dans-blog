@@ -24,6 +24,7 @@ const locale = requireActiveLocale(options);
 const judgeModel = optionalString(options, "model") ?? "openrouter/google/gemini-3-flash-preview";
 const secondJudgeModel = optionalString(options, "second-model");
 const escalationJudgeModel = optionalString(options, "escalate-model");
+validateJudgeModels({ judgeModel, secondJudgeModel, escalationJudgeModel });
 const selectedCommit = optionalString(options, "select");
 const candidateModels = parseList(optionalString(options, "candidate-models"), []);
 const shouldSkipCommit = options["no-commit"] === true;
@@ -145,6 +146,36 @@ function runJudgeCommand(model: string, judgePrompt: string, files: string[] = [
   "--dangerously-skip-permissions",
   judgePrompt,
   ], timeoutSeconds * 1000);
+}
+
+function validateJudgeModels({
+  judgeModel,
+  secondJudgeModel,
+  escalationJudgeModel,
+}: {
+  judgeModel: string;
+  secondJudgeModel?: string;
+  escalationJudgeModel?: string;
+}) {
+  const cheapJudgeModels = [judgeModel, secondJudgeModel].filter((model): model is string => model != null);
+  const forbiddenCheapJudges = cheapJudgeModels.filter((model) =>
+    model.includes("-fast") ||
+    model.startsWith("openrouter/openai/") ||
+    model.startsWith("openrouter/anthropic/"),
+  );
+  const forbiddenEscalation = escalationJudgeModel == null
+    ? []
+    : [escalationJudgeModel].filter((model) =>
+      model.includes("-fast") ||
+      model.startsWith("openrouter/openai/"),
+    );
+
+  if (forbiddenCheapJudges.length > 0 || forbiddenEscalation.length > 0) {
+    throw new Error([
+      "Judge models must use cheap non-GPT/non-Anthropic models, except Anthropic is allowed only as the explicit escalation judge.",
+      `Forbidden model(s): ${[...forbiddenCheapJudges, ...forbiddenEscalation].join(", ")}`,
+    ].join(" "));
+  }
 }
 
 function getSecondJudgePrompt() {
