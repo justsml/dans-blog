@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: de
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.42
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-01-02--llm-routing-mastra-ai/de/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
