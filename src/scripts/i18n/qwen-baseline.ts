@@ -13,6 +13,9 @@ import {
 
 const QWEN_BASELINE_MODEL = "openrouter/qwen/qwen3.6-plus";
 const QWEN_REPORT_FILE = "openrouter-qwen-qwen3.6-plus.md";
+const QWEN_DEFERRED_SLUGS = new Set([
+  "quiz-is-your-memory-rusty",
+]);
 
 type Task = {
   slug: string;
@@ -148,6 +151,7 @@ function getQwenBaselineTasks() {
     const postDir = join(postsDir, entry.name);
     const slug = stripDatePrefix(entry.name);
     if (selectedSlugs.size > 0 && !selectedSlugs.has(slug) && !selectedSlugs.has(entry.name)) continue;
+    if (QWEN_DEFERRED_SLUGS.has(slug)) continue;
 
     for (const locale of selectedLocales) {
       const targetPath = join(postDir, locale, "index.mdx");
