@@ -1,0 +1,111 @@
+---
+title: "Heirate dein Modell nicht"
+subTitle: "LLM-Routing – gerade total angesagt"
+date: 2026-01-02
+modified: 2026-01-08
+tags: [ai, llm, typescript, mastra, agent-orchestration]
+category: AI
+subCategory: Engineering
+social_image: ../mobile-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Die meisten Entwicklungsteams suchen sich ein Sprachmodell aus und bleiben dabei. Ein Anbieter, ein Modell, alle Aufgaben. Als würde man eine Person einstellen, die das Coding, die Texte und die Steuererklärung macht, nur weil sie im ersten Vorstellungsgespräch gut war.
+
+Zu jedem Zeitpunkt ist ein Modell besser beim Programmieren, ein anderes besser mit langen, unübersichtlichen Kontexten, und wieder ein anderes ist der billigste, langweilige Arbeitssklave für Klassifikation. Die Namen ändern sich. Die Form des Problems nicht. Ein Modell so zu behandeln, als wäre es in allem exzellent, heißt, entweder für einfache Aufgaben zu viel zu bezahlen oder bei spezialisierten Aufgaben schlechtere Ergebnisse zu kassieren.
+
+Ich habe ein Team dabei beobachtet, wie es Tausende von Dollar für Sentiment-Analyse durch ein Modell für 30 Dollar pro Million Tokens verbrannt hat – obwohl ein 0,50‑Dollar-Modell die Arbeit genauso gut erledigt hätte. Einfache JSON-Formatierung, grundlegende Klassifikationsaufgaben – alles lief über den Premium-Anbieter. Das Einzige, was wirklich heiß lief, war ihre AWS-Rechnung.
+
+Es gibt einen besseren Weg, und der ist nicht besonders kompliziert.
+
+## Delegation statt Hingabe
+
+Was, wenn du Anfragen zu dem Modell routen könntest, das für genau diese Aufgabe am besten geeignet ist? Setz dein teures Kraftpaket für die harten Nüsse ein, aber lass das einfache Parsen und Formatieren von etwas Günstigerem erledigen. Nutz die Vorteile mehrerer Anbieter, ohne sie manuell in deiner Codebase jonglieren zu müssen.
+
+Mit Mastra kannst du genau so ein System bauen. Du richtest spezialisierte Agents für verschiedene Aufgaben ein und erstellst dann einen Router-Agent, der herausfindet, welcher Spezialist welche Anfrage bearbeiten soll. Die Modell-IDs unten sind Beispiele, keine Rangliste. Tausch sie gegen die aktuellen Modelle aus, die in deinen Evals gewinnen und in dein Budget passen.
+
+Stell es dir so vor: Du hast drei Spezialisten in deinem Team.
+
+```typescript
+// ./src/mastra/index.ts
+import { Mastra } from '@mastra/core';
+import { Agent } from '@mastra/core/agent';
+import { openai } from '@ai-sdk/openai';
+import { anthropic } from '@ai-sdk/anthropic';
+import { google } from '@ai-sdk/google';
+
+export const claudeAgent = new Agent({
+  id: 'claude-agent',
+  instructions: 'You are an expert engineer. Write bugs? You are fired.',
+  model: anthropic(process.env.CODE_MODEL ?? 'claude-sonnet-4-5'),
+});
+
+export const geminiAgent = new Agent({
+  id: 'gemini-agent',
+  instructions: 'You are a creative writer. Be weird.',
+  model: google(process.env.LONG_CONTEXT_MODEL ?? 'gemini-3-pro-preview'),
+});
+
+export const gptAgent = new Agent({
+  id: 'gpt-agent',
+  instructions: 'You are a helpful assistant. Be boring.',
+  model: openai(process.env.GENERAL_MODEL ?? 'gpt-5.2'),
+});
+```
+
+Jeder hat seinen Job. Dein Code-Agent sollte das Modell sein, das deine repo-spezifischen Coding-Evals besteht. Dein Long-Context-Agent sollte das sein, das deine tatsächlichen Dokumente übersteht, ohne die Mitte in Brei zu verwandeln. Dein Allgemein-Agent sollte billig, zuverlässig und im besten Sinne langweilig sein.
+
+Hier wird es interessant. Du fügst einen Router hinzu, der als intelligenter Proxy fungiert:
+
+```typescript
+export const routerAgent = new Agent({
+  id: 'router-agent',
+  name: 'The Boss',
+  instructions: `You are an intelligent router.
+  - Coding -> Claude
+  - Poetry -> Gemini
+  - Facts -> GPT
+
+  Do not do the work yourself. Delegate.`,
+  model: openai(process.env.ROUTER_MODEL ?? 'gpt-5-mini'), // Use a cheap model for routing!
+  agents: {
+    claudeAgent,
+    geminiAgent,
+    gptAgent,
+  },
+});
+
+export const mastra = new Mastra({
+  agents: { routerAgent, claudeAgent, geminiAgent, gptAgent },
+});
+```
+
+Der Router selbst läuft auf einem leichten Modell, weil er nur Entscheidungen darüber trifft, wohin der Traffic geleitet wird. Du zahlst keine Premium-Preise, um herauszufinden, welches andere Premium-Modell verwendet werden soll. Miss auch das: Ein schlechter Router verwandelt Einsparungen leise in Fehlleitungen.
+
+Wenn jemand nach einer Bubblesort-Implementierung fragt, erkennt der Router das als Code-Aufgabe und übergibt sie an deinen Code-Spezialisten. Kreative Schreibaufgabe? Die geht an das Modell, das du für Stimme und Bandbreite ausgewählt hast. Faktische Frage zu historischen Ereignissen? Leite sie an den Allgemein-Agent weiter, idealerweise mit Retrieval, wenn Aktualität oder Quellenangabe wichtig sind.
+
+## Die praktischen Vorteile
+
+**Kosteneffizienz ist wichtiger, als du denkst.** Ein kleines Routing-Modell, das Delegationsentscheidungen trifft, kostet einen Bruchteil dessen, was es ausmachen würde, jede einzelne Anfrage durch deinen teuersten Anbieter zu jagen. Mit der Zeit, besonders in großem Maßstab, summiert sich das zu echtem Geld. Du zahlst nur dann für die schwere intellektuelle Arbeit, wenn du sie wirklich brauchst.
+
+**Die Qualität verbessert sich, wenn du Modelle auf Aufgaben abstimmst.** Der Gewinner wechselt von Monat zu Monat, von Aufgabe zu Aufgabe und je nach Prompt-Form. Deshalb sollte die Routing-Ebene von deinen Evals abhängen – nicht von dem Modell, das in der Woche, als du die Integration geschrieben hast, auf Twitter gevotet wurde.
+
+**Resilienz ist ein willkommener Nebeneffekt.** Wenn OpenAI einen seiner regelmäßigen Ausfälle hat (und das kommt vor), kann dein Router den Traffic zu anderen Anbietern umleiten. Du steckst nicht fest und wartest darauf, dass eine bestimmte API wieder online kommt.
+
+Hier geht es nicht darum, um des Klugseins willen klug zu sein. Es geht darum, Systeme zu bauen, die sowohl finanziell als auch technisch Sinn ergeben. Du würdest nicht denselben Hammer für jede Bauaufgabe verwenden, und du solltest wahrscheinlich auch nicht dasselbe Sprachmodell für jede KI-Aufgabe verwenden.
+
+Das Schöne an diesem Ansatz ist, dass sich dein Anwendungscode nicht ändert. Du rufst immer noch einfach deinen Router-Agent auf. Die Komplexität der Entscheidung, welches Modell für welche Aufgabe verwendet wird, lebt an einem Ort, einmal konfiguriert, anstatt über deine gesamte Codebase in einer Reihe von bedingten Logiken verstreut zu sein.
+
+### Ressourcen
+
+- [Mastra.ai Dokumentation](https://mastra.ai/docs)
+- [Mastra GitHub Repository](https://github.com/mastra-ai/mastra)
+
+## Artikel-Serie
+
+1. **LLM-Routing** (Dieser Artikel)
+2. [Sicherheit & Guardrails](/mastra-security-guardrails)
+3. [MCP & Tool-Integrationen](/mastra-mcp-tool-integrations)
+4. [Workflows & Memory](/mastra-workflows-memory)
