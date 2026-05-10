@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: naming-things-real-good
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2016-06-01--naming-things-real-good/de/index.mdx
+- Validation: passed
+- Runtime seconds: 32.32
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
