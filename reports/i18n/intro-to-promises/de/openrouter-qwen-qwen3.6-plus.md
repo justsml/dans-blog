@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-08-01--intro-to-promises/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.49
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

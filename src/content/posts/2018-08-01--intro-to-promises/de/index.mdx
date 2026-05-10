@@ -1,0 +1,104 @@
+---
+social_image: ../desktop-social.webp
+title: "Einführung in Promises"
+subTitle: JavaScript-Promises sind Spaß!
+date: 2018-08-01
+modified: 2024-07-31
+category: Code
+subCategory: promises
+tags: [promises, async, javascript, composition]
+related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+cover: joe-yates-480485-unsplash.webp
+cover_mobile: w300_joe-yates-480485-unsplash.webp
+cover_icon: icon_joe-yates-480485-unsplash.webp
+---
+
+## Promises... Was ist ihr Deal?
+
+Bei der Ausführung von Computercode gibt es immer zwei mögliche outcomes: **Erfolg** oder **Fehler**.
+
+Wenn dieser Code asynchroner Natur ist, kann es schwieriger sein, sich zuverlässig auf das Ergebnis zu verlassen.
+
+**`Promises`** bieten hierfür eine praktische Lösung.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-entweder-> |
+                        |            |
+                <-------+            +-------->
+                |Fehler?              Erfolg?|
+                |                             |
+                v                             v
+                (Abgelehnt)           (Erfüllt)
+```
+
+> Hinweis: Auch wenn Promises sich erfüllen oder ablehnen sollten, kann es vorkommen, dass keines von beidem geschieht. Das führt dazu, dass Anwendungen hängen bleiben, und kann sehr schwer zu debuggen sein.
+
+
+### Woher kommen Promises?
+
+In vielen Fällen musst du kein Promise selbst erstellen. Native APIs wie `fetch` und beliebte Bibliotheken wie `axios` geben bereits Promises zurück.
+
+Wenn du jedoch ein Promise erstellen musst, gibt es zwei Möglichkeiten:
+
+
+
+### Promises erstellen #1/2:
+
+Der einfachste Weg, ein Promise zu erstellen, ist die Hilfsmethode `Promise.resolve()`.
+
+Du kannst jeden Wert mit `Promise.resolve(value)` in ein Promise einwickeln (oder „konvertieren").
+
+```js
+// Ohne Promises:
+function add10(num) {
+  return num + 10
+}
+
+// Mit Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Promises erstellen #2/2:
+
+Eine weitere, flexiblere Methode: der `Promise`-Konstruktor.
+
+`new Promise(callback)` akzeptiert eine `callback`-Funktion mit folgender Schnittstelle:
+
+```js
+new Promise(function(resolve, reject) {
+  // Die Argumente `resolve` und `reject` sind beide Funktionen.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` muss ausgeführt werden, wenn das Promise erfüllt wird
+  // `reject(Error)` muss ausgeführt werden, wenn das Promise abgelehnt wird
+})
+```
+
+### Promises-API
+
+Die Promises-API besteht aus einer überschaubaren Anzahl von Methoden.
+
+Zwei Instanzmethoden und vier statische/Hilfsmethoden.
+
+#### Promise-Instanzmethoden
+
+Der Zugriff auf Werte aus einem Promise funktioniert nicht mit den üblichen Tricks (z. B. `console.log(promise)`).
+
+Alle Promises liefern entweder Erfolg (über `.then(fn)`) oder Fehler (über `.catch(fn)`).
+
+#### Promise-Hilfsmethoden
+
+* `Promise.resolve(value)` – Konvertiert jeden Wert in ein Promise
+* `Promise.reject(Error)` – Erstellt ein fehlerhaftes Promise, löst nachfolgende `.catch()` aus
+* `Promise.all([...promises])` – Wartet, bis alle Promises in einem Array abgeschlossen sind
+* `Promise.race([...promises])` – Löst sich auf, sobald das erste Promise sich erfüllt
