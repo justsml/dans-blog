@@ -1,0 +1,463 @@
+---
+title: "क्विज़: क्या आप सच में JavaScript Closures समझते हैं?"
+subTitle: "ज़्यादातर डेवलपर्स सोचते हैं कि वे समझते हैं। ज़्यादातर डेवलपर्स गलत हैं।"
+date: 2026-05-01
+modified: 2026-05-05
+tags: [javascript, closures, quiz, fundamentals, scope, advanced]
+category: Quiz
+subCategory: JavaScript
+draft: true
+unlisted: true
+hidden: true
+publish: false
+popularity: 0.85
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Closures उन concepts में से एक है जिसे हर JavaScript डेवलपर *समझता* है — तब तक जब तक वह न समझ पाए। यह क्विज़ आपकी असली समझ की सीमाएँ ढूँढेगा।</p>
+
+Closures event handlers, factory functions, React hooks, module patterns, और लगभग हर जगह मिलते हैं। ये कोई अनजान चीज़ नहीं है। ये वो कपड़ा है जिससे JavaScript बना है।
+
+सवाल आसानी से शुरू होते हैं और फिर ज़मीन खींचने लगते हैं।
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Warmup"
+  title="Classic Counter"
+  options={[
+    {text: '0, 0, 0'},
+    {text: '0, 1, 2'},
+    {text: '1, 2, 3', isAnswer: true},
+    {text: 'ReferenceError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इसका output क्या है?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const tick = makeCounter();
+    console.log(tick(), tick(), tick());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `tick` `count` के ऊपर close होता है। हर call में *उसी* `count` variable को increment और return करता है। तीन calls `1, 2, 3` देती हैं।
+
+    मुख्य शब्द: *उसी*। `count` closure में copy नहीं होता। Closure variable binding का **live reference** रखता है। यही पूरा मामला है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Warmup"
+  title="Separate Closures"
+  options={[
+    {text: '1, 1', isAnswer: true},
+    {text: '1, 2'},
+    {text: '2, 2'},
+    {text: '0, 0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इसका output क्या है?
+    ```javascript
+    function makeCounter() {
+      let count = 0;
+      return () => ++count;
+    }
+    const a = makeCounter();
+    const b = makeCounter();
+    console.log(a(), b());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `makeCounter()` की हर call एक **नया execution context** बनाता है जिसका अपना ताज़ा `count` होता है। `a` और `b` *अलग-अलग* `count` bindings पर close होते हैं। ये state share नहीं करते।
+
+    परिणाम: `1, 1`
+
+    यही कारण है कि closures private state बनाने के लिए इस्तेमाल होते हैं — हर "instance" स्वतंत्र होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="The Classic Trap"
+  title="var in a Loop"
+  options={[
+    {text: '0, 1, 2, 3, 4'},
+    {text: '5, 5, 5, 5, 5', isAnswer: true},
+    {text: '1, 2, 3, 4, 5'},
+    {text: 'undefined x5'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    100ms बाद क्या log होता है?
+    ```javascript
+    for (var i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var` function-scoped है। बिल्कुल **एक** ही `i` है — सभी पाँच callbacks उसी binding पर close होते हैं। जब तक timeouts fire होते हैं, loop ख़त्म हो चुका होता है और `i` की वैल्यू `5` है।
+
+    पाँच callbacks। एक `i`। वैल्यू: `5`। पाँच बार log हुआ।
+
+    फिक्स `let` है (block-scoped, हर iteration में नई binding) या IIFE में wrap करके current value capture करना:
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+    }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="The Classic Trap"
+  title="let Fixes It (Or Does It?)"
+  options={[
+    {text: '0, 1, 2, 3, 4', isAnswer: true},
+    {text: '5, 5, 5, 5, 5'},
+    {text: '4, 4, 4, 4, 4'},
+    {text: 'ReferenceError: i is not defined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    वही loop, अलग keyword। क्या log होता है?
+    ```javascript
+    for (let i = 0; i < 5; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `for` loop में `let` ख़ास है। Spec कहता है: हर iteration को `i` की **नई binding** मिलती है। ऐसा लगता है जैसे loop चुपचाप ये कर रहा हो:
+
+    ```javascript
+    { let i = 0; setTimeout(() => console.log(i), 100) }
+    { let i = 1; setTimeout(() => console.log(i), 100) }
+    // ...
+    ```
+
+    तो पाँच callbacks पाँच अलग variables पर close होते हैं। परिणाम: `0, 1, 2, 3, 4`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Closures & Objects"
+  title="Object Mutation"
+  options={[
+    {text: '{ x: 1 }, { x: 1 }'},
+    {text: '{ x: 1 }, { x: 99 }'},
+    {text: '{ x: 99 }, { x: 99 }', isAnswer: true},
+    {text: '{ x: 99 }, { x: 1 }'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इसका output क्या है?
+    ```javascript
+    function wrap() {
+      const obj = { x: 1 };
+      const getObj = () => obj;
+      obj.x = 99;
+      return getObj;
+    }
+    const get = wrap();
+    console.log(get(), get());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Closure **binding** `obj` capture करता है, object का कोई snapshot नहीं। Closure बनने के बाद object mutate हो जाता है — लेकिन `obj` अभी भी उसी reference को point कर रहा है। दोनों calls उसी mutated object को return करते हैं: `{ x: 99 }`।
+
+    ये उन लोगों को डस्ता देता है जो सोचते हैं कि closures values "freeze" करते हैं। ऐसा नहीं है। ये **references** capture करते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Advanced"
+  title="Stale Closure in React"
+  options={[
+    {text: 'हर click पर current count log करता है'},
+    {text: 'हमेशा 0 log करता है', isAnswer: true},
+    {text: 'NaN log करता है'},
+    {text: 'ये compile नहीं होगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    बटन कई बार click करने पर यह React component कैसा व्यवहार करता है?
+    ```jsx
+    function Counter() {
+      const [count, setCount] = useState(0);
+
+      useEffect(() => {
+        const id = setInterval(() => {
+          console.log('count is', count);
+        }, 1000);
+        return () => clearInterval(id);
+      }, []); // empty deps
+
+      return <button onClick={() => setCount(c => c + 1)}>
+        Click ({count})
+      </button>;
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Classic stale closure। `useEffect` एक बार चलता है (empty dep array) और एक interval बनाता है जो mount time पर जो `count` था उस पर close होता है: `0`। चाहे कितने भी click करो, interval का closure updated value कभी नहीं देखता।
+
+    Button label सही अपडेट होता है — वो एक fresh render है। लेकिन `console.log` हमेशा `0` पर फँसा रहता है।
+
+    इसे ठीक करने के लिए dep array में `count` जोड़ें (interval दोबारा बनेगा) या ref इस्तेमाल करें:
+    ```jsx
+    const countRef = useRef(count);
+    useEffect(() => { countRef.current = count; }, [count]);
+    // फिर interval में countRef.current इस्तेमाल करें
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Advanced"
+  title="Module Pattern"
+  options={[
+    {text: '60', isAnswer: true},
+    {text: 'TypeError: balance is not defined'},
+    {text: '-40'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    रुकिए — ध्यान से पढ़ें। असल में क्या होता है?
+    ```javascript
+    const bank = (() => {
+      let balance = 0;
+      return {
+        deposit: (n) => (balance += n),
+        withdraw: (n) => (balance -= n),
+        getBalance: () => balance,
+      };
+    })();
+
+    bank.deposit(100);
+    bank.withdraw(40);
+    console.log(bank.getBalance());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    जवाब `60` है।
+
+    यह **Module Pattern** है — एक IIFE जो closures का एक object return करता है। तीनों methods उसी `balance` binding पर close होते हैं। यह genuinely private है: बाहर से `balance` access नहीं कर सकते।
+
+    ```javascript
+    console.log(bank.balance); // undefined
+    ```
+
+    classes से पहले, JavaScript में state encapsulate करने का यही *तरीका* था। Legacy codebases और utility libraries में आज भी ये दिखता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Expert"
+  title="Closure Memory Leak"
+  options={[
+    {text: 'ये data array की length log करता है'},
+    {text: 'ये एक memory leak बनाता है', isAnswer: true},
+    {text: 'ये RangeError throw करता है'},
+    {text: 'कुछ असामान्य नहीं — ये ठीक है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इस code में क्या समस्या है?
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      element.addEventListener('click', () => {
+        console.log('clicked!', data.length);
+      });
+    }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Event listener `data` पर close होता है, इसलिए array तब तक reachable रहता है जब तक listener reachable है। अगर `element` long-lived है और listener कभी हटाया नहीं जाता, तो वो बड़ा array भी retain रहता है।
+
+    `element` DOM में है। Listener `data` को पकड़े हुए है। GC इसे collect नहीं कर सकता।
+
+    फिक्स: long-lived listeners में बड़े data को capture मत करो जब तक ज़रूरत न हो, और listeners हटाओ जब owning UI tear down हो:
+    ```javascript
+    function attachHandler(element) {
+      const data = new Array(100_000).fill('🔥');
+      // data के साथ कुछ करें...
+
+      const onClick = () => {
+        console.log('clicked!');
+      };
+
+      element.addEventListener('click', onClick);
+      return () => element.removeEventListener('click', onClick);
+    }
+    ```
+
+    Modern V8 पहले से बेहतर है। लेकिन बहुत सारे event listeners वाले long-lived SPAs में, ये pattern अभी भी लोगों को डस्ता देता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Expert"
+  title="The this Trap"
+  options={[
+    {text: 'Dan, Dan'},
+    {text: 'Dan, undefined'},
+    {text: 'undefined, Dan'},
+    {text: 'undefined, undefined', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    इसका output क्या है?
+    ```javascript
+    const user = {
+      name: 'Dan',
+      greetArrow: () => console.log(this?.name),
+      greetRegular() {
+        const inner = () => console.log(this?.name);
+        inner();
+      },
+    };
+
+    user.greetArrow();
+    const fn = user.greetRegular;
+    fn();
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    दो सूक्ष्म traps:
+
+    **`greetArrow`**: Arrow functions का अपना `this` नहीं होता। ये `this` को enclosing lexical scope से capture करते हैं — जो यहाँ module/global scope है, `user` नहीं। तो `this?.name` `undefined` है।
+
+    **`fn()`**: `greetRegular` बिना receiver के call हो रहा है (`fn()` न कि `user.greetRegular()`)। Strict mode में, `this` `undefined` है। Sloppy mode में, ये global object है। दोनों हाल में, `this?.name` `undefined` है।
+
+    अगर आप सीधे `user.greetRegular()` call करते, तो आपको `'Dan'` मिलता — क्योंकि तब `this` `user` से bound होता।
+
+    परिणाम: `undefined, undefined`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Bonus"
+  title="Memoization via Closure"
+  options={[
+    {text: 'expensive() 3 बार call करता है'},
+    {text: 'expensive() 1 बार call करता है', isAnswer: true},
+    {text: 'expensive() 2 बार call करता है'},
+    {text: 'Throws: Maximum call stack exceeded'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `expensive()` असल में कितनी बार call होता है?
+    ```javascript
+    function memoize(fn) {
+      const cache = new Map();
+      return (arg) => {
+        if (cache.has(arg)) return cache.get(arg);
+        const result = fn(arg);
+        cache.set(arg, result);
+        return result;
+      };
+    }
+
+    let calls = 0;
+    const expensive = (n) => { calls++; return n * 2; };
+    const fast = memoize(expensive);
+
+    fast(5);
+    fast(5);
+    fast(5);
+    console.log(calls);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Memoized function `cache` पर close होता है। पहली call (`fast(5)`) cache miss होती है, `expensive` को call करती है, और result store करती है। दूसरी और तीसरी call cache hit होती है और तुरंत return होती है।
+
+    `calls` है `1`।
+
+    ये closures का असली काम है। `cache` private है (`memoize` के बाहर से access नहीं हो सकता), persistent है (`fast` जितना रहता है तब तक ज़िंदा रहता है), और `fast` की सभी calls में shared है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+---
+
+कैसा रहा?
+
+- **9-10**: आप सच में closures समझते हैं। शायद pair-program करना डरावना होगा।
+- **6-8**: मज़बूत। Stale closure / `this` वाले सवालों में अटके, जो ईमानदारी है।
+- **3-5**: Concept तो समझते हैं लेकिन किनारे धुंधले हैं। MDN scope chain docs पढ़ें।
+- **0-2**: आप सोचते थे कि closures समझते हैं। अब समझ गए। यही तो मकसद था।
+
+React में stale closure (#6) और `this` trap (#8) वे हैं जो असली production bugs पैदा करते हैं। अगर ये अपरिचित लगे, तो इन्हें दोबारा देखने लायक हैं — code review में ये closure-related किसी भी दूसरी issue से ज़्यादा आते हैं।
