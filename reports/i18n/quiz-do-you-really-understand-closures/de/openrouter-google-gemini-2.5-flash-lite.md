@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-do-you-really-understand-closures
+- Locale: de
+- Model: openrouter/google/gemini-2.5-flash-lite
+- Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 2.66
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/de/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
