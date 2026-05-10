@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-evals-are-broken
+- Locale: ja
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-06--llm-evals-are-broken/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 84.53
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
