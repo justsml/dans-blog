@@ -3,5 +3,10 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/es/index.mdx
-- Validation: rejected: missing output file
-- Note: Model did not create src/content/posts/2026-04-16--lancedb-wasm-browser-client/es/index.mdx.
+- Validation: passed
+- Runtime seconds: 69.44
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
