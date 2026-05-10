@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ja/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 120.29
+- Input tokens: 0
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ja/index.mdx: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/
