@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 147.28
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-01-03--mastra-security-guardrails/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
