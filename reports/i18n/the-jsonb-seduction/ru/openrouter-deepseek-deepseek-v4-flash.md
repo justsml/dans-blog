@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 61.20
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
