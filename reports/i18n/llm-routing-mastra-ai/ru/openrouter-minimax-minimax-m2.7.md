@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: ru
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 48.00
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
