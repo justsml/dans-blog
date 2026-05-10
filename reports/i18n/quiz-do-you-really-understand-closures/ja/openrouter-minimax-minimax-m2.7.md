@@ -3,5 +3,10 @@
 - Locale: ja
 - Model: openrouter/minimax/minimax-m2.7
 - Target: src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/ja/index.mdx
-- Validation: rejected: missing output file
-- Note: Model did not create src/content/posts/2026-05-05--quiz-do-you-really-understand-closures/ja/index.mdx.
+- Validation: passed
+- Runtime seconds: 33.23
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
