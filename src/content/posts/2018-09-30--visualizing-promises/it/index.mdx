@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: "Visualizzare le Promise"
+subTitle: Attraversa...
+date: 2018-09-30
+modified: 2024-07-30
+category: Guides
+subCategory: promises
+cover: junior-ferreira-735237-unsplash.webp
+cover_mobile: w300_junior-ferreira-735237-unsplash.webp
+cover_icon: icon_junior-ferreira-735237-unsplash.webp
+tags: [promises, async, visualizing, javascript, composition]
+related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+---
+
+Per visualizzare come vengono eseguite le Promise, definiamo un nuovo metodo `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+Questo è un metodo di utilità che si risolverà una volta trascorso il timeout.
+
+Il ritardo in millisecondi verrà passato al callback di `.then`.
+
+Esaminiamo 4 esempi (con timeline animate).
+
+## Esempio #1/4
+
+Questo mostra come l'esecuzione di `console.log()` verrà ritardata da `delay(msec)`.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![Timeline che mostra delay 1000 poi console log in esecuzione dopo un secondo](N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Esempio #2/4
+
+_Questo mostra un errore comune._
+
+Il `console.log` viene eseguito proprio quando il `delay(1000)` **inizia**. Non **dopo** il ritardo come probabilmente volevi.
+
+Poiché `console.log` restituisce `undefined`, il nostro `.then()` viene ignorato silenziosamente.
+
+Nota la differenza tra `typeof console.log === 'function'` e `typeof console.log() === undefined`.
+
+Generalmente l'uso desiderato per `console.log` è mostrato nell'Esempio #1. Assicurati di passare funzioni a `.then` e `.catch`.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![Timeline che mostra console log in esecuzione immediatamente prima che il ritardo finisca](N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Esempio #3/4
+
+3 Promise vengono eseguite simultaneamente.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![Timeline che mostra tre promise di ritardo che si risolvono dopo uno due e tre secondi](N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## Esempio #4/4
+
+`Promise.all` con 3 Promise `delay`. Verranno eseguite simultaneamente.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![Timeline che mostra Promise all che attende tutte e tre le promise di ritardo](N_3000ms_PromiseAll.webp)
+
+<!--
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+-->
+
+> Crediti:
+>
+> - Diagrammi async animati di [Patrick Biffle](https://github.com/Piglacquer)
+> - Ispirazione per questo articolo: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="Domanda #1: Il senso della vita:">
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">Qual è il senso della vita?</div>
+</div> -->
