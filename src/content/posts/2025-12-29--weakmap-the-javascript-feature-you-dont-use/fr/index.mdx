@@ -1,0 +1,124 @@
+---
+title: "Arrêtez de Fuir la Mémoire avec WeakMap"
+subTitle: "Réparer du code faible avec des références faibles !"
+date: 2025-12-29
+modified: 2026-01-12
+tags: [javascript, memory, garbage-collection, performance, patterns]
+category: Code
+subCategory: Best Practices
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Vous connaissez cette sensation quand vous changez une ligne de code et que votre utilisation mémoire chute de 50 % ? J'ai eu ce moment en regardant le Performance Monitor des DevTools Chrome alors qu'une app de tableau de bord passait d'une hémorragie de 100 Mo par heure à un fonctionnement propre pendant tout un après-midi.
+
+Le changement d'une ligne : `new Map()` est devenu `new WeakMap()`.
+
+Voilà. Même API, même motif d'utilisation, comportement complètement différent sous le capot. Mais comprendre pourquoi ça marche, c'est comprendre quelque chose que la plupart des développeurs JavaScript ne prennent jamais le temps de considérer : qu'est-ce qui arrive quand plus rien ne regarde vos données ?
+
+## Quand les Références Deviennent des Ancres
+
+Un Map classique en JavaScript traite ses clés comme un bien précieux. Une fois que vous y mettez quelque chose, le Map s'y accroche avec une poigne de fer. Le ramasse-miettes voit cette relation et se dit : « De toute évidence, ils ont encore besoin de cet objet, je ferais mieux de ne pas y toucher. »
+
+Cet instinct protecteur devient un problème quand vous stockez des métadonnées sur des choses temporaires. Des nœuds DOM qui sont supprimés. Des sessions utilisateur qui expirent. Des instances de composants qui se démontent. Le Map ne sait pas que ces objets ne sont plus utiles. Il sait juste qu'il a une référence, donc il les maintient en vie.
+
+```javascript
+const cache = new Map();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// L'élément a disparu du DOM, mais le cache le garde en mémoire
+```
+
+Le ramasse-miettes ne peut pas nettoyer `element` parce que `cache` pointe encore vers lui. C'est ce qu'on appelle une « référence forte », et dans les applications monopages qui tournent longtemps, ça devient une fuite qui finit par faire planter le navigateur.
+
+## WeakMap Change les Règles
+
+Un WeakMap fonctionne différemment. Il traite ses clés comme des citoyens temporaires plutôt que des résidents permanents. Quand vous stockez quelque chose dans un WeakMap, vous dites essentiellement : « Je veux associer ces données à cet objet, mais je ne veux pas être la raison pour laquelle il reste en vie. »
+
+Si la seule chose qui garde un objet en mémoire est un WeakMap, le ramasse-miettes est autorisé à le prendre. Quand l'objet disparaît, l'entrée WeakMap disparaît avec lui. Pas de nettoyage manuel nécessaire.
+
+```javascript
+const cache = new WeakMap();
+
+function trackClick(element) {
+  cache.set(element, { clicks: 0 });
+}
+
+document.body.removeChild(element);
+// L'élément est ramassé par le garbage collector
+// L'entrée du cache disparaît automatiquement
+```
+
+J'ai lancé un benchmark créant 100 000 nœuds DOM, stockant des métadonnées sur chacun, puis les supprimant tous. Avec un Map, le navigateur retenait 150–200 Mo. Avec un WeakMap, il est tombé à 70–80 Mo. Même code, même fonctionnalité, la moitié de l'empreinte mémoire.
+
+## Ce à Quoi Vous Renoncez
+
+WeakMap a des contraintes qui ressemblent à des limitations jusqu'à ce que vous réalisiez que c'est ce qui rend la magie possible.
+
+**Vous ne pouvez pas itérer sur un WeakMap.** Pas de `forEach`, pas de `keys()`, pas de `values()`. C'est logique quand on y pense : le ramasse-miettes pourrait supprimer une entrée au milieu de votre boucle. Vous voulez vraiment gérer ça ?
+
+Vous ne pouvez pas vérifier la taille. Pas de propriété `.size`, pas de `.length`. Encore une fois, c'est une cible mouvante. Le nombre pourrait changer entre le moment où vous demandez et celui où vous obtenez la réponse.
+
+**Les clés doivent être des objets.** Pas de chaînes, pas de nombres, pas de primitives. C'est fondamental au fonctionnement des références faibles : les valeurs primitives n'ont pas d'identité qui puisse être suivie séparément de leur valeur.
+
+Ce ne sont pas des bugs. C'est la conception. WeakMap est conçu pour un travail spécifique : attacher des métadonnées à des objets sans empêcher ces objets d'être nettoyés. Si vous avez besoin d'itération, de clés primitives ou d'un compteur d'entrées, vous résolvez probablement un problème différent et devriez utiliser un Map classique.
+
+## Là Où Ça Aide Vraiment
+
+Le motif « données privées » était le cas d'usage original de WeakMap, avant que JavaScript n'ait les champs `#private`. Les bibliothèques créaient un WeakMap en dehors de la classe et l'utilisaient pour stocker des données inaccessibles sur l'instance.
+
+```javascript
+const privateData = new WeakMap();
+
+class User {
+  constructor(name) {
+    privateData.set(this, { name });
+  }
+
+  getName() {
+    return privateData.get(this).name;
+  }
+}
+```
+
+Quand une instance User est ramassée par le garbage collector, les données privées partent avec elle. Aucun code de nettoyage nécessaire.
+
+La mémoïsation est une autre candidate naturelle, surtout quand vous mettez en cache des résultats basés sur des entrées objets plutôt que des valeurs primitives. Si votre calcul coûteux prend un objet de configuration en entrée, un WeakMap signifie que vous n'avez pas à vous soucier que le cache survive aux configurations.
+
+```javascript
+const cache = new WeakMap();
+
+function expensiveCalc(obj) {
+  if (cache.has(obj)) return cache.get(obj);
+  
+  const result = heavyMath(obj);
+  cache.set(obj, result);
+  return result;
+}
+```
+
+Le cache ne vit qu'aussi longtemps que les objets mis en cache. Une fois que `obj` n'est plus référencé ailleurs, le résultat mis en cache et l'entrée du cache disparaissent ensemble.
+
+## Quand y Recourir
+
+Les fuites mémoire dans les apps web modernes viennent généralement de références obsolètes à des choses qui auraient dû être nettoyées. Si vous construisez quelque chose qui tourne longtemps — un tableau de bord qui reste ouvert toute la journée, une app de chat qui fonctionne pendant des heures, un panneau d'administration qui ne se rafraîchit jamais — vous devez réfléchir à ce qui arrive aux anciennes données.
+
+WeakMap est particulièrement utile quand vous associez des données à des nœuds DOM, des instances de composants, ou tout objet dont vous ne contrôlez pas la durée de vie. Si vous stockez quelque chose basé sur une référence et que cette référence pourrait disparaître, WeakMap simplifie grandement le nettoyage.
+
+Un Map classique reste le bon choix quand vous construisez un vrai cache avec des politiques d'éviction, quand vous devez itérer sur les entrées, quand vous utilisez des clés primitives, ou quand ce sont les données elles-mêmes qui comptent plutôt que leur association avec un objet.
+
+Ce qui est agréable avec `WeakMap`, c'est qu'il est généralement évident quand vous en avez besoin. Si vous vous surprenez à écrire du code de nettoyage pour supprimer des entrées de map quand des objets sont détruits, c'est un signe. Si vous vous inquiétez d'une croissance mémoire illimitée parce que vous ne savez pas quand supprimer des choses, c'est un autre signe.
+
+Parfois, la meilleure fonctionnalité est celle qui fonctionne sans que vous ayez à y penser.
+
+## Ressources
+
+- [MDN: WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+- [MDN: Gestion de la Mémoire](https://developer.mozilla.org/fr/docs/Web/JavaScript/Memory_management)
+- [Blog V8: Références Faibles et Finaliseurs](https://v8.dev/features/weak-references)
+- [JavaScript.info: WeakMap et WeakSet](https://javascript.info/weakmap-weakset)
