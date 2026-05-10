@@ -42,8 +42,8 @@ const candidateModels = parseList(optionalString(options, "models"), CHEAP_CANDI
 const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 3);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
-const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 180);
-const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 180);
+const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 240);
+const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 240);
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
 

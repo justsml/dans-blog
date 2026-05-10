@@ -259,7 +259,7 @@ function getVariantArgs(model: string) {
 
 function getTimeoutSeconds() {
   const rawValue = optionalString(options, "timeout-seconds");
-  if (rawValue == null) return 180;
+  if (rawValue == null) return 240;
 
   const parsedValue = Number(rawValue);
   if (!Number.isInteger(parsedValue) || parsedValue <= 0) {

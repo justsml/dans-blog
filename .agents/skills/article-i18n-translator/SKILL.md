@@ -52,7 +52,7 @@ For higher-risk batches, add a second cheap judge with `--second-model openroute
 
    Candidate generation skips existing slug+locale+model reports by default. Use `--overwrite` only when you intentionally want to rerun that model and replace its target-file output.
 
-   OpenCode calls default to a 90 second timeout. Use `--timeout-seconds 60` or `--timeout-seconds 90` explicitly for batch work. Thinking-capable models should stay cheap: Qwen and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
+   OpenCode calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
 
    Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from OpenCode/provider output; write `unknown` rather than omitting unavailable fields.
 
@@ -63,7 +63,7 @@ For higher-risk batches, add a second cheap judge with `--second-model openroute
    bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/openai/gpt-5.4-mini
    ```
 
-   GPT-5-class judges run with `--variant low` by default. Keep judge timeouts at 60 or 90 seconds unless there is a deliberate reason to let one run longer.
+   GPT-5-class judges run with `--variant low` by default. Keep judge timeouts at 240 seconds for this translation pipeline unless there is a deliberate reason to shorten one.
 
 5. If the judge breaks inherited asset paths, fix them with parent-relative paths and commit as `i18n final(...)`.
 6. Validate:
