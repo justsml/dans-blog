@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: stop-hardcoding-your-prompts
+- Locale: hi
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 88.79
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
