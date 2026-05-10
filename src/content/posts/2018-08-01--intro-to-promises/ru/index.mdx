@@ -1,0 +1,104 @@
+---
+social_image: ../desktop-social.webp
+title:  "Введение в Promises"
+subTitle: JavaScript Promises — это весело!
+date: 2018-08-01
+modified: 2024-07-31
+category: Code
+subCategory: promises
+tags: [promises, async, javascript, composition]
+related: [promise-gotchas, visualizing-promises, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+cover: joe-yates-480485-unsplash.webp
+cover_mobile: w300_joe-yates-480485-unsplash.webp
+cover_icon: icon_joe-yates-480485-unsplash.webp
+---
+
+## Promises... в чём их суть?
+
+При выполнении любого компьютерного кода возможны 2 исхода: **успех** или **ошибка**.
+
+Если этот код имеет асинхронную природу, надёжно зависеть от результата становится сложнее.
+
+**`Promises`** предоставляют удобный способ справиться с этим.
+
+```
+                         +--Promise---+
+                         |            |
+                         | <-либо->   |
+                         |            |
+                 <-------+            +-------->
+                 |Ошибка?              Успех?  |
+                 |                             |
+                 v                             v
+                 (Отклонён)           (Выполнен)
+```
+
+> Примечание: Хотя Promises должны завершаться успешно или отклоняться, они могут не сделать ни того, ни другого. Это приводит к зависанию приложений, которое бывает очень трудно отладить.
+
+
+### Откуда берутся Promises?
+
+Во многих случаях вам не придётся создавать промисы самостоятельно. Нативные API, такие как `fetch`, и популярные библиотеки вроде `axios` уже возвращают Promises.
+
+Однако если вам всё же нужно создать промис, есть 2 способа сделать это:
+
+
+
+### Создание Promises #1/2:
+
+Самый простой способ создать Promise — использовать вспомогательный метод `Promise.resolve()`.
+
+Вы можете обернуть (или «преобразовать») любое значение в Promise с помощью `Promise.resolve(value)`.
+
+```js
+// Без Promises:
+function add10(num) {
+  return num + 10
+}
+
+// С Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Создание Promises #2/2:
+
+Другой, более гибкий метод: использование конструктора `Promise`.
+
+`new Promise(callback)` принимает функцию `callback` со следующим интерфейсом:
+
+```js
+new Promise(function(resolve, reject) {
+  // Аргументы `resolve` и `reject` — это функции.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` должен вызываться при успешном выполнении промиса
+  // `reject(Error)` должен вызываться при отклонении промиса
+})
+```
+
+### API Promises
+
+API Promises состоит из небольшого числа методов.
+
+2 метода экземпляра и 4 статических/вспомогательных метода.
+
+#### Методы экземпляра Promise
+
+Получить значения из промиса с помощью обычных приёмов (например, `console.log(promise)`) не получится.
+
+Все Promises возвращают либо успех (через `.then(fn)`), либо ошибку (через `.catch(fn)`).
+
+#### Вспомогательные методы Promise
+
+* `Promise.resolve(value)` — Преобразует любое значение в Promise
+* `Promise.reject(Error)` — Создаёт промис-ошибку, запускает последующие `.catch()`
+* `Promise.all([...promises])` — Ждёт завершения ВСЕХ промисов в массиве
+* `Promise.race([...promises])` — Выполняется, как только первый промис выполнится
