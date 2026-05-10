@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 59.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx: src/content/posts/2026-04-16--lancedb-wasm-browser-client/it/
