@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/de/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 150.64
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale de --skip-global
