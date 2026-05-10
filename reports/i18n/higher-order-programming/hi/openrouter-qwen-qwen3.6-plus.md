@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-10-05--higher-order-programming/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 29.08
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000

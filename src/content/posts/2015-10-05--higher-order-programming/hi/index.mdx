@@ -1,0 +1,62 @@
+---
+social_image: ../desktop-social.webp
+title:  "उच्च-क्रम प्रोग्रामिंग"
+subTitle: "एरे- और सेट-आधारित पाइपलाइन तकनीकों का अन्वेषण"
+date: 2015-09-22
+modified: 2024-07-30
+category: Code
+subCategory: programming
+tags: [programming, patterns, models, source code, organization]
+cover: susan-holt-simpson-799094-unsplash.webp
+cover_mobile: w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: icon_susan-holt-simpson-799094-unsplash.webp
+---
+
+## एरे- और सेट-आधारित पाइपलाइन तकनीकों का अन्वेषण
+
+### एक एंटी-पैटर्न?
+
+यह उन लाभों का अन्वेषण है जो तब प्राप्त होते हैं जब आप **सब कुछ एक एरे के रूप में कोड करते हैं।** (SmallTalk के जेडाइ सिद्धांतों का उपयोग करते हुए)
+
+यहाँ कुछ मार्गदर्शक सिद्धांत दिए गए हैं:
+
+1.  सभी इनपुट एरे-जैसे होने चाहिए। भले ही वह 1 तत्व का एरे हो।
+1.  उच्च-स्तरीय फ़ंक्शंस को आम तौर पर एरे स्वीकार करने चाहिए और लौटाने चाहिए। (लूप्स के लिए कॉलबैक मेथड्स को छोड़कर: map/reduce/each/filter)
+1.  100 में से 99 डेवलपर्स का कोड उस समस्या से ग्रस्त है जिसे मैं `acute schema surplusage` सिंड्रोम कहता हूं।
+1.  फूले हुए `class-backed models` से सावधान रहें - सभी अनुमानित दुष्प्रभावों के साथ: नाजुक `instance state` जिसमें बहुत सारे लीवर और नॉब्स हैं जिनसे गड़बड़ हो सकती है, DB ट्रांजैक्शन, sql लॉक्स, async/mutexing (जो हमेशा पहली बार काम करता है, है ना?), आइडियोमैटिक `property getter/setters` का उपयोग, और आपका `public/private/final/etc` उपयोग ठोस है, है ना?
+
+1.  तो मुझे एक सामान्य समस्या लेने दें और उसमें सेट-आधारित विचारों को _थोपने_ दें।
+1.  एक काल्पनिक ब्लॉग साइट में बहुत सारे आर्टिकल्स हैं, और उससे भी ज्यादा पोस्ट्स (कमेंट्स) हैं।
+1.  आइए एक `delete` मेथड जोड़ें (नीचे) - जो सिंगुलर और एरे दोनों के साथ काम करे।
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` को सिंगुलर Post या Post[] के एरे के साथ कॉल किया जा सकता है
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> क्षमा करें यदि मेरा Java थोड़ा जंग खा गया है।
