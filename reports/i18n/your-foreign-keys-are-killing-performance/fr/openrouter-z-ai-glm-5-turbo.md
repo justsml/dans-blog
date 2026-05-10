@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: your-foreign-keys-are-killing-performance
+- Locale: fr
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 142.81
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
