@@ -1,6 +1,6 @@
 ---
-title: "Non Sposare il Tuo Modello"
-subTitle: "LLM Routing, una figata pazzesca"
+title: "Non sposare il tuo modello"
+subTitle: "LLM Routing, così di tendenza adesso"
 date: 2026-01-02
 modified: 2026-01-08
 tags: [ai, llm, typescript, mastra, agent-orchestration]
@@ -12,21 +12,21 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-La maggior parte dei team di engineering sceglie un modello linguistico e ci resta fedele. Un provider, un modello, tutti i compiti. È come assumere una persona per scrivere codice, fare copywriting e gestire le tasse solo perché è stata brava al primo colloquio.
+La maggior parte dei team ingegneristici sceglie un modello linguistico e ci resta. Un provider, un modello, tutti i compiti. È come assumere una persona per scrivere codice, copywriting e tasse perché è risultata brava al primo colloquio.
 
-In ogni momento, un modello è migliore per il codice, un altro per contesti lunghi e complessi, e un altro ancora è il più economico e affidabile per la classificazione. I nomi cambiano. La struttura del problema no. Trattare un modello come se eccellesse in tutto significa pagare troppo per compiti semplici o ottenere risultati scadenti su quelli specializzati.
+In qualsiasi momento, un modello è migliore nel codice, un altro è migliore con contesti lunghi e disordinati, e un altro ancora è il cavallo da lavoro più economico e noioso per la classificazione. I nomi cambiano. La forma del problema no. Trattare un modello come se eccellesse in tutto significa che stai spendendo troppo per compiti semplici o ottenendo risultati inferiori su quelli specializzati.
 
-Ho visto un team bruciare migliaia di dollari eseguendo analisi del sentiment con un modello da 30 dollari per milione di token, quando un modello da 0,50 dollari avrebbe fatto perfettamente il lavoro. Semplice formattazione JSON, compiti di classificazione di base, tutto passava attraverso il loro provider premium. L'unica cosa che si scaldava era il loro conto AWS.
+Ho visto un team bruciare migliaia di dollari eseguendo analisi del sentiment attraverso un modello a 30 dollari per milione di token, quando un modello da 0,50 dollari avrebbe fatto il lavoro altrettanto bene. Formattazione JSON semplice, compiti di classificazione base, tutto passato attraverso il loro provider premium. L'unica cosa che si scaldava era il loro conto AWS.
 
-Esiste un modo migliore, e non è particolarmente complicato.
+C'è un modo migliore, e non è particolarmente complicato.
 
-## Delega, non Devozione
+## Delegare, non adorare
 
-E se potessi instradare le richieste al modello effettivamente più adatto per quel compito specifico? Usa il tuo potente motore per le cose difficili, ma scarica la semplice analisi e formattazione su qualcosa di più economico. Ottieni i vantaggi di più provider senza doverli gestire manualmente nel tuo codice.
+E se potessi instradare le richieste al modello effettivamente più adatto per quel compito specifico? Usa il tuo powerhouse costoso per le cose difficili, ma abbassa la formattazione e il parsing semplici a qualcosa di più economico. Ottieni i vantaggi di provider multipli senza doverli gestire manualmente nel tuo codebase.
 
-Mastra ti permette di costruire esattamente questo tipo di sistema. Configuri agenti specializzati per diversi tipi di lavoro, poi crei un agente router che decide quale specialista deve gestire ogni richiesta. Gli ID dei modelli qui sotto sono esempi, non una classifica. Sostituiscili con i modelli attuali che vincono i tuoi eval e si adattano al tuo budget.
+Mastra ti permette di costruire esattamente questo tipo di sistema. Configuri agent specialisti per diversi tipi di lavoro, poi crei un agente router che decide quale specialista dovrebbe gestire ogni richiesta. Gli ID dei modelli qui sotto sono esempi, non una classifica. Sostituiscili con i modelli attuali che vincono le tue eval e si adattano al tuo budget.
 
-Pensala così: hai tre specialisti nel tuo team.
+Pensalo così: hai tre specialisti nel tuo team.
 
 ```typescript
 // ./src/mastra/index.ts
@@ -55,9 +55,9 @@ export const gptAgent = new Agent({
 });
 ```
 
-Ognuno ha un compito. Il tuo agente per il codice dovrebbe essere il modello che supera i tuoi eval specifici del repository. Il tuo agente per contesti lunghi dovrebbe essere quello che sopravvive ai tuoi documenti veri senza trasformare la parte centrale in zuppa. Il tuo agente generale dovrebbe essere economico, affidabile e noioso nel modo migliore possibile.
+Ognuno ha un lavoro. Il tuo agente di codice dovrebbe essere il modello che supera le tue eval specifiche per il repository. Il tuo agente per contesti lunghi dovrebbe essere quello che sopravvive ai tuoi documenti reali senza trasformare il mezzo in zuppa. Il tuo agente generale dovrebbe essere economico, affidabile e noioso nel miglior modo possibile.
 
-Qui le cose si fanno interessanti. Aggiungi un router che funge da proxy intelligente:
+È qui che diventa interessante. Aggiungi un router che agisce come proxy intelligente:
 
 ```typescript
 export const routerAgent = new Agent({
@@ -82,21 +82,21 @@ export const mastra = new Mastra({
 });
 ```
 
-Il router stesso funziona su un modello leggero perché deve solo prendere decisioni su dove inviare il traffico. Non stai pagando tariffe premium per capire quale altro modello premium usare. Anche questo va misurato: un router scadente trasforma silenziosamente i risparmi in instradamenti errati.
+Il router stesso gira su un modello leggero perché sta solo prendendo decisioni su dove inviare il traffico. Non stai pagando tariffe premium per capire quale altro modello premium usare. Misura anche questo; un router cattivo trasforma silenziosamente i risparmi in instradamenti errati.
 
-Quando qualcuno chiede un'implementazione di bubble sort, il router riconosce che è un lavoro di codice e lo passa al tuo specialista del codice. Prompt di scrittura creativa? Finisce al modello che hai scelto per voce e creatività. Domanda fattuale su eventi storici? Instradala all'agente generale, idealmente con retrieval quando la freschezza o la citazione contano.
+Quando qualcuno chiede un'implementazione di bubble sort, il router la riconosce come lavoro di codice e la passa al tuo specialista del codice. Prompt di scrittura creativa? Va al modello che hai scelto per voce e gamma. Domanda fattuale su eventi storici? Instradata all'agente generale, idealmente con retrieval quando la freschezza o la citazione conta.
 
-## I Vantaggi Pratici
+## I benefici pratici
 
-**L'efficienza dei costi conta più di quanto pensi.** Un modello di routing piccolo che prende decisioni di delega costa una frazione dell'inviare ogni singola richiesta al tuo provider più costoso. Con il tempo, specialmente su larga scala, la cifra diventa significativa. Paghi per l'intelligenza pesante solo quando ne hai davvero bisogno.
+**L'efficienza dei costi conta più di quanto pensi.** Un piccolo modello di routing che prende decisioni di delega costa una frazione dell'eseguire ogni singola richiesta attraverso il tuo provider più costoso. Nel tempo, specialmente su larga scala, questo si somma a soldi veri. Paghi per l'intelligenza pesante solo quando ne hai effettivamente bisogno.
 
-**La qualità migliora quando abbini i modelli ai compiti.** Il vincitore cambia ogni mese, a seconda del compito e della forma del prompt. Ecco perché il livello di routing deve dipendere dai tuoi eval, non dal modello che spopolava su Twitter la settimana in cui hai scritto l'integrazione.
+**La qualità migliora quando abbini i modelli ai compiti.** Il vincitore cambia per mese, compito e forma del prompt. Ecco perché il layer di routing dovrebbe dipendere dalle tue eval, non da qualunque modello stesse vincendo su Twitter la settimana in cui hai scritto l'integrazione.
 
-**La resilienza diventa un beneficio collaterale.** Quando OpenAI ha uno dei suoi periodici down (e li ha), il tuo router può reindirizzare il traffico verso altri provider. Non sei fermo in attesa che una specifica API torni online.
+**La resilienza diventa un beneficio collaterale.** Quando OpenAI ha una delle sue interruzioni periodiche (e le ha), il tuo router può reindirizzare il traffico verso altri provider. Non sei morto in acqua in attesa che un'API specifica torni online.
 
-Non si tratta di essere furbi per il gusto di esserlo. Si tratta di costruire sistemi che abbiano senso sia dal punto di vista finanziario che tecnico. Non useresti lo stesso martello per ogni compito di costruzione, e probabilmente non dovresti usare lo stesso modello linguistico per ogni compito di IA.
+Non si tratta di essere intelligenti per il gusto di esserlo. Si tratta di costruire sistemi che abbiano senso sia finanziariamente che tecnicamente. Non useresti lo stesso martello per ogni compito di costruzione, e probabilmente non dovresti usare lo stesso modello linguistico per ogni compito AI.
 
-La bellezza di questo approccio è che il codice della tua applicazione non cambia. Continui a chiamare il tuo agente router. La complessità di decidere quale modello usare per quale compito vive in un unico posto, configurato una volta sola, invece di essere sparsa in giro per il codice con una serie di logiche condizionali.
+La bellezza di questo approccio è che il codice della tua applicazione non cambia. Chiami ancora il tuo agente router. La complessità di decidere quale modello usare per quale compito vive in un posto, configurato una volta, piuttosto che sparsa in tutto il tuo codebase in una serie di logiche condizionali.
 
 ### Risorse
 
@@ -107,5 +107,5 @@ La bellezza di questo approccio è che il codice della tua applicazione non camb
 
 1. **LLM Routing** (Questo Post)
 2. [Sicurezza e Guardrails](/mastra-security-guardrails)
-3. [Integrazioni MCP e Strumenti](/mastra-mcp-tool-integrations)
-4. [Workflow e Memoria](/mastra-workflows-memory)
+3. [MCP e Integrazioni Tool](/mastra-mcp-tool-integrations)
+4. [Workflows e Memoria](/mastra-workflows-memory)
