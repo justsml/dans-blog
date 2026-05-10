@@ -1,0 +1,146 @@
+---
+title: "Fremdschlüssel: Hör auf zu fragen, ob sie schnell sind"
+subTitle: "Frag dich, wofür du eigentlich optimierst."
+date: 2025-12-29
+modified: 2026-01-10
+tags: [postgres, postgresql, datenbanken, performance, fremdschlüssel, constraints, indizierung]
+category: Code
+subCategory: Datenbanken
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
+---
+
+Die teuerste Datenbankoptimierung, die ich je gesehen habe, begann damit, dass jemand alle Fremdschlüssel entfernte.
+
+Nicht weil sie einen Engpass gemessen hatten. Nicht weil Schreibvorgänge tatsächlich langsam waren. Sondern weil sie irgendwo gelesen hatten: „Fremdschlüssel skalieren nicht.“ Sechs Monate später hatten sie 2 Milliarden verwaiste Datensätze, ein Abrechnungssystem, das gelöschte Benutzer belastete, und Analysen, die um 40% daneben lagen.
+
+Als sie versuchten, die Constraints wieder hinzuzufügen? Die Datenbank kam zum Stillstand, weil sie versuchte, bereits korrupte Daten zu validieren.
+
+Es gibt diese weit verbreitete Vorstellung in der Webentwicklung, dass Fremdschlüssel grundsätzlich langsam sind – so eine Art Stützräder, die man abmontiert, sobald man zu „echten“ Systemen aufsteigt. Aber das verfehlt völlig den Sinn eines Constraints. Du entscheidest dich nicht zwischen schnell und langsam. Du entscheidest dich zwischen verschiedenen Fehlermodi.
+
+Stell es dir so vor: Sicherheitsglas, Sicherheitsgurte und Airbags machen dein Auto schwerer. Sie machen dein Fahrzeug definitiv langsamer und weniger spritsparend. Aber du reißt sie nicht raus, um deine 0-100-Zeit zu optimieren, weil du für etwas ganz anderes optimierst.
+
+Die Frage ist nicht, ob Fremdschlüssel dich ausbremsen. Natürlich tun sie das. Die Frage ist, was du dafür bekommst – und ob du es wirklich brauchst.
+
+## Was du wirklich eintauschst
+
+Lass mich dir ein konkretes Beispiel geben. Du baust ein Wetterüberwachungssystem mit Tabellen für Wetterstationen, Sensoren, Sensorwerte und US-Bundesstaaten.
+
+Verknüpfst du alles mit Fremdschlüsseln? Überlegen wir, was sich tatsächlich ändert und welche Konsequenzen das hat:
+
+US-Bundesstaaten ändern sich wahrscheinlich nicht. Wyoming wird nicht so bald umbenannt. Du brauchst keinen Fremdschlüssel, um bei jedem Einfügen Staatscodes zu validieren, wenn du weißt, dass die Referenzdaten statisch sind. Das ist unnötiger Overhead.
+
+Wetterstationen werden hinzugefügt, verschoben und stillgelegt. Aber hier eine Frage: Möchtest du, dass historische Messwerte ihre Station „verlieren“, wenn jemand versehentlich einen Stationsdatensatz löscht? Vielleicht möchtest du, dass diese Daten intakt bleiben, auch wenn die Station weg ist. Das würde bedeuten, dass du Messwerte als historischen Schnappschuss behandelst, nicht als Live-Referenz – und das ändert, ob ein Fremdschlüssel überhaupt Sinn ergibt.
+
+Sensorwerte werden tausende Male pro Minute eingefügt. Jede Fremdschlüsselprüfung bedeutet einen Lookup. Jeder Lookup erzeugt Konflikte auf deinen Tabellen. Wenn langsame Validierung dazu führt, dass deine Einfüge-Warteschlange überläuft und du Echtzeitdaten verlierst, ist das eine andere Art von Datenverlust als ein verwaister Datensatz.
+
+Du siehst, worauf das hinausläuft. Die Wahl geht nicht um Performance gegen Korrektheit als abstrakte Konzepte. Es geht darum, welchen spezifischen Fehler du eher tolerieren kannst – angesichts deiner tatsächlichen Randbedingungen und tatsächlichen Konsequenzen.
+
+Wenn falsche Referenzen korrupte Abrechnungsdaten oder Verstöße gegen Vorschriften bedeuten, willst du wahrscheinlich Fremdschlüssel, die dich schützen – egal wie hoch der Performance-Preis ist. Wenn langsame Validierung bedeutet, dass du Echtzeit-Sensordaten für immer verlierst, weil deine Warteschlange überläuft, dann ist Validierung vielleicht der falsche Kompromiss.
+
+## Wenn schnelle Schreibvorgänge wirklich zählen
+
+Angenommen, du hast entschieden, dass du maximale Schreibgeschwindigkeit brauchst. Deine Warteschlange wächst, Transaktionen laufen aus, und Fremdschlüsselprüfungen verursachen Probleme, die du tatsächlich gemessen hast (nicht nur theoretisiert).
+
+Du hast ein paar Optionen. Du könntest deine Transaktionsisolationsstufe von `SERIALIZABLE` auf `READ COMMITTED` ändern – das ist schneller, gibt aber einige Konsistenzgarantien auf. Du könntest deine Commits bündeln, 1000 Zeilen pro Transaktion statt einzeln, um den FK-Overhead zu amortisieren. Oder du könntest in eine Append-Only-Log-Struktur denormalisieren, bei der du gar nicht erst versuchst, Referenzen zu validieren.
+
+Diese dritte Option ist übrigens kein Schummeln. Es ist einfach ein anderes Design:
+
+```sql
+CREATE TABLE sensor_log (
+  id BIGSERIAL PRIMARY KEY,
+  recorded_at TIMESTAMPTZ NOT NULL,
+  data JSONB NOT NULL  -- { station_id, sensor_id, temp, humidity, ... }
+);
+
+CREATE INDEX ON sensor_log USING GIN (data);
+CREATE INDEX ON sensor_log (recorded_at);
+```
+
+Keine Joins. Keine Fremdschlüsselprüfungen. Einfach Daten anhängen und nach Zeitbereich oder GIN-Index auf dem JSONB-Blob abfragen. Ist das „Best Practice“? Wahrscheinlich nicht im Sinne von Datenbank-Lehrbüchern. Funktioniert es, wenn du 50.000 Zeilen pro Minute auf einem Raspberry Pi einfügst? Absolut.
+
+Der Bruch entsteht, wenn Leute „Best Practice“ als moralischen Imperativ behandeln, statt als Muster, das in üblichen Szenarien gut funktioniert, aber nicht unbedingt zu deinem passt.
+
+## Die Normalisierungsfalle
+
+Datenbankkurse lieben es, Normalisierung zu lehren. Vermeide Redundanz um jeden Preis. Dritte Normalform oder gar nichts.
+
+Also landest du bei so etwas wie: `Orders` → `OrderItems` → `Products` → `Variants` → `Colors` → `Sizes`
+
+Sechs Tabellen-Joins, nur um zu beantworten: „Habe ich letztes Weihnachten das rote oder das blaue Hemd bestellt?“ Und wehe, du musst den Produktnamen einbeziehen – dann sind es noch drei Joins mehr in der Kataloghierarchie.
+
+Aber Moment. Die Begründung lautet meist: „Was, wenn die Marke ändert, wie sie Blau nennen?“ Wenn das passiert, willst du dann wirklich, dass historische Bestellungen rückwirkend die Farbe wechseln? Natürlich nicht. Als jemand diese Bestellung aufgegeben hat, hat er ein „Blaues T-Shirt, Größe M“ gekauft – so wie es zu diesem Zeitpunkt existierte, nicht als abstrakte Referenz auf einen Katalogeintrag, der später aktualisiert werden könnte.
+
+Das ist wichtig, weil es subtil ist. Manche Daten sind grundsätzlich ein Schnappschuss, keine Referenz. Wenn du Schnappschussdaten wie eine Live-Referenz behandelst, endest du mit dieser absurden Joins-Vermehrung, um etwas zu rekonstruieren, das einfach zum Zeitpunkt des Schreibens denormalisiert hätte werden sollen.
+
+Speichere `{"color": "blue", "size": "M"}` direkt in der Bestellung. Fertig.
+
+### Schnappschussdaten erkennen
+
+Woher weißt du, ob etwas ein Schnappschuss sein sollte? Frag dich, ob es eine Momentaufnahme ist:
+
+Bestellungen erfassen Produktdetails zum Zeitpunkt des Kaufs. Audit-Logs speichern den Benutzerzustand, als eine Aktion ausgeführt wurde. Historientabellen bewahren den Datensatzstand vor einem Update. Ereignisströme erfassen, was passiert ist, wann und mit welchen Daten.
+
+Wenn die Antwort „Ja, das zeichnet einen Moment in der Zeit auf“ lautet, hör auf zu normalisieren. Fang an, Schnappschüsse zu machen.
+
+### Undurchsichtige Blobs
+
+Es gibt noch eine weitere Kategorie jenseits von Schnappschüssen: Daten, die du nie abfragst. Du speicherst sie nur und holst sie als Ganzes ab.
+
+LLM-Modellkonfigurationen wie `{"model": "gpt-4", "temperature": 0.7, "max_tokens": 2000}` sind nichts, wonach du nach Temperatur suchst. Du holst die gesamte Konfiguration per Request-ID, wenn du sie brauchst. JWT-Payloads nach dem Dekodieren, API-Request/Response-Logs zum Debuggen, Benutzereinstellungsobjekte mit Theme-Einstellungen und Benachrichtigungsflags. Das alles sind undurchsichtige Blobs. Du brauchst keine Normalisierung. Du brauchst keine Fremdschlüssel. Pack sie in JSONB und mach weiter.
+
+Der 6-Tabellen-Join, um herauszufinden, welche Farbe das Hemd hatte? Das ist keine richtige Normalisierung. Das ist verwirrtes Denken darüber, ob du eine Referenz oder einen Wert speicherst.
+
+(Sei aber vorsichtig: Das kann spektakulär nach hinten losgehen, wenn du später diese Daten abfragen musst. Siehe [The JSONB Seduction](/the-jsonb-seduction) für den Fall, dass dieser Ansatz sein eigenes Albtraum erzeugt.)
+
+## Skalierung ist Kontext
+
+Du wirst Leute sagen hören: „Fremdschlüssel skalieren nicht.“ Aber Skalierung ist völlig relativ zu deiner Hardware und Architektur.
+
+Ein Raspberry Pi, der 10.000 Sensorwerte pro Minute auf eine microSD-Karte loggt? Das ist für diese Hardware legitimerweise hohe Skalierung. AWS Aurora mit provisionierten IOPS, das Milliarden von Zeilen verarbeitet? Du kannst dich mit Fremdschlüsseln durchkämpfen, ohne ins Schwitzen zu kommen.
+
+Die eigentliche harte Grenze ist nicht die Zeilenanzahl oder das Schreibvolumen. Es ist das Sharding.
+
+Wenn deine `Users`-Tabelle auf Server A und deine `Orders`-Tabelle auf Server B lebt, können Fremdschlüssel physikalisch nicht funktionieren. Die Datenbank hat keinen Mechanismus, um einen Constraint über Netzwerkgrenzen hinweg durchzusetzen. An diesem Punkt führst du bereits Hintergrundjobs aus, um Waisen zu finden, und implementierst Eventual-Consistency-Muster.
+
+Das passiert in Multi-Tenant-SaaS, wo jeder Mandant seine eigene isolierte Datenbank aus Compliance-Gründen bekommt, oder in IoT-Bereitstellungen mit 50.000 Edge-Geräten, die jeweils lokal SQLite ausführen. Sobald du dort bist, sind Fremdschlüssel (wörtlich) vom Tisch – unabhängig von Performance-Überlegungen.
+
+Aber bis du an diese architektonische Grenze stößt, optimiere vielleicht nicht vorsorglich für Netflix' Probleme, wenn du ein internes Tool für 10 Benutzer baust.
+
+## Wie das in der Praxis tatsächlich aussieht
+
+Statt zu fragen „Soll ich Fremdschlüssel verwenden?“, versuche diese drei Dinge zu fragen:
+
+Was bricht, wenn diese Referenz falsch ist? Ist es eine Klage, korrupte Abrechnung, ein Verstoß gegen Vorschriften? Oder nur ein fehlender Join, der in deinem Analyse-Dashboard null zurückgibt?
+
+Was bricht, wenn die Validierung langsam ist? Verlierst du unwiederbringliche Echtzeitdaten? Oder brauchen deine Abfragen nur zusätzliche 50 Millisekunden?
+
+Ist dieser Daten ein Schnappschuss oder eine Referenz? Zeichnest du auf, wie etwas zu einem bestimmten Zeitpunkt aussah, oder zeigst du auf den autoritativen aktuellen Wert?
+
+Daraus ergeben sich die Muster ziemlich natürlich:
+
+Finanztransaktionen, Authentifizierungssitzungen – alles, wo Datenkorruption rechtliche Haftung bedeutet – will wahrscheinlich Fremdschlüssel, unabhängig vom Performance-Overhead.
+
+Hochvolumige Logs, Append-Only-Zeitreihendaten – alles, wo du eine Million Ereignisse pro Minute schreibst – braucht wahrscheinlich keinen Validierungs-Overhead bei jedem Schreibvorgang.
+
+Historische Schnappschüsse wie Bestellungen und Audit-Logs, Daten, die du immer als vollständigen Blob abrufst (wie Benutzereinstellungen), Schemata, die du nicht kontrollierst (wie Webhook-Payloads von externen APIs) – diese funktionieren oft besser denormalisiert.
+
+Aber beachte: Ich sagte „wahrscheinlich“ und „oft“. Denn der Kontext zählt, und dein Kontext ist ein anderer als meiner.
+
+## Abschließende Gedanken
+
+Fremdschlüssel sind kein Performance-Problem. Sie sind ein Kompromiss zwischen Schreibgeschwindigkeit und Datenintegrität – und ob dieser Kompromiss sinnvoll ist, hängt ganz von deinen spezifischen Engpässen und deinen spezifischen Konsequenzen ab.
+
+Das eigentliche Problem ist, wenn Leute Fremdschlüssel entfernen, weil sie etwas über „Web-Skalierung“ gelesen haben, ohne tatsächlich zu messen, ob sie ein Schreibperformance-Problem haben, oder zu bedenken, was sie aufgeben. Du endest damit, Netflix' Architektur auf ein Greenfield-Projekt zu übertragen, das 100 Transaktionen pro Tag verarbeitet.
+
+Vielleicht ist der Performance-Preis für deinen Anwendungsfall wert. Vielleicht nicht. Aber triff diese Entscheidung zumindest basierend darauf, wofür du tatsächlich optimierst – nicht basierend darauf, wofür du denkst, dass du optimieren solltest.
+
+Wofür optimierst du?
+
+## Ressourcen
+
+- [PostgreSQL Dokumentation zu Fremdschlüssel-Constraints](https://www.postgresql.org/docs/current/ddl-constraints.html#DDL-CONSTRAINTS-FK)
+- [PostgreSQL Performance-Tipps](https://www.postgresql.org/docs/current/performance-tips.html)
+- [Use The Index, Luke! – Fremdschlüssel](https://use-the-index-luke.com/sql/clustering/data-clustering)
+- [Datenbank-Normalisierung vs. Denormalisierung](https://www.postgresql.org/docs/current/tutorial-concepts.html)
