@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 54.03
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
