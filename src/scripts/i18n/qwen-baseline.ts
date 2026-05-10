@@ -104,6 +104,9 @@ function getQwenBaselineTasks() {
   }
 
   return tasks.sort((a, b) => {
+    const byMissingFile = Number(existsSync(a.targetPath)) - Number(existsSync(b.targetPath));
+    if (byMissingFile !== 0) return byMissingFile;
+
     const byTarget = b.targetPath.localeCompare(a.targetPath);
     return byTarget || a.locale.localeCompare(b.locale);
   });
