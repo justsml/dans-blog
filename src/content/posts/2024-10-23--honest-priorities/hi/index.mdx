@@ -1,0 +1,115 @@
+---
+social_image: ../desktop-social.webp
+title:  "प्राथमिकता का जाल"
+subTitle: क्या बहुविकल्पीय ही सर्वोत्तम विकल्प है?
+category: Thoughts
+subCategory: Agile
+date: 2024-10-23
+modified: 2024-10-24
+tags: [agile, leadership, priority, backlog, jira]
+cover: new-priority-city.webp
+cover_full_width: new-priority-city.webp
+cover_mobile: new-priority-city-w300.webp
+cover_icon: new-priority-city-w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@mroz?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Filip Mroz</a> on <a href="https://unsplash.com/photos/photo-of-tram-beside-waiting-station-during-nighttime-023T4jyCRqA?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+## `Priority` ड्रॉपडाउन का जाल
+
+<aside className="breakout">
+💡 जैसे-जैसे संगठन बढ़ता है, उसका बैकलॉग भी फूलता जाएगा। अंततः सूची का आकार प्राथमिकता की *मांग* करेगा।
+</aside>
+
+## एक स्टार्टअप की कहानी
+
+बिना किसी शक के, आपके Jira एडमिन के पास एक समाधान होगा: देखो, एक `Priority` फ़ील्ड ड्रॉपडाउन! (एंटरप्राइज़ डेवलपर्स के लिए प्रो टिप: शायद `Priority2` या `P-level` नाम दिया जाए।)
+
+अजीब बात यह है कि 100% कंपनियां `P1, P2, P3, P4` या `Low, Med, High, और Critical` के बीच चुनती हैं — मानो कोई और विकल्प हो ही नहीं।
+
+चार विकल्पों की हार्ड-कोडेड सूची? ठीक है। कुछ हफ़्तों के लिए आज़माते हैं...
+
+### 2 दिन बाद
+
+*किसी को भी हैरान न करने वाले मोड़ में*, संगठन को एक नई, उच्च प्राथमिकता वाले टिकट का पता चला, जिसके लिए एक छोटी हैकिंग की ज़रूरत पड़ी: `P0`, या `Critical Max+` जोड़ना!
+
+### 3 और दिन बाद
+
+*हमारे बॉस ने कॉन्फ्रेंस में कुछ रोमांचक मीटिंगें और खोजें कीं!*
+
+किसी तरह उन्होंने `P0` से भी उच्च प्राथमिकता खोज निकाली!
+
+तब से टीम इस नई प्राथमिकता को लेबल करने के तरीके पर शोध में लगी हुई है।
+
+शायद `-1`? नहीं, नहीं। यह बहुत भ्रमित करने वाला होगा (`P-1` बनाम `P1`)। ठीक है, `P0.5` कैसा रहेगा?
+
+<p className="breakout">एक "प्रेरित" क्षण में, टीम ने एक उच्च प्राथमिकता का आविष्कार किया: डबल-ज़ीरो!<br />अब इसे `P00` प्राथमिकता के नाम से जाना जाता है।</p>
+
+{/* *आखिरकार, हम दुनिया की हर चीज़ को अपनी प्राथमिकताओं के ड्रॉपडाउन में neatly लेबल कर सकते हैं! (…evil laugh…)* */}
+
+### बाढ़ से पहले
+
+कोई एहसास करने से पहले ही, आपकी टीम somehow `P00` टिकटों में डूब रही है!
+
+<b>इस सिली इंजीनियरिंग थिएटर के खेल से हम कैसे बच सकते हैं?</b>
+
+## क्या होगा अगर प्राथमिकता बहुविकल्पीय न हो?
+
+हम प्राथमिकता जैसे लगातार बदलते, तरल मानव विचार को बेहतर तरीके से कैसे दर्शा सकते हैं?
+
+- असली दुनिया में, प्राथमिकताएं नई जानकारी, बाज़ार में बदलाव, और संगठनात्मक लक्ष्यों के आधार पर लगातार बदलती और विकसित होती रहती हैं।
+- अक्सर urgency, importance, resource availability, और cost/risk analysis के बीच एक जटिल अंतर्संबंध होता है जिसे एक साधारण ड्रॉपडाउन कैप्चर नहीं कर सकता, खासकर समय के साथ। (टिकट rot।)
+- विभिन्न stakeholders की उच्च प्राथमिकता के बारे में अलग-अलग राय हो सकती है, जिससे one-size-fits-all approach अनुपयुक्त हो जाता है।
+
+## तो, आगे क्या?
+
+कई वैकल्पिक दृष्टिकोण हैं जिनका पता लगाना उचित है, कम से ज़्यादा effort तक:
+
+- ज़्यादा leg और headroom देने के लिए, एक "neutral" starting value चुनें, जैसे 100 या 1,000। आप हमेशा संख्या बढ़ा या घटा सकते हैं।
+    - या शुरुआत में शून्य से शुरू करें, जहाँ उच्च संख्याओं की उच्च प्राथमिकता हो।
+- एक multidimensional prioritization system लागू करें जो business value, urgency, और required effort जैसे factors को ध्यान में रखे। (sorting और filtering आसान बनाने के लिए एक `composite` score बनाएं।)
+- एक dynamic prioritization method अपनाएं, जैसे [MoSCoW technique](https://en.wikipedia.org/wiki/MoSCoW_method) (Must have, Should have, Could have, Won't have), जो regular reassessment की अनुमति दे। ([Kano Model](https://en.wikipedia.org/wiki/Kano_model) भी देखें।)
+
+## सारांश
+
+Priority पर इतना ज़ोर दिया जाता है, भले ही इसकी decay rate तेज़ हो। कल के `CRITICAL` टिकट शायद अगली तिमाही के `CRITICAL` टिकट न हों।
+
+समय के साथ, पुराने high-priority टिकट cleanup और maintenance के प्रति resistant हो जाते हैं। आखिरकार, कौन किसी चीज़ की `Priority` कम करना चाहेगा जिसे एक बार ***अनिवार्य*** declared किया गया हो? उन अप्रासंगिक टिकटों को delete करने की तो बात ही छोड़ दें… (हाय! बैकलॉग के बारे में सोचें!)
+
+मैंने कई कंपनियों को `Severity` और `Priority` को mix up करते देखा है। `Severity` ***urgency*** (या time-sensitivity) को describe करता है।
+
+`Priority ≠ Severity`। 3-5 severity levels define करना समझदारी हो सकती है (अक्सर Service Level Agreements maintain करने के लिए उपयोग किया जाता है।)
+
+Urgency के levels `zero customer impact` से लेकर `partial/complete service outage` तक communicate करने में मदद करते हैं।
+
+## एक चेतावनी
+
+Unbounded Priority field deploy करने के लिए थोड़ी planning और discipline की ज़रूरत होती है!
+
+अगर आप front-end development से परिचित हैं, तो आपने `z-index` war का अनुभव किया होगा।
+
+मूल रूप से, `z-index` designers को *any* positive integer set करने देता है ताकि यह सुनिश्चित हो सके कि उनकी widgets अन्य lower `z-index` content के "ऊपर" दिखें।
+
+एक minor component update भी उनके `<Dialog />` पर z-index में change introduce कर सकता है — जिससे वह अचानक invisible हो जाता है। ये situations messy हो सकती हैं क्योंकि हमारे third-party components, feature work, और अन्य team contributions एक-दूसरे को out-`z-index` करने की कोशिश करते थे।
+
+`Z-index` एक समय ~32,000 तक limited था। हालाँकि, मैंने हाल ही में एक snippet देखा जिसमें अरबों `z-index: 1000000000` था!
+
+Inflation को `z-index` पर hard hit लग रहा होगा।
+
+## चर्चा करें
+
+- क्या यह एक worthy thought experiment है?
+- ever-increasing Priority का idea horrifying है? anxiety inducing है?
+- क्या यह inevitable है कि यह approach अंततः 64-bit integer limits से exceed कर जाए?
+- क्या अन्य fields (`Severity` या `Urgency` के अलावा) इस conversation में contribute कर सकते हैं?
+- Jira कितना blame deserve करता है? या credit?
+
+हम इंटरनेट में चिल्ला सकते हैं, "इन सभी `P00` tix को कौन clean करने वाला है?"
+
+या, आप अपने backlog के बारे में ***real*** हो सकते हैं।
+
+- स्वीकार करें कि आपके 1,000 टिकटों में से 90% कभी complete नहीं होंगे। यह ठीक है।
+- उन टिकटों को archive करें जो महीनों से untouched रहे हैं। कोई भी initial priority/urgency अब applicable नहीं है। वैसे भी, archived issues को अक्सर retrieve किया जा सकता है।
+- जब कोई issue वापस आए, तो यह cool है; इसने बस अपनी priority बढ़ा दी।
+- Anecdotally, मैंने पुराने और incomplete टिकटों को discard करने से zero harm noticed किया है।
+- Backlog-as-database को endlessly append करना उस opportunity को miss कर देता है जो आपकी team और organization को what matters पर focus करने देती है। (हमारे आगे की चीज़ें। जबकि backlogs inherently पीछे की ओर देखते हैं।)
+- एक deep backlog एक Bizzaro Trophy Room की तरह हो जाता है, जो उस shit को celebrate करता है जो आप कभी ship नहीं करेंगे।
