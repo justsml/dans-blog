@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: prompt-injection-new-sql-injection
+- Locale: ru
+- Model: openrouter/qwen/qwen3.5-flash-02-23
+- Target: src/content/posts/2026-05-05--prompt-injection-new-sql-injection/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 22.80
+- Input tokens: 0
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
