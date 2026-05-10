@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: it
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/it/index.mdx
+- Validation: passed
+- Runtime seconds: 52.43
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
