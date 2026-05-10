@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: linux-system-benchmark-scripts
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2017-05-01--linux-system-benchmark-scripts/it/index.mdx
+- Validation: passed
+- Runtime seconds: 89.19
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
