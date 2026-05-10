@@ -1,0 +1,294 @@
+---
+social_image: ../desktop-social.webp
+title: "TypeScriptにおけるゲリラ型定義"
+subTitle: 反逆的な型デザイン
+date: 2023-09-05
+modified: 2024-07-30
+tags: [engineering,typescript,composition,types]
+category: Guides
+subCategory: TypeScript
+cover: gorilla-types_dall-e.webp
+cover_mobile: w300_gorilla-types_dall-e.webp
+cover_icon: icon_gorilla-types_dall-e.webp
+---
+
+## TypeScriptにおけるゲリラ型定義
+
+この記事では、型デザインを支援する3つの興味深い（そして恐ろしい？）テクニックを探求します！
+
+主な目的は、**一貫性**があり**予測可能**なモデル/エンティティ/クラスのインターフェースを実現することです。
+
+- [型を設計するアプローチ](#approaches-to-designing-types)
+  - [単一の巨大なオブジェクト](#single-large-object)
+  - [複数の名前付き型](#multiple-named-types)
+- [テクニック #1: 全部取り](#technique-1-why-not-all)
+- [テクニック #2: ミックスイン](#technique-2-mix-ins)
+  - [ミックスインの例](#mix-in-examples)
+  - [`User`の例](#example-user)
+- [テクニック #3: 名前空間による整理](#technique-3-organizing-with-namespaces)
+  - [実世界での使用例](#real-world-usage)
+- [まとめ](#summary)
+
+<!--
+1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
+2.  Durable way to model combinations of logically related fields.
+    1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
+    2.  Model Request & Response fields from your discrete database models. (e.g. `_version`, `_v`)
+    3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
+3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
+4.  Compose higher level types with multiple smaller reusable interfaces & types.
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+
+### 型を設計するアプローチ
+
+サードパーティAPIのデータを消費する際など、おそらく「型の実装」に関する様々なパターンを目にしたことがあるでしょう。
+
+**注:** ここでは、エンティティ関係図（ERD）やオブジェクト指向プログラミング（OOP）の継承階層を構築する「伝統的な」プロセスは意図的に無視します。ここでは、半構造化されたAPIデータを表現するための型を構築しています。
+
+2つの高レベルなアプローチを探ってみましょう：**単一の巨大なオブジェクト**（トップダウン）対 **複数の名前付き型**（ボトムアップ）です。
+
+#### 単一の巨大なオブジェクト
+
+再利用性やDRY（Don't Repeat Yourself）よりも、明示的であることを優先します。
+
+**ボーナス:** ツールチップにより完全なプレビューが表示されるため、IDE/開発者体験は良好です。
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+明示的な可読性を優先しているため、_ある程度の_ 繰り返し（合理的な範囲内で）は許容されます。プロパティのグループが_何度も_ 繰り返される場合は、遠慮せずに繰り返しフィールドを名前付き型に抽出してください。
+
+#### 複数の名前付き型
+
+再利用性とDRY性を優先します。
+
+<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+
+このアプローチは、おそらく圧倒的な支持を得ている方法でしょう。
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+全体的には素晴らしいアプローチですが、欠点がないわけではありません。
+
+- **可読性** は最初は非常に優れていますが、型のサイズと数が増えるにつれて_損なわれる可能性_ があります。
+- 徹底的なDRYですが、その代償は？（後ほど詳しく説明します。）
+- ツールチップの情報が少なくなるため、開発者体験が損なわれる可能性があります。
+
+> ⚠️ （およそ）TypeScript v3以降、言語サーバーはツールチップを切り捨て、ネストされたプロパティを省略するようになりました。
+> 💡 状況を少し改善するトリックがあります。`Cmd` または `Ctrl` を押したまま、様々な型名にカーソルを合わせてみてください。ツールチップに少なくとも1つ以上のレイヤーのプロパティが表示されるはずです。
+
+なぜこれら2つのアプローチのどちらかを選ばなければならないのでしょうか？（巨大な型 vs 名前付きサブ型。）
+
+### テクニック #1: 全部取り
+
+両方を持つことはできないでしょうか？
+
+- 「全体像」の型の明確さ？
+- 名前付きサブ型？
+- 重複なしで？
+
+> ✅ はい！🎉
+
+<!-- ### Some things to consider
+
+- How do you represent a `one-to-one` relationship like `Product` -> `Seller`?
+- What about `one-to-many` relationships? Say `Reviews`, or `Photos`?
+- Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) -->
+
+<!-- This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the "big picture" more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. -->
+
+<!-- When provided with some structured array/object data, many TypeScript coders feel the urge to create types. Loads of types. Eventually a cascade of layers forms, made up of simpler types building ever more complex types.
+
+Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? -->
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1.  大きな「プライマリ」構造化型を作成する。
+2.  プライマリ型から派生したサブ型をエクスポートする。
+
+このアプローチは、「高レベル」なオブジェクトが1か所でのドキュメント化の恩恵を受けるシステムで特に効果を発揮します。
+また、このテクニックはモデル、サービス、クエリ結果など、多くのユースケース間での再利用をサポートします。
+
+### テクニック #2: ミックスイン
+
+この戦略は、**単一の論理的なオブジェクトを表現する**ために、**正しいフィールド**を**正しい名前**で組み合わせることです。目標は、TypeScriptのユーティリティと型のユニオンを使用して、複数のユースケースを効率的に処理することです。
+
+このアプローチは、オブジェクトの層を密結合の分類体系に作成することを目的とする伝統的なOOPの継承や階層とは異なります。**ミックスインのアプローチは、平坦で緩く関連した型**に関するもので、関連するフィールドをグループ化しながら重複を減らすことを目的としています。
+
+#### ミックスインの例
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft represents Form state, possibly all undefined */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo represents a Todo instance record from the database */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### `User`の例
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+データベースへの保存前と保存後の`User`を表現してみましょう。
+
+```tsx
+// Core User fields (say for a <form>)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Fields from the database
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// A User **instance** - with all fields
+type UserInstance = InstanceMixin & UserBase;
+```
+
+これで、必要な正確なフィールドを削り出すことができます（例えば、作成/更新には`password`が必要ですが、`UserInstance`のクエリには含まれません）。
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & { password: string };
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1.  「これは良いプラクティスなのか？」
+2.  「試してみるべきか？」
+
+わかりません。先に進みましょう！
+
+### テクニック #3: 名前空間による整理
+
+ここでは、`ModelMixins`名前空間を宣言します。これにより、いくつかの整理とより明確な再利用パターンが提供されます。
+
+**標準化された形状**
+
+- `createdAt`と`updatedAt`は一緒に存在する。
+- `ID`や`_id`ではなく`id`。
+
+```tsx
+// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**型のユニオンの使用**
+
+```tsx
+// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Single `User` type, using Type Union to dynamically
+//  represent the pre- & post-creation states.
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+必要に応じて、個別の名前付き型をエクスポートすることもできます。
+
+```tsx
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### 実世界での使用例
+
+`in`演算子を使用して`UserInstance`と`UserPayload`の型を区別する`upsert()`関数です。
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript knows `user` here has fields from Instance (id, createdAt, etc)
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript knows this must be the `UserBase & ModelMixins.InputPassword` version of user.
+    return createUser(user);
+  }
+}
+```
+
+### まとめ
+
+3つのテクニックといくつかの関連するサポートアイデアについて説明しました。
+
+おそらくこう尋ねていることでしょう。「これらのパターンは良いのか？これらのアイデアの一部を採用すべきか？」と。
+
+## リソース
+
+- [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
+- [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript Tips](https://www.totaltypescript.com/tips)
