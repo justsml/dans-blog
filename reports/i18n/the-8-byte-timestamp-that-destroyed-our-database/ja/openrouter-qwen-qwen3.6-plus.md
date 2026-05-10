@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 56.93
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
