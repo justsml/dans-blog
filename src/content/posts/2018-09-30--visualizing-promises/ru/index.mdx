@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title:  "Визуализация промисов"
+subTitle: Сквозь асинхронность...
+date: 2018-09-30
+modified: 2024-07-30
+category: Guides
+subCategory: promises
+cover: junior-ferreira-735237-unsplash.webp
+cover_mobile: w300_junior-ferreira-735237-unsplash.webp
+cover_icon: icon_junior-ferreira-735237-unsplash.webp
+tags: [promises, async, visualizing, javascript, composition]
+related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
+---
+
+Чтобы визуализировать выполнение промисов, определим новый метод `delay(millisecs)`.
+
+```js
+function delay(millisecs) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(millisecs), millisecs);
+  });
+}
+```
+
+Это утилита, которая завершается после истечения указанного таймаута.
+
+Значение задержки в миллисекундах будет передано в колбэк `.then`.
+
+Рассмотрим 4 примера (с анимированными временными шкалами).
+
+## Пример #1/4
+
+Здесь показано, как выполнение `console.log()` задерживается из-за `delay(msec)`.
+
+```js
+delay(1000).then(() => console.log("done"));
+```
+
+![Временная шкала: delay 1000, затем console.log выполняется через одну секунду](N_1000ms_log.webp)
+
+<!-- ```
+delay(1000) --------|.then(fn)
+                    | console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Пример #2/4
+
+_Здесь показана распространённая ошибка._
+
+`console.log` вызывается сразу в момент начала `delay(1000)`, а не после задержки, как вы, вероятно, хотели.
+
+Поскольку `console.log` возвращает `undefined`, наш `.then()` молча игнорируется.
+
+Обратите внимание на разницу: `typeof console.log === 'function'` против `typeof console.log() === undefined`.
+
+Обычно желаемый способ использования `console.log` показан в примере #1. Убедитесь, что вы передаёте функции в `.then` и `.catch`.
+
+```js
+delay(1000).then(console.log("done"));
+```
+
+![Временная шкала: console.log выполняется немедленно, до завершения delay](N_1000ms_!log.webp)
+
+<!-- ```
+delay(1000) --------|.then(null)
+console.log('done')
+|-------------------|--------------------|--------------------|-----------------
+0msec             1sec                 2sec                 3sec
+``` -->
+
+## Пример #3/4
+
+Три промиса выполняются одновременно.
+
+```js
+delay(1000).then(console.log);
+delay(2000).then(console.log);
+delay(3000).then(console.log);
+```
+
+![Временная шкала: три промиса задержки завершаются через одну, две и три секунды](N_3000ms.webp)
+
+<!-- ```
+delay(1000) ------|.then(console.log)
+delay(2000) ------|--------------------|.then(console.log)
+delay(3000) ------|--------------------|--------------------|.then(console.log)
+|-----------------|--------------------|--------------------|-------------------
+|                 |                    |                    |
+0msec           1sec                 2sec                 3sec
+``` -->
+
+## Пример #4/4
+
+`Promise.all` с тремя промисами `delay`. Они выполняются одновременно.
+
+```js
+Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
+```
+
+![Временная шкала: Promise.all ждёт завершения всех трёх промисов задержки](N_3000ms_PromiseAll.webp)
+
+<!--
+```
+delay(1000) ---| [resolved]------------------v
+delay(2000) ---|--------------| [resolved]---v
+delay(3000) ---|--------------|--------------v [resolved]
+Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
+|--------------|--------------|--------------|--------------------------------
+|              |              |              |
+0msec        1sec           2sec           3sec
+```
+-->
+
+> Благодарности:
+>
+> - Анимированные асинхронные диаграммы: [Patrick Biffle](https://github.com/Piglacquer)
+> - Вдохновение для статьи: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
+
+<!-- <div class="challenge" title="Question #1: Meaning of life:">
+  <ul class="options">
+    <li>1</li>
+    <li>2</li>
+    <li class="answer">42</li>
+    <li>3</li>
+  </ul>
+  <div class="description">What is the meaning of life?</div>
+</div> -->
