@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 31.99
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
