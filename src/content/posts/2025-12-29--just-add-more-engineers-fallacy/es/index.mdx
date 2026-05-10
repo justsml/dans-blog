@@ -1,0 +1,107 @@
+---
+draft: true
+hidden: true
+publish: false
+title: "La falacia de 'solo añade más ingenieros'"
+subTitle: "Por qué lanzar cuerpos a un proyecto atrasado lo retrasa aún más."
+category: Code
+subCategory: Ingeniería de Software
+date: 2025-12-29
+modified: 2025-12-29
+tags: [engineering-management, team-scaling, brooks-law, productivity, software-engineering]
+---
+
+## n(n-1)/2
+
+Esa es la fórmula que debería estar tatuada en el brazo de cada gerente de ingeniería. No es la solución a tu problema de plazos. Es la prueba matemática de por qué tu solución no funcionará.
+
+Has estado en esa reunión. Esa en la que alguien inevitablemente sugiere que "solo añadamos más desarrolladores" para cumplir con la fecha límite. La hoja de cálculo lo hace parecer tan simple: 2 ingenieros × 3 meses = 6 ingeniero-meses de trabajo, así que 6 ingenieros deberían terminarlo en 1 mes, ¿verdad? El VP asiente con aprobación. El PM actualiza el cronograma. Todos se sienten productivos.
+
+Excepto que las matemáticas no funcionan así, y nunca lo han hecho.
+
+## Lo que nadie te cuenta sobre las rutas de comunicación
+
+Cuando tienes 5 ingenieros en un equipo, pueden hablar entre sí de 10 maneras diferentes. Añade 5 ingenieros más, y de repente hay 45 canales de comunicación diferentes que gestionar. Esa es la fórmula en acción: n(n-1)/2, donde n es el tamaño de tu equipo.
+
+Esto no es un inconveniente menor. Esta es la diferencia entre "lo discutimos en el almuerzo" y "déjame programar una reunión con los interesados". No acabas de duplicar la capacidad de tu equipo. Has más que cuadruplicado la sobrecarga de mantener a todos alineados.
+
+Para cuando llegas a 20 personas, estás gestionando 190 conversaciones potenciales diferentes. Tu daily ya no es una sincronización rápida. Tus decisiones arquitectónicas requieren construcción de consenso. Tus conflictos de merge se convierten en excavaciones arqueológicas a través de visiones competidoras de la misma funcionalidad.
+
+El equipo DevDiv de Microsoft estudió esto allá por 2008, y los hallazgos fueron incómodamente claros: los costos de coordinación aparecen en todas partes. ¿Quién posee qué módulo? ¿Quién necesita estar en esta llamada? ¿Por qué este conflicto de merge ocurrió tres veces esta semana? Cada pregunta representa tiempo real que tus ingenieros no están dedicando a la fecha límite que intentas cumplir.
+
+Lo que es peor, la investigación en *Accelerate* de Forsgren, Humble y Kim mostró que los equipos más pequeños y autónomos consistentemente superan a los más grandes tanto en velocidad como en calidad. El impuesto de coordinación no es solo real. Es medible, y es caro.
+
+## La inversión de tres meses que no tienes tiempo para hacer
+
+Pero digamos que estás dispuesto a pagar ese costo de coordinación. Tienes presupuesto, tienes aprobación de headcount, y estás listo para lanzar recursos a este problema. ¡Genial! Ahora necesitas esperar de tres a seis meses para que esos recursos realmente ayuden.
+
+Tus nuevos ingenieros senior (y estás contratando personas senior, ¿verdad? Porque los ingenieros junior necesitarían aún más tiempo) pasan su primera semana solo consiguiendo que su entorno de desarrollo funcione. Luego necesitan entender tu arquitectura. No solo "usamos microservicios", sino *por qué* dividiste los servicios de esa manera. No solo "usamos Redis aquí", sino qué pasó en el incidente de hace dos años que te hizo elegir Redis sobre la alternativa obvia.
+
+Durante este tiempo, tu equipo existente está pagando el impuesto de mentoría. Cada pregunta es legítima y necesaria: "¿Por qué estructuramos el flujo de autenticación de esta manera?" "¿Quién posee el servicio de facturación?" "¿Este TODO de 2019 sigue siendo relevante?" Cada una saca a alguien de su trabajo. La investigación de Gloria Mark en UC Irvine encontró que toma un promedio de 23 minutos volver a una tarea después de una interrupción. Si tus cinco nuevos ingenieros hacen cinco preguntas al día cada uno, estás quemando horas de tiempo de enfoque de las personas que se supone que deben cumplir esa fecha límite.
+
+Camille Fournier escribe en *The Manager's Path* que toma de 3 a 6 meses para un ingeniero senior volverse completamente productivo en un codebase complejo. Eso si todo va bien. Eso si tu documentación está actualizada, tu conocimiento tribal es accesible, y tu dominio no es particularmente extraño. La mayoría de los codebases no cumplen esos criterios.
+
+El mes tres es particularmente peligroso. Tus nuevos ingenieros están confiados ahora. ¡Están escribiendo código! ¡Son productivos! Excepto que no conocen el caso límite extraño en el flujo de pagos, o el módulo legacy que secretamente estás migrando, o el incidente que enseñó a todos por qué nunca, nunca se despliega los viernes. Parte de su código necesitará refactorización. Algunos podrían causar incidentes. Todo necesita revisión exhaustiva de esas mismas personas que se supone que deben cumplir la fecha límite.
+
+## La incómoda continuidad de la Ley de Brooks
+
+Fred Brooks escribió sobre esto en 1975. *The Mythical Man-Month* capturó una verdad simple: "Añadir mano de obra a un proyecto de software atrasado lo atrasa más". El libro se basó en su experiencia con el proyecto OS/360 de IBM, e incluyó esa memorable metáfora: una mujer puede hacer un bebé en nueve meses, pero nueve mujeres no pueden hacer un bebé en un mes.
+
+Cinco décadas después, tenemos mejores herramientas. Nuestros pipelines de CI/CD reducen algunos costos de integración. Los flujos de trabajo modernos de pull request detectan problemas antes. Un estudio de 2019 en *IEEE Transactions on Software Engineering* encontró que las prácticas sólidas de CI/CD pueden reducir los costos de integración hasta en un 40%. Las herramientas de comunicación asíncrona nos permiten coordinar a través de zonas horarias. Los microservicios bien diseñados pueden reducir las dependencias entre equipos.
+
+Pero los humanos no se han actualizado. Todavía necesitamos contexto. Todavía necesitamos entender el porqué detrás de las decisiones, no solo el qué. O(n²) es matemáticas, no opinión. Puedes optimizar los factores constantes en esa ecuación, pero no puedes escapar de la tasa de crecimiento fundamental. La experiencia en el dominio todavía toma tiempo construir, sin importar lo buena que sea tu documentación de onboarding.
+
+La tecnología cambia. Las matemáticas permanecen iguales.
+
+## Amazon sabía esto a principios de los 2000
+
+Jeff Bezos instituyó la regla del "equipo de dos pizzas" en Amazon: si un equipo no puede ser alimentado con dos pizzas, es demasiado grande. El punto óptimo terminó siendo de 5 a 8 personas. Esto no era sobre presupuestos de pizza o ser extravagante. Los equipos más pequeños toman decisiones más rápido porque hay menos interesados. Se comunican más eficientemente porque hay menos rutas. Construyen mejores sistemas porque la propiedad es más clara.
+
+En *Team Topologies*, Matthew Skelton y Manuel Pais citan investigación mostrando que equipos de 7-9 personas alcanzan el balance óptimo entre capacidad y coordinación. Más allá de ese umbral, estás pagando exponencialmente más en costos de coordinación por rendimientos decrecientes en producción. Las matemáticas te alcanzan ya sea que lo reconozcas o no.
+
+## Qué funciona realmente
+
+Entonces, ¿qué haces cuando un proyecto está genuinamente atrasado y la fecha límite es genuinamente importante?
+
+Reduces el alcance. Sé que al negocio no le gustará. Pero como escribe Marty Cagan en *Inspired*, "La realidad es que al menos la mitad de nuestras ideas simplemente no van a funcionar". Lanza el MVP. Difiere los nice-to-haves. Lanza sin el dashboard de métricas de vanidad. Puedes iterar en la v2.
+
+Elimina reuniones innecesarias. Simplifica procesos de aprobación. Dale a tu equipo tiempo de enfoque real e ininterrumpido. Di no a nuevas solicitudes de funcionalidades. El Sistema de Producción de Toyota tiene un concepto llamado "eliminar desperdicio", y a veces la forma más rápida de avanzar es dejar de hacer cosas que te ralentizan.
+
+Timeboxea implacablemente y lanza lo que tienes. Cuando Facebook lanzó, se llamaba "Thefacebook" y solo funcionaba en Harvard. Cuando AWS lanzó S3, tenía un puñado de llamadas API. Como escribe Paul Graham en *Hackers & Painters*, "Es mejor que unos pocos usuarios te amen realmente a que muchos usuarios te gusten más o menos". Lanza lo más simple que funcione.
+
+Si absolutamente debes contratar, contrata para el próximo proyecto, no para salvar este. Acepta el tiempo de rampa de 3-6 meses. Invierte en pair programming y mentoría. Documenta *por qué* se tomaron las decisiones, no solo cuáles fueron. La Ley de Brooks tiene un corolario: añadir personas a un proyecto *temprano* puede ayudar, porque pagas el costo de onboarding antes de la crisis de la fecha límite.
+
+## Por qué persiste la falacia
+
+La falacia de "solo añade más ingenieros" sobrevive porque se siente como tomar acción. Demuestra urgencia a los interesados. Se ve impresionante en una hoja de cálculo. Es emocionalmente satisfactoria en el momento.
+
+Pero el desarrollo de software no es trabajo de línea de ensamblaje. No estamos estampando widgets donde duplicar los trabajadores duplica la producción. Estamos resolviendo problemas interconectados donde el contexto importa, la comunicación importa, y la sobrecarga de coordinación es un costo real que escala cuadráticamente con el tamaño del equipo.
+
+Las matemáticas son claras: cinco personas tienen 10 rutas de comunicación, diez personas tienen 45, veinte personas tienen 190. El onboarding toma meses, no semanas. La sobrecarga de coordinación es un impuesto que pagas por cada persona adicional. Estas no son opiniones con las que puedes discutir en una sala de conferencias. Son realidades medibles que aparecen en tus gráficos de velocidad ya sea que creas en ellas o no.
+
+La próxima vez que alguien sugiera añadir más ingenieros a un proyecto atrasado, sabrás qué esperar. El proyecto no estará atrasado por días o semanas.
+
+Estará atrasado por meses. Y a diferencia de la mayoría de los problemas de ingeniería, no puedes refactorizar tu camino para salir de este.
+
+---
+
+## Lectura adicional
+
+**Libros:**
+- *The Mythical Man-Month* por Fred Brooks (1975)
+- *The Manager's Path* por Camille Fournier (2017)
+- *Accelerate* por Nicole Forsgren, Jez Humble y Gene Kim (2018)
+- *Team Topologies* por Matthew Skelton y Manuel Pais (2019)
+- *Inspired* por Marty Cagan (2017)
+- *Hackers & Painters* por Paul Graham (2004)
+
+**Artículos y Papers:**
+- "The Influence of Organizational Structure on Software Quality" (Microsoft Research, 2008)
+- "No Silver Bullet: Essence and Accidents of Software Engineering" por Fred Brooks (1986)
+- Investigación de Gloria Mark sobre interrupción y atención en UC Irvine
+- Varios artículos de Harvard Business Review sobre dinámica de equipos y productividad
+
+**Perspectivas modernas:**
+- Blog y libro *Staff Engineer* de Will Larson sobre liderazgo técnico
+- Charity Majors (Honeycomb) sobre observabilidad y estructura de equipos
+- Los informes State of DevOps de DORA
