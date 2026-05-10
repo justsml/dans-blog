@@ -1,0 +1,236 @@
+---
+title: "2025年のデータベース革新の波"
+subTitle: "AIのおかげです。"
+date: 2025-09-10
+modified: 2025-09-17
+tags: [serverless, databases, AI, innovation, chroma, lanceDB, pagefind, orama, duckdb]
+category: Search
+subCategory: "Databases"
+social_image: desktop-social.webp
+cover_full_width: data-city-wide.webp
+cover_mobile: data-city-square-200.webp
+cover_icon: data-city-square-200.webp
+cover_credit: "©️ 2025 Dan Levy"
+---
+
+## また別のVector DBの記事ではない
+
+もっと早く使っておけばよかったと願う判断基準はこれだ：
+
+<p class="inset">データがファイルから再構築可能で、ユーザーが主に読み取るだけなら、オブジェクトストレージデータベースをまず試せ。ユーザーが一日中書き込みを行うなら、本物のデータベースを使え。S3にデータベースの真似事をさせるのはやめろ。</p>
+
+それが有用な線引きだ。「サーバーレスが未来だ」でも「ベクトルデータベースがすべてを変えた」でもない。それらの文言はすでにカンファレンスのネームタグに十分印刷されている。
+
+AIは確かに多くの検索問題の形を変えた。突然、小規模チームがセマンティック検索、ハイブリッドランキング、ドキュメントチャット、マルチモーダル検索、そしてオブジェクトストレージ上のファイルに対する分析を欲するようになった。従来の答えは「pgvector付きのPostgresを運用する」か「OpenSearch/Elasticsearchを運用する」か「管理型検索サービスを買う」だった。それらの答えはワークロードがそれに値する場合には今も良い答えだ。
+
+しかし、多くのワークロードはそうではない。読み込みが支配的で、再構築可能で、コンテンツの変更から検索の反映までの短い遅延に耐えられるもの。ドキュメント。カタログのスナップショット。静的エクスポート。内部ナレッジベース。ローカル分析。プロトタイプRAGシステム。それらにとって、新しいクラスのツールが地味なアーキテクチャを異常に強力なものにした：インデックスをビルドし、ファイルとして保存し、HTTP経由で配信する。
+
+スナップショット注記：エコシステムは急速に動いている。以下のスター数、機能ラベル、パフォーマンス数値は2025年9月のスナップショットであり、永遠のスコアボードではない。これらを方向付けとして扱い、本番移行をどのセルに賭けるか決める前に現在のドキュメントを確認してほしい。
+
+## 名前を変えただけのデータベース
+
+これらのサーバーレスおよびCDN対応データストアは、従来のデータベースインフラが価値以上の儀式になりかねない中規模ケース（約1,000〜1,000,000レコード、または数GB）で有用だ：
+
+- **Pagefind**（2022年、約4.5K ⭐）：純粋な静的アプローチ — 一度コンパイルすれば、バックエンド不要で永久に検索可能
+- **Orama**（2023年、約8K ⭐）：ブラウザからサーバーレス関数までどこでも動作するユニバーサルソリューション
+- **Chroma**（2022年、約14K ⭐）：AIネイティブ、RAGアプリケーション用に設計
+- **LanceDB**（2023年、約4K ⭐）：ディスクベースアーキテクチャによるエンタープライズマルチモーダル機能
+- **DuckDB-WASM**（2019年、約23K ⭐）：WebAssembly経由でブラウザで動作するフルSQL分析データベース
+
+共通する動きはシンプルだ：永続的なデータをファイルやオブジェクトストレージに保持し、ブラウザ、エッジ関数、ワーカー、または軽量サービスからクエリする。それは複雑さを排除するわけではない。複雑さをビルドパイプライン、インデックスの鮮度、キャッシュの無効化、クライアントの機能へと移動させるだけだ。読み込みが支配的な場合には、それで完璧に良いトレードになる。
+
+### チェックボックスの戦い
+
+| Feature | [Pagefind](https://pagefind.app) | [Orama](https://orama.com) | [Chroma](https://www.trychroma.com/) | [LanceDB](https://lancedb.com) | [DuckDB-WASM](https://duckdb.org/docs/api/wasm) |
+|---------|----------|--------|---------|----------|----------|
+| **Full-Text Search** | ✅ Advanced stemming | ✅ BM25, 30 languages | ✅ SQLite FTS | ✅ Tantivy | ✅ Full SQL |
+| **Vector Search** | ❌ | ✅ Cosine similarity | ✅ HNSW | ✅ IVF_PQ, HNSW, GPU | ⚠️ Extensions |
+| **AI/RAG Integrations** | None | ✅ Built-in pipeline | ✅ LangChain, LlamaIndex | ✅ Advanced reranking | ⚠️ Manual setup |
+| **Storage** | Static JSON/WASM | Memory + S3 plugins | Server-based* | S3-compatible Lance | WASM + S3/HTTP |
+| **Write Support** | Build-time only | Full CRUD | Full CRUD | Full CRUD | Full SQL CRUD |
+| **Performance** | Sub-100ms | 0.0001ms - 100ms | Sub-100ms | 3-5ms vector, 50ms FTS | 10ms-1s (complex SQL) |
+
+*2025年9月スナップショット：Chromaはサーバーランタイムを必要とし、オブジェクトファイルツールのような方法で直接S3オブジェクトストレージをサポートしていない（[issue #1736](https://github.com/chroma-core/chroma/issues/1736)）。
+
+### 実装例
+
+構文の違いが本当の分裂を明らかにしている：ビルドタイム検索、インメモリ検索、ベクトルネイティブストレージ、マルチモーダルテーブル、ブラウザSQLは、AIデモにすべて登場するからといって同じ製品カテゴリーではない。
+
+#### Pagefindによる静的サイト検索
+```html
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js"></script>
+<div id="search"></div>
+<script>new PagefindUI({ element: "#search" });</script>
+```
+
+#### LanceDBによるエンタープライズグレードのマルチモーダル
+
+**自動OpenAI埋め込み付きのLanceDBテーブルを作成するコード：**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+import { LanceSchema, getRegistry } from "@lancedb/lancedb/embedding";
+import { Utf8 } from "apache-arrow";
+
+const db = await lancedb.connect("data/multimodal-db");
+const func = getRegistry()
+  .get("openai")
+  ?.create({ model: "text-embedding-ada-002" });
+
+// Schema with automatic embedding generation
+const documentsSchema = LanceSchema({
+  text: func.sourceField(new Utf8()),
+  vector: func.vectorField(),
+  category: new Utf8()
+});
+
+const table = await db.createEmptyTable("documents", documentsSchema);
+await table.add([
+  { text: "machine learning concepts", category: "research" },
+  { text: "deep learning fundamentals", category: "research" }
+]);
+```
+
+**LanceDBテーブルをクエリする例：**
+```typescript
+import * as lancedb from "@lancedb/lancedb";
+import "@lancedb/lancedb/embedding/openai";
+// "Connect" to a URL path
+const db = await lancedb.connect("data/multimodal-db");
+const table = db.getTable("documents");
+
+// SQL + vector search combination
+const results = await table.search("machine learning concepts")
+  .where("category = 'research'")
+  .limit(10)
+  .toArray();
+
+console.log(results);
+```
+
+
+#### Oramaによるユニバーサル検索
+```typescript
+import { create, insert, search } from '@orama/orama'
+
+const db = create({
+  schema: {
+    title: 'string',
+    content: 'string', 
+    embedding: 'vector[1536]'
+  }
+})
+
+await insert(db, { 
+  title: 'Getting Started',
+  content: 'Learn the basics',
+  embedding: await generateEmbedding('Learn the basics')
+})
+
+const results = await search(db, { 
+  term: 'basics',
+  mode: 'hybrid' // Combines text + vector search
+})
+```
+
+**DuckDB-WASM：**
+```typescript
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.mjs";
+const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
+const worker = new Worker(bundle.mainWorker);
+const db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+await db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
+const conn = await db.connect();
+await conn.query(`create table t as select * from (values (1,'hybrid search'),(2,'edge sql')) as v(id,txt);`);
+// Optional full-text:
+await conn.query(`install fts; load fts; select * from t where match_bm25(txt, 'hybrid');`);
+```
+
+#### ChromaによるAIネイティブ検索
+```typescript
+import { ChromaClient } from "chromadb";
+
+const client = new ChromaClient();
+const collection = await client.createCollection({ name: "knowledge-base" });
+
+await collection.add({
+  documents: ["AI will transform software development"],
+  metadatas: [{ source: "tech-blog", category: "AI" }],
+  ids: ["doc1"]
+});
+
+const results = await collection.query({
+  queryTexts: ["future of programming"],
+  where: { category: "AI" },
+  nResults: 5
+});
+```
+
+## ユースケースガイド
+
+**Pagefindを選ぶ場合：**
+- ドキュメント、ブログ、ナレッジベースを構築している
+- コンテンツの更新が週1回以下
+- 運用オーバーヘッドゼロかつ完璧なCDNキャッシュが必要
+- *例：月1回更新される1万ページ以上の企業ドキュメント*
+
+**Oramaを選ぶ場合：**
+- ダッシュボード、EC、またはダイナミックアプリケーションを構築している
+- リアルタイム更新と100ms未満のパフォーマンスが必要
+- ブラウザからエッジ関数までの柔軟なデプロイメントが必要
+- *例：ダイナミックな製品カタログを持つSaaS*
+
+**Chromaを選ぶ場合：**
+- RAGアプリケーションやAIナレッジベースを構築している
+- LangChain/LlamaIndex統合が必要
+- セマンティック検索がコア機能
+- *例：AIカスタマーサポートボット*
+
+**LanceDBを選ぶ場合：**
+- マルチモーダルデータ（画像、音声、動画）を扱っている
+- 大規模なエンタープライズパフォーマンスが必要
+- 複雑な分析とリランキングが必要
+- *例：セマンティック動画検索を持つメディアプラットフォーム*
+
+**DuckDB-WASMを選ぶ場合：**
+- ブラウザやエッジ関数でフルSQL機能が必要
+- 分析ワークロードと複雑なクエリを扱っている
+- S3から直接CSV/Parquetファイルを処理したい
+- *例：アドホックSQLクエリを持つビジネスインテリジェンスダッシュボード*
+
+## 判断基準
+
+実践的な問いは「どのデータベースが一番良いか？」ではない。
+
+実践的な問いは：システムが吸収しなければならない変化はどのような種類か？
+
+- **再構築可能なコンテンツ：** Pagefind、Oramaスナップショット、Lanceファイル、Parquet上のDuckDB。痛くなるまで静的に保て。
+- **頻繁な書き込み：** Postgres、Chromaサーバー、管理型検索サービス、またはキューベースのインデックスパイプライン。協調が必要だ。雰囲気ではない。
+- **ユーザー固有の結果：** 本物のバックエンドを使え。オブジェクトストレージは認可モデルではない。
+- **ファイル上の分析：** DuckDBは異常に有用だ。SQLにSQLらしいことをさせろ。
+- **マルチモーダルまたはベクトル-heavyな検索：** LanceDBとChromaは、READMEのベンチマークではなく、実際のデータに対してテストする価値がある。
+
+ハッピーパスは安い。エッジケースがアーキテクチャを決める。
+
+## 大きな絵
+
+これらのツールは有用な検索に必要な最小限のインフラを削減する。それは重要だ。2020年、「セマンティック検索」には多くのサービス、大量の接着剤コード、そして部屋の半分がランチを欲している会議でベクトルインデックスを説明する誰かが必要だった。2025年、小規模チームがファイル、埋め込み、そして週末で同じ製品アイデアをプロトタイプできる。
+
+それはすべての検索ボックスがRAGシステムになるべきだという意味ではない。それは最初のバージョンが本番の証拠を持つ前に本番のインフラを継承する必要がなくなったという意味だ。
+
+AWSでさえS3周辺のベクトル検索作業でこの方向に動いている。これは有用なシグナルだ：オブジェクトストレージは古いファイルが行く屋根裏ではもはやない。それはクエリサーフェスになりつつある。
+
+## 実験を始めよう
+
+1. **更新パターンを最初に選べ**：ビルドタイム、1時間ごとのバッチ、ライブ書き込み、またはユーザーごとの結果。
+2. **最も正直な最小限のツールでプロトタイプせよ**：静的HTMLにはPagefind、分析ファイルにはDuckDB、軽量アプリ検索にはOrama、ベクトル-heavyな作業にはLanceDBまたはChroma。
+3. **醜い部分を測定せよ**：インデックス時間、鮮度、バンドルサイズ、権限、コールドスタート後の最初のクエリ。
+4. **痛みが本物になったときだけ昇格させよ**：ファイルベースのバージョンがどこで曲がるかを正確に示した後でなければ、管理型データベースの正当化は難しい。
+
+*実践的な[Pagefindガイド][1]で実装の詳細を見るか、大規模なデータを変革しつつあるエッジネイティブデータベースのエコシステムを探検してほしい。*
+
+> **免責事項：** 私は長年Pagefindを使用しており、2025年にコントリビューターになった。より小さなプロジェクトでOramaとChromaを実験し、より大規模なAIアプリケーションでLanceDBを探っている。これらのプロジェクトへの金銭的関係はない — 進化するデータベースの風景への強い興味だけだ。
+
+[1]: https://danlevy.net/you-might-not-need-algolia/
