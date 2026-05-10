@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: upgrade-from-gatsby-to-astro
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-08-22--upgrade-from-gatsby-to-astro/it/index.mdx
+- Validation: passed
+- Runtime seconds: 86.31
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
