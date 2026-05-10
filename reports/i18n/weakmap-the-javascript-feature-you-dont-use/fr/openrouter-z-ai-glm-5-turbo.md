@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: fr
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 18.44
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
