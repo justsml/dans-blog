@@ -3,11 +3,11 @@
 - Locale: hi
 - Model: openrouter/google/gemini-3-flash-preview
 - Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 48.92
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 42.37
 - Input tokens: unknown
-- Output tokens: 0
+- Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Command failed: bun run i18n:validate --slug postgres-fts-vs-pgvector --locale hi
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx: reports/i18n/stop-hardcoding-your-prompts/ja/judge-second.md, reports/i18n/stop-hardcoding-your-prompts/ja/judge-summary.md
