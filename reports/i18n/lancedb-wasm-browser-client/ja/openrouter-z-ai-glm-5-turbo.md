@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: ja
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 33.89
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
