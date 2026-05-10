@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 224.79
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
