@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: ru
+- Model: openrouter/z-ai/glm-5-turbo
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 26.68
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
