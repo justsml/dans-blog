@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: de
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/de/index.mdx
+- Validation: passed
+- Runtime seconds: 56.00
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
