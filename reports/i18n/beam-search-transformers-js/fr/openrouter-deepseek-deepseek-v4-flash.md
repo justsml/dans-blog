@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 58.95
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
