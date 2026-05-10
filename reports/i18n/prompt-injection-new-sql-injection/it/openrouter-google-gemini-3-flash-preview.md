@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: prompt-injection-new-sql-injection
+- Locale: it
+- Model: openrouter/google/gemini-3-flash-preview
+- Target: src/content/posts/2026-05-05--prompt-injection-new-sql-injection/it/index.mdx
+- Validation: passed
+- Runtime seconds: 20.34
+- Input tokens: 2026
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: unknown
