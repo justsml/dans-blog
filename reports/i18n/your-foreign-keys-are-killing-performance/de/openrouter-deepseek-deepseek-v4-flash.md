@@ -4,10 +4,10 @@
 - Model: openrouter/deepseek/deepseek-v4-flash
 - Target: src/content/posts/2025-12-29--your-foreign-keys-are-killing-performance/de/index.mdx
 - Validation: rejected: unknown
-- Runtime seconds: 48.83
-- Input tokens: 2481
-- Output tokens: 4576
+- Runtime seconds: 0.17
+- Input tokens: unknown
+- Output tokens: unknown
 - Thinking tokens: unknown
-- Cached input tokens: 0
+- Cached input tokens: unknown
 - Estimated cost: unknown
-- Note: Model output did not look like a complete German MDX translation.
+- Note: {"error":{"message":"This request requires more credits, or fewer max_tokens. You requested up to 8000 tokens, but can only afford 7783. To increase, visit https://openrouter.ai/settings/keys and create a key with a higher daily limit","code":402,"metadata":{"provider_name":null}},"user_id":"user_2pzehDUA0Dk91FO7jPDvof7W5Qm"}
