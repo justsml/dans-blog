@@ -1,34 +1,38 @@
 ---
-title: "Guida alla ricerca testuale in Postgres 2026"
-subTitle: "Gli strumenti di ricerca già nel tuo database e quando vale la pena usarli."
+title: "Guida alla Ricerca Testuale in Postgres 2026"
+subTitle: "Gli strumenti di ricerca già nel tuo database, e quando ognuno dà il meglio di sé."
 date: 2026-05-02
+modified: 2026-05-03
 tags: [postgres, postgresql, full-text-search, trigrams, pg_trgm, databases, search, sql, pg_search]
 category: Code
-subCategory: Database
+subCategory: Databases
 popularity: 0.8
-cover_alt: Mappa degli strumenti di ricerca di Postgres
+social_image: ../desktop-social.webp
+cover_full_width: ../wide.webp
+cover_mobile: ../square.webp
+cover_icon: ../square.webp
 ---
 
-La maggior parte dei team usa un solo strumento di ricerca in Postgres. I team che conoscono tutti e tre realizzano una ricerca migliore con meno complessità — ed evitano la costosa deviazione verso un servizio di ricerca dedicato che non serviva ancora.
+La maggior parte dei team usa un solo strumento di ricerca in Postgres. I team che li conoscono tutti e tre offrono una ricerca migliore con meno complessità — ed evitano la costosa deviazione verso un servizio di ricerca dedicato di cui non avevano ancora bisogno.
 
-Questa guida copre tutte le opzioni native di Postgres: cosa fa ciascuno, quando è la scelta giusta e come combinarli.
+Questa guida copre l'intero set di opzioni native di Postgres: cosa fa ciascuna, quando è la scelta giusta e come combinarle.
 
 ---
 
 ## I Tre Strumenti
 
-**La ricerca full-text** (`tsvector` / indice `GIN`) è lessicale. Tokenizza il testo in lexemi, li stemmatizza e corrisponde le query all'indice. "Running" e "runs" collassano nello stesso lexema. Lo fanno anche "dog" e "dogs". La funzione di ranking (`ts_rank`) favorisce i documenti dove i termini della query appaiono spesso o in modo prominente.
+**La ricerca full-text** (`tsvector` / indice `GIN`) è lessicale. Tokenizza il testo in lessemi, li riconduce alla radice e confronta le query con l'indice. "Correre" e "corre" collassano nello stesso lessemo. Così come "cane" e "cani". La funzione di ranking (`ts_rank`) premia i documenti in cui i termini della query compaiono spesso o in posizioni di rilievo.
 
-**I trigrammi** (`pg_trgm`) suddividono le stringhe in sovrapposizioni di 3 caratteri e misurano quanti trigrammi due stringhe condividono. "Dan" → `" da"`, `"dan"`, `"an "`. "Micheal" e "Michael" condividono la maggior parte dei trigrammi, quindi la similarità è alta. Questo rende `pg_trgm` eccellente per la corrispondenza fuzzy dei nomi, la tolleranza agli errori di battitura e l'autocompletamento — lo spazio dove FTS performa male.
+**I trigrammi** (`pg_trgm`) suddividono le stringhe in slice sovrapposte di 3 caratteri e misurano quante slice due stringhe condividono. "Dan" → `" da"`, `"dan"`, `"an "`. "Micheal" e "Michael" condividono la maggior parte dei loro trigrammi, quindi la similarità è alta. Questo rende `pg_trgm` eccellente per il fuzzy matching di nomi, la tolleranza ai refusi e l'autocompletamento — lo spazio in cui il full-text si comporta male.
 
-**Gli indici di corrispondenza esatta** (B-tree, hash) gestiscono chiavi primarie, indirizzi email, ID, SKU e tutto dove la risposta è binaria: corrisponde o non corrisponde. Questi non sembrano "ricerca", ma appartengono a questa conversazione perché il pattern peggiore è usare la ricerca fuzzy o semantica per problemi che hanno risposte corrette.
+**Gli indici per corrispondenza esatta** (B-tree, hash) gestiscono chiavi primarie, indirizzi email, ID, SKU e tutto ciò per cui la risposta è binaria: corrisponde o non corrisponde. Questi non sembrano "ricerca", ma appartengono a questa conversazione perché il pattern peggiore è usare una ricerca fuzzy o semantica per problemi che hanno risposte corrette.
 
-La scelta non riguarda la sofisticazione. Si tratta di abbinare lo strumento alla forma della query.
+La scelta non riguarda la sofisticatezza. Riguarda l'abbinare lo strumento alla forma della query.
 
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 720" role="img" aria-labelledby="stm-title stm-desc">
-  <title id="stm-title">Mappa degli strumenti di ricerca di Postgres</title>
-  <desc id="stm-desc">Un confronto tra pg_trgm, full-text search, pgvector e hybrid search per forma di input e intento della query.</desc>
+  <title id="stm-title">Mappa degli strumenti di ricerca Postgres</title>
+  <desc id="stm-desc">Un confronto tra pg_trgm, full-text search, pgvector e ricerca ibrida in base alla forma dell'input e all'intento della query.</desc>
   <defs>
     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
       <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#111827" flood-opacity="0.14"/>
@@ -53,22 +57,22 @@ La scelta non riguarda la sofisticazione. Si tratta di abbinare lo strumento all
   </defs>
 
   <rect class="stm-bg" width="1120" height="720" rx="0"/>
-  <text class="stm-title-text" x="64" y="70">Scegli il primitivo di ricerca per forma di input</text>
+  <text class="stm-title-text" x="64" y="70">Scegli il primitivo di ricerca in base alla forma dell'input</text>
   <text class="stm-subtitle" x="64" y="103">La stessa tabella Postgres può supportare tutti e quattro. Il trucco è abbinare la query al testo.</text>
 
   <line class="stm-line" x1="560" y1="150" x2="560" y2="640"/>
   <line class="stm-line" x1="76" y1="395" x2="1044" y2="395"/>
 
-  <text class="stm-axis" x="360" y="142">Importano le parole esatte</text>
-  <text class="stm-axis" x="650" y="142">Importa il significato</text>
+  <text class="stm-axis" x="360" y="142">Le parole esatte contano</text>
+  <text class="stm-axis" x="650" y="142">Il significato conta</text>
   <text class="stm-axis" x="78" y="388" transform="rotate(-90 78 388)">Testo breve / strutturato</text>
-  <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">Prosa lunga / chunk</text>
+  <text class="stm-axis" x="78" y="628" transform="rotate(-90 78 628)">Prosa lunga / blocchi</text>
 
   <rect class="stm-card" x="112" y="168" width="408" height="186" rx="20"/>
   <rect x="136" y="192" width="100" height="28" rx="14" fill="#f59e0b"/>
   <text class="stm-label" x="154" y="212">fuzzy</text>
   <text class="stm-tool" x="136" y="256">pg_trgm</text>
-  <text class="stm-body" x="136" y="294">Nomi, indirizzi, titoli, errori di battitura,</text>
+  <text class="stm-body" x="136" y="294">Nomi, indirizzi, titoli, refusi,</text>
   <text class="stm-body" x="136" y="320">autocompletamento, stringhe parziali.</text>
   <text class="stm-small" x="136" y="344">Similarità ortografica: distanza di spelling.</text>
 
@@ -77,103 +81,103 @@ La scelta non riguarda la sofisticazione. Si tratta di abbinare lo strumento all
   <text class="stm-label" x="644" y="212">simile</text>
   <text class="stm-tool" x="624" y="256">pgvector</text>
   <text class="stm-body" x="624" y="294">Elementi correlati, ticket duplicati,</text>
-  <text class="stm-body" x="624" y="320">raccomandazioni da brevi descrizioni.</text>
-  <text class="stm-small" x="624" y="344">Similarità di embedding: distanza di significato.</text>
+  <text class="stm-body" x="624" y="320">raccomandazioni da descrizioni brevi.</text>
+  <text class="stm-small" x="624" y="344">Similarità di embedding: distanza semantica.</text>
 
   <rect class="stm-card" x="112" y="436" width="408" height="186" rx="20"/>
   <rect x="136" y="460" width="102" height="28" rx="14" fill="#38bdf8"/>
   <text class="stm-label" x="158" y="480">lessicale</text>
-  <text class="stm-tool" x="136" y="524">Ricerca full-text</text>
+  <text class="stm-tool" x="136" y="524">Full-text search</text>
   <text class="stm-body" x="136" y="562">Articoli, documenti, log, contenuti di supporto</text>
-  <text class="stm-body" x="136" y="588">dove le parole della query dovrebbero apparire.</text>
-  <text class="stm-small" x="136" y="612">Lexemi, stemming, ranking, filtri booleani.</text>
+  <text class="stm-body" x="136" y="588">in cui le parole della query devono apparire.</text>
+  <text class="stm-small" x="136" y="612">Lessemi, stemming, ranking, filtri booleani.</text>
 
   <rect class="stm-card" x="600" y="436" width="408" height="186" rx="20"/>
   <rect x="624" y="460" width="102" height="28" rx="14" fill="#f472b6"/>
   <text class="stm-label" x="645" y="480">ibrido</text>
   <text class="stm-tool" x="624" y="524">FTS + pgvector</text>
-  <text class="stm-body" x="624" y="562">Documentazione tecnica e RAG dove gli utenti pongono</text>
-  <text class="stm-body" x="624" y="588">questioni concettuali più simboli esatti.</text>
-  <text class="stm-small" x="624" y="612">Esegui entrambi, fusi i ranking con RRF.</text>
+  <text class="stm-body" x="624" y="562">Documentazione tecnica e RAG in cui gli utenti fanno</text>
+  <text class="stm-body" x="624" y="588">domande concettuali più simboli esatti.</text>
+  <text class="stm-small" x="624" y="612">Esegui entrambi, fonde i ranking con RRF.</text>
 
   <rect x="396" y="658" width="328" height="36" rx="18" fill="url(#header)"/>
   <text class="stm-chip" x="429" y="681">Inizia dall'intento della query, poi controlla la forma del testo</text>
 </svg>
-<figcaption>I quattro primitivi di ricerca di Postgres mappati per intento della query (esatto vs. semantico) e forma del testo (strutturato vs. prosa). La stessa tabella può portare tutti e quattro gli indici — la scelta è per query, non per tabella.</figcaption>
+<figcaption>I quattro primitivi di ricerca Postgres mappati per intento della query (esatto vs. semantico) e forma del testo (strutturato vs. prosa). La stessa tabella può portare tutti e quattro gli indici — la scelta è per query, non per tabella.</figcaption>
 </figure>
 
 ---
 
-## Quando Vince la Ricerca Full-Text
+## Quando il Full-Text Search Vince
 
-**Cercare prosa per parole chiave.** Blog post, documentazione, descrizioni di prodotti, ticket di supporto, documenti legali. FTS è stato progettato per questa forma di contenuto: recupero indicizzato e rankizzato su testo di linguaggio naturale.
+**Ricerca di parole chiave nella prosa.** Post di blog, documentazione, descrizioni di prodotti, ticket di supporto, documenti legali. FTS è stato progettato per questa forma di contenuto: recupero indicizzato e classificato su testo in linguaggio naturale.
 
-**Query utente basate su parole chiave.** Gli utenti digitano un termine di ricerca, filtrano per tag o navigano per parola chiave. FTS gestisce quell'intento nativamente senza alcuna infrastruttura di embedding.
+**Query utente basate su parole chiave.** Gli utenti digitano un termine di ricerca, filtrano per tag o navigano per parola chiave. FTS gestisce quell'intento nativamente, senza infrastruttura di embedding.
 
-**Risultati rankizzati senza dipendenze esterne.** Gli indici FTS sono veloci, deterministici e non richiedono chiamate API. Il segnale di rilevanza viene dalla frequenza dei termini pesata per posizione di campo.
+**Risultati classificati senza dipendenze esterne.** Gli indici FTS sono veloci, deterministici e non richiedono chiamate API. Il segnale di rilevanza proviene dalla frequenza del termine ponderata per posizione nel campo.
 
-**Filtraggio booleano accanto alla ricerca.** FTS si compone naturalmente con la tua logica di query esistente:
+**Filtraggio booleano insieme alla ricerca.** FTS si compone naturalmente con la logica di query esistente:
 
 ```sql
 SELECT * FROM posts
-WHERE search_vector @@ to_tsquery('english', 'postgres & performance')
+WHERE search_vector @@ to_tsquery('italian', 'postgres & prestazioni')
   AND category = 'tutorial'
   AND published_at > NOW() - INTERVAL '6 months';
 ```
 
-### Configurazione FTS
+### Configurazione di FTS
 
 ```sql
--- Colonna generata mantiene l'indice aggiornato automaticamente
+-- La colonna generata mantiene l'indice aggiornato automaticamente
 ALTER TABLE posts ADD COLUMN search_vector tsvector
   GENERATED ALWAYS AS (
-    setweight(to_tsvector('english', coalesce(title, '')), 'A') ||
-    setweight(to_tsvector('english', coalesce(body,  '')), 'B')
+    setweight(to_tsvector('italian', coalesce(title, '')), 'A') ||
+    setweight(to_tsvector('italian', coalesce(body,  '')), 'B')
   ) STORED;
 
 CREATE INDEX posts_search_idx ON posts USING GIN (search_vector);
 
 -- Query
 SELECT title, ts_rank(search_vector, query) AS rank
-FROM posts, to_tsquery('english', 'postgres & performance') query
+FROM posts, to_tsquery('italian', 'postgres & prestazioni') query
 WHERE search_vector @@ query
 ORDER BY rank DESC
 LIMIT 10;
 ```
 
-`setweight` assegna importanza: `A` (title) supera `B` (body). Questo è l'intero modello di rilevanza per la maggior parte dei casi d'uso di ricerca di contenuti.
+`setweight` assegna l'importanza: `A` (titolo) supera `B` (corpo). Questo è l'intero modello di rilevanza per la maggior parte dei casi d'uso di ricerca di contenuti.
 
 ### Cosa FTS Non Gestisce Bene
 
-- Errori di battitura nelle query — "javascipt" non corrisponderà a "javascript"
-- Nomi di persone, indirizzi, nomi propri che non stemmatizzano in modo prevedibile
-- Prefix/autocompletamento senza configurazione speciale
-- Query dove l'utente descrive un concetto invece di nominarlo
+- Refusi nelle query — "javascipt" non corrisponderà a "javascript"
+- Nomi di persona, indirizzi, nomi propri che non si riconducono prevedibilmente alla radice
+- Prefisso/autocompletamento senza configurazione speciale
+- Query in cui l'utente descrive un concetto invece di nominarlo
 
 ---
 
 ## Quando Vincono i Trigrammi (`pg_trgm`)
 
-`pg_trgm` copre la zona imbarazzante che FTS fallisce sistematicamente.
+`pg_trgm` copre quella zona intermedia scomoda che FTS sbaglia sistematicamente.
 
-FTS tokenizza il testo in lexemi e li stemmatizza. Per la prosa questo è corretto. Per nomi e identificatori brevi spesso non lo è:
+FTS tokenizza il testo in lessemi e li riconduce alla radice. Per la prosa è corretto. Per nomi e identificatori brevi spesso non lo è:
 
-- Nomi di persone ("Dan Levy" → stemmatizzato diversamente a seconda di dizionario e configurazione linguistica)
-- Nomi di aziende, indirizzi, titoli di prodotti dove lo spelling esatto conta
-- Query con errori di battitura — "Micheal Jordan", "Amaon", "javascipt"
-- Autocompletamento / ricerca prefix
+- Nomi di persona ("Dan Levy" → radice diversa a seconda del dizionario e della configurazione linguistica)
+- Nomi di aziende, indirizzi, titoli di prodotto in cui l'ortografia esatta conta
+- Query con refusi — "Micheal Jordan", "Amaon", "javascipt"
+- Autocompletamento / ricerca con prefisso
 - Corrispondenza parziale di stringhe ("son" che corrisponde a "Johnson", "Anderson")
 
-`pg_trgm` è anche language-agnostic, il che conta per nomi da background linguistici diversificati. FTS richiede configurazione di dizionario per ogni lingua.
+`pg_trgm` è anche indipendente dalla lingua, il che conta per nomi provenienti da background linguistici diversi. FTS richiede la configurazione del dizionario per ogni lingua.
 
-### Ricerca Fuzzy Nomi
+### Ricerca Fuzzy di Nomi
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 CREATE INDEX users_name_trgm_idx ON users USING GIN (name gin_trgm_ops);
 
--- Trova "Micheal Jordan" quando cerchi "Michael Jordan"
+-- Trova "Micheal Jordan" quando si cerca "Michael Jordan"
 SELECT id, name, similarity(name, $1) AS score
 FROM users
 WHERE name % $1          -- operatore % = soglia di similarità (default 0.3)
@@ -181,20 +185,20 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-L'operatore `%` usa `pg_trgm.similarity_threshold` (default 0.3, range 0–1). Per la ricerca nomi, 0.3–0.4 cattura errori di battitura mantenendo il rumore basso.
+L'operatore `%` usa `pg_trgm.similarity_threshold` (default 0.3, range 0–1). Per la ricerca di nomi, 0.3–0.4 cattura i refusi mantenendo basso il rumore.
 
-### Autocompletamento, Prefix e Cerca Contiene
+### Autocompletamento, Prefisso e Ricerca per Contenuto
 
 ```sql
--- Corrispondenza prefix per autocompletamento. Un indice GIN trigram può aiutare,
--- ma un indice B-tree pattern può essere meglio per prefix left-ancorati puri.
+-- Corrispondenza con prefisso per autocompletamento. Un indice GIN di trigrammi può aiutare,
+-- ma un indice B-tree pattern può essere migliore per prefissi puramente ancorati a sinistra.
 SELECT name FROM users
 WHERE name ILIKE $1 || '%'
 ORDER BY name
 LIMIT 10;
 
 -- word_similarity per corrispondenze parziali all'interno di stringhe più lunghe
--- ("Johnson" all'interno di "Andrew Johnson III")
+-- ("Johnson" dentro "Andrew Johnson III")
 SELECT id, name, word_similarity($1, name) AS score
 FROM users
 WHERE $1 <% name
@@ -202,48 +206,48 @@ ORDER BY score DESC
 LIMIT 10;
 ```
 
-L'indice GIN trigram è specialmente utile per query `ILIKE '%pattern%'` contiene e corrispondenza tollerante errori di battitura — pattern che sono solitamente scansioni full-table senza indice trigram.
+L'indice GIN di trigrammi è particolarmente utile per query `ILIKE '%pattern%'` di contenuto e corrispondenza tollerante ai refusi — pattern che di solito sono scansioni complete di tabella senza un indice di trigrammi.
 
-### Quando Usare pg_trgm Invece di FTS
+### Quando Scegliere pg_trgm invece di FTS
 
 | Scenario | Usa |
 |---|---|
-| Ricerca nomi di persone/aziende con errori di battitura | `pg_trgm` |
-| Autocompletamento / ricerca prefix | `pg_trgm` (o FTS con query prefix) |
+| Ricerca di nomi di persona/azienda con refusi | `pg_trgm` |
+| Autocompletamento / ricerca con prefisso | `pg_trgm` (o FTS con query di prefisso) |
 | Stringhe brevi, identificatori, codici | `pg_trgm` |
-| Articoli prosa, documentazione, ticket | FTS |
-| Messaggi log per parole chiave | FTS |
-| Ricerca nomi multilingue | `pg_trgm` (language-agnostic) |
+| Articoli in prosa, documentazione, ticket | FTS |
+| Messaggi di log per parole chiave | FTS |
+| Ricerca di nomi multilingue | `pg_trgm` (indipendente dalla lingua) |
 
 ---
 
-## Quando Vince la SQL di Corrispondenza Esatta
+## Quando Vince la SQL per Corrispondenza Esatta
 
-Alcuni problemi di "ricerca" non sono ricerca affatto.
+Alcuni problemi di "ricerca" non sono affatto ricerca.
 
-"Trova l'utente con email `dan@example.com`" è un controllo di uguaglianza. "Trova ordine `ORD-12345`" è una lookup di primary key. "Lista post nella categoria `tutorial` ordinati per data" è una query filtrata. Questi appartengono a indici B-tree o hash.
+"Trova l'utente con email `dan@example.com`" è un controllo di uguaglianza. "Trova l'ordine `ORD-12345`" è una ricerca per chiave primaria. "Elenca i post nella categoria `tutorial` ordinati per data" è una query filtrata. Questi appartengono a indici B-tree o hash.
 
-Usare FTS o trigram qui aggiunge complessità senza migliorare la correttezza — e per identificatori esatti, un near-match è peggio di nessun match.
+Usare FTS o trigrammi qui aggiunge complessità senza migliorare la correttezza — e per identificatori esatti, una corrispondenza approssimativa è peggio di nessuna corrispondenza.
 
 ```sql
 CREATE INDEX users_email_idx ON users (email);
 
--- Lookup esatto: veloce e ambiguo
+-- Ricerca esatta: veloce e senza ambiguità
 SELECT id, name FROM users WHERE email = $1;
 ```
 
-La lezione più ampia: ricerca approssimativa per problemi con risposte corrette è un errore di categoria. Restituisce *qualcosa* — che può essere confidentemente sbagliato.
+La lezione più ampia: la ricerca approssimativa per problemi con risposte corrette è un errore categoriale. Restituisce *qualcosa* — che può essere sicuramente sbagliato.
 
 ---
 
 ## Combinare Questi Strumenti
 
-Questi strumenti si compongono pulitamente. Non scegli esattamente uno.
+Questi strumenti si compongono in modo pulito. Non devi sceglierne solo uno.
 
-**FTS + pg_trgm per una casella di ricerca che tollera errori di battitura nelle parole chiave:**
+**FTS + pg_trgm per una casella di ricerca che tollera i refusi nelle parole chiave:**
 
 ```sql
--- Similarità trigram sul titolo cattura errori di battitura; ts_rank gestisce rilevanza body
+-- La similarità di trigrammi sul titolo cattura i refusi; ts_rank gestisce la rilevanza del corpo
 SELECT id, title,
   ts_rank(search_vector, to_tsquery('simple', $1)) AS fts_rank,
   similarity(title, $1) AS trgm_score
@@ -257,7 +261,7 @@ LIMIT 10;
 **FTS + `unaccent` per contenuti internazionali:**
 
 ```sql
--- Rimuovi segni diacritici così "José" corrisponde a "Jose"
+-- Rimuove i segni diacritici in modo che "José" corrisponda a "Jose"
 CREATE EXTENSION IF NOT EXISTS unaccent;
 
 CREATE TEXT SEARCH CONFIGURATION public.simple_unaccent (COPY = pg_catalog.simple);
@@ -274,7 +278,7 @@ FOR EACH ROW EXECUTE FUNCTION
   tsvector_update_trigger(search_vector, 'public.simple_unaccent', title, body);
 ```
 
-**`unaccent` + `pg_trgm` per ricerca nomi internazionali:**
+**`unaccent` + `pg_trgm` per la ricerca internazionale di nomi:**
 
 ```sql
 ALTER TABLE users ADD COLUMN name_search text;
@@ -301,27 +305,27 @@ ORDER BY similarity(name_search, unaccent($1)) DESC
 LIMIT 10;
 ```
 
-Gli esempi di trigger evitano di usare `unaccent()` all'interno di generated-column o espressioni di indice, dove le regole di immutabilità di PostgreSQL contano. Se avvolgi `unaccent()` nella tua funzione immutable, documenta che stai accettando rischio di upgrade/configurazione.
+Gli esempi con trigger evitano di usare `unaccent()` all'interno di espressioni di colonne generate o di indici, dove entrano in gioco le regole di immutabilità di PostgreSQL. Se racchiudi `unaccent()` in una tua funzione immutabile, documenta che stai accettando rischi di aggiornamento/configurazione.
 
 ---
 
-## Estensioni Notevoli
+## Estensioni Degne di Nota
 
-**`pg_trgm`** è bundled con la maggior parte delle distribuzioni Postgres ma richiede abilitazione esplicita. Il fondamento per corrispondenza stringa fuzzy in Postgres.
+**`pg_trgm`** è inclusa nella maggior parte delle distribuzioni Postgres ma richiede l'attivazione esplicita. La fondazione per il fuzzy matching di stringhe in Postgres.
 
-**`unaccent`** rimuove segni diacritici prima di indicizzare e query. Si abbina bene sia con `pg_trgm` che FTS per contenuti europei. Bundled con Postgres.
+**`unaccent`** rimuove i segni diacritici prima dell'indicizzazione e della query. Si abbina bene sia con `pg_trgm` che con FTS per contenuti in lingue europee. Inclusa con Postgres.
 
-**`pg_bigm`** estende l'approccio trigram a bigram (slice di 2 caratteri), che migliora significativamente risultati per lingue CJK (Cinese, Giapponese, Coreano) dove `pg_trgm` performa male. Deve essere installato separatamente; non bundled.
+**`pg_bigm`** estende l'approccio dei trigrammi ai bigrammi (slice di 2 caratteri), migliorando significativamente i risultati per le lingue CJK (cinese, giapponese, coreano) dove `pg_trgm` dà risultati scadenti. Deve essere installata separatamente; non è inclusa.
 
-**`pg_search`** (da [ParadeDB](https://www.paradedb.com/)) sostituisce lo stack standard `GIN` / `tsvector` con un indice BM25 basato su Tantivy. Questo ti dà scoring BM25 (spesso migliore di `ts_rank`), corrispondenza fuzzy all'interno query FTS, search facetato e indicizzazione drammaticamente più veloce su tabelle grandi. È un percorso di upgrade drop-in quando FTS standard inizia a mostrare limiti di ranking o performance.
+**`pg_search`** (di [ParadeDB](https://www.paradedb.com/)) sostituisce lo stack standard `GIN` / `tsvector` con un indice BM25 basato su Tantivy. Offre punteggi BM25 (spesso migliori di `ts_rank`), fuzzy matching all'interno di query FTS, ricerca sfaccettata e indicizzazione drasticamente più veloce su tabelle grandi. È un percorso di aggiornamento drop-in quando il FTS standard inizia a mostrare limiti di ranking o prestazioni.
 
 ```sql
--- pg_search: BM25 full-text search con corrispondenza fuzzy
+-- pg_search: ricerca full-text BM25 con fuzzy matching
 CREATE INDEX posts_bm25_idx ON posts
   USING bm25 (id, title, body)
   WITH (key_field = 'id', text_fields = '{"title": {}, "body": {}}');
 
--- Query con scoring BM25 + corrispondenza fuzzy (cattura "javascipt")
+-- Query con punteggio BM25 + fuzzy matching (cattura "javascipt")
 SELECT id, title, paradedb.score(id) AS rank
 FROM posts
 WHERE posts @@@ paradedb.fuzzy_phrase(field => 'title', value => 'postgres performnce')
@@ -329,40 +333,40 @@ ORDER BY rank DESC
 LIMIT 10;
 ```
 
-**`pgvector`** aggiunge storage vettoriale denso e search di similarità. È lo strumento giusto quando utenti descrivono cosa vogliono invece di nominarlo — ricerca semantica, RAG, raccomandazioni contenuti correlati, query multilingue. Coperto in profondità in [Ricerca Vettoriale Semantica e Strategie Ibride](/semantic-vector-search-landscape).
+**`pgvector`** aggiunge l'archiviazione di vettori densi e la ricerca per similarità. È lo strumento giusto quando gli utenti descrivono ciò che vogliono invece di nominarlo — ricerca semantica, RAG, raccomandazioni di contenuti correlati, query multilingue. Trattato in dettaglio in [Ricerca Vettoriale Semantica e Strategie Ibride](/semantic-vector-search-landscape).
 
 ---
 
-## Tabella Decisionale
+## Tabella delle Decisioni
 
-| Cosa stai cercando | Raccomandato |
+| Cosa stai cercando | Consigliato |
 |---|---|
-| Articoli prosa, docs, ticket | FTS |
-| Nomi di persone/aziende con errori di battitura | `pg_trgm` |
-| Autocompletamento, ricerca prefix | `pg_trgm` |
+| Articoli in prosa, documenti, ticket | FTS |
+| Nomi di persona/azienda con refusi | `pg_trgm` |
+| Autocompletamento, ricerca con prefisso | `pg_trgm` |
 | Codici brevi, identificatori | `pg_trgm` |
-| Messaggi log per parole chiave | FTS |
+| Messaggi di log per parole chiave | FTS |
 | Nomi internazionali | `pg_trgm` + `unaccent` |
-| Contenuti grandi, ranking migliore | `pg_search` (BM25 ParadeDB) |
+| Contenuti grandi, ranking migliore | `pg_search` (ParadeDB BM25) |
 | Chiavi primarie, email esatte, ID | Indice B-tree |
-| Date, range, liste ordinate | Indice B-tree |
-| Permessi, categorie, filtri | WHERE clause regolare |
-| Domande, parafrasi, concetti | pgvector (vedi prossimo articolo) |
+| Date, intervalli, elenchi ordinati | Indice B-tree |
+| Permessi, categorie, filtri | Normale clausola WHERE |
+| Domande, parafrasi, concetti | pgvector (vedi il prossimo articolo) |
 
-Quando sei nel dubbio: stringhe brevi con variazione spelling → trigram. Prosa lunga per query keyword → FTS. Identificatori strutturati → indici regolari. Query concettuali o di linguaggio naturale → pgvector.
+Nel dubbio: stringhe brevi con variazioni ortografiche → trigrammi. Prosa lunga per query di parole chiave → FTS. Identificatori strutturati → indici regolari. Query concettuali o in linguaggio naturale → pgvector.
 
 ---
 
-## Ricerca Ibrida: Due Segnali, Un Rank
+## Ricerca Ibrida: Due Segnali, Un Solo Ranking
 
-Quando una query come `"withRetry timeout errors"` colpisce una casella di ricerca, porta due tipi di intento: nomi di simboli esatti che l'utente conosce (`withRetry`) e una descrizione concettuale (`timeout errors`). Nessun singolo primitivo copre entrambi. Esegui FTS e vector search in parallelo — poi fusi i loro ranking con Reciprocal Rank Fusion — fa.
+Quando una query come `"withRetry timeout errors"` colpisce una casella di ricerca, porta con sé due tipi di intento: nomi di simboli esatti che l'utente conosce (`withRetry`) e una descrizione concettuale (`timeout errors`). Nessun singolo primitivo copre entrambi. Eseguire FTS e la ricerca vettoriale in parallelo — e poi unire le loro liste classificate con Reciprocal Rank Fusion (RRF) — lo fa.
 
-RRF scores ogni risultato come `1 / (60 + rank)` in ogni lista e somma attraverso le liste. La costante 60 smorza il vantaggio dei top ranking, così un risultato che si posiziona secondo in entrambe le liste può battere un risultato che vince una lista e manca l'altra completamente. Crucialmente, RRF non media mai raw scores attraverso metodi — FTS rank e cosine distance sono valute diverse e non possono essere combinati aritmeticamente.
+RRF assegna a ogni risultato un punteggio di `1 / (60 + rango)` in ciascuna lista e somma i punteggi tra le liste. La costante 60 attenua il vantaggio dei primi ranghi, così un risultato che si piazza secondo in entrambe le liste può battere un risultato che vince una lista ma manca completamente l'altra. Fondamentalmente, RRF non fa mai la media dei punteggi grezzi tra metodi diversi — il rango FTS e la distanza coseno sono valute diverse e non possono essere combinate aritmeticamente.
 
 <figure>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 660" role="img" aria-labelledby="rrf-title rrf-desc">
   <title id="rrf-title">Ricerca ibrida con Reciprocal Rank Fusion</title>
-  <desc id="rrf-desc">Una query si dirama a full-text search e vector search, ciascuno produce ranking, e Reciprocal Rank Fusion li combina in una lista di risultati.</desc>
+  <desc id="rrf-desc">Una query si dirama verso full-text search e ricerca vettoriale, ciascuna produce ranghi, e Reciprocal Rank Fusion le combina in un'unica lista di risultati.</desc>
   <defs>
     <marker id="rrf-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
       <path d="M2,2 L10,6 L2,10 Z" fill="#334155"/>
@@ -390,8 +394,8 @@ RRF scores ogni risultato come `1 / (60 + rank)` in ogni lista e somma attravers
   </defs>
 
   <rect class="rrf-bg" width="1120" height="660"/>
-  <text class="rrf-title-text" x="64" y="68">Ricerca ibrida è due segnali onesti, poi un rank fuso</text>
-  <text class="rrf-subtitle" x="64" y="102">Non mediare raw scores. FTS rank e cosine distance sono valute diverse.</text>
+  <text class="rrf-title-text" x="64" y="68">La ricerca ibrida sono due segnali onesti, poi un solo ranking unificato</text>
+  <text class="rrf-subtitle" x="64" y="102">Non fare la media dei punteggi grezzi. Il rango FTS e la distanza coseno sono valute diverse.</text>
 
   <rect class="rrf-box rrf-query" x="72" y="238" width="214" height="132" rx="20"/>
   <text class="rrf-head" x="104" y="288">Query utente</text>
@@ -403,37 +407,37 @@ RRF scores ogni risultato come `1 / (60 + rank)` in ogni lista e somma attravers
 
   <rect class="rrf-box rrf-fts" x="418" y="142" width="266" height="144" rx="20"/>
   <text class="rrf-head" x="450" y="188">FTS / BM25</text>
-  <text class="rrf-body" x="450" y="224">Simboli e parole esatti</text>
-  <text class="rrf-rank" x="450" y="256">1. API reference</text>
-  <text class="rrf-rank" x="578" y="256">2. Retry guide</text>
+  <text class="rrf-body" x="450" y="224">Simboli e parole esatte</text>
+  <text class="rrf-rank" x="450" y="256">1. Riferimento API</text>
+  <text class="rrf-rank" x="578" y="256">2. Guida retry</text>
 
   <rect class="rrf-box rrf-vector" x="418" y="394" width="266" height="144" rx="20"/>
   <text class="rrf-head" x="450" y="440">pgvector</text>
   <text class="rrf-body" x="450" y="476">Vicini concettuali</text>
-  <text class="rrf-rank" x="450" y="508">1. Network failures</text>
-  <text class="rrf-rank" x="594" y="508">2. Retry guide</text>
+  <text class="rrf-rank" x="450" y="508">1. Guasti di rete</text>
+  <text class="rrf-rank" x="594" y="508">2. Guida retry</text>
 
   <path class="rrf-thin" d="M684 214 C734 214 734 294 778 294"/>
   <path class="rrf-thin" d="M684 466 C734 466 734 366 778 366"/>
 
   <rect class="rrf-box rrf-merge" x="778" y="260" width="258" height="166" rx="22"/>
-  <text class="rrf-head" x="810" y="306">Merge RRF</text>
+  <text class="rrf-head" x="810" y="306">Fusione RRF</text>
   <text class="rrf-body" x="810" y="342">Dai a ogni risultato credito per</text>
-  <text class="rrf-body" x="810" y="368">dove si è posizionato in ogni lista.</text>
-  <text class="rrf-mono" x="810" y="402">1 / (60 + rank)</text>
+  <text class="rrf-body" x="810" y="368">la sua posizione in ogni lista.</text>
+  <text class="rrf-mono" x="810" y="402">1 / (60 + rango)</text>
 
   <path class="rrf-arrow-line" d="M907 426 L907 492"/>
 
   <rect class="rrf-box rrf-result" x="736" y="492" width="342" height="110" rx="20"/>
   <text class="rrf-head" x="768" y="538">Risultati finali</text>
-  <text class="rrf-body" x="768" y="574">Il top hit è dove termini esatti</text>
+  <text class="rrf-body" x="768" y="574">Il risultato migliore è dove termini esatti</text>
   <text class="rrf-body" x="768" y="598">e significato semantico concordano.</text>
 </svg>
-<figcaption>Una query si dirama a FTS e pgvector in parallelo. Ciascuno produce la propria lista ranking. RRF scores ogni documento per la sua posizione in ogni lista e somma i punteggi — il risultato recupera documenti che entrambi i segnali concordano.</figcaption>
+<figcaption>Una query si dirama verso FTS e pgvector in parallelo. Ciascuna produce la propria lista classificata. RRF assegna a ogni documento un punteggio in base alla sua posizione in ciascuna lista e somma i punteggi — il risultato mostra i documenti su cui entrambi i segnali concordano.</figcaption>
 </figure>
 
 ```sql
--- Hybrid search: FTS + pgvector fusi con RRF
+-- Ricerca ibrida: FTS + pgvector fusi con RRF
 WITH fts AS (
   SELECT id, ts_rank(search_vector, query) AS score,
          ROW_NUMBER() OVER (ORDER BY ts_rank(search_vector, query) DESC) AS rank
@@ -456,12 +460,12 @@ ORDER BY rrf_score DESC
 LIMIT 10;
 ```
 
-Il pool di candidati di 60 documenti per branch (`LIMIT 60`) è un punto di partenza comune. Allargalo se recall è basso; restringilo per velocità.
+Il pool di 60 documenti candidati per ramo (`LIMIT 60`) è un punto di partenza comune. Allargalo se il recall è basso; restringilo per velocità.
 
 ---
 
-## Prossimamente
+## Prossimi Passi
 
-La ricerca testuale Postgres copre un bel po' di terreno, ma ha un soffitto. Quando utenti descrivono cosa vogliono invece di nominarlo — "qualcosa per aiutarmi a dormire su un volo", "articoli sul debugging confidence come nuovo ingegnere" — lessicale e trigram search falliscono entrambi.
+La ricerca testuale di Postgres copre molto terreno, ma ha un limite. Quando gli utenti descrivono ciò che vogliono invece di nominarlo — "qualcosa che mi aiuti a dormire in aereo", "articoli sulla fiducia nel debugging come nuovo ingegnere" — la ricerca lessicale e quella per trigrammi falliscono entrambe.
 
-Quello è il territorio di embedding vettoriali, ricerca semantica e architetture ibride. Coperto in [Ricerca Vettoriale Semantica e Strategie Ibride](/semantic-vector-search-landscape).
+Questo è il territorio degli embedding vettoriali, della ricerca semantica e delle architetture ibride. Trattato in [Ricerca Vettoriale Semantica e Strategie Ibride](/semantic-vector-search-landscape).
