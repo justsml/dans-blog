@@ -1,6 +1,6 @@
 ---
-title: "Reducir el radio de destrucción de tu estación de trabajo de desarrollo"
-subTitle: "Dev Containers, secretos cifrados, tokens cebo y firewalls de salida para quienes aún necesitan trabajar."
+title: "Reduce el Radio de Explosión de tu Estación de Trabajo"
+subTitle: "Dev Containers, secretos cifrados, tokens señuelo y cortafuegos de salida para quienes aún necesitan hacer su trabajo."
 date: 2026-05-09
 modified: 2026-05-09
 tags: [security, devcontainers, secrets, canarytokens, varlock, firewall, ai-agents, developer-experience, best-practices]
@@ -17,27 +17,27 @@ related:
   - docker-security-tips-for-self-hosting
 ---
 
-Los consejos de seguridad para portátiles de desarrollo suelen fallar de dos formas.
+Los consejos de seguridad para portátiles de desarrolladores suelen fallar de dos maneras.
 
-O son papel tapiz empresarial:
+O son papel pintado corporativo:
 
-> Usa protección de endpoints, parchea regularmente, evita enlaces sospechosos, reporta incidentes promptly.
+> Usa protección de terminales, aplica parches con regularidad, evita enlaces sospechosos, reporta incidentes con prontitud.
 
 Todo cierto. También insuficiente.
 
-O es tonterías survivalistas donde la respuesta es dejar de usar navegadores, JavaScript, Wi-Fi, gestores de paquetes, vendors, PDFs, chats, editores de código, teléfonos y alegría.
+O son tonterías supervivencialistas donde la respuesta es dejar de usar navegadores, JavaScript, Wi-Fi, gestores de paquetes, proveedores, PDFs, chats, editores de código, teléfonos y la alegría.
 
-Tampoco útil.
+Tampoco es útil.
 
 El objetivo práctico es más pequeño:
 
-> Si algo se ejecuta como tú, no debería heredar automáticamente todo lo que se te ha confiar.
+> Si algo se ejecuta como tú, no debería heredar automáticamente todo lo que tienes permitido hacer.
 
-Ese es el problema del radio de destrucción de la estación de trabajo.
+Ese es el problema del radio de explosión de la estación de trabajo.
 
-Esta es una guía para reducirlo sin que el desarrollo parezca escribir através de cemento húmedo.
+Esta es una guía para reducirlo sin que desarrollar se sienta como escribir a través de cemento mojado.
 
-Última verificación: 9 de mayo de 2026. El comportamiento de las herramientas, precios y soporte de plataformas cambian, así que consulta la documentación actual antes de estandarizar en un equipo.
+Última verificación: 9 de mayo de 2026. El comportamiento de las herramientas, los precios y la compatibilidad con plataformas cambian, así que consulta la documentación actual antes de estandarizar en un equipo.
 
 ---
 
@@ -47,23 +47,23 @@ Necesitas cuatro capas:
 
 | Capa | Función |
 | --- | --- |
-| Aislamiento | Mantener las herramientas de proyecto y comandos riesgosos alejados del resto del equipo. |
-| Manejo de secretos | Reducir credenciales en texto plano y hacer que los valores sensibles sean más difíciles de filtrar accidentalmente. |
-| Detección | Plantar cables de alarma donde atacantes o automatización maliciosa mirarían naturalmente. |
-| Control de salida | Detectar y bloquear conexiones salientes inesperadas. |
+| Aislamiento | Mantener las herramientas del proyecto y los comandos de riesgo alejados del resto de la máquina. |
+| Gestión de secretos | Reducir credenciales en texto plano y dificultar la filtración accidental de valores sensibles. |
+| Detección | Colocar señuelos donde los atacantes o la automatización maliciosa buscarían naturalmente. |
+| Control de salida | Notificar y bloquear conexiones salientes inesperadas. |
 
-No empieces tratando de resolver cada amenaza de portátil.
+No intentes resolver todas las amenazas del portátil de entrada.
 
-Empieza por el camino que los atacantes realmente disfrutan: ejecutar algo, leer secretos, enviarlos, usarlos antes de que alguien nota.
+Empieza por el camino que los atacantes realmente disfrutan: ejecutar algo, leer secretos, enviarlos fuera, usarlos antes de que nadie se dé cuenta.
 
-## 1. Poner Proyectos en Dev Containers
+## 1. Pon los Proyectos en Dev Containers
 
-Los [Dev Containers](https://github.com/devcontainers/spec) te permiten usar un contenedor como un entorno de desarrollo completamente funcional. Suena como infraestructura de experiencia de desarrollador, y lo es. Pero también es un límite de seguridad cuando lo usas con disciplina.
+Los [Dev Containers](https://github.com/devcontainers/spec) te permiten usar un contenedor como entorno de desarrollo completo. Suena a infraestructura de experiencia de desarrollo, y lo es. Pero también es un límite de seguridad cuando se usa con disciplina.
 
-La configuración demasiado conveniente monta demasiado:
+La configuración perezosa monta demasiado:
 
 ```jsonc
-// Demasiado conveniente. Demasiado radio de destrucción.
+// Demasiado conveniente. Demasiado radio de explosión.
 {
   "name": "app",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22",
@@ -73,7 +73,7 @@ La configuración demasiado conveniente monta demasiado:
 }
 ```
 
-Eso convierte el contenedor en una versión con forma rara de tu cuenta host.
+Eso convierte el contenedor en una versión extraña de tu cuenta local.
 
 Usa montajes estrechos en su lugar:
 
@@ -93,15 +93,15 @@ Usa montajes estrechos en su lugar:
 }
 ```
 
-Esto no es un sandbox perfecto. Los contenedores comparten un kernel. Docker tiene bordes afilados. Los montajes pueden atravesar el modelo.
+Esto no es una zona de pruebas perfecta. Los contenedores comparten el kernel. Docker tiene bordes afilados. Los montajes pueden perforar agujeros directos a través del modelo.
 
-Pero para la mayoría de flujos de trabajo de desarrollo, la ganancia es inmediata: los comandos del proyecto ven el proyecto, no todo tu ático digital.
+Pero para la mayoría de los flujos de trabajo de desarrollo, la ventaja es inmediata: los comandos del proyecto ven el proyecto, no todo tu ático digital.
 
 ### Qué Montar
 
 Monta el repositorio.
 
-Quizás monta un caché específico del proyecto.
+Quizás monta una caché específica del proyecto.
 
 No montes estos por defecto:
 
@@ -111,53 +111,53 @@ No montes estos por defecto:
 - `~/.azure`
 - `~/Downloads`
 - `~/Documents`
-- exportaciones de gestor de contraseñas
-- volcados de bases de datos
+- exportaciones del gestor de contraseñas
+- volcados de base de datos
 - carpetas de respaldo
-- carpetas "temporales" al random que existen desde 2021
+- carpetas «temporales» que existen desde 2021
 
-Si un proyecto necesita acceso a la nube, inyecta una credencial hecha para ese proyecto. Es mejor que sea de corta duración. Es mejor que sea de solo lectura. Un token que solo pueda acceder a una cuenta de desarrollo es mejor que tu identidad administrativa personal vagando al contenedor con una maleta pequeña.
+Si un proyecto necesita acceso a la nube, inyecta una credencial hecha para ese proyecto. De corta duración es mejor. De solo lectura es mejor. Un token que solo puede acceder a una cuenta de desarrollo es mejor que tu identidad administrativa personal paseando por el contenedor con una maleta pequeña.
 
-### Las Herramientas de Código AI También Pertenecen Aquí
+### Las Herramientas de IA También Pertenecen Aquí
 
-Las herramientas de código AI hacen que los Dev Containers sean más importantes, no menos.
+Las herramientas de codificación con IA hacen que los Dev Containers sean más importantes, no menos.
 
-Los [docs de permisos de Claude Code](https://code.claude.com/docs/en/permissions) de Anthropic split the world into permisos y sandboxing: los permisos controlan herramientas, archivos y dominios; el sandboxing proporciona aplicación a nivel de OS para acceso de filesystem y red de Bash.
+La [documentación de permisos de Claude Code](https://code.claude.com/docs/en/permissions) divide el mundo en permisos y zonas de pruebas: los permisos controlan herramientas, archivos y dominios; las zonas de pruebas proporcionan aplicación a nivel de SO para el acceso a Bash, sistema de archivos y red.
 
-Esa distinción es toda la cuestión.
+Esa distinción es todo el partido.
 
 Si un agente puede ejecutar comandos de shell, instalar paquetes, inspeccionar archivos y seguir instrucciones, pon el trabajo de shell dentro de un entorno de proyecto restringido. Mantén el host aburrido.
 
-Buen valor por defecto:
+Buena configuración por defecto:
 
-- iniciar el agente en el repositorio, no en tu directorio de inicio
-- negar rutas sensibles explícitamente
-- usar un Dev Container para comandos de install/build/test
-- evitar agregar "directorios adicionales" amplios como contexto
-- revisar cualquier comando generado que toque credenciales, configuración de auth, publicación de paquetes o recursos en la nube
+- inicia el agente en el repositorio, no en tu directorio personal
+- deniega rutas sensibles explícitamente
+- usa un Dev Container para comandos de instalación/construcción/prueba
+- evita añadir «directorios extra» amplios como contexto
+- revisa cualquier comando generado que toque credenciales, configuración de autenticación, publicación de paquetes o recursos en la nube
 
-El modelo no necesita tu carpeta `~/Documents` para corregir un error de TypeScript.
+El modelo no necesita tu carpeta `~/Documents` para arreglar un error de TypeScript.
 
-## 2. Reemplazar la Proliferación de `.env` en Texto Plano
+## 2. Reemplaza la Proliferación de `.env` en Texto Plano
 
 Los archivos `.env` no son malvados.
 
-Solo son archivos. Ese es el problema.
+Son solo archivos. Ese es el problema.
 
-Los archivos se copian. Los archivos se indexan. Los archivos se montan. Los archivos son leídos por scripts que solo debían hacer lint de CSS. Los archivos se incluyen en zips de debugging. Los archivos se pegan en un chat porque alguien quería ayuda y se olvidó de las últimas doce líneas.
+Los archivos se copian. Los archivos se indexan. Los archivos se montan. Los archivos son leídos por scripts que solo debían lintear CSS. Los archivos se incluyen en zips de depuración. Los archivos se pegan en el chat porque alguien quería ayuda y olvidó las últimas doce líneas.
 
 Usa la jerarquía aburrida:
 
-1. Sin secreto necesario: pon el valor en `.env.example`
-2. Secreto solo local: cifraulo en reposo
-3. Secreto de desarrollo compartido: ponlo en un gestor de secretos real o gestor de contraseñas
-4. Secreto de producción: no lo pongas en portátiles de desarrollo a menos que haya una razón muy específica
+1. No se necesita secreto: pon el valor en `.env.example`.
+2. Secreto solo local: cífralo en reposo.
+3. Secreto de desarrollo compartido: ponlo en un gestor de secretos real o en un gestor de contraseñas.
+4. Secreto de producción: no lo pongas en portátiles de desarrolladores a menos que haya una razón muy específica.
 
-[VarLock](https://varlock.dev/guides/secrets/) es atractivo porque hace la sensibilidad explícita. Sus docs describen marcar valores con `@sensitive`, cifrar valores locales con `varlock()`, redactar valores sensibles de la salida de consola y escanear archivos de proyecto para ocurrencias en texto plano de valores sensibles conocidos.
+[VarLock](https://varlock.dev/guides/secrets/) es atractivo porque hace explícita la sensibilidad. Su documentación describe marcar valores con `@sensitive`, cifrar valores locales con `varlock()`, redactar valores sensibles de la salida de consola y escanear archivos del proyecto en busca de ocurrencias en texto plano de valores sensibles conocidos.
 
-La forma es mejor que "ejecutar un regex contra el repo y esperar que el secreto parezca secreto".
+La forma es mejor que «ejecutar una expresión regular contra el repositorio y esperar que el secreto tenga aspecto de secreto».
 
-Dirección del ejemplo:
+Ejemplo de dirección:
 
 ```dotenv
 # .env.schema
@@ -172,7 +172,7 @@ STRIPE_SECRET_KEY=
 DATABASE_URL=
 ```
 
-Override local:
+Sobrescritura local:
 
 ```dotenv
 # .env.local
@@ -181,34 +181,34 @@ STRIPE_SECRET_KEY=varlock(local:...)
 DATABASE_URL=varlock(local:...)
 ```
 
-Esto no significa que los secretos estén seguros una vez cargados en un proceso comprometido. Nada lo está. Pero significa que el filesystem tiene menos premios en texto plano.
+Esto no significa que los secretos estén seguros una vez cargados en un proceso comprometido. Nada lo garantiza. Pero sí significa que el sistema de archivos tiene menos premios en texto plano.
 
-Eso importa contra infostealers, dependencias maliciosas, contexto AI excesivo, commits accidentales y el humilde momento de `console.log(process.env)`.
+Eso importa contra infostealers, dependencias maliciosas, contexto de IA demasiado amplio, commits accidentales y el humilde momento de `console.log(process.env)`.
 
-## 3. Agregar Tokens Cebo Donde un Ladrón Miraría
+## 3. Añade Tokens Señuelo Donde un Ladrón Miraría
 
-La mayoría del monitoreo te dice cuando algo conocido-malo ocurrió.
+La mayoría de la monitorización te dice cuándo ocurrió algo conocido como malo.
 
-Los tokens cebo te dicen cuando algo extraño tocó algo que no debería saber que existe.
+Los tokens señuelo te dicen cuándo algo extraño tocó algo que no debería saber que existe.
 
-[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) los describe como cables de alarma digitales. Pueden ser documentos, URLs, claves de API, perfiles de VPN, códigos QR y otros activos falsos que alertan cuando se acceden.
+[Thinkst Canarytokens](https://help.canary.tools/hc/en-gb/articles/10905485310109-Canarytoken-Overview-and-Use-Cases) los describe como alarmas digitales. Pueden ser documentos, URLs, claves API, perfiles VPN, códigos QR y otros activos falsos que alertan cuando se accede a ellos.
 
-El placement es el arte.
+La colocación es el arte.
 
-No scattered cebo random y declarar victoria. Poncebos donde el robo de credenciales, robo de backups o reconocimientoiría naturalmente.
+No esparzas señuelos aleatorios y declares victoria. Pon señuelos donde el robo de credenciales, el robo de respaldos o el reconocimiento irían naturalmente.
 
-### Cebo Locales
+### Señuelos Locales
 
-Crea un backup falso:
+Crea un respaldo falso:
 
 ```text
 ~/backups/customer-prod-export-2024.sql
 ```
 
-Pon un token o URL cebo dentro:
+Pon una URL o token señuelo dentro:
 
 ```sql
--- legacy analytics webhook
+-- webhook legacy de analíticas
 -- https://canarytokens.example.invalid/static/abc123
 ```
 
@@ -227,90 +227,90 @@ aws_access_key_id = AKIA...
 aws_secret_access_key = ...
 ```
 
-Usa un tipo real de token cebo de AWS cuando esté disponible para que la alerta dispara en intento de uso, no solo en abrir archivo.
+Usa un tipo de token señuelo real de AWS cuando esté disponible para que la alerta se dispare al intentar usarlo, no solo al abrir el archivo.
 
-### Cebo en Repo
+### Señuelos en el Repositorio
 
-Poncebos cerca de lugares que los atacantes inspeccionan después de acceso al código:
+Pon señuelos cerca de lugares que los atacantes inspeccionan después de acceder al código fuente:
 
 - runbooks internos
-- docs de deployment obsoletos
-- notas de migración antiguas
-- credenciales de servicio falsas en un `.env.canary` claramente no de producción
-- instrucciones de restore de backup falsas
+- documentación de despliegue obsoleta
+- notas antiguas de migración
+- credenciales de servicio falsas en un `.env.canary` claramente no productivo
+- instrucciones falsas de restauración de respaldos
 
-Esto no es seguridad por oscuridad. Esto es una alarma en un pasillo.
+Esto no es seguridad por oscuridad. Es una alarma en un pasillo.
 
-### Cebo en CI y Nube
+### Señuelos en CI y la Nube
 
-Buenos lugares para cable de alarma en nube:
+Buenas ubicaciones para señuelos en la nube:
 
 - un secreto falso de CI
-- un token falso de deploy
+- un token de despliegue falso
 - un usuario de base de datos falso sin privilegios
-- una ruta de object storage sin usar
+- una ruta de almacenamiento de objetos no utilizada
 - un kubeconfig falso
-- una clave de API falsa documentada en un runbook
+- una clave API falsa documentada en un runbook
 
-Haz que la alerta sea accionable. Un cebo que envía correo a una bandeja sin atender es un adorno.
+Haz que la alerta sea accionable. Un señuelo que envía un correo electrónico a una bandeja de entrada no supervisada es una cadena decorativa.
 
-Mínimo, la alerta debe decirte:
+Como mínimo, la alerta debería decirte:
 
-- qué token disparó
+- qué token se disparó
 - dónde se plantó
-- qué sistema lo tocrotó
+- qué sistema lo tocó
 - qué rotar
-- quién posee la respuesta
+- quién es responsable de la respuesta
 
-## 4. Poner una Compuerta en el Tráfico de Salida
+## 4. Pon un Control en el Tráfico Saliente
 
-Si algo malicioso se ejecuta localmente, la exfiltración necesita un camino de red.
+Si algo malicioso se ejecuta localmente, la exfiltración necesita una ruta de red.
 
-La mayoría de portátiles de desarrollo permiten tráfico saliente por defecto. Eso es conveniente. También significa que un proceso desconocido a menudo puede enviar datos a un lugar desconocido sin un punto de decisión local.
+La mayoría de los portátiles de desarrolladores permiten el tráfico saliente por defecto. Eso es conveniente. También significa que un proceso desconocido a menudo puede enviar datos a un lugar desconocido sin un punto de decisión local.
 
-Los firewalls de salida son la capa del cinturón de seguridad.
+Los cortafuegos de salida son la capa del cinturón de seguridad.
 
-No van a detener cada accidente. vão hacer algunos accidentes survivables. También van a complain en tiempos inconvenientes hasta que les enseñes qué es normal.
+No detendrán todos los accidentes. Harán que algunos accidentes sean sobrevivibles. También se quejarán en momentos inconvenientes hasta que les enseñes cómo se ve la normalidad.
 
 ### macOS
 
-[LuLu](https://objective-see.org/products/lulu.html) es gratis y open source. Objective-See lo describe como bloqueando conexiones salientes desconocidas, y sus docs notan que LuLu solo monitorea tráfico saliente.
+[LuLu](https://objective-see.org/products/lulu.html) es gratuito y de código abierto. Objective-See lo describe como bloqueador de conexiones salientes desconocidas, y su documentación señala que LuLu solo monitorea el tráfico saliente.
 
-Es una buena primera opción si quieres prompts simples de salida y puedes tolerar algo de fricción de setup.
+Es una buena primera opción si quieres avisos de salida simples y puedes tolerar algo de fricción en la configuración.
 
-[Little Snitch](https://obdev.at/products/littlesnitch/) es comercial y más pulido. Muestra alertas de conexión, te permite permitir o denegar conexiones de apps, y te da un monitor de red con visibilidad de app, dominio, país, puerto, protocolo y tráfico.
+[Little Snitch](https://obdev.at/products/littlesnitch/) es comercial y más pulido. Muestra alertas de conexión, te permite permitir o denegar conexiones de aplicaciones, y te da un monitor de red con visibilidad de aplicación, dominio, país, puerto, protocolo y tráfico.
 
-Es la opción más fuerte si quieres perfiles, gestión de reglas y una UI que la gente realmente puede seguir usando después de la semana dos.
+Es la opción más sólida si quieres perfiles, gestión de reglas y una interfaz que la gente pueda seguir usando después de la segunda semana.
 
 ### Windows
 
-Windows Defender Firewall soporta reglas salientes y precedencia de reglas para tráfico entrante y saliente. La guía de Microsoft es sobria: cambiar reglas salientes a bloqueado puede considerarse en ambientes de alta seguridad, pero requiere inventariar apps y crear reglas para lo que necesita conectividad de red.
+El Cortafuegos de Windows Defender soporta reglas de salida y prioridad de reglas para tráfico entrante y saliente. La guía de Microsoft es sobria: cambiar las reglas de salida a bloqueadas puede considerarse en entornos de alta seguridad, pero requiere inventariar aplicaciones y crear reglas para lo que necesita conectividad de red.
 
-Traducción: posible, potente y fácil de hacer molesto.
+Traducción: posible, potente y fácil de volver molesto.
 
-[Portmaster](https://safing.io/) también vale la pena evaluar en Windows. Safing lo describe como un firewall de aplicación open source que monitorea conexiones de red y establece reglas de bloqueo por aplicación.
+[Portmaster](https://safing.io/) también vale la pena evaluarlo en Windows. Safing lo describe como un cortafuegos de aplicaciones de código abierto que monitoriza conexiones de red y establece reglas de bloqueo por aplicación.
 
 ### Linux
 
-Portmaster soporta paquetes comunes de Linux. OpenSnitch es otro firewall de aplicación de Linux que vale la pena evaluar, aunque el estado del proyecto y el empaquetado de distro deben verificarse antes de estandarizar.
+Portmaster es compatible con paquetes comunes de Linux. OpenSnitch es otro cortafuegos de aplicaciones para Linux que vale la pena evaluar, aunque el estado del proyecto y el empaquetado en las distribuciones deben verificarse antes de estandarizar.
 
-Para servidores, usa controles normales de servidor. Para portátiles de desarrollo, la característica clave es visibilidad a nivel de aplicación. "Bloquear todo saliente excepto 443" no es suficiente cuando toda ruta interesante de exfiltración también habla 443.
+Para servidores, usa controles de servidor normales. Para portátiles de desarrolladores, la característica clave es la visibilidad a nivel de aplicación. «Bloquear todo saliente excepto el 443» no es suficiente cuando casi cualquier ruta de exfiltración interesante también habla por el 443.
 
-## 5. Dar Supervisión Adulta a los Backups
+## 5. Da a los Respaldos Supervisión de Adultos
 
-Los backups no están fríos. Son datos sensibles en forma portátil.
+Los respaldos no son fríos. Son datos sensibles en forma portátil.
 
-Las máquinas de desarrollo no должны convertirse en archivos de respaldo a menos que ese sea el trabajo.
+Las máquinas de desarrolladores no deberían convertirse en archivos de respaldo a menos que ese sea su trabajo.
 
-Reglas que realmente aplicaría:
+Reglas que yo aplicaría:
 
-- Los exports de producción requieren un propietario y una fecha de expiración.
-- Los volcados de bases de datos locales deben estar cifrados.
-- Cualquier export que contenga credenciales dispara rotación o limpieza de credenciales.
-- Las carpetas de backup no se montan en Dev Containers por defecto.
-- Las carpetas de backup se niegan a herramientas de código AI por defecto.
-- Al menos un cebo vive en almacenamiento tipo backup.
-- Los exports antiguos se borran por automatización, no por vibras.
+- Las exportaciones de producción requieren un propietario y una fecha de vencimiento.
+- Los volcados de base de datos locales deben estar cifrados.
+- Cualquier exportación que contenga credenciales desencadena rotación o depuración de credenciales.
+- Las carpetas de respaldo no se montan en Dev Containers por defecto.
+- Las carpetas de respaldo están denegadas a las herramientas de IA por defecto.
+- Al menos un señuelo vive en un almacenamiento con aspecto de respaldo.
+- Las exportaciones antiguas se eliminan con automatización, no con corazonadas.
 
 Convención local simple:
 
@@ -322,9 +322,9 @@ chmod 700 ~/sensitive-exports
 Mejor convención:
 
 - volumen cifrado o archivo cifrado
-- nomenclatura clara con expiración
+- nomenclatura clara con vencimiento
 - eliminación documentada
-- no sync a drives de nube de consumidores a menos que se aprobado
+- sin sincronización a unidades en la nube de consumo a menos que esté aprobado
 
 Ejemplo:
 
@@ -333,34 +333,34 @@ age -r age1yourpublickeyhere -o customer-export-2026-05-09.sql.gz.age customer-e
 shred -u customer-export.sql.gz
 ```
 
-No conviertas esto en un ritual. La mejor política de backup es aquella donde los desarrolladores rara vez necesitan exports de producción en primer lugar.
+No conviertas esto en un ritual. La mejor política de respaldos es aquella en la que los desarrolladores rara vez necesitan exportaciones de producción en primer lugar.
 
-## 6. Construir un Default de Estación de Trabajo
+## 6. Construye una Configuración por Defecto para la Estación de Trabajo
 
-Aquí hay una línea base razonable para un desarrollador individual:
+Aquí hay una base sensata para un desarrollador individual:
 
-| Área | Línea Base |
+| Área | Base |
 | --- | --- |
-| Navegador | Sin contraseñas de producción guardadas. Usa un gestor de contraseñas y MFA con hardware para cuentas importantes. |
-| Proyectos | Usa Dev Containers para proyectos con installs de paquetes, código no confiado, o trabajo de shell dirigido por AI. |
-| Secretos | Sin secretos de producción en texto plano en disco. Cifra secretos locales de desarrollo donde sea práctico. |
-| Nube | Credenciales de corta duración. Identidades separadas de dev y prod. No token administrativo personal por defecto. |
-| GitHub | Tokens de grano fino. Revisa tokens de publicación de paquetes. Usa SSO de org y claves de hardware. |
-| Herramientas AI | Acceso con ámbito de proyecto, niega rutas sensibles, ejecuta comandos en contenedores cuando sea práctico. |
-| Backups | Cifra, expira, aísla y monitorea. Mantén fuera de montajes amplios y contexto AI. |
-| Red | Firewall de salida en modo alerta o monitor primero, luego reglas para herramientas riesgosas. |
-| Detectación | Tokens cebo en backup, credenciales, CI, nube y ubicaciones de documentación. |
+| Navegador | Sin contraseñas de producción guardadas. Usa un gestor de contraseñas y MFA basada en hardware para cuentas importantes. |
+| Proyectos | Usa Dev Containers para proyectos con instalación de paquetes, código no confiable o trabajo de shell impulsado por IA. |
+| Secretos | Sin secretos de producción en texto plano en el disco. Cifra los secretos de desarrollo locales cuando sea práctico. |
+| Nube | Credenciales de corta duración. Identidades separadas para desarrollo y producción. Sin token de administración personal por defecto. |
+| GitHub | Tokens de grano fino. Revisa los tokens de publicación de paquetes. Usa SSO de organización y claves de hardware. |
+| Herramientas de IA | Acceso limitado al proyecto, deniega rutas sensibles, ejecuta comandos en contenedores cuando sea práctico. |
+| Respaldos | Cifra, vence, aísla y monitoriza. Mantén fuera de montajes amplios y del contexto de IA. |
+| Red | Cortafuegos de salida en modo de alerta o monitorización primero, luego reglas para herramientas de riesgo. |
+| Detección | Tokens señuelo en ubicaciones de respaldo, credenciales, CI, nube y documentación. |
 
-Para un equipo, agrega:
+Para un equipo, añade:
 
 - una plantilla estándar de `.devcontainer`
-- una política de secretos que distinga local, dev compartido, staging y prod
-- convenciones de placement de tokens cebo
-- perfiles de firewall saliente documentados
-- playbooks de rotación de credenciales rápido
-- onboarding que explique el modelo de amenaza sin teatro
+- una política de secretos que distinga entre local, desarrollo compartido, staging y producción
+- convenciones de colocación de tokens señuelo
+- perfiles de cortafuegos de salida documentados
+- manuales de rotación rápida de credenciales
+- una incorporación que explique el modelo de amenaza sin teatro
 
-El objetivo no es hacer de cada desarrollador un ingeniero de seguridad.
+El objetivo no es convertir a cada desarrollador en un ingeniero de seguridad.
 
 El objetivo es hacer que el camino más seguro sea el camino normal.
 
@@ -368,35 +368,35 @@ El objetivo es hacer que el camino más seguro sea el camino normal.
 
 Si esto parece demasiado grande, haz cinco cosas:
 
-1. Elige un repo de alto riesgo y agrega un Dev Container con montajes estrechos.
-2. Mueve un secreto plaintext `.env.local` a almacenamiento cifrado local o un gestor de contraseñas.
-3. Planta un token cebo en un archivo de backup falso y enruta alertas a algún lugar visible.
-4. Instala LuLu, Little Snitch, Portmaster o equivalente en modo monitor y observa qué realmente habla.
-5. Encuentra exports locales de producción y ya sea eliminar, cifrar o expirar.
+1. Elige un repositorio de alto riesgo y añádele un Dev Container con montajes estrechos.
+2. Mueve un secreto de `.env.local` en texto plano a almacenamiento local cifrado o a un gestor de contraseñas.
+3. Planta un token señuelo en un archivo de respaldo falso y dirige las alertas a algún lugar visible.
+4. Instala LuLu, Little Snitch, Portmaster o equivalente en modo monitor y observa qué habla realmente.
+5. Encuentra exportaciones de producción locales y bórralas, cífralas o ponles fecha de vencimiento.
 
 Eso es suficiente para empezar.
 
-El trabajo de seguridad a menudo falla porque intenta llegar como una catedral. Trae primero una puerta. Luego una cerradura. Luego una alarma. Luego un hábito.
+El trabajo de seguridad a menudo falla porque intenta llegar como una catedral. Trae primero una puerta. Luego un candado. Luego una alarma. Luego un hábito.
 
-La estación de trabajo no tiene que ser perfectamente confiada.
+La estación de trabajo no tiene que ser perfectamente confiable.
 
-Tiene que dejar de ser infinitamente confiada por accidente.
+Tiene que dejar de ser infinitamente confiable por accidente.
 
-## Plan de Imagen
+## Image Plan
 
-Direcciones potenciales de cover:
+Potential cover directions:
 
-- Mapa diagrámatico: un portátil en el centro con cuatro anillos constrainados etiquetados aislamiento, secretos, detección y egress. Mejor para una guía práctica.
-- Metáfora editorial: un taller con llaves, documentos y cables de red bajo domos de cristal, con un cable llevando a una luz de advertencia. Mejor para la identidad visual de la serie.
-- Escena de modo de fallo: una carpeta de backup local brillando como infraestructura de producción mientras diminutos cables de alarma la rodean. Mejor si el post se inclina más al riesgo de backup.
+- Diagrammatic map: a laptop in the center with four constrained rings labeled isolation, secrets, detection, and egress. Best for a practical guide.
+- Editorial metaphor: a workbench with keys, documents, and network cables under glass domes, with one cable leading to a warning light. Best for the series visual identity.
+- Failure-mode scene: a local backup folder glowing like production infrastructure while tiny alert tripwires surround it. Best if the post leans harder into backup risk.
 
-Conjunto de assets sugerido una vez elegida una dirección:
+Suggested asset set once a direction is chosen:
 
-- `desktop-social.webp` a 1200x630
-- `wide.webp` a 1600x900
-- `square.webp` a 800x800
+- `desktop-social.webp` at 1200x630
+- `wide.webp` at 1600x900
+- `square.webp` at 800x800
 
-## Fuentes y Lectura Útil
+## Sources and Useful Reading
 
 - [Development Containers specification](https://github.com/devcontainers/spec)
 - [Claude Code permissions](https://code.claude.com/docs/en/permissions)
