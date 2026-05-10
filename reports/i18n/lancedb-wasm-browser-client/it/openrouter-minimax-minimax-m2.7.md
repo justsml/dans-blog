@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: it
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/it/index.mdx
+- Validation: passed
+- Runtime seconds: 63.95
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
