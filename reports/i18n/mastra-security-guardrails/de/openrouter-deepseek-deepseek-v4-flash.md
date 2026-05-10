@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: de
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx
+- Validation: passed
+- Runtime seconds: 28.50
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
