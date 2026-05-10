@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: fr
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 34.28
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
