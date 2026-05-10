@@ -12,18 +12,17 @@ import {
 } from "./utils.ts";
 
 const CHEAP_CANDIDATE_MODELS = [
-  "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
-  "openrouter/minimax/minimax-m2.7",
   "openrouter/z-ai/glm-5-turbo",
   "openrouter/z-ai/glm-4.7-flash",
   "openrouter/google/gemini-3-flash-preview",
   "openrouter/deepseek/deepseek-v3.2",
   "openrouter/minimax/minimax-m2.5",
+  "openrouter/minimax/minimax-m2.7",
+  "openrouter/qwen/qwen3.6-plus",
 ];
 
 const JUDGE_MODEL = "openrouter/google/gemini-3-flash-preview";
-const SECOND_JUDGE_MODEL = "openrouter/deepseek/deepseek-v4-flash";
 const ESCALATION_JUDGE_MODEL = "openrouter/anthropic/claude-sonnet-4.6";
 
 type Task = {
@@ -37,11 +36,14 @@ const selectedLocales = parseList(optionalString(options, "locales"), [...ACTIVE
   .filter((locale): locale is ActiveLocale => ACTIVE_LOCALES.includes(locale as ActiveLocale));
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const candidateModels = validateCandidateModels(parseList(optionalString(options, "models"), CHEAP_CANDIDATE_MODELS));
-const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 3);
+const minCandidates = parsePositiveInteger(optionalString(options, "min-candidates"), 2);
 const limit = parseOptionalPositiveInteger(optionalString(options, "limit"));
 const latestPosts = parseOptionalPositiveInteger(optionalString(options, "latest-posts"));
 const candidateTimeoutSeconds = parsePositiveInteger(optionalString(options, "timeout-seconds"), 240);
 const judgeTimeoutSeconds = parsePositiveInteger(optionalString(options, "judge-timeout-seconds"), 240);
+const judgeModel = optionalString(options, "judge-model") ?? JUDGE_MODEL;
+const secondJudgeModel = optionalString(options, "second-judge-model");
+const escalationJudgeModel = optionalString(options, "escalate-model") ?? ESCALATION_JUDGE_MODEL;
 const shouldDryRun = options["dry-run"] === true;
 const shouldPush = options["push"] === true;
 
@@ -122,14 +124,17 @@ function processTask(task: Task) {
     "--locale",
     task.locale,
     "--model",
-    JUDGE_MODEL,
-    "--second-model",
-    SECOND_JUDGE_MODEL,
+    judgeModel,
+    ...optionalArg("--second-model", secondJudgeModel),
     "--escalate-model",
-    ESCALATION_JUDGE_MODEL,
+    escalationJudgeModel,
     "--timeout-seconds",
     String(judgeTimeoutSeconds),
   ]);
+}
+
+function optionalArg(name: string, value: string | undefined) {
+  return value == null ? [] : [name, value];
 }
 
 function getMissingTranslationTasks() {
