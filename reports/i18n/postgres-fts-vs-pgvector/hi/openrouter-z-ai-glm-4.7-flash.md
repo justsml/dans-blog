@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: postgres-fts-vs-pgvector
+- Locale: hi
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 135.29
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-05-08--postgres-fts-vs-pgvector/hi/index.mdx: reports/i18n/stop-hardcoding-your-prompts/ja/judge-second.md, src/content/posts/2026-05-07--stop-hardcoding-your-prompts/hi/index.mdx, src/content/posts/2026-05-07--stop-hardcoding-your-prompts/ja/index.mdx
