@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-09-15--serverless-database-magic/de/index.mdx
+- Validation: passed
+- Runtime seconds: 73.29
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
