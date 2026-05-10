@@ -1,0 +1,112 @@
+---
+social_image: ../desktop-social.webp
+title: "Nombrar las cosas bien"
+subTitle: "Nombrar cosas: Fundamentos de Orientación a Objetos"
+date: 2016-06-01
+modified: 2024-08-10
+category: Guides
+subCategory: programación
+tags: [programación, patrones, nomenclatura, código fuente, organización]
+cover: rawpixel-652639-unsplash.webp
+cover_mobile: w300_rawpixel-652639-unsplash.webp
+cover_icon: icon_rawpixel-652639-unsplash.webp
+---
+
+## Nombrar cosas: Fundamentos de Orientación a Objetos
+
+Veamos el diseño de objetos/clases con un ejemplo...
+
+### La situación
+
+¿Alguna vez has diseñado un `modelo de datos` (en código, SQL o hojas de cálculo de Excel)?
+¿Te resulta familiar lo siguiente?
+
+```
+*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+```
+
+### ¿Dónde está el error?
+
+Bueno, técnicamente no hay ningún error, simplemente datos que necesitan reorganizarse.
+
+**¿Te suena familiar lo siguiente?**
+
+1. Cualquier cambio en tu aplicación requerirá horas de ardua depuración.
+1. Cualquier cambio en los requisitos resultará en:
+
+![refactorización de esquema][schema_refactor]
+
+¿Por qué es _tan malo_ nombrar un campo `agentEmailPrimary`?
+
+Para empezar, **no** estás creando algo completamente nuevo en el universo. La sobreespecificación tiene algunas trampas:
+
+1. Estar 'atado' a un nombre altamente específico significa que `agentEmailPrimary` probablemente hace que tus vistas y código relacionado sean **0% reutilizables**, y presenta bugs recurrentes molestos como:
+
+- Los datos no se sincronizan entre tablas (no es obvio si `user.email` necesita propagarse a `agent.agentEmail` o viceversa — sin mencionar la complejidad de implementar manualmente dónde y cómo aplicar esta 'lógica'...)
+- Las reglas/lógica de validación probablemente están duplicadas e inconsistentes.
+- Cada vez más, tu proyecto se parecerá a una tambaleante torre de Jenga.
+- La fragilidad se acumula con cada nuevo archivo, ya que se requiere una atención al detalle extremadamente alta incluso para cambios triviales
+
+1. `agentEmailPrimary` podría significar varias cosas diferentes. Evita la ambigüedad con **nombres más cortos**.
+
+- Cuidado con el exceso ridículo de palabras. ¿`Primary` (Principal)? Solo lleva a más preguntas: ¿Hay un secundario? ¿Es para su familiar principal más cercano?
+
+Suficientes palabras Dan, ¿cómo debería verse en su lugar?
+
+### Una solución
+
+```
+// Consolidated Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+Eliminé la tabla `Agent`, ya que no contenía campos únicos para los Agentes. Y el objeto `User.company` (con `.name`, `.address`) emergió una vez que se limpió la nomenclatura.
+
+Algunos principios guía:
+
+1. Elimina tablas innecesarias. ¿Realmente necesitas una tabla `statuses`? Cuando podrías agregar un campo `status::VARCHAR(8)` en la tabla `User`? Está bien, usa los bytes extra por fila.
+2. Intenta fusionar tablas relacionadas. **Datos**
+3. Elimina recopilaciones de datos redundantes (por ejemplo, elimina la tabla `ActivityLogs` si fue reemplazada por una solución de Analytics.)
+4. Intenta mantener **todos los nombres de campo** en una **sola palabra/sustantivo/pronombre**. Está bien depender del contexto proporcionado por el nombre de la tabla. (por ejemplo, `PersonalAccount.email` vs `BusinessAccount.email` — el contexto lo proporciona el nombre de la tabla.)
+5. **No existe** `Agent.agentEmail` ni `Agent.agentPhonePrimary`. Punto. Repítelo conmigo: "es `email` y `phone`."
+6. Al usar nombres altamente específicos, grabas en piedra un nivel específico de `reutilización-de-código` y `durabilidad`, bueno, específicamente **CERO %**.
+7. No te estás haciendo ningún favor con basura como esta `User.profileSummaryEmail`. 💞
+
+**Lectura recomendada incluye:**
+
+1. [Maybe Normalizing Isn't Normal](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1. [The Trade-offs Between Database Normalization and Denormalization](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2. [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3. [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
