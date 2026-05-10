@@ -1,0 +1,142 @@
+---
+title: Один странный способ ускорить команды разработки!
+subTitle: Старшие инженеры это ненавидят!
+date: 2024-09-29
+modified: 2024-09-30
+tags: [agile, teams]
+category: Engineering
+social_image: ../desktop-social.webp
+
+cover_full_width: wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: Photo by <a href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny Howe</a> on <a href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+
+<details>
+<summary>Table of Contents</summary>
+
+- [Thinking in Keys](#thinking-in-keys)
+  - [Designing with Keys](#designing-with-keys)
+  - [KVs as Graphs & Trees?](#kvs-as-graphs--trees)
+  - [When to Use KV Patterns](#when-to-use-kv-patterns)
+  - [When to Avoid KV Patterns](#when-to-avoid-kv-patterns)
+  - [When you need more than KV](#when-you-need-more-than-kv)
+- [Next Steps](#next-steps)
+  - [Fact Service - Reference Project](#fact-service---reference-project)
+- [Conclusion](#conclusion)
+  - [Further Reading](#further-reading)
+
+</details>
+
+При проектировании новой системы или фичи легко увязнуть в проектировании схемы данных. В этой статье я поделюсь приёмом, который не раз окупал себя за мою карьеру.
+
+<section class="breakout">
+  Попробуйте _наипростейшее_ возможное хранилище данных при проектировании новой системы или фичи.
+</section>
+
+Слишком часто команды тянутся к SQL или MongoDB как к единственному варианту хранения данных. Конечно, никто не будет рисковать, выбирая SQL. Но что, если я скажу, что есть более простой, быстрый и дешёвый способ начать?
+
+Хранилище ключ-значение (KV) может быть всем, что вам нужно. Что-то вроде Redis или S3.
+
+Это не всегда правильный выбор, но, возможно, **чаще, чем вы думаете.**
+
+Простое хранилище данных может умеренно ускорить *раннюю* разработку за счёт переиспользования кода слоя данных и снижения затрат, связанных с изменениями в схеме и миграциями. Изменения всё равно будут происходить; пусть код разбирается с ними как можно дольше. Лучше избегать изменений в двух местах одновременно.
+
+Производительность также вырастет, поскольку поиск по `ключу` сильно оптимизирован, а записи могут выигрывать от пакетных обновлений.
+
+## Thinking in Keys
+
+Может показаться странным сначала проектировать с паттерном ключ-значение, особенно если вы привыкли проектировать системы с иерархиями объектов или диаграммами связей сущностей и напрямую реализовывать их в SQL.
+
+Вы наверняка ***использовали*** паттерны ключ-значение раньше! Они повсюду: от конфигов и URL до S3-подобных объектных хранилищ! Каждый раз, когда вы работаете с данными через уникальный `ID` — угадайте что? Ещё один паттерн ключ-значение! (Хотя и не обязательно KV-хранилище.)
+
+### Designing with Keys
+
+Практически все данные _можно_ представить с помощью паттернов KV. (На самом деле, многие высокоуровневые базы данных строятся на низкоуровневых паттернах KV.) Давайте посмотрим на примеры:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+Вы могли заметить, но `ID` часто является частью ключа! Это распространённый паттерн в KV-хранилищах. Ключ часто составной: тип сущности и уникальный идентификатор (например, `user/123`, `user:456`).
+
+### KVs as Graphs & Trees?
+
+Можно полезно представлять сложные структуры данных, такие как графы или деревья, с помощью паттернов KV. (Опять же, URL-адреса REST — отличный пример этого.)
+
+Иерархия ключей (`user/420` → `user/420/friends`) естественным образом кодирует отношения графа между `user` и его `friends`.
+
+Это быстрый и дешёвый способ сериализации графовых структур данных. Особенно если вам не нужна сложность графовой базы данных (вроде Neo4j).
+
+<figure>
+![Graph of user/123](../../KVsCanBeGraphs.webp)
+<figcaption>Graph of user/123</figcaption>
+</figure>
+
+### When to Use KV Patterns
+
+- Когда вам нужен масштаб. (Миллиарды или даже триллионы пар ключ-значение.)
+- Когда вы в основном обращаетесь к данным через уникальный ключ.
+- Когда вам нужны простые структуры данных.
+- Когда у вас есть данные с иерархией, графовой или древовидной структурой.
+
+### When to Avoid KV Patterns
+
+Не храните, например, комментарии к блогам в _**одной**_ паре KV. Например, `post/666 -> {comments: [...слишком много...]}`. Вместо этого можно использовать `post/666/comments/1` или `post/666/comments/<UUID>` и т. д. Или перейти к SQL-таблице.
+
+- Когда нужно искать по свойствам (не по ключу или ID) в наборе данных.
+- Когда нужно выполнять JOIN данных между несколькими сущностями.
+- Когда нужно обеспечивать сложные ограничения или отношения.
+
+### When you need more than KV
+
+По мере изменения требований проекта вам может понадобиться больше, чем поддерживает ваше KV-хранилище. В этот момент нужно рассмотреть миграцию на более сложное хранилище данных.
+
+Хорошая новость: мигрировать одно KV-хранилище в SQL относительно проще, чем переносить сложную SQL-схему в KV-хранилище. (С множеством таблиц, индексов, ограничений и т. д.) Я делал это множество раз с помощью скрипта в 50 строк.
+
+По моим наблюдениям, качество SQL-проектирования выше, если начать с паттерна KV. Это заставляет по-настоящему подумать о данных по-другому и лучше понять, _что именно_ вам нужно от SQL.
+
+## Next Steps
+
+Лучший способ научиться — попробовать! Если вам интересно изучить этот паттерн глубже, рекомендую **создать что-нибудь** с Redis, DynamoDB или S3.
+Все они — отличные KV-хранилища с разными trade-off'ами.
+
+### Fact Service - Reference Project
+
+Посмотрите мой Open Source проект ["Fact Service" на GitHub](https://github.com/justsml/fact-service).
+
+Это самостоятельный RESTful API, реализующий KV-сервис данных.
+
+Он включает множество [адаптеров данных](https://github.com/justsml/fact-service/tree/main/lib/providers).
+В том числе для Postgres, Redis, DynamoDB, Firestore и Cassandra! (С готовыми [Docker-командами](https://github.com/justsml/fact-service/tree/main/lib/providers) для быстрого старта.)
+
+Fact Service создан как стартовый проект и источник знаний — форкните его и создайте свой KV-сервис!
+
+## Conclusion
+
+Надеюсь, эта статья была полезна! Если у вас есть вопросы или отзывы, не стесняйтесь комментировать или писать мне в [Twitter](https://x.com/justsml).
+
+### Credits
+
+- [Modeling Hierarchical Tree Data in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Do's and Don'ts of Storing Large Trees in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Further Reading
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
