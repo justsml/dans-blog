@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ru
+- Model: openrouter/deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 57.86
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
