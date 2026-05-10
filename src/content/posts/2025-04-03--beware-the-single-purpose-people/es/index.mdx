@@ -1,0 +1,121 @@
+---
+language: Spanish
+title: "Cuidado con las Personas de un Solo Propósito"
+subTitle: "Tan puro que duele"
+category: Code
+subCategory: Best Practices
+date: 2025-04-14
+modified: 2025-04-15
+tags: [software development, code organization, maintainability, testing, dogma, pragmatism]
+
+social_image: ../desktop-social.webp
+cover_full_width: ../endless-little-boxes.webp
+cover_mobile: ../endless-little-boxes-square-200.webp
+cover_icon: ../endless-little-boxes-square-200.webp
+---
+
+El `Principio de Responsabilidad Única` es una de esas ideas que suena tan sensata que puede colarse por debajo de tu juicio.
+
+Haz una cosa. Hazla bien. Mantén los módulos enfocados. Dale al código una razón para cambiar. Buen consejo.
+
+Luego alguien convierte el consejo en una cinta métrica y empieza a declarar que cualquier función de más de cinco líneas es un olor a código.
+
+<p class="inset">El problema no es SRP. El problema es tratar "pequeño" como un sustituto de "cohesivo".</p>
+
+En ese punto te has encontrado con las Personas de un Solo Propósito: desarrolladores que no están exactamente equivocados sobre la modularidad, pero han confundido los límites útiles con la fragmentación máxima.
+
+<figure class="inset-right">
+  <figcaption>Violencia en la Arquitectura de Software</figcaption>
+![Componentes, componentes en todas partes](../software-patterns__the-dismembered-architecture.webp "Componentes, componentes en todas partes")
+</figure>
+
+## I. La Idea Útil Debajo
+
+> Añadir un solo checkbox a un formulario idealmente solo debería afectar a un archivo. No 8 archivos en 5 directorios... Te estoy mirando a ti, React/Redux.
+
+Cuando SRP se aplica con juicio, ayuda. Las unidades de código enfocadas en una única tarea conceptual son más fáciles de entender. Las pruebas pueden apuntar al comportamiento en un límite sensato. Los módulos claros facilitan cambiar una parte del sistema sin arrastrar al resto de la aplicación a la sala.
+
+Incluso los ejemplos clásicos de Unix son más pragmáticos de lo que sugiere el eslogan. `ls` lista archivos, sí, pero también coordina llamadas como `opendir`, `readdir`, `closedir` y `stat`. La unidad útil no es la operación más pequeña posible. La unidad útil es la cosa coherente más pequeña que resuelve la tarea.
+
+<p class="inset">La filosofía original de Unix trataba sobre *composición* y *simplicidad*, **no sobre reducir todo** a una sola función o archivo.</p>
+
+Esa distinción importa. "Una responsabilidad" no es lo mismo que "una línea de comportamiento".
+
+## II. Sobre-Abstracción: Cuando la Simplicidad se Convierte en Caos
+
+> Nuestro arquitecto insiste en que cada función de más de 5 líneas es un 'olor a código'. Nuestra base de código ahora huele ligeramente a desesperación clueless.
+
+El modo de fallo es fácil de detectar después de que ya ha empeorado tu semana.
+
+La base de código tiene más archivos, pero menos forma. Cada ayudante tiene un ayudante. Cada concepto se ha dividido en carpetas nombradas según roles técnicos en lugar de significado del producto. Añadir un checkbox requiere tocar un componente, un hook, un selector, una acción, un reductor, una constante, un fixture de prueba y una exportación de barril que existe principalmente para evitar que las rutas de importación parezcan culpables.
+
+<figure class="inset-left">
+  <figcaption>Sin escape para este patrón de trabajo infinito</figcaption>
+![Componentes, componentes en todas partes](../software-patterns__the-mc-escher-stack.webp "El Patrón MC Escher")
+</figure>
+
+¿Qué compró toda esa pureza?
+
+-   **Fragmentación del Sistema de Archivos:** Los directorios de código fuente florecen en paisajes pesadillescos de innumerables archivos diminutos, que a menudo contienen una función única y trágicamente solitaria. La navegación se convierte en un ejercicio de espeleología.
+-   **Enredos de Dependencias:** Una red de importaciones y exportaciones tan densa que rastrear la ejecución requiere una pizarra grande y más paciencia de la que la función merece. Los archivos importados exactamente una vez se sientan allí fingiendo ser reutilizables.
+-   **Traición en las Pruebas:** Las pruebas se vuelven frágiles, centinelas hiperespecíficos que guardan detalles de implementación minúsculos. ¿Cambiar una firma de función? Observa cómo docenas de pruebas se desmoronan como cerámica antigua. La suite de pruebas se transforma de una red de seguridad en un campo de minas.
+-   **Velocidad Desvanecida:** Los cambios simples se metastatizan en sagas de modificación de múltiples archivos. Incorporar nuevos desarrolladores implica semanas de entregarles mapas y brújulas solo para encontrar dónde *vive realmente* el componente `UserProfile` esta semana. El avance se ralentiza a un paso geológico bajo el peso abrumador de esta "organización".
+
+He mirado al abismo de bases de código donde una función directa de 100 líneas fue viviseccionada en más de 15 archivos, cada uno un pequeño ángel "puro" que contenía quizás una o dos funciones. El radio de explosión cognitiva de intentar mantener ese desorden en tu cabeza negaba por completo cualquier ganancia teórica de la separación. No era más simple; simplemente estaba disperso.
+
+## III. El Peaje de la Perfección: Impacto en los Desarrolladores
+
+> Pasamos más tiempo debatiendo sobre la estructura de archivos y convenciones de nomenclatura que realmente enviando funciones. ¿Esto es Agile?
+
+<figure class="inset-left">
+  <figcaption>Tan desordenado que bordea el arte</figcaption>
+![Tan desordenado que bordea el arte](../software-patterns__the-rube-goldberg-architecture.webp "El Patrón Rube Goldberg")
+</figure>
+
+Esta fragmentación patológica no es solo un problema estético. Cambia cómo los desarrolladores gastan su atención:
+
+**La Fuga de Productividad:** Olvida la deuda técnica; esto es deuda organizacional acumulada a través de anidamiento de directorios obsesivo-compulsivo. Cada pequeño ajuste se convierte en una excavación arqueológica a través de capas de abstracción. El tiempo se desvanece en el agujero negro de `cd ..` y `grep`.
+
+**El Impuesto de Pruebas:** En lugar de proporcionar confianza, la suite de pruebas se convierte en una fuente de fricción. Las horas se derriten arreglando pruebas rotas por refactorizaciones triviales, pruebas que estaban demasiado acopladas a los detalles microscópicos que se suponía que debían verificar.
+
+**La Carga Cognitiva:** Hay un límite estricto en cuántas piezas desconectadas de información puede malabarear el cerebro humano. Obligar a los desarrolladores a reconstruir el flujo del programa desde una docena de archivos dispersos obstaculiza activamente la comprensión y hace que los cambios seguros sean más difíciles.
+
+## IV. Abrazando el Pragmatismo: Una Alternativa Práctica
+
+> Sugerí que pusiéramos dos funciones relacionadas en el mismo archivo. La sala reaccionó como si hubiera propuesto eliminar la puesta en escena.
+> — Un lector en recuperación purista
+
+La salida de emergencia no es abandonar SRP. La respuesta es aplicarlo en el nivel correcto de significado.
+
+Así es como se ve eso en la práctica:
+
+-   **Enfócate en la Cohesión, No en los Átomos:** Agrupa cosas que *cambian juntas* y *pertenecen juntas* conceptualmente. Un módulo podría manejar varios aspectos relacionados de la autenticación de usuarios. Está bien. Probablemente sea *mejor* que seis archivos separados que contengan una función cada uno relacionada con el estado de inicio de sesión.
+-   **Mantén lo Cinético Junto:** No dividas el código relacionado a menos que haya un beneficio tangible y gritón, como una reutilización genuina *en la práctica*, no en algún futuro hipotético que nunca llega. La proximidad importa para la comprensión.
+-   **Deja que la Realidad Conduzca:** Organiza según las características y flujos de trabajo reales de tu aplicación, no algún ideal abstracto de pureza funcional³. ¿Esta estructura hace que sea más fácil o más difícil para alguien entender y modificar `Feature X`?
+-   **Cuida el Meatware:** Recuerda al pobre desarrollador. ¿Qué organización minimiza el malabarismo mental necesario para trabajar en el código? Optimiza para la comprensión humana.
+-   **Prueba lo que Importa:** Escribe pruebas que verifiquen el comportamiento en un límite sensato, no pruebas que estén íntimamente soldadas al cableado interno de cada pequeña función. Apunta a la confianza, no solo al teatro de porcentaje de cobertura.
+
+<p class="inset">El objetivo no es la perfección teórica digna de una tesis doctoral; es crear código que tus colegas (y tu yo futuro) puedan navegar, entender y modificar sin querer incendiar el edificio.</p>
+
+A veces esto significa que un archivo tiene 200 líneas en lugar de 50. A veces una función maneja la obtención de datos *y* los transforma ligeramente. A veces una clase tiene dos responsabilidades que están tan estrechamente acopladas que deberían vivir juntas. Si hace que el sistema sea más fácil de usar en general, probablemente sea la decisión correcta.
+
+Mantente enfocado implacablemente en las preguntas prácticas:
+- ¿Puede alguien nuevo encontrar su camino?
+- ¿Podemos cambiar `X` sin romper el `Y` no relacionado?
+- ¿Esta prueba realmente me dice si la función funciona?
+- ¿Estamos enviando valor, o solo reorganizando carpetas?
+
+## V. Conclusión: Fomentando un Código Cohesivo y Mantenible
+
+El Principio de Responsabilidad Única es una herramienta útil. No es un mandato para pulverizar tu base de código en polvo atómico. Como cualquier herramienta, su valor depende del juicio de la persona que la usa.
+
+Así que cuando te encuentres con las Personas de un Solo Propósito, listas para librar una guerra contra cualquier función que se atreva a exceder las tres líneas, respira. Recuerda el checkbox de 12 archivos.
+
+Nuestro trabajo no es construir funciones de copo de nieve teóricamente inmaculadas. Nuestro trabajo es construir software que funcione, resuelva problemas y no castigue a la siguiente persona que tenga que tocarlo.
+
+Mantente pragmático. Enfócate en los resultados. No dejes que la búsqueda de la pureza perfecta se convierta en el enemigo del código mantenible. Tu cordura, y la velocidad de tu equipo, dependen de ello.
+
+
+¹ La ironía es que lograr *verdadero* propósito único en los niveles más bajos requiere una inmensa complejidad oculta justo debajo de la superficie.
+
+² Estamos hablando de pureza conceptual aquí: la idea de que una función debería hacer solo "una cosa" lógicamente. No confundas esto con el concepto de programación funcional de "función pura" sin efectos secundarios, que es una idea diferente, aunque a veces relacionada.
