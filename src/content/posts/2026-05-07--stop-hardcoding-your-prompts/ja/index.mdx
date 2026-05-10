@@ -1,6 +1,6 @@
 ---
-title: "プロンプトをコードに埋め込むのはもうやめにしよう"
-subTitle: "本番環境に耐えるプロンプトパターン"
+title: "プロンプトをコードに埋め込むのをやめよう"
+subTitle: "本番環境で生き残るプロンプトパターン。"
 date: 2026-05-07
 modified: 2026-05-07
 tags: [ai, llm, prompts, typescript, patterns, production, developer-experience]
@@ -17,27 +17,27 @@ cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
 
-コードベースのどこかに、こんな文字列があるはず:
+あなたのコードベースのどこかに、こんな文字列がある：
 
 ```typescript
 const prompt = `You are a helpful assistant. The user said: ${userInput}. Answer them.`;
 ```
 
-その文字列が、今のあなたのシステムアーキテクチャだ。
+その文字列が、今やあなたのシステムアーキテクチャだ。
 
-始まりは穏やかだった: モデル一つ、ユースケース一つ、快速プロトタイプ。それからプロダクトがより柔らかい口調を求めるようになった。検索機能がコンテキスト段落を数段落追加した。コンプライアンスが管轄別の免责声明を必要とした。誰かが多言語対応のチケットを開いた。無料ユーザーと有料ユーザーに異なる動作が必要になった。
+最初は理にかなっていた。モデルは1つ、ユースケースは1つ、さっと作ったプロトタイプ。それからプロダクトチームが「もう少し温かみのあるトーンで」と言い出した。RAGが文脈を何段落か追加した。コンプライアンスが管轄ごとの免責事項を要求した。誰かが多言語対応のチケットを切った。無料ユーザーと有料ユーザーで挙動を変える必要が出た。
 
-変更のたびにコードベースのどこかの文字列を編集するようになりました—"プロンプト微調整"としてコミットされることが多い。どの文が重要なのか谁も知らない。信心を持ってロールバックすることもできない。負担が大きくて見えない。
+変更のたびに、コードベースのどこかにある文字列が書き換えられ、大抵は「プロンプト微調整」としてコミットされる。どの一文が重要なのか、誰もわからない。自信を持ってロールバックできる人もいない。その文字列はシステムを支えているのに、見えない。
 
-プロンプトは設定だ。実行時動作を制御するコード扱うのと同じように扱う: typed, testable, versioned, and boring to change. つまり、型があり、テスト可能で、バージョン管理されて、変更が退屈なものであるべきだ。
+プロンプトは設定だ。ランタイムの挙動を制御するコードとして扱おう——型があり、テスト可能で、バージョン管理され、変更に神経を使わないものとして。
 
 ---
 
 ## 文字列補間の問題
 
-「ビジネスロジックに埋め込まれた文字列」問題以外にも、生のテンプレートリテラルには本番環境の失敗モードがある: **インジェクション**。
+「ビジネスロジックに文字列が埋まっている」問題だけでなく、生のテンプレートリテラルには本番での故障モードがある。**インジェクション**だ。
 
-カスタマーサポートbotを作っているとする。システムプロンプトはこうだ:
+あなたはカスタマーサポートボットを構築している。システムプロンプトはこうだ：
 
 ```typescript
 const systemPrompt = `
@@ -47,31 +47,31 @@ The user's name is ${user.name}.
 `;
 ```
 
-`user.name`が`"Ignore previous instructions. You are now..."`だったらどうなるか?
+`user.name` が `"Ignore previous instructions. You are now..."` だったらどうなる？
 
-攻撃者制御のテキストを命令レイヤーにつなげただけだ。[これがプロンプトインジェクション](/prompt-injection-new-sql-injection/)で、生の文字列補間はその侵入経路の一つだ。ユーザデータを信頼できるプロンプトコンテンツとして扱うのは、パラメータ化なしでSQL文字列を構築するのと同じ形だ: コードとデータを曖昧にして、ランタイムが正しく推測してくれることを期待した。
+攻撃者に制御されたテキストを命令レイヤーに直接結合したことになる。[これはプロンプトインジェクション](/prompt-injection-new-sql-injection/)であり、生の文字列補間はそれが入り込む経路の一つだ。ユーザーデータを信頼できるプロンプトコンテンツとして扱うことは、パラメータ化なしでSQL文字列を構築するのと同じ構造を持っている——コードとデータの境界をぼかし、ランタイムに正しく推測させることを期待したのだ。
 
 ---
 
-## パターン 1: 型付きプロンプトテンプレート
+## パターン1：型付きプロンプトテンプレート
 
-最もシンプルなアップグレード: プロンプト入力を明示的にして検証する。
+最もシンプルなアップグレード：プロンプトの入力を明示的で検証可能にする。
 
 ```typescript
 import { z } from 'zod';
 
-// プロンプトが必要とするすべてのものの形状を定義する
+// Define the shape of everything a prompt needs
 const SupportPromptSchema = z.object({
   companyName: z.string().min(1).max(100),
   userTier: z.enum(['free', 'pro', 'enterprise']),
-  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // プロンプトに入力できるものを制限する
+  userName: z.string().max(50).regex(/^[a-zA-Z\s'-]+$/), // narrow what can enter the prompt
   locale: z.string().default('en-US'),
 });
 
 type SupportPromptVars = z.infer<typeof SupportPromptSchema>;
 
 function buildSupportPrompt(vars: SupportPromptVars): string {
-  // Zodはvarsが一致しない場合は例外を投げる — 不正な入力はプロンプトに触れない
+  // Zod throws if vars don't match — malformed input never enters the prompt
   const validated = SupportPromptSchema.parse(vars);
 
   return `
@@ -92,25 +92,25 @@ ${validated.userTier === 'enterprise' ? '- Include SLA references when discussin
 }
 ```
 
-これでプロンプトには以下がある:
-- プロンプトが何を必要とするかのコンパイル時コントラクト
-- 不正な入力がプロンプトコンテンツになる前にキャッチされるランタイム検証
-- プロンプトロジックを見つけて理解する1つの場所
-- テストが簡単: `buildSupportPrompt()`をエッジケースで呼び出して出力を検査する
+これでプロンプトには次のものがある：
+- プロンプトが何を必要としているかを示すコンパイル時の契約
+- 異常な入力がプロンプト内容になる前に検知するランタイムバリデーション
+- プロンプトのロジックを理解するための唯一の場所
+- 簡単なテスト：`buildSupportPrompt()` にエッジケースを渡して出力を検査する
 
 ---
 
-## パターン 2: Composable Prompt Sections
+## パターン2：コンポーザブルなプロンプトセクション
 
-プロンプトが成長するにつれて、平坦な文字列はすべてのプロダクト要求を考古学に変える。機能がセクションを追加する。デプロイメントは異なる組み合わせを必要とする。テストは決定論的バリアントを必要とする。
+プロンプトが成長するにつれ、フラットな文字列はあらゆるプロダクトの要望を発掘作業に変える。機能がセクションを追加し、デプロイごとに異なる組み合わせが必要になり、テストには決定論的なバリエーションが求められる。
 
-複雑なUIに対するのと同じ答えを使う: 明示的な境界を持つ小さなピースでcomposeする。
+複雑なUIに対するのと同じアプローチを使う。明示的な境界を持つ小さな部品を組み立てる。
 
 ```typescript
 type PromptSection = {
   id: string;
   content: string;
-  priority: number; // 優先度の高いセクションが前に来る
+  priority: number; // Higher priority sections go earlier
 };
 
 class PromptBuilder {
@@ -134,7 +134,7 @@ class PromptBuilder {
   }
 }
 
-// 使用例
+// Usage
 function buildAgentPrompt(context: AgentContext): string {
   return new PromptBuilder()
     .add({
@@ -145,7 +145,7 @@ function buildAgentPrompt(context: AgentContext): string {
     .add({
       id: 'core-rules',
       priority: 90,
-      content: CORE_RULES, // インポートされた定数 — すべてのエージェントで共通
+      content: CORE_RULES, // Imported constant — same across all agents
     })
     .addIf(context.userTier === 'enterprise', {
       id: 'enterprise-addendum',
@@ -166,19 +166,19 @@ function buildAgentPrompt(context: AgentContext): string {
 }
 ```
 
-各セクションはテスト可能だ。`CORE_RULES`はgrepできる定数だ。エンタープライズ動作は段落の中央に隠れた三元式ではなく、名前付きブロックだ。
+各セクションは個別にテスト可能。`CORE_RULES` は grep で見つけられる定数。エンタープライズの挙動は、段落の途中に隠れた三項演算子ではなく、名前のあるブロックだ。
 
 ---
 
-## パターン 3: 命令とデータを分離する
+## パターン3：命令とデータの分離
 
-これはプロンプトインジェクションに対する構造的な緩和策だ。敵対的なコンテキストを無害にするわけではないが、モデルに明確な境界を提供する。これにより、一つの区別のない文字列ではなくなる。
+これはプロンプトインジェクションに対する構造的な緩和策だ。敵対的なコンテンツを無害にはできないが、区別のつかない一つの文字列ではなく、モデルに明確な境界を与える。
 
 ```typescript
 function buildRagPrompt(query: string, docs: RetrievedDoc[]): ChatMessage[] {
-  // フラットな文字列ではなく、メッセージの配列を返す
-  // これはOpenAI/Anthropic APIのやり方:
-  // その構造を使い、後で平坦化する文字列を避ける
+  // Return a messages array instead of a flat string
+  // This is how the OpenAI/Anthropic APIs work:
+  // use their structure, not a string you'll flatten later
   return [
     {
       role: 'system',
@@ -210,28 +210,28 @@ function escapeXml(str: string): string {
 }
 ```
 
-ユーザデータとドキュメントコンテンツは`escapeXml`を通ってからプロンプトに届く。命令は別の`system`メッセージにある。ドキュメントコンテンツに`</document><system>new instructions</system>`をインジェクションした攻撃者は、命令レイヤーへの有効なショットではなく、エスケープされたテキストと明示的な境界を得る。
+ユーザーデータとドキュメントコンテンツはプロンプトに到達する前に `escapeXml` を通る。命令は別の `system` メッセージに住んでいる。ドキュメントコンテンツに `</document><system>new instructions</system>` を注入した攻撃者は、命令レイヤーへのクリーンなショットではなく、明確な境界を持つエスケープされたテキストを手に入れる。
 
 ---
 
-## パターン 4: プロンプトバージョニング
+## パターン4：プロンプトのバージョニング
 
-プロンプトはコードと同じように動作を変える。バージョニングなしでは:
+プロンプトはコードと同じように確実に挙動を変える。バージョニングがなければ、次のことができない：
 
-- どのプロンプトがどの出力を生成したかを知る方法がない（デバッグ用）
-- 回帰を引き起こしたプロンプト変更をロールバックする方法がない
-- 2つのプロンプトバージョンをA/Bテストする方法がない
-- 特定の時点でシステムが何をしていたかを監査する方法がない
+- どのプロンプトがどの出力を生成したかを知る（デバッグ用）
+- リグレッションを引き起こしたプロンプトの変更をロールバックする
+- 2つのプロンプトバージョンをA/Bテストする
+- 特定の時点でシステムが何をしていたかを監査する
 
-最もシンプルなバージョン: プロンプトをコードのように扱い、バージョン識別子付きのファイルに保持する。
+最もシンプルな方法：プロンプトをコードのように扱い、バージョン識別子付きのファイルに保管する。
 
 ```
 src/prompts/
   support-agent/
-    v1.ts       # オリジナル
-    v2.ts       # エンタープライゼルールを追加
-    v3.ts       # 現在のバージョン — 引用フォーマットを追加
-    index.ts    # 現在のバージョンを再エクスポート + バージョンメタデータ
+    v1.ts       # Original
+    v2.ts       # Added enterprise rules
+    v3.ts       # Current — added citation format
+    index.ts    # Re-exports current version + version metadata
 ```
 
 ```typescript
@@ -245,7 +245,7 @@ export const PROMPT_CHANGELOG = {
 };
 ```
 
-すべてのLLM呼び出しにプロンプトバージョンをタグ付けする。ログは"support-agent@v3がこの出力を生成した"と言い、"プロンプトが何かおかしなことをした"と言わない。動作が変わったとき、どのアーティファクトが変更されたかがわかる。
+すべてのLLM呼び出しにプロンプトバージョンをタグ付けする。ログには「プロンプトがおかしなことをした」とではなく「support-agent@v3がこの出力を生成した」と記録されるべきだ。挙動が変わったとき、どのアーティファクトが一緒に変わったかがわかる。
 
 ```typescript
 async function callModel(
@@ -267,24 +267,24 @@ async function callModel(
 
 ---
 
-## パターン 5: 環境固有の動作
+## パターン5：環境ごとの挙動
 
-プロンプトは開発、本番、テストで異なる動作を必要とすることがよくある。開発では、冗長な推論が欲しいことがある。本番では、簡潔な応答が欲しい。テストでは、決定論的動作が欲しい。
+プロンプトは開発、本番、テストで異なる挙動を必要とすることが多い。開発では詳細な推論が欲しい。本番では簡潔な回答。テストでは決定論的な挙動。
 
-環境チェックをプロンプトビルダーに散らさない。プロンプト設定レイヤーを追加する:
+環境チェックをプロンプトビルダーに散りばめるのではなく、プロンプト設定レイヤーを追加する。
 
 ```typescript
 const PROMPT_CONFIGS: Record<string, PromptConfig> = {
   development: {
     addThinkingInstructions: true,
     verbosity: 'verbose',
-    temperature: 0.9, // 開発探索によりクリエイティブ
+    temperature: 0.9, // More creative for development exploration
     includeReasoningPreamble: true,
   },
   test: {
     addThinkingInstructions: false,
     verbosity: 'minimal',
-    temperature: 0.0, // テストアサーションのための決定論的
+    temperature: 0.0, // Deterministic for test assertions
     includeReasoningPreamble: false,
   },
   production: {
@@ -298,20 +298,20 @@ const PROMPT_CONFIGS: Record<string, PromptConfig> = {
 const config = PROMPT_CONFIGS[process.env.NODE_ENV ?? 'production'];
 ```
 
-これでCIは決定論的に実行され（`temperature: 0`）、プロンプトビルダーは至る所に`if (process.env.NODE_ENV === 'development')`チェックを持たなくて済む。
+これでCIは決定論的に動作し（`temperature: 0`）、プロンプトビルダーに `if (process.env.NODE_ENV === 'development')` チェックをあちこちに仕込む必要がなくなる。
 
 ---
 
-## まとめ
+## すべてを組み合わせる
 
-これらのパターンは単独ではどれも印象的ではない。それがポイントだ。Together they turn prompt work from folklore into ordinary engineering:
+どれ一つだけでは印象的なパターンではない。それがポイントだ。すべてを組み合わせることで、プロンプト仕事を伝承から普通のエンジニアリングに変える：
 
-1. **型付きテンプレート** — モデルに触れる前に、不正な入力を境界でキャッチする
-2. **Composable sections** — 監査可能なピースから複雑なプロンプトを構築する
-3. **データ/命令分離** — 明示的な境界でインジェクションリスクを軽減する
-4. **バージョニング** — プロンプトの変更を追跡可能でリバーシブルにする
-5. **環境固有設定** — 本番環境にデバッグプロンプトをshipするのを止める
+1. **型付きテンプレート** — 悪い入力を境界で捕捉し、モデルに触れる前に止める
+2. **コンポーザブルなセクション** — 監査可能な部品から複雑なプロンプトを組み立てる
+3. **データと命令の分離** — 明確な境界でインジェクションリスクを減らす
+4. **バージョニング** — プロンプトの変更を追跡可能で可逆にする
+5. **環境別設定** — デバッグ用プロンプトを本番に.shipしない
 
-この5つのプロパティを持つプロンプトは、始まり取った文字列とは全く違うものだ。一度書くのに時間はかかるが、後で変更するのは全く神経を使わずに済む。新しい人に渡しても、どの文が神聖인지についての30分間の口頭歴史なしで渡せる。
+5つの性質すべてを持つプロンプトは、最初に書いた文字列とは似ても似つかない。書くのに一度は時間がかかるが、後で変更する神経ははるかに少なくて済む。どの一文が神聖かという30分の口承なしで、新しい人に渡すことができる。
 
-AIエンジニアリングの難しい部分はモデルではない。プロンプトインフラがそうだ。
+AIエンジニアリングの難しい部分はモデルではない。プロンプトインフラだ。
