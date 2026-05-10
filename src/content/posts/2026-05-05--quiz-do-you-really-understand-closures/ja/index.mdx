@@ -1,6 +1,6 @@
 ---
-title: "クイズ：クロージャを本当に理解していますか？"
-subTitle: "大半の開発者は理解しているつもり。大半の開発者は間違っている。"
+title: "クイズ：JavaScriptのクロージャ、本当に理解してる？"
+subTitle: "ほとんどの開発者は理解しているつもりだ。ほとんどの開発者は間違っている。"
 date: 2026-05-01
 modified: 2026-05-05
 tags: [javascript, closures, quiz, fundamentals, scope, advanced]
@@ -16,14 +16,15 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
+
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">クロージャは、すべてのJavaScript開発者が「理解している」と思い込んでいる概念の1つです——理解していない瞬間までね。このクイズで、あなたが実際に知っていることの境界線を見つけ出します。</p>
+<p class="inset">クロージャは、すべてのJavaScript開発者が*理解している*と思い込んでいる概念のひとつだ——実際には理解が曖昧なままであることに気づくその瞬間までは。このクイズであなたの知識の輪郭を探ってみよう。</p>
 
-クロージャはイベントハンドラ、ファクトリ関数、React Hooks、モジュールパターン、そしてほぼあらゆる場所に登場します。決して特殊なものではありません。JavaScriptの織りなす生地そのものです。
+クロージャはイベントハンドラ、ファクトリ関数、Reactフック、モジュールパターン、そしてあらゆる場所に現れる。特別なものではない。JavaScriptが織りなす布地そのものだ。
 
-最初の問題は手頃で、そこから床板を剥がし始めます。
+質問は穏やかに始まり、次第に床板をはがしていく。
 
 <QuizUI>
 
@@ -31,7 +32,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ウォームアップ"
-  title="クラシックなカウンター"
+  title="古典的カウンター"
   options={[
     {text: '0, 0, 0'},
     {text: '0, 1, 2'},
@@ -41,7 +42,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    これは何を出力しますか？
+    このコードは何を出力する？
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -54,9 +55,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `tick` は `count` をクロージャとして捕捉しています。呼び出すたびに*同じ* `count` 変数をインクリメントして返します。3回の呼び出しで `1, 2, 3` が出力されます。
+    `tick` は `count` をクロージャとして閉じ込める。呼び出しのたびに**同じ** `count` 変数をインクリメントして返す。3回の呼び出しで `1, 2, 3` となる。
 
-    キーワードは：**同じ**。`count` はクロージャにコピーされるわけではありません。クロージャは変数バインディングへの**ライブリファレンス**を保持します。これがすべてです。
+    重要なのは「同じ」という点だ。`count` はクロージャにコピーされるわけではない。クロージャは変数バインディングへの**ライブ参照**を保持している。それがすべてだ。
   </div>
   </slot>
 </Challenge>
@@ -75,7 +76,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    これは何を出力しますか？
+    このコードは何を出力する？
     ```javascript
     function makeCounter() {
       let count = 0;
@@ -89,11 +90,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `makeCounter()` の呼び出しごとに、独自の新しい `count` を持つ**新しい実行コンテキスト**が作成されます。`a` と `b` は*異なる* `count` バインディングをクロージャとして捕捉します。状態を共有しません。
+    `makeCounter()` を呼び出すたびに、それぞれ新しい `count` を持つ**新しい実行コンテキスト**が作成される。`a` と `b` は*異なる* `count` バインディングをクロージャとして閉じ込める。状態は共有されない。
 
     結果：`1, 1`
 
-    クロージャがプライベート状態の構築に使われる理由はここにあります——各「インスタンス」が独立しているからです。
+    これこそクロージャを使ってプライベート状態を構築する理由だ——各「インスタンス」は独立している。
   </div>
   </slot>
 </Challenge>
@@ -101,7 +102,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="クラシックな罠"
+  group="古典的トラップ"
   title="ループ内のvar"
   options={[
     {text: '0, 1, 2, 3, 4'},
@@ -112,7 +113,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    100ms後に何がログ出力されますか？
+    100ms後に何が出力される？
     ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -122,11 +123,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `var` は関数スコープです。`i` は**1つだけ**——5つのコールバックはすべて同じバインディングをクロージャとして捕捉します。タイムアウトが発火する頃には、ループは終了しており `i` は `5` です。
+    `var` は関数スコープを持つ。`i` は**ひとつ**しかない——5つのコールバックすべてが同じバインディングをクロージャとして閉じ込める。タイムアウトが発火する頃にはループは終了しており、`i` は `5` になっている。
 
-    5つのコールバック。1つの `i`。値は `5`。5回ログ出力されます。
+    5つのコールバック。ひとつの `i`。値：`5`。5回出力される。
 
-    修正方法は `let`（ブロックスコープ、反復ごとに新しいバインディング）を使うか、IIFEでラップして現在の値をキャプチャすることです：
+    修正方法は `let`（ブロックスコープ、各イテレーションで新しいバインディング）を使うか、IIFEでラップして現在の値をキャプチャすることだ：
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
@@ -139,8 +140,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="クラシックな罠"
-  title="letが直す（本当に？）"
+  group="古典的トラップ"
+  title="letで直る（ホントに？）"
   options={[
     {text: '0, 1, 2, 3, 4', isAnswer: true},
     {text: '5, 5, 5, 5, 5'},
@@ -150,7 +151,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    同じループ、違うキーワード。何がログ出力されますか？
+    同じループ、異なるキーワード。何が出力される？
     ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
@@ -160,7 +161,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `for` ループ内の `let` は特別です。仕様では：各反復で `i` の**新しいバインディング**が取得されます。ループが秘密裏にこうしているかのようです：
+    `for` ループ内の `let` は特別だ。仕様によれば、各イテレーションは独自の**新しい `i` のバインディング**を取得する。ループが内部的にこうなっているようなものだ：
 
     ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
@@ -168,7 +169,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     // ...
     ```
 
-    つまり5つのコールバックは5つの異なる変数をクロージャとして捕捉します。結果：`0, 1, 2, 3, 4`。
+    つまり5つのコールバックは5つの異なる変数をクロージャとして閉じ込める。結果：`0, 1, 2, 3, 4`。
   </div>
   </slot>
 </Challenge>
@@ -187,7 +188,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    これは何を出力しますか？
+    このコードは何を出力する？
     ```javascript
     function wrap() {
       const obj = { x: 1 };
@@ -202,9 +203,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    クロージャはオブジェクトのスナップショットではなく、**バインディング** `obj` を捕捉します。オブジェクト自体はクロージャ作成後にミューテーションされていますが、`obj` は同じリファレンスを指し続けています。両方の呼び出しは同じミューテーションされたオブジェクト `{ x: 99 }` を返します。
+    クロージャは `obj` の**バインディング**をキャプチャするのであって、オブジェクトのスナップショットではない。オブジェクト自体はクロージャ作成後にミューテートされているが、`obj` は同じ参照を指し続けている。両方の呼び出しは同じミューテートされたオブジェクト `{ x: 99 }` を返す。
 
-    クロージャが「値を凍結する」と仮定する人がよくつまずきます。凍結しません。**リファレンス**を捕捉します。
+    クロージャが値を「フリーズ」すると勘違いしている人はこれに引っかかる。そんなことはない。クロージャは**参照**をキャプチャする。
   </div>
   </slot>
 </Challenge>
@@ -212,18 +213,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="上級"
-  title="Reactの古いクロージャ"
+  group="アドバンスド"
+  title="ReactのStale Closure"
   options={[
-    {text: 'クリックするたびに現在のカウントをログ出力'},
-    {text: '常に0をログ出力', isAnswer: true},
-    {text: 'NaNをログ出力'},
-    {text: 'コンパイルできない'},
+    {text: 'クリックするたびに現在のカウントを出力する'},
+    {text: '常に0を出力する', isAnswer: true},
+    {text: 'NaNを出力する'},
+    {text: 'コンパイルエラーになる'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    このReactコンポーネントでボタンを複数回クリックしたとき、どう動作しますか？
+    このReactコンポーネントは、ボタンが複数回クリックされたときどのような振る舞いを示すか？
     ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
@@ -244,15 +245,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    古典的な古いクロージャ（stale closure）です。`useEffect` は一度だけ実行され（空の依存配列）、マウント時の `count`、つまり `0` をクロージャとして捕捉したインターバルを作成します。何回クリックしても、インターバルのクロージャは更新された値を見ることはありません。
+    古典的なStale Closure問題。`useEffect` は一度だけ実行され（空の依存配列）、マウント時の `count`（`0`）をクロージャとして閉じ込めたインターバルを作成する。何回クリックしても、インターバルのクロージャは更新された値を決して参照しない。
 
-    ボタンのラベルは正しく更新されます——それは新しいレンダーだからです。しかし `console.log` は永遠に `0` に閉じ込められます。
+    ボタンのラベルは正しく更新される——それは新しいレンダリングだからだ。しかし `console.log` は永遠に `0` に閉じ込められたままになる。
 
-    修正するには `count` を依存配列に追加する（インターバルが再作成される）か、refを使います：
+    修正方法は `count` を依存配列に追加するか（インターバルを再作成）、refを使うことだ：
     ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
-    // インターバル内では countRef.current を使う
+    // そしてインターバル内で countRef.current を使う
     ```
   </div>
   </slot>
@@ -261,7 +262,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="上級"
+  group="アドバンスド"
   title="モジュールパターン"
   options={[
     {text: '60', isAnswer: true},
@@ -272,7 +273,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    待って——よく読んで。実際にどうなりますか？
+    よく読んで——実際に何が起こる？
     ```javascript
     const bank = (() => {
       let balance = 0;
@@ -291,15 +292,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    答えは `60` です。
+    答えは `60` だ。
 
-    これは**モジュールパターン**——クロージャのオブジェクトを返すIIFEです。3つのメソッドはすべて同じ `balance` バインディングをクロージャとして捕捉しています。本当の意味でプライベートです：外部から `balance` にアクセスすることはできません。
+    これが**モジュールパターン**——クロージャのオブジェクトを返すIIFEである。3つのメソッドはすべて同じ `balance` バインディングをクロージャとして閉じ込めている。本当にプライベートだ：外部から `balance` にアクセスすることはできない。
 
     ```javascript
     console.log(bank.balance); // undefined
     ```
 
-    クラスが登場する前、これはJavaScriptで状態をカプセル化する*決定的な*方法でした。レガシーコードベースやユーティリティライブラリでは今でも見かけます。
+    クラスが登場する前は、これがJavaScriptで状態をカプセル化する*主流の*方法だった。レガシーコードベースやユーティリティライブラリで今でも目にするだろう。
   </div>
   </slot>
 </Challenge>
@@ -310,15 +311,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="エキスパート"
   title="クロージャのメモリリーク"
   options={[
-    {text: 'data配列のlengthをログ出力する'},
+    {text: 'data配列の長さを出力する'},
     {text: 'メモリリークを引き起こす', isAnswer: true},
     {text: 'RangeErrorをスローする'},
-    {text: '特に問題ない——これは正常'},
+    {text: '何も問題ない——これで正常'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    このコードの問題は何ですか？
+    このコードの問題は何か？
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
@@ -331,15 +332,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    イベントリスナーが `data` をクロージャとして捕捉しているため、リスナーが到達可能な限り配列は到達可能なままです。`element` が長寿命で、リスナーが削除されなければ、大きな配列も保持され続けます。
+    イベントリスナーが `data` をクロージャとして閉じ込めるため、リスナーが到達可能である限り配列も保持され続ける。`element` が長命でリスナーが削除されない場合、その大きな配列も保持され続ける。
 
-    `element` はDOMにあります。リスナーが `data` を保持しています。GCは回収できません。
+    `element` はDOM内にある。リスナーが `data` を保持している。GCはそれを回収できない。
 
-    修正方法：長寿命のリスナーで大きなデータを捕捉しないようにし、所有するUIが破棄されるときにリスナーを削除します：
+    修正方法：長命のリスナー内で大きなデータをキャプチャしないこと（本当に必要な場合を除く）、そしてUIが破棄されるときにリスナーを削除すること：
     ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
-      // dataを使って何かする...
+      // dataで何か処理をする...
 
       const onClick = () => {
         console.log('clicked!');
@@ -350,7 +351,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     }
     ```
 
-    最新のV8はかつてよりこの点で優れています。しかし、多くのイベントリスナーを持つ長寿命のSPAでは、このパターンは依然として人を困らせます。
+    現代のV8は以前よりこれに強くなっている。しかし、多くのイベントリスナーを持つ長命のSPAでは、このパターンは今でも人々を悩ませる。
   </div>
   </slot>
 </Challenge>
@@ -369,7 +370,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    これは何を出力しますか？
+    このコードは何を出力する？
     ```javascript
     const user = {
       name: 'Dan',
@@ -388,13 +389,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    2つの巧妙な罠があります：
+    2つの微妙な罠：
 
-    **`greetArrow`**：アロー関数は自身の `this` を持ちません。囲むレキシカルスコープから `this` を捕捉します——ここでは `user` ではなく、モジュール/グローバルスコープです。`this?.name` は `undefined` です。
+    **`greetArrow`**：アロー関数は自身の `this` を持たない。囲んでいる語彙スコープ（ここではモジュール/グローバルスコープであって、`user` ではない）から `this` をキャプチャする。したがって `this?.name` は `undefined` になる。
 
-    **`fn()`**：`greetRegular` はレシーバなしで呼び出されています（`user.greetRegular()` ではなく `fn()`）。strict modeでは `this` は `undefined` です。sloppy modeではグローバルオブジェクトです。どちらにしても `this?.name` は `undefined` です。
+    **`fn()`**：`greetRegular` はレシーバなしで呼び出されている（`user.greetRegular()` ではなく `fn()`）。strictモードでは `this` は `undefined`。sloppyモードではグローバルオブジェクトになる。どちらにせよ、`this?.name` は `undefined` だ。
 
-    `user.greetRegular()` を直接呼び出せば `'Dan'` になります——そのとき `this` が `user` にバインドされるからです。
+    `user.greetRegular()` と直接呼び出せば `'Dan'` が得られた——その場合 `this` は `user` にバインドされるからだ。
 
     結果：`undefined, undefined`。
   </div>
@@ -407,15 +408,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="ボーナス"
   title="クロージャによるメモ化"
   options={[
-    {text: 'expensive()を3回呼び出す'},
-    {text: 'expensive()を1回呼び出す', isAnswer: true},
-    {text: 'expensive()を2回呼び出す'},
-    {text: 'スロー：Maximum call stack exceeded'},
+    {text: 'expensive()が3回呼ばれる'},
+    {text: 'expensive()が1回呼ばれる', isAnswer: true},
+    {text: 'expensive()が2回呼ばれる'},
+    {text: 'エラー：Maximum call stack exceeded'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    `expensive()` は実際に何回呼び出されますか？
+    `expensive()` は実際に何回呼び出されるか？
     ```javascript
     function memoize(fn) {
       const cache = new Map();
@@ -440,11 +441,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    メモ化された関数は `cache` をクロージャとして捕捉しています。最初の呼び出し（`fast(5)`）はキャッシュにミスし、`expensive` を呼び出して結果を格納します。2回目と3回目の呼び出しはキャッシュにヒットし、即座に返します。
+    メモ化された関数は `cache` をクロージャとして閉じ込める。最初の呼び出し（`fast(5)`）はキャッシュミスし、`expensive` を呼び出して結果を保存する。2回目と3回目の呼び出しはキャッシュにヒットして即座に返る。
 
-    `calls` は `1` です。
+    `calls` は `1` だ。
 
-    これがクロージャの実用的な仕事です。`cache` はプライベート（`memoize` の外からアクセス不可）、永続的（`fast` が存在する限り存続）、そして `fast` のすべての呼び出しで共有されます。
+    これがクロージャの実際の仕事だ。`cache` はプライベートで（`memoize` の外部からアクセスできない）、永続的で（`fast` が存在する限り生き続ける）、`fast` へのすべての呼び出しで共有される。
   </div>
   </slot>
 </Challenge>
@@ -453,11 +454,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 ---
 
-どうでしたか？
+どうだった？
 
-- **9-10問正解**：クロージャを本当に理解しています。ペアプログラミング相手だとたぶん怖い。
-- **6-8問正解**： solid です。古いクロージャ / `this` の問題でつまずいたのは正直なところです。
-- **3-5問正解**：概念は知っているが、境界線が曖昧です。MDNのスコープチェーンドキュメントを読み直しましょう。
-- **0-2問正解**：クロージャを知っているつもりでした。今知りました。それがポイントです。
+- **9-10問正解**：あなたは本当にクロージャを理解している。おそらくペアプロすると怖い人。
+- **6-8問正解**：堅実。Stale Closure／`this` の問題に引っかかったなら、それは正直なところだ。
+- **3-5問正解**：概念はわかっているが、境界があいまい。MDNのスコープチェーンのドキュメントを読もう。
+- **0-2問正解**：クロージャを理解しているつもりだった。今は理解した。それでいい。
 
-Reactの古いクロージャ（#6）と `this` の罠（#8）が、実際のプロダクションバグを引き起こす問題です。これらが馴染みがないと感じたなら、見直す価値があります——コードレビューで他のクロージャ関連の問題よりも頻繁に登場するからです。
+ReactのStale Closure（#6）と `this` の罠（#8）は、実際のプロダクションバグを引き起こす問題だ。それらに馴染みがなかったなら、再訪する価値がある——クロージャ関連の問題としては、コードレビューでこれ以上に頻繁に登場するものはない。
