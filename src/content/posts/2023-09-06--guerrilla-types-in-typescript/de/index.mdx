@@ -1,0 +1,294 @@
+---
+social_image: ../desktop-social.webp
+title: "Guerrilla-Typen in TypeScript"
+subTitle: Renegade-Type-Design
+date: 2023-09-05
+modified: 2024-07-30
+tags: [engineering,typescript,composition,types]
+category: Guides
+subCategory: TypeScript
+cover: gorilla-types_dall-e.webp
+cover_mobile: w300_gorilla-types_dall-e.webp
+cover_icon: icon_gorilla-types_dall-e.webp
+---
+
+## Guerrilla-Typen in TypeScript
+
+In diesem Artikel erkunden wir drei faszinierende (möglicherweise schreckliche?) Techniken für das Type-Design!
+
+Das Hauptziel sind **konsistente** und **vorhersagbare** Model/Entity/Class-Interfaces.
+
+- [Ansätze zum Entwerfen von Typen](#ansätze-zum-entwerfen-von-typen)
+  - [Einzelnes großes Objekt](#einzelnes-großes-objekt)
+  - [Mehrere benannte Typen](#mehrere-benannte-typen)
+- [Technik #1: Warum nicht alles](#technik-1-warum-nicht-alles)
+- [Technik #2: Mix-ins](#technik-2-mix-ins)
+  - [Mix-in-Beispiele](#mix-in-beispiele)
+  - [Beispiel `User`](#beispiel-user)
+- [Technik #3: Organisieren mit Namespaces](#technik-3-organisieren-mit-namespaces)
+  - [Praxisnahe Anwendung](#praxisnahe-anwendung)
+- [Zusammenfassung](#zusammenfassung)
+
+<!--
+1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
+2.  Durable way to model combinations of logically related fields.
+    1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
+    2.  Model Request & Response fields from your discrete database models. (e.g. `_version`, `_v`)
+    3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
+3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
+4.  Compose higher level types with multiple smaller reusable interfaces & types.
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+
+### Ansätze zum Entwerfen von Typen
+
+Du hast wahrscheinlich bereits unterschiedliche Muster rund um „Type-Implementierungen" gesehen oder geschrieben. Besonders beim Konsumieren von Daten aus APIs Dritter.
+
+**Hinweis:** Ich ignoriere bewusst „traditionelle" Prozesse wie das Erstellen von Entity-Relationship-Diagrammen (ERD) oder Vererbungshierarchien der objektorientierten Programmierung (OOP). Hier bauen wir Typen, die halbstrukturierte API-Daten repräsentieren.
+
+Lass uns zwei übergeordnete Ansätze erkunden: **Einzelnes großes Objekt** (Top-down) vs. **Mehrere benannte Typen** (Bottom-up.)
+
+#### Einzelnes großes Objekt
+
+Priorisiert Explizitheit gegenüber Wiederverwendbarkeit & DRY-Prinzip.
+
+**Bonus:** Die IDE/Dev Experience ist hervorragend, da Tooltips eine vollständigere Vorschau bieten – ohne Aufwand.
+
+```tsx
+interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  availability: Array<{ warehouseId: string; quantity: number }>;
+  reviews: Array<{ authorId: number; stars: number }>;
+}
+```
+
+Da wir explizite Lesbarkeit priorisieren, ist es in Ordnung, _einige_ Wiederholungen zuzulassen (in vernünftigem Rahmen.) Wenn sich Gruppen von Eigenschaften _sehr oft_ wiederholen, kannst du die wiederholten Felder gerne in einen benannten Typ extrahieren.
+
+#### Mehrere benannte Typen
+
+Priorisiert Wiederverwendbarkeit & DRY-Prinzip.
+
+<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+
+Dieser Ansatz ist wahrscheinlich der mit Abstand bevorzugte.
+
+```ts
+interface ProductDetails {
+  name: string;
+  seller: Seller;
+  reviews: Reviews[];
+  availability: Availability[];
+}
+interface Seller { name: string; }
+interface Availability { warehouseId: string; quantity: number; }
+interface Reviews { authorId: number; stars: number; }
+```
+
+Insgesamt ist dieser Ansatz großartig. Aber er ist nicht ohne Nachteile.
+
+- **Lesbarkeit** ist anfangs exzellent; sie kann jedoch leiden, wenn die Größe und Anzahl der Typen wächst.
+- Unerbittlich DRY, aber zu welchem Preis? (Mehr dazu später.)
+- Die Developer Experience leidet, da Tooltips weniger informativ sind.
+
+> ⚠️ Seit (ca.) TypeScript v3 kürzt der Language Server Tooltips und lässt verschachtelte Eigenschaften weg.
+> 💡 Es gibt Tricks, um die Sache etwas zu verbessern. Halte `Cmd oder Ctrl` gedrückt, dann fahre mit der Maus über verschiedene Typnamen – du solltest mindestens eine zusätzliche „Ebene" von Eigenschaften im Tooltip sehen.
+
+Warum müssen wir uns zwischen diesen beiden Ansätzen entscheiden? (Riesiger Typ vs. benannte Sub-Typen.)
+
+### Technik #1: Warum nicht alles
+
+Können wir beides haben?
+
+- Klarheit der „Big-Picture"-Typen?
+- Plus benannte Sub-Typen?
+- Ohne Duplizierung?
+
+> ✅ JA! 🎉
+
+<!-- ### Some things to consider
+
+- How do you represent a `one-to-one` relationship like `Product` -> `Seller`?
+- What about `one-to-many` relationships? Say `Reviews`, or `Photos`?
+- Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) -->
+
+<!-- This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the "big picture" more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. -->
+
+<!-- When provided with some structured array/object data, many TypeScript coders feel the urge to create types. Loads of types. Eventually a cascade of layers forms, made up of simpler types building ever more complex types.
+
+Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? -->
+
+```tsx
+export interface ProductDetails {
+  name: string;
+  seller: { name: string };
+  reviews: Array<{ authorId: number; stars: number }>;
+  availability: Array<{ warehouseId: string; quantity: number }>;
+}
+export type Seller = ProductDetails["seller"];
+export type Review = ProductDetails["reviews"][number];
+export type Availability = ProductDetails["availability"][number];
+```
+
+1.  Erstelle große „primäre" strukturierte Typen.
+2.  Exportiere Sub-Typen, die vom primären Typ abgeleitet sind.
+
+Dieser Ansatz glänzt besonders in Systemen, in denen „hochrangige" Objekte von Dokumentation an einer Stelle profitieren.
+Außerdem unterstützt diese Technik die Wiederverwendung zwischen vielen Anwendungsfällen: Models, Services, Query-Ergebnisse usw.
+
+### Technik #2: Mix-ins
+
+Diese Strategie dreht sich darum, die **richtigen Felder** mit den **richtigen Namen** zusammenzusetzen, um **einzelne logische Objekte** zu repräsentieren. Das Ziel ist es, mehrere Anwendungsfälle effizient mit TypeScript-Utilities und Type-Unions abzudecken.
+
+Dieser Ansatz unterscheidet sich von traditioneller OOP-Vererbung & Hierarchien, die darauf abzielen, Objektschichten in eng verbundene Taxonomien zu gliedern. Der **Mix-in-Ansatz zielt auf flache und lose verwandte Typen** ab, die zusammengehörige Felder gruppieren und dabei Duplizierung reduzieren.
+
+#### Mix-in-Beispiele
+
+```tsx
+interface TodoModel {
+  text: string;
+  complete: boolean;
+}
+interface InstanceMixin {
+  id: number;
+}
+/** TodoDraft represents Form state, possibly all undefined */
+export type TodoDraft = Partial<TodoModel>;
+/** Todo represents a Todo instance record from the database */
+export type Todo = TodoModel & InstanceMixin;
+```
+
+#### Beispiel `User`
+
+```tsx
+interface User {
+  id: number;
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+```
+
+Lass uns den `User` vor und nach dem Speichern in der Datenbank repräsentieren.
+
+```tsx
+// Core User fields (say for a <form>)
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Fields from the database
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+// A User **instance** - with all fields
+type UserInstance = InstanceMixin & UserBase;
+```
+
+Jetzt können wir die exakten Felder formen, die wir brauchen (wie `password` für Create/Update, aber nicht enthalten in Queries von `UserInstance`).
+
+```tsx
+interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+interface InstanceMixin {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & { password: string };
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & InstanceMixin;
+```
+
+1.  „Ist das gute Praxis?"
+2.  „Sollte ich das ausprobieren?"
+
+Keine Ahnung. Lass uns weitermachen!
+
+### Technik #3: Organisieren mit Namespaces
+
+Hier deklarieren wir einen `ModelMixins`-Namespace. Das bietet etwas Organisation und ein klareres Wiederverwendungsmuster.
+
+**Standardisierte Shapes**
+
+- `createdAt` & `updatedAt` existieren zusammen.
+- `id`, nicht `ID` oder `_id`.
+
+```tsx
+// `src/types/mixins.d.ts`
+namespace ModelMixins {
+  interface Identity {
+    id: number;
+  }
+  interface Timestamp {
+    createdAt: Date;
+    updatedAt: Date;
+  }
+  type Instance = ModelMixins.Identity & ModelMixins.Timestamp;
+  interface HashedPassword {
+    passwordHash: string;
+  }
+  interface InputPassword {
+    password: string;
+  }
+}
+```
+
+**Verwenden von Type Unions**
+
+```tsx
+// `src/types/user.d.ts`
+export interface UserBase {
+  name: string;
+  bio: string;
+  social: Record<"facebook" | "instagram" | "github", URL>;
+}
+// Single `User` type, using Type Union to dynamically
+//  represent the pre- & post-creation states.
+export type User =
+  | (UserBase & ModelMixins.Instance & ModelMixins.HashedPassword)
+  | (UserBase & ModelMixins.InputPassword);
+```
+
+Falls gewünscht, kannst du auch einzelne benannte Typen exportieren:
+
+```tsx
+/** User payload for signup, including `password` field */
+export type UserPayload = UserBase & ModelMixins.Instance & ModelMixins.HashedPassword;
+/** Represents User type returned from server. */
+export type UserInstance = UserBase & ModelMixins.InputPassword;
+```
+
+#### Praxisnahe Anwendung
+
+Hier ist eine `upsert()`-Funktion, die den `in`-Operator verwendet, um zwischen `UserInstance`- und `UserPayload`-Typen zu unterscheiden.
+
+```tsx
+function upsert(user: User) {
+  if ("id" in user) {
+    // TypeScript knows `user` here has fields from Instance (id, createdAt, etc)
+    return updateUser(user.id, user);
+  } else {
+    // TypeScript knows this must be the `UserBase & ModelMixins.InputPassword` version of user.
+    return createUser(user);
+  }
+}
+```
+
+### Zusammenfassung
+
+Wir haben drei Techniken und einige damit verbundene unterstützende Ideen behandelt.
+
+Du fragst dich vielleicht: Sind das gute Patterns? Sollte ich einige dieser Ideen übernehmen?
+
+## Ressourcen
+
+- [TypeScript tips for legacy projects: Type only you need](https://sergiocarracedo.es/typescript-tips/)
+- [Matt Pocock's Excellent new book](https://www.totaltypescript.com/books/total-typescript-essentials)
+- [Total TypeScript Tips](https://www.totaltypescript.com/tips)
