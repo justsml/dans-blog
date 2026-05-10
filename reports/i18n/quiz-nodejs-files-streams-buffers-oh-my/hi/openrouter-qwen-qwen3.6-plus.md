@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/hi/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 122.14
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-nodejs-files-streams-buffers-oh-my --locale hi --skip-global
