@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/de/index.mdx
+- Validation: passed
+- Runtime seconds: 50.73
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
