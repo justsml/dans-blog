@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: fr
+- Model: openrouter/minimax/minimax-m2.7
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 4.25
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
