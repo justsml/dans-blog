@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 76.16
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
