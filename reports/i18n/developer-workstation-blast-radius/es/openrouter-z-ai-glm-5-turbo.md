@@ -3,11 +3,11 @@
 - Locale: es
 - Model: openrouter/z-ai/glm-5-turbo
 - Target: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx
-- Validation: rejected: missing output file
-- Runtime seconds: 10.43
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 63.85
 - Input tokens: unknown
-- Output tokens: unknown
+- Output tokens: 0
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model did not create src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx.
+- Note: Model changed files outside src/content/posts/2026-05-09--developer-workstation-blast-radius/es/index.mdx: candidate_deepseek.mdx, candidate_glm47.mdx, candidate_glm5.mdx, english_source.mdx
