@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/de/index.mdx
+- Validation: passed
+- Runtime seconds: 73.05
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
