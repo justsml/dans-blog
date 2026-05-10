@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: should-you-use-named-or-default-exports
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2023-08-18--should-you-use-named-or-default-exports/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 75.35
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
