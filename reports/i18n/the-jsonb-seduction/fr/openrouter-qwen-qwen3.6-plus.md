@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: the-jsonb-seduction
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-12-29--the-jsonb-seduction/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 68.33
+- Input tokens: unknown
+- Output tokens: 0
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
