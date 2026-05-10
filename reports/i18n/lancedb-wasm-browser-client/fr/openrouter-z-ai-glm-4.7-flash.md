@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: fr
+- Model: openrouter/z-ai/glm-4.7-flash
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx
+- Validation: rejected: touched unrelated files
+- Runtime seconds: 104.43
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model changed files outside src/content/posts/2026-04-16--lancedb-wasm-browser-client/fr/index.mdx: reports/i18n/beam-search-transformers-js/de/judge-second.md
