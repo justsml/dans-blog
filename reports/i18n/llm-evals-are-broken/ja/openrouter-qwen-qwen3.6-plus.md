@@ -3,11 +3,11 @@
 - Locale: ja
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2026-05-06--llm-evals-are-broken/ja/index.mdx
-- Validation: rejected: touched unrelated files
-- Runtime seconds: 69.99
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.55
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Model changed files outside src/content/posts/2026-05-06--llm-evals-are-broken/ja/index.mdx: src/content/posts/2026-05-09--developer-workstation-blast-radius/es/
+- Note: Model did not leave a diff in src/content/posts/2026-05-06--llm-evals-are-broken/ja/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
