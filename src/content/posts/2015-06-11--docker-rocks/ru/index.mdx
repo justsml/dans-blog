@@ -1,0 +1,43 @@
+---
+social_image: ../desktop-social.webp
+title: "Docker rocks и теперь работает на OSX"
+subTitle: "Docker — это потрясающая, быстрая и гибкая платформа"
+date: 2015-06-11
+modified: 2024-08-10
+category: DevOps
+subCategory: docker
+tags: [docker, boot2docker, devops]
+related: [docker-makes-everything-better, docker-server-setup-notes, docker-security-tips-for-self-hosting]
+cover: guillaume-bolduc-259596-unsplash.webp
+cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
+---
+
+## Docker rocks
+
+> Обновления: сентябрь 2016, 2018
+> Boot2Docker заменён на Docker for Mac
+
+> Историческая справка: эта публикация сознательно сохранена как снимок эпохи Docker for Mac 2015 года. Советы по производительности и названия инструментов отражают тот момент; современные рабочие процессы Docker Desktop и Compose ушли вперёд.
+
+1. Docker — это потрясающая, быстрая и гибкая платформа.
+1. Предыдущие инструменты, особенно boot2docker, были медленными и склонными к сбоям.
+
+ Docker сейчас может работать нативно на ядре Linux v3.4+ — а виртуальная машина boot2docker уже использует v4.
+
+ Лучшее использование вашего оборудования: установите последнюю версию Debian или Ubuntu на ваш Mac/Windows,
+
+ ... да ладно, эти игры не помогут вашему коду...
+
+### Проверьте вашу настройку
+
+Изучите вывод команды `docker info`.
+
+1. Безопасность: проверьте сервер на наличие неожиданно открытых портов (с помощью `nmap` из удалённой сети)
+1. DNS: используйте локальный кэш или DNS-сервер с низкой задержкой.
+1. Хранилище: используйте правильный драйвер хранилища (`overlay2` — наиболее вероятный вариант)
+
+Обновление 2024:
+
+- Docker Desktop — проприетарное решение, но бесплатное для личного использования. Это отличный способ начать работу с Docker на OSX или Windows.
+- Если вы ищете более открытое решение, обратите внимание на [Rancher Desktop](https://rancherdesktop.io/).
