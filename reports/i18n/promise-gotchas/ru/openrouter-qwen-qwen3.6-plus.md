@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-09-26--promise-gotchas/ru/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.51
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2018-09-26--promise-gotchas/ru/index.mdx.
