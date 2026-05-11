@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: contribute-to-open-source-the-easy-way
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/de/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.53
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-01-16--contribute-to-open-source-the-easy-way/de/index.mdx.
