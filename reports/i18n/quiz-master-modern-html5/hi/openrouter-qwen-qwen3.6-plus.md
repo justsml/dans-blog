@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: hi
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/hi/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 103.62
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-master-modern-html5 --locale hi --skip-global
