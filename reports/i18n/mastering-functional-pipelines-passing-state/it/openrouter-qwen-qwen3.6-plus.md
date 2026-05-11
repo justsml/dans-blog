@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/it/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.56
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/it/index.mdx.
