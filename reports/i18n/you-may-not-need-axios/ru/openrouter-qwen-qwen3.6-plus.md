@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/ru/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.52
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2018-11-15--you-may-not-need-axios/ru/index.mdx.
