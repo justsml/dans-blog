@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-postgres-sql-mastery-pt1
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/ru/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.60
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/ru/index.mdx.
