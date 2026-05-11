@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: javascript-promises-quiz
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.57
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2019-11-26--javascript-promises-quiz/ja/index.mdx.
