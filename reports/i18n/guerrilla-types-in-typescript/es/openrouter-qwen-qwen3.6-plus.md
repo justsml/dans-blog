@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: guerrilla-types-in-typescript
+- Locale: es
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2023-09-06--guerrilla-types-in-typescript/es/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.74
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2023-09-06--guerrilla-types-in-typescript/es/index.mdx.
