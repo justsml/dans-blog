@@ -3,11 +3,11 @@
 - Locale: ru
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2024-11-08--quiz-css-core-fundamentals/ru/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 94.83
+- Validation: rejected: missing output file
+- Runtime seconds: 1.55
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: bun run i18n:validate --slug quiz-css-core-fundamentals --locale ru --skip-global
+- Note: Model did not create src/content/posts/2024-11-08--quiz-css-core-fundamentals/ru/index.mdx.
