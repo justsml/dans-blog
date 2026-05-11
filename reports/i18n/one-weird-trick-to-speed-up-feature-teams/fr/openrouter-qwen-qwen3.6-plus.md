@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/fr/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.58
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/fr/index.mdx.
