@@ -3,11 +3,11 @@
 - Locale: hi
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/hi/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 234.15
+- Validation: rejected: missing output file
+- Runtime seconds: 1.56
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: bun run i18n:validate --slug docker-security-for-admins-and-maintainers --locale hi --skip-global
+- Note: Model did not create src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/hi/index.mdx.
