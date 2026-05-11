@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: ja
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/ja/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.55
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2015-03-12--docker-makes-everything-better/ja/index.mdx.
