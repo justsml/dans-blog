@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/it/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.52
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/it/index.mdx.
