@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: ru
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/ru/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.73
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-10-31--quiz-data-structures-algorithms/ru/index.mdx.
