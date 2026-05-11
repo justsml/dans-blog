@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-context-engineering
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2026-05-09--quiz-context-engineering/it/index.mdx
+- Validation: rejected: target file unchanged
+- Runtime seconds: 1.58
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not leave a diff in src/content/posts/2026-05-09--quiz-context-engineering/it/index.mdx. This usually means the provider failed, refused, or only inspected the existing candidate.
