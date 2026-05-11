@@ -17,7 +17,7 @@ cover_icon: icon_matt-nelson-414464-unsplash.webp
 <br />
 <small>_Ответы:_ Linux и пробелы.</small>
 
-<!-- We're going to look at 2 rules to improve your life with Promises. -->
+{/* We're going to look at 2 rules to improve your life with Promises. */}
 
 ## Битва...?
 
@@ -36,7 +36,7 @@ cover_icon: icon_matt-nelson-414464-unsplash.webp
 
 <blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Visual Studio Code can now convert your long chains of Promise.then()&#39;s into async/await! 🎊 Works very well in both JavaScript and TypeScript files. .catch() is also correctly converted to try/catch ✅ <a href="https://t.co/xb39Lsp84V">pic.x.com/xb39Lsp84V</a></p>&mdash; Umar Hansa (@umaar) <a href="https://x.com/umaar/status/1045655069478334464?ref_src=twsrc%5Etfw">September 28, 2018</a></blockquote>
 
-<!-- Sure, it's an impressive addition to an already amazing list of features. -->
+{/* Sure, it's an impressive addition to an already amazing list of features. */}
 
 Если вы ненавидите промисы и хотите такую функцию рефакторинга, я не виню вас.
 <br />
@@ -61,9 +61,9 @@ _Я сопереживаю. Я понимаю._
 
 Выполнение HTTP GET-запроса с помощью `fetch`:
 
-<!-- the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). -->
+{/* the fetch specification states [HTTP status codes](https://http.cat/) over 400 or 500 **do not automatically trigger an error.** The default in many AJAX libraries (jQuery, axios). */}
 
-<!-- Before we see the solution, look over a common "recommended" implementation: -->
+{/* Before we see the solution, look over a common "recommended" implementation: */}
 
 ### Антипаттерн
 
@@ -106,7 +106,7 @@ function getText(response) {
 
 И всё же это настолько субъективно и произвольно, что иногда даже бессмысленно.
 
-<!-- Instead of arguing if a given function is sufficiently focused.
+{/* Instead of arguing if a given function is sufficiently focused.
 
 I came up with a rough measure for this: `Purpose Cost`. The higher the score, more likely it's doing too much.
 
@@ -126,16 +126,16 @@ function getText(response) {
 Given a function's code, add 1 point for every line containing any of: `if`, `return`, ternary, `for`, `const`, `let`, `var`, `switch`, `while`, `[].map/filter/reduce/etc`. Add 1 point for each instruction (ignore extra lines from whitespace). A number of chained expressions or methods only count for 1 point.
 
 Whew, that was a bit of jargon.
-  -->
+  */}
 
 Интересно, что большинство разработчиков считают себя _довольно хорошими_ в применении принципа **единственной ответственности** к своему коду. Неудивительно: они также считают себя отличными водителями!
 
-<!-- This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. -->
+{/* This **isn't a unique issue with Promises**, array methods and all other HoF-based (Higher Order Function) APIs have the same ergonomics. */}
 
 Рассмотрим пример, который (невероятно талантливый) [Jake Archibald](https://x.com/jaffathecake) приводит в своей статье об async/await для сайта Google Developers (примечание: 2024, ссылка удалена).
 
-<!--
-Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") -->
+{/*
+Let's look at one of the so called "❌ Not recommended" Promise examples. (The description is "say we wanted to fetch a series URLs and log them as soon as possible, in the correct order.") */}
 
 ```js
 // source: https://developers.google.com/web/fundamentals/primers/async-functions
@@ -166,11 +166,11 @@ function logInOrder(urls) {
 
 В этой единственной функции определено 5 анонимных методов. Как указывает даже Джейк, `.reduce` здесь слишком сложен. Не имеет смысла вручную писать такие механизмы повсюду в коде. Другими словами, мы не создаём DOM с помощью бесконечных `document.createElement()`, `element.setAttribute()` и т.д. Вместо этого мы выбираем лучший инструмент из множества вариантов: вспомогательные/утилитарные функции, библиотеки или фреймворки.
 
-<!-- We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. -->
+{/* We need to isolate each 'step' that's going on: there's an HTTP request, a transform for a list of URLs into a list of results. Also a `console.log` is needed. */}
 
-<!-- > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? -->
+{/* > 🤔 Why do `Promises` cause developers to abandon practices we use elsewhere? */}
 
-<!-- **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. -->
+{/* **Note:** If the intention was to _initiate requests_ in a sequence, instead of merely printing the results out in order, this code doesn't actually do that. We'll refactor accordingly. */}
 
 
 

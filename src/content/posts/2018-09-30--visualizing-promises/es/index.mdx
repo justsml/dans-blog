@@ -39,12 +39,12 @@ delay(1000).then(() => console.log("done"));
 
 ![Línea de tiempo mostrando delay 1000 luego console log ejecutándose después de un segundo](N_1000ms_log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(fn)
                     | console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Ejemplo #2/4
 
@@ -64,12 +64,12 @@ delay(1000).then(console.log("done"));
 
 ![Línea de tiempo mostrando console log ejecutándose inmediatamente antes de que termine el delay](N_1000ms_!log.webp)
 
-<!-- ```
+{/* ```
 delay(1000) --------|.then(null)
 console.log('done')
 |-------------------|--------------------|--------------------|-----------------
 0msec             1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Ejemplo #3/4
 
@@ -83,14 +83,14 @@ delay(3000).then(console.log);
 
 ![Línea de tiempo mostrando tres delay promises resolviéndose después de uno dos y tres segundos](N_3000ms.webp)
 
-<!-- ```
+{/* ```
 delay(1000) ------|.then(console.log)
 delay(2000) ------|--------------------|.then(console.log)
 delay(3000) ------|--------------------|--------------------|.then(console.log)
 |-----------------|--------------------|--------------------|-------------------
 |                 |                    |                    |
 0msec           1sec                 2sec                 3sec
-``` -->
+``` */}
 
 ## Ejemplo #4/4
 
@@ -102,7 +102,7 @@ Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 
 ![Línea de tiempo mostrando Promise all esperando a que las tres delay promises se resuelvan](N_3000ms_PromiseAll.webp)
 
-<!--
+{/*
 ```
 delay(1000) ---| [resolved]------------------v
 delay(2000) ---|--------------| [resolved]---v
@@ -112,14 +112,14 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
 |              |              |              |
 0msec        1sec           2sec           3sec
 ```
--->
+*/}
 
 > Créditos:
 >
 > - Diagramas async animados por [Patrick Biffle](https://github.com/Piglacquer)
 > - Inspiración para este artículo: https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html
 
-<!-- <div class="challenge" title="Pregunta #1: Significado de la vida:">
+{/* <div class="challenge" title="Pregunta #1: Significado de la vida:">
   <ul class="options">
     <li>1</li>
     <li>2</li>
@@ -127,4 +127,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
     <li>3</li>
   </ul>
   <div class="description">¿Cuál es el significado de la vida?</div>
-</div> -->
+</div> */}

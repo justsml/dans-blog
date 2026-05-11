@@ -25,7 +25,7 @@ Alcuni ingegneri usano la conoscenza di git (e del terminale) come segnale del l
 
 Altri fattori probabilmente includono la familiarità e il bias del sopravvissuto, che possono ulteriormente offuscare la nostra valutazione e le nostre ipotesi.
 
-<!-- Misplaced belief in the inherent virtue of certain OSS projects' processes. (The Linux Kernel uses rebasing, and if you don't, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) -->
+{/* Misplaced belief in the inherent virtue of certain OSS projects' processes. (The Linux Kernel uses rebasing, and if you don't, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) */}
 
 ### Domanda chiave: qual è lo scopo di un commit git?
 
@@ -41,7 +41,7 @@ Altri fattori probabilmente includono la familiarità e il bias del sopravvissut
 
 Stai pensando a git in un modo che sta **fornendo il massimo valore** a te, al tuo team e alla tua organizzazione?
 
-<!-- What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. -->
+{/* What makes sense for an Open Source project like Postgres, or the Linux Kernel, may not be the best choice for you or your team. */}
 
 Dato che esistono mentalità molto diverse riguardo alla strategia di commit, non c'è da stupirsi se c'è così tanta confusione sul modo "giusto" di usare git.
 
@@ -66,7 +66,7 @@ Modello mentale: "Voglio creare una versione alternativa di una cronologia esist
 #### Pro
 
 - 🔌 Potere assoluto. Puoi cambiare la cronologia.
-  <!-- - 🎭 Practice your Engineering Theater skills. -->
+  {/* - 🎭 Practice your Engineering Theater skills. */}
 
 #### Contro
 
@@ -101,9 +101,9 @@ Modello mentale: "Voglio un rilascio personalizzato, a partire da un dato punto,
 
 Alla fine, **un processo più semplice con meno rischi dovrebbe prevalere.**
 
-<!-- **Squash merge** is the clear winner here. It's **simpler** and **less error-prone**. It also **leaves the existing commit history intact**. This is a **huge win** for **collaboration** and **code review**. -->
+{/* **Squash merge** is the clear winner here. It's **simpler** and **less error-prone**. It also **leaves the existing commit history intact**. This is a **huge win** for **collaboration** and **code review**. */}
 
-<!-- Include a diagram of a rebase flow with 2 feature branches -->
+{/* Include a diagram of a rebase flow with 2 feature branches */}
 
 Anche se i _Rebaser_ hanno certamente modi per risolvere (o evitare) i loro problemi, il **fatto resta: avrai bisogno di una cintura nera nel kung fu di git.** (es. Anche un umile `git push` può affrontare una complessità extra: era `git push --force` o `git push --force-with-lease`? Perché occuparsene affatto?)
 
@@ -120,7 +120,7 @@ Alla fine, **il rebasing significa che occasionalmente ti ritroverai a rivivere 
 - _🔤 Always Be Committing!_
   - In oltre il 95% dei progetti aziendali la mentalità da "backup" è preferibile alla mentalità da "opera d'arte scolpita". Col passare del tempo, il significato dei messaggi di commit svanirà, molto più velocemente del codice la cui logica e i cui test manterranno il loro significato.
 
-<!--
+{/*
 #### Bonus: Releases Tip
 
 Ever need just an individual file or a few folders from a branch? Without the commit history?
@@ -128,4 +128,4 @@ Ever need just an individual file or a few folders from a branch? Without the co
 - You can use the special "--" separator with `git checkout` to stay in the current branch while copying the specified files:
 - `git checkout feature/half-a-feature **--** <folder or file path>`
 - Make sure you've committed any changes you want to keep first, as this will overwrite any local changes.
--->
+*/}

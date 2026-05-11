@@ -29,7 +29,7 @@ cover_icon: icon_gorilla-types_dall-e.webp
   - [実世界での使用例](#real-world-usage)
 - [まとめ](#summary)
 
-<!--
+{/*
 1.  High-level logical representation of types - in a way meaningful to both devs and business stakeholders.
 2.  Durable way to model combinations of logically related fields.
     1.  Example: **Object instances** often include common fields `id`, `createdDate`, `createdById`, etc.
@@ -37,7 +37,7 @@ cover_icon: icon_gorilla-types_dall-e.webp
     3.  Composable utilities, Paging/Payload wrapper, etc: `pageNumber`, `sortBy`, `impersonateSession`, `token`, `_version`, etc.
 3.  Avoid unintended variances in naming and typing (`id`, `Id`, `ID`, `created_at`, `date_created`, oh noes!)
 4.  Compose higher level types with multiple smaller reusable interfaces & types.
-5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. -->
+5.  Utilize [Unions](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes-func.html#discriminated-unions) to 'automatically' match variants of a type. */}
 
 ### 型を設計するアプローチ
 
@@ -68,7 +68,7 @@ interface ProductDetails {
 
 再利用性とDRY性を優先します。
 
-<!-- Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** -->
+{/* Readability is a funny measure. Since Readability is often good or **great when there are few types/files.** **Inevitably types tend to proliferate,** featuring ever more properties. **Readability suffers.** */}
 
 このアプローチは、おそらく圧倒的な支持を得ている方法でしょう。
 
@@ -105,17 +105,17 @@ interface Reviews { authorId: number; stars: number; }
 
 > ✅ はい！🎉
 
-<!-- ### Some things to consider
+{/* ### Some things to consider
 
 - How do you represent a `one-to-one` relationship like `Product` -> `Seller`?
 - What about `one-to-many` relationships? Say `Reviews`, or `Photos`?
-- Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) -->
+- Let Prisma handle it? (Not a bad idea, but this article is secretly about learning some TypeScript...) */}
 
-<!-- This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the "big picture" more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. -->
+{/* This approach is an exercise in NEVER duplicating Model field names. Along the way, I think the "big picture" more obvious (in one spot). starting with the largest, highest-level type, and deriving the simpler types from it. */}
 
-<!-- When provided with some structured array/object data, many TypeScript coders feel the urge to create types. Loads of types. Eventually a cascade of layers forms, made up of simpler types building ever more complex types.
+{/* When provided with some structured array/object data, many TypeScript coders feel the urge to create types. Loads of types. Eventually a cascade of layers forms, made up of simpler types building ever more complex types.
 
-Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? -->
+Or maybe you are the type to start at the highest-level type, scaffolding enough to write the next sub-type in the tree? */}
 
 ```tsx
 export interface ProductDetails {
