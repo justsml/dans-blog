@@ -6,10 +6,10 @@ modified: 2025-09-17
 tags: [serverless, databases, AI, innovation, chroma, lanceDB, pagefind, orama, duckdb]
 category: Search
 subCategory: "Bases de données"
-social_image: desktop-social.webp
-cover_full_width: data-city-wide.webp
-cover_mobile: data-city-square-200.webp
-cover_icon: data-city-square-200.webp
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
 cover_credit: "©️ 2025 Dan Levy"
 ---
 
@@ -48,7 +48,7 @@ Le mouvement commun est simple : gardez les données durables dans des fichiers 
 | **Intégrations IA/RAG** | Aucune | ✅ Pipeline intégré | ✅ LangChain, LlamaIndex | ✅ Reranking avancé | ⚠️ Configuration manuelle |
 | **Stockage** | JSON/WASM statique | Mémoire + plugins S3 | Basé sur un serveur* | Lance compatible S3 | WASM + S3/HTTP |
 | **Support en écriture** | Uniquement au build | CRUD complet | CRUD complet | CRUD complet | CRUD SQL complet |
-| **Performance** | <100ms | 0,0001ms - 100ms | <100ms | 3-5ms vectoriel, 50ms FTS | 10ms-1s (SQL complexe) |
+| **Performance** | Sub-100ms | 0,0001ms - 100ms | Sub-100ms | 3-5ms vectoriel, 50ms FTS | 10ms-1s (SQL complexe) |
 
 *Instantané de septembre 2025 : Chroma nécessite un environnement serveur et ne prend pas en charge le stockage objet S3 direct de la même manière que les outils fichier-objet ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
 
@@ -178,7 +178,7 @@ const results = await collection.query({
 
 **Choisissez Orama quand :**
 - Vous construisez des tableaux de bord, du e-commerce ou des applications dynamiques
-- Vous avez besoin de mises à jour en temps réel et de performances <100ms
+- Vous avez besoin de mises à jour en temps réel et de performances Sub-100ms
 - Vous voulez une flexibilité de déploiement allant des navigateurs aux fonctions edge
 - *Exemple : SaaS avec des catalogues produits dynamiques*
 

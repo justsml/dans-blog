@@ -6,9 +6,9 @@ date: 2018-09-30
 modified: 2024-07-30
 category: Guides
 subCategory: promises
-cover: junior-ferreira-735237-unsplash.webp
-cover_mobile: w300_junior-ferreira-735237-unsplash.webp
-cover_icon: icon_junior-ferreira-735237-unsplash.webp
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
 tags: [promises, async, visualizing, javascript, composition]
 related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 ---
@@ -37,7 +37,7 @@ Esto muestra cómo la ejecución de `console.log()` será retrasada por `delay(m
 delay(1000).then(() => console.log("done"));
 ```
 
-![Línea de tiempo mostrando delay 1000 luego console log ejecutándose después de un segundo](N_1000ms_log.webp)
+![Línea de tiempo mostrando delay 1000 luego console log ejecutándose después de un segundo](../N_1000ms_log.webp)
 
 {/* ```
 delay(1000) --------|.then(fn)
@@ -62,7 +62,7 @@ Generalmente el uso deseado para `console.log` se muestra en el Ejemplo #1. Aseg
 delay(1000).then(console.log("done"));
 ```
 
-![Línea de tiempo mostrando console log ejecutándose inmediatamente antes de que termine el delay](N_1000ms_!log.webp)
+![Línea de tiempo mostrando console log ejecutándose inmediatamente antes de que termine el delay](../N_1000ms_!log.webp)
 
 {/* ```
 delay(1000) --------|.then(null)
@@ -81,7 +81,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![Línea de tiempo mostrando tres delay promises resolviéndose después de uno dos y tres segundos](N_3000ms.webp)
+![Línea de tiempo mostrando tres delay promises resolviéndose después de uno dos y tres segundos](../N_3000ms.webp)
 
 {/* ```
 delay(1000) ------|.then(console.log)
@@ -100,7 +100,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![Línea de tiempo mostrando Promise all esperando a que las tres delay promises se resuelvan](N_3000ms_PromiseAll.webp)
+![Línea de tiempo mostrando Promise all esperando a que las tres delay promises se resuelvan](../N_3000ms_PromiseAll.webp)
 
 {/*
 ```

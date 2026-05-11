@@ -6,9 +6,9 @@ date: 2018-09-30
 modified: 2024-07-30
 category: Guides
 subCategory: promises
-cover: junior-ferreira-735237-unsplash.webp
-cover_mobile: w300_junior-ferreira-735237-unsplash.webp
-cover_icon: icon_junior-ferreira-735237-unsplash.webp
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
 tags: [promises, async, visualizing, javascript, composition]
 related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 ---
@@ -37,7 +37,7 @@ Dies zeigt, wie die Ausführung von `console.log()` durch `delay(msec)` verzöge
 delay(1000).then(() => console.log("done"));
 ```
 
-![Zeitachse, die delay 1000 und dann console.log nach einer Sekunde zeigt](N_1000ms_log.webp)
+![Zeitachse, die delay 1000 und dann console.log nach einer Sekunde zeigt](../N_1000ms_log.webp)
 
 {/* ```
 delay(1000) --------|.then(fn)
@@ -62,7 +62,7 @@ Im Allgemeinen ist die gewünschte Verwendung von `console.log` wie in Beispiel 
 delay(1000).then(console.log("done"));
 ```
 
-![Zeitachse, die console.log zeigt, das sofort ausgeführt wird, bevor die Verzögerung endet](N_1000ms_!log.webp)
+![Zeitachse, die console.log zeigt, das sofort ausgeführt wird, bevor die Verzögerung endet](../N_1000ms_!log.webp)
 
 {/* ```
 delay(1000) --------|.then(null)
@@ -81,7 +81,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![Zeitachse, die drei Delay-Promises zeigt, die nach einer, zwei und drei Sekunden aufgelöst werden](N_3000ms.webp)
+![Zeitachse, die drei Delay-Promises zeigt, die nach einer, zwei und drei Sekunden aufgelöst werden](../N_3000ms.webp)
 
 {/* ```
 delay(1000) ------|.then(console.log)
@@ -100,7 +100,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![Zeitachse, die Promise.all zeigt, das auf alle drei Delay-Promises wartet](N_3000ms_PromiseAll.webp)
+![Zeitachse, die Promise.all zeigt, das auf alle drei Delay-Promises wartet](../N_3000ms_PromiseAll.webp)
 
 {/*
 ```

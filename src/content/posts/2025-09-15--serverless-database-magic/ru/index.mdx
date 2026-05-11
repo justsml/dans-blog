@@ -6,10 +6,10 @@ modified: 2025-09-17
 tags: [serverless, databases, AI, innovation, chroma, lanceDB, pagefind, orama, duckdb]
 category: Search
 subCategory: "Databases"
-social_image: desktop-social.webp
-cover_full_width: data-city-wide.webp
-cover_mobile: data-city-square-200.webp
-cover_icon: data-city-square-200.webp
+social_image: ../desktop-social.webp
+cover_full_width: ../data-city-wide.webp
+cover_mobile: ../data-city-square-200.webp
+cover_icon: ../data-city-square-200.webp
 cover_credit: "©️ 2025 Dan Levy"
 ---
 
@@ -48,7 +48,7 @@ cover_credit: "©️ 2025 Dan Levy"
 | **ИИ/RAG интеграции** | Нет | ✅ Встроенный пайплайн | ✅ LangChain, LlamaIndex | ✅ Продвинутое реранжирование | ⚠️ Ручная настройка |
 | **Хранение** | Статические JSON/WASM | Память + плагины S3 | Серверное* | Lance, совместимый с S3 | WASM + S3/HTTP |
 | **Поддержка записи** | Только при сборке | Полный CRUD | Полный CRUD | Полный CRUD | Полный SQL CRUD |
-| **Производительность** | <100мс | 0,0001мс — 100мс | <100мс | 3-5мс вектор, 50мс FTS | 10мс-1с (сложный SQL) |
+| **Производительность** | Sub-100мс | 0,0001мс — 100мс | Sub-100мс | 3-5мс вектор, 50мс FTS | 10мс-1с (сложный SQL) |
 
 *Снимок сентября 2025: Chroma требует серверного runtime и не поддерживает прямое объектное хранилище S3 так, как это делают инструменты на основе файлов ([issue #1736](https://github.com/chroma-core/chroma/issues/1736)).
 
@@ -178,7 +178,7 @@ const results = await collection.query({
 
 **Выбирайте Orama, когда:**
 - Создаёте дашборды, электронную коммерцию или динамические приложения
-- Нужны обновления в реальном времени и производительность <100мс
+- Нужны обновления в реальном времени и производительность Sub-100мс
 - Хотите гибкость развёртывания — от браузеров до edge-функций
 - *Пример: SaaS с динамическими каталогами продуктов*
 

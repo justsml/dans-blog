@@ -6,9 +6,9 @@ date: 2018-09-30
 modified: 2024-07-30
 category: Guides
 subCategory: promises
-cover: junior-ferreira-735237-unsplash.webp
-cover_mobile: w300_junior-ferreira-735237-unsplash.webp
-cover_icon: icon_junior-ferreira-735237-unsplash.webp
+cover: ../junior-ferreira-735237-unsplash.webp
+cover_mobile: ../w300_junior-ferreira-735237-unsplash.webp
+cover_icon: ../icon_junior-ferreira-735237-unsplash.webp
 tags: [promises, async, visualizing, javascript, composition]
 related: [intro-to-promises, promise-gotchas, stop-trying-to-make-async-await-happen, javascript-promises-quiz]
 ---
@@ -37,7 +37,7 @@ function delay(millisecs) {
 delay(1000).then(() => console.log("done"));
 ```
 
-![Временная шкала: delay 1000, затем console.log выполняется через одну секунду](N_1000ms_log.webp)
+![Временная шкала: delay 1000, затем console.log выполняется через одну секунду](../N_1000ms_log.webp)
 
 {/* ```
 delay(1000) --------|.then(fn)
@@ -62,7 +62,7 @@ _Здесь показана распространённая ошибка._
 delay(1000).then(console.log("done"));
 ```
 
-![Временная шкала: console.log выполняется немедленно, до завершения delay](N_1000ms_!log.webp)
+![Временная шкала: console.log выполняется немедленно, до завершения delay](../N_1000ms_!log.webp)
 
 {/* ```
 delay(1000) --------|.then(null)
@@ -81,7 +81,7 @@ delay(2000).then(console.log);
 delay(3000).then(console.log);
 ```
 
-![Временная шкала: три промиса задержки завершаются через одну, две и три секунды](N_3000ms.webp)
+![Временная шкала: три промиса задержки завершаются через одну, две и три секунды](../N_3000ms.webp)
 
 {/* ```
 delay(1000) ------|.then(console.log)
@@ -100,7 +100,7 @@ delay(3000) ------|--------------------|--------------------|.then(console.log)
 Promise.all([delay(1000), delay(2000), delay(3000)]).then(console.log);
 ```
 
-![Временная шкала: Promise.all ждёт завершения всех трёх промисов задержки](N_3000ms_PromiseAll.webp)
+![Временная шкала: Promise.all ждёт завершения всех трёх промисов задержки](../N_3000ms_PromiseAll.webp)
 
 {/*
 ```
