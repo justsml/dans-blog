@@ -4,9 +4,9 @@
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/ru/index.mdx
 - Validation: rejected: validation failed
-- Runtime seconds: 144.93
+- Runtime seconds: 113.30
 - Input tokens: unknown
-- Output tokens: 0
+- Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
