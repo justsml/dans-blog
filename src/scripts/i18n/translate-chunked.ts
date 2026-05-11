@@ -119,16 +119,17 @@ async function translateChunk(
   llmConfig: LlmConfig,
   articleSummary: string,
   previousTranslation: string | undefined,
+  isQuiz: boolean,
 ): Promise<{ text: string; inputTokens: number; outputTokens: number; durationMs: number }> {
   const start = performance.now();
 
-  const system = buildSystemPrompt(locale);
+  const system = buildSystemPrompt(locale, isQuiz);
   const user = buildUserPrompt(chunk.text, locale, {
     chunkIndex: chunk.index,
     totalChunks: chunk.totalChunks ?? chunk.index + 1,
     previousTranslation,
     articleSummary,
-  });
+  }, isQuiz);
 
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
@@ -155,6 +156,7 @@ async function generateSummary(
   title: string,
   body: string,
   llmConfig: LlmConfig,
+  isQuiz: boolean,
 ): Promise<string> {
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
@@ -162,7 +164,7 @@ async function generateSummary(
     model,
     system:
       "You are a technical editor. Write concise, accurate summaries of technical articles.",
-    prompt: buildSummaryPrompt(title, body),
+    prompt: buildSummaryPrompt(title, body, isQuiz),
     temperature: llmConfig.temperature,
     maxTokens: 500,
   });
@@ -195,12 +197,17 @@ async function main() {
   const sourceRaw = readFileSync(sourcePath, "utf8");
   const parsed = matter(sourceRaw);
   const sourceBody = parsed.content;
+  const isQuiz = parsed.data.category === "Quiz";
+
+  if (isQuiz) {
+    console.log(`🎯 Quiz detected: ${slug}\n`);
+  }
 
   // Generate or skip summary
   let articleSummary = "";
   if (!skipSummary) {
     console.log("📝 Generating article summary...");
-    articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig);
+    articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, isQuiz);
     console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
   } else {
     articleSummary = "No summary provided. Translate each chunk independently.";
@@ -248,6 +255,7 @@ async function main() {
       llmConfig,
       articleSummary,
       previousTranslation,
+      isQuiz,
     );
 
     telemetry.chunks.push({ index: i, inputTokens, outputTokens, durationMs });
@@ -280,7 +288,7 @@ async function main() {
   // We need to handle frontmatter translation separately or assume the body
   // chunker doesn't see frontmatter. Let's translate frontmatter explicitly.
 
-  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig);
+  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz);
   const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
 
   const finalOutput = frontmatterYaml + "\n" + normalizedBody;
@@ -304,6 +312,7 @@ async function translateFrontmatter(
   frontmatter: Record<string, unknown>,
   locale: ActiveLocale,
   llmConfig: LlmConfig,
+  isQuiz: boolean,
 ): Promise<Record<string, unknown>> {
   const result = { ...frontmatter };
 
@@ -318,7 +327,7 @@ async function translateFrontmatter(
     const model = provider.chat(llmConfig.modelId);
     const translation = await generateText({
       model,
-      system: buildSystemPrompt(locale),
+      system: buildSystemPrompt(locale, isQuiz),
       prompt: `Translate the following ${key} into ${locale}. Keep it concise and natural.\n\n${value}`,
       temperature: llmConfig.temperature,
       maxTokens: 500,

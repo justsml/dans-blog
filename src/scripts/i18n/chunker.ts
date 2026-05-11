@@ -88,6 +88,11 @@ function extractSegmentsHeuristic(body: string): Segment[] {
   let mdxName = "";
   let mdxDepth = 0;
 
+  // Wrapper components that should not swallow their children.
+  // Their open/close tags are emitted as text so inner components
+  // (e.g. <Challenge>) remain atomic MDX segments.
+  const WRAPPER_COMPONENTS = new Set(["QuizUI"]);
+
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
@@ -105,6 +110,20 @@ function extractSegmentsHeuristic(body: string): Segment[] {
       const startMatch = line.match(/^\s*<([a-zA-Z][a-zA-Z0-9]*)(?:\s|>|$)/);
       if (startMatch) {
         mdxName = startMatch[1];
+
+        // Skip wrapper components — emit their tags as text
+        if (WRAPPER_COMPONENTS.has(mdxName)) {
+          // Check if it's a one-line self-closing tag
+          const hasSelfClose = /\/>\s*$/.test(line);
+          if (hasSelfClose) {
+            // One-line wrapper, treat as atomic MDX
+            mdxRanges.push({ start: i, end: i });
+          }
+          // Otherwise just ignore the open/close tags and let inner
+          // components be detected normally
+          continue;
+        }
+
         mdxStart = i;
         mdxDepth = 1;
 
@@ -161,7 +180,20 @@ function extractSegmentsHeuristic(body: string): Segment[] {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Code fence detection
+    // MDX component lines take priority — keep code fences inside components
+    // as part of the MDX segment so <Challenge> blocks stay atomic
+    if (mdxLineSet.has(i)) {
+      if (buffer.length > 0 && !mdxLineSet.has(i - 1)) {
+        flushBuffer("text");
+      }
+      buffer.push(line);
+      if (!mdxLineSet.has(i + 1)) {
+        flushBuffer("mdx");
+      }
+      continue;
+    }
+
+    // Code fence detection (only outside MDX components)
     const fenceMatch = line.match(/^(\s*)(```+)(\s*\w*)\s*$/);
     if (fenceMatch) {
       if (!inCodeFence) {
@@ -182,17 +214,6 @@ function extractSegmentsHeuristic(body: string): Segment[] {
 
     if (inCodeFence) {
       buffer.push(line);
-      continue;
-    }
-
-    if (mdxLineSet.has(i)) {
-      if (buffer.length > 0 && !mdxLineSet.has(i - 1)) {
-        flushBuffer("text");
-      }
-      buffer.push(line);
-      if (!mdxLineSet.has(i + 1)) {
-        flushBuffer("mdx");
-      }
       continue;
     }
 
@@ -239,7 +260,10 @@ function chunkByParagraph(segments: Segment[], size: number): Chunk[] {
 
   for (const para of paragraphs) {
     current.push(para);
-    if (para.type === "text") count++;
+    // Count both text paragraphs and MDX components toward the chunk limit.
+    // This ensures quiz <Challenge> components each get their own chunk
+    // when using paragraph mode.
+    if (para.type === "text" || para.type === "mdx") count++;
 
     if (count >= size) {
       chunks.push(createChunk(chunks.length, current));
