@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: higher-order-programming
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-10-05--higher-order-programming/fr/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 1.54
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2015-10-05--higher-order-programming/fr/index.mdx.
