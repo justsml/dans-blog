@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/fr/index.mdx
 - Validation: rejected: missing output file
-- Runtime seconds: 1.58
+- Runtime seconds: 1.50
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
