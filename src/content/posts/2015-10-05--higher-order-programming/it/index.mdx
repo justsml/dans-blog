@@ -1,0 +1,62 @@
+---
+social_image: ../desktop-social.webp
+title: "Programmazione di Ordine Superiore"
+subTitle: "Esplorazione di Tecniche di Pipeline Basate su Array e Insiemi"
+date: 2015-09-22
+modified: 2024-07-30
+category: Code
+subCategory: programming
+tags: [programming, patterns, models, source code, organization]
+cover: susan-holt-simpson-799094-unsplash.webp
+cover_mobile: w300_susan-holt-simpson-799094-unsplash.webp
+cover_icon: icon_susan-holt-simpson-799094-unsplash.webp
+---
+
+## Esplorazione di Tecniche di Pipeline Basate su Array e Insiemi
+
+### Un Anti-Pattern?
+
+Questa è un'esplorazione dei vantaggi che si ottengono quando **si programma tutto come un array.** (Usando concetti Jedi derivati da SmallTalk)
+
+Ecco alcuni principi guida:
+
+1. Tutto l'input è di tipo array. Anche se si tratta di un array di un solo elemento.
+1. Le funzioni di livello superiore dovrebbero generalmente accettare E restituire array. (Eccezione fatta per i metodi di callback per i loop: map/reduce/each/filter)
+1. 99 sviluppatori su 100 soffrono di quella che chiamo sindrome da `surplus di schema acuto`.
+1. Attenzione ai `modelli basati su classi` gonfiati — con tutte le conseguenze prevedibili: `stato dell'istanza` fragile con tante leve e manopole da sbagliare, transazioni DB, lock SQL, async/mutex (che funzionano sempre al primo colpo, vero?), uso idiomatico di `getter/setter di proprietà`, e il vostro utilizzo di `public/private/final/ecc.` è solido, giusto?
+
+1. Quindi lasciatemi prendere un problema comune e _infilare_ ~~~aggiungere~~~ alcune riflessioni basate sugli insiemi.
+1. Un ipotetico sito Blog ha molti Articoli, e ha ancora più Post (Commenti).
+1. Aggiungiamo un metodo `delete` (di seguito) — ma con supporto sia per singoli che per array.
+
+```java
+package net.danlevy.why.java___why.you.got.all.the.dots____it.must.be.all.the.factories;
+
+public class Post {
+  public String   title;
+  public Date     created;
+  public String   message;
+
+  public Post(String title, String message) {
+    this.title    = title;
+    this.message  = message;
+    this.created  = new Date();
+  }
+
+  public Date isArchived() {
+    return this.created < new Date(2015, 0, 1);
+  }
+
+  // Post.delete` può essere chiamato con un singolo Post o un array di Post[]
+  public static int delete(Post post) {
+    List<Post> posts = new List<Post>(post);
+    return delete(posts)
+  }
+
+  public static int delete(List<Post> posts) {
+    return posts.map(Dao.remove);
+  }
+}
+```
+
+> Perdonatemi se il mio Java è un po' arrugginito.
