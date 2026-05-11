@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-js-interfaces-symbols-and-enumerables
+- Locale: it
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/it/index.mdx
+- Validation: rejected: missing output file
+- Runtime seconds: 2.48
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Model did not create src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/it/index.mdx.
