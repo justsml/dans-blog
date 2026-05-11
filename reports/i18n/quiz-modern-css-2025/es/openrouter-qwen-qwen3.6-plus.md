@@ -3,11 +3,11 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2024-11-07--quiz-modern-css-2025/es/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 81.39
+- Validation: rejected: missing output file
+- Runtime seconds: 1.59
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: bun run i18n:validate --slug quiz-modern-css-2025 --locale es --skip-global
+- Note: Model did not create src/content/posts/2024-11-07--quiz-modern-css-2025/es/index.mdx.
