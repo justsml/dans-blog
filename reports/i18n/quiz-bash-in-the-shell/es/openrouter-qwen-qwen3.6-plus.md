@@ -3,11 +3,11 @@
 - Locale: es
 - Model: openrouter/qwen/qwen3.6-plus
 - Target: src/content/posts/2024-11-20--quiz-bash-in-the-shell/es/index.mdx
-- Validation: rejected: validation failed
-- Runtime seconds: 131.10
+- Validation: rejected: missing output file
+- Runtime seconds: 1.56
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
 - Cached input tokens: unknown
 - Estimated cost: $0.000000
-- Note: Command failed: bun run i18n:validate --slug quiz-bash-in-the-shell --locale es --skip-global
+- Note: Model did not create src/content/posts/2024-11-20--quiz-bash-in-the-shell/es/index.mdx.
