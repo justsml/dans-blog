@@ -1,0 +1,43 @@
+---
+social_image: ../desktop-social.webp
+title: "Docker ist großartig & funktioniert jetzt auf OSX"
+subTitle: "Docker ist großartig, schnell und flexibel"
+date: 2015-06-11
+modified: 2024-08-10
+category: DevOps
+subCategory: docker
+tags: [docker, boot2docker, devops]
+related: [docker-makes-everything-better, docker-server-setup-notes, docker-security-tips-for-self-hosting]
+cover: guillaume-bolduc-259596-unsplash.webp
+cover_mobile: w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: icon_guillaume-bolduc-259596-unsplash.webp
+---
+
+## Docker ist großartig
+
+> Updates September 2016, 2018
+> Boot2Docker wurde durch Docker for Mac ersetzt
+
+> Historischer Hinweis: Dieser Beitrag wurde bewusst als Momentaufnahme von Docker für Mac aus dem Jahr 2015 erhalten. Die Performance-Ratschläge und Tool-Namen spiegeln diesen Zeitpunkt wider; aktuelle Docker-Desktop- und Compose-Workflows sind weiterentwickelt.
+
+1. Docker ist ein großartiges, schnelles und flexibles Tool.
+1. Vorgänger-Tools, insbesondere boot2docker, waren langsam und störanfällig.
+
+ Docker kann aktuell nativ auf einem Linux-Kernel v3.4+ laufen – und die aktuelle boot2docker-VM nutzt sogar v4.
+
+ Beste Hardware-Nutzung: Installiere das neueste Debian oder Ubuntu auf deinem Mac/Windows-Rechner,
+
+ ... komm schon, diese Spiele helfen deinem Code nicht weiter...
+
+### Prüfe dein Setup
+
+Überprüfe die Ausgabe des `docker info`-Befehls.
+
+1. Sicherheit: Prüfe den Server auf unerwartet offene Ports (mit `nmap` von einem entfernten Netzwerk aus)
+1. DNS: Verwende einen lokalen Cache oder einen DNS-Server mit geringer Latenz.
+1. Storage: Nutze den richtigen Storage-Treiber (`overlay2` ist wahrscheinlich)
+
+Aktualisiert 2024: 
+
+- Docker Desktop ist proprietär, aber für die private Nutzung kostenlos. Es ist ein großartiger Einstieg für Docker auf OSX oder Windows.
+- Wenn du eine eher Open-Source-Lösung suchst, schau dir [Rancher Desktop](https://rancherdesktop.io/) an.

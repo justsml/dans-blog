@@ -1,0 +1,12 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: de
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-11--docker-rocks/de/index.mdx
+- Validation: passed
+- Runtime seconds: 23.07
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
