@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "División con look-behind",
+  "translation": {
+    "title": "División con look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "¿Qué se devuelve?"
+    ],
+    "explanationProse": [
+      "El patrón `/(?<=,)/` es un look-behind que coincide justo después de una coma:\n    - `a,` (después de la coma)\n    - `b,` (después de la coma)\n    - `c` (sin coma después)\n\n    El look-behind no consume la coma, por lo que esta permanece unida al segmento anterior en el resultado de la división.\n\n    Esto es muy útil cuando quieres dividir una cadena según lo que la precede **sin perder el carácter de división.**\n\n    [Aprende más sobre aserciones de look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"División con look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué se devuelve?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón `/(?<=,)/` es un look-behind que coincide justo después de una coma:\\n    - `a,` (después de la coma)\\n    - `b,` (después de la coma)\\n    - `c` (sin coma después)\\n\\n    El look-behind no consume la coma, por lo que esta permanece unida al segmento anterior en el resultado de la división.\\n\\n    Esto es muy útil cuando quieres dividir una cadena según lo que la precede **sin perder el carácter de división.**\\n\\n    [Aprende más sobre aserciones de look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 4106,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 77298
+  },
+  "cost": {
+    "inputUsd": 0.00028405,
+    "outputUsd": 0.0080067,
+    "totalUsd": 0.00829075,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

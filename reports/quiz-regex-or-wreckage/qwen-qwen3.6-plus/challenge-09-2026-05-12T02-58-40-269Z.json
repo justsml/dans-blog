@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Grupos de captura",
+  "translation": {
+    "title": "Grupos de captura",
+    "group": "Coincidencia básica",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]",
+        "hint": "Devuelve la cadena completa, pero ignora los grupos definidos."
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]",
+        "hint": "¡Exacto! `match()` sin `g` incluye la coincidencia completa y los grupos capturados."
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]",
+        "hint": "El patrón agrupa los dígitos en bloques de 4 y 2, no de 2 y 2."
+      },
+      {
+        "text": "null",
+        "hint": "El patrón sí coincide con la fecha proporcionada."
+      }
+    ],
+    "questionProse": [
+      "¿Qué devolverá esto?"
+    ],
+    "explanationProse": [
+      "El patrón utiliza tres grupos de captura:\n    1. `(\\d{4})` captura el año\n    2. `(\\d{2})` captura el mes\n    3. `(\\d{2})` captura el día\n\n    `match()` sin la bandera `g` devuelve:\n    - Índice 0: Coincidencia completa\n    - Índice 1+: Grupos de captura\n\n    `slice(1)` es un truco común para obtener solo los grupos capturados.\n\n    [Aprende más sobre grupos y referencias inversas](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grupos de captura\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\",\n      \"hint\": \"Devuelve la cadena completa, pero ignora los grupos definidos.\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\",\n      \"hint\": \"¡Exacto! `match()` sin `g` incluye la coincidencia completa y los grupos capturados.\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\",\n      \"hint\": \"El patrón agrupa los dígitos en bloques de 4 y 2, no de 2 y 2.\"\n    },\n    {\n      \"text\": \"null\",\n      \"hint\": \"El patrón sí coincide con la fecha proporcionada.\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devolverá esto?\"\n  ],\n  \"explanationProse\": [\n    \"El patrón utiliza tres grupos de captura:\\n    1. `(\\\\d{4})` captura el año\\n    2. `(\\\\d{2})` captura el mes\\n    3. `(\\\\d{2})` captura el día\\n\\n    `match()` sin la bandera `g` devuelve:\\n    - Índice 0: Coincidencia completa\\n    - Índice 1+: Grupos de captura\\n\\n    `slice(1)` es un truco común para obtener solo los grupos capturados.\\n\\n    [Aprende más sobre grupos y referencias inversas](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 875,
+    "outputTokens": 4691,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 85631
+  },
+  "cost": {
+    "inputUsd": 0.000284375,
+    "outputUsd": 0.00914745,
+    "totalUsd": 0.009431825,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

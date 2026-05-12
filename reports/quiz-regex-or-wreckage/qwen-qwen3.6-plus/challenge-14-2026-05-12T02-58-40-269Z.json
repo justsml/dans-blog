@@ -1,0 +1,30 @@
+{
+  "index": 13,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Cuantificadores perezosos vs. voraces",
+  "translation": {
+    "title": "Cuantificadores perezosos vs. voraces",
+    "group": "Coincidencia básica",
+    "options": [],
+    "questionProse": [
+      "¿Qué coincide?"
+    ],
+    "explanationProse": [
+      "El patrón utiliza coincidencia perezosa con `*?`:\n    - `<b>`: Coincide con la etiqueta de apertura\n    - `(.*?)`: Captura cualquier carácter (perezoso)\n    - `</b>`: Coincide con la etiqueta de cierre\n\n    El `?` después de `*` lo vuelve perezoso, haciendo que coincida con la menor cantidad de caracteres posible.\n    Sin el `?`, sería voraz y coincidiría con la mayor cantidad posible.\n\n    `slice(1)` devuelve únicamente el grupo capturado.\n\n    [Aprende más sobre coincidencia voraz vs. perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cuantificadores perezosos vs. voraces\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué coincide?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"El patrón utiliza coincidencia perezosa con `*?`:\\n    - `<b>`: Coincide con la etiqueta de apertura\\n    - `(.*?)`: Captura cualquier carácter (perezoso)\\n    - `</b>`: Coincide con la etiqueta de cierre\\n\\n    El `?` después de `*` lo vuelve perezoso, haciendo que coincida con la menor cantidad de caracteres posible.\\n    Sin el `?`, sería voraz y coincidiría con la mayor cantidad posible.\\n\\n    `slice(1)` devuelve únicamente el grupo capturado.\\n\\n    [Aprende más sobre coincidencia voraz vs. perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 3930,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 71855
+  },
+  "cost": {
+    "inputUsd": 0.00025512500000000003,
+    "outputUsd": 0.0076635,
+    "totalUsd": 0.007918625,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
