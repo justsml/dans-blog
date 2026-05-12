@@ -48,25 +48,25 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह कोड क्या प्रिंट करेगा?
-```js
+    यह कोड क्या प्रिंट करेगा?
+    ```js
     const person = {
       name: 'Dan Levy',
       location: 'Cape Town',
     };
     const { name, age } = person;
     console.log(`Name: ${name}, Age: ${age}`);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`person` ऑब्जेक्ट में `age` प्रॉपर्टी मौजूद ही नहीं है, इसलिए `age` का मान `undefined` होगा। `Infinity` तो बिल्कुल नहीं 😅
+    `person` ऑब्जेक्ट में `age` प्रॉपर्टी मौजूद ही नहीं है, इसलिए `age` का मान `undefined` होगा। `Infinity` तो बिल्कुल नहीं 😅
 
     नतीजा यह निकलेगा:
-```plaintext
+    ```plaintext
     Name: Dan Levy, Age: undefined
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -87,22 +87,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह कोड क्या करेगा?
-```js
+    यह कोड क्या करेगा?
+    ```js
     const person = [ 'Dan Levy', 'Cape Town' ];
     const [ name, origin, age ] = person;
     console.log(`Name: ${name}, Age: ${age}`);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`age` वेरिएबल `tuple` ऐरे में मौजूद नहीं है, इसलिए यह `undefined` रहेगा।
+    `age` वेरिएबल `tuple` ऐरे में मौजूद नहीं है, इसलिए यह `undefined` रहेगा।
 
     इसका परिणाम यह होगा:
-```plaintext
+    ```plaintext
     Name: Dan Levy, Age: undefined
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -122,8 +122,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब नेस्टेड डिस्ट्रक्चरिंग की बारी?
-```js
+    अब नेस्टेड डिस्ट्रक्चरिंग की बारी?
+    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -137,21 +137,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     console.log(
       `First: ${first}, City: ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`person` ऑब्जेक्ट पर `birth: { place }` प्रॉपर्टी मौजूद नहीं है, इसलिए यह एक एरर थ्रो करेगा।
-  इसका एक समाधान नेस्टेड प्रॉपर्टीज़ के लिए डिफ़ॉल्ट वैल्यूज़ प्रदान करना है।
+    `person` ऑब्जेक्ट पर `birth: { place }` प्रॉपर्टी मौजूद नहीं है, इसलिए यह एक एरर थ्रो करेगा।
+    इसका एक समाधान नेस्टेड प्रॉपर्टीज़ के लिए डिफ़ॉल्ट वैल्यूज़ प्रदान करना है।
 
-  नेस्टेड प्रॉपर्टीज़ एक्सेस करते समय सावधान रहें — क्योंकि एरर्स को पकड़ना मुश्किल हो सकता है। साथ ही, ब्राउज़र और अन्य प्लेटफ़ॉर्म पर एरर मैसेज अलग-अलग होते हैं, जिससे डिबगिंग थोड़ी चुनौतीपूर्ण हो जाती है।
+    नेस्टेड प्रॉपर्टीज़ एक्सेस करते समय सावधान रहें — क्योंकि एरर्स को पकड़ना मुश्किल हो सकता है। साथ ही, ब्राउज़र और अन्य प्लेटफ़ॉर्म पर एरर मैसेज अलग-अलग होते हैं, जिससे डिबगिंग थोड़ी चुनौतीपूर्ण हो जाती है।
 
-  आधुनिक Chrome में: `TypeError: Cannot read properties of undefined (reading 'place')`
+    आधुनिक Chrome में: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  Node.js में भी यह एक `TypeError` ही होता है, क्योंकि JavaScript `place` को पढ़ने से पहले ही उसे `undefined` से डिस्ट्रक्चर करने की कोशिश करता है।
+    Node.js में भी यह एक `TypeError` ही होता है, क्योंकि JavaScript `place` को पढ़ने से पहले ही उसे `undefined` से डिस्ट्रक्चर करने की कोशिश करता है।
 
-  ब्राउज़र और रनटाइम के बीच सटीक शब्दों में भिन्नता हो सकती है।
+    ब्राउज़र और रनटाइम के बीच सटीक शब्दों में भिन्नता हो सकती है।
   </div>
   </slot>
 </Challenge>
@@ -171,8 +171,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब डिफ़ॉल्ट वैल्यूज़ डालने पर यह क्या आउटपुट देगा?
-```js
+    अब डिफ़ॉल्ट वैल्यूज़ डालने पर यह क्या आउटपुट देगा?
+    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -185,21 +185,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     console.log(
       `Hi ${first} from ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`person` पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए सिर्फ़ नेस्टेड प्रॉपर्टी का नहीं, बल्कि पूरे ऑब्जेक्ट का डिफ़ॉल्ट वैल्यू सेट करना ज़रूरी है। असल में, वहाँ ` = {}` डिफ़ॉल्ट मिसिंग है।
+    `person` पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए सिर्फ़ नेस्टेड प्रॉपर्टी का नहीं, बल्कि पूरे ऑब्जेक्ट का डिफ़ॉल्ट वैल्यू सेट करना ज़रूरी है। असल में, वहाँ ` = {}` डिफ़ॉल्ट मिसिंग है।
 
-  कोड का यह हिस्सा कहता है कि "अगर `person.birth` `undefined` है, तो `place` को `Unknown` मान लो"। लेकिन चूँकि `person.birth` खुद `undefined` है, JS `undefined` को डिस्ट्रक्चर करने की कोशिश करता है, और यही एरर का कारण बनता है।
-```plaintext
-  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    कोड का यह हिस्सा कहता है कि "अगर `person.birth` `undefined` है, तो `place` को `Unknown` मान लो"। लेकिन चूँकि `person.birth` खुद `undefined` है, JS `undefined` को डिस्ट्रक्चर करने की कोशिश करता है, और यही एरर का कारण बनता है।
+    ```plaintext
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-  Exact wording varies between browsers and runtimes.
-```
+    Exact wording varies between browsers and runtimes.
+    ```
   </div>
   </slot>
 </Challenge>
@@ -220,8 +220,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-इसका आउटपुट क्या निकलेगा?
-```js
+    इसका आउटपुट क्या निकलेगा?
+    ```js
     const person = {
       name: { first: 'Dan' },
       address: { city: 'Denver' },
@@ -234,12 +234,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     console.log(
       `Hi ${first} from ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`person` ऑब्जेक्ट पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए यह एक खाली ऑब्जेक्ट ` = {}` पर फॉलबैक कर लेता है। यही ट्रिक डिफ़ॉल्ट वैल्यू को एक्टिव करती है।
+    `person` ऑब्जेक्ट पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए यह एक खाली ऑब्जेक्ट ` = {}` पर फॉलबैक कर लेता है। यही ट्रिक डिफ़ॉल्ट वैल्यू को एक्टिव करती है।
   </div>
   </slot>
 </Challenge>
@@ -260,8 +260,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब फ़ंक्शन पैरामीटर्स के रूप में, यह क्या करेगा?
-```js
+    अब फ़ंक्शन पैरामीटर्स के रूप में, यह क्या करेगा?
+    ```js
     'use strict';
     function displayUser({
       name = "Unknown",
@@ -270,14 +270,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       console.log(`Hi ${name} from ${place}`);
     }
     displayUser({ name: "Dan" });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-यह फ़ंक्शन `name` और `age` प्रॉपर्टीज़ को एक्सट्रैक्ट करता है, और ज़रूरत पड़ने पर डिफ़ॉल्ट वैल्यूज़ का इस्तेमाल करता है। इस केस में, डिफ़ॉल्ट ऑब्जेक्ट का `place` की सिर्फ़ शोर है—इसका `displayUser()` के अंदर कोई इस्तेमाल नहीं है।
+    यह फ़ंक्शन `name` और `age` प्रॉपर्टीज़ को एक्सट्रैक्ट करता है, और ज़रूरत पड़ने पर डिफ़ॉल्ट वैल्यूज़ का इस्तेमाल करता है। इस केस में, डिफ़ॉल्ट ऑब्जेक्ट का `place` की सिर्फ़ शोर है—इसका `displayUser()` के अंदर कोई इस्तेमाल नहीं है।
 
-  स्ट्रिक्ट मोड इसमें कोई बदलाव नहीं लाता: बिना डिक्लेयर किए गए `place` बाइंडिंग को एक्सेस करने पर `ReferenceError` थ्रो होता है।
+    स्ट्रिक्ट मोड इसमें कोई बदलाव नहीं लाता: बिना डिक्लेयर किए गए `place` बाइंडिंग को एक्सेस करने पर `ReferenceError` थ्रो होता है।
   </div>
   </slot>
 </Challenge>
@@ -300,8 +300,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-`undefined` वैल्यूज़ को कैसे हैंडल किया जाता है?
-```js
+    `undefined` वैल्यूज़ को कैसे हैंडल किया जाता है?
+    ```js
     'use strict';
     function displayPlace({
       name = "N/A",
@@ -313,21 +313,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     displayPlace({ name: "Dan" });
     displayPlace({ name: "Dan", place: undefined });
     displayPlace({ name: "Dan", place: "Joburg" });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`displayPlace` फ़ंक्शन डिफ़ॉल्ट ऑब्जेक्ट का उपयोग तभी करेगा जब कोई ऑब्जेक्ट पास न किया गया हो। इसलिए, `{ place: "Unknown" }` डिफ़ॉल्ट प्राप्त करने का एकमात्र तरीका बिना किसी आर्गुमेंट के `displayPlace()` को कॉल करना है।
+    `displayPlace` फ़ंक्शन डिफ़ॉल्ट ऑब्जेक्ट का उपयोग तभी करेगा जब कोई ऑब्जेक्ट पास न किया गया हो। इसलिए, `{ place: "Unknown" }` डिफ़ॉल्ट प्राप्त करने का एकमात्र तरीका बिना किसी आर्गुमेंट के `displayPlace()` को कॉल करना है।
 
-  यहाँ एक और उल्लेखनीय व्यवहार यह है कि `place` के लिए `undefined` पास करने से डिफ़ॉल्ट वैल्यू का उपयोग होगा, जो `JSON.stringify` के व्यवहार के थोड़ा मिलता-जुलता है (`undefined` को नज़रअंदाज़ करना, `null` को पहचानना)।
+    यहाँ एक और उल्लेखनीय व्यवहार यह है कि `place` के लिए `undefined` पास करने से डिफ़ॉल्ट वैल्यू का उपयोग होगा, जो `JSON.stringify` के व्यवहार के थोड़ा मिलता-जुलता है (`undefined` को नज़रअंदाज़ करना, `null` को पहचानना)।
 
-  इसका परिणाम यह होगा:
-```js
-  displayPlace() // Unknown
-  displayPlace({ name: "Dan" }) // N/A
-  displayPlace({ name: "Dan", place: undefined }) // N/A
-```
+    इसका परिणाम यह होगा:
+    ```js
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
   </div>
   </slot>
 </Challenge>
@@ -351,8 +351,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-पिछले सवाल की तरह... इस बार `null` को कैसे हैंडल किया जाएगा?_
-```js
+    पिछले सवाल की तरह... इस बार `null` को कैसे हैंडल किया जाएगा?_
+    ```js
     function displayPlace({
       name = "N/A",
       place = "N/A",
@@ -362,12 +362,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     }
     displayPlace({ name: "Dan", place: null });
     displayPlace({ name: "Dan", place: undefined });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-इस केस में, पहले कॉल में `place` प्रॉपर्टी को `null` सेट किया गया है और दूसरे में `undefined`। `place` के लिए डिफ़ॉल्ट वैल्यू केवल तभी यूज़ होती है जब पूरा ऑब्जेक्ट मिसिंग हो **या** `undefined` हो। `null` वैल्यूज़ `null` के रूप में ही पास होंगी।
+    इस केस में, पहले कॉल में `place` प्रॉपर्टी को `null` सेट किया गया है और दूसरे में `undefined`। `place` के लिए डिफ़ॉल्ट वैल्यू केवल तभी यूज़ होती है जब पूरा ऑब्जेक्ट मिसिंग हो **या** `undefined` हो। `null` वैल्यूज़ `null` के रूप में ही पास होंगी।
   </div>
   </slot>
 </Challenge>
@@ -387,8 +387,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब टाइपस्क्रिप्ट में... _यह क्या करेगा?_
-```ts
+    अब टाइपस्क्रिप्ट में... _यह क्या करेगा?_
+    ```ts
     'use strict';
     function displayPlace(
       {
@@ -403,14 +403,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       console.log(`${place}`);
     }
     displayPlace({ name: 'Dan', place: null });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-टाइपस्क्रिप्ट एक एरर रिपोर्ट करता है क्योंकि `place` को `string` टाइप दिया गया है, लेकिन कॉल में `null` पास किया गया है। साथ ही, इस कॉल में ज़रूरी `age` प्रॉपर्टी को छोड़ दिया गया है।
+    टाइपस्क्रिप्ट एक एरर रिपोर्ट करता है क्योंकि `place` को `string` टाइप दिया गया है, लेकिन कॉल में `null` पास किया गया है। साथ ही, इस कॉल में ज़रूरी `age` प्रॉपर्टी को छोड़ दिया गया है।
 
-  अगर आप टाइप एरर्स को नज़रअंदाज़ कर दें, तो कोड चलने पर कंसोल में `null` प्रिंट होगा।
+    अगर आप टाइप एरर्स को नज़रअंदाज़ कर दें, तो कोड चलने पर कंसोल में `null` प्रिंट होगा।
   </div>
   </slot>
 </Challenge>
@@ -433,8 +433,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब कुछ रीनेमिंग/असाइनमेंट ट्राई करते हैं...
-```ts
+    अब कुछ रीनेमिंग/असाइनमेंट ट्राई करते हैं...
+    ```ts
     'use strict';
     function displayPlace({
       name = 'N/A',
@@ -447,12 +447,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       console.log(`${location}`);
     }
     displayPlace({ name: 'Dan', place: 'Denver' });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-यह कंसोल पर `Denver` प्रिंट करेगा। ऐसा इसलिए होता है क्योंकि फ़ंक्शन सिग्नेचर में `place` प्रॉपर्टी को `location` नाम से रीनेम कर दिया गया है। बाहरी या थर्ड-पार्टी डेटा स्ट्रक्चर्स को अपने कोड में फिट करते समय डीस्ट्रक्चरिंग के दौरान प्रॉपर्टीज़ को रीनेम करना एक स्टैंडर्ड और बेहद उपयोगी पैटर्न है।
+    यह कंसोल पर `Denver` प्रिंट करेगा। ऐसा इसलिए होता है क्योंकि फ़ंक्शन सिग्नेचर में `place` प्रॉपर्टी को `location` नाम से रीनेम कर दिया गया है। बाहरी या थर्ड-पार्टी डेटा स्ट्रक्चर्स को अपने कोड में फिट करते समय डीस्ट्रक्चरिंग के दौरान प्रॉपर्टीज़ को रीनेम करना एक स्टैंडर्ड और बेहद उपयोगी पैटर्न है।
   </div>
   </slot>
 </Challenge>
@@ -472,8 +472,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-टाइप एरर पहचानें:
-```ts
+    टाइप एरर पहचानें:
+    ```ts
     function greet({
       name: {first = "N/A", last = "N/A"},
       birth: {place = "N/A"} = {},
@@ -486,12 +486,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       console.log(`Hi ${first} ${last} from ${place}`);
     }
     greet({ name: {first: 'Dan'} });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-एरर `greet` फंक्शन सिग्नेचर में है। पास किए गए ऑब्जेक्ट में `age` और `birth` प्रॉपर्टीज़ गायब हैं, इसलिए टाइप डिफिनिशन में इन्हें ऑप्शनल होना चाहिए।
+    एरर `greet` फंक्शन सिग्नेचर में है। पास किए गए ऑब्जेक्ट में `age` और `birth` प्रॉपर्टीज़ गायब हैं, इसलिए टाइप डिफिनिशन में इन्हें ऑप्शनल होना चाहिए।
   </div>
   </slot>
 </Challenge>
@@ -511,8 +511,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-अब **असाइनमेंट** के साथ (`f`, `l` और `p` वेरिएबल्स पर ध्यान दें)
-```ts
+    अब **असाइनमेंट** के साथ (`f`, `l` और `p` वेरिएबल्स पर ध्यान दें)
+    ```ts
     'use strict';
     function greet(
       {
@@ -532,21 +532,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
       name: {first: 'Dan', last: 'Levy'},
       birth: {place: 'Cape Town'},
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-एक और Error! अब आप अंदाज़ा लगाने लगे हैं, है न?!
+    एक और Error! अब आप अंदाज़ा लगाने लगे हैं, है न?!
 
-  डिफ़ॉल्ट, असाइनमेंट और टाइप्स के साथ डिस्ट्रक्चरिंग की परतों को पढ़ना वाकई मुश्किल होता है!
+    डिफ़ॉल्ट, असाइनमेंट और टाइप्स के साथ डिस्ट्रक्चरिंग की परतों को पढ़ना वाकई मुश्किल होता है!
 
-  जैसे ही `place` को `p` वेरिएबल में रीअसाइन किया जाता है, यह `console.log` स्टेटमेंट के स्कोप में अब डिफ़ाइंड नहीं रहता।
-```ts
-  console.log(`Hi ${f} ${l} from ${place}`); // ❌
-  // to:
-  console.log(`Hi ${f} ${l} from ${p}`); // ✅
-```
+    जैसे ही `place` को `p` वेरिएबल में रीअसाइन किया जाता है, यह `console.log` स्टेटमेंट के स्कोप में अब डिफ़ाइंड नहीं रहता।
+    ```ts
+    console.log(`Hi ${f} ${l} from ${place}`); // ❌
+    // to:
+    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
   </div>
   </slot>
 </Challenge>

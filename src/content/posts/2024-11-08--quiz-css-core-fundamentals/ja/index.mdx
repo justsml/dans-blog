@@ -47,24 +47,24 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-<em class="highlight">無効な</em> ❌ `font-size` を1つ選べ：
+    <em class="highlight">無効な</em> ❌ `font-size` を1つ選べ：
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`10cx` が不正解なのは、`cx` が実在するCSS単位ではないためです。（少なくとも執筆時点では。）
+    `10cx` が不正解なのは、`cx` が実在するCSS単位ではないためです。（少なくとも執筆時点では。）
 
-日常的によく使われるのは、おなじみの `px`、`rem`、`em` です。
+    日常的によく使われるのは、おなじみの `px`、`rem`、`em` です。
 
-比較的新しい単位は、動的かつレスポンシブなレイアウト構築に非常に役立ちます。
+    比較的新しい単位は、動的かつレスポンシブなレイアウト構築に非常に役立ちます。
 
-- `ch` - `0` 文字の幅
-- `vmin` - ビューポートの最小辺
-- `vmax` - ビューポートの最大辺
-- `vh` - ビューポートの高さ
-- `vw` - ビューポートの幅
+    - `ch` - `0` 文字の幅
+    - `vmin` - ビューポートの最小辺
+    - `vmax` - ビューポートの最大辺
+    - `vh` - ビューポートの高さ
+    - `vw` - ビューポートの幅
 
-また、仕様上は昔から存在するものの、実務ではほとんど使われない単位もいくつかあります。センチメートルの `cm`、ミリメートルの `mm`、インチの `in`、ポイントの `pt` などです。
+    また、仕様上は昔から存在するものの、実務ではほとんど使われない単位もいくつかあります。センチメートルの `cm`、ミリメートルの `mm`、インチの `in`、ポイントの `pt` などです。
   </div>
   </slot>
 </Challenge>
@@ -83,12 +83,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-<em class="highlight">たった1つ</em>の正しい 👍 16進数カラーコードはどれ？
+    <em class="highlight">たった1つ</em>の正しい 👍 16進数カラーコードはどれ？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-CSSで色を指定する際、16進数カラーコード（Hexコード）が広く使われます。先頭に `#` を付け、その後に16進数の数字を3、4、6、または8桁続けるのがルールです。
+    CSSで色を指定する際、16進数カラーコード（Hexコード）が広く使われます。先頭に `#` を付け、その後に16進数の数字を3、4、6、または8桁続けるのがルールです。
       
       3桁のコードは6桁コードのショートハンドで、各桁の文字が自動的に2回繰り返されます。4桁のコードは、透明度（アルファチャンネル）を指定するためのものです。
 
@@ -122,16 +122,16 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-これらの単位の中で、<em class="highlight">無効</em>な❌ CSS単位はどれですか？
+    これらの単位の中で、<em class="highlight">無効</em>な❌ CSS単位はどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`ch`、`vmin`、`vmax`、`vh`、`vw` といった新しい単位は、動的・レスポンシブなレイアウト構築に非常に便利です。
+    `ch`、`vmin`、`vmax`、`vh`、`vw` といった新しい単位は、動的・レスポンシブなレイアウト構築に非常に便利です。
 
-`cm`（センチメートル）、`mm`、`in`（インチ）、`pt`（ポイント）、`pc`、大文字の高さを表す `cap`、そして小文字 `x` の高さに等しい `ex` など、昔から存在するものの実際の開発ではほとんど使われない単位もいくつかあります。
+    `cm`（センチメートル）、`mm`、`in`（インチ）、`pt`（ポイント）、`pc`、大文字の高さを表す `cap`、そして小文字 `x` の高さに等しい `ex` など、昔から存在するものの実際の開発ではほとんど使われない単位もいくつかあります。
 
-よく使われる単位には、おなじみのピクセル `px` や要素のフォントサイズを基準とする `em`、そして `rem` があります。`rem` は実は90年代に忘れられたバンド R.E.M. への密かなオマージュだったりして…（冗談ですよ。実際はルート要素を基準とする相対 `em` 単位です）。
+    よく使われる単位には、おなじみのピクセル `px` や要素のフォントサイズを基準とする `em`、そして `rem` があります。`rem` は実は90年代に忘れられたバンド R.E.M. への密かなオマージュだったりして…（冗談ですよ。実際はルート要素を基準とする相対 `em` 単位です）。
   </div>
   </slot>
 </Challenge>
@@ -150,17 +150,17 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-以下のHTMLに最も正確にマッチするセレクタはどれ？
-```html
+    以下のHTMLに最も正確にマッチするセレクタはどれ？
+    ```html
       <a id="home" name="home" href="/home">Home</a>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-正解は `a#home[name='home']` です。このセレクタは `id` と `name` の両方の属性を同時に指定しています。CSSセレクタは大文字・小文字を厳密に区別するため、`#Home` はマッチしません。また、セレクタ内のスペースは子孫結合子を意味するため、このケースには当てはまりません。
+    正解は `a#home[name='home']` です。このセレクタは `id` と `name` の両方の属性を同時に指定しています。CSSセレクタは大文字・小文字を厳密に区別するため、`#Home` はマッチしません。また、セレクタ内のスペースは子孫結合子を意味するため、このケースには当てはまりません。
 
-`:contains()` は標準CSSセレクタではなく、jQueryなどの一部のJSライブラリで独自に実装されている擬似クラスです。
+    `:contains()` は標準CSSセレクタではなく、jQueryなどの一部のJSライブラリで独自に実装されている擬似クラスです。
   </div>
   </slot>
 </Challenge>
@@ -180,17 +180,17 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-以下のHTMLボタンに一致するセレクターはどれ？
-```html
+    以下のHTMLボタンに一致するセレクターはどれ？
+    ```html
       <button onclick="openModal()">Contact</button>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-正解は `button[onclick]` です。このセレクターは `onclick` 属性が要素に存在するかどうかを判定します。
+    正解は `button[onclick]` です。このセレクターは `onclick` 属性が要素に存在するかどうかを判定します。
 
-なぜ他の選択肢が違うのかというと、`:link` は未訪問の `href` リンクにのみ適用され、`::click` はCSS仕様に存在しない無効な擬似要素です。また、`:focus` はユーザー操作でフォーカスされた要素にのみ作用するため、属性の有無を判定する用途には使えません。
+    なぜ他の選択肢が違うのかというと、`:link` は未訪問の `href` リンクにのみ適用され、`::click` はCSS仕様に存在しない無効な擬似要素です。また、`:focus` はユーザー操作でフォーカスされた要素にのみ作用するため、属性の有無を判定する用途には使えません。
   </div>
   </slot>
 </Challenge>
@@ -205,12 +205,12 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-次のセレクターのうち、無効なものはどれですか？
+    次のセレクターのうち、無効なものはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-セレクター `c > > d {}` は、2つの `>` の間にセレクターがないまま子結合子が繰り返されているため無効です。
+    セレクター `c > > d {}` は、2つの `>` の間にセレクターがないまま子結合子が繰り返されているため無効です。
 
       他のセレクターはすべて有効です。`c {}` のようなタイプセレクターは、`c` が標準的なHTML要素でなくても、構文的には有効なCSSです。
   </div>
@@ -232,19 +232,19 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-次のHTMLにおいて、最後のリンクにマッチするセレクターはどれか？
-```html
+    次のHTMLにおいて、最後のリンクにマッチするセレクターはどれか？
+    ```html
       <nav>
         <a name="home" href="/home">Home</a>
         <a name="login" href="/login">Login</a>
         <a name="help" href="/help">Help</a>
       </nav>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-正解は `a:last-child` です。このセレクターは、親要素の最後の子要素かつ `<a>` タグである場合にのみマッチします。対照的に `nav:nth-child(3)` は、親要素の3番目の子要素である `<nav>` を選択してしまうため、ここでは不正解です。
+    正解は `a:last-child` です。このセレクターは、親要素の最後の子要素かつ `<a>` タグである場合にのみマッチします。対照的に `nav:nth-child(3)` は、親要素の3番目の子要素である `<nav>` を選択してしまうため、ここでは不正解です。
   </div>
   </slot>
 </Challenge>
@@ -263,12 +263,12 @@ CSSで色を指定する際、16進数カラーコード（Hexコード）が広
 >
   <slot name="question">
   <div className="question">
-どのセレクターが優先される？
+    どのセレクターが優先される？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-IDはタグやクラスセレクターよりも詳細度が高いため、`a#quote` が優先されます。
+    IDはタグやクラスセレクターよりも詳細度が高いため、`a#quote` が優先されます。
   </div>
   </slot>
 </Challenge>
@@ -288,14 +288,14 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-ボックス内の「shit」を中央揃えにするには？
+    ボックス内の「shit」を中央揃えにするには？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`text-align: center;` を使うのが、ブロック要素内のテキストを中央揃えにする正解です。`align` 系プロパティはFlexboxレイアウト用で、`margin: 0 auto;` はブロック要素自体を水平方向に中央配置するために使われます。
+    `text-align: center;` を使うのが、ブロック要素内のテキストを中央揃えにする正解です。`align` 系プロパティはFlexboxレイアウト用で、`margin: 0 auto;` はブロック要素自体を水平方向に中央配置するために使われます。
 
-`align-content` はグリッドレイアウト用であり、`text-content` はそもそも存在しないCSSプロパティです。
+    `align-content` はグリッドレイアウト用であり、`text-content` はそもそも存在しないCSSプロパティです。
   </div>
   </slot>
 </Challenge>
@@ -315,16 +315,16 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-モダンなフローレイアウトにおいて、ブロックコンテナ内のコンテンツを垂直方向に中央揃えにする正しい方法は？
+    モダンなフローレイアウトにおいて、ブロックコンテナ内のコンテンツを垂直方向に中央揃えにする正しい方法は？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-フローレイアウトでブロックコンテナ内のコンテンツを垂直方向に中央揃えするには、`align-content`を使うのがモダンな正解だ。
+    フローレイアウトでブロックコンテナ内のコンテンツを垂直方向に中央揃えするには、`align-content`を使うのがモダンな正解だ。
 
-`align-items`と`justify-content`はFlexboxやGridレイアウト用であり、フローレイアウトでは使えない。
+    `align-items`と`justify-content`はFlexboxやGridレイアウト用であり、フローレイアウトでは使えない。
 
-`margin: 0 auto;`も`margin: auto;`もブロック要素を水平方向には中央揃えにするが、垂直方向には効かない。
+    `margin: 0 auto;`も`margin: auto;`もブロック要素を水平方向には中央揃えにするが、垂直方向には効かない。
   </div>
   </slot>
 </Challenge>
@@ -344,19 +344,19 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-次のHTMLにおいて、`<a>`リンクのテキストは最終的に何pxになる？
-```html
+    次のHTMLにおいて、`<a>`リンクのテキストは最終的に何pxになる？
+    ```html
       <body style="font-size: 40px !important;">
         <nav style="font-size: 50%;">
           <a style="font-size: 25%;">HOME</a>
         </nav>
       </body>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`<a>`の`font-size`は5pxに収束します。CSSのパーセント単位は親要素の計算済み値を基準に継承されるため、40px（body）× 50%（nav）= 20px、さらにその20px × 25% = 5pxと段階的に計算されます。
+    `<a>`の`font-size`は5pxに収束します。CSSのパーセント単位は親要素の計算済み値を基準に継承されるため、40px（body）× 50%（nav）= 20px、さらにその20px × 25% = 5pxと段階的に計算されます。
   </div>
   </slot>
 </Challenge>
@@ -377,19 +377,19 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-次のHTMLにある「HOME」リンクの `1.2rem` は、実際のピクセルサイズでいくつになる？
-```html
+    次のHTMLにある「HOME」リンクの `1.2rem` は、実際のピクセルサイズでいくつになる？
+    ```html
       <html style="font-size: 10px;">
         <body style="font-size: 20px;">
           <a style="font-size: 1.2rem;">HOME</a>
         </body>
       </html>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`1.2rem` は 12px になる。`rem` 単位はルート要素（`<html>`）のフォントサイズを基準とするため、ここでは設定された 10px が基準値として適用されるからだ。
+    `1.2rem` は 12px になる。`rem` 単位はルート要素（`<html>`）のフォントサイズを基準とするため、ここでは設定された 10px が基準値として適用されるからだ。
   </div>
   </slot>
 </Challenge>
@@ -410,19 +410,19 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-前問と同様、以下のHTMLにおける「HOME」リンクの `1.2em` は、ピクセル換算でいくつになるか？
-```html
+    前問と同様、以下のHTMLにおける「HOME」リンクの `1.2em` は、ピクセル換算でいくつになるか？
+    ```html
       <html style="font-size: 10px;">
         <body style="font-size: 20px;">
           <a style="font-size: 1.2em;">HOME</a>
         </body>
       </html>
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`1.2em` が 24px になるのは、`em` 単位が継承されたフォントサイズを基準とするためだ。ここではその基準値が 20px に設定されている。
+    `1.2em` が 24px になるのは、`em` 単位が継承されたフォントサイズを基準とするためだ。ここではその基準値が 20px に設定されている。
   </div>
   </slot>
 </Challenge>
@@ -441,12 +441,12 @@ IDはタグやクラスセレクターよりも詳細度が高いため、`a#quo
 >
   <slot name="question">
   <div className="question">
-最も詳細度が低いセレクターはどれ？
+    最も詳細度が低いセレクターはどれ？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`:where(.card) .title` が最も詳細度が低くなります。`:where()` 疑似クラスとその内部のセレクターは詳細度に `0-0-0` を寄与するため、結果として `.title` の詳細度のみが計算されます。一方、`:is(.card) .title` は `.card` の詳細度をそのまま引き継ぎ、`.card .title` はクラスが2つ、`#card .title` はIDセレクターを含むため、詳細度が上がります。
+    `:where(.card) .title` が最も詳細度が低くなります。`:where()` 疑似クラスとその内部のセレクターは詳細度に `0-0-0` を寄与するため、結果として `.title` の詳細度のみが計算されます。一方、`:is(.card) .title` は `.card` の詳細度をそのまま引き継ぎ、`.card .title` はクラスが2つ、`#card .title` はIDセレクターを含むため、詳細度が上がります。
   </div>
   </slot>
 </Challenge>

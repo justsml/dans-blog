@@ -45,16 +45,16 @@ Mal sehen, wie sicher du Streams von Buffern unterscheidest! 🚀
 >
   <slot name="question">
   <div className="question">
-Was macht dieser Code?
-```js
+    Was macht dieser Code?
+    ```js
     const buf = Buffer.alloc(5);
     console.log(buf);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Buffer.alloc(size)` erstellt einen neuen Buffer der angegebenen Größe, der mit Nullen gefüllt ist.
+    `Buffer.alloc(size)` erstellt einen neuen Buffer der angegebenen Größe, der mit Nullen gefüllt ist.
     Die Ausgabe lautet: `<Buffer 00 00 00 00 00>`
 
     Wenn du einen Buffer mit zufälligen Daten erstellen willst, nutze `Buffer.allocUnsafe(5)`.
@@ -79,16 +79,16 @@ Was macht dieser Code?
 >
   <slot name="question">
   <div className="question">
-Was wird hier ausgegeben?
-```js
+    Was wird hier ausgegeben?
+    ```js
     const buf = Buffer.from([65]);
     console.log(buf.toString());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Zahlen im Array repräsentieren ASCII-Codes:
+    Die Zahlen im Array repräsentieren ASCII-Codes:
 
     - 65: 'A'
 
@@ -113,23 +113,23 @@ Die Zahlen im Array repräsentieren ASCII-Codes:
 >
   <slot name="question">
   <div className="question">
-In welcher Reihenfolge erfolgt die Ausgabe?
-```js
+    In welcher Reihenfolge erfolgt die Ausgabe?
+    ```js
     import fs from 'fs';
     fs.readFile('test.txt', 'utf8', (err, data) => {
       console.log(data);
     });
     console.log('Done');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft einfach weiter, während die Datei im Hintergrund gelesen wird.
+    Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft einfach weiter, während die Datei im Hintergrund gelesen wird.
     Deshalb erscheint "Done" vor dem Dateiinhalt.
 
     Willst du sicherstellen, dass die Datei zuerst gelesen wird, greif zur Promise-basierten Variante:
-```js
+    ```js
     import { promises as fs } from 'fs';
     
     async function read() {
@@ -137,7 +137,7 @@ Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft 
       console.log(data);
       console.log('Done');
     }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -156,16 +156,16 @@ Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft 
 >
   <slot name="question">
   <div className="question">
-Was gibt `fs.readFileSync()` standardmäßig zurück?
-```js
+    Was gibt `fs.readFileSync()` standardmäßig zurück?
+    ```js
     import fs from 'fs';
     const content = fs.readFileSync('test.txt');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`fs.readFileSync()` gibt standardmäßig einen Buffer zurück, wenn kein Encoding angegeben wird. Wenn du einen String möchtest, musst du entweder:
+    `fs.readFileSync()` gibt standardmäßig einen Buffer zurück, wenn kein Encoding angegeben wird. Wenn du einen String möchtest, musst du entweder:
     1. Ein Encoding angeben: `fs.readFileSync('test.txt', 'utf8')`
     2. Den Buffer konvertieren: `content.toString()`
 
@@ -188,22 +188,22 @@ Was gibt `fs.readFileSync()` standardmäßig zurück?
 >
   <slot name="question">
   <div className="question">
-Welche Event-Kombination wird typischerweise bei Readable-Streams verwendet?
+    Welche Event-Kombination wird typischerweise bei Readable-Streams verwendet?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Readable-Streams emittieren mehrere zentrale Events:
+    Readable-Streams emittieren mehrere zentrale Events:
     - 'data': Wenn Daten zum Lesen bereitstehen
     - 'end': Wenn keine Daten mehr zu lesen sind
     - 'error': Wenn ein Fehler auftritt
     - 'close': Wenn der Stream und die zugrundeliegende Ressource geschlossen wurden
-```js
+    ```js
     const readable = fs.createReadStream('file.txt');
     readable.on('data', chunk => console.log(chunk));
     readable.on('end', () => console.log('Done!'));
-```
-[Erfahre mehr über Stream-Events](https://nodejs.org/api/stream.html#class-streamreadable)
+    ```
+    [Erfahre mehr über Stream-Events](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
   </slot>
 </Challenge>
@@ -222,18 +222,18 @@ Readable-Streams emittieren mehrere zentrale Events:
 >
   <slot name="question">
   <div className="question">
-Was macht dieser Code?
-```js
+    Was macht dieser Code?
+    ```js
     import fs from 'fs';
     const readable = fs.createReadStream('source.txt');
     const writable = fs.createWriteStream('dest.txt');
     readable.pipe(writable);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, verwaltet automatisch den Backpressure und kopiert die Daten in Chunks, ohne die gesamte Datei in den Speicher zu laden.
+    `pipe()` verbindet einen lesbaren Stream mit einem schreibbaren Stream, verwaltet automatisch den Backpressure und kopiert die Daten in Chunks, ohne die gesamte Datei in den Speicher zu laden.
 
     Das ist im Vergleich zu `fs.readFile()` gefolgt von `fs.writeFile()` speichereffizient für große Dateien.
 
@@ -256,16 +256,16 @@ Was macht dieser Code?
 >
   <slot name="question">
   <div className="question">
-Was bewirkt die Option `recursive`?
-```js
+    Was bewirkt die Option `recursive`?
+    ```js
     import fs from 'fs';
     fs.mkdirSync('./a/b/c', { recursive: true });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Option `recursive: true` erstellt übergeordnete Verzeichnisse automatisch, wenn sie fehlen.
+    Die Option `recursive: true` erstellt übergeordnete Verzeichnisse automatisch, wenn sie fehlen.
     Ohne sie würde Node.js beim Versuch, './a/b/c' anzulegen, sofort einen Fehler werfen, solange './a' oder './a/b' nicht existieren.
 
     Das funktioniert exakt wie der Shell-Befehl `mkdir -p`.
@@ -289,8 +289,8 @@ Die Option `recursive: true` erstellt übergeordnete Verzeichnisse automatisch, 
 >
   <slot name="question">
   <div className="question">
-Was wird hier ausgegeben?
-```js
+    Was wird hier ausgegeben?
+    ```js
     import { Transform } from 'stream';
     const upperCase = new Transform({
       transform(chunk, encoding, callback) {
@@ -301,12 +301,12 @@ Was wird hier ausgegeben?
       .pipe(upperCase)
       .pipe(process.stdout);
     // Input: "hello world"
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Transform-Streams verändern Daten, während sie hindurchfließen. Hier wird jeder Chunk:
+    Transform-Streams verändern Daten, während sie hindurchfließen. Hier wird jeder Chunk:
     1. In einen String umgewandelt
     2. In Großbuchstaben transformiert
     3. An stdout weitergeleitet
@@ -332,19 +332,19 @@ Transform-Streams verändern Daten, während sie hindurchfließen. Hier wird jed
 >
   <slot name="question">
   <div className="question">
-Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?
-```js
+    Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?
+    ```js
     import fs from 'fs';
     fs.watch('test.txt', (eventType, filename) => {
       console.log(`${filename} was changed`);
     });
     // Then modify test.txt once
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`fs.watch()` garantiert nicht, dass es genau einmal pro logischer Dateiänderung ausgelöst wird. Es wird oft mehrfach ausgelöst, da viele Texteditoren:
+    `fs.watch()` garantiert nicht, dass es genau einmal pro logischer Dateiänderung ausgelöst wird. Es wird oft mehrfach ausgelöst, da viele Texteditoren:
     1. In eine temporäre Datei speichern
     2. Diese in die Zieldatei umbenennen
 
@@ -372,25 +372,25 @@ Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?
 >
   <slot name="question">
   <div className="question">
-Was ist die Ausgabe?
-```js
+    Was ist die Ausgabe?
+    ```js
     const buf1 = Buffer.from('Hello');
     const buf2 = Buffer.from('Hello');
     console.log(buf1 === buf2);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Buffer werden nach Referenz und nicht nach Wert verglichen. Auch wenn sie dieselben Daten enthalten, sind es unterschiedliche Objekte.
+    Buffer werden nach Referenz und nicht nach Wert verglichen. Auch wenn sie dieselben Daten enthalten, sind es unterschiedliche Objekte.
 
-Um den Inhalt von Buffern zu vergleichen, verwende:
-```js
+    Um den Inhalt von Buffern zu vergleichen, verwende:
+    ```js
     buf1.equals(buf2)  // true
     // or
     Buffer.compare(buf1, buf2) === 0  // true
-```
-[Erfahre mehr über den Buffer-Vergleich](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+    ```
+    [Erfahre mehr über den Buffer-Vergleich](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
   </slot>
 </Challenge>
@@ -409,15 +409,15 @@ Um den Inhalt von Buffern zu vergleichen, verwende:
 >
   <slot name="question">
   <div className="question">
-Was ist der Hauptzweck von Stream-Backpressure?
+    Was ist der Hauptzweck von Stream-Backpressure?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Backpressure ist ein Mechanismus, der Speicherüberlauf verhindert, indem das Lesen pausiert wird, wenn das schreibende Ende nicht hinterherkommt.
+    Backpressure ist ein Mechanismus, der Speicherüberlauf verhindert, indem das Lesen pausiert wird, wenn das schreibende Ende nicht hinterherkommt.
 
-Beispiel für manuelles Backpressure:
-```js
+    Beispiel für manuelles Backpressure:
+    ```js
     readable.on('data', (chunk) => {
       const canContinue = writable.write(chunk);
       if (!canContinue) {
@@ -425,10 +425,10 @@ Beispiel für manuelles Backpressure:
         writable.once('drain', () => readable.resume());
       }
     });
-```
-`pipe()` regelt das automatisch!
+    ```
+    `pipe()` regelt das automatisch!
 
-[Mehr über Backpressure erfahren](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+    [Mehr über Backpressure erfahren](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
   </slot>
 </Challenge>
@@ -447,27 +447,27 @@ Beispiel für manuelles Backpressure:
 >
   <slot name="question">
   <div className="question">
-Was genau bewirkt dieser Code?
-```js
+    Was genau bewirkt dieser Code?
+    ```js
     import fs from 'fs';
     fs.symlinkSync('target.txt', 'link.txt');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`symlinkSync` erstellt einen symbolischen Link (ähnlich einer Verknüpfung) zur Zieldatei.
+    `symlinkSync` erstellt einen symbolischen Link (ähnlich einer Verknüpfung) zur Zieldatei.
 
-Wichtige Unterschiede zu Hardlinks:
-- Kann auf Verzeichnisse verweisen
-- Kann Dateisystemgrenzen überschreiten
-- Wird ungültig, wenn das Ziel gelöscht wird
+    Wichtige Unterschiede zu Hardlinks:
+    - Kann auf Verzeichnisse verweisen
+    - Kann Dateisystemgrenzen überschreiten
+    - Wird ungültig, wenn das Ziel gelöscht wird
 
-Um stattdessen einen Hardlink zu erstellen:
-```js
+    Um stattdessen einen Hardlink zu erstellen:
+    ```js
     fs.linkSync('target.txt', 'hardlink.txt');
-```
-[Mehr über symbolische Links erfahren](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    ```
+    [Mehr über symbolische Links erfahren](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -488,17 +488,17 @@ Um stattdessen einen Hardlink zu erstellen:
 >
   <slot name="question">
   <div className="question">
-In welchen Modi können Node.js-Streams arbeiten?
+    In welchen Modi können Node.js-Streams arbeiten?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Streams können in folgenden Modi arbeiten:
+    Streams können in folgenden Modi arbeiten:
     1. Binärmodus (Standard): für Buffer und Strings
     2. Objektmodus: für beliebige JavaScript-Werte
 
     Beispiel für den Objektmodus:
-```js
+    ```js
     import { Transform } from 'stream';
     const objectStream = new Transform({
       objectMode: true,
@@ -506,8 +506,8 @@ Streams können in folgenden Modi arbeiten:
         callback(null, { value: chunk });
       }
     });
-```
-[Mehr über Stream-Modi erfahren](https://nodejs.org/api/stream.html#object-mode)
+    ```
+    [Mehr über Stream-Modi erfahren](https://nodejs.org/api/stream.html#object-mode)
   </div>
   </slot>
 </Challenge>
@@ -526,18 +526,18 @@ Streams können in folgenden Modi arbeiten:
 >
   <slot name="question">
   <div className="question">
-Welchen Typ hat der `fd`-Parameter in diesem Callback?
-```js
+    Welchen Typ hat der `fd`-Parameter in diesem Callback?
+    ```js
     import fs from 'fs';
     fs.open('test.txt', 'r', (err, fd) => {
       console.log(typeof fd);
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dateideskriptoren sind Zahlen, die geöffnete Dateien im Betriebssystem eindeutig identifizieren.
+    Dateideskriptoren sind Zahlen, die geöffnete Dateien im Betriebssystem eindeutig identifizieren.
 
     Die ersten drei Dateideskriptoren sind reserviert:
     - 0: stdin
@@ -545,12 +545,12 @@ Dateideskriptoren sind Zahlen, die geöffnete Dateien im Betriebssystem eindeuti
     - 2: stderr
 
     Vergiss nie, Dateideskriptoren wieder zu schließen:
-```js
+    ```js
     fs.close(fd, (err) => {
       if (err) throw err;
     });
-```
-[Erfahre mehr über Dateideskriptoren](https://nodejs.org/api/fs.html#file-descriptors)
+    ```
+    [Erfahre mehr über Dateideskriptoren](https://nodejs.org/api/fs.html#file-descriptors)
   </div>
   </slot>
 </Challenge>
@@ -570,27 +570,27 @@ Dateideskriptoren sind Zahlen, die geöffnete Dateien im Betriebssystem eindeuti
 >
   <slot name="question">
   <div className="question">
-Wie viele Bytes belegt dieser String in UTF-8?
-```js
+    Wie viele Bytes belegt dieser String in UTF-8?
+    ```js
     const str = "Hello 🌍";
     const buf = Buffer.from(str);
     console.log(buf.length);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-In UTF-8:
+    In UTF-8:
     - ASCII-Zeichen (wie 'Hello ') belegen jeweils 1 Byte
     - Das Erd-Emoji 🌍 benötigt 4 Bytes
 
     Also: 5 (Hello) + 1 (Leerzeichen) + 4 (🌍) = 10 Bytes
 
     Um die Bytes zu sehen:
-```js
+    ```js
     console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
-```
-[Erfahre mehr über die UTF-8-Kodierung](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    ```
+    [Erfahre mehr über die UTF-8-Kodierung](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>

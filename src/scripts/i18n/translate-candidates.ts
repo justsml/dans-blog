@@ -246,6 +246,7 @@ for (const model of models) {
 
 function validateCandidate() {
   normalizeCandidateForLocale();
+  runInherited("bun", ["run", "i18n:fix-mdx-indents", "--write", targetPath]);
   const validateArgs = ["run", "i18n:validate", "--slug", slug, "--locale", locale];
   if (shouldAllowConcurrentWorktree) {
     validateArgs.push("--skip-global");

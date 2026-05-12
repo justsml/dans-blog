@@ -45,15 +45,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-Welchen Wert hat `result`?
-```js
+    Welchen Wert hat `result`?
+    ```js
     console.log(null ?? 100);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der Null-Koaleszenz-Operator (`??`) gibt den rechten Operanden (`b`) zurück, wenn der linke Operand (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
+    Der Null-Koaleszenz-Operator (`??`) gibt den rechten Operanden (`b`) zurück, wenn der linke Operand (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
   </div>
   </slot>
 </Challenge>
@@ -73,17 +73,17 @@ Der Null-Koaleszenz-Operator (`??`) gibt den rechten Operanden (`b`) zurück, we
 >
   <slot name="question">
   <div className="question">
-Was gibt der folgende Code aus?
-```js
+    Was gibt der folgende Code aus?
+    ```js
     const value = false;
     const defaultVal = 42;
     console.log(value ?? defaultVal);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der Nullish-Coalescing-Operator (`??`) behandelt falsy-Werte wie `false` als gültige Werte. Da `value` `false` ist, wird es als gültiger Wert betrachtet und zurückgegeben.
+    Der Nullish-Coalescing-Operator (`??`) behandelt falsy-Werte wie `false` als gültige Werte. Da `value` `false` ist, wird es als gültiger Wert betrachtet und zurückgegeben.
   </div>
   </slot>
 </Challenge>
@@ -102,17 +102,17 @@ Der Nullish-Coalescing-Operator (`??`) behandelt falsy-Werte wie `false` als gü
 >
   <slot name="question">
   <div className="question">
-Was ist die Ausgabe des folgenden Codes?
-```js
+    Was ist die Ausgabe des folgenden Codes?
+    ```js
     const obj = { foo: null };
     const result = obj.foo?.bar;
     console.log(result);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, ergibt `obj.foo?.bar` den Wert `undefined`.
+    Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, ergibt `obj.foo?.bar` den Wert `undefined`.
   </div>
   </slot>
 </Challenge>
@@ -131,17 +131,17 @@ Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke S
 >
   <slot name="question">
   <div className="question">
-Was ist die Ausgabe des folgenden Codes?
-```js
+    Was ist die Ausgabe des folgenden Codes?
+    ```js
     const a = 42n;
     const result = a * 2n;
     console.log(result);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-BigInt-Werte werden erstellt, indem man ein `n` an eine Zahl anhängt. Du kannst BigInt nicht mit normalen Zahlen in arithmetischen Operationen mischen. Hier sind beide Werte BigInt, also funktioniert die Multiplikation und ergibt `84n`.
+    BigInt-Werte werden erstellt, indem man ein `n` an eine Zahl anhängt. Du kannst BigInt nicht mit normalen Zahlen in arithmetischen Operationen mischen. Hier sind beide Werte BigInt, also funktioniert die Multiplikation und ergibt `84n`.
   </div>
   </slot>
 </Challenge>
@@ -161,16 +161,16 @@ BigInt-Werte werden erstellt, indem man ein `n` an eine Zahl anhängt. Du kannst
 >
   <slot name="question">
   <div className="question">
-Was wird hier geloggt?
-```js
+    Was wird hier geloggt?
+    ```js
     const modulePromise = import('./myModule.js');
     console.log(typeof modulePromise);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `import()`-Funktion gibt ein `Promise` zurück, das zum Modulobjekt aufgelöst wird. Da `Promise`-Instanzen Objekte sind, gibt `typeof modulePromise` `'object'` aus.
+    Die `import()`-Funktion gibt ein `Promise` zurück, das zum Modulobjekt aufgelöst wird. Da `Promise`-Instanzen Objekte sind, gibt `typeof modulePromise` `'object'` aus.
   </div>
   </slot>
 </Challenge>
@@ -189,8 +189,8 @@ Die `import()`-Funktion gibt ein `Promise` zurück, das zum Modulobjekt aufgelö
 >
   <slot name="question">
   <div className="question">
-Was wird das Ergebnis des folgenden Codes sein?
-```js
+    Was wird das Ergebnis des folgenden Codes sein?
+    ```js
     const promises = [
       Promise.resolve('success'),
       Promise.reject('error')
@@ -198,12 +198,12 @@ Was wird das Ergebnis des folgenden Codes sein?
     Promise.allSettled(promises).then(results => {
       console.log(results[0].status + ': ' + results[0].value);
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jedes Promises beschreiben. Das erste Promise ist `fulfilled` mit dem Wert `'success'`, daher gibt die Log-Anweisung `fulfilled: success` aus.
+    `Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jedes Promises beschreiben. Das erste Promise ist `fulfilled` mit dem Wert `'success'`, daher gibt die Log-Anweisung `fulfilled: success` aus.
   </div>
   </slot>
 </Challenge>
@@ -222,16 +222,16 @@ Was wird das Ergebnis des folgenden Codes sein?
 >
   <slot name="question">
   <div className="question">
-Was gibt `str.matchAll()` zurück?
-```js
+    Was gibt `str.matchAll()` zurück?
+    ```js
     const str = 'foo1bar2baz3';
     const matches = str.matchAll(/\d/g);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`String.matchAll` gibt einen Iterator von Übereinstimmungen zurück, kein Array. Dieser Iterator kann verwendet werden, um alle Übereinstimmungsgruppen aus einem String zu erhalten.
+    `String.matchAll` gibt einen Iterator von Übereinstimmungen zurück, kein Array. Dieser Iterator kann verwendet werden, um alle Übereinstimmungsgruppen aus einem String zu erhalten.
   </div>
   </slot>
 </Challenge>
@@ -250,15 +250,15 @@ Was gibt `str.matchAll()` zurück?
 >
   <slot name="question">
   <div className="question">
-Was repräsentiert `import.meta.url`?
-```js
+    Was repräsentiert `import.meta.url`?
+    ```js
     console.log(import.meta.url);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`import.meta` ist ein Objekt, das Metadaten über das aktuelle Modul enthält. Die Eigenschaft `import.meta.url` repräsentiert die URL des aktuellen Moduls, die verwendet werden kann, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
+    `import.meta` ist ein Objekt, das Metadaten über das aktuelle Modul enthält. Die Eigenschaft `import.meta.url` repräsentiert die URL des aktuellen Moduls, die verwendet werden kann, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
   </div>
   </slot>
 </Challenge>
@@ -277,17 +277,17 @@ Was repräsentiert `import.meta.url`?
 >
   <slot name="question">
   <div className="question">
-Welchen Wert hat `a` nach der logischen Zuweisung?
-```js
+    Welchen Wert hat `a` nach der logischen Zuweisung?
+    ```js
     let a = null;
     a ||= 10;
     console.log(a);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die logische ODER-Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falsy ist (`null`, `undefined`, `0`, `false`, usw.). Da `a` `null` ist, wird ihm der Wert `10` zugewiesen.
+    Die logische ODER-Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falsy ist (`null`, `undefined`, `0`, `false`, usw.). Da `a` `null` ist, wird ihm der Wert `10` zugewiesen.
   </div>
   </slot>
 </Challenge>
@@ -306,17 +306,17 @@ Die logische ODER-Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke We
 >
   <slot name="question">
   <div className="question">
-Welchen Wert hat `b` nach der Nullish-Zuweisung?
-```js
+    Welchen Wert hat `b` nach der Nullish-Zuweisung?
+    ```js
     let b = null;
     b ??= 10;
     console.log(b);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Nullish-Koaleszenz-Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihm der Wert `10` zugewiesen.
+    Die Nullish-Koaleszenz-Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihm der Wert `10` zugewiesen.
   </div>
   </slot>
 </Challenge>
@@ -335,17 +335,17 @@ Die Nullish-Koaleszenz-Zuweisung (`??=`) weist den rechten Wert zu, wenn der lin
 >
   <slot name="question">
   <div className="question">
-Was stellt `WeakRef` bereit?
-```js
+    Was stellt `WeakRef` bereit?
+    ```js
     const obj = { data: 'important' };
     const ref = new WeakRef(obj);
     console.log(ref.deref());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`WeakRef` stellt eine schwache Referenz auf ein Objekt bereit, die es dem Objekt ermöglicht, vom Garbage Collector freigegeben zu werden, wenn keine anderen Referenzen mehr existieren. Da `obj` hier immer noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wenn das Ziel bereits freigegeben worden wäre, würde `deref()` `undefined` zurückgeben.
+    `WeakRef` stellt eine schwache Referenz auf ein Objekt bereit, die es dem Objekt ermöglicht, vom Garbage Collector freigegeben zu werden, wenn keine anderen Referenzen mehr existieren. Da `obj` hier immer noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wenn das Ziel bereits freigegeben worden wäre, würde `deref()` `undefined` zurückgeben.
   </div>
   </slot>
 </Challenge>

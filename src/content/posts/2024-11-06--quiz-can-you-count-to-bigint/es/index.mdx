@@ -39,14 +39,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-```tsx
+    ```tsx
     parseInt(" 123456.00")
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `parseInt` ignora los espacios y procesa la secuencia inicial de dígitos como un entero. Aquí, se detiene al encontrar el punto decimal, por lo que únicamente devuelve `123456`.
+    La función `parseInt` ignora los espacios y procesa la secuencia inicial de dígitos como un entero. Aquí, se detiene al encontrar el punto decimal, por lo que únicamente devuelve `123456`.
   </div>
   </slot>
 </Challenge>
@@ -66,14 +66,14 @@ La función `parseInt` ignora los espacios y procesa la secuencia inicial de dí
 >
   <slot name="question">
   <div className="question">
-```tsx
+    ```tsx
     parseInt("123,456.00")
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Por regla general, `parseInt` detiene el análisis en cuanto encuentra un carácter no numérico. Aquí se topa con la coma y se planta, devolviendo únicamente `123`.
+    Por regla general, `parseInt` detiene el análisis en cuanto encuentra un carácter no numérico. Aquí se topa con la coma y se planta, devolviendo únicamente `123`.
   </div>
   </slot>
 </Challenge>
@@ -92,18 +92,18 @@ Por regla general, `parseInt` detiene el análisis en cuanto encuentra un carác
 >
   <slot name="question">
   <div className="question">
-```tsx
+    ```tsx
     0.1 + 0.2 === 0.3
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente igual a `0.3`. Por la forma en que los números de punto flotante se almacenan en memoria, el resultado es `0.30000000000000004`. El estándar IEEE 754 para manejar aritmética de punto flotante es el culpable: no puede representar algunos números con exactitud. Este es un problema común en todos los lenguajes de programación. Tarde o temprano te toparás con un decimal periódico y, sin importar el lenguaje, la computadora simplemente debe dejar de perseguir dígitos que se repiten infinitamente.
+    Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente igual a `0.3`. Por la forma en que los números de punto flotante se almacenan en memoria, el resultado es `0.30000000000000004`. El estándar IEEE 754 para manejar aritmética de punto flotante es el culpable: no puede representar algunos números con exactitud. Este es un problema común en todos los lenguajes de programación. Tarde o temprano te toparás con un decimal periódico y, sin importar el lenguaje, la computadora simplemente debe dejar de perseguir dígitos que se repiten infinitamente.
 
-  Algunos lenguajes como Python y Java cuentan con `Decimal` o `BigDecimal` para manejar esto, pero no viene integrado en JavaScript. Puedes usar bibliotecas como `big.js` o `decimal.js` para resolver estos casos.
+    Algunos lenguajes como Python y Java cuentan con `Decimal` o `BigDecimal` para manejar esto, pero no viene integrado en JavaScript. Puedes usar bibliotecas como `big.js` o `decimal.js` para resolver estos casos.
 
-  (Nota: Algunos lenguajes están diseñados para manejar fracciones, números imaginarios, etc., a un nivel lógico superior, preservando expresiones literales. Pero, a nivel de hardware, siguen teniendo que lidiar con los mismos problemas de precisión de punto flotante.)
+    (Nota: Algunos lenguajes están diseñados para manejar fracciones, números imaginarios, etc., a un nivel lógico superior, preservando expresiones literales. Pero, a nivel de hardware, siguen teniendo que lidiar con los mismos problemas de precisión de punto flotante.)
   </div>
   </slot>
 </Challenge>
@@ -122,16 +122,16 @@ Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente 
 >
   <slot name="question">
   <div className="question">
-```tsx
+    ```tsx
     Number.MAX_VALUE * 2
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dado que `Number.MAX_VALUE` es el número regular más grande **representable** en JavaScript, superar su límite provoca rápidamente un desbordamiento; básicamente, obtendrás resultados sin sentido. Multiplicarlo por `2` resulta en `Infinity`.
+    Dado que `Number.MAX_VALUE` es el número regular más grande **representable** en JavaScript, superar su límite provoca rápidamente un desbordamiento; básicamente, obtendrás resultados sin sentido. Multiplicarlo por `2` resulta en `Infinity`.
   
-  *Ya sabes, JavaScript hace de esas a veces.*
+    *Ya sabes, JavaScript hace de esas a veces.*
   </div>
   </slot>
 </Challenge>
@@ -152,17 +152,17 @@ Dado que `Number.MAX_VALUE` es el número regular más grande **representable** 
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelve esto?
-```tsx
+    ¿Qué devuelve esto?
+    ```tsx
     5..toFixed(2)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`.toFixed(2)` devuelve una representación en cadena de `5` con dos decimales, por lo que el resultado es `"5.00"`.
+    `.toFixed(2)` devuelve una representación en cadena de `5` con dos decimales, por lo que el resultado es `"5.00"`.
 
-  El doble punto (`5..toFixed(2)`) es un 'truco' para acceder al modelo de objetos de los literales numéricos.
+    El doble punto (`5..toFixed(2)`) es un 'truco' para acceder al modelo de objetos de los literales numéricos.
   </div>
   </slot>
 </Challenge>
@@ -180,14 +180,14 @@ Dado que `Number.MAX_VALUE` es el número regular más grande **representable** 
 >
   <slot name="question">
   <div className="question">
-```jsx
+    ```jsx
     parseInt("42") === parseFloat("42")
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` como el número `42`. Por lo tanto, la comparación `parseInt("42") === parseFloat("42")` se evalúa como `true`. Aunque `parseInt` detiene el análisis en el primer carácter que no es un dígito, `parseFloat` continúa hasta encontrar un carácter que no forme parte de un número de punto flotante. Sin embargo, dado que `"42"` no contiene puntos decimales ni otros caracteres no numéricos, ambas funciones devuelven exactamente el mismo valor.
+    En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` como el número `42`. Por lo tanto, la comparación `parseInt("42") === parseFloat("42")` se evalúa como `true`. Aunque `parseInt` detiene el análisis en el primer carácter que no es un dígito, `parseFloat` continúa hasta encontrar un carácter que no forme parte de un número de punto flotante. Sin embargo, dado que `"42"` no contiene puntos decimales ni otros caracteres no numéricos, ambas funciones devuelven exactamente el mismo valor.
   </div>
   </slot>
 </Challenge>
@@ -206,14 +206,14 @@ En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` c
 >
   <slot name="question">
   <div className="question">
-```jsx
+    ```jsx
     BigInt("42") === parseInt("42")
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) es un tipo diferente a `number`, por lo que `parseInt("42")` (un número normal) no es estrictamente igual a `BigInt("42")`. Para compararlos, debes convertir ambos al mismo tipo: `BigInt(parseInt("42")) === BigInt("42")`.
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) es un tipo diferente a `number`, por lo que `parseInt("42")` (un número normal) no es estrictamente igual a `BigInt("42")`. Para compararlos, debes convertir ambos al mismo tipo: `BigInt(parseInt("42")) === BigInt("42")`.
   </div>
   </slot>
 </Challenge>
@@ -233,16 +233,16 @@ En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` c
 >
   <slot name="question">
   <div className="question">
-¿Cuál será el resultado?
-```jsx
+    ¿Cuál será el resultado?
+    ```jsx
     parseInt("0x2A") === parseInt("2a", 16)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Cualquier cadena que comience con `0x` se interpreta automáticamente como un hexadecimal (base `16`).
-  Esto equivale exactamente a pasar una base de 16. Así, `parseInt("0x2A")` es idéntico a `parseInt("2a", 16)`. (Es insensible a mayúsculas y minúsculas.)
+    Cualquier cadena que comience con `0x` se interpreta automáticamente como un hexadecimal (base `16`).
+    Esto equivale exactamente a pasar una base de 16. Así, `parseInt("0x2A")` es idéntico a `parseInt("2a", 16)`. (Es insensible a mayúsculas y minúsculas.)
   </div>
   </slot>
 </Challenge>
@@ -261,15 +261,15 @@ Cualquier cadena que comience con `0x` se interpreta automáticamente como un he
 >
   <slot name="question">
   <div className="question">
-¿Qué está pasando aquí?
-```jsx
+    ¿Qué está pasando aquí?
+    ```jsx
     parseInt('0xFF', 16)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`parseInt` con una base hexadecimal (`16`) convierte `"FF"` a `255` en decimal. Seguramente lo has visto en los códigos de color CSS RGB/Hex.
+    `parseInt` con una base hexadecimal (`16`) convierte `"FF"` a `255` en decimal. Seguramente lo has visto en los códigos de color CSS RGB/Hex.
   </div>
   </slot>
 </Challenge>
@@ -288,14 +288,14 @@ Cualquier cadena que comience con `0x` se interpreta automáticamente como un he
 >
   <slot name="question">
   <div className="question">
-```jsx
+    ```jsx
     [24, 'One', 42].map(parseInt)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento `index` de los métodos de array. Esto provoca resultados inesperados, ya que `parseInt("One", 1)` devuelve `NaN` debido a la entrada inválida.
+    El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento `index` de los métodos de array. Esto provoca resultados inesperados, ya que `parseInt("One", 1)` devuelve `NaN` debido a la entrada inválida.
 
 
   </div>
@@ -318,14 +318,14 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
 >
   <slot name="question">
   <div className="question">
-```jsx
+    ```jsx
     [24, 'Twenty1', 0o42].map(Number)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Number` convierte valores a un tipo numérico de forma más estricta que `parseInt`. En este caso, `'Twenty1'` se convierte en `NaN`, mientras que `0o42` se reconoce como un literal octal y se convierte a `34`.
+    `Number` convierte valores a un tipo numérico de forma más estricta que `parseInt`. En este caso, `'Twenty1'` se convierte en `NaN`, mientras que `0o42` se reconoce como un literal octal y se convierte a `34`.
   </div>
   </slot>
 </Challenge>
@@ -346,18 +346,18 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
 >
   <slot name="question">
   <div className="question">
-¿Cuál será el resultado de este código?
-```jsx
+    ¿Cuál será el resultado de este código?
+    ```jsx
     console.log(parseInt(null), Number(null))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`parseInt` convierte la entrada a string, así que `null` se vuelve `"null"`. Como `"null"` no contiene dígitos válidos en base 10, devolverá `NaN`.
+    `parseInt` convierte la entrada a string, así que `null` se vuelve `"null"`. Como `"null"` no contiene dígitos válidos en base 10, devolverá `NaN`.
   
-  `Number(null)` retorna `0`. Porque a JS le gusta mantenerte en vilo.
-  ¿Por qué? Bueno, puedo profundizar más si hay interés.
+    `Number(null)` retorna `0`. Porque a JS le gusta mantenerte en vilo.
+    ¿Por qué? Bueno, puedo profundizar más si hay interés.
   </div>
   </slot>
 </Challenge>
@@ -378,19 +378,19 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
 >
   <slot name="question">
   <div className="question">
-¿Cuál será el resultado de este hechizo?
-```jsx
+    ¿Cuál será el resultado de este hechizo?
+    ```jsx
     parseInt(null, 36)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dado que `parseInt` siempre convierte la entrada a una cadena, `null` se transforma en la cadena `"null"`.
+    Dado que `parseInt` siempre convierte la entrada a una cadena, `null` se transforma en la cadena `"null"`.
   
-  En base 36 (hexatrigesimal, si llevas la cuenta), la cadena `"null"` representa `1112745`.
+    En base 36 (hexatrigesimal, si llevas la cuenta), la cadena `"null"` representa `1112745`.
 
-  Los valores secuenciales de `nulk`, `null` y `nulm` son respectivamente `1112744`, `1112745` y `1112746` en base 36.
+    Los valores secuenciales de `nulk`, `null` y `nulm` son respectivamente `1112744`, `1112745` y `1112746` en base 36.
   </div>
   </slot>
 </Challenge>

@@ -55,21 +55,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-¿Qué va a imprimir el siguiente código?
-```js
+    ¿Qué va a imprimir el siguiente código?
+    ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     p.catch(error => console.log(error.message))
     p.catch(error => console.log(error.message))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Creamos una Promise con su constructor y provocamos un error de inmediato mediante el callback `reject`.
+    Creamos una Promise con su constructor y provocamos un error de inmediato mediante el callback `reject`.
 
-Luego, los manejadores `.catch` funcionan igual que `.addEventListener(event, callback)` del DOM o `.on(event, callback)` de un Event Emitter, donde **se pueden registrar múltiples callbacks de manejo.** Cada uno será llamado con los mismos argumentos.
+    Luego, los manejadores `.catch` funcionan igual que `.addEventListener(event, callback)` del DOM o `.on(event, callback)` de un Event Emitter, donde **se pueden registrar múltiples callbacks de manejo.** Cada uno será llamado con los mismos argumentos.
   </div>
   </slot>
 </Challenge>
@@ -88,19 +88,19 @@ Luego, los manejadores `.catch` funcionan igual que `.addEventListener(event, ca
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     var p = new Promise((resolve, reject) => {
       return Promise.reject(Error('The Fails!'))
     })
     p.catch(error => console.log(error.message))
     p.catch(error => console.log(error.message))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `reject()`. El constructor `Promise` ignora el valor de retorno del ejecutor, por lo que la promesa adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores están adjuntos a `p`, que permanece en estado pendiente, mientras que la promesa rechazada devuelta es reportada como no manejada por el entorno host.
+    Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `reject()`. El constructor `Promise` ignora el valor de retorno del ejecutor, por lo que la promesa adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores están adjuntos a `p`, que permanece en estado pendiente, mientras que la promesa rechazada devuelta es reportada como no manejada por el entorno host.
   </div>
   </slot>
 </Challenge>
@@ -119,19 +119,19 @@ Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `rej
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
-  var p = new Promise((resolve, reject) => {
+    ¿Cuál será la salida del siguiente código?
+    ```js
+    var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     .catch(error => console.log(error))
     .then(error => console.log(error))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu "paso" encuentra un error, cualquier "paso" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si quieres anular un error, todo lo que necesitas hacer es devolver un valor que no sea un error. Este podrá ser accedido por cualquier `.then` posterior.
+    Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu "paso" encuentra un error, cualquier "paso" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si quieres anular un error, todo lo que necesitas hacer es devolver un valor que no sea un error. Este podrá ser accedido por cualquier `.then` posterior.
   </div>
   </slot>
 </Challenge>
@@ -150,19 +150,19 @@ Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
-  var p = new Promise((resolve, reject) => {
+    ¿Cuál será la salida del siguiente código?
+    ```js
+    var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     .catch(error => console.log(error.message))
     .catch(error => console.log(error.message))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.then` o `.catch` previos. En este ejemplo, el primer `.catch` devuelve el `console.log`, al cual solo podrías acceder agregando un `.then()` después de ambos `.catch`.
+    Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.then` o `.catch` previos. En este ejemplo, el primer `.catch` devuelve el `console.log`, al cual solo podrías acceder agregando un `.then()` después de ambos `.catch`.
   </div>
   </slot>
 </Challenge>
@@ -181,8 +181,8 @@ Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     new Promise((resolve, reject) => {
         resolve('Success!')
       })
@@ -193,14 +193,14 @@ Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.
         return "actually, that worked"
       })
       .catch(error => console.log(error.message))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-**Pista:** Los `.catch` se pueden usar para ignorar (o sobrescribir) errores simplemente devolviendo un valor normal.
+    **Pista:** Los `.catch` se pueden usar para ignorar (o sobrescribir) errores simplemente devolviendo un valor normal.
 
-Este truco solo funciona si hay un `.then` posterior listo para recibir el valor.
+    Este truco solo funciona si hay un `.then` posterior listo para recibir el valor.
   </div>
   </slot>
 </Challenge>
@@ -219,8 +219,8 @@ Este truco solo funciona si hay un `.then` posterior listo para recibir el valor
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     Promise.resolve('Success!')
       .then(data => {
         return data.toUpperCase()
@@ -228,14 +228,14 @@ Este truco solo funciona si hay un `.then` posterior listo para recibir el valor
       .then(data => {
         console.log(data)
       })
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-**Pista:** Los `.then` pasan los datos secuencialmente, desde el `return value` hasta el siguiente `.then(value => /* handle value */)`.
+    **Pista:** Los `.then` pasan los datos secuencialmente, desde el `return value` hasta el siguiente `.then(value => /* handle value */)`.
 
-Un `return` es clave para pasar un valor al siguiente `.then`.
+    Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
   </slot>
 </Challenge>
@@ -254,8 +254,8 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     Promise.resolve('Success!')
       .then(data => {
         return data.toUpperCase()
@@ -265,12 +265,12 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
         return data
       })
       .then(console.log)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Se ejecutarán 2 llamadas a `console.log`.
+    Se ejecutarán 2 llamadas a `console.log`.
   </div>
   </slot>
 </Challenge>
@@ -289,8 +289,8 @@ Se ejecutarán 2 llamadas a `console.log`.
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     Promise.resolve('Success!')
       .then(data => {
         data.toUpperCase()
@@ -298,14 +298,14 @@ Se ejecutarán 2 llamadas a `console.log`.
       .then(data => {
         console.log(data)
       })
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-**Pista:** Los `.then` pasan los datos secuencialmente, desde `return value` hasta el siguiente `.then(value => /* handle value */)`.
+    **Pista:** Los `.then` pasan los datos secuencialmente, desde `return value` hasta el siguiente `.then(value => /* handle value */)`.
 
-Un `return` es clave para pasar un valor al siguiente `.then`.
+    Un `return` es clave para pasar un valor al siguiente `.then`.
   </div>
   </slot>
 </Challenge>
@@ -325,8 +325,8 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida del siguiente código?
-```js
+    ¿Cuál será la salida del siguiente código?
+    ```js
     Promise.resolve('Success!')
       .then(() => {
         throw Error('Oh noes!')
@@ -338,12 +338,12 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
         throw Error('The fails!')
       })
       .catch(error => console.log(error.message))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
+    ![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
   </div>
   </slot>
 </Challenge>

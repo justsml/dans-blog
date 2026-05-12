@@ -47,22 +47,22 @@ Las preguntas empiezan siendo razonables y luego empiezan a quitar los tablones 
 >
   <slot name="question">
   <div className="question">
-¿Qué imprime esto?
-```javascript
+    ¿Qué imprime esto?
+    ```javascript
     function makeCounter() {
       let count = 0;
       return () => ++count;
     }
     const tick = makeCounter();
     console.log(tick(), tick(), tick());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`tick` captura `count`. Cada llamada incrementa y devuelve la *misma* variable `count`. Las tres llamadas producen `1, 2, 3`.
+    `tick` captura `count`. Cada llamada incrementa y devuelve la *misma* variable `count`. Las tres llamadas producen `1, 2, 3`.
 
-La palabra clave: *misma*. `count` no se copia dentro del closure. El closure mantiene una **referencia activa** al enlace de la variable. Ahí está todo el truco.
+    La palabra clave: *misma*. `count` no se copia dentro del closure. El closure mantiene una **referencia activa** al enlace de la variable. Ahí está todo el truco.
   </div>
   </slot>
 </Challenge>
@@ -81,8 +81,8 @@ La palabra clave: *misma*. `count` no se copia dentro del closure. El closure ma
 >
   <slot name="question">
   <div className="question">
-¿Qué imprime esto?
-```javascript
+    ¿Qué imprime esto?
+    ```javascript
     function makeCounter() {
       let count = 0;
       return () => ++count;
@@ -90,12 +90,12 @@ La palabra clave: *misma*. `count` no se copia dentro del closure. El closure ma
     const a = makeCounter();
     const b = makeCounter();
     console.log(a(), b());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` recién inicializado. `a` y `b` se cierran sobre *diferentes* bindings de `count`. No comparten estado.
+    Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su propio `count` recién inicializado. `a` y `b` se cierran sobre *diferentes* bindings de `count`. No comparten estado.
 
     Resultado: `1, 1`
 
@@ -118,26 +118,26 @@ Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su p
 >
   <slot name="question">
   <div className="question">
-¿Qué se registra en la consola después de 100 ms?
-```javascript
+    ¿Qué se registra en la consola después de 100 ms?
+    ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`var` tiene alcance de función. Existe exactamente **una** `i` — los cinco callbacks cierran sobre la misma referencia. Cuando se ejecutan los timeouts, el bucle ya terminó y `i` vale `5`.
+    `var` tiene alcance de función. Existe exactamente **una** `i` — los cinco callbacks cierran sobre la misma referencia. Cuando se ejecutan los timeouts, el bucle ya terminó y `i` vale `5`.
 
     Cinco callbacks. Una `i`. Valor: `5`. Se registra cinco veces.
 
     La solución es `let` (alcance de bloque, nueva referencia en cada iteración) o envolverlo en una IIFE para capturar el valor actual:
-```javascript
+    ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
     }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -156,23 +156,23 @@ Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su p
 >
   <slot name="question">
   <div className="question">
-Mismo bucle, distinta palabra clave. ¿Qué se imprime?
-```javascript
+    Mismo bucle, distinta palabra clave. ¿Qué se imprime?
+    ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nueva vinculación** de `i`. Es como si el bucle hiciera esto en secreto:
-```javascript
+    `let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nueva vinculación** de `i`. Es como si el bucle hiciera esto en secreto:
+    ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
     { let i = 1; setTimeout(() => console.log(i), 100) }
     // ...
-```
-Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
+    ```
+    Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
   </div>
   </slot>
 </Challenge>
@@ -191,8 +191,8 @@ Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 
 >
   <slot name="question">
   <div className="question">
-¿Qué imprime esto?
-```javascript
+    ¿Qué imprime esto?
+    ```javascript
     function wrap() {
       const obj = { x: 1 };
       const getObj = () => obj;
@@ -201,12 +201,12 @@ Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 
     }
     const get = wrap();
     console.log(get(), get());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El closure captura el **enlace** `obj`, no una instantánea del objeto. El objeto en sí se muta después de crear el closure, pero `obj` sigue apuntando a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.
+    El closure captura el **enlace** `obj`, no una instantánea del objeto. El objeto en sí se muta después de crear el closure, pero `obj` sigue apuntando a la misma referencia. Ambas llamadas devuelven el mismo objeto mutado: `{ x: 99 }`.
 
     Esto suele pillar a quienes asumen que los closures "congelan" los valores. No lo hacen. Capturan **referencias**.
   </div>
@@ -227,8 +227,8 @@ El closure captura el **enlace** `obj`, no una instantánea del objeto. El objet
 >
   <slot name="question">
   <div className="question">
-¿Qué comportamiento exhibe este componente de React al hacer clic en el botón varias veces?
-```jsx
+    ¿Qué comportamiento exhibe este componente de React al hacer clic en el botón varias veces?
+    ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
 
@@ -243,21 +243,21 @@ El closure captura el **enlace** `obj`, no una instantánea del objeto. El objet
         Click ({count})
       </button>;
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dependencias vacío) y crea un intervalo que cierra sobre `count` tal como estaba en el montaje: `0`. No importa cuántas veces hagas clic, la clausura del intervalo nunca verá el valor actualizado.
+    Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dependencias vacío) y crea un intervalo que cierra sobre `count` tal como estaba en el montaje: `0`. No importa cuántas veces hagas clic, la clausura del intervalo nunca verá el valor actualizado.
 
     La etiqueta del botón se actualiza correctamente — eso es un renderizado nuevo. Pero `console.log` queda atrapado para siempre en `0`.
 
     Arréglalo agregando `count` al array de dependencias (recrea el intervalo) o usando una ref:
-```jsx
+    ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
     // then use countRef.current inside the interval
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -276,8 +276,8 @@ Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dep
 >
   <slot name="question">
   <div className="question">
-Espera, lee con atención. ¿Qué sucede realmente?
-```javascript
+    Espera, lee con atención. ¿Qué sucede realmente?
+    ```javascript
     const bank = (() => {
       let balance = 0;
       return {
@@ -290,18 +290,18 @@ Espera, lee con atención. ¿Qué sucede realmente?
     bank.deposit(100);
     bank.withdraw(40);
     console.log(bank.getBalance());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La respuesta es `60`.
+    La respuesta es `60`.
 
     Este es el **Patrón de Módulo** — una IIFE que devuelve un objeto de closures. Los tres métodos capturan el mismo binding de `balance`. Es genuinamente privado: no puedes acceder a `balance` desde fuera.
-```javascript
+    ```javascript
     console.log(bank.balance); // undefined
-```
-Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Todavía lo verás en bases de código legacy y bibliotecas de utilidades.
+    ```
+    Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Todavía lo verás en bases de código legacy y bibliotecas de utilidades.
   </div>
   </slot>
 </Challenge>
@@ -320,25 +320,25 @@ Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Tod
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el problema con este código?
-```javascript
+    ¿Cuál es el problema con este código?
+    ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       element.addEventListener('click', () => {
         console.log('clicked!', data.length);
       });
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El *event listener* cierra sobre `data`, por lo que el array permanece accesible mientras el listener siga existiendo. Si `element` tiene un ciclo de vida largo y el listener nunca se elimina, ese array enorme también se queda retenido.
+    El *event listener* cierra sobre `data`, por lo que el array permanece accesible mientras el listener siga existiendo. Si `element` tiene un ciclo de vida largo y el listener nunca se elimina, ese array enorme también se queda retenido.
 
     `element` vive en el DOM. El listener mantiene viva `data`. El GC no puede liberarlo.
 
     Solución: no captures datos pesados en listeners de larga duración a menos que sea estrictamente necesario, y elimina los listeners cuando desmontes la interfaz que los usa:
-```javascript
+    ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       // do something with data...
@@ -350,8 +350,8 @@ El *event listener* cierra sobre `data`, por lo que el array permanece accesible
       element.addEventListener('click', onClick);
       return () => element.removeEventListener('click', onClick);
     }
-```
-El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga ejecución con muchos *event listeners*, este patrón sigue mordiendo a más de uno.
+    ```
+    El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga ejecución con muchos *event listeners*, este patrón sigue mordiendo a más de uno.
   </div>
   </slot>
 </Challenge>
@@ -370,8 +370,8 @@ El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga e
 >
   <slot name="question">
   <div className="question">
-¿Qué imprime esto?
-```javascript
+    ¿Qué imprime esto?
+    ```javascript
     const user = {
       name: 'Dan',
       greetArrow: () => console.log(this?.name),
@@ -384,12 +384,12 @@ El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga e
     user.greetArrow();
     const fn = user.greetRegular;
     fn();
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dos trampas sutiles:
+    Dos trampas sutiles:
 
     **`greetArrow`**: Las funciones flecha no tienen su propio `this`. Capturan `this` del ámbito léxico circundante — que en este caso es el ámbito del módulo/global, no `user`. Por lo tanto, `this?.name` es `undefined`.
 
@@ -416,8 +416,8 @@ Dos trampas sutiles:
 >
   <slot name="question">
   <div className="question">
-¿Cuántas veces se llama realmente a `expensive()`?
-```javascript
+    ¿Cuántas veces se llama realmente a `expensive()`?
+    ```javascript
     function memoize(fn) {
       const cache = new Map();
       return (arg) => {
@@ -436,12 +436,12 @@ Dos trampas sutiles:
     fast(5);
     fast(5);
     console.log(calls);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra el valor en caché, ejecuta `expensive` y almacena el resultado. La segunda y tercera llamadas aciertan en caché y devuelven el resultado de inmediato.
+    La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra el valor en caché, ejecuta `expensive` y almacena el resultado. La segunda y tercera llamadas aciertan en caché y devuelven el resultado de inmediato.
 
     `calls` es `1`.
 

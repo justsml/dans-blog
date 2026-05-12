@@ -41,15 +41,15 @@ Teste dein RegEx-Wissen mit Fragen zu grundlegenden Mustern, Quantoren, Gruppen 
 >
   <slot name="question">
   <div className="question">
-Was wird gematcht?
-```js
+    Was wird gematcht?
+    ```js
     'cat CAT Cat'.match(/cat/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dieses Muster verwendet `g`, aber nicht `i`:
+    Dieses Muster verwendet `g`, aber nicht `i`:
     - `g` findet alle Übereinstimmungen
     - Ohne `i` wird die Groß-/Kleinschreibung beachtet
 
@@ -76,16 +76,16 @@ Dieses Muster verwendet `g`, aber nicht `i`:
 >
   <slot name="question">
   <div className="question">
-Was gibt dieser Code zurück?
-```js
+    Was gibt dieser Code zurück?
+    ```js
     const words = ['cat', 'hat', 'what', 'bat'];
     words.filter(word => word.match(/^[ch]at/))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster `/^[ch]at/` matcht Zeichenketten, die:
+    Das Muster `/^[ch]at/` matcht Zeichenketten, die:
     - Mit (`^`) entweder 'c' oder 'h' beginnen (das bedeutet `[ch]` – eine Zeichenklasse, die ein einzelnes Zeichen matcht)
     - Gefolgt von buchstäblich 'at'
 
@@ -106,15 +106,15 @@ Das Muster `/^[ch]at/` matcht Zeichenketten, die:
 >
   <slot name="question">
   <div className="question">
-Was wird hiermit gematcht?
-```js
+    Was wird hiermit gematcht?
+    ```js
     '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster `/<div>.*?<\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was bedeutet:
+    Das Muster `/<div>.*?<\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was bedeutet:
     - Matche `<div>`
     - Matche jedes Zeichen (`.*`) aber so wenige wie möglich (`?`)
     - Bis `</div>` gefunden wird
@@ -141,15 +141,15 @@ Das Muster `/<div>.*?<\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was 
 >
   <slot name="question">
   <div className="question">
-Was wird zurückgegeben?
-```js
+    Was wird zurückgegeben?
+    ```js
     'hello\nworld'.match(/\w+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster `\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeilenumbruch vorkommt, matcht `\w`:
+    Das Muster `\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeilenumbruch vorkommt, matcht `\w`:
     - Buchstaben (a-z, A-Z)
     - Zahlen (0-9)
     - Unterstrich (_)
@@ -176,15 +176,15 @@ Das Muster `\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeile
 >
   <slot name="question">
   <div className="question">
-Was wird hiermit gematcht?
-```js
+    Was wird hiermit gematcht?
+    ```js
     '$100 and €50'.match(/\d+(?=[\$€])/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn du Ziffern suchst, denen `$` oder `€` vorausgehen, verwende einen Lookbehind: `/(?<=[\$€])\d+/g`.
+    Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn du Ziffern suchst, denen `$` oder `€` vorausgehen, verwende einen Lookbehind: `/(?<=[\$€])\d+/g`.
 
     Lookaheads prüfen, was *nach* der aktuellen Position kommt. Das Pattern sucht nach:
     - Ein oder mehr Ziffern (`\d+`)
@@ -211,15 +211,15 @@ Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn
 >
   <slot name="question">
   <div className="question">
-Was wird übereinstimmen?
-```js
+    Was wird übereinstimmen?
+    ```js
     'cat cats category'.match(/\bcat\b/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`\b` steht für eine Wortgrenze, die Folgendes erfasst:
+    `\b` steht für eine Wortgrenze, die Folgendes erfasst:
     - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen
     - Am Anfang/Ende der Zeichenkette, wenn dort ein Wortzeichen steht
 
@@ -248,15 +248,15 @@ Was wird übereinstimmen?
 >
   <slot name="question">
   <div className="question">
-Was ist die Ausgabe?
-```js
+    Was ist die Ausgabe?
+    ```js
     'banana'.match(/a/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das `g`-Flag (global) ändert das Verhalten von `match()`:
+    Das `g`-Flag (global) ändert das Verhalten von `match()`:
     - Ohne `g`: Gibt den ersten Treffer mit Erfassungsgruppen zurück
     - Mit `g`: Gibt ein Array aller übereinstimmenden Zeichenfolgen zurück
 
@@ -284,15 +284,15 @@ Das `g`-Flag (global) ändert das Verhalten von `match()`:
 >
   <slot name="question">
   <div className="question">
-Was matcht dieses Muster?
-```js
+    Was matcht dieses Muster?
+    ```js
     'abc123 def456'.match(/(?<!abc)\d+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht "abc" vorausgeht:
+    Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht "abc" vorausgeht:
     - ❌ "123" (vorausgehend "abc")
     - ✅ "23" (vorausgehend "abc1")
     - ✅ "456" (vorausgehend "def")
@@ -318,15 +318,15 @@ Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht "abc" 
 >
   <slot name="question">
   <div className="question">
-Was gibt das zurück?
-```js
+    Was gibt das zurück?
+    ```js
     '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster verwendet drei erfassende Gruppen:
+    Das Muster verwendet drei erfassende Gruppen:
     1. `(\d{4})` erfasst das Jahr
     2. `(\d{2})` erfasst den Monat
     3. `(\d{2})` erfasst den Tag
@@ -358,15 +358,15 @@ Das Muster verwendet drei erfassende Gruppen:
 >
   <slot name="question">
   <div className="question">
-Welches wird das Ergebnis hiervon sein?
-```js
+    Welches wird das Ergebnis hiervon sein?
+    ```js
     "123aBc".match(/^\d+(?![a-z])/ig)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine Kleinbuchstaben folgen. Da der Teil "3aBc" einen Kleinbuchstaben nach den Ziffern hat, passt sein Abschnitt nicht. Daher passt nur der Anfang "12".
+    Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine Kleinbuchstaben folgen. Da der Teil "3aBc" einen Kleinbuchstaben nach den Ziffern hat, passt sein Abschnitt nicht. Daher passt nur der Anfang "12".
 
     [Mehr über negativen Look-ahead erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -387,15 +387,15 @@ Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine K
 >
   <slot name="question">
   <div className="question">
-Was wird zurückgegeben?
-```js
+    Was wird zurückgegeben?
+    ```js
     'a,b,c'.split(/(?<=,)/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:
+    Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:
     - `a,` (nach Komma)
     - `b,` (nach Komma)
     - `c` (kein Komma danach)
@@ -424,23 +424,23 @@ Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:
 >
   <slot name="question">
   <div className="question">
-Was wird gematcht?
-```js
+    Was wird gematcht?
+    ```js
     '$100'.match(/$\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Sonderzeichen müssen mit `\` escaped werden, um sie literal zu matchen:
+    Sonderzeichen müssen mit `\` escaped werden, um sie literal zu matchen:
     - `$` ist ein Sonderzeichen (Ende des Strings)
     - Um ein literal Dollarzeichen zu matchen, escape es: `\$`
 
     Häufige Zeichen, die ein Escape benötigen:
-```js
+    ```js
     . * + ? ^ $ [ ] \ ( ) { } |
-```
-Ohne Escaping haben viele Sonderzeichen eine Regex-Bedeutung, die vielleicht nicht das ist, was du möchtest.
+    ```
+    Ohne Escaping haben viele Sonderzeichen eine Regex-Bedeutung, die vielleicht nicht das ist, was du möchtest.
 
     [Erfahre mehr über das Escaping von Sonderzeichen](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
@@ -461,15 +461,15 @@ Ohne Escaping haben viele Sonderzeichen eine Regex-Bedeutung, die vielleicht nic
 >
   <slot name="question">
   <div className="question">
-Was wird gematcht?
-```js
+    Was wird gematcht?
+    ```js
     '$100'.match(/(?<=\$)\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der positive Look-behind `(?<=\$) stellt sicher, dass den Ziffern ein Dollarzeichen vorausgeht:
+    Der positive Look-behind `(?<=\$) stellt sicher, dass den Ziffern ein Dollarzeichen vorausgeht:
     - `(?<=\$)`: Look-behind für Dollarzeichen
     - `\d+`: Matcht eine oder mehrere Ziffern
 
@@ -491,15 +491,15 @@ Der positive Look-behind `(?<=\$) stellt sicher, dass den Ziffern ein Dollarzeic
 >
   <slot name="question">
   <div className="question">
-Was wird gematcht?
-```js
+    Was wird gematcht?
+    ```js
     '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Muster verwendet lazy Matching mit `*?`:
+    Das Muster verwendet lazy Matching mit `*?`:
     - `<b>`: Öffnendes Tag finden
     - `(.*?)`: Beliebige Zeichen erfassen (lazy)
     - `</b>`: Schließendes Tag finden
@@ -528,15 +528,15 @@ Das Muster verwendet lazy Matching mit `*?`:
 >
   <slot name="question">
   <div className="question">
-Was wird gematcht?
-```js
+    Was wird gematcht?
+    ```js
     '😀 🙂'.match(/\p{Emoji}/gu)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das `u`-Flag ermöglicht:
+    Das `u`-Flag ermöglicht:
     - Unicode-Eigenschafts-Escapes (`\p{...}`)
     - Korrekte Behandlung von Surrogatpaaren
 
@@ -564,16 +564,16 @@ Das `u`-Flag ermöglicht:
 >
   <slot name="question">
   <div className="question">
-Entschuldigung im Voraus! 😈<br />
+    Entschuldigung im Voraus! 😈<br />
     Welches Passwort passt zu diesem Muster?
-```js
+    ```js
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Schreibe so etwas niemals in der Produktion! 😅
+    Schreibe so etwas niemals in der Produktion! 😅
 
     Dieses Muster verwendet mehrere positive Lookaheads, um Folgendes zu erzwingen:
     - Mindestens ein Großbuchstabe: `(?=.*[A-Z])`

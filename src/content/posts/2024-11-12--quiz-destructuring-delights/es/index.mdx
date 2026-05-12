@@ -48,25 +48,25 @@ Arranca con el calentamiento y demuestra que dominas la sintaxis. 👇
 >
   <slot name="question">
   <div className="question">
-¿Qué imprimirá este código?
-```js
+    ¿Qué imprimirá este código?
+    ```js
     const person = {
       name: 'Dan Levy',
       location: 'Cape Town',
     };
     const { name, age } = person;
     console.log(`Name: ${name}, Age: ${age}`);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. Definitivamente no es `Infinity` 😅
+    La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. Definitivamente no es `Infinity` 😅
 
     Esto da como resultado:
-```plaintext
+    ```plaintext
     Name: Dan Levy, Age: undefined
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -87,22 +87,22 @@ La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. De
 >
   <slot name="question">
   <div className="question">
-¿Qué hará este código?
-```js
+    ¿Qué hará este código?
+    ```js
     const person = [ 'Dan Levy', 'Cape Town' ];
     const [ name, origin, age ] = person;
     console.log(`Name: ${name}, Age: ${age}`);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La variable `age` no está presente en el array `tuple`, por lo que su valor será `undefined`.
+    La variable `age` no está presente en el array `tuple`, por lo que su valor será `undefined`.
 
     Esto da como resultado:
-```plaintext
+    ```plaintext
     Name: Dan Levy, Age: undefined
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -122,8 +122,8 @@ La variable `age` no está presente en el array `tuple`, por lo que su valor ser
 >
   <slot name="question">
   <div className="question">
-¿Qué tal un poco de desestructuración anidada?
-```js
+    ¿Qué tal un poco de desestructuración anidada?
+    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -137,21 +137,21 @@ La variable `age` no está presente en el array `tuple`, por lo que su valor ser
     console.log(
       `First: ${first}, City: ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La propiedad `birth: { place }` no existe en `person`, así que saltará un error.
-  Una solución es asignar valores por defecto a las propiedades anidadas.
+    La propiedad `birth: { place }` no existe en `person`, así que saltará un error.
+    Una solución es asignar valores por defecto a las propiedades anidadas.
 
-  Ojo al acceder a propiedades anidadas: los errores se camuflan fácil. Y como cada navegador o plataforma escupe mensajes distintos, depurarlo se vuelve un poco más tedioso.
+    Ojo al acceder a propiedades anidadas: los errores se camuflan fácil. Y como cada navegador o plataforma escupe mensajes distintos, depurarlo se vuelve un poco más tedioso.
 
-  En Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`
+    En Chrome moderno: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  En Node también es un `TypeError`, porque JavaScript intenta desestructurar `place` desde `undefined` antes de siquiera leer `place`.
+    En Node también es un `TypeError`, porque JavaScript intenta desestructurar `place` desde `undefined` antes de siquiera leer `place`.
 
-  El texto exacto del error cambia según el navegador o el runtime.
+    El texto exacto del error cambia según el navegador o el runtime.
   </div>
   </slot>
 </Challenge>
@@ -171,8 +171,8 @@ La propiedad `birth: { place }` no existe en `person`, así que saltará un erro
 >
   <slot name="question">
   <div className="question">
-Ahora, con algunos valores predeterminados, ¿qué hará esto?
-```js
+    Ahora, con algunos valores predeterminados, ¿qué hará esto?
+    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -185,21 +185,21 @@ Ahora, con algunos valores predeterminados, ¿qué hará esto?
     console.log(
       `Hi ${first} from ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La propiedad `birth` no existe en `person`, por lo que el objeto completo aún necesita un valor predeterminado, no solo la propiedad anidada. Básicamente, le falta un ` = {}` por ahí.
+    La propiedad `birth` no existe en `person`, por lo que el objeto completo aún necesita un valor predeterminado, no solo la propiedad anidada. Básicamente, le falta un ` = {}` por ahí.
 
-  Tal como está escrito, dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que intenta desestructurar `undefined`, lo que provoca un error.
-```plaintext
-  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+    Tal como está escrito, dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que intenta desestructurar `undefined`, lo que provoca un error.
+    ```plaintext
+    In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
-  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+    In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
-  Exact wording varies between browsers and runtimes.
-```
+    Exact wording varies between browsers and runtimes.
+    ```
   </div>
   </slot>
 </Challenge>
@@ -220,8 +220,8 @@ La propiedad `birth` no existe en `person`, por lo que el objeto completo aún n
 >
   <slot name="question">
   <div className="question">
-¿Qué hará esto?
-```js
+    ¿Qué hará esto?
+    ```js
     const person = {
       name: { first: 'Dan' },
       address: { city: 'Denver' },
@@ -234,12 +234,12 @@ La propiedad `birth` no existe en `person`, por lo que el objeto completo aún n
     console.log(
       `Hi ${first} from ${place}`,
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La propiedad `birth` no existe en `person`, por lo que se recurre a un objeto vacío ` = {}`. Esto permite utilizar el valor predeterminado.
+    La propiedad `birth` no existe en `person`, por lo que se recurre a un objeto vacío ` = {}`. Esto permite utilizar el valor predeterminado.
   </div>
   </slot>
 </Challenge>
@@ -260,8 +260,8 @@ La propiedad `birth` no existe en `person`, por lo que se recurre a un objeto va
 >
   <slot name="question">
   <div className="question">
-Ahora como parámetros de función, ¿qué hará esto?
-```js
+    Ahora como parámetros de función, ¿qué hará esto?
+    ```js
     'use strict';
     function displayUser({
       name = "Unknown",
@@ -270,12 +270,12 @@ Ahora como parámetros de función, ¿qué hará esto?
       console.log(`Hi ${name} from ${place}`);
     }
     displayUser({ name: "Dan" });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Esta función extrae las propiedades `name` y `age`, aplicando valores predeterminados cuando es necesario. En este caso, la clave `place` en el objeto predeterminado es solo ruido: no se utiliza dentro de `displayUser()`.
+    Esta función extrae las propiedades `name` y `age`, aplicando valores predeterminados cuando es necesario. En este caso, la clave `place` en el objeto predeterminado es solo ruido: no se utiliza dentro de `displayUser()`.
   </div>
   </slot>
 </Challenge>
@@ -298,8 +298,8 @@ Esta función extrae las propiedades `name` y `age`, aplicando valores predeterm
 >
   <slot name="question">
   <div className="question">
-¿Cómo se manejan los valores `undefined`?
-```js
+    ¿Cómo se manejan los valores `undefined`?
+    ```js
     'use strict';
     function displayPlace({
       name = "N/A",
@@ -311,17 +311,17 @@ Esta función extrae las propiedades `name` y `age`, aplicando valores predeterm
     displayPlace({ name: "Dan" });
     displayPlace({ name: "Dan", place: undefined });
     displayPlace({ name: "Dan", place: "Joburg" });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `displayPlace` SOLO usará un objeto por defecto si no se le pasa ninguno. Por lo tanto, la única forma de obtener el valor `{ place: "Unknown" }` es con cero argumentos: `displayPlace()`.
-```js
-  displayPlace() // Unknown
-  displayPlace({ name: "Dan" }) // N/A
-  displayPlace({ name: "Dan", place: undefined }) // N/A
-```
+    La función `displayPlace` SOLO usará un objeto por defecto si no se le pasa ninguno. Por lo tanto, la única forma de obtener el valor `{ place: "Unknown" }` es con cero argumentos: `displayPlace()`.
+    ```js
+    displayPlace() // Unknown
+    displayPlace({ name: "Dan" }) // N/A
+    displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
   </div>
   </slot>
 </Challenge>
@@ -345,8 +345,8 @@ La función `displayPlace` SOLO usará un objeto por defecto si no se le pasa ni
 >
   <slot name="question">
   <div className="question">
-Al igual que en el anterior... ¿cómo se maneja `null`?_
-```js
+    Al igual que en el anterior... ¿cómo se maneja `null`?_
+    ```js
     function displayPlace({
       name = "N/A",
       place = "N/A",
@@ -356,12 +356,12 @@ Al igual que en el anterior... ¿cómo se maneja `null`?_
     }
     displayPlace({ name: "Dan", place: null });
     displayPlace({ name: "Dan", place: undefined });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado para `place` solo se utiliza si el objeto completo falta **o** es `undefined`. Los valores `null` se pasarán tal cual como `null`.
+    En este caso, la propiedad `place` se establece en `null` en la primera llamada y en `undefined` en la segunda. El valor predeterminado para `place` solo se utiliza si el objeto completo falta **o** es `undefined`. Los valores `null` se pasarán tal cual como `null`.
   </div>
   </slot>
 </Challenge>
@@ -381,8 +381,8 @@ En este caso, la propiedad `place` se establece en `null` en la primera llamada 
 >
   <slot name="question">
   <div className="question">
-Ahora en TypeScript... _¿qué hará esto?_
-```ts
+    Ahora en TypeScript... _¿qué hará esto?_
+    ```ts
     'use strict';
     function displayPlace(
       {
@@ -397,14 +397,14 @@ Ahora en TypeScript... _¿qué hará esto?_
       console.log(`${place}`);
     }
     displayPlace({ name: 'Dan', place: null });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-TypeScript lanza un error porque `place` está tipado como `string`, pero la llamada pasa `null`. Además, la llamada omite la propiedad obligatoria `age`.
+    TypeScript lanza un error porque `place` está tipado como `string`, pero la llamada pasa `null`. Además, la llamada omite la propiedad obligatoria `age`.
 
-  Si ignoras los errores de tipo, ejecutar el código imprimirá `null` en la consola.
+    Si ignoras los errores de tipo, ejecutar el código imprimirá `null` en la consola.
   </div>
   </slot>
 </Challenge>
@@ -427,8 +427,8 @@ TypeScript lanza un error porque `place` está tipado como `string`, pero la lla
 >
   <slot name="question">
   <div className="question">
-Probemos un poco de renombrado y asignación...
-```ts
+    Probemos un poco de renombrado y asignación...
+    ```ts
     'use strict';
     function displayPlace({
       name = 'N/A',
@@ -441,12 +441,12 @@ Probemos un poco de renombrado y asignación...
       console.log(`${location}`);
     }
     displayPlace({ name: 'Dan', place: 'Denver' });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `location` directamente en la firma de la función. Este es un patrón estándar (renombrar propiedades durante la desestructuración) que resulta muy útil para adaptar estructuras de datos de terceros sin crear variables intermedias innecesarias.
+    Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `location` directamente en la firma de la función. Este es un patrón estándar (renombrar propiedades durante la desestructuración) que resulta muy útil para adaptar estructuras de datos de terceros sin crear variables intermedias innecesarias.
   </div>
   </slot>
 </Challenge>
@@ -466,8 +466,8 @@ Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `loca
 >
   <slot name="question">
   <div className="question">
-Detecta el error de tipo:
-```ts
+    Detecta el error de tipo:
+    ```ts
     function greet({
       name: {first = "N/A", last = "N/A"},
       birth: {place = "N/A"} = {},
@@ -480,16 +480,16 @@ Detecta el error de tipo:
       console.log(`Hi ${first} ${last} from ${place}`);
     }
     greet({ name: {first: 'Dan'} });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición del tipo.
+    El error está en la firma de la función `greet`. Las propiedades `age` y `birth` faltan en el objeto pasado, por lo que deberían ser opcionales en la definición del tipo.
 
-  Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición del tipo exige que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.
+    Aunque la propiedad `birth` se desestructura con un valor predeterminado, la definición del tipo exige que esté presente. Para marcar una propiedad como opcional en TypeScript, debes usar el operador `?`.
   
-  Ten en cuenta que `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`.
+    Ten en cuenta que `birth?: { place?: string }` no es lo mismo que `birth: { place?: string } | undefined`.
   </div>
   </slot>
 </Challenge>
@@ -509,8 +509,8 @@ El error está en la firma de la función `greet`. Las propiedades `age` y `birt
 >
   <slot name="question">
   <div className="question">
-Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
-```ts
+    Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
+    ```ts
     'use strict';
     function greet(
       {
@@ -530,21 +530,21 @@ Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
       name: {first: 'Dan', last: 'Levy'},
       birth: {place: 'Cape Town'},
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¡Otro Error! ¿Ya estás adivinando, verdad?!
+    ¡Otro Error! ¿Ya estás adivinando, verdad?!
 
-  ¡Es difícil leer capas de desestructuración con valores por defecto, asignación y tipos!
+    ¡Es difícil leer capas de desestructuración con valores por defecto, asignación y tipos!
 
-  En cuanto `place` se reasigna a la variable `p`, deja de estar definida en el ámbito de la sentencia `console.log`.
-```ts
-  console.log(`Hi ${f} ${l} from ${place}`); // ❌
-  // to:
-  console.log(`Hi ${f} ${l} from ${p}`); // ✅
-```
+    En cuanto `place` se reasigna a la variable `p`, deja de estar definida en el ámbito de la sentencia `console.log`.
+    ```ts
+    console.log(`Hi ${f} ${l} from ${place}`); // ❌
+    // to:
+    console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
   </div>
   </slot>
 </Challenge>

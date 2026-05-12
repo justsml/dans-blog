@@ -46,25 +46,25 @@ Viel Erfolg! 🍀
 >
   <slot name="question">
   <div className="question">
-Welche der folgenden ist KEINE eingebaute Aggregatfunktion in PostgreSQL?
-```sql
+    Welche der folgenden ist KEINE eingebaute Aggregatfunktion in PostgreSQL?
+    ```sql
     SELECT 
       MIN(grade) as lowest,
       MAX(grade) as highest,
       AVG(grade) as average,
       MEDIAN(grade) as middle
     FROM grades;
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`MEDIAN` ist nicht standardmäßig eingebaut! Du brauchst:
-```sql
+    `MEDIAN` ist nicht standardmäßig eingebaut! Du brauchst:
+    ```sql
     PERCENTILE_CONT(0.5) 
     WITHIN GROUP (ORDER BY grade)
-```
-Gängige eingebaute Aggregate:
+    ```
+    Gängige eingebaute Aggregate:
     - `MIN`, `MAX`, `COUNT`
     - `AVG`, `SUM`
     - `ARRAY_AGG`, `STRING_AGG`
@@ -87,21 +87,21 @@ Gängige eingebaute Aggregate:
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Casts ist **ungültig** ❌?
+    Welcher dieser Casts ist **ungültig** ❌?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL kennt drei Wege, um Typen zu konvertieren:
+    PostgreSQL kennt drei Wege, um Typen zu konvertieren:
 
-1. ANSI SQL: `CAST(expression AS type)`.
-2. PostgreSQL: `expression::type`.
-3. Typ-Funktion: `type 'literal'`.
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. Typ-Funktion: `type 'literal'`.
 
-Unter der Haube machen alle drei exakt dasselbe, aber:
-- `CAST()` ist der portabelste Standard und läuft auf jeder SQL-Datenbank.
-- `::` ist PostgreSQL-spezifisch, aber der De-facto-Standard in der Community.
-- Die Infix-Schreibweise `type 'literal'` ist eher historisch bedingt, bleibt aber vollständig gültig.
+    Unter der Haube machen alle drei exakt dasselbe, aber:
+    - `CAST()` ist der portabelste Standard und läuft auf jeder SQL-Datenbank.
+    - `::` ist PostgreSQL-spezifisch, aber der De-facto-Standard in der Community.
+    - Die Infix-Schreibweise `type 'literal'` ist eher historisch bedingt, bleibt aber vollständig gültig.
   </div>
   </slot>
 </Challenge>
@@ -120,30 +120,30 @@ Unter der Haube machen alle drei exakt dasselbe, aber:
 >
   <slot name="question">
   <div className="question">
-Wie viele NULL-Werte sind hier erlaubt?
-```sql
+    Wie viele NULL-Werte sind hier erlaubt?
+    ```sql
     CREATE TABLE student_emails (
       student_id INTEGER,
       email VARCHAR(255),
       UNIQUE(email)
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-UNIQUE-Constraints in PostgreSQL:
+    UNIQUE-Constraints in PostgreSQL:
     - Erlauben mehrere NULL-Werte.
     - `NULL` ≠ `NULL` bei Eindeutigkeitsprüfungen.
 
     Um `NULL`-Werte zu verhindern, füge `NOT NULL` hinzu:
-```sql
+    ```sql
     CREATE TABLE student_emails (
       student_id INTEGER,
       email VARCHAR(255) NOT NULL,
       UNIQUE(email)
     );
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -163,15 +163,15 @@ UNIQUE-Constraints in PostgreSQL:
 >
   <slot name="question">
   <div className="question">
-Was gibt dies zurück?
-```sql
+    Was gibt dies zurück?
+    ```sql
     SELECT '2024-11-27'::date + interval '24 hours';
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Intervalle sind ein leistungsstarkes Werkzeug, um Operationen mit Datumsbereichen zu vereinfachen!
+    Intervalle sind ein leistungsstarkes Werkzeug, um Operationen mit Datumsbereichen zu vereinfachen!
 
     Datumsarithmetik in PostgreSQL:
     - `+ interval '24 hours'` addiert 24 Stunden
@@ -200,12 +200,12 @@ Intervalle sind ein leistungsstarkes Werkzeug, um Operationen mit Datumsbereiche
 >
   <slot name="question">
   <div className="question">
-Welche Aussage über `timestamptz` und `timestamp` ist am **präzisesten**?
+    Welche Aussage über `timestamptz` und `timestamp` ist am **präzisesten**?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Beide benötigen 8 Byte, speichern jedoch nicht dieselbe Art von Wert.
+    Beide benötigen 8 Byte, speichern jedoch nicht dieselbe Art von Wert.
 
     Was ist also der Unterschied? Er liegt im Eingabe-Parsing.
 
@@ -241,18 +241,18 @@ Beide benötigen 8 Byte, speichern jedoch nicht dieselbe Art von Wert.
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Datentyp?
+    Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Datentyp?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL verfügt über eine umfangreiche Palette an Datentypen, doch `STRING(100)` ist keiner davon.
+    PostgreSQL verfügt über eine umfangreiche Palette an Datentypen, doch `STRING(100)` ist keiner davon.
 
-Die korrekten Zeichenkettentypen lauten:
-- `VARCHAR(100)` (Zeichenkette variabler Länge)
-- `CHAR(100)` (Zeichenkette fester Länge)
-- `TEXT` (unbegrenzte Länge)
-- `CHARACTER VARYING(100)` (identisch mit `VARCHAR(100)`)
+    Die korrekten Zeichenkettentypen lauten:
+    - `VARCHAR(100)` (Zeichenkette variabler Länge)
+    - `CHAR(100)` (Zeichenkette fester Länge)
+    - `TEXT` (unbegrenzte Länge)
+    - `CHARACTER VARYING(100)` (identisch mit `VARCHAR(100)`)
   </div>
   </slot>
 </Challenge>
@@ -274,12 +274,12 @@ Die korrekten Zeichenkettentypen lauten:
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
+    Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der Name klingt vertraut, da `decimal128` in vielen anderen Umgebungen (etwa MongoDB oder Java) Standard ist. In PostgreSQL ist er jedoch kein valider Typ – hier heißt es schlicht `decimal`.
+    Der Name klingt vertraut, da `decimal128` in vielen anderen Umgebungen (etwa MongoDB oder Java) Standard ist. In PostgreSQL ist er jedoch kein valider Typ – hier heißt es schlicht `decimal`.
 
     Die korrekten numerischen Typen sind:
     - `int` (4-Byte-Ganzzahl)
@@ -308,12 +308,12 @@ Der Name klingt vertraut, da `decimal128` in vielen anderen Umgebungen (etwa Mon
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Datentyp?
+    Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Datentyp?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Hat dich das frustriert, vielleicht sogar _wütend_ gemacht? Du bist nicht allein! Um einen ungenannten "Core"-Datenbankmitarbeiter zu zitieren: "Was zur Hölle, Dan?! Ich bin bei den Typen-Fragen gecrasht! Das ist ja gewalttätig, Mann! Ich teile mein Ergebnis nicht, haha." 😈 Gern geschehen.
+    Hat dich das frustriert, vielleicht sogar _wütend_ gemacht? Du bist nicht allein! Um einen ungenannten "Core"-Datenbankmitarbeiter zu zitieren: "Was zur Hölle, Dan?! Ich bin bei den Typen-Fragen gecrasht! Das ist ja gewalttätig, Mann! Ich teile mein Ergebnis nicht, haha." 😈 Gern geschehen.
 
     PostgreSQLs umfangreiche Sammlung an Netzwerktypen enthält kein `ipv4`. Jedes Mal, wenn ich versuche, es zu verwenden, ohne vorher zu googeln, mache ich es falsch. Vielleicht lässt mich `macaddr8` glauben, dass es _unbedingt_ `ipv4`- und `ipv6`-Typen geben muss. Fehlanzeige, `inet` deckt beides ab. Außerdem deckt `cidr` die Netzwerkmasken für beide ab.
 
@@ -341,12 +341,12 @@ Hat dich das frustriert, vielleicht sogar _wütend_ gemacht? Du bist nicht allei
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
+    Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL bietet eine beeindruckende Palette spezialisierter Datentypen, aber `currency` ist definitiv nicht dabei!
+    PostgreSQL bietet eine beeindruckende Palette spezialisierter Datentypen, aber `currency` ist definitiv nicht dabei!
 
     Zu den gültigen Typen zählen:
     - `xml` (XML-Daten)
@@ -373,12 +373,12 @@ PostgreSQL bietet eine beeindruckende Palette spezialisierter Datentypen, aber `
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
+    Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL bietet eine umfangreiche Palette spezialisierter Typen, aber `triangle` gehört nicht dazu.
+    PostgreSQL bietet eine umfangreiche Palette spezialisierter Typen, aber `triangle` gehört nicht dazu.
 
     Ich gehe davon aus, dass kommende Versionen von [GEOS](https://libgeos.org/) die `Triangle`-OGC/WKT-Unterstützung einbauen werden, was bedeutet, dass es irgendwann auch in Postgis landen sollte. (Kurz gesagt: Diese Antwort könnte in Zukunft falsch sein.)
 
@@ -406,26 +406,26 @@ PostgreSQL bietet eine umfangreiche Palette spezialisierter Typen, aber `triangl
 >
   <slot name="question">
   <div className="question">
-Was passiert, wenn Sie die maximale Anzahl möglicher Studenten-IDs berechnen?
-```sql
+    Was passiert, wenn Sie die maximale Anzahl möglicher Studenten-IDs berechnen?
+    ```sql
     SELECT 256 * 256 * 256 * 256;
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der `integer`-Typ von PostgreSQL ist eine 32-Bit-Ganzzahl mit Vorzeichen und reicht von `-2,147,483,648` bis `2,147,483,647`.
+    Der `integer`-Typ von PostgreSQL ist eine 32-Bit-Ganzzahl mit Vorzeichen und reicht von `-2,147,483,648` bis `2,147,483,647`.
 
     Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.
 
     Um größere Zahlen zu verarbeiten:
-```sql
+    ```sql
     -- Use BIGINT
     SELECT 256::bigint * 256 * 256 * 256;
 
     -- Or numeric for arbitrary precision
     SELECT 256::numeric * 256 * 256 * 256;
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -444,25 +444,25 @@ Der `integer`-Typ von PostgreSQL ist eine 32-Bit-Ganzzahl mit Vorzeichen und rei
 >
   <slot name="question">
   <div className="question">
-Welches ist das kleinste `timestamp`-Literal, das die maximale `time`-Präzision in Postgres überschreitet?
-```sql
+    Welches ist das kleinste `timestamp`-Literal, das die maximale `time`-Präzision in Postgres überschreitet?
+    ```sql
     CREATE TABLE class_sessions (
       id INT GENERATED BY DEFAULT AS IDENTITY,
       start_time timestamptz,
       end_time timestamptz
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL-Zeitstempel haben eine Mikrosekunden-Präzision (6 Dezimalstellen).
+    PostgreSQL-Zeitstempel haben eine Mikrosekunden-Präzision (6 Dezimalstellen).
 
-- Maximum: `.123456` (6 Stellen)
-- Nanosekunden (9 Stellen) werden auf die unterstützte Präzision gerundet oder abgeschnitten
-- Zeitzonen-Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich
+    - Maximum: `.123456` (6 Stellen)
+    - Nanosekunden (9 Stellen) werden auf die unterstützte Präzision gerundet oder abgeschnitten
+    - Zeitzonen-Offsets werden für `timestamptz` akzeptiert, sind aber nicht zwingend erforderlich
 
-**Nicht ganz alltägliche Falle:** Einige Sprachen oder Frameworks senden Nanosekunden-Präzision, PostgreSQL speichert Zeitstempel jedoch nur mit Mikrosekunden-Präzision.
+    **Nicht ganz alltägliche Falle:** Einige Sprachen oder Frameworks senden Nanosekunden-Präzision, PostgreSQL speichert Zeitstempel jedoch nur mit Mikrosekunden-Präzision.
   </div>
   </slot>
 </Challenge>
@@ -482,14 +482,14 @@ PostgreSQL-Zeitstempel haben eine Mikrosekunden-Präzision (6 Dezimalstellen).
 >
   <slot name="question">
   <div className="question">
-Welche dieser Optionen ist ❌ kein gültiger PostgreSQL-Typ?
+    Welche dieser Optionen ist ❌ kein gültiger PostgreSQL-Typ?
 
     (Im Ernst, das sind (größtenteils) echte Typen.)
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-PostgreSQL verfügt über mehrere integrierte geometrische und Textsuch-Typen, aber `tsrank` gehört nicht dazu.
+    PostgreSQL verfügt über mehrere integrierte geometrische und Textsuch-Typen, aber `tsrank` gehört nicht dazu.
 
     Zu den korrekten geometrischen und Textsuch-Typen gehören:
     - `lseg` (Liniensegment)
@@ -514,20 +514,20 @@ PostgreSQL verfügt über mehrere integrierte geometrische und Textsuch-Typen, a
 >
   <slot name="question">
   <div className="question">
-Wann wird diese Constraint geprüft?
-```sql
+    Wann wird diese Constraint geprüft?
+    ```sql
     ALTER TABLE students 
     ADD CONSTRAINT valid_grade 
     CHECK (
       (grade >= 0 AND grade <= 100) OR 
       grade IS NULL
     ) NOT VALID;
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`NOT VALID`-Constraints:
+    `NOT VALID`-Constraints:
     - Werden sofort bei neuen INSERTs und UPDATEs geprüft
     - Validieren keine bestehenden Zeilen
     - Können bestehende Zeilen später mit `VALIDATE CONSTRAINT` prüfen

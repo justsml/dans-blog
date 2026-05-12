@@ -47,14 +47,14 @@ Steig direkt ein und zeig, dass du die SQL-Query-Grundlagen noch drauf hast! �
 >
   <slot name="question">
   <div className="question">
-Welche dieser SQL-Abfragen filtert korrekt nach dem Namen "John"?
+    Welche dieser SQL-Abfragen filtert korrekt nach dem Namen "John"?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-In SQL wird für Gleichheitsprüfungen in der `WHERE`-Klausel das einfache Gleichheitszeichen (`=`) verwendet. Die Operatoren `==` oder `===` stammen aus JavaScript und haben in SQL nichts zu suchen.
+    In SQL wird für Gleichheitsprüfungen in der `WHERE`-Klausel das einfache Gleichheitszeichen (`=`) verwendet. Die Operatoren `==` oder `===` stammen aus JavaScript und haben in SQL nichts zu suchen.
 
-Die korrekte Syntax lautet `SELECT * FROM users WHERE name = 'John';`.
+    Die korrekte Syntax lautet `SELECT * FROM users WHERE name = 'John';`.
   </div>
   </slot>
 </Challenge>
@@ -73,12 +73,12 @@ Die korrekte Syntax lautet `SELECT * FROM users WHERE name = 'John';`.
 >
   <slot name="question">
   <div className="question">
-Was genau macht `COUNT(column_name)` in SQL?
+    Was genau macht `COUNT(column_name)` in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`COUNT(column_name)` zählt ausschließlich die Nicht-NULL-Werte in der angegebenen Spalte. Das ist ein wichtiger Unterschied zu `COUNT(*)`, das wirklich *jede* Zeile zählt – auch die leeren. Falls du NULLs doch mitzählen willst, kannst du sie mit `COALESCE` vor der Zählung durch einen Fallback-Wert ersetzen. Etwa so: `COUNT(COALESCE(column_name, 0))`.
+    `COUNT(column_name)` zählt ausschließlich die Nicht-NULL-Werte in der angegebenen Spalte. Das ist ein wichtiger Unterschied zu `COUNT(*)`, das wirklich *jede* Zeile zählt – auch die leeren. Falls du NULLs doch mitzählen willst, kannst du sie mit `COALESCE` vor der Zählung durch einen Fallback-Wert ersetzen. Etwa so: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -97,12 +97,12 @@ Was genau macht `COUNT(column_name)` in SQL?
 >
   <slot name="question">
   <div className="question">
-Was genau bewirkt ein `LEFT JOIN` in SQL?
+    Was genau bewirkt ein `LEFT JOIN` in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ein `LEFT JOIN` gibt alle Zeilen aus der linken Tabelle sowie die passenden Zeilen aus der rechten Tabelle zurück. Wo keine Übereinstimmung existiert, setzt SQL die fehlenden Werte der rechten Tabelle automatisch auf `NULL`.
+    Ein `LEFT JOIN` gibt alle Zeilen aus der linken Tabelle sowie die passenden Zeilen aus der rechten Tabelle zurück. Wo keine Übereinstimmung existiert, setzt SQL die fehlenden Werte der rechten Tabelle automatisch auf `NULL`.
   </div>
   </slot>
 </Challenge>
@@ -121,12 +121,12 @@ Ein `LEFT JOIN` gibt alle Zeilen aus der linken Tabelle sowie die passenden Zeil
 >
   <slot name="question">
   <div className="question">
-Was genau bewirkt ein `INNER JOIN` in SQL?
+    Was genau bewirkt ein `INNER JOIN` in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ein `INNER JOIN` liefert nur die Zeilen zurück, bei denen die Verknüpfungsbedingung in beiden Tabellen eine Entsprechung findet. Zeilen ohne Treffer werden bewusst ausgefiltert, da es hier ausschließlich um die Schnittmenge der Datensätze geht.
+    Ein `INNER JOIN` liefert nur die Zeilen zurück, bei denen die Verknüpfungsbedingung in beiden Tabellen eine Entsprechung findet. Zeilen ohne Treffer werden bewusst ausgefiltert, da es hier ausschließlich um die Schnittmenge der Datensätze geht.
   </div>
   </slot>
 </Challenge>
@@ -145,12 +145,12 @@ Ein `INNER JOIN` liefert nur die Zeilen zurück, bei denen die Verknüpfungsbedi
 >
   <slot name="question">
   <div className="question">
-Was genau ist eine korrelierte Unterabfrage in SQL?
+    Was genau ist eine korrelierte Unterabfrage in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Eine korrelierte Unterabfrage wird pro Zeile der äußeren Abfrage neu ausgeführt. Sie greift auf Spalten der äußeren Abfrage zu und ist daher untrennbar mit der aktuellen Zeile verknüpft. Deshalb kann die Datenbank sie nicht einmalig vorberechnen, sondern muss sie für jede Zeile separat evaluieren – was sie flexibel, aber auch rechenintensiver macht.
+    Eine korrelierte Unterabfrage wird pro Zeile der äußeren Abfrage neu ausgeführt. Sie greift auf Spalten der äußeren Abfrage zu und ist daher untrennbar mit der aktuellen Zeile verknüpft. Deshalb kann die Datenbank sie nicht einmalig vorberechnen, sondern muss sie für jede Zeile separat evaluieren – was sie flexibel, aber auch rechenintensiver macht.
   </div>
   </slot>
 </Challenge>
@@ -169,24 +169,24 @@ Eine korrelierte Unterabfrage wird pro Zeile der äußeren Abfrage neu ausgefüh
 >
   <slot name="question">
   <div className="question">
-Was ist der eigentliche Zweck der `WITH`-Klausel (Common Table Expression) in SQL?
+    Was ist der eigentliche Zweck der `WITH`-Klausel (Common Table Expression) in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `WITH`-Klausel, auch Common Table Expression (CTE) genannt, definiert ein temporäres Ergebnis-Set, das du innerhalb deiner Hauptabfrage direkt referenzieren kannst. In PostgreSQL lässt sich `WITH` an Anweisungen wie `SELECT`, `INSERT`, `UPDATE`, `DELETE` oder `MERGE` anhängen.
+    Die `WITH`-Klausel, auch Common Table Expression (CTE) genannt, definiert ein temporäres Ergebnis-Set, das du innerhalb deiner Hauptabfrage direkt referenzieren kannst. In PostgreSQL lässt sich `WITH` an Anweisungen wie `SELECT`, `INSERT`, `UPDATE`, `DELETE` oder `MERGE` anhängen.
 
-Das bricht komplexe Logik in handliche Teile auf und verbessert die Lesbarkeit sowie Wartbarkeit deiner Queries erheblich.
+    Das bricht komplexe Logik in handliche Teile auf und verbessert die Lesbarkeit sowie Wartbarkeit deiner Queries erheblich.
 
-Die Syntax lautet:
-```sql
-WITH cte_name AS (
-  SELECT column_name
-  FROM table_name
-)
-SELECT *
-FROM cte_name;
-```
+    Die Syntax lautet:
+    ```sql
+    WITH cte_name AS (
+    SELECT column_name
+    FROM table_name
+    )
+    SELECT *
+    FROM cte_name;
+    ```
   </div>
   </slot>
 </Challenge>
@@ -205,12 +205,12 @@ FROM cte_name;
 >
   <slot name="question">
   <div className="question">
-Was macht der `IS NULL`-Operator in SQL?
+    Was macht der `IS NULL`-Operator in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`IS NULL` prüft, ob eine angegebene Spalte einen NULL-Wert enthält. `IS NOT NULL` prüft das genaue Gegenteil.
+    `IS NULL` prüft, ob eine angegebene Spalte einen NULL-Wert enthält. `IS NOT NULL` prüft das genaue Gegenteil.
   </div>
   </slot>
 </Challenge>
@@ -229,12 +229,12 @@ Was macht der `IS NULL`-Operator in SQL?
 >
   <slot name="question">
   <div className="question">
-Was macht der `IN`-Operator in SQL?
+    Was macht der `IN`-Operator in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der `IN`-Operator filtert Zeilen so, dass sie mit beliebigen Werten in einer angegebenen Liste übereinstimmen – oft als praktische Alternative zu mehreren OR-Bedingungen.
+    Der `IN`-Operator filtert Zeilen so, dass sie mit beliebigen Werten in einer angegebenen Liste übereinstimmen – oft als praktische Alternative zu mehreren OR-Bedingungen.
   </div>
   </slot>
 </Challenge>
@@ -254,14 +254,14 @@ Der `IN`-Operator filtert Zeilen so, dass sie mit beliebigen Werten in einer ang
 >
   <slot name="question">
   <div className="question">
-Was macht die `COALESCE`-Funktion in SQL?
+    Was macht die `COALESCE`-Funktion in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `COALESCE`-Funktion gibt den ersten Wert ungleich NULL aus einer angegebenen Liste zurück. Das ist praktisch, um Standardwerte einzusetzen, wenn auf NULL-Werte getroffen wird.
+    Die `COALESCE`-Funktion gibt den ersten Wert ungleich NULL aus einer angegebenen Liste zurück. Das ist praktisch, um Standardwerte einzusetzen, wenn auf NULL-Werte getroffen wird.
 
-Zum Beispiel würde `COALESCE(column_name, 0)` den Wert `0` zurückgeben, wenn `column_name` den Wert `NULL` hat.
+    Zum Beispiel würde `COALESCE(column_name, 0)` den Wert `0` zurückgeben, wenn `column_name` den Wert `NULL` hat.
   </div>
   </slot>
 </Challenge>
@@ -281,12 +281,12 @@ Zum Beispiel würde `COALESCE(column_name, 0)` den Wert `0` zurückgeben, wenn `
 >
   <slot name="question">
   <div className="question">
-Was genau bewirkt die `GROUP BY`-Klausel in SQL?
+    Was genau bewirkt die `GROUP BY`-Klausel in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `GROUP BY`-Klausel bündelt Zeilen, die in den angegebenen Spalten identische Werte besitzen. Dadurch lassen sich Aggregatfunktionen gezielt auf jede einzelne Gruppe anwenden.
+    Die `GROUP BY`-Klausel bündelt Zeilen, die in den angegebenen Spalten identische Werte besitzen. Dadurch lassen sich Aggregatfunktionen gezielt auf jede einzelne Gruppe anwenden.
   </div>
   </slot>
 </Challenge>
@@ -306,14 +306,14 @@ Die `GROUP BY`-Klausel bündelt Zeilen, die in den angegebenen Spalten identisch
 >
   <slot name="question">
   <div className="question">
-Was genau macht ein `FULL OUTER JOIN` in SQL?
+    Was genau macht ein `FULL OUTER JOIN` in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ein `FULL OUTER JOIN` gibt alle Zeilen aus beiden Tabellen zurück und setzt NULL-Werte für fehlende Daten bei nicht übereinstimmenden Zeilen ein.
+    Ein `FULL OUTER JOIN` gibt alle Zeilen aus beiden Tabellen zurück und setzt NULL-Werte für fehlende Daten bei nicht übereinstimmenden Zeilen ein.
 
-Das ist besonders nützlich, um zwei Tabellen direkt zu vergleichen und Unterschiede oder fehlende Einträge schnell aufzuspüren.
+    Das ist besonders nützlich, um zwei Tabellen direkt zu vergleichen und Unterschiede oder fehlende Einträge schnell aufzuspüren.
   </div>
   </slot>
 </Challenge>

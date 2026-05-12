@@ -34,6 +34,8 @@ if (source.includes("<Challenge") || target.includes("<Challenge")) {
   runInherited("bun", ["run", "fix-quizzes"]);
 }
 
+runInherited("bun", ["run", "check"]);
+
 function assertFrontmatter(contents: string) {
   if (!contents.startsWith("---")) {
     throw new Error(`${targetPath} must start with frontmatter`);
@@ -73,6 +75,14 @@ function assertProtectedTokens(sourceContents: string, targetContents: string) {
   if (sourceFences !== targetFences) {
     throw new Error(
       `${targetPath} changed fenced code block count from ${sourceFences} to ${targetFences}`,
+    );
+  }
+
+  const sourcePreCode = sourceContents.match(/<pre><code>/g)?.length ?? 0;
+  const targetPreCode = targetContents.match(/<pre><code>/g)?.length ?? 0;
+  if (sourcePreCode !== targetPreCode) {
+    throw new Error(
+      `${targetPath} changed <pre><code> block count from ${sourcePreCode} to ${targetPreCode}`,
     );
   }
 }

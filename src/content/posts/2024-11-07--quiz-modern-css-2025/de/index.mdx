@@ -46,22 +46,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-Wie wendest du eine CSS-Variable namens `--main-color` korrekt an, um die Hintergrundfarbe eines Elements zu setzen?
-```css
+    Wie wendest du eine CSS-Variable namens `--main-color` korrekt an, um die Hintergrundfarbe eines Elements zu setzen?
+    ```css
     :root {
       --main-color: blue;
     }
     div {
       /* How do we use --main-color here? */
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-CSS-Variablen werden mit der `var`-Funktion aufgerufen, daher ist `background-color: var(--main-color);` die einzig richtige Wahl. Diese Syntax liest den gespeicherten Wert von `--main-color` aus und übergibt ihn direkt an die Eigenschaft.
+    CSS-Variablen werden mit der `var`-Funktion aufgerufen, daher ist `background-color: var(--main-color);` die einzig richtige Wahl. Diese Syntax liest den gespeicherten Wert von `--main-color` aus und übergibt ihn direkt an die Eigenschaft.
 
-Die anderen Optionen stammen aus anderen Ökosystemen oder Präprozessor-Syntaxen wie Sass oder Less und funktionieren im nativen CSS nicht.
+    Die anderen Optionen stammen aus anderen Ökosystemen oder Präprozessor-Syntaxen wie Sass oder Less und funktionieren im nativen CSS nicht.
   </div>
   </slot>
 </Challenge>
@@ -82,28 +82,28 @@ Die anderen Optionen stammen aus anderen Ökosystemen oder Präprozessor-Syntaxe
 >
   <slot name="question">
   <div className="question">
-Wenn die Breite des übergeordneten Containers 400px beträgt, wie groß ist die berechnete Breite des folgenden Elements?
-```css
+    Wenn die Breite des übergeordneten Containers 400px beträgt, wie groß ist die berechnete Breite des folgenden Elements?
+    ```css
     div {
       width: min(250px, 50%);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `min()`-Funktion wählt strikt den kleinsten Wert zwischen `250px` und `50%` der Breite des Elternelements.
+    Die `min()`-Funktion wählt strikt den kleinsten Wert zwischen `250px` und `50%` der Breite des Elternelements.
 
-Damit du den berechneten Wert nachvollziehen kannst, rechnen wir die relativen Einheiten fix in Pixel um:
+    Damit du den berechneten Wert nachvollziehen kannst, rechnen wir die relativen Einheiten fix in Pixel um:
 
-- `50%` von `400px` ergibt `200px`
-- `250px` steht bereits in Pixel
-```css
-/* This gets computed to */
-width: min(250px, 200px);
-/* -> 200px wins */
-```
-Im responsiven Design ist `min()` ein echtes Arbeitstier: Damit garantierst du, dass eine Komponente (oder Schriftgröße) niemals über ein definiertes Limit hinauswächst.
+    - `50%` von `400px` ergibt `200px`
+    - `250px` steht bereits in Pixel
+    ```css
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
+    ```
+    Im responsiven Design ist `min()` ein echtes Arbeitstier: Damit garantierst du, dass eine Komponente (oder Schriftgröße) niemals über ein definiertes Limit hinauswächst.
   </div>
   </slot>
 </Challenge>
@@ -124,28 +124,28 @@ Im responsiven Design ist `min()` ein echtes Arbeitstier: Damit garantierst du, 
 >
   <slot name="question">
   <div className="question">
-Ein Container ist `200px` breit. Wie groß ist die berechnete Breite des `<div>`?
-```css
+    Ein Container ist `200px` breit. Wie groß ist die berechnete Breite des `<div>`?
+    ```css
     div {
       width: max(50px, 10%, 6rem);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `max()`-Funktion akzeptiert zwei oder mehr Werte und wählt automatisch den größten aus. Geht man von der browserüblichen Standard-Schriftgröße von `16px` aus, ergibt sich eine Breite von `96px`.
+    Die `max()`-Funktion akzeptiert zwei oder mehr Werte und wählt automatisch den größten aus. Geht man von der browserüblichen Standard-Schriftgröße von `16px` aus, ergibt sich eine Breite von `96px`.
 
-Um den berechneten Wert nachzuvollziehen, müssen wir die relativen Einheiten in Pixel umrechnen:
+    Um den berechneten Wert nachzuvollziehen, müssen wir die relativen Einheiten in Pixel umrechnen:
 
-- `50px` ist bereits in Pixeln angegeben
-- `10%` von `200px` entspricht `20px`
-- `6rem` ist `6 * 16px` (die Standard-Schriftgröße), also `96px`
-```css
-/* This gets computed to */
-width: max(50px, 20px, 96px);
-/* -> 96px wins */
-```
+    - `50px` ist bereits in Pixeln angegeben
+    - `10%` von `200px` entspricht `20px`
+    - `6rem` ist `6 * 16px` (die Standard-Schriftgröße), also `96px`
+    ```css
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
+    ```
   </div>
   </slot>
 </Challenge>
@@ -164,17 +164,17 @@ width: max(50px, 20px, 96px);
 >
   <slot name="question">
   <div className="question">
-Was passiert, wenn du `minmax(100px, 200px)` für einen CSS-Grid-Track verwendest?
-```css
+    Was passiert, wenn du `minmax(100px, 200px)` für einen CSS-Grid-Track verwendest?
+    ```css
     grid-template-columns: minmax(100px, 200px);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Mit `minmax(100px, 200px)` skaliert der Grid-Track flexibel zwischen `100px` und `200px`. Er nutzt den verfügbaren Raum optimal aus, bleibt aber strikt innerhalb dieser Grenzen.
+    Mit `minmax(100px, 200px)` skaliert der Grid-Track flexibel zwischen `100px` und `200px`. Er nutzt den verfügbaren Raum optimal aus, bleibt aber strikt innerhalb dieser Grenzen.
 
-So baust du Layouts, die sich automatisch anpassen, wobei Container und Kindelemente gemeinsam die Berechnung übernehmen. Der wahre Hebel entsteht in Kombination mit `repeat()` sowie `auto-fill` oder `auto-fit` – damit erzeugst du automatisch so viele Tracks wie möglich, ohne die Limits zu sprengen.
+    So baust du Layouts, die sich automatisch anpassen, wobei Container und Kindelemente gemeinsam die Berechnung übernehmen. Der wahre Hebel entsteht in Kombination mit `repeat()` sowie `auto-fill` oder `auto-fit` – damit erzeugst du automatisch so viele Tracks wie möglich, ohne die Limits zu sprengen.
   </div>
   </slot>
 </Challenge>
@@ -194,19 +194,19 @@ So baust du Layouts, die sich automatisch anpassen, wobei Container und Kindelem
 >
   <slot name="question">
   <div className="question">
-Welche Hintergrundfarbe ergibt folgendes CSS?
-```css
+    Welche Hintergrundfarbe ergibt folgendes CSS?
+    ```css
     div {
       background: var(--primary, olivedrab);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `var()`-Funktion ermöglicht es dir, einen Fallback-Wert festzulegen, falls die Variable nicht definiert ist. In diesem Fall wird der Hintergrund `olivedrab` (`#6b8e23`) sein, da `--primary` nicht definiert ist.
+    Die `var()`-Funktion ermöglicht es dir, einen Fallback-Wert festzulegen, falls die Variable nicht definiert ist. In diesem Fall wird der Hintergrund `olivedrab` (`#6b8e23`) sein, da `--primary` nicht definiert ist.
 
-Das ist eine hervorragende Methode, um sicherzustellen, dass deine Styles nicht kaputtgehen, wenn eine Variable fehlt oder nicht unterstützt wird.
+    Das ist eine hervorragende Methode, um sicherzustellen, dass deine Styles nicht kaputtgehen, wenn eine Variable fehlt oder nicht unterstützt wird.
   </div>
   </slot>
 </Challenge>
@@ -226,23 +226,23 @@ Das ist eine hervorragende Methode, um sicherzustellen, dass deine Styles nicht 
 >
   <slot name="question">
   <div className="question">
-Was macht `clamp()` eigentlich?
-```css
+    Was macht `clamp()` eigentlich?
+    ```css
     .card {
       width: clamp(200px, 50vw, 500px);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `clamp()`-Funktion lässt die Breite basierend auf `50vw` skalieren, hält sie aber strikt im Bereich von 200px bis 500px.
+    Die `clamp()`-Funktion lässt die Breite basierend auf `50vw` skalieren, hält sie aber strikt im Bereich von 200px bis 500px.
 
-Konkret heißt das: Die Breite bleibt bei 200px, wenn 50vw darunter fallen würde, springt auf 500px, wenn 50vw darüber liegt, und skaliert dazwischen linear.
+    Konkret heißt das: Die Breite bleibt bei 200px, wenn 50vw darunter fallen würde, springt auf 500px, wenn 50vw darüber liegt, und skaliert dazwischen linear.
 
-Damit wird dein Layout quasi automatisch responsiv! Der Clou bei `clamp` ist, dass es **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.
+    Damit wird dein Layout quasi automatisch responsiv! Der Clou bei `clamp` ist, dass es **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.
 
-Normalerweise würdest du Viewport-Einheiten nicht für Schriftgrößen verwenden wollen, aber mit `clamp()` garantierst du, dass die Schrift nie zu winzig oder zu riesig wird.
+    Normalerweise würdest du Viewport-Einheiten nicht für Schriftgrößen verwenden wollen, aber mit `clamp()` garantierst du, dass die Schrift nie zu winzig oder zu riesig wird.
   </div>
   </slot>
 </Challenge>
@@ -261,12 +261,12 @@ Normalerweise würdest du Viewport-Einheiten nicht für Schriftgrößen verwende
 >
   <slot name="question">
   <div className="question">
-Unterstützt CSS Nesting nativ?
+    Unterstützt CSS Nesting nativ?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ja! Endlich haben wir natives CSS-Nesting! CSS hat 2023 offiziell eine Nesting-Syntax eingeführt, die hierarchisches Styling direkt im Stylesheet ermöglicht.
+    Ja! Endlich haben wir natives CSS-Nesting! CSS hat 2023 offiziell eine Nesting-Syntax eingeführt, die hierarchisches Styling direkt im Stylesheet ermöglicht.
   </div>
   </slot>
 </Challenge>
@@ -285,8 +285,8 @@ Ja! Endlich haben wir natives CSS-Nesting! CSS hat 2023 offiziell eine Nesting-S
 >
   <slot name="question">
   <div className="question">
-Ist das eine korrekte Verwendung von nativem CSS-Nesting?
-```css
+    Ist das eine korrekte Verwendung von nativem CSS-Nesting?
+    ```css
     .container {
       color: black;
       .title {
@@ -294,14 +294,14 @@ Ist das eine korrekte Verwendung von nativem CSS-Nesting?
         background: black;
       }
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `.title`-Klasse ist innerhalb der `.container`-Klasse verschachtelt und die Eigenschaften werden wie erwartet angewendet.
+    Die `.title`-Klasse ist innerhalb der `.container`-Klasse verschachtelt und die Eigenschaften werden wie erwartet angewendet.
 
-Das ist ein hervorragender Ansatz, um zusammengehörige Styles beieinander zu halten und lange Selektoren zu vermeiden.
+    Das ist ein hervorragender Ansatz, um zusammengehörige Styles beieinander zu halten und lange Selektoren zu vermeiden.
   </div>
   </slot>
 </Challenge>
@@ -320,8 +320,8 @@ Das ist ein hervorragender Ansatz, um zusammengehörige Styles beieinander zu ha
 >
   <slot name="question">
   <div className="question">
-Welche Hintergrundfarbe erhalten die direkten `div`-Kindelemente von `.container`?
-```css
+    Welche Hintergrundfarbe erhalten die direkten `div`-Kindelemente von `.container`?
+    ```css
     .container {
       background-color: red;
       > div {
@@ -329,14 +329,14 @@ Welche Hintergrundfarbe erhalten die direkten `div`-Kindelemente von `.container
       }
       background-color: blue !important;
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der `>`-Selektor in der verschachtelten Regel wendet `background-color: white` ausschließlich auf direkte `div`-Kindelemente innerhalb von `.container` an.
+    Der `>`-Selektor in der verschachtelten Regel wendet `background-color: white` ausschließlich auf direkte `div`-Kindelemente innerhalb von `.container` an.
 
-Die letzte Regel, `background-color: blue !important;`, ist nur eine kleine Ablenkung. Sie steht **außerhalb der verschachtelten Regel** und wird auf alle `.container`-Elemente angewendet.
+    Die letzte Regel, `background-color: blue !important;`, ist nur eine kleine Ablenkung. Sie steht **außerhalb der verschachtelten Regel** und wird auf alle `.container`-Elemente angewendet.
   </div>
   </slot>
 </Challenge>
@@ -356,20 +356,20 @@ Die letzte Regel, `background-color: blue !important;`, ist nur eine kleine Able
 >
   <slot name="question">
   <div className="question">
-Wie änderst du den Wert einer CSS-Variable zur Laufzeit?
+    Wie änderst du den Wert einer CSS-Variable zur Laufzeit?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-CSS-Variablen lassen sich über Klassen und JavaScript setzen. Sie können sogar erst definiert werden, 'nachdem' sie technisch bereits verwendet wurden.
-```js
-document.documentElement.style.setProperty('--main-color', 'blue');
-```
-Dadurch wird der Wert von `--main-color` für das gesamte Dokument auf `blue` geändert.
+    CSS-Variablen lassen sich über Klassen und JavaScript setzen. Sie können sogar erst definiert werden, 'nachdem' sie technisch bereits verwendet wurden.
+    ```js
+    document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    Dadurch wird der Wert von `--main-color` für das gesamte Dokument auf `blue` geändert.
 
-CSS-Variablen sind veränderbar und lassen sich zur Laufzeit direkt per JavaScript anpassen.
+    CSS-Variablen sind veränderbar und lassen sich zur Laufzeit direkt per JavaScript anpassen.
 
-Du kannst sie auch durch das Hinzufügen oder Entfernen von Klassen umschalten – ein bewährtes Pattern für dynamisches Theming.
+    Du kannst sie auch durch das Hinzufügen oder Entfernen von Klassen umschalten – ein bewährtes Pattern für dynamisches Theming.
   </div>
   </slot>
 </Challenge>
@@ -388,20 +388,20 @@ Du kannst sie auch durch das Hinzufügen oder Entfernen von Klassen umschalten �
 >
   <slot name="question">
   <div className="question">
-Wie groß ist die berechnete Breite des Elements?
-```css
+    Wie groß ist die berechnete Breite des Elements?
+    ```css
     :root {
       --base-width: 100px;
     }
     div {
       width: calc(var(--base-width) + 10px);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `calc()`-Funktion wertet den Wert von `--base-width` (100px) aus und addiert 10px hinzu. Dadurch ergibt sich eine finale Breite von 110px.
+    Die `calc()`-Funktion wertet den Wert von `--base-width` (100px) aus und addiert 10px hinzu. Dadurch ergibt sich eine finale Breite von 110px.
   </div>
   </slot>
 </Challenge>

@@ -46,22 +46,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la forma correcta de usar una variable CSS llamada `--main-color` para establecer el color de fondo de un elemento?
-```css
+    ¿Cuál es la forma correcta de usar una variable CSS llamada `--main-color` para establecer el color de fondo de un elemento?
+    ```css
     :root {
       --main-color: blue;
     }
     div {
       /* How do we use --main-color here? */
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las variables CSS se utilizan con la función `var`, por lo que la respuesta correcta es `background-color: var(--main-color);`. Esta sintaxis recupera el valor de `--main-color` y lo aplica.
+    Las variables CSS se utilizan con la función `var`, por lo que la respuesta correcta es `background-color: var(--main-color);`. Esta sintaxis recupera el valor de `--main-color` y lo aplica.
 
-Las otras opciones pueden resultarte familiares por otros lenguajes o sintaxis de preprocesadores, como Sass o Less.
+    Las otras opciones pueden resultarte familiares por otros lenguajes o sintaxis de preprocesadores, como Sass o Less.
   </div>
   </slot>
 </Challenge>
@@ -82,28 +82,28 @@ Las otras opciones pueden resultarte familiares por otros lenguajes o sintaxis d
 >
   <slot name="question">
   <div className="question">
-Si el contenedor padre mide 400px de ancho, ¿cuál será el ancho calculado real de este elemento?
-```css
+    Si el contenedor padre mide 400px de ancho, ¿cuál será el ancho calculado real de este elemento?
+    ```css
     div {
       width: min(250px, 50%);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `min()` siempre se queda con el valor más pequeño entre `250px` y el `50%` del ancho del padre.
+    La función `min()` siempre se queda con el valor más pequeño entre `250px` y el `50%` del ancho del padre.
 
-Para entender el valor calculado, hay que convertir las unidades relativas a píxeles:
+    Para entender el valor calculado, hay que convertir las unidades relativas a píxeles:
 
-- El `50%` de `400px` equivale a `200px`
-- `250px` ya está en píxeles
-```css
-/* This gets computed to */
-width: min(250px, 200px);
-/* -> 200px wins */
-```
-La función `min()` es especialmente útil para el diseño responsivo, ya que te permite garantizar que un componente (o el tamaño de la fuente) nunca supere un límite establecido.
+    - El `50%` de `400px` equivale a `200px`
+    - `250px` ya está en píxeles
+    ```css
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
+    ```
+    La función `min()` es especialmente útil para el diseño responsivo, ya que te permite garantizar que un componente (o el tamaño de la fuente) nunca supere un límite establecido.
   </div>
   </slot>
 </Challenge>
@@ -124,28 +124,28 @@ La función `min()` es especialmente útil para el diseño responsivo, ya que te
 >
   <slot name="question">
   <div className="question">
-Dado un contenedor con un ancho de 200px, ¿cuál sería el ancho calculado del `<div>`?
-```css
+    Dado un contenedor con un ancho de 200px, ¿cuál sería el ancho calculado del `<div>`?
+    ```css
     div {
       width: max(50px, 10%, 6rem);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `max()` acepta dos o más valores y selecciona automáticamente el mayor. Si asumimos que el tamaño de fuente raíz es el predeterminado del navegador (`16px`), el ancho resultante es `96px`.
+    La función `max()` acepta dos o más valores y selecciona automáticamente el mayor. Si asumimos que el tamaño de fuente raíz es el predeterminado del navegador (`16px`), el ancho resultante es `96px`.
 
-Para entender el valor calculado, debemos convertir las unidades relativas a píxeles:
+    Para entender el valor calculado, debemos convertir las unidades relativas a píxeles:
 
-- `50px` ya está en píxeles
-- `10%` de `200px` equivale a `20px`
-- `6rem` es `6 * 16px` (el tamaño de fuente predeterminado), lo que da `96px`
-```css
-/* This gets computed to */
-width: max(50px, 20px, 96px);
-/* -> 96px wins */
-```
+    - `50px` ya está en píxeles
+    - `10%` de `200px` equivale a `20px`
+    - `6rem` es `6 * 16px` (el tamaño de fuente predeterminado), lo que da `96px`
+    ```css
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
+    ```
   </div>
   </slot>
 </Challenge>
@@ -164,15 +164,15 @@ width: max(50px, 20px, 96px);
 >
   <slot name="question">
   <div className="question">
-¿Qué efecto tiene usar `minmax(100px, 200px)` en una pista de CSS Grid?
-```css
+    ¿Qué efecto tiene usar `minmax(100px, 200px)` en una pista de CSS Grid?
+    ```css
     grid-template-columns: minmax(100px, 200px);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Usar `minmax(100px, 200px)` permite que la pista de la cuadrícula se redimensione entre `100px` y `200px`, adaptándose al espacio disponible sin bajar nunca de `100px` ni superar los `200px`.
+    Usar `minmax(100px, 200px)` permite que la pista de la cuadrícula se redimensione entre `100px` y `200px`, adaptándose al espacio disponible sin bajar nunca de `100px` ni superar los `200px`.
   </div>
   </slot>
 </Challenge>
@@ -192,19 +192,19 @@ Usar `minmax(100px, 200px)` permite que la pista de la cuadrícula se redimensio
 >
   <slot name="question">
   <div className="question">
-¿De qué color terminará el fondo con este CSS?
-```css
+    ¿De qué color terminará el fondo con este CSS?
+    ```css
     div {
       background: var(--primary, olivedrab);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `var()` te permite inyectar un valor de respaldo por si la variable no está definida. Aquí, el fondo será `olivedrab` (`#6b8e23`) porque `--primary` simplemente no existe.
+    La función `var()` te permite inyectar un valor de respaldo por si la variable no está definida. Aquí, el fondo será `olivedrab` (`#6b8e23`) porque `--primary` simplemente no existe.
 
-Úsalo para blindar tus estilos y evitar que se rompan si falta una variable o el navegador no la soporta.
+    Úsalo para blindar tus estilos y evitar que se rompan si falta una variable o el navegador no la soporta.
   </div>
   </slot>
 </Challenge>
@@ -224,17 +224,17 @@ La función `var()` te permite inyectar un valor de respaldo por si la variable 
 >
   <slot name="question">
   <div className="question">
-¿Qué hace `clamp()`?
-```css
+    ¿Qué hace `clamp()`?
+    ```css
     .card {
       width: clamp(200px, 50vw, 500px);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo mantiene dentro de un rango de 200px a 500px.
+    La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo mantiene dentro de un rango de 200px a 500px.
   </div>
   </slot>
 </Challenge>
@@ -253,12 +253,12 @@ La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo
 >
   <slot name="question">
   <div className="question">
-¿CSS admite el anidamiento de forma nativa?
+    ¿CSS admite el anidamiento de forma nativa?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¡Sí! ¡Por fin contamos con anidamiento nativo en CSS! La especificación introdujo esta sintaxis en 2023, lo que te permite definir estilos jerárquicos directamente en CSS sin depender de preprocesadores.
+    ¡Sí! ¡Por fin contamos con anidamiento nativo en CSS! La especificación introdujo esta sintaxis en 2023, lo que te permite definir estilos jerárquicos directamente en CSS sin depender de preprocesadores.
   </div>
   </slot>
 </Challenge>
@@ -277,8 +277,8 @@ La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo
 >
   <slot name="question">
   <div className="question">
-¿Es este un uso correcto del anidamiento nativo en CSS?
-```css
+    ¿Es este un uso correcto del anidamiento nativo en CSS?
+    ```css
     .container {
       color: black;
       .title {
@@ -286,14 +286,14 @@ La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo
         background: black;
       }
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La clase `.title` está anidada dentro de `.container`, y las propiedades se aplican como se espera.
+    La clase `.title` está anidada dentro de `.container`, y las propiedades se aplican como se espera.
 
-Es una excelente forma de mantener los estilos relacionados agrupados y evitar selectores largos e innecesarios.
+    Es una excelente forma de mantener los estilos relacionados agrupados y evitar selectores largos e innecesarios.
   </div>
   </slot>
 </Challenge>
@@ -312,8 +312,8 @@ Es una excelente forma de mantener los estilos relacionados agrupados y evitar s
 >
   <slot name="question">
   <div className="question">
-¿Qué color de fondo se aplicará a los `div` hijos directos de `.container`?
-```css
+    ¿Qué color de fondo se aplicará a los `div` hijos directos de `.container`?
+    ```css
     .container {
       background-color: red;
       > div {
@@ -321,12 +321,12 @@ Es una excelente forma de mantener los estilos relacionados agrupados y evitar s
       }
       background-color: blue !important;
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El selector `>` en la regla anidada aplica `background-color: white` únicamente a los elementos `div` hijos directos dentro de `.container`.
+    El selector `>` en la regla anidada aplica `background-color: white` únicamente a los elementos `div` hijos directos dentro de `.container`.
   </div>
   </slot>
 </Challenge>
@@ -346,20 +346,20 @@ El selector `>` en la regla anidada aplica `background-color: white` únicamente
 >
   <slot name="question">
   <div className="question">
-¿Cómo cambias el valor de una variable CSS en tiempo de ejecución?
+    ¿Cómo cambias el valor de una variable CSS en tiempo de ejecución?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las variables CSS se pueden establecer mediante clases y JavaScript. Incluso pueden definirse 'después' de haberse utilizado técnicamente.
-```js
-document.documentElement.style.setProperty('--main-color', 'blue');
-```
-Esto cambiará el valor de `--main-color` a `blue` para todo el documento.
+    Las variables CSS se pueden establecer mediante clases y JavaScript. Incluso pueden definirse 'después' de haberse utilizado técnicamente.
+    ```js
+    document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    Esto cambiará el valor de `--main-color` a `blue` para todo el documento.
 
-Las variables CSS son mutables por diseño, por lo que puedes alterarlas en tiempo de ejecución con JavaScript.
+    Las variables CSS son mutables por diseño, por lo que puedes alterarlas en tiempo de ejecución con JavaScript.
 
-También puedes modificarlas agregando o quitando clases, un patrón estándar para implementar temas dinámicos.
+    También puedes modificarlas agregando o quitando clases, un patrón estándar para implementar temas dinámicos.
   </div>
   </slot>
 </Challenge>
@@ -378,20 +378,20 @@ También puedes modificarlas agregando o quitando clases, un patrón estándar p
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el ancho calculado final del elemento?
-```css
+    ¿Cuál es el ancho calculado final del elemento?
+    ```css
     :root {
       --base-width: 100px;
     }
     div {
       width: calc(var(--base-width) + 10px);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `calc()` evalúa matemáticamente el valor de `--base-width` (100px) y le suma 10px. El navegador resuelve esta expresión en tiempo de ejecución, por lo que el ancho final aplicado es de 110px.
+    La función `calc()` evalúa matemáticamente el valor de `--base-width` (100px) y le suma 10px. El navegador resuelve esta expresión en tiempo de ejecución, por lo que el ancho final aplicado es de 110px.
   </div>
   </slot>
 </Challenge>

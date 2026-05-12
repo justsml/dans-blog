@@ -57,8 +57,8 @@ Ya seas un Rustaceano experimentado o estés empezando con la gestión de memori
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede al ejecutar este código? Intenta predecir la salida o el error:
-```rust
+    ¿Qué sucede al ejecutar este código? Intenta predecir la salida o el error:
+    ```rust
       fn main() {
           let philosopher =
               String::from("Zeno of Citium");
@@ -66,28 +66,28 @@ Ya seas un Rustaceano experimentado o estés empezando con la gestión de memori
 
           println!("Hello, {}!", philosopher);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código no se compila debido a las reglas de propiedad de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del `String` se transfiere a `greeting`. Tras este movimiento, `philosopher` deja de ser válido para su uso.
+    Este código no se compila debido a las reglas de propiedad de Rust. Cuando asignamos `philosopher` a `greeting`, la propiedad del `String` se transfiere a `greeting`. Tras este movimiento, `philosopher` deja de ser válido para su uso.
 
       Aquí tienes tres formas de solucionarlo:
 
       1. Clonar la cadena (crea una nueva copia):
-```rust
+    ```rust
       let greeting = philosopher.clone();
-```
-2. Usar una referencia (toma prestado el valor):
-```rust
+    ```
+    2. Usar una referencia (toma prestado el valor):
+    ```rust
       let greeting = &philosopher;
-```
-3. Usar un slice de cadena (toma prestada una parte de la cadena):
-```rust
+    ```
+    3. Usar un slice de cadena (toma prestada una parte de la cadena):
+    ```rust
       let greeting = &philosopher[..];
-```
-Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te otorga la propiedad, mientras que las referencias son más económicas pero tienen restricciones de tiempo de vida.
+    ```
+    Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clonar es más costoso pero te otorga la propiedad, mientras que las referencias son más económicas pero tienen restricciones de tiempo de vida.
   </div>
   </slot>
 </Challenge>
@@ -106,8 +106,8 @@ Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clo
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede al ejecutar este código? Piensa en la transferencia de propiedad:
-```rust
+    ¿Qué sucede al ejecutar este código? Piensa en la transferencia de propiedad:
+    ```rust
       fn take_knowledge(knowledge: String) {
           println!("Knowledge: {}", knowledge);
       }
@@ -118,35 +118,35 @@ Cada solución tiene diferentes casos de uso e implicaciones de rendimiento. Clo
           // What happens to our wisdom?
           println!("Do you {}", wisdom);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El código no compila porque la propiedad de `wisdom` se transfirió a `take_knowledge` y, por lo tanto, no puede usarse después.
+    El código no compila porque la propiedad de `wisdom` se transfirió a `take_knowledge` y, por lo tanto, no puede usarse después.
 
       Aquí tienes tres formas de solucionar este problema:
 
       1. Pasar por referencia (prestar el valor):
-```rust
+    ```rust
       fn borrow_it(text: &String) {
           println!("Inside: {}", text);
       }
       borrow_it(&wisdom);  // Now wisdom can be used after
-```
-2. Clonar el valor (crear una nueva copia):
-```rust
+    ```
+    2. Clonar el valor (crear una nueva copia):
+    ```rust
       take_knowledge(wisdom.clone());  // Original wisdom remains valid
-```
-3. Devolver la propiedad desde la función:
-```rust
+    ```
+    3. Devolver la propiedad desde la función:
+    ```rust
       fn take_and_return(text: String) -> String {
           println!("Inside: {}", text);
           text  // Return ownership back
       }
       let wisdom = take_and_return(wisdom);  // Reassign returned ownership
-```
-Cada enfoque tiene diferentes casos de uso:
+    ```
+    Cada enfoque tiene diferentes casos de uso:
       - Referencias: La más eficiente, pero requiere gestión de tiempos de vida
       - Clonación: Simple, pero potencialmente costosa
       - Devolver la propiedad: Útil para transformar valores
@@ -170,8 +170,8 @@ Cada enfoque tiene diferentes casos de uso:
 >
   <slot name="question">
   <div className="question">
-¿Qué ocurre con múltiples referencias mutables?
-```rust
+    ¿Qué ocurre con múltiples referencias mutables?
+    ```rust
       fn main() {
           let mut wisdom = String::from("He who laughs at");
           let ref1 = &mut wisdom;  // First mutable borrow
@@ -179,13 +179,13 @@ Cada enfoque tiene diferentes casos de uso:
           ref1.push_str(" himself never runs");
           ref2.push_str(" out of things to laugh at.");
       }
-```
-Piensa en las reglas de Rust para las referencias mutables.
+    ```
+    Piensa en las reglas de Rust para las referencias mutables.
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código viola las reglas fundamentales de préstamo de Rust:
+    Este código viola las reglas fundamentales de préstamo de Rust:
       - Solo UNA referencia mutable a un valor a la vez
       - O cualquier número de referencias inmutables
       - Las referencias no pueden sobrevivir a su referente
@@ -193,7 +193,7 @@ Este código viola las reglas fundamentales de préstamo de Rust:
       Así es como puedes arreglar el código:
 
       1. Usa ámbitos secuenciales:
-```rust
+    ```rust
       let mut wisdom = String::from("He who laughs at");
       {
           let ref1 = &mut wisdom;
@@ -201,14 +201,14 @@ Este código viola las reglas fundamentales de préstamo de Rust:
       }  // ref1 goes out of scope
       let ref2 = &mut wisdom;  // Now this is valid
       ref2.push_str(" out of things to laugh at.");
-```
-2. O modifica la cadena en un único préstamo:
-```rust
+    ```
+    2. O modifica la cadena en un único préstamo:
+    ```rust
       let mut wisdom = String::from("He who laughs at");
       let ref1 = &mut wisdom;
       ref1.push_str(" himself never runs out of things to laugh at.");
-```
-Estas reglas previenen condiciones de carrera en tiempo de compilación, haciendo que Rust sea seguro para subprocesos por defecto.
+    ```
+    Estas reglas previenen condiciones de carrera en tiempo de compilación, haciendo que Rust sea seguro para subprocesos por defecto.
 
       Trampa común: Intentar usar múltiples referencias mutables para evitar clonar o
       modificar diferentes partes del mismo valor simultáneamente.
@@ -230,8 +230,8 @@ Estas reglas previenen condiciones de carrera en tiempo de compilación, haciend
 >
   <slot name="question">
   <div className="question">
-¿Se compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?
-```rust
+    ¿Se compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?
+    ```rust
       fn first_word(s: &str) -> &str {  // No explicit lifetimes?
           match s.find(' ') {
               Some(pos) => &s[0..pos],
@@ -244,12 +244,12 @@ Estas reglas previenen condiciones de carrera en tiempo de compilación, haciend
           let first = first_word(&name);
           println!("Hello, {}", first);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código se compila correctamente gracias a las reglas de elisión de lifetimes de Rust. 
+    Este código se compila correctamente gracias a las reglas de elisión de lifetimes de Rust. 
       Estas reglas permiten que el compilador infiera automáticamente los lifetimes en patrones comunes.
 
       Las tres reglas de elisión de lifetimes son:
@@ -258,13 +258,13 @@ Este código se compila correctamente gracias a las reglas de elisión de lifeti
       3. Si hay múltiples parámetros de lifetime de entrada, pero uno de ellos es &self o &mut self, el lifetime de self se asigna a todos los parámetros de lifetime de salida
 
       Esta función es equivalente a:
-```rust
+    ```rust
       fn first_word<'a>(s: &'a str) -> &'a str {
           // ... same implementation
       }
-```
-Patrones comunes donde la elisión funciona:
-```rust
+    ```
+    Patrones comunes donde la elisión funciona:
+    ```rust
       // These don't need explicit lifetimes
       fn get_str(s: &str) -> &str { s }
       fn get_first(s: &str) -> &str { &s[0..1] }
@@ -273,8 +273,8 @@ Patrones comunes donde la elisión funciona:
       fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
           if x.len() > y.len() { x } else { y }
       }
-```
-Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero comprende cuándo se necesitan lifetimes explícitos.
+    ```
+    Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero comprende cuándo se necesitan lifetimes explícitos.
   </div>
   </slot>
 </Challenge>
@@ -289,8 +289,8 @@ Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero co
 >
   <slot name="question">
   <div className="question">
-¿Qué está mal en esta definición de tipo recursivo?
-```rust
+    ¿Qué está mal en esta definición de tipo recursivo?
+    ```rust
       #[derive(Debug)]
       enum CatList {
           Cons(i32, CatList),  // Recursive without indirection
@@ -303,15 +303,15 @@ Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero co
                   CatList::Cons(3,
                       CatList::Nil)));
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código falla porque el compilador no puede determinar el tamaño de `CatList` en tiempo de compilación. ¡La naturaleza recursiva del tipo significa que podría ser infinitamente grande!
+    Este código falla porque el compilador no puede determinar el tamaño de `CatList` en tiempo de compilación. ¡La naturaleza recursiva del tipo significa que podría ser infinitamente grande!
 
       Así es como solucionarlo usando `Box<T>`:
-```rust
+    ```rust
       #[derive(Debug)]
       enum CatList {
           Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
@@ -324,8 +324,8 @@ Este código falla porque el compilador no puede determinar el tamaño de `CatLi
                   Box::new(CatList::Cons(3,
                       Box::new(CatList::Nil))))));
       }
-```
-Por qué funciona `Box<T>`:
+    ```
+    Por qué funciona `Box<T>`:
       1. Box proporciona un puntero de tamaño fijo (generalmente 8 bytes en sistemas de 64 bits)
       2. Los datos reales se almacenan en el heap
       3. El compilador ahora sabe exactamente cuánto espacio asignar
@@ -353,8 +353,8 @@ Por qué funciona `Box<T>`:
 >
   <slot name="question">
   <div className="question">
-¿Qué imprimirá este código? ¡Cuenta con cuidado!
-```rust
+    ¿Qué imprimirá este código? ¡Cuenta con cuidado!
+    ```rust
       use std::rc::Rc;
 
       fn main() {
@@ -366,19 +366,19 @@ Por qué funciona `Box<T>`:
               Rc::strong_count(&text)
           );
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Desglosemos cómo funciona `Rc`:
+    Desglosemos cómo funciona `Rc`:
 
       1. Creación inicial con `Rc::new()`: count = 1
       2. Primer clon para `marcus`: count = 2
       3. Segundo clon para `aurelius`: count = 3
 
       Características importantes de `Rc`:
-```rust
+    ```rust
       use std::rc::Rc;
       
       fn demonstrate_rc() {
@@ -392,8 +392,8 @@ Desglosemos cómo funciona `Rc`:
           
           println!("Count after scope: {}", Rc::strong_count(&original)); // 1
       }
-```
-Puntos clave:
+    ```
+    Puntos clave:
       - Rc::clone() es económico: solo incrementa un contador
       - Rc es exclusivo para escenarios de un solo hilo
       - Cuando se descarta la última referencia, los datos se limpian automáticamente
@@ -421,8 +421,8 @@ Puntos clave:
 >
   <slot name="question">
   <div className="question">
-¿Compila esta definición de struct? ¿Por qué sí o por qué no?
-```rust
+    ¿Compila esta definición de struct? ¿Por qué sí o por qué no?
+    ```rust
       struct Philosopher {
           name: &str,    // Reference without lifetime
           quote: &str,   // Another reference without lifetime
@@ -434,13 +434,13 @@ Puntos clave:
               quote: "Luck happens when preparation meets opportunity",
           };
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El código falla porque los structs que contienen referencias deben especificar tiempos de vida. Así es como solucionarlo:
-```rust
+    El código falla porque los structs que contienen referencias deben especificar tiempos de vida. Así es como solucionarlo:
+    ```rust
       // Single lifetime parameter
       struct Philosopher<'a> {
           name: &'a str,
@@ -452,9 +452,9 @@ El código falla porque los structs que contienen referencias deben especificar 
           name: &'n str,
           quote: &'q str,
       }
-```
-Patrones comunes:
-```rust
+    ```
+    Patrones comunes:
+    ```rust
       // Own the data instead
       struct PhilosopherOwned {
           name: String,
@@ -466,8 +466,8 @@ Patrones comunes:
           name: String,      // Owned
           quote: &'a str,    // Borrowed
       }
-```
-Mejores prácticas:
+    ```
+    Mejores prácticas:
       1. Usa tipos con propiedad (String) cuando necesites almacenar datos indefinidamente
       2. Usa referencias cuando el tiempo de vida del struct sea claramente más corto que el de los datos
       3. Considera múltiples parámetros de tiempo de vida cuando las referencias puedan tener duraciones distintas
@@ -490,8 +490,8 @@ Mejores prácticas:
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede con esta función que devuelve la más larga de dos slices de cadena?
-```rust
+    ¿Qué sucede con esta función que devuelve la más larga de dos slices de cadena?
+    ```rust
       fn longest(text1: &str, text2: &str) -> &str {
           if text1.len() > text2.len() {
               text1    // Returning a reference, but which lifetime?
@@ -506,13 +506,13 @@ Mejores prácticas:
               "Marcus Aurelius"
           ));
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código falla porque el compilador no puede determinar la relación entre los tiempos de vida de entrada y salida. Aquí te explico por qué y cómo solucionarlo:
-```rust
+    Este código falla porque el compilador no puede determinar la relación entre los tiempos de vida de entrada y salida. Aquí te explico por qué y cómo solucionarlo:
+    ```rust
       // Correct version with explicit lifetime annotation
       fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
           if text1.len() > text2.len() {
@@ -530,14 +530,14 @@ Este código falla porque el compilador no puede determinar la relación entre l
               text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
           }
       }
-```
-Por qué se necesitan los tiempos de vida aquí:
+    ```
+    Por qué se necesitan los tiempos de vida aquí:
       1. Las múltiples referencias de entrada podrían tener tiempos de vida distintos
       2. El valor de retorno debe vivir tanto como ambas entradas
       3. El compilador necesita verificar estas relaciones
 
       Patrones comunes:
-```rust
+    ```rust
       // Single input reference - elision works
       fn first_word(s: &str) -> &str { /* ... */ }
 
@@ -546,8 +546,8 @@ Por qué se necesitan los tiempos de vida aquí:
 
       // Different lifetimes possible
       fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
-```
-Mejores prácticas:
+    ```
+    Mejores prácticas:
       1. Deja que la elisión de tiempos de vida funcione cuando sea posible
       2. Usa tiempos de vida explícitos cuando las relaciones deban quedar claras
       3. Considera devolver tipos con propiedad (*owned*) para evitar la complejidad de los tiempos de vida
@@ -570,8 +570,8 @@ Mejores prácticas:
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede cuando se ejecuta este código?
-```rust
+    ¿Qué sucede cuando se ejecuta este código?
+    ```rust
       use std::cell::RefCell;
 
       fn main() {
@@ -580,13 +580,13 @@ Mejores prácticas:
           let _borrow2 = data.borrow_mut();  // Second mutable borrow
           println!("Value: {}", _borrow2);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-RefCell proporciona mutabilidad interna, pero sigue aplicando las reglas de préstamo de Rust en tiempo de ejecución:
-```rust
+    RefCell proporciona mutabilidad interna, pero sigue aplicando las reglas de préstamo de Rust en tiempo de ejecución:
+    ```rust
       use std::cell::RefCell;
 
       fn demonstrate_refcell() {
@@ -605,8 +605,8 @@ RefCell proporciona mutabilidad interna, pero sigue aplicando las reglas de pré
           let read1 = data.borrow();
           let read2 = data.borrow(); // This is OK
       }
-```
-Conceptos clave:
+    ```
+    Conceptos clave:
       1. RefCell traslada las comprobaciones de préstamo a tiempo de ejecución
       2. Puede causar pánicos si se violan las reglas
       3. Útil para el patrón de mutabilidad interna
@@ -639,8 +639,8 @@ Conceptos clave:
 >
   <slot name="question">
   <div className="question">
-¿Qué imprimirá este código?
-```rust
+    ¿Qué imprimirá este código?
+    ```rust
       use std::cell::Cell;
 
       fn main() {
@@ -650,13 +650,13 @@ Conceptos clave:
           meaning.set(43);            // Mutation through shared ref
           println!("{}", life.get()); // And here?
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Cell y RefCell cumplen funciones distintas para la mutabilidad interna:
-```rust
+    Cell y RefCell cumplen funciones distintas para la mutabilidad interna:
+    ```rust
       use std::cell::{Cell, RefCell};
 
       // Cell for Copy types
@@ -680,8 +680,8 @@ Cell y RefCell cumplen funciones distintas para la mutabilidad interna:
               self.messages.borrow_mut().push(msg.to_string());
           }
       }
-```
-Diferencias clave:
+    ```
+    Diferencias clave:
       1. Cell:
          - Funciona mejor con tipos Copy
          - Carece de API de préstamo
@@ -716,10 +716,10 @@ Diferencias clave:
 >
   <slot name="question">
   <div className="question">
-¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?
+    ¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?
 
       Considera este ejemplo:
-```rust
+    ```rust
       use std::rc::Rc;
 
       struct SharedConfig {
@@ -736,15 +736,15 @@ Diferencias clave:
           let config2 = Rc::clone(&config);
           // Both config and config2 share ownership
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.
+    Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.
 
       Casos de uso comunes:
-```rust
+    ```rust
       use std::rc::Rc;
       use std::cell::RefCell;
 
@@ -763,8 +763,8 @@ Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde
       let original = Rc::new(vec![1, 2, 3]);
       let clone1 = Rc::clone(&original);
       let clone2 = Rc::clone(&original);
-```
-Puntos clave:
+    ```
+    Puntos clave:
       1. Usa Rc cuando:
          - Múltiples partes de tu código necesiten propiedad
          - Sepas que el uso compartido es de un solo hilo
@@ -803,10 +803,10 @@ Puntos clave:
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la diferencia clave entre RefCell y RwLock en Rust?
+    ¿Cuál es la diferencia clave entre RefCell y RwLock en Rust?
 
       Considera estos ejemplos:
-```rust
+    ```rust
       use std::cell::RefCell;
       use std::sync::RwLock;
 
@@ -817,13 +817,13 @@ Puntos clave:
       // Example 2
       let shared = RwLock::new(vec![1, 2, 3]);
       let locked = shared.write().unwrap();
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-RefCell y RwLock cumplen propósitos similares, pero en contextos distintos:
-```rust
+    RefCell y RwLock cumplen propósitos similares, pero en contextos distintos:
+    ```rust
       // Single-threaded scenario with RefCell
       use std::cell::RefCell;
       
@@ -849,8 +849,8 @@ RefCell y RwLock cumplen propósitos similares, pero en contextos distintos:
               self.data.write().unwrap().push(42);
           }
       }
-```
-Diferencias clave:
+    ```
+    Diferencias clave:
       1. RefCell:
          - Solo para un único hilo
          - Sin sobrecarga de sincronización
@@ -885,8 +885,8 @@ Diferencias clave:
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede cuando se ejecuta este código?
-```rust
+    ¿Qué sucede cuando se ejecuta este código?
+    ```rust
       use std::sync::{Arc, Mutex};
 
       fn main() {
@@ -898,13 +898,13 @@ Diferencias clave:
           
           println!("Value: {}", _guard2);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este código demuestra un escenario clásico de interbloqueo. Así es como solucionarlo:
-```rust
+    Este código demuestra un escenario clásico de interbloqueo. Así es como solucionarlo:
+    ```rust
       use std::sync::{Arc, Mutex};
 
       // Correct way - Release lock before acquiring it again
@@ -930,8 +930,8 @@ Este código demuestra un escenario clásico de interbloqueo. Así es como soluc
           let guard1 = lock1.lock().unwrap();
           let guard2 = lock2.lock().unwrap();
       }
-```
-Mejores prácticas para evitar interbloqueos:
+    ```
+    Mejores prácticas para evitar interbloqueos:
       1. Mantén las secciones críticas pequeñas
       2. Libera los bloqueos rápidamente usando ámbitos
       3. Adquiere múltiples bloqueos en un orden consistente
@@ -939,7 +939,7 @@ Mejores prácticas para evitar interbloqueos:
       5. Considera usar RwLock para cargas de trabajo intensivas en lectura
 
       Patrones comunes:
-```rust
+    ```rust
       // Thread-safe counter
       struct Counter {
           count: Arc<Mutex<i32>>,
@@ -951,7 +951,7 @@ Mejores prácticas para evitar interbloqueos:
               *count += 1;
           } // Lock automatically released here
       }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -966,8 +966,8 @@ Mejores prácticas para evitar interbloqueos:
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede cuando ejecutas este código con referencias débiles?
-```rust
+    ¿Qué sucede cuando ejecutas este código con referencias débiles?
+    ```rust
       use std::rc::{Rc, Weak};
 
       fn main() {
@@ -977,13 +977,13 @@ Mejores prácticas para evitar interbloqueos:
           
           println!("Value: {:?}", weak.upgrade());
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las referencias débiles no impiden que sus objetivos se desasignen. Aquí tienes un ejemplo detallado:
-```rust
+    Las referencias débiles no impiden que sus objetivos se desasignen. Aquí tienes un ejemplo detallado:
+    ```rust
       use std::rc::{Rc, Weak};
       use std::cell::RefCell;
 
@@ -1011,8 +1011,8 @@ Las referencias débiles no impiden que sus objetivos se desasignen. Aquí tiene
               self.parent.borrow().upgrade()
           }
       }
-```
-Casos de uso comunes:
+    ```
+    Casos de uso comunes:
       1. Estructuras tipo caché donde las entradas pueden eliminarse
       2. Estructuras de árbol con referencias a padres
       3. Patrones observador donde los sujetos pueden descartarse
@@ -1041,8 +1041,8 @@ Casos de uso comunes:
 >
   <slot name="question">
   <div className="question">
-¿Qué ocurre con el manejador de archivo en este ejemplo de RAII?
-```rust
+    ¿Qué ocurre con el manejador de archivo en este ejemplo de RAII?
+    ```rust
       use std::fs::File;
       
       struct FileWrapper {
@@ -1055,15 +1055,15 @@ Casos de uso comunes:
           // ... use wrapper ...
           // No Drop implementation
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el manejador de archivo: su campo `File` se elimina automáticamente cuando el wrapper sale del ámbito.
+    RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el manejador de archivo: su campo `File` se elimina automáticamente cuando el wrapper sale del ámbito.
 
       Solo implementas `Drop` cuando el wrapper en sí tiene un comportamiento de limpieza adicional más allá de eliminar sus campos:
-```rust
+    ```rust
       use std::fs::File;
       use std::io::{self, Write};
 
@@ -1092,8 +1092,8 @@ RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejem
               println!("Closing file: {}", self.path);
           }
       }
-```
-Patrones RAII:
+    ```
+    Patrones RAII:
       1. El constructor adquiere los recursos
       2. Los métodos usan los recursos de forma segura
       3. Los campos se eliminan automáticamente cuando el propietario sale del ámbito
@@ -1124,8 +1124,8 @@ Patrones RAII:
 >
   <slot name="question">
   <div className="question">
-¿Qué sucede exactamente cuando clonamos esta struct Philosophy?
-```rust
+    ¿Qué sucede exactamente cuando clonamos esta struct Philosophy?
+    ```rust
       #[derive(Clone)]
       struct Philosophy {
           school: String,
@@ -1141,12 +1141,12 @@ Patrones RAII:
           println!("{} - {}", 
               stoicism.school, new_school.school);
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Entendamos en detalle Copy vs Clone:
+    Entendamos en detalle Copy vs Clone:
       Diferencias clave:
       1. Copy:
          - Copia implícita, a nivel de bits
@@ -1164,7 +1164,7 @@ Entendamos en detalle Copy vs Clone:
       3. Documenta las implicaciones de rendimiento de Clone
       4. Considera implementaciones personalizadas de Clone para optimización
       5. Ten cuidado con la derivación automática
-```rust
+    ```rust
       // Types that can be Copy
       #[derive(Copy, Clone)]
       struct Point {
@@ -1194,8 +1194,8 @@ Entendamos en detalle Copy vs Clone:
               }
           }
       }
-```
-Key differences:
+    ```
+    Key differences:
       1. Copy:
          - Implicit, bitwise copy
          - Must be Copy-safe (no heap allocations)
@@ -1230,20 +1230,20 @@ Key differences:
 >
   <slot name="question">
   <div className="question">
-En una plataforma Rust típica actual de 64 bits, ¿cuál es el tamaño de esta struct?
-```rust
+    En una plataforma Rust típica actual de 64 bits, ¿cuál es el tamaño de esta struct?
+    ```rust
       struct Metadata {
           id: u32,        // How many bytes?
           name: String,   // How many bytes?
           active: bool    // How many bytes + padding?
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Desglosemos la disposición en memoria y la optimización de las struct:
-```rust
+    Desglosemos la disposición en memoria y la optimización de las struct:
+    ```rust
       // Typical current 64-bit Rust layout: 32 bytes
       struct Metadata {
           id: u32,       // 4 bytes
@@ -1266,8 +1266,8 @@ Desglosemos la disposición en memoria y la optimización de las struct:
           active: bool,
           name: String,
       }
-```
-Consideraciones sobre la disposición en memoria:
+    ```
+    Consideraciones sobre la disposición en memoria:
       1. Requisitos de alineación:
          - u32: alineación de 4 bytes
          - String: alineación de 8 bytes y tamaño de 24 bytes en plataformas de 64 bits comunes
@@ -1302,8 +1302,8 @@ Consideraciones sobre la disposición en memoria:
 >
   <slot name="question">
   <div className="question">
-¿Cómo se compara el rendimiento de estas dos implementaciones?
-```rust
+    ¿Cómo se compara el rendimiento de estas dos implementaciones?
+    ```rust
       // Implementation A: Iterator
       fn sum_iterator(v: &[i32]) -> i32 {
           v.iter().fold(0, |acc, &x| acc + x)
@@ -1317,13 +1317,13 @@ Consideraciones sobre la disposición en memoria:
           }
           sum
       }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las abstracciones de costo cero de Rust se compilan en código eficiente equivalente:
-```rust
+    Las abstracciones de costo cero de Rust se compilan en código eficiente equivalente:
+    ```rust
       use std::ops::Range;
 
       // High-level abstraction
@@ -1356,8 +1356,8 @@ Las abstracciones de costo cero de Rust se compilan en código eficiente equival
               .filter(|&n| n > 3)
               .fold(0, |acc, n| acc + n as u32)
       }
-```
-Principios clave:
+    ```
+    Principios clave:
       1. Lo que no usas, no lo pagas
       2. Lo que usas, no podrías escribirlo a mano mejor
 

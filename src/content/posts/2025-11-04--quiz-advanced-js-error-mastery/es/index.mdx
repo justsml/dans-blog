@@ -47,16 +47,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelve `JSON.stringify(error)`?
-```js
+    ¿Qué devuelve `JSON.stringify(error)`?
+    ```js
     const error = new Error('Oops');
     console.log(JSON.stringify(error));
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Esta es una trampa clásica al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar.
+    Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack`), por lo que `JSON.stringify()` devuelve `{}`. Esta es una trampa clásica al enviar errores en respuestas de API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un objeto plano en su lugar.
   </div>
   </slot>
 </Challenge>
@@ -75,17 +75,17 @@ Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la diferencia real entre estos dos?
-```js
+    ¿Cuál es la diferencia real entre estos dos?
+    ```js
     const err = new Error('Test');
     console.log(err);
     console.log(JSON.stringify(err));
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`console.log(err)` te muestra el error completo, con su mensaje y stack trace, porque la consola tiene un trato preferente para los objetos `Error`. `JSON.stringify(err)` escupe `'{}'` porque las propiedades de Error no son enumerables. Esta diferencia es la que hace tropezar a más de un dev cuando toca depurar APIs.
+    `console.log(err)` te muestra el error completo, con su mensaje y stack trace, porque la consola tiene un trato preferente para los objetos `Error`. `JSON.stringify(err)` escupe `'{}'` porque las propiedades de Error no son enumerables. Esta diferencia es la que hace tropezar a más de un dev cuando toca depurar APIs.
   </div>
   </slot>
 </Challenge>
@@ -104,20 +104,20 @@ Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelven estas comprobaciones?
-```js
+    ¿Qué devuelven estas comprobaciones?
+    ```js
     class CustomError extends Error {}
     const err = new CustomError('test');
     
     console.log(err instanceof CustomError);
     console.log(err instanceof Error);
     console.log(err instanceof Object);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende `Object`. El operador `instanceof` no se detiene en la clase inmediata; recorre toda la cadena de prototipos. Por eso, cualquier instancia de `CustomError` también se considera instancia de `Error` y de `Object`.
+    Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende `Object`. El operador `instanceof` no se detiene en la clase inmediata; recorre toda la cadena de prototipos. Por eso, cualquier instancia de `CustomError` también se considera instancia de `Error` y de `Object`.
   </div>
   </slot>
 </Challenge>
@@ -136,18 +136,18 @@ Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende
 >
   <slot name="question">
   <div className="question">
-¿Qué ocurre con `instanceof Error` al cruzar iframes?
-```js
+    ¿Qué ocurre con `instanceof Error` al cruzar iframes?
+    ```js
     // In iframe:
     const iframeError = new Error('test');
     // In parent window:
     console.log(iframeError instanceof Error);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`instanceof` puede devolver `false` entre distintos contextos de ejecución (iframes, workers) porque cada contexto mantiene su propio constructor `Error`. Usa `Object.prototype.toString.call(obj) === '[object Error]'` para una detección fiable de errores, sin importar el contexto.
+    `instanceof` puede devolver `false` entre distintos contextos de ejecución (iframes, workers) porque cada contexto mantiene su propio constructor `Error`. Usa `Object.prototype.toString.call(obj) === '[object Error]'` para una detección fiable de errores, sin importar el contexto.
   </div>
   </slot>
 </Challenge>
@@ -166,20 +166,20 @@ Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende
 >
   <slot name="question">
   <div className="question">
-¿Qué ocurre exactamente cuando lanzas un string?
-```js
+    ¿Qué ocurre exactamente cuando lanzas un string?
+    ```js
     try {
       throw "Oops!";
     } catch (e) {
       console.log(e instanceof Error);
       console.log(typeof e);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `false` y `typeof e` es `"string"`. Esto puede romper el código de manejo de errores que asume ciegamente que todas las excepciones capturadas son objetos `Error`. Lanza siempre instancias de `Error` para facilitar la depuración y evitar dolores de cabeza.
+    JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `false` y `typeof e` es `"string"`. Esto puede romper el código de manejo de errores que asume ciegamente que todas las excepciones capturadas son objetos `Error`. Lanza siempre instancias de `Error` para facilitar la depuración y evitar dolores de cabeza.
   </div>
   </slot>
 </Challenge>
@@ -198,8 +198,8 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el valor de `err.name`?
-```js
+    ¿Cuál es el valor de `err.name`?
+    ```js
     class CustomError extends Error {
       constructor(message) {
         super(message);
@@ -208,12 +208,12 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
     }
     const err = new CustomError('test');
     console.log(err.name);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`err.name` es `"CustomError"` porque `this.constructor.name` devuelve el nombre de la clase. Asignar `this.name = this.constructor.name` es un patrón común para garantizar que las clases de error personalizadas muestren el nombre correcto en los stack traces y mensajes de error.
+    `err.name` es `"CustomError"` porque `this.constructor.name` devuelve el nombre de la clase. Asignar `this.name = this.constructor.name` es un patrón común para garantizar que las clases de error personalizadas muestren el nombre correcto en los stack traces y mensajes de error.
   </div>
   </slot>
 </Challenge>
@@ -232,19 +232,19 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la salida si te olvidas de establecer `name`?
-```js
+    ¿Cuál es la salida si te olvidas de establecer `name`?
+    ```js
     class MyError extends Error {
       // No constructor or name setting
     }
     const err = new MyError('test');
     console.log(err.name);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Si no configuras explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `"Error"`. Por esta razón, las clases de error personalizadas siempre deben asignar `this.name = this.constructor.name` en su constructor para evitar que se pierda la identidad del error.
+    Si no configuras explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `"Error"`. Por esta razón, las clases de error personalizadas siempre deben asignar `this.name = this.constructor.name` en su constructor para evitar que se pierda la identidad del error.
   </div>
   </slot>
 </Challenge>
@@ -263,19 +263,19 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelve `wrapper.cause.message`?
-```js
+    ¿Qué devuelve `wrapper.cause.message`?
+    ```js
     const original = new Error('Original error');
     const wrapper = new Error('Wrapper', 
       { cause: original }
     );
     console.log(wrapper.cause.message);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Error.cause` (ES2022) permite encadenar excepciones para preservar el contexto del fallo original. Dado que `wrapper.cause` referencia directamente el error subyacente, `wrapper.cause.message` devuelve `"Original error"`. Úsalo para envolver errores de bajo nivel con contexto de alto nivel sin romper la pila de depuración.
+    `Error.cause` (ES2022) permite encadenar excepciones para preservar el contexto del fallo original. Dado que `wrapper.cause` referencia directamente el error subyacente, `wrapper.cause.message` devuelve `"Original error"`. Úsalo para envolver errores de bajo nivel con contexto de alto nivel sin romper la pila de depuración.
   </div>
   </slot>
 </Challenge>
@@ -294,20 +294,20 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
 >
   <slot name="question">
   <div className="question">
-¿Qué hace `Error.captureStackTrace`?
-```js
+    ¿Qué hace `Error.captureStackTrace`?
+    ```js
     function createError(msg) {
       const err = new Error(msg);
       Error.captureStackTrace(err, createError);
       return err;
     }
     const error = createError('test');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Error.captureStackTrace` (V8/Node.js) elimina la función especificada (`createError`) de la traza de pila, haciendo que las funciones factoría de errores sean invisibles para los usuarios finales. Esto genera trazas más limpias que apuntan directamente a dónde se llamó a la factoría, en lugar de perderse en la implementación interna de la misma.
+    `Error.captureStackTrace` (V8/Node.js) elimina la función especificada (`createError`) de la traza de pila, haciendo que las funciones factoría de errores sean invisibles para los usuarios finales. Esto genera trazas más limpias que apuntan directamente a dónde se llamó a la factoría, en lugar de perderse en la implementación interna de la misma.
   </div>
   </slot>
 </Challenge>
@@ -326,8 +326,8 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el mensaje de error?
-```js
+    ¿Cuál es el mensaje de error?
+    ```js
     function validate(value) {
       if (!value) {
         throw new Error(
@@ -340,12 +340,12 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
     } catch (e) {
       console.log(e.message);
     }
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los literales de plantilla convierten `undefined` en la cadena `"undefined"` durante la interpolación. El mensaje de error se transforma en `"Value undefined is invalid"`. Para evitar resultados inesperados y mantener mensajes limpios, considera usar `value ?? 'null'` o validaciones similares antes de interpolar.
+    Los literales de plantilla convierten `undefined` en la cadena `"undefined"` durante la interpolación. El mensaje de error se transforma en `"Value undefined is invalid"`. Para evitar resultados inesperados y mantener mensajes limpios, considera usar `value ?? 'null'` o validaciones similares antes de interpolar.
   </div>
   </slot>
 </Challenge>
@@ -364,19 +364,19 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
 >
   <slot name="question">
   <div className="question">
-¿Qué se envía realmente al cliente?
-```js
+    ¿Qué se envía realmente al cliente?
+    ```js
     // Express.js route
     app.get('/api/data', (req, res) => {
       const error = new Error('Database failed');
       res.json({ error });
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`res.json()` usa `JSON.stringify()` internamente, por lo que el objeto Error se convierte en `{}`. El cliente recibe `{"error":{}}`. Para solucionarlo, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`.
+    `res.json()` usa `JSON.stringify()` internamente, por lo que el objeto Error se convierte en `{}`. El cliente recibe `{"error":{}}`. Para solucionarlo, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`.
   </div>
   </slot>
 </Challenge>
@@ -395,8 +395,8 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
 >
   <slot name="question">
   <div className="question">
-¿Qué puede aceptar `Promise.reject()`?
-```js
+    ¿Qué puede aceptar `Promise.reject()`?
+    ```js
     Promise.reject('string').catch(e => 
       console.log(typeof e)
     );
@@ -406,12 +406,12 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
     Promise.reject(42).catch(e => 
       console.log(e)
     );
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: cadenas, objetos, números, lo que sea. Esto imprimirá `"string"`, `404` y `42`. Comprueba siempre el tipo de los valores que atrapes en tus cadenas de promesas, especialmente si trabajas con código de terceros que a veces rechaza con cualquier cosa que no sea un `Error`.
+    Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: cadenas, objetos, números, lo que sea. Esto imprimirá `"string"`, `404` y `42`. Comprueba siempre el tipo de los valores que atrapes en tus cadenas de promesas, especialmente si trabajas con código de terceros que a veces rechaza con cualquier cosa que no sea un `Error`.
   </div>
   </slot>
 </Challenge>
@@ -430,8 +430,8 @@ Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: c
 >
   <slot name="question">
   <div className="question">
-¿Qué tan fiables son realmente `error.code` y `error.errno`?
-```js
+    ¿Qué tan fiables son realmente `error.code` y `error.errno`?
+    ```js
     const fs = require('fs');
     fs.readFile('missing.txt', (err, data) => {
       if (err) {
@@ -439,12 +439,12 @@ Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: c
         console.log(err.errno);   // -2
       }
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este caso) y no forman parte del objeto `Error` estándar. Los errores en el navegador carecerán de ellas. Comprueba siempre su existencia con `if (err.code === 'ENOENT')` en lugar de asumir que están ahí por arte de magia.
+    Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este caso) y no forman parte del objeto `Error` estándar. Los errores en el navegador carecerán de ellas. Comprueba siempre su existencia con `if (err.code === 'ENOENT')` en lugar de asumir que están ahí por arte de magia.
   </div>
   </slot>
 </Challenge>
@@ -463,8 +463,8 @@ Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelven estas comprobaciones?
-```js
+    ¿Qué devuelven estas comprobaciones?
+    ```js
     const fakeError = {
       name: 'Error',
       message: 'Fake error',
@@ -475,12 +475,12 @@ Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este
     console.log(Object.prototype.toString.call(
       fakeError
     ) === '[object Error]');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor `Error`. `Object.prototype.toString.call()` también devuelve `false` (retorna `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente esto como un objeto de error falso.
+    `instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor `Error`. `Object.prototype.toString.call()` también devuelve `false` (retorna `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente esto como un objeto de error falso.
   </div>
   </slot>
 </Challenge>

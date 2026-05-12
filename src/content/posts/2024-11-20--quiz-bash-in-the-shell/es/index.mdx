@@ -47,16 +47,16 @@ Afina (o demuestra) tus **habilidades** de scripting en shell.
 >
   <slot name="question">
   <div className="question">
-¿Cómo se definen las variables en Bash?
+    ¿Cómo se definen las variables en Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-En Bash, las variables se declaran sin espacios alrededor del signo `=`. Por ejemplo:
-```bash
+    En Bash, las variables se declaran sin espacios alrededor del signo `=`. Por ejemplo:
+    ```bash
     name=Alice
-```
-Esto asigna el valor `"Alice"` a la variable `name`.
+    ```
+    Esto asigna el valor `"Alice"` a la variable `name`.
 
     Nota: `$name` se utiliza para **referenciar** o leer el valor de una variable.
 
@@ -84,18 +84,18 @@ Esto asigna el valor `"Alice"` a la variable `name`.
 >
   <slot name="question">
   <div className="question">
-_¿Qué imprimirá `It's 🔨 Time!`?_
+    _¿Qué imprimirá `It's 🔨 Time!`?_
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Lo sé. Es una locura lo rápido que el escape de caracteres complica el análisis de cadenas. Imagina tener que escapar otros lenguajes dentro de cadenas en Bash, con todas esas comillas, apóstrofes y símbolos `$` listos para arruinarte el día. 🫠
+    Lo sé. Es una locura lo rápido que el escape de caracteres complica el análisis de cadenas. Imagina tener que escapar otros lenguajes dentro de cadenas en Bash, con todas esas comillas, apóstrofes y símbolos `$` listos para arruinarte el día. 🫠
 
     Las comillas simples deben escaparse dentro de cadenas entre comillas simples. La secuencia de cerrar comilla, comilla escapada y abrir comilla (`'\''`) permite generar:
-```plaintext
+    ```plaintext
     It's 🔨 Time!
-```
-Existen otras formas de manejar esto, pero esta es la más común.
+    ```
+    Existen otras formas de manejar esto, pero esta es la más común.
   </div>
   </slot>
 </Challenge>
@@ -116,20 +116,20 @@ Existen otras formas de manejar esto, pero esta es la más común.
 >
   <slot name="question">
   <div className="question">
-¿Qué imprimirá este comando?
-```bash
+    ¿Qué imprimirá este comando?
+    ```bash
     echo c{a,b}t
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La expansión de llaves `{}` genera múltiples variantes de la cadena que la contiene, una (o más) por cada valor o patrón separado por comas.
+    La expansión de llaves `{}` genera múltiples variantes de la cadena que la contiene, una (o más) por cada valor o patrón separado por comas.
 
     En este caso, `c{a,b}t` se expande a:
-```plaintext
+    ```plaintext
     cat cbt
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -150,24 +150,24 @@ La expansión de llaves `{}` genera múltiples variantes de la cadena que la con
 >
   <slot name="question">
   <div className="question">
-Ahora, ¿qué imprimirá esto?
-```bash
+    Ahora, ¿qué imprimirá esto?
+    ```bash
     price="$100"
     echo "Cost: $price"
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las variables numeradas tienen un significado especial. En este caso, `$1` es una variable especial que almacena el primer argumento pasado al script o a la función. 
+    Las variables numeradas tienen un significado especial. En este caso, `$1` es una variable especial que almacena el primer argumento pasado al script o a la función. 
 
     Como estamos ejecutando el script en un REPL, no hay argumentos, por lo que `$1` está vacío. El texto restante `00` se imprime tal cual.
 
     Para imprimir un carácter `$` literal, usa comillas simples o escápalo con una barra invertida (`\`):
-```bash
+    ```bash
     price="\$100"
     echo "Cost: $price"
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -187,20 +187,20 @@ Las variables numeradas tienen un significado especial. En este caso, `$1` es un
 >
   <slot name="question">
   <div className="question">
-¿Qué está pasando aquí?
-```bash
+    ¿Qué está pasando aquí?
+    ```bash
     str="Bark bark"
     echo ${str/bark/meow}
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `${var/pattern/replacement}` sustituye la primera coincidencia de `pattern` por `replacement`. En este caso, la salida es:
-```plaintext
+    La sintaxis `${var/pattern/replacement}` sustituye la primera coincidencia de `pattern` por `replacement`. En este caso, la salida es:
+    ```plaintext
     Bark meow
-```
-La búsqueda distingue entre mayúsculas y minúsculas. Para capturar tanto `bark` como `Bark`, utiliza un patrón como `${var/[Bb]ark/Bark}` o normaliza la cadena antes de reemplazar.
+    ```
+    La búsqueda distingue entre mayúsculas y minúsculas. Para capturar tanto `bark` como `Bark`, utiliza un patrón como `${var/[Bb]ark/Bark}` o normaliza la cadena antes de reemplazar.
 
     Para sustituir todas las coincidencias, utiliza `${var//pattern/replacement}`.
 
@@ -226,24 +226,24 @@ La búsqueda distingue entre mayúsculas y minúsculas. Para capturar tanto `bar
 >
   <slot name="question">
   <div className="question">
-¿Cómo puedes obtener la longitud de una variable en Bash?
+    ¿Cómo puedes obtener la longitud de una variable en Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `${#username}` devuelve la longitud de `username`.
+    La sintaxis `${#username}` devuelve la longitud de `username`.
 
-Por ejemplo:
-```bash
+    Por ejemplo:
+    ```bash
     username="@justsml"
     echo ${#username} # => 8
-```
-Aunque `wc` funcionaría, técnicamente no forma parte de Bash.
+    ```
+    Aunque `wc` funcionaría, técnicamente no forma parte de Bash.
 
-La utilidad `wc` es una broma interna antigua que hace referencia a "water closet", o inodoro.
-¡ES BROMA! ¿Alguien lee esto?
+    La utilidad `wc` es una broma interna antigua que hace referencia a "water closet", o inodoro.
+    ¡ES BROMA! ¿Alguien lee esto?
 
-En realidad, `wc` es un comando antiguo de POSIX (y de la época de Unix de AT&T). Es la abreviatura de "word count" (conteo de palabras) y puede contar líneas, palabras y caracteres en un archivo o flujo de entrada.
+    En realidad, `wc` es un comando antiguo de POSIX (y de la época de Unix de AT&T). Es la abreviatura de "word count" (conteo de palabras) y puede contar líneas, palabras y caracteres en un archivo o flujo de entrada.
   </div>
   </slot>
 </Challenge>
@@ -263,33 +263,33 @@ En realidad, `wc` es un comando antiguo de POSIX (y de la época de Unix de AT&T
 >
   <slot name="question">
   <div className="question">
-¿Qué imprime este script si el archivo `cats.txt` EXISTE?
-```bash
+    ¿Qué imprime este script si el archivo `cats.txt` EXISTE?
+    ```bash
     if [ -e cats.txt]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¿Notaste el espacio que falta antes del corchete de cierre?
+    ¿Notaste el espacio que falta antes del corchete de cierre?
     
     Bash es bastante estricto con esto: se requieren espacios dentro de las expresiones entre corchetes.
 
     Debido a que el espacio faltante hace que el comando `[` no vea un `]` de cierre, Bash imprime un mensaje de diagnóstico, considera que la prueba falló y continúa con la rama `else`.
 
     La sintaxis correcta es:
-```bash
+    ```bash
     if [ -e example.txt ]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-```
-Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicionales. [Consulta el BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+    ```
+    Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicionales. [Consulta el BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -308,8 +308,8 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
 >
   <slot name="question">
   <div className="question">
-¿Cómo podemos comparar cadenas en Bash?
-```bash
+    ¿Cómo podemos comparar cadenas en Bash?
+    ```bash
     cat1="Rosie"
     cat2="Sunflower"
     if [ "$cat1" === "$cat2" ]; then
@@ -317,12 +317,12 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
     else
       echo "Different cats"
     fi
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¡Otro error de sintaxis en la prueba!
+    ¡Otro error de sintaxis en la prueba!
 
     ¿Notaste el operador inválido `===`?
 
@@ -349,18 +349,18 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
 >
   <slot name="question">
   <div className="question">
-¿Qué mostrará este script?
-```bash
-   function greet () {
+    ¿Qué mostrará este script?
+    ```bash
+    function greet () {
       echo "$1"
     }
     greet Hi Dan
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las funciones en Bash pueden aceptar argumentos. La variable `$1` contiene el primer argumento pasado a la función.
+    Las funciones en Bash pueden aceptar argumentos. La variable `$1` contiene el primer argumento pasado a la función.
     
     Recuerda que `$0` es el nombre del script, `$1` es el primer argumento, `$2` es el segundo, y así sucesivamente. **Los espacios separan los argumentos.** Por lo tanto, `greet Hi Dan` pasa `"Hi"` como primer argumento. Para pasar `"Hi Dan"` como un único argumento, debes entrecomillarlo: `greet "Hi Dan"`.
   </div>
@@ -377,16 +377,16 @@ Las funciones en Bash pueden aceptar argumentos. La variable `$1` contiene el pr
 >
   <slot name="question">
   <div className="question">
-¿Qué operador conecta la **salida** de un comando con la **entrada** del siguiente comando?
+    ¿Qué operador conecta la **salida** de un comando con la **entrada** del siguiente comando?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El operador de tubería `|` conecta la salida de un comando con la entrada de otro. Por ejemplo:
-```bash
+    El operador de tubería `|` conecta la salida de un comando con la entrada de otro. Por ejemplo:
+    ```bash
     echo "Mr. Levy 👨🏻‍🔬" | wc -m
     # => 14
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -406,26 +406,26 @@ El operador de tubería `|` conecta la salida de un comando con la entrada de ot
 >
   <slot name="question">
   <div className="question">
-¿Cómo funcionan las operaciones matemáticas en Bash?
+    ¿Cómo funcionan las operaciones matemáticas en Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `(( ))` realiza operaciones matemáticas con enteros en Bash.
+    La sintaxis `(( ))` realiza operaciones matemáticas con enteros en Bash.
 
     Se puede usar para cálculos simples:
-```bash
+    ```bash
     ((result = 2 + 2))
     echo $result # => 4
-```
-O para expresiones condicionales:
-```bash
+    ```
+    O para expresiones condicionales:
+    ```bash
 
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
-```
-Para aritmética de punto flotante, considera usar [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    ```
+    Para aritmética de punto flotante, considera usar [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
@@ -447,12 +447,12 @@ Para aritmética de punto flotante, considera usar [`bc`](https://www.gnu.org/so
 >
   <slot name="question">
   <div className="question">
-¿Cuál de estas multiplica correctamente 10 por 0.5 e imprime 5?
+    ¿Cuál de estas multiplica correctamente 10 por 0.5 e imprime 5?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `(( ))` SOLO realiza aritmética de **enteros**. Ya sabes, números enteros, ¡nada de punto flotante!
+    La sintaxis `(( ))` SOLO realiza aritmética de **enteros**. Ya sabes, números enteros, ¡nada de punto flotante!
 
     Bash (quizás sorprendentemente) carece de soporte **integrado** para aritmética de punto flotante.
 
@@ -475,20 +475,20 @@ La sintaxis `(( ))` SOLO realiza aritmética de **enteros**. Ya sabes, números 
 >
   <slot name="question">
   <div className="question">
-¿Qué hace el `:` en este script?
-```bash
+    ¿Qué hace el `:` en este script?
+    ```bash
     rosie="Bad cat, good cat"
     echo ${rosie:9}
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `${var:offset}` extrae una subcadena comenzando desde `offset`. En este caso, la salida es:
-```plaintext
+    La sintaxis `${var:offset}` extrae una subcadena comenzando desde `offset`. En este caso, la salida es:
+    ```plaintext
     good cat
-```
-Para extraer una subcadena de una longitud específica, usa `${var:offset:length}`.
+    ```
+    Para extraer una subcadena de una longitud específica, usa `${var:offset:length}`.
 
     Para extraer desde el final de la cadena, usa `${var: -offset}`. (¡Ojo con el espacio antes del `-`!)
   </div>
@@ -510,12 +510,12 @@ Para extraer una subcadena de una longitud específica, usa `${var:offset:length
 >
   <slot name="question">
   <div className="question">
-¿Cuál NO ❌ es una palabra clave para bucles en Bash?
+    ¿Cuál NO ❌ es una palabra clave para bucles en Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`each` no es una palabra clave de bucle en Bash. Las palabras clave principales para bucles son `for`, `while` y `until`.
+    `each` no es una palabra clave de bucle en Bash. Las palabras clave principales para bucles son `for`, `while` y `until`.
 
     Aunque `do` no es técnicamente una palabra clave de bucle, es una parte fundamental de la sintaxis de los bucles.
   </div>
@@ -537,17 +537,17 @@ Para extraer una subcadena de una longitud específica, usa `${var:offset:length
 >
   <slot name="question">
   <div className="question">
-¿Cuál de estas opciones ejecutará el comando `ls -l` y devolverá su salida?
+    ¿Cuál de estas opciones ejecutará el comando `ls -l` y devolverá su salida?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y reemplaza la llamada con su salida. Por ejemplo:
-```bash
+    La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y reemplaza la llamada con su salida. Por ejemplo:
+    ```bash
     echo "Today is $(date +%F)"
     # => Today is 2029-12-31
-```
-La primera opción usa comillas simples `'`, **no backticks.** Esto bloquea la expansión, así que `'$(date +%F)'` solo imprimirá la cadena literal `$(date +%F)`.
+    ```
+    La primera opción usa comillas simples `'`, **no backticks.** Esto bloquea la expansión, así que `'$(date +%F)'` solo imprimirá la cadena literal `$(date +%F)`.
 
     Aunque los backticks (`` `ls -l` ``) siguen siendo compatibles, se consideran un anti-patrón hoy en día. Usa siempre `$(comando)` para mayor legibilidad y compatibilidad entre distintas shells y versiones.
 
@@ -568,12 +568,12 @@ La primera opción usa comillas simples `'`, **no backticks.** Esto bloquea la e
 >
   <slot name="question">
   <div className="question">
-¿Qué operador se utiliza para combinar la salida de errores con la salida estándar?
+    ¿Qué operador se utiliza para combinar la salida de errores con la salida estándar?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El operador `2>&1` redirige el error estándar (descriptor de archivo 2) hacia la salida estándar (descriptor de archivo 1). Así logras que los mensajes de error viajen por el mismo flujo que la salida normal.
+    El operador `2>&1` redirige el error estándar (descriptor de archivo 2) hacia la salida estándar (descriptor de archivo 1). Así logras que los mensajes de error viajen por el mismo flujo que la salida normal.
 
     Por otro lado, `1>&2` hace justo lo contrario: manda la salida estándar al error estándar. Pero la pregunta era clara: queríamos el error en la salida estándar, no al revés.
 

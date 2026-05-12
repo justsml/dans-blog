@@ -41,15 +41,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-क्या मैच होगा?
-```js
+    क्या मैच होगा?
+    ```js
     'cat CAT Cat'.match(/cat/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-इस पैटर्न में `g` तो है, पर `i` नहीं है:
+    इस पैटर्न में `g` तो है, पर `i` नहीं है:
     - `g` सभी मैच ढूंढता है
     - `i` के बिना, मिलान केस-सेंसिटिव रहता है
 
@@ -76,16 +76,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह कोड क्या रिटर्न करेगा?
-```js
+    यह कोड क्या रिटर्न करेगा?
+    ```js
     const words = ['cat', 'hat', 'what', 'bat'];
     words.filter(word => word.match(/^[ch]at/))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-पैटर्न `/^[ch]at/` उन स्ट्रिंग्स से मेल खाता है जो:
+    पैटर्न `/^[ch]at/` उन स्ट्रिंग्स से मेल खाता है जो:
     - (`^`) के साथ 'c' या 'h' से शुरू होती हैं (`[ch]` का मतलब यही है - एक कैरेक्टर क्लास जो एक वर्ण से मेल खाता है)
     - और उसके बाद शाब्दिक रूप से 'at' आता है
 
@@ -106,15 +106,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह किससे मैच करेगा?
-```js
+    यह किससे मैच करेगा?
+    ```js
     '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-पैटर्न `/<div>.*?<\/div>/g` `*?` का उपयोग करके नॉन-ग्रीडी मैचिंग करता है, जिसका अर्थ है:
+    पैटर्न `/<div>.*?<\/div>/g` `*?` का उपयोग करके नॉन-ग्रीडी मैचिंग करता है, जिसका अर्थ है:
     - `<div>` से मैच करें
     - किसी भी कैरेक्टर (`.*`) से मैच करें, लेकिन जितना संभव हो उतना कम (`?`)
     - जब तक `</div>` न मिल जाए
@@ -141,15 +141,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह क्या रिटर्न करेगा?
-```js
+    यह क्या रिटर्न करेगा?
+    ```js
     'hello\nworld'.match(/\w+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`\w+` पैटर्न एक या अधिक वर्ड कैरेक्टर्स को मैच करता है। भले ही स्ट्रिंग में न्यूलाइन हो, `\w` सिर्फ़ इन्हें ही पहचानता है:
+    `\w+` पैटर्न एक या अधिक वर्ड कैरेक्टर्स को मैच करता है। भले ही स्ट्रिंग में न्यूलाइन हो, `\w` सिर्फ़ इन्हें ही पहचानता है:
     - अक्षर (a-z, A-Z)
     - संख्याएँ (0-9)
     - अंडरस्कोर (_)
@@ -176,23 +176,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह क्या मैच करेगा?
-```js
+    यह क्या मैच करेगा?
+    ```js
     '$100 and €50'.match(/\d+(?=[\$€])/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-यह पैटर्न कुछ भी मैच नहीं करेगा क्योंकि लुक-अहेड उल्टा लगाया गया है! अगर आप `$` या `€` से पहले आने वाले अंकों को मैच करना चाहते हैं, तो लुक-बिहाइंड का उपयोग करें: `/(?<=[\$€])\d+/g`।
+    यह पैटर्न कुछ भी मैच नहीं करेगा क्योंकि लुक-अहेड उल्टा लगाया गया है! अगर आप `$` या `€` से पहले आने वाले अंकों को मैच करना चाहते हैं, तो लुक-बिहाइंड का उपयोग करें: `/(?<=[\$€])\d+/g`।
 
-लुक-अहेड यह चेक करते हैं कि वर्तमान पोज़िशन के *बाद* क्या आता है। जैसा कि यह लिखा गया है, यह पैटर्न इनकी तलाश करता है:
-- एक या अधिक अंक (`\d+`)
-- जिनके बाद (`(?=...)`) `$` या `€` (`[\$€]`) आता हो
+    लुक-अहेड यह चेक करते हैं कि वर्तमान पोज़िशन के *बाद* क्या आता है। जैसा कि यह लिखा गया है, यह पैटर्न इनकी तलाश करता है:
+    - एक या अधिक अंक (`\d+`)
+    - जिनके बाद (`(?=...)`) `$` या `€` (`[\$€]`) आता हो
 
-चूंकि यहाँ कोई भी नंबर करंसी सिंबल के बाद नहीं आ रहा है (वे तो नंबर से पहले आ रहे हैं), इसलिए हमें कोई मैच नहीं मिलेगा।
+    चूंकि यहाँ कोई भी नंबर करंसी सिंबल के बाद नहीं आ रहा है (वे तो नंबर से पहले आ रहे हैं), इसलिए हमें कोई मैच नहीं मिलेगा।
 
-[लुक-अहेड असेर्शन के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [लुक-अहेड असेर्शन के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -211,15 +211,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-इस रेगेक्स से क्या मैच होगा?
-```js
+    इस रेगेक्स से क्या मैच होगा?
+    ```js
     'cat cats category'.match(/\bcat\b/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`\b` एक वर्ड बाउंडरी को दर्शाता है, जो तब मैच करता है जब:
+    `\b` एक वर्ड बाउंडरी को दर्शाता है, जो तब मैच करता है जब:
     - एक वर्ड कैरेक्टर और नॉन-वर्ड कैरेक्टर के बीच सीमा हो
     - स्ट्रिंग की शुरुआत या अंत में कोई वर्ड कैरेक्टर मौजूद हो
 
@@ -248,15 +248,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-आउटपुट क्या होगा?
-```js
+    आउटपुट क्या होगा?
+    ```js
     'banana'.match(/a/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`g` (global) फ्लैग `match()` के व्यवहार को बदल देता है:
+    `g` (global) फ्लैग `match()` के व्यवहार को बदल देता है:
     - `g` के बिना: कैप्चर ग्रुप्स के साथ पहला मैच रिटर्न करता है
     - `g` के साथ: सभी मिलते-जुलते स्ट्रिंग्स की एक अरे (array) रिटर्न करता है
 
@@ -284,15 +284,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-इस पैटर्न से क्या मैच होगा?
-```js
+    इस पैटर्न से क्या मैच होगा?
+    ```js
     'abc123 def456'.match(/(?<!abc)\d+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-नेगेटिव लुक-बिहाइंड `(?<!abc)` यह सुनिश्चित करता है कि अंकों के ठीक पहले "abc" न आया हो:
+    नेगेटिव लुक-बिहाइंड `(?<!abc)` यह सुनिश्चित करता है कि अंकों के ठीक पहले "abc" न आया हो:
     - ❌ "123" (इसके पहले "abc" है)
     - ✅ "23" (इसके पहले "abc1" है)
     - ✅ "456" (इसके पहले "def" है)
@@ -318,26 +318,26 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यह क्या रिटर्न करेगा?
-```js
+    यह क्या रिटर्न करेगा?
+    ```js
     '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-पैटर्न में तीन कैप्चरिंग ग्रुप्स का इस्तेमाल किया गया है:
-1. `(\d{4})` साल को कैप्चर करता है
-2. `(\d{2})` महीने को कैप्चर करता है
-3. `(\d{2})` तारीख को कैप्चर करता है
+    पैटर्न में तीन कैप्चरिंग ग्रुप्स का इस्तेमाल किया गया है:
+    1. `(\d{4})` साल को कैप्चर करता है
+    2. `(\d{2})` महीने को कैप्चर करता है
+    3. `(\d{2})` तारीख को कैप्चर करता है
 
-`g` फ्लैग के बिना `match()` यह रिटर्न करता है:
-- इंडेक्स 0: पूरा मैच
-- इंडेक्स 1+: कैप्चर ग्रुप्स
+    `g` फ्लैग के बिना `match()` यह रिटर्न करता है:
+    - इंडेक्स 0: पूरा मैच
+    - इंडेक्स 1+: कैप्चर ग्रुप्स
 
-सिर्फ कैप्चर ग्रुप्स निकालने के लिए `slice(1)` एक कॉमन ट्रिक है।
+    सिर्फ कैप्चर ग्रुप्स निकालने के लिए `slice(1)` एक कॉमन ट्रिक है।
 
-[ग्रुप्स और बैकरेफरेंस के बारे में और पढ़ें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+    [ग्रुप्स और बैकरेफरेंस के बारे में और पढ़ें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
   </slot>
 </Challenge>
@@ -358,15 +358,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-इसका आउटपुट क्या होगा?
-```js
+    इसका आउटपुट क्या होगा?
+    ```js
     "123aBc".match(/^\d+(?![a-z])/ig)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-नेगेटिव लुक-अहेड `(?![a-z])` यह सुनिश्चित करता है कि अंकों के बाद कोई लोअरकेस अक्षर न हो। चूंकि "3aBc" वाले हिस्से में अंकों के बाद एक लोअरकेस अक्षर मौजूद है, इसलिए यह हिस्सा मैच नहीं करता। नतीजतन, सिर्फ शुरुआत का "12" ही मैच करता है।
+    नेगेटिव लुक-अहेड `(?![a-z])` यह सुनिश्चित करता है कि अंकों के बाद कोई लोअरकेस अक्षर न हो। चूंकि "3aBc" वाले हिस्से में अंकों के बाद एक लोअरकेस अक्षर मौजूद है, इसलिए यह हिस्सा मैच नहीं करता। नतीजतन, सिर्फ शुरुआत का "12" ही मैच करता है।
 
     [नेगेटिव लुक-अहेड के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -387,15 +387,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-कोड क्या रिटर्न करेगा?
-```js
+    कोड क्या रिटर्न करेगा?
+    ```js
     'a,b,c'.split(/(?<=,)/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-पैटर्न `/(?<=,)/` एक लुक-बिहाइंड असेर्शन है जो कॉमा के ठीक बाद मैच करता है:
+    पैटर्न `/(?<=,)/` एक लुक-बिहाइंड असेर्शन है जो कॉमा के ठीक बाद मैच करता है:
     - `a,` (कॉमा के बाद)
     - `b,` (कॉमा के बाद)
     - `c` (बाद में कोई कॉमा नहीं)
@@ -424,23 +424,23 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-क्या मैच होगा?
-```js
+    क्या मैच होगा?
+    ```js
     '$100'.match(/$\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-विशेष वर्णों को literal रूप से मैच करने के लिए `\` से escape करना ज़रूरी है:
+    विशेष वर्णों को literal रूप से मैच करने के लिए `\` से escape करना ज़रूरी है:
     - `$` एक विशेष वर्ण है (स्ट्रिंग का अंत)
     - literal डॉलर साइन को मैच करने के लिए, इसे escape करें: `\$`
 
     अक्सर escape करने वाले वर्ण:
-```js
+    ```js
     . * + ? ^ $ [ ] \ ( ) { } |
-```
-बिना escape किए, regex इन विशेष वर्णों को कुछ और ही समझ लेगा, जो शायद आपका इरादा नहीं था।
+    ```
+    बिना escape किए, regex इन विशेष वर्णों को कुछ और ही समझ लेगा, जो शायद आपका इरादा नहीं था।
 
     [विशेष वर्णों को escape करने के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
@@ -461,15 +461,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-क्या मैच होगा?
-```js
+    क्या मैच होगा?
+    ```js
     '$100'.match(/(?<=\$)\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-पॉज़िटिव लुक-बिहाइंड `(?<=\$)` यह सुनिश्चित करता है कि अंकों से ठीक पहले एक डॉलर साइन मौजूद हो:
+    पॉज़िटिव लुक-बिहाइंड `(?<=\$)` यह सुनिश्चित करता है कि अंकों से ठीक पहले एक डॉलर साइन मौजूद हो:
     - `(?<=\$)`: डॉलर साइन के लिए लुक-बिहाइंड
     - `\d+`: एक या अधिक अंकों को मैच करें
 
@@ -491,15 +491,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-यहाँ क्या मैच होगा?
-```js
+    यहाँ क्या मैच होगा?
+    ```js
     '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-यह पैटर्न `*?` का उपयोग करके lazy matching करता है:
+    यह पैटर्न `*?` का उपयोग करके lazy matching करता है:
     - `<b>`: ओपनिंग टैग को मैच करता है
     - `(.*?)`: किसी भी कैरेक्टर को कैप्चर करता है (lazy)
     - `</b>`: क्लोजिंग टैग को मैच करता है
@@ -528,15 +528,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-क्या मैच होगा?
-```js
+    क्या मैच होगा?
+    ```js
     '😀 🙂'.match(/\p{Emoji}/gu)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`u` फ्लैग निम्नलिखित क्षमताओं को सक्षम करता है:
+    `u` फ्लैग निम्नलिखित क्षमताओं को सक्षम करता है:
     - यूनिकोड प्रॉपर्टी एस्केप्स (`\p{...}`)
     - सरोगेट पेयर्स का सटीक हैंडलिंग
 
@@ -564,16 +564,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-पहले से ही माफ़ी मांग रहा हूँ! 😈<br />
+    पहले से ही माफ़ी मांग रहा हूँ! 😈<br />
     इनमें से कौन सा पासवर्ड इस पैटर्न से मेल खाता है?
-```js
+    ```js
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-प्रोडक्शन में ऐसा कुछ भी न लिखें! 😅
+    प्रोडक्शन में ऐसा कुछ भी न लिखें! 😅
 
     यह पैटर्न कई पॉज़िटिव लुक-अहेड्स का उपयोग करके निम्नलिखित लागू करता है:
     - कम से कम एक अपरकेस अक्षर: `(?=.*[A-Z])`

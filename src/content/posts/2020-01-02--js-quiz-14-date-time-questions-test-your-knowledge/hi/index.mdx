@@ -66,16 +66,16 @@ JavaScript की `Date` क्लास का API कुख्यात रू
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Month आर्गुमेंट zero-based होता है। इसकी रेंज 0-11 होती है (वेस्टर्न कैलेंडर के अनुसार)।
+    Month आर्गुमेंट zero-based होता है। इसकी रेंज 0-11 होती है (वेस्टर्न कैलेंडर के अनुसार)।
 
     'February' का इंडेक्स वैल्यू 1 होता है। (इसे बिल्कुल array lookup की तरह ही समझें।)
   </div>
@@ -95,16 +95,16 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Month आर्गुमेंट zero-based होता है। इसकी रेंज 0-11 होती है (वेस्टर्न कैलेंडर के अनुसार)।
+    Month आर्गुमेंट zero-based होता है। इसकी रेंज 0-11 होती है (वेस्टर्न कैलेंडर के अनुसार)।
 
     'January' का इंडेक्स वैल्यू शून्य होता है। (इसे बिल्कुल array lookup की तरह ही समझें।)
   </div>
@@ -127,16 +127,16 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
     const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
     console.log(d3)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`new` कीवर्ड को भूलना मत! `Date` एक क्लास है, और इसे `new` के साथ ही कॉल किया जाना चाहिए।
+    `new` कीवर्ड को भूलना मत! `Date` एक क्लास है, और इसे `new` के साथ ही कॉल किया जाना चाहिए।
 
     `new` के बिना `Date('...')` आपके दिए गए इनपुट को पूरी तरह नज़रअंदाज़ कर देता है। यह हमेशा `new Date()` (बिना आर्गुमेंट) की तरह ही वर्तमान तिथि व समय लौटाता है।
 
@@ -161,16 +161,16 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       const date = new Date(2020)
       console.log(date.getFullYear())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-एकल पूर्णांक तर्क के साथ बनाया गया Date इंस्टेंस एक Unix `Epoch` मान के रूप में व्याख्यायित होता है। `Epoch` 1 जनवरी 1970 के बाद से मिलीसेकंड की गिनती है।
+    एकल पूर्णांक तर्क के साथ बनाया गया Date इंस्टेंस एक Unix `Epoch` मान के रूप में व्याख्यायित होता है। `Epoch` 1 जनवरी 1970 के बाद से मिलीसेकंड की गिनती है।
 
       `2020` (मिलीसेकंड) का मान 1 जनवरी 1970 के 2 सेकंड बाद के समय को दर्शाता है।
       
@@ -195,17 +195,17 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-कंसोल पर कौन सा मान प्रिंट होगा?
-```js
+    कंसोल पर कौन सा मान प्रिंट होगा?
+    ```js
       const d1 = new Date('2020-01-01')
       const d2 = new Date('2020-01-01T00:00')
       console.log(d1.getFullYear(), d2.getFullYear())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-बिना `T` टाइम वैल्यू वाली स्ट्रिंग 1 जनवरी 2020 जैसी दिख सकती है - लेकिन केवल डेट वाली स्ट्रिंग्स को UTC के रूप में इंटरप्रेट किया जाता है, और जब इसे हमारे लोकल टाइमज़ोन (GMT-7) में एडजस्ट किया जाता है, तो पता चलता है कि हम अभी भी 2019 में ही हैं।
+    बिना `T` टाइम वैल्यू वाली स्ट्रिंग 1 जनवरी 2020 जैसी दिख सकती है - लेकिन केवल डेट वाली स्ट्रिंग्स को UTC के रूप में इंटरप्रेट किया जाता है, और जब इसे हमारे लोकल टाइमज़ोन (GMT-7) में एडजस्ट किया जाता है, तो पता चलता है कि हम अभी भी 2019 में ही हैं।
 
       बिना स्पष्ट टाइमज़ोन वाली डेट-टाइम स्ट्रिंग्स को लोकल टाइम में इंटरप्रेट किया जाता है।
   
@@ -231,14 +231,14 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-एक _गलत_ फॉर्मेटिंग मेथड चुनें:
+    एक _गलत_ फॉर्मेटिंग मेथड चुनें:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`toLocaleFormat()` मेथड बिल्कुल स्टैंडर्ड नहीं है! यह शायद इसलिए जानी-पहचानी लग रही है क्योंकि यह किसी पुरानी थर्ड-पार्टी लाइब्रेरी का हिस्सा थी।
+    `toLocaleFormat()` मेथड बिल्कुल स्टैंडर्ड नहीं है! यह शायद इसलिए जानी-पहचानी लग रही है क्योंकि यह किसी पुरानी थर्ड-पार्टी लाइब्रेरी का हिस्सा थी।
 
-सही तरीके के लिए [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) मेथड देखें। इसका सही व्यवहार [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) के अंतर्गत डॉक्यूमेंट किया गया है।
+    सही तरीके के लिए [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) मेथड देखें। इसका सही व्यवहार [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) के अंतर्गत डॉक्यूमेंट किया गया है।
   </div>
   </slot>
 </Challenge>
@@ -257,16 +257,16 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या मिलेगा?
-```js
+    आउटपुट में क्या मिलेगा?
+    ```js
       var date = Date.UTC('2020-01-02T00:00')
       console.log(date.toUTCString())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-आपको `TypeError: date.toUTCString is not a function` ही मिलेगा, क्योंकि [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई डेट इंस्टेंस नहीं, बल्कि मिलीसेकंड में एक इंटिजर लौटाता है।
+    आपको `TypeError: date.toUTCString is not a function` ही मिलेगा, क्योंकि [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई डेट इंस्टेंस नहीं, बल्कि मिलीसेकंड में एक इंटिजर लौटाता है।
 
       {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) मेथड आपके लोकल ऑफसेट का इस्तेमाल करता है (इन सवालों के लिए GMT-07:00 मान लें।)
       यानी यह आपको पिछला साल देगा (न्यू ईयर -7 घंटे)।
@@ -290,16 +290,16 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में वास्तव में क्या शामिल होगा?
-```js
+    आउटपुट में वास्तव में क्या शामिल होगा?
+    ```js
       const d = Date.UTC(2020, 0, 1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-याद रखें, [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई दिनांक इंस्टेंस रिटर्न नहीं करता। यह बस मिलीसेकंड में एक पूर्णांक लौटाता है।
+    याद रखें, [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई दिनांक इंस्टेंस रिटर्न नहीं करता। यह बस मिलीसेकंड में एक पूर्णांक लौटाता है।
   </div>
   </slot>
 </Challenge>
@@ -319,19 +319,19 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       // Assume local TZ is -07:00
       const d = new Date(Date.UTC(2020, 0, 1))
       console.log(d.getTimezoneOffset())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-डेट्स को स्थानीय समय में अंतर्निहित रूप से प्रस्तुत किया जाएगा, जिसमें एक (प्रभावी रूप से) अपरिवर्तनीय [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) होगा।
+    डेट्स को स्थानीय समय में अंतर्निहित रूप से प्रस्तुत किया जाएगा, जिसमें एक (प्रभावी रूप से) अपरिवर्तनीय [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) होगा।
 
-`Date` इंस्टेंस टाइमज़ोन डेटा स्टोर नहीं करते। वे केवल यूनिक्स एपोक (1 जनवरी, 1970) से बीते मिलीसेकंड की संख्या स्टोर करते हैं। टाइमज़ोन का हिसाब केवल डेट स्ट्रिंग को पार्स और रेंडर करते समय लगाया जाता है। डिफ़ॉल्ट डिस्प्ले व्यवहार स्वचालित रूप से सिस्टम या ब्राउज़र की लोकेल सेटिंग्स के आधार पर निर्धारित होता है।
+    `Date` इंस्टेंस टाइमज़ोन डेटा स्टोर नहीं करते। वे केवल यूनिक्स एपोक (1 जनवरी, 1970) से बीते मिलीसेकंड की संख्या स्टोर करते हैं। टाइमज़ोन का हिसाब केवल डेट स्ट्रिंग को पार्स और रेंडर करते समय लगाया जाता है। डिफ़ॉल्ट डिस्प्ले व्यवहार स्वचालित रूप से सिस्टम या ब्राउज़र की लोकेल सेटिंग्स के आधार पर निर्धारित होता है।
   </div>
   </slot>
 </Challenge>
@@ -349,17 +349,17 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setDate(1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) मेथड दिए गए इंस्टेंस के करंट महीने के आधार पर महीने का दिन सेट करता है।
+    [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) मेथड दिए गए इंस्टेंस के करंट महीने के आधार पर महीने का दिन सेट करता है।
   
       अगर आप कोई ऐसी वैल्यू देते हैं जो उस महीने के दिनों की संख्या से बाहर है, तो JavaScript खुद-ब-खुद महीने को एडजस्ट कर लेगा (उदाहरण के लिए, जनवरी में `setDate(32)` चलाने पर यह 1 फरवरी के रूप में कैलकुलेट होगा।)
 
@@ -381,19 +381,19 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए date instance का महीना सेट करता है।
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दिए गए date instance का महीना सेट करता है।
 
-महीने का आर्गुमेंट zero-based होता है, जिसकी रेंज 0-11 तक होती है (वेस्टर्न कैलेंडर के अनुसार।)
+    महीने का आर्गुमेंट zero-based होता है, जिसकी रेंज 0-11 तक होती है (वेस्टर्न कैलेंडर के अनुसार।)
   </div>
   </slot>
 </Challenge>
@@ -412,21 +412,21 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(12)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दी गई डेट इंस्टेंस का महीना सेट करता है।
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड दी गई डेट इंस्टेंस का महीना सेट करता है।
 
-`month` आर्गुमेंट जीरो-बेस्ड होता है, जिसमें 0-11 की रेंज में 12 वैल्यूज़ होती हैं (वेस्टर्न कैलेंडर के अनुसार)।
+    `month` आर्गुमेंट जीरो-बेस्ड होता है, जिसमें 0-11 की रेंज में 12 वैल्यूज़ होती हैं (वेस्टर्न कैलेंडर के अनुसार)।
 
-यहाँ साल 2021 में एडजस्ट हो जाता है, क्योंकि `setMonth(12)` 11 (दिसंबर) से 1 ज्यादा है।
+    यहाँ साल 2021 में एडजस्ट हो जाता है, क्योंकि `setMonth(12)` 11 (दिसंबर) से 1 ज्यादा है।
   </div>
   </slot>
 </Challenge>
@@ -446,17 +446,17 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या दिखेगा?
-```js
+    आउटपुट में क्या दिखेगा?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(13)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड किसी भी डेट इंस्टेंस का महीना सेट करती है।
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) मेथड किसी भी डेट इंस्टेंस का महीना सेट करती है।
   
       महीने का आर्गुमेंट जीरो-बेस्ड होता है, यानी इसकी रेंज 0 से 11 तक होती है (वेस्टर्न कैलेंडर के अनुसार।)
 
@@ -485,17 +485,17 @@ Month आर्गुमेंट zero-based होता है। इसकी
 >
   <slot name="question">
   <div className="question">
-आउटपुट में क्या शामिल होगा?
-```js
+    आउटपुट में क्या शामिल होगा?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(-1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) विधि दी गई डेट इंस्टेंस का महीना सेट करती है।
+    [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) विधि दी गई डेट इंस्टेंस का महीना सेट करती है।
   
       महीने का तर्क शून्य-आधारित है, जिसकी सीमा 0-11 है (पश्चिमी कैलेंडर का उपयोग करते हुए)।
 

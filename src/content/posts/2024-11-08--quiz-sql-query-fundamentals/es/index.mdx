@@ -47,14 +47,14 @@ No te preocupes, les pasa a un montón de devs.
 >
   <slot name="question">
   <div className="question">
-¿Cuál de las siguientes consultas SQL recupera correctamente las filas donde el nombre es "John"?
+    ¿Cuál de las siguientes consultas SQL recupera correctamente las filas donde el nombre es "John"?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-En SQL, el signo de igual simple (`=`) es el que manda para las comparaciones en la cláusula `WHERE`. Olvídate de `==` o `===`, esos son exclusivos de JavaScript y aquí no pintan nada.
+    En SQL, el signo de igual simple (`=`) es el que manda para las comparaciones en la cláusula `WHERE`. Olvídate de `==` o `===`, esos son exclusivos de JavaScript y aquí no pintan nada.
 
-La sintaxis correcta es `SELECT * FROM users WHERE name = 'John';`.
+    La sintaxis correcta es `SELECT * FROM users WHERE name = 'John';`.
   </div>
   </slot>
 </Challenge>
@@ -73,14 +73,14 @@ La sintaxis correcta es `SELECT * FROM users WHERE name = 'John';`.
 >
   <slot name="question">
   <div className="question">
-¿Qué hace `COUNT(column_name)` en SQL?
+    ¿Qué hace `COUNT(column_name)` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`COUNT(column_name)` cuenta la cantidad de valores no NULL en una columna específica. Si quieres contar todas las filas sin importar si tienen NULL, usa `COUNT(*)`.
+    `COUNT(column_name)` cuenta la cantidad de valores no NULL en una columna específica. Si quieres contar todas las filas sin importar si tienen NULL, usa `COUNT(*)`.
 
-También puedes usar `COALESCE` para que los NULL se traten como un valor por defecto y no te arruinen el conteo. Por ejemplo: `COUNT(COALESCE(column_name, 0))`.
+    También puedes usar `COALESCE` para que los NULL se traten como un valor por defecto y no te arruinen el conteo. Por ejemplo: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -99,12 +99,12 @@ También puedes usar `COALESCE` para que los NULL se traten como un valor por de
 >
   <slot name="question">
   <div className="question">
-¿Qué hace un `LEFT JOIN` en SQL?
+    ¿Qué hace un `LEFT JOIN` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Un `LEFT JOIN` devuelve todas las filas de la tabla izquierda y las filas coincidentes de la tabla derecha, rellenando con NULL las filas de la derecha que no encuentren coincidencia.
+    Un `LEFT JOIN` devuelve todas las filas de la tabla izquierda y las filas coincidentes de la tabla derecha, rellenando con NULL las filas de la derecha que no encuentren coincidencia.
   </div>
   </slot>
 </Challenge>
@@ -123,12 +123,12 @@ Un `LEFT JOIN` devuelve todas las filas de la tabla izquierda y las filas coinci
 >
   <slot name="question">
   <div className="question">
-¿Qué hace un `INNER JOIN` en SQL?
+    ¿Qué hace un `INNER JOIN` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Un `INNER JOIN` devuelve las filas donde la condición de unión encuentra coincidencias en ambas tablas. Las filas que no coinciden se quedan fuera del conjunto de resultados.
+    Un `INNER JOIN` devuelve las filas donde la condición de unión encuentra coincidencias en ambas tablas. Las filas que no coinciden se quedan fuera del conjunto de resultados.
   </div>
   </slot>
 </Challenge>
@@ -147,12 +147,12 @@ Un `INNER JOIN` devuelve las filas donde la condición de unión encuentra coinc
 >
   <slot name="question">
   <div className="question">
-¿Qué es una subconsulta correlacionada en SQL?
+    ¿Qué es una subconsulta correlacionada en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta externa. Al hacer referencia a columnas de la consulta externa, su ejecución depende directamente de cada fila individual.
+    Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta externa. Al hacer referencia a columnas de la consulta externa, su ejecución depende directamente de cada fila individual.
   </div>
   </slot>
 </Challenge>
@@ -171,20 +171,20 @@ Una subconsulta correlacionada se evalúa una vez por cada fila de la consulta e
 >
   <slot name="question">
   <div className="question">
-¿Para qué sirve realmente la cláusula `WITH` (Expresión de Tabla Común) en SQL?
+    ¿Para qué sirve realmente la cláusula `WITH` (Expresión de Tabla Común) en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La cláusula `WITH`, o Expresión de Tabla Común (CTE), se utiliza para definir un conjunto de resultados temporal que puede referenciarse dentro de la consulta principal. En PostgreSQL, `WITH` puede adjuntarse a sentencias como `SELECT`, `INSERT`, `UPDATE`, `DELETE` o `MERGE`.
-```sql
-WITH cte_name AS (
-  SELECT column_name
-  FROM table_name
-)
-SELECT *
-FROM cte_name;
-```
+    La cláusula `WITH`, o Expresión de Tabla Común (CTE), se utiliza para definir un conjunto de resultados temporal que puede referenciarse dentro de la consulta principal. En PostgreSQL, `WITH` puede adjuntarse a sentencias como `SELECT`, `INSERT`, `UPDATE`, `DELETE` o `MERGE`.
+    ```sql
+    WITH cte_name AS (
+    SELECT column_name
+    FROM table_name
+    )
+    SELECT *
+    FROM cte_name;
+    ```
   </div>
   </slot>
 </Challenge>
@@ -203,12 +203,12 @@ FROM cte_name;
 >
   <slot name="question">
   <div className="question">
-¿Qué hace exactamente el operador `IS NULL` en SQL?
+    ¿Qué hace exactamente el operador `IS NULL` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`IS NULL` verifica si una columna específica contiene un valor NULL. `IS NOT NULL` comprueba exactamente lo opuesto.
+    `IS NULL` verifica si una columna específica contiene un valor NULL. `IS NOT NULL` comprueba exactamente lo opuesto.
   </div>
   </slot>
 </Challenge>
@@ -227,12 +227,12 @@ FROM cte_name;
 >
   <slot name="question">
   <div className="question">
-¿Qué hace el operador `IN` en SQL?
+    ¿Qué hace el operador `IN` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El operador `IN` filtra filas para que coincidan con cualquier valor de una lista especificada, a menudo como alternativa a múltiples condiciones `OR`.
+    El operador `IN` filtra filas para que coincidan con cualquier valor de una lista especificada, a menudo como alternativa a múltiples condiciones `OR`.
   </div>
   </slot>
 </Challenge>
@@ -252,14 +252,14 @@ El operador `IN` filtra filas para que coincidan con cualquier valor de una list
 >
   <slot name="question">
   <div className="question">
-¿Qué hace la función `COALESCE` en SQL?
+    ¿Qué hace la función `COALESCE` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La función `COALESCE` devuelve el primer valor no NULL de una lista especificada, lo que resulta muy útil para asignar valores predeterminados cuando te encuentras con NULLs.
+    La función `COALESCE` devuelve el primer valor no NULL de una lista especificada, lo que resulta muy útil para asignar valores predeterminados cuando te encuentras con NULLs.
 
-Por ejemplo, `COALESCE(column_name, 0)` devolvería `0` si `column_name` es `NULL`.
+    Por ejemplo, `COALESCE(column_name, 0)` devolvería `0` si `column_name` es `NULL`.
   </div>
   </slot>
 </Challenge>
@@ -279,12 +279,12 @@ Por ejemplo, `COALESCE(column_name, 0)` devolvería `0` si `column_name` es `NUL
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el propósito de la cláusula `GROUP BY` en SQL?
+    ¿Cuál es el propósito de la cláusula `GROUP BY` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La cláusula `GROUP BY` agrupa las filas que comparten los mismos valores en las columnas especificadas, lo que te permite aplicar funciones de agregación a cada grupo por separado.
+    La cláusula `GROUP BY` agrupa las filas que comparten los mismos valores en las columnas especificadas, lo que te permite aplicar funciones de agregación a cada grupo por separado.
   </div>
   </slot>
 </Challenge>
@@ -304,14 +304,14 @@ La cláusula `GROUP BY` agrupa las filas que comparten los mismos valores en las
 >
   <slot name="question">
   <div className="question">
-¿Qué hace un `FULL OUTER JOIN` en SQL?
+    ¿Qué hace un `FULL OUTER JOIN` en SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Un `FULL OUTER JOIN` devuelve todas las filas de ambas tablas, rellenando con NULL los valores que no tienen coincidencia.
+    Un `FULL OUTER JOIN` devuelve todas las filas de ambas tablas, rellenando con NULL los valores que no tienen coincidencia.
 
-Esto es ideal para comparar dos tablas y encontrar rápidamente las diferencias entre ellas.
+    Esto es ideal para comparar dos tablas y encontrar rápidamente las diferencias entre ellas.
   </div>
   </slot>
 </Challenge>

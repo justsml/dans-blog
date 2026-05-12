@@ -51,12 +51,12 @@ Trae pruebas.
 >
   <slot name="question">
   <div className="question">
-¿Qué significa "ventana de contexto" en un LLM?
+    ¿Qué significa "ventana de contexto" en un LLM?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La ventana de contexto es el número total de tokens que un modelo puede procesar en una sola llamada: **entrada + salida combinadas**. Una ventana de contexto de 128K significa que tu prompt + documentos recuperados + historial de conversación + la respuesta del modelo deben caber todos dentro de 128 000 tokens.
+    La ventana de contexto es el número total de tokens que un modelo puede procesar en una sola llamada: **entrada + salida combinadas**. Una ventana de contexto de 128K significa que tu prompt + documentos recuperados + historial de conversación + la respuesta del modelo deben caber todos dentro de 128 000 tokens.
 
     No tiene nada que ver con sesiones, memoria ni límites de tasa. Cuando alcanzas el límite, el modelo trunca, falla o, peor aún, descarta silenciosamente tokens que no esperabas.
   </div>
@@ -77,12 +77,12 @@ La ventana de contexto es el número total de tokens que un modelo puede procesa
 >
   <slot name="question">
   <div className="question">
-¿Cuántos tokens consume aproximadamente un párrafo en inglés de 100 palabras con un tokenizador moderno estándar?
+    ¿Cuántos tokens consume aproximadamente un párrafo en inglés de 100 palabras con un tokenizador moderno estándar?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La regla general es **~1.3 tokens por palabra** para prosa típica en inglés. Un párrafo de 100 palabras ≈ 130 tokens.
+    La regla general es **~1.3 tokens por palabra** para prosa típica en inglés. Un párrafo de 100 palabras ≈ 130 tokens.
 
     Esto varía significativamente según el tipo de contenido:
     - Código: ~1.5–2 tokens/palabra (caracteres especiales, espacios en blanco)
@@ -109,16 +109,16 @@ La regla general es **~1.3 tokens por palabra** para prosa típica en inglés. U
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el efecto práctico de usar el rol `system` frente al rol `user` en el array de mensajes?
+    ¿Cuál es el efecto práctico de usar el rol `system` frente al rol `user` en el array de mensajes?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El rol `system` se procesa como instrucciones de mayor prioridad. Los modelos están entrenados para darle más peso que a los mensajes del usuario: es el límite arquitectónico entre "lo que dijo el desarrollador" y "lo que dijo el usuario".
+    El rol `system` se procesa como instrucciones de mayor prioridad. Los modelos están entrenados para darle más peso que a los mensajes del usuario: es el límite arquitectónico entre "lo que dijo el desarrollador" y "lo que dijo el usuario".
 
-No es magia. No garantiza que el modelo ignore instrucciones contradictorias del usuario (véase: inyección de prompts). Pero aumenta significativamente la tendencia del modelo a seguir tus directrices, sobre todo en modelos con un fuerte seguimiento de instrucciones.
+    No es magia. No garantiza que el modelo ignore instrucciones contradictorias del usuario (véase: inyección de prompts). Pero aumenta significativamente la tendencia del modelo a seguir tus directrices, sobre todo en modelos con un fuerte seguimiento de instrucciones.
 
-En la práctica: coloca tu persona, reglas y restricciones de comportamiento en `system`. Pon el contexto recuperado y los datos del usuario en `user`. Nunca introduzcas entradas controladas por el usuario en `system`.
+    En la práctica: coloca tu persona, reglas y restricciones de comportamiento en `system`. Pon el contexto recuperado y los datos del usuario en `user`. Nunca introduzcas entradas controladas por el usuario en `system`.
   </div>
   </slot>
 </Challenge>
@@ -137,12 +137,12 @@ En la práctica: coloca tu persona, reglas y restricciones de comportamiento en 
 >
   <slot name="question">
   <div className="question">
-La investigación sobre el fenómeno de "Lost in the Middle" revela que los LLM tienden a:
+    La investigación sobre el fenómeno de "Lost in the Middle" revela que los LLM tienden a:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El [artículo Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demostró que los LLM pierden sistemáticamente el rastro de la información ubicada en el centro de contextos extensos. El rendimiento mejora drásticamente cuando los datos clave aparecen al **principio o al final** de la ventana de contexto.
+    El [artículo Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) demostró que los LLM pierden sistemáticamente el rastro de la información ubicada en el centro de contextos extensos. El rendimiento mejora drásticamente cuando los datos clave aparecen al **principio o al final** de la ventana de contexto.
 
     Implicación práctica: al inyectar fragmentos recuperados en un prompt de RAG, no te limites a concatenarlos por orden de relevancia. Coloca el resultado más relevante primero, el segundo al final, y rellena el centro con los de menor prioridad. Contraintuitivo, pero los benchmarks lo confirman.
   </div>
@@ -163,12 +163,12 @@ El [artículo Lost in the Middle (Liu et al., 2023)](https://arxiv.org/abs/2307.
 >
   <slot name="question">
   <div className="question">
-Al segmentar documentos para RAG, ¿cuál es el principio más importante?
+    Al segmentar documentos para RAG, ¿cuál es el principio más importante?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-No existe un tamaño de fragmento universalmente correcto: depende de tu contenido. Los principios clave son:
+    No existe un tamaño de fragmento universalmente correcto: depende de tu contenido. Los principios clave son:
 
     1. **Adáptate a la estructura de tu contenido.** Las páginas de FAQ se segmentan bien a nivel de pregunta y respuesta. Los documentos legales, a nivel de cláusula. El código, a nivel de función.
     2. **Usa superposición.** Un fragmento de 512 tokens con 64 tokens de superposición a cada lado garantiza que las respuestas que crucen un límite sigan recuperándose.
@@ -193,12 +193,12 @@ No existe un tamaño de fragmento universalmente correcto: depende de tu conteni
 >
   <slot name="question">
   <div className="question">
-En los sistemas RAG, la "búsqueda híbrida" se refiere a:
+    En los sistemas RAG, la "búsqueda híbrida" se refiere a:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La búsqueda híbrida combina la **búsqueda vectorial** (similitud semántica mediante embeddings) y la **búsqueda por palabras clave** (BM25 / búsqueda de texto completo) porque sus puntos débiles son complementarios:
+    La búsqueda híbrida combina la **búsqueda vectorial** (similitud semántica mediante embeddings) y la **búsqueda por palabras clave** (BM25 / búsqueda de texto completo) porque sus puntos débiles son complementarios:
 
     - La búsqueda vectorial falla con términos exactos: nombres de productos, códigos de error, números de modelo, identificadores técnicos
     - La búsqueda por palabras clave falla con paráfrasis: "cómo cancelo" vs. "terminar suscripción"
@@ -224,12 +224,12 @@ La búsqueda híbrida combina la **búsqueda vectorial** (similitud semántica m
 >
   <slot name="question">
   <div className="question">
-Al construir un prompt de RAG con contexto recuperado, una buena regla general para el presupuesto de contexto es:
+    Al construir un prompt de RAG con contexto recuperado, una buena regla general para el presupuesto de contexto es:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90% para la entrada, al modelo solo le queda el 10% de la ventana para generar una respuesta, lo que a menudo provoca salidas truncadas o degradadas.
+    La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90% para la entrada, al modelo solo le queda el 10% de la ventana para generar una respuesta, lo que a menudo provoca salidas truncadas o degradadas.
 
     Una heurística razonable: decide primero el tamaño esperado de tu salida y luego mantén tu entrada cómodamente por debajo del presupuesto restante. Para muchas tareas de RAG, esto significa usar no más del **60–70% del total de la ventana de contexto para la entrada** (prompt del sistema + historial + contexto recuperado). Deja el resto para la generación y un margen de seguridad.
 
@@ -252,12 +252,12 @@ La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90% pa
 >
   <slot name="question">
   <div className="question">
-En una aplicación de chat multipturno, ¿cuál es la estrategia correcta cuando el historial de conversación crece demasiado?
+    En una aplicación de chat multipturno, ¿cuál es la estrategia correcta cuando el historial de conversación crece demasiado?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los LLM no tienen memoria persistente. Cada llamada a la API es *stateless*: envías el contexto completo y obtienes una respuesta. La "memoria" de una conversación depende exclusivamente del historial de mensajes que incluyes en cada solicitud.
+    Los LLM no tienen memoria persistente. Cada llamada a la API es *stateless*: envías el contexto completo y obtienes una respuesta. La "memoria" de una conversación depende exclusivamente del historial de mensajes que incluyes en cada solicitud.
 
     Cuando ese historial supera tu presupuesto, las opciones son:
     1. **Resumir**: Comprime las intervenciones antiguas en un resumen acumulativo y mantén las recientes de forma literal.
@@ -285,12 +285,12 @@ Los LLM no tienen memoria persistente. Cada llamada a la API es *stateless*: env
 >
   <slot name="question">
   <div className="question">
-Para la mayoría de los casos de uso en producción, la estrategia óptima de ejemplos few-shot es:
+    Para la mayoría de los casos de uso en producción, la estrategia óptima de ejemplos few-shot es:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los ejemplos few-shot mejoran drásticamente la consistencia de la salida y el cumplimiento del formato. El punto óptimo para la mayoría de las tareas es **3–5 ejemplos diversos y de alta calidad**.
+    Los ejemplos few-shot mejoran drásticamente la consistencia de la salida y el cumplimiento del formato. El punto óptimo para la mayoría de las tareas es **3–5 ejemplos diversos y de alta calidad**.
 
     ¿Por qué no más? Cada ejemplo consume tokens. Más allá de 5–10 ejemplos, el beneficio marginal disminuye mientras el costo en tokens sigue aumentando. Más ejemplos también elevan la probabilidad de que el modelo se sobreajuste a los ejemplos en lugar de comprender el patrón subyacente.
 
@@ -315,19 +315,19 @@ Los ejemplos few-shot mejoran drásticamente la consistencia de la salida y el c
 >
   <slot name="question">
   <div className="question">
-¿Por qué muchos prompts de producción utilizan etiquetas estilo XML como `<document>`, `<context>`, `<instructions>`?
+    ¿Por qué muchos prompts de producción utilizan etiquetas estilo XML como `<document>`, `<context>`, `<instructions>`?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Las etiquetas estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:
+    Las etiquetas estilo XML proporcionan **límites estructurales explícitos** que los modelos están entrenados para reconocer y respetar. Hacen dos cosas:
 
-1. **Separación**: Le indican al modelo dónde terminan las instrucciones y comienzan los datos, algo crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.
-2. **Capacidad de análisis**: Cuando le pides al modelo que responda en XML (p. ej., `<answer>...</answer>`), las etiquetas te ofrecen puntos de extracción limpios sin necesidad de hacks con regex.
+    1. **Separación**: Le indican al modelo dónde terminan las instrucciones y comienzan los datos, algo crítico para RAG y para reducir el riesgo de inyección de prompts desde documentos recuperados.
+    2. **Capacidad de análisis**: Cuando le pides al modelo que responda en XML (p. ej., `<answer>...</answer>`), las etiquetas te ofrecen puntos de extracción limpios sin necesidad de hacks con regex.
 
-Esto no es XML como lenguaje de marcado. Es XML como convención de delimitadores en la que se entrena a los modelos. Funciona porque el modelo ha visto este patrón extensamente durante el entrenamiento, no porque esté validando esquemas.
+    Esto no es XML como lenguaje de marcado. Es XML como convención de delimitadores en la que se entrena a los modelos. Funciona porque el modelo ha visto este patrón extensamente durante el entrenamiento, no porque esté validando esquemas.
 
-Funciona en la mayoría de los modelos ajustados para instrucciones con la frecuencia suficiente para ser útil: es una convención de datos de entrenamiento, no una función del proveedor ni una garantía de seguridad.
+    Funciona en la mayoría de los modelos ajustados para instrucciones con la frecuencia suficiente para ser útil: es una convención de datos de entrenamiento, no una función del proveedor ni una garantía de seguridad.
   </div>
   </slot>
 </Challenge>
@@ -346,12 +346,12 @@ Funciona en la mayoría de los modelos ajustados para instrucciones con la frecu
 >
   <slot name="question">
   <div className="question">
-Configurar `temperature=0` en tu llamada al LLM significa:
+    Configurar `temperature=0` en tu llamada al LLM significa:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`temperature=0` hace que el modelo seleccione el token de mayor probabilidad en cada paso (decodificación voraz), lo que genera salidas **más consistentes**, pero no garantiza que sean idénticas.
+    `temperature=0` hace que el modelo seleccione el token de mayor probabilidad en cada paso (decodificación voraz), lo que genera salidas **más consistentes**, pero no garantiza que sean idénticas.
 
     Fuentes de variación con temperature=0:
     - **No determinismo de punto flotante** en los cálculos de la GPU, especialmente al cambiar de hardware o tamaño de lote
@@ -377,13 +377,13 @@ Configurar `temperature=0` en tu llamada al LLM significa:
 >
   <slot name="question">
   <div className="question">
-¿Qué es el "caché de prompts" en el contexto de las APIs de LLM (Anthropic, OpenAI)?
+    ¿Qué es el "caché de prompts" en el contexto de las APIs de LLM (Anthropic, OpenAI)?
     <p className="text-sm">Última verificación: 8 de mayo de 2026. Los controles de caché y la tarificación de los proveedores cambian rápidamente.</p>
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El caché de prompts reutiliza el **estado del caché KV / prefijo del prompt** calculado para prefijos estáticos cuando tu proveedor lo soporta. En solicitudes posteriores con el mismo prefijo, el modelo puede omitir el reprocesamiento de esos tokens, lo que reduce la latencia y puede disminuir drásticamente el costo.
+    El caché de prompts reutiliza el **estado del caché KV / prefijo del prompt** calculado para prefijos estáticos cuando tu proveedor lo soporta. En solicitudes posteriores con el mismo prefijo, el modelo puede omitir el reprocesamiento de esos tokens, lo que reduce la latencia y puede disminuir drásticamente el costo.
 
     Esto no es un caché de respuestas. El modelo sigue generando una respuesta nueva cada vez. Solo estás evitando volver a tokenizar y recalcular la atención para la parte del prompt que no cambia.
 
@@ -408,19 +408,19 @@ El caché de prompts reutiliza el **estado del caché KV / prefijo del prompt** 
 >
   <slot name="question">
   <div className="question">
-La técnica más efectiva para reducir la alucinación en un sistema de IA en producción es:
+    La técnica más efectiva para reducir la alucinación en un sistema de IA en producción es:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ordenarle a un modelo que no alucine no detiene las alucinaciones: el modelo no cuenta con una señal introspectiva fiable para "me lo estoy inventando". Solo logra que te diga con total seguridad que no se lo está inventando, mientras se lo inventa.
+    Ordenarle a un modelo que no alucine no detiene las alucinaciones: el modelo no cuenta con una señal introspectiva fiable para "me lo estoy inventando". Solo logra que te diga con total seguridad que no se lo está inventando, mientras se lo inventa.
 
     Lo que realmente funciona: **el anclaje**. Proporciona al modelo la información necesaria para responder correctamente y restríngelo exclusivamente a esa información:
-```
+    ```
     Answer only using the provided documents.
     If the answer isn't in the documents, say: "I don't have enough information to answer that."
-```
-Luego valida la salida: comprueba que las afirmaciones de la respuesta figuren en el contexto recuperado. Esta es la verificación de anclaje por citación; consulta la sección de evaluación RAG para ver cómo implementarla.
+    ```
+    Luego valida la salida: comprueba que las afirmaciones de la respuesta figuren en el contexto recuperado. Esta es la verificación de anclaje por citación; consulta la sección de evaluación RAG para ver cómo implementarla.
 
     Los modelos más grandes alucinan menos en promedio, pero todos alucinan. El anclaje es la estrategia de mitigación, no el tamaño del modelo.
   </div>
@@ -441,28 +441,28 @@ Luego valida la salida: comprueba que las afirmaciones de la respuesta figuren e
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la diferencia clave entre la ingeniería de contexto y el fine-tuning, y cuándo realmente tiene sentido aplicar fine-tuning?
+    ¿Cuál es la diferencia clave entre la ingeniería de contexto y el fine-tuning, y cuándo realmente tiene sentido aplicar fine-tuning?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-**La ingeniería de contexto** moldea el comportamiento del modelo a través del prompt: instrucciones del sistema, ejemplos few-shot y contexto recuperado. Es por solicitud, reversible y no requiere entrenamiento.
+    **La ingeniería de contexto** moldea el comportamiento del modelo a través del prompt: instrucciones del sistema, ejemplos few-shot y contexto recuperado. Es por solicitud, reversible y no requiere entrenamiento.
 
-**El fine-tuning** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese checkpoint) y se aplican a cada inferencia.
+    **El fine-tuning** actualiza los pesos del modelo con tus datos. Los cambios son permanentes (para ese checkpoint) y se aplican a cada inferencia.
 
-El fine-tuning es genuinamente mejor cuando:
-- Necesitas un estilo o formato consistente que el modelo no pueda seguir de forma fiable solo con instrucciones
-- Tu tarea requiere un comportamiento repetible en patrones específicos del dominio que el prompting y la recuperación no resuelven
-- Necesitas reducir la longitud del prompt: el comportamiento ajustado no necesita explicarse en cada solicitud
-- Procesas muchas solicitudes donde los ejemplos few-shot consistentes consumen una cantidad significativa de tokens
+    El fine-tuning es genuinamente mejor cuando:
+    - Necesitas un estilo o formato consistente que el modelo no pueda seguir de forma fiable solo con instrucciones
+    - Tu tarea requiere un comportamiento repetible en patrones específicos del dominio que el prompting y la recuperación no resuelven
+    - Necesitas reducir la longitud del prompt: el comportamiento ajustado no necesita explicarse en cada solicitud
+    - Procesas muchas solicitudes donde los ejemplos few-shot consistentes consumen una cantidad significativa de tokens
 
-El fine-tuning es excesivo cuando:
-- Tus instrucciones caben en un prompt de sistema
-- Principalmente necesitas datos actuales o propietarios que pueden recuperarse en tiempo de solicitud
-- Los requisitos cambian con frecuencia (tendrías que volver a hacer fine-tuning)
-- No has agotado primero la ingeniería de contexto
+    El fine-tuning es excesivo cuando:
+    - Tus instrucciones caben en un prompt de sistema
+    - Principalmente necesitas datos actuales o propietarios que pueden recuperarse en tiempo de solicitud
+    - Los requisitos cambian con frecuencia (tendrías que volver a hacer fine-tuning)
+    - No has agotado primero la ingeniería de contexto
 
-El orden correcto: domina primero la ingeniería de contexto. Haz fine-tuning solo cuando esté demostrado que no es suficiente.
+    El orden correcto: domina primero la ingeniería de contexto. Haz fine-tuning solo cuando esté demostrado que no es suficiente.
   </div>
   </slot>
 </Challenge>

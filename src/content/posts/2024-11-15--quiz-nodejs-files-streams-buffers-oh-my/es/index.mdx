@@ -45,16 +45,16 @@ Veamos qué tan bien distingues streams de buffers. 🚀
 >
   <slot name="question">
   <div className="question">
-¿Qué hace este código?
-```js
+    ¿Qué hace este código?
+    ```js
     const buf = Buffer.alloc(5);
     console.log(buf);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`Buffer.alloc(size)` crea un nuevo Buffer del tamaño especificado, rellenado con ceros.
+    `Buffer.alloc(size)` crea un nuevo Buffer del tamaño especificado, rellenado con ceros.
     La salida será: `<Buffer 00 00 00 00 00>`
 
     Si necesitas un Buffer con datos aleatorios, usa `Buffer.allocUnsafe(5)`.
@@ -79,16 +79,16 @@ Veamos qué tan bien distingues streams de buffers. 🚀
 >
   <slot name="question">
   <div className="question">
-¿Qué imprimirá esto?
-```js
+    ¿Qué imprimirá esto?
+    ```js
     const buf = Buffer.from([65]);
     console.log(buf.toString());
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los números en el arreglo representan códigos ASCII:
+    Los números en el arreglo representan códigos ASCII:
 
     - 65: 'A'
 
@@ -113,23 +113,23 @@ Los números en el arreglo representan códigos ASCII:
 >
   <slot name="question">
   <div className="question">
-¿En qué orden se muestra la salida?
-```js
+    ¿En qué orden se muestra la salida?
+    ```js
     import fs from 'fs';
     fs.readFile('test.txt', 'utf8', (err, data) => {
       console.log(data);
     });
     console.log('Done');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Como `readFile` es asíncrono, el código sigue ejecutándose mientras se lee el archivo.
+    Como `readFile` es asíncrono, el código sigue ejecutándose mientras se lee el archivo.
     Por lo tanto, "Done" se imprimirá antes que el contenido del archivo.
 
     Para esperar a que el archivo se lea primero, podrías usar la versión basada en promesas:
-```js
+    ```js
     import { promises as fs } from 'fs';
     
     async function read() {
@@ -137,7 +137,7 @@ Como `readFile` es asíncrono, el código sigue ejecutándose mientras se lee el
       console.log(data);
       console.log('Done');
     }
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -156,16 +156,16 @@ Como `readFile` es asíncrono, el código sigue ejecutándose mientras se lee el
 >
   <slot name="question">
   <div className="question">
-¿Qué devuelve `fs.readFileSync()` por defecto?
-```js
+    ¿Qué devuelve `fs.readFileSync()` por defecto?
+    ```js
     import fs from 'fs';
     const content = fs.readFileSync('test.txt');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Por defecto, `fs.readFileSync()` devuelve un Buffer si no especificas una codificación. Si prefieres obtener una cadena de texto, tienes dos caminos:
+    Por defecto, `fs.readFileSync()` devuelve un Buffer si no especificas una codificación. Si prefieres obtener una cadena de texto, tienes dos caminos:
     1. Especificar la codificación: `fs.readFileSync('test.txt', 'utf8')`
     2. Convertir el Buffer manualmente: `content.toString()`
 
@@ -188,22 +188,22 @@ Por defecto, `fs.readFileSync()` devuelve un Buffer si no especificas una codifi
 >
   <slot name="question">
   <div className="question">
-¿Qué conjunto de eventos se utiliza comúnmente con los streams Readable?
+    ¿Qué conjunto de eventos se utiliza comúnmente con los streams Readable?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los streams Readable emiten varios eventos importantes:
+    Los streams Readable emiten varios eventos importantes:
     - 'data': Cuando hay datos disponibles para leer
     - 'end': Cuando no quedan más datos para leer
     - 'error': Cuando se produce un error
     - 'close': Cuando el stream y el recurso subyacente se han cerrado
-```js
+    ```js
     const readable = fs.createReadStream('file.txt');
     readable.on('data', chunk => console.log(chunk));
     readable.on('end', () => console.log('Done!'));
-```
-[Más información sobre los eventos de Stream](https://nodejs.org/api/stream.html#class-streamreadable)
+    ```
+    [Más información sobre los eventos de Stream](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
   </slot>
 </Challenge>
@@ -222,18 +222,18 @@ Los streams Readable emiten varios eventos importantes:
 >
   <slot name="question">
   <div className="question">
-¿Qué hace este código?
-```js
+    ¿Qué hace este código?
+    ```js
     import fs from 'fs';
     const readable = fs.createReadStream('source.txt');
     const writable = fs.createWriteStream('dest.txt');
     readable.pipe(writable);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`pipe()` conecta un flujo legible con uno escribible, gestionando automáticamente la backpressure y transfiriendo los datos en fragmentos sin cargar el archivo completo en la RAM.
+    `pipe()` conecta un flujo legible con uno escribible, gestionando automáticamente la backpressure y transfiriendo los datos en fragmentos sin cargar el archivo completo en la RAM.
   </div>
   </slot>
 </Challenge>
@@ -252,16 +252,16 @@ Los streams Readable emiten varios eventos importantes:
 >
   <slot name="question">
   <div className="question">
-¿Qué hace la opción recursive?
-```js
+    ¿Qué hace la opción recursive?
+    ```js
     import fs from 'fs';
     fs.mkdirSync('./a/b/c', { recursive: true });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-La opción `recursive: true` crea los directorios padres si no existen.
+    La opción `recursive: true` crea los directorios padres si no existen.
     Sin esta opción, intentar crear './a/b/c' lanzaría un error si './a' o './a/b' no existen.
 
     Esto es similar al comando de shell `mkdir -p`.
@@ -285,8 +285,8 @@ La opción `recursive: true` crea los directorios padres si no existen.
 >
   <slot name="question">
   <div className="question">
-¿Cuál será la salida de este código?
-```js
+    ¿Cuál será la salida de este código?
+    ```js
     import { Transform } from 'stream';
     const upperCase = new Transform({
       transform(chunk, encoding, callback) {
@@ -297,12 +297,12 @@ La opción `recursive: true` crea los directorios padres si no existen.
       .pipe(upperCase)
       .pipe(process.stdout);
     // Input: "hello world"
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los flujos de transformación modifican los datos a medida que pasan a través de ellos. Aquí, cada fragmento:
+    Los flujos de transformación modifican los datos a medida que pasan a través de ellos. Aquí, cada fragmento:
     1. Se convierte en una cadena
     2. Se transforma a mayúsculas
     3. Se pasa a stdout
@@ -328,19 +328,19 @@ Los flujos de transformación modifican los datos a medida que pasan a través d
 >
   <slot name="question">
   <div className="question">
-¿Cuántas veces se garantiza que se disparará `fs.watch()` cuando se modifique un archivo?
-```js
+    ¿Cuántas veces se garantiza que se disparará `fs.watch()` cuando se modifique un archivo?
+    ```js
     import fs from 'fs';
     fs.watch('test.txt', (eventType, filename) => {
       console.log(`${filename} was changed`);
     });
     // Then modify test.txt once
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`fs.watch()` no garantiza que se dispare exactamente una vez por cada cambio lógico en el archivo. Es muy común que se dispare múltiples veces porque muchos editores de texto:
+    `fs.watch()` no garantiza que se dispare exactamente una vez por cada cambio lógico en el archivo. Es muy común que se dispare múltiples veces porque muchos editores de texto:
     1. Guardan en un archivo temporal
     2. Lo renombran al archivo final
 
@@ -368,25 +368,25 @@ Los flujos de transformación modifican los datos a medida que pasan a través d
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la salida?
-```js
+    ¿Cuál es la salida?
+    ```js
     const buf1 = Buffer.from('Hello');
     const buf2 = Buffer.from('Hello');
     console.log(buf1 === buf2);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los buffers se comparan por referencia, no por valor. Aunque contengan los mismos datos, son objetos distintos.
+    Los buffers se comparan por referencia, no por valor. Aunque contengan los mismos datos, son objetos distintos.
 
-Para comparar el contenido de un buffer, usa:
-```js
+    Para comparar el contenido de un buffer, usa:
+    ```js
     buf1.equals(buf2)  // true
     // or
     Buffer.compare(buf1, buf2) === 0  // true
-```
-[Más información sobre la comparación de buffers](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+    ```
+    [Más información sobre la comparación de buffers](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
   </slot>
 </Challenge>
@@ -405,15 +405,15 @@ Para comparar el contenido de un buffer, usa:
 >
   <slot name="question">
   <div className="question">
-¿Cuál es el propósito principal del backpressure en streams?
+    ¿Cuál es el propósito principal del backpressure en streams?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar la lectura cuando el extremo de escritura no puede seguir el ritmo.
+    El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar la lectura cuando el extremo de escritura no puede seguir el ritmo.
 
     Ejemplo de backpressure manual:
-```js
+    ```js
     readable.on('data', (chunk) => {
       const canContinue = writable.write(chunk);
       if (!canContinue) {
@@ -421,8 +421,8 @@ El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar
         writable.once('drain', () => readable.resume());
       }
     });
-```
-`pipe()` se encarga de esto automáticamente.
+    ```
+    `pipe()` se encarga de esto automáticamente.
 
     [Más información sobre backpressure](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
@@ -443,16 +443,16 @@ El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar
 >
   <slot name="question">
   <div className="question">
-¿Qué hace este código?
-```js
+    ¿Qué hace este código?
+    ```js
     import fs from 'fs';
     fs.symlinkSync('target.txt', 'link.txt');
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`symlinkSync` crea un enlace simbólico (como un acceso directo) al archivo de destino.
+    `symlinkSync` crea un enlace simbólico (como un acceso directo) al archivo de destino.
 
     Diferencias clave con los enlaces duros:
     - Puede enlazar a directorios
@@ -460,10 +460,10 @@ El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar
     - Se rompe si se elimina el destino
 
     Para crear un enlace duro en su lugar:
-```js
+    ```js
     fs.linkSync('target.txt', 'hardlink.txt');
-```
-[Más información sobre enlaces simbólicos](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    ```
+    [Más información sobre enlaces simbólicos](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -484,17 +484,17 @@ El backpressure es un mecanismo que evita el desbordamiento de memoria al pausar
 >
   <slot name="question">
   <div className="question">
-¿En qué modos pueden operar los streams de Node.js?
+    ¿En qué modos pueden operar los streams de Node.js?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los streams pueden operar en:
+    Los streams pueden operar en:
     1. Modo binario (predeterminado): optimizado para manejar buffers y strings de forma eficiente
     2. Modo objeto: diseñado para transmitir cualquier valor de JavaScript sin necesidad de serializarlo
 
     Ejemplo de modo objeto:
-```js
+    ```js
     import { Transform } from 'stream';
     const objectStream = new Transform({
       objectMode: true,
@@ -502,8 +502,8 @@ Los streams pueden operar en:
         callback(null, { value: chunk });
       }
     });
-```
-[Más información sobre los modos de stream](https://nodejs.org/api/stream.html#object-mode)
+    ```
+    [Más información sobre los modos de stream](https://nodejs.org/api/stream.html#object-mode)
   </div>
   </slot>
 </Challenge>
@@ -522,18 +522,18 @@ Los streams pueden operar en:
 >
   <slot name="question">
   <div className="question">
-¿Qué tipo tiene el parámetro `fd` en este callback?
-```js
+    ¿Qué tipo tiene el parámetro `fd` en este callback?
+    ```js
     import fs from 'fs';
     fs.open('test.txt', 'r', (err, fd) => {
       console.log(typeof fd);
     });
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los descriptores de archivo son números que identifican de forma única los archivos abiertos en el sistema operativo.
+    Los descriptores de archivo son números que identifican de forma única los archivos abiertos en el sistema operativo.
 
     Los tres primeros descriptores de archivo están reservados:
     - 0: stdin
@@ -541,12 +541,12 @@ Los descriptores de archivo son números que identifican de forma única los arc
     - 2: stderr
 
     No olvides cerrar siempre los descriptores de archivo:
-```js
+    ```js
     fs.close(fd, (err) => {
       if (err) throw err;
     });
-```
-[Más información sobre descriptores de archivo](https://nodejs.org/api/fs.html#file-descriptors)
+    ```
+    [Más información sobre descriptores de archivo](https://nodejs.org/api/fs.html#file-descriptors)
   </div>
   </slot>
 </Challenge>
@@ -566,27 +566,27 @@ Los descriptores de archivo son números que identifican de forma única los arc
 >
   <slot name="question">
   <div className="question">
-¿Cuántos bytes ocupará esta cadena en UTF-8?
-```js
+    ¿Cuántos bytes ocupará esta cadena en UTF-8?
+    ```js
     const str = "Hello 🌍";
     const buf = Buffer.from(str);
     console.log(buf.length);
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-En UTF-8:
+    En UTF-8:
     - Los caracteres ASCII (como 'Hello ') ocupan 1 byte cada uno
     - El emoji del planeta 🌍 ocupa 4 bytes
 
     Entonces: 5 (Hello) + 1 (espacio) + 4 (🌍) = 10 bytes
 
     Para ver los bytes:
-```js
+    ```js
     console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
-```
-[Aprende más sobre la codificación UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    ```
+    [Aprende más sobre la codificación UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>

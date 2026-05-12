@@ -116,8 +116,10 @@ function parseChallengeBlock(raw: string, fallbackIndex: number): QuizChallenge 
   const titleMatch = propsText.match(/title="([^"]*)"/);
   const title = titleMatch ? titleMatch[1] : "";
 
-  const clientVisibleMatch = propsText.match(/client:visible=\{\{([^}]*)\}\}/);
-  const clientVisible = clientVisibleMatch ? `{{${clientVisibleMatch[1]}}}` : "";
+  const clientDirectiveMatch = propsText.match(
+    /\b(client:[A-Za-z-]+=(?:"[^"]*"|\{\{[\s\S]*?\}\}|\{[\s\S]*?\}))/,
+  );
+  const clientVisible = clientDirectiveMatch ? clientDirectiveMatch[1] : "";
 
   const options = parseOptions(propsText);
   const question = parseSlot(raw, "question");
@@ -287,7 +289,9 @@ export function assembleQuiz(quiz: ParsedQuiz): string {
 function assembleChallenge(challenge: QuizChallenge): string {
   const lines: string[] = [];
   lines.push(`<Challenge`);
-  lines.push(`  client:visible=${challenge.clientVisible}`);
+  if (challenge.clientVisible) {
+    lines.push(`  ${challenge.clientVisible}`);
+  }
   lines.push(`  index={${challenge.index}}`);
   lines.push(`  group="${escapeQuotes(challenge.group)}"`);
   lines.push(`  title="${escapeQuotes(challenge.title)}"`);
@@ -322,15 +326,22 @@ function assembleSlotLines(slot: QuizSlot): string[] {
   const lines: string[] = [];
   for (const frag of slot.fragments) {
     if (frag.type === "prose") {
-      lines.push(normalizeMarkdownIndentation(frag.content));
+      lines.push(...indentSlotContent(normalizeMarkdownIndentation(frag.content)));
     } else if (frag.type === "code") {
       const code = normalizeCodeContent(frag.content);
-      lines.push("```" + (frag.language || ""));
-      if (code) lines.push(code);
-      lines.push("```");
+      lines.push(`    \`\`\`${frag.language || ""}`);
+      if (code) lines.push(...indentSlotContent(code));
+      lines.push("    ```");
     }
   }
   return lines;
+}
+
+function indentSlotContent(content: string): string[] {
+  if (!content) return [];
+  return content.split("\n").map((line) => (
+    line.trim() === "" ? line : `    ${line}`
+  ));
 }
 
 export function normalizeMarkdownIndentation(content: string): string {

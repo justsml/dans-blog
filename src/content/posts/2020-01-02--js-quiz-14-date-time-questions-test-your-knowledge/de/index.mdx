@@ -66,16 +66,16 @@ Dieses Quiz prüft (und vertieft) dein Wissen über die native `Date`-API. Nutze
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Monatsargument ist nullbasiert. Der gültige Bereich reicht von 0 bis 11 (bei westlichen Kalendern).
+    Das Monatsargument ist nullbasiert. Der gültige Bereich reicht von 0 bis 11 (bei westlichen Kalendern).
 
     'Februar' hat daher den Indexwert 1. (Stell es dir einfach wie einen Array-Zugriff vor.)
   </div>
@@ -95,16 +95,16 @@ Das Monatsargument ist nullbasiert. Der gültige Bereich reicht von 0 bis 11 (be
 >
   <slot name="question">
   <div className="question">
-Was wird in der Ausgabe stehen?
-```js
+    Was wird in der Ausgabe stehen?
+    ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Das Monatsargument ist nullbasiert. Der Wertebereich reicht von 0 bis 11 (bei westlichen Kalendern).
+    Das Monatsargument ist nullbasiert. Der Wertebereich reicht von 0 bis 11 (bei westlichen Kalendern).
 
     'Januar' hat den Index 0. (Stell es dir einfach wie einen Array-Zugriff vor.)
   </div>
@@ -127,16 +127,16 @@ Das Monatsargument ist nullbasiert. Der Wertebereich reicht von 0 bis 11 (bei we
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
     const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
     console.log(d3)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Vergiss das `new`-Schlüsselwort nicht! `Date` ist eine Klasse und sollte mit `new` aufgerufen werden.
+    Vergiss das `new`-Schlüsselwort nicht! `Date` ist eine Klasse und sollte mit `new` aufgerufen werden.
 
     `Date('...')` ohne `new` ignoriert sämtliche Argumente. Stattdessen gibt es einfach das aktuelle Datum und die Uhrzeit zurück – exakt wie `new Date()` ohne Parameter.
 
@@ -161,22 +161,22 @@ Vergiss das `new`-Schlüsselwort nicht! `Date` ist eine Klasse und sollte mit `n
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const date = new Date(2020)
       console.log(date.getFullYear())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Eine `Date`-Instanz, die mit einem einzigen Integer-Argument erstellt wird, wird als Unix-`Epoch`-Wert interpretiert. Die `Epoch` zählt einfach die Millisekunden seit dem 1. Januar 1970.
+    Eine `Date`-Instanz, die mit einem einzigen Integer-Argument erstellt wird, wird als Unix-`Epoch`-Wert interpretiert. Die `Epoch` zählt einfach die Millisekunden seit dem 1. Januar 1970.
 
-Ein Wert von `2020` (Millisekunden) entspricht also lächerlichen 2 Sekunden nach dem 1. Januar 1970.
+    Ein Wert von `2020` (Millisekunden) entspricht also lächerlichen 2 Sekunden nach dem 1. Januar 1970.
 
-Da unsere lokale Zeitzone einen negativen Offset von -7 Stunden hat, rutschen wir ins vorherige Jahr zurück und landen bei `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
+    Da unsere lokale Zeitzone einen negativen Offset von -7 Stunden hat, rutschen wir ins vorherige Jahr zurück und landen bei `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.
 
-Um diesem lokalen Zeitzonen-Offset aus dem Weg zu gehen, verwende einfach [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
+    Um diesem lokalen Zeitzonen-Offset aus dem Weg zu gehen, verwende einfach [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).
   </div>
   </slot>
 </Challenge>
@@ -195,17 +195,17 @@ Um diesem lokalen Zeitzonen-Offset aus dem Weg zu gehen, verwende einfach [`.get
 >
   <slot name="question">
   <div className="question">
-Welcher Wert wird in der Konsole ausgegeben?
-```js
+    Welcher Wert wird in der Konsole ausgegeben?
+    ```js
       const d1 = new Date('2020-01-01')
       const d2 = new Date('2020-01-01T00:00')
       console.log(d1.getFullYear(), d2.getFullYear())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der String ohne `T`-Zeitwert mag wie der 1. Januar 2020 aussehen – aber reine Datums-Strings werden standardmäßig als UTC behandelt. Rechnet man sie in unsere lokale Zeitzone (GMT-7) um, landet man tatsächlich noch im Jahr 2019.
+    Der String ohne `T`-Zeitwert mag wie der 1. Januar 2020 aussehen – aber reine Datums-Strings werden standardmäßig als UTC behandelt. Rechnet man sie in unsere lokale Zeitzone (GMT-7) um, landet man tatsächlich noch im Jahr 2019.
 
       Datums-Zeit-Strings ohne explizite Zeitzone werden hingegen in der lokalen Zeit interpretiert.
   
@@ -231,14 +231,14 @@ Der String ohne `T`-Zeitwert mag wie der 1. Januar 2020 aussehen – aber reine 
 >
   <slot name="question">
   <div className="question">
-Wähle eine _falsche_ Formatierungsmethode aus:
+    Wähle eine _falsche_ Formatierungsmethode aus:
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode `toLocaleFormat()` ist kein offizieller Standard! Sie könnte dir bekannt wirken, weil sie aus einer steinzeitlichen Drittanbieter-Bibliothek stammt.
+    Die Methode `toLocaleFormat()` ist kein offizieller Standard! Sie könnte dir bekannt wirken, weil sie aus einer steinzeitlichen Drittanbieter-Bibliothek stammt.
 
-Schau dir lieber die [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) an. Ihr Verhalten ist offiziell unter [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) dokumentiert.
+    Schau dir lieber die [`toLocaleDateString` docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) an. Ihr Verhalten ist offiziell unter [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) dokumentiert.
   </div>
   </slot>
 </Challenge>
@@ -257,16 +257,16 @@ Schau dir lieber die [`toLocaleDateString` docs](https://developer.mozilla.org/e
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       var date = Date.UTC('2020-01-02T00:00')
       console.log(date.toUTCString())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Du erhältst `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Datumsinstanz.
+    Du erhältst `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Datumsinstanz.
 
       {/* Die [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear)-Methode verwendet deinen lokalen Zeitversatz (für diese Fragen nehmen wir GMT-07:00 an).
       Das bedeutet, dass sie das vorherige Jahr ausgibt (Silvester minus 7 Stunden).
@@ -290,16 +290,16 @@ Du erhältst `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const d = Date.UTC(2020, 0, 1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Hilfsmethode [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) gibt keine Datumsinstanz zurück. Sie liefert stattdessen eine Ganzzahl in Millisekunden.
+    Die Hilfsmethode [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) gibt keine Datumsinstanz zurück. Sie liefert stattdessen eine Ganzzahl in Millisekunden.
   </div>
   </slot>
 </Challenge>
@@ -319,19 +319,19 @@ Die Hilfsmethode [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaS
 >
   <slot name="question">
   <div className="question">
-Was enthält die Ausgabe?
-```js
+    Was enthält die Ausgabe?
+    ```js
       // Assume local TZ is -07:00
       const d = new Date(Date.UTC(2020, 0, 1))
       console.log(d.getTimezoneOffset())
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Datumsangaben werden implizit in der lokalen Zeit dargestellt, mit einem (effektiv) unveränderlichen [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
+    Datumsangaben werden implizit in der lokalen Zeit dargestellt, mit einem (effektiv) unveränderlichen [`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset).
 
-`Date`-Instanzen speichern keine Zeitzonendaten. Sie speichern lediglich die Anzahl der Millisekunden seit dem Unix-Epoch (1. Jan. 1970). Die Zeitzone wird erst beim Parsen und Rendern von Datums-Strings berücksichtigt. Das Standard-Anzeigeverhalten wird automatisch anhand der Gebietsschema-Einstellungen des Systems oder Browsers ermittelt.
+    `Date`-Instanzen speichern keine Zeitzonendaten. Sie speichern lediglich die Anzahl der Millisekunden seit dem Unix-Epoch (1. Jan. 1970). Die Zeitzone wird erst beim Parsen und Rendern von Datums-Strings berücksichtigt. Das Standard-Anzeigeverhalten wird automatisch anhand der Gebietsschema-Einstellungen des Systems oder Browsers ermittelt.
   </div>
   </slot>
 </Challenge>
@@ -349,17 +349,17 @@ Datumsangaben werden implizit in der lokalen Zeit dargestellt, mit einem (effekt
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setDate(1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) setzt den Tag des Monats basierend auf dem aktuellen Monat der Instanz.
+    Die Methode [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate) setzt den Tag des Monats basierend auf dem aktuellen Monat der Instanz.
 
       Wird ein Wert außerhalb der verfügbaren Tage angegeben, wird der Monatswert der Datumsinstanz automatisch angepasst (z. B. ergibt ein `setDate(32)` im Januar den 1. Februar.)
 
@@ -381,17 +381,17 @@ Die Methode [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScri
 >
   <slot name="question">
   <div className="question">
-Was gibt der Code tatsächlich aus?
-```js
+    Was gibt der Code tatsächlich aus?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
+    Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
   
       Das Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).
   </div>
@@ -412,21 +412,21 @@ Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScr
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(12)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
+    Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
 
-Das `month`-Argument ist nullbasiert und deckt 12 Werte im Bereich von 0 bis 11 ab (bei westlichen Kalendern).
+    Das `month`-Argument ist nullbasiert und deckt 12 Werte im Bereich von 0 bis 11 ab (bei westlichen Kalendern).
 
-Hier rutscht das Jahr automatisch auf 2021, weil `setMonth(12)` genau einen Schritt über 11 (Dezember) hinausgeht.
+    Hier rutscht das Jahr automatisch auf 2021, weil `setMonth(12)` genau einen Schritt über 11 (Dezember) hinausgeht.
   </div>
   </slot>
 </Challenge>
@@ -446,26 +446,26 @@ Hier rutscht das Jahr automatisch auf 2021, weil `setMonth(12)` genau einen Schr
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(13)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
+    Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
 
-Das Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).
+    Das Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).
 
-Hier sehen wir, dass Monat und Jahr automatisch auf Februar 2021 korrigiert werden, da `setMonth(13)` einfach 2 über dem Limit von 11 (Dezember) liegt. JavaScript rechnet das gnadenlos für dich um.
+    Hier sehen wir, dass Monat und Jahr automatisch auf Februar 2021 korrigiert werden, da `setMonth(13)` einfach 2 über dem Limit von 11 (Dezember) liegt. JavaScript rechnet das gnadenlos für dich um.
 
-<aside class="hint">`setMonth` arbeitet mit nullbasierten Indizes: 12 Monate = 0 bis 11.</aside>
-<aside class="hint">
-Werte außerhalb von 0–11 lösen einen stillen Jahresüberlauf aus. `setMonth(13)` schiebt das Datum einfach ins Jahr 2021 (Februar, weil 13 = 11 + 2).
-</aside>
+    <aside class="hint">`setMonth` arbeitet mit nullbasierten Indizes: 12 Monate = 0 bis 11.</aside>
+    <aside class="hint">
+    Werte außerhalb von 0–11 lösen einen stillen Jahresüberlauf aus. `setMonth(13)` schiebt das Datum einfach ins Jahr 2021 (Februar, weil 13 = 11 + 2).
+    </aside>
   </div>
   </slot>
 </Challenge>
@@ -485,17 +485,17 @@ Werte außerhalb von 0–11 lösen einen stillen Jahresüberlauf aus. `setMonth(
 >
   <slot name="question">
   <div className="question">
-Was wird die Ausgabe enthalten?
-```js
+    Was wird die Ausgabe enthalten?
+    ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(-1)
       console.log(d)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
+    Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.
 
       Das Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).
 

@@ -47,16 +47,16 @@ Schärfe (oder beweise) deine Shell-Skripting-**Fähigkeiten**!
 >
   <slot name="question">
   <div className="question">
-Wie werden Variablen in Bash definiert?
+    Wie werden Variablen in Bash definiert?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Variablen in Bash werden ohne Leerzeichen um das `=`-Zeichen herum deklariert. Zum Beispiel:
-```bash
+    Variablen in Bash werden ohne Leerzeichen um das `=`-Zeichen herum deklariert. Zum Beispiel:
+    ```bash
     name=Alice
-```
-Dies weist der Variable `name` den Wert `"Alice"` zu.
+    ```
+    Dies weist der Variable `name` den Wert `"Alice"` zu.
 
     Hinweis: `$name` wird verwendet, um auf den Wert einer Variable **zuzugreifen** oder ihn zu lesen.
 
@@ -84,18 +84,18 @@ Dies weist der Variable `name` den Wert `"Alice"` zu.
 >
   <slot name="question">
   <div className="question">
-_Welcher Befehl gibt `It's 🔨 Time!` aus?_
+    _Welcher Befehl gibt `It's 🔨 Time!` aus?_
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Ich weiß. Es ist schon wild, wie schnell Escaping Strings schwer durchschaubar macht. Stell dir vor, du müsstest andere Sprachen in Bash-Strings escapen – mit all diesen Quotes, Apostrophen und `$`-Symbolen, die dich nur verarschen wollen. 🫠
+    Ich weiß. Es ist schon wild, wie schnell Escaping Strings schwer durchschaubar macht. Stell dir vor, du müsstest andere Sprachen in Bash-Strings escapen – mit all diesen Quotes, Apostrophen und `$`-Symbolen, die dich nur verarschen wollen. 🫠
 
     Einzelne Anführungszeichen müssen innerhalb von einfach gequoteten Strings escaped werden. Die Sequenz aus schließendem Quote, escaped Quote und wieder öffnendem Quote (`'\''`) ermöglicht die Ausgabe von:
-```plaintext
+    ```plaintext
     It's 🔨 Time!
-```
-Es gibt andere Wege, damit umzugehen, aber dies ist die gängigste Methode.
+    ```
+    Es gibt andere Wege, damit umzugehen, aber dies ist die gängigste Methode.
   </div>
   </slot>
 </Challenge>
@@ -116,20 +116,20 @@ Es gibt andere Wege, damit umzugehen, aber dies ist die gängigste Methode.
 >
   <slot name="question">
   <div className="question">
-Was gibt dieser Befehl aus?
-```bash
+    Was gibt dieser Befehl aus?
+    ```bash
     echo c{a,b}t
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `{}`-Klammererweiterung generiert mehrere Varianten ihres Zeichenkettenkontexts, jeweils eine (oder mehr) für jeden durch Komma getrennten Wert oder jedes Muster.
+    Die `{}`-Klammererweiterung generiert mehrere Varianten ihres Zeichenkettenkontexts, jeweils eine (oder mehr) für jeden durch Komma getrennten Wert oder jedes Muster.
 
     Hier expandiert `c{a,b}t` zu:
-```plaintext
+    ```plaintext
     cat cbt
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -150,24 +150,24 @@ Die `{}`-Klammererweiterung generiert mehrere Varianten ihres Zeichenkettenkonte
 >
   <slot name="question">
   <div className="question">
-Was gibt das hier wohl aus?
-```bash
+    Was gibt das hier wohl aus?
+    ```bash
     price="$100"
     echo "Cost: $price"
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Nummerierte Variablen haben in Bash eine feste Bedeutung. In diesem Fall ist `$1` eine spezielle Variable, die das erste an das Skript oder die Funktion übergebene Argument speichert.
+    Nummerierte Variablen haben in Bash eine feste Bedeutung. In diesem Fall ist `$1` eine spezielle Variable, die das erste an das Skript oder die Funktion übergebene Argument speichert.
 
-Da wir das Skript hier direkt in einer REPL ausführen, werden keine Argumente mitgegeben – `$1` bleibt also leer. Der verbleibende Text `00` wird einfach unverändert ausgegeben.
+    Da wir das Skript hier direkt in einer REPL ausführen, werden keine Argumente mitgegeben – `$1` bleibt also leer. Der verbleibende Text `00` wird einfach unverändert ausgegeben.
 
-Möchtest du ein literales `$`-Zeichen ausgeben, nutze einfache Anführungszeichen oder maskiere es mit einem Backslash (`\`):
-```bash
+    Möchtest du ein literales `$`-Zeichen ausgeben, nutze einfache Anführungszeichen oder maskiere es mit einem Backslash (`\`):
+    ```bash
     price="\$100"
     echo "Cost: $price"
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -187,20 +187,20 @@ Möchtest du ein literales `$`-Zeichen ausgeben, nutze einfache Anführungszeich
 >
   <slot name="question">
   <div className="question">
-Was passiert hier?
-```bash
+    Was passiert hier?
+    ```bash
     str="Bark bark"
     echo ${str/bark/meow}
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Syntax `${var/pattern/replacement}` ersetzt das erste Vorkommen von `pattern` durch `replacement`. Die Ausgabe lautet hier:
-```plaintext
+    Die Syntax `${var/pattern/replacement}` ersetzt das erste Vorkommen von `pattern` durch `replacement`. Die Ausgabe lautet hier:
+    ```plaintext
     Bark meow
-```
-Die Ersetzung ist case-sensitiv. Um sowohl `bark` als auch `Bark` zu erfassen, verwende ein Muster wie `${var/[Bb]ark/Bark}` oder normalisiere den String vor der Ersetzung.
+    ```
+    Die Ersetzung ist case-sensitiv. Um sowohl `bark` als auch `Bark` zu erfassen, verwende ein Muster wie `${var/[Bb]ark/Bark}` oder normalisiere den String vor der Ersetzung.
 
     Um alle Vorkommen zu ersetzen, verwende `${var//pattern/replacement}`.
 
@@ -226,19 +226,19 @@ Die Ersetzung ist case-sensitiv. Um sowohl `bark` als auch `Bark` zu erfassen, v
 >
   <slot name="question">
   <div className="question">
-Wie ermittelst du die Länge einer Variable in Bash?
+    Wie ermittelst du die Länge einer Variable in Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Syntax `${#username}` gibt die Länge von `username` zurück.
+    Die Syntax `${#username}` gibt die Länge von `username` zurück.
     
     Zum Beispiel:
-```bash
+    ```bash
     username="@justsml"
     echo ${#username} # => 8
-```
-Auch wenn `wc` funktionieren würde, ist es technisch gesehen kein Teil von Bash.
+    ```
+    Auch wenn `wc` funktionieren würde, ist es technisch gesehen kein Teil von Bash.
 
     Das Tool `wc` ist ein alter Insider-Joke, der sich auf „water closet“ (also Toilette) bezieht.
     WAR NUR EIN SCHERZ! Liest das überhaupt jemand?
@@ -263,33 +263,33 @@ Auch wenn `wc` funktionieren würde, ist es technisch gesehen kein Teil von Bash
 >
   <slot name="question">
   <div className="question">
-Was gibt dieses Skript aus, wenn die Datei `cats.txt` EXISTIERT?
-```bash
+    Was gibt dieses Skript aus, wenn die Datei `cats.txt` EXISTIERT?
+    ```bash
     if [ -e cats.txt]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Hast du das fehlende Leerzeichen vor der schließenden Klammer bemerkt?
+    Hast du das fehlende Leerzeichen vor der schließenden Klammer bemerkt?
 
-Bash ist hier ziemlich pingelig: Leerzeichen innerhalb von Klammerausdrücken sind zwingend erforderlich.
+    Bash ist hier ziemlich pingelig: Leerzeichen innerhalb von Klammerausdrücken sind zwingend erforderlich.
 
-Da das fehlende Leerzeichen dazu führt, dass der `[`-Befehl keine schließende `]` erkennt, gibt Bash eine Fehlermeldung aus, wertet den Test als fehlgeschlagen und fährt mit dem `else`-Zweig fort.
+    Da das fehlende Leerzeichen dazu führt, dass der `[`-Befehl keine schließende `]` erkennt, gibt Bash eine Fehlermeldung aus, wertet den Test als fehlgeschlagen und fährt mit dem `else`-Zweig fort.
 
-Die korrekte Syntax lautet:
-```bash
+    Die korrekte Syntax lautet:
+    ```bash
     if [ -e example.txt ]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-```
-Hinweis: Doppelte Klammern `[[ ]]` sind für Bedingungsprüfungen **empfohlen**. [Siehe BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+    ```
+    Hinweis: Doppelte Klammern `[[ ]]` sind für Bedingungsprüfungen **empfohlen**. [Siehe BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -308,8 +308,8 @@ Hinweis: Doppelte Klammern `[[ ]]` sind für Bedingungsprüfungen **empfohlen**.
 >
   <slot name="question">
   <div className="question">
-Wie vergleicht man Strings in Bash?
-```bash
+    Wie vergleicht man Strings in Bash?
+    ```bash
     cat1="Rosie"
     cat2="Sunflower"
     if [ "$cat1" === "$cat2" ]; then
@@ -317,12 +317,12 @@ Wie vergleicht man Strings in Bash?
     else
       echo "Different cats"
     fi
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Schon wieder ein Syntaxfehler im Test!
+    Schon wieder ein Syntaxfehler im Test!
 
     Ist dir der ungültige `===`-Operator aufgefallen?
 
@@ -349,20 +349,20 @@ Schon wieder ein Syntaxfehler im Test!
 >
   <slot name="question">
   <div className="question">
-Was gibt dieses Skript aus?
-```bash
-   function greet () {
+    Was gibt dieses Skript aus?
+    ```bash
+    function greet () {
       echo "$1"
     }
     greet Hi Dan
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Funktionen in Bash akzeptieren Argumente. Die Variable `$1` enthält das erste Argument, das an die Funktion übergeben wird.
+    Funktionen in Bash akzeptieren Argumente. Die Variable `$1` enthält das erste Argument, das an die Funktion übergeben wird.
 
-Merke: `$0` ist der Skriptname, `$1` das erste Argument, `$2` das zweite usw. **Leerzeichen trennen Argumente.** Der Aufruf `greet Hi Dan` übergibt also `"Hi"` als erstes Argument. Willst du `"Hi Dan"` als ein einziges Argument übergeben, musst du es quoten: `greet "Hi Dan"`.
+    Merke: `$0` ist der Skriptname, `$1` das erste Argument, `$2` das zweite usw. **Leerzeichen trennen Argumente.** Der Aufruf `greet Hi Dan` übergibt also `"Hi"` als erstes Argument. Willst du `"Hi Dan"` als ein einziges Argument übergeben, musst du es quoten: `greet "Hi Dan"`.
   </div>
   </slot>
 </Challenge>
@@ -377,16 +377,16 @@ Merke: `$0` ist der Skriptname, `$1` das erste Argument, `$2` das zweite usw. **
 >
   <slot name="question">
   <div className="question">
-Welcher Operator verbindet die **Ausgabe** eines Befehls mit der **Eingabe** des nächsten Befehls?
+    Welcher Operator verbindet die **Ausgabe** eines Befehls mit der **Eingabe** des nächsten Befehls?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der Pipe-Operator `|` verbindet die Ausgabe eines Befehls mit der Eingabe eines anderen. Zum Beispiel:
-```bash
+    Der Pipe-Operator `|` verbindet die Ausgabe eines Befehls mit der Eingabe eines anderen. Zum Beispiel:
+    ```bash
     echo "Mr. Levy 👨🏻‍🔬" | wc -m
     # => 14
-```
+    ```
   </div>
   </slot>
 </Challenge>
@@ -406,25 +406,25 @@ Der Pipe-Operator `|` verbindet die Ausgabe eines Befehls mit der Eingabe eines 
 >
   <slot name="question">
   <div className="question">
-Wie rechnet man eigentlich in Bash?
+    Wie rechnet man eigentlich in Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Syntax `(( ))` ist für Ganzzahl-Arithmetik in Bash zuständig.
+    Die Syntax `(( ))` ist für Ganzzahl-Arithmetik in Bash zuständig.
 
     Damit lassen sich einfache Berechnungen durchführen:
-```bash
+    ```bash
     ((result = 2 + 2))
     echo $result # => 4
-```
-Oder für bedingte Ausdrücke:
-```bash
+    ```
+    Oder für bedingte Ausdrücke:
+    ```bash
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
-```
-Für Gleitkomma-Arithmetik greifst du besser auf [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) zurück.
+    ```
+    Für Gleitkomma-Arithmetik greifst du besser auf [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) oder [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) zurück.
   </div>
   </slot>
 </Challenge>
@@ -446,12 +446,12 @@ Für Gleitkomma-Arithmetik greifst du besser auf [`bc`](https://www.gnu.org/soft
 >
   <slot name="question">
   <div className="question">
-Welcher dieser Befehle multipliziert 10 und 0.5 korrekt und gibt 5 aus?
+    Welcher dieser Befehle multipliziert 10 und 0.5 korrekt und gibt 5 aus?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die `(( ))`-Syntax führt **ausschließlich** **Ganzzahl**-Arithmetik durch. Du weißt schon, ganze Zahlen, ohne Fließkomma!
+    Die `(( ))`-Syntax führt **ausschließlich** **Ganzzahl**-Arithmetik durch. Du weißt schon, ganze Zahlen, ohne Fließkomma!
 
     Bash hat (vielleicht überraschend) **keine eingebaute** Unterstützung für Fließkommaarithmetik.
 
@@ -474,20 +474,20 @@ Die `(( ))`-Syntax führt **ausschließlich** **Ganzzahl**-Arithmetik durch. Du 
 >
   <slot name="question">
   <div className="question">
-Was genau bewirkt das `:` in diesem Skript?
-```bash
+    Was genau bewirkt das `:` in diesem Skript?
+    ```bash
     rosie="Bad cat, good cat"
     echo ${rosie:9}
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Syntax `${var:offset}` extrahiert eine Teilzeichenkette ab der Position `offset`. Die Ausgabe lautet hier:
-```plaintext
+    Die Syntax `${var:offset}` extrahiert eine Teilzeichenkette ab der Position `offset`. Die Ausgabe lautet hier:
+    ```plaintext
     good cat
-```
-Um eine Teilzeichenkette mit einer bestimmten Länge zu extrahieren, verwende `${var:offset:length}`.
+    ```
+    Um eine Teilzeichenkette mit einer bestimmten Länge zu extrahieren, verwende `${var:offset:length}`.
 
     Um vom Ende der Zeichenkette aus zu extrahieren, nutze `${var: -offset}`. (Achte auf das Leerzeichen vor dem `-`!)
   </div>
@@ -509,12 +509,12 @@ Um eine Teilzeichenkette mit einer bestimmten Länge zu extrahieren, verwende `$
 >
   <slot name="question">
   <div className="question">
-Was ist KEIN ❌ Schlüsselwort für Schleifen in Bash?
+    Was ist KEIN ❌ Schlüsselwort für Schleifen in Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-`each` ist kein Schleifen-Schlüsselwort in Bash. Die wichtigsten Schleifen-Schlüsselwörter sind `for`, `while` und `until`.
+    `each` ist kein Schleifen-Schlüsselwort in Bash. Die wichtigsten Schleifen-Schlüsselwörter sind `for`, `while` und `until`.
 
     Auch wenn `do` technisch gesehen kein eigenständiges Schleifen-Schlüsselwort ist, ist es ein unverzichtbarer Bestandteil der Schleifensyntax.
   </div>
@@ -536,17 +536,17 @@ Was ist KEIN ❌ Schlüsselwort für Schleifen in Bash?
 >
   <slot name="question">
   <div className="question">
-Welche Option führt den Befehl `ls -l` aus und gibt dessen Ausgabe zurück?
+    Welche Option führt den Befehl `ls -l` aus und gibt dessen Ausgabe zurück?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Die Syntax `$(ls -l)` führt den Befehl innerhalb der **Klammern** aus und ersetzt ihn durch die Ausgabe. Zum Beispiel:
-```bash
+    Die Syntax `$(ls -l)` führt den Befehl innerhalb der **Klammern** aus und ersetzt ihn durch die Ausgabe. Zum Beispiel:
+    ```bash
     echo "Today is $(date +%F)"
     # => Today is 2029-12-31
-```
-Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks.** Das verhindert die Expansion, sodass `'$(date +%F)'` einfach die Zeichenkette `$(date +%F)` wörtlich ausgibt.
+    ```
+    Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks.** Das verhindert die Expansion, sodass `'$(date +%F)'` einfach die Zeichenkette `$(date +%F)` wörtlich ausgibt.
 
     Zwar werden Backticks (`` `ls -l` ``) zur Befehlsausführung noch unterstützt, sie gelten jedoch zunehmend als Anti-Pattern (in manchen Kontexten). Die meisten empfehlen `$(Befehl)` für bessere Lesbarkeit und Konsistenz über verschiedene Shells und Versionen hinweg.
 
@@ -567,18 +567,18 @@ Die erste Option verwendet einfache Anführungszeichen `'`, **keine Backticks.**
 >
   <slot name="question">
   <div className="question">
-Welcher Operator wird verwendet, um die Fehlerausgabe in die Standardausgabe umzuleiten?
+    Welcher Operator wird verwendet, um die Fehlerausgabe in die Standardausgabe umzuleiten?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Der Operator `2>&1` leitet die Standardfehlerausgabe (Dateideskriptor 2) auf die Standardausgabe (Dateideskriptor 1) um. Das ist nützlich, um Fehlermeldungen im selben Ausgabestrom wie die reguläre Ausgabe abzufangen.
+    Der Operator `2>&1` leitet die Standardfehlerausgabe (Dateideskriptor 2) auf die Standardausgabe (Dateideskriptor 1) um. Das ist nützlich, um Fehlermeldungen im selben Ausgabestrom wie die reguläre Ausgabe abzufangen.
 
-Der Operator `1>&2` leitet die Standardausgabe auf die Standardfehlerausgabe um. Die Frage lautete jedoch, wie man die Standardfehlerausgabe auf die Standardausgabe umleitet.
+    Der Operator `1>&2` leitet die Standardausgabe auf die Standardfehlerausgabe um. Die Frage lautete jedoch, wie man die Standardfehlerausgabe auf die Standardausgabe umleitet.
 
-Um mehr über die Hintergründe zu erfahren, schau dir [Greg's hervorragende FAQ zu Umleitungen](https://mywiki.wooledge.org/BashFAQ/055) an.
+    Um mehr über die Hintergründe zu erfahren, schau dir [Greg's hervorragende FAQ zu Umleitungen](https://mywiki.wooledge.org/BashFAQ/055) an.
 
-Ein Dank geht auch an den Reddit-Nutzer [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) für die vorgeschlagenen Textverbesserungen.
+    Ein Dank geht auch an den Reddit-Nutzer [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) für die vorgeschlagenen Textverbesserungen.
   </div>
   </slot>
 </Challenge>

@@ -41,15 +41,15 @@ Pon a prueba tus conocimientos de RegEx con preguntas que cubren patrones básic
 >
   <slot name="question">
   <div className="question">
-¿Qué coincide?
-```js
+    ¿Qué coincide?
+    ```js
     'cat CAT Cat'.match(/cat/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Este patrón usa `g`, pero no `i`:
+    Este patrón usa `g`, pero no `i`:
     - `g` encuentra todas las coincidencias
     - Sin `i`, la coincidencia distingue mayúsculas de minúsculas
 
@@ -76,16 +76,16 @@ Este patrón usa `g`, pero no `i`:
 >
   <slot name="question">
   <div className="question">
-¿Qué devolverá este código?
-```js
+    ¿Qué devolverá este código?
+    ```js
     const words = ['cat', 'hat', 'what', 'bat'];
     words.filter(word => word.match(/^[ch]at/))
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón `/^[ch]at/` busca cadenas que:
+    El patrón `/^[ch]at/` busca cadenas que:
     - Comiencen (`^`) con 'c' o 'h' (así funciona `[ch]`: una clase de caracteres que atrapa exactamente uno)
     - Y continúen literalmente con 'at'
 
@@ -106,23 +106,23 @@ El patrón `/^[ch]at/` busca cadenas que:
 >
   <slot name="question">
   <div className="question">
-¿Qué coincidirá con este patrón?
-```js
+    ¿Qué coincidirá con este patrón?
+    ```js
     '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón `/<div>.*?<\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:
-- Coincidir con `<div>`
-- Coincidir con cualquier carácter (`.*`) pero la menor cantidad posible (`?`)
-- Hasta encontrar `</div>`
-- La bandera `g` hace que coincida con todas las apariciones
+    El patrón `/<div>.*?<\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:
+    - Coincidir con `<div>`
+    - Coincidir con cualquier carácter (`.*`) pero la menor cantidad posible (`?`)
+    - Hasta encontrar `</div>`
+    - La bandera `g` hace que coincida con todas las apariciones
 
-Sin el `?`, el `.*` codicioso se tragaría todo desde el primer `<div>` hasta el último `</div>`, dándote una sola coincidencia gigante. Con el `?`, captura cada par por separado.
+    Sin el `?`, el `.*` codicioso se tragaría todo desde el primer `<div>` hasta el último `</div>`, dándote una sola coincidencia gigante. Con el `?`, captura cada par por separado.
 
-[Aprende más sobre coincidencia codiciosa vs. perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [Aprende más sobre coincidencia codiciosa vs. perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -141,15 +141,15 @@ Sin el `?`, el `.*` codicioso se tragaría todo desde el primer `<div>` hasta el
 >
   <slot name="question">
   <div className="question">
-¿Qué devolverá esto?
-```js
+    ¿Qué devolverá esto?
+    ```js
     'hello\nworld'.match(/\w+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque haya un salto de línea en la cadena, `\w` solo busca:
+    El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque haya un salto de línea en la cadena, `\w` solo busca:
     - Letras (a-z, A-Z)
     - Números (0-9)
     - Guion bajo (_)
@@ -176,15 +176,15 @@ El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque haya un s
 >
   <slot name="question">
   <div className="question">
-¿Qué coincidencias devolverá este patrón?
-```js
+    ¿Qué coincidencias devolverá este patrón?
+    ```js
     '$100 and €50'.match(/\d+(?=[\$€])/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¡Este patrón no coincidirá con nada porque el look-ahead está al revés! 🔄 Si buscas dígitos precedidos por `$` o `€`, necesitas un look-behind: `/(?<=[\$€])\d+/g`.
+    ¡Este patrón no coincidirá con nada porque el look-ahead está al revés! 🔄 Si buscas dígitos precedidos por `$` o `€`, necesitas un look-behind: `/(?<=[\$€])\d+/g`.
 
     Los look-aheads siempre verifican qué viene *después* de la posición actual. Tal como está escrito, este patrón busca:
     - Uno o más dígitos (`\d+`)
@@ -211,15 +211,15 @@ El patrón `\w+` coincide con uno o más caracteres de palabra. Aunque haya un s
 >
   <slot name="question">
   <div className="question">
-¿Qué coincidirá?
-```js
+    ¿Qué coincidirá?
+    ```js
     'cat cats category'.match(/\bcat\b/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El `\b` representa un límite de palabra, que coincide:
+    El `\b` representa un límite de palabra, que coincide:
     - Entre un carácter de palabra y un carácter que no es de palabra
     - Al inicio o final de la cadena si hay un carácter de palabra
 
@@ -248,15 +248,15 @@ El `\b` representa un límite de palabra, que coincide:
 >
   <slot name="question">
   <div className="question">
-¿Cuál es la salida?
-```js
+    ¿Cuál es la salida?
+    ```js
     'banana'.match(/a/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El flag `g` (global) cambia por completo cómo se comporta `match()` porque le dice al motor que **no se detenga** tras la primera victoria:
+    El flag `g` (global) cambia por completo cómo se comporta `match()` porque le dice al motor que **no se detenga** tras la primera victoria:
     - Sin `g`: Te devuelve solo la primera coincidencia (con sus grupos de captura).
     - Con `g`: Ignora los grupos y te entrega un array con *todas* las subcadenas que coinciden.
 
@@ -284,15 +284,15 @@ El flag `g` (global) cambia por completo cómo se comporta `match()` porque le d
 >
   <slot name="question">
   <div className="question">
-¿Qué coincide con este patrón?
-```js
+    ¿Qué coincide con este patrón?
+    ```js
     'abc123 def456'.match(/(?<!abc)\d+/g)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El lookbehind negativo `(?<!abc)` garantiza que los dígitos no estén precedidos por "abc":
+    El lookbehind negativo `(?<!abc)` garantiza que los dígitos no estén precedidos por "abc":
     - ❌ "123" (precedido por "abc")
     - ✅ "23" (precedido por "abc1")
     - ✅ "456" (precedido por "def")
@@ -318,15 +318,15 @@ El lookbehind negativo `(?<!abc)` garantiza que los dígitos no estén precedido
 >
   <slot name="question">
   <div className="question">
-¿Qué devolverá esto?
-```js
+    ¿Qué devolverá esto?
+    ```js
     '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón utiliza tres grupos de captura:
+    El patrón utiliza tres grupos de captura:
     1. `(\d{4})` captura el año
     2. `(\d{2})` captura el mes
     3. `(\d{2})` captura el día
@@ -358,15 +358,15 @@ El patrón utiliza tres grupos de captura:
 >
   <slot name="question">
   <div className="question">
-¿Cuál será el resultado de esto?
-```js
+    ¿Cuál será el resultado de esto?
+    ```js
     "123aBc".match(/^\d+(?![a-z])/ig)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El lookahead negativo `(?![a-z])` actúa como un filtro que rechaza cualquier letra minúscula justo después de los dígitos. Como la parte `"3aBc"` contiene una minúscula tras los números, esa porción falla. ¡Por eso solo el inicio `"12"` logra coincidir! 🎯
+    El lookahead negativo `(?![a-z])` actúa como un filtro que rechaza cualquier letra minúscula justo después de los dígitos. Como la parte `"3aBc"` contiene una minúscula tras los números, esa porción falla. ¡Por eso solo el inicio `"12"` logra coincidir! 🎯
 
     [Aprende más sobre lookahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
@@ -387,15 +387,15 @@ El lookahead negativo `(?![a-z])` actúa como un filtro que rechaza cualquier le
 >
   <slot name="question">
   <div className="question">
-¿Qué se devuelve?
-```js
+    ¿Qué se devuelve?
+    ```js
     'a,b,c'.split(/(?<=,)/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón `/(?<=,)/` es un look-behind que coincide justo después de una coma:
+    El patrón `/(?<=,)/` es un look-behind que coincide justo después de una coma:
     - `a,` (después de la coma)
     - `b,` (después de la coma)
     - `c` (sin coma después)
@@ -424,23 +424,23 @@ El patrón `/(?<=,)/` es un look-behind que coincide justo después de una coma:
 >
   <slot name="question">
   <div className="question">
-¿Qué coincide?
-```js
+    ¿Qué coincide?
+    ```js
     '$100'.match(/$\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-Los caracteres especiales deben escaparse con `\` para coincidir literalmente:
+    Los caracteres especiales deben escaparse con `\` para coincidir literalmente:
     - `$` es un carácter especial (fin de cadena)
     - Para coincidir con un signo de dólar literal, escápalo: `\$`
 
     Caracteres comunes que necesitan escape:
-```js
+    ```js
     . * + ? ^ $ [ ] \ ( ) { } |
-```
-Sin el escape, muchos caracteres especiales tienen significados en regex que podrían no ser lo que buscas.
+    ```
+    Sin el escape, muchos caracteres especiales tienen significados en regex que podrían no ser lo que buscas.
 
     [Aprende más sobre el escape de caracteres especiales](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
@@ -461,15 +461,15 @@ Sin el escape, muchos caracteres especiales tienen significados en regex que pod
 >
   <slot name="question">
   <div className="question">
-¿Qué se captura?
-```js
+    ¿Qué se captura?
+    ```js
     '$100'.match(/(?<=\$)\d+/)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El look-behind positivo `(?<=\$)` garantiza que los dígitos estén precedidos por un signo de dólar:
+    El look-behind positivo `(?<=\$)` garantiza que los dígitos estén precedidos por un signo de dólar:
     - `(?<=\$)`: Look-behind para el signo de dólar
     - `\d+`: Coincide con uno o más dígitos
 
@@ -491,15 +491,15 @@ El look-behind positivo `(?<=\$)` garantiza que los dígitos estén precedidos p
 >
   <slot name="question">
   <div className="question">
-¿Qué coincide?
-```js
+    ¿Qué coincide?
+    ```js
     '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El patrón utiliza coincidencia perezosa con `*?`:
+    El patrón utiliza coincidencia perezosa con `*?`:
     - `<b>`: Coincide con la etiqueta de apertura
     - `(.*?)`: Captura cualquier carácter (perezoso)
     - `</b>`: Coincide con la etiqueta de cierre
@@ -528,15 +528,15 @@ El patrón utiliza coincidencia perezosa con `*?`:
 >
   <slot name="question">
   <div className="question">
-¿Qué coincide?
-```js
+    ¿Qué coincide?
+    ```js
     '😀 🙂'.match(/\p{Emoji}/gu)
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-El modificador `u` habilita:
+    El modificador `u` habilita:
     - Secuencias de escape de propiedades Unicode (`\p{...}`)
     - El manejo correcto de pares sustitutos
 
@@ -564,16 +564,16 @@ El modificador `u` habilita:
 >
   <slot name="question">
   <div className="question">
-¡Pido disculpas de antemano! 😈<br />
+    ¡Pido disculpas de antemano! 😈<br />
     ¿Qué contraseña coincide con este patrón?
-```js
+    ```js
     /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
-```
+    ```
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-¡No escribas nada parecido en producción! 😅
+    ¡No escribas nada parecido en producción! 😅
 
     Este patrón utiliza múltiples look-aheads positivos para exigir:
     - Al menos una letra mayúscula: `(?=.*[A-Z])`
