@@ -1,0 +1,151 @@
+---
+social_image: ../desktop-social.webp
+title: अच्छा नामकरण
+subTitle: 'नामकरण: ऑब्जेक्ट ओरिएंटेड बुनियादी बातें'
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## नामकरण: ऑब्जेक्ट ओरिएंटेड बुनियादी बातें
+
+आइए उदाहरण के साथ ऑब्जेक्ट/क्लास डिज़ाइन को देखें...
+
+### स्थिति
+
+क्या आपने कभी कोई `data model` (कोड, SQL, या एक्सेल वर्कशीट में) डिज़ाइन किया है?
+
+क्या निम्नलिखित परिचित लगता है?
+
+```
+*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+```
+
+### बग कहाँ है?
+
+खैर, तकनीकी रूप से कोई बग नहीं है, बस डेटा को पुनर्गठित करने की आवश्यकता है।
+
+**क्या निम्नलिखित परिचित लगता है?**
+
+**
+
+1.  आपके ऐप में कोई भी बदलाव घंटों के कठिन डिबगिंग की मांग करेगा।
+
+1.  कोई भी बदलती आवश्यकताएँ इसका परिणाम देंगी:
+
+![
+
+स्कीमा रीफैक्टर][schema_refactor]
+
+एक फ़ील्ड का नाम `agentEmailPrimary` रखना _इतना बुरा_ क्यों है?
+
+शुरुआत के लिए, आप ब्रह्मांड में कोई बिल्कुल नई चीज़ **नहीं** बना रहे हैं। अति-विशिष्टता में कुछ जाल हैं:
+
+1.
+
+एक अत्यधिक विशिष्ट नाम में 'लॉक' होने का मतलब है कि `agentEmailPrimary` संभवतः आपके व्यू और संबंधित कोड को **0% पुन: प्रयोज्य** बना देता है, और कष्टप्रद रूप से बार-बार आने वाले बग्स पेश करता है जैसे:
+
+- तालिकाओं के बीच डेटा सिंक न होना (यह स्पष्ट नहीं है कि `user.email` को `agent.agentEmail` में प्रचारित करने की आवश्यकता है या इसके विपरीत - इस 'लॉजिक' को कहाँ और कैसे लागू किया जाए, इसे मैन्युअल रूप से लागू करने की जटिलता को छोड़ दें...)
+- वैलिडेशन नियम/लॉजिक संभवतः डुप्लिकेट और असंगत हैं।
+
+- धीरे-धीरे, आपका प्रोजेक्ट एक डगमगाते Jenga टॉवर जैसा दिखने लगेगा।
+- हर एक नई फ़ाइल के साथ नाज़ुकी बढ़ती जाती है, क्योंकि मामूली बदलावों के लिए भी अत्यधिक सावधानी की आवश्यकता होती है।
+
+1.  `agentEmailPrimary` के कई अलग-अलग अर्थ हो सकते हैं।
+
+**छोटे नामों** से अस्पष्टता से बचें।
+
+- बेवजह के अतिरिक्त शब्दों से सावधान रहें। `Primary`?
+
+बस और सवाल खड़े हो जाते हैं: क्या कोई Secondary है? क्या यह उनके Primary Next-of-kin के लिए है?
+
+बहुत हुआ डैन, तो फिर इसे कैसा दिखना चाहिए?
+
+### एक समाधान
+
+```
+// Consolidated Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+मैंने `Agent` तालिका हटा दी, क्योंकि इसमें ऐसे फ़ील्ड नहीं थे जो केवल एजेंटों के लिए अद्वितीय हों।
+
+और `User.company` ऑब्जेक्ट (`.name`, `.address` के साथ) तब उभरा जब नामकरण को साफ किया गया।
+
+कुछ मार्गदर्शक सिद्धांत:
+
+1.  अनावश्यक तालिकाओं को हटाएँ।
+
+क्या वास्तव में `statuses` तालिका रखने की ज़रूरत है? जब आप `User` तालिका पर `status::VARCHAR(8)` फ़ील्ड जोड़ सकते हैं?
+
+यह ठीक है, प्रति पंक्ति अतिरिक्त बाइट्स का उपयोग करें।
+2.
+
+संबंधित तालिकाओं को मर्ज करने का प्रयास करें। **डेटा**
+
+3.  अनावश्यक डेटा संग्रह हटाएं (उदाहरण के लिए, यदि किसी Analytics समाधान से बदल दिया गया है तो `ActivityLogs` तालिका हटाएं।)
+
+4.  **सभी फ़ील्ड नामों** को **एक शब्द/संज्ञा/सर्वनाम** तक सीमित रखने का प्रयास करें।
+
+टेबल द्वारा प्रदान किए गए संदर्भ पर निर्भर रहना ठीक है। (जैसे `PersonalAccount.email` बनाम `BusinessAccount.email` - संदर्भ टेबल के नाम से मिलता है।)
+
+5.  **ऐसी कोई चीज़ नहीं है** जैसे `Agent.agentEmail` या `Agent.agentPhonePrimary`।
+
+पूर्ण विराम। मेरे साथ कहें: "यह `email` और `phone` है।"
+
+6.  अत्यधिक विशिष्ट नामों का उपयोग करके, आप `code-reusability` और `durability` के एक विशिष्ट स्तर को पत्थर में जड़ देते हैं, खैर, विशेष रूप से **शून्य प्रतिशत**।
+
+7.  आप ऐसी बकवास `User.profileSummaryEmail` से अपना कोई भला नहीं कर रहे हैं।
+
+💞
+
+**अनुशंसित पठन में शामिल हैं:**
+
+1. [शायद सामान्यीकरण सामान्य नहीं है](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+
+1.  [डेटाबेस नॉर्मलाइज़ेशन और डीनॉर्मलाइज़ेशन के बीच ट्रेड-ऑफ़](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+
+2.  [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3.  [https://en.wikipedia.org/wiki/Database_normalization](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
