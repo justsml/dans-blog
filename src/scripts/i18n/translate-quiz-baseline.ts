@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, appendFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
 import matter from "gray-matter";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -23,6 +23,7 @@ interface QuizPost {
 interface TranslationTask {
   slug: string;
   locale: ActiveLocale;
+  targetPath: string;
 }
 
 interface SummaryStats {
@@ -40,6 +41,7 @@ interface Outcome {
   status: "exists" | "missing" | "translated" | "failed" | "skipped";
   model?: string;
   stats?: SummaryStats;
+  reason?: string;
 }
 
 interface Totals {
@@ -82,6 +84,14 @@ function resolveLocales(options: Record<string, string | boolean>): ActiveLocale
   }
 
   return locales;
+}
+
+function hasLocaleFilter(options: Record<string, string | boolean>) {
+  return typeof options.locale === "string" || typeof options.locales === "string";
+}
+
+function getLocalizedTargetPath(post: QuizPost, locale: ActiveLocale) {
+  return join(dirname(post.path), locale, "index.mdx");
 }
 
 function parseBoundedInt(
@@ -247,6 +257,8 @@ async function mapLimit<T, R>(
 async function main() {
   const options = parseArgs();
   const dryRun = options["dry-run"] === true;
+  const skipExisting = options["skip-existing"] === true;
+  const shouldRotateLocales = !hasLocaleFilter(options);
   const quizConcurrency = parseBoundedInt(
     options["quiz-concurrency"],
     DEFAULT_PARALLEL_CHALLENGE_CALLS,
@@ -294,6 +306,8 @@ async function main() {
       models,
       quizCount: selectedPosts.length,
       dryRun,
+      skipExisting,
+      taskOrder: shouldRotateLocales ? "locale-rotated" : "post-ordered",
       quizConcurrency,
       fileConcurrency,
       progressPath: relativeToRepo(progressPath),
@@ -337,25 +351,47 @@ async function main() {
     models,
     quizCount: selectedPosts.length,
     dryRun,
+    skipExisting,
+    taskOrder: shouldRotateLocales ? "locale-rotated" : "post-ordered",
     quizConcurrency,
     fileConcurrency,
   });
   writeSummary("running");
 
   const tasks: TranslationTask[] = [];
-  for (const post of selectedPosts) {
-    for (const locale of locales) {
-      const existingModel = findExistingModel(post.slug, models, locale);
-      if (existingModel) {
-        const stats = latestSummary(post.slug, existingModel, locale);
-        const outcome: Outcome = { slug: post.slug, locale, status: "exists", model: existingModel, stats };
-        outcomes.push(outcome);
-        addStats(totals, stats);
-        appendJsonl(progressPath, "baseline_exists", outcome as unknown as Record<string, unknown>);
-        printArticleStats(outcome);
-      } else {
-        tasks.push({ slug: post.slug, locale });
-      }
+  const taskPairs = shouldRotateLocales
+    ? locales.flatMap((locale) => selectedPosts.map((post) => ({ post, locale })))
+    : selectedPosts.flatMap((post) => locales.map((locale) => ({ post, locale })));
+
+  for (const { post, locale } of taskPairs) {
+    const targetPath = getLocalizedTargetPath(post, locale);
+
+    if (skipExisting && existsSync(targetPath)) {
+      const outcome: Outcome = {
+        slug: post.slug,
+        locale,
+        status: "skipped",
+        reason: "target translation exists",
+      };
+      outcomes.push(outcome);
+      appendJsonl(progressPath, "baseline_skipped_existing_translation", {
+        ...outcome,
+        targetPath: relativeToRepo(targetPath),
+      });
+      printArticleStats(outcome);
+      continue;
+    }
+
+    const existingModel = findExistingModel(post.slug, models, locale);
+    if (existingModel) {
+      const stats = latestSummary(post.slug, existingModel, locale);
+      const outcome: Outcome = { slug: post.slug, locale, status: "exists", model: existingModel, stats };
+      outcomes.push(outcome);
+      addStats(totals, stats);
+      appendJsonl(progressPath, "baseline_exists", outcome as unknown as Record<string, unknown>);
+      printArticleStats(outcome);
+    } else {
+      tasks.push({ slug: post.slug, locale, targetPath });
     }
   }
 
