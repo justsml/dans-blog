@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Limites de mots",
+  "translation": {
+    "title": "Limites de mots",
+    "group": "Correspondance de base",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce qui correspond ?"
+    ],
+    "explanationProse": [
+      "Le `\\b` représente une limite de mot, qui correspond :\n    - Entre un caractère de mot et un caractère non-mot\n    - Au début/à la fin de la chaîne s'il y a un caractère de mot\n\n    Donc `/\\bcat\\b/` correspond à \\\"cat\\\" uniquement lorsqu'il s'agit d'un mot complet, pas d'une partie d'un autre mot.\n    - ✅ \\\"cat\\\" (entouré d'espaces)\n    - ❌ \\\"cats\\\" (pas de limite après \\\"cat\\\")\n    - ❌ \\\"category\\\" (pas de limite après \\\"cat\\\")\n\n    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Limites de mots\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [\n    { \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\" },\n    { \"text\": \"[\\\"cat\\\"]\" },\n    { \"text\": \"[\\\"cats\\\"]\" },\n    { \"text\": \"[]\" }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce qui correspond ?\"\n  ],\n  \"explanationProse\": [\n    \"Le `\\\\b` représente une limite de mot, qui correspond :\\n    - Entre un caractère de mot et un caractère non-mot\\n    - Au début/à la fin de la chaîne s'il y a un caractère de mot\\n\\n    Donc `/\\\\bcat\\\\b/` correspond à \\\\\\\"cat\\\\\\\" uniquement lorsqu'il s'agit d'un mot complet, pas d'une partie d'un autre mot.\\n    - ✅ \\\\\\\"cat\\\\\\\" (entouré d'espaces)\\n    - ❌ \\\\\\\"cats\\\\\\\" (pas de limite après \\\\\\\"cat\\\\\\\")\\n    - ❌ \\\\\\\"category\\\\\\\" (pas de limite après \\\\\\\"cat\\\\\\\")\\n\\n    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 3085,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 17320
+  },
+  "cost": {
+    "inputUsd": 0.00011102,
+    "outputUsd": 0.0008638000000000001,
+    "totalUsd": 0.00097482,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

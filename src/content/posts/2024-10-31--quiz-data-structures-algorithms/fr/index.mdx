@@ -1,0 +1,527 @@
+---
+title: 'Quiz : Structures de données et algorithmes'
+subTitle: Peux-tu bluffer sur un arbre binaire ?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  Bienvenue dans mon quiz sur les structures de données et les algorithmes !
+</section>
+
+Ce quiz testera vos connaissances sur les structures de données (piles, listes, arbres, etc.), les algorithmes (), et la complexité temporelle.
+
+### 20 questions… Commencez !
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Structures de données"
+  title="Piles vs Files d'attente"
+  options={[
+    {text: 'Les deux'},
+    {text: 'Files d\'attente'},
+    {text: 'Piles', isAnswer: true},
+    {text: 'Aucun'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle structure de données est la mieux adaptée pour un mode d'accès LIFO (Last In, First Out) ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les piles sont les mieux adaptées pour les modes d'accès LIFO. Les files d'attente sont les mieux adaptées pour les modes d'accès FIFO (First In, First Out).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Algorithmes"
+  title="Notation Grand O"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle d'un algorithme qui prend toujours le même temps pour s'exécuter, quelle que soit la taille de l'entrée ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) représente une complexité temporelle constante. Cela signifie que l'algorithme prend toujours le même temps pour s'exécuter, quelle que soit la taille de l'entrée.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Structures de données"
+  title="Calcul de la longueur d'une liste chaînée"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle pour calculer la longueur d'une liste chaînée simple ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Pour calculer la longueur d'une liste chaînée simple, vous devez parcourir chaque nœud de la tête à la queue, ce qui donne une complexité temporelle de O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Structures de données"
+  title="Recherche dans un arbre binaire de recherche"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle moyenne pour rechercher un élément dans un arbre binaire de recherche équilibré ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Dans un ABR équilibré, la complexité temporelle moyenne pour la recherche est O(log n) car chaque niveau permet de diviser l'espace de recherche par deux.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Algorithmes de tri"
+  title="Complexité du tri fusion"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle de l'algorithme de tri fusion dans le pire des cas ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le tri fusion fonctionne toujours avec une complexité dans le pire des cas de O(n log n) car il divise répétitivement le tableau en deux et fusionne les sous-tableaux triés.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Graphes"
+  title="DFS vs BFS"
+  options={[
+    {text: 'File', isAnswer: true},
+    {text: 'Pile'},
+    {text: 'File de priorité'},
+    {text: 'Table de hachage'},
+    {text: 'Ensemble'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle structure de données est généralement utilisée pour implémenter le parcours en largeur (BFS) ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le BFS utilise une file pour explorer les nœuds niveau par niveau, en traitant les nœuds dans un ordre de parcours en largeur (par « rangée »).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Graphes"
+  title="Détection de cycles dans les graphes"
+  options={[
+    {text: 'Tri rapide'},
+    {text: 'Recherche en largeur'},
+    {text: 'Tri fusion'},
+    {text: 'Recherche en profondeur', isAnswer: true},
+    {text: 'Tri à bulles'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel algorithme est couramment utilisé pour détecter les cycles dans un graphe orienté ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La recherche en profondeur (DFS) est généralement utilisée pour détecter les cycles dans un graphe en maintenant une pile de récursion pour suivre les nœuds visités.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Algorithmes de tri"
+  title="Complexité du Heap Sort"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle du Heap Sort dans le pire des cas ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le Heap Sort conserve une complexité temporelle dans le pire des cas de O(n log n), car il construit un tas et extrait répétitivement l'élément maximum.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Structures de données"
+  title="Complexité temporelle des tables de hachage"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle moyenne pour accéder à un élément dans une table de hachage ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les tables de hachage ont une complexité temporelle moyenne de O(1) pour accéder aux éléments, en supposant une bonne fonction de hachage qui minimise les collisions.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Structures de données"
+  title="Opérations sur la pile"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insérer, Rechercher, Supprimer'},
+    {text: 'Parcourir, Visiter, Trier'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel ensemble contient les opérations typiques effectuées sur une pile ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les opérations principales d'une pile sont Push (ajouter un élément), Pop (retirer un élément) et Peek (voir l'élément du dessus sans le retirer).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Algorithmes de graphes"
+  title="Algorithme du plus court chemin"
+  options={[
+    {text: 'Kruskal\'s Algorithm'},
+    {text: 'Prim\'s Algorithm'},
+    {text: 'Bellman-Ford Algorithm'},
+    {text: 'Dijkstra\'s Algorithm', isAnswer: true},
+    {text: 'Floyd-Warshall Algorithm'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel algorithme est couramment utilisé pour trouver le plus court chemin dans un graphe pondéré avec des arêtes non négatives ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'algorithme de Dijkstra est fréquemment utilisé pour trouver le plus court chemin dans des graphes avec des poids d'arêtes non négatifs. Il utilise une file de priorité pour déterminer efficacement la distance la plus courte.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Structures de données arborescentes"
+  title="Arbres de recherche auto-équilibrants"
+  options={[
+    {text: 'Arbre binaire de recherche et tas min'},
+    {text: 'Arbre AVL et arbre rouge-noir', isAnswer: true},
+    {text: 'Tas min et tas max'},
+    {text: 'Pile et file'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel ensemble contient des exemples de structures de données d'arbres binaires de recherche auto-équilibrants ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les arbres AVL et les arbres rouge-noir sont des types d'arbres auto-équilibrants, qui garantissent que l'arbre reste équilibré après chaque insertion ou suppression.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Récursion"
+  title="Cas de base de la récursion"
+  options={[
+    {text: 'Boucle infinie'},
+    {text: 'Débordement de pile'},
+    {text: 'Cas de base', isAnswer: true},
+    {text: 'Variable globale'},
+    {text: 'Limitation de portée'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que doit-on définir dans une fonction récursive pour éviter une récursion infinie ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un cas de base est nécessaire dans une fonction récursive pour arrêter les appels récursifs lorsqu'une condition spécifique est remplie, évitant ainsi une récursion infinie.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Structures de données"
+  title="Opérations sur les files"
+  options={[
+    {text: 'Enfiler et défiler', isAnswer: true},
+    {text: 'Empiler et dépiler'},
+    {text: 'Peek et Top'},
+    {text: 'Parcourir et trier'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelles sont les deux opérations principales d'une file ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les deux opérations principales d'une file sont Enfiler (ajouter un élément à l'arrière) et Défiler (retirer un élément de l'avant).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Algorithmes de graphes"
+  title="Tri topologique"
+  options={[
+    {text: 'Le graphe doit contenir des cycles'},
+    {text: 'Le graphe doit être pondéré et connexe'},
+    {text: 'Le graphe doit être non orienté et acyclique'},
+    {text: 'Le graphe doit être orienté et acyclique', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelles sont les conditions pour effectuer un tri topologique sur un graphe ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le tri topologique peut être effectué sur un graphe s'il est orienté et acyclique (DAG). Ce type d'ordonnancement est utile dans les problèmes de planification de tâches.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Programmation dynamique"
+  title="Complexité de la récursion de Fibonacci"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la complexité temporelle d'une implémentation récursive naïve de la suite de Fibonacci ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'implémentation récursive naïve de la suite de Fibonacci a une complexité temporelle de O(2^n) en raison des nombreux calculs répétés pour chaque nombre de Fibonacci.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="Structures de données"
+  title="Implémentation d'une file de priorité"
+  options={[
+    {text: 'Tableau'},
+    {text: 'Pile'},
+    {text: 'Tas', isAnswer: true},
+    {text: 'File'},
+    {text: 'Liste chaînée'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle structure de données est couramment utilisée pour implémenter une file de priorité ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Une file de priorité est le plus souvent implémentée à l'aide d'un tas car cela permet une extraction efficace de l'élément de priorité la plus haute ou la plus basse.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="Structures de données"
+  title="Parcours d'arbres binaires"
+  options={[
+    {text: 'En ordre, Pré-ordre, Post-ordre', isAnswer: true},
+    {text: 'Largeur d\'abord, Profondeur d\'abord, Tasifier'},
+    {text: 'Trier, Rechercher, Rotationner'},
+    {text: 'Empiler, Dépiler, Consulter'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel ensemble énumère les ordres de parcours en profondeur courants pour un arbre binaire ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    En ordre, Pré-ordre et Post-ordre sont les trois ordres de parcours en profondeur courants pour les arbres binaires, chacun avec un ordre différent de visite des nœuds. Le parcours en largeur est également courant, mais il s'agit d'une catégorie de parcours différente.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="Structures de données arborescentes"
+  title="Propriété du tas"
+  options={[
+    {text: 'Tous les nœuds sont triés de gauche à droite'},
+    {text: 'La racine est toujours le plus grand élément'},
+    {text: 'Toutes les feuilles sont au même niveau'},
+    {text: 'La racine est le plus petit élément et la hauteur est O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Laquelle des propriétés suivantes est vraie pour un tas-min ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Dans un tas-min, la racine est toujours le plus petit élément, et la hauteur de l'arbre est O(log n), ce qui rend l'insertion et l'extraction efficaces.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="Algorithmes de tri"
+  title="Stabilité du tri à bulles"
+  options={[
+    {text: 'Instable'},
+    {text: 'Stable', isAnswer: true},
+    {text: 'Dépend de l\'implémentation'},
+    {text: 'Aucun des deux'},
+    {text: 'La complexité détermine la stabilité'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    L'algorithme de tri à bulles est-il stable ?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le tri à bulles est un algorithme de tri stable car il préserve l'ordre relatif des éléments égaux lors du tri.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

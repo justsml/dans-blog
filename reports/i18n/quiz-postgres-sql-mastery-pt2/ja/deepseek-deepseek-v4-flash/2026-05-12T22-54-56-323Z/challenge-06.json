@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "複数列インデックスの順序",
+  "translation": {
+    "title": "複数列インデックスの順序",
+    "group": "インデックス",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "このクエリにはどのインデックスが適していますか？"
+    ],
+    "explanationProse": [
+      "私にとって驚くべきことは、クエリテキストの列順序がインデックス定義と一致しなくても、複数列インデックスが使用できることです。\n\n    **注:** B-treeインデックスでは、先頭列が重要です。このクエリは`grade_level`と`last_name`でフィルタリングするため、`grade_level`で始まり`last_name`が続くインデックスが適しています。\n\n    SQLがより少ない行を選択できるほど、パフォーマンスは向上します。\n\n    例えば、`task`テーブルがあり、`status`が`created_at`よりも選択性が高いことがわかっている場合、`status = 'done' AND created_at > '2024-01-01'`のようなクエリには、`status`で始まるインデックスを選ぶかもしれません。`WHERE`句のテキスト内の条件の順序は重要ではなく、インデックスの列順序と述語の形状が重要です。\n\n    B+Treeインデックスは以下の用途に使用できます：\n    - 先頭列、または列の左端のプレフィックス。\n    - クエリの形状に応じて、`=`, `>`, `<`, `BETWEEN`, `IN`などの演算子。\n    - 前方一致、`LIKE 'prefix%'`。\n\n    この説明の以前の誤りを指摘してくれた[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)に感謝します！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"複数列インデックスの順序\",\n  \"group\": \"インデックス\",\n  \"options\": [\n    {\"text\": \"CREATE INDEX ON students(grade_level, last_name);\"},\n    {\"text\": \"CREATE INDEX ON students(grade_level);\"},\n    {\"text\": \"CREATE INDEX ON students(last_name, age);\"},\n    {\"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"}\n  ],\n  \"questionProse\": [\"このクエリにはどのインデックスが適していますか？\"],\n  \"explanationProse\": [\"私にとって驚くべきことは、クエリテキストの列順序がインデックス定義と一致しなくても、複数列インデックスが使用できることです。\\n\\n    **注:** B-treeインデックスでは、先頭列が重要です。このクエリは`grade_level`と`last_name`でフィルタリングするため、`grade_level`で始まり`last_name`が続くインデックスが適しています。\\n\\n    SQLがより少ない行を選択できるほど、パフォーマンスは向上します。\\n\\n    例えば、`task`テーブルがあり、`status`が`created_at`よりも選択性が高いことがわかっている場合、`status = 'done' AND created_at > '2024-01-01'`のようなクエリには、`status`で始まるインデックスを選ぶかもしれません。`WHERE`句のテキスト内の条件の順序は重要ではなく、インデックスの列順序と述語の形状が重要です。\\n\\n    B+Treeインデックスは以下の用途に使用できます：\\n    - 先頭列、または列の左端のプレフィックス。\\n    - クエリの形状に応じて、`=`, `>`, `<`, `BETWEEN`, `IN`などの演算子。\\n    - 前方一致、`LIKE 'prefix%'`。\\n\\n    この説明の以前の誤りを指摘してくれた[u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button)に感謝します！\"]\n}",
+  "telemetry": {
+    "inputTokens": 999,
+    "outputTokens": 2405,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 164617
+  },
+  "cost": {
+    "inputUsd": 0.00013986000000000003,
+    "outputUsd": 0.0006734000000000001,
+    "totalUsd": 0.0008132600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

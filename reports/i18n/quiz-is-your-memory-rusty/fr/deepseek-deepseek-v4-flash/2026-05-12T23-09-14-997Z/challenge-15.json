@@ -1,0 +1,49 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "Modèle RAII",
+  "translation": {
+    "title": "Modèle RAII",
+    "group": "Modèles de mémoire",
+    "options": [
+      {
+        "text": "La ressource est libérée après la portée",
+        "hint": "Le champ File a sa propre implémentation de Drop."
+      },
+      {
+        "text": "Fuite de ressource",
+        "hint": "Le wrapper n'a pas de Drop personnalisé, mais ses champs sont toujours libérés."
+      },
+      {
+        "text": "Erreur de compilation",
+        "hint": "Le code compile avec succès"
+      },
+      {
+        "text": "Erreur d'exécution",
+        "hint": "Le problème concerne le nettoyage des ressources."
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec le descripteur de fichier dans cet exemple RAII ?"
+    ],
+    "explanationProse": [
+      "RAII en Rust garantit que les ressources sont correctement gérées. Dans cet exemple, `FileWrapper` n'a pas besoin d'une implémentation personnalisée de `Drop` pour que le descripteur de fichier se ferme : son champ `File` est libéré automatiquement lorsque le wrapper sort de la portée.\n\n      Vous n'implémentez `Drop` que lorsque le wrapper lui-même a un comportement de nettoyage supplémentaire au-delà de la libération de ses champs :",
+      "Patrons RAII :\n      1. Le constructeur acquiert les ressources\n      2. Les méthodes utilisent les ressources en toute sécurité\n      3. Les champs sont libérés automatiquement lorsque le propriétaire sort de la portée\n      4. Drop personnalisé ajoute un nettoyage supplémentaire si nécessaire\n      5. Utilisez `?` pour la propagation des erreurs\n\n      Bonnes pratiques :\n      1. Fiez-vous aux implémentations de Drop de la bibliothèque standard lorsqu'elles modélisent déjà la ressource\n      2. Gardez la gestion des ressources simple et évidente\n      3. Utilisez les types de la bibliothèque standard lorsque c'est possible\n      4. Documentez le comportement de nettoyage\n      5. Envisagez d'utiliser des motifs de garde pour les opérations limitées à une portée"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Modèle RAII\",\n  \"group\": \"Modèles de mémoire\",\n  \"options\": [\n    {\n      \"text\": \"La ressource est libérée après la portée\",\n      \"hint\": \"Le champ File a sa propre implémentation de Drop.\"\n    },\n    {\n      \"text\": \"Fuite de ressource\",\n      \"hint\": \"Le wrapper n'a pas de Drop personnalisé, mais ses champs sont toujours libérés.\"\n    },\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"Le code compile avec succès\"\n    },\n    {\n      \"text\": \"Erreur d'exécution\",\n      \"hint\": \"Le problème concerne le nettoyage des ressources.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec le descripteur de fichier dans cet exemple RAII ?\"\n  ],\n  \"explanationProse\": [\n    \"RAII en Rust garantit que les ressources sont correctement gérées. Dans cet exemple, `FileWrapper` n'a pas besoin d'une implémentation personnalisée de `Drop` pour que le descripteur de fichier se ferme : son champ `File` est libéré automatiquement lorsque le wrapper sort de la portée.\\n\\n      Vous n'implémentez `Drop` que lorsque le wrapper lui-même a un comportement de nettoyage supplémentaire au-delà de la libération de ses champs :\",\n    \"Patrons RAII :\\n      1. Le constructeur acquiert les ressources\\n      2. Les méthodes utilisent les ressources en toute sécurité\\n      3. Les champs sont libérés automatiquement lorsque le propriétaire sort de la portée\\n      4. Drop personnalisé ajoute un nettoyage supplémentaire si nécessaire\\n      5. Utilisez `?` pour la propagation des erreurs\\n\\n      Bonnes pratiques :\\n      1. Fiez-vous aux implémentations de Drop de la bibliothèque standard lorsqu'elles modélisent déjà la ressource\\n      2. Gardez la gestion des ressources simple et évidente\\n      3. Utilisez les types de la bibliothèque standard lorsque c'est possible\\n      4. Documentez le comportement de nettoyage\\n      5. Envisagez d'utiliser des motifs de garde pour les opérations limitées à une portée\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 911,
+    "outputTokens": 1681,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8529
+  },
+  "cost": {
+    "inputUsd": 0.00012754000000000002,
+    "outputUsd": 0.00047068000000000007,
+    "totalUsd": 0.0005982200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

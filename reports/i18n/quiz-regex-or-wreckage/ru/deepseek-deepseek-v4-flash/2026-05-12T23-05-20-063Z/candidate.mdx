@@ -1,0 +1,600 @@
+---
+unlisted: false
+title: 'Тест: Мастерство регулярных выражений'
+subTitle: Сможете укротить дикий RegEx?
+label: RegEx
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: RegEx
+date: '2024-11-15'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - regex
+  - javascript
+  - intermediate
+  - patterns
+cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Готовы побороться с регулярными выражениями? 🤼‍♂️</p>
+
+Проверьте свои знания RegEx на вопросах, охватывающих базовые шаблоны, квантификаторы, группы и эти хитрые look-around утверждения. От простого сопоставления строк до сложной проверки шаблонов — сможете ли вы определить правильное регулярное выражение?
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка"
+  title="Регистрозависимое сопоставление"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что соответствует?
+    ```js
+        'cat CAT Cat'.match(/cat/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Этот шаблон использует `g`, но не `i`:
+    - `g` находит все совпадения
+    - Без `i` сопоставление чувствительно к регистру
+
+    Без флага `i` совпадает только строчное "cat".
+
+    Это особенно полезно при работе с пользовательским вводом или HTML, где регистр может различаться.
+
+    [Узнайте больше о флагах RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка"
+  title="Простое сопоставление символов"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что вернёт этот код?
+    ```js
+        const words = ['cat', 'hat', 'what', 'bat'];
+        words.filter(word => word.match(/^[ch]at/))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Шаблон `/^[ch]at/` соответствует строкам, которые:
+    - Начинаются (`^`) с символа 'c' или 'h' (это означает `[ch]` — класс символов, соответствующий одному символу)
+    - За которыми буквально следует 'at'
+
+    Следовательно, только "cat" и "hat" соответствуют этому шаблону. Метод `filter()` оставляет только подходящие элементы.
+
+    [Узнайте больше о классах символов на MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Базовое сопоставление"
+  title="Жадный vs Нежадный"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет соответствовать?
+    ```js
+        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Шаблон `/<div>.*?<\/div>/g` использует нежадное сопоставление с `*?`, что означает:
+    - Найти `<div>`
+    - Найти любой символ (`.*`) как можно меньше раз (`?`)
+    - До тех пор, пока не встретится `</div>`
+    - Флаг `g` заставляет находить все вхождения
+
+    Без `?` жадный `.*` будет соответствовать всему от первого `<div>` до последнего `</div>`, давая одно большое совпадение. С `?` он находит каждую пару отдельно.
+
+    [Узнайте больше о жадном и нежадном сопоставлении](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Частые ошибки"
+  title="Метасимвол точки"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что вернет этот код?
+    ```js
+        'hello\nworld'.match(/\w+/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Шаблон `\\w+` соответствует одному или нескольким символам слов. Даже если в строке есть символ новой строки, `\\w` совпадает:
+    - Буквы (a-z, A-Z)
+    - Цифры (0-9)
+    - Знак подчеркивания (_)
+
+    Таким образом, символ новой строки выступает в качестве границы слова, и мы получаем два совпадения. Если бы мы использовали `.*`, он бы не совпал с символом новой строки по умолчанию (для этого нужен флаг `s`).
+
+    [Узнайте больше о метасимволах](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Опережающая проверка"
+  title="Положительная опережающая проверка"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет найдено?
+    ```js
+        '$100 and €50'.match(/\d+(?=[\$€])/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Этот шаблон ничего не найдет, потому что опережающая проверка смотрит не туда! Если вам нужны цифры, перед которыми стоит `$` или `€`, используйте ретроспективную проверку: `/(?<=[\$€])\d+/g`.
+
+    Опережающие проверки проверяют, что следует *после* текущей позиции. Написанный шаблон ищет:
+    - Одна или более цифр (`\d+`)
+    - За которыми следует (`(?=...)`) либо $, либо € (`[\$€]`)
+
+    Поскольку нет чисел, после которых идут символы валют (они стоят перед ними), мы не получаем совпадений.
+
+    [Узнайте больше об опережающих проверках](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Базовое сопоставление"
+  title="Границы слов"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет найдено?
+    ```js
+        'cat cats category'.match(/\bcat\b/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `\b` обозначает границу слова, которая совпадает:
+    - Между символом слова и символом не-слова
+    - В начале/конце строки, если там есть символ слова
+
+    Таким образом, `/\bcat\b/` находит "cat" только когда это целое слово, а не часть другого слова.
+    - ✅ "cat" (окружено пробелами)
+    - ❌ "cats" (нет границы после "cat")
+    - ❌ "category" (нет границы после "cat")
+
+    [Узнайте больше о границах слов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Частые ловушки"
+  title="Глобальный флаг"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой будет вывод?
+    ```js
+        'banana'.match(/a/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Флаг `g` (глобальный) меняет поведение `match()`:
+    - Без `g`: возвращает первое совпадение с группами захвата
+    - С `g`: возвращает массив всех совпадающих строк
+
+    В этом случае он находит все вхождения "a" в "banana".
+
+    Примечание: если вам нужны и все совпадения, и группы захвата, используйте `matchAll()` или метод `exec()` в цикле.
+
+    [Узнайте больше о глобальном флаге](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Просмотр назад"
+  title="Отрицательный просмотр назад"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что соответствует этому шаблону?
+    ```js
+        'abc123 def456'.match(/(?<!abc)\d+/g)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Отрицательный просмотр назад `(?<!abc)` гарантирует, что цифрам не предшествует "abc":
+    - ❌ "123" (предшествует "abc")
+    - ✅ "23" (предшествует "abc1")
+    - ✅ "456" (предшествует "def")
+
+    JavaScript поддерживает просмотр назад в современных движках. В этом примере используется просмотр назад фиксированной длины: `abc` всегда состоит из трех символов. Просмотр назад переменной длины — более сложный крайний случай, зависящий от движка.
+
+    Примечание: Поддержка просмотра назад появилась в JavaScript относительно недавно. Проверьте [совместимость с браузерами](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), если вам нужна поддержка старых браузеров.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Базовое сопоставление"
+  title="Захватывающие группы"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что вернёт этот код?
+    ```js
+        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В шаблоне используются три захватывающие группы:
+    1. `(\d{4})` захватывает год
+    2. `(\d{2})` захватывает месяц
+    3. `(\d{2})` захватывает день
+
+    `match()` без флага `g` возвращает:
+    - Индекс 0: полное совпадение
+    - Индекс 1+: группы захвата
+
+    `slice(1)` — распространённый трюк, чтобы получить только группы захвата.
+
+    [Узнайте больше о группах и захвате](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Опережающий просмотр"
+  title="Отрицательный опережающий просмотр"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]'},
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет результат этого?
+    ```js
+        "123aBc".match(/^\d+(?![a-z])/ig)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Отрицательный опережающий просмотр `(?![a-z])` гарантирует, что после цифр нет строчных букв. Поскольку часть "3aBc" содержит строчную букву после цифр, эта часть не совпадает. Таким образом, совпадает только начало "12".
+
+    [Узнайте больше об отрицательном опережающем просмотре](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Просмотр назад"
+  title="Разделение с просмотром назад"
+  options={[
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что возвращается?
+    ```js
+        'a,b,c'.split(/(?<=,)/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Шаблон `/(?<=,)/` — это просмотр назад, который совпадает после запятой:
+    - `a,` (после запятой)
+    - `b,` (после запятой)
+    - `c` (нет запятой после)
+
+    Просмотр назад не поглощает запятую, поэтому запятая остается прикрепленной к предыдущему сегменту в результате разделения.
+
+    Это полезно, когда вы хотите разделить строку на основе того, что стоит перед ней, **не теряя разделительный(е) символ(ы).**
+
+    [Узнайте больше об утверждениях просмотра назад](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Частые ловушки"
+  title="Экранирование специальных символов"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что совпадает?
+    ```js
+        '$100'.match(/$\d+/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Специальные символы требуют экранирования с помощью `\` для буквального совпадения:
+    - `$` — специальный символ (конец строки)
+    - Чтобы сопоставить буквальный знак доллара, экранируйте его: `\$`
+
+    Распространенные символы, требующие экранирования:
+    ```js
+        . * + ? ^ $ [ ] \ ( ) { } |
+    ```
+    Без экранирования многие специальные символы имеют значения в регулярных выражениях, которые могут не соответствовать вашим ожиданиям.
+
+    [Узнайте больше об экранировании специальных символов](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Просмотр назад"
+  title="Положительный просмотр назад"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]', isAnswer: true},
+    {text: '["$"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что совпало?
+    ```js
+        '$100'.match(/(?<=\$)\d+/)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Положительный просмотр назад `(?<=\$)` гарантирует, что перед цифрами стоит знак доллара:
+    - `(?<=\$)`: Просмотр назад для знака доллара
+    - `\d+`: Совпадение с одной или несколькими цифрами
+
+    Утверждения просмотра назад не потребляют символы; они только проверяют, что находится перед ними.
+    Это полезно, когда вы хотите найти совпадение на основе того, что находится перед ним, не включая предшествующую часть.
+
+    [Узнайте больше об утверждениях просмотра назад](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Базовое сопоставление"
+  title="Ленивые и жадные квантификаторы"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что сопоставляется?
+    ```js
+        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В шаблоне используется ленивое сопоставление с `*?`:
+    - `<b>`: Сопоставить открывающий тег
+    - `(.*?)`: Захватить любые символы (лениво)
+    - `</b>`: Сопоставить закрывающий тег
+
+    `?` после `*` делает его ленивым, сопоставляя как можно меньше символов.
+    Без `?` он был бы жадным и сопоставлял бы как можно больше.
+
+    `slice(1)` возвращает только захваченную группу.
+
+    [Узнайте больше о жадном и ленивом сопоставлении](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Базовое сопоставление"
+  title="Флаг Unicode"
+  options={[
+    {text: '["🙂"]'},
+    {text: '["😀", "🙂"]', isAnswer: true},
+    {text: 'null'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что совпадает?
+    ```js
+        '😀 🙂'.match(/\p{Emoji}/gu)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Флаг `u` включает:
+    - Unicode property escapes (`\p{...}`)
+    - Корректную обработку суррогатных пар
+
+    Без `u` эмодзи и другие символы Unicode могут не совпадать корректно.
+    Шаблон `\p{Emoji}` соответствует символам со свойством Unicode `Emoji`. В этой строке это означает два эмодзи-пиктограммы.
+
+    Примечание: Unicode property escapes требуют флага `u`.
+
+    [Узнать больше о режиме Unicode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Заглядывание в ад"
+  title="Проверка пароля"
+  options={[
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Заранее извиняюсь! 😈<br />
+    Какой пароль соответствует этому шаблону?
+    ```js
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Не пишите ничего подобного в продакшене! 😅
+
+    Этот шаблон использует несколько положительных опережающих проверок для обеспечения:
+    - Хотя бы одна заглавная буква: `(?=.*[A-Z])`
+    - Хотя бы одна строчная буква: `(?=.*[a-z])`
+    - Хотя бы одна цифра: `(?=.*\d)`
+    - Хотя бы один специальный символ: `(?=.*[!@#$%^&*])`
+    - Минимальная длина 8: `.{8,}`
+
+    Опережающие проверки идеально подходят для валидации паролей, так как они могут проверять несколько критериев, не поглощая символы.
+
+    [Узнайте больше о шаблонах валидации паролей](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<h2>Ну как, справились? 🧐</h2>
+
+Регулярные выражения — зверь, которого нужно приручить, но они невероятно мощные, когда освоишься (и весь новый синтаксис). Продолжайте практиковаться, и вы станете мастером RegEx в мгновение ока! 🧙‍♂️
+
+<p class="inset">Ищете передышку после всего этого RegEx?<br />Пфф, помните: перерыв *после* навыков! <br /><br />Жмите [мой тренажерный зал](/challenges/), чтобы раздавить ещё несколько испытаний! 💪</p>

@@ -1,0 +1,56 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "Пакетные операции",
+  "translation": {
+    "title": "Пакетные операции",
+    "group": "Пакеты, часть 2!",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "Хорошая догадка..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "Думаете о лимите GetItem?"
+      },
+      {
+        "text": "100 при стриминге"
+      },
+      {
+        "text": "Ни один из вышеперечисленных",
+        "hint": "Это немного хитро..."
+      }
+    ],
+    "questionProse": [
+      "Какое максимальное количество документов DynamoDB может `UPDATE` за один пакет?"
+    ],
+    "explanationProse": [
+      "Клиенты DynamoDB по сути являются обёртками для его HTTP API. Операция `BatchWriteItem` может `PUT` или `DELETE` до **25** документов за один HTTP-запрос, но не может `UPDATE` несколько документов.\n\n  В то время как DynamoDB может `INSERT` до **25** документов за один HTTP-запрос, он может `UPDATE` только **1** документ за запрос с помощью операции `UpdateItem`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Пакетные операции\",\n  \"group\": \"Пакеты, часть 2!\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"Хорошая догадка...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"Думаете о лимите GetItem?\"\n    },\n    {\n      \"text\": \"100 при стриминге\"\n    },\n    {\n      \"text\": \"Ни один из вышеперечисленных\",\n      \"hint\": \"Это немного хитро...\"\n    }\n  ],\n  \"questionProse\": [\n    \"Какое максимальное количество документов DynamoDB может `UPDATE` за один пакет?\"\n  ],\n  \"explanationProse\": [\n    \"Клиенты DynamoDB по сути являются обёртками для его HTTP API. Операция `BatchWriteItem` может `PUT` или `DELETE` до **25** документов за один HTTP-запрос, но не может `UPDATE` несколько документов.\\n\\n  В то время как DynamoDB может `INSERT` до **25** документов за один HTTP-запрос, он может `UPDATE` только **1** документ за запрос с помощью операции `UpdateItem`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 803,
+    "outputTokens": 798,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4325
+  },
+  "cost": {
+    "inputUsd": 0.00011242000000000001,
+    "outputUsd": 0.00022344000000000002,
+    "totalUsd": 0.00033586,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

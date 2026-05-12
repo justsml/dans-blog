@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "Метасимвол точки",
+  "translation": {
+    "title": "Метасимвол точки",
+    "group": "Частые ошибки",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Что вернет этот код?"
+    ],
+    "explanationProse": [
+      "Шаблон `\\\\w+` соответствует одному или нескольким символам слов. Даже если в строке есть символ новой строки, `\\\\w` совпадает:\n    - Буквы (a-z, A-Z)\n    - Цифры (0-9)\n    - Знак подчеркивания (_)\n\n    Таким образом, символ новой строки выступает в качестве границы слова, и мы получаем два совпадения. Если бы мы использовали `.*`, он бы не совпал с символом новой строки по умолчанию (для этого нужен флаг `s`).\n\n    [Узнайте больше о метасимволах](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Метасимвол точки\",\n  \"group\": \"Частые ошибки\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что вернет этот код?\"\n  ],\n  \"explanationProse\": [\n    \"Шаблон `\\\\\\\\w+` соответствует одному или нескольким символам слов. Даже если в строке есть символ новой строки, `\\\\\\\\w` совпадает:\\n    - Буквы (a-z, A-Z)\\n    - Цифры (0-9)\\n    - Знак подчеркивания (_)\\n\\n    Таким образом, символ новой строки выступает в качестве границы слова, и мы получаем два совпадения. Если бы мы использовали `.*`, он бы не совпал с символом новой строки по умолчанию (для этого нужен флаг `s`).\\n\\n    [Узнайте больше о метасимволах](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 3138,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 177914
+  },
+  "cost": {
+    "inputUsd": 0.00011158000000000001,
+    "outputUsd": 0.0008786400000000001,
+    "totalUsd": 0.00099022,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

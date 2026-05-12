@@ -1,0 +1,601 @@
+---
+unlisted: false
+title: 'Тест: Мастерство NodeJS IO'
+subTitle: 'Проверьте свои знания о файлах, потоках и буферах'
+label: NodeJS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: NodeJS
+date: '2024-11-15'
+modified: '2024-11-15'
+tags:
+  - quiz
+  - nodejs
+  - io
+  - streams
+  - buffers
+  - filesystem
+  - intermediate
+cover_full_width: ../data-streaming-wide.webp
+cover_mobile: ../data-streaming-square.webp
+cover_icon: ../data-streaming-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Готовы погрузиться в мир ввода-вывода NodeJS? 🌊</p>
+
+Этот тест проверит ваше понимание операций ввода-вывода Node — от базовых операций с файловой системой до продвинутых концепций потоков. Мы рассмотрим буферы, кодировки и лучшие практики эффективной обработки данных.
+
+Посмотрим, насколько хорошо вы различаете потоки и буферы! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка: Буферы"
+  title="Выделение буфера"
+  options={[
+    {text: 'Создаёт буфер размером 5, заполненный нулями', isAnswer: true},
+    {text: 'Создаёт буфер размером 5 со случайными данными'},
+    {text: 'Вызывает ошибку'},
+    {text: 'Создаёт пустой буфер'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает этот код?
+    ```js
+        const buf = Buffer.alloc(5);
+        console.log(buf);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Buffer.alloc(size)` создаёт новый буфер указанного размера, заполненный нулями.
+    Результат будет: `<Buffer 00 00 00 00 00>`
+
+    Если вы хотите создать буфер со случайными данными, используйте `Buffer.allocUnsafe(5)`.
+
+    [Узнайте больше о выделении буфера](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка: Буферы"
+  title="Преобразование буфера в строку"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'Binary data'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```js
+        const buf = Buffer.from([65]);
+        console.log(buf.toString());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Числа в массиве представляют собой ASCII-коды:
+
+    - 65: 'A'
+
+    `toString()` преобразует эти байты в строковое представление, используя по умолчанию кодировку UTF-8.
+
+    [Узнайте больше о кодировке буферов](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Разминка: Файловая система"
+  title="Асинхронные файловые операции"
+  options={[
+    {text: 'Выводит содержимое файла, затем "Готово"'},
+    {text: 'Выводит "Готово", затем содержимое файла', isAnswer: true},
+    {text: 'Выводит только содержимое файла'},
+    {text: 'Выбрасывает ошибку'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каков порядок вывода?
+    ```js
+        import fs from 'fs';
+        fs.readFile('test.txt', 'utf8', (err, data) => {
+          console.log(data);
+        });
+        console.log('Done');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Поскольку `readFile` асинхронен, код продолжает выполняться, пока файл читается.
+    Следовательно, "Готово" будет выведено до содержимого файла.
+
+    Чтобы дождаться сначала чтения файла, можно использовать версию на основе Promise:
+    ```js
+        import { promises as fs } from 'fs';
+    
+        async function read() {
+          const data = await fs.readFile('test.txt', 'utf8');
+          console.log(data);
+          console.log('Done');
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Основы файловой системы"
+  title="Чтение файлов синхронно"
+  options={[
+    {text: 'Возвращает Buffer', isAnswer: true},
+    {text: 'Возвращает строку'},
+    {text: 'Возвращает undefined'},
+    {text: 'Возвращает Promise'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что по умолчанию возвращает `fs.readFileSync()`?
+    ```js
+        import fs from 'fs';
+        const content = fs.readFileSync('test.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.readFileSync()` по умолчанию возвращает Buffer, если не указана кодировка. Если вам нужна строка, вы можете:
+    1. Указать кодировку: `fs.readFileSync('test.txt', 'utf8')`
+    2. Преобразовать Buffer: `content.toString()`
+
+    [Узнайте больше о fs.readFileSync в документации Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Потоки"
+  title="События потоков"
+  options={[
+    {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
+    {text: '\'finish\', \'drain\', \'pipe\''},
+    {text: '\'read\', \'write\', \'end\''},
+    {text: '\'open\', \'close\', \'data\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какие события обычно используются с читаемыми потоками (Readable streams)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Читаемые потоки (Readable streams) генерируют несколько важных событий:
+    - 'data': Когда данные доступны для чтения
+    - 'end': Когда больше нет данных для чтения
+    - 'error': Когда происходит ошибка
+    - 'close': Когда поток и связанный ресурс закрыты
+    ```js
+        const readable = fs.createReadStream('file.txt');
+        readable.on('data', chunk => console.log(chunk));
+        readable.on('end', () => console.log('Done!'));
+    ```
+    [Узнайте больше о событиях потоков](https://nodejs.org/api/stream.html#class-streamreadable)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Потоки"
+  title="Соединение потоков (pipe)"
+  options={[
+    {text: 'Копирует файл со сжатием'},
+    {text: 'Копирует файл без буферизации в памяти', isAnswer: true},
+    {text: 'Загружает весь файл в память'},
+    {text: 'Создает символическую ссылку'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает этот код?
+    ```js
+        import fs from 'fs';
+        const readable = fs.createReadStream('source.txt');
+        const writable = fs.createWriteStream('dest.txt');
+        readable.pipe(writable);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `pipe()` соединяет читаемый поток с записываемым, автоматически управляя противодавлением и копируя данные частями без загрузки всего файла в память.
+
+    Это эффективно по памяти для больших файлов по сравнению с `fs.readFile()` с последующим `fs.writeFile()`.
+
+    [Узнайте больше о pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Файловая система"
+  title="Операции с каталогами"
+  options={[
+    {text: 'Создает вложенные каталоги при необходимости', isAnswer: true},
+    {text: 'Создает только последний каталог'},
+    {text: 'Вызывает ошибку'},
+    {text: 'Создает символические ссылки'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает опция recursive?
+    ```js
+        import fs from 'fs';
+        fs.mkdirSync('./a/b/c', { recursive: true });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Опция `recursive: true` создает родительские каталоги, если они не существуют.
+    Без этой опции попытка создать './a/b/c' вызовет ошибку, если './a' или './a/b' не существуют.
+
+    Это аналогично команде оболочки `mkdir -p`.
+
+    [Узнайте больше о mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Потоки"
+  title="Трансформирующие потоки"
+  options={[
+    {text: 'hello world'},
+    {text: 'HELLO WORLD', isAnswer: true},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```js
+        import { Transform } from 'stream';
+        const upperCase = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk.toString().toUpperCase());
+          }
+        });
+        process.stdin
+          .pipe(upperCase)
+          .pipe(process.stdout);
+        // Input: "hello world"
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Трансформирующие потоки изменяют данные по мере их прохождения. Здесь каждый фрагмент:
+    1. Преобразуется в строку
+    2. Переводится в верхний регистр
+    3. Передаётся в stdout
+
+    Это создаёт конвейер, который преобразует все входные данные в верхний регистр.
+
+    [Узнайте больше о трансформирующих потоках](https://nodejs.org/api/stream.html#class-streamtransform)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Файловая система"
+  title="Наблюдение за файлами"
+  options={[
+    {text: 'Один раз за изменение файла'},
+    {text: 'Не гарантируется; может сработать несколько раз', isAnswer: true},
+    {text: 'Никогда'},
+    {text: 'Только при удалении файла'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Сколько раз гарантированно срабатывает `fs.watch()` при изменении файла?
+    ```js
+        import fs from 'fs';
+        fs.watch('test.txt', (eventType, filename) => {
+          console.log(`${filename} was changed`);
+        });
+        // Then modify test.txt once
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.watch()` не гарантирует срабатывание ровно один раз за логическое изменение файла. Он часто срабатывает несколько раз, потому что многие текстовые редакторы:
+    1. Сохраняют во временный файл
+    2. Переименовывают его в целевой файл
+
+    Для более надежного наблюдения рассмотрите использование:
+    - Пакета `chokidar`
+    - Дебаунсинга (debouncing) колбэка
+    - Использования `fs.watchFile()` (хотя это менее эффективно)
+
+    [Узнайте больше о fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Буферы"
+  title="Сравнение буферов"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет выведено?
+    ```js
+        const buf1 = Buffer.from('Hello');
+        const buf2 = Buffer.from('Hello');
+        console.log(buf1 === buf2);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Буферы сравниваются по ссылке, а не по значению. Даже если они содержат одинаковые данные, это разные объекты.
+
+    Для сравнения содержимого буферов используйте:
+    ```js
+        buf1.equals(buf2)  // true
+        // or
+        Buffer.compare(buf1, buf2) === 0  // true
+    ```
+    [Узнайте больше о сравнении буферов](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Потоки"
+  title="Обратное давление в потоках"
+  options={[
+    {text: 'Предотвращает переполнение памяти', isAnswer: true},
+    {text: 'Увеличивает скорость чтения'},
+    {text: 'Сжимает данные'},
+    {text: 'Шифрует данные'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова основная цель обратного давления (backpressure) в потоках?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Обратное давление — это механизм, предотвращающий переполнение памяти путём приостановки чтения, когда записывающий конец не успевает обрабатывать данные.
+
+    Пример ручного управления обратным давлением:
+    ```js
+        readable.on('data', (chunk) => {
+          const canContinue = writable.write(chunk);
+          if (!canContinue) {
+            readable.pause();
+            writable.once('drain', () => readable.resume());
+          }
+        });
+    ```
+    `pipe()` обрабатывает это автоматически!
+
+    [Узнать больше об обратном давлении](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Файловая система"
+  title="Символические ссылки"
+  options={[
+    {text: 'Создаёт жёсткую ссылку'},
+    {text: 'Создаёт копию'},
+    {text: 'Создаёт символическую ссылку', isAnswer: true},
+    {text: 'Перемещает файл'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает этот код?
+    ```js
+        import fs from 'fs';
+        fs.symlinkSync('target.txt', 'link.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `symlinkSync` создаёт символическую ссылку (как ярлык) на целевой файл.
+
+    Ключевые отличия от жёстких ссылок:
+    - Может ссылаться на каталоги
+    - Может работать между файловыми системами
+    - Разрывается, если цель удалена
+
+    Чтобы создать жёсткую ссылку вместо этого:
+    ```js
+        fs.linkSync('target.txt', 'hardlink.txt');
+    ```
+    [Узнайте больше о симлинках](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Потоки"
+  title="Режимы потоков"
+  options={[
+    {text: 'Только двоичный режим'},
+    {text: 'Только объектный режим'},
+    {text: 'Оба режима', isAnswer: true},
+    {text: 'Ни один из режимов'},
+    {text: 'Режимы ввода и вывода'},
+    {text: 'Режимы чтения и записи'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    В каких режимах могут работать потоки Node.js?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Потоки могут работать в:
+    1. Двоичном режиме (по умолчанию): для буферов и строк
+    2. Объектном режиме: для любых значений JavaScript
+
+    Пример объектного режима:
+    ```js
+        import { Transform } from 'stream';
+        const objectStream = new Transform({
+          objectMode: true,
+          transform(chunk, encoding, callback) {
+            callback(null, { value: chunk });
+          }
+        });
+    ```
+    [Узнайте больше о режимах потоков](https://nodejs.org/api/stream.html#object-mode)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Файловая система"
+  title="Файловые дескрипторы"
+  options={[
+    {text: 'Число', isAnswer: true},
+    {text: 'Строка'},
+    {text: 'Объект'},
+    {text: 'Буфер'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой тип имеет параметр `fd` в этом колбэке?
+    ```js
+        import fs from 'fs';
+        fs.open('test.txt', 'r', (err, fd) => {
+          console.log(typeof fd);
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Файловые дескрипторы — это числа, которые уникально идентифицируют открытые файлы в операционной системе.
+
+    Первые три файловых дескриптора зарезервированы:
+    - 0: stdin
+    - 1: stdout
+    - 2: stderr
+
+    Всегда не забывайте закрывать файловые дескрипторы:
+    ```js
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
+    ```
+    [Узнайте больше о файловых дескрипторах](https://nodejs.org/api/fs.html#file-descriptors)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Кодировка"
+  title="Кодирование буфера"
+  options={[
+    {text: '3'},
+    {text: '4'},
+    {text: '6'},
+    {text: '8'},
+    {text: '10', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Сколько байт займет эта строка в UTF-8?
+    ```js
+        const str = "Hello 🌍";
+        const buf = Buffer.from(str);
+        console.log(buf.length);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В UTF-8:
+    - Символы ASCII (например, 'Hello ') занимают по 1 байту
+    - Эмодзи земли 🌍 занимает 4 байта
+
+    Итого: 5 (Hello) + 1 (пробел) + 4 (🌍) = 10 байт
+
+    Чтобы увидеть байты:
+    ```js
+        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+    ```
+    [Узнайте больше о кодировке UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Надеюсь, вам понравилось проверять свои знания NodeJS IO! Хотите ещё? Посмотрите мою [Коллекцию викторин](/challenges/) для новых заданий!

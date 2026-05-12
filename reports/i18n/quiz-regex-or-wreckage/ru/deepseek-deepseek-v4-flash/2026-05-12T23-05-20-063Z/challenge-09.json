@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Захватывающие группы",
+  "translation": {
+    "title": "Захватывающие группы",
+    "group": "Базовое сопоставление",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Что вернёт этот код?"
+    ],
+    "explanationProse": [
+      "В шаблоне используются три захватывающие группы:\n    1. `(\\d{4})` захватывает год\n    2. `(\\d{2})` захватывает месяц\n    3. `(\\d{2})` захватывает день\n\n    `match()` без флага `g` возвращает:\n    - Индекс 0: полное совпадение\n    - Индекс 1+: группы захвата\n\n    `slice(1)` — распространённый трюк, чтобы получить только группы захвата.\n\n    [Узнайте больше о группах и захвате](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Захватывающие группы\",\n  \"group\": \"Базовое сопоставление\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что вернёт этот код?\"\n  ],\n  \"explanationProse\": [\n    \"В шаблоне используются три захватывающие группы:\\n    1. `(\\\\d{4})` захватывает год\\n    2. `(\\\\d{2})` захватывает месяц\\n    3. `(\\\\d{2})` захватывает день\\n\\n    `match()` без флага `g` возвращает:\\n    - Индекс 0: полное совпадение\\n    - Индекс 1+: группы захвата\\n\\n    `slice(1)` — распространённый трюк, чтобы получить только группы захвата.\\n\\n    [Узнайте больше о группах и захвате](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 720,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 30423
+  },
+  "cost": {
+    "inputUsd": 0.00011186000000000002,
+    "outputUsd": 0.00020160000000000002,
+    "totalUsd": 0.00031346000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

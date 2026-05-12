@@ -1,0 +1,261 @@
+---
+unlisted: false
+title: 'Тест: Символы и перечисляемые'
+subTitle: Знакомы ли вы с менее известными особенностями ES2015?
+label: Symbols
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-10-31'
+modified: '2024-11-07'
+tags:
+  - quiz
+  - javascript
+  - interfaces
+  - symbols
+  - enumerables
+cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+---
+## Викторина: JavaScript-интерфейсы, символы и перечисляемые свойства
+
+> * **Докажи свои навыки JavaScript!** 🚀
+> * Никакого входа или регистрации не требуется. ✨
+> * Множественный выбор. 🤖 ... _Ну насколько это может быть сложно, а?_
+
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Продвинутые интерфейсы"
+  title="Геттер против прямого доступа к свойству"
+  options={[
+    {text: 'Использовать цикл'},
+    {text: 'Вызвать метод для доступа к значению'},
+    {text: 'Получить значение напрямую', isAnswer: true},
+    {text: 'Выбросить ошибку'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как следует обращаться к свойству объекта JavaScript, которое использует метод-геттер?
+    ```js
+        const obj = {
+          get val() {
+            return 'got it!';
+          }
+        };
+        console.log(obj.val);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В JavaScript к геттеру можно обращаться как к обычному свойству. Нет необходимости вызывать его как функцию.
+    В этом примере прямой доступ к `obj.val` вызывает метод-геттер и выводит `got it!`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Продвинутые интерфейсы"
+  title="Использование Symbol в качестве ключей объекта"
+  options={[
+    {text: 'Использование Symbol', isAnswer: true},
+    {text: 'Использование строки'},
+    {text: 'Использование числа'},
+    {text: 'Использование объекта в качестве ключа'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой правильный способ создать действительно уникальный ключ свойства для объекта JavaScript?
+    ```js
+        const uniqueKey = Symbol('myUniqueKey');
+        const obj = {
+          [uniqueKey]: 'unique value'
+        };
+        console.log(obj[uniqueKey]);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Symbol — это уникальный и неизменяемый примитивный тип, который можно использовать в качестве ключей для свойств объекта. Это помогает избежать коллизий имён, особенно в больших кодовых базах или при написании переиспользуемых библиотек.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Продвинутые интерфейсы"
+  title="Перечисляемые свойства"
+  options={[
+    {text: 'Выбрасывает ошибку'},
+    {text: 'Нет, не будет'},
+    {text: 'Зависит от типа значения'},
+    {text: 'Да, будет перечислено', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Будет ли свойство `age` перечислено при итерации `for...in`?
+    ```js
+        const person = {};
+        Object.defineProperty(person, 'age', {
+          value: 25,
+          enumerable: true
+        });
+        for (let key in person) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойство `enumerable` в `Object.defineProperty()` определяет, будет ли свойство отображаться в методах перечисления, таких как `for...in`. В этом примере, поскольку `enumerable: true`, свойство `age` будет перечислено во время итерации.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Работа с объектами"
+  title="Перечисляемость по умолчанию при использовании Object.defineProperty()"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Зависит от контекста'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова перечисляемость свойства по умолчанию при использовании `Object.defineProperty()` без указания `enumerable`?
+    ```js
+        const car = {};
+        Object.defineProperty(car, 'make', {
+          value: 'Toyota'
+        });
+        console.log(Object.keys(car));
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Когда вы используете `Object.defineProperty()` без указания `enumerable`, его значение по умолчанию — `false`. Это означает, что свойство `make` не будет отображаться в `Object.keys()` или других методах перечисления.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Продвинутые интерфейсы"
+  title="Уникальные символы"
+  options={[
+    {text: 'Зависит от их описаний'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'Выбрасывает ошибку'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет результат следующего сравнения?
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('id');
+        console.log(sym1 === sym2);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Каждый вызов `Symbol()` создаёт уникальное и неизменяемое значение, даже если описание одинаковое. В данном случае `sym1` и `sym2` — разные символы, поэтому сравнение возвращает `false`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Продвинутые интерфейсы"
+  title="Символы как неперечисляемые ключи"
+  options={[
+    {text: 'Нет, не будет', isAnswer: true},
+    {text: 'Да, будет перечислено'},
+    {text: 'Зависит от метода итерации'},
+    {text: 'Вызывает ошибку'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Будет ли свойство с ключом-символом перечислено при итерации `for...in`?
+    ```js
+        const sym = Symbol('uniqueKey');
+        const obj = {
+          [sym]: 'symbol value',
+          regularKey: 'regular value'
+        };
+        for (let key in obj) {
+          console.log(key);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойства с ключами-символами могут иметь собственный флаг `enumerable`, но `for...in` и `Object.keys()` посещают только строковые перечисляемые свойства. В этом примере будет перечислено только `regularKey`, а не свойство с ключом-символом.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Продвинутые интерфейсы"
+  title="Получить все ключи-символы"
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true},
+    {text: 'Object.entries()'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой метод можно использовать для получения всех ключей-символов объекта?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Метод `Object.getOwnPropertySymbols()` используется для получения собственных ключей-символов объекта.
+    ```js
+        const sym1 = Symbol('id');
+        const sym2 = Symbol('name');
+        const obj = {
+          [sym1]: 'symbol value',
+          [sym2]: 'another symbol value'
+        };
+        console.log(Object.getOwnPropertySymbols(obj));
+        // [Symbol(id), Symbol(name)]
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

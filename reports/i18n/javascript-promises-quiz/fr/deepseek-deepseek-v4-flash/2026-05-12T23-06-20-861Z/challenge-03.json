@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Enchaîner les `.then` et `.catch`",
+  "translation": {
+    "title": "Enchaîner les `.then` et `.catch`",
+    "group": "Gestion des erreurs",
+    "options": [
+      {
+        "text": "affiche l'erreur et `undefined`"
+      },
+      {
+        "text": "affiche l'erreur deux fois"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Quelle sera la sortie du code suivant ?"
+    ],
+    "explanationProse": [
+      "Lorsque vous enchaînez des `.then` et des `.catch`, il est utile de les considérer comme une série d'étapes. Chaque `.then` reçoit la valeur retournée par le `.then` précédent (comme argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront ignorées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez outrepasser une erreur, il vous suffit de retourner une valeur non-erreur. Elle peut être accédée via n'importe quel `.then` suivant."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Enchaîner les `.then` et `.catch`\",\n  \"group\": \"Gestion des erreurs\",\n  \"options\": [\n    {\n      \"text\": \"affiche l'erreur et `undefined`\"\n    },\n    {\n      \"text\": \"affiche l'erreur deux fois\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle sera la sortie du code suivant ?\"\n  ],\n  \"explanationProse\": [\n    \"Lorsque vous enchaînez des `.then` et des `.catch`, il est utile de les considérer comme une série d'étapes. Chaque `.then` reçoit la valeur retournée par le `.then` précédent (comme argument). Cependant, si votre « étape » rencontre une erreur, toutes les « étapes » `.then` suivantes seront ignorées jusqu'à ce qu'un `.catch` soit rencontré. Si vous voulez outrepasser une erreur, il vous suffit de retourner une valeur non-erreur. Elle peut être accédée via n'importe quel `.then` suivant.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 750,
+    "outputTokens": 1113,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7209
+  },
+  "cost": {
+    "inputUsd": 0.00010500000000000002,
+    "outputUsd": 0.00031164000000000007,
+    "totalUsd": 0.0004166400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

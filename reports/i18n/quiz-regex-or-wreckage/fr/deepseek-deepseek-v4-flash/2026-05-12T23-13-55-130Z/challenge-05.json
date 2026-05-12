@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Anticipation positive",
+  "translation": {
+    "title": "Anticipation positive",
+    "group": "Anticipation",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que va-t-il correspondre ?"
+    ],
+    "explanationProse": [
+      "Ce motif ne correspondra à rien car l'anticipation est à l'envers ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez une rétrospection : `/(?<=[\\$€])\\d+/g`.\n\n    Les anticipations vérifient ce qui vient *après* la position actuelle. Le motif tel qu'écrit cherche :\n    - Un ou plusieurs chiffres (`\\d+`)\n    - Suivis de (`(?=...)`) soit $ soit € (`[\\$€]`)\n\n    Comme il n'y a pas de nombres suivis de symboles monétaires (ils sont précédés par eux), nous n'obtenons aucune correspondance.\n\n    [En savoir plus sur les assertions d'anticipation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Anticipation positive\",\n  \"group\": \"Anticipation\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que va-t-il correspondre ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce motif ne correspondra à rien car l'anticipation est à l'envers ! Si vous voulez des chiffres précédés de `$` ou `€`, utilisez une rétrospection : `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Les anticipations vérifient ce qui vient *après* la position actuelle. Le motif tel qu'écrit cherche :\\n    - Un ou plusieurs chiffres (`\\\\d+`)\\n    - Suivis de (`(?=...)`) soit $ soit € (`[\\\\$€]`)\\n\\n    Comme il n'y a pas de nombres suivis de symboles monétaires (ils sont précédés par eux), nous n'obtenons aucune correspondance.\\n\\n    [En savoir plus sur les assertions d'anticipation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 1563,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8846
+  },
+  "cost": {
+    "inputUsd": 0.00011578000000000002,
+    "outputUsd": 0.00043764000000000005,
+    "totalUsd": 0.0005534200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

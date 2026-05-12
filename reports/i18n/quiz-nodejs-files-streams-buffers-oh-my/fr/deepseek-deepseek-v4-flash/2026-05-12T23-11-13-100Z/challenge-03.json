@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Async File Operations",
+  "translatedTitle": "Opérations de fichiers asynchrones",
+  "translation": {
+    "title": "Opérations de fichiers asynchrones",
+    "group": "Échauffement : Système de fichiers",
+    "options": [
+      {
+        "text": "Affiche le contenu du fichier puis \"Terminé\""
+      },
+      {
+        "text": "Affiche \"Terminé\" puis le contenu du fichier"
+      },
+      {
+        "text": "Affiche uniquement le contenu du fichier"
+      },
+      {
+        "text": "Lève une erreur"
+      }
+    ],
+    "questionProse": [
+      "Quel est l'ordre de sortie ?"
+    ],
+    "explanationProse": [
+      "Comme `readFile` est asynchrone, le code continue de s'exécuter pendant la lecture du fichier.\n    Par conséquent, \"Terminé\" sera affiché avant le contenu du fichier.\n\n    Pour attendre que le fichier soit lu en premier, vous pouvez utiliser la version basée sur les promesses :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Opérations de fichiers asynchrones\",\n  \"group\": \"Échauffement : Système de fichiers\",\n  \"options\": [\n    {\n      \"text\": \"Affiche le contenu du fichier puis \\\"Terminé\\\"\"\n    },\n    {\n      \"text\": \"Affiche \\\"Terminé\\\" puis le contenu du fichier\"\n    },\n    {\n      \"text\": \"Affiche uniquement le contenu du fichier\"\n    },\n    {\n      \"text\": \"Lève une erreur\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est l'ordre de sortie ?\"\n  ],\n  \"explanationProse\": [\n    \"Comme `readFile` est asynchrone, le code continue de s'exécuter pendant la lecture du fichier.\\n    Par conséquent, \\\"Terminé\\\" sera affiché avant le contenu du fichier.\\n\\n    Pour attendre que le fichier soit lu en premier, vous pouvez utiliser la version basée sur les promesses :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 733,
+    "outputTokens": 738,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3959
+  },
+  "cost": {
+    "inputUsd": 0.00010262000000000002,
+    "outputUsd": 0.00020664000000000004,
+    "totalUsd": 0.00030926000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

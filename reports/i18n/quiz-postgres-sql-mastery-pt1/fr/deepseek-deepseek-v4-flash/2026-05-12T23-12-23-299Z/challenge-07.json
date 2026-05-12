@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Identifier les types invalides",
+  "translation": {
+    "title": "Identifier les types invalides",
+    "group": "Types Postgres",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Lequel de ces types n'est pas ❌ un type PostgreSQL valide ?"
+    ],
+    "explanationProse": [
+      "Cela peut sembler familier car `decimal128` est un type dans de nombreux environnements (y compris Mongo et Java). Ce n'est pas un type PostgreSQL valide, `decimal` l'est.\n\n    Les types numériques corrects incluent :\n    - `int` (entier 4 octets)\n    - `bigint` (entier 8 octets)\n    - `real` (flottant 4 octets)\n    - `double precision` (flottant 8 octets)\n    - `bigserial` (entier auto-incrémenté 8 octets)\n    - `smallserial` (entier auto-incrémenté 2 octets)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Identifier les types invalides\",\n  \"group\": \"Types Postgres\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"questionProse\": [\n    \"Lequel de ces types n'est pas ❌ un type PostgreSQL valide ?\"\n  ],\n  \"explanationProse\": [\n    \"Cela peut sembler familier car `decimal128` est un type dans de nombreux environnements (y compris Mongo et Java). Ce n'est pas un type PostgreSQL valide, `decimal` l'est.\\n\\n    Les types numériques corrects incluent :\\n    - `int` (entier 4 octets)\\n    - `bigint` (entier 8 octets)\\n    - `real` (flottant 4 octets)\\n    - `double precision` (flottant 8 octets)\\n    - `bigserial` (entier auto-incrémenté 8 octets)\\n    - `smallserial` (entier auto-incrémenté 2 octets)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 767,
+    "outputTokens": 1129,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 32870
+  },
+  "cost": {
+    "inputUsd": 0.00010738,
+    "outputUsd": 0.00031612000000000003,
+    "totalUsd": 0.00042350000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

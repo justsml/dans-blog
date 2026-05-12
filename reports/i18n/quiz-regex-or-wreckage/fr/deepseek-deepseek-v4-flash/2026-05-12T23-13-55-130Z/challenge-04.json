@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "Le métacaractère point",
+  "translation": {
+    "title": "Le métacaractère point",
+    "group": "Pièges courants",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que retournera ceci ?"
+    ],
+    "explanationProse": [
+      "Le motif `\\w+` correspond à un ou plusieurs caractères de mot. Même s'il y a un saut de ligne dans la chaîne, `\\w` correspond à :\n    - Lettres (a-z, A-Z)\n    - Chiffres (0-9)\n    - Tiret bas (_)\n\n    Ainsi, le saut de ligne agit comme une limite de mot, et nous obtenons deux correspondances. Si nous avions utilisé `.*`, il n'aurait pas correspondu au saut de ligne par défaut (il faudrait le drapeau `s` pour cela).\n\n    [En savoir plus sur les métacaractères](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le métacaractère point\",\n  \"group\": \"Pièges courants\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que retournera ceci ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif `\\\\w+` correspond à un ou plusieurs caractères de mot. Même s'il y a un saut de ligne dans la chaîne, `\\\\w` correspond à :\\n    - Lettres (a-z, A-Z)\\n    - Chiffres (0-9)\\n    - Tiret bas (_)\\n\\n    Ainsi, le saut de ligne agit comme une limite de mot, et nous obtenons deux correspondances. Si nous avions utilisé `.*`, il n'aurait pas correspondu au saut de ligne par défaut (il faudrait le drapeau `s` pour cela).\\n\\n    [En savoir plus sur les métacaractères](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 1092,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6684
+  },
+  "cost": {
+    "inputUsd": 0.00011144000000000002,
+    "outputUsd": 0.00030576,
+    "totalUsd": 0.00041720000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

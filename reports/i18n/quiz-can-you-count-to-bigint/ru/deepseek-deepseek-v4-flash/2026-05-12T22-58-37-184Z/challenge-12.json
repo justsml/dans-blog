@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Обработка null",
+  "translation": {
+    "title": "Обработка null",
+    "group": "Парсинг",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Каким будет результат этого кода?"
+    ],
+    "explanationProse": [
+      "`parseInt` преобразует входное значение в строку, поэтому `null` становится `\"null\"`. Поскольку `\"null\"` не содержит допустимых десятичных символов (обычных чисел), он вернет `NaN`.\n  \n  `Number(null)` возвращает `0`, потому что JS любит держать вас в тонусе.\n  Почему? Ну, я могу углубиться, если будет интерес."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Обработка null\",\n  \"group\": \"Парсинг\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Каким будет результат этого кода?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`parseInt` преобразует входное значение в строку, поэтому `null` становится `\\\"null\\\"`. Поскольку `\\\"null\\\"` не содержит допустимых десятичных символов (обычных чисел), он вернет `NaN`.\\n  \\n  `Number(null)` возвращает `0`, потому что JS любит держать вас в тонусе.\\n  Почему? Ну, я могу углубиться, если будет интерес.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 762,
+    "outputTokens": 942,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20586
+  },
+  "cost": {
+    "inputUsd": 0.00010668,
+    "outputUsd": 0.00026376000000000004,
+    "totalUsd": 0.00037044000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

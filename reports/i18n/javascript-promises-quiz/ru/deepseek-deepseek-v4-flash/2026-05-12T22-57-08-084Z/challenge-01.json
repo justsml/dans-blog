@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #1",
+  "translatedTitle": "Несколько `.catch` #1",
+  "translation": {
+    "title": "Несколько `.catch` #1",
+    "group": "Обработка ошибок",
+    "options": [
+      {
+        "text": "вывести сообщение один раз"
+      },
+      {
+        "text": "вывести сообщение дважды"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "процесс завершится"
+      }
+    ],
+    "questionProse": [
+      "Каким будет вывод следующего кода?"
+    ],
+    "explanationProse": [
+      "Мы создаём Promise с помощью конструктора, который сразу же вызывает ошибку через колбэк `reject`.\n\nЗатем обработчики `.catch` работают как DOM-метод `.addEventListener(event, callback)` или Event Emitter'а `.on(event, callback)`, где **можно добавить несколько колбэков-обработчиков.** Каждый из них будет вызван с теми же аргументами."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Несколько `.catch` #1\",\n  \"group\": \"Обработка ошибок\",\n  \"options\": [\n    { \"text\": \"вывести сообщение один раз\" },\n    { \"text\": \"вывести сообщение дважды\" },\n    { \"text\": \"UnhandledPromiseRejectionWarning\" },\n    { \"text\": \"процесс завершится\" }\n  ],\n  \"questionProse\": [\n    \"Каким будет вывод следующего кода?\"\n  ],\n  \"explanationProse\": [\n    \"Мы создаём Promise с помощью конструктора, который сразу же вызывает ошибку через колбэк `reject`.\\n\\nЗатем обработчики `.catch` работают как DOM-метод `.addEventListener(event, callback)` или Event Emitter'а `.on(event, callback)`, где **можно добавить несколько колбэков-обработчиков.** Каждый из них будет вызван с теми же аргументами.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 714,
+    "outputTokens": 1544,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15197
+  },
+  "cost": {
+    "inputUsd": 0.00009996000000000001,
+    "outputUsd": 0.00043232000000000003,
+    "totalUsd": 0.00053228,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,327 @@
+---
+unlisted: false
+title: クイズ：SQLスキルを証明しよう！
+subTitle: SQL派？それともNoSQL派？
+label: SQL 101
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## SQLクエリの基礎をテストしよう
+
+ORMを使っていると、スキル面で甘くなっていませんか？
+心配しないでください。多くの開発者に起こることです。
+
+さあ、SQLクエリの基礎力を証明しましょう！👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="SQL基礎"
+  title="基本的なWHERE句"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = "', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    次のSQLクエリのうち、nameが"John"である行を正しく取得できるものはどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    SQLでは、WHERE句での等価比較には単一の等号（`=`）を使用します。`==`や`===`はJavaScriptの演算子です。
+
+    正しい構文は`SELECT * FROM users WHERE name = 'John';`です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="SQL 基礎"
+  title="集約関数 COUNT"
+  options={[
+    {text: 'NULL値を含むすべての行をカウントする'},
+    {text: '列内の非NULL値のみをカウントする', isAnswer: true},
+    {text: 'NULL値を1つの一意な値としてカウントする'},
+    {text: '各NULL値をNaN !== NaNと同様に一意として扱う'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLの `COUNT(column_name)` は何を行いますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `COUNT(column_name)` は指定された列の非NULL値の数をカウントします。NULLを含むすべての行をカウントするには、`COUNT(*)` を使用します。
+
+    また、`COALESCE` を使用してNULLを非NULL値にデフォルト設定することもできます。例: `COUNT(COALESCE(column_name, 0))`
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="SQL結合"
+  title="LEFT JOINの基本"
+  options={[
+    {text: '一致する行ごとに1行を返し、一致しない行は無視する'},
+    {text: '左テーブルのすべての行と、一致する右テーブルの行を返す', isAnswer: true},
+    {text: '一致する行と一致しない行のすべてを返し、NULLは一致がないことを示す'},
+    {text: '右テーブルのすべての行と、一致する左テーブルの行を返す'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLにおける`LEFT JOIN`の動作は？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `LEFT JOIN`は左テーブルのすべての行と右テーブルの一致する行を返し、右テーブルで一致しない行にはNULLが入ります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="SQL 結合"
+  title="INNER JOIN の使用"
+  options={[
+    {text: '両方のテーブルから一致しない行を返す'},
+    {text: '両方のテーブルのすべての行を返し、一致しない行には NULL を埋める'},
+    {text: '両方のテーブルで結合条件を満たす行を返す', isAnswer: true},
+    {text: '右のテーブルから一致しない行を返す'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQL の `INNER JOIN` は何を行いますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `INNER JOIN` は、結合条件が両方のテーブルの行と一致する行を返します。一致しない行は結果セットに含まれません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="SQLサブクエリ"
+  title="相関サブクエリ"
+  options={[
+    {text: '全体で一度だけ実行されるサブクエリ'},
+    {text: 'JOIN文でのみ使用されるサブクエリ'},
+    {text: '複数のカラムのみを返すサブクエリ'},
+    {text: '外側のクエリの行ごとに一度実行されるサブクエリ', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLにおける相関サブクエリとは何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    相関サブクエリは、外側のクエリの行ごとに1回評価されます。外側のクエリのカラムを参照するため、各行に依存します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="SQL CTE"
+  title="WITH句の構文"
+  options={[
+    {text: 'DELETE文でのみ使用可能'},
+    {text: '集約関数に使用される'},
+    {text: 'ビューの定義のみに使用される'},
+    {text: 'より大きなSQL文で使用するための一時的な結果セットを定義する', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLにおける`WITH`句（Common Table Expression）の目的は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `WITH`句（Common Table Expression、CTE）は、メインクエリ内で参照可能な一時的な結果セットを定義するために使用されます。PostgreSQLでは、`WITH`は`SELECT`、`INSERT`、`UPDATE`、`DELETE`、`MERGE`などの文に付加できます。
+
+    これにより、複雑なクエリの可読性と保守性が向上します。
+
+    構文は次の通りです：
+    ```sql
+    WITH cte_name AS (
+      SELECT column_name
+      FROM table_name
+    )
+    SELECT *
+    FROM cte_name;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="SQLの基礎"
+  title="IS NULL vs IS NOT NULL"
+  options={[
+    {text: '値がNULLかどうかをチェックする', isAnswer: true},
+    {text: '値が空かどうかをチェックする'},
+    {text: '値が文字列かどうかをチェックする'},
+    {text: '値が数値かどうかをチェックする'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLの`IS NULL`演算子は何をするものですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `IS NULL`は指定されたカラムがNULL値を含むかどうかをチェックします。`IS NOT NULL`はその逆をチェックします。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="SQL演算子"
+  title="IN演算子の使用"
+  options={[
+    {text: '一意の行を返す'},
+    {text: 'インデックス列が必要'},
+    {text: '数値列にのみ適用'},
+    {text: '指定されたリストの値に一致する行を返す', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLの`IN`演算子は何をするものですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `IN`演算子は、指定されたリスト内の任意の値に一致する行をフィルタリングします。多くの場合、複数のOR条件の代替として使用されます。
+
+    一意の行を返す*こともあります*（実際よくあります）が、それが必ずしも主な目的ではありません。
+
+    ここではインデックスは必須ではありませんが、インデックス（できれば`UNIQUE`インデックス）が設定された列に対して`IN`を使用するのはベストプラクティスであり、パフォーマンスを向上させることができます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="SQL関数"
+  title="COALESCE関数の使い方"
+  options={[
+    {text: 'NULL値をカウントする'},
+    {text: '最後の非NULL引数を返す'},
+    {text: '最初の非NULL引数を返す', isAnswer: true},
+    {text: 'IDENTITY列に限定される'},
+    {text: '元々はPrinter Coalationから'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLの`COALESCE`関数は何をするものですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `COALESCE`関数は、指定されたリスト内の最初の非NULL値を返します。NULLに遭遇したときにデフォルト値を代わりに使用するのに便利です。
+
+    例えば、`COALESCE(column_name, 0)`は、`column_name`が`NULL`の場合に`0`を返します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="SQL集約関数"
+  title="GROUP BYの使用法"
+  options={[
+    {text: '重複を非表示にする'},
+    {text: 'JOINでのみ使用される'},
+    {text: '行を昇順に並べ替える'},
+    {text: '指定した列で行をグループ化する', isAnswer: true},
+    {text: '構文はGROUP WITH/USINGであるべき'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQLの`GROUP BY`句の目的は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `GROUP BY`句は、指定した列で同じ値を持つ行をグループ化し、各グループに集約関数を適用できるようにします。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="SQL 結合"
+  title="FULL OUTER JOIN の基本"
+  options={[
+    {text: '一致した行のみを返す'},
+    {text: 'NULL でない値を持つ行のみを返す'},
+    {text: '左テーブルからのみ一致しない行を返す'},
+    {text: '右テーブルからのみ一致しない行を返す'},
+    {text: '両方のテーブルからすべての行を返し、一致しない行には NULL を埋める', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    SQL における `FULL OUTER JOIN` は何を行いますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `FULL OUTER JOIN` は両方のテーブルからすべての行を返し、一致しない行には欠損値として NULL を埋めます。
+
+    これは、2つのテーブルを比較してそれらの違いを見つけるのに便利です。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

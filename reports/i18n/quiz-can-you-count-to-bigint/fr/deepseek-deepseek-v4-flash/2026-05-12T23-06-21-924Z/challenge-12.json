@@ -1,0 +1,50 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Gestion des nulls",
+  "translation": {
+    "title": "Gestion des nulls",
+    "group": "Analyse",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Quel sera le résultat de ce code ?"
+    ],
+    "explanationProse": [
+      "`parseInt` convertit l'entrée en chaîne, donc `null` devient `\"null\"`. Comme `\"null\"` ne contient aucun caractère valide en base 10 (chiffres normaux), il retournera `NaN`.\n  \n  `Number(null)` retourne `0`, parce que JS aime vous tenir en haleine.\n  Pourquoi ? Eh bien, je pourrais approfondir si cela intéresse."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestion des nulls\",\n  \"group\": \"Analyse\",\n  \"options\": [\n    { \"text\": \"0 NaN\" },\n    { \"text\": \"0 0\" },\n    { \"text\": \"NaN NaN\" },\n    { \"text\": \"NaN 0\" },\n    { \"text\": \"null null\" },\n    { \"text\": \"TypeError\" }\n  ],\n  \"questionProse\": [\n    \"Quel sera le résultat de ce code ?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` convertit l'entrée en chaîne, donc `null` devient `\\\"null\\\"`. Comme `\\\"null\\\"` ne contient aucun caractère valide en base 10 (chiffres normaux), il retournera `NaN`.\\n  \\n  `Number(null)` retourne `0`, parce que JS aime vous tenir en haleine.\\n  Pourquoi ? Eh bien, je pourrais approfondir si cela intéresse.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 750,
+    "outputTokens": 964,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9130
+  },
+  "cost": {
+    "inputUsd": 0.00010500000000000002,
+    "outputUsd": 0.00026992000000000004,
+    "totalUsd": 0.00037492000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

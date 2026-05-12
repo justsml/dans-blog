@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT и NULL",
+  "translation": {
+    "title": "COUNT и NULL",
+    "group": "Поведение NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "Сколько *строк* вернёт этот запрос?"
+    ],
+    "explanationProse": [
+      "Ладно, это было немного хитро. Подвох в том, что `x = NULL` никогда не совпадёт ни с одной строкой, и ВСЕГДА вернёт одну строку с количеством `0`.\n\n    Поскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с самим собой.\n    \n    Правильный способ проверки на `NULL` — использовать `IS NULL`.\n\n    Пример:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT и NULL\",\n  \"group\": \"Поведение NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Сколько *строк* вернёт этот запрос?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Ладно, это было немного хитро. Подвох в том, что `x = NULL` никогда не совпадёт ни с одной строкой, и ВСЕГДА вернёт одну строку с количеством `0`.\\n\\n    Поскольку `NULL` — это неизвестное значение, его нельзя сравнить ни с чем, даже с самим собой.\\n    \\n    Правильный способ проверки на `NULL` — использовать `IS NULL`.\\n\\n    Пример:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 440,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3667
+  },
+  "cost": {
+    "inputUsd": 0.00010990000000000002,
+    "outputUsd": 0.0001232,
+    "totalUsd": 0.00023310000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

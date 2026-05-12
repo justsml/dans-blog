@@ -1,0 +1,48 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "Comportement de RefCell",
+  "translation": {
+    "title": "Comportement de RefCell",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "Affiche : 42",
+        "hint": "Peut-on avoir deux emprunts mutables à la fois ?"
+      },
+      {
+        "text": "Panique à l'exécution : RefCell déjà emprunté"
+      },
+      {
+        "text": "Erreur de compilation",
+        "hint": "RefCell déplace les vérifications à l'exécution"
+      },
+      {
+        "text": "Panique à l'exécution : message différent",
+        "hint": "L'erreur mentionne spécifiquement l'emprunt"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsque ce code s'exécute ?"
+    ],
+    "explanationProse": [
+      "RefCell offre une mutabilité intérieure mais applique toujours les règles d'emprunt de Rust à l'exécution :",
+      "Concepts clés :\n      1. RefCell déplace les vérifications d'emprunt à l'exécution\n      2. Peut provoquer des paniques si les règles sont violées\n      3. Utile pour le motif de mutabilité intérieure\n\n      Cas d'utilisation courants :\n      - Objets fictifs dans les tests\n      - Implémentation de structures auto-référentielles\n      - Quand vous devez muter des données derrière une référence partagée\n      \n      Bonnes pratiques :\n      1. Préférez l'emprunt à la compilation quand c'est possible\n      2. Gardez les emprunts RefCell dans des portées étroites\n      3. Envisagez d'utiliser drop() pour terminer explicitement les emprunts\n      4. Utilisez RefCell lorsque vous avez besoin de mutabilité intérieure"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportement de RefCell\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"Affiche : 42\",\n      \"hint\": \"Peut-on avoir deux emprunts mutables à la fois ?\"\n    },\n    {\n      \"text\": \"Panique à l'exécution : RefCell déjà emprunté\"\n    },\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"RefCell déplace les vérifications à l'exécution\"\n    },\n    {\n      \"text\": \"Panique à l'exécution : message différent\",\n      \"hint\": \"L'erreur mentionne spécifiquement l'emprunt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsque ce code s'exécute ?\"\n  ],\n  \"explanationProse\": [\n    \"RefCell offre une mutabilité intérieure mais applique toujours les règles d'emprunt de Rust à l'exécution :\",\n    \"Concepts clés :\\n      1. RefCell déplace les vérifications d'emprunt à l'exécution\\n      2. Peut provoquer des paniques si les règles sont violées\\n      3. Utile pour le motif de mutabilité intérieure\\n\\n      Cas d'utilisation courants :\\n      - Objets fictifs dans les tests\\n      - Implémentation de structures auto-référentielles\\n      - Quand vous devez muter des données derrière une référence partagée\\n      \\n      Bonnes pratiques :\\n      1. Préférez l'emprunt à la compilation quand c'est possible\\n      2. Gardez les emprunts RefCell dans des portées étroites\\n      3. Envisagez d'utiliser drop() pour terminer explicitement les emprunts\\n      4. Utilisez RefCell lorsque vous avez besoin de mutabilité intérieure\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 852,
+    "outputTokens": 1663,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9096
+  },
+  "cost": {
+    "inputUsd": 0.00011928000000000001,
+    "outputUsd": 0.00046564,
+    "totalUsd": 0.0005849200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

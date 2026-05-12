@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "Variations de syntaxe de transtypage",
+  "translation": {
+    "title": "Variations de syntaxe de transtypage",
+    "group": "Échauffement : Transtypage",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "Laquelle de ces conversions de type est **invalide** ❌ ?"
+    ],
+    "explanationProse": [
+      "PostgreSQL prend en charge trois syntaxes de transtypage :\n\n    1. SQL ANSI : `CAST(expression AS type)`.\n    2. PostgreSQL : `expression::type`.\n    3. Fonction de type : `type 'literal'`.\n\n    Toutes sont fonctionnellement équivalentes, mais :\n    - `CAST()` est la plus portable.\n    - `::` est spécifique à PostgreSQL mais couramment utilisée.\n    - La syntaxe infixe `type 'literal'` est moins courante mais toujours valide."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Variations de syntaxe de transtypage\",\n  \"group\": \"Échauffement : Transtypage\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"Laquelle de ces conversions de type est **invalide** ❌ ?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL prend en charge trois syntaxes de transtypage :\\n\\n    1. SQL ANSI : `CAST(expression AS type)`.\\n    2. PostgreSQL : `expression::type`.\\n    3. Fonction de type : `type 'literal'`.\\n\\n    Toutes sont fonctionnellement équivalentes, mais :\\n    - `CAST()` est la plus portable.\\n    - `::` est spécifique à PostgreSQL mais couramment utilisée.\\n    - La syntaxe infixe `type 'literal'` est moins courante mais toujours valide.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 722,
+    "outputTokens": 488,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3991
+  },
+  "cost": {
+    "inputUsd": 0.00010108,
+    "outputUsd": 0.00013664000000000002,
+    "totalUsd": 0.00023772000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

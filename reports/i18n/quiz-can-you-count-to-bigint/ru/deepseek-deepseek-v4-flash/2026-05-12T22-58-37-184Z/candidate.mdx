@@ -1,0 +1,415 @@
+---
+unlisted: false
+title: ''
+subTitle: ''
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка"
+  title="Парсинг с помощью `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt(" 123456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `parseInt` игнорирует пробелы и разбирает начальную последовательность цифр как целое число. Здесь она останавливается на десятичной точке, поэтому возвращается только `123456`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Парсинг"
+  title="Обработка запятых"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        parseInt("123,456.00")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Вообще говоря, `parseInt` прекращает разбор, когда встречает нечисловой символ. Здесь он останавливается на запятой, поэтому возвращается только `123`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Математика"
+  title="Точность с плавающей точкой"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        0.1 + 0.2 === 0.3
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Из-за ошибок точности чисел с плавающей точкой `0.1 + 0.2` не равно точно `0.3`. Из-за того, как числа с плавающей точкой хранятся в памяти, результат равен `0.30000000000000004`. Стандарт IEEE 754 для арифметики с плавающей точкой является виновником — он не может точно представить некоторые числа. Это распространенная проблема во всех языках программирования. В конечном итоге вы столкнетесь с бесконечно повторяющейся десятичной дробью, и независимо от языка, компьютеру просто приходится перестать гоняться за бесконечно повторяющимися цифрами.
+
+    Некоторые языки, такие как Python и Java, имеют `Decimal` или `BigDecimal` для решения этой проблемы, но в JavaScript это не встроено. Вы можете использовать библиотеки, такие как `big.js` или `decimal.js`, для обработки таких случаев.
+
+    (Примечание: некоторые языки спроектированы для работы с дробями, мнимыми числами и т.д. на более высоком логическом уровне, сохраняя буквальные выражения. Но они все равно сталкиваются с теми же проблемами точности чисел с плавающей точкой на уровне оборудования.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Переполнение чисел"
+  title="Обработка Infinity"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```tsx
+        Number.MAX_VALUE * 2
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Поскольку `Number.MAX_VALUE` — это самое большое **представимое** обычное число в JavaScript, превышение его предела быстро приведет к переполнению — по сути, вы можете увидеть бессмысленные результаты. Умножение его на `2` дает `Infinity`.
+
+    *Знаете, JavaScript иногда такой.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Форматирование"
+  title="Преобразование строки с помощью `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что это может сделать?
+    ```tsx
+        5..toFixed(2)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `.toFixed(2)` возвращает строковое представление числа `5` с двумя десятичными знаками, поэтому результат — `"5.00"`.
+
+    Двойная точка (`5..toFixed(2)`) — это 'трюк' для доступа к объектной модели числовых литералов.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Сравнение типов"
+  title="Сравнение на равенство между `parseInt` и `parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        parseInt("42") === parseFloat("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В JavaScript обе функции `parseInt` и `parseFloat` интерпретируют строку `"42"` как число `42`. Следовательно, сравнение `parseInt("42") === parseFloat("42")` возвращает `true`. В то время как `parseInt` прекращает разбор при первом нецифровом символе, `parseFloat` продолжает разбор до тех пор, пока не встретит символ, не являющийся частью числа с плавающей точкой. Однако, поскольку в `"42"` нет десятичных точек или других нечисловых символов, обе функции возвращают одно и то же значение.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Равенство"
+  title="Сравнение на равенство с BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        BigInt("42") === parseInt("42")
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) — это другой тип, отличный от `number`, поэтому `parseInt(\"42\")` (обычное число) не является строго равным `BigInt(\"42\")`. Для сравнения необходимо привести оба к одному типу: `BigInt(parseInt(\"42\")) === BigInt(\"42\")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Базовое"
+  title="Шестнадцатеричный разбор"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: 'Должно быть заглавными: 2A'},
+    {text: 'Ошибка'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что получится в результате?
+    ```jsx
+        parseInt("0x2A") === parseInt("2a", 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Любая входная строка, начинающаяся с `0x`, автоматически обрабатывается как шестнадцатеричная (основание `16`).
+    Следовательно, это эквивалентно передаче основания 16. Так, `parseInt("0x2A")` то же самое, что и `parseInt("2a", 16)`. (Регистр не имеет значения.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="По основанию"
+  title="Разбор с указанием системы счисления"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    В чем тут дело?
+    ```jsx
+        parseInt('0xFF', 16)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` с шестнадцатеричным основанием (`16`) преобразует `"FF"` в десятичное `255`. Возможно, вы видели это в CSS RGB/Hex кодах цветов.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="Использование `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'One', 42].map(parseInt)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Второй аргумент `parseInt` (основание системы счисления) совпадает с аргументом `index` методов массива. Это приводит к неожиданным результатам, так как `parseInt(\"One\", 1)` возвращает `NaN` из-за недопустимого ввода.\n\n  Первый элемент, `24`, парсится как `24` в системе счисления 0 (автоопределение), поэтому он остаётся `24`. Второй элемент, `'One'`, парсится как `NaN` в системе счисления 1. Третий элемент, `42`, парсится в системе счисления 2. В системе счисления 2 `'42'` — это `NaN`, поэтому результат — `[24, NaN, NaN]`.\n\n  Это распространённая ловушка с `parseInt` и `map`. Если вы хотите преобразовать массив строк в числа, единственный безопасный \"built-in\" метод — это `.map(Number)` или добавление колбэка/обёртки `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="Использование `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ```jsx
+        [24, 'Twenty1', 0o42].map(Number)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Number` преобразует значения в числовой тип более строго, чем `parseInt`. Здесь `'Twenty1'` становится `NaN`, а `0o42` распознается как восьмеричный литерал и преобразуется в `34`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Парсинг"
+  title="Обработка null"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет результат этого кода?
+    ```jsx
+        console.log(parseInt(null), Number(null))
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `parseInt` преобразует входное значение в строку, поэтому `null` становится `"null"`. Поскольку `"null"` не содержит допустимых десятичных символов (обычных чисел), он вернет `NaN`.
+
+    `Number(null)` возвращает `0`, потому что JS любит держать вас в тонусе.
+    Почему? Ну, я могу углубиться, если будет интерес.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Парсинг"
+  title="Разбор по основанию"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет результат этого заклинания?
+    ```jsx
+        parseInt(null, 36)
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Поскольку `parseInt` всегда преобразует входное значение в строку, `null` становится строкой `"null"`.
+
+    В системе счисления с основанием 36 (тридцатишестеричной, если вам интересно), строка `"null"` представляет число `1112745`.
+
+    Последовательные значения `nulk`, `null` и `nulm` в системе с основанием 36 равны соответственно `1112744`, `1112745` и `1112746`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## Сравнительная таблица
+
+| Функция | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Игнорирует пробелы | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)` | ❌ | ☑️ | ✅ | ✅ |
+| Поддерживает аргумент системы счисления | ✅ | ❌ | ❌ | ❌ |
+| Двоичные/восьмеричные/шестнадцатеричные литералы | ✅ | ❌ | ✅ | ✅ |
+| Недопустимые символы `42 oh no` | `42` | `42` | `NaN` | `SyntaxError` |
+</section>
+
+<h2>Как вы справились? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">Ищете отдых после стольких двоичных?<br />Пфф, помните: перерыв *после* навыков! <br /><br />Жмите [мой зал](/challenges/), чтобы сокрушить ещё несколько испытаний! 💪</p>

@@ -1,0 +1,445 @@
+---
+unlisted: false
+title: 'Тест: Стоит ли указывать HTML в резюме?'
+subTitle: Прояви себя!
+label: Semantic HTML5
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Итак, думаешь, у тебя есть навыки HTML5?
+
+В конце концов, ты же знаешь, чем `<div>` отличается от `<span>`, верно? Но насколько хорошо ты знаешь более продвинутые семантические элементы HTML5?
+
+> Примечание: Если ты не пройдешь этот тест, ты обязан по закону удалить `HTML Skills` из своего резюме.
+
+### Начинаем!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова основная роль элемента `<ul>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Тег `<ul>` создает неупорядоченный список, элементы которого обычно отмечаются маркерами.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что представляет собой элемент `<dd>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<dd>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) определяет описание, определение или значение в списке описаний, используется внутри `<dl>` для пары с `<dt>` (_термин описания_).
+
+    Это полезно при отображении данных типа «ключ-значение». Примеры: информация профиля, настройки и статистика.
+    ```html
+    <dl>
+      <dt>JS</dt>
+      <dd>Client-side</dd>
+      <dd>Server-side</dd>
+
+      <dt>HTML</dt>
+      <dd>Client-side</dd>
+    </dl>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Когда следует использовать элементы `<figure>` и `<figcaption>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Тег [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) обычно используется для оборачивания самодостаточного (медийного) контента, например изображения или диаграммы, вместе с [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) для предоставления подписи.
+
+    Это полезно для изображений, диаграмм, фрагментов кода и многого другого.
+    ```html
+    <figure>
+      <img src="image.jpg" alt="Description of image">
+      <figcaption>Image caption</figcaption>
+    </figure>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Для чего нужен элемент `<article>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<article>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) используется для определения самостоятельного фрагмента контента, который может быть независимо распространен или повторно использован.
+
+    Он часто используется для записей в блогах, новостных статей, сообщений на форумах или комментариев пользователей.
+
+    Вы можете использовать несколько элементов `<article>` на одной странице (например, для страниц с бесконечной прокруткой). Или вы можете вкладывать их друг в друга, чтобы создать иерархию «самостоятельного контента».
+    ```html
+    <article>
+      <h2>Article Title</h2>
+      <p>Article content...</p>
+      <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+      </article>
+    </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова цель элементов `<fieldset>` и `<legend>` в форме?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) используется для группировки связанных элементов управления формы, а `<legend>` предоставляет заголовок/метку для группы, улучшая доступность.
+
+    Это полезно для группировки связанных элементов формы, например, раздела для адреса доставки или платёжных данных.
+    ```html
+    <fieldset>
+      <legend>Shipping Address</legend>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name">
+      ...
+    </fieldset>
+    <fieldset>
+      <legend>Payment Details</legend>
+      <label for="card">Card Number:</label>
+      <input type="text" id="card" name="card">
+      ...
+    </fieldset>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Для чего используется элемент `<meter>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<meter>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) используется для представления скалярного (одиночного) измерения в заданном диапазоне, например, температуры, использования диска или количества голосов.
+
+    Он может показаться похожим на индикатор [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), однако индикаторы выполнения **ВСЕГДА** начинаются с нуля. Поэтому элементы `<progress>` показывают `percent of completion`, а `<meter>` — любое значение в пределах определяемого диапазона.
+    ```html
+    <meter min="-60" max="130" value="75" /> 75°F
+    <meter min="0" max="100" value="75" /> 75%
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Почему используется элемент `<source>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<source>` используется для указания доступных медиаформатов](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+    Конкретно используется с элементами [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) и [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture), позволяя браузеру выбрать наиболее подходящий формат.
+    ```html
+    <video controls>
+      <source src="movie.mp4" type="video/mp4">
+      <source src="movie.ogg" type="video/ogg">
+    </video>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Продвинутая семантическая HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как следует использовать элемент `<hgroup>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) группирует заголовок с сопутствующим вторичным содержимым, обычно одним или несколькими элементами `<p>`.
+
+    Он может быть полезен, когда у заголовка есть подзаголовок, слоган или альтернативный заголовок, который не должен становиться ещё одним заголовком в структуре документа.
+    ```html
+    <article>
+      <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+      </hgroup>
+      <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+      </section>
+    </article>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Для чего используется элемент `<menu>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) представляет список команд или интерактивных элементов управления.
+
+    Если ваш список состоит из навигационных ссылок, используйте `<nav>` с `<ul>`. Используйте `<menu>` для панелей инструментов или списков команд.
+    ```html
+    <menu>
+      <li><button type="button">Copy</button></li>
+      <li><button type="button">Paste</button></li>
+    </menu>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Продвинутый семантический HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какую роль играют `<details>` и `<summary>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    [`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) позволяет создавать сворачиваемый контент, а [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) задает видимый заголовок для этого контента.
+
+    Это полезно для FAQ, сворачиваемых разделов или любого контента, который можно переключать.
+    ```html
+    <details>
+      <summary>Click to expand 🤯</summary>
+      <p>Hidden content! 💥</p>
+    </details>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Продвинутая семантическая HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Почему стоит использовать элемент `<dialog>`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) используется для всплывающих окон или модальных окон и предоставляет семантическую разметку, расширенные CSS и нативный API для таких взаимодействий.
+
+    Используйте JavaScript, чтобы открыть его с помощью `.showModal()` для модальных диалогов или `.show()` для немодальных диалогов, и закрыть с помощью `.close()` или отправки формы с `method="dialog"`.
+    ```html
+    <dialog>
+      <h2>Modal Title</h2>
+      <p>Modal content...</p>
+      <button>Close</button>
+    </dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Продвинутая семантика HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как используется элемент `<time>` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Элемент `<time>` используется для дат, времени или длительности. Он может содержать читаемый человеком контент и машиночитаемый атрибут `datetime`. В HTML нет элемента `<date>`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Продвинутый семантический HTML"
+  title="Назначение ARIA-атрибутов"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова цель ARIA-атрибутов?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ARIA-атрибуты (Accessible Rich Internet Applications) улучшают доступность веб-контента, предоставляя дополнительный контекст для программ чтения с экрана и других вспомогательных технологий.
+
+    Существуют роли, состояния и свойства, которые можно использовать для описания элементов.
+    ```html
+    <button aria-label="Close" aria-expanded="true">X</button>
+    <main aria-live="polite">...</main>
+    <dialog
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="dialog_label"
+      aria-describedby="dialog_desc"
+    ></dialog>
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Продвинутая семантическая HTML"
+  title="Использование атрибута `role`"
+  options={[
+    {text: 'Для определения поведения компонента'},
+    {text: 'Для описания назначения элемента', isAnswer: true},
+    {text: 'Ограничение доступа к элементам'},
+    {text: 'Только для веб-компонентов'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каково использование атрибута `role` в HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Атрибут `role` описывает
+
+    назначение элемента для вспомогательных технологий, помогая улучшить доступность.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Итак, как успехи? Готовы использовать больше семантических HTML-элементов в следующем проекте? 🚀
+
+Или смирились с `<div>` и `<span>` на всю жизнь? 😅
+
+Делитесь в комментариях ниже! 👇

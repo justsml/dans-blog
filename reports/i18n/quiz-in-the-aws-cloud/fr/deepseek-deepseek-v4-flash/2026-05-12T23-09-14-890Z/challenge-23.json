@@ -1,0 +1,44 @@
+{
+  "index": 22,
+  "attempt": 1,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Mécanisme de basculement Aurora",
+  "translation": {
+    "title": "Mécanisme de basculement Aurora",
+    "group": "Haute disponibilité Aurora",
+    "options": [
+      {
+        "text": "Intervention manuelle requise"
+      },
+      {
+        "text": "Nécessite une reconfiguration de l'application"
+      },
+      {
+        "text": "Bascule toujours vers le réplica le plus ancien"
+      },
+      {
+        "text": "Promotion automatique basée sur le niveau de priorité de basculement"
+      }
+    ],
+    "questionProse": [
+      "Dans un cluster Aurora avec plusieurs réplicas de lecture, que se passe-t-il lors d'un basculement automatique lorsque l'instance principale tombe en panne ?"
+    ],
+    "explanationProse": [
+      "Processus de basculement Aurora :\n      1. Détecte la panne de l'instance principale\n      2. Choisit un réplica Aurora principalement en fonction du niveau de priorité de basculement\n      3. Utilise les caractéristiques de l'instance comme critères de départage lorsque les priorités correspondent\n      4. Met à jour automatiquement le point de terminaison du cluster\n\n      Bonnes pratiques :\n      - Maintenez plusieurs réplicas dans différentes zones de disponibilité\n      - Configurez intentionnellement les niveaux de promotion\n      - Utilisez le point de terminaison du cluster dans les applications\n      - Testez régulièrement les scénarios de basculement"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mécanisme de basculement Aurora\",\n  \"group\": \"Haute disponibilité Aurora\",\n  \"options\": [\n    {\n      \"text\": \"Intervention manuelle requise\"\n    },\n    {\n      \"text\": \"Nécessite une reconfiguration de l'application\"\n    },\n    {\n      \"text\": \"Bascule toujours vers le réplica le plus ancien\"\n    },\n    {\n      \"text\": \"Promotion automatique basée sur le niveau de priorité de basculement\"\n    }\n  ],\n  \"questionProse\": [\n    \"Dans un cluster Aurora avec plusieurs réplicas de lecture, que se passe-t-il lors d'un basculement automatique lorsque l'instance principale tombe en panne ?\"\n  ],\n  \"explanationProse\": [\n    \"Processus de basculement Aurora :\\n      1. Détecte la panne de l'instance principale\\n      2. Choisit un réplica Aurora principalement en fonction du niveau de priorité de basculement\\n      3. Utilise les caractéristiques de l'instance comme critères de départage lorsque les priorités correspondent\\n      4. Met à jour automatiquement le point de terminaison du cluster\\n\\n      Bonnes pratiques :\\n      - Maintenez plusieurs réplicas dans différentes zones de disponibilité\\n      - Configurez intentionnellement les niveaux de promotion\\n      - Utilisez le point de terminaison du cluster dans les applications\\n      - Testez régulièrement les scénarios de basculement\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 769,
+    "outputTokens": 931,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5037
+  },
+  "cost": {
+    "inputUsd": 0.00010766000000000002,
+    "outputUsd": 0.00026068,
+    "totalUsd": 0.00036834000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

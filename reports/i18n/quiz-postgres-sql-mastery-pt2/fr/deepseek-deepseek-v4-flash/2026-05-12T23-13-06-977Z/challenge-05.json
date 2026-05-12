@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Éligibilité au Hash Join",
+  "translation": {
+    "title": "Éligibilité au Hash Join",
+    "group": "Fonctionnement interne de SQL",
+    "options": [],
+    "questionProse": [
+      "Quelle condition `ON` PostgreSQL peut-elle utiliser pour un `HASH JOIN` ?"
+    ],
+    "explanationProse": [
+      "Un hash join est possible avec une condition d'égalité (`=`) dans la clause `ON`.\n\n    - `=` est la forme de prédicat clé pour les hash joins\n    - `>` et `>=` ne sont pas des prédicats de hash join\n    - `HASH JOIN` n'est pas une syntaxe valide dans PostgreSQL\n\n    Le planificateur peut toujours choisir un nested loop ou un merge join en fonction de la taille des tables, des statistiques, des index et des paramètres mémoire."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Éligibilité au Hash Join\",\n  \"group\": \"Fonctionnement interne de SQL\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quelle condition `ON` PostgreSQL peut-elle utiliser pour un `HASH JOIN` ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Un hash join est possible avec une condition d'égalité (`=`) dans la clause `ON`.\\n\\n    - `=` est la forme de prédicat clé pour les hash joins\\n    - `>` et `>=` ne sont pas des prédicats de hash join\\n    - `HASH JOIN` n'est pas une syntaxe valide dans PostgreSQL\\n\\n    Le planificateur peut toujours choisir un nested loop ou un merge join en fonction de la taille des tables, des statistiques, des index et des paramètres mémoire.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 687,
+    "outputTokens": 1151,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6151
+  },
+  "cost": {
+    "inputUsd": 0.00009618,
+    "outputUsd": 0.00032228,
+    "totalUsd": 0.00041846,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

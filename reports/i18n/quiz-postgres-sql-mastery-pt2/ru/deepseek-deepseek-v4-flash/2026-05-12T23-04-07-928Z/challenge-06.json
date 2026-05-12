@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Порядок столбцов в составном индексе",
+  "translation": {
+    "title": "Порядок столбцов в составном индексе",
+    "group": "Индексация",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "Какой индекс лучше подходит для этого запроса?"
+    ],
+    "explanationProse": [
+      "Для меня удивительным здесь является то, что составной индекс может быть использован, даже если порядок столбцов в тексте запроса не совпадает с определением индекса.\n\n    **Примечание:** В B-деревьях ведущий столбец имеет значение. Поскольку этот запрос фильтрует по `grade_level` и `last_name`, индекс, начинающийся с `grade_level`, а затем `last_name`, подходит хорошо.\n\n    Чем быстрее SQL может выбрать наименьшее количество строк, тем лучше производительность.\n\n    Например, если у вас есть таблица `task`, и вы знаете, что `status` более селективен, чем `created_at`, вы можете выбрать индекс, начинающийся с `status`, для запроса вроде `status = 'done' AND created_at > '2024-01-01'`. Порядок условий в тексте `WHERE` не имеет значения; важны порядок столбцов индекса и формы предикатов.\n\n    B+дерево может использоваться для:\n    - Ведущего столбца или самого левого префикса столбцов.\n    - Операторов, таких как `=`, `>`, `<`, `BETWEEN` и `IN`, в зависимости от формы запроса.\n    - Префиксного поиска, `LIKE 'prefix%'`.\n\n    Спасибо [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) за указание на предыдущую ошибку в этом объяснении!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Порядок столбцов в составном индексе\",\n  \"group\": \"Индексация\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"Какой индекс лучше подходит для этого запроса?\"\n  ],\n  \"explanationProse\": [\n    \"Для меня удивительным здесь является то, что составной индекс может быть использован, даже если порядок столбцов в тексте запроса не совпадает с определением индекса.\\n\\n    **Примечание:** В B-деревьях ведущий столбец имеет значение. Поскольку этот запрос фильтрует по `grade_level` и `last_name`, индекс, начинающийся с `grade_level`, а затем `last_name`, подходит хорошо.\\n\\n    Чем быстрее SQL может выбрать наименьшее количество строк, тем лучше производительность.\\n\\n    Например, если у вас есть таблица `task`, и вы знаете, что `status` более селективен, чем `created_at`, вы можете выбрать индекс, начинающийся с `status`, для запроса вроде `status = 'done' AND created_at > '2024-01-01'`. Порядок условий в тексте `WHERE` не имеет значения; важны порядок столбцов индекса и формы предикатов.\\n\\n    B+дерево может использоваться для:\\n    - Ведущего столбца или самого левого префикса столбцов.\\n    - Операторов, таких как `=`, `>`, `<`, `BETWEEN` и `IN`, в зависимости от формы запроса.\\n    - Префиксного поиска, `LIKE 'prefix%'`.\\n\\n    Спасибо [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) за указание на предыдущую ошибку в этом объяснении!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1032,
+    "outputTokens": 1937,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16723
+  },
+  "cost": {
+    "inputUsd": 0.00014448,
+    "outputUsd": 0.00054236,
+    "totalUsd": 0.00068684,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

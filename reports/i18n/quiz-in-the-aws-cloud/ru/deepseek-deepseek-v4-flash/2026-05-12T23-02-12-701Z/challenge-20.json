@@ -1,0 +1,44 @@
+{
+  "index": 19,
+  "attempt": 1,
+  "originalTitle": "Large File Transfer",
+  "translatedTitle": "Передача больших файлов",
+  "translation": {
+    "title": "Передача больших файлов",
+    "group": "Передача в S3",
+    "options": [
+      {
+        "text": "Всегда использовать один PUT-запрос"
+      },
+      {
+        "text": "Использовать Multipart Upload для больших файлов"
+      },
+      {
+        "text": "Сжимать перед загрузкой"
+      },
+      {
+        "text": "Разделять вручную перед загрузкой"
+      }
+    ],
+    "questionProse": [
+      "Лучший метод загрузки больших файлов в S3?"
+    ],
+    "explanationProse": [
+      "Преимущества Multipart Upload:\n  - Эффективная обработка больших файлов\n  - Возобновление прерванных загрузок\n  - Параллельная загрузка частей файла\n  - Рекомендуется для файлов > 100 МБ\n  - Повышенная надежность сети\n\n  [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Передача больших файлов\",\n  \"group\": \"Передача в S3\",\n  \"options\": [\n    {\n      \"text\": \"Всегда использовать один PUT-запрос\"\n    },\n    {\n      \"text\": \"Использовать Multipart Upload для больших файлов\"\n    },\n    {\n      \"text\": \"Сжимать перед загрузкой\"\n    },\n    {\n      \"text\": \"Разделять вручную перед загрузкой\"\n    }\n  ],\n  \"questionProse\": [\n    \"Лучший метод загрузки больших файлов в S3?\"\n  ],\n  \"explanationProse\": [\n    \"Преимущества Multipart Upload:\\n  - Эффективная обработка больших файлов\\n  - Возобновление прерванных загрузок\\n  - Параллельная загрузка частей файла\\n  - Рекомендуется для файлов > 100 МБ\\n  - Повышенная надежность сети\\n\\n  [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 724,
+    "outputTokens": 1418,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 71746
+  },
+  "cost": {
+    "inputUsd": 0.00010136000000000002,
+    "outputUsd": 0.00039704000000000003,
+    "totalUsd": 0.0004984000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

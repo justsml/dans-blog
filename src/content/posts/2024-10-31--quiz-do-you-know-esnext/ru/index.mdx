@@ -1,0 +1,355 @@
+---
+title: 'Тест: знаете ли вы современный JavaScript?'
+subTitle: Докажите свое JavaScript-мастерство!
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### Отличаете ли вы ES2015 от ES2022?
+
+* **Докажите свои JavaScript-скиллы!** 🚀
+* Не требуется регистрация или вход. ✨
+* Множественный выбор. 🤖 ... _Ну что может быть проще, а?_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Null Coalescing"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каково значение `result`?
+    ```js
+        console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Оператор нулевого слияния (`??`) возвращает правый операнд (`b`), если левый (`a`) равен `null` или `undefined`. В данном случае `a` равно `null`, поэтому `result` равен `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="Нулевое слияние"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что будет выведено в результате выполнения следующего кода?
+    ```js
+        const value = false;
+        const defaultVal = 42;
+        console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Оператор нулевого слияния (`??`) рассматривает ложные значения, такие как `false`, как допустимые значения. Поскольку `value` равно `false`, оно считается допустимым значением и возвращается.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Опциональная цепочка"
+  title="Опциональная цепочка"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Ошибка: невозможно прочитать свойство undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет следующий код?
+    ```js
+        const obj = { foo: null };
+        const result = obj.foo?.bar;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Оператор опциональной цепочки (`?.`) прекращает вычисление, если левая часть равна `null` или `undefined`. Поскольку `obj.foo` равно `null`, выражение `obj.foo?.bar` вычисляется в `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="Использование BigInt"
+  options={[
+    {text: 'TypeError: Нельзя смешивать BigInt и число'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каков результат выполнения следующего кода?
+    ```js
+        const a = 42n;
+        const result = a * 2n;
+        console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Значения BigInt создаются добавлением `n` к числу. Нельзя смешивать BigInt с обычными числами в арифметических операциях. Здесь оба значения являются BigInt, поэтому умножение работает, и результатом будет `84n`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Динамический импорт"
+  title="Синтаксис динамического импорта"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```js
+        const modulePromise = import('./myModule.js');
+        console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `import()` возвращает `Promise`, который разрешается в объект модуля. Поскольку экземпляры `Promise` являются объектами, `typeof modulePromise` выводит `'object'`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'fulfilled: success', isAnswer: true},
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет результат следующего кода?
+    ```js
+        const promises = [
+          Promise.resolve('success'),
+          Promise.reject('error')
+        ];
+        Promise.allSettled(promises).then(results => {
+          console.log(results[0].status + ': ' + results[0].value);
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` возвращает массив объектов, описывающих результат каждого промиса. Первый промис выполнен (`fulfilled`) со значением `'success'`, поэтому оператор `log` выведет `fulfilled: success`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="Использование String.matchAll"
+  options={[
+    {text: 'Массив совпадений'},
+    {text: 'Итератор совпадений', isAnswer: true},
+    {text: 'Ошибка: недопустимый вызов'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что возвращает `str.matchAll()`?
+    ```js
+        const str = 'foo1bar2baz3';
+        const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` возвращает итератор совпадений, а не массив. Этот итератор можно использовать для получения всех групп совпадений из строки.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Import Meta"
+  title="Использование import.meta"
+  options={[
+    {text: 'URL текущего модуля', isAnswer: true},
+    {text: 'Текущая временная метка'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что представляет собой `import.meta.url`?
+    ```js
+        console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` — это объект, содержащий метаданные о текущем модуле. Свойство `import.meta.url` представляет URL текущего модуля, который можно использовать для получения информации о том, где выполняется скрипт.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Логическое присваивание"
+  title="Логическое присваивание"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какое значение будет у `a` после логического присваивания?
+    ```js
+        let a = null;
+        a ||= 10;
+        console.log(a);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Логическое присваивание OR (`||=`) присваивает значение справа, если значение слева ложно (`null`, `undefined`, `0`, `false` и т.д.). Поскольку `a` равно `null`, ему присваивается значение `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Логическое присваивание с нулевым значением"
+  title="Логическое присваивание с нулевым значением"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каково значение `b` после присваивания с нулевым значением?
+    ```js
+        let b = null;
+        b ??= 10;
+        console.log(b);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Присваивание с нулевым слиянием (`??=`) присваивает значение справа, если значение слева равно `null` или `undefined`. Поскольку `b` равно `null`, ему присваивается значение `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="Использование WeakRef"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что предоставляет `WeakRef`?
+    ```js
+        const obj = { data: 'important' };
+        const ref = new WeakRef(obj);
+        console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` предоставляет слабую ссылку на объект, что позволяет объекту быть собранным сборщиком мусора, если не существует других ссылок. Поскольку `obj` всё ещё имеет сильную ссылку, `deref()` возвращает исходный объект. Если бы цель была удалена, `deref()` вернул бы `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

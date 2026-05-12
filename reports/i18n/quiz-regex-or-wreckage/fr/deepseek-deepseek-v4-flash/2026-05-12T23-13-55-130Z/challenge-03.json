@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Glouton vs Non-Glouton",
+  "translation": {
+    "title": "Glouton vs Non-Glouton",
+    "group": "Correspondance de base",
+    "options": [],
+    "questionProse": [
+      "Que va-t-il correspondre ?"
+    ],
+    "explanationProse": [
+      "Le motif `/<div>.*?<\\/div>/g` utilise la correspondance non gloutonne avec `*?`, ce qui signifie :\n    - Correspondre à `<div>`\n    - Correspondre à n'importe quel caractère (`.*`) mais le moins possible (`?`)\n    - Jusqu'à trouver `</div>`\n    - Le drapeau `g` permet de trouver toutes les occurrences\n\n    Sans le `?`, le `.*` glouton correspondrait à tout depuis le premier `<div>` jusqu'au dernier `</div>`, donnant une seule grande correspondance. Avec `?`, il correspond à chaque paire séparément.\n\n    [En savoir plus sur la correspondance gloutonne vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Glouton vs Non-Glouton\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Que va-t-il correspondre ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif `/<div>.*?<\\\\/div>/g` utilise la correspondance non gloutonne avec `*?`, ce qui signifie :\\n    - Correspondre à `<div>`\\n    - Correspondre à n'importe quel caractère (`.*`) mais le moins possible (`?`)\\n    - Jusqu'à trouver `</div>`\\n    - Le drapeau `g` permet de trouver toutes les occurrences\\n\\n    Sans le `?`, le `.*` glouton correspondrait à tout depuis le premier `<div>` jusqu'au dernier `</div>`, donnant une seule grande correspondance. Avec `?`, il correspond à chaque paire séparément.\\n\\n    [En savoir plus sur la correspondance gloutonne vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 757,
+    "outputTokens": 2207,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11537
+  },
+  "cost": {
+    "inputUsd": 0.00010598000000000001,
+    "outputUsd": 0.0006179600000000001,
+    "totalUsd": 0.0007239400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

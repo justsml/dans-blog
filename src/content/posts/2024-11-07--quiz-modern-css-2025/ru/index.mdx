@@ -1,0 +1,408 @@
+---
+unlisted: false
+title: 'Тест: Знаете ли вы современный CSS? (на 2025 год)'
+subTitle: Ты достаточно фронтенд?
+label: Advanced CSS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Тест: Знаете ли вы CSS?
+
+* Современный CSS?  🤔
+* **Есть ли место CSS в _вашем_ резюме???** 🚀
+* Множественный выбор. 🤖 ... _Ну насколько это может быть сложно, а?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка"
+  title="Использование CSS-переменных"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как правильно использовать CSS-переменную `--main-color`, чтобы задать цвет фона элемента?
+    ```css
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    CSS-переменные используются с функцией `var`, поэтому правильный ответ — `background-color: var(--main-color);`. Этот синтаксис извлекает значение `--main-color` и применяет его.
+
+    Другие варианты могут быть знакомы из других языков или синтаксисов препроцессоров, таких как Sass или Less.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="CSS-функции"
+  title="Функция CSS min()"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Неверный синтаксис'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Если ширина родительского контейнера равна 400px, какой будет вычисленная ширина следующего элемента?
+    ```css
+        div {
+          width: min(250px, 50%);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `min()` выберет наименьшее значение между 250px и 50% от ширины родителя.
+
+    Чтобы понять вычисленное значение, нужно перевести относительные единицы в пиксели:
+
+    - `50%` от `400px` равно `200px`
+    - `250px` уже в пикселях
+    ```css
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
+    ```
+    Функция `min()` особенно полезна для адаптивного дизайна, где можно гарантировать, что компонент (или размер шрифта) не превысит определённый предел.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="CSS-функции"
+  title="Функция CSS max()"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'Неверный синтаксис'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Если контейнер имеет ширину 200px, какой будет вычисленная ширина `<div>`?
+    ```css
+        div {
+          width: max(50px, 10%, 6rem);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `max()` принимает 2 или более аргументов и автоматически использует наибольшее значение. Предполагая, что размер корневого шрифта равен стандартному для браузера `16px`, ширина получается `96px`.
+
+    Чтобы понять вычисленное значение, нужно перевести относительные единицы в пиксели:
+
+    - `50px` уже в пикселях
+    - `10%` от `200px` это `20px`
+    - `6rem` это `6 * 16px` (стандартный размер шрифта), что равно `96px`
+    ```css
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Функции CSS Grid"
+  title="Функция CSS minmax()"
+  options={[
+    {text: 'Все ширины столбцов от 100px до 200px'},
+    {text: 'Установить столбцы 100px, строки 200px'},
+    {text: 'Первый столбец будет от 100px до 200px', isAnswer: true},
+    {text: 'Применять диапазон рекурсивно, включая подсетки'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каков эффект использования `minmax(100px, 200px)` для трека CSS Grid?
+    ```css
+        grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Использование `minmax(100px, 200px)` позволяет треку сетки изменять размер между `100px` и `200px`, адаптируясь к доступному пространству, но никогда не становясь меньше `100px` или больше `200px`.
+
+    Вы можете создавать самонастраивающиеся макеты, где контейнер и дочерние элементы играют роль в вычислении макетов. Это мощно в сочетании с `repeat()` и `auto-fill` или `auto-fit`, которые создадут столько треков, сколько возможно в заданных пределах.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="CSS-переменные"
+  title="Резервные значения CSS-переменных"
+  options={[
+    {text: 'синий'},
+    {text: 'красный'},
+    {text: 'системный по умолчанию'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой цвет фона будет у следующего CSS?
+    ```css
+        div {
+          background: var(--primary, olivedrab);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `var()` позволяет задать резервное значение, если переменная не определена. В данном случае фон будет `olivedrab` (`#6b8e23`), потому что `--primary` не определена.
+
+    Это отличный способ гарантировать, что ваши стили не сломаются, если переменная отсутствует или не поддерживается.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CSS-функции"
+  title="Использование clamp() для адаптивного дизайна"
+  options={[
+    {text: 'Запасной вариант для возможно неподдерживаемых единиц'},
+    {text: 'Гарантировать, что единицы `vw` находятся в диапазоне от 20px до 50px'},
+    {text: 'Линейное масштабирование между 200px и 500px', isAnswer: true},
+    {text: 'Логарифмическое масштабирование по основанию 2 между 200px и 500px'},
+    {text: 'Провал! Нет поддержки IE 11'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает `clamp()`?
+    ```css
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `clamp()` позволяет ширине масштабироваться на основе `50vw`, но удерживает её в диапазоне от 200px до 500px.
+
+    Это означает, что ширина будет равна 200px, когда 50vw меньше 200px, 500px, когда 50vw больше 500px, и линейна между этими пределами.
+
+    Это позволяет быть автоматически адаптивным! Важно знать, что `clamp` сочетает **фиксированные единицы** с **адаптивными или вычисляемыми единицами.**
+
+    Обычно вы не захотите использовать единицы области просмотра для размеров шрифта, но с помощью `clamp()` мы можем гарантировать, что размер шрифта не станет слишком маленьким или слишком большим.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Вложенность CSS"
+  title="Нативная вложенность CSS"
+  options={[
+    {text: 'Только с SCSS'},
+    {text: 'Технически с PostCSS'},
+    {text: 'Да', isAnswer: true},
+    {text: 'Нет'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Поддерживает ли CSS вложенность нативно?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Да! Наконец-то у нас есть нативная вложенность CSS! CSS представил синтаксис нативной вложенности в последние годы (2023), позволяющий иерархическое стилизование непосредственно в CSS.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Вложенность CSS"
+  title="Вложенность CSS"
+  options={[
+    {text: 'Имя файла должно заканчиваться на .scss'},
+    {text: '`.title` должен предшествовать свойствам, таким как `color`'},
+    {text: 'Только с PostCSS'},
+    {text: 'Идеально. Без замечаний.', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Является ли это правильным использованием нативной вложенности CSS?
+    ```css
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Класс `.title` вложен в класс `.container`, и свойства применяются как ожидается.
+
+    Это отличный способ держать связанные стили вместе и избегать длинных селекторов.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="CSS Вложенность"
+  title="Прямой селектор дочерних элементов с вложенностью"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'Неверный синтаксис'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой цвет фона будет применён к прямым дочерним `div` элементам `.container`?
+    ```css
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Селектор `>` во вложенном правиле применяет `background-color: white` только к прямым дочерним элементам `div` внутри `.container`.
+
+    Последнее правило, `background-color: blue !important;`, — это небольшое отвлечение. Оно **находится за пределами вложенного правила** и будет применено ко всем элементам `.container`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="CSS-переменные"
+  title="Изменение CSS-переменной во время выполнения"
+  options={[
+    {text: 'CSS-переменные неизменяемы'},
+    {text: 'С помощью JavaScript', isAnswer: true},
+    {text: 'Только с SCSS'},
+    {text: 'Только с инлайн-стилями'},
+    {text: 'С помощью адаптивных единиц'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как изменить значение CSS-переменной во время выполнения?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    CSS-переменные можно задавать с помощью классов и JavaScript. Их можно определить даже «после» того, как они технически использованы.
+    ```js
+    document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    Это изменит значение `--main-color` на `blue` для всего документа.
+
+    CSS-переменные изменяемы, и их можно менять во время выполнения с помощью JavaScript.
+
+    Их также можно менять, добавляя или удаляя классы — это распространённый паттерн для тем.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="CSS-переменные"
+  title="Использование calc() с CSS-переменными"
+  options={[
+    {text: 'Ширина: 50px'},
+    {text: 'Ширина: 100px'},
+    {text: 'Ширина: 110px', isAnswer: true},
+    {text: 'Ширина: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой будет вычисленная ширина элемента?
+    ```css
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `calc()` объединяет значение `--base-width` (100px) с дополнительными 10px, в результате чего ширина составляет 110px.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

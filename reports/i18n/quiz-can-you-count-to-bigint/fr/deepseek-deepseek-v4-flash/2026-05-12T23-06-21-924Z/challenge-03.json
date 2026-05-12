@@ -1,0 +1,42 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "Précision avec les nombres à virgule flottante",
+  "translation": {
+    "title": "Précision avec les nombres à virgule flottante",
+    "group": "Maths",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "En raison des erreurs de précision des nombres à virgule flottante, `0.1 + 0.2` n'est pas exactement égal à `0.3`. À cause de la façon dont les nombres à virgule flottante sont stockés en mémoire, le résultat est `0.30000000000000004`. La norme IEEE 754 pour la gestion de l'arithmétique à virgule flottante est en cause : elle ne peut pas représenter certains nombres exactement. C'est un problème courant dans tous les langages de programmation. Vous finirez par rencontrer une décimale infinie, et quel que soit le langage, l'ordinateur doit simplement arrêter de poursuivre des chiffres infiniment répétés.\n\n  Certains langages comme Python et Java ont `Decimal` ou `BigDecimal` pour gérer cela, mais ce n'est pas intégré à JavaScript. Vous pouvez utiliser des bibliothèques comme `big.js` ou `decimal.js` pour traiter ces cas.\n\n  (Remarque : certains langages sont conçus pour gérer les fractions, les nombres imaginaires, etc. à un niveau logique supérieur, en préservant les expressions littérales. Mais ils doivent toujours faire face aux mêmes problèmes de précision des nombres à virgule flottante au niveau matériel.)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Précision avec les nombres à virgule flottante\",\n  \"group\": \"Maths\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"tsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"En raison des erreurs de précision des nombres à virgule flottante, `0.1 + 0.2` n'est pas exactement égal à `0.3`. À cause de la façon dont les nombres à virgule flottante sont stockés en mémoire, le résultat est `0.30000000000000004`. La norme IEEE 754 pour la gestion de l'arithmétique à virgule flottante est en cause : elle ne peut pas représenter certains nombres exactement. C'est un problème courant dans tous les langages de programmation. Vous finirez par rencontrer une décimale infinie, et quel que soit le langage, l'ordinateur doit simplement arrêter de poursuivre des chiffres infiniment répétés.\\n\\n  Certains langages comme Python et Java ont `Decimal` ou `BigDecimal` pour gérer cela, mais ce n'est pas intégré à JavaScript. Vous pouvez utiliser des bibliothèques comme `big.js` ou `decimal.js` pour traiter ces cas.\\n\\n  (Remarque : certains langages sont conçus pour gérer les fractions, les nombres imaginaires, etc. à un niveau logique supérieur, en préservant les expressions littérales. Mais ils doivent toujours faire face aux mêmes problèmes de précision des nombres à virgule flottante au niveau matériel.)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 1550,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14443
+  },
+  "cost": {
+    "inputUsd": 0.00011774000000000001,
+    "outputUsd": 0.00043400000000000003,
+    "totalUsd": 0.00055174,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,454 @@
+---
+unlisted: false
+title: 'Тест: Знаете ли вы основы CSS? (2025)'
+subTitle: Ты достаточно фронтенд?
+label: CSS Fundamentals
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Тест: Знаете ли вы CSS?
+
+* Современный CSS?  🤔
+* **Есть ли CSS в _вашем_ резюме???** 🚀
+* Множественный выбор. 🤖 ... _Насколько это может быть сложно, а?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка: Шрифты"
+  title="Недопустимая единица CSS для размера шрифта"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Выберите <em class="highlight">ОДИН НЕДОПУСТИМЫЙ</em> ❌ `font-size`:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `10cx` неверен, так как `cx` не является реальной единицей CSS. (По крайней мере, на момент написания.)
+
+    Популярные единицы включают знакомые `px`, `rem`, `em`.
+
+    Более новые единицы полезны для динамических, адаптивных макетов.
+
+    - `ch` — ширина символа `0`
+    - `vmin` — минимум области просмотра
+    - `vmax` — максимум области просмотра
+    - `vh` — высота области просмотра
+    - `vw` — ширина области просмотра
+
+    Также есть несколько единиц, которые существовали всегда, но редко используются, например, `cm` (сантиметры), `mm`, `in` (дюймы), `pt` (пункты)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка: Цвета"
+  title="Hex-коды"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Можете ли вы найти <em class="highlight">ОДИН</em> правильный 👍 hex-код?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Hex-коды используются для представления цветов в CSS. Они начинаются с символа `#` и должны содержать 3, 4, 6 или 8 шестнадцатеричных цифр.
+
+    3-символьный hex-код является сокращением для 6-символьного, где каждый символ повторяется. 4-символьный код включает альфа-канал для прозрачности.
+
+    Например, `#ABC` эквивалентно `#AABBCC`, а `#ABCD` эквивалентно `#AABBCCDD`. Чтобы узнать больше о работе с hex-значениями, посмотрите мою [викторину по числам JavaScript.](/quiz-can-you-count-to-bigint/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Разминка: Единицы измерения"
+  title="Ой, все единицы!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая из этих единиц <em class="highlight">НЕ</em> является допустимой ❌ CSS-единицей?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Новые единицы, такие как `ch`, `vmin`, `vmax`, `vh`, `vw`, весьма полезны для динамических/адаптивных макетов.
+
+    Также существует несколько единиц, которые всегда были доступны, но редко используются, например `cm` для сантиметров, `mm`, `in` для дюймов, `pt` для пунктов, `pc`, `cap` для размера заглавных букв и `ex`, равный высоте буквы `x`.
+
+    Популярные единицы включают знакомые `px` для пикселей, `em` относительно размера шрифта элемента, а `rem` — это тайная дань уважения забытой группе 90-х R.E.M. (ладно, не совсем, это просто относительная единица `em`, которая ссылается на корневой элемент).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Селекторы: Основы"
+  title="Сопоставление селекторов с HTML-элементами"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой селектор лучше всего соответствует следующему HTML?
+    ```html
+          <a id="home" name="home" href="/home">Home</a>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Правильный ответ — `a#home[name='home']`, который соответствует как атрибуту `id`, так и атрибуту `name`. Селекторы CSS чувствительны к регистру, поэтому `#Home` не сработает, а пробелы подразумевают дочерние элементы, что здесь не применимо.
+
+    Селектор `:contains()` не является стандартным селектором CSS, но доступен в некоторых JS-библиотеках.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Селектор: Основы"
+  title="Селектор атрибута для кнопки"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой селектор соответствует следующей HTML-кнопке?
+    ```html
+          <button onclick="openModal()">Contact</button>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Правильный ответ — `button[onclick]`, который нацелен на наличие атрибута `onclick`.
+
+    Обратите внимание, что `:link` нацелен только на непосещённые ссылки с `href`, `::click` — это невалидный псевдоэлемент, а `:focus` нацелен только на элемент в фокусе.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Селектор: Основы"
+  title="Недействительный CSS-селектор"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих селекторов является недействительным?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Селектор `c > > d {}` недействителен, потому что комбинатор дочерних элементов повторяется без селектора между двумя символами `>`.
+
+    Остальные селекторы действительны. Селектор типа, такой как `c {}`, синтаксически корректен в CSS, даже если `c` не является стандартным HTML-элементом.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Селекторы: Основы"
+  title="Выбор последней ссылки"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой селектор соответствует последней ссылке в следующем HTML?
+    ```html
+          <nav>
+            <a name="home" href="/home">Home</a>
+            <a name="login" href="/login">Login</a>
+            <a name="help" href="/help">Help</a>
+          </nav>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Правильный селектор — `a:last-child`, который выбирает последний `<a>`, когда он также является последним дочерним элементом своего родителя. `nav:nth-child(3)` выбрал бы элемент `<nav>`, который является третьим дочерним элементом своего собственного родителя.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Селектор: Специфичность"
+  title="Приоритет селекторов"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой селектор будет иметь приоритет?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Селектор `a#quote` имеет приоритет из-за ID, который обладает более высокой специфичностью, чем селекторы на основе тегов или классов.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Макеты: Выравнивание по центру"
+  title="Выравнивание текста по центру в блочном элементе"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как выровнять «текст» по центру в блоке?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Использование `text-align: center;` — правильный способ выровнять текст по центру в блочном элементе. Свойства `align` используются для flexbox-раскладки, а `margin: 0 auto;` — для горизонтального выравнивания блочных элементов.
+
+    Свойство `align-content` используется для grid-раскладки, а `text-content` не является допустимым CSS-свойством.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Макеты: Центрирование"
+  title="Вертикальное центрирование блочного элемента"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как выровнять содержимое по вертикали внутри блочного контейнера в современном потоковом макете?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Использование `align-content` — это современный способ вертикального центрирования содержимого блочного контейнера в потоковом макете.
+
+    Свойства `align-items` и `justify-content` используются для flexbox и grid макетов, но не для потокового.
+
+    Оба варианта `margin: 0 auto;` и `margin: auto;` центрируют блочный элемент по горизонтали, но не по вертикали.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Макеты: Единицы измерения"
+  title="Расчет пиксельного размера вложенных размеров шрифта"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каков пиксельный размер текста ссылки `<a>` в следующем HTML?
+    ```html
+          <body style="font-size: 40px !important;">
+            <nav style="font-size: 50%;">
+              <a style="font-size: 25%;">HOME</a>
+            </nav>
+          </body>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `font-size` для `<a>` вычисляется как 5px: 40px (body) * 50% (nav) = 20px, затем 20px * 25% = 5px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Единицы: REM"
+  title="Вычисление размера в пикселях с помощью REM"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каким будет размер в пикселях для `1.2rem` ссылки "HOME" в следующем HTML?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2rem;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2rem` преобразуется в 12px, потому что единицы `rem` ссылаются на корневой размер шрифта (`<html>`), установленный здесь в 10px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Единицы: EM"
+  title="Расчет размера в пикселях с помощью EM"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как и в предыдущем вопросе, каким будет размер в пикселях для `1.2em` ссылки "HOME" в следующем HTML?
+    ```html
+          <html style="font-size: 10px;">
+            <body style="font-size: 20px;">
+              <a style="font-size: 1.2em;">HOME</a>
+            </body>
+          </html>
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `1.2em` преобразуется в 24px, потому что единицы `em` ссылаются на унаследованный размер шрифта, который здесь установлен в 20px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Селектор: Специфичность"
+  title="Селекторы с нулевой специфичностью"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой селектор имеет самую низкую специфичность?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `:where(.card) .title` имеет самую низкую специфичность. Псевдокласс `:where()` и всё, что внутри него, даёт вклад `0-0-0`, поэтому учитывается только `.title`. `:is(.card) .title` сохраняет специфичность `.card`, `.card .title` имеет два класса, а `#card .title` включает ID.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

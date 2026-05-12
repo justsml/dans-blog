@@ -1,0 +1,50 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "Конструктор Date, часть 4",
+  "translation": {
+    "title": "Конструктор Date, часть 4",
+    "group": "Работа с датами",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: Недопустимый аргумент."
+      }
+    ],
+    "questionProse": [
+      "Что будет в выводе?"
+    ],
+    "explanationProse": [
+      "Экземпляр Date, созданный с одним целочисленным аргументом, интерпретируется как значение Unix `Epoch`. `Epoch` — это количество миллисекунд с 1 января 1970 года.\n\nЗначение `2020` (миллисекунд) соответствует 2 секундам после 1 января 1970 года.\n\nЗатем, поскольку наш часовой пояс имеет отрицательное смещение -7 часов, мы получаем `Wed Dec 31 1969 17:00:02 GMT-0700 (Горное стандартное время)`.\n\nВы можете обойти смещение локального часового пояса, используя [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Конструктор Date, часть 4\",\n  \"group\": \"Работа с датами\",\n  \"options\": [\n    {\n      \"text\": \"1969\"\n    },\n    {\n      \"text\": \"1970\"\n    },\n    {\n      \"text\": \"2019\"\n    },\n    {\n      \"text\": \"2020\"\n    },\n    {\n      \"text\": \"2021\"\n    },\n    {\n      \"text\": \"RangeError: Недопустимый аргумент.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что будет в выводе?\"\n  ],\n  \"explanationProse\": [\n    \"Экземпляр Date, созданный с одним целочисленным аргументом, интерпретируется как значение Unix `Epoch`. `Epoch` — это количество миллисекунд с 1 января 1970 года.\\n\\nЗначение `2020` (миллисекунд) соответствует 2 секундам после 1 января 1970 года.\\n\\nЗатем, поскольку наш часовой пояс имеет отрицательное смещение -7 часов, мы получаем `Wed Dec 31 1969 17:00:02 GMT-0700 (Горное стандартное время)`.\\n\\nВы можете обойти смещение локального часового пояса, используя [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 849,
+    "outputTokens": 783,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 28295
+  },
+  "cost": {
+    "inputUsd": 0.00011886000000000001,
+    "outputUsd": 0.00021924,
+    "totalUsd": 0.00033810000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,528 @@
+---
+title: 'Тест: Структуры данных и алгоритмы'
+subTitle: Можешь ли ты наболтать про бинарное дерево?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  Добро пожаловать в мой тест по структурам данных и алгоритмам!
+</section>
+
+Этот тест проверит ваши знания структур данных (стеки, списки, деревья и т.д.), алгоритмов и временной сложности.
+
+### 20 вопросов... Поехали!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Структуры данных"
+  title="Стеки против Очередей"
+  options={[
+    {text: 'Оба'},
+    {text: 'Очереди'},
+    {text: 'Стеки', isAnswer: true},
+    {text: 'Ни один'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая структура данных лучше всего подходит для шаблона доступа LIFO (последним пришёл — первым ушёл)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Стеки лучше всего подходят для шаблонов доступа LIFO. Очереди лучше всего подходят для шаблонов доступа FIFO (первым пришёл — первым ушёл).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Алгоритмы"
+  title="О-нотация"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова временная сложность алгоритма, который всегда выполняется за одно и то же время, независимо от размера входных данных?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) обозначает константную временную сложность. Это означает, что алгоритм всегда выполняется за одно и то же время, независимо от размера входных данных.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Структуры данных"
+  title="Вычисление длины связного списка"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова временная сложность вычисления длины односвязного списка?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Чтобы вычислить длину односвязного списка, необходимо пройти по каждому узлу от головы до хвоста, что даёт временную сложность O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Структуры данных"
+  title="Поиск в бинарном дереве поиска"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова средняя временная сложность поиска элемента в сбалансированном бинарном дереве поиска?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В сбалансированном BST средняя временная сложность поиска составляет O(log n), потому что каждый уровень позволяет уменьшить пространство поиска вдвое.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Алгоритмы сортировки"
+  title="Сложность сортировки слиянием"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова временная сложность алгоритма сортировки слиянием в худшем случае?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Сортировка слиянием всегда работает с худшей сложностью O(n log n), так как она многократно делит массив пополам и объединяет отсортированные подмассивы.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Графы"
+  title="DFS и BFS"
+  options={[
+    {text: 'Очередь', isAnswer: true},
+    {text: 'Стек'},
+    {text: 'Очередь с приоритетом'},
+    {text: 'Хеш-карта'},
+    {text: 'Множество'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая структура данных обычно используется для реализации поиска в ширину (BFS)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS использует очередь для обхода узлов уровень за уровнем, обрабатывая узлы в порядке ширины (по "рядам").
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Графы"
+  title="Обнаружение циклов в графах"
+  options={[
+    {text: 'Быстрая сортировка'},
+    {text: 'Поиск в ширину'},
+    {text: 'Сортировка слиянием'},
+    {text: 'Поиск в глубину', isAnswer: true},
+    {text: 'Сортировка пузырьком'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой алгоритм обычно используется для обнаружения циклов в ориентированном графе?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Поиск в глубину (DFS) обычно используется для обнаружения циклов в графе с помощью поддержки стека рекурсии для отслеживания посещённых узлов.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Алгоритмы сортировки"
+  title="Сложность пирамидальной сортировки"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова временная сложность пирамидальной сортировки в худшем случае?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Пирамидальная сортировка сохраняет временную сложность O(n log n) в худшем случае, так как она строит кучу и многократно извлекает максимальный элемент.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Структуры данных"
+  title="Временная сложность хеш-таблицы"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова средняя временная сложность доступа к элементу в хеш-таблице?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Хеш-таблицы имеют среднюю временную сложность O(1) для доступа к элементам, при условии хорошей хеш-функции, минимизирующей коллизии.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Структуры данных"
+  title="Операции со стеком"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой набор содержит типичные операции, выполняемые над стеком?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Основными операциями стека являются Push (добавление элемента), Pop (удаление элемента) и Peek (просмотр верхнего элемента без его удаления).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Алгоритмы на графах"
+  title="Алгоритм поиска кратчайшего пути"
+  options={[
+    {text: 'Алгоритм Крускала'},
+    {text: 'Алгоритм Прима'},
+    {text: 'Алгоритм Беллмана-Форда'},
+    {text: 'Алгоритм Дейкстры', isAnswer: true},
+    {text: 'Алгоритм Флойда-Уоршелла'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой алгоритм обычно используется для поиска кратчайшего пути во взвешенном графе с неотрицательными рёбрами?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Алгоритм Дейкстры часто используется для поиска кратчайшего пути в графах с неотрицательными весами рёбер. Он использует приоритетную очередь для эффективного определения кратчайшего расстояния.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Структуры данных: деревья"
+  title="Самобалансирующиеся деревья поиска"
+  options={[
+    {text: 'Бинарное дерево поиска и минимальная куча'},
+    {text: 'АВЛ-дерево и красно-черное дерево', isAnswer: true},
+    {text: 'Минимальная куча и максимальная куча'},
+    {text: 'Стек и очередь'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой набор содержит примеры самобалансирующихся бинарных деревьев поиска?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    АВЛ-деревья и красно-черные деревья — это типы самобалансирующихся деревьев, которые гарантируют, что дерево остается сбалансированным после каждой вставки или удаления.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Рекурсия"
+  title="Базовый случай рекурсии"
+  options={[
+    {text: 'Бесконечный цикл'},
+    {text: 'Переполнение стека'},
+    {text: 'Базовый случай', isAnswer: true},
+    {text: 'Глобальная переменная'},
+    {text: 'Ограничение области видимости'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что должно быть определено в рекурсивной функции, чтобы предотвратить бесконечную рекурсию?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Базовый случай необходим в рекурсивной функции, чтобы остановить рекурсивные вызовы при выполнении определенного условия, предотвращая бесконечную рекурсию.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Структуры данных"
+  title="Операции с очередью"
+  options={[
+    {text: 'Enqueue и Dequeue', isAnswer: true},
+    {text: 'Push и Pop'},
+    {text: 'Peek и Top'},
+    {text: 'Traverse и Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какие две основные операции выполняются с очередью?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Двумя основными операциями в очереди являются Enqueue (добавление элемента в конец) и Dequeue (удаление элемента из начала).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Алгоритмы на графах"
+  title="Топологическая сортировка"
+  options={[
+    {text: 'Граф должен содержать циклы'},
+    {text: 'Граф должен быть взвешенным и связным'},
+    {text: 'Граф должен быть неориентированным и ациклическим'},
+    {text: 'Граф должен быть ориентированным и ациклическим', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Каковы условия для выполнения топологической сортировки графа?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Топологическую сортировку можно выполнить на графе, если он ориентированный и ациклический (DAG). Такой порядок полезен в задачах планирования задач.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Динамическое программирование"
+  title="Сложность рекурсивного Фибоначчи"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова временная сложность наивной рекурсивной реализации ряда Фибоначчи?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Наивная рекурсивная реализация ряда Фибоначчи имеет временную сложность O(2^n) из-за большого количества повторных вычислений для каждого числа Фибоначчи.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="Структуры данных"
+  title="Реализация очереди с приоритетом"
+  options={[
+    {text: 'Массив'},
+    {text: 'Стек'},
+    {text: 'Куча', isAnswer: true},
+    {text: 'Очередь'},
+    {text: 'Связный список'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая структура данных обычно используется для реализации очереди с приоритетом?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Очередь с приоритетом чаще всего реализуется с помощью кучи, так как это позволяет эффективно извлекать элемент с наивысшим или наинизшим приоритетом.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="Структуры данных"
+  title="Обходы бинарного дерева"
+  options={[
+    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
+    {text: 'Breadth-First, Depth-First, Heapify'},
+    {text: 'Сортировка, Поиск, Поворот'},
+    {text: 'Push, Pop, Peek'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой набор перечисляет распространённые порядки обхода в глубину для бинарного дерева?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In-order, Pre-order и Post-order — это три распространённых порядка обхода в глубину для бинарных деревьев, каждый с различным порядком посещения узлов. Обход в ширину также распространён, но это другая категория обхода.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="Древовидные структуры данных"
+  title="Свойство кучи"
+  options={[
+    {text: 'Все узлы отсортированы слева направо'},
+    {text: 'Корень всегда является наибольшим элементом'},
+    {text: 'Все листья находятся на одном уровне'},
+    {text: 'Корень является наименьшим элементом, а высота равна O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какие из следующих свойств верны для min-кучи?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В min-куче корень всегда является наименьшим элементом, а высота дерева равна O(log n), что делает вставку и извлечение эффективными.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="Алгоритмы сортировки"
+  title="Стабильность пузырьковой сортировки"
+  options={[
+    {text: 'Нестабильный'},
+    {text: 'Стабильный', isAnswer: true},
+    {text: 'Зависит от реализации'},
+    {text: 'Ни то, ни другое'},
+    {text: 'Сложность определяет стабильность'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Является ли алгоритм пузырьковой сортировки стабильным?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Пузырьковая сортировка является стабильным алгоритмом сортировки, так как сохраняет относительный порядок равных элементов во время сортировки.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

@@ -1,0 +1,326 @@
+---
+unlisted: false
+title: 'Тест: Проверьте свои навыки SQL!'
+subTitle: Ты за SQL? Или за NoSQL?
+label: SQL 101
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Проверьте свои основы SQL-запросов
+
+Не делает ли вас использование ORM мягкотелыми — в плане навыков? Не волнуйтесь, это случается со многими разработчиками.
+
+Прыгайте прямо сейчас, чтобы подтвердить свои знания основ SQL-запросов! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Основы SQL"
+  title="Базовое условие WHERE"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = \', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из следующих SQL-запросов правильно извлекает строки, где имя равно "John"?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В SQL для проверки равенства в условии `WHERE` используется один знак равенства (`=`), а не `==` или `===`, которые являются операторами JavaScript.
+
+    Правильный синтаксис: `SELECT * FROM users WHERE name = 'John';`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Основы SQL"
+  title="Агрегатная функция COUNT"
+  options={[
+    {text: 'Подсчитывает все строки, включая NULL-значения'},
+    {text: 'Подсчитывает только не-NULL значения в столбце', isAnswer: true},
+    {text: 'Считает NULL-значения как одно уникальное значение'},
+    {text: 'Считает каждое NULL-значение уникальным, подобно NaN !== NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает `COUNT(column_name)` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `COUNT(column_name)` подсчитывает количество не-NULL значений в указанном столбце. Чтобы подсчитать все строки, включая NULL, используйте `COUNT(*)`.
+
+    Вы также можете использовать `COALESCE`, чтобы NULL по умолчанию принимали не-NULL значение. Например: `COUNT(COALESCE(column_name, 0))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="SQL-соединения"
+  title="Основы LEFT JOIN"
+  options={[
+    {text: 'Возвращает одну строку для каждой совпадающей строки, игнорирует несовпадающие строки'},
+    {text: 'Возвращает все строки из левой таблицы плюс совпадающие строки из правой', isAnswer: true},
+    {text: 'Возвращает все совпадающие и несовпадающие строки, где NULL указывает на отсутствие совпадения'},
+    {text: 'Возвращает все строки из правой таблицы с любыми совпадающими строками из левой'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает `LEFT JOIN` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `LEFT JOIN` возвращает все строки из левой таблицы и совпадающие строки из правой таблицы, а для несовпадающих строк в правой таблице подставляет NULL.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="SQL-соединения"
+  title="Использование INNER JOIN"
+  options={[
+    {text: 'Возвращает несовпадающие строки из обеих таблиц'},
+    {text: 'Возвращает все строки из обеих таблиц, с NULL для несовпадающих строк'},
+    {text: 'Возвращает строки, удовлетворяющие условию соединения в обеих таблицах', isAnswer: true},
+    {text: 'Возвращает несовпадающие строки из правой таблицы'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает `INNER JOIN` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `INNER JOIN` возвращает строки, где условие соединения совпадает со строками из обеих таблиц. Несовпадающие строки не включаются в результирующий набор.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="SQL подзапросы"
+  title="Коррелированный подзапрос"
+  options={[
+    {text: 'Подзапрос, который выполняется один раз в целом'},
+    {text: 'Подзапрос, используемый только в операторах JOIN'},
+    {text: 'Подзапрос, возвращающий только несколько столбцов'},
+    {text: 'Подзапрос, который выполняется один раз для каждой строки внешнего запроса', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что такое коррелированный подзапрос в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Коррелированный подзапрос вычисляется один раз для каждой строки внешнего запроса. Он ссылается на столбцы внешнего запроса, что делает его зависимым от каждой строки.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="SQL CTE (общие табличные выражения)"
+  title="Синтаксис предложения WITH"
+  options={[
+    {text: 'Разрешено только в операторах DELETE'},
+    {text: 'Используется для агрегатных функций'},
+    {text: 'Используется только для определения представлений'},
+    {text: 'Определение временного набора результатов для использования в более крупном SQL-запросе', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова цель предложения `WITH` (общее табличное выражение) в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Предложение `WITH`, или общее табличное выражение (CTE), используется для определения временного набора результатов, на который можно ссылаться в основном запросе. В PostgreSQL `WITH` может быть присоединено к таким операторам, как `SELECT`, `INSERT`, `UPDATE`, `DELETE` или `MERGE`.
+
+    Это помогает улучшить читаемость и поддерживаемость сложных запросов.
+
+    Синтаксис:
+    ```sql
+    WITH cte_name AS (
+      SELECT column_name
+      FROM table_name
+    )
+    SELECT *
+    FROM cte_name;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Основы SQL"
+  title="IS NULL и IS NOT NULL"
+  options={[
+    {text: 'Проверяет, является ли значение NULL', isAnswer: true},
+    {text: 'Проверяет, является ли значение пустым'},
+    {text: 'Проверяет, является ли значение строкой'},
+    {text: 'Проверяет, является ли значение числовым'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает оператор `IS NULL` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `IS NULL` проверяет, содержит ли указанный столбец значение NULL. `IS NOT NULL` проверяет противоположное.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Операторы SQL"
+  title="Использование оператора IN"
+  options={[
+    {text: 'Возвращает уникальные строки'},
+    {text: 'Требует индексированный столбец'},
+    {text: 'Применяется только к числовым столбцам'},
+    {text: 'Возвращает строки, соответствующие значениям из указанного списка', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает оператор `IN` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Оператор `IN` фильтрует строки, чтобы они соответствовали любому значению из указанного списка, часто как альтернатива нескольким условиям OR.
+
+    Хотя он *может* возвращать «уникальные строки» (и часто так и делает), это не обязательно его основная цель.
+
+    Индексирование здесь не требуется, хотя, безусловно, рекомендуется использовать `IN` для столбца с индексом, желательно `UNIQUE`, так как это может улучшить производительность.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Функции SQL"
+  title="Использование функции COALESCE"
+  options={[
+    {text: 'Подсчитывает значения NULL'},
+    {text: 'Возвращает последний не-NULL аргумент'},
+    {text: 'Возвращает первый не-NULL аргумент', isAnswer: true},
+    {text: 'Ограничено столбцами IDENTITY'},
+    {text: 'Изначально из Printer Coalation'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает функция `COALESCE` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `COALESCE` возвращает первое не-NULL значение из указанного списка, что полезно для подстановки значений по умолчанию при обнаружении NULL.
+
+    Например, `COALESCE(column_name, 0)` вернёт `0`, если `column_name` равно `NULL`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Агрегатные функции SQL"
+  title="Использование GROUP BY"
+  options={[
+    {text: 'Скрывает дубликаты'},
+    {text: 'Используется только в JOIN'},
+    {text: 'Сортирует строки по возрастанию'},
+    {text: 'Группирует строки по указанным столбцам', isAnswer: true},
+    {text: 'Синтаксис должен быть GROUP WITH/USING'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какова цель предложения `GROUP BY` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Предложение `GROUP BY` группирует строки с одинаковыми значениями в указанных столбцах, позволяя применять агрегатные функции к каждой группе.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Соединения SQL"
+  title="Основы FULL OUTER JOIN"
+  options={[
+    {text: 'Возвращает только совпадающие строки'},
+    {text: 'Возвращает только строки с не-NULL значениями'},
+    {text: 'Возвращает только несовпадающие строки из левой таблицы'},
+    {text: 'Возвращает только несовпадающие строки из правой таблицы'},
+    {text: 'Возвращает все строки из обеих таблиц, с NULL для несовпадающих строк', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что делает `FULL OUTER JOIN` в SQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `FULL OUTER JOIN` возвращает все строки из обеих таблиц, заполняя несовпадающие строки значениями NULL.
+
+    Это полезно для сравнения двух таблиц и поиска различий между ними.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Ловушка EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Ловушка EXPLAIN ANALYZE",
+    "group": "Производительность",
+    "options": [
+      {
+        "text": "Легкая оценка плана"
+      },
+      {
+        "text": "Работает только с SELECT"
+      },
+      {
+        "text": "Изменяет данные и выводит план"
+      },
+      {
+        "text": "Имитирует выполнение для получения плана"
+      }
+    ],
+    "questionProse": [
+      "Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\n\n    Лучшие практики:\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\n    - Оборачивайте изменения в транзакции:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ловушка EXPLAIN ANALYZE\",\n  \"group\": \"Производительность\",\n  \"options\": [\n    {\"text\": \"Легкая оценка плана\"},\n    {\"text\": \"Работает только с SELECT\"},\n    {\"text\": \"Изменяет данные и выводит план\"},\n    {\"text\": \"Имитирует выполнение для получения плана\"}\n  ],\n  \"questionProse\": [\n    \"Что делает `EXPLAIN ANALYZE` для операторов `UPDATE`?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` на самом деле выполняет запрос! Будьте осторожны при анализе операций записи, особенно операторов `UPDATE`, `DELETE` и `INSERT`. Возможно, вам придется выполнять операции очистки после каждого `EXPLAIN ANALYZE`, чтобы получить повторяемые результаты.\\n\\n    Лучшие практики:\\n    - Используйте `EXPLAIN` (без ANALYZE) для UPDATE/DELETE/INSERT\\n    - Оборачивайте изменения в транзакции:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 804,
+    "outputTokens": 1318,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7348
+  },
+  "cost": {
+    "inputUsd": 0.00011256000000000002,
+    "outputUsd": 0.00036904,
+    "totalUsd": 0.0004816,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Concatenare `.then` e `.catch`",
+  "translation": {
+    "title": "Concatenare `.then` e `.catch`",
+    "group": "Gestione degli errori",
+    "options": [
+      {
+        "text": "stampa l'errore e `undefined`"
+      },
+      {
+        "text": "stampa l'errore due volte"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Quale sarà l'output del seguente codice?"
+    ],
+    "explanationProse": [
+      "Quando si concatenano `.then` e `.catch`, è utile pensarli come una serie di passaggi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come suo argomento). Tuttavia, se il tuo \"passaggio\" incontra un errore, tutti i successivi `.then` verranno saltati fino a quando non si incontra un `.catch`. Se vuoi sovrascrivere un errore, tutto ciò che devi fare è restituire un valore non di errore. Può essere accessibile tramite qualsiasi `.then` successivo."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Concatenare `.then` e `.catch`\",\n  \"group\": \"Gestione degli errori\",\n  \"options\": [\n    {\n      \"text\": \"stampa l'errore e `undefined`\"\n    },\n    {\n      \"text\": \"stampa l'errore due volte\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale sarà l'output del seguente codice?\"\n  ],\n  \"explanationProse\": [\n    \"Quando si concatenano `.then` e `.catch`, è utile pensarli come una serie di passaggi. Ogni `.then` riceve il valore restituito dal `.then` precedente (come suo argomento). Tuttavia, se il tuo \\\"passaggio\\\" incontra un errore, tutti i successivi `.then` verranno saltati fino a quando non si incontra un `.catch`. Se vuoi sovrascrivere un errore, tutto ciò che devi fare è restituire un valore non di errore. Può essere accessibile tramite qualsiasi `.then` successivo.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 782,
+    "outputTokens": 1036,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6501
+  },
+  "cost": {
+    "inputUsd": 0.00010948000000000002,
+    "outputUsd": 0.00029008,
+    "totalUsd": 0.00039956000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

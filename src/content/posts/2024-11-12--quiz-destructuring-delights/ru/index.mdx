@@ -1,0 +1,559 @@
+---
+unlisted: false
+title: 'Викторина: Прелести деструктуризации'
+subTitle: Ты маэстро деструктуризации?
+label: Destructuring
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-11-12'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - intro
+  - javascript
+  - es2015
+  - destructuring
+  - beginner
+  - intermediate
+cover_full_width: ../boxes-of-nesting-dolls.webp
+cover_mobile: ../boxes-of-nesting-dolls-square.webp
+cover_icon: ../boxes-of-nesting-dolls-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+{/* Ты маэстро деструктуризации?<br/> */}
+<p class="inset">Или это твоя <em>Симфония разрушения?</em></p>
+
+Этот тест проверит твои знания деструктуризации в JavaScript: от «базового» синтаксиса объектов до вложенной деструктуризации и значений по умолчанию. Плюс бонусные вопросы по TypeScript и встроенным типам!
+
+Прыгай прямо в разминку — докажи свои навыки деструктуризации! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка: Объекты"
+  title="Базовая деструктуризация объекта"
+  options={[
+    {text: 'Имя: Dan Levy, Возраст: 20'},
+    {text: 'Имя: Dan Levy, Возраст: 40'},
+    {text: 'Имя: Dan Levy, Возраст: Infinity'},
+    {text: 'Имя: Dan Levy, Возраст: undefined', isAnswer: true},
+    {text: 'Ошибка: Невозможно прочитать свойство \'age\''},
+    {text: 'Имя: undefined, Возраст: 40'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что выведет этот код?
+    ```js
+        const person = {
+          name: 'Dan Levy',
+          location: 'Cape Town',
+        };
+        const { name, age } = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойство `age` не существует на `person`, поэтому `age` будет `undefined`. Точно не `Infinity` 😅
+
+    В результате получаем:
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка: Массивы"
+  title="Значение по умолчанию в деструктуризации объекта"
+  options={[
+    {text: 'Имя: Dan Levy, Возраст: NaN'},
+    {text: 'Имя: Dan Levy, Возраст: null'},
+    {text: 'Имя: Dan Levy, Возраст: undefined', isAnswer: true},
+    {text: 'Имя: Dan Levy, Возраст: 40'},
+    {text: 'Ошибка: Невозможно деструктурировать свойство \'age\''},
+    {text: 'SyntaxError: Неожиданный токен \',\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что сделает этот код?
+    ```js
+        const person = [ 'Dan Levy', 'Cape Town' ];
+        const [ name, origin, age ] = person;
+        console.log(`Name: ${name}, Age: ${age}`);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Переменная `age` отсутствует в массиве `tuple`, поэтому она будет `undefined`.
+
+    Это приводит к:
+    ```plaintext
+        Name: Dan Levy, Age: undefined
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Вложенная деструктуризация"
+  title="Вложенная деструктуризация"
+  options={[
+    {text: 'Имя: Dan, Город: Denver'},
+    {text: 'Имя: undefined, Город: Denver'},
+    {text: 'Ошибка: Невозможно прочитать свойство \'first\''},
+    {text: 'Имя: Dan, Город: undefined'},
+    {text: 'Ошибка', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как насчет вложенной деструктуризации?
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first },
+          address: { city },
+          birth: { place },
+        } = person;
+        console.log(
+          `First: ${first}, City: ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойство `birth: { place }` не существует на объекте `person`, поэтому будет выброшена ошибка.
+    Одно из решений — предоставить значения по умолчанию для вложенных свойств.
+
+    При доступе к вложенным свойствам будьте осторожны, так как ошибки может быть трудно заметить. И сообщения об ошибках различаются в разных браузерах и других платформах, что делает отладку немного сложнее.
+
+    В современном Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+    В Node это также `TypeError`, потому что JavaScript пытается деструктурировать `place` из `undefined` до того, как `place` будет прочитан.
+
+    Точная формулировка различается в зависимости от браузера и среды выполнения.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Значения по умолчанию"
+  title="Значения по умолчанию в деструктуризации объектов"
+  options={[
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Теперь, с некоторыми значениями по умолчанию, что произойдет?
+    ```js
+        'use strict';
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' },
+        } = person;
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойство `birth` не существует в объекте `person`, поэтому всему объекту все равно нужен дефолт, а не только вложенному свойству. По сути, не хватает дефолта ` = {}`.
+
+    То, как это написано, означает: "если `person.birth` равно `undefined`, то `place` равно `Unknown`". Но `person.birth` равно `undefined`, поэтому происходит попытка деструктуризации `undefined`, что приводит к ошибке.
+    ```plaintext
+      In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+      In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+
+      Exact wording varies between browsers and runtimes.
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="По умолчанию"
+  title="Значения по умолчанию в деструктуризации объектов"
+  options={[
+    {text: 'Привет, Дэн из Денвера'},
+    {text: 'Привет, Дэн из Йоханнесбурга'},
+    {text: 'Привет, Дэн из Неизвестности', isAnswer: true},
+    {text: 'Привет, Неизвестный из Неизвестности'},
+    {text: 'Привет, Неизвестный из Денвера'},
+    {text: 'Ошибка'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что это сделает?
+    ```js
+        const person = {
+          name: { first: 'Dan' },
+          address: { city: 'Denver' },
+        };
+        const {
+          name: { first = 'Unknown' },
+          birth: { place = 'Unknown' } = {},
+        } = person;
+
+        console.log(
+          `Hi ${first} from ${place}`,
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Свойство `birth` не существует на `person`, поэтому оно возвращается к пустому объекту ` = {}`. Это позволяет использовать значение по умолчанию.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Аргументы функции"
+  title="Деструктуризация параметров функции со значениями по умолчанию"
+  options={[
+    {text: 'Привет, Dan из undefined'},
+    {text: 'Привет, Dan из Unknown'},
+    {text: 'Привет, Dan из Denver'},
+    {text: 'Привет, Unknown из Unknown'},
+    {text: 'Привет, Unknown из Denver'},
+    {text: 'Ошибка', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Теперь, как параметры функции, что это сделает?
+    ```js
+        'use strict';
+        function displayUser({
+          name = "Unknown",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`Hi ${name} from ${place}`);
+        }
+        displayUser({ name: "Dan" });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Эта функция извлекает свойства `name` и `age`, используя значения по умолчанию при необходимости. В данном случае ключ `place` в объекте по умолчанию — просто шум, он не используется внутри `displayUser()`.
+
+    Строгий режим не меняет этого: чтение необъявленной привязки `place` вызывает `ReferenceError`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Аргументы функций"
+  title="Деструктуризация с вложенными значениями по умолчанию"
+  options={[
+    {text: 'Неизвестно, Неизвестно, Joburg'},
+    {text: 'Неизвестно, Неизвестно, Неизвестно'},
+    {text: 'Неизвестно, `undefined`, Joburg'},
+    {text: 'Н/Д, `undefined`, Joburg'},
+    {text: 'Н/Д, Неизвестно, Joburg'},
+    {text: 'Н/Д, Н/Д, Joburg', isAnswer: true},
+    {text: 'Неизвестно, Н/Д, Joburg'},
+    {text: 'Ошибка'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Как обрабатываются значения `undefined`?
+    ```js
+        'use strict';
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan" });
+        displayPlace({ name: "Dan", place: undefined });
+        displayPlace({ name: "Dan", place: "Joburg" });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Функция `displayPlace` будет использовать объект по умолчанию ТОЛЬКО если не передан ни один объект. Таким образом, единственный способ получить значение по умолчанию `{ place: "Unknown" }` — это вызвать функцию без аргументов `displayPlace()`.
+
+    Еще одно примечательное поведение: передача `undefined` для `place` приведет к использованию значения по умолчанию, что немного похоже на поведение `JSON.stringify` (игнорирование `undefined`, распознавание `null`).
+
+    В результате получаем:
+    ```js
+      displayPlace() // Unknown
+      displayPlace({ name: "Dan" }) // N/A
+      displayPlace({ name: "Dan", place: undefined }) // N/A
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Аргументы функций"
+  title="Деструктуризация с вложенными значениями по умолчанию"
+  options={[
+    {text: 'Н/Д, Н/Д'},
+    {text: 'Н/Д, undefined'},
+    {text: 'Неизвестно, Н/Д'},
+    {text: 'Неизвестно, Неизвестно'},
+    {text: 'Неизвестно, undefined'},
+    {text: 'null, Н/Д', isAnswer: true},
+    {text: 'null, Неизвестно'},
+    {text: 'null, undefined'},
+    {text: 'Ошибка'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Похоже на предыдущий... как обрабатывается `null`?
+    ```js
+        function displayPlace({
+          name = "N/A",
+          place = "N/A",
+          age = -1,
+        } = { place: "Unknown" }) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: "Dan", place: null });
+        displayPlace({ name: "Dan", place: undefined });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    В этом случае свойство `place` установлено в `null` в первом вызове и в `undefined` во втором. Значение по умолчанию для `place` используется только если весь объект отсутствует **или** равен `undefined`. Значения `null` передаются как `null`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Встроенные типы TypeScript"
+  title="Деструктуризация с вложенными значениями по умолчанию"
+  options={[
+    {text: 'Н/Д'},
+    {text: 'undefined'},
+    {text: 'Неизвестно'},
+    {text: '\'null\''},
+    {text: 'Ошибка TypeScript', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Теперь в TypeScript... _что это сделает?_
+    ```ts
+        'use strict';
+        function displayPlace(
+          {
+            name = 'N/A',
+            place = 'N/A',
+          }: {
+            name: string;
+            place: string;
+            age: number;
+          },
+        ) {
+          console.log(`${place}`);
+        }
+        displayPlace({ name: 'Dan', place: null });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    TypeScript сообщает об ошибке, потому что `place` имеет тип `string`, но вызов передает `null`. Вызов также опускает обязательное свойство `age`.
+
+    Если игнорировать ошибки типов, при выполнении кода в консоль будет выведено `null`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="TypeScript: с присваиванием"
+  title="Деструктуризация с вложенными значениями по умолчанию"
+  options={[
+    {text: 'undefined'},
+    {text: 'null'},
+    {text: 'N/A'},
+    {text: 'Неизвестно'},
+    {text: 'Denver', isAnswer: true},
+    {text: 'SyntaxError'},
+    {text: 'Ошибка: недопустимый тип'},
+    {text: 'Ошибка: недопустимые аргументы'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Давайте попробуем переименование/присваивание...
+    ```ts
+        'use strict';
+        function displayPlace({
+          name = 'N/A',
+          place: location = 'N/A',
+        }: {
+          name: string;
+          place: string;
+          age?: number;
+        }) {
+          console.log(`${location}`);
+        }
+        displayPlace({ name: 'Dan', place: 'Denver' });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Это выведет `Denver` в консоль. Свойство `place` переименовано в `location` в сигнатуре функции. Это распространённый шаблон (переименование свойств при деструктуризации) при адаптации сторонних структур данных.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Вложенная деструктуризация в TS"
+  title="Деструктуризация с вложенными значениями по умолчанию"
+  options={[
+    {text: 'Ошибка: отсутствует свойство \'first\''},
+    {text: 'Ошибка: отсутствует свойство \'last\''},
+    {text: 'Ошибка: отсутствуют свойства \'birth\' и \'age\'', isAnswer: true},
+    {text: 'Ошибка: отсутствует свойство \'place\''},
+    {text: 'Ошибка: \'string\' не имеет свойств в {...}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Найдите ошибку в типах:
+    ```ts
+        function greet({
+          name: {first = "N/A", last = "N/A"},
+          birth: {place = "N/A"} = {},
+          age = -1,
+        }: {
+          name: {first?: string, last?: string};
+          birth: {place?: string};
+          age: number;
+        }) {
+          console.log(`Hi ${first} ${last} from ${place}`);
+        }
+        greet({ name: {first: 'Dan'} });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ошибка находится в сигнатуре функции `greet`. Свойства `age` и `birth` отсутствуют в переданном объекте, поэтому они должны быть необязательными в определении типа.
+
+    Даже если свойство `birth` деструктурируется со значением по умолчанию, определение типа требует его наличия. Чтобы пометить свойство как необязательное в TypeScript, используйте оператор `?`.
+
+    Обратите внимание: `birth?: { place?: string }` — это не то же самое, что `birth: { place?: string } | undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="TypeScript + Присваивание"
+  title="Деструктуризация с вложенными значениями, присваивание и типы"
+  options={[
+    {text: 'Привет Dan Levy из N/A'},
+    {text: 'Привет Dan Levy из Кейптауна'},
+    {text: 'Привет N/A N/A из N/A'},
+    {text: 'Привет N/A N/A из Кейптауна'},
+    {text: 'Ошибка', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Теперь с **присваиванием** (обратите внимание на переменные `f`, `l` и `p`)
+    ```ts
+        'use strict';
+        function greet(
+          {
+            name: {first: f = "N/A", last: l = "N/A"},
+            birth: {place: p = "N/A"} = {},
+            age = -1,
+          }: {
+            name: {first?: string, last?: string};
+            birth?: {place?: string};
+            age?: number;
+          }
+        ) {
+          console.log(`Hi ${f} ${l} from ${place}`);
+          // What will 👆 do?
+        }
+        greet({
+          name: {first: 'Dan', last: 'Levy'},
+          birth: {place: 'Cape Town'},
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ещё одна ошибка! Вы начинаете угадывать, не так ли?!
+
+    Сложно читать слои деструктуризации с значениями по умолчанию, присваиванием и типами!
+
+    Как только `place` переназначается переменной `p`, она больше не определена в области видимости оператора `console.log`.
+    ```ts
+      console.log(`Hi ${f} ${l} from ${place}`); // ❌
+      // to:
+      console.log(`Hi ${f} ${l} from ${p}`); // ✅
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

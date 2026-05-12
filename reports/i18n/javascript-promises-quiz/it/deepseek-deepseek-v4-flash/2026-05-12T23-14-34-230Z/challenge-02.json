@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Multiple `.catch` #2",
+  "translation": {
+    "title": "Multiple `.catch` #2",
+    "group": "Gestione degli errori",
+    "options": [
+      {
+        "text": "stampa il messaggio una volta"
+      },
+      {
+        "text": "stampa il messaggio due volte"
+      },
+      {
+        "text": "promessa rifiutata non gestita"
+      },
+      {
+        "text": "il processo termina"
+      }
+    ],
+    "questionProse": [
+      "Quale sarà l'output del seguente codice?"
+    ],
+    "explanationProse": [
+      "Quando si utilizza il costruttore Promise, è necessario invocare le callback `resolve()` o `reject()`. Il costruttore Promise ignora il valore di ritorno dell'esecutore, quindi la Promise aggiuntiva creata con `Promise.reject()` non è concatenata a `p`. I due handler sono attaccati a `p`, che rimane in sospeso, mentre la promise rifiutata restituita viene segnalata come non gestita dall'ambiente host."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Multiple `.catch` #2\",\n  \"group\": \"Gestione degli errori\",\n  \"options\": [\n    {\n      \"text\": \"stampa il messaggio una volta\"\n    },\n    {\n      \"text\": \"stampa il messaggio due volte\"\n    },\n    {\n      \"text\": \"promessa rifiutata non gestita\"\n    },\n    {\n      \"text\": \"il processo termina\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quale sarà l'output del seguente codice?\"\n  ],\n  \"explanationProse\": [\n    \"Quando si utilizza il costruttore Promise, è necessario invocare le callback `resolve()` o `reject()`. Il costruttore Promise ignora il valore di ritorno dell'esecutore, quindi la Promise aggiuntiva creata con `Promise.reject()` non è concatenata a `p`. I due handler sono attaccati a `p`, che rimane in sospeso, mentre la promise rifiutata restituita viene segnalata come non gestita dall'ambiente host.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 746,
+    "outputTokens": 895,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5538
+  },
+  "cost": {
+    "inputUsd": 0.00010444000000000001,
+    "outputUsd": 0.0002506,
+    "totalUsd": 0.00035504000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc et Mutex",
+  "translation": {
+    "title": "Arc et Mutex",
+    "group": "Pointeurs intelligents",
+    "options": [
+      {
+        "text": "Affiche : 42",
+        "hint": "Le code n'atteindra jamais l'instruction d'affichage"
+      },
+      {
+        "text": "Affiche : 43",
+        "hint": "Le code se bloquera avant l'affichage"
+      },
+      {
+        "text": "Erreur de compilation",
+        "hint": "Le code est syntaxiquement correct"
+      },
+      {
+        "text": "Panique à l'exécution",
+        "hint": "C'est pire qu'une panique"
+      },
+      {
+        "text": "Interblocage"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsque ce code s'exécute ?"
+    ],
+    "explanationProse": [
+      "Ce code illustre un scénario classique d'interblocage. Voici comment le résoudre :",
+      "Bonnes pratiques pour éviter les interblocages :\n      1. Garder les sections critiques petites\n      2. Libérer les verrous rapidement en utilisant des portées\n      3. Acquérir plusieurs verrous dans un ordre cohérent\n      4. Utiliser parking_lot::Mutex pour de meilleures performances\n      5. Envisager d'utiliser RwLock pour les charges de travail à forte lecture\n\n      Modèles courants :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc et Mutex\",\n  \"group\": \"Pointeurs intelligents\",\n  \"options\": [\n    {\n      \"text\": \"Affiche : 42\",\n      \"hint\": \"Le code n'atteindra jamais l'instruction d'affichage\"\n    },\n    {\n      \"text\": \"Affiche : 43\",\n      \"hint\": \"Le code se bloquera avant l'affichage\"\n    },\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"Le code est syntaxiquement correct\"\n    },\n    {\n      \"text\": \"Panique à l'exécution\",\n      \"hint\": \"C'est pire qu'une panique\"\n    },\n    {\n      \"text\": \"Interblocage\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsque ce code s'exécute ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce code illustre un scénario classique d'interblocage. Voici comment le résoudre :\",\n    \"Bonnes pratiques pour éviter les interblocages :\\n      1. Garder les sections critiques petites\\n      2. Libérer les verrous rapidement en utilisant des portées\\n      3. Acquérir plusieurs verrous dans un ordre cohérent\\n      4. Utiliser parking_lot::Mutex pour de meilleures performances\\n      5. Envisager d'utiliser RwLock pour les charges de travail à forte lecture\\n\\n      Modèles courants :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 842,
+    "outputTokens": 855,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4605
+  },
+  "cost": {
+    "inputUsd": 0.00011788,
+    "outputUsd": 0.00023940000000000002,
+    "totalUsd": 0.00035728,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

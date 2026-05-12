@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT et NULL",
+  "translation": {
+    "title": "COUNT et NULL",
+    "group": "Comportement de NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "Combien de *lignes* cela va-t-il retourner ?"
+    ],
+    "explanationProse": [
+      "Ok, c'était un peu piégeux. Le piège est que `x = NULL` ne correspondra jamais à aucune ligne, et cela retournera TOUJOURS une ligne avec un compte de `0`.\n\n    Puisque `NULL` est une valeur inconnue, elle ne peut être comparée à rien, pas même à elle-même.\n    \n    La bonne façon de vérifier les valeurs `NULL` est avec `IS NULL`.\n\n    Exemple :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT et NULL\",\n  \"group\": \"Comportement de NULL\",\n  \"options\": [\n    {\"text\": \"100\"},\n    {\"text\": \"90\"},\n    {\"text\": \"10\"},\n    {\"text\": \"1\"},\n    {\"text\": \"0\"}\n  ],\n  \"questionProse\": [\n    \"Combien de *lignes* cela va-t-il retourner ?\"\n  ],\n  \"explanationProse\": [\n    \"Ok, c'était un peu piégeux. Le piège est que `x = NULL` ne correspondra jamais à aucune ligne, et cela retournera TOUJOURS une ligne avec un compte de `0`.\\n\\n    Puisque `NULL` est une valeur inconnue, elle ne peut être comparée à rien, pas même à elle-même.\\n    \\n    La bonne façon de vérifier les valeurs `NULL` est avec `IS NULL`.\\n\\n    Exemple :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 944,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 43092
+  },
+  "cost": {
+    "inputUsd": 0.00010724000000000001,
+    "outputUsd": 0.00026432,
+    "totalUsd": 0.00037156000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

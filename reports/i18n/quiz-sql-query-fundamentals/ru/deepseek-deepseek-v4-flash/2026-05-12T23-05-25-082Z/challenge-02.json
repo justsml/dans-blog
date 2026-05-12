@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "Агрегатная функция COUNT",
+  "translation": {
+    "title": "Агрегатная функция COUNT",
+    "group": "Основы SQL",
+    "options": [
+      {
+        "text": "Подсчитывает все строки, включая NULL-значения"
+      },
+      {
+        "text": "Подсчитывает только не-NULL значения в столбце"
+      },
+      {
+        "text": "Считает NULL-значения как одно уникальное значение"
+      },
+      {
+        "text": "Считает каждое NULL-значение уникальным, подобно NaN !== NaN"
+      }
+    ],
+    "questionProse": [
+      "Что делает `COUNT(column_name)` в SQL?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` подсчитывает количество не-NULL значений в указанном столбце. Чтобы подсчитать все строки, включая NULL, используйте `COUNT(*)`.\n\nВы также можете использовать `COALESCE`, чтобы NULL по умолчанию принимали не-NULL значение. Например: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Агрегатная функция COUNT\",\n  \"group\": \"Основы SQL\",\n  \"options\": [\n    {\n      \"text\": \"Подсчитывает все строки, включая NULL-значения\"\n    },\n    {\n      \"text\": \"Подсчитывает только не-NULL значения в столбце\"\n    },\n    {\n      \"text\": \"Считает NULL-значения как одно уникальное значение\"\n    },\n    {\n      \"text\": \"Считает каждое NULL-значение уникальным, подобно NaN !== NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что делает `COUNT(column_name)` в SQL?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` подсчитывает количество не-NULL значений в указанном столбце. Чтобы подсчитать все строки, включая NULL, используйте `COUNT(*)`.\\n\\nВы также можете использовать `COALESCE`, чтобы NULL по умолчанию принимали не-NULL значение. Например: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 715,
+    "outputTokens": 895,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 35865
+  },
+  "cost": {
+    "inputUsd": 0.00010010000000000002,
+    "outputUsd": 0.0002506,
+    "totalUsd": 0.0003507,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Citation des noms de colonnes",
+  "translation": {
+    "title": "Citation des noms de colonnes",
+    "group": "Citation 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "Comment spécifier un **nom de colonne contenant un point ?**"
+    ],
+    "explanationProse": [
+      "PostgreSQL utilise les guillemets doubles pour citer les identifiants :\n    - Les guillemets doubles `\"...\"` pour les identifiants (noms de colonnes, noms de tables)\n    - Les guillemets simples `'...'` pour les chaînes littérales\n    - La forme `first.name` est interprétée comme `table_name.column_name`\n\n    Sans guillemets, un point dans un nom de colonne serait interprété comme un séparateur de schéma/table ! De plus, tous les identifiants non cités sont automatiquement mis en minuscules.\n\n    Pour réduire les surprises, il est préférable d'utiliser `snake_case` et d'éviter les caractères spéciaux."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Citation des noms de colonnes\",\n  \"group\": \"Citation 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Comment spécifier un **nom de colonne contenant un point ?**\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL utilise les guillemets doubles pour citer les identifiants :\\n    - Les guillemets doubles `\\\"...\\\"` pour les identifiants (noms de colonnes, noms de tables)\\n    - Les guillemets simples `'...'` pour les chaînes littérales\\n    - La forme `first.name` est interprétée comme `table_name.column_name`\\n\\n    Sans guillemets, un point dans un nom de colonne serait interprété comme un séparateur de schéma/table ! De plus, tous les identifiants non cités sont automatiquement mis en minuscules.\\n\\n    Pour réduire les surprises, il est préférable d'utiliser `snake_case` et d'éviter les caractères spéciaux.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 786,
+    "outputTokens": 1139,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 50511
+  },
+  "cost": {
+    "inputUsd": 0.00011004000000000001,
+    "outputUsd": 0.00031892000000000004,
+    "totalUsd": 0.00042896000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

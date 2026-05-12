@@ -1,0 +1,48 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell vs RefCell",
+  "translation": {
+    "title": "Cell vs RefCell",
+    "group": "Mutabilité",
+    "options": [
+      {
+        "text": "Affiche : 42, 43"
+      },
+      {
+        "text": "Affiche : 43, 43",
+        "hint": "Cell::get() retourne la valeur au moment de l'appel"
+      },
+      {
+        "text": "Erreur de compilation",
+        "hint": "Cell est conçu pour ce cas d'usage exact"
+      },
+      {
+        "text": "Panique à l'exécution",
+        "hint": "Les opérations sur Cell sont toujours sûres pour les types Copy"
+      }
+    ],
+    "questionProse": [
+      "Qu'est-ce que ce code va afficher ?"
+    ],
+    "explanationProse": [
+      "Cell et RefCell servent des objectifs différents pour la mutabilité intérieure :",
+      "Key differences:\n      1. Cell:\n         - Fonctionne mieux avec les types Copy\n         - Pas d'API d'emprunt\n         - Copie ou déplace toujours les valeurs\n      \n      2. RefCell:\n         - Fonctionne avec n'importe quel type\n         - Possède une API d'emprunt\n         - Vérification d'emprunt à l'exécution\n\n      Best practices:\n      1. Utilisez Cell pour les types Copy simples (nombres, bool, etc.)\n      2. Utilisez RefCell lorsque vous devez emprunter le contenu\n      3. Gardez les mutations via Cell/RefCell minimales\n      4. Documentez pourquoi la mutabilité intérieure est nécessaire"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell vs RefCell\",\n  \"group\": \"Mutabilité\",\n  \"options\": [\n    {\n      \"text\": \"Affiche : 42, 43\"\n    },\n    {\n      \"text\": \"Affiche : 43, 43\",\n      \"hint\": \"Cell::get() retourne la valeur au moment de l'appel\"\n    },\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"Cell est conçu pour ce cas d'usage exact\"\n    },\n    {\n      \"text\": \"Panique à l'exécution\",\n      \"hint\": \"Les opérations sur Cell sont toujours sûres pour les types Copy\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'est-ce que ce code va afficher ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Cell et RefCell servent des objectifs différents pour la mutabilité intérieure :\",\n    \"Key differences:\\n      1. Cell:\\n         - Fonctionne mieux avec les types Copy\\n         - Pas d'API d'emprunt\\n         - Copie ou déplace toujours les valeurs\\n      \\n      2. RefCell:\\n         - Fonctionne avec n'importe quel type\\n         - Possède une API d'emprunt\\n         - Vérification d'emprunt à l'exécution\\n\\n      Best practices:\\n      1. Utilisez Cell pour les types Copy simples (nombres, bool, etc.)\\n      2. Utilisez RefCell lorsque vous devez emprunter le contenu\\n      3. Gardez les mutations via Cell/RefCell minimales\\n      4. Documentez pourquoi la mutabilité intérieure est nécessaire\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 848,
+    "outputTokens": 2208,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11632
+  },
+  "cost": {
+    "inputUsd": 0.00011872000000000002,
+    "outputUsd": 0.00061824,
+    "totalUsd": 0.00073696,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

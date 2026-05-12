@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Dépassement d'entier",
+  "translation": {
+    "title": "Dépassement d'entier",
+    "group": "Arithmétique des entiers",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Erreur : entier hors plage"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lors du calcul du nombre total d'identifiants étudiants possibles ?"
+    ],
+    "explanationProse": [
+      "Le type `integer` de PostgreSQL est un entier signé 32 bits, allant de `-2,147,483,648` à `2,147,483,647`.\n\n    Le calcul `256^4` = `4,294,967,296` dépasse cette plage.\n\n    Pour gérer des nombres plus grands :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Dépassement d'entier\",\n  \"group\": \"Arithmétique des entiers\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"Erreur : entier hors plage\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lors du calcul du nombre total d'identifiants étudiants possibles ?\"\n  ],\n  \"explanationProse\": [\n    \"Le type `integer` de PostgreSQL est un entier signé 32 bits, allant de `-2,147,483,648` à `2,147,483,647`.\\n\\n    Le calcul `256^4` = `4,294,967,296` dépasse cette plage.\\n\\n    Pour gérer des nombres plus grands :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 729,
+    "outputTokens": 970,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5781
+  },
+  "cost": {
+    "inputUsd": 0.00010206000000000002,
+    "outputUsd": 0.00027160000000000004,
+    "totalUsd": 0.00037366000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

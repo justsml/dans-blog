@@ -1,0 +1,554 @@
+---
+unlisted: false
+social_image: ../mobile.webp
+title: 'Викторина: Углублённый Postgres: Часть 1'
+subTitle: SQL — это боль?
+label: 'Deep PostgreSQL #1'
+category: Quiz
+subCategory: Database
+date: '2024-11-27'
+modified: '2024-12-03'
+tags:
+  - quiz
+  - postgresql
+  - sql
+  - database
+  - intermediate
+  - advanced
+cover_full_width: ../elephant-synthwave-gym-wide.webp
+cover_mobile: ../elephant-synthwave-gym-square-200.webp
+cover_icon: ../elephant-synthwave-gym-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+> **Часть 1 из 2.** [Перейти к части 2](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 — безусловно, моя любимая база данных! Я постоянно узнаю новые трюки и подводные камни, поэтому решил собрать их в новом тесте!</p>
+
+Этот тест охватывает как знакомые, так и малоизвестные возможности и «сюрпризы» PostgreSQL: от встроенных агрегатных функций до приведения типов, ограничений и не только.
+
+Удачи! 🍀
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Разминка: Функции"
+  title="Встроенные агрегатные функции"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какая из перечисленных функций НЕ является встроенной агрегатной функцией в PostgreSQL?
+    ```sql
+        SELECT 
+          MIN(grade) as lowest,
+          MAX(grade) as highest,
+          AVG(grade) as average,
+          MEDIAN(grade) as middle
+        FROM grades;
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `MEDIAN` не является встроенной! Вам нужно:
+    ```sql
+        PERCENTILE_CONT(0.5) 
+        WITHIN GROUP (ORDER BY grade)
+    ```
+    Общие встроенные агрегаты:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - Различные статистические функции
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Разминка: приведение типов"
+  title="Вариации синтаксиса приведения типов"
+  options={[
+    {text: '\'95\'::INTEGER'},
+    {text: 'INTEGER \'95\''},
+    {text: 'CAST(\'95\', INTEGER)', isAnswer: true},
+    {text: 'CAST(\'95\' AS INTEGER)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какое из этих преобразований типов **неверно** ❌?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL поддерживает три синтаксиса приведения:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. Функция типа: `type 'literal'`.
+
+    Все они функционально эквивалентны, но:
+    - `CAST()` наиболее переносим.
+    - `::` специфичен для PostgreSQL, но широко используется.
+    - Инфиксный стиль `type 'literal'` менее распространён, но всё ещё допустим.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Ограничения"
+  title="Ограничения UNIQUE и NULL"
+  options={[
+    {text: 'NULL не допускаются'},
+    {text: 'Допускается один NULL'},
+    {text: 'Допускается несколько NULL', isAnswer: true},
+    {text: 'Зависит от версии PostgreSQL'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Сколько значений NULL допускается здесь?
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255),
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ограничения UNIQUE в PostgreSQL:
+    - Допускают несколько значений NULL.
+    - `NULL` ≠ `NULL` при проверке уникальности.
+
+    Чтобы запретить значения NULL, добавьте `NOT NULL`:
+    ```sql
+        CREATE TABLE student_emails (
+          student_id INTEGER,
+          email VARCHAR(255) NOT NULL,
+          UNIQUE(email)
+        );
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Дата/Время"
+  title="Арифметика дат"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'Ошибка: неверное время'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что вернёт этот запрос?
+    ```sql
+        SELECT '2024-11-27'::date + interval '24 hours';
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Интервалы — мощный инструмент для упрощения операций с диапазонами дат!
+
+    Арифметика дат в PostgreSQL:
+    - `+ interval '24 hours'` добавляет 24 часа
+    - `+ interval '1 day'` добавляет 1 день
+    - `+ interval '1 month'` добавляет 1 месяц
+    - `+ interval '1 year'` добавляет 1 год
+
+    Результат: `2024-11-28 00:00:00`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Временные метки"
+  title="timestamptz и timestamp"
+  options={[
+    {text: 'Они оба занимают 8 байт, но представляют разную семантику временных меток', isAnswer: true},
+    {text: 'Они\'},
+    {text: 'timestamptz сохраняет любой часовой пояс ввода'},
+    {text: 'timestamptz хранит исходное название часового пояса или смещение'},
+    {text: 'timestamptz хранит 2-байтовое значение для TZ'},
+    {text: 'timestamptz является преемником timestamp'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какое утверждение является **самым точным** относительно `timestamptz` и `timestamp`?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Они оба занимают 8 байт, но не хранят один и тот же тип значения.
+
+    Так в чем разница? Она в разборе ввода.
+
+    **`timestamptz`**
+    - Нормализует ввод до абсолютной точки во времени.
+    - Учитывает настройку `TimeZone` сервера/подключения при разборе ввода без явного смещения и при отображении вывода.
+
+    **`timestamp`**
+    - Хранит дату и время без преобразования часового пояса.
+    - Не сохраняет и не нормализует информацию о часовом поясе.
+
+
+    **`timestamp`**
+
+    - Хранит дату и время без информации о часовом поясе.
+    - Полезно для явного хранения стандартизированных дат, либо в UTC, либо в определенном часовом поясе.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Типы PostgreSQL"
+  title="Определите недопустимый тип"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не является ❌ допустимым типом PostgreSQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL имеет богатый набор типов данных, но `STRING(100)` не входит в их число.
+
+    Правильные строковые типы включают:
+    - `VARCHAR(100)` (строка переменной длины)
+    - `CHAR(100)` (строка фиксированной длины)
+    - `TEXT` (неограниченная длина)
+    - `CHARACTER VARYING(100)` (то же, что и `VARCHAR(100)`)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Типы PostgreSQL"
+  title="Определите неверные типы"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не является ❌ допустимым типом PostgreSQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Возможно, он кажется знакомым, поскольку `decimal128` является типом во многих местах (включая Mongo и Java). Это недопустимый тип PostgreSQL, а `decimal` — допустимый.
+
+    Правильные числовые типы включают:
+    - `int` (4-байтовое целое)
+    - `bigint` (8-байтовое целое)
+    - `real` (4-байтовое число с плавающей точкой)
+    - `double precision` (8-байтовое число с плавающей точкой)
+    - `bigserial` (автоинкрементируемое 8-байтовое целое)
+    - `smallserial` (автоинкрементируемое 2-байтовое целое)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Типы Postgres"
+  title="Определите недопустимые типы"
+  options={[
+    {text: 'cidr'},
+    {text: 'inet'},
+    {text: 'ipv4', isAnswer: true},
+    {text: 'macaddr'},
+    {text: 'macaddr8'},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не является ❌ допустимым типом PostgreSQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Это вызвало у вас разочарование, даже _гнев_? Вы не одиноки! Цитируя неназванного участника "core" базы данных: "какого черта, Дэн?! Я провалился на вопросах о типах! Это жестоко, сэр! Не делюсь своим результатом, ха." 😈 Пожалуйста.
+
+    Богатый набор сетевых типов PostgreSQL не включает `ipv4`. Каждый раз, когда я пытаюсь использовать его без гугления, я ошибаюсь. Возможно, `macaddr8` заставляет меня думать, что _должны_ быть типы `ipv4` и `ipv6`. Нет, `inet` охватывает оба. Также `cidr` охватывает сетевые маски для обоих.
+
+    Допустимые сетевые типы включают:
+    - `cidr` (IPv4/IPv6 сетевой адрес)
+    - `inet` (IPv4/IPv6 адрес хоста)
+    - `macaddr` (MAC-адрес)
+    - `macaddr8` (EUI-64 MAC-адрес)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Типы PostgreSQL"
+  title="Определите недопустимые типы"
+  options={[
+    {text: 'xml'},
+    {text: 'uuid'},
+    {text: 'money'},
+    {text: 'currency', isAnswer: true},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не ❌ является допустимым типом PostgreSQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL имеет богатый набор специализированных типов, но `currency` не входит в их число!
+
+    Допустимые типы включают:
+    - `xml` (XML-данные)
+    - `uuid` (UUID)
+    - `money` (денежная сумма)
+    - `interval` (временной интервал)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Типы Postgres"
+  title="Определите недопустимые типы"
+  options={[
+    {text: 'box'},
+    {text: 'line'},
+    {text: 'point'},
+    {text: 'circle'},
+    {text: 'polygon'},
+    {text: 'triangle', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не является ❌ допустимым типом PostgreSQL?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL имеет богатый набор специализированных типов, но `triangle` не входит в их число.
+
+    Я полагаю, что будущие версии [GEOS](https://libgeos.org/) будут включать поддержку Triangle OGC/WKT, что означает, что он в конечном итоге должен быть включен в Postgis. (По сути, этот ответ может оказаться неверным в будущем.)
+
+    Правильные специализированные типы включают:
+    - `box` (прямоугольный бокс)
+    - `line` (бесконечная линия)
+    - `point` (2D точка)
+    - `circle` (2D окружность)
+    - `polygon` (2D многоугольник)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Целочисленная арифметика"
+  title="Целочисленное переполнение"
+  options={[
+    {text: '4294967296'},
+    {text: 'Ошибка: целое число вне диапазона', isAnswer: true},
+    {text: '0'},
+    {text: '2147483647'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Что произойдёт при вычислении общего количества возможных идентификаторов студентов?
+    ```sql
+        SELECT 256 * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Тип `integer` в PostgreSQL — это 32-битное знаковое целое, диапазон от `-2,147,483,648` до `2,147,483,647`.
+
+    Вычисление `256^4` = `4,294,967,296` выходит за пределы этого диапазона.
+
+    Для работы с большими числами:
+    ```sql
+        -- Use BIGINT
+        SELECT 256::bigint * 256 * 256 * 256;
+
+        -- Or numeric for arbitrary precision
+        SELECT 256::numeric * 256 * 256 * 256;
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Дата/Время"
+  title="Точность временных меток"
+  options={[
+    {text: '2024-01-08 13:30:00+00'},
+    {text: '2024-01-08 13:30:00.123456+00'},
+    {text: '2024-01-08 13:30:00.123456789+00'},
+    {text: '2024-01-08 13:30:00.1234567', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой литерал `timestamp` является наименьшим, превышающим максимальную точность `time` в Postgres?
+    ```sql
+        CREATE TABLE class_sessions (
+          id INT GENERATED BY DEFAULT AS IDENTITY,
+          start_time timestamptz,
+          end_time timestamptz
+        );
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Временные метки PostgreSQL имеют точность до микросекунд (6 знаков после запятой).
+
+    - Максимум: `.123456` (6 цифр)
+    - Наносекунды (9 цифр) округляются или усекаются до поддерживаемой точности
+    - Смещения часовых поясов принимаются для `timestamptz`, но не обязательны
+
+    **Неочевидный подвох:** Некоторые языки/фреймворки отправляют наносекундную точность, но PostgreSQL хранит временные метки с микросекундной точностью.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Типы PostgreSQL"
+  title="Определите недопустимые типы"
+  options={[
+    {text: 'lseg'},
+    {text: 'bytea'},
+    {text: 'tsquery'},
+    {text: 'tsvector'},
+    {text: 'tsrank', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Какой из этих типов не является ❌ допустимым типом PostgreSQL?
+
+    (Серьезно, это (в основном) настоящие типы.)
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    PostgreSQL имеет несколько встроенных геометрических типов и типов текстового поиска, но `tsrank` не входит в их число.
+
+    Правильные геометрические типы и типы текстового поиска включают:
+    - `lseg` (отрезок линии)
+    - `bytea` (двоичные данные)
+    - `tsquery` (запрос текстового поиска)
+    - `tsvector` (документ текстового поиска)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Ограничения"
+  title="Время проверки ограничения CHECK"
+  options={[
+    {text: 'Сразу для новых или изменённых строк', isAnswer: true},
+    {text: 'При фиксации транзакции'},
+    {text: 'При следующем запросе'},
+    {text: 'Никогда — ограничения проверяются только при INSERT'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Когда проверяется это ограничение grade?
+    ```sql
+        ALTER TABLE students 
+        ADD CONSTRAINT valid_grade 
+        CHECK (
+          (grade >= 0 AND grade <= 100) OR 
+          grade IS NULL
+        ) NOT VALID;
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Ограничения `NOT VALID`:
+    - Проверяются сразу для новых вставок и обновлений
+    - Не проверяют существующие строки
+    - Могут проверить существующие строки позже с помощью `VALIDATE CONSTRAINT`
+    - Полезны для больших таблиц
+
+    Без `NOT VALID`:
+    - Ограничение проверяется сразу
+    - Все существующие строки проверяются
+    - Может быть медленным на больших таблицах
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Отлично! Вы глубоко погрузились в несколько областей PostgreSQL! 🐘
+
+Надеюсь, вы узнали что-то новое или хотя бы получили результат, которым можно похвастаться! 🏆
+
+<p class="inset">Посмотрите [Часть 2](/quiz-postgres-sql-mastery-pt2/) для новых приключений с Postgres! 🚀</p>
+
+Хотите больше острых ощущений в жизни? Загляните в мою [Коллекцию викторин](/challenges/) для бесконечного* веселья!

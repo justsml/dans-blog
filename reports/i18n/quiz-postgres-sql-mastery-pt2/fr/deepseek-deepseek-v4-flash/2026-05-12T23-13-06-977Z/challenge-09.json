@@ -1,0 +1,32 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "Syntaxe TABLESAMPLE",
+  "translation": {
+    "title": "Syntaxe TABLESAMPLE",
+    "group": "Échantillonnage de données",
+    "options": [],
+    "questionProse": [
+      "Quelle est la syntaxe valide pour **échantillonner aléatoirement 10%** des étudiants ?"
+    ],
+    "explanationProse": [
+      "Celui-ci est piégeux ! Il comporte environ 6 pièges, dont :\n\n    1. Description de haut niveau + fragments de syntaxe. Teste comment vous adaptez et assemblez des informations incomplètes.\n    2. Nécessite une connaissance familière de la syntaxe `TABLESAMPLE`, car aucune des options `TABLESAMPLE` n'utilise la syntaxe correcte ! (Diabolique ! Je sais ! Continuez, je crois en vous !!! ❤️)\n    3. Les `ROW_NUMBER() OVER (ORDER BY RAND())` et `ORDER BY RANDOM() > 10` sont des leurres supplémentaires. Ils ont l'air corrects, mais ils ne le sont pas. `RAND()` n'existe pas. Et `RANDOM() > 10` est une expression booléenne qui sera toujours fausse car `RANDOM()` est toujours dans l'intervalle `0.0-1.0`.\n    Un autre problème : `ORDER BY RANDOM() > 10` trierait aussi sur une valeur booléenne, pas sur un nombre aléatoire. Mais ce `> 10` donnait l'impression de pouvoir être un pourcentage, n'est-ce pas ?\n    4. `BERNOULLI` est valide, mais `SAMPLETABLE` ne l'est pas.\n    5. `WHERE RANDOM() >= 0.1` est un piège ! `RANDOM()` renvoie une valeur dans l'intervalle `0.0 <= x < 1.0`, donc `>= 0.1` renverrait environ 90% des lignes, pas 10%.\n\n    En ce qui concerne la méthode `TABLESAMPLE`, PostgreSQL prend en charge deux méthodes d'échantillonnage :\n    - `BERNOULLI` : chaque ligne a une probabilité égale\n    - `SYSTEM` : échantillonnage au niveau du bloc (plus rapide mais moins aléatoire)\n\n    Pour en savoir plus sur l'échantillonnage, consultez cet article de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\n\n    Exemple :",
+      "Il convient également de mentionner que `TABLESAMPLE` [a été signalé](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) comme n'étant pas très aléatoire. Si vous avez besoin d'un échantillon de taille fixe _plus_ aléatoire, envisagez d'utiliser `ORDER BY RANDOM() LIMIT 10`. Mais sachez que cela renvoie 10 lignes, pas 10%, et peut être lent sur les grandes tables.\n\n    Il existe également quelques extensions tierces qui fournissent de meilleures méthodes d'échantillonnage aléatoire, mais cela dépasse le cadre de cette question ! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Syntaxe TABLESAMPLE\",\n  \"group\": \"Échantillonnage de données\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quelle est la syntaxe valide pour **échantillonner aléatoirement 10%** des étudiants ?\"\n  ],\n  \"explanationProse\": [\n    \"Celui-ci est piégeux ! Il comporte environ 6 pièges, dont :\\n\\n    1. Description de haut niveau + fragments de syntaxe. Teste comment vous adaptez et assemblez des informations incomplètes.\\n    2. Nécessite une connaissance familière de la syntaxe `TABLESAMPLE`, car aucune des options `TABLESAMPLE` n'utilise la syntaxe correcte ! (Diabolique ! Je sais ! Continuez, je crois en vous !!! ❤️)\\n    3. Les `ROW_NUMBER() OVER (ORDER BY RAND())` et `ORDER BY RANDOM() > 10` sont des leurres supplémentaires. Ils ont l'air corrects, mais ils ne le sont pas. `RAND()` n'existe pas. Et `RANDOM() > 10` est une expression booléenne qui sera toujours fausse car `RANDOM()` est toujours dans l'intervalle `0.0-1.0`.\\n    Un autre problème : `ORDER BY RANDOM() > 10` trierait aussi sur une valeur booléenne, pas sur un nombre aléatoire. Mais ce `> 10` donnait l'impression de pouvoir être un pourcentage, n'est-ce pas ?\\n    4. `BERNOULLI` est valide, mais `SAMPLETABLE` ne l'est pas.\\n    5. `WHERE RANDOM() >= 0.1` est un piège ! `RANDOM()` renvoie une valeur dans l'intervalle `0.0 <= x < 1.0`, donc `>= 0.1` renverrait environ 90% des lignes, pas 10%.\\n\\n    En ce qui concerne la méthode `TABLESAMPLE`, PostgreSQL prend en charge deux méthodes d'échantillonnage :\\n    - `BERNOULLI` : chaque ligne a une probabilité égale\\n    - `SYSTEM` : échantillonnage au niveau du bloc (plus rapide mais moins aléatoire)\\n\\n    Pour en savoir plus sur l'échantillonnage, consultez cet article de [Render](https://render.com/blog/postgresql-random-samples-big-tables).\\n\\n    Exemple :\",\n    \"Il convient également de mentionner que `TABLESAMPLE` [a été signalé](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql) comme n'étant pas très aléatoire. Si vous avez besoin d'un échantillon de taille fixe _plus_ aléatoire, envisagez d'utiliser `ORDER BY RANDOM() LIMIT 10`. Mais sachez que cela renvoie 10 lignes, pas 10%, et peut être lent sur les grandes tables.\\n\\n    Il existe également quelques extensions tierces qui fournissent de meilleures méthodes d'échantillonnage aléatoire, mais cela dépasse le cadre de cette question ! 😅\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1135,
+    "outputTokens": 987,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9205
+  },
+  "cost": {
+    "inputUsd": 0.0001589,
+    "outputUsd": 0.00027636,
+    "totalUsd": 0.00043526000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": "Utiliser `.map(parseInt)`",
+  "translation": {
+    "title": "Utiliser `.map(parseInt)`",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "Le deuxième argument de `parseInt` (le radix) correspond à l'argument `index` des méthodes de tableau. Cela conduit à des résultats inattendus, car `parseInt(\"One\", 1)` renvoie `NaN` en raison d'une entrée invalide.\n\n  Le premier élément, `24`, est analysé comme `24` en base 0 (détection automatique), donc il reste `24`. Le deuxième élément, `'One'`, est analysé comme `NaN` en base 1. Le troisième élément, `42`, est analysé en base 2. En base 2, `'42'` donne `NaN`, donc le résultat est `[24, NaN, NaN]`.\n\n  C'est un piège courant avec `parseInt` et `map`. Si vous voulez analyser un tableau de chaînes en nombres, la seule méthode \"intégrée\" sûre est `.map(Number)` ou l'ajout d'un callback/fermeture `.map(x => parseInt(x, 10))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Utiliser `.map(parseInt)`\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\n      \"text\": \"[24, NaN, NaN]\"\n    },\n    {\n      \"text\": \"[24, NaN, 42]\"\n    },\n    {\n      \"text\": \"[24, 42]\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Le deuxième argument de `parseInt` (le radix) correspond à l'argument `index` des méthodes de tableau. Cela conduit à des résultats inattendus, car `parseInt(\\\"One\\\", 1)` renvoie `NaN` en raison d'une entrée invalide.\\n\\n  Le premier élément, `24`, est analysé comme `24` en base 0 (détection automatique), donc il reste `24`. Le deuxième élément, `'One'`, est analysé comme `NaN` en base 1. Le troisième élément, `42`, est analysé en base 2. En base 2, `'42'` donne `NaN`, donc le résultat est `[24, NaN, NaN]`.\\n\\n  C'est un piège courant avec `parseInt` et `map`. Si vous voulez analyser un tableau de chaînes en nombres, la seule méthode \\\"intégrée\\\" sûre est `.map(Number)` ou l'ajout d'un callback/fermeture `.map(x => parseInt(x, 10))`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 847,
+    "outputTokens": 1082,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15520
+  },
+  "cost": {
+    "inputUsd": 0.00011858,
+    "outputUsd": 0.00030296000000000007,
+    "totalUsd": 0.0004215400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

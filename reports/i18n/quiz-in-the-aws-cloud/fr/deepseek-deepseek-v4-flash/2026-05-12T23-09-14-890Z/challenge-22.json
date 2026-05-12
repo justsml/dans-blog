@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "Modèles de cohérence",
+  "translation": {
+    "title": "Modèles de cohérence",
+    "group": "Cohérence DynamoDB",
+    "options": [
+      {
+        "text": "100 lectures par seconde"
+      },
+      {
+        "text": "50 lectures par seconde"
+      },
+      {
+        "text": "200 lectures par seconde"
+      },
+      {
+        "text": "Lectures illimitées par seconde"
+      }
+    ],
+    "questionProse": [
+      "Une table DynamoDB a une capacité de lecture provisionnée de 100 RCU. Combien de lectures fortement cohérentes d'éléments de 4 Ko peuvent être effectuées par seconde ?"
+    ],
+    "explanationProse": [
+      "Comprendre les modèles de cohérence DynamoDB est crucial :\n\n      - 1 RCU = 1 lecture fortement cohérente/seconde pour des éléments jusqu'à 4 Ko\n      - 1 RCU = 2 lectures éventuellement cohérentes/seconde pour des éléments jusqu'à 4 Ko\n\n      Donc :\n      - 100 RCU = 100 lectures fortement cohérentes de 4 Ko/seconde\n      - 100 RCU = 200 lectures éventuellement cohérentes de 4 Ko/seconde\n\n      Choisissez les modèles de cohérence en fonction :\n      - Des exigences de l'application\n      - Des considérations de coût\n      - Des besoins de performance\n      - Des besoins d'actualité des données"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Modèles de cohérence\",\n  \"group\": \"Cohérence DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"100 lectures par seconde\"\n    },\n    {\n      \"text\": \"50 lectures par seconde\"\n    },\n    {\n      \"text\": \"200 lectures par seconde\"\n    },\n    {\n      \"text\": \"Lectures illimitées par seconde\"\n    }\n  ],\n  \"questionProse\": [\n    \"Une table DynamoDB a une capacité de lecture provisionnée de 100 RCU. Combien de lectures fortement cohérentes d'éléments de 4 Ko peuvent être effectuées par seconde ?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"Comprendre les modèles de cohérence DynamoDB est crucial :\\n\\n      - 1 RCU = 1 lecture fortement cohérente/seconde pour des éléments jusqu'à 4 Ko\\n      - 1 RCU = 2 lectures éventuellement cohérentes/seconde pour des éléments jusqu'à 4 Ko\\n\\n      Donc :\\n      - 100 RCU = 100 lectures fortement cohérentes de 4 Ko/seconde\\n      - 100 RCU = 200 lectures éventuellement cohérentes de 4 Ko/seconde\\n\\n      Choisissez les modèles de cohérence en fonction :\\n      - Des exigences de l'application\\n      - Des considérations de coût\\n      - Des besoins de performance\\n      - Des besoins d'actualité des données\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 1000,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 41227
+  },
+  "cost": {
+    "inputUsd": 0.00011158000000000001,
+    "outputUsd": 0.00028000000000000003,
+    "totalUsd": 0.00039158000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

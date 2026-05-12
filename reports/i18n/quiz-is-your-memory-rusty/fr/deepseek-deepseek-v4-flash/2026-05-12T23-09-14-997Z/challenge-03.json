@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Références mutables",
+  "translation": {
+    "title": "Références mutables",
+    "group": "Emprunt",
+    "options": [
+      {
+        "text": "Compile avec succès",
+        "hint": "Pouvons-nous avoir plusieurs références mutables en même temps ?"
+      },
+      {
+        "text": "Erreur : impossible d'emprunter `wisdom` comme mutable plus d'une fois"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant",
+        "hint": "Le problème n'est pas lié aux durées de vie ici"
+      },
+      {
+        "text": "Panique à l'exécution",
+        "hint": "Rust détecte ces problèmes à la compilation"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec plusieurs références mutables ?",
+      "Pensez aux règles de Rust concernant les références mutables."
+    ],
+    "explanationProse": [
+      "Ce code viole les règles fondamentales d'emprunt de Rust :\n      - Une SEULE référence mutable à une valeur à la fois\n      - OU un nombre quelconque de références immuables\n      - Les références ne peuvent pas survivre à leur référent\n\n      Voici comment corriger le code :\n\n      1. Utilisez un cadrage séquentiel :",
+      "2. Ou modifiez la chaîne en un seul emprunt :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Références mutables\",\n  \"group\": \"Emprunt\",\n  \"options\": [\n    {\n      \"text\": \"Compile avec succès\",\n      \"hint\": \"Pouvons-nous avoir plusieurs références mutables en même temps ?\"\n    },\n    {\n      \"text\": \"Erreur : impossible d'emprunter `wisdom` comme mutable plus d'une fois\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\",\n      \"hint\": \"Le problème n'est pas lié aux durées de vie ici\"\n    },\n    {\n      \"text\": \"Panique à l'exécution\",\n      \"hint\": \"Rust détecte ces problèmes à la compilation\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec plusieurs références mutables ?\",\n    \"Pensez aux règles de Rust concernant les références mutables.\"\n  ],\n  \"explanationProse\": [\n    \"Ce code viole les règles fondamentales d'emprunt de Rust :\\n      - Une SEULE référence mutable à une valeur à la fois\\n      - OU un nombre quelconque de références immuables\\n      - Les références ne peuvent pas survivre à leur référent\\n\\n      Voici comment corriger le code :\\n\\n      1. Utilisez un cadrage séquentiel :\",\n    \"2. Ou modifiez la chaîne en un seul emprunt :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 1302,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22917
+  },
+  "cost": {
+    "inputUsd": 0.00012208000000000002,
+    "outputUsd": 0.00036456000000000005,
+    "totalUsd": 0.0004866400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

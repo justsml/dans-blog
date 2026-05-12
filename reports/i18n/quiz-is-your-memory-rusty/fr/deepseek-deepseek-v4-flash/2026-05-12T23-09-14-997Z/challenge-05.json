@@ -1,0 +1,32 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Pointeur intelligent Box",
+  "translation": {
+    "title": "Pointeur intelligent Box",
+    "group": "Pointeurs intelligents",
+    "options": [],
+    "questionProse": [
+      "Quel est le problème avec cette définition de type récursive ?"
+    ],
+    "explanationProse": [
+      "Ce code échoue car le compilateur ne peut pas déterminer la taille de `CatList` à la compilation. La nature récursive du type signifie qu'il pourrait être infiniment grand !\n\n      Voici comment le corriger en utilisant `Box<T>` :",
+      "Pourquoi `Box<T>` fonctionne :\n      1. Box fournit un pointeur de taille fixe (généralement 8 octets sur les systèmes 64 bits)\n      2. Les données réelles sont stockées sur le tas\n      3. Le compilateur sait maintenant exactement combien d'espace allouer\n\n      Cas d'utilisation courants de `Box<T>` :\n      - Structures de données récursives (listes chaînées, arbres)\n      - Grandes données que vous voulez garantir allouées sur le tas\n      - Objets de trait lorsque vous avez besoin de dispatch dynamique\n\n      Bonne pratique : Utilisez `Box<T>` lorsque vous avez besoin :\n      - De types récursifs\n      - De garantir l'allocation sur le tas\n      - De déplacer de grandes données sans copie"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Pointeur intelligent Box\",\n  \"group\": \"Pointeurs intelligents\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quel est le problème avec cette définition de type récursive ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Ce code échoue car le compilateur ne peut pas déterminer la taille de `CatList` à la compilation. La nature récursive du type signifie qu'il pourrait être infiniment grand !\\n\\n      Voici comment le corriger en utilisant `Box<T>` :\",\n    \"Pourquoi `Box<T>` fonctionne :\\n      1. Box fournit un pointeur de taille fixe (généralement 8 octets sur les systèmes 64 bits)\\n      2. Les données réelles sont stockées sur le tas\\n      3. Le compilateur sait maintenant exactement combien d'espace allouer\\n\\n      Cas d'utilisation courants de `Box<T>` :\\n      - Structures de données récursives (listes chaînées, arbres)\\n      - Grandes données que vous voulez garantir allouées sur le tas\\n      - Objets de trait lorsque vous avez besoin de dispatch dynamique\\n\\n      Bonne pratique : Utilisez `Box<T>` lorsque vous avez besoin :\\n      - De types récursifs\\n      - De garantir l'allocation sur le tas\\n      - De déplacer de grandes données sans copie\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 794,
+    "outputTokens": 1229,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6370
+  },
+  "cost": {
+    "inputUsd": 0.00011116000000000001,
+    "outputUsd": 0.00034412000000000006,
+    "totalUsd": 0.00045528000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

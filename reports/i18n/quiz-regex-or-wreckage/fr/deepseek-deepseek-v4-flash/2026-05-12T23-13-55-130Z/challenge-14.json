@@ -1,0 +1,31 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Quantificateurs paresseux vs gourmands",
+  "translation": {
+    "title": "Quantificateurs paresseux vs gourmands",
+    "group": "Correspondance de base",
+    "options": [],
+    "questionProse": [
+      "Qu'est-ce qui est mis en correspondance ?"
+    ],
+    "explanationProse": [
+      "Le motif utilise la correspondance paresseuse avec `*?` :\n    - `<b>` : Correspond à la balise d'ouverture\n    - `(.*?)` : Capture tous les caractères (paresseux)\n    - `</b>` : Correspond à la balise de fermeture\n\n    Le `?` après `*` le rend paresseux, correspondant au minimum de caractères possible.\n    Sans `?`, il serait gourmand et correspondrait au maximum possible.\n\n    `slice(1)` renvoie uniquement le groupe capturé.\n\n    [En savoir plus sur la correspondance gourmande vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quantificateurs paresseux vs gourmands\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Qu'est-ce qui est mis en correspondance ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Le motif utilise la correspondance paresseuse avec `*?` :\\n    - `<b>` : Correspond à la balise d'ouverture\\n    - `(.*?)` : Capture tous les caractères (paresseux)\\n    - `</b>` : Correspond à la balise de fermeture\\n\\n    Le `?` après `*` le rend paresseux, correspondant au minimum de caractères possible.\\n    Sans `?`, il serait gourmand et correspondrait au maximum possible.\\n\\n    `slice(1)` renvoie uniquement le groupe capturé.\\n\\n    [En savoir plus sur la correspondance gourmande vs paresseuse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 733,
+    "outputTokens": 966,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5433
+  },
+  "cost": {
+    "inputUsd": 0.00010262000000000002,
+    "outputUsd": 0.00027048,
+    "totalUsd": 0.0003731,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
