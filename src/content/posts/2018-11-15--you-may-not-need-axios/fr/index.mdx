@@ -1,0 +1,214 @@
+---
+social_image: ../desktop-social.webp
+title: Vous n'avez peut-être pas besoin d'Axios
+subTitle: Fetch API à la rescousse !
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## Vous n'avez peut-être pas besoin d'Axios
+
+<p class="breakout call-to-action">Ceci **n'est pas une attaque** contre [Axios](https://www.npmjs.com/package/axios). <br />
+Il s'agit plutôt **d'un plaidoyer pour l'API `fetch` qui est devenue très capable.** 🦄</p>
+
+### Aperçu
+
+Cet article est une collection d'extraits de code `fetch` « manquants » et de cas d'utilisation courants que j'aurais aimé trouver plus facilement.
+
+- [Aperçu](#overview)
+- [Comparaison des fonctionnalités](#feature-comparison)
+- [Recettes Fetch](#fetch-recipes)
+  - [Obtenir du JSON depuis une URL](#get-json-from-a-url)
+
+- [En-têtes personnalisés](#custom-headers)
+  - [Gestion des erreurs HTTP](#http-error-handling)
+  - [Exemple CORS](#cors-example)
+  - [Envoi de JSON](#posting-json)
+  - [Envoi d'un formulaire HTML](#posting-an-html-form)
+
+- [Données encodées en formulaire](#form-encoded-data)
+- [Envoi d'un fichier](#uploading-a-file)
+- [Envoi de plusieurs fichiers](#uploading-multiple-files)
+- [Délais d'attente](#timeouts)
+- [Aide au suivi de progression du téléchargement](#download-progress-helper)
+
+- [Aide de réessai récursif](#recursive-retry-helper)
+  - [Gestion des redirections HTTP](#handling-http-redirects)
+  - [Annulation d'une requête fetch](#canceling-a-fetch-request) ✨new✨
+- [Compatibilité](#compatibility)
+
+> Votre cas d'utilisation n'est pas listé ? [Faites-le moi savoir ✉️](/contact/)
+
+<br />
+
+### Comparaison des fonctionnalités
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+
+| Intercepter la requête et la réponse                  |✅        |✅         |✅       |
+| Transformer les données de la requête et de la réponse |✅        |✅         |✅       |
+| Annuler les requêtes                                 |✅        |✅         |❌       |
+| Transformations automatiques pour les données JSON    |aides manuelles |✅         |✅       |
+| Prise en charge côté client pour la protection contre XSRF |✅        |✅         |✅       |
+
+| Progression                                    |✅        |✅         |✅       |
+| Streaming                                       |✅        |✅         |✅       |
+| Redirections                                    |✅        |✅         |✅       |
+
+<br /><br />
+
+En commençant cet article (fin 2018, mis à jour en 2024), je pensais que je terminerais avec un tableau de cases à cocher mélangées. Il y a sûrement des _cas d'utilisation_ spéciaux qui justifiaient [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got), etc.
+
+Eh bien, il s'avère que **j'ai surestimé le besoin de bibliothèques HTTP tierces**.
+
+**
+
+Bien que j'utilise `fetch` depuis plusieurs années (y compris pour des tâches non triviales : téléchargements de fichiers et gestion des erreurs/répétitions), j'avais encore des idées fausses sur les capacités et les limites de `fetch`.
+
+Le `fetch` natif n'analyse pas automatiquement les réponses JSON ni ne sérialise les corps de requête JSON.
+
+Vous appelez `response.json()` au retour et `JSON.stringify()` à l'envoi. Axios conserve cet avantage ergonomique ; l'argument en faveur de `fetch` est qu'un petit utilitaire comble souvent l'écart.
+
+Bon, voyons ce que `fetch` peut faire...
+
+## Recettes Fetch
+
+### Obtenir du JSON depuis une URL
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### En-têtes personnalisés
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### Gestion des erreurs HTTP
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### Exemple CORS
+
+Le CORS est principalement vérifié côté serveur - assurez-vous donc que votre configuration est correcte côté serveur.
+
+L'option `credentials` contrôle si vos cookies sont automatiquement inclus.
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### Envoyer du JSON
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### Envoyer un formulaire HTML `<form>`
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### Données encodées en formulaire
+
+Pour envoyer des données avec un Content-Type de `application/x-www-form-urlencoded`, nous utiliserons `URLSearchParams` pour encoder les données comme une chaîne de requête.
+
+Par exemple, `new URLSearchParams({a: 1, b: 2})` produit `a=1&b=2`.
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### Envoi d’un fichier
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### Envoi de plusieurs fichiers
+
+Configurez un élément d’envoi de fichier avec l’attribut `multiple` :
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+Utilisez-le ensuite avec quelque chose comme :
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### Délais d’attente
+
+Voici un délai d’attente générique pour Promise, utilisant le modèle d’« application partielle ». Il fonctionnera avec n’importe quelle interface Promise.
+
+Ne faites pas trop de travail dans la chaîne de promesses fournie, elle continuera à s'exécuter – et les échecs ont tendance à créer des fuites mémoire à long terme.
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+Et un exemple plus complexe, avec un indicateur de suivi `__timeout` pour **intercepter tout travail coûteux.**
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### Aide au suivi de progression des téléchargements
+
+La progression des téléchargements (upload) est actuellement un peu capricieuse en dehors de Chrome.
+
+Le gestionnaire de progression [la technique ci-dessous évite d'envelopper](#source-progress-helper) l'appel `fetch` dans une fermeture. 👍
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+Regardons un exemple d'utilisation :
+
+<Gist path='justsml/9bec219590ff50688972c1caff67c14b' />
+
+Un téléchargeur d'images réutilisable pourrait ressembler à `getBlob()` :
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+Au fait, un `Blob` est un Binary Large Object (objet binaire volumineux).
+
+Il est important de choisir UN des 2 modèles d'utilisation ci-dessous (ils sont fonctionnellement équivalents) :
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+Ma préférence va à l'`Option #1`. Cependant, la conception de votre scope peut vous obliger à utiliser l'`Option #2`.
+
+Enfin, voici la dernière partie de cette recette, notre `progressHelper` :
+
+##### Source : Aide de progression
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_crédit :_ Remerciements spéciaux à Anthum Chris et à sa [fantastique preuve de concept Progress+Fetch montrée ici](https://github.com/AnthumChris/fetch-progress-indicators)
+
+### Helper de réessai récursif
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### Gestion des redirections HTTP
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### Annulation d'une requête fetch
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### Compatibilité
+
+Depuis 2022, l'API `fetch` est [largement prise en charge](https://caniuse.com/#feat=fetch) dans tous les navigateurs modernes et dans les versions plus récentes de NodeJS v18+.
+
+Si vous devez prendre en charge IE, vous pouvez [polyfill fetch](https://github.com/github/fetch#browser-support) avec le package `github/fetch` (maintenu par une équipe géniale chez GitHub). Il est possible de remonter jusqu'à [IE8](https://github.com/camsong/fetch-ie8) - _Les résultats peuvent varier_.
+
+Les versions antérieures de NodeJS peuvent tirer parti de l'API `fetch` avec le package [`node-fetch`](https://www.npmjs.com/package/node-fetch) :
+
+```sh
+npm install node-fetch
+```
+
+_Après polyfill+node-fetch : compatible à 99,99 %_ ✅
+
+> N'hésitez pas à [me tweeter](https://x.com/justsml) si vous avez d'autres _cas d'usage_ que vous aimeriez voir.
+
+❤️

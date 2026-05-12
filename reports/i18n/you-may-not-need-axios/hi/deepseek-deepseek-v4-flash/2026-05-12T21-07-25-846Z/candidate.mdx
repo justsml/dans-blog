@@ -1,0 +1,214 @@
+---
+social_image: ../desktop-social.webp
+title: शायद Axios की ज़रूरत न हो
+subTitle: Fetch API बचाव में आया!
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## आपको Axios की आवश्यकता नहीं हो सकती
+
+<p class="breakout call-to-action">यह [Axios](https://www.npmjs.com/package/axios) पर **हमला नहीं है**। <br />
+
+बल्कि, यह **`fetch` API के लिए समर्थन है जो काफी सक्षम हो गया है।** 🦄</p>
+
+### अवलोकन
+
+यह लेख उन "गुम" `fetch` कोड स्निपेट्स और सामान्य उपयोग मामलों का संग्रह है जिन्हें मैं ढूंढना आसान बनाना चाहता था।
+
+- [अवलोकन](#overview)
+- [सुविधा तुलना](#feature-comparison)
+- [Fetch रेसिपीज़](#fetch-recipes)
+  - [URL से JSON प्राप्त करें](#get-json-from-a-url)
+
+- [कस्टम हेडर](#custom-headers)
+  - [HTTP त्रुटि प्रबंधन](#http-error-handling)
+  - [CORS उदाहरण](#cors-example)
+  - [JSON पोस्ट करना](#posting-json)
+  - [HTML `<form>` पोस्ट करना](#posting-an-html-form)
+
+- [फ़ॉर्म एन्कोडेड डेटा](#form-encoded-data)
+  - [एक फ़ाइल अपलोड करना](#uploading-a-file)
+  - [एकाधिक फ़ाइलें अपलोड करना](#uploading-multiple-files)
+  - [टाइमआउट](#timeouts)
+  - [डाउनलोड प्रगति सहायक](#download-progress-helper)
+
+- [पुनरावर्ती पुनर्प्रयास सहायक](#recursive-retry-helper)
+  - [HTTP रीडायरेक्ट को संभालना](#handling-http-redirects)
+  - [fetch अनुरोध को रद्द करना](#canceling-a-fetch-request) ✨नया✨
+- [अनुकूलता](#compatibility)
+
+> क्या आपका उपयोग मामला सूचीबद्ध नहीं है? [मुझे बताएं ✉️](/contact/)
+
+<br />
+
+### सुविधा तुलना
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+
+| अनुरोध और प्रतिक्रिया को इंटरसेप्ट करना                  |✅        |✅         |✅       |
+| अनुरोध और प्रतिक्रिया डेटा को रूपांतरित करना             |✅        |✅         |✅       |
+| अनुरोध रद्द करना                                 |✅        |✅         |❌       |
+| JSON डेटा के लिए स्वचालित रूपांतरण              |मैन्युअल हेल्पर्स |✅         |✅       |
+| क्लाइंट साइड पर XSRF से सुरक्षा के लिए समर्थन |✅        |✅         |✅       |
+
+| प्रगति                                        |✅        |✅         |✅       |
+| स्ट्रीमिंग                                       |✅        |✅         |✅       |
+| रीडायरेक्ट                                       |✅        |✅         |✅       |
+
+<br /><br />
+
+जब मैंने यह लेख लिखना शुरू किया (देर 2018, 2024 में अपडेट किया गया), तो मुझे लगा था कि मैं मिश्रित चेकबॉक्स वाली एक तालिका के साथ समाप्त करूँगा। निश्चित रूप से कुछ विशेष _उपयोग के मामले_ हैं जो [`axios`](https://www.npmjs.com/package/axios), [`request`](https://www.npmjs.com/package/request), [`r2`](https://www.npmjs.com/package/r2), [`superagent`](https://www.npmjs.com/package/superagent), [`got`](https://www.npmjs.com/package/got) आदि को उचित ठहराते हैं।
+
+खैर, जैसा कि पता चला, **मैंने तृतीय-पक्ष HTTP लाइब्रेरियों की आवश्यकता को अधिक आंका था।
+
+**
+
+कई वर्षों तक `fetch` का उपयोग करने के बावजूद (गैर-सामान्य कार्यों सहित: फ़ाइल अपलोड और त्रुटि/पुनर्प्रयास समर्थन), मुझे अभी भी `fetch` की क्षमताओं और सीमाओं के बारे में गलत धारणाएँ थीं।
+
+नेटिव `fetch` स्वचालित रूप से JSON प्रतिक्रियाओं को पार्स नहीं करता है या JSON अनुरोध निकायों को स्ट्रिंगिफाई नहीं करता है।
+
+आप वापसी पर `response.json()` और भेजते समय `JSON.stringify()` को कॉल करते हैं। एर्गोनॉमिक्स के उस मामले में Axios अभी भी बेहतर है; `fetch` के पक्ष में तर्क यह है कि एक छोटी सहायक फ़ंक्शन अक्सर इस अंतर को भर देती है।
+
+खैर, आइए देखते हैं कि `fetch` क्या कर सकता है...
+
+## Fetch रेसिपीज़
+
+### URL से JSON प्राप्त करें
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### कस्टम हेडर
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTP त्रुटि प्रबंधन
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORS उदाहरण
+
+CORS मुख्य रूप से सर्वर पर जांचा जाता है - इसलिए सुनिश्चित करें कि आपका कॉन्फ़िगरेशन सर्वर-साइड पर सही है।
+
+`credentials` विकल्प यह नियंत्रित करता है कि आपके कुकीज़ स्वचालित रूप से शामिल हैं या नहीं।
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### JSON पोस्ट करना
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### HTML `<form>` पोस्ट करना
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### फॉर्म एन्कोडेड डेटा
+
+`Content-Type: application/x-www-form-urlencoded` वाले डेटा को पोस्ट करने के लिए हम `URLSearchParams` का उपयोग करके डेटा को क्वेरी स्ट्रिंग की तरह एन्कोड करेंगे।
+
+उदाहरण के लिए, `new URLSearchParams({a: 1, b: 2})` से `a=1&b=2` प्राप्त होता है।
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### फ़ाइल अपलोड करना
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### एकाधिक फ़ाइलें अपलोड करना
+
+`multiple` विशेषता वाला एक फ़ाइल अपलोड तत्व सेटअप करें:
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+फिर इस प्रकार उपयोग करें:
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### टाइमआउट
+
+यहाँ एक सामान्य Promise टाइमआउट है, जो 'Partial Application' पैटर्न का उपयोग करता है। यह किसी भी Promise इंटरफ़ेस के साथ काम करेगा।
+
+प्रदान की गई प्रॉमिस श्रृंखला में बहुत अधिक कार्य न करें, यह चलता रहेगा - और कोई भी विफलता दीर्घकालिक मेमोरी लीक उत्पन्न कर सकती है।
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+और एक अधिक जटिल उदाहरण, जिसमें एक ट्रैकिंग फ़्लैग `__timeout` है ताकि आप **किसी भी महँगे कार्य को इंटरसेप्ट** कर सकें।
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### डाउनलोड प्रोग्रेस हेल्पर
+
+अपलोड प्रोग्रेस वर्तमान में Chrome के बाहर थोड़ा बगी है।
+
+प्रोग्रेस हैंडलर [नीचे दिखाई गई तकनीक रैपिंग से बचाती है](#source-progress-helper) `fetch` कॉल को क्लोज़र में। 👍
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+आइए एक उपयोग उदाहरण देखें:
+
+<Gist path='justsml/9bec219590ff50688972c1caff67c14b' />
+
+एक पुन: प्रयोज्य इमेज डाउनलोडर `getBlob()` जैसा दिख सकता है:
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+वैसे, `Blob` एक बाइनरी लार्ज ऑब्जेक्ट है।
+
+नीचे दिए गए 2 उपयोग पैटर्न में से एक को चुनना महत्वपूर्ण है (वे कार्यात्मक रूप से समतुल्य हैं):
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+मेरी प्राथमिकता `Option #1` है। हालांकि, आपका स्कोप डिज़ाइन आपको `Option #2` का उपयोग करने के लिए मजबूर कर सकता है।
+अंत में, यहाँ इस रेसिपी का अंतिम भाग है, हमारा `progressHelper`:
+
+##### स्रोत: प्रोग्रेस हेल्पर
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_श्रेय:_ Anthum Chris और उनके [यहाँ दिखाए गए शानदार Progress+Fetch PoC](https://github.com/AnthumChris/fetch-progress-indicators) के लिए विशेष धन्यवाद
+
+### पुनरावर्ती पुनर्प्रयास सहायक
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### HTTP रीडायरेक्ट को संभालना
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### fetch अनुरोध को रद्द करना
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### संगतता
+
+2022 तक, `fetch` API सभी आधुनिक ब्राउज़रों और NodeJS v18+ के नए संस्करणों में [व्यापक रूप से समर्थित](https://caniuse.com/#feat=fetch) है।
+
+यदि आपको IE को सपोर्ट करना ही है, तो आप `github/fetch` पैकेज (GitHub की एक शानदार टीम द्वारा अनुरक्षित) के साथ [fetch को पॉलीफिल](https://github.com/github/fetch#browser-support) कर सकते हैं। [IE8](https://github.com/camsong/fetch-ie8) तक जाना संभव है - _आपकी माइलेज भिन्न हो सकती है_।
+
+पुराने NodeJS में [`node-fetch`](https://www.npmjs.com/package/node-fetch) पैकेज के साथ `fetch` API का लाभ उठाया जा सकता है:
+
+```sh
+npm install node-fetch
+```
+
+_पॉलीफिल+node-fetch के बाद: 99.99% संगत_ ✅
+
+
+> कृपया मुझे [ट्वीट करें](https://x.com/justsml) यदि आप अन्य _उपयोग के मामले_ देखना चाहते हैं।
+
+❤️

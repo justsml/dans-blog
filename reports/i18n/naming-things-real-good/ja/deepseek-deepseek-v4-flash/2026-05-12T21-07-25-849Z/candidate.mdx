@@ -1,0 +1,132 @@
+---
+social_image: ../desktop-social.webp
+title: 良い名前付け
+subTitle: 命名：オブジェクト指向の基本
+date: '2016-06-01'
+modified: '2024-08-10'
+category: Guides
+subCategory: programming
+tags:
+  - programming
+  - patterns
+  - naming
+  - source code
+  - organization
+cover: ../rawpixel-652639-unsplash.webp
+cover_mobile: ../w300_rawpixel-652639-unsplash.webp
+cover_icon: ../icon_rawpixel-652639-unsplash.webp
+---
+## 命名の話：オブジェクト指向の基本
+
+例を使ってオブジェクト/クラス設計を見てみましょう...
+
+### 状況
+
+これまでに（コード、SQL、Excelシートなどで）`データモデル`を設計したことはありますか？
+次のようなものに見覚えはありませんか？
+
+```
+*** anti-pattern - don't copy-paste ***
+* User
+  - id
+  - avatarUrl
+  - name
+  - email
+  - password
+
+* Agent
+  - id
+  - primaryPhoto
+  - name
+  - email
+  - agentEmail
+  - agentPhoneMain
+  - agentEmailPrimary
+  - agentPhonePrimary
+  - agentAddressFull
+  - agentCompanyName
+  - agentCompanyAddress
+  - *userEmail* - 'Pointer' to User table ^^^
+```
+
+### バグはどこにある？
+
+厳密に言えばバグではなく、単に再編成が必要なデータです。
+
+**次のような経験はありませんか？**
+
+1.  アプリに変更を加えるたびに、何時間もの骨の折れるデバッグが必要になる。
+
+1.  要件が変更されるたびに、次のような結果になります：
+
+![スキーマのリファクタリング][schema_refactor]
+
+なぜフィールド名を `agentEmailPrimary` と名付けるのが _そんなに悪い_ のか？
+
+まず第一に、あなたは宇宙にまったく新しいものを創造しているわけではない。過剰な具体性にはいくつかの落とし穴がある：
+
+1.  過度に具体的な名前に「固定」されてしまうと、`agentEmailPrimary` のような名前は、おそらくあなたのビューや関連コードを**0%の再利用性**にし、次のような厄介な繰り返しバグを引き起こす原因となる：
+
+- テーブル間でデータが同期されない（`user.email` を `agent.agentEmail` に伝搬させるべきなのか、その逆なのかが明確でない。この「ロジック」をどこでどのように強制するかを手動で実装する複雑さは言うまでもない……）
+
+- 検証ルールやロジックが重複し、一貫性を欠く可能性が高い。
+- プロジェクトはますます、ぐらつくジェンガタワーのようになる。
+- 些細な変更にも極めて高い注意力が必要となるため、新しいファイルを追加するたびに脆弱性が積み重なっていく。
+
+1.  `agentEmailPrimary` はいくつかの異なる意味を持ち得る。
+
+曖昧さを避けるには**短い名前**を使う。
+
+- 馬鹿げた余計な言葉に注意。`Primary`? それだとさらに疑問が湧く：Secondaryはあるのか？
+
+「それは『主要な近親者』のためか？」
+
+もう言葉は十分だ、Dan。代わりにどうあるべきだ？
+
+### 解決策
+
+```
+// Consolidated Schema:
+
+User
+  - id
+  - role: ['agent', 'lead', 'admin']
+  - name
+  - phone
+  - address
+  - email
+  - password
+  - company
+    - name
+    - address
+```
+
+`Agent`テーブルは削除した。エージェント固有のフィールドが何もなかったからだ。そして命名を整理した結果、`User.company`オブジェクト（`.name`、`.address`を持つ）が現れた。
+
+いくつかの指針：
+
+1. 不要なテーブルを排除する。本当に`statuses`テーブルが必要か？`User`テーブルに`status::VARCHAR(8)`フィールドを追加すれば済むのではないか？
+
+大丈夫です。行あたりの余分なバイトを使いましょう。
+2.  関連テーブルの統合を試みる。**データ**
+3.
+
+3. 冗長なデータ収集を削除する（例：Analyticsソリューションに置き換えられた場合は`ActivityLogs`テーブルを削除する）。
+4. **すべてのフィールド名**を**単一の単語/名詞/代名詞**に保つようにする。テーブルが提供するコンテキストに依存しても構わない。（例：`PersonalAccount.email` vs `BusinessAccount.email` - コンテキストはテーブル名によって提供される。）
+
+5. `Agent.agentEmail` や `Agent.agentPhonePrimary` なんてものは**存在しない**。以上。一緒に言ってみよう：「`email` と `phone` だ」。
+6.
+
+高度に特化した名前を使うことで、特定のレベルの `code-reusability` と `durability` を固定することになる。具体的には**ゼロ%**だ。
+7. こんなクソみたいな `User.profileSummaryEmail` は自分に何の利益ももたらさない。💞
+
+**おすすめの参考文献:**
+
+1. [正規化は正常ではないのかもしれない](https://blog.codinghorror.com/maybe-normalizing-isnt-normal/)
+1.
+
+[データベース正規化と非正規化のトレードオフ](https://dev.to/er_dward/the-trade-offs-between-database-normalization-and-denormalization-4kdo)
+2.  [http://phlonx.com/resources/nf3/](http://phlonx.com/resources/nf3/)
+3.  [データベース正規化](https://en.wikipedia.org/wiki/Database_normalization)
+
+[schema_refactor]: https://res.cloudinary.com/ddd/image/upload/bldg-collapse__wsZKhIc_kafcha.gif
