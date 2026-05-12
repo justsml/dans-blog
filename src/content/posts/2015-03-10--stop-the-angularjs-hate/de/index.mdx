@@ -1,0 +1,241 @@
+---
+social_image: ../desktop-social.webp
+title: AngularJS-Tricks
+subTitle: AngularJS KANN Spaß machen!
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+
+
+## AngularJS KANN Spaß machen!
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+> Für: AngularJS v1.x
+
+
+
+1.
+
+AngularJS-Entwickler stellen schnell fest, dass ihre mittelgroßen bis großen Anwendungen unter der Last verstreuter `$watch's` und der oft aufgeblähten Krücke namens `$scope` ächzen.
+
+2.
+
+Halten Sie Ihr `$scope` frei von überflüssigem UI-Status und versuchen Sie, die Größe und Tiefe Ihrer gesamten Hierarchie zu begrenzen.
+
+
+
+### 2-Wege-Datenbindung: Ein zweischneidiges Schwert
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+2-Wege-Binding allein macht den Wechsel von anderen Frameworks wie Backbone, na ja, **einfach nur verdammt geil**.
+
+
+
+Das Problem ist: Viele Websites **nutzen Angulars Design Patterns chronisch übermäßig**.
+
+Das führt zu einem Ausufern von Direktiven und einem `$scope/rootScope`, das leicht Tausende von Instanzen hat und an großen Objekten haften kann, was jede Hoffnung auf effektive Garbage Collection zunichtemacht.
+
+
+
+Sie wissen, worauf das hinausläuft: ein überlasteter Browser!
+
+Auf ewig verdammt dazu, in einem **rasenden Tempo** endlose und redundante UI/DOM-Neu-Kompilierungen auszuführen.
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+### Stopp der Über-Angular.JSifizierung
+
+
+
+> „Wenn dein einziges Werkzeug ein Hammer ist, dann sieht jedes Problem wie ein Nagel aus.“
+
+>
+
+> - alte Redewendung
+
+
+
+Hat deine App ein Problem mit Direktiven?
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+Entwerfen wir ein flexibles User-Widget, das hilft:
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+1.
+
+Vielseitige Komponentisierung mit DRY Angular-Code
+
+1.
+
+Verständliche Direktiven mit minimaler Direktivengröße/-tiefe (achten Sie auf Ihre ng-repeats)
+
+1.
+
+Einfache Service-Schicht
+
+1.
+
+Wenig tatsächlicher Code zur Implementierung - nur HTML/View Code
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## Lösungen
+
+
+
+### Angular Tipps
+
+
+
+1.
+
+Verwende Einweg-Bindung (z. B. `{ :: title }` )
+
+1.
+
+Begrenzen Sie die rekursive Verschachtelung von Direktiven
+
+1.
+
+Und wenn Sie Direktiven verschachteln müssen, tun Sie das _NIEMALS_ innerhalb eines `ng-repeat` – die Performance wird dann so etwas wie `O(n^2)^3` widerspiegeln ;)
+
+I.
+
+Verwenden Sie nativen JS/DOM-Code in einem Factory-Pattern, um grundlegende DOM/UI-Fragmente zu erstellen, z.B. Modal-Meldungsbox, Statusleiste.
+
+Rufen Sie UI-Factorys entweder aus Direktiven oder Controllern auf.
+
+1.
+
+_Bonus:_ Verstehen Sie die Kosten und Auslöser des [Browser-Render-Lebenszyklus](https://developers.google.com/web/fundamentals/performance/rendering/index?
+
+hl=en): Animation, Composite-Rendering, Reflows
+
+
+
+### Browserify zur Projektorganisation verwenden
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+Nicht speziell für Angular per se, aber wesentlich für eine einfache Abhängigkeitsauflösung.
+
+
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) macht JS-Projekte handhabbar – praktisch ohne zusätzlichen Code-Overhead (ok, ein paar hundert Zeichen).
+
+
+
+Lesen Sie einfach [diesen Abschnitt](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) des [Browserify-Handbuchs](https://github.com/substack/browserify-handbook/).
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+## Alternativen
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+### [ReactJS](https://facebook.github.io/react/) von Facebook
+
+
+
+Wenn Sie eine Unmenge kleiner, wiederverwendbarer UI-Komponenten haben - könnte ReactJS die bessere Wahl sein:
+
+
+
+- Wenn Ihr Projekt...?:
+
+- Hat eine andere Philosophie bei der UI/DOM-Implementierung als Angular
+
+- Hat bereits eine Art 'Framework' - Sie können **ReactJS zusammen mit** AngularJS, Ember, Backbone verwenden.
+
+(Vermeiden Sie dies jedoch wenn möglich).
+
+- Behandelt häufige Datenmodelländerungen im eigenen Code, und Sie profitieren davon, die ADHS-artige Natur des Digest/Loop-Musters in Angular zu vermeiden.
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+### [Polymer Project](http://www.Polymer-Project.org/) von Google
+
+
+
+### Reinerer JS-Ansatz
+
+--- CHUNK START ---
+
+--- CHUNK END ---
+
+- Übrigens, hier versuche ich, framework-agnostischen Code zu erstellen (+1 Testbarkeit, +1 Wiederverwendbarkeit)
+
+1.
+
+Verwende eine einfache JavaScript-Klasse, um Daten zu laden (AJAX/JSONP/im Seiteninhalt eingebettet usw.)
+
+1.
+
+Verwenden Sie Mustache-Templating, um HTML-Strings (oder direkt DOM) zu erstellen
+
+1.
+
+Cache gerenderte Inhalte in localStorage, wenn möglich
+
+1.
+
+(Optional) Fügen Sie nun einen Ereignis-Listener hinzu, um den Inhalt neu zu rendern.
+
+Ich habe mich auf den Ereignisnamen `refresh.<class-name>` festgelegt.
