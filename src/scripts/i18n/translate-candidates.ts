@@ -420,8 +420,8 @@ function isRejectedReport(reportPath: string) {
 }
 
 function getVariantArgs(model: string) {
-  const variant = MODEL_VARIANTS.get(model);
-  return variant == null ? [] : ["--variant", variant];
+  const variant = MODEL_VARIANTS.get(model) ?? "low";
+  return ["--variant", variant];
 }
 
 function getTimeoutSeconds() {

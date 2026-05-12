@@ -42,23 +42,51 @@ import {
   buildSummaryPrompt,
 } from "./prompts.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
+import { LOCALE_LABELS } from "../../shared/i18n.ts";
+import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
+import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 
 interface LlmConfig {
   modelId: string;
   providerSettings: OpenRouterProviderSettings;
+  providerOptions: {
+    openrouter: {
+      reasoning: {
+        effort: string;
+      };
+    };
+  };
+  reasoningEffort: string;
   temperature: number;
   maxTokens: number;
 }
 
+const DEFAULT_REASONING_EFFORT = "low";
+
 function resolveLlmConfig(modelInput: string): LlmConfig {
   if (modelInput.startsWith("llm://")) {
     const parsed = parseLlmString(modelInput);
+    const reasoningEffort = String(
+      parsed.params.reasoning_effort
+        ?? parsed.params.reasoningEffort
+        ?? parsed.params.effort
+        ?? DEFAULT_REASONING_EFFORT,
+    );
+
     return {
       modelId: parsed.model,
       providerSettings: {
         apiKey: parsed.apiKey,
         baseURL: parsed.host ? `https://${parsed.host}` : undefined,
       },
+      providerOptions: {
+        openrouter: {
+          reasoning: {
+            effort: reasoningEffort,
+          },
+        },
+      },
+      reasoningEffort,
       temperature: Number(parsed.params.temperature ?? parsed.params.temp ?? 0.3),
       maxTokens: Number(parsed.params.max_tokens ?? parsed.params.maxTokens ?? 16000),
     };
@@ -70,6 +98,14 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
   return {
     modelId,
     providerSettings: {},
+    providerOptions: {
+      openrouter: {
+        reasoning: {
+          effort: DEFAULT_REASONING_EFFORT,
+        },
+      },
+    },
+    reasoningEffort: DEFAULT_REASONING_EFFORT,
     temperature: 0.3,
     maxTokens: 16000,
   };
@@ -95,8 +131,8 @@ function normalizeCandidateForLocale(source: string, translatedBody: string): st
   let result = translatedBody
     .replace(/]\(\.\//g, "](../")
     .replace(/src="\.\//g, 'src="../')
-    .replace(/from '\.\.\/..\/..\//g, "from '../../../")
-    .replace(/from "\.\.\/..\/..\//g, 'from "../../../');
+    .replace(/from '\.\.\/..\/..\//g, "from '../../../../")
+    .replace(/from "\.\.\/..\/..\//g, 'from "../../../../');
 
   // Ensure all source import lines are present (insert at top of body)
   const sourceImports = source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [];
@@ -139,15 +175,16 @@ async function translateChunk(
     system,
     prompt: user,
     temperature: llmConfig.temperature,
-    maxTokens: llmConfig.maxTokens,
+    maxOutputTokens: llmConfig.maxTokens,
+    providerOptions: llmConfig.providerOptions,
   });
 
   const durationMs = Math.round(performance.now() - start);
 
   return {
     text: result.text,
-    inputTokens: result.usage?.promptTokens ?? 0,
-    outputTokens: result.usage?.completionTokens ?? 0,
+    inputTokens: result.usage?.inputTokens ?? 0,
+    outputTokens: result.usage?.outputTokens ?? 0,
     durationMs,
   };
 }
@@ -166,21 +203,160 @@ async function generateSummary(
       "You are a technical editor. Write concise, accurate summaries of technical articles.",
     prompt: buildSummaryPrompt(title, body, isQuiz),
     temperature: llmConfig.temperature,
-    maxTokens: 500,
+    maxOutputTokens: 500,
+    providerOptions: llmConfig.providerOptions,
   });
   return result.text.trim();
+}
+
+async function translateQuiz(
+  sourceBody: string,
+  locale: ActiveLocale,
+  llmConfig: LlmConfig,
+  skipSummary: boolean,
+  dryRun: boolean,
+): Promise<{ body: string; telemetry: Telemetry; articleSummary: string }> {
+  console.log("🧩 Parsing quiz structure...");
+  const quiz = parseQuiz(sourceBody);
+  console.log(`   ${quiz.challenges.length} challenges found\n`);
+
+  // Generate quiz description
+  let quizDescription = "";
+  if (!skipSummary) {
+    console.log("📝 Generating quiz description...");
+    quizDescription = await generateQuizDescription(quiz, llmConfig);
+    console.log(`   ${quizDescription.split("\n")[0]}\n`);
+  } else {
+    quizDescription = "Technical quiz. Translate each challenge precisely.";
+  }
+
+  if (dryRun) {
+    console.log("🧪 Dry run — printing first challenge payload:");
+    console.log("---");
+    const first = quiz.challenges[0];
+    if (first) {
+      console.log(JSON.stringify({
+        title: first.title,
+        group: first.group,
+        options: first.options.map(o => ({ text: o.text, hint: o.hint })),
+      }, null, 2));
+    }
+    console.log("---");
+    console.log("\nExiting without translation.");
+    return { body: sourceBody, telemetry: createEmptyTelemetry(llmConfig, "quiz"), articleSummary: quizDescription };
+  }
+
+  // Translate intro text using normal chunking
+  let translatedIntro = quiz.intro;
+  if (quiz.intro) {
+    console.log("🔄 Translating quiz intro...");
+    translatedIntro = await translateProse(quiz.intro, locale, llmConfig, quizDescription);
+    console.log("   ✅ Intro done\n");
+  }
+
+  // Translate each challenge one at a time
+  const translatedChallenges = [];
+  const telemetry: Telemetry = {
+    model: llmConfig.modelId,
+    chunkSize: "quiz",
+    totalChunks: quiz.challenges.length,
+    totalInputTokens: 0,
+    totalOutputTokens: 0,
+    totalDurationMs: 0,
+    chunks: [],
+  };
+
+  for (let i = 0; i < quiz.challenges.length; i++) {
+    const challenge = quiz.challenges[i];
+    console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}"`);
+
+    const { challenge: translatedChallenge, telemetry: t } = await translateChallenge(
+      challenge,
+      locale,
+      llmConfig,
+      quizDescription,
+      true,
+    );
+
+    translatedChallenges.push(translatedChallenge);
+    telemetry.chunks.push({ index: i, inputTokens: t.inputTokens, outputTokens: t.outputTokens, durationMs: t.durationMs });
+    telemetry.totalInputTokens += t.inputTokens;
+    telemetry.totalOutputTokens += t.outputTokens;
+    telemetry.totalDurationMs += t.durationMs;
+
+    console.log(
+      `   ✅ Done in ${t.durationMs}ms | input: ${t.inputTokens} | output: ${t.outputTokens}`,
+    );
+  }
+
+  // Translate outro text using normal chunking
+  let translatedOutro = quiz.outro;
+  if (quiz.outro) {
+    console.log("\n🔄 Translating quiz outro...");
+    translatedOutro = await translateProse(quiz.outro, locale, llmConfig, quizDescription);
+    console.log("   ✅ Outro done\n");
+  }
+
+  const translatedQuiz = {
+    intro: translatedIntro,
+    challenges: translatedChallenges,
+    outro: translatedOutro,
+  };
+
+  const body = assembleQuiz(translatedQuiz);
+  return { body, telemetry, articleSummary: quizDescription };
+}
+
+async function translateProse(
+  text: string,
+  locale: ActiveLocale,
+  llmConfig: LlmConfig,
+  context: string,
+): Promise<string> {
+  const provider = createOpenRouter(llmConfig.providerSettings);
+  const model = provider.chat(llmConfig.modelId);
+
+  const result = await generateText({
+    model,
+    system: buildSystemPrompt(locale, true),
+    prompt: [
+      `QUIZ CONTEXT:`,
+      context,
+      ``,
+      `Translate the following prose into ${LOCALE_LABELS[locale]}:`,
+      `---`,
+      text,
+      `---`,
+    ].join("\n"),
+    temperature: llmConfig.temperature,
+    maxOutputTokens: llmConfig.maxTokens,
+    providerOptions: llmConfig.providerOptions,
+  });
+
+  return result.text.trim();
+}
+
+function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetry {
+  return {
+    model: llmConfig.modelId,
+    chunkSize,
+    totalChunks: 0,
+    totalInputTokens: 0,
+    totalOutputTokens: 0,
+    totalDurationMs: 0,
+    chunks: [],
+  };
 }
 
 async function main() {
   const options = parseArgs();
   const slug = requireString(options, "slug");
   const locale = requireActiveLocale(options);
-  const chunkSizeInput = requireString(options, "chunk");
   const modelId = requireString(options, "model");
+  const chunkSizeInput = options["chunk"] as string | undefined;
   const skipSummary = options["skip-summary"] === true;
   const dryRun = options["dry-run"] === true;
 
-  const strategy = parseChunkSize(chunkSizeInput);
   const llmConfig = resolveLlmConfig(modelId);
   const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 
@@ -188,51 +364,99 @@ async function main() {
     throw new Error(`Source file not found: ${sourcePath}`);
   }
 
-  console.log(`\n📄 Source: ${relativeToRepo(sourcePath)}`);
-  console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
-  console.log(`🌐 Locale: ${locale}`);
-  console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
-  console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens})\n`);
-
   const sourceRaw = readFileSync(sourcePath, "utf8");
   const parsed = matter(sourceRaw);
   const sourceBody = parsed.content;
   const isQuiz = parsed.data.category === "Quiz";
 
+  console.log(`\n📄 Source: ${relativeToRepo(sourcePath)}`);
+  console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
+  console.log(`🌐 Locale: ${locale}`);
+  if (isQuiz) {
+    console.log(`✂️  Strategy: 1 question per API call`);
+  } else {
+    if (!chunkSizeInput) throw new Error(`Missing required --chunk for non-quiz articles`);
+    console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
+  }
+  console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens}, effort=${llmConfig.reasoningEffort})\n`);
+
+  let translatedBody: string;
+  let telemetry: Telemetry;
+  let articleSummary: string;
+
   if (isQuiz) {
     console.log(`🎯 Quiz detected: ${slug}\n`);
-  }
-
-  // Generate or skip summary
-  let articleSummary = "";
-  if (!skipSummary) {
-    console.log("📝 Generating article summary...");
-    articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, isQuiz);
-    console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
+    const result = await translateQuiz(sourceBody, locale, llmConfig, skipSummary, dryRun);
+    if (dryRun) return;
+    translatedBody = result.body;
+    telemetry = result.telemetry;
+    articleSummary = result.articleSummary;
   } else {
-    articleSummary = "No summary provided. Translate each chunk independently.";
+    // Regular article translation
+    const strategy = parseChunkSize(chunkSizeInput!);
+
+    if (!skipSummary) {
+      console.log("📝 Generating article summary...");
+      articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false);
+      console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
+    } else {
+      articleSummary = "No summary provided. Translate each chunk independently.";
+    }
+
+    console.log("✂️  Chunking article...");
+    const segments = extractSegments(sourceBody);
+    const chunks = chunkSegments(segments, strategy);
+    console.log(`   ${chunks.length} chunks created\n`);
+
+    if (dryRun) {
+      console.log("🧪 Dry run — printing first chunk:");
+      console.log("---");
+      console.log(chunks[0]?.text ?? "(no chunks)");
+      console.log("---");
+      console.log("\nExiting without translation.");
+      return;
+    }
+
+    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary);
+    translatedBody = reassembleChunks(result.translatedChunks);
+    telemetry = result.telemetry;
   }
 
-  // Chunk the body
-  console.log("✂️  Chunking article...");
-  const segments = extractSegments(sourceBody);
-  const chunks = chunkSegments(segments, strategy);
-  console.log(`   ${chunks.length} chunks created\n`);
+  const normalizedBody = normalizeCandidateForLocale(sourceRaw, translatedBody);
 
-  if (dryRun) {
-    console.log("🧪 Dry run — printing first chunk:");
-    console.log("---");
-    console.log(chunks[0]?.text ?? "(no chunks)");
-    console.log("---");
-    console.log("\nExiting without translation.");
-    return;
-  }
+  // Build frontmatter
+  const frontmatter: Record<string, unknown> = { ...parsed.data };
+  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz);
+  const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
 
-  // Translate chunks
+  const finalOutput = frontmatterYaml + "\n" + normalizedBody;
+
+  // Write output
+  mkdirSync(dirname(targetPath), { recursive: true });
+  writeFileSync(targetPath, finalOutput, "utf8");
+
+  // Write telemetry report
+  const reportName = chunkSizeInput ?? (isQuiz ? "quiz" : "article");
+  const reportPath = join(reportDir, `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`);
+  writeTextFile(reportPath, formatTelemetryReport(telemetry, articleSummary));
+
+  console.log(`\n✅ Translation written to ${relativeToRepo(targetPath)}`);
+  console.log(`📊 Report written to ${relativeToRepo(reportPath)}`);
+  console.log(
+    `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms`,
+  );
+}
+
+async function translateArticleChunks(
+  chunks: Chunk[],
+  locale: ActiveLocale,
+  llmConfig: LlmConfig,
+  articleSummary: string,
+): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
   const telemetry: Telemetry = {
     model: llmConfig.modelId,
-    chunkSize: chunkSizeInput,
+    chunkSize: "article",
     totalChunks: chunks.length,
     totalInputTokens: 0,
     totalOutputTokens: 0,
@@ -244,7 +468,6 @@ async function main() {
 
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
-    // Attach totalChunks for prompt context
     chunk.totalChunks = chunks.length;
 
     console.log(`🔄 Translating chunk ${i + 1}/${chunks.length}...`);
@@ -255,7 +478,7 @@ async function main() {
       llmConfig,
       articleSummary,
       previousTranslation,
-      isQuiz,
+      false,
     );
 
     telemetry.chunks.push({ index: i, inputTokens, outputTokens, durationMs });
@@ -276,36 +499,7 @@ async function main() {
     );
   }
 
-  // Reassemble
-  const translatedBody = reassembleChunks(translatedChunks);
-  const normalizedBody = normalizeCandidateForLocale(sourceRaw, translatedBody);
-
-  // Build frontmatter
-  const frontmatter: Record<string, unknown> = { ...parsed.data };
-  frontmatter.title = frontmatter.title; // Model should have translated inline, but we may need to extract
-  // We don't auto-translate frontmatter here; the chunked body includes it
-  // if gray-matter left it in parsed.content. Actually gray-matter strips it.
-  // We need to handle frontmatter translation separately or assume the body
-  // chunker doesn't see frontmatter. Let's translate frontmatter explicitly.
-
-  const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz);
-  const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
-
-  const finalOutput = frontmatterYaml + "\n" + normalizedBody;
-
-  // Write output
-  mkdirSync(dirname(targetPath), { recursive: true });
-  writeFileSync(targetPath, finalOutput, "utf8");
-
-  // Write telemetry report
-  const reportPath = join(reportDir, `chunked-${chunkSizeInput.replace(/[^a-z0-9]/gi, "")}.md`);
-  writeTextFile(reportPath, formatTelemetryReport(telemetry, articleSummary));
-
-  console.log(`\n✅ Translation written to ${relativeToRepo(targetPath)}`);
-  console.log(`📊 Report written to ${relativeToRepo(reportPath)}`);
-  console.log(
-    `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms`,
-  );
+  return { translatedChunks, telemetry };
 }
 
 async function translateFrontmatter(
@@ -315,6 +509,27 @@ async function translateFrontmatter(
   isQuiz: boolean,
 ): Promise<Record<string, unknown>> {
   const result = { ...frontmatter };
+
+  for (const key of ["date", "modified", "minReleaseDate"]) {
+    const value = result[key];
+    if (value instanceof Date) {
+      result[key] = value.toISOString().slice(0, 10);
+    }
+  }
+
+  for (const [key, value] of Object.entries(result)) {
+    if (
+      /(?:image|cover|icon|hero|thumbnail)/i.test(key)
+      && typeof value === "string"
+      && /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value)
+      && !value.startsWith("../")
+      && !value.startsWith("./")
+      && !value.startsWith("/")
+      && !/^https?:\/\//i.test(value)
+    ) {
+      result[key] = `../${value}`;
+    }
+  }
 
   // Only translate reader-facing strings
   const keysToTranslate = ["title", "subTitle", "cover_alt"];
@@ -330,7 +545,8 @@ async function translateFrontmatter(
       system: buildSystemPrompt(locale, isQuiz),
       prompt: `Translate the following ${key} into ${locale}. Keep it concise and natural.\n\n${value}`,
       temperature: llmConfig.temperature,
-      maxTokens: 500,
+      maxOutputTokens: 500,
+      providerOptions: llmConfig.providerOptions,
     });
 
     result[key] = translation.text.trim();
