@@ -1,30 +1,29 @@
 # I18n Coverage
 
-Generated at `2026-05-12T20:19:29.197Z`.
+Generated at `2026-05-12T21:24:15.895Z`.
 
 ## Summary
 
 - English posts: 75
-- Translation slots: 309/525 filled (58.9%)
-- Missing slots: 216
-- Fully translated posts: 22/75
+- Translation slots: 322/525 filled (61.3%)
+- Missing slots: 203
+- Fully translated posts: 24/75
 - Locales: es, hi, ja, ru, de, fr, it
 
 ## Locale Coverage
 
 | Locale | Filled | Missing | Coverage |
 | --- | ---: | ---: | ---: |
-| es | 54 | 21 | 72.0% |
-| hi | 54 | 21 | 72.0% |
-| ja | 42 | 33 | 56.0% |
-| ru | 35 | 40 | 46.7% |
-| de | 53 | 22 | 70.7% |
-| fr | 34 | 41 | 45.3% |
-| it | 37 | 38 | 49.3% |
+| es | 55 | 20 | 73.3% |
+| hi | 55 | 20 | 73.3% |
+| ja | 43 | 32 | 57.3% |
+| ru | 37 | 38 | 49.3% |
+| de | 54 | 21 | 72.0% |
+| fr | 38 | 37 | 50.7% |
+| it | 40 | 35 | 53.3% |
 
 ## Zero Coverage Posts
 
-- `you-may-not-need-axios` (Guides, 2018-11-14)
 - `docker-security-tips-for-self-hosting` (Security, 2025-01-04)
 - `from-zero-to-regex-hero-extract-url-like-strings` (Regex, 2024-12-29)
 - `breaking-unicorns` (Lulz, 2024-09-25)
@@ -32,18 +31,18 @@ Generated at `2026-05-12T20:19:29.197Z`.
 
 ## Health Notes
 
-- Missing locale slots with candidate reports waiting: 41
-- Existing translations without judge summaries: 155
+- Missing locale slots with candidate reports waiting: 42
+- Existing translations without judge summaries: 154
 
 ### Candidate Reports Without Translation Files
 
 | Post | Locale | Candidate reports | Qwen baseline |
 | --- | --- | ---: | --- |
-| you-may-not-need-axios | ru | 1 | yes |
-| you-may-not-need-axios | de | 1 | yes |
-| naming-things-real-good | ja | 1 | yes |
+| docker-security-tips-for-self-hosting | hi | 1 | yes |
+| docker-security-tips-for-self-hosting | ja | 1 | yes |
+| docker-security-tips-for-self-hosting | ru | 1 | yes |
 | docker-security-tips-for-self-hosting | fr | 1 | yes |
-| quiz-advanced-js-error-mastery | ru | 1 | yes |
+| docker-security-tips-for-self-hosting | it | 1 | yes |
 | from-zero-to-regex-hero-extract-url-like-strings | hi | 1 | yes |
 | breaking-unicorns | es | 1 | yes |
 | breaking-unicorns | hi | 1 | yes |
@@ -80,23 +79,12 @@ Generated at `2026-05-12T20:19:29.197Z`.
 | mastering-functional-pipelines-passing-state | it | 1 | yes |
 | stop-trying-to-make-async-await-happen | it | 1 | yes |
 | intro-to-promises | es | 1 | yes |
+| you-may-not-need-axios | ru | 1 | yes |
 
 ### Translations Without Judge Summaries
 
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
-| quiz-bash-in-the-shell | es | yes |
-| quiz-bash-in-the-shell | hi | no |
-| quiz-bash-in-the-shell | ja | no |
-| quiz-bash-in-the-shell | de | no |
-| naming-things-real-good | es | yes |
-| naming-things-real-good | ru | yes |
-| naming-things-real-good | de | yes |
-| naming-things-real-good | it | yes |
-| quiz-advanced-js-error-mastery | es | yes |
-| quiz-advanced-js-error-mastery | hi | no |
-| quiz-advanced-js-error-mastery | ja | yes |
-| quiz-advanced-js-error-mastery | de | no |
 | docker-server-setup-notes | es | yes |
 | docker-makes-everything-better | fr | yes |
 | amazing-resources | it | yes |
@@ -240,16 +228,23 @@ Generated at `2026-05-12T20:19:29.197Z`.
 | compare-nvme-ssd-cloud-options | ja | yes |
 | compare-nvme-ssd-cloud-options | ru | yes |
 | compare-nvme-ssd-cloud-options | de | yes |
+| you-may-not-need-axios | es | no |
+| you-may-not-need-axios | hi | no |
+| you-may-not-need-axios | de | yes |
+| you-may-not-need-axios | fr | no |
+| you-may-not-need-axios | it | no |
+| naming-things-real-good | es | yes |
+| naming-things-real-good | ja | yes |
+| naming-things-real-good | ru | yes |
+| naming-things-real-good | de | yes |
+| naming-things-real-good | fr | no |
+| naming-things-real-good | it | yes |
 
 ## Prioritized Gaps
 
 | Priority | Post | Category | Date | Filled | Missing locales | Reports waiting |
 | --- | --- | --- | --- | ---: | --- | ---: |
-| critical | you-may-not-need-axios | Guides | 2018-11-14 | 0/7 | es, hi, ja, ru, de, fr, it | 2 |
-| critical | quiz-bash-in-the-shell | Quiz | 2024-11-20 | 4/7 | ru, fr, it | 0 |
-| critical | naming-things-real-good | Guides | 2016-06-01 | 4/7 | hi, ja, fr | 1 |
-| high | docker-security-tips-for-self-hosting | Security | 2025-01-04 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
-| high | quiz-advanced-js-error-mastery | Quiz | 2025-11-03 | 4/7 | ru, fr, it | 1 |
+| high | docker-security-tips-for-self-hosting | Security | 2025-01-04 | 0/7 | es, hi, ja, ru, de, fr, it | 5 |
 | medium | from-zero-to-regex-hero-extract-url-like-strings | Regex | 2024-12-29 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
 | medium | breaking-unicorns | Lulz | 2024-09-25 | 0/7 | es, hi, ja, ru, de, fr, it | 2 |
 | medium | stop-the-angularjs-hate | Code | 2015-02-26 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
@@ -298,6 +293,8 @@ Generated at `2026-05-12T20:19:29.197Z`.
 | low | visualizing-promises | Guides | 2018-09-30 | 4/7 | hi, ja, fr | 0 |
 | low | intro-to-promises | Code | 2018-08-01 | 4/7 | es, ja, it | 1 |
 | low | compare-nvme-ssd-cloud-options | DevOps | 2017-04-15 | 4/7 | es, fr, it | 0 |
+| low | you-may-not-need-axios | Guides | 2018-11-14 | 5/7 | ja, ru | 1 |
+| low | naming-things-real-good | Guides | 2016-06-01 | 6/7 | hi | 0 |
 
 ## Translation Queue Commands
 
