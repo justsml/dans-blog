@@ -14,6 +14,7 @@
  *   1000t = ~1000 tokens per chunk
  */
 
+import { createHash } from "node:crypto";
 import { readFileSync, existsSync, mkdirSync, writeFileSync, appendFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import "dotenv/config";
@@ -146,6 +147,8 @@ interface QuizReportOptions {
   slug: string;
   locale: ActiveLocale;
   concurrency: number;
+  runDir: string;
+  timestamp: string;
 }
 
 interface QuizRunReporter {
@@ -182,10 +185,11 @@ function createQuizRunReporter(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   concurrency: number,
+  runDir: string,
+  timestamp: string,
 ): QuizRunReporter {
-  const reportDir = join(process.cwd(), "reports", slug, safeModelPathName(llmConfig.modelId));
-  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
-  const progressPath = join(reportDir, `progress-${timestamp}.jsonl`);
+  const reportDir = runDir;
+  const progressPath = join(reportDir, "progress.jsonl");
 
   mkdirSync(reportDir, { recursive: true });
 
@@ -194,7 +198,7 @@ function createQuizRunReporter(
     timestamp,
     progressPath,
     writeJson(name, data) {
-      writeFileSync(join(reportDir, `${name}-${timestamp}.json`), JSON.stringify(data, null, 2), "utf8");
+      writeFileSync(join(reportDir, `${name}.json`), JSON.stringify(data, null, 2), "utf8");
     },
     append(event, data) {
       appendFileSync(
@@ -222,6 +226,7 @@ function createQuizRunReporter(
     maxTokens: llmConfig.maxTokens,
     timeoutMs: llmConfig.timeoutMs,
     concurrency,
+    runId: timestamp,
     startedAt: new Date().toISOString(),
     progressPath: relativeToRepo(progressPath),
   });
@@ -272,6 +277,131 @@ function createTelemetry(llmConfig: LlmConfig, chunkSize: string, totalChunks: n
     pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
     chunks: [],
   };
+}
+
+function createRunTimestamp() {
+  return new Date().toISOString().replace(/[:.]/g, "-");
+}
+
+function hashText(text: string) {
+  return createHash("sha256").update(text).digest("hex");
+}
+
+function appendJsonl(path: string, data: Record<string, unknown>) {
+  mkdirSync(dirname(path), { recursive: true });
+  appendFileSync(path, JSON.stringify(data) + "\n", "utf8");
+}
+
+function getCandidateRunPaths(
+  slug: string,
+  locale: ActiveLocale,
+  modelId: string,
+  timestamp: string,
+) {
+  const rootDir = join(process.cwd(), "reports/i18n", slug, locale);
+  const modelDir = join(rootDir, safeModelPathName(modelId));
+  const runDir = join(modelDir, timestamp);
+
+  return {
+    rootDir,
+    modelDir,
+    runDir,
+    candidatePath: join(runDir, "candidate.mdx"),
+    summaryPath: join(runDir, "summary.json"),
+    runPath: join(runDir, "run.json"),
+    usagePath: join(runDir, "usage.jsonl"),
+    candidatesPath: join(rootDir, "candidates.jsonl"),
+  };
+}
+
+function writeCandidateRun({
+  slug,
+  locale,
+  sourcePath,
+  targetPath,
+  sourceRaw,
+  finalOutput,
+  telemetry,
+  articleSummary,
+  llmConfig,
+  timestamp,
+  chunkReportName,
+  chunkReport,
+}: {
+  slug: string;
+  locale: ActiveLocale;
+  sourcePath: string;
+  targetPath: string;
+  sourceRaw: string;
+  finalOutput: string;
+  telemetry: Telemetry;
+  articleSummary: string;
+  llmConfig: LlmConfig;
+  timestamp: string;
+  chunkReportName: string;
+  chunkReport: string;
+}) {
+  const paths = getCandidateRunPaths(slug, locale, llmConfig.modelId, timestamp);
+  const sourceHash = hashText(sourceRaw);
+  const outputHash = hashText(finalOutput);
+  const createdAt = new Date().toISOString();
+  const runId = `${safeModelPathName(llmConfig.modelId)}@${timestamp}`;
+
+  mkdirSync(paths.runDir, { recursive: true });
+  writeFileSync(paths.candidatePath, finalOutput, "utf8");
+  writeFileSync(join(paths.runDir, chunkReportName), chunkReport, "utf8");
+
+  for (const chunk of telemetry.chunks) {
+    appendJsonl(paths.usagePath, {
+      runId,
+      slug,
+      locale,
+      model: llmConfig.modelId,
+      createdAt,
+      ...chunk,
+    });
+  }
+
+  const summary = {
+    runId,
+    slug,
+    locale,
+    model: llmConfig.modelId,
+    modelPath: safeModelPathName(llmConfig.modelId),
+    createdAt,
+    sourcePath: relativeToRepo(sourcePath),
+    targetPath: relativeToRepo(targetPath),
+    candidatePath: relativeToRepo(paths.candidatePath),
+    sourceHash,
+    outputHash,
+    reasoningEffort: llmConfig.reasoningEffort,
+    temperature: llmConfig.temperature,
+    maxTokens: llmConfig.maxTokens,
+    timeoutMs: llmConfig.timeoutMs,
+    articleSummary,
+    totalInputTokens: telemetry.totalInputTokens,
+    totalOutputTokens: telemetry.totalOutputTokens,
+    totalCacheReadTokens: telemetry.totalCacheReadTokens,
+    totalCacheWriteTokens: telemetry.totalCacheWriteTokens,
+    totalDurationMs: telemetry.totalDurationMs,
+    totalCostUsd: telemetry.totalCostUsd,
+    pricingSource: telemetry.pricingSource,
+    telemetry,
+  };
+
+  writeFileSync(paths.summaryPath, JSON.stringify(summary, null, 2), "utf8");
+  writeFileSync(paths.runPath, JSON.stringify({
+    runId,
+    slug,
+    locale,
+    model: llmConfig.modelId,
+    createdAt,
+    sourceHash,
+    outputHash,
+  }, null, 2), "utf8");
+  appendJsonl(paths.candidatesPath, summary);
+
+  return paths;
 }
 
 async function mapLimit<T, R>(
@@ -439,7 +569,14 @@ async function translateQuiz(
 
   const reporter = dryRun
     ? undefined
-    : createQuizRunReporter(reportOptions.slug, locale, llmConfig, reportOptions.concurrency);
+    : createQuizRunReporter(
+      reportOptions.slug,
+      locale,
+      llmConfig,
+      reportOptions.concurrency,
+      reportOptions.runDir,
+      reportOptions.timestamp,
+    );
   reporter?.writeJson("parsed-quiz", {
     challengeCount: quiz.challenges.length,
     introLength: quiz.intro.length,
@@ -725,10 +862,13 @@ async function main() {
   const chunkSizeInput = options["chunk"] as string | undefined;
   const skipSummary = options["skip-summary"] === true;
   const dryRun = options["dry-run"] === true;
+  const shouldPublish = options["no-publish"] !== true;
   const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
 
   const llmConfig = resolveLlmConfig(modelId);
-  const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
+  const { sourcePath, targetPath } = getPostPaths(slug, locale);
+  const runTimestamp = createRunTimestamp();
+  const runPaths = getCandidateRunPaths(slug, locale, llmConfig.modelId, runTimestamp);
 
   if (!existsSync(sourcePath)) {
     throw new Error(`Source file not found: ${sourcePath}`);
@@ -742,6 +882,7 @@ async function main() {
   console.log(`\n📄 Source: ${relativeToRepo(sourcePath)}`);
   console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
   console.log(`🌐 Locale: ${locale}`);
+  console.log(`🗂️  Candidate run: ${safeModelPathName(llmConfig.modelId)}@${runTimestamp}`);
   if (isQuiz) {
     console.log(`✂️  Strategy: 1 question per API call, ${quizConcurrency} parallel challenge calls`);
   } else {
@@ -761,6 +902,8 @@ async function main() {
       slug,
       locale,
       concurrency: quizConcurrency,
+      runDir: runPaths.runDir,
+      timestamp: runTimestamp,
     });
     if (dryRun) return;
     translatedBody = result.body;
@@ -807,18 +950,39 @@ async function main() {
 
   const finalOutput = frontmatterYaml + "\n" + normalizedBody;
 
-  // Write output
-  mkdirSync(dirname(targetPath), { recursive: true });
-  writeFileSync(targetPath, finalOutput, "utf8");
-
-  // Write telemetry report. Keep model in the path so repeated runs with
-  // different models do not overwrite each other's chunked report.
   const reportName = chunkSizeInput ?? (isQuiz ? "quiz" : "article");
-  const modelReportDir = join(reportDir, safeModelPathName(llmConfig.modelId));
-  const reportPath = join(modelReportDir, `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`);
-  writeTextFile(reportPath, formatTelemetryReport(telemetry, articleSummary));
+  const chunkReportName = `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`;
+  const chunkReport = formatTelemetryReport(telemetry, articleSummary);
+  const candidatePaths = writeCandidateRun({
+    slug,
+    locale,
+    sourcePath,
+    targetPath,
+    sourceRaw,
+    finalOutput,
+    telemetry,
+    articleSummary,
+    llmConfig,
+    timestamp: runTimestamp,
+    chunkReportName,
+    chunkReport,
+  });
 
-  console.log(`\n✅ Translation written to ${relativeToRepo(targetPath)}`);
+  // Keep a latest-by-model telemetry report for quick human inspection.
+  const reportPath = join(runPaths.modelDir, chunkReportName);
+  writeTextFile(reportPath, chunkReport);
+
+  if (shouldPublish) {
+    mkdirSync(dirname(targetPath), { recursive: true });
+    writeFileSync(targetPath, finalOutput, "utf8");
+  }
+
+  console.log(`\n✅ Candidate written to ${relativeToRepo(candidatePaths.candidatePath)}`);
+  if (shouldPublish) {
+    console.log(`✅ Translation written to ${relativeToRepo(targetPath)}`);
+  } else {
+    console.log(`⏭️  Skipped publishing to ${relativeToRepo(targetPath)} (--no-publish)`);
+  }
   console.log(`📊 Report written to ${relativeToRepo(reportPath)}`);
   console.log(
     `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms, $${telemetry.totalCostUsd.toFixed(6)} estimated`,

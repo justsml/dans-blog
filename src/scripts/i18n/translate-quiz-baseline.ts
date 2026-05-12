@@ -99,21 +99,55 @@ function parseBoundedInt(
 }
 
 function readSummaries(slug: string, model: string, locale: ActiveLocale) {
-  const dir = join(process.cwd(), "reports", slug, safeModelPathName(model));
-  if (!existsSync(dir)) return [];
+  const summaries: SummaryStats[] = [];
+  const legacyDir = join(process.cwd(), "reports", slug, safeModelPathName(model));
+  if (existsSync(legacyDir)) {
+    summaries.push(...readSummaryFiles(legacyDir, locale));
+  }
 
+  const modelDir = join(process.cwd(), "reports/i18n", slug, locale, safeModelPathName(model));
+  if (existsSync(modelDir)) {
+    for (const entry of readdirSync(modelDir, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const summaryPath = join(modelDir, entry.name, "summary.json");
+      if (!existsSync(summaryPath)) continue;
+      try {
+        const json = JSON.parse(readFileSync(summaryPath, "utf8"));
+        summaries.push(normalizeSummaryStats(json));
+      } catch {
+        // Ignore malformed partial runs.
+      }
+    }
+  }
+
+  return summaries;
+}
+
+function readSummaryFiles(dir: string, locale: ActiveLocale) {
   return readdirSync(dir)
     .filter((name) => name.startsWith("summary-") && name.endsWith(".json"))
     .sort()
     .map((name) => {
       try {
         const json = JSON.parse(readFileSync(join(dir, name), "utf8"));
-        return json.locale === locale ? json as SummaryStats : undefined;
+        return json.locale === locale ? normalizeSummaryStats(json) : undefined;
       } catch {
         return undefined;
       }
     })
     .filter((summary): summary is SummaryStats => summary !== undefined);
+}
+
+function normalizeSummaryStats(json: any): SummaryStats {
+  const telemetry = json.telemetry ?? {};
+  return {
+    totalInputTokens: json.totalInputTokens ?? telemetry.totalInputTokens,
+    totalOutputTokens: json.totalOutputTokens ?? telemetry.totalOutputTokens,
+    totalCacheReadTokens: json.totalCacheReadTokens ?? telemetry.totalCacheReadTokens,
+    totalCacheWriteTokens: json.totalCacheWriteTokens ?? telemetry.totalCacheWriteTokens,
+    totalDurationMs: json.totalDurationMs ?? telemetry.totalDurationMs,
+    totalCostUsd: json.totalCostUsd ?? telemetry.totalCostUsd,
+  };
 }
 
 function latestSummary(slug: string, model: string, locale: ActiveLocale) {
