@@ -60,6 +60,7 @@ The translation pipeline is wrapped with Bun scripts:
 bun run i18n:translate:candidates -- --slug the-last-to-think --locale es
 bun run i18n:judge -- --slug the-last-to-think --locale es --model openrouter/google/gemini-3-flash-preview
 bun run i18n:validate -- --slug the-last-to-think --locale es
+bun run i18n:coverage
 bun run i18n:promote -- --slug the-last-to-think --locale es
 bun run i18n:report:models
 ```
@@ -125,6 +126,8 @@ Thinking-capable models are run with cheap reasoning variants by default:
 - `openrouter/z-ai/glm-5.1`: `--variant low`
 
 `bun run i18n:report:models` regenerates `reports/i18n/model-performance.md`, including aggregate model stats, winner counts, and article/locale winner tables.
+
+`bun run i18n:coverage` prints a coverage and health report for the translation corpus. Use it before starting a broad batch to see which slug/locale pairs are missing, after promotion to confirm coverage changed as expected, and during review to spot stale fallback redirects or locale folders that look incomplete. It is a reporting pass, not a promotion or validation substitute; still run the build/check commands below before finishing.
 
 ## Candidate Models
 

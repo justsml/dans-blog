@@ -1,9 +1,15 @@
 import { describe, expect, test } from "bun:test";
 import {
+  ACTIVE_LOCALES,
   DEFAULT_LOCALE,
+  FUTURE_LOCALES,
   getBaseSlugFromRouteSlug,
   getLocaleFromRouteSlug,
   getLocalizedPostPath,
+  getLocalizedPostSlug,
+  isActiveLocale,
+  isLocale,
+  normalizeRoutePath,
 } from "./i18n";
 import { getSlugFromId, parsePostId } from "./pathHelpers";
 
@@ -44,6 +50,54 @@ describe("i18n post routing helpers", () => {
     );
     expect(getLocalizedPostPath("postgres-text-search-guide", "de")).toBe(
       "/de/postgres-text-search-guide/",
+    );
+  });
+
+  test("normalizes route paths without duplicating slashes", () => {
+    expect(normalizeRoutePath("postgres-text-search-guide")).toBe(
+      "/postgres-text-search-guide/",
+    );
+    expect(normalizeRoutePath("/postgres-text-search-guide/")).toBe(
+      "/postgres-text-search-guide/",
+    );
+    expect(normalizeRoutePath("///ja/postgres-text-search-guide///")).toBe(
+      "/ja/postgres-text-search-guide/",
+    );
+    expect(normalizeRoutePath("///")).toBe("/");
+  });
+
+  test("keeps active translation slugs prefixed and English slugs unprefixed", () => {
+    expect(getLocalizedPostSlug("postgres-text-search-guide", DEFAULT_LOCALE)).toBe(
+      "postgres-text-search-guide",
+    );
+
+    for (const locale of ACTIVE_LOCALES) {
+      expect(getLocalizedPostSlug("postgres-text-search-guide", locale)).toBe(
+        `${locale}/postgres-text-search-guide`,
+      );
+      expect(getLocalizedPostPath("postgres-text-search-guide", locale)).toBe(
+        `/${locale}/postgres-text-search-guide/`,
+      );
+    }
+  });
+
+  test("distinguishes supported future locales from active rollout locales", () => {
+    expect(FUTURE_LOCALES).toContain("zh");
+    expect(isLocale("zh")).toBe(true);
+    expect(isActiveLocale("zh")).toBe(false);
+    expect(isLocale("pt")).toBe(false);
+    expect(isActiveLocale("pt")).toBe(false);
+  });
+
+  test("parses future locale routes but does not treat unsupported prefixes as locales", () => {
+    expect(getLocaleFromRouteSlug("zh/postgres-text-search-guide")).toBe("zh");
+    expect(getBaseSlugFromRouteSlug("zh/postgres-text-search-guide")).toBe(
+      "postgres-text-search-guide",
+    );
+
+    expect(getLocaleFromRouteSlug("pt/postgres-text-search-guide")).toBe("en");
+    expect(getBaseSlugFromRouteSlug("pt/postgres-text-search-guide")).toBe(
+      "pt/postgres-text-search-guide",
     );
   });
 

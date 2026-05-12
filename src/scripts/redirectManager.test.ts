@@ -112,6 +112,23 @@ describe("redirect manifest generation", () => {
     );
   });
 
+  test("builds fallback redirects for missing translations", () => {
+    expect(
+      buildRedirectManifest([
+        post("postgres-text-search-guide", [
+          "/es/postgres-text-search-guide",
+          "/es/postgres-text-search-guide/",
+        ]),
+      ]),
+    ).toBe(
+      [
+        "/es/postgres-text-search-guide /postgres-text-search-guide 301",
+        "/es/postgres-text-search-guide/ /postgres-text-search-guide 301",
+        "",
+      ].join("\n"),
+    );
+  });
+
   test("throws when an existing redirect conflicts with post frontmatter", () => {
     expect(() =>
       buildRedirectManifest(
