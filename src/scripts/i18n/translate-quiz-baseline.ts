@@ -110,6 +110,21 @@ function parseBoundedInt(
   return Math.min(parsed, max);
 }
 
+function resolveModels(options: Record<string, string | boolean>) {
+  const rawModels =
+    typeof options.candidates === "string"
+      ? options.candidates
+      : typeof options.models === "string"
+        ? options.models
+        : undefined;
+
+  return parseList(rawModels, DEFAULT_MODELS).map(normalizeCandidateModel);
+}
+
+function normalizeCandidateModel(model: string) {
+  return model.replace(/@\d{4}-\d{2}-\d{2}T.*$/, "");
+}
+
 function readSummaries(slug: string, model: string, locale: ActiveLocale) {
   const summaries: SummaryStats[] = [];
   const legacyDir = join(process.cwd(), "reports", slug, safeModelPathName(model));
@@ -282,14 +297,18 @@ async function main() {
     MAX_CHALLENGE_RETRIES,
     "challenge-retries",
   );
-  const models = parseList(
-    typeof options.models === "string" ? options.models : undefined,
-    DEFAULT_MODELS,
-  );
+  const models = resolveModels(options);
   const locales = resolveLocales(options);
   const posts = findQuizPosts();
+  const selectedSlugs = new Set(parseList(
+    typeof options.slugs === "string" ? options.slugs : undefined,
+    [],
+  ));
   const limit = typeof options.limit === "string" ? Number(options.limit) : undefined;
-  const selectedPosts = Number.isFinite(limit) ? posts.slice(0, limit) : posts;
+  const scopedPosts = selectedSlugs.size === 0
+    ? posts
+    : posts.filter((post) => selectedSlugs.has(post.slug));
+  const selectedPosts = Number.isFinite(limit) ? scopedPosts.slice(0, limit) : scopedPosts;
 
   const reportDir = join(process.cwd(), "reports", "quiz-baseline");
   mkdirSync(reportDir, { recursive: true });
