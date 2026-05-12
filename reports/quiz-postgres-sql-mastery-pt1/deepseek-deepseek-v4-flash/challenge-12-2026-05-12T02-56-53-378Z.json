@@ -1,0 +1,43 @@
+{
+  "index": 11,
+  "originalTitle": "Timestamp Precision",
+  "translatedTitle": "Precisión de Timestamp",
+  "translation": {
+    "title": "Precisión de Timestamp",
+    "group": "Fecha/Hora",
+    "options": [
+      {
+        "text": "2024-01-08 13:30:00+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.123456789+00"
+      },
+      {
+        "text": "2024-01-08 13:30:00.1234567"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el literal `timestamp` más pequeño que supera la precisión máxima de `time` en Postgres?"
+    ],
+    "explanationProse": [
+      "Los timestamps de PostgreSQL tienen precisión de microsegundos (6 decimales).\n\n    - Máximo: `.123456` (6 dígitos)\n    - Los nanosegundos (9 dígitos) se redondean o truncan a la precisión soportada\n    - Los offsets de zona horaria son aceptados para `timestamptz`, pero no son requeridos\n\n    **Gotcha poco común:** Algunos lenguajes/frameworks envían precisión de nanosegundos, pero PostgreSQL almacena timestamps con precisión de microsegundos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Precisión de Timestamp\",\n  \"group\": \"Fecha/Hora\",\n  \"options\": [\n    {\n      \"text\": \"2024-01-08 13:30:00+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.123456789+00\"\n    },\n    {\n      \"text\": \"2024-01-08 13:30:00.1234567\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el literal `timestamp` más pequeño que supera la precisión máxima de `time` en Postgres?\"\n  ],\n  \"explanationProse\": [\n    \"Los timestamps de PostgreSQL tienen precisión de microsegundos (6 decimales).\\n\\n    - Máximo: `.123456` (6 dígitos)\\n    - Los nanosegundos (9 dígitos) se redondean o truncan a la precisión soportada\\n    - Los offsets de zona horaria son aceptados para `timestamptz`, pero no son requeridos\\n\\n    **Gotcha poco común:** Algunos lenguajes/frameworks envían precisión de nanosegundos, pero PostgreSQL almacena timestamps con precisión de microsegundos.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 1023,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8148
+  },
+  "cost": {
+    "inputUsd": 0.00011102,
+    "outputUsd": 0.00028644000000000006,
+    "totalUsd": 0.0003974600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

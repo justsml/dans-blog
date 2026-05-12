@@ -1,0 +1,48 @@
+{
+  "index": 3,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Lifetimes implícitos",
+  "translation": {
+    "title": "Lifetimes implícitos",
+    "group": "Elisión de lifetimes",
+    "options": [
+      {
+        "text": "Se compila correctamente"
+      },
+      {
+        "text": "Error: falta el especificador de lifetime",
+        "hint": "¡Recuerda las reglas de elisión de lifetimes; están aquí para ayudarte!"
+      },
+      {
+        "text": "Error: se requiere un lifetime explícito",
+        "hint": "El compilador puede deducir esto automáticamente"
+      },
+      {
+        "text": "Error: discrepancia de lifetimes",
+        "hint": "Los lifetimes coinciden perfectamente aquí"
+      }
+    ],
+    "questionProse": [
+      "¿Se compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?"
+    ],
+    "explanationProse": [
+      "Este código se compila correctamente gracias a las reglas de elisión de lifetimes de Rust. \n      Estas reglas permiten que el compilador infiera automáticamente los lifetimes en patrones comunes.\n\n      Las tres reglas de elisión de lifetimes son:\n      1. Cada parámetro obtiene su propio parámetro de lifetime\n      2. Si hay exactamente un parámetro de lifetime de entrada, ese lifetime se asigna a todos los parámetros de lifetime de salida\n      3. Si hay múltiples parámetros de lifetime de entrada, pero uno de ellos es &self o &mut self, el lifetime de self se asigna a todos los parámetros de lifetime de salida\n\n      Esta función es equivalente a:",
+      "Patrones comunes donde la elisión funciona:",
+      "Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero comprende cuándo se necesitan lifetimes explícitos."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lifetimes implícitos\",\n  \"group\": \"Elisión de lifetimes\",\n  \"options\": [\n    {\n      \"text\": \"Se compila correctamente\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de lifetime\",\n      \"hint\": \"¡Recuerda las reglas de elisión de lifetimes; están aquí para ayudarte!\"\n    },\n    {\n      \"text\": \"Error: se requiere un lifetime explícito\",\n      \"hint\": \"El compilador puede deducir esto automáticamente\"\n    },\n    {\n      \"text\": \"Error: discrepancia de lifetimes\",\n      \"hint\": \"Los lifetimes coinciden perfectamente aquí\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Se compilará este código? Si es así, ¿por qué? Si no, ¿qué está mal?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Este código se compila correctamente gracias a las reglas de elisión de lifetimes de Rust. \\n      Estas reglas permiten que el compilador infiera automáticamente los lifetimes en patrones comunes.\\n\\n      Las tres reglas de elisión de lifetimes son:\\n      1. Cada parámetro obtiene su propio parámetro de lifetime\\n      2. Si hay exactamente un parámetro de lifetime de entrada, ese lifetime se asigna a todos los parámetros de lifetime de salida\\n      3. Si hay múltiples parámetros de lifetime de entrada, pero uno de ellos es &self o &mut self, el lifetime de self se asigna a todos los parámetros de lifetime de salida\\n\\n      Esta función es equivalente a:\",\n    \"Patrones comunes donde la elisión funciona:\",\n    \"Mejor práctica: Deja que la elisión trabaje por ti cuando sea posible, pero comprende cuándo se necesitan lifetimes explícitos.\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 966,
+    "outputTokens": 4300,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 78764
+  },
+  "cost": {
+    "inputUsd": 0.00031395,
+    "outputUsd": 0.008385,
+    "totalUsd": 0.00869895,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

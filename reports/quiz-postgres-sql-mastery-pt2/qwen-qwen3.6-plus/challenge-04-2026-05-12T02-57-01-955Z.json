@@ -1,0 +1,43 @@
+{
+  "index": 3,
+  "originalTitle": "Automatic Rollback",
+  "translatedTitle": "Rollback Automático",
+  "translation": {
+    "title": "Rollback Automático",
+    "group": "Transacciones",
+    "options": [
+      {
+        "text": "Depende de efectos secundarios"
+      },
+      {
+        "text": "Revierte todas las sentencias"
+      },
+      {
+        "text": "Confirma solo la primera sentencia"
+      },
+      {
+        "text": "Confirma todas las sentencias exitosas"
+      }
+    ],
+    "questionProse": [
+      "Dejando de lado \"Depende de efectos secundarios\"\n    ¿Qué ocurre exactamente tras un error?"
+    ],
+    "explanationProse": [
+      "Cuando ocurre un error aquí:\n    - Se revierte la transacción **completa** para garantizar la atomicidad\n    - No se confirma ningún cambio\n    - La transacción se marca como fallida\n\n    Para confirmar parcialmente:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rollback Automático\",\n  \"group\": \"Transacciones\",\n  \"options\": [\n    {\"text\": \"Depende de efectos secundarios\"},\n    {\"text\": \"Revierte todas las sentencias\"},\n    {\"text\": \"Confirma solo la primera sentencia\"},\n    {\"text\": \"Confirma todas las sentencias exitosas\"}\n  ],\n  \"questionProse\": [\n    \"Dejando de lado \\\"Depende de efectos secundarios\\\"\\n    ¿Qué ocurre exactamente tras un error?\"\n  ],\n  \"explanationProse\": [\n    \"Cuando ocurre un error aquí:\\n    - Se revierte la transacción **completa** para garantizar la atomicidad\\n    - No se confirma ningún cambio\\n    - La transacción se marca como fallida\\n\\n    Para confirmar parcialmente:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 3203,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 58742
+  },
+  "cost": {
+    "inputUsd": 0.00025739999999999997,
+    "outputUsd": 0.00624585,
+    "totalUsd": 0.0065032499999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

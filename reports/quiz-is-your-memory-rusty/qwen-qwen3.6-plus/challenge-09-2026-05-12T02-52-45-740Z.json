@@ -1,0 +1,47 @@
+{
+  "index": 8,
+  "originalTitle": "RefCell Behavior",
+  "translatedTitle": "Comportamiento de RefCell",
+  "translation": {
+    "title": "Comportamiento de RefCell",
+    "group": "RefCells",
+    "options": [
+      {
+        "text": "Imprime: 42",
+        "hint": "¿Podemos tener dos préstamos mutables al mismo tiempo?"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución: RefCell already borrowed"
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "RefCell traslada las comprobaciones a tiempo de ejecución"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución: mensaje diferente",
+        "hint": "El error menciona específicamente el préstamo"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede cuando se ejecuta este código?"
+    ],
+    "explanationProse": [
+      "RefCell proporciona mutabilidad interna, pero sigue aplicando las reglas de préstamo de Rust en tiempo de ejecución:",
+      "Conceptos clave:\n      1. RefCell traslada las comprobaciones de préstamo a tiempo de ejecución\n      2. Puede causar pánicos si se violan las reglas\n      3. Útil para el patrón de mutabilidad interna\n\n      Casos de uso comunes:\n      - Objetos mock en pruebas\n      - Implementación de estructuras autorreferenciales\n      - Cuando necesitas mutar datos detrás de una referencia compartida\n      \n      Buenas prácticas:\n      1. Prefiere el préstamo en tiempo de compilación cuando sea posible\n      2. Mantén los préstamos de RefCell en ámbitos estrechos\n      3. Considera usar drop() para finalizar explícitamente los préstamos\n      4. Usa RefCell cuando necesites mutabilidad interna"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportamiento de RefCell\",\n  \"group\": \"RefCells\",\n  \"options\": [\n    {\n      \"text\": \"Imprime: 42\",\n      \"hint\": \"¿Podemos tener dos préstamos mutables al mismo tiempo?\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución: RefCell already borrowed\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"RefCell traslada las comprobaciones a tiempo de ejecución\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución: mensaje diferente\",\n      \"hint\": \"El error menciona específicamente el préstamo\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede cuando se ejecuta este código?\"\n  ],\n  \"explanationProse\": [\n    \"RefCell proporciona mutabilidad interna, pero sigue aplicando las reglas de préstamo de Rust en tiempo de ejecución:\",\n    \"Conceptos clave:\\n      1. RefCell traslada las comprobaciones de préstamo a tiempo de ejecución\\n      2. Puede causar pánicos si se violan las reglas\\n      3. Útil para el patrón de mutabilidad interna\\n\\n      Casos de uso comunes:\\n      - Objetos mock en pruebas\\n      - Implementación de estructuras autorreferenciales\\n      - Cuando necesitas mutar datos detrás de una referencia compartida\\n      \\n      Buenas prácticas:\\n      1. Prefiere el préstamo en tiempo de compilación cuando sea posible\\n      2. Mantén los préstamos de RefCell en ámbitos estrechos\\n      3. Considera usar drop() para finalizar explícitamente los préstamos\\n      4. Usa RefCell cuando necesites mutabilidad interna\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 926,
+    "outputTokens": 5057,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 94172
+  },
+  "cost": {
+    "inputUsd": 0.00030094999999999997,
+    "outputUsd": 0.009861149999999999,
+    "totalUsd": 0.010162099999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

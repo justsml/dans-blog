@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "originalTitle": "S3 Bucket Policy",
+  "translatedTitle": "Política de bucket de S3",
+  "translation": {
+    "title": "Política de bucket de S3",
+    "group": "Seguridad de S3",
+    "options": [
+      {
+        "text": "Hacer públicos los nuevos buckets",
+        "hint": "El principio de menor privilegio, primero."
+      },
+      {
+        "text": "Mover S3 a un entorno on-premise para controlar completamente las ACL"
+      },
+      {
+        "text": "Mover los datos a una blockchain privada",
+        "hint": "¿Es broma, verdad?"
+      },
+      {
+        "text": "Usar el principio de menor privilegio"
+      },
+      {
+        "text": "Usar comodines en las políticas para garantizar el acceso necesario",
+        "hint": "😯 ¡No!"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el enfoque recomendado para los permisos de los buckets de S3?"
+    ],
+    "explanationProse": [
+      "En prácticamente TODOS los sistemas, adoptar un diseño de \"menor privilegio\" es una forma clave de reforzar la seguridad y garantizar su viabilidad a futuro. Intentar blindar un sistema existente es tan difícil como trasladar un edificio de oficinas completo a unos nuevos cimientos.\n\n  Los buckets de S3 no son la excepción. Para aplicar el principio de menor privilegio, comienza sin permisos y otorga solo el acceso estrictamente necesario. Usa roles y políticas de IAM para controlar el acceso y audita regularmente los permisos de los buckets.\n\n  Mejores prácticas de seguridad:\n  - Aplica el principio de menor privilegio\n  - Comienza sin permisos\n  - Otorga solo el acceso necesario\n  - Usa roles y políticas de IAM\n  - Audita regularmente los permisos de los buckets\n\n  Evita configuraciones excesivamente permisivas que puedan exponer datos sensibles.\n\n  [Mejores prácticas de seguridad de S3](https://aws.amazon.com/s3/security/)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Política de bucket de S3\",\n  \"group\": \"Seguridad de S3\",\n  \"options\": [\n    {\n      \"text\": \"Hacer públicos los nuevos buckets\",\n      \"hint\": \"El principio de menor privilegio, primero.\"\n    },\n    {\n      \"text\": \"Mover S3 a un entorno on-premise para controlar completamente las ACL\"\n    },\n    {\n      \"text\": \"Mover los datos a una blockchain privada\",\n      \"hint\": \"¿Es broma, verdad?\"\n    },\n    {\n      \"text\": \"Usar el principio de menor privilegio\"\n    },\n    {\n      \"text\": \"Usar comodines en las políticas para garantizar el acceso necesario\",\n      \"hint\": \"😯 ¡No!\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el enfoque recomendado para los permisos de los buckets de S3?\"\n  ],\n  \"explanationProse\": [\n    \"En prácticamente TODOS los sistemas, adoptar un diseño de \\\"menor privilegio\\\" es una forma clave de reforzar la seguridad y garantizar su viabilidad a futuro. Intentar blindar un sistema existente es tan difícil como trasladar un edificio de oficinas completo a unos nuevos cimientos.\\n\\n  Los buckets de S3 no son la excepción. Para aplicar el principio de menor privilegio, comienza sin permisos y otorga solo el acceso estrictamente necesario. Usa roles y políticas de IAM para controlar el acceso y audita regularmente los permisos de los buckets.\\n\\n  Mejores prácticas de seguridad:\\n  - Aplica el principio de menor privilegio\\n  - Comienza sin permisos\\n  - Otorga solo el acceso necesario\\n  - Usa roles y políticas de IAM\\n  - Audita regularmente los permisos de los buckets\\n\\n  Evita configuraciones excesivamente permisivas que puedan exponer datos sensibles.\\n\\n  [Mejores prácticas de seguridad de S3](https://aws.amazon.com/s3/security/)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 942,
+    "outputTokens": 3472,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63981
+  },
+  "cost": {
+    "inputUsd": 0.00030615000000000004,
+    "outputUsd": 0.006770399999999999,
+    "totalUsd": 0.007076549999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

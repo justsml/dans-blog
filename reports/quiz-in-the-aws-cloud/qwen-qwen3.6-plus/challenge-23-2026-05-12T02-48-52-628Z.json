@@ -1,0 +1,43 @@
+{
+  "index": 22,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Mecanismo de failover de Aurora",
+  "translation": {
+    "title": "Mecanismo de failover de Aurora",
+    "group": "Alta disponibilidad de Aurora",
+    "options": [
+      {
+        "text": "Requiere intervención manual"
+      },
+      {
+        "text": "Requiere reconfigurar la aplicación"
+      },
+      {
+        "text": "Siempre promueve la réplica más antigua"
+      },
+      {
+        "text": "Promoción automática según el nivel de prioridad de failover"
+      }
+    ],
+    "questionProse": [
+      "En un clúster de Aurora con varias réplicas de lectura, ¿qué ocurre durante un failover automático cuando la instancia principal falla?"
+    ],
+    "explanationProse": [
+      "Proceso de failover de Aurora:\n      1. Detecta el fallo de la instancia principal\n      2. Elige una réplica de Aurora basándose principalmente en el nivel de prioridad de failover\n      3. Usa las características de la instancia como desempate cuando las prioridades coinciden\n      4. Actualiza el endpoint del clúster automáticamente\n\n      Mejores prácticas:\n      - Mantén varias réplicas distribuidas en distintas zonas de disponibilidad (AZ)\n      - Configura los niveles de promoción de forma intencional\n      - Usa el endpoint del clúster en tus aplicaciones\n      - Prueba los escenarios de failover regularmente"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mecanismo de failover de Aurora\",\n  \"group\": \"Alta disponibilidad de Aurora\",\n  \"options\": [\n    {\n      \"text\": \"Requiere intervención manual\"\n    },\n    {\n      \"text\": \"Requiere reconfigurar la aplicación\"\n    },\n    {\n      \"text\": \"Siempre promueve la réplica más antigua\"\n    },\n    {\n      \"text\": \"Promoción automática según el nivel de prioridad de failover\"\n    }\n  ],\n  \"questionProse\": [\n    \"En un clúster de Aurora con varias réplicas de lectura, ¿qué ocurre durante un failover automático cuando la instancia principal falla?\"\n  ],\n  \"explanationProse\": [\n    \"Proceso de failover de Aurora:\\n      1. Detecta el fallo de la instancia principal\\n      2. Elige una réplica de Aurora basándose principalmente en el nivel de prioridad de failover\\n      3. Usa las características de la instancia como desempate cuando las prioridades coinciden\\n      4. Actualiza el endpoint del clúster automáticamente\\n\\n      Mejores prácticas:\\n      - Mantén varias réplicas distribuidas en distintas zonas de disponibilidad (AZ)\\n      - Configura los niveles de promoción de forma intencional\\n      - Usa el endpoint del clúster en tus aplicaciones\\n      - Prueba los escenarios de failover regularmente\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 833,
+    "outputTokens": 3103,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56914
+  },
+  "cost": {
+    "inputUsd": 0.000270725,
+    "outputUsd": 0.00605085,
+    "totalUsd": 0.006321575,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

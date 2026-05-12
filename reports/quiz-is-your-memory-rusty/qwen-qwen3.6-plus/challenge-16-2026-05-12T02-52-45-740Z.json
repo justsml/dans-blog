@@ -1,0 +1,46 @@
+{
+  "index": 15,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "Copy vs Clone",
+  "translation": {
+    "title": "Copy vs Clone",
+    "group": "Patrones de diseño",
+    "options": [
+      {
+        "text": "Error de compilación",
+        "hint": "El atributo derive se usa correctamente"
+      },
+      {
+        "text": "Se crea una copia profunda"
+      },
+      {
+        "text": "Se crea una copia superficial",
+        "hint": "Clone crea una copia profunda de los campos String"
+      },
+      {
+        "text": "Se aplican semánticas de movimiento",
+        "hint": "Clone crea explícitamente una nueva copia"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede exactamente cuando clonamos esta struct Philosophy?"
+    ],
+    "explanationProse": [
+      "Entendamos en detalle Copy vs Clone:\n      Diferencias clave:\n      1. Copy:\n         - Copia implícita, a nivel de bits\n         - Debe ser seguro para Copy (sin asignaciones en el heap)\n         - Típicamente para tipos pequeños que solo viven en el stack\n         \n      2. Clone:\n         - Copia explícita, potencialmente profunda\n         - Puede manejar asignaciones en el heap\n         - Más flexible pero potencialmente costoso\n\n      Buenas prácticas:\n      1. Implementa Copy para tipos pequeños que solo viven en el stack\n      2. Usa Clone para tipos con recursos propios\n      3. Documenta las implicaciones de rendimiento de Clone\n      4. Considera implementaciones personalizadas de Clone para optimización\n      5. Ten cuidado con la derivación automática"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Copy vs Clone\",\n  \"group\": \"Patrones de diseño\",\n  \"options\": [\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"El atributo derive se usa correctamente\"\n    },\n    {\n      \"text\": \"Se crea una copia profunda\"\n    },\n    {\n      \"text\": \"Se crea una copia superficial\",\n      \"hint\": \"Clone crea una copia profunda de los campos String\"\n    },\n    {\n      \"text\": \"Se aplican semánticas de movimiento\",\n      \"hint\": \"Clone crea explícitamente una nueva copia\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede exactamente cuando clonamos esta struct Philosophy?\"\n  ],\n  \"explanationProse\": [\n    \"Entendamos en detalle Copy vs Clone:\\n      Diferencias clave:\\n      1. Copy:\\n         - Copia implícita, a nivel de bits\\n         - Debe ser seguro para Copy (sin asignaciones en el heap)\\n         - Típicamente para tipos pequeños que solo viven en el stack\\n         \\n      2. Clone:\\n         - Copia explícita, potencialmente profunda\\n         - Puede manejar asignaciones en el heap\\n         - Más flexible pero potencialmente costoso\\n\\n      Buenas prácticas:\\n      1. Implementa Copy para tipos pequeños que solo viven en el stack\\n      2. Usa Clone para tipos con recursos propios\\n      3. Documenta las implicaciones de rendimiento de Clone\\n      4. Considera implementaciones personalizadas de Clone para optimización\\n      5. Ten cuidado con la derivación automática\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 911,
+    "outputTokens": 3741,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 68379
+  },
+  "cost": {
+    "inputUsd": 0.00029607500000000003,
+    "outputUsd": 0.00729495,
+    "totalUsd": 0.0075910249999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

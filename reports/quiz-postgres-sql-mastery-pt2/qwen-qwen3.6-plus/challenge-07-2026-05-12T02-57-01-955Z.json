@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "originalTitle": "Proper Quoting",
+  "translatedTitle": "Uso correcto de comillas",
+  "translation": {
+    "title": "Uso correcto de comillas",
+    "group": "Comillas 1",
+    "options": [
+      {
+        "text": "Ambas funcionan igual",
+        "hint": "PostgreSQL trata las comillas simples y dobles de forma muy distinta."
+      },
+      {
+        "text": "Se requieren comillas dobles",
+        "hint": "Exacto. Las comillas dobles fuerzan a PostgreSQL a respetar el caso exacto del identificador."
+      },
+      {
+        "text": "Se requieren comillas simples",
+        "hint": "Cuidado, las comillas simples son exclusivamente para valores de texto."
+      },
+      {
+        "text": "Error de sintaxis: literal de usuario no válido",
+        "hint": "Este mensaje no corresponde al motor de PostgreSQL."
+      },
+      {
+        "text": "Todos los nombres DEBEN estar en minúsculas",
+        "hint": "PostgreSQL normaliza internamente, pero permite otros casos si se citan correctamente."
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la sintaxis correcta para nombres de columnas que distinguen mayúsculas y minúsculas?"
+    ],
+    "explanationProse": [
+      "En PostgreSQL:\n    - Las comillas dobles (`\\\"`) son para identificadores (nombres de tablas, nombres de columnas)\n    - Las comillas simples (`'`) son para literales de cadena\n\n    Buenas prácticas:\n    - Evita mezclar mayúsculas y minúsculas o usar espacios en los nombres\n    - Usa snake_case para los identificadores\n    - Utiliza identificadores entre comillas solo cuando sea estrictamente necesario"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Uso correcto de comillas\",\n  \"group\": \"Comillas 1\",\n  \"options\": [\n    {\"text\": \"Ambas funcionan igual\", \"hint\": \"PostgreSQL trata las comillas simples y dobles de forma muy distinta.\"},\n    {\"text\": \"Se requieren comillas dobles\", \"hint\": \"Exacto. Las comillas dobles fuerzan a PostgreSQL a respetar el caso exacto del identificador.\"},\n    {\"text\": \"Se requieren comillas simples\", \"hint\": \"Cuidado, las comillas simples son exclusivamente para valores de texto.\"},\n    {\"text\": \"Error de sintaxis: literal de usuario no válido\", \"hint\": \"Este mensaje no corresponde al motor de PostgreSQL.\"},\n    {\"text\": \"Todos los nombres DEBEN estar en minúsculas\", \"hint\": \"PostgreSQL normaliza internamente, pero permite otros casos si se citan correctamente.\"}\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la sintaxis correcta para nombres de columnas que distinguen mayúsculas y minúsculas?\"\n  ],\n  \"explanationProse\": [\n    \"En PostgreSQL:\\n    - Las comillas dobles (`\\\\\\\"`) son para identificadores (nombres de tablas, nombres de columnas)\\n    - Las comillas simples (`'`) son para literales de cadena\\n\\n    Buenas prácticas:\\n    - Evita mezclar mayúsculas y minúsculas o usar espacios en los nombres\\n    - Usa snake_case para los identificadores\\n    - Utiliza identificadores entre comillas solo cuando sea estrictamente necesario\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 800,
+    "outputTokens": 4908,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 89397
+  },
+  "cost": {
+    "inputUsd": 0.00026000000000000003,
+    "outputUsd": 0.0095706,
+    "totalUsd": 0.0098306,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

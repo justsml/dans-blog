@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Desbordamiento de Entero",
+  "translation": {
+    "title": "Desbordamiento de Entero",
+    "group": "Aritmética de Enteros",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Error: entero fuera de rango"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede al calcular el total de posibles IDs de estudiantes?"
+    ],
+    "explanationProse": [
+      "El tipo `integer` de PostgreSQL es de 32 bits con signo, con un rango de `-2,147,483,648` a `2,147,483,647`.\n\n    El cálculo `256^4` = `4,294,967,296` excede este rango.\n\n    Para manejar números más grandes:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Desbordamiento de Entero\",\n  \"group\": \"Aritmética de Enteros\",\n  \"options\": [\n    {\"text\": \"4294967296\"},\n    {\"text\": \"Error: entero fuera de rango\"},\n    {\"text\": \"0\"},\n    {\"text\": \"2147483647\"}\n  ],\n  \"questionProse\": [\"¿Qué sucede al calcular el total de posibles IDs de estudiantes?\"],\n  \"explanationProse\": [\"El tipo `integer` de PostgreSQL es de 32 bits con signo, con un rango de `-2,147,483,648` a `2,147,483,647`.\\n\\n    El cálculo `256^4` = `4,294,967,296` excede este rango.\\n\\n    Para manejar números más grandes:\"]\n}",
+  "telemetry": {
+    "inputTokens": 733,
+    "outputTokens": 1258,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11490
+  },
+  "cost": {
+    "inputUsd": 0.00010262000000000002,
+    "outputUsd": 0.00035224000000000003,
+    "totalUsd": 0.0004548600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

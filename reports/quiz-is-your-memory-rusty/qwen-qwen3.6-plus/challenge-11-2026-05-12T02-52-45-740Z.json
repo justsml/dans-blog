@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Comprendiendo Rc",
+  "translation": {
+    "title": "Comprendiendo Rc",
+    "group": "Conteo de Referencias",
+    "options": [
+      {
+        "text": "Rc se utiliza en entornos de un solo hilo"
+      },
+      {
+        "text": "Rc se utiliza en entornos multihilo",
+        "hint": "Piensa en la seguridad de hilos: Rc no tiene sincronización"
+      },
+      {
+        "text": "Rc solo se usa para datos inmutables",
+        "hint": "Rc puede combinarse con mutabilidad interior"
+      },
+      {
+        "text": "Rc solo se usa para datos mutables",
+        "hint": "Rc funciona tanto con datos mutables como inmutables"
+      },
+      {
+        "text": "Rc es para control remoto",
+        "hint": "Aunque es ingenioso, ¡esto no es un concepto de programación!"
+      }
+    ],
+    "questionProse": [
+      "¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?\n\n      Considera este ejemplo:"
+    ],
+    "explanationProse": [
+      "Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.\n\n      Casos de uso comunes:",
+      "Puntos clave:\n      1. Usa Rc cuando:\n         - Múltiples partes de tu código necesiten propiedad\n         - Sepas que el uso compartido es de un solo hilo\n         - El tiempo de vida no pueda determinarse estáticamente\n\n      2. Usa Arc en su lugar cuando:\n         - Necesites uso compartido seguro para hilos\n         - Múltiples hilos necesiten propiedad\n\n      3. Limitaciones de Rc:\n         - No es seguro para hilos\n         - Ligera sobrecarga en tiempo de ejecución\n         - No puede romper ciclos de referencia automáticamente\n\n      Mejores prácticas:\n      1. Prefiere la propiedad única cuando sea posible\n      2. Usa Rc para propiedad compartida en un solo hilo\n      3. Usa Arc para escenarios multihilo\n      4. Combínalo con Weak para prevenir ciclos de referencia"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comprendiendo Rc\",\n  \"group\": \"Conteo de Referencias\",\n  \"options\": [\n    {\n      \"text\": \"Rc se utiliza en entornos de un solo hilo\"\n    },\n    {\n      \"text\": \"Rc se utiliza en entornos multihilo\",\n      \"hint\": \"Piensa en la seguridad de hilos: Rc no tiene sincronización\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos inmutables\",\n      \"hint\": \"Rc puede combinarse con mutabilidad interior\"\n    },\n    {\n      \"text\": \"Rc solo se usa para datos mutables\",\n      \"hint\": \"Rc funciona tanto con datos mutables como inmutables\"\n    },\n    {\n      \"text\": \"Rc es para control remoto\",\n      \"hint\": \"Aunque es ingenioso, ¡esto no es un concepto de programación!\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuándo deberías usar Rc (Conteo de Referencias) en Rust?\\n\\n      Considera este ejemplo:\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Conteo de Referencias) está diseñado para escenarios de un solo hilo donde necesitas propiedad compartida.\\n\\n      Casos de uso comunes:\",\n    \"Puntos clave:\\n      1. Usa Rc cuando:\\n         - Múltiples partes de tu código necesiten propiedad\\n         - Sepas que el uso compartido es de un solo hilo\\n         - El tiempo de vida no pueda determinarse estáticamente\\n\\n      2. Usa Arc en su lugar cuando:\\n         - Necesites uso compartido seguro para hilos\\n         - Múltiples hilos necesiten propiedad\\n\\n      3. Limitaciones de Rc:\\n         - No es seguro para hilos\\n         - Ligera sobrecarga en tiempo de ejecución\\n         - No puede romper ciclos de referencia automáticamente\\n\\n      Mejores prácticas:\\n      1. Prefiere la propiedad única cuando sea posible\\n      2. Usa Rc para propiedad compartida en un solo hilo\\n      3. Usa Arc para escenarios multihilo\\n      4. Combínalo con Weak para prevenir ciclos de referencia\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1023,
+    "outputTokens": 3625,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 66306
+  },
+  "cost": {
+    "inputUsd": 0.00033247500000000004,
+    "outputUsd": 0.00706875,
+    "totalUsd": 0.007401225000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

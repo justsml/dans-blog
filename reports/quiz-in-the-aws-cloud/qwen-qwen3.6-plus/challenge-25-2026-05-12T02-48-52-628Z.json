@@ -1,0 +1,47 @@
+{
+  "index": 24,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Tiempo de vida (TTL)",
+  "translation": {
+    "title": "Tiempo de vida (TTL)",
+    "group": "Características de DynamoDB",
+    "options": [
+      {
+        "text": "Elimina los elementos inmediatamente al expirar",
+        "hint": "TTL no opera de forma síncrona."
+      },
+      {
+        "text": "Requiere un activador de eliminación manual",
+        "hint": "El proceso es completamente automatizado."
+      },
+      {
+        "text": "Eliminación en segundo plano con programación de mejor esfuerzo",
+        "hint": "Correcto: DynamoDB lo hace asíncronamente para no afectar el rendimiento."
+      },
+      {
+        "text": "Marca los elementos como expirados pero los mantiene almacenados",
+        "hint": "La eliminación es física, no solo un cambio de metadatos."
+      }
+    ],
+    "questionProse": [
+      "¿Cómo gestiona DynamoDB la eliminación de elementos cuando se activa el TTL?"
+    ],
+    "explanationProse": [
+      "Características clave del TTL en DynamoDB:\n      - Un proceso en segundo plano escanea y monitorea el atributo TTL\n      - Los elementos expirados se eliminan bajo una política de mejor esfuerzo (best-effort), usualmente en unos pocos días\n      - No incurres en costos adicionales por habilitar TTL\n      - Las eliminaciones se registran en DynamoDB Streams\n\n      ¿Por qué usarlo?\n      - Gestión automática de sesiones\n      - Rotación y expiración de logs\n      - Limpieza de datos temporales sin scripts personalizados\n      - Cumplimiento de políticas de retención de datos"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tiempo de vida (TTL)\",\n  \"group\": \"Características de DynamoDB\",\n  \"options\": [\n    {\n      \"text\": \"Elimina los elementos inmediatamente al expirar\",\n      \"hint\": \"TTL no opera de forma síncrona.\"\n    },\n    {\n      \"text\": \"Requiere un activador de eliminación manual\",\n      \"hint\": \"El proceso es completamente automatizado.\"\n    },\n    {\n      \"text\": \"Eliminación en segundo plano con programación de mejor esfuerzo\",\n      \"hint\": \"Correcto: DynamoDB lo hace asíncronamente para no afectar el rendimiento.\"\n    },\n    {\n      \"text\": \"Marca los elementos como expirados pero los mantiene almacenados\",\n      \"hint\": \"La eliminación es física, no solo un cambio de metadatos.\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cómo gestiona DynamoDB la eliminación de elementos cuando se activa el TTL?\"\n  ],\n  \"explanationProse\": [\n    \"Características clave del TTL en DynamoDB:\\n      - Un proceso en segundo plano escanea y monitorea el atributo TTL\\n      - Los elementos expirados se eliminan bajo una política de mejor esfuerzo (best-effort), usualmente en unos pocos días\\n      - No incurres en costos adicionales por habilitar TTL\\n      - Las eliminaciones se registran en DynamoDB Streams\\n\\n      ¿Por qué usarlo?\\n      - Gestión automática de sesiones\\n      - Rotación y expiración de logs\\n      - Limpieza de datos temporales sin scripts personalizados\\n      - Cumplimiento de políticas de retención de datos\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 3803,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69729
+  },
+  "cost": {
+    "inputUsd": 0.00026065,
+    "outputUsd": 0.00741585,
+    "totalUsd": 0.0076765,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

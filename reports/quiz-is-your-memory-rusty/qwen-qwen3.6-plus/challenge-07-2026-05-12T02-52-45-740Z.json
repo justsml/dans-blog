@@ -1,0 +1,48 @@
+{
+  "index": 6,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Tiempos de vida de structs",
+  "translation": {
+    "title": "Tiempos de vida de structs",
+    "group": "Tiempos de vida",
+    "options": [
+      {
+        "text": "Compila correctamente",
+        "hint": "Los structs con referencias necesitan anotaciones de tiempo de vida"
+      },
+      {
+        "text": "Error: falta el especificador de tiempo de vida"
+      },
+      {
+        "text": "Error: incompatibilidad de tiempos de vida",
+        "hint": "Aún no hemos especificado ningún tiempo de vida"
+      },
+      {
+        "text": "Error: referencia no válida",
+        "hint": "Las referencias son válidas, pero falta algo más"
+      }
+    ],
+    "questionProse": [
+      "¿Compila esta definición de struct? ¿Por qué sí o por qué no?"
+    ],
+    "explanationProse": [
+      "El código falla porque los structs que contienen referencias deben especificar tiempos de vida. Así es como solucionarlo:",
+      "Patrones comunes:",
+      "Mejores prácticas:\n      1. Usa tipos con propiedad (String) cuando necesites almacenar datos indefinidamente\n      2. Usa referencias cuando el tiempo de vida del struct sea claramente más corto que el de los datos\n      3. Considera múltiples parámetros de tiempo de vida cuando las referencias puedan tener duraciones distintas\n      4. Documenta las relaciones de tiempo de vida en estructuras complejas"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Tiempos de vida de structs\",\n  \"group\": \"Tiempos de vida\",\n  \"options\": [\n    {\n      \"text\": \"Compila correctamente\",\n      \"hint\": \"Los structs con referencias necesitan anotaciones de tiempo de vida\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de tiempo de vida\"\n    },\n    {\n      \"text\": \"Error: incompatibilidad de tiempos de vida\",\n      \"hint\": \"Aún no hemos especificado ningún tiempo de vida\"\n    },\n    {\n      \"text\": \"Error: referencia no válida\",\n      \"hint\": \"Las referencias son válidas, pero falta algo más\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Compila esta definición de struct? ¿Por qué sí o por qué no?\"\n  ],\n  \"explanationProse\": [\n    \"El código falla porque los structs que contienen referencias deben especificar tiempos de vida. Así es como solucionarlo:\",\n    \"Patrones comunes:\",\n    \"Mejores prácticas:\\n      1. Usa tipos con propiedad (String) cuando necesites almacenar datos indefinidamente\\n      2. Usa referencias cuando el tiempo de vida del struct sea claramente más corto que el de los datos\\n      3. Considera múltiples parámetros de tiempo de vida cuando las referencias puedan tener duraciones distintas\\n      4. Documenta las relaciones de tiempo de vida en estructuras complejas\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 897,
+    "outputTokens": 4399,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 80331
+  },
+  "cost": {
+    "inputUsd": 0.000291525,
+    "outputUsd": 0.00857805,
+    "totalUsd": 0.008869575000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

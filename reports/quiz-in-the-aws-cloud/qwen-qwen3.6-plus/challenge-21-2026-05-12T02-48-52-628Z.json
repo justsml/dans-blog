@@ -1,0 +1,43 @@
+{
+  "index": 20,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Análisis de costos de almacenamiento",
+  "translation": {
+    "title": "Análisis de costos de almacenamiento",
+    "group": "Optimización de costos",
+    "options": [
+      {
+        "text": "S3 Standard para todos los datos"
+      },
+      {
+        "text": "Usar siempre el almacenamiento más barato"
+      },
+      {
+        "text": "Combinar clases de almacenamiento según los patrones de acceso"
+      },
+      {
+        "text": "Almacenar todo en Glacier"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la estrategia más rentable para almacenar 1 PB de datos si el 20 % se accede a diario, el 30 % mensualmente y el 50 % anualmente?"
+    ],
+    "explanationProse": [
+      "Estrategia de almacenamiento óptima:\n  - 20 % en S3 Standard para acceso diario\n  - 30 % en S3 Standard-IA para acceso mensual\n  - 50 % en Glacier para acceso anual\n\n  Este enfoque optimiza los costos manteniendo los patrones de acceso adecuados. La clave no es buscar el precio más bajo a ciegas, sino pagar solo por la velocidad y disponibilidad que realmente necesitas.\n\n  Consideraciones de costo:\n  - Precio de almacenamiento por GB\n  - Costos de recuperación\n  - Patrones de acceso\n  - Costos de transición"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Análisis de costos de almacenamiento\",\n  \"group\": \"Optimización de costos\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard para todos los datos\"\n    },\n    {\n      \"text\": \"Usar siempre el almacenamiento más barato\"\n    },\n    {\n      \"text\": \"Combinar clases de almacenamiento según los patrones de acceso\"\n    },\n    {\n      \"text\": \"Almacenar todo en Glacier\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la estrategia más rentable para almacenar 1 PB de datos si el 20 % se accede a diario, el 30 % mensualmente y el 50 % anualmente?\"\n  ],\n  \"explanationProse\": [\n    \"Estrategia de almacenamiento óptima:\\n  - 20 % en S3 Standard para acceso diario\\n  - 30 % en S3 Standard-IA para acceso mensual\\n  - 50 % en Glacier para acceso anual\\n\\n  Este enfoque optimiza los costos manteniendo los patrones de acceso adecuados. La clave no es buscar el precio más bajo a ciegas, sino pagar solo por la velocidad y disponibilidad que realmente necesitas.\\n\\n  Consideraciones de costo:\\n  - Precio de almacenamiento por GB\\n  - Costos de recuperación\\n  - Patrones de acceso\\n  - Costos de transición\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 835,
+    "outputTokens": 3529,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 64551
+  },
+  "cost": {
+    "inputUsd": 0.000271375,
+    "outputUsd": 0.00688155,
+    "totalUsd": 0.007152925,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

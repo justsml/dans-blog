@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Referencias mutables",
+  "translation": {
+    "title": "Referencias mutables",
+    "group": "Préstamos",
+    "options": [
+      {
+        "text": "Se compila correctamente",
+        "hint": "¿Podemos tener varias referencias mutables al mismo tiempo?"
+      },
+      {
+        "text": "Error: no se puede tomar prestado `wisdom` como mutable más de una vez"
+      },
+      {
+        "text": "Error: falta el especificador de tiempo de vida",
+        "hint": "El problema aquí no tiene que ver con los tiempos de vida"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución",
+        "hint": "Rust detecta estos problemas en tiempo de compilación"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre con múltiples referencias mutables?",
+      "Piensa en las reglas de Rust para las referencias mutables."
+    ],
+    "explanationProse": [
+      "Este código viola las reglas fundamentales de préstamo de Rust:\n      - Solo UNA referencia mutable a un valor a la vez\n      - O cualquier número de referencias inmutables\n      - Las referencias no pueden sobrevivir a su referente\n\n      Así es como puedes arreglar el código:\n\n      1. Usa ámbitos secuenciales:",
+      "2. O modifica la cadena en un único préstamo:",
+      "Estas reglas previenen condiciones de carrera en tiempo de compilación, haciendo que Rust sea seguro para subprocesos por defecto.\n\n      Trampa común: Intentar usar múltiples referencias mutables para evitar clonar o\n      modificar diferentes partes del mismo valor simultáneamente."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Referencias mutables\",\n  \"group\": \"Préstamos\",\n  \"options\": [\n    {\n      \"text\": \"Se compila correctamente\",\n      \"hint\": \"¿Podemos tener varias referencias mutables al mismo tiempo?\"\n    },\n    {\n      \"text\": \"Error: no se puede tomar prestado `wisdom` como mutable más de una vez\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de tiempo de vida\",\n      \"hint\": \"El problema aquí no tiene que ver con los tiempos de vida\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución\",\n      \"hint\": \"Rust detecta estos problemas en tiempo de compilación\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre con múltiples referencias mutables?\",\n    \"Piensa en las reglas de Rust para las referencias mutables.\"\n  ],\n  \"explanationProse\": [\n    \"Este código viola las reglas fundamentales de préstamo de Rust:\\n      - Solo UNA referencia mutable a un valor a la vez\\n      - O cualquier número de referencias inmutables\\n      - Las referencias no pueden sobrevivir a su referente\\n\\n      Así es como puedes arreglar el código:\\n\\n      1. Usa ámbitos secuenciales:\",\n    \"2. O modifica la cadena en un único préstamo:\",\n    \"Estas reglas previenen condiciones de carrera en tiempo de compilación, haciendo que Rust sea seguro para subprocesos por defecto.\\n\\n      Trampa común: Intentar usar múltiples referencias mutables para evitar clonar o\\n      modificar diferentes partes del mismo valor simultáneamente.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 942,
+    "outputTokens": 3094,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 59209
+  },
+  "cost": {
+    "inputUsd": 0.00030615000000000004,
+    "outputUsd": 0.0060333,
+    "totalUsd": 0.00633945,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

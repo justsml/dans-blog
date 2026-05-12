@@ -1,0 +1,43 @@
+{
+  "index": 9,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoización mediante closure",
+  "translation": {
+    "title": "Memoización mediante closure",
+    "group": "Bonus",
+    "options": [
+      {
+        "text": "Llama a `expensive()` 3 veces"
+      },
+      {
+        "text": "Llama a `expensive()` 1 vez"
+      },
+      {
+        "text": "Llama a `expensive()` 2 veces"
+      },
+      {
+        "text": "Lanza: Maximum call stack exceeded"
+      }
+    ],
+    "questionProse": [
+      "¿Cuántas veces se llama realmente a `expensive()`?"
+    ],
+    "explanationProse": [
+      "La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra el valor en caché, ejecuta `expensive` y almacena el resultado. La segunda y tercera llamadas aciertan en caché y devuelven el resultado de inmediato.\n\n    `calls` es `1`.\n\n    Así es como los closures hacen trabajo real. `cache` es privado (no se puede acceder desde fuera de `memoize`), persistente (vive mientras `fast` exista) y se comparte entre todas las llamadas a `fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoización mediante closure\",\n  \"group\": \"Bonus\",\n  \"options\": [\n    {\n      \"text\": \"Llama a `expensive()` 3 veces\"\n    },\n    {\n      \"text\": \"Llama a `expensive()` 1 vez\"\n    },\n    {\n      \"text\": \"Llama a `expensive()` 2 veces\"\n    },\n    {\n      \"text\": \"Lanza: Maximum call stack exceeded\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuántas veces se llama realmente a `expensive()`?\"\n  ],\n  \"explanationProse\": [\n    \"La función memoizada cierra sobre `cache`. La primera llamada (`fast(5)`) no encuentra el valor en caché, ejecuta `expensive` y almacena el resultado. La segunda y tercera llamadas aciertan en caché y devuelven el resultado de inmediato.\\n\\n    `calls` es `1`.\\n\\n    Así es como los closures hacen trabajo real. `cache` es privado (no se puede acceder desde fuera de `memoize`), persistente (vive mientras `fast` exista) y se comparte entre todas las llamadas a `fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 816,
+    "outputTokens": 3750,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69455
+  },
+  "cost": {
+    "inputUsd": 0.0002652,
+    "outputUsd": 0.0073124999999999996,
+    "totalUsd": 0.0075777,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

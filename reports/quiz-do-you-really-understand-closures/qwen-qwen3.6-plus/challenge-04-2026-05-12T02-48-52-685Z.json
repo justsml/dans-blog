@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "¿`let` lo soluciona? (¿O no?)",
+  "translation": {
+    "title": "¿`let` lo soluciona? (¿O no?)",
+    "group": "La trampa clásica",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i is not defined"
+      }
+    ],
+    "questionProse": [
+      "Mismo bucle, distinta palabra clave. ¿Qué se imprime?"
+    ],
+    "explanationProse": [
+      "`let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nueva vinculación** de `i`. Es como si el bucle hiciera esto en secreto:",
+      "Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 1, 2, 3, 4`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"¿`let` lo soluciona? (¿O no?)\",\n  \"group\": \"La trampa clásica\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"4, 4, 4, 4, 4\"\n    },\n    {\n      \"text\": \"ReferenceError: i is not defined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Mismo bucle, distinta palabra clave. ¿Qué se imprime?\"\n  ],\n  \"explanationProse\": [\n    \"`let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nueva vinculación** de `i`. Es como si el bucle hiciera esto en secreto:\",\n    \"Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 837,
+    "outputTokens": 3056,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56425
+  },
+  "cost": {
+    "inputUsd": 0.000272025,
+    "outputUsd": 0.0059592000000000004,
+    "totalUsd": 0.006231225000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

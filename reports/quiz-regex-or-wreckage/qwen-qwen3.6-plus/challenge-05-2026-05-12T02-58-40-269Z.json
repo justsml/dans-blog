@@ -1,0 +1,46 @@
+{
+  "index": 4,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Look-ahead positivo",
+  "translation": {
+    "title": "Look-ahead positivo",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidencias devolverá este patrón?"
+    ],
+    "explanationProse": [
+      "¡Este patrón no coincidirá con nada porque el look-ahead está al revés! 🔄 Si buscas dígitos precedidos por `$` o `€`, necesitas un look-behind: `/(?<=[\\$€])\\d+/g`.\n\n    Los look-aheads siempre verifican qué viene *después* de la posición actual. Tal como está escrito, este patrón busca:\n    - Uno o más dígitos (`\\d+`)\n    - Seguidos por (`(?=...)`) un símbolo `$` o `€` (`[\\$€]`)\n\n    Dado que en la cadena los números van *después* de los símbolos de moneda (no al revés), el motor de regex no encuentra ninguna coincidencia. 🎯\n\n    [Aprende más sobre aserciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead positivo\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidencias devolverá este patrón?\"\n  ],\n  \"explanationProse\": [\n    \"¡Este patrón no coincidirá con nada porque el look-ahead está al revés! 🔄 Si buscas dígitos precedidos por `$` o `€`, necesitas un look-behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Los look-aheads siempre verifican qué viene *después* de la posición actual. Tal como está escrito, este patrón busca:\\n    - Uno o más dígitos (`\\\\d+`)\\n    - Seguidos por (`(?=...)`) un símbolo `$` o `€` (`[\\\\$€]`)\\n\\n    Dado que en la cadena los números van *después* de los símbolos de moneda (no al revés), el motor de regex no encuentra ninguna coincidencia. 🎯\\n\\n    [Aprende más sobre aserciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 4552,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 87333
+  },
+  "cost": {
+    "inputUsd": 0.00029055000000000004,
+    "outputUsd": 0.0088764,
+    "totalUsd": 0.00916695,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

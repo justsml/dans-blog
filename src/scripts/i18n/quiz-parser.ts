@@ -216,9 +216,7 @@ function parseSlotFragments(content: string): TextFragment[] {
         flushProse();
         inCodeBlock = true;
         codeLanguage = fenceMatch[2];
-        codeBuffer.push(line);
       } else {
-        codeBuffer.push(line);
         flushCode();
         inCodeBlock = false;
       }
@@ -326,12 +324,27 @@ function assembleSlotLines(slot: QuizSlot): string[] {
     if (frag.type === "prose") {
       lines.push(frag.content);
     } else if (frag.type === "code") {
+      const code = normalizeCodeContent(frag.content);
       lines.push("```" + (frag.language || ""));
-      lines.push(frag.content);
+      if (code) lines.push(code);
       lines.push("```");
     }
   }
   return lines;
+}
+
+function normalizeCodeContent(content: string): string {
+  let lines = content.split("\n");
+
+  while (
+    lines.length >= 2
+    && /^\s*```[\w-]*\s*$/.test(lines[0] ?? "")
+    && /^\s*```\s*$/.test(lines[lines.length - 1] ?? "")
+  ) {
+    lines = lines.slice(1, -1);
+  }
+
+  return lines.join("\n").replace(/^\n+|\n+$/g, "");
 }
 
 function escapeQuotes(str: string): string {

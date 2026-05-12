@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Fuga de memoria por clausura",
+  "translation": {
+    "title": "Fuga de memoria por clausura",
+    "group": "Experto",
+    "options": [
+      {
+        "text": "Imprime la longitud del array de datos"
+      },
+      {
+        "text": "Crea una fuga de memoria"
+      },
+      {
+        "text": "Lanza un RangeError"
+      },
+      {
+        "text": "Nada inusual, esto está bien"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el problema con este código?"
+    ],
+    "explanationProse": [
+      "El *event listener* cierra sobre `data`, por lo que el array permanece accesible mientras el listener siga existiendo. Si `element` tiene un ciclo de vida largo y el listener nunca se elimina, ese array enorme también se queda retenido.\n\n    `element` vive en el DOM. El listener mantiene viva `data`. El GC no puede liberarlo.\n\n    Solución: no captures datos pesados en listeners de larga duración a menos que sea estrictamente necesario, y elimina los listeners cuando desmontes la interfaz que los usa:",
+      "El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga ejecución con muchos *event listeners*, este patrón sigue mordiendo a más de uno."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fuga de memoria por clausura\",\n  \"group\": \"Experto\",\n  \"options\": [\n    {\n      \"text\": \"Imprime la longitud del array de datos\"\n    },\n    {\n      \"text\": \"Crea una fuga de memoria\"\n    },\n    {\n      \"text\": \"Lanza un RangeError\"\n    },\n    {\n      \"text\": \"Nada inusual, esto está bien\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el problema con este código?\"\n  ],\n  \"explanationProse\": [\n    \"El *event listener* cierra sobre `data`, por lo que el array permanece accesible mientras el listener siga existiendo. Si `element` tiene un ciclo de vida largo y el listener nunca se elimina, ese array enorme también se queda retenido.\\n\\n    `element` vive en el DOM. El listener mantiene viva `data`. El GC no puede liberarlo.\\n\\n    Solución: no captures datos pesados en listeners de larga duración a menos que sea estrictamente necesario, y elimina los listeners cuando desmontes la interfaz que los usa:\",\n    \"El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga ejecución con muchos *event listeners*, este patrón sigue mordiendo a más de uno.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 868,
+    "outputTokens": 3475,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63625
+  },
+  "cost": {
+    "inputUsd": 0.00028209999999999997,
+    "outputUsd": 0.006776249999999999,
+    "totalUsd": 0.00705835,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

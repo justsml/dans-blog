@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Orden de índices multicolumna",
+  "translation": {
+    "title": "Orden de índices multicolumna",
+    "group": "Indexación",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "¿Qué índice es mejor para esta consulta?"
+    ],
+    "explanationProse": [
+      "Lo interesante aquí es que un índice multicolumna puede aprovecharse incluso cuando el orden de las columnas en la consulta no coincide con la definición del índice.\n\n**Nota:** En los índices B-tree, la primera columna es la que manda. Como esta consulta filtra por `grade_level` y `last_name`, un índice que empiece por `grade_level` y siga con `last_name` encaja perfectamente.\n\nCuanto más rápido logre SQL reducir el conjunto de filas, mejor será el rendimiento.\n\nPor ejemplo, si tienes una tabla `task` y sabes que `status` es más selectivo que `created_at`, te convendría un índice que comience con `status` para una consulta del tipo `status = 'done' AND created_at > '2024-01-01'`. El orden en que escribes las condiciones en la cláusula `WHERE` es irrelevante; lo que realmente importa es el orden de las columnas en el índice y la forma de los predicados.\n\nUn índice B+Tree sirve para:\n- La primera columna o cualquier prefijo izquierdo de columnas.\n- Operadores como `=`, `>`, `<`, `BETWEEN` e `IN`, según la estructura de la consulta.\n- Búsquedas por prefijo, `LIKE 'prefix%'`.\n\n¡Gracias a [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) por señalar un error en una versión anterior de esta explicación!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Orden de índices multicolumna\",\n  \"group\": \"Indexación\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué índice es mejor para esta consulta?\"\n  ],\n  \"explanationProse\": [\n    \"Lo interesante aquí es que un índice multicolumna puede aprovecharse incluso cuando el orden de las columnas en la consulta no coincide con la definición del índice.\\n\\n**Nota:** En los índices B-tree, la primera columna es la que manda. Como esta consulta filtra por `grade_level` y `last_name`, un índice que empiece por `grade_level` y siga con `last_name` encaja perfectamente.\\n\\nCuanto más rápido logre SQL reducir el conjunto de filas, mejor será el rendimiento.\\n\\nPor ejemplo, si tienes una tabla `task` y sabes que `status` es más selectivo que `created_at`, te convendría un índice que comience con `status` para una consulta del tipo `status = 'done' AND created_at > '2024-01-01'`. El orden en que escribes las condiciones en la cláusula `WHERE` es irrelevante; lo que realmente importa es el orden de las columnas en el índice y la forma de los predicados.\\n\\nUn índice B+Tree sirve para:\\n- La primera columna o cualquier prefijo izquierdo de columnas.\\n- Operadores como `=`, `>`, `<`, `BETWEEN` e `IN`, según la estructura de la consulta.\\n- Búsquedas por prefijo, `LIKE 'prefix%'`.\\n\\n¡Gracias a [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) por señalar un error en una versión anterior de esta explicación!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1065,
+    "outputTokens": 4651,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1059,
+    "durationMs": 85477
+  },
+  "cost": {
+    "inputUsd": 0.000346125,
+    "outputUsd": 0.00906945,
+    "totalUsd": 0.009415574999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

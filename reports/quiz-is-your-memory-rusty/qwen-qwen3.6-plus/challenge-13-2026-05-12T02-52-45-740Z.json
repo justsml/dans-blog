@@ -1,0 +1,51 @@
+{
+  "index": 12,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc y Mutex",
+  "translation": {
+    "title": "Arc y Mutex",
+    "group": "Punteros inteligentes",
+    "options": [
+      {
+        "text": "Imprime: 42",
+        "hint": "El código nunca llegará a la instrucción de impresión"
+      },
+      {
+        "text": "Imprime: 43",
+        "hint": "El código se quedará atascado antes de imprimir"
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "El código es sintácticamente correcto"
+      },
+      {
+        "text": "Pánico en tiempo de ejecución",
+        "hint": "Es peor que un pánico"
+      },
+      {
+        "text": "Interbloqueo"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede cuando se ejecuta este código?"
+    ],
+    "explanationProse": [
+      "Este código demuestra un escenario clásico de interbloqueo. Así es como solucionarlo:",
+      "Mejores prácticas para evitar interbloqueos:\n      1. Mantén las secciones críticas pequeñas\n      2. Libera los bloqueos rápidamente usando ámbitos\n      3. Adquiere múltiples bloqueos en un orden consistente\n      4. Usa parking_lot::Mutex para un mejor rendimiento\n      5. Considera usar RwLock para cargas de trabajo intensivas en lectura\n\n      Patrones comunes:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc y Mutex\",\n  \"group\": \"Punteros inteligentes\",\n  \"options\": [\n    {\n      \"text\": \"Imprime: 42\",\n      \"hint\": \"El código nunca llegará a la instrucción de impresión\"\n    },\n    {\n      \"text\": \"Imprime: 43\",\n      \"hint\": \"El código se quedará atascado antes de imprimir\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"El código es sintácticamente correcto\"\n    },\n    {\n      \"text\": \"Pánico en tiempo de ejecución\",\n      \"hint\": \"Es peor que un pánico\"\n    },\n    {\n      \"text\": \"Interbloqueo\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede cuando se ejecuta este código?\"\n  ],\n  \"explanationProse\": [\n    \"Este código demuestra un escenario clásico de interbloqueo. Así es como solucionarlo:\",\n    \"Mejores prácticas para evitar interbloqueos:\\n      1. Mantén las secciones críticas pequeñas\\n      2. Libera los bloqueos rápidamente usando ámbitos\\n      3. Adquiere múltiples bloqueos en un orden consistente\\n      4. Usa parking_lot::Mutex para un mejor rendimiento\\n      5. Considera usar RwLock para cargas de trabajo intensivas en lectura\\n\\n      Patrones comunes:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 914,
+    "outputTokens": 2685,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 53264
+  },
+  "cost": {
+    "inputUsd": 0.00029705,
+    "outputUsd": 0.00523575,
+    "totalUsd": 0.0055328,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

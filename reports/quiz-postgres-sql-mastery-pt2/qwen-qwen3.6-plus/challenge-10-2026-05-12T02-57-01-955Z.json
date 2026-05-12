@@ -1,0 +1,46 @@
+{
+  "index": 9,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Índices Parciales",
+  "translation": {
+    "title": "Índices Parciales",
+    "group": "Indexación",
+    "options": [
+      {
+        "text": "Sintaxis inválida"
+      },
+      {
+        "text": "Crea índices duplicados"
+      },
+      {
+        "text": "Solo indexa estudiantes activos"
+      },
+      {
+        "text": "Indexa primero a los estudiantes activos"
+      },
+      {
+        "text": "Proporciona una pista al planificador de consultas"
+      }
+    ],
+    "questionProse": [
+      "¿Qué hace este conjuro?"
+    ],
+    "explanationProse": [
+      "Este truco se llama `Partial Index`.\n\nSon útiles para reducir el uso de disco y acelerar las consultas cuando solo se suele consultar un subconjunto de filas.\n\nPostgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\n\n**Recordatorio:** Postgres no admite 'pistas de consulta' como otros SGBD. El planificador de consultas decidirá por sí mismo cuándo usar el o los índices que considere más adecuados."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Índices Parciales\",\n  \"group\": \"Indexación\",\n  \"options\": [\n    {\n      \"text\": \"Sintaxis inválida\"\n    },\n    {\n      \"text\": \"Crea índices duplicados\"\n    },\n    {\n      \"text\": \"Solo indexa estudiantes activos\"\n    },\n    {\n      \"text\": \"Indexa primero a los estudiantes activos\"\n    },\n    {\n      \"text\": \"Proporciona una pista al planificador de consultas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué hace este conjuro?\"\n  ],\n  \"explanationProse\": [\n    \"Este truco se llama `Partial Index`.\\n\\nSon útiles para reducir el uso de disco y acelerar las consultas cuando solo se suele consultar un subconjunto de filas.\\n\\nPostgres solo usará el índice cuando la condición `status = 'active'` esté presente en la consulta.\\n\\n**Recordatorio:** Postgres no admite 'pistas de consulta' como otros SGBD. El planificador de consultas decidirá por sí mismo cuándo usar el o los índices que considere más adecuados.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 819,
+    "outputTokens": 3211,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 58897
+  },
+  "cost": {
+    "inputUsd": 0.000266175,
+    "outputUsd": 0.00626145,
+    "totalUsd": 0.0065276250000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

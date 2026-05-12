@@ -1,0 +1,46 @@
+{
+  "index": 10,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT y NULL",
+  "translation": {
+    "title": "COUNT y NULL",
+    "group": "Comportamiento de NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "¿Cuántas *filas* devolverá esto?"
+    ],
+    "explanationProse": [
+      "Ok, esta era un poco tramposa. El truco está en que `x = NULL` nunca coincidirá con ninguna fila y SIEMPRE devolverá una única fila con un conteo de `0`.\n\nDado que `NULL` es un valor desconocido, no puede compararse con nada, ni siquiera consigo mismo.\n\nLa forma correcta de verificar valores `NULL` es mediante `IS NULL`.\n\nEjemplo:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT y NULL\",\n  \"group\": \"Comportamiento de NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuántas *filas* devolverá esto?\"\n  ],\n  \"explanationProse\": [\n    \"Ok, esta era un poco tramposa. El truco está en que `x = NULL` nunca coincidirá con ninguna fila y SIEMPRE devolverá una única fila con un conteo de `0`.\\n\\nDado que `NULL` es un valor desconocido, no puede compararse con nada, ni siquiera consigo mismo.\\n\\nLa forma correcta de verificar valores `NULL` es mediante `IS NULL`.\\n\\nEjemplo:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 3077,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56336
+  },
+  "cost": {
+    "inputUsd": 0.00027170000000000004,
+    "outputUsd": 0.006000149999999999,
+    "totalUsd": 0.006271849999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

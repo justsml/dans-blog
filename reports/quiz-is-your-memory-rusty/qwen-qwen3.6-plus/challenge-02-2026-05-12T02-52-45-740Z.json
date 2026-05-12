@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "originalTitle": "Move Semantics with Functions",
+  "translatedTitle": "Semántica de movimiento con funciones",
+  "translation": {
+    "title": "Semántica de movimiento con funciones",
+    "group": "Propiedad",
+    "options": [
+      {
+        "text": "Imprime ambas líneas",
+        "hint": "Considera qué le sucede a 'wisdom' después de pasarlo a la función"
+      },
+      {
+        "text": "Imprime solo la primera línea",
+        "hint": "El código ni siquiera compilará para llegar a la ejecución"
+      },
+      {
+        "text": "Error de compilación"
+      },
+      {
+        "text": "Error en tiempo de ejecución",
+        "hint": "Las reglas de propiedad de Rust se aplican en tiempo de compilación"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede al ejecutar este código? Piensa en la transferencia de propiedad:"
+    ],
+    "explanationProse": [
+      "El código no compila porque la propiedad de `wisdom` se transfirió a `take_knowledge` y, por lo tanto, no puede usarse después.\n\n      Aquí tienes tres formas de solucionar este problema:\n\n      1. Pasar por referencia (prestar el valor):",
+      "2. Clonar el valor (crear una nueva copia):",
+      "3. Devolver la propiedad desde la función:",
+      "Cada enfoque tiene diferentes casos de uso:\n      - Referencias: La más eficiente, pero requiere gestión de tiempos de vida\n      - Clonación: Simple, pero potencialmente costosa\n      - Devolver la propiedad: Útil para transformar valores\n\n      Buena práctica: Usa referencias a menos que necesites transferir la propiedad."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Semántica de movimiento con funciones\",\n  \"group\": \"Propiedad\",\n  \"options\": [\n    {\n      \"text\": \"Imprime ambas líneas\",\n      \"hint\": \"Considera qué le sucede a 'wisdom' después de pasarlo a la función\"\n    },\n    {\n      \"text\": \"Imprime solo la primera línea\",\n      \"hint\": \"El código ni siquiera compilará para llegar a la ejecución\"\n    },\n    {\n      \"text\": \"Error de compilación\"\n    },\n    {\n      \"text\": \"Error en tiempo de ejecución\",\n      \"hint\": \"Las reglas de propiedad de Rust se aplican en tiempo de compilación\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede al ejecutar este código? Piensa en la transferencia de propiedad:\"\n  ],\n  \"explanationProse\": [\n    \"El código no compila porque la propiedad de `wisdom` se transfirió a `take_knowledge` y, por lo tanto, no puede usarse después.\\n\\n      Aquí tienes tres formas de solucionar este problema:\\n\\n      1. Pasar por referencia (prestar el valor):\",\n    \"2. Clonar el valor (crear una nueva copia):\",\n    \"3. Devolver la propiedad desde la función:\",\n    \"Cada enfoque tiene diferentes casos de uso:\\n      - Referencias: La más eficiente, pero requiere gestión de tiempos de vida\\n      - Clonación: Simple, pero potencialmente costosa\\n      - Devolver la propiedad: Útil para transformar valores\\n\\n      Buena práctica: Usa referencias a menos que necesites transferir la propiedad.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 974,
+    "outputTokens": 3362,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 62435
+  },
+  "cost": {
+    "inputUsd": 0.00031655,
+    "outputUsd": 0.0065559,
+    "totalUsd": 0.0068724499999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

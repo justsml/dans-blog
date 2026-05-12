@@ -1,0 +1,48 @@
+{
+  "index": 14,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "Patrón RAII",
+  "translation": {
+    "title": "Patrón RAII",
+    "group": "Patrones de Memoria",
+    "options": [
+      {
+        "text": "El recurso se libera al salir del ámbito",
+        "hint": "El campo `File` tiene su propia implementación de `Drop`."
+      },
+      {
+        "text": "Fuga de recursos",
+        "hint": "El wrapper no tiene un `Drop` personalizado, pero sus campos se eliminan de todos modos."
+      },
+      {
+        "text": "Error de compilación",
+        "hint": "El código compila sin problemas"
+      },
+      {
+        "text": "Error en tiempo de ejecución",
+        "hint": "El problema gira en torno a la limpieza de recursos"
+      }
+    ],
+    "questionProse": [
+      "¿Qué ocurre con el manejador de archivo en este ejemplo de RAII?"
+    ],
+    "explanationProse": [
+      "RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el manejador de archivo: su campo `File` se elimina automáticamente cuando el wrapper sale del ámbito.\n\n      Solo implementas `Drop` cuando el wrapper en sí tiene un comportamiento de limpieza adicional más allá de eliminar sus campos:",
+      "Patrones RAII:\n      1. El constructor adquiere los recursos\n      2. Los métodos usan los recursos de forma segura\n      3. Los campos se eliminan automáticamente cuando el propietario sale del ámbito\n      4. `Drop` personalizado añade limpieza extra cuando es necesario\n      5. Usa `?` para la propagación de errores\n\n      Mejores prácticas:\n      1. Confía en las implementaciones de `Drop` de la biblioteca estándar cuando ya modelan el recurso\n      2. Mantén la gestión de recursos simple y clara\n      3. Utiliza tipos de la biblioteca estándar siempre que sea posible\n      4. Documenta el comportamiento de limpieza\n      5. Considera el uso de patrones de guardia para operaciones con ámbito"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Patrón RAII\",\n  \"group\": \"Patrones de Memoria\",\n  \"options\": [\n    {\n      \"text\": \"El recurso se libera al salir del ámbito\",\n      \"hint\": \"El campo `File` tiene su propia implementación de `Drop`.\"\n    },\n    {\n      \"text\": \"Fuga de recursos\",\n      \"hint\": \"El wrapper no tiene un `Drop` personalizado, pero sus campos se eliminan de todos modos.\"\n    },\n    {\n      \"text\": \"Error de compilación\",\n      \"hint\": \"El código compila sin problemas\"\n    },\n    {\n      \"text\": \"Error en tiempo de ejecución\",\n      \"hint\": \"El problema gira en torno a la limpieza de recursos\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué ocurre con el manejador de archivo en este ejemplo de RAII?\"\n  ],\n  \"explanationProse\": [\n    \"RAII en Rust garantiza que los recursos se gestionen correctamente. En este ejemplo, `FileWrapper` no necesita una implementación personalizada de `Drop` para cerrar el manejador de archivo: su campo `File` se elimina automáticamente cuando el wrapper sale del ámbito.\\n\\n      Solo implementas `Drop` cuando el wrapper en sí tiene un comportamiento de limpieza adicional más allá de eliminar sus campos:\",\n    \"Patrones RAII:\\n      1. El constructor adquiere los recursos\\n      2. Los métodos usan los recursos de forma segura\\n      3. Los campos se eliminan automáticamente cuando el propietario sale del ámbito\\n      4. `Drop` personalizado añade limpieza extra cuando es necesario\\n      5. Usa `?` para la propagación de errores\\n\\n      Mejores prácticas:\\n      1. Confía en las implementaciones de `Drop` de la biblioteca estándar cuando ya modelan el recurso\\n      2. Mantén la gestión de recursos simple y clara\\n      3. Utiliza tipos de la biblioteca estándar siempre que sea posible\\n      4. Documenta el comportamiento de limpieza\\n      5. Considera el uso de patrones de guardia para operaciones con ámbito\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 989,
+    "outputTokens": 3970,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 72507
+  },
+  "cost": {
+    "inputUsd": 0.000321425,
+    "outputUsd": 0.007741499999999999,
+    "totalUsd": 0.008062924999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "index": 0,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "Los muchos JOIN de PostgreSQL",
+  "translation": {
+    "title": "Los muchos JOIN de PostgreSQL",
+    "group": "Calentamiento: Joins",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál NO ❌ es una expresión JOIN válida en PostgreSQL?"
+    ],
+    "explanationProse": [
+      "Ya conocías `CROSS JOIN`, ¿no?\n\n    ¿Te hizo `JOIN ALL` pensar en otra operación, `UNION ALL`?\n\n    La respuesta aquí es `JOIN ALL` ❌.\n\n    Los tipos de JOIN correctos son:\n    - `INNER JOIN` (el JOIN por defecto)\n    - `LEFT JOIN` (o `LEFT OUTER JOIN`)\n    - `RIGHT JOIN` (o `RIGHT OUTER JOIN`)\n    - `FULL JOIN` (o `FULL OUTER JOIN`)\n    - `CROSS JOIN` (el producto cartesiano, a menos que una cláusula `WHERE` posterior lo filtre)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Los muchos JOIN de PostgreSQL\",\n  \"group\": \"Calentamiento: Joins\",\n  \"options\": [\n    {\n      \"text\": \"JOIN ALL\"\n    },\n    {\n      \"text\": \"INNER JOIN\"\n    },\n    {\n      \"text\": \"CROSS JOIN\"\n    },\n    {\n      \"text\": \"LEFT OUTER JOIN\"\n    },\n    {\n      \"text\": \"FULL OUTER JOIN\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál NO ❌ es una expresión JOIN válida en PostgreSQL?\"\n  ],\n  \"explanationProse\": [\n    \"Ya conocías `CROSS JOIN`, ¿no?\\n\\n    ¿Te hizo `JOIN ALL` pensar en otra operación, `UNION ALL`?\\n\\n    La respuesta aquí es `JOIN ALL` ❌.\\n\\n    Los tipos de JOIN correctos son:\\n    - `INNER JOIN` (el JOIN por defecto)\\n    - `LEFT JOIN` (o `LEFT OUTER JOIN`)\\n    - `RIGHT JOIN` (o `RIGHT OUTER JOIN`)\\n    - `FULL JOIN` (o `FULL OUTER JOIN`)\\n    - `CROSS JOIN` (el producto cartesiano, a menos que una cláusula `WHERE` posterior lo filtre)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 831,
+    "outputTokens": 2621,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 48096
+  },
+  "cost": {
+    "inputUsd": 0.00027007500000000005,
+    "outputUsd": 0.00511095,
+    "totalUsd": 0.005381025,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

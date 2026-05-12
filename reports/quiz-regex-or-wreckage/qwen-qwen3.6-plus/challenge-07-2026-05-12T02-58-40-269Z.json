@@ -1,0 +1,46 @@
+{
+  "index": 6,
+  "originalTitle": "The Global Flag",
+  "translatedTitle": "El flag global",
+  "translation": {
+    "title": "El flag global",
+    "group": "Trampas comunes",
+    "options": [
+      {
+        "text": "null"
+      },
+      {
+        "text": "[\"a\"]"
+      },
+      {
+        "text": "[\"a\", \"a\", \"a\"]"
+      },
+      {
+        "text": "[\"b\", \"n\", \"n\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la salida?"
+    ],
+    "explanationProse": [
+      "El flag `g` (global) cambia por completo cómo se comporta `match()` porque le dice al motor que **no se detenga** tras la primera victoria:\n    - Sin `g`: Te devuelve solo la primera coincidencia (con sus grupos de captura).\n    - Con `g`: Ignora los grupos y te entrega un array con *todas* las subcadenas que coinciden.\n\n    Por eso, aquí atrapa cada \"a\" escondida en \"banana\". 🍌✨\n\n    Nota: Si necesitas las coincidencias completas Y los grupos de captura a la vez, `match()` con `g` te dejará tirado. Usa `matchAll()` o un bucle con `exec()`.\n\n    [Aprende más sobre el flag global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"El flag global\",\n  \"group\": \"Trampas comunes\",\n  \"options\": [\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"[\\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\"a\\\", \\\"a\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"b\\\", \\\"n\\\", \\\"n\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la salida?\"\n  ],\n  \"explanationProse\": [\n    \"El flag `g` (global) cambia por completo cómo se comporta `match()` porque le dice al motor que **no se detenga** tras la primera victoria:\\n    - Sin `g`: Te devuelve solo la primera coincidencia (con sus grupos de captura).\\n    - Con `g`: Ignora los grupos y te entrega un array con *todas* las subcadenas que coinciden.\\n\\n    Por eso, aquí atrapa cada \\\"a\\\" escondida en \\\"banana\\\". 🍌✨\\n\\n    Nota: Si necesitas las coincidencias completas Y los grupos de captura a la vez, `match()` con `g` te dejará tirado. Usa `matchAll()` o un bucle con `exec()`.\\n\\n    [Aprende más sobre el flag global](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 855,
+    "outputTokens": 4914,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 93783
+  },
+  "cost": {
+    "inputUsd": 0.000277875,
+    "outputUsd": 0.0095823,
+    "totalUsd": 0.009860175,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "index": 8,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "Límites de BatchGetItem",
+  "translation": {
+    "title": "Límites de BatchGetItem",
+    "group": "¡Lotes, parte 1!",
+    "options": [
+      {
+        "text": "1",
+        "hint": "... Insisto en usar lotes."
+      },
+      {
+        "text": "25",
+        "hint": "Ese es el límite para `BatchWriteItem`."
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "Cerca, pero el correcto es un número redondo."
+      },
+      {
+        "text": "50",
+        "hint": "Un poco más alto para `BatchGetItem`."
+      },
+      {
+        "text": "200",
+        "hint": "Un poco demasiado alto..."
+      },
+      {
+        "text": "Ilimitado",
+        "hint": "Existe un límite fijo para `BatchGetItem`."
+      }
+    ],
+    "questionProse": [
+      "¡Una pregunta más sobre lotes en DynamoDB!<br />\n      ¿Cuál es el número máximo de elementos que puedes recuperar con una única solicitud `BatchGetItem` de DynamoDB?"
+    ],
+    "explanationProse": [
+      "El SDK de DynamoDB te permite recuperar hasta **100** elementos en una única solicitud `BatchGetItem`. Este límite es mayor que el de `BatchWriteItem`, que se sitúa en 25 elementos.\n      Además, existen restricciones sobre el tamaño total de la carga útil, el tamaño del documento y la tasa de solicitudes.\n\n      Comprender estos límites es fundamental para optimizar el rendimiento de tu aplicación y garantizar operaciones de datos eficientes.\n\n      **Nota:** Es posible superar _algunos_ de estos límites... si logras ganarte a tu administrador de cuentas de AWS con un poco de labia. 😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Límites de BatchGetItem\",\n  \"group\": \"¡Lotes, parte 1!\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"... Insisto en usar lotes.\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"Ese es el límite para `BatchWriteItem`.\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"Cerca, pero el correcto es un número redondo.\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"Un poco más alto para `BatchGetItem`.\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"Un poco demasiado alto...\"\n    },\n    {\n      \"text\": \"Ilimitado\",\n      \"hint\": \"Existe un límite fijo para `BatchGetItem`.\"\n    }\n  ],\n  \"questionProse\": [\n    \"¡Una pregunta más sobre lotes en DynamoDB!<br />\\n      ¿Cuál es el número máximo de elementos que puedes recuperar con una única solicitud `BatchGetItem` de DynamoDB?\"\n  ],\n  \"explanationProse\": [\n    \"El SDK de DynamoDB te permite recuperar hasta **100** elementos en una única solicitud `BatchGetItem`. Este límite es mayor que el de `BatchWriteItem`, que se sitúa en 25 elementos.\\n      Además, existen restricciones sobre el tamaño total de la carga útil, el tamaño del documento y la tasa de solicitudes.\\n\\n      Comprender estos límites es fundamental para optimizar el rendimiento de tu aplicación y garantizar operaciones de datos eficientes.\\n\\n      **Nota:** Es posible superar _algunos_ de estos límites... si logras ganarte a tu administrador de cuentas de AWS con un poco de labia. 😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 981,
+    "outputTokens": 3862,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 134052
+  },
+  "cost": {
+    "inputUsd": 0.00031882500000000007,
+    "outputUsd": 0.0075309,
+    "totalUsd": 0.007849725,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

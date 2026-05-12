@@ -1,12 +1,12 @@
 ---
 unlisted: false
-title: 'Quiz: AWS Storage: 20+ preguntas'
+title: 'Quiz: Almacenamiento en AWS: ¡Más de 20 preguntas!'
 subTitle: ¿Puedes navegar por el laberinto de la nube?
 label: AWS Storage
 category: Quiz
 subCategory: Cloud
-date: 2024-12-28
-modified: 2024-12-29
+date: '2024-12-28'
+modified: '2024-12-29'
 tags:
   - quiz
   - aws
@@ -25,11 +25,11 @@ cover_icon: ../aws-cloud--city-focus-square.webp
 import Challenge from '../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../components/QuizUI/QuizUI';
 
-<p class="inset">¿Te apuntas al cloud?! 🤡</p>
+<p class="inset">¿Te va la nube? 🤡</p>
 
-Vamos a fondo con los servicios de almacenamiento de AWS. Este quiz evalúa tu dominio de S3, DynamoDB, Aurora, RDS, ElastiCache y el resto del stack. Desde buenas prácticas hasta esos *gotchas* que te rompen un despliegue, repasaremos el terreno del almacenamiento cloud.
+Vamos a fondo con los servicios de almacenamiento de AWS. Este quiz pondrá a prueba tu conocimiento de S3, DynamoDB, Aurora, RDS, ElastiCache y más. De buenas prácticas a *gotchas* espinosos, exploraremos el terreno del almacenamiento en la nube.
 
-Prepárate para demostrar que sabes lo que haces. 🚀
+Prepárate para demostrar tu dominio de la nube. 🚀
 
 <QuizUI>
 
@@ -43,25 +43,25 @@ Prepárate para demostrar que sabes lo que haces. 🚀
     {text: 'Almacenamiento como servicio'},
     {text: 'Servicio de almacenamiento simple', isAnswer: true},
     {text: 'Servicio de almacenamiento con actitud'},
-    {text: 'Almacén simple sincronizado'},
+    {text: 'Almacén sincronizado simple'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    <p className="text-sm">Última verificación: 8 de mayo de 2026. Los límites y precios de AWS cambian rápidamente.</p>
+<p className="text-sm">Última verificación: 8 de mayo de 2026. Los límites y precios de AWS cambian rápidamente.</p>
     ¿Qué significa el nombre `S3`?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  S3 significa **Servicio de almacenamiento simple**. Es un servicio de almacenamiento de objetos escalable diseñado para guardar grandes volúmenes de datos.
+S3 significa **Servicio de almacenamiento simple**. Es un servicio de almacenamiento de objetos escalable diseñado para guardar datos a gran escala.
 
   AWS S3 ofrece varias clases de almacenamiento:
-  - Estándar: Para datos a los que se accede con frecuencia
-  - Acceso infrecuente (IA): Menor costo para accesos menos frecuentes
+  - Estándar: Para datos de acceso frecuente
+  - Acceso infrecuente (IA): Costo reducido para accesos menos habituales
   - Glacier: Almacenamiento de archivo a largo plazo y bajo costo
 
-  Cada clase presenta precios y características de acceso distintos, lo que te permite optimizar costos ajustándote a los patrones reales de uso de tus datos.
+  Cada clase presenta diferentes características de precio y acceso, lo que te permite optimizar costos según los patrones de uso de tus datos.
 
   [Más información sobre las clases de almacenamiento de S3](https://aws.amazon.com/s3/storage-classes/)
   </div>
@@ -77,20 +77,20 @@ Prepárate para demostrar que sabes lo que haces. 🚀
     {text: 'Almacenar propiedades arbitrarias', isAnswer: true},
     {text: 'Claves de partición dinámicas'},
     {text: 'Las columnas no tienen tipo'},
-    {text: 'Esquema JSON gestionado automáticamente'},
-    {text: 'Depende de RDS para el soporte de esquema'},
+    {text: 'Esquema JSON administrado automáticamente'},
+    {text: 'Depende de RDS para el soporte de esquemas'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Qué significa que DynamoDB se describa como "sin esquema"?
+¿Qué significa que DynamoDB se describa como "sin esquema"?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  DynamoDB se considera "sin esquema" porque permite almacenar propiedades arbitrarias en los elementos sin requerir un esquema predefinido.
+DynamoDB se considera "sin esquema" porque te permite almacenar propiedades arbitrarias en los elementos sin necesidad de un esquema predefinido.
 
-  [Mejores prácticas de DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+  [Prácticas recomendadas para DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
   </div>
   </slot>
 </Challenge>
@@ -101,9 +101,9 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="Sin esquema"
   title="DynamoDB"
   options={[
-    {text: 'PutItem', hint: 'Crea un nuevo elemento o reemplaza un elemento existente por uno nuevo.'},
+    {text: 'PutItem', hint: 'Crea un nuevo elemento o reemplaza uno existente con uno nuevo.'},
     {text: 'BatchUpdateItem', hint: 'No existe.'},
-    {text: 'BatchWriteItem', hint: 'Inserta (PUT) O elimina múltiples elementos en una sola llamada.'},
+    {text: 'BatchWriteItem', hint: 'Inserta (PUT) o elimina varios elementos en una sola llamada.'},
     {text: 'UpdateItem', isAnswer: true},
     {text: 'BatchUpsertItem', hint: '¿En DynamoDB?'},
     {text: 'TransactWriteItems', hint: 'Combina múltiples operaciones PutItem, UpdateItem, DeleteItem y ConditionCheck en una sola llamada.'},
@@ -111,25 +111,25 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Qué API de DynamoDB actualiza atributos en un único elemento existente?
+¿Qué API de DynamoDB actualiza los atributos de un solo elemento existente?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  La clave aquí es <b>actualizar</b>, no insertar ni hacer PUTs. Si estás haciendo inserciones, puedes usar `BatchWriteItem` o `TransactWriteItems`.
+La clave aquí es <b>actualizaciones</b>, no inserciones ni PUTs. Si estás insertando datos, puedes usar `BatchWriteItem` o `TransactWriteItems`.
 
-  Aunque `BatchWriteItem` puede manejar múltiples operaciones, está limitado a PUTs y DELETES. `TransactWriteItems` es más potente, pero es un poco como usar un mazo para actualizaciones simples.
-  Para actualizaciones simples, `UpdateItem` es la mejor opción. Te permite ACTUALIZAR, o modificar uno o más atributos en un elemento existente.
+Aunque `BatchWriteItem` puede manejar múltiples operaciones, está limitado a PUTs y DELETES. `TransactWriteItems` es más potente, pero es como usar un mazo para un trabajo sencillo.
+Para actualizaciones simples, `UpdateItem` es la mejor opción. Te permite ACTUALIZAR, o modificar uno o más atributos en un elemento existente.
 
-  La operación `UpdateItem` modifica un solo elemento por solicitud. Para cargas masivas (backfills) o actualizaciones por lotes, normalmente orquestarás muchas llamadas a `UpdateItem` o usarás un flujo de trabajo más amplio como la ejecución por lotes de PartiQL, Step Functions, Glue, EMR o un proceso worker personalizado.
+La operación `UpdateItem` modifica un solo elemento por solicitud. Para cargas iniciales masivas o actualizaciones por lotes, normalmente orquestarás muchas llamadas a `UpdateItem` o utilizarás un flujo de trabajo más amplio como la ejecución por lotes de PartiQL, Step Functions, Glue, EMR o un proceso worker personalizado.
 
-  La operación `UpdateItem`:
-  - Actualiza los atributos de un elemento existente.
-  - Añade nuevos atributos a un elemento existente.
-  - Elimina atributos de un elemento existente.
-  - Realiza la actualización de forma condicional si el elemento existe o cumple ciertas condiciones.
+La operación `UpdateItem`:
+- Actualiza los atributos de un elemento existente.
+- Añade nuevos atributos a un elemento existente.
+- Elimina atributos de un elemento existente.
+- Realiza la actualización de forma condicional si el elemento existe o cumple ciertas condiciones.
 
-  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
   </div>
   </slot>
 </Challenge>
@@ -138,26 +138,26 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Capacidades de consulta"
-  title="Funciones avanzadas de búsqueda"
+  title="Funciones de búsqueda avanzadas"
   options={[
     {text: 'ElastiCache', hint: 'Principalmente una caché en memoria; las versiones más recientes de Valkey incluyen funciones de búsqueda.'},
     {text: 'OpenSearch', isAnswer: true},
-    {text: 'Neptune', hint: 'Base de datos de grafos con capacidades avanzadas de consulta'},
-    {text: 'Redshift', hint: 'Consultas analíticas complejas'},
-    {text: 'DocumentDB', hint: 'Consultas compatibles con MongoDB'},
+    {text: 'Neptune', hint: 'Base de datos de grafos con capacidades avanzadas de consulta.'},
+    {text: 'Redshift', hint: 'Consultas analíticas complejas.'},
+    {text: 'DocumentDB', hint: 'Consultas compatibles con MongoDB.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      ¿Cuál de estos servicios de AWS está diseñado específicamente para búsqueda de texto completo y análisis de búsqueda?
+¿Cuál de estos servicios de AWS está diseñado específicamente para búsqueda de texto completo y análisis de búsqueda?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      OpenSearch es el servicio administrado de AWS para búsqueda, análisis de registros y cargas de trabajo de búsqueda de texto completo.
+OpenSearch es el servicio gestionado de AWS para búsqueda, análisis de logs y cargas de trabajo de texto completo.
 
       Las demás opciones son servicios útiles, pero no son el motor de búsqueda diseñado específicamente en esta lista:
-      - ElastiCache: Principalmente una caché en memoria. El actual ElastiCache para Valkey incluye comandos de búsqueda para datos indexados en memoria, por lo que ya no es preciso describir todo el servicio como carente de búsqueda integrada.
+      - ElastiCache: Principalmente una caché en memoria. La versión actual de ElastiCache para Valkey incluye comandos de búsqueda para datos indexados en memoria, por lo que ya no es preciso describir todo el servicio como carente de búsqueda integrada.
       - Neptune: Base de datos de grafos; puede integrarse con OpenSearch para búsqueda de texto completo.
       - Redshift: Almacén de datos para análisis SQL.
       - DocumentDB: Base de datos de documentos con búsqueda de texto compatible con MongoDB en las versiones admitidas.
@@ -169,31 +169,31 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="RDS"
-  title="Despliegue Multi-AZ"
+  title="Implementación Multi-AZ"
   options={[
     {text: 'Reduce los costos de almacenamiento'},
     {text: 'Soluciona el problema de Egress'},
     {text: 'Proporciona conmutación por error automática', isAnswer: true},
     {text: 'Aumenta el rendimiento de lectura'},
-    {text: 'Mejora el tráfico distribuido geográficamente'},
+    {text: 'Mejora el tráfico geodistribuido'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el beneficio **principal** del despliegue Multi-AZ en RDS?
+¿Cuál es el beneficio **principal** de la implementación Multi-AZ de RDS?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Las Zonas de Disponibilidad (AZ) son centros de datos físicamente separados **dentro de una misma región.** El despliegue Multi-AZ de RDS se encarga del *failover* automático hacia una réplica en espera ubicada en una AZ *cercana*.
+Las Zonas de Disponibilidad (AZ) son centros de datos independientes **dentro de una región.** La implementación Multi-AZ de RDS ofrece conmutación por error automática hacia una réplica en espera en una AZ *cercana*.
 
-  El despliegue Multi-AZ:
-  - Garantiza conmutación por error automática
-  - Maximiza la disponibilidad de tu base de datos
-  - Mantiene una réplica en espera síncrona
-  - Reduce al mínimo el tiempo de inactividad ante fallos de infraestructura
+  La implementación Multi-AZ:
+  - Proporciona conmutación por error automática
+  - Aumenta la disponibilidad de la base de datos
+  - Crea una réplica en espera síncrona
+  - Minimiza el tiempo de inactividad durante fallos de infraestructura
 
-  Ojo: no confundas Multi-AZ con las réplicas de lectura, que están diseñadas exclusivamente para escalar la carga de consultas de lectura.
+  No confundas la implementación Multi-AZ con las réplicas de lectura, que se utilizan para escalar operaciones de lectura.
 
   {/* [Detalles de RDS Multi-AZ](https://aws.amazon.com/rds/features/multi-az/) */}
   </div>
@@ -207,33 +207,33 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   title="Magia con WebSockets"
   options={[
     {text: 'API Gateway', isAnswer: true},
-    {text: 'EKS', hint: 'EKS puede ejecutar tus propios servicios de WebSocket de larga duración.'},
-    {text: 'Lightsail', hint: 'Las instancias de Lightsail pueden ejecutar tu propio servidor WebSocket.'},
-    {text: 'AppSync', hint: 'AppSync ofrece suscripciones GraphQL en tiempo real gestionadas a través de WebSockets, no sockets sin procesar arbitrarios.'},
-    {text: 'EC2', hint: 'EC2 puede ejecutar tu propio proceso de servidor WebSocket de larga duración.'},
+    {text: 'EKS', hint: 'EKS puede ejecutar tus propios servicios de WebSockets de larga duración.'},
+    {text: 'Lightsail', hint: 'Las instancias de Lightsail pueden ejecutar tu propio servidor de WebSockets.'},
+    {text: 'AppSync', hint: 'AppSync ofrece suscripciones GraphQL en tiempo real gestionadas sobre WebSockets, no sockets raw arbitrarios.'},
+    {text: 'EC2', hint: 'EC2 puede ejecutar tu propio proceso de servidor de WebSockets de larga duración.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      👋 ¡Espero que te lo estés pasando bien hasta ahora!
+👋 ¡Espero que te lo estés pasando bien hasta ahora!
 
       Prepárate para una difícil...
 
-      ¿Qué servicio de AWS ofrece APIs WebSocket gestionadas en las que AWS se encarga de la conexión del cliente y enruta los mensajes hacia las integraciones?
+      ¿Qué servicio de AWS ofrece APIs de WebSocket gestionadas donde AWS controla la conexión del cliente y enruta los mensajes a las integraciones?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      API Gateway admite APIs WebSocket bidireccionales, pero la implementación es gestionada por el propio servicio en lugar de ser un socket directo a tu proceso de servidor.
-      API Gateway mantiene la conexión del cliente y enruta los mensajes a Lambda, endpoints HTTP u otras integraciones. Los mensajes pueden enviarse de vuelta a los clientes conectados a través de la API Gateway Management API.
+API Gateway admite APIs de WebSocket bidireccionales, pero la implementación es gestionada por el propio API Gateway en lugar de ser un socket directo a tu proceso de servidor.
+      API Gateway mantiene la conexión del cliente y enruta los mensajes a Lambda, endpoints HTTP u otras integraciones. Los mensajes se pueden enviar de vuelta a los clientes conectados mediante la API de gestión de API Gateway.
 
       Las demás opciones son mucho más amigables con WebSockets:
-      - Lightsail: Perfecto para configuraciones simples de WebSocket 👌
-      - AppSync: Utiliza WebSockets para suscripciones GraphQL gestionadas
+      - Lightsail: Perfecto para configuraciones sencillas de WebSockets 👌
+      - AppSync: Usa WebSockets para suscripciones GraphQL gestionadas
       - EC2: Tu clásica opción de "haz lo que quieras" para WebSockets
-      - EKS: Ideal para ejecutar clústeres de WebSocket escalables
+      - EKS: Ideal para ejecutar clústeres escalables de WebSockets
 
-      Consejo pro: Si necesitas el poder total de los WebSockets sin procesar, ¡quédate con los servicios de cómputo!
+      Consejo pro: Si necesitas la potencia bruta de WebSockets, ¡quédate con los servicios de cómputo!
   </div>
   </slot>
 </Challenge>
@@ -241,26 +241,26 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Seguridad en S3"
-  title="Política de Bucket de S3"
+  group="Seguridad de S3"
+  title="Política de bucket de S3"
   options={[
-    {text: 'Hacer públicos los nuevos buckets', hint: 'Ante todo, el principio de menor privilegio.'},
-    {text: 'Mover S3 a infraestructura on-premise para controlar completamente las ACL'},
+    {text: 'Hacer públicos los nuevos buckets', hint: 'El principio de menor privilegio, primero.'},
+    {text: 'Mover S3 a un entorno on-premise para controlar completamente las ACL'},
     {text: 'Mover los datos a una blockchain privada', hint: '¿Es broma, verdad?'},
-    {text: 'Aplicar el principio de menor privilegio', isAnswer: true},
+    {text: 'Usar el principio de menor privilegio', isAnswer: true},
     {text: 'Usar comodines en las políticas para garantizar el acceso necesario', hint: '😯 ¡No!'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el enfoque recomendado para los permisos de buckets de S3?
+¿Cuál es el enfoque recomendado para los permisos de los buckets de S3?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  En prácticamente TODOS los sistemas, adoptar un diseño de "menor privilegio" es una forma clave de fortalecer y preparar para el futuro. Intentar asegurar un sistema existente es tan difícil como trasladar un edificio de oficinas completo a unos nuevos cimientos.
+En prácticamente TODOS los sistemas, adoptar un diseño de "menor privilegio" es una forma clave de reforzar la seguridad y garantizar su viabilidad a futuro. Intentar blindar un sistema existente es tan difícil como trasladar un edificio de oficinas completo a unos nuevos cimientos.
 
-  Los buckets de S3 no son la excepción. Para aplicar el principio de menor privilegio, comienza sin permisos y otorga solo el acceso necesario. Usa roles y políticas de IAM para controlar el acceso y audita regularmente los permisos de los buckets.
+  Los buckets de S3 no son la excepción. Para aplicar el principio de menor privilegio, comienza sin permisos y otorga solo el acceso estrictamente necesario. Usa roles y políticas de IAM para controlar el acceso y audita regularmente los permisos de los buckets.
 
   Mejores prácticas de seguridad:
   - Aplica el principio de menor privilegio
@@ -269,9 +269,9 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   - Usa roles y políticas de IAM
   - Audita regularmente los permisos de los buckets
 
-  Evita configuraciones excesivamente permisivas que podrían exponer datos sensibles.
+  Evita configuraciones excesivamente permisivas que puedan exponer datos sensibles.
 
-  [Mejores prácticas de seguridad en S3](https://aws.amazon.com/s3/security/)
+  [Mejores prácticas de seguridad de S3](https://aws.amazon.com/s3/security/)
   </div>
   </slot>
 </Challenge>
@@ -282,7 +282,7 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="Aurora"
   title="Aurora Serverless"
   options={[
-    {text: 'Siempre es más barato que el aprovisionado'},
+    {text: 'Siempre resulta más barato que el aprovisionado'},
     {text: 'Escala automáticamente la capacidad de cómputo', isAnswer: true},
     {text: 'Proporciona almacenamiento ilimitado'},
     {text: 'Elimina la gestión de la base de datos'},
@@ -290,20 +290,20 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es la característica clave de Aurora Serverless?
+¿Cuál es la característica clave de Aurora Serverless?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Aurora Serverless:
+Aurora Serverless:
   - Escala automáticamente la capacidad de cómputo
   - Ajusta los recursos según la carga de trabajo
   - Ideal para cargas de trabajo impredecibles
-  - Solo pagas por los recursos que usas
+  - Pagas únicamente por los recursos que usas
 
   Perfecto para aplicaciones con patrones de tráfico variables.
 
-  [Aurora Serverless Overview](https://aws.amazon.com/rds/aurora/serverless/)
+  [Descripción general de Aurora Serverless](https://aws.amazon.com/rds/aurora/serverless/)
   </div>
   </slot>
 </Challenge>
@@ -311,32 +311,32 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="Lotes, ¡parte 1!"
+  group="¡Lotes, parte 1!"
   title="Límites de BatchGetItem"
   options={[
     {text: '1', hint: '... Insisto en usar lotes.'},
     {text: '25', hint: 'Ese es el límite para `BatchWriteItem`.'},
     {text: '100', isAnswer: true},
-    {text: '75', hint: 'Cerca, pero es un número redondo.'},
+    {text: '75', hint: 'Cerca, pero el correcto es un número redondo.'},
     {text: '50', hint: 'Un poco más alto para `BatchGetItem`.'},
     {text: '200', hint: 'Un poco demasiado alto...'},
-    {text: 'Unlimited', hint: 'Existe un límite fijo para `BatchGetItem`.'},
+    {text: 'Ilimitado', hint: 'Existe un límite fijo para `BatchGetItem`.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      ¡Una pregunta más sobre lotes en DynamoDB!<br />
+¡Una pregunta más sobre lotes en DynamoDB!<br />
       ¿Cuál es el número máximo de elementos que puedes recuperar con una única solicitud `BatchGetItem` de DynamoDB?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      El SDK de DynamoDB te permite recuperar hasta **100** elementos en una única solicitud `BatchGetItem`. Este límite es mayor que el de `BatchWriteItem`, que es de 25 elementos.
-      Además, existen límites en el tamaño total de la carga útil, el tamaño del documento y la tasa de solicitudes.
+El SDK de DynamoDB te permite recuperar hasta **100** elementos en una única solicitud `BatchGetItem`. Este límite es mayor que el de `BatchWriteItem`, que se sitúa en 25 elementos.
+      Además, existen restricciones sobre el tamaño total de la carga útil, el tamaño del documento y la tasa de solicitudes.
 
-      Comprender estos límites es crucial para optimizar el rendimiento de tu aplicación y garantizar operaciones de datos eficientes.
+      Comprender estos límites es fundamental para optimizar el rendimiento de tu aplicación y garantizar operaciones de datos eficientes.
 
-      **Nota:** Es posible superar _algunos_ de estos límites... si sabes convencer a tu administrador de cuentas de AWS. 😎
+      **Nota:** Es posible superar _algunos_ de estos límites... si logras ganarte a tu administrador de cuentas de AWS con un poco de labia. 😎
   </div>
   </slot>
 </Challenge>
@@ -344,7 +344,7 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="¡Lotes, parte 2!"
+  group="Lotes, ¡parte 2!"
   title="Operaciones por lotes"
   options={[
     {text: '1', isAnswer: true},
@@ -353,20 +353,19 @@ Prepárate para demostrar que sabes lo que haces. 🚀
     {text: '50'},
     {text: '100', hint: '¿Pensando en el límite de GetItem?'},
     {text: '100 en modo streaming'},
-    {text: 'Ninguna de las anteriores', hint: 'Esta es un poco tramposa...'},
+    {text: 'Ninguna de las anteriores', hint: 'Esto tiene su truco...'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el número máximo de documentos que DynamoDB puede `UPDATE` por lote?
+¿Cuál es la cantidad máxima de documentos que DynamoDB puede `UPDATE` por lote?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Los clientes de DynamoDB son, en esencia, envoltorios para su API HTTP. La operación `BatchWriteItem` permite `PUT` o `DELETE` hasta **25** documentos por solicitud HTTP, pero no puede `UPDATE` múltiples documentos.
+Los clientes de DynamoDB son, en esencia, simples envoltorios para su API HTTP. La operación `BatchWriteItem` permite `PUT` o `DELETE` hasta **25** documentos por solicitud HTTP, pero no puede `UPDATE` múltiples documentos.
 
-  Si bien DynamoDB puede `INSERT` hasta **25** documentos por solicitud HTTP, solo puede `UPDATE` **1** documento por solicitud utilizando la operación `UpdateItem`.
-
+  Aunque DynamoDB puede `INSERT` hasta **25** documentos por solicitud HTTP, solo puede `UPDATE` **1** documento por petición mediante la operación `UpdateItem`.
   </div>
   </slot>
 </Challenge>
@@ -377,20 +376,20 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="DynamoDB"
   title="Capacidad aprovisionada vs. bajo demanda"
   options={[
-    {text: 'La capacidad aprovisionada siempre es mejor'},
-    {text: 'La capacidad bajo demanda es ilimitada'},
-    {text: 'Ambas ofrecen el mismo rendimiento'},
-    {text: 'La capacidad bajo demanda es más económica para cargas de trabajo impredecibles', isAnswer: true},
+    {text: 'La aprovisionada siempre es mejor'},
+    {text: 'La bajo demanda tiene capacidad ilimitada'},
+    {text: 'Su rendimiento es idéntico'},
+    {text: 'La bajo demanda es más económica para cargas impredecibles', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuándo deberías usar la capacidad bajo demanda de DynamoDB?
+¿Cuándo te conviene usar la capacidad bajo demanda de DynamoDB?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  La capacidad bajo demanda es ideal para:
+La capacidad bajo demanda es ideal para:
   - Cargas de trabajo impredecibles
   - Tráfico esporádico
   - Aplicaciones con patrones de acceso desconocidos
@@ -399,7 +398,7 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   La capacidad aprovisionada es mejor para:
   - Cargas de trabajo predecibles y constantes
   - Mayor control sobre el rendimiento
-  - Posibles ahorros de costos
+  - Posible ahorro de costos
 
   [Modos de capacidad de DynamoDB](https://aws.amazon.com/dynamodb/pricing/)
   </div>
@@ -412,26 +411,26 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="Rendimiento de S3"
   title="Optimización del rendimiento de S3"
   options={[
-    {text: 'Usa prefijos aleatorios/hash'},
-    {text: 'Usa prefijos lógicos; no se requiere aleatorización', isAnswer: true},
+    {text: 'Usa prefijos aleatorios o hash'},
+    {text: 'Usa prefijos lógicos; la aleatorización no es necesaria', isAnswer: true},
     {text: 'Usa siempre los objetos más grandes'},
     {text: 'Minimiza la cantidad de objetos'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cómo exprimir el máximo rendimiento de S3 con altas tasas de solicitud?
+¿Cómo optimizar el rendimiento de S3 cuando las tasas de solicitud se disparan?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Consejos de rendimiento para S3:
+Consejos de rendimiento de S3:
   - El S3 moderno escala automáticamente las tasas de solicitud por prefijo
-  - No necesitas prefijos aleatorios/hash para mejorar el rendimiento
+  - No necesitas prefijos aleatorios o hash para el rendimiento
   - Usa nombres de clave lógicos que se ajusten a tus patrones de acceso
-  - Monitorea los errores 503 Slow Down si llevas las solicitudes al límite
+  - Monitorea las respuestas 503 Slow Down si manejas tasas de solicitud muy altas
 
-  Las guías antiguas recomendaban aleatorizar los prefijos para evitar particiones calientes, pero AWS ya no lo considera un requisito de rendimiento por defecto.
+  Las guías antiguas recomendaban aleatorizar los prefijos para evitar particiones calientes, pero AWS ya no lo recomienda como un requisito de rendimiento predeterminado.
 
   [Directrices de rendimiento de S3](https://aws.amazon.com/s3/performance/)
   </div>
@@ -441,34 +440,34 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="Respaldo de RDS"
-  title="Estrategia de respaldo para RDS"
+  group="Copias de seguridad de RDS"
+  title="Estrategia de copias de seguridad en RDS"
   options={[
     {text: 'Solo instantáneas manuales'},
-    {text: 'No se necesitan respaldos'},
-    {text: 'Respaldos automatizados con recuperación a un punto en el tiempo', isAnswer: true},
-    {text: 'Respaldos completos semanales'},
+    {text: 'No se necesitan copias de seguridad'},
+    {text: 'Copias de seguridad automatizadas con recuperación a un punto específico en el tiempo', isAnswer: true},
+    {text: 'Copias de seguridad completas semanales'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el enfoque recomendado para respaldar RDS?
+¿Cuál es el enfoque recomendado para las copias de seguridad en RDS?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Prácticas recomendadas para respaldos:
-  - Habilita los respaldos automatizados
-  - Usa la recuperación a un punto en el tiempo
+Prácticas recomendadas para respaldos:
+  - Habilita las copias de seguridad automatizadas
+  - Utiliza la recuperación a un punto específico en el tiempo
   - Conserva los respaldos según los requisitos de cumplimiento
   - Prueba el proceso de restauración regularmente
-  - Considera los respaldos entre regiones
+  - Considera realizar copias entre regiones
 
-  Los respaldos automatizados te brindan:
+  Las copias automatizadas ofrecen:
   - Protección continua de datos
   - Opciones de recuperación flexibles
 
-  [Mejores prácticas de respaldo de RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+  [Prácticas recomendadas para respaldos en RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
   </div>
   </slot>
 </Challenge>
@@ -487,12 +486,12 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es la diferencia clave entre `Redis` y `Memcached` en `ElastiCache`?
+¿Cuál es la diferencia clave entre `Redis` y `Memcached` en `ElastiCache`?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Ventajas de Redis:
+Ventajas de Redis:
   - Admite estructuras de datos complejas
   - Opciones de persistencia
   - Operaciones avanzadas
@@ -500,7 +499,7 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 
   Memcached:
   - Almacén clave-valor simple
-  - Caché puro
+  - Caché pura
   - Alto rendimiento para casos de uso sencillos
 
   [Redis vs Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
@@ -517,21 +516,21 @@ Prepárate para demostrar que sabes lo que haces. 🚀
     {text: 'Idéntico a la clave primaria'},
     {text: 'Sin costo adicional'},
     {text: 'Reduce el rendimiento de escritura'},
-    {text: 'Permite consultar atributos no clave primaria', isAnswer: true},
+    {text: 'Permite consultar atributos no primarios', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el propósito de un Índice Secundario Global en DynamoDB?
+¿Para qué sirve un índice secundario global en DynamoDB?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Índice Secundario Global (GSI):
-  - Permite consultar atributos que no son parte de la clave primaria
+Índice secundario global (GSI):
+  - Permite consultar atributos que no forman parte de la clave primaria
   - Crea patrones de acceso alternativos
-  - Aumenta la flexibilidad en las consultas
-  - Genera un costo adicional por capacidad de escritura
+  - Aumenta la flexibilidad de las consultas
+  - Conlleva un costo adicional por capacidad de escritura
 
   Útil para requisitos de consulta complejos que van más allá de la clave primaria.
 
@@ -554,14 +553,14 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Qué permite hacer la gestión del ciclo de vida de S3?
+¿Qué te permite hacer la gestión del ciclo de vida de S3?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Gestión del ciclo de vida:
+Gestión del ciclo de vida:
   - Transiciona automáticamente objetos entre clases de almacenamiento
-  - Mueve datos de acceso infrecuente a almacenamiento más económico
+  - Mueve datos de acceso poco frecuente a un almacenamiento más económico
   - Configura reglas para la expiración de objetos
   - Optimiza los costos de almacenamiento
   - Reduce la sobrecarga de gestión manual
@@ -577,26 +576,26 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="Escalado de Aurora"
   title="Escalado de lecturas con Amazon Aurora"
   options={[
-    {text: 'Limitado a una única réplica de lectura', hint: 'Piensa en las capacidades de escalabilidad de Aurora.'},
-    {text: 'No es posible escalar las lecturas', hint: '¿Eso encaja con lo que ofrece Aurora?'},
+    {text: 'Limitado a una única réplica de lectura', hint: 'Piensa en las características de escalabilidad de Aurora.'},
+    {text: 'No es posible escalar las lecturas', hint: '¿Eso se alinea con las capacidades de Aurora?'},
     {text: 'Admite hasta 15 réplicas de lectura', isAnswer: true},
-    {text: 'Réplicas de lectura ilimitadas', hint: 'Hay un límite práctico que debes tener en cuenta.'},
+    {text: 'Réplicas de lectura ilimitadas', hint: 'Hay un límite práctico que debes considerar.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      ¿Cuál es el número máximo de réplicas de lectura que admite Amazon Aurora?
+¿Cuál es el número máximo de réplicas de lectura que admite Amazon Aurora?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Amazon Aurora admite **hasta 15 réplicas de lectura**, lo que te permite escalar significativamente tus operaciones de lectura. Estas réplicas se benefician de:
+Amazon Aurora admite **hasta 15 réplicas de lectura**, lo que te permite escalar significativamente tus operaciones de lectura. Estas réplicas se benefician de:
 
       - **Replicación casi instantánea** entre réplicas
       - **Impacto mínimo en el rendimiento** de la instancia principal
       - **Distribución eficiente** de las cargas de trabajo de lectura
 
-      Esta configuración permite el escalado horizontal para aplicaciones con altas demandas de lectura.
+      Esta configuración permite el escalado horizontal para aplicaciones con una alta demanda de lecturas.
 
       [Más información sobre las réplicas de lectura de Aurora](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
   </div>
@@ -617,19 +616,18 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Qué capacidades de cifrado proporciona RDS?
+¿Qué capacidades de cifrado ofrece RDS?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Características de cifrado de RDS:
-  - Cifra datos en reposo mediante KMS
-  - Cifra datos en tránsito mediante SSL/TLS
-  - Habilita el cifrado durante la creación de la base de datos
-  - Protege información sensible
-  - Cumplimiento de estándares de seguridad
+Funcionalidades de cifrado en RDS:
+  - Cifra datos en reposo mediante KMS para proteger el almacenamiento físico.
+  - Cifra datos en tránsito usando SSL/TLS para asegurar las comunicaciones.
+  - Activa el cifrado durante la creación de la base de datos.
+  - Protege información sensible y garantiza el cumplimiento de estándares de seguridad.
 
-  [Opciones de cifrado de RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
+  [Opciones de cifrado en RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
   </div>
   </slot>
 </Challenge>
@@ -641,25 +639,25 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   title="Propósito de DynamoDB Streams"
   options={[
     {text: 'Almacenar copias adicionales de datos'},
-    {text: 'Créditos de DynamoDB para Proveedores Verdes', hint: '¿En serio?'},
+    {text: 'Créditos de DynamoDB para proveedores ecológicos', hint: '¿En serio?'},
     {text: 'Aumentar el rendimiento de escritura', hint: 'Los streams son '},
     {text: 'Capturar cambios a nivel de elemento para arquitecturas basadas en eventos', isAnswer: true},
-    {text: 'Alternativa a los Índices Secundarios Globales', hint: '¿Estás adivinando?'},
+    {text: 'Alternativa a los índices secundarios globales', hint: '¿Estás adivinando?'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el uso principal de DynamoDB Streams?
+¿Cuál es el uso principal de DynamoDB Streams?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  DynamoDB Streams:
-  - Capturar cambios a nivel de elemento
-  - Habilitar arquitecturas basadas en eventos
-  - Activar funciones Lambda
-  - Soportar replicación entre regiones
-  - Proporcionar movimiento de datos en casi tiempo real
+DynamoDB Streams:
+  - Captura cambios a nivel de elemento
+  - Habilita arquitecturas basadas en eventos
+  - Invoca funciones de Lambda
+  - Permite la replicación entre regiones
+  - Facilita el movimiento de datos en casi tiempo real
 
   [Descripción general de DynamoDB Streams](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
   </div>
@@ -680,19 +678,19 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el mejor método para subir archivos grandes a S3?
+¿Cuál es el mejor método para subir archivos grandes a S3?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Beneficios de Multipart Upload:
-  - Maneja archivos grandes de forma eficiente
-  - Permite reanudar subidas interrumpidas
+Ventajas de Multipart Upload:
+  - Gestiona archivos grandes de forma eficiente
+  - Reanuda subidas interrumpidas
   - Subida paralela de las partes del archivo
   - Recomendado para archivos > 100 MB
-  - Mayor confiabilidad de red
+  - Mejora la fiabilidad de la red
 
-  [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+  [Carga multiparte en S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
   </div>
   </slot>
 </Challenge>
@@ -700,8 +698,8 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={20}
-  group="Optimización de Costos"
-  title="Análisis de Costos de Almacenamiento"
+  group="Optimización de costos"
+  title="Análisis de costos de almacenamiento"
   options={[
     {text: 'S3 Standard para todos los datos'},
     {text: 'Usar siempre el almacenamiento más barato'},
@@ -711,17 +709,17 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el enfoque más rentable para almacenar 1 PB de datos con un 20 % de acceso diario, un 30 % mensual y un 50 % anual?
+¿Cuál es la estrategia más rentable para almacenar 1 PB de datos si el 20 % se accede a diario, el 30 % mensualmente y el 50 % anualmente?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-  Estrategia de almacenamiento óptima:
+Estrategia de almacenamiento óptima:
   - 20 % en S3 Standard para acceso diario
   - 30 % en S3 Standard-IA para acceso mensual
   - 50 % en Glacier para acceso anual
 
-  Este enfoque optimiza los costos sin sacrificar los patrones de acceso necesarios.
+  Este enfoque optimiza los costos manteniendo los patrones de acceso adecuados. La clave no es buscar el precio más bajo a ciegas, sino pagar solo por la velocidad y disponibilidad que realmente necesitas.
 
   Consideraciones de costo:
   - Precio de almacenamiento por GB
@@ -746,22 +744,22 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-      Una tabla de DynamoDB tiene una capacidad de lectura aprovisionada de 100 RCUs. ¿Cuántas lecturas fuertemente consistentes de elementos de 4KB se pueden realizar por segundo?
+Una tabla de DynamoDB tiene una capacidad de lectura aprovisionada de 100 RCU. ¿Cuántas lecturas fuertemente consistentes de elementos de 4 KB puedes realizar por segundo?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Comprender los modelos de consistencia de DynamoDB es crucial:
+Comprender los modelos de consistencia de DynamoDB es fundamental:
 
-      - 1 RCU = 1 lectura fuertemente consistente/segundo para elementos de hasta 4KB
-      - 1 RCU = 2 lecturas eventualmente consistentes/segundo para elementos de hasta 4KB
+      - 1 RCU = 1 lectura fuertemente consistente/segundo para elementos de hasta 4 KB
+      - 1 RCU = 2 lecturas eventualmente consistentes/segundo para elementos de hasta 4 KB
 
       Por lo tanto:
-      - 100 RCUs = 100 lecturas fuertemente consistentes de 4KB/segundo
-      - 100 RCUs = 200 lecturas eventualmente consistentes de 4KB/segundo
+      - 100 RCU = 100 lecturas fuertemente consistentes de 4 KB/segundo
+      - 100 RCU = 200 lecturas eventualmente consistentes de 4 KB/segundo
 
-      Elige los modelos de consistencia en función de:
-      - Los requisitos de la aplicación
+      Elige el modelo de consistencia según:
+      - Los requisitos de tu aplicación
       - Consideraciones de costo
       - Necesidades de rendimiento
       - Requisitos de actualización de datos
@@ -773,32 +771,32 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   client:visible={{rootMargin: "150px"}}
   index={22}
   group="Alta disponibilidad de Aurora"
-  title="Mecanismo de conmutación por error de Aurora"
+  title="Mecanismo de failover de Aurora"
   options={[
     {text: 'Requiere intervención manual'},
-    {text: 'Requiere reconfiguración de la aplicación'},
-    {text: 'Siempre conmuta a la réplica más antigua'},
-    {text: 'Promoción automática basada en el nivel de prioridad de conmutación por error', isAnswer: true},
+    {text: 'Requiere reconfigurar la aplicación'},
+    {text: 'Siempre promueve la réplica más antigua'},
+    {text: 'Promoción automática según el nivel de prioridad de failover', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-      En un clúster de Aurora con múltiples réplicas de lectura, ¿qué ocurre exactamente durante una conmutación por error automática cuando la instancia principal se cae?
+En un clúster de Aurora con varias réplicas de lectura, ¿qué ocurre durante un failover automático cuando la instancia principal falla?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Proceso de conmutación por error de Aurora:
-      1. Detecta la caída de la instancia principal
-      2. Selecciona una réplica de Aurora priorizando el nivel de prioridad de conmutación por error
-      3. Usa características de la instancia como desempate si las prioridades coinciden
-      4. Actualiza automáticamente el endpoint del clúster
+Proceso de failover de Aurora:
+      1. Detecta el fallo de la instancia principal
+      2. Elige una réplica de Aurora basándose principalmente en el nivel de prioridad de failover
+      3. Usa las características de la instancia como desempate cuando las prioridades coinciden
+      4. Actualiza el endpoint del clúster automáticamente
 
       Mejores prácticas:
-      - Mantén varias réplicas distribuidas en distintas AZs
-      - Configura los niveles de promoción con criterio
-      - Conecta tus aplicaciones al endpoint del clúster
-      - Simula fallos y prueba la conmutación regularmente
+      - Mantén varias réplicas distribuidas en distintas zonas de disponibilidad (AZ)
+      - Configura los niveles de promoción de forma intencional
+      - Usa el endpoint del clúster en tus aplicaciones
+      - Prueba los escenarios de failover regularmente
   </div>
   </slot>
 </Challenge>
@@ -806,7 +804,7 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={23}
-  group="Consistencia en S3"
+  group="Consistencia de S3"
   title="Consistencia fuerte en S3"
   options={[
     {text: 'Solo para objetos nuevos'},
@@ -817,22 +815,22 @@ Prepárate para demostrar que sabes lo que haces. 🚀
 >
   <slot name="question">
   <div className="question">
-      Desde finales de 2020, ¿qué modelo de consistencia garantiza S3 para todas las operaciones?
+A finales de 2020, ¿qué modelo de consistencia ofrece S3 para todas las operaciones?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Modelo de consistencia de S3:
+Modelo de consistencia de S3:
       - Consistencia fuerte de lectura tras escritura para todas las operaciones
       - Se aplica a PUTs y DELETEs
-      - Olvídate de los parches y soluciones alternativas de antes
+      - Ya no se necesitan las soluciones alternativas que se usaban antes
       - Sin costo adicional
 
       Impacto:
-      - Lógica de aplicación mucho más limpia
-      - Adiós a las verificaciones manuales de consistencia
-      - Lecturas inmediatas y fiables justo tras escribir
-      - Mayor fiabilidad general de tu aplicación
+      - Lógica de aplicación simplificada
+      - No es necesario realizar verificaciones de consistencia
+      - Lecturas inmediatas y fiables tras las escrituras
+      - Mayor fiabilidad de la aplicación
   </div>
   </slot>
 </Challenge>
@@ -843,30 +841,30 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   group="Características de DynamoDB"
   title="Tiempo de vida (TTL)"
   options={[
-    {text: 'Elimina los elementos inmediatamente al expirar', hint: 'El TTL no opera en tiempo real.'},
-    {text: 'Requiere un desencadenante de eliminación manual', hint: 'La automatización es el punto clave.'},
-    {text: 'Eliminación en segundo plano con programación de mejor esfuerzo', isAnswer: true, hint: 'Correcto. AWS lo gestiona de forma asíncrona.'},
-    {text: 'Marca los elementos como expirados pero los mantiene almacenados', hint: 'El TTL sí elimina los datos físicamente.'},
+    {text: 'Elimina los elementos inmediatamente al expirar', hint: 'TTL no opera de forma síncrona.'},
+    {text: 'Requiere un activador de eliminación manual', hint: 'El proceso es completamente automatizado.'},
+    {text: 'Eliminación en segundo plano con programación de mejor esfuerzo', isAnswer: true, hint: 'Correcto: DynamoDB lo hace asíncronamente para no afectar el rendimiento.'},
+    {text: 'Marca los elementos como expirados pero los mantiene almacenados', hint: 'La eliminación es física, no solo un cambio de metadatos.'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      ¿Cómo maneja realmente la función TTL de DynamoDB la eliminación de elementos?
+¿Cómo gestiona DynamoDB la eliminación de elementos cuando se activa el TTL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Características del TTL en DynamoDB:
-      - Un proceso en segundo plano monitorea el atributo TTL
-      - Los elementos expirados se eliminan bajo una programación de mejor esfuerzo. ¿Por qué? Porque el borrado es asíncrono para no bloquear las operaciones de lectura/escritura, por lo que suele tardar unos pocos días
-      - Sin costo adicional por habilitar TTL
-      - Los elementos eliminados se reflejan en los streams
+Características clave del TTL en DynamoDB:
+      - Un proceso en segundo plano escanea y monitorea el atributo TTL
+      - Los elementos expirados se eliminan bajo una política de mejor esfuerzo (best-effort), usualmente en unos pocos días
+      - No incurres en costos adicionales por habilitar TTL
+      - Las eliminaciones se registran en DynamoDB Streams
 
-      Casos de uso ideales:
-      - Gestión de sesiones
-      - Expiración de logs
-      - Limpieza automática de datos temporales
-      - Cumplimiento de normativas de retención
+      ¿Por qué usarlo?
+      - Gestión automática de sesiones
+      - Rotación y expiración de logs
+      - Limpieza de datos temporales sin scripts personalizados
+      - Cumplimiento de políticas de retención de datos
   </div>
   </slot>
 </Challenge>
@@ -875,40 +873,40 @@ Prepárate para demostrar que sabes lo que haces. 🚀
   client:visible={{rootMargin: "150px"}}
   index={25}
   group="Aurora Serverless"
-  title="Comportamiento de escalado"
+  title="Comportamiento del escalado"
   options={[
     {text: 'La velocidad de escalado depende de la capacidad actual y configurada', isAnswer: true},
-    {text: 'Escala al instante bajo demanda'},
+    {text: 'Escala instantáneamente bajo demanda'},
     {text: 'Solo escala en intervalos preestablecidos'},
     {text: 'Solo permite escalado manual'},
   ]}
 >
   <slot name="question">
   <div className="question">
-      ¿Cuál es la consideración clave al confiar en Aurora Serverless para manejar picos repentinos de tráfico?
+¿Qué debes tener muy en cuenta al depender de Aurora Serverless para absorber picos repentinos de tráfico?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-      Escalado de Aurora Serverless:
+Escalado de Aurora Serverless:
       - Aurora Serverless v2 escala la capacidad en incrementos granulares de ACU
-      - La velocidad de escalado depende de la capacidad actual y de los ajustes de ACU mín/máx
-      - Las versiones compatibles pueden pausarse automáticamente a 0 ACU si se configura
+      - La velocidad de escalado depende de la capacidad actual y de la configuración de ACU mín/máx
+      - Las versiones compatibles pueden pausarse automáticamente en 0 ACU si se configura
       - Facturación por segundo basada en ACU
 
       Mejores prácticas:
       - Configura una capacidad mínima lo suficientemente alta para absorber picos repentinos en cargas de trabajo críticas
       - Monitorea los eventos de escalado
-      - No olvides la gestión de conexiones
+      - Ten en cuenta la gestión de conexiones
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-Vaya, esta aventura se metió de lleno en los detalles técnicos. 🚀☁️
+Vaya, esta aventura se metió de lleno en los detalles 🚀☁️
 Espero que hayas disfrutado el recorrido y, de paso, hayas aprendido un par de cosas sobre los servicios de almacenamiento de AWS.
 
 Echa un vistazo a más [desafíos de Dan](/challenges/)! 🧠
 
-Aviso legal: Este cuestionario es solo con fines educativos. Todas las marcas registradas y derechos de autor pertenecen a sus respectivos propietarios, especialmente a los grandes.
+Legal: Este cuestionario es únicamente con fines educativos. Todas las marcas comerciales y derechos de autor pertenecen a sus respectivos propietarios, especialmente a los grandes.

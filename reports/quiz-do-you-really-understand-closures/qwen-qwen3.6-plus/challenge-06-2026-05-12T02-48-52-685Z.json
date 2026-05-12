@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "Clausura obsoleta en React",
+  "translation": {
+    "title": "Clausura obsoleta en React",
+    "group": "Avanzado",
+    "options": [
+      {
+        "text": "Muestra el conteo actual en cada clic"
+      },
+      {
+        "text": "Siempre muestra 0"
+      },
+      {
+        "text": "Muestra NaN"
+      },
+      {
+        "text": "Esto no compilará"
+      }
+    ],
+    "questionProse": [
+      "¿Qué comportamiento exhibe este componente de React al hacer clic en el botón varias veces?"
+    ],
+    "explanationProse": [
+      "Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dependencias vacío) y crea un intervalo que cierra sobre `count` tal como estaba en el montaje: `0`. No importa cuántas veces hagas clic, la clausura del intervalo nunca verá el valor actualizado.\n\n    La etiqueta del botón se actualiza correctamente — eso es un renderizado nuevo. Pero `console.log` queda atrapado para siempre en `0`.\n\n    Arréglalo agregando `count` al array de dependencias (recrea el intervalo) o usando una ref:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Clausura obsoleta en React\",\n  \"group\": \"Avanzado\",\n  \"options\": [\n    {\n      \"text\": \"Muestra el conteo actual en cada clic\"\n    },\n    {\n      \"text\": \"Siempre muestra 0\"\n    },\n    {\n      \"text\": \"Muestra NaN\"\n    },\n    {\n      \"text\": \"Esto no compilará\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué comportamiento exhibe este componente de React al hacer clic en el botón varias veces?\"\n  ],\n  \"explanationProse\": [\n    \"Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dependencias vacío) y crea un intervalo que cierra sobre `count` tal como estaba en el montaje: `0`. No importa cuántas veces hagas clic, la clausura del intervalo nunca verá el valor actualizado.\\n\\n    La etiqueta del botón se actualiza correctamente — eso es un renderizado nuevo. Pero `console.log` queda atrapado para siempre en `0`.\\n\\n    Arréglalo agregando `count` al array de dependencias (recrea el intervalo) o usando una ref:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 847,
+    "outputTokens": 3906,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 72343
+  },
+  "cost": {
+    "inputUsd": 0.000275275,
+    "outputUsd": 0.0076167000000000006,
+    "totalUsd": 0.007891975,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

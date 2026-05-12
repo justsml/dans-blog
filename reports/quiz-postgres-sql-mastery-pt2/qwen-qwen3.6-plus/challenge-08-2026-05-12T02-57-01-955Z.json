@@ -1,0 +1,46 @@
+{
+  "index": 7,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Comillas en nombres de columna",
+  "translation": {
+    "title": "Comillas en nombres de columna",
+    "group": "Comillas 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "¿Cómo defines un **nombre de columna que contiene un punto?**"
+    ],
+    "explanationProse": [
+      "PostgreSQL utiliza comillas dobles para delimitar identificadores:\n    - Comillas dobles `\"...\"` para identificadores (nombres de columnas, nombres de tablas)\n    - Comillas simples `'...'` para literales de cadena\n    - La forma `first.name` se interpreta como `nombre_tabla.nombre_columna`\n\n    Sin comillas, el motor asumirá que el punto separa un esquema o tabla de su columna. Además, cualquier identificador sin comillas se normaliza a minúsculas automáticamente.\n\n    Para evitar dolores de cabeza, lo más seguro es usar `snake_case` y huir de los caracteres especiales."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comillas en nombres de columna\",\n  \"group\": \"Comillas 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cómo defines un **nombre de columna que contiene un punto?**\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL utiliza comillas dobles para delimitar identificadores:\\n    - Comillas dobles `\\\"...\\\"` para identificadores (nombres de columnas, nombres de tablas)\\n    - Comillas simples `'...'` para literales de cadena\\n    - La forma `first.name` se interpreta como `nombre_tabla.nombre_columna`\\n\\n    Sin comillas, el motor asumirá que el punto separa un esquema o tabla de su columna. Además, cualquier identificador sin comillas se normaliza a minúsculas automáticamente.\\n\\n    Para evitar dolores de cabeza, lo más seguro es usar `snake_case` y huir de los caracteres especiales.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 3575,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 67674
+  },
+  "cost": {
+    "inputUsd": 0.00027170000000000004,
+    "outputUsd": 0.00697125,
+    "totalUsd": 0.00724295,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

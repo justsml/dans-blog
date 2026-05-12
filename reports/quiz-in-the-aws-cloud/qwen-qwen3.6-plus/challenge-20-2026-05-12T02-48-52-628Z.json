@@ -1,0 +1,43 @@
+{
+  "index": 19,
+  "originalTitle": "Large File Transfer",
+  "translatedTitle": "Transferencia de archivos grandes",
+  "translation": {
+    "title": "Transferencia de archivos grandes",
+    "group": "Transferencia en S3",
+    "options": [
+      {
+        "text": "Usar siempre una única solicitud PUT"
+      },
+      {
+        "text": "Usar Multipart Upload para archivos grandes"
+      },
+      {
+        "text": "Comprimir antes de subir"
+      },
+      {
+        "text": "Dividir manualmente antes de subir"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es el mejor método para subir archivos grandes a S3?"
+    ],
+    "explanationProse": [
+      "Ventajas de Multipart Upload:\n  - Gestiona archivos grandes de forma eficiente\n  - Reanuda subidas interrumpidas\n  - Subida paralela de las partes del archivo\n  - Recomendado para archivos > 100 MB\n  - Mejora la fiabilidad de la red\n\n  [Carga multiparte en S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Transferencia de archivos grandes\",\n  \"group\": \"Transferencia en S3\",\n  \"options\": [\n    {\n      \"text\": \"Usar siempre una única solicitud PUT\"\n    },\n    {\n      \"text\": \"Usar Multipart Upload para archivos grandes\"\n    },\n    {\n      \"text\": \"Comprimir antes de subir\"\n    },\n    {\n      \"text\": \"Dividir manualmente antes de subir\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es el mejor método para subir archivos grandes a S3?\"\n  ],\n  \"explanationProse\": [\n    \"Ventajas de Multipart Upload:\\n  - Gestiona archivos grandes de forma eficiente\\n  - Reanuda subidas interrumpidas\\n  - Subida paralela de las partes del archivo\\n  - Recomendado para archivos > 100 MB\\n  - Mejora la fiabilidad de la red\\n\\n  [Carga multiparte en S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 789,
+    "outputTokens": 2243,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 43548
+  },
+  "cost": {
+    "inputUsd": 0.000256425,
+    "outputUsd": 0.00437385,
+    "totalUsd": 0.0046302750000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

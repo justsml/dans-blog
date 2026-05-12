@@ -1,0 +1,48 @@
+{
+  "index": 7,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Anotaciones de tiempos de vida",
+  "translation": {
+    "title": "Anotaciones de tiempos de vida",
+    "group": "Tiempos de vida",
+    "options": [
+      {
+        "text": "Resultado: Séneca el Joven",
+        "hint": "El código no compilará, por lo que no generará ninguna salida"
+      },
+      {
+        "text": "Error: falta el especificador de tiempo de vida"
+      },
+      {
+        "text": "Error: no se puede devolver una referencia a una variable local",
+        "hint": "La referencia corresponde a un parámetro de entrada, no a una variable local"
+      },
+      {
+        "text": "Error: discrepancia de tiempos de vida",
+        "hint": "Aún no hemos especificado los tiempos de vida, así que no puede haber una discrepancia"
+      }
+    ],
+    "questionProse": [
+      "¿Qué sucede con esta función que devuelve la más larga de dos slices de cadena?"
+    ],
+    "explanationProse": [
+      "Este código falla porque el compilador no puede determinar la relación entre los tiempos de vida de entrada y salida. Aquí te explico por qué y cómo solucionarlo:",
+      "Por qué se necesitan los tiempos de vida aquí:\n      1. Las múltiples referencias de entrada podrían tener tiempos de vida distintos\n      2. El valor de retorno debe vivir tanto como ambas entradas\n      3. El compilador necesita verificar estas relaciones\n\n      Patrones comunes:",
+      "Mejores prácticas:\n      1. Deja que la elisión de tiempos de vida funcione cuando sea posible\n      2. Usa tiempos de vida explícitos cuando las relaciones deban quedar claras\n      3. Considera devolver tipos con propiedad (*owned*) para evitar la complejidad de los tiempos de vida\n      4. Documenta las relaciones complejas de tiempos de vida"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Anotaciones de tiempos de vida\",\n  \"group\": \"Tiempos de vida\",\n  \"options\": [\n    {\n      \"text\": \"Resultado: Séneca el Joven\",\n      \"hint\": \"El código no compilará, por lo que no generará ninguna salida\"\n    },\n    {\n      \"text\": \"Error: falta el especificador de tiempo de vida\"\n    },\n    {\n      \"text\": \"Error: no se puede devolver una referencia a una variable local\",\n      \"hint\": \"La referencia corresponde a un parámetro de entrada, no a una variable local\"\n    },\n    {\n      \"text\": \"Error: discrepancia de tiempos de vida\",\n      \"hint\": \"Aún no hemos especificado los tiempos de vida, así que no puede haber una discrepancia\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué sucede con esta función que devuelve la más larga de dos slices de cadena?\"\n  ],\n  \"explanationProse\": [\n    \"Este código falla porque el compilador no puede determinar la relación entre los tiempos de vida de entrada y salida. Aquí te explico por qué y cómo solucionarlo:\",\n    \"Por qué se necesitan los tiempos de vida aquí:\\n      1. Las múltiples referencias de entrada podrían tener tiempos de vida distintos\\n      2. El valor de retorno debe vivir tanto como ambas entradas\\n      3. El compilador necesita verificar estas relaciones\\n\\n      Patrones comunes:\",\n    \"Mejores prácticas:\\n      1. Deja que la elisión de tiempos de vida funcione cuando sea posible\\n      2. Usa tiempos de vida explícitos cuando las relaciones deban quedar claras\\n      3. Considera devolver tipos con propiedad (*owned*) para evitar la complejidad de los tiempos de vida\\n      4. Documenta las relaciones complejas de tiempos de vida\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 959,
+    "outputTokens": 3566,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 65276
+  },
+  "cost": {
+    "inputUsd": 0.00031167500000000003,
+    "outputUsd": 0.0069537,
+    "totalUsd": 0.007265375,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

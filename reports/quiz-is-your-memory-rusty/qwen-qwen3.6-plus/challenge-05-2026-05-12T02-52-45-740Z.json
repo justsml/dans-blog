@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Puntero inteligente `Box`",
+  "translation": {
+    "title": "Puntero inteligente `Box`",
+    "group": "Punteros inteligentes",
+    "options": [],
+    "questionProse": [
+      "¿Qué está mal en esta definición de tipo recursivo?"
+    ],
+    "explanationProse": [
+      "Este código falla porque el compilador no puede determinar el tamaño de `CatList` en tiempo de compilación. ¡La naturaleza recursiva del tipo significa que podría ser infinitamente grande!\n\n      Así es como solucionarlo usando `Box<T>`:",
+      "Por qué funciona `Box<T>`:\n      1. Box proporciona un puntero de tamaño fijo (generalmente 8 bytes en sistemas de 64 bits)\n      2. Los datos reales se almacenan en el heap\n      3. El compilador ahora sabe exactamente cuánto espacio asignar\n\n      Casos de uso comunes para `Box<T>`:\n      - Estructuras de datos recursivas (listas enlazadas, árboles)\n      - Datos grandes que quieres asegurar que se asignen en el heap\n      - Objetos trait cuando necesitas despacho dinámico\n\n      Buena práctica: Usa `Box<T>` cuando necesites:\n      - Tipos recursivos\n      - Asegurar la asignación en el heap\n      - Mover datos grandes sin copiarlos"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Puntero inteligente `Box`\",\n  \"group\": \"Punteros inteligentes\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué está mal en esta definición de tipo recursivo?\"\n  ],\n  \"explanationProse\": [\n    \"Este código falla porque el compilador no puede determinar el tamaño de `CatList` en tiempo de compilación. ¡La naturaleza recursiva del tipo significa que podría ser infinitamente grande!\\n\\n      Así es como solucionarlo usando `Box<T>`:\",\n    \"Por qué funciona `Box<T>`:\\n      1. Box proporciona un puntero de tamaño fijo (generalmente 8 bytes en sistemas de 64 bits)\\n      2. Los datos reales se almacenan en el heap\\n      3. El compilador ahora sabe exactamente cuánto espacio asignar\\n\\n      Casos de uso comunes para `Box<T>`:\\n      - Estructuras de datos recursivas (listas enlazadas, árboles)\\n      - Datos grandes que quieres asegurar que se asignen en el heap\\n      - Objetos trait cuando necesitas despacho dinámico\\n\\n      Buena práctica: Usa `Box<T>` cuando necesites:\\n      - Tipos recursivos\\n      - Asegurar la asignación en el heap\\n      - Mover datos grandes sin copiarlos\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 849,
+    "outputTokens": 3633,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 66647
+  },
+  "cost": {
+    "inputUsd": 0.000275925,
+    "outputUsd": 0.00708435,
+    "totalUsd": 0.0073602749999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
