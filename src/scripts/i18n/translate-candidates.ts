@@ -1,6 +1,5 @@
 import { existsSync, mkdirSync, readFileSync, rmSync } from "node:fs";
-import { spawnSync } from "node:child_process";
-import { dirname } from "node:path";
+import { dirname, join } from "node:path";
 import {
   getPostPaths,
   gitCommit,
@@ -26,53 +25,19 @@ const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/z-ai/glm-5-turbo",
 ];
 
-const DEFAULT_OPENCODE_TIMEOUT_SECONDS = 240;
-const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
-  ? "/Users/dan/.opencode/bin/opencode"
-  : "opencode";
-const MODEL_VARIANTS = new Map([
-  ["openrouter/google/gemini-3.1-flash-lite-preview", "minimal"],
-  ["openrouter/deepseek/deepseek-v4-pro", "low"],
-  ["openrouter/qwen/qwen3.6-plus", "low"],
-  ["openrouter/qwen/qwen3-coder-flash", "low"],
-  ["openrouter/qwen/qwen3.5-flash-02-23", "low"],
-  ["openrouter/google/gemini-3-flash-preview", "minimal"],
-  ["openrouter/z-ai/glm-5.1", "low"],
-  ["openrouter/z-ai/glm-5-turbo", "low"],
-  ["openrouter/z-ai/glm-4.7-flash", "low"],
-]);
+const DEFAULT_TRANSLATION_TIMEOUT_SECONDS = 240;
+const DEFAULT_ARTICLE_CHUNK_SIZE = "5s";
 
-type ModelPrice = {
-  input: number;
-  output: number;
-  cachedInput?: number;
+type CandidateTelemetry = {
+  runtimeSeconds: string;
+  tokens: {
+    input?: number;
+    output?: number;
+    thinking?: number;
+    cached?: number;
+  };
+  estimatedCostUsd?: number;
 };
-
-const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
-  ["openrouter/google/gemma-4-26b-a4b-it", { input: 0, output: 0 }],
-  ["openrouter/google/gemma-4-31b-it", { input: 0, output: 0 }],
-  ["openrouter/google/gemini-3.1-flash-lite-preview", { input: 0.1, output: 0.4 }],
-  ["openrouter/google/gemini-2.5-flash-lite", { input: 0.1, output: 0.4 }],
-  ["openrouter/deepseek/deepseek-v4-flash", { input: 0.14, output: 0.28, cachedInput: 0.0028 }],
-  ["openrouter/deepseek/deepseek-v4-pro", { input: 0.2, output: 0.8 }],
-  ["openrouter/anthropic/claude-haiku-4.5", { input: 1, output: 5 }],
-  ["openrouter/qwen/qwen3-coder-flash", { input: 0.05, output: 0.2 }],
-  ["openrouter/qwen/qwen3.5-flash-02-23", { input: 0.05, output: 0.2 }],
-  ["openrouter/qwen/qwen3.6-plus", { input: 0.325, output: 1.95 }],
-  ["openrouter/qwen/qwen3.6-flash", { input: 0.25, output: 1.5 }],
-  ["openrouter/qwen/qwen3.6-35b-a3b", { input: 0.15, output: 1 }],
-  ["openrouter/z-ai/glm-5-turbo", { input: 1.2, output: 4, cachedInput: 0.24 }],
-  ["openrouter/z-ai/glm-4.7-flash", { input: 0.06, output: 0.4, cachedInput: 0.01 }],
-  ["openrouter/google/gemini-3-flash-preview", { input: 0.5, output: 3, cachedInput: 0.05 }],
-  ["openrouter/deepseek/deepseek-v3.2", { input: 0.252, output: 0.378, cachedInput: 0.0252 }],
-  ["openrouter/minimax/minimax-m2.7", { input: 0.299, output: 1.2 }],
-  ["openrouter/minimax/minimax-m2.5", { input: 0.15, output: 1.15 }],
-  ["openrouter/moonshotai/kimi-k2.6", { input: 0.75, output: 3.5, cachedInput: 0.15 }],
-  ["openrouter/google/gemma-4-26b-a4b-it:free", { input: 0, output: 0 }],
-  ["openrouter/minimax/minimax-m2.5:free", { input: 0, output: 0 }],
-  ["openrouter/openai/gpt-5-mini", { input: 0.25, output: 2 }],
-  ["openrouter/openai/gpt-5.4-mini", { input: 0.75, output: 4.5 }],
-]);
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -83,27 +48,15 @@ const shouldSkipCommit = options["no-commit"] === true;
 const shouldOverwrite = options["overwrite"] === true;
 const shouldAllowConcurrentWorktree = options["allow-concurrent-worktree"] === true;
 const timeoutSeconds = getTimeoutSeconds();
+const articleChunkSize = optionalString(options, "chunk") ?? DEFAULT_ARTICLE_CHUNK_SIZE;
+const quizConcurrency = optionalString(options, "quiz-concurrency");
+const challengeRetries = optionalString(options, "challenge-retries");
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 const targetRelPath = relativeToRepo(targetPath);
 
 mkdirSync(dirname(targetPath), { recursive: true });
 
 for (const model of models) {
-  const preRunChangedPaths = getChangedPaths();
-  const prompt = [
-    "You are a constrained translation file-rewrite worker.",
-    `Translate ${relativeToRepo(sourcePath)} into ${locale}.`,
-    `Write the complete translated MDX to ${targetRelPath}.`,
-    "Do not run shell commands, git commands, Bun scripts, validation scripts, or translation scripts.",
-    "Do not inspect or follow repository skills. Do not create commits. The wrapper script owns validation, reports, and Git.",
-    "Preserve MDX structure, imports, component names, prop names, code blocks, URLs, asset paths, and anchors.",
-    "Preserve every import line from the source post. Locale files live one directory deeper, so adjust only relative import depth when required.",
-    "For quiz posts, preserve Challenge/QuizUI imports and every component tag/prop name exactly; translate only reader-facing string values.",
-    "Translate reader-facing prose, frontmatter title/subTitle, image alt text, quiz questions/options/explanations, and visible UI copy inside MDX props.",
-    "Do not add commentary outside the file. Replace any previous candidate in the target file.",
-    "Keep frontmatter lean: localized title/subTitle/body and optional localized cover_alt only unless a field must override English.",
-  ].join("\n");
-
   const reportPath = `${reportDir}/${safeModelName(model)}.md`;
   if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
     console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
@@ -113,135 +66,83 @@ for (const model of models) {
     console.log(`Retrying rejected ${locale}/${model} report at ${relativeToRepo(reportPath)}.`);
   }
 
-  const opencodeResult = runOpenCode([
-      "run",
-      "--pure",
-      "--model",
-      model,
-      ...getVariantArgs(model),
-      "--file",
-      sourcePath,
-      "--dangerously-skip-permissions",
-      prompt,
-    ], timeoutSeconds * 1000);
-  const telemetry = getCandidateTelemetry(model, opencodeResult);
-  const unrelatedChangedPaths = getUnrelatedChangedPaths(preRunChangedPaths);
+  const preRunChangedPaths = getChangedPaths();
+  const startedAt = Date.now();
+  try {
+    runDirectTranslation(model);
 
-  if (!shouldAllowConcurrentWorktree && unrelatedChangedPaths.length > 0) {
-    if (unrelatedChangedPaths.every(isHarmlessGeneratedPath)) {
-      cleanupUnrelatedPaths(unrelatedChangedPaths);
-    } else {
-    cleanupRejectedTarget();
-    cleanupUnrelatedPaths(unrelatedChangedPaths);
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus: "rejected: touched unrelated files",
-      telemetry,
-      note: `Model changed files outside ${targetRelPath}: ${unrelatedChangedPaths.join(", ")}`,
-    });
-
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-        relativeToRepo(reportPath),
-      ]);
+    if (!existsSync(targetPath)) {
+      throw new Error(`Direct translator did not create ${targetRelPath}.`);
     }
 
-    continue;
-    }
-  }
-
-  if (!opencodeResult.ok) {
-    cleanupRejectedTarget();
-    cleanupUnrelatedPaths(getUnrelatedChangedPaths(preRunChangedPaths).filter(isHarmlessGeneratedPath));
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus: "rejected: opencode command failed",
-      telemetry,
-      note: opencodeResult.errorMessage,
-    });
-
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-        relativeToRepo(reportPath),
-      ]);
+    if (!hasGitDiff(targetRelPath)) {
+      throw new Error([
+        `Direct translator did not leave a diff in ${targetRelPath}.`,
+        "This usually means the translation already exists or the provider produced unchanged output.",
+      ].join(" "));
     }
 
-    continue;
-  }
-
-  if (!existsSync(targetPath)) {
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus: "rejected: missing output file",
-      telemetry,
-      note: `Model did not create ${targetRelPath}.`,
-    });
-
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-        relativeToRepo(reportPath),
-      ]);
-    }
-
-    continue;
-  }
-
-  if (!hasGitDiff(targetRelPath)) {
-    writeCandidateReport({
-      reportPath,
-      model,
-      validationStatus: "rejected: target file unchanged",
-      telemetry,
-      note: [
-        `Model did not leave a diff in ${targetRelPath}.`,
-        "This usually means the provider failed, refused, or only inspected the existing candidate.",
-      ].join(" "),
-    });
-
-    if (!shouldSkipCommit) {
-      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-        relativeToRepo(reportPath),
-      ]);
-    }
-
-    continue;
-  }
-
-  let validationStatus = "skipped";
-  if (!shouldSkipValidation) {
-    try {
+    let validationStatus = "skipped";
+    if (!shouldSkipValidation) {
       validationStatus = validateCandidate();
-    } catch (error) {
-      cleanupRejectedTarget();
-      writeCandidateReport({
-        reportPath,
-        model,
-        validationStatus: "rejected: validation failed",
-        telemetry,
-        note: error instanceof Error ? error.message : String(error),
-      });
+    }
 
-      if (!shouldSkipCommit) {
-        gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
-          relativeToRepo(reportPath),
-        ]);
-      }
+    writeCandidateReport({
+      reportPath,
+      model,
+      validationStatus,
+      telemetry: getDirectTelemetry(model, startedAt),
+      note: "Generated through the direct AI SDK chunked translator.",
+    });
 
-      continue;
+    if (!shouldSkipCommit) {
+      gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
+        targetRelPath,
+        relativeToRepo(reportDir),
+      ]);
+    }
+  } catch (error) {
+    cleanupRejectedTarget();
+    cleanupNewGeneratedReports(preRunChangedPaths, reportPath);
+    writeCandidateReport({
+      reportPath,
+      model,
+      validationStatus: "rejected: direct AI SDK translation failed",
+      telemetry: getDirectTelemetry(model, startedAt),
+      note: error instanceof Error ? error.message : String(error),
+    });
+
+    if (!shouldSkipCommit) {
+      gitCommit(`i18n rejected(${locale}): ${slug} via ${model}`, [
+        relativeToRepo(reportPath),
+      ]);
     }
   }
+}
 
-  writeCandidateReport({ reportPath, model, validationStatus, telemetry });
+function runDirectTranslation(model: string) {
+  const args = [
+    "run",
+    "i18n:translate:chunked",
+    "--",
+    "--slug",
+    slug,
+    "--locale",
+    locale,
+    "--model",
+    model,
+    "--chunk",
+    articleChunkSize,
+  ];
 
-  if (!shouldSkipCommit) {
-    gitCommit(`i18n candidate(${locale}): ${slug} via ${model}`, [
-      targetRelPath,
-      relativeToRepo(reportPath),
-    ]);
+  if (quizConcurrency != null) {
+    args.push("--quiz-concurrency", quizConcurrency);
   }
+  if (challengeRetries != null) {
+    args.push("--challenge-retries", challengeRetries);
+  }
+
+  runInherited("bun", args, { timeoutMs: timeoutSeconds * 1000 });
 }
 
 function validateCandidate() {
@@ -313,16 +214,17 @@ function targetExistsInHead() {
   }
 }
 
-function getUnrelatedChangedPaths(preRunChangedPaths: Set<string>) {
-  const targetDirRelPath = relativeToRepo(dirname(targetPath));
-  const targetDirStatusPath = `${targetDirRelPath}/`;
+function cleanupNewGeneratedReports(preRunChangedPaths: Set<string>, reportPath: string) {
+  const legacyReportRelPath = relativeToRepo(reportPath);
+  const reportDirRelPath = relativeToRepo(reportDir);
 
-  return [...getChangedPaths()].filter(
-    (path) =>
-      path !== targetRelPath &&
-      path !== targetDirStatusPath &&
-      !preRunChangedPaths.has(path),
-  );
+  for (const path of getChangedPaths()) {
+    if (preRunChangedPaths.has(path)) continue;
+    if (path === legacyReportRelPath) continue;
+    if (!path.startsWith(`${reportDirRelPath}/`)) continue;
+    if (pathExistsInHead(path)) continue;
+    rmSync(join(process.cwd(), path), { recursive: true, force: true });
+  }
 }
 
 function getChangedPaths() {
@@ -335,20 +237,6 @@ function getChangedPaths() {
       .map((path) => path.split(" -> ").at(-1))
       .filter((path): path is string => path != null && path.trim() !== ""),
   );
-}
-
-function cleanupUnrelatedPaths(paths: string[]) {
-  for (const path of paths) {
-    if (pathExistsInHead(path)) {
-      writeTextFile(`${process.cwd()}/${path}`, run("git", ["show", `HEAD:${path}`]));
-    } else {
-      rmSync(`${process.cwd()}/${path}`, { recursive: true, force: true });
-    }
-  }
-}
-
-function isHarmlessGeneratedPath(path: string) {
-  return /^tmp-language-nav-.+\.png$/.test(path);
 }
 
 function pathExistsInHead(path: string) {
@@ -395,6 +283,48 @@ function writeCandidateReport({
   );
 }
 
+function getDirectTelemetry(model: string, startedAt: number): CandidateTelemetry {
+  const summary = readLatestCandidateSummary(model);
+  if (summary != null) {
+    return {
+      runtimeSeconds: formatSeconds(numberValue(summary.totalDurationMs)),
+      tokens: {
+        input: numberValue(summary.totalInputTokens),
+        output: numberValue(summary.totalOutputTokens),
+        cached: numberValue(summary.totalCacheReadTokens),
+      },
+      estimatedCostUsd: numberValue(summary.totalCostUsd),
+    };
+  }
+
+  return {
+    runtimeSeconds: formatSeconds(Date.now() - startedAt),
+    tokens: {},
+  };
+}
+
+function readLatestCandidateSummary(model: string) {
+  const candidatesPath = join(reportDir, "candidates.jsonl");
+  if (!existsSync(candidatesPath)) return undefined;
+
+  const normalizedModel = model.replace(/^openrouter\//, "");
+  const lines = readFileSync(candidatesPath, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean);
+
+  for (const line of lines.toReversed()) {
+    try {
+      const summary = JSON.parse(line) as Record<string, unknown>;
+      if (summary.model === normalizedModel || summary.model === model) return summary;
+    } catch {
+      // Ignore malformed JSONL rows.
+    }
+  }
+
+  return undefined;
+}
+
 function safeModelName(model: string) {
   return model.replace(/[^a-z0-9._-]+/gi, "-");
 }
@@ -420,14 +350,9 @@ function isRejectedReport(reportPath: string) {
   return readFileSync(reportPath, "utf8").includes("- Validation: rejected:");
 }
 
-function getVariantArgs(model: string) {
-  const variant = MODEL_VARIANTS.get(model) ?? "low";
-  return ["--variant", variant];
-}
-
 function getTimeoutSeconds() {
   const rawValue = optionalString(options, "timeout-seconds");
-  if (rawValue == null) return DEFAULT_OPENCODE_TIMEOUT_SECONDS;
+  if (rawValue == null) return DEFAULT_TRANSLATION_TIMEOUT_SECONDS;
 
   const parsedValue = Number(rawValue);
   if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
@@ -437,169 +362,13 @@ function getTimeoutSeconds() {
   return parsedValue;
 }
 
-type CandidateTelemetry = {
-  runtimeSeconds: string;
-  tokens: {
-    input?: number;
-    output?: number;
-    thinking?: number;
-    cached?: number;
-  };
-  estimatedCostUsd?: number;
-};
-
-type OpenCodeResult = {
-  ok: boolean;
-  runtimeMs: number;
-  output: string;
-  errorMessage?: string;
-};
-
-function runOpenCode(args: string[], timeoutMs: number): OpenCodeResult {
-  const startTime = Date.now();
-  const result = spawnSync(OPENCODE_COMMAND, args, {
-    cwd: process.cwd(),
-    encoding: "utf8",
-    stdio: ["ignore", "pipe", "pipe"],
-    timeout: timeoutMs,
-  });
-  const runtimeMs = Date.now() - startTime;
-  const stdout = result.stdout ?? "";
-  const stderr = result.stderr ?? "";
-
-  if (stdout.length > 0) process.stdout.write(stdout);
-  if (stderr.length > 0) process.stderr.write(stderr);
-
-  const timeoutNote =
-    result.error?.name === "TimeoutError" || result.signal === "SIGTERM"
-      ? ` after ${timeoutMs}ms`
-      : "";
-
-  return {
-    ok: result.status === 0,
-    runtimeMs,
-    output: `${stdout}\n${stderr}`,
-    errorMessage: result.status === 0
-      ? undefined
-      : `Command failed${timeoutNote}: ${OPENCODE_COMMAND} ${args.join(" ")}`,
-  };
+function formatSeconds(milliseconds: number | undefined) {
+  if (milliseconds == null || !Number.isFinite(milliseconds)) return "unknown";
+  return (milliseconds / 1000).toFixed(2);
 }
 
-function getCandidateTelemetry(model: string, result: OpenCodeResult): CandidateTelemetry {
-  const tokens = parseTokenUsage(result.output);
-
-  return {
-    runtimeSeconds: (result.runtimeMs / 1000).toFixed(2),
-    tokens,
-    estimatedCostUsd: estimateCost(model, tokens),
-  };
-}
-
-function parseTokenUsage(output: string): CandidateTelemetry["tokens"] {
-  const jsonUsage = parseJsonUsage(output);
-  if (jsonUsage != null) return jsonUsage;
-
-  return {
-    input: findTokenCount(output, [
-      "input tokens",
-      "prompt tokens",
-      "input",
-      "prompt",
-    ]),
-    output: findTokenCount(output, [
-      "output tokens",
-      "completion tokens",
-      "output",
-      "completion",
-    ]),
-    thinking: findTokenCount(output, [
-      "thinking tokens",
-      "reasoning tokens",
-      "reasoning",
-      "thinking",
-    ]),
-    cached: findTokenCount(output, [
-      "cached input tokens",
-      "cache read tokens",
-      "cached tokens",
-      "cached",
-    ]),
-  };
-}
-
-function parseJsonUsage(output: string): CandidateTelemetry["tokens"] | undefined {
-  for (const line of output.split(/\r?\n/)) {
-    const trimmedLine = line.trim();
-    if (!trimmedLine.startsWith("{")) continue;
-
-    try {
-      const event = JSON.parse(trimmedLine);
-      const usage = findUsageObject(event);
-      if (usage == null) continue;
-
-      return {
-        input: firstNumber(usage, ["input", "inputTokens", "prompt_tokens", "promptTokens"]),
-        output: firstNumber(usage, ["output", "outputTokens", "completion_tokens", "completionTokens"]),
-        thinking: firstNumber(usage, ["thinking", "thinkingTokens", "reasoning_tokens", "reasoningTokens"]),
-        cached: firstNumber(usage, ["cached", "cachedInput", "cachedInputTokens", "cache_read_input_tokens"]),
-      };
-    } catch {
-      // Ignore non-JSON formatted opencode output.
-    }
-  }
-
-  return undefined;
-}
-
-function findUsageObject(value: unknown): Record<string, unknown> | undefined {
-  if (value == null || typeof value !== "object") return undefined;
-  const record = value as Record<string, unknown>;
-  const directUsage = record.usage;
-  if (directUsage != null && typeof directUsage === "object") {
-    return directUsage as Record<string, unknown>;
-  }
-
-  for (const child of Object.values(record)) {
-    const nestedUsage = findUsageObject(child);
-    if (nestedUsage != null) return nestedUsage;
-  }
-
-  return undefined;
-}
-
-function firstNumber(record: Record<string, unknown>, keys: string[]) {
-  for (const key of keys) {
-    const value = record[key];
-    if (typeof value === "number" && Number.isFinite(value)) return value;
-  }
-
-  return undefined;
-}
-
-function findTokenCount(output: string, labels: string[]) {
-  for (const label of labels) {
-    const match = output.match(new RegExp(`${label.replaceAll(" ", "\\s+")}\\D+([0-9][0-9,]*)`, "i"));
-    if (match?.[1] != null) return Number(match[1].replaceAll(",", ""));
-  }
-
-  return undefined;
-}
-
-function estimateCost(model: string, tokens: CandidateTelemetry["tokens"]) {
-  const price = MODEL_PRICES_PER_MILLION_TOKENS.get(model);
-  if (price == null) return undefined;
-
-  const inputTokens = tokens.input ?? 0;
-  const outputTokens = tokens.output ?? 0;
-  const thinkingTokens = tokens.thinking ?? 0;
-  const cachedTokens = tokens.cached ?? 0;
-  const uncachedInputTokens = Math.max(inputTokens - cachedTokens, 0);
-
-  return (
-    (uncachedInputTokens * price.input) +
-    (cachedTokens * (price.cachedInput ?? price.input)) +
-    ((outputTokens + thinkingTokens) * price.output)
-  ) / 1_000_000;
+function numberValue(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
 function formatMetric(value: number | undefined) {

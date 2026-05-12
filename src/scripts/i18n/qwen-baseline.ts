@@ -150,7 +150,7 @@ for (const [index, task] of limitedTasks.entries()) {
       }
 
       withRepoLock(() => {
-        runInherited("git", ["add", relativeToRepo(task.targetPath), relativeToRepo(task.reportPath)]);
+        runInherited("git", ["add", relativeToRepo(task.targetPath), relativeToRepo(dirname(task.reportPath))]);
         runInherited("git", ["commit", "-m", `i18n candidate(${task.locale}): ${task.slug} via ${QWEN_BASELINE_MODEL}`]);
         if (shouldPush) {
           runInherited("git", ["push", "origin", "HEAD:main"]);
