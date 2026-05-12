@@ -14,7 +14,7 @@ import { jsonrepair } from "jsonrepair";
 import { z } from "zod";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
-import { slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
+import { normalizeMarkdownIndentation, slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
@@ -290,11 +290,11 @@ export async function generateQuizDescription(
   }
 
   const d = validated.data;
-  const description = [
+  const description = normalizeMarkdownIndentation([
     d.description,
     `Topics: ${d.topics.join(", ")}`,
     `Audience: ${d.audience}`,
-  ].join("\n");
+  ].join("\n"));
 
   return {
     description,

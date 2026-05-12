@@ -259,7 +259,7 @@ export function slotFromTranslatable(
 
   for (const frag of originalSlot.fragments) {
     if (frag.type === "prose") {
-      const translated = translatedProse[proseIdx] ?? frag.content;
+      const translated = normalizeMarkdownIndentation(translatedProse[proseIdx] ?? frag.content);
       proseIdx++;
       fragments.push({ type: "prose", content: translated });
     } else {
@@ -322,7 +322,7 @@ function assembleSlotLines(slot: QuizSlot): string[] {
   const lines: string[] = [];
   for (const frag of slot.fragments) {
     if (frag.type === "prose") {
-      lines.push(frag.content);
+      lines.push(normalizeMarkdownIndentation(frag.content));
     } else if (frag.type === "code") {
       const code = normalizeCodeContent(frag.content);
       lines.push("```" + (frag.language || ""));
@@ -331,6 +331,40 @@ function assembleSlotLines(slot: QuizSlot): string[] {
     }
   }
   return lines;
+}
+
+export function normalizeMarkdownIndentation(content: string): string {
+  const lines = content
+    .replace(/\r\n?/g, "\n")
+    .split("\n");
+
+  while (lines.length > 0 && lines[0].trim() === "") lines.shift();
+  while (lines.length > 0 && lines[lines.length - 1].trim() === "") lines.pop();
+
+  const indents = lines
+    .filter((line) => line.trim() !== "")
+    .map((line) => line.match(/^[ \t]*/)?.[0] ?? "")
+    .filter((indent) => indent.length > 0);
+  const commonIndent = indents.reduce(
+    (common, indent) => commonPrefix(common, indent),
+    indents[0] ?? "",
+  );
+
+  const dedented = commonIndent
+    ? lines.map((line) => line.startsWith(commonIndent) ? line.slice(commonIndent.length) : line)
+    : lines;
+
+  return dedented
+    .map((line) => line.replace(/[ \t]+$/g, ""))
+    .join("\n");
+}
+
+function commonPrefix(a: string, b: string) {
+  let index = 0;
+  while (index < a.length && index < b.length && a[index] === b[index]) {
+    index++;
+  }
+  return a.slice(0, index);
 }
 
 function normalizeCodeContent(content: string): string {
