@@ -1,9 +1,6 @@
-import getGlobal from "@stdlib/utils-global";
 import type { Option } from "./types.ts";
 
 const KEY_PREFIX = "quiz-";
-
-const global = getGlobal();
 
 export type QuizQuestionInfo = {
   title?: string;
@@ -36,7 +33,7 @@ export type QuizProgress = ReturnType<typeof createQuizProgress>;
 export function createQuizProgress(slug: string) {
   const normalizedSlug = normalizeQuizSlug(slug);
   const storageKey = `${KEY_PREFIX}${normalizedSlug}`;
-  const storage = global?.localStorage as Storage | undefined;
+  const storage = getStorage();
   const legacyValue = storage?.getItem(normalizedSlug);
   const storedValue = storage?.getItem(storageKey) ?? legacyValue ?? "[]";
   const questions = parseStoredQuestions(storedValue);
@@ -118,7 +115,7 @@ export function createQuizProgress(slug: string) {
 }
 
 export function clearAllQuizProgress() {
-  const storage = global?.localStorage as Storage | undefined;
+  const storage = getStorage();
   if (!storage) return;
 
   Object.keys(storage).forEach((key) => {
@@ -130,6 +127,10 @@ export function clearAllQuizProgress() {
 
 function normalizeQuizSlug(slug: string) {
   return slug.replace(/^\/|\/$/gm, "");
+}
+
+function getStorage() {
+  return typeof window === "undefined" ? undefined : window.localStorage;
 }
 
 function parseStoredQuestions(storedValue: string): QuizQuestionProgress[] {

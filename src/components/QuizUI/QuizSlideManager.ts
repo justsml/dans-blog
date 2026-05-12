@@ -37,6 +37,7 @@ export function initQuizSlideManager(
   let currentIndex = 0;
   let isTransitioning = false;
   let completionCardShown = false;
+  let confettiShown = false;
   let totalAttemptCount = 0;
   const answeredQuestions = new Map<number, boolean>();
   const prefersReducedMotion = window.matchMedia(
@@ -118,6 +119,7 @@ export function initQuizSlideManager(
     const cy = rect.top + rect.height / 2;
 
     const container = document.createElement("div");
+    container.className = "quiz-confetti";
     container.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;`;
     document.body.appendChild(container);
 
@@ -327,6 +329,22 @@ export function initQuizSlideManager(
       Array.from({ length: totalQuestions }, (_, index) =>
         isQuestionCorrect(index),
       ).every(Boolean);
+
+    const isQuizFullyAnswered = () => answeredQuestions.size >= totalQuestions;
+
+    const triggerFinalConfetti = (answeredIndex: number) => {
+      if (confettiShown || !isQuizFullyAnswered()) return;
+      confettiShown = true;
+
+      const answeredChallenge = islands[answeredIndex]?.querySelector(
+        ".challenge",
+      ) as HTMLElement | null;
+      const activeChallenge = islands[currentIndex]?.querySelector(
+        ".challenge",
+      ) as HTMLElement | null;
+
+      triggerConfetti(answeredChallenge ?? activeChallenge ?? quizUI);
+    };
 
     const findNextUnansweredIndex = (fromIndex: number) => {
       for (let offset = 1; offset <= totalQuestions; offset++) {
@@ -718,10 +736,6 @@ export function initQuizSlideManager(
       syncAttemptCount(detail.snapshot);
       updateDots();
       updateProgress();
-      const activeChallenge = islands[currentIndex]?.querySelector(
-        ".challenge",
-      ) as HTMLElement;
-      if (activeChallenge) triggerConfetti(activeChallenge);
     }) as EventListener);
 
     listen(window, "quiz-question-answered", ((e: Event) => {
@@ -743,6 +757,7 @@ export function initQuizSlideManager(
       }
       updateDots();
       updateProgress();
+      triggerFinalConfetti(detail.index);
       advanceToNextUnanswered(detail.index);
     }) as EventListener);
 

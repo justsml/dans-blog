@@ -192,6 +192,29 @@ const shouldCropMobileBanner =
       tags={Astro.props.frontmatter?.tags?.join(", ") ?? ""}
       imageUrl={coverUrl}
     />
+    {
+      import.meta.env.DEV && category === "Quiz" && (
+        <script
+          is:inline
+          set:html={`
+            (() => {
+              const originalError = console.error;
+              console.error = (...args) => {
+                const message = String(args[0] ?? "");
+                const renderedArgs = args.map((arg) => String(arg ?? "")).join(" ");
+                const isKnownQuizSlotWarning =
+                  message.startsWith("Warning: Extra attributes from the server:") &&
+                  renderedArgs.includes("style") &&
+                  renderedArgs.includes("Challenge");
+
+                if (isKnownQuizSlotWarning) return;
+                originalError(...args);
+              };
+            })();
+          `}
+        />
+      )
+    }
     <link
       rel="stylesheet"
       href="/files/fonts.css"

@@ -1080,26 +1080,12 @@ async function translateFrontmatter(
   llmConfig: LlmConfig,
   isQuiz: boolean,
 ): Promise<Record<string, unknown>> {
-  const result = { ...frontmatter };
+  const result = normalizeFrontmatterAssetPaths(frontmatter);
 
   for (const key of ["date", "modified", "minReleaseDate"]) {
     const value = result[key];
     if (value instanceof Date) {
       result[key] = value.toISOString().slice(0, 10);
-    }
-  }
-
-  for (const [key, value] of Object.entries(result)) {
-    if (
-      /(?:image|cover|icon|hero|thumbnail)/i.test(key)
-      && typeof value === "string"
-      && /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value)
-      && !value.startsWith("../")
-      && !value.startsWith("./")
-      && !value.startsWith("/")
-      && !/^https?:\/\//i.test(value)
-    ) {
-      result[key] = `../${value}`;
     }
   }
 
@@ -1123,6 +1109,27 @@ async function translateFrontmatter(
   });
 
     result[key] = translation.text.trim();
+  }
+
+  return result;
+}
+
+export function normalizeFrontmatterAssetPaths(
+  frontmatter: Record<string, unknown>,
+): Record<string, unknown> {
+  const result = { ...frontmatter };
+
+  for (const [key, value] of Object.entries(result)) {
+    if (
+      /(?:image|cover|icon|hero|thumbnail)/i.test(key)
+      && typeof value === "string"
+      && /\.(?:avif|gif|jpe?g|png|svg|webp)$/i.test(value)
+      && !value.startsWith("../")
+      && !value.startsWith("/")
+      && !/^https?:\/\//i.test(value)
+    ) {
+      result[key] = value.startsWith("./") ? `.${value}` : `../${value}`;
+    }
   }
 
   return result;
@@ -1157,7 +1164,9 @@ function formatTelemetryReport(telemetry: Telemetry, summary: string): string {
   return lines.join("\n");
 }
 
-main().catch((err) => {
-  console.error("\n❌ Translation failed:", err.message);
-  process.exit(1);
-});
+if (import.meta.main) {
+  main().catch((err) => {
+    console.error("\n❌ Translation failed:", err.message);
+    process.exit(1);
+  });
+}

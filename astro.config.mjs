@@ -58,6 +58,13 @@ export default defineConfig({
     // remarkPlugins: [remarkMermaid],
   },
   vite: {
+    optimizeDeps: {
+      esbuildOptions: {
+        define: {
+          "process.env.NODE_ENV": '"development"',
+        },
+      },
+    },
     build: {
       assetsInlineLimit: 2048, // 2kb - default is 4096
     },

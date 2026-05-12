@@ -8,18 +8,32 @@ import {
 } from "react";
 import type { Option } from "./types";
 import { QuizContext } from "./QuizContext";
-import classNames from "classnames";
 
 import { slugify } from "../../shared/pathHelpers.ts";
 import { HintTooltip } from "./HintTooltip.tsx";
 import { usePostHog } from "../PostHogEntry.tsx";
 
-import clsx from "clsx";
-import getGlobal from "@stdlib/utils-global";
 import { createQuizProgress, type QuizProgress } from "./QuizProgress.ts";
 
-const global = getGlobal();
 const SCREENSHOT_SCALE = 1.75;
+
+function getPathname() {
+  return typeof window === "undefined" ? "" : window.location.pathname;
+}
+
+function classList(
+  ...values: Array<string | false | null | undefined | Record<string, boolean>>
+) {
+  return values
+    .flatMap((value) => {
+      if (!value) return [];
+      if (typeof value === "string") return [value];
+      return Object.entries(value)
+        .filter(([, isEnabled]) => isEnabled)
+        .map(([className]) => className);
+    })
+    .join(" ");
+}
 
 /**
  * Challenge component
@@ -76,18 +90,18 @@ export default function Challenge({
   useEffect(() => {
     if (!quizProgressRef.current) {
       quizProgressRef.current = createQuizProgress(
-        global?.location?.pathname ?? "",
+        getPathname(),
       );
     }
 
-    const link = global?.location?.pathname ?? "";
+    const link = getPathname();
     setPageLink(siteDomain + link);
-  }, [global?.location?.pathname]);
+  }, []);
 
   useEffect(() => {
     if (!quizProgressRef.current) {
       quizProgressRef.current = createQuizProgress(
-        global?.location?.pathname ?? "",
+        getPathname(),
       );
     }
 
@@ -147,7 +161,7 @@ export default function Challenge({
   const handleAnswer = (option: Option) => {
     if (!quizProgressRef.current) {
       quizProgressRef.current = createQuizProgress(
-        global?.location?.pathname ?? "",
+        getPathname(),
       );
     }
 
@@ -299,7 +313,7 @@ export default function Challenge({
 
   const _options = options
     .map((option) => {
-      const isCurrentOptionCorrectAnswer = isCorrect && option.isAnswer;
+      const isCurrentOptionCorrectAnswer = Boolean(isCorrect && option.isAnswer);
       if (isCorrect && !option.isAnswer) return null;
 
       const _showHint = option.hint === showHint ? showHint : false;
@@ -308,7 +322,7 @@ export default function Challenge({
           key={option.text}
           role="button"
           tabIndex={0}
-          className={classNames(
+          className={classList(
             "option",
             {
               "correct-answer": isCurrentOptionCorrectAnswer,
@@ -342,7 +356,7 @@ export default function Challenge({
   return (
     <div
       id={`qq-${sequenceNum}`}
-      className={clsx("challenge challenge-modern", challengeClass)}
+      className={classList("challenge challenge-modern", challengeClass)}
       ref={challengeRef}
       data-answer-count={tries}
       data-question-correct={isCorrect}
@@ -357,18 +371,20 @@ export default function Challenge({
         </h2>
       </div>
 
-      <div className="quiz-question">{question || children}</div>
+      <div className="quiz-question">
+        {question || children}
+      </div>
       <aside className="quiz-hint-toggle">
         <div className="watermark">{pageLink}</div>
         <button
           onClick={() => setShowExplanation(!showExplanation)}
-          className={clsx("toggle-explainer", { open: showExplanation })}
+          className={classList("toggle-explainer", { open: showExplanation })}
         >
           {showExplanation ? "Hide" : "Hint"} Explainer{" "}
         </button>
       </aside>
       <section
-        className={clsx("quiz-body-panel", "card-container", {
+        className={classList("quiz-body-panel", "card-container", {
           "card-flip": showExplanation,
         })}
         style={{

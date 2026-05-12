@@ -1,5 +1,3 @@
-import { cx } from "class-variance-authority";
-
 export function HintTooltip({
   hint,
   className,
@@ -17,7 +15,7 @@ export function HintTooltip({
 
   return (
     <aside
-      className={cx("hint-tooltip", className)}
+      className={["hint-tooltip", className].filter(Boolean).join(" ")}
       role="status"
       aria-live="polite"
       onClick={(e) => {
