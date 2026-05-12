@@ -1,26 +1,26 @@
 # I18n Coverage
 
-Generated at `2026-05-12T22:00:52.985Z`.
+Generated at `2026-05-12T22:04:56.932Z`.
 
 ## Summary
 
 - English posts: 75
-- Translation slots: 332/525 filled (63.2%)
-- Missing slots: 193
-- Fully translated posts: 27/75
+- Translation slots: 338/525 filled (64.4%)
+- Missing slots: 187
+- Fully translated posts: 28/75
 - Locales: es, hi, ja, ru, de, fr, it
 
 ## Locale Coverage
 
 | Locale | Filled | Missing | Coverage |
 | --- | ---: | ---: | ---: |
-| es | 56 | 19 | 74.7% |
-| hi | 57 | 18 | 76.0% |
-| ja | 45 | 30 | 60.0% |
-| ru | 39 | 36 | 52.0% |
-| de | 55 | 20 | 73.3% |
+| es | 57 | 18 | 76.0% |
+| hi | 58 | 17 | 77.3% |
+| ja | 46 | 29 | 61.3% |
+| ru | 40 | 35 | 53.3% |
+| de | 56 | 19 | 74.7% |
 | fr | 39 | 36 | 52.0% |
-| it | 41 | 34 | 54.7% |
+| it | 42 | 33 | 56.0% |
 
 ## Zero Coverage Posts
 
@@ -30,8 +30,8 @@ Generated at `2026-05-12T22:00:52.985Z`.
 
 ## Health Notes
 
-- Missing locale slots with candidate reports waiting: 40
-- Existing translations without judge summaries: 143
+- Missing locale slots with candidate reports waiting: 39
+- Existing translations without judge summaries: 142
 
 ### Candidate Reports Without Translation Files
 
@@ -46,7 +46,6 @@ Generated at `2026-05-12T22:00:52.985Z`.
 | breaking-unicorns | es | 1 | yes |
 | breaking-unicorns | hi | 1 | yes |
 | docker-server-setup-notes | ja | 1 | yes |
-| docker-makes-everything-better | ja | 1 | yes |
 | amazing-resources | ru | 1 | yes |
 | security-notes-regex | ru | 1 | yes |
 | angularjs-v2-impending-schism | de | 1 | yes |
@@ -83,7 +82,6 @@ Generated at `2026-05-12T22:00:52.985Z`.
 | Post | Locale | Qwen baseline |
 | --- | --- | --- |
 | docker-server-setup-notes | es | yes |
-| docker-makes-everything-better | fr | yes |
 | amazing-resources | it | yes |
 | security-notes-regex | ja | yes |
 | angularjs-v2-impending-schism | fr | yes |
@@ -234,7 +232,6 @@ Generated at `2026-05-12T22:00:52.985Z`.
 | medium | from-zero-to-regex-hero-extract-url-like-strings | Regex | 2024-12-29 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
 | medium | breaking-unicorns | Lulz | 2024-09-25 | 0/7 | es, hi, ja, ru, de, fr, it | 2 |
 | medium | docker-server-setup-notes | DevOps | 2015-04-06 | 1/7 | hi, ja, ru, de, fr, it | 1 |
-| medium | docker-makes-everything-better | DevOps | 2015-02-26 | 1/7 | es, hi, ja, ru, de, it | 1 |
 | medium | amazing-resources | Code | 2015-02-26 | 1/7 | es, hi, ja, ru, de, fr | 1 |
 | medium | security-notes-regex | Security | 2015-02-24 | 1/7 | es, hi, ru, de, fr, it | 1 |
 | medium | angularjs-v2-impending-schism | Thoughts | 2015-08-05 | 2/7 | es, hi, ja, ru, de | 1 |
