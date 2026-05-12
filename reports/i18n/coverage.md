@@ -1,38 +1,37 @@
 # I18n Coverage
 
-Generated at `2026-05-12T21:24:15.895Z`.
+Generated at `2026-05-12T22:00:52.985Z`.
 
 ## Summary
 
 - English posts: 75
-- Translation slots: 322/525 filled (61.3%)
-- Missing slots: 203
-- Fully translated posts: 24/75
+- Translation slots: 332/525 filled (63.2%)
+- Missing slots: 193
+- Fully translated posts: 27/75
 - Locales: es, hi, ja, ru, de, fr, it
 
 ## Locale Coverage
 
 | Locale | Filled | Missing | Coverage |
 | --- | ---: | ---: | ---: |
-| es | 55 | 20 | 73.3% |
-| hi | 55 | 20 | 73.3% |
-| ja | 43 | 32 | 57.3% |
-| ru | 37 | 38 | 49.3% |
-| de | 54 | 21 | 72.0% |
-| fr | 38 | 37 | 50.7% |
-| it | 40 | 35 | 53.3% |
+| es | 56 | 19 | 74.7% |
+| hi | 57 | 18 | 76.0% |
+| ja | 45 | 30 | 60.0% |
+| ru | 39 | 36 | 52.0% |
+| de | 55 | 20 | 73.3% |
+| fr | 39 | 36 | 52.0% |
+| it | 41 | 34 | 54.7% |
 
 ## Zero Coverage Posts
 
 - `docker-security-tips-for-self-hosting` (Security, 2025-01-04)
 - `from-zero-to-regex-hero-extract-url-like-strings` (Regex, 2024-12-29)
 - `breaking-unicorns` (Lulz, 2024-09-25)
-- `stop-the-angularjs-hate` (Code, 2015-02-26)
 
 ## Health Notes
 
-- Missing locale slots with candidate reports waiting: 42
-- Existing translations without judge summaries: 154
+- Missing locale slots with candidate reports waiting: 40
+- Existing translations without judge summaries: 143
 
 ### Candidate Reports Without Translation Files
 
@@ -46,7 +45,6 @@ Generated at `2026-05-12T21:24:15.895Z`.
 | from-zero-to-regex-hero-extract-url-like-strings | hi | 1 | yes |
 | breaking-unicorns | es | 1 | yes |
 | breaking-unicorns | hi | 1 | yes |
-| stop-the-angularjs-hate | ja | 1 | yes |
 | docker-server-setup-notes | ja | 1 | yes |
 | docker-makes-everything-better | ja | 1 | yes |
 | amazing-resources | ru | 1 | yes |
@@ -79,7 +77,6 @@ Generated at `2026-05-12T21:24:15.895Z`.
 | mastering-functional-pipelines-passing-state | it | 1 | yes |
 | stop-trying-to-make-async-await-happen | it | 1 | yes |
 | intro-to-promises | es | 1 | yes |
-| you-may-not-need-axios | ru | 1 | yes |
 
 ### Translations Without Judge Summaries
 
@@ -228,17 +225,6 @@ Generated at `2026-05-12T21:24:15.895Z`.
 | compare-nvme-ssd-cloud-options | ja | yes |
 | compare-nvme-ssd-cloud-options | ru | yes |
 | compare-nvme-ssd-cloud-options | de | yes |
-| you-may-not-need-axios | es | no |
-| you-may-not-need-axios | hi | no |
-| you-may-not-need-axios | de | yes |
-| you-may-not-need-axios | fr | no |
-| you-may-not-need-axios | it | no |
-| naming-things-real-good | es | yes |
-| naming-things-real-good | ja | yes |
-| naming-things-real-good | ru | yes |
-| naming-things-real-good | de | yes |
-| naming-things-real-good | fr | no |
-| naming-things-real-good | it | yes |
 
 ## Prioritized Gaps
 
@@ -247,7 +233,6 @@ Generated at `2026-05-12T21:24:15.895Z`.
 | high | docker-security-tips-for-self-hosting | Security | 2025-01-04 | 0/7 | es, hi, ja, ru, de, fr, it | 5 |
 | medium | from-zero-to-regex-hero-extract-url-like-strings | Regex | 2024-12-29 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
 | medium | breaking-unicorns | Lulz | 2024-09-25 | 0/7 | es, hi, ja, ru, de, fr, it | 2 |
-| medium | stop-the-angularjs-hate | Code | 2015-02-26 | 0/7 | es, hi, ja, ru, de, fr, it | 1 |
 | medium | docker-server-setup-notes | DevOps | 2015-04-06 | 1/7 | hi, ja, ru, de, fr, it | 1 |
 | medium | docker-makes-everything-better | DevOps | 2015-02-26 | 1/7 | es, hi, ja, ru, de, it | 1 |
 | medium | amazing-resources | Code | 2015-02-26 | 1/7 | es, hi, ja, ru, de, fr | 1 |
@@ -293,8 +278,6 @@ Generated at `2026-05-12T21:24:15.895Z`.
 | low | visualizing-promises | Guides | 2018-09-30 | 4/7 | hi, ja, fr | 0 |
 | low | intro-to-promises | Code | 2018-08-01 | 4/7 | es, ja, it | 1 |
 | low | compare-nvme-ssd-cloud-options | DevOps | 2017-04-15 | 4/7 | es, fr, it | 0 |
-| low | you-may-not-need-axios | Guides | 2018-11-14 | 5/7 | ja, ru | 1 |
-| low | naming-things-real-good | Guides | 2016-06-01 | 6/7 | hi | 0 |
 
 ## Translation Queue Commands
 
