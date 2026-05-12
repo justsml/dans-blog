@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "Varianten der Cast-Syntax",
+  "translation": {
+    "title": "Varianten der Cast-Syntax",
+    "group": "Aufwärmrunde: Typkonvertierung",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "Welcher dieser Casts ist **ungültig** ❌?"
+    ],
+    "explanationProse": [
+      "PostgreSQL kennt drei Wege, um Typen zu konvertieren:\n\n1. ANSI SQL: `CAST(expression AS type)`.\n2. PostgreSQL: `expression::type`.\n3. Typ-Funktion: `type 'literal'`.\n\nUnter der Haube machen alle drei exakt dasselbe, aber:\n- `CAST()` ist der portabelste Standard und läuft auf jeder SQL-Datenbank.\n- `::` ist PostgreSQL-spezifisch, aber der De-facto-Standard in der Community.\n- Die Infix-Schreibweise `type 'literal'` ist eher historisch bedingt, bleibt aber vollständig gültig."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Varianten der Cast-Syntax\",\n  \"group\": \"Aufwärmrunde: Typkonvertierung\",\n  \"options\": [\n    {\n      \"text\": \"'95'::INTEGER\"\n    },\n    {\n      \"text\": \"INTEGER '95'\"\n    },\n    {\n      \"text\": \"CAST('95', INTEGER)\"\n    },\n    {\n      \"text\": \"CAST('95' AS INTEGER)\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher dieser Casts ist **ungültig** ❌?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL kennt drei Wege, um Typen zu konvertieren:\\n\\n1. ANSI SQL: `CAST(expression AS type)`.\\n2. PostgreSQL: `expression::type`.\\n3. Typ-Funktion: `type 'literal'`.\\n\\nUnter der Haube machen alle drei exakt dasselbe, aber:\\n- `CAST()` ist der portabelste Standard und läuft auf jeder SQL-Datenbank.\\n- `::` ist PostgreSQL-spezifisch, aber der De-facto-Standard in der Community.\\n- Die Infix-Schreibweise `type 'literal'` ist eher historisch bedingt, bleibt aber vollständig gültig.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 795,
+    "outputTokens": 3419,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63125
+  },
+  "cost": {
+    "inputUsd": 0.00025837500000000003,
+    "outputUsd": 0.00666705,
+    "totalUsd": 0.006925425,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

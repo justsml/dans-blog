@@ -1,0 +1,43 @@
+{
+  "index": 3,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "Cross-Frame instanceof",
+  "translation": {
+    "title": "Cross-Frame instanceof",
+    "group": "Tricks zur Typprüfung",
+    "options": [
+      {
+        "text": "Immer true"
+      },
+      {
+        "text": "Immer false"
+      },
+      {
+        "text": "Kann über Frames hinweg false sein"
+      },
+      {
+        "text": "Wirft einen Fehler"
+      }
+    ],
+    "questionProse": [
+      "Was passiert eigentlich mit `instanceof Error`, wenn du es über iframes hinweg anwendest?"
+    ],
+    "explanationProse": [
+      "`instanceof` kann über verschiedene Ausführungskontexte (iframes, Worker) hinweg `false` zurückgeben, da jeder Kontext seinen eigenen `Error`-Konstruktor besitzt. Nutze `Object.prototype.toString.call(obj) === '[object Error]'` für eine zuverlässige Fehlererkennung über Kontextgrenzen hinweg."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cross-Frame instanceof\",\n  \"group\": \"Tricks zur Typprüfung\",\n  \"options\": [\n    {\n      \"text\": \"Immer true\"\n    },\n    {\n      \"text\": \"Immer false\"\n    },\n    {\n      \"text\": \"Kann über Frames hinweg false sein\"\n    },\n    {\n      \"text\": \"Wirft einen Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert eigentlich mit `instanceof Error`, wenn du es über iframes hinweg anwendest?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` kann über verschiedene Ausführungskontexte (iframes, Worker) hinweg `false` zurückgeben, da jeder Kontext seinen eigenen `Error`-Konstruktor besitzt. Nutze `Object.prototype.toString.call(obj) === '[object Error]'` für eine zuverlässige Fehlererkennung über Kontextgrenzen hinweg.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 753,
+    "outputTokens": 2391,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 44185
+  },
+  "cost": {
+    "inputUsd": 0.000244725,
+    "outputUsd": 0.004662449999999999,
+    "totalUsd": 0.004907175,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

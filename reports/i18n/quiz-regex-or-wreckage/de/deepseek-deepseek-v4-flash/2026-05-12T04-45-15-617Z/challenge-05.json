@@ -1,0 +1,46 @@
+{
+  "index": 4,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Positiver Lookahead",
+  "translation": {
+    "title": "Positiver Lookahead",
+    "group": "Lookahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was wird hiermit gematcht?"
+    ],
+    "explanationProse": [
+      "Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn du Ziffern suchst, denen `$` oder `€` vorausgehen, verwende einen Lookbehind: `/(?<=[\\$€])\\d+/g`.\n\n    Lookaheads prüfen, was *nach* der aktuellen Position kommt. Das Pattern sucht nach:\n    - Ein oder mehr Ziffern (`\\d+`)\n    - Gefolgt von (`(?=...)`) entweder $ oder € (`[\\$€]`)\n\n    Da es keine Zahlen gibt, denen Währungssymbole folgen (sie gehen ihnen voraus), erhalten wir keine Treffer.\n\n    [Mehr über Lookahead-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Positiver Lookahead\",\n  \"group\": \"Lookahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird hiermit gematcht?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn du Ziffern suchst, denen `$` oder `€` vorausgehen, verwende einen Lookbehind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Lookaheads prüfen, was *nach* der aktuellen Position kommt. Das Pattern sucht nach:\\n    - Ein oder mehr Ziffern (`\\\\d+`)\\n    - Gefolgt von (`(?=...)`) entweder $ oder € (`[\\\\$€]`)\\n\\n    Da es keine Zahlen gibt, denen Währungssymbole folgen (sie gehen ihnen voraus), erhalten wir keine Treffer.\\n\\n    [Mehr über Lookahead-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 823,
+    "outputTokens": 2657,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14528
+  },
+  "cost": {
+    "inputUsd": 0.00011522,
+    "outputUsd": 0.0007439600000000001,
+    "totalUsd": 0.0008591800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

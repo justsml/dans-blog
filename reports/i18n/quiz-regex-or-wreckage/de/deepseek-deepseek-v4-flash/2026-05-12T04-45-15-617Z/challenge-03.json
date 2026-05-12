@@ -1,0 +1,30 @@
+{
+  "index": 2,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Gierig vs. Nicht-Gierig",
+  "translation": {
+    "title": "Gierig vs. Nicht-Gierig",
+    "group": "Grundlegende Übereinstimmungen",
+    "options": [],
+    "questionProse": [
+      "Was wird hiermit gematcht?"
+    ],
+    "explanationProse": [
+      "Das Muster `/<div>.*?<\\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was bedeutet:\n    - Matche `<div>`\n    - Matche jedes Zeichen (`.*`) aber so wenige wie möglich (`?`)\n    - Bis `</div>` gefunden wird\n    - Das `g`-Flag sorgt dafür, dass alle Vorkommen gematcht werden\n\n    Ohne das `?` würde das gierige `.*` alles vom ersten `<div>` bis zum letzten `</div>` matchen, was einen großen Treffer ergibt. Mit `?` werden die Paare einzeln gematcht.\n\n    [Erfahre mehr über gieriges vs. nicht-gieriges Matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gierig vs. Nicht-Gierig\",\n  \"group\": \"Grundlegende Übereinstimmungen\",\n  \"options\": [],\n  \"questionProse\": [\"Was wird hiermit gematcht?\"],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\"Das Muster `/<div>.*?<\\\\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was bedeutet:\\n    - Matche `<div>`\\n    - Matche jedes Zeichen (`.*`) aber so wenige wie möglich (`?`)\\n    - Bis `</div>` gefunden wird\\n    - Das `g`-Flag sorgt dafür, dass alle Vorkommen gematcht werden\\n\\n    Ohne das `?` würde das gierige `.*` alles vom ersten `<div>` bis zum letzten `</div>` matchen, was einen großen Treffer ergibt. Mit `?` werden die Paare einzeln gematcht.\\n\\n    [Erfahre mehr über gieriges vs. nicht-gieriges Matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 753,
+    "outputTokens": 1901,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10224
+  },
+  "cost": {
+    "inputUsd": 0.00010542,
+    "outputUsd": 0.00053228,
+    "totalUsd": 0.0006376999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

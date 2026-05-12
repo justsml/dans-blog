@@ -1,0 +1,43 @@
+{
+  "index": 4,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Parsing von Datums-Strings",
+  "translation": {
+    "title": "Parsing von Datums-Strings",
+    "group": "Datumsverarbeitung",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "Welcher Wert wird in der Konsole ausgegeben?"
+    ],
+    "explanationProse": [
+      "Der String ohne `T`-Zeitwert mag wie der 1. Januar 2020 aussehen – aber reine Datums-Strings werden standardmäßig als UTC behandelt. Rechnet man sie in unsere lokale Zeitzone (GMT-7) um, landet man tatsächlich noch im Jahr 2019.\n\n      Datums-Zeit-Strings ohne explizite Zeitzone werden hingegen in der lokalen Zeit interpretiert.\n  \n      Durch die `T00:00`-Schreibweise wird der zweite Wert als lokale Mitternacht gewertet.\n\n      Das erste Datum ergibt somit `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\n      Das zweite Datum ergibt `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Parsing von Datums-Strings\",\n  \"group\": \"Datumsverarbeitung\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Wert wird in der Konsole ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Der String ohne `T`-Zeitwert mag wie der 1. Januar 2020 aussehen – aber reine Datums-Strings werden standardmäßig als UTC behandelt. Rechnet man sie in unsere lokale Zeitzone (GMT-7) um, landet man tatsächlich noch im Jahr 2019.\\n\\n      Datums-Zeit-Strings ohne explizite Zeitzone werden hingegen in der lokalen Zeit interpretiert.\\n  \\n      Durch die `T00:00`-Schreibweise wird der zweite Wert als lokale Mitternacht gewertet.\\n\\n      Das erste Datum ergibt somit `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\n      Das zweite Datum ergibt `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 914,
+    "outputTokens": 4624,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 84263
+  },
+  "cost": {
+    "inputUsd": 0.00029705,
+    "outputUsd": 0.009016799999999998,
+    "totalUsd": 0.009313849999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

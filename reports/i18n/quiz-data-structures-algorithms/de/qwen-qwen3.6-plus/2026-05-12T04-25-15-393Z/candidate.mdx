@@ -1,0 +1,527 @@
+---
+title: 'Quiz: Datenstrukturen & Algorithmen'
+subTitle: Kannst du bei Binärbäumen bluffen?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  Willkommen zu meinem Quiz zu Datenstrukturen und Algorithmen!
+</section>
+
+Dieses Quiz prüft dein Wissen zu Datenstrukturen (Stacks, Listen, Bäume usw.), Algorithmen () und Zeitkomplexität.
+
+### 20 Fragen... Los geht's!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Datenstrukturen"
+  title="Stacks vs. Queues"
+  options={[
+    {text: 'Beide'},
+    {text: 'Queues'},
+    {text: 'Stacks', isAnswer: true},
+    {text: 'Keine'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Datenstruktur ist die klare Wahl für ein LIFO-Zugriffsmuster (Last In, First Out)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Stacks sind speziell für LIFO konzipiert: Das zuletzt abgelegte Element wird als erstes wieder herausgeholt, was sie perfekt für Backtracking oder Undo-Funktionen macht. Queues arbeiten dagegen strikt nach dem FIFO-Prinzip (First In, First Out) und sind daher für Warteschlangen-Szenarien gedacht, nicht für LIFO.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Algorithmen"
+  title="Big-O-Notation"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie lautet die Zeitkomplexität eines Algorithmus, der unabhängig von der Eingabegröße stets die gleiche Laufzeit hat?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+O(1) steht für konstante Zeitkomplexität. Das bedeutet, dass der Algorithmus immer exakt die gleiche Ausführungszeit benötigt, völlig egal, wie groß die Eingabe ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Datenstrukturen"
+  title="Längenberechnung einer verketteten Liste"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie hoch ist die Zeitkomplexität zur Berechnung der Länge einer einfach verketteten Liste?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Um die Länge einer einfach verketteten Liste zu ermitteln, muss jeder Knoten vom Kopf bis zum Ende durchlaufen werden. Das führt zwangsläufig zu einer Zeitkomplexität von O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Datenstrukturen"
+  title="Suche im binären Suchbaum"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie lautet die durchschnittliche Zeitkomplexität für die Suche nach einem Element in einem balancierten binären Suchbaum?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+In einem balancierten BST beträgt die durchschnittliche Suchkomplexität O(log n). Warum? Weil jeder Vergleich den verbleibenden Suchraum präzise halbiert.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Sortieralgorithmen"
+  title="Komplexität von Merge Sort"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie lautet die Zeitkomplexität des Merge-Sort-Algorithmus im Worst-Case?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Merge Sort weist im Worst-Case stets eine Komplexität von O(n log n) auf, da das Array wiederholt halbiert und die sortierten Teilarrays anschließend zusammengeführt werden.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Graphen"
+  title="DFS vs. BFS"
+  options={[
+    {text: 'Warteschlange', isAnswer: true},
+    {text: 'Stapel'},
+    {text: 'Prioritätswarteschlange'},
+    {text: 'Hash-Tabelle'},
+    {text: 'Menge'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Mit welcher Datenstruktur implementiert man die Breitensuche (BFS) typischerweise?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+BFS setzt auf eine Warteschlange, um Knoten Ebene für Ebene abzuarbeiten. So werden erst alle direkten Nachbarn besucht, bevor die Suche tiefer geht – eben zeilenweise und nicht in die Tiefe.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Graphen"
+  title="Zyklenerkennung in Graphen"
+  options={[
+    {text: 'Quick Sort', hint: 'Ein effizienter Sortieralgorithmus, aber für Graphenstrukturen ungeeignet.'},
+    {text: 'Breitensuche', hint: 'Durchsucht Ebene für Ebene, ist aber nicht die optimale Wahl für Zyklen.'},
+    {text: 'Merge Sort', hint: 'Teilt und erobert beim Sortieren, ignoriert jedoch Graphenverbindungen.'},
+    {text: 'Tiefensuche', isAnswer: true, hint: 'Verfolgt Pfade tief in den Graphen und erkennt Rückkanten sofort.'},
+    {text: 'Bubble Sort', hint: 'Vergleicht nur benachbarte Elemente und hat mit Graphen nichts zu tun.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welchen Algorithmus ziehst du heran, um Zyklen in gerichteten Graphen zweifelsfrei zu identifizieren?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die Tiefensuche (DFS) ist das Mittel der Wahl, weil sie den aktuellen Suchpfad über einen Rekursionsstapel nachverfolgt. Trifft sie dabei auf einen Knoten, der sich bereits im aktiven Stapel befindet, hat sie eine Rückkante entdeckt – und damit den eindeutigen Beweis für einen Zyklus.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Sortieralgorithmen"
+  title="Komplexität von Heap Sort"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie hoch ist die Zeitkomplexität von Heap Sort im schlechtesten Fall?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Heap Sort garantiert im schlechtesten Fall eine Zeitkomplexität von O(n log n), da er einen Heap aufbaut und wiederholt das maximale Element extrahiert.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Datenstrukturen"
+  title="Zeitkomplexität von Hash-Tabellen"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie hoch ist die durchschnittliche Zeitkomplexität für den Zugriff auf ein Element in einer Hash-Tabelle?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Hash-Tabellen erreichen im Durchschnitt eine Zeitkomplexität von O(1) beim Zugriff auf Elemente, sofern eine geeignete Hash-Funktion Kollisionen effektiv minimiert.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Datenstrukturen"
+  title="Stack-Operationen"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Einfügen, Suchen, Löschen'},
+    {text: 'Durchlaufen, Besuchen, Sortieren'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche dieser Optionen enthält die typischen Operationen eines Stacks?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die Grundoperationen eines Stacks sind Push (Element hinzufügen), Pop (Element entfernen) und Peek (das oberste Element betrachten, ohne es zu entfernen).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Graphalgorithmen"
+  title="Kürzeste-Pfade-Algorithmus"
+  options={[
+    {text: 'Kruskal-Algorithmus'},
+    {text: 'Prim-Algorithmus'},
+    {text: 'Bellman-Ford-Algorithmus'},
+    {text: 'Dijkstra-Algorithmus', isAnswer: true},
+    {text: 'Floyd-Warshall-Algorithmus'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welcher Algorithmus kommt standardmäßig zum Einsatz, um den kürzesten Pfad in einem gewichteten Graphen mit ausschließlich nicht-negativen Kanten zu berechnen?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der Dijkstra-Algorithmus ist die erste Wahl für kürzeste Pfade in Graphen mit nicht-negativen Kantengewichten. Durch den Einsatz einer Prioritätswarteschlange ermittelt er die minimale Distanz äußerst effizient.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Baumdatenstrukturen"
+  title="Selbstbalancierende Suchbäume"
+  options={[
+    {text: 'Binärer Suchbaum und Min-Heap'},
+    {text: 'AVL-Baum und Rot-Schwarz-Baum', isAnswer: true},
+    {text: 'Min-Heap und Max-Heap'},
+    {text: 'Stack und Queue'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche dieser Kombinationen enthält Beispiele für selbstbalancierende binäre Suchbaum-Datenstrukturen?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+AVL-Bäume und Rot-Schwarz-Bäume sind Typen selbstbalancierender Bäume. Sie stellen sicher, dass die Baumstruktur nach jeder Einfüge- oder Löschoperation stets ausgeglichen bleibt.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Rekursion"
+  title="Rekursiver Basisfall"
+  options={[
+    {text: 'Endlosschleife'},
+    {text: 'Stack Overflow'},
+    {text: 'Basisfall', isAnswer: true},
+    {text: 'Globale Variable'},
+    {text: 'Scope-Einschränkung'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was muss in einer rekursiven Funktion zwingend definiert werden, um eine Endlosrekursion zu verhindern?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Ein Basisfall ist das entscheidende Abbruchkriterium. Er signalisiert der Funktion, wann sie aufhören muss, sich selbst aufzurufen. Ohne diese klare Stoppbedingung würde die Rekursion unendlich weiterlaufen und unweigerlich den Stack sprengen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Datenstrukturen"
+  title="Queue-Operationen"
+  options={[
+    {text: 'Enqueue und Dequeue', isAnswer: true},
+    {text: 'Push und Pop'},
+    {text: 'Peek und Top'},
+    {text: 'Traversieren und Sortieren'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche zwei Hauptoperationen definiert eine Queue?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die beiden Kernoperationen einer Queue sind Enqueue (Element am Ende hinzufügen) und Dequeue (Element am Anfang entfernen).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Graphalgorithmen"
+  title="Topologische Sortierung"
+  options={[
+    {text: 'Der Graph muss Zyklen enthalten'},
+    {text: 'Der Graph muss gewichtet und zusammenhängend sein'},
+    {text: 'Der Graph muss ungerichtet und azyklisch sein'},
+    {text: 'Der Graph muss gerichtet und azyklisch sein', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Voraussetzungen muss ein Graph erfüllen, um topologisch sortiert werden zu können?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Topologische Sortierung funktioniert ausschließlich auf gerichteten, azyklischen Graphen (DAG). Ein Zyklus würde eine zirkuläre Abhängigkeit erzeugen, bei der keine gültige lineare Reihenfolge definiert werden kann. Diese Anordnung ist daher das Mittel der Wahl für Task-Scheduling-Probleme, bei denen die Ausführungsreihenfolge strikt von Vorbedingungen abhängt.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Dynamische Programmierung"
+  title="Zeitkomplexität der Fibonacci-Rekursion"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Zeitkomplexität hat eine naive rekursive Implementierung der Fibonacci-Folge?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die naive rekursive Implementierung der Fibonacci-Folge hat eine Zeitkomplexität von O(2^n). Der Grund: Ohne Memoisierung werden dieselben Teilprobleme immer wieder neu berechnet, was den Rechenaufwand exponentiell in die Höhe treibt.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="Datenstrukturen"
+  title="Implementierung einer Prioritätswarteschlange"
+  options={[
+    {text: 'Array'},
+    {text: 'Stack'},
+    {text: 'Heap', isAnswer: true},
+    {text: 'Queue'},
+    {text: 'Verkettete Liste'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Datenstruktur wird standardmäßig zur Implementierung einer Prioritätswarteschlange genutzt?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Prioritätswarteschlangen werden in der Praxis fast ausschließlich mit einem Heap umgesetzt. Warum? Weil ein Heap garantiert, dass das Element mit der höchsten oder niedrigsten Priorität effizient extrahiert werden kann, ohne die gesamte Struktur bei jeder Operation neu sortieren zu müssen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="Datenstrukturen"
+  title="Traversierung binärer Bäume"
+  options={[
+    {text: 'In-Order, Pre-Order, Post-Order', isAnswer: true},
+    {text: 'Breitensuche, Tiefensuche, Heapify'},
+    {text: 'Sortieren, Suchen, Rotieren'},
+    {text: 'Push, Pop, Peek'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche dieser Mengen listet die gängigen Traversierungsreihenfolgen für die Tiefensuche in einem binären Baum auf?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+In-Order, Pre-Order und Post-Order sind die drei Standard-Traversierungsverfahren für die Tiefensuche in binären Bäumen. Der entscheidende Unterschied liegt darin, wann der aktuelle Knoten im Verhältnis zu seinen linken und rechten Teilbäumen verarbeitet wird. Die Breitensuche durchläuft den Baum zwar ebenfalls vollständig, arbeitet aber ebenenweise und gehört damit zu einer eigenen Algorithmus-Kategorie.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="Baumdatenstrukturen"
+  title="Heap-Eigenschaft"
+  options={[
+    {text: 'Alle Knoten sind von links nach rechts sortiert'},
+    {text: 'Die Wurzel ist immer das größte Element'},
+    {text: 'Alle Blätter befinden sich auf derselben Ebene'},
+    {text: 'Die Wurzel ist das kleinste Element und die Höhe beträgt O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche der folgenden Eigenschaften gelten für einen Min-Heap?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+In einem Min-Heap ist die Wurzel stets das kleinste Element. Da die Baumhöhe bei O(log n) liegt, bleiben Einfüge- und Entnahmeoperationen effizient.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="Sortieralgorithmen"
+  title="Stabilität von Bubble Sort"
+  options={[
+    {text: 'Instabil'},
+    {text: 'Stabil', isAnswer: true},
+    {text: 'Hängt von der Implementierung ab'},
+    {text: 'Weder noch'},
+    {text: 'Die Komplexität bestimmt die Stabilität'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Ist der Bubble-Sort-Algorithmus stabil?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bubble Sort ist ein stabiler Sortieralgorithmus, da er die relative Reihenfolge gleicher Elemente während des Sortiervorgangs beibehält.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

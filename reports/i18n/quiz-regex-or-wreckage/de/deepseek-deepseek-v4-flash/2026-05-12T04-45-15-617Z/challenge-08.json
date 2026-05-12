@@ -1,0 +1,46 @@
+{
+  "index": 7,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Negativer Look-behind",
+  "translation": {
+    "title": "Negativer Look-behind",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Was matcht dieses Muster?"
+    ],
+    "explanationProse": [
+      "Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht \"abc\" vorausgeht:\n    - ❌ \"123\" (vorausgehend \"abc\")\n    - ✅ \"23\" (vorausgehend \"abc1\")\n    - ✅ \"456\" (vorausgehend \"def\")\n\n    JavaScript unterstützt Look-behind-Assertions in modernen Engines. Dieses Beispiel verwendet einen Look-behind mit fester Länge: `abc` ist immer drei Zeichen. Look-behind mit variabler Länge ist der kniffligere engine-spezifische Sonderfall.\n\n    Hinweis: Die Unterstützung für Look-behind ist in JavaScript relativ neu. Überprüfe die [Browser-Kompatibilität](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), wenn du ältere Browser unterstützen musst."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Negativer Look-behind\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was matcht dieses Muster?\"\n  ],\n  \"explanationProse\": [\n    \"Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht \\\"abc\\\" vorausgeht:\\n    - ❌ \\\"123\\\" (vorausgehend \\\"abc\\\")\\n    - ✅ \\\"23\\\" (vorausgehend \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (vorausgehend \\\"def\\\")\\n\\n    JavaScript unterstützt Look-behind-Assertions in modernen Engines. Dieses Beispiel verwendet einen Look-behind mit fester Länge: `abc` ist immer drei Zeichen. Look-behind mit variabler Länge ist der kniffligere engine-spezifische Sonderfall.\\n\\n    Hinweis: Die Unterstützung für Look-behind ist in JavaScript relativ neu. Überprüfe die [Browser-Kompatibilität](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), wenn du ältere Browser unterstützen musst.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 822,
+    "outputTokens": 2288,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 20016
+  },
+  "cost": {
+    "inputUsd": 0.00011508000000000002,
+    "outputUsd": 0.00064064,
+    "totalUsd": 0.0007557200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

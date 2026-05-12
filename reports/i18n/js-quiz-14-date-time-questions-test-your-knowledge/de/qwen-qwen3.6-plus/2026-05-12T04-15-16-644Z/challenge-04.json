@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "Der Date-Konstruktor, Teil 4",
+  "translation": {
+    "title": "Der Date-Konstruktor, Teil 4",
+    "group": "Datumsverwaltung",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: Ungültiges Argument."
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "explanationProse": [
+      "Eine `Date`-Instanz, die mit einem einzigen Integer-Argument erstellt wird, wird als Unix-`Epoch`-Wert interpretiert. Die `Epoch` zählt einfach die Millisekunden seit dem 1. Januar 1970.\n\nEin Wert von `2020` (Millisekunden) entspricht also lächerlichen 2 Sekunden nach dem 1. Januar 1970.\n\nDa unsere lokale Zeitzone einen negativen Offset von -7 Stunden hat, rutschen wir ins vorherige Jahr zurück und landen bei `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.\n\nUm diesem lokalen Zeitzonen-Offset aus dem Weg zu gehen, verwende einfach [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Der Date-Konstruktor, Teil 4\",\n  \"group\": \"Datumsverwaltung\",\n  \"options\": [\n    { \"text\": \"1969\" },\n    { \"text\": \"1970\" },\n    { \"text\": \"2019\" },\n    { \"text\": \"2020\" },\n    { \"text\": \"2021\" },\n    { \"text\": \"RangeError: Ungültiges Argument.\" }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"explanationProse\": [\n    \"Eine `Date`-Instanz, die mit einem einzigen Integer-Argument erstellt wird, wird als Unix-`Epoch`-Wert interpretiert. Die `Epoch` zählt einfach die Millisekunden seit dem 1. Januar 1970.\\n\\nEin Wert von `2020` (Millisekunden) entspricht also lächerlichen 2 Sekunden nach dem 1. Januar 1970.\\n\\nDa unsere lokale Zeitzone einen negativen Offset von -7 Stunden hat, rutschen wir ins vorherige Jahr zurück und landen bei `Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)`.\\n\\nUm diesem lokalen Zeitzonen-Offset aus dem Weg zu gehen, verwende einfach [`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear).\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 921,
+    "outputTokens": 5122,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 93417
+  },
+  "cost": {
+    "inputUsd": 0.000299325,
+    "outputUsd": 0.0099879,
+    "totalUsd": 0.010287224999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

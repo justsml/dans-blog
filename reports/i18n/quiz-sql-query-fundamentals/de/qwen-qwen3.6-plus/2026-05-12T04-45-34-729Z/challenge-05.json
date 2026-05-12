@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "originalTitle": "Correlated Subquery",
+  "translatedTitle": "Korrelierte Unterabfrage",
+  "translation": {
+    "title": "Korrelierte Unterabfrage",
+    "group": "SQL-Unterabfragen",
+    "options": [
+      {
+        "text": "Eine Unterabfrage, die insgesamt nur einmal ausgeführt wird",
+        "hint": "Falsch – das beschreibt eine unabhängige Subquery."
+      },
+      {
+        "text": "Eine Unterabfrage, die ausschließlich in JOIN-Anweisungen verwendet wird",
+        "hint": "Falsch – Subqueries sind auch ohne JOINs nutzbar."
+      },
+      {
+        "text": "Eine Unterabfrage, die ausschließlich mehrere Spalten zurückgibt",
+        "hint": "Falsch – die Spaltenanzahl ist hier nicht entscheidend."
+      },
+      {
+        "text": "Eine Unterabfrage, die für jede Zeile der äußeren Abfrage einmal ausgeführt wird",
+        "hint": "Richtig – genau das ist das Kernmerkmal."
+      }
+    ],
+    "questionProse": [
+      "Was genau ist eine korrelierte Unterabfrage in SQL?"
+    ],
+    "explanationProse": [
+      "Eine korrelierte Unterabfrage wird pro Zeile der äußeren Abfrage neu ausgeführt. Sie greift auf Spalten der äußeren Abfrage zu und ist daher untrennbar mit der aktuellen Zeile verknüpft. Deshalb kann die Datenbank sie nicht einmalig vorberechnen, sondern muss sie für jede Zeile separat evaluieren – was sie flexibel, aber auch rechenintensiver macht."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Korrelierte Unterabfrage\",\n  \"group\": \"SQL-Unterabfragen\",\n  \"options\": [\n    {\n      \"text\": \"Eine Unterabfrage, die insgesamt nur einmal ausgeführt wird\",\n      \"hint\": \"Falsch – das beschreibt eine unabhängige Subquery.\"\n    },\n    {\n      \"text\": \"Eine Unterabfrage, die ausschließlich in JOIN-Anweisungen verwendet wird\",\n      \"hint\": \"Falsch – Subqueries sind auch ohne JOINs nutzbar.\"\n    },\n    {\n      \"text\": \"Eine Unterabfrage, die ausschließlich mehrere Spalten zurückgibt\",\n      \"hint\": \"Falsch – die Spaltenanzahl ist hier nicht entscheidend.\"\n    },\n    {\n      \"text\": \"Eine Unterabfrage, die für jede Zeile der äußeren Abfrage einmal ausgeführt wird\",\n      \"hint\": \"Richtig – genau das ist das Kernmerkmal.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was genau ist eine korrelierte Unterabfrage in SQL?\"\n  ],\n  \"explanationProse\": [\n    \"Eine korrelierte Unterabfrage wird pro Zeile der äußeren Abfrage neu ausgeführt. Sie greift auf Spalten der äußeren Abfrage zu und ist daher untrennbar mit der aktuellen Zeile verknüpft. Deshalb kann die Datenbank sie nicht einmalig vorberechnen, sondern muss sie für jede Zeile separat evaluieren – was sie flexibel, aber auch rechenintensiver macht.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 731,
+    "outputTokens": 3850,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 70236
+  },
+  "cost": {
+    "inputUsd": 0.00023757500000000001,
+    "outputUsd": 0.0075075,
+    "totalUsd": 0.007745075000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "index": 5,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Rc-Smart-Pointer",
+  "translation": {
+    "title": "Rc-Smart-Pointer",
+    "group": "Referenzzählung",
+    "options": [],
+    "questionProse": [
+      "Was gibt dieser Code aus? Zähl genau nach!"
+    ],
+    "explanationProse": [
+      "So funktioniert `Rc` im Detail:\n\n      1. Erstes Erstellen mit `Rc::new()`: count = 1\n      2. Erster Klon für `marcus`: count = 2\n      3. Zweiter Klon für `aurelius`: count = 3\n\n      Wichtige Eigenschaften von `Rc`:",
+      "Wichtige Punkte:\n      - `Rc::clone()` ist günstig – es erhöht lediglich einen Zähler\n      - `Rc` ist ausschließlich für Single-Thread-Szenarien gedacht\n      - Sobald die letzte Referenz freigegeben wird, werden die Daten bereinigt\n      - Nutze `Weak`-Referenzen, um Referenzzyklen zu vermeiden\n\n      Best Practices:\n      - Verwende `Rc`, wenn du gemeinsame Ownership benötigst\n      - Greife auf `Arc` zurück, wenn Thread-Sicherheit erforderlich ist\n      - Vermeide das Erstellen von Referenzzyklen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc-Smart-Pointer\",\n  \"group\": \"Referenzzählung\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Was gibt dieser Code aus? Zähl genau nach!\"\n  ],\n  \"explanationProse\": [\n    \"So funktioniert `Rc` im Detail:\\n\\n      1. Erstes Erstellen mit `Rc::new()`: count = 1\\n      2. Erster Klon für `marcus`: count = 2\\n      3. Zweiter Klon für `aurelius`: count = 3\\n\\n      Wichtige Eigenschaften von `Rc`:\",\n    \"Wichtige Punkte:\\n      - `Rc::clone()` ist günstig – es erhöht lediglich einen Zähler\\n      - `Rc` ist ausschließlich für Single-Thread-Szenarien gedacht\\n      - Sobald die letzte Referenz freigegeben wird, werden die Daten bereinigt\\n      - Nutze `Weak`-Referenzen, um Referenzzyklen zu vermeiden\\n\\n      Best Practices:\\n      - Verwende `Rc`, wenn du gemeinsame Ownership benötigst\\n      - Greife auf `Arc` zurück, wenn Thread-Sicherheit erforderlich ist\\n      - Vermeide das Erstellen von Referenzzyklen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 825,
+    "outputTokens": 4239,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 77364
+  },
+  "cost": {
+    "inputUsd": 0.000268125,
+    "outputUsd": 0.008266049999999999,
+    "totalUsd": 0.008534174999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

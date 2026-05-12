@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Mehrere `.catch`'s #2",
+  "translation": {
+    "title": "Mehrere `.catch`'s #2",
+    "group": "Fehlerbehandlung",
+    "options": [
+      {
+        "text": "Nachricht einmal ausgeben"
+      },
+      {
+        "text": "Nachricht zweimal ausgeben"
+      },
+      {
+        "text": "nicht behandelter abgelehnter Promise"
+      },
+      {
+        "text": "Prozess beendet sich"
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe für den folgenden Code sein?"
+    ],
+    "explanationProse": [
+      "Bei Verwendung des Promise-Konstruktors müssen Sie entweder die `resolve()`- oder `reject()`-Callbacks aufrufen. Der Promise-Konstruktor ignoriert den Rückgabewert des Executors, daher wird der zusätzliche Promise, der mit `Promise.reject()` erstellt wurde, nicht an `p` angehängt. Die beiden Handler sind an `p` gebunden, das ausstehend bleibt, während der zurückgegebene abgelehnte Promise von der Host-Umgebung als nicht behandelt gemeldet wird."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mehrere `.catch`'s #2\",\n  \"group\": \"Fehlerbehandlung\",\n  \"options\": [\n    {\n      \"text\": \"Nachricht einmal ausgeben\"\n    },\n    {\n      \"text\": \"Nachricht zweimal ausgeben\"\n    },\n    {\n      \"text\": \"nicht behandelter abgelehnter Promise\"\n    },\n    {\n      \"text\": \"Prozess beendet sich\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe für den folgenden Code sein?\"\n  ],\n  \"explanationProse\": [\n    \"Bei Verwendung des Promise-Konstruktors müssen Sie entweder die `resolve()`- oder `reject()`-Callbacks aufrufen. Der Promise-Konstruktor ignoriert den Rückgabewert des Executors, daher wird der zusätzliche Promise, der mit `Promise.reject()` erstellt wurde, nicht an `p` angehängt. Die beiden Handler sind an `p` gebunden, das ausstehend bleibt, während der zurückgegebene abgelehnte Promise von der Host-Umgebung als nicht behandelt gemeldet wird.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 716,
+    "outputTokens": 820,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 4881
+  },
+  "cost": {
+    "inputUsd": 0.00010024,
+    "outputUsd": 0.00022960000000000002,
+    "totalUsd": 0.00032984,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

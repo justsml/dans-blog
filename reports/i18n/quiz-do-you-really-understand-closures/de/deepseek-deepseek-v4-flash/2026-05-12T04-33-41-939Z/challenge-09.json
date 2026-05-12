@@ -1,0 +1,43 @@
+{
+  "index": 8,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "Die this-Falle",
+  "translation": {
+    "title": "Die this-Falle",
+    "group": "Experte",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier ausgegeben?"
+    ],
+    "explanationProse": [
+      "Zwei subtile Fallen:\n\n    **`greetArrow`**: Pfeilfunktionen haben kein eigenes `this`. Sie übernehmen `this` aus dem umschließenden lexikalischen Scope – hier ist das der Modul-/globale Scope, nicht `user`. Also ist `this?.name` `undefined`.\n\n    **`fn()`**: `greetRegular` wird ohne Empfänger aufgerufen (`fn()` nicht `user.greetRegular()`). Im Strict Mode ist `this` `undefined`. Im Sloppy Mode ist es das globale Objekt. In beiden Fällen ist `this?.name` `undefined`.\n\n    Wenn du `user.greetRegular()` direkt aufgerufen hättest, würdest du `'Dan'` erhalten – weil dann `this` an `user` gebunden ist.\n\n    Ergebnis: `undefined, undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Die this-Falle\",\n  \"group\": \"Experte\",\n  \"options\": [\n    {\"text\": \"Dan, Dan\"},\n    {\"text\": \"Dan, undefined\"},\n    {\"text\": \"undefined, Dan\"},\n    {\"text\": \"undefined, undefined\"}\n  ],\n  \"questionProse\": [\"Was wird hier ausgegeben?\"],\n  \"explanationProse\": [\"Zwei subtile Fallen:\\n\\n    **`greetArrow`**: Pfeilfunktionen haben kein eigenes `this`. Sie übernehmen `this` aus dem umschließenden lexikalischen Scope – hier ist das der Modul-/globale Scope, nicht `user`. Also ist `this?.name` `undefined`.\\n\\n    **`fn()`**: `greetRegular` wird ohne Empfänger aufgerufen (`fn()` nicht `user.greetRegular()`). Im Strict Mode ist `this` `undefined`. Im Sloppy Mode ist es das globale Objekt. In beiden Fällen ist `this?.name` `undefined`.\\n\\n    Wenn du `user.greetRegular()` direkt aufgerufen hättest, würdest du `'Dan'` erhalten – weil dann `this` an `user` gebunden ist.\\n\\n    Ergebnis: `undefined, undefined`.\"]\n}",
+  "telemetry": {
+    "inputTokens": 824,
+    "outputTokens": 1629,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10000
+  },
+  "cost": {
+    "inputUsd": 0.00011536000000000001,
+    "outputUsd": 0.00045612000000000007,
+    "totalUsd": 0.0005714800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

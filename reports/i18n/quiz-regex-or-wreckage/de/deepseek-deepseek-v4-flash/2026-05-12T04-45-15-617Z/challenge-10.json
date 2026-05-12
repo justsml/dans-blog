@@ -1,0 +1,49 @@
+{
+  "index": 9,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Negativer Look-ahead",
+  "translation": {
+    "title": "Negativer Look-ahead",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "Welches wird das Ergebnis hiervon sein?"
+    ],
+    "explanationProse": [
+      "Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine Kleinbuchstaben folgen. Da der Teil \"3aBc\" einen Kleinbuchstaben nach den Ziffern hat, passt sein Abschnitt nicht. Daher passt nur der Anfang \"12\".\n\n    [Mehr über negativen Look-ahead erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Negativer Look-ahead\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\"text\": \"[\\\"password123\\\"]\"},\n    {\"text\": \"[\\\"abc123\\\"]\"},\n    {\"text\": \"[\\\"123aBc\\\"]\"},\n    {\"text\": \"[\\\"12\\\"]\"},\n    {\"text\": \"[\\\"abc\\\"]\"},\n    {\"text\": \"Error\"}\n  ],\n  \"questionProse\": [\"Welches wird das Ergebnis hiervon sein?\"],\n  \"explanationProse\": [\"Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine Kleinbuchstaben folgen. Da der Teil \\\"3aBc\\\" einen Kleinbuchstaben nach den Ziffern hat, passt sein Abschnitt nicht. Daher passt nur der Anfang \\\"12\\\".\\n\\n    [Mehr über negativen Look-ahead erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"]\n}",
+  "telemetry": {
+    "inputTokens": 762,
+    "outputTokens": 1524,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9839
+  },
+  "cost": {
+    "inputUsd": 0.00010668,
+    "outputUsd": 0.00042672,
+    "totalUsd": 0.0005334000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

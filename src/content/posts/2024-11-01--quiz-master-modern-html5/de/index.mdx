@@ -1,0 +1,446 @@
+---
+unlisted: false
+title: 'Quiz: Gehört HTML noch auf deinen Lebenslauf?'
+subTitle: 'Zeig, was du kannst!'
+label: Semantic HTML5
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Du glaubst also, du hast HTML5 drauf?
+
+Immerhin kennst du dein `<div>` von deinem `<span>`, oder? Aber wie gut kennst du die fortgeschrittenen, semantischen Elemente in HTML5?
+
+> Hinweis: Wenn du diesen Test nicht bestehst, bist du gesetzlich verpflichtet, `HTML Skills` aus deinem Lebenslauf zu entfernen.
+
+### Los geht's!
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Aufwärmphase"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die primäre Aufgabe des `<ul>`-Elements in HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das `<ul>`-Tag erzeugt eine ungeordnete Liste, deren Einträge standardmäßig mit Aufzählungspunkten versehen werden.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Fortgeschrittenes semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Bedeutung hat das `<dd>`-Element in HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<dd>`-Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) definiert eine Beschreibung, Definition oder einen Wert in einer Definitionsliste. Es wird innerhalb von `<dl>`-Tags genutzt, um mit `<dt>` (_Description Term_) gepaart zu werden.
+
+Das ist besonders praktisch, wenn du Key-Value-Daten sauber strukturieren willst. Profilinfos, Einstellungen oder Statistiken sind typische Anwendungsfälle.
+```html
+<dl>
+  <dt>JS</dt>
+  <dd>Client-side</dd>
+  <dd>Server-side</dd>
+
+  <dt>HTML</dt>
+  <dd>Client-side</dd>
+</dl>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Semantisches HTML für Fortgeschrittene"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wann sollten die Elemente `<figure>` und `<figcaption>` verwendet werden?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure)-Tag kapselt eigenständige Inhalte wie Bilder oder Diagramme. Zusammen mit [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) spendiert es die passende Bildunterschrift.
+
+Ideal für Fotos, Grafiken, Code-Snippets und alles, was eine eigene Legende verdient.
+```html
+<figure>
+  <img src="image.jpg" alt="Description of image">
+  <figcaption>Image caption</figcaption>
+</figure>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Semantisches HTML für Fortgeschrittene"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wozu dient das `<article>`-Element in HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<article>`-Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) ist dein Werkzeug für Inhalte, die komplett auf eigenen Beinen stehen und sich unabhängig verteilen oder recyceln lassen.
+
+Typische Einsatzgebiete: Blogposts, News-Artikel, Forenbeiträge oder Kommentare.
+
+Du kannst locker mehrere davon auf einer Seite stapeln (perfekt für Infinite-Scroll) oder sie ineinander verschachteln, um eine saubere Hierarchie aus „eigenständigen Inhalten“ zu bauen.
+```html
+<article>
+  <h2>Article Title</h2>
+  <p>Article content...</p>
+  <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+  </article>
+</article>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Fortgeschrittenes semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür genau sind die Elemente `<fieldset>` und `<legend>` in einem Formular gut?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) wird verwendet, um zusammengehörige Formularsteuerelemente zu gruppieren, während `<legend>` eine Überschrift/Bezeichnung für diese Gruppe liefert – was die Barrierefreiheit deutlich verbessert.
+
+Das ist besonders praktisch, um verwandte Formularfelder zu bündeln, etwa einen Abschnitt für die Lieferadresse oder Zahlungsdaten.
+```html
+<fieldset>
+  <legend>Shipping Address</legend>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  ...
+</fieldset>
+<fieldset>
+  <legend>Payment Details</legend>
+  <label for="card">Card Number:</label>
+  <input type="text" id="card" name="card">
+  ...
+</fieldset>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Fortgeschrittenes semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür ist das `<meter>`-Element eigentlich da?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<meter>`-Element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) dient dazu, einen skalaren Messwert innerhalb eines festgelegten Bereichs darzustellen – etwa Temperatur, Festplattenauslastung oder eine Stimmenanzahl.
+
+Es könnte einem [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress)-Balken ähneln, aber Fortschrittsbalken starten **IMMER** bei null. `<progress>`-Elemente zeigen also einen `Fertigstellungsgrad in Prozent`, während `<meter>` jeden Wert innerhalb eines frei definierbaren Bereichs abbildet.
+```html
+<meter min="-60" max="130" value="75" /> 75°F
+<meter min="0" max="100" value="75" /> 75%
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür wird das `<source>`-Element eigentlich verwendet?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<source>`-Element ist deine Absicherung gegen Format-Chaos](https://developer.mozilla.org/en-us/docs/web/html/element/source).
+
+Es wird gezielt mit [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) und [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) kombiniert. So lässt du den Browser selbst entscheiden, welches Format am besten passt – statt ihm blind etwas aufzuzwingen.
+```html
+<video controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+</video>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Semantisches HTML für Fortgeschrittene"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie setzt du das `<hgroup>`-Element richtig ein?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup)-Element bündelt eine Überschrift mit zugehörigen Zusatzinfos, meist einem oder mehreren `<p>`-Elementen.
+
+Greif genau dann darauf zurück, wenn eine Überschrift einen Untertitel, einen Slogan oder einen Alternativtitel hat, der auf keinen Fall als weitere Überschrift im Dokumenten-Outline auftauchen darf.
+```html
+<article>
+  <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+  </hgroup>
+  <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+  </section>
+</article>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Semantisches HTML für Fortgeschrittene"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür ist das `<menu>`-Element in HTML eigentlich gedacht?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu)-Element repräsentiert eine Liste von Befehlen oder interaktiven Steuerelementen.
+
+Verwechsel es nicht mit Navigation: Für Links nimm `<nav>` zusammen mit einem `<ul>`. `<menu>` ist ausschließlich für toolbar-ähnliche Steuerelemente oder Befehlslisten gedacht.
+```html
+<menu>
+  <li><button type="button">Copy</button></li>
+  <li><button type="button">Paste</button></li>
+</menu>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Fortgeschrittenes semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welche Rolle spielen `<details>` und `<summary>` in HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) ermöglicht aufklappbare Inhalte, und [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) definiert eine sichtbare Überschrift dafür.
+
+Genau das Richtige für FAQs, ausklappbare Bereiche oder alles, was der Nutzer auf Knopfdruck ein- und ausblenden soll.
+```html
+<details>
+  <summary>Click to expand 🤯</summary>
+  <p>Hidden content! 💥</p>
+</details>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Fortgeschrittenes semantisches HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Warum solltest du ein `<dialog>`-Element verwenden?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog)-Element ist für Pop-ups oder Modals gedacht und liefert semantisches Markup, erweiterte CSS-Möglichkeiten sowie eine native API für diese Interaktionen.
+
+Öffne es per JavaScript mit `.showModal()` für modale Dialoge oder `.show()` für nicht-modale Dialoge. Schließen kannst du es mit `.close()` oder durch das Absenden eines Formulars mit `method="dialog"`.
+```html
+<dialog>
+  <h2>Modal Title</h2>
+  <p>Modal content...</p>
+  <button>Close</button>
+</dialog>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Semantisches HTML für Fortgeschrittene"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür ist das `<time>`-Element in HTML eigentlich da?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das `<time>`-Element ist für Datumsangaben, Uhrzeiten oder Zeitspannen vorgesehen. Es enthält menschenlesbaren Inhalt und ein maschinenlesbares `datetime`-Attribut. HTML besitzt schlichtweg kein `<date>`-Element.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Fortgeschrittenes semantisches HTML"
+  title="Zweck von ARIA-Attributen"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wofür sind ARIA-Attribute eigentlich gedacht?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ARIA-Attribute (Accessible Rich Internet Applications) verbessern die Barrierefreiheit im Web, indem sie Screenreadern und anderen assistiven Technologien den nötigen Kontext liefern.
+
+Mithilfe von Rollen, Zuständen und Eigenschaften kannst du Elemente präzise beschreiben und so sicherstellen, dass wirklich jeder Nutzer deine Inhalte versteht.
+```html
+<button aria-label="Close" aria-expanded="true">X</button>
+<main aria-live="polite">...</main>
+<dialog
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="dialog_label"
+  aria-describedby="dialog_desc"
+></dialog>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Fortgeschrittenes semantisches HTML"
+  title="Verwendung des `role`-Attributs"
+  options={[
+    {text: 'Zur Definition des Komponentenverhaltens'},
+    {text: 'Zur Beschreibung des Elementzwecks', isAnswer: true},
+    {text: 'Um den Zugriff auf Elemente einzuschränken'},
+    {text: 'Nur für Web Components'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die eigentliche Aufgabe des `role`-Attributs in HTML?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das `role`-Attribut verrät assistiven Technologien
+
+ den wahren Zweck eines Elements. Ohne diesen Hinweis tappen Screenreader im Dunkeln – mit ihm sorgst du dafür, dass deine Seite nicht nur funktioniert, sondern auch wirklich zugänglich ist.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+Na, wie hast du abgeschnitten? Lust, in deinem nächsten Projekt mehr semantische HTML-Elemente einzusetzen? 🚀
+
+Oder hast du dich auf Lebenszeit mit `<div>` und `<span>` abgefunden? 😅
+
+Schreib's mir unten in die Kommentare! 👇

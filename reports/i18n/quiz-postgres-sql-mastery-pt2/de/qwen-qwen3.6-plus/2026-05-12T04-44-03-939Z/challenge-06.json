@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Reihenfolge mehrspaltiger Indizes",
+  "translation": {
+    "title": "Reihenfolge mehrspaltiger Indizes",
+    "group": "Indizierung",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "Welcher Index ist für diese Abfrage besser geeignet?"
+    ],
+    "explanationProse": [
+      "Das Überraschende hier ist für mich, dass ein mehrspaltiger Index auch dann genutzt werden kann, wenn die Spaltenreihenfolge im Abfragetext nicht mit der Indexdefinition übereinstimmt.\n\n    **Hinweis:** Bei B-Tree-Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, ist ein Index, der mit `grade_level` und dann `last_name` beginnt, eine gute Wahl.\n\n    Je schneller SQL die kleinstmögliche Zeilenmenge auswählen kann, desto besser ist die Performance.\n\n    Wenn du beispielsweise eine `task`-Tabelle hast und weißt, dass `status` selektiver ist als `created_at`, würdest du für eine Abfrage wie `status = 'done' AND created_at > '2024-01-01'` wahrscheinlich einen Index wählen, der mit `status` beginnt. Entscheidend ist nicht die Reihenfolge der Bedingungen im `WHERE`-Klausel-Text, sondern die Spaltenreihenfolge des Index und die Form der Prädikate.\n\n    Ein B+Tree-Index kann genutzt werden für:\n    - Die führende Spalte oder ein Präfix der linken Spalten.\n    - Operatoren wie `=`, `>`, `<`, `BETWEEN` und `IN`, abhängig von der Abfragestruktur.\n    - Präfix-Matching, z. B. `LIKE 'prefix%'`.\n\n    Danke an [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) für den Hinweis auf einen früheren Fehler in dieser Erklärung!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Reihenfolge mehrspaltiger Indizes\",\n  \"group\": \"Indizierung\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Index ist für diese Abfrage besser geeignet?\"\n  ],\n  \"explanationProse\": [\n    \"Das Überraschende hier ist für mich, dass ein mehrspaltiger Index auch dann genutzt werden kann, wenn die Spaltenreihenfolge im Abfragetext nicht mit der Indexdefinition übereinstimmt.\\n\\n    **Hinweis:** Bei B-Tree-Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, ist ein Index, der mit `grade_level` und dann `last_name` beginnt, eine gute Wahl.\\n\\n    Je schneller SQL die kleinstmögliche Zeilenmenge auswählen kann, desto besser ist die Performance.\\n\\n    Wenn du beispielsweise eine `task`-Tabelle hast und weißt, dass `status` selektiver ist als `created_at`, würdest du für eine Abfrage wie `status = 'done' AND created_at > '2024-01-01'` wahrscheinlich einen Index wählen, der mit `status` beginnt. Entscheidend ist nicht die Reihenfolge der Bedingungen im `WHERE`-Klausel-Text, sondern die Spaltenreihenfolge des Index und die Form der Prädikate.\\n\\n    Ein B+Tree-Index kann genutzt werden für:\\n    - Die führende Spalte oder ein Präfix der linken Spalten.\\n    - Operatoren wie `=`, `>`, `<`, `BETWEEN` und `IN`, abhängig von der Abfragestruktur.\\n    - Präfix-Matching, z. B. `LIKE 'prefix%'`.\\n\\n    Danke an [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) für den Hinweis auf einen früheren Fehler in dieser Erklärung!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1068,
+    "outputTokens": 4710,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1062,
+    "durationMs": 86011
+  },
+  "cost": {
+    "inputUsd": 0.0003471,
+    "outputUsd": 0.0091845,
+    "totalUsd": 0.0095316,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "index": 15,
+  "originalTitle": "Password Validation",
+  "translatedTitle": "Passwort-Validierung",
+  "translation": {
+    "title": "Passwort-Validierung",
+    "group": "Blick-in-die-Hölle",
+    "options": [
+      {
+        "text": "\"sassword123\""
+      },
+      {
+        "text": "\"Sass123!\""
+      },
+      {
+        "text": "\"SASSWORD123\""
+      },
+      {
+        "text": "\"Sass word123\""
+      }
+    ],
+    "questionProse": [
+      "Entschuldigung im Voraus! 😈<br />\n    Welches Passwort passt zu diesem Muster?"
+    ],
+    "explanationProse": [
+      "Schreibe so etwas niemals in der Produktion! 😅\n\n    Dieses Muster verwendet mehrere positive Lookaheads, um Folgendes zu erzwingen:\n    - Mindestens ein Großbuchstabe: `(?=.*[A-Z])`\n    - Mindestens ein Kleinbuchstabe: `(?=.*[a-z])`\n    - Mindestens eine Ziffer: `(?=.*\\d)`\n    - Mindestens ein Sonderzeichen: `(?=.*[!@#$%^&*])`\n    - Mindestlänge von 8: `.{8,}`\n\n    Lookaheads sind perfekt für die Passwortvalidierung, da sie mehrere Kriterien prüfen können, ohne Zeichen zu verbrauchen.\n\n    [Erfahre mehr über Passwort-Validierungsmuster](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Passwort-Validierung\",\n  \"group\": \"Blick-in-die-Hölle\",\n  \"options\": [\n    {\n      \"text\": \"\\\"sassword123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass123!\\\"\"\n    },\n    {\n      \"text\": \"\\\"SASSWORD123\\\"\"\n    },\n    {\n      \"text\": \"\\\"Sass word123\\\"\"\n    }\n  ],\n  \"questionProse\": [\n    \"Entschuldigung im Voraus! 😈<br />\\n    Welches Passwort passt zu diesem Muster?\"\n  ],\n  \"explanationProse\": [\n    \"Schreibe so etwas niemals in der Produktion! 😅\\n\\n    Dieses Muster verwendet mehrere positive Lookaheads, um Folgendes zu erzwingen:\\n    - Mindestens ein Großbuchstabe: `(?=.*[A-Z])`\\n    - Mindestens ein Kleinbuchstabe: `(?=.*[a-z])`\\n    - Mindestens eine Ziffer: `(?=.*\\\\d)`\\n    - Mindestens ein Sonderzeichen: `(?=.*[!@#$%^&*])`\\n    - Mindestlänge von 8: `.{8,}`\\n\\n    Lookaheads sind perfekt für die Passwortvalidierung, da sie mehrere Kriterien prüfen können, ohne Zeichen zu verbrauchen.\\n\\n    [Erfahre mehr über Passwort-Validierungsmuster](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 830,
+    "outputTokens": 1286,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7010
+  },
+  "cost": {
+    "inputUsd": 0.0001162,
+    "outputUsd": 0.00036008000000000004,
+    "totalUsd": 0.00047628000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

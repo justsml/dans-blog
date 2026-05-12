@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "let behebt es (Oder doch nicht?)",
+  "translation": {
+    "title": "let behebt es (Oder doch nicht?)",
+    "group": "Die klassische Falle",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i ist nicht definiert"
+      }
+    ],
+    "questionProse": [
+      "Gleiche Schleife, anderes Schlüsselwort. Was wird ausgegeben?"
+    ],
+    "explanationProse": [
+      "`let` in einer `for`-Schleife ist besonders. Die Spezifikation sagt: Jede Iteration erhält ihre eigene **neue Bindung** von `i`. Es ist, als ob die Schleife heimlich Folgendes tut:",
+      "Die fünf Callbacks schließen also über fünf verschiedene Variablen. Ergebnis: `0, 1, 2, 3, 4`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"let behebt es (Oder doch nicht?)\",\n  \"group\": \"Die klassische Falle\",\n  \"options\": [\n    { \"text\": \"0, 1, 2, 3, 4\" },\n    { \"text\": \"5, 5, 5, 5, 5\" },\n    { \"text\": \"4, 4, 4, 4, 4\" },\n    { \"text\": \"ReferenceError: i ist nicht definiert\" }\n  ],\n  \"questionProse\": [\n    \"Gleiche Schleife, anderes Schlüsselwort. Was wird ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"`let` in einer `for`-Schleife ist besonders. Die Spezifikation sagt: Jede Iteration erhält ihre eigene **neue Bindung** von `i`. Es ist, als ob die Schleife heimlich Folgendes tut:\",\n    \"Die fünf Callbacks schließen also über fünf verschiedene Variablen. Ergebnis: `0, 1, 2, 3, 4`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 799,
+    "outputTokens": 1160,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 38196
+  },
+  "cost": {
+    "inputUsd": 0.00011186000000000002,
+    "outputUsd": 0.00032480000000000003,
+    "totalUsd": 0.00043666000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

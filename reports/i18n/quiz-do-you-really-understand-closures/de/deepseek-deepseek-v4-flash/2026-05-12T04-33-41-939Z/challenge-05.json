@@ -1,0 +1,43 @@
+{
+  "index": 4,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Objekt-Mutation",
+  "translation": {
+    "title": "Objekt-Mutation",
+    "group": "Closures & Objekte",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier geloggt?"
+    ],
+    "explanationProse": [
+      "Die Closure erfasst die **Bindung** `obj`, nicht eine Momentaufnahme des Objekts. Das Objekt selbst wird nach der Erstellung der Closure mutiert – aber `obj` zeigt immer noch auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.\n\n    Das überrascht Leute, die annehmen, dass Closures Werte \"einfrieren\". Tun sie nicht. Sie erfassen **Referenzen**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objekt-Mutation\",\n  \"group\": \"Closures & Objekte\",\n  \"options\": [\n    { \"text\": \"{ x: 1 }, { x: 1 }\" },\n    { \"text\": \"{ x: 1 }, { x: 99 }\" },\n    { \"text\": \"{ x: 99 }, { x: 99 }\" },\n    { \"text\": \"{ x: 99 }, { x: 1 }\" }\n  ],\n  \"questionProse\": [\n    \"Was wird hier geloggt?\"\n  ],\n  \"explanationProse\": [\n    \"Die Closure erfasst die **Bindung** `obj`, nicht eine Momentaufnahme des Objekts. Das Objekt selbst wird nach der Erstellung der Closure mutiert – aber `obj` zeigt immer noch auf dieselbe Referenz. Beide Aufrufe geben dasselbe mutierte Objekt zurück: `{ x: 99 }`.\\n\\n    Das überrascht Leute, die annehmen, dass Closures Werte \\\"einfrieren\\\". Tun sie nicht. Sie erfassen **Referenzen**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 769,
+    "outputTokens": 2174,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12565
+  },
+  "cost": {
+    "inputUsd": 0.00010766000000000002,
+    "outputUsd": 0.0006087200000000001,
+    "totalUsd": 0.0007163800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

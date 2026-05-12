@@ -1,0 +1,46 @@
+{
+  "index": 12,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Datum-Setter Teil 4",
+  "translation": {
+    "title": "Datum-Setter Teil 4",
+    "group": "Datumsverarbeitung",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "explanationProse": [
+      "Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.\n\nDas Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).\n\nHier sehen wir, dass Monat und Jahr automatisch auf Februar 2021 korrigiert werden, da `setMonth(13)` einfach 2 über dem Limit von 11 (Dezember) liegt. JavaScript rechnet das gnadenlos für dich um.\n\n<aside class=\"hint\">`setMonth` arbeitet mit nullbasierten Indizes: 12 Monate = 0 bis 11.</aside>\n<aside class=\"hint\">\nWerte außerhalb von 0–11 lösen einen stillen Jahresüberlauf aus. `setMonth(13)` schiebt das Datum einfach ins Jahr 2021 (Februar, weil 13 = 11 + 2).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Datum-Setter Teil 4\",\n  \"group\": \"Datumsverarbeitung\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"explanationProse\": [\n    \"Die Methode [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) setzt den Monat der angegebenen Datumsinstanz.\\n\\nDas Monatsargument ist nullbasiert und reicht von 0 bis 11 (bei westlichen Kalendern).\\n\\nHier sehen wir, dass Monat und Jahr automatisch auf Februar 2021 korrigiert werden, da `setMonth(13)` einfach 2 über dem Limit von 11 (Dezember) liegt. JavaScript rechnet das gnadenlos für dich um.\\n\\n<aside class=\\\"hint\\\">`setMonth` arbeitet mit nullbasierten Indizes: 12 Monate = 0 bis 11.</aside>\\n<aside class=\\\"hint\\\">\\nWerte außerhalb von 0–11 lösen einen stillen Jahresüberlauf aus. `setMonth(13)` schiebt das Datum einfach ins Jahr 2021 (Februar, weil 13 = 11 + 2).\\n</aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 966,
+    "outputTokens": 4623,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 84478
+  },
+  "cost": {
+    "inputUsd": 0.00031395,
+    "outputUsd": 0.009014850000000001,
+    "totalUsd": 0.009328800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

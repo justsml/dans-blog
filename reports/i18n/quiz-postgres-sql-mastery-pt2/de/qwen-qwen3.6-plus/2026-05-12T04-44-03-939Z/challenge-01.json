@@ -1,0 +1,46 @@
+{
+  "index": 0,
+  "originalTitle": "The Many JOINs of PostgreSQL",
+  "translatedTitle": "Die vielen JOINs von PostgreSQL",
+  "translation": {
+    "title": "Die vielen JOINs von PostgreSQL",
+    "group": "Aufwärmen: Joins",
+    "options": [
+      {
+        "text": "JOIN ALL"
+      },
+      {
+        "text": "INNER JOIN"
+      },
+      {
+        "text": "CROSS JOIN"
+      },
+      {
+        "text": "LEFT OUTER JOIN"
+      },
+      {
+        "text": "FULL OUTER JOIN"
+      }
+    ],
+    "questionProse": [
+      "Welches ist ❌ kein gültiger PostgreSQL-JOIN-Ausdruck?"
+    ],
+    "explanationProse": [
+      "Du kennst `CROSS JOIN`, richtig?\n\n    Hat dich `JOIN ALL` an eine andere Operation erinnert, nämlich `UNION ALL`?\n\n    Die richtige Antwort ist hier `JOIN ALL` ❌.\n\n    Die gültigen JOIN-Typen sind:\n    - `INNER JOIN` (Standard-JOIN)\n    - `LEFT JOIN` (oder `LEFT OUTER JOIN`)\n    - `RIGHT JOIN` (oder `RIGHT OUTER JOIN`)\n    - `FULL JOIN` (oder `FULL OUTER JOIN`)\n    - `CROSS JOIN` (das kartesische Produkt, sofern es nicht durch eine nachfolgende `WHERE`-Klausel gefiltert wird)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Die vielen JOINs von PostgreSQL\",\n  \"group\": \"Aufwärmen: Joins\",\n  \"options\": [\n    {\n      \"text\": \"JOIN ALL\"\n    },\n    {\n      \"text\": \"INNER JOIN\"\n    },\n    {\n      \"text\": \"CROSS JOIN\"\n    },\n    {\n      \"text\": \"LEFT OUTER JOIN\"\n    },\n    {\n      \"text\": \"FULL OUTER JOIN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches ist ❌ kein gültiger PostgreSQL-JOIN-Ausdruck?\"\n  ],\n  \"explanationProse\": [\n    \"Du kennst `CROSS JOIN`, richtig?\\n\\n    Hat dich `JOIN ALL` an eine andere Operation erinnert, nämlich `UNION ALL`?\\n\\n    Die richtige Antwort ist hier `JOIN ALL` ❌.\\n\\n    Die gültigen JOIN-Typen sind:\\n    - `INNER JOIN` (Standard-JOIN)\\n    - `LEFT JOIN` (oder `LEFT OUTER JOIN`)\\n    - `RIGHT JOIN` (oder `RIGHT OUTER JOIN`)\\n    - `FULL JOIN` (oder `FULL OUTER JOIN`)\\n    - `CROSS JOIN` (das kartesische Produkt, sofern es nicht durch eine nachfolgende `WHERE`-Klausel gefiltert wird)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 834,
+    "outputTokens": 3212,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 60018
+  },
+  "cost": {
+    "inputUsd": 0.00027105,
+    "outputUsd": 0.0062634,
+    "totalUsd": 0.00653445,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

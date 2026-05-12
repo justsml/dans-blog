@@ -1,0 +1,43 @@
+{
+  "index": 2,
+  "originalTitle": "Role of the System Prompt",
+  "translatedTitle": "Die Rolle des System-Prompts",
+  "translation": {
+    "title": "Die Rolle des System-Prompts",
+    "group": "Grundlagen",
+    "options": [
+      {
+        "text": "Es wird zuerst verarbeitet und hat ein höheres Gewicht als Benutzer-Nachrichten"
+      },
+      {
+        "text": "Es ist identisch mit einer Benutzer-Nachricht, wird aber anders dargestellt"
+      },
+      {
+        "text": "Es wird ausschließlich für API-Aufrufe verwendet, nicht für Chat-Oberflächen"
+      },
+      {
+        "text": "Es bleibt über Sitzungen hinweg als Langzeitspeicher erhalten"
+      }
+    ],
+    "questionProse": [
+      "Welche praktischen Auswirkungen hat die Verwendung der `system`-Rolle im Vergleich zur `user`-Rolle im Nachrichten-Array?"
+    ],
+    "explanationProse": [
+      "Die `system`-Rolle wird als Anweisung mit höherer Priorität verarbeitet. Modelle sind darauf trainiert, ihr mehr Gewicht als Benutzer-Nachrichten zu geben – sie bildet die architektonische Grenze zwischen „was der Entwickler gesagt hat“ und „was der Benutzer gesagt hat“.\n\n    Das ist keine Magie. Es garantiert nicht, dass das Modell widersprüchliche Benutzeranweisungen ignoriert (siehe: Prompt Injection). Aber es erhöht die Tendenz des Modells, deine Vorgaben zu befolgen, signifikant – besonders bei Modellen mit starker Anweisungsbefolgung.\n\n    In der Praxis: Definiere Persona, Regeln und Verhaltensbeschränkungen in `system`. Lege abgerufenen Kontext und Benutzerdaten in `user`. Speichere niemals benutzergesteuerte Eingaben in `system`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Die Rolle des System-Prompts\",\n  \"group\": \"Grundlagen\",\n  \"options\": [\n    {\n      \"text\": \"Es wird zuerst verarbeitet und hat ein höheres Gewicht als Benutzer-Nachrichten\"\n    },\n    {\n      \"text\": \"Es ist identisch mit einer Benutzer-Nachricht, wird aber anders dargestellt\"\n    },\n    {\n      \"text\": \"Es wird ausschließlich für API-Aufrufe verwendet, nicht für Chat-Oberflächen\"\n    },\n    {\n      \"text\": \"Es bleibt über Sitzungen hinweg als Langzeitspeicher erhalten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche praktischen Auswirkungen hat die Verwendung der `system`-Rolle im Vergleich zur `user`-Rolle im Nachrichten-Array?\"\n  ],\n  \"explanationProse\": [\n    \"Die `system`-Rolle wird als Anweisung mit höherer Priorität verarbeitet. Modelle sind darauf trainiert, ihr mehr Gewicht als Benutzer-Nachrichten zu geben – sie bildet die architektonische Grenze zwischen „was der Entwickler gesagt hat“ und „was der Benutzer gesagt hat“.\\n\\n    Das ist keine Magie. Es garantiert nicht, dass das Modell widersprüchliche Benutzeranweisungen ignoriert (siehe: Prompt Injection). Aber es erhöht die Tendenz des Modells, deine Vorgaben zu befolgen, signifikant – besonders bei Modellen mit starker Anweisungsbefolgung.\\n\\n    In der Praxis: Definiere Persona, Regeln und Verhaltensbeschränkungen in `system`. Lege abgerufenen Kontext und Benutzerdaten in `user`. Speichere niemals benutzergesteuerte Eingaben in `system`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 870,
+    "outputTokens": 4518,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 82497
+  },
+  "cost": {
+    "inputUsd": 0.00028275,
+    "outputUsd": 0.008810100000000001,
+    "totalUsd": 0.009092850000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

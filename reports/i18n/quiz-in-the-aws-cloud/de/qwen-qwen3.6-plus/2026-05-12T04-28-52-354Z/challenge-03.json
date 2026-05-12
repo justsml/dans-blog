@@ -1,0 +1,54 @@
+{
+  "index": 2,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "Schema-los",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "Erstellt ein neues Item oder ersetzt ein bestehendes durch ein neues."
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "Existiert nicht."
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "Fügt mehrere Items ein (PUT) oder löscht sie in einem einzigen Aufruf."
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "In DynamoDB?"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "Kombiniert mehrere PutItem-, UpdateItem-, DeleteItem- und ConditionCheck-Operationen zu einem einzigen Aufruf."
+      }
+    ],
+    "questionProse": [
+      "Welche DynamoDB-API aktualisiert Attribute eines einzelnen bestehenden Items?"
+    ],
+    "explanationProse": [
+      "Der entscheidende Punkt ist hier <b>Updates</b>, nicht Inserts oder PUTs. Wenn du neue Items einfügst, greifst du zu `BatchWriteItem` oder `TransactWriteItems`.\n\n  Zwar kann `BatchWriteItem` mehrere Operationen bündeln, ist aber strikt auf PUTs und DELETES beschränkt. `TransactWriteItems` bietet zwar mehr Power, ist für einfache Updates aber eher ein Vorschlaghammer.\n  Für gezielte Änderungen ist `UpdateItem` die klare Wahl. Damit kannst du ein oder mehrere Attribute eines bestehenden Items UPDATEN, also gezielt anpassen.\n\n  Die `UpdateItem`-Operation verarbeitet genau ein Item pro Request. Bei großen Backfills oder Bulk-Updates orchestrierst du üblicherweise viele `UpdateItem`-Aufrufe oder setzt auf umfangreichere Workflows wie die PartiQL-Batchausführung, Step Functions, Glue, EMR oder einen eigenen Worker-Prozess.\n\n  Die `UpdateItem`-Operation:\n  - Aktualisiert die Attribute eines bestehenden Items.\n  - Fügt einem bestehenden Item neue Attribute hinzu.\n  - Entfernt Attribute aus einem bestehenden Item.\n  - Führt das Update nur bedingt aus, wenn das Item existiert oder bestimmte Bedingungen erfüllt.\n\n  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"Schema-los\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"Erstellt ein neues Item oder ersetzt ein bestehendes durch ein neues.\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"Existiert nicht.\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"Fügt mehrere Items ein (PUT) oder löscht sie in einem einzigen Aufruf.\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"In DynamoDB?\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"Kombiniert mehrere PutItem-, UpdateItem-, DeleteItem- und ConditionCheck-Operationen zu einem einzigen Aufruf.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche DynamoDB-API aktualisiert Attribute eines einzelnen bestehenden Items?\"\n  ],\n  \"explanationProse\": [\n    \"Der entscheidende Punkt ist hier <b>Updates</b>, nicht Inserts oder PUTs. Wenn du neue Items einfügst, greifst du zu `BatchWriteItem` oder `TransactWriteItems`.\\n\\n  Zwar kann `BatchWriteItem` mehrere Operationen bündeln, ist aber strikt auf PUTs und DELETES beschränkt. `TransactWriteItems` bietet zwar mehr Power, ist für einfache Updates aber eher ein Vorschlaghammer.\\n  Für gezielte Änderungen ist `UpdateItem` die klare Wahl. Damit kannst du ein oder mehrere Attribute eines bestehenden Items UPDATEN, also gezielt anpassen.\\n\\n  Die `UpdateItem`-Operation verarbeitet genau ein Item pro Request. Bei großen Backfills oder Bulk-Updates orchestrierst du üblicherweise viele `UpdateItem`-Aufrufe oder setzt auf umfangreichere Workflows wie die PartiQL-Batchausführung, Step Functions, Glue, EMR oder einen eigenen Worker-Prozess.\\n\\n  Die `UpdateItem`-Operation:\\n  - Aktualisiert die Attribute eines bestehenden Items.\\n  - Fügt einem bestehenden Item neue Attribute hinzu.\\n  - Entfernt Attribute aus einem bestehenden Item.\\n  - Führt das Update nur bedingt aus, wenn das Item existiert oder bestimmte Bedingungen erfüllt.\\n\\n  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1058,
+    "outputTokens": 6689,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1052,
+    "durationMs": 121963
+  },
+  "cost": {
+    "inputUsd": 0.00034385,
+    "outputUsd": 0.01304355,
+    "totalUsd": 0.013387399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "index": 7,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Verwaltung des Konversationsverlaufs",
+  "translation": {
+    "title": "Verwaltung des Konversationsverlaufs",
+    "group": "Token-Verwaltung",
+    "options": [
+      {
+        "text": "Immer den vollständigen Konversationsverlauf mitsenden"
+      },
+      {
+        "text": "Ältere Nachrichten zusammenfassen, wenn der Verlauf das Token-Budget überschreitet"
+      },
+      {
+        "text": "Ältere Nachrichten löschen – das Modell besitzt ein persistentes Gedächtnis"
+      },
+      {
+        "text": "Verlauf in einer Vektordatenbank speichern und relevante Dialogabschnitte abrufen"
+      }
+    ],
+    "questionProse": [
+      "In einer Multi-Turn-Chat-Anwendung: Wie verfahren Sie korrekt, wenn der Konversationsverlauf ausufert?"
+    ],
+    "explanationProse": [
+      "LLMs besitzen kein persistentes Gedächtnis. Jeder API-Aufruf ist zustandslos – Sie senden den vollständigen Kontext, Sie erhalten eine Antwort. Das „Gedächtnis“ einer Konversation ist ausschließlich der Nachrichtenverlauf, den Sie in jede Anfrage packen.\n\nWenn dieser Verlauf Ihr Budget sprengt, haben Sie folgende Optionen:\n1. **Zusammenfassen**: Ältere Dialogabschnitte zu einer laufenden Zusammenfassung komprimieren, aktuelle Abschnitte wortgetreu beibehalten\n2. **Sliding Window**: Die letzten N Abschnitte behalten, frühere verwerfen\n3. **Selektives Retrieval**: Dialogabschnitte einbetten und pro Anfrage relevante Teile abrufen (komplex, aber leistungsstark)\n\nBlindes Abschneiden (Truncation) – also das Kürzen alter Nachrichten, um ins Limit zu passen – ist die schlechteste Wahl, da sie stillschweigend Kontext löscht, den das Modell möglicherweise braucht.\n\nDer Abruf des Konversationsverlaufs über eine Vektor-Datenbank klingt theoretisch gut, ist für die meisten Chat-Apps aber meist Overkill. Zusammenfassung ist der pragmatische Standard."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verwaltung des Konversationsverlaufs\",\n  \"group\": \"Token-Verwaltung\",\n  \"options\": [\n    {\n      \"text\": \"Immer den vollständigen Konversationsverlauf mitsenden\"\n    },\n    {\n      \"text\": \"Ältere Nachrichten zusammenfassen, wenn der Verlauf das Token-Budget überschreitet\"\n    },\n    {\n      \"text\": \"Ältere Nachrichten löschen – das Modell besitzt ein persistentes Gedächtnis\"\n    },\n    {\n      \"text\": \"Verlauf in einer Vektordatenbank speichern und relevante Dialogabschnitte abrufen\"\n    }\n  ],\n  \"questionProse\": [\n    \"In einer Multi-Turn-Chat-Anwendung: Wie verfahren Sie korrekt, wenn der Konversationsverlauf ausufert?\"\n  ],\n  \"explanationProse\": [\n    \"LLMs besitzen kein persistentes Gedächtnis. Jeder API-Aufruf ist zustandslos – Sie senden den vollständigen Kontext, Sie erhalten eine Antwort. Das „Gedächtnis“ einer Konversation ist ausschließlich der Nachrichtenverlauf, den Sie in jede Anfrage packen.\\n\\nWenn dieser Verlauf Ihr Budget sprengt, haben Sie folgende Optionen:\\n1. **Zusammenfassen**: Ältere Dialogabschnitte zu einer laufenden Zusammenfassung komprimieren, aktuelle Abschnitte wortgetreu beibehalten\\n2. **Sliding Window**: Die letzten N Abschnitte behalten, frühere verwerfen\\n3. **Selektives Retrieval**: Dialogabschnitte einbetten und pro Anfrage relevante Teile abrufen (komplex, aber leistungsstark)\\n\\nBlindes Abschneiden (Truncation) – also das Kürzen alter Nachrichten, um ins Limit zu passen – ist die schlechteste Wahl, da sie stillschweigend Kontext löscht, den das Modell möglicherweise braucht.\\n\\nDer Abruf des Konversationsverlaufs über eine Vektor-Datenbank klingt theoretisch gut, ist für die meisten Chat-Apps aber meist Overkill. Zusammenfassung ist der pragmatische Standard.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 4204,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 76765
+  },
+  "cost": {
+    "inputUsd": 0.000295425,
+    "outputUsd": 0.0081978,
+    "totalUsd": 0.008493225,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

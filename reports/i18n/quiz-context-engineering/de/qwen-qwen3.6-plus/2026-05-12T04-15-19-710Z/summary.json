@@ -1,0 +1,204 @@
+{
+  "runId": "qwen-qwen3.6-plus@2026-05-12T04-15-19-710Z",
+  "slug": "quiz-context-engineering",
+  "locale": "de",
+  "model": "qwen/qwen3.6-plus",
+  "modelPath": "qwen-qwen3.6-plus",
+  "createdAt": "2026-05-12T04:27:35.518Z",
+  "sourcePath": "src/content/posts/2026-05-09--quiz-context-engineering/index.mdx",
+  "targetPath": "src/content/posts/2026-05-09--quiz-context-engineering/de/index.mdx",
+  "candidatePath": "reports/i18n/quiz-context-engineering/de/qwen-qwen3.6-plus/2026-05-12T04-15-19-710Z/candidate.mdx",
+  "sourceHash": "80bb5fc16b497b3b59ea5d61677bbb1d2c11b1569c5926640320b7a8ce3fe3e7",
+  "outputHash": "07d1b22de721c7da282998385ea720960175d83e56f1f45c6aa52fdb0053ee14",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "This quiz evaluates practical skills in managing AI context windows, token budgets, retrieval strategies, and prompt architecture, with a sharp focus on diagnosing real-world failure modes. It begins with accessible questions but rapidly escalates to an advanced difficulty level, demanding production-ready expertise. The teaching tone is pragmatic and direct, favoring hands-on engineering reality over theoretical hype.\nTopics: Context window management, Token budgeting, Retrieval strategies, Prompt structure, AI failure modes, Prompt caching, Hybrid search\nAudience: AI developers and engineers building production-grade LLM applications, ranging from intermediate practitioners to advanced system architects.",
+  "telemetry": {
+    "model": "qwen/qwen3.6-plus",
+    "chunkSize": "quiz",
+    "totalChunks": 14,
+    "totalInputTokens": 14766,
+    "totalOutputTokens": 61674,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 1038,
+    "totalDurationMs": 1147334,
+    "totalCostUsd": 0.12506325,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": -1,
+        "label": "quiz-summary",
+        "inputTokens": 328,
+        "outputTokens": 1424,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 36195,
+        "costUsd": 0.0028834
+      },
+      {
+        "index": -2,
+        "label": "intro",
+        "text": "import Challenge from '../../../components/QuizUI/Challenge';\nimport QuizUI from '../../../components/QuizUI/QuizUI';\n\n<p class=\"inset\">Prompt-Engineering bekommt die Slogans. Context-Engineering den Pager. Wie gut kennst du den Teil eines KI-Systems, der tatsächlich in Produktion geht?</p>\n\nDieses Quiz behandelt Kontextfenster, Token-Budgets, Retrieval, Prompt-Struktur und die Fehlermodi, die aus polierten Demos verwirrende Produkte machen. Es fängt harmlos an. Das bleibt es nicht.\n\nBring die Belege mit.",
+        "inputTokens": 964,
+        "outputTokens": 2617,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 48212,
+        "costUsd": 0.00541645
+      },
+      {
+        "index": 0,
+        "label": "Context Window Basics",
+        "inputTokens": 817,
+        "outputTokens": 2220,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 41114,
+        "costUsd": 0.004594525
+      },
+      {
+        "index": 1,
+        "label": "Token Estimation",
+        "inputTokens": 847,
+        "outputTokens": 4333,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 80220,
+        "costUsd": 0.008724625
+      },
+      {
+        "index": 2,
+        "label": "Role of the System Prompt",
+        "inputTokens": 870,
+        "outputTokens": 4518,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 82497,
+        "costUsd": 0.009092850000000001
+      },
+      {
+        "index": 3,
+        "label": "Lost in the Middle",
+        "inputTokens": 872,
+        "outputTokens": 3679,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 68653,
+        "costUsd": 0.007457449999999999
+      },
+      {
+        "index": 4,
+        "label": "Chunking Strategy",
+        "inputTokens": 861,
+        "outputTokens": 4703,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 86089,
+        "costUsd": 0.009450674999999999
+      },
+      {
+        "index": 5,
+        "label": "Hybrid Search",
+        "inputTokens": 861,
+        "outputTokens": 3670,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 67382,
+        "costUsd": 0.007436325
+      },
+      {
+        "index": 6,
+        "label": "Context Budget",
+        "inputTokens": 907,
+        "outputTokens": 3644,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 66849,
+        "costUsd": 0.0074005749999999995
+      },
+      {
+        "index": 7,
+        "label": "Conversation History Management",
+        "inputTokens": 909,
+        "outputTokens": 4204,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 76765,
+        "costUsd": 0.008493225
+      },
+      {
+        "index": 8,
+        "label": "Few-Shot Examples",
+        "inputTokens": 871,
+        "outputTokens": 3513,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 64555,
+        "costUsd": 0.007133425
+      },
+      {
+        "index": 9,
+        "label": "XML Tags for Structure",
+        "inputTokens": 912,
+        "outputTokens": 3959,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 72331,
+        "costUsd": 0.00801645
+      },
+      {
+        "index": 10,
+        "label": "Temperature and Determinism",
+        "inputTokens": 873,
+        "outputTokens": 3673,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 67860,
+        "costUsd": 0.007446075
+      },
+      {
+        "index": 11,
+        "label": "Prompt Caching",
+        "inputTokens": 931,
+        "outputTokens": 3042,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 56457,
+        "costUsd": 0.006234475
+      },
+      {
+        "index": 12,
+        "label": "Grounding vs. Hallucination",
+        "inputTokens": 911,
+        "outputTokens": 3837,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 71270,
+        "costUsd": 0.007778225
+      },
+      {
+        "index": 13,
+        "label": "Context Engineering vs. Fine-Tuning",
+        "inputTokens": 988,
+        "outputTokens": 4144,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 77397,
+        "costUsd": 0.0084019
+      },
+      {
+        "index": -3,
+        "label": "outro",
+        "text": "Wie hast du abgeschnitten?\n\n- **13–14**: Du baust produktive KI-Systeme, nicht nur Demos. Selten.\n- **9–12**: Solider Praktiker. Du kennst die Tools; an den Rändern ist es noch etwas unscharf.\n- **5–8**: Du hast LLMs intensiv genutzt, aber dich noch nicht tiefgehend mit Kontextmanagement beschäftigt. Arbeite dich in Prompt-Caching und Hybrid Search ein – das wird deine Kostenbetrachtung grundlegend verändern.\n- **0–4**: Gute Nachricht: Alles in diesem Quiz ist lernbar und sofort praktisch anwendbar. Allein das Verständnis der „Lost in the Middle“-Frage ist es wert, verinnerlicht zu werden, bevor du dein nächstes RAG-Deployment durchziehst.\n\nContext Engineering ist die Disziplin, gezielt zu entscheiden, welche Informationen in das Kontextfenster gelangen, wo sie platziert werden und wie sie strukturiert sind. Das Modell ist der am wenigsten kontrollierbare Teil deines Systems. Alles drumherum liegt in deiner Hand.",
+        "inputTokens": 1044,
+        "outputTokens": 4494,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 1038,
+        "durationMs": 83488,
+        "costUsd": 0.0091026
+      }
+    ]
+  }
+}

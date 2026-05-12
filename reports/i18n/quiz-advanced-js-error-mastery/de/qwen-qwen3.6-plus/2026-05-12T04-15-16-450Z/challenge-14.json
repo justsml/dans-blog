@@ -1,0 +1,43 @@
+{
+  "index": 13,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objekt- vs. Error-Erkennung",
+  "translation": {
+    "title": "Objekt- vs. Error-Erkennung",
+    "group": "Fehlergrenzen",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Was geben diese Prüfungen zurück?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` gibt `false` zurück, weil das Objekt nicht vom `Error`-Konstruktor instanziiert wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), da es den internen `[[Class]]`-Slot prüft. Beide Methoden entlarven dieses Objekt korrekt als Fake-Error."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objekt- vs. Error-Erkennung\",\n  \"group\": \"Fehlergrenzen\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was geben diese Prüfungen zurück?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` gibt `false` zurück, weil das Objekt nicht vom `Error`-Konstruktor instanziiert wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), da es den internen `[[Class]]`-Slot prüft. Beide Methoden entlarven dieses Objekt korrekt als Fake-Error.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 760,
+    "outputTokens": 3749,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69069
+  },
+  "cost": {
+    "inputUsd": 0.00024700000000000004,
+    "outputUsd": 0.00731055,
+    "totalUsd": 0.00755755,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

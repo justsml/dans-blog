@@ -1,0 +1,453 @@
+---
+unlisted: false
+title: 'प्रश्नोत्तरी: क्या आप CSS की मूल बातें जानते हैं? (2025)'
+subTitle: क्या आप फ्रंट-एंड के लिए काफी हैं?
+label: CSS Fundamentals
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: CSS
+date: '2024-11-08'
+modified: '2024-11-10'
+tags:
+  - quiz
+  - intro
+  - css
+  - styles
+  - beginner
+  - intermediate
+cover_full_width: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-wide.webp
+cover_mobile: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+cover_icon: ../yeshi-kangrang-Qq7A85iCzhQ-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## प्रश्नोत्तरी: क्या आप CSS जानते हैं?
+
+* आधुनिक CSS?  🤔
+* **क्या CSS आपके _रिज़्यूमे_ में होना चाहिए???** 🚀
+* बहुविकल्पीय। 🤖 ... _यह कितना मुश्किल हो सकता है, है ना?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप: फ़ॉन्ट्स"
+  title="फ़ॉन्ट आकार के लिए अमान्य CSS इकाई"
+  options={[
+    {text: '10cx', isAnswer: true},
+    {text: '10mm'},
+    {text: '10pt'},
+    {text: '10px'},
+    {text: '10vmin'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+एक <em class="highlight">अमान्य</em> ❌ `font-size` चुनें:
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`10cx` गलत है क्योंकि `cx` कोई वास्तविक CSS इकाई नहीं है। (कम से कम लिखने के समय तक।)
+
+लोकप्रिय इकाइयों में परिचित `px`, `rem`, `em` शामिल हैं।
+
+नई इकाइयाँ गतिशील, उत्तरदायी लेआउट के लिए उपयोगी हैं।
+
+- `ch` - `0` वर्ण की चौड़ाई
+- `vmin` - व्यूपोर्ट न्यूनतम
+- `vmax` - व्यूपोर्ट अधिकतम
+- `vh` - व्यूपोर्ट ऊँचाई
+- `vw` - व्यूपोर्ट चौड़ाई
+
+कुछ इकाइयाँ भी हैं जो हमेशा से मौजूद हैं लेकिन शायद ही उपयोग की जाती हैं, जैसे `cm` सेंटीमीटर के लिए, `mm`, `in` इंच के लिए, `pt` पॉइंट के लिए
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="वार्मअप: रंग"
+  title="हेक्स कोड"
+  options={[
+    {text: '#A'},
+    {text: '#AB'},
+    {text: '#ABCD', isAnswer: true},
+    {text: '#ABCDE'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या आप एक <em class="highlight">सही</em> 👍 हेक्स कोड ढूंढ सकते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+हेक्स कोड का उपयोग CSS में रंगों को दर्शाने के लिए किया जा सकता है। वे `#` से शुरू होते हैं और इनमें 3, 4, 6 या 8 हेक्साडेसिमल अंक होने चाहिए।
+      
+      3-अक्षर वाला हेक्स कोड 6-अक्षर वाले कोड का शॉर्टहैंड है, जहाँ प्रत्येक अक्षर दोहराया जाता है। 4-अक्षर वाले कोड में पारदर्शिता के लिए अल्फा चैनल शामिल होता है।
+
+      उदाहरण के लिए `#ABC` `#AABBCC` के समान है, और `#ABCD` `#AABBCCDD` के समान है। हेक्स मानों को संभालने के बारे में अधिक जानने के लिए, मेरी [JavaScript संख्याओं की प्रश्नोत्तरी](/quiz-can-you-count-to-bigint/) देखें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="वार्मअप: इकाइयाँ"
+  title="अरे, सभी इकाइयाँ!"
+  options={[
+    {text: 'em'},
+    {text: 'rem'},
+    {text: 'cm'},
+    {text: 'mm'},
+    {text: 'in'},
+    {text: 'pt'},
+    {text: 'pc'},
+    {text: 'px'},
+    {text: 'ex'},
+    {text: 'ch'},
+    {text: 'vmin'},
+    {text: 'vmax'},
+    {text: 'vh'},
+    {text: 'rel', isAnswer: true},
+    {text: 'vw'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सी इकाई <em class="highlight">नहीं</em> है एक वैध ❌ CSS इकाई?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`ch`, `vmin`, `vmax`, `vh`, `vw` जैसी नई इकाइयाँ डायनामिक/रिस्पॉन्सिव लेआउट के लिए काफी उपयोगी हैं।
+      
+      कुछ इकाइयाँ ऐसी भी हैं जो हमेशा से मौजूद हैं लेकिन शायद ही इस्तेमाल होती हैं, जैसे `cm` सेंटीमीटर के लिए, `mm`, `in` इंच के लिए, `pt` पॉइंट्स के लिए, `pc`, `cap` बड़े अक्षरों के आकार के लिए, और `ex` जो अक्षर `x` की ऊंचाई के बराबर है।
+
+      लोकप्रिय इकाइयों में परिचित `px` पिक्सल के लिए, `em` एलिमेंट के फ़ॉन्ट आकार के सापेक्ष, और `rem` गुप्त रूप से 90 के दशक के भूले-बिसरे बैंड R.E.M. को श्रद्धांजलि है (ठीक है, सच में नहीं, यह सिर्फ एक सापेक्ष `em` इकाई है जो रूट एलिमेंट को संदर्भित करती है)।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="चयनकर्ता: मूल बातें"
+  title="HTML तत्वों से चयनकर्ताओं का मिलान"
+  options={[
+    {text: '#Home'},
+    {text: 'a [id=\'home\']'},
+    {text: 'a:contains(home)'},
+    {text: 'a#home[name=\'home\']', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित HTML से सबसे अच्छा मेल खाने वाला चयनकर्ता कौन सा है?
+```html
+      <a id="home" name="home" href="/home">Home</a>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+सही उत्तर `a#home[name='home']` है, जो `id` और `name` दोनों विशेषताओं से मेल खाता है। CSS चयनकर्ता केस-सेंसिटिव होते हैं, इसलिए `#Home` काम नहीं करेगा, और स्पेस का मतलब चाइल्ड एलिमेंट होता है, जो यहाँ लागू नहीं होता।
+
+      `:contains()` चयनकर्ता एक मानक CSS चयनकर्ता नहीं है, लेकिन यह कुछ JS लाइब्रेरीज़ में उपलब्ध है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="सेलेक्टर: मूल बातें"
+  title="बटन के लिए एट्रिब्यूट सेलेक्टर"
+  options={[
+    {text: 'button:link'},
+    {text: 'button::click'},
+    {text: 'button:focus'},
+    {text: 'button[onclick]', isAnswer: true},
+    {text: 'button[on-click]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा सेलेक्टर निम्नलिखित HTML बटन से मेल खाता है?
+```html
+      <button onclick="openModal()">Contact</button>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+सही उत्तर `button[onclick]` है, जो `onclick` एट्रिब्यूट की उपस्थिति को लक्षित करता है।
+      
+      ध्यान दें कि `:link` केवल अनविज़िटेड `href` लिंक को लक्षित करता है, `::click` एक मान्य स्यूडो-एलिमेंट नहीं है, और `:focus` केवल फोकस किए गए एलिमेंट को लक्षित करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="चयनकर्ता: मूल बातें"
+  title="अमान्य CSS चयनकर्ता"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा चयनकर्ता अमान्य है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+चयनकर्ता `c > > d {}` अमान्य है क्योंकि चाइल्ड कॉम्बिनेटर को दो `>` वर्णों के बीच बिना किसी चयनकर्ता के दोहराया गया है।
+
+      अन्य चयनकर्ता मान्य हैं। एक टाइप चयनकर्ता जैसे `c {}` वाक्य-रचना की दृष्टि से मान्य CSS है, भले ही `c` एक मानक HTML तत्व न हो।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="सेलेक्टर: मूल बातें"
+  title="अंतिम लिंक का चयन"
+  options={[
+    {text: 'a :nth-child(3)'},
+    {text: 'a:last-item'},
+    {text: 'nav:last-of-type(a)'},
+    {text: 'nav:nth-child(3)'},
+    {text: 'a:last-child', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित HTML में अंतिम लिंक से मेल खाने वाला सेलेक्टर कौन सा है?
+```html
+      <nav>
+        <a name="home" href="/home">Home</a>
+        <a name="login" href="/login">Login</a>
+        <a name="help" href="/help">Help</a>
+      </nav>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+सही सेलेक्टर `a:last-child` है, जो अंतिम `<a>` से मेल खाता है जब वह अपने पैरेंट का अंतिम चाइल्ड भी होता है। `nav:nth-child(3)` एक `<nav>` एलिमेंट से मेल खाएगा जो अपने पैरेंट का तीसरा चाइल्ड है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="चयनकर्ता: विशिष्टता"
+  title="चयनकर्ता प्राथमिकता"
+  options={[
+    {text: 'main article section blockquote a'},
+    {text: 'blockquote a'},
+    {text: 'a#quote', isAnswer: true},
+    {text: 'a.quote'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा चयनकर्ता प्राथमिकता लेगा?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`a#quote` चयनकर्ता ID के कारण प्राथमिकता लेता है, जिसकी विशिष्टता टैग या क्लास-आधारित चयनकर्ताओं से अधिक होती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="लेआउट: सेंटरिंग"
+  title="ब्लॉक एलिमेंट में टेक्स्ट को सेंटर करना"
+  options={[
+    {text: 'align: center;'},
+    {text: 'margin: 0 auto;'},
+    {text: 'align-content: center;'},
+    {text: 'text-align: center;', isAnswer: true},
+    {text: 'text-content: center;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+आप एक बॉक्स में "shit" को कैसे सेंटर कर सकते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`text-align: center;` का उपयोग ब्लॉक एलिमेंट में टेक्स्ट को सेंटर करने का सही तरीका है। `align` प्रॉपर्टीज का उपयोग फ्लेक्सबॉक्स लेआउट के लिए किया जाता है, और `margin: 0 auto;` का उपयोग ब्लॉक एलिमेंट को क्षैतिज रूप से सेंटर करने के लिए किया जाता है।
+
+      `align-content` प्रॉपर्टी का उपयोग ग्रिड लेआउट के लिए किया जाता है, और `text-content` एक मान्य CSS प्रॉपर्टी नहीं है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="लेआउट: केंद्रित करना"
+  title="ब्लॉक एलिमेंट को लंबवत केंद्रित करना"
+  options={[
+    {text: 'align-items: center;'},
+    {text: 'justify-content: center;'},
+    {text: 'align-content: center;', isAnswer: true},
+    {text: 'margin: auto;'},
+    {text: 'margin: 0 auto;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+आधुनिक फ्लो लेआउट में ब्लॉक कंटेनर के अंदर सामग्री को लंबवत रूप से कैसे केंद्रित करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+फ्लो लेआउट में ब्लॉक कंटेनर की सामग्री को लंबवत रूप से केंद्रित करने का आधुनिक तरीका `align-content` का उपयोग करना है।
+
+      `align-items` और `justify-content` प्रॉपर्टीज का उपयोग फ्लेक्सबॉक्स और ग्रिड लेआउट में किया जाता है, फ्लो में नहीं।
+
+      `margin: 0 auto;` और `margin: auto;` दोनों ही ब्लॉक एलिमेंट को क्षैतिज रूप से केंद्रित करते हैं, लेकिन लंबवत नहीं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="लेआउट: इकाइयाँ"
+  title="नेस्टेड फ़ॉन्ट साइज़ के पिक्सेल आकार की गणना"
+  options={[
+    {text: '!40px'},
+    {text: '5px', isAnswer: true},
+    {text: '20px'},
+    {text: '25px'},
+    {text: '40px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित HTML में `<a>` लिंक के टेक्स्ट का पिक्सेल आकार क्या है?
+```html
+      <body style="font-size: 40px !important;">
+        <nav style="font-size: 50%;">
+          <a style="font-size: 25%;">HOME</a>
+        </nav>
+      </body>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`<a>` के लिए `font-size` की गणना 5px होती है: 40px (body) * 50% (nav) = 20px, फिर 20px * 25% = 5px.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="इकाइयाँ: REM"
+  title="REM के साथ पिक्सेल आकार की गणना"
+  options={[
+    {text: '10px'},
+    {text: '12px', isAnswer: true},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px'},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित HTML में "HOME" लिंक के लिए `1.2rem` का पिक्सेल आकार क्या होगा?
+```html
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2rem;">HOME</a>
+        </body>
+      </html>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`1.2rem` 12px में बदल जाता है क्योंकि `rem` इकाइयाँ रूट या `<html>` फ़ॉन्ट आकार को संदर्भित करती हैं, जो यहाँ 10px पर सेट है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="इकाइयाँ: EM"
+  title="EM के साथ पिक्सेल आकार की गणना"
+  options={[
+    {text: '10px'},
+    {text: '12px'},
+    {text: '14px'},
+    {text: '20px'},
+    {text: '24px', isAnswer: true},
+    {text: '34px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+पिछले प्रश्न के समान, निम्नलिखित HTML में "HOME" लिंक के लिए `1.2em` का पिक्सेल आकार क्या होगा?
+```html
+      <html style="font-size: 10px;">
+        <body style="font-size: 20px;">
+          <a style="font-size: 1.2em;">HOME</a>
+        </body>
+      </html>
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`1.2em` 24px में बदल जाता है क्योंकि `em` इकाइयाँ विरासत में मिले फ़ॉन्ट आकार को संदर्भित करती हैं, जो यहाँ 20px पर सेट है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="चयनकर्ता: विशिष्टता"
+  title="शून्य-विशिष्टता चयनकर्ता"
+  options={[
+    {text: ':where(.card) .title', isAnswer: true},
+    {text: '.card .title'},
+    {text: ':is(.card) .title'},
+    {text: '#card .title'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+किस चयनकर्ता की विशिष्टता सबसे कम है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`:where(.card) .title` की विशिष्टता सबसे कम है। `:where()` छद्म-वर्ग और इसके अंदर की हर चीज़ `0-0-0` योगदान देती है, इसलिए केवल `.title` गिना जाता है। `:is(.card) .title` में `.card` की विशिष्टता बनी रहती है, `.card .title` में दो क्लास हैं, और `#card .title` में एक आईडी शामिल है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

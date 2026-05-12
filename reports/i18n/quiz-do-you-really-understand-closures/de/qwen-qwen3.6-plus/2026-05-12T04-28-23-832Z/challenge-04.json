@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "`let` löst das Problem (oder doch nicht?)",
+  "translation": {
+    "title": "`let` löst das Problem (oder doch nicht?)",
+    "group": "Die klassische Falle",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i is not defined"
+      }
+    ],
+    "questionProse": [
+      "Gleiche Schleife, anderes Schlüsselwort. Was wird geloggt?"
+    ],
+    "explanationProse": [
+      "`let` in einer `for`-Schleife ist speziell. Die Spezifikation besagt: Jede Iteration erhält ihr eigenes **neues Binding** für `i`. Es ist, als würde die Schleife heimlich Folgendes tun:",
+      "Somit schließen die fünf Callbacks über fünf unterschiedliche Variablen. Ergebnis: `0, 1, 2, 3, 4`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"`let` löst das Problem (oder doch nicht?)\",\n  \"group\": \"Die klassische Falle\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"4, 4, 4, 4, 4\"\n    },\n    {\n      \"text\": \"ReferenceError: i is not defined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Gleiche Schleife, anderes Schlüsselwort. Was wird geloggt?\"\n  ],\n  \"explanationProse\": [\n    \"`let` in einer `for`-Schleife ist speziell. Die Spezifikation besagt: Jede Iteration erhält ihr eigenes **neues Binding** für `i`. Es ist, als würde die Schleife heimlich Folgendes tun:\",\n    \"Somit schließen die fünf Callbacks über fünf unterschiedliche Variablen. Ergebnis: `0, 1, 2, 3, 4`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 2460,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 46476
+  },
+  "cost": {
+    "inputUsd": 0.00027625,
+    "outputUsd": 0.004797,
+    "totalUsd": 0.00507325,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

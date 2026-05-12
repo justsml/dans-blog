@@ -1,0 +1,43 @@
+{
+  "index": 6,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Die Konstruktor-Name-Falle",
+  "translation": {
+    "title": "Die Konstruktor-Name-Falle",
+    "group": "Benutzerdefinierte Fehler",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Was ist die Ausgabe, wenn `name` nicht gesetzt wird?"
+    ],
+    "explanationProse": [
+      "Ohne die explizite Zuweisung von `this.name` erbt der Fehler die Standard-`name`-Eigenschaft der `Error`-Klasse – und die lautet schlicht `\"Error\"`. Genau deshalb muss in benutzerdefinierten Fehlerklassen im Konstruktor zwingend `this.name = this.constructor.name` stehen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Die Konstruktor-Name-Falle\",\n  \"group\": \"Benutzerdefinierte Fehler\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist die Ausgabe, wenn `name` nicht gesetzt wird?\"\n  ],\n  \"explanationProse\": [\n    \"Ohne die explizite Zuweisung von `this.name` erbt der Fehler die Standard-`name`-Eigenschaft der `Error`-Klasse – und die lautet schlicht `\\\"Error\\\"`. Genau deshalb muss in benutzerdefinierten Fehlerklassen im Konstruktor zwingend `this.name = this.constructor.name` stehen.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 744,
+    "outputTokens": 3323,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 61150
+  },
+  "cost": {
+    "inputUsd": 0.0002418,
+    "outputUsd": 0.00647985,
+    "totalUsd": 0.00672165,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

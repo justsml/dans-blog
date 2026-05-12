@@ -1,0 +1,51 @@
+{
+  "index": 10,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Rc verstehen",
+  "translation": {
+    "title": "Rc verstehen",
+    "group": "Referenzzählung",
+    "options": [
+      {
+        "text": "Rc wird für Single-Threaded-Umgebungen verwendet"
+      },
+      {
+        "text": "Rc wird für Multi-Threaded-Umgebungen verwendet",
+        "hint": "Denk an Thread-Sicherheit – Rc bietet keine Synchronisation"
+      },
+      {
+        "text": "Rc wird nur für unveränderliche Daten verwendet",
+        "hint": "Rc kann mit innerer Veränderlichkeit (Interior Mutability) kombiniert werden"
+      },
+      {
+        "text": "Rc wird nur für veränderliche Daten verwendet",
+        "hint": "Rc funktioniert sowohl mit veränderlichen als auch mit unveränderlichen Daten"
+      },
+      {
+        "text": "Rc steht für Fernbedienung",
+        "hint": "Zwar witzig, aber das ist kein Programmierkonzept!"
+      }
+    ],
+    "questionProse": [
+      "Wann solltest du Rc (Reference Counting) in Rust verwenden?\n\n      Betrachte dieses Beispiel:"
+    ],
+    "explanationProse": [
+      "Rc (Reference Counting) ist für Single-Threaded-Szenarien konzipiert, in denen du gemeinsame Besitzverhältnisse benötigst.\n\n      Typische Anwendungsfälle:",
+      "Wichtige Punkte:\n      1. Verwende Rc, wenn:\n         - Mehrere Teile deines Codes Besitz benötigen\n         - Du weißt, dass die Nutzung Single-Threaded ist\n         - Die Lebensdauer nicht statisch bestimmt werden kann\n\n      2. Verwende stattdessen Arc, wenn:\n         - Du thread-sichere gemeinsame Nutzung brauchst\n         - Mehrere Threads Besitz benötigen\n\n      3. Grenzen von Rc:\n         - Nicht thread-sicher\n         - Geringer Laufzeit-Overhead\n         - Kann Referenzzyklen nicht automatisch auflösen\n\n      Best Practices:\n      1. Bevorzuge eindeutigen Besitz, wann immer möglich\n      2. Nutze Rc für Single-Threaded Shared Ownership\n      3. Nutze Arc für Multi-Threaded-Szenarien\n      4. Kombiniere es mit Weak, um Referenzzyklen zu vermeiden"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rc verstehen\",\n  \"group\": \"Referenzzählung\",\n  \"options\": [\n    {\n      \"text\": \"Rc wird für Single-Threaded-Umgebungen verwendet\"\n    },\n    {\n      \"text\": \"Rc wird für Multi-Threaded-Umgebungen verwendet\",\n      \"hint\": \"Denk an Thread-Sicherheit – Rc bietet keine Synchronisation\"\n    },\n    {\n      \"text\": \"Rc wird nur für unveränderliche Daten verwendet\",\n      \"hint\": \"Rc kann mit innerer Veränderlichkeit (Interior Mutability) kombiniert werden\"\n    },\n    {\n      \"text\": \"Rc wird nur für veränderliche Daten verwendet\",\n      \"hint\": \"Rc funktioniert sowohl mit veränderlichen als auch mit unveränderlichen Daten\"\n    },\n    {\n      \"text\": \"Rc steht für Fernbedienung\",\n      \"hint\": \"Zwar witzig, aber das ist kein Programmierkonzept!\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wann solltest du Rc (Reference Counting) in Rust verwenden?\\n\\n      Betrachte dieses Beispiel:\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Rc (Reference Counting) ist für Single-Threaded-Szenarien konzipiert, in denen du gemeinsame Besitzverhältnisse benötigst.\\n\\n      Typische Anwendungsfälle:\",\n    \"Wichtige Punkte:\\n      1. Verwende Rc, wenn:\\n         - Mehrere Teile deines Codes Besitz benötigen\\n         - Du weißt, dass die Nutzung Single-Threaded ist\\n         - Die Lebensdauer nicht statisch bestimmt werden kann\\n\\n      2. Verwende stattdessen Arc, wenn:\\n         - Du thread-sichere gemeinsame Nutzung brauchst\\n         - Mehrere Threads Besitz benötigen\\n\\n      3. Grenzen von Rc:\\n         - Nicht thread-sicher\\n         - Geringer Laufzeit-Overhead\\n         - Kann Referenzzyklen nicht automatisch auflösen\\n\\n      Best Practices:\\n      1. Bevorzuge eindeutigen Besitz, wann immer möglich\\n      2. Nutze Rc für Single-Threaded Shared Ownership\\n      3. Nutze Arc für Multi-Threaded-Szenarien\\n      4. Kombiniere es mit Weak, um Referenzzyklen zu vermeiden\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1033,
+    "outputTokens": 4529,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1027,
+    "durationMs": 83077
+  },
+  "cost": {
+    "inputUsd": 0.00033572500000000004,
+    "outputUsd": 0.00883155,
+    "totalUsd": 0.009167275,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

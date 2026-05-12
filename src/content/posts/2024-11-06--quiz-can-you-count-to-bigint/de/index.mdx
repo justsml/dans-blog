@@ -1,0 +1,419 @@
+---
+unlisted: false
+title: 'Quiz: Kannst du auf JavaScript zählen?'
+subTitle: Kennst du den Unterschied zwischen `parseInt` und `parseFloat`?
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Aufwärmen"
+  title="Parsing mit `parseInt`"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Fehler'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    parseInt(" 123456.00")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die `parseInt`-Funktion ignoriert Leerzeichen und parst die anfängliche Ziffernfolge als Ganzzahl. Hier stoppt sie am Dezimalpunkt, sodass nur `123456` zurückgegeben wird.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Parsen"
+  title="Komma-Behandlung"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    parseInt("123,456.00")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Im Allgemeinen stoppt `parseInt` das Parsen, wenn es auf ein nicht-numerisches Zeichen trifft. Hier stoppt es am Komma, sodass nur `123` zurückgegeben wird.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Mathematik"
+  title="Präzision bei Gleitkommazahlen"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    0.1 + 0.2 === 0.3
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Aufgrund von Präzisionsfehlern bei Gleitkommazahlen ist `0.1 + 0.2` nicht exakt gleich `0.3`. Aufgrund der Art und Weise, wie Gleitkommazahlen im Speicher abgelegt werden, ist das Ergebnis `0.30000000000000004`. Der IEEE-754-Standard für die Gleitkommaarithmetik ist der Übeltäter – er kann manche Zahlen nicht exakt darstellen. Dies ist ein häufiges Problem in allen Programmiersprachen. Irgendwann stößt man auf eine unendlich wiederholende Dezimalzahl, und egal in welcher Sprache – der Computer muss einfach aufhören, unendlich viele Nachkommastellen zu verfolgen.
+
+Manche Sprachen wie Python und Java haben `Decimal` oder `BigDecimal`, um damit umzugehen, aber in JavaScript ist das nicht eingebaut. Du kannst Bibliotheken wie `big.js` oder `decimal.js` verwenden, um solche Fälle zu handhaben.
+
+(Hinweis: Manche Sprachen sind darauf ausgelegt, Brüche, imaginäre Zahlen usw. auf einer höheren logischen Ebene zu behandeln, indem sie wörtliche Ausdrücke bewahren. Aber sie müssen sich dennoch mit denselben Gleitkomma-Präzisionsproblemen auf Hardwareebene auseinandersetzen.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Überlaufende Zahlen"
+  title="Umgang mit Infinity"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    Number.MAX_VALUE * 2
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Da `Number.MAX_VALUE` die größte **darstellbare** normale Zahl in JavaScript ist, führt ein Überschreiten ihrer Grenze schnell zu einem Überlauf – im Grunde kann man bedeutungslose Ergebnisse sehen. Die Multiplikation mit `2` ergibt `Infinity`.
+  
+  *Weißt du, JavaScript ist manchmal so.*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Formatierung"
+  title="String-Konvertierung mit `.toFixed()`"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was könnte das tun?
+```tsx
+    5..toFixed(2)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+.toFixed(2) gibt eine Zeichenkettendarstellung von `5` mit zwei Dezimalstellen zurück, daher ist das Ergebnis `"5.00"`.
+
+  Der doppelte Punkt (`5..toFixed(2)`) ist ein 'Trick', um auf das Objektmodell von Zahlenliteralen zuzugreifen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Typen vergleichen"
+  title="Gleichheitsvergleich zwischen `parseInt` und `parseFloat`"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    parseInt("42") === parseFloat("42")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+In JavaScript interpretieren sowohl `parseInt` als auch `parseFloat` den String `"42"` als die Zahl `42`. Daher ergibt der Vergleich `parseInt("42") === parseFloat("42")` den Wert `true`. Während `parseInt` das Parsen beim ersten nicht-ziffrigen Zeichen stoppt, fährt `parseFloat` fort, bis es auf ein Zeichen stößt, das nicht Teil einer Gleitkommazahl ist. Da es jedoch keine Dezimalpunkte oder andere nicht-numerische Zeichen in `"42"` gibt, geben beide Funktionen denselben Wert zurück.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Gleichheit"
+  title="Gleichheitsvergleich mit BigInt"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    BigInt("42") === parseInt("42")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) ist ein anderer Typ als `number`, also ist `parseInt("42")` (eine normale Zahl) nicht strikt gleich `BigInt("42")`. Um sie zu vergleichen, musst du beide in denselben Typ umwandeln: `BigInt(parseInt("42")) === BigInt("42")`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Basis"
+  title="Hexadezimal-Parsing"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: 'Muss großgeschrieben sein: 2A'},
+    {text: 'Fehler'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ergibt das?
+```jsx
+    parseInt("0x2A") === parseInt("2a", 16)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Jede Eingabezeichenfolge, die mit `0x` beginnt, wird automatisch als hexadezimal (Basis `16`) behandelt.
+  Es ist daher äquivalent zur Angabe einer Basis von 16. Also ist `parseInt("0x2A")` dasselbe wie `parseInt("2a", 16)`. (Die Groß-/Kleinschreibung spielt keine Rolle.)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Basiert"
+  title="Parsen mit Radix"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist hier los?
+```jsx
+    parseInt('0xFF', 16)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` mit einer hexadezimalen Basis (`16`) wandelt `"FF"` in die Dezimalzahl `255` um. Das kennst du vielleicht von CSS RGB/Hex-Farbcodes.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="Verwendung von `.map(parseInt)`"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    [24, 'One', 42].map(parseInt)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das zweite Argument von `parseInt` (der Radix) stimmt mit dem `index`-Argument der Array-Methoden überein. Dies führt zu unerwarteten Ergebnissen, da `parseInt("One", 1)` aufgrund der ungültigen Eingabe `NaN` zurückgibt.
+
+  Das erste Element `24` wird in Basis 0 (automatische Erkennung) als `24` geparst, bleibt also `24`. Das zweite Element `'One'` wird in Basis 1 als `NaN` geparst. Das dritte Element `42` wird mit Basis 2 geparst. In Basis 2 ist `'42'` `NaN`, also ist das Ergebnis `[24, NaN, NaN]`.
+
+  Dies ist eine häufige Falle bei `parseInt` und `map`. Wenn du ein Array von Strings in Zahlen parsen möchtest, ist die einzige sichere "eingebaute" Methode `.map(Number)` oder das Hinzufügen eines Callbacks/Enclosures `.map(x => parseInt(x, 10))`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="Verwendung von `.map(Number)`"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    [24, 'Twenty1', 0o42].map(Number)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Number` konvertiert Werte strenger in einen numerischen Typ als `parseInt`. Hier wird `'Twenty1'` zu `NaN`, während `0o42` als oktales Literal erkannt und zu `34` konvertiert wird.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Parsen"
+  title="Umgang mit null"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird das Ergebnis dieses Codes sein?
+```jsx
+    console.log(parseInt(null), Number(null))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` wandelt die Eingabe in einen String um, daher wird `null` zu `"null"`. Da `"null"` keine gültigen Basis-10-Zeichen (normale Zahlen) enthält, wird `NaN` zurückgegeben.
+  
+  `Number(null)` gibt `0` zurück, weil JS es liebt, dich auf Trab zu halten.
+  Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Parsen"
+  title="Parsing auf Basis"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird das Ergebnis dieses Zaubers sein?
+```jsx
+    parseInt(null, 36)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Da `parseInt` die Eingabe immer in einen String umwandelt, wird `null` zum String `"null"`.
+
+In Basis 36 (hexatrigesimal, falls du mitzählst), repräsentiert der String `"null"` den Wert `1112745`.
+
+Die aufeinanderfolgenden Werte von `nulk`, `null` und `nulm` sind in Basis 36 jeweils `1112744`, `1112745` und `1112746`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## Vergleichstabelle
+
+| Funktion | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| Ignoriert Leerzeichen | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| Unterstützt Radix-Argument | ✅ | ❌ | ❌ | ❌ |
+| Binär-/Oktal-/Hex-Literale | ✅ | ❌ | ✅ | ✅ |
+| Ungültige Zeichen `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>Wie hast du abgeschnitten? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">Suchst du eine Pause nach so viel Binärem?<br />Pftt, denk dran: Pause *nach* den Skills! <br /><br />Ab ins [mein Gym](/challenges/) und zerschmettere noch mehr Challenges! 💪</p>

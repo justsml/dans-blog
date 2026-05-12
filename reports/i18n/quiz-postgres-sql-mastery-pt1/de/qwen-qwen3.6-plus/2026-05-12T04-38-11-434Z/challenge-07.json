@@ -1,0 +1,52 @@
+{
+  "index": 6,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "Ungültige Typen identifizieren",
+  "translation": {
+    "title": "Ungültige Typen identifizieren",
+    "group": "Postgres-Typen",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?"
+    ],
+    "explanationProse": [
+      "Der Name klingt vertraut, da `decimal128` in vielen anderen Umgebungen (etwa MongoDB oder Java) Standard ist. In PostgreSQL ist er jedoch kein valider Typ – hier heißt es schlicht `decimal`.\n\n    Die korrekten numerischen Typen sind:\n    - `int` (4-Byte-Ganzzahl)\n    - `bigint` (8-Byte-Ganzzahl)\n    - `real` (4-Byte-Gleitkommazahl)\n    - `double precision` (8-Byte-Gleitkommazahl)\n    - `bigserial` (automatisch inkrementierende 8-Byte-Ganzzahl)\n    - `smallserial` (automatisch inkrementierende 2-Byte-Ganzzahl)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ungültige Typen identifizieren\",\n  \"group\": \"Postgres-Typen\",\n  \"options\": [\n    {\n      \"text\": \"int\"\n    },\n    {\n      \"text\": \"real\"\n    },\n    {\n      \"text\": \"bigint\"\n    },\n    {\n      \"text\": \"bigserial\"\n    },\n    {\n      \"text\": \"smallserial\"\n    },\n    {\n      \"text\": \"decimal128\"\n    },\n    {\n      \"text\": \"double precision\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher dieser Typen ist ❌ kein gültiger PostgreSQL-Typ?\"\n  ],\n  \"explanationProse\": [\n    \"Der Name klingt vertraut, da `decimal128` in vielen anderen Umgebungen (etwa MongoDB oder Java) Standard ist. In PostgreSQL ist er jedoch kein valider Typ – hier heißt es schlicht `decimal`.\\n\\n    Die korrekten numerischen Typen sind:\\n    - `int` (4-Byte-Ganzzahl)\\n    - `bigint` (8-Byte-Ganzzahl)\\n    - `real` (4-Byte-Gleitkommazahl)\\n    - `double precision` (8-Byte-Gleitkommazahl)\\n    - `bigserial` (automatisch inkrementierende 8-Byte-Ganzzahl)\\n    - `smallserial` (automatisch inkrementierende 2-Byte-Ganzzahl)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 844,
+    "outputTokens": 2408,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 44299
+  },
+  "cost": {
+    "inputUsd": 0.0002743,
+    "outputUsd": 0.0046956,
+    "totalUsd": 0.0049699,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

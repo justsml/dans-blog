@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "Integer-Überlauf",
+  "translation": {
+    "title": "Integer-Überlauf",
+    "group": "Integer-Arithmetik",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "Fehler: integer out of range"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn Sie die maximale Anzahl möglicher Studenten-IDs berechnen?"
+    ],
+    "explanationProse": [
+      "Der `integer`-Typ von PostgreSQL ist eine 32-Bit-Ganzzahl mit Vorzeichen und reicht von `-2,147,483,648` bis `2,147,483,647`.\n\n    Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.\n\n    Um größere Zahlen zu verarbeiten:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Integer-Überlauf\",\n  \"group\": \"Integer-Arithmetik\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"Fehler: integer out of range\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn Sie die maximale Anzahl möglicher Studenten-IDs berechnen?\"\n  ],\n  \"explanationProse\": [\n    \"Der `integer`-Typ von PostgreSQL ist eine 32-Bit-Ganzzahl mit Vorzeichen und reicht von `-2,147,483,648` bis `2,147,483,647`.\\n\\n    Die Berechnung `256^4` = `4,294,967,296` überschreitet diesen Bereich.\\n\\n    Um größere Zahlen zu verarbeiten:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 3703,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 67695
+  },
+  "cost": {
+    "inputUsd": 0.00027170000000000004,
+    "outputUsd": 0.00722085,
+    "totalUsd": 0.00749255,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

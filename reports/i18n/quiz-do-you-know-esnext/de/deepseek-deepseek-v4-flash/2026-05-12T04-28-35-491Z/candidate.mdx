@@ -1,0 +1,353 @@
+---
+title: 'Quiz: Kennst du modernes JavaScript?'
+subTitle: Beweise deine geschätzten JavaScript-Skills!
+label: ES2019+ Features
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### Kennst du dein ES2015 von ES2022?
+
+* **Beweise deine JavaScript-Skillz!** 🚀
+* Kein Login oder Registrierung erforderlich. ✨
+* Multiple Choice. 🤖 ... _Wie schwer kann das schon sein, oder?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Null-Koaleszenz"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welchen Wert hat `result`?
+```js
+    console.log(null ?? 100);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der Null-Koaleszenz-Operator (`??`) gibt den rechten Operanden (`b`) zurück, wenn der linke Operand (`a`) `null` oder `undefined` ist. In diesem Fall ist `a` `null`, also ist `result` `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="Nullish Coalescing"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt der folgende Code aus?
+```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der Nullish-Coalescing-Operator (`??`) behandelt falsy-Werte wie `false` als gültige Werte. Da `value` `false` ist, wird es als gültiger Wert betrachtet und zurückgegeben.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Optionale Verkettung"
+  title="Optionale Verkettung"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Fehler: Kann Eigenschaft von undefined nicht lesen'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die Ausgabe des folgenden Codes?
+```js
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der optionale Verkettungsoperator (`?.`) stoppt die Auswertung, wenn die linke Seite `null` oder `undefined` ist. Da `obj.foo` `null` ist, ergibt `obj.foo?.bar` den Wert `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="BigInt-Verwendung"
+  options={[
+    {text: 'TypeError: BigInt und Zahl können nicht gemischt werden'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die Ausgabe des folgenden Codes?
+```js
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+BigInt-Werte werden erstellt, indem man ein `n` an eine Zahl anhängt. Du kannst BigInt nicht mit normalen Zahlen in arithmetischen Operationen mischen. Hier sind beide Werte BigInt, also funktioniert die Multiplikation und ergibt `84n`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Dynamischer Import"
+  title="Dynamische Import-Syntax"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird hier geloggt?
+```js
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die `import()`-Funktion gibt ein `Promise` zurück, das zum Modulobjekt aufgelöst wird. Da `Promise`-Instanzen Objekte sind, gibt `typeof modulePromise` `'object'` aus.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'fulfilled: success', isAnswer: true},
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird das Ergebnis des folgenden Codes sein?
+```js
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Promise.allSettled` gibt ein Array von Objekten zurück, die das Ergebnis jedes Promises beschreiben. Das erste Promise ist `fulfilled` mit dem Wert `'success'`, daher gibt die Log-Anweisung `fulfilled: success` aus.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="Verwendung von String.matchAll"
+  options={[
+    {text: 'Array von Übereinstimmungen'},
+    {text: 'Iterator von Übereinstimmungen', isAnswer: true},
+    {text: 'Fehler: Ungültiger Aufruf'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt `str.matchAll()` zurück?
+```js
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`String.matchAll` gibt einen Iterator von Übereinstimmungen zurück, kein Array. Dieser Iterator kann verwendet werden, um alle Übereinstimmungsgruppen aus einem String zu erhalten.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Import-Meta"
+  title="Nutzung von import.meta"
+  options={[
+    {text: 'URL des aktuellen Moduls', isAnswer: true},
+    {text: 'Aktueller Zeitstempel'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was repräsentiert `import.meta.url`?
+```js
+    console.log(import.meta.url);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`import.meta` ist ein Objekt, das Metadaten über das aktuelle Modul enthält. Die Eigenschaft `import.meta.url` repräsentiert die URL des aktuellen Moduls, die verwendet werden kann, um Informationen darüber zu erhalten, wo das Skript ausgeführt wird.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Logische Zuweisung"
+  title="Logische Zuweisung"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welchen Wert hat `a` nach der logischen Zuweisung?
+```js
+    let a = null;
+    a ||= 10;
+    console.log(a);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die logische ODER-Zuweisung (`||=`) weist den rechten Wert zu, wenn der linke Wert falsy ist (`null`, `undefined`, `0`, `false`, usw.). Da `a` `null` ist, wird ihm der Wert `10` zugewiesen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Logische Nullish-Zuweisung"
+  title="Logische Nullish-Zuweisung"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welchen Wert hat `b` nach der Nullish-Zuweisung?
+```js
+    let b = null;
+    b ??= 10;
+    console.log(b);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Die Nullish-Koaleszenz-Zuweisung (`??=`) weist den rechten Wert zu, wenn der linke Wert `null` oder `undefined` ist. Da `b` `null` ist, wird ihm der Wert `10` zugewiesen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="WeakRef-Nutzung"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was stellt `WeakRef` bereit?
+```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`WeakRef` stellt eine schwache Referenz auf ein Objekt bereit, die es dem Objekt ermöglicht, vom Garbage Collector freigegeben zu werden, wenn keine anderen Referenzen mehr existieren. Da `obj` hier immer noch stark referenziert wird, gibt `deref()` das ursprüngliche Objekt zurück. Wenn das Ziel bereits freigegeben worden wäre, würde `deref()` `undefined` zurückgeben.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

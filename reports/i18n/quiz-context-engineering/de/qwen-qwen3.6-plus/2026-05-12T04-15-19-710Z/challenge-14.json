@@ -1,0 +1,43 @@
+{
+  "index": 13,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Context Engineering vs. Fine-Tuning",
+  "translation": {
+    "title": "Context Engineering vs. Fine-Tuning",
+    "group": "Experte",
+    "options": [
+      {
+        "text": "Fine-Tuning ist immer besser — Context Engineering ist nur ein Workaround"
+      },
+      {
+        "text": "Context Engineering ist kostenlos; Fine-Tuning ist teuer; nutze immer Context Engineering"
+      },
+      {
+        "text": "Context Engineering ändert das Verhalten pro Anfrage; Fine-Tuning ändert die Modellgewichte dauerhaft"
+      },
+      {
+        "text": "Es sind nur unterschiedliche Namen für dieselbe Technik"
+      }
+    ],
+    "questionProse": [
+      "Was ist der entscheidende Unterschied zwischen Context Engineering und Fine-Tuning, und wann macht Fine-Tuning überhaupt Sinn?"
+    ],
+    "explanationProse": [
+      "**Context Engineering** steuert das Modellverhalten über den Prompt – Systemanweisungen, Few-Shot-Beispiele, abgerufener Kontext. Es wirkt pro Anfrage, ist reversibel und erfordert kein Training.\n\n    **Fine-Tuning** aktualisiert die Modellgewichte auf Basis deiner Daten. Die Änderungen sind dauerhaft (für diesen Checkpoint) und gelten für jede Inferenz.\n\n    Fine-Tuning ist tatsächlich die bessere Wahl, wenn:\n    - Du einen konsistenten Stil oder ein Format brauchst, das das Modell allein durch Anweisungen nicht zuverlässig umsetzt\n    - Deine Aufgabe wiederholbares Verhalten bei domänenspezifischen Mustern erfordert, das sich durch Prompting und Retrieval nicht zuverlässig lösen lässt\n    - Du die Prompt-Länge reduzieren musst – ein feinabgestimmtes Modell muss nicht bei jeder Anfrage neu instruiert werden\n    - Du viele Anfragen verarbeitest, bei denen konsistente Few-Shot-Beispiele signifikante Token verbrauchen\n\n    Fine-Tuning ist Overkill, wenn:\n    - Deine Anweisungen problemlos in einen System-Prompt passen\n    - Du hauptsächlich aktuelle oder proprietäre Fakten brauchst, die zur Laufzeit abgerufen werden können\n    - Sich die Anforderungen häufig ändern (sonst müsstest du ständig neu fine-tunen)\n    - Du Context Engineering noch nicht vollständig ausgeschöpft hast\n\n    Die goldene Regel: Zuerst Context Engineering meistern. Fine-Tune erst, wenn es nachweislich nicht ausreicht."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Context Engineering vs. Fine-Tuning\",\n  \"group\": \"Experte\",\n  \"options\": [\n    {\n      \"text\": \"Fine-Tuning ist immer besser — Context Engineering ist nur ein Workaround\"\n    },\n    {\n      \"text\": \"Context Engineering ist kostenlos; Fine-Tuning ist teuer; nutze immer Context Engineering\"\n    },\n    {\n      \"text\": \"Context Engineering ändert das Verhalten pro Anfrage; Fine-Tuning ändert die Modellgewichte dauerhaft\"\n    },\n    {\n      \"text\": \"Es sind nur unterschiedliche Namen für dieselbe Technik\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist der entscheidende Unterschied zwischen Context Engineering und Fine-Tuning, und wann macht Fine-Tuning überhaupt Sinn?\"\n  ],\n  \"explanationProse\": [\n    \"**Context Engineering** steuert das Modellverhalten über den Prompt – Systemanweisungen, Few-Shot-Beispiele, abgerufener Kontext. Es wirkt pro Anfrage, ist reversibel und erfordert kein Training.\\n\\n    **Fine-Tuning** aktualisiert die Modellgewichte auf Basis deiner Daten. Die Änderungen sind dauerhaft (für diesen Checkpoint) und gelten für jede Inferenz.\\n\\n    Fine-Tuning ist tatsächlich die bessere Wahl, wenn:\\n    - Du einen konsistenten Stil oder ein Format brauchst, das das Modell allein durch Anweisungen nicht zuverlässig umsetzt\\n    - Deine Aufgabe wiederholbares Verhalten bei domänenspezifischen Mustern erfordert, das sich durch Prompting und Retrieval nicht zuverlässig lösen lässt\\n    - Du die Prompt-Länge reduzieren musst – ein feinabgestimmtes Modell muss nicht bei jeder Anfrage neu instruiert werden\\n    - Du viele Anfragen verarbeitest, bei denen konsistente Few-Shot-Beispiele signifikante Token verbrauchen\\n\\n    Fine-Tuning ist Overkill, wenn:\\n    - Deine Anweisungen problemlos in einen System-Prompt passen\\n    - Du hauptsächlich aktuelle oder proprietäre Fakten brauchst, die zur Laufzeit abgerufen werden können\\n    - Sich die Anforderungen häufig ändern (sonst müsstest du ständig neu fine-tunen)\\n    - Du Context Engineering noch nicht vollständig ausgeschöpft hast\\n\\n    Die goldene Regel: Zuerst Context Engineering meistern. Fine-Tune erst, wenn es nachweislich nicht ausreicht.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 988,
+    "outputTokens": 4144,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 77397
+  },
+  "cost": {
+    "inputUsd": 0.0003211,
+    "outputUsd": 0.0080808,
+    "totalUsd": 0.0084019,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

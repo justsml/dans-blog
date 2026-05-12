@@ -1,0 +1,30 @@
+{
+  "index": 4,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "Hash-Join-Eignung",
+  "translation": {
+    "title": "Hash-Join-Eignung",
+    "group": "SQL-Interna",
+    "options": [],
+    "questionProse": [
+      "Welche `ON`-Bedingung kann PostgreSQL für einen `HASH JOIN` verwenden?"
+    ],
+    "explanationProse": [
+      "Ein Hash-Join ist nur mit einer Gleichheitsbedingung (`=`) in der `ON`-Klausel möglich.\n\n- `=` ist die entscheidende Prädikatstruktur für Hash-Joins\n- `>` und `>=` sind keine Hash-Join-Prädikate\n- `HASH JOIN` ist keine gültige Syntax in PostgreSQL\n\nDer Planner kann sich je nach Tabellengröße, Statistiken, Indizes und Speichereinstellungen dennoch für einen Nested Loop oder Merge Join entscheiden."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Hash-Join-Eignung\",\n  \"group\": \"SQL-Interna\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Welche `ON`-Bedingung kann PostgreSQL für einen `HASH JOIN` verwenden?\"\n  ],\n  \"explanationProse\": [\n    \"Ein Hash-Join ist nur mit einer Gleichheitsbedingung (`=`) in der `ON`-Klausel möglich.\\n\\n- `=` ist die entscheidende Prädikatstruktur für Hash-Joins\\n- `>` und `>=` sind keine Hash-Join-Prädikate\\n- `HASH JOIN` ist keine gültige Syntax in PostgreSQL\\n\\nDer Planner kann sich je nach Tabellengröße, Statistiken, Indizes und Speichereinstellungen dennoch für einen Nested Loop oder Merge Join entscheiden.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 738,
+    "outputTokens": 2722,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 50178
+  },
+  "cost": {
+    "inputUsd": 0.00023985000000000003,
+    "outputUsd": 0.0053079,
+    "totalUsd": 0.00554775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

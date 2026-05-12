@@ -1,0 +1,43 @@
+{
+  "index": 22,
+  "originalTitle": "Aurora Failover Mechanism",
+  "translatedTitle": "Aurora-Failover-Mechanismus",
+  "translation": {
+    "title": "Aurora-Failover-Mechanismus",
+    "group": "Aurora-Hochverfügbarkeit",
+    "options": [
+      {
+        "text": "Manuelles Eingreifen erforderlich"
+      },
+      {
+        "text": "Erfordert Neukonfiguration der Anwendung"
+      },
+      {
+        "text": "Failover erfolgt immer auf die älteste Replik"
+      },
+      {
+        "text": "Automatische Promotion basierend auf der Failover-Prioritätsstufe"
+      }
+    ],
+    "questionProse": [
+      "Was passiert in einem Aurora-Cluster mit mehreren Lesereplikaten, wenn die Primärinstanz ausfällt und ein automatisches Failover ausgelöst wird?"
+    ],
+    "explanationProse": [
+      "Aurora-Failover-Prozess:\n1. Erkennt den Ausfall der Primärinstanz\n2. Wählt eine Aurora-Replik primär basierend auf der konfigurierten Failover-Prioritätsstufe aus\n3. Nutzt Instanzmerkmale als Tiebreaker, falls Prioritäten identisch sind\n4. Aktualisiert den Cluster-Endpunkt automatisch\n\nBest Practices:\n- Halte mehrere Replikate über verschiedene Verfügbarkeitszonen (AZs) vor\n- Konfiguriere Promotion-Tiers bewusst\n- Nutze den Cluster-Endpunkt in deinen Anwendungen\n- Teste Failover-Szenarien regelmäßig"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Aurora-Failover-Mechanismus\",\n  \"group\": \"Aurora-Hochverfügbarkeit\",\n  \"options\": [\n    {\n      \"text\": \"Manuelles Eingreifen erforderlich\"\n    },\n    {\n      \"text\": \"Erfordert Neukonfiguration der Anwendung\"\n    },\n    {\n      \"text\": \"Failover erfolgt immer auf die älteste Replik\"\n    },\n    {\n      \"text\": \"Automatische Promotion basierend auf der Failover-Prioritätsstufe\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert in einem Aurora-Cluster mit mehreren Lesereplikaten, wenn die Primärinstanz ausfällt und ein automatisches Failover ausgelöst wird?\"\n  ],\n  \"explanationProse\": [\n    \"Aurora-Failover-Prozess:\\n1. Erkennt den Ausfall der Primärinstanz\\n2. Wählt eine Aurora-Replik primär basierend auf der konfigurierten Failover-Prioritätsstufe aus\\n3. Nutzt Instanzmerkmale als Tiebreaker, falls Prioritäten identisch sind\\n4. Aktualisiert den Cluster-Endpunkt automatisch\\n\\nBest Practices:\\n- Halte mehrere Replikate über verschiedene Verfügbarkeitszonen (AZs) vor\\n- Konfiguriere Promotion-Tiers bewusst\\n- Nutze den Cluster-Endpunkt in deinen Anwendungen\\n- Teste Failover-Szenarien regelmäßig\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 3078,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56901
+  },
+  "cost": {
+    "inputUsd": 0.0002587,
+    "outputUsd": 0.0060021,
+    "totalUsd": 0.0062607999999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

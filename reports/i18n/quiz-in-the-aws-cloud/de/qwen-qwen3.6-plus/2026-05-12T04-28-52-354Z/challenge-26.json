@@ -1,0 +1,43 @@
+{
+  "index": 25,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Skalierungsverhalten",
+  "translation": {
+    "title": "Skalierungsverhalten",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "Die Skalierungsgeschwindigkeit hängt von der aktuellen und konfigurierten Kapazität ab"
+      },
+      {
+        "text": "Skaliert sofort bei Bedarf"
+      },
+      {
+        "text": "Skaliert nur in festgelegten Intervallen"
+      },
+      {
+        "text": "Nur manuelle Skalierung möglich"
+      }
+    ],
+    "questionProse": [
+      "Worauf musst du unbedingt achten, wenn du dich bei plötzlichen Traffic-Spitzen auf Aurora Serverless verlässt?"
+    ],
+    "explanationProse": [
+      "Aurora Serverless Skalierung:\n- Aurora Serverless v2 skaliert die Kapazität in feingranularen ACU-Schritten\n- Die Skalierungsgeschwindigkeit hängt von der aktuellen Kapazität und den Min-/Max-ACU-Einstellungen ab\n- Unterstützte Versionen können bei entsprechender Konfiguration automatisch bei 0 ACUs pausieren\n- Die Abrechnung erfolgt sekundengenau auf Basis der ACUs\n\nBest Practices:\n- Setze die Mindestkapazität hoch genug an, um plötzliche Spitzen bei kritischen Workloads abzufangen – das verhindert Performance-Einbrüche während der Skalierung\n- Überwache Skalierungsereignisse, um das Verhalten deines Clusters im Blick zu behalten\n- Berücksichtige das Connection-Management, da neue Verbindungen beim Hochskalieren kurzzeitig verzögert werden können"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Skalierungsverhalten\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"Die Skalierungsgeschwindigkeit hängt von der aktuellen und konfigurierten Kapazität ab\"\n    },\n    {\n      \"text\": \"Skaliert sofort bei Bedarf\"\n    },\n    {\n      \"text\": \"Skaliert nur in festgelegten Intervallen\"\n    },\n    {\n      \"text\": \"Nur manuelle Skalierung möglich\"\n    }\n  ],\n  \"questionProse\": [\n    \"Worauf musst du unbedingt achten, wenn du dich bei plötzlichen Traffic-Spitzen auf Aurora Serverless verlässt?\"\n  ],\n  \"explanationProse\": [\n    \"Aurora Serverless Skalierung:\\n- Aurora Serverless v2 skaliert die Kapazität in feingranularen ACU-Schritten\\n- Die Skalierungsgeschwindigkeit hängt von der aktuellen Kapazität und den Min-/Max-ACU-Einstellungen ab\\n- Unterstützte Versionen können bei entsprechender Konfiguration automatisch bei 0 ACUs pausieren\\n- Die Abrechnung erfolgt sekundengenau auf Basis der ACUs\\n\\nBest Practices:\\n- Setze die Mindestkapazität hoch genug an, um plötzliche Spitzen bei kritischen Workloads abzufangen – das verhindert Performance-Einbrüche während der Skalierung\\n- Überwache Skalierungsereignisse, um das Verhalten deines Clusters im Blick zu behalten\\n- Berücksichtige das Connection-Management, da neue Verbindungen beim Hochskalieren kurzzeitig verzögert werden können\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 3208,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 58905
+  },
+  "cost": {
+    "inputUsd": 0.00025675000000000003,
+    "outputUsd": 0.0062556,
+    "totalUsd": 0.00651235,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "index": 3,
+  "originalTitle": "Lost in the Middle",
+  "translatedTitle": "Verloren in der Mitte",
+  "translation": {
+    "title": "Verloren in der Mitte",
+    "group": "Retrieval",
+    "options": [
+      {
+        "text": "Modelle liefern unabhängig von der Kontextposition gleich gute Ergebnisse"
+      },
+      {
+        "text": "Modelle arbeiten am besten, wenn der Kontext ganz am Ende steht"
+      },
+      {
+        "text": "Modelle arbeiten am besten mit Kontext am Anfang und Ende, am schlechtesten in der Mitte"
+      },
+      {
+        "text": "Modelle arbeiten am besten, wenn der Kontext in der Prompt-Mitte steht"
+      }
+    ],
+    "questionProse": [
+      "Untersuchungen zum „Lost in the Middle“-Phänomen zeigen, dass LLMs typischerweise:"
+    ],
+    "explanationProse": [
+      "Die [Lost-in-the-Middle-Studie (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) hat gezeigt, dass LLMs zuverlässig mit Informationen kämpfen, die mitten in langen Kontexten platziert sind. Die Leistung ist deutlich höher, wenn relevante Informationen am **Anfang oder Ende** des Kontextfensters stehen.\n\n    Praktische Konsequenz: Wenn du abgerufene Chunks in einen RAG-Prompt einfügst, hänge sie nicht einfach in der Reihenfolge ihrer Relevanz an. Platziere das bestbewertete Ergebnis an erster Stelle, das zweitbeste ganz am Ende und fülle die Mitte mit weniger relevanten Materialien. Klingt kontraintuitiv, ist aber messbar besser."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verloren in der Mitte\",\n  \"group\": \"Retrieval\",\n  \"options\": [\n    {\n      \"text\": \"Modelle liefern unabhängig von der Kontextposition gleich gute Ergebnisse\"\n    },\n    {\n      \"text\": \"Modelle arbeiten am besten, wenn der Kontext ganz am Ende steht\"\n    },\n    {\n      \"text\": \"Modelle arbeiten am besten mit Kontext am Anfang und Ende, am schlechtesten in der Mitte\"\n    },\n    {\n      \"text\": \"Modelle arbeiten am besten, wenn der Kontext in der Prompt-Mitte steht\"\n    }\n  ],\n  \"questionProse\": [\n    \"Untersuchungen zum „Lost in the Middle“-Phänomen zeigen, dass LLMs typischerweise:\"\n  ],\n  \"explanationProse\": [\n    \"Die [Lost-in-the-Middle-Studie (Liu et al., 2023)](https://arxiv.org/abs/2307.03172) hat gezeigt, dass LLMs zuverlässig mit Informationen kämpfen, die mitten in langen Kontexten platziert sind. Die Leistung ist deutlich höher, wenn relevante Informationen am **Anfang oder Ende** des Kontextfensters stehen.\\n\\n    Praktische Konsequenz: Wenn du abgerufene Chunks in einen RAG-Prompt einfügst, hänge sie nicht einfach in der Reihenfolge ihrer Relevanz an. Platziere das bestbewertete Ergebnis an erster Stelle, das zweitbeste ganz am Ende und fülle die Mitte mit weniger relevanten Materialien. Klingt kontraintuitiv, ist aber messbar besser.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 3679,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 68653
+  },
+  "cost": {
+    "inputUsd": 0.0002834,
+    "outputUsd": 0.0071740499999999995,
+    "totalUsd": 0.007457449999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

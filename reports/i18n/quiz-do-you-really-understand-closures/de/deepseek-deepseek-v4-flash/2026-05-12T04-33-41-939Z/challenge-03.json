@@ -1,0 +1,43 @@
+{
+  "index": 2,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var in einer Schleife",
+  "translation": {
+    "title": "var in einer Schleife",
+    "group": "Die klassische Falle",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "undefined x5"
+      }
+    ],
+    "questionProse": [
+      "Was wird nach 100ms geloggt?"
+    ],
+    "explanationProse": [
+      "`var` ist funktionsbezogen (function-scoped). Es gibt genau **ein** `i` – alle fünf Callbacks schließen über dieselbe Bindung. Wenn die Timeouts feuern, ist die Schleife bereits beendet und `i` ist `5`.\n\n    Fünf Callbacks. Ein `i`. Wert: `5`. Fünfmal geloggt.\n\n    Die Lösung ist `let` (block-scoped, neue Bindung pro Iteration) oder das Einwickeln in eine IIFE, um den aktuellen Wert einzufangen:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var in einer Schleife\",\n  \"group\": \"Die klassische Falle\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"undefined x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird nach 100ms geloggt?\"\n  ],\n  \"explanationProse\": [\n    \"`var` ist funktionsbezogen (function-scoped). Es gibt genau **ein** `i` – alle fünf Callbacks schließen über dieselbe Bindung. Wenn die Timeouts feuern, ist die Schleife bereits beendet und `i` ist `5`.\\n\\n    Fünf Callbacks. Ein `i`. Wert: `5`. Fünfmal geloggt.\\n\\n    Die Lösung ist `let` (block-scoped, neue Bindung pro Iteration) oder das Einwickeln in eine IIFE, um den aktuellen Wert einzufangen:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 820,
+    "outputTokens": 1140,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8015
+  },
+  "cost": {
+    "inputUsd": 0.00011480000000000001,
+    "outputUsd": 0.0003192,
+    "totalUsd": 0.00043400000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

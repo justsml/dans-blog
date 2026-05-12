@@ -1,0 +1,47 @@
+{
+  "index": 14,
+  "originalTitle": "Global Secondary Index",
+  "translatedTitle": "Globaler Sekundärindex",
+  "translation": {
+    "title": "Globaler Sekundärindex",
+    "group": "DynamoDB-Indizes",
+    "options": [
+      {
+        "text": "Identisch mit dem Primärschlüssel",
+        "hint": "Nein, ein GSI definiert eigene Schlüsselattribute."
+      },
+      {
+        "text": "Kostenfrei",
+        "hint": "Falsch, AWS berechnet separate Schreibkapazität für jeden Index."
+      },
+      {
+        "text": "Verringert die Schreibperformance",
+        "hint": "Technisch korrekt, aber das ist ein Nebeneffekt, nicht der Zweck."
+      },
+      {
+        "text": "Ermöglicht Abfragen nach Nicht-Primärschlüssel-Attributen",
+        "hint": "Genau, das ist der eigentliche Grund, warum du einen GSI anlegst."
+      }
+    ],
+    "questionProse": [
+      "Wofür setzt du einen Global Secondary Index in DynamoDB eigentlich ein?"
+    ],
+    "explanationProse": [
+      "Global Secondary Index (GSI):\n  - Ermöglicht Abfragen nach Attributen, die nicht Teil des Primärschlüssels sind\n  - Schafft alternative Zugriffsmuster\n  - Erhöht die Flexibilität bei Datenabfragen\n  - Verbraucht dafür zusätzliche Schreibkapazität (WCU)\n\n  Nutze ihn, wenn deine Anwendung komplexe Suchanfragen benötigt, die über den Standard-Primärschlüssel hinausgehen.\n\n  [DynamoDB-Indizes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Globaler Sekundärindex\",\n  \"group\": \"DynamoDB-Indizes\",\n  \"options\": [\n    {\n      \"text\": \"Identisch mit dem Primärschlüssel\",\n      \"hint\": \"Nein, ein GSI definiert eigene Schlüsselattribute.\"\n    },\n    {\n      \"text\": \"Kostenfrei\",\n      \"hint\": \"Falsch, AWS berechnet separate Schreibkapazität für jeden Index.\"\n    },\n    {\n      \"text\": \"Verringert die Schreibperformance\",\n      \"hint\": \"Technisch korrekt, aber das ist ein Nebeneffekt, nicht der Zweck.\"\n    },\n    {\n      \"text\": \"Ermöglicht Abfragen nach Nicht-Primärschlüssel-Attributen\",\n      \"hint\": \"Genau, das ist der eigentliche Grund, warum du einen GSI anlegst.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wofür setzt du einen Global Secondary Index in DynamoDB eigentlich ein?\"\n  ],\n  \"explanationProse\": [\n    \"Global Secondary Index (GSI):\\n  - Ermöglicht Abfragen nach Attributen, die nicht Teil des Primärschlüssels sind\\n  - Schafft alternative Zugriffsmuster\\n  - Erhöht die Flexibilität bei Datenabfragen\\n  - Verbraucht dafür zusätzliche Schreibkapazität (WCU)\\n\\n  Nutze ihn, wenn deine Anwendung komplexe Suchanfragen benötigt, die über den Standard-Primärschlüssel hinausgehen.\\n\\n  [DynamoDB-Indizes](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 760,
+    "outputTokens": 4115,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 75654
+  },
+  "cost": {
+    "inputUsd": 0.00024700000000000004,
+    "outputUsd": 0.00802425,
+    "totalUsd": 0.00827125,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

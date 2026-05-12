@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Express-Antwortfehler",
+  "translation": {
+    "title": "Express-Antwortfehler",
+    "group": "API-Fallstricke",
+    "options": [
+      {
+        "text": "Sendet das vollständige Fehlerobjekt"
+      },
+      {
+        "text": "Sendet {\"error\":{}}"
+      },
+      {
+        "text": "Wirft einen Serverfehler"
+      },
+      {
+        "text": "Sendet nur die Fehlermeldung"
+      }
+    ],
+    "questionProse": [
+      "Was landet tatsächlich beim Client?"
+    ],
+    "explanationProse": [
+      "`res.json()` nutzt intern `JSON.stringify()`, wodurch das Error-Objekt gnadenlos zu `{}` serialisiert wird. Der Client erhält `{\"error\":{}}`. Um das zu beheben, verwende `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Express-Antwortfehler\",\n  \"group\": \"API-Fallstricke\",\n  \"options\": [\n    {\n      \"text\": \"Sendet das vollständige Fehlerobjekt\"\n    },\n    {\n      \"text\": \"Sendet {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Wirft einen Serverfehler\"\n    },\n    {\n      \"text\": \"Sendet nur die Fehlermeldung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was landet tatsächlich beim Client?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` nutzt intern `JSON.stringify()`, wodurch das Error-Objekt gnadenlos zu `{}` serialisiert wird. Der Client erhält `{\\\"error\\\":{}}`. Um das zu beheben, verwende `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 773,
+    "outputTokens": 3389,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 62693
+  },
+  "cost": {
+    "inputUsd": 0.000251225,
+    "outputUsd": 0.00660855,
+    "totalUsd": 0.006859775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

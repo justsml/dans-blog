@@ -1,0 +1,43 @@
+{
+  "index": 11,
+  "originalTitle": "Promise Rejection Values",
+  "translatedTitle": "Promise-Rejection-Werte",
+  "translation": {
+    "title": "Promise-Rejection-Werte",
+    "group": "Asynchrone Fehler",
+    "options": [
+      {
+        "text": "Immer Error-Objekte"
+      },
+      {
+        "text": "Jeder beliebige Wert kann eine Rejection sein"
+      },
+      {
+        "text": "Nur Strings und Error-Objekte"
+      },
+      {
+        "text": "Automatisch in Error verpackt"
+      }
+    ],
+    "questionProse": [
+      "Was akzeptiert `Promise.reject()`?"
+    ],
+    "explanationProse": [
+      "Genau wie `throw` akzeptiert `Promise.reject()` absolut alles – Strings, Objekte, Zahlen, was auch immer. Deshalb wird hier `\"string\"`, `404` und `42` ausgegeben. Prüft in euren Promise-Ketten immer den Typ der abgefangenen Werte. Das ist besonders wichtig, wenn ihr mit Third-Party-Code arbeitet, der sich nicht an die Konvention hält und statt eines echten `Error` einfach einen primitiven Wert wirft."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Promise-Rejection-Werte\",\n  \"group\": \"Asynchrone Fehler\",\n  \"options\": [\n    {\n      \"text\": \"Immer Error-Objekte\"\n    },\n    {\n      \"text\": \"Jeder beliebige Wert kann eine Rejection sein\"\n    },\n    {\n      \"text\": \"Nur Strings und Error-Objekte\"\n    },\n    {\n      \"text\": \"Automatisch in Error verpackt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was akzeptiert `Promise.reject()`?\"\n  ],\n  \"explanationProse\": [\n    \"Genau wie `throw` akzeptiert `Promise.reject()` absolut alles – Strings, Objekte, Zahlen, was auch immer. Deshalb wird hier `\\\"string\\\"`, `404` und `42` ausgegeben. Prüft in euren Promise-Ketten immer den Typ der abgefangenen Werte. Das ist besonders wichtig, wenn ihr mit Third-Party-Code arbeitet, der sich nicht an die Konvention hält und statt eines echten `Error` einfach einen primitiven Wert wirft.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 770,
+    "outputTokens": 3690,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 67727
+  },
+  "cost": {
+    "inputUsd": 0.00025025,
+    "outputUsd": 0.0071955000000000005,
+    "totalUsd": 0.00744575,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

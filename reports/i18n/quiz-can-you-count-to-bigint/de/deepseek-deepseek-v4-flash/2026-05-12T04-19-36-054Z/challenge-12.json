@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "Umgang mit null",
+  "translation": {
+    "title": "Umgang mit null",
+    "group": "Parsen",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Was wird das Ergebnis dieses Codes sein?"
+    ],
+    "explanationProse": [
+      "`parseInt` wandelt die Eingabe in einen String um, daher wird `null` zu `\"null\"`. Da `\"null\"` keine gültigen Basis-10-Zeichen (normale Zahlen) enthält, wird `NaN` zurückgegeben.\n  \n  `Number(null)` gibt `0` zurück, weil JS es liebt, dich auf Trab zu halten.\n  Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Umgang mit null\",\n  \"group\": \"Parsen\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird das Ergebnis dieses Codes sein?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"jsx\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`parseInt` wandelt die Eingabe in einen String um, daher wird `null` zu `\\\"null\\\"`. Da `\\\"null\\\"` keine gültigen Basis-10-Zeichen (normale Zahlen) enthält, wird `NaN` zurückgegeben.\\n  \\n  `Number(null)` gibt `0` zurück, weil JS es liebt, dich auf Trab zu halten.\\n  Warum? Nun, ich könnte tiefer gehen, falls Interesse besteht.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 752,
+    "outputTokens": 943,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10101
+  },
+  "cost": {
+    "inputUsd": 0.00010528000000000001,
+    "outputUsd": 0.00026404000000000005,
+    "totalUsd": 0.0003693200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

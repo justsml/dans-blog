@@ -1,0 +1,43 @@
+{
+  "index": 24,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "Time To Live (TTL)",
+  "translation": {
+    "title": "Time To Live (TTL)",
+    "group": "DynamoDB-Funktionen",
+    "options": [
+      {
+        "text": "Löscht Elemente sofort beim Ablauf"
+      },
+      {
+        "text": "Erfordert einen manuellen Lösch-Trigger"
+      },
+      {
+        "text": "Hintergrundlöschung nach bestem Ermessen (best-effort)"
+      },
+      {
+        "text": "Markiert Elemente als abgelaufen, speichert sie aber weiter"
+      }
+    ],
+    "questionProse": [
+      "Wie handhabt das TTL-Feature von DynamoDB das Löschen von Items?"
+    ],
+    "explanationProse": [
+      "Merkmale von DynamoDB TTL:\n      - Ein Hintergrundprozess überwacht kontinuierlich das TTL-Attribut\n      - Abgelaufene Elemente werden nach bestem Ermessen (best-effort) gelöscht, typischerweise innerhalb weniger Tage, um die Schreib-Performance der Datenbank nicht zu beeinträchtigen\n      - Keine zusätzlichen Kosten für die TTL-Nutzung\n      - Gelöschte Elemente erscheinen weiterhin in den Streams\n\n      Typische Anwendungsfälle:\n      - Sitzungsverwaltung\n      - Automatischer Log-Ablauf\n      - Bereinigung temporärer Daten\n      - Einhaltung gesetzlicher Aufbewahrungsfristen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Time To Live (TTL)\",\n  \"group\": \"DynamoDB-Funktionen\",\n  \"options\": [\n    {\n      \"text\": \"Löscht Elemente sofort beim Ablauf\"\n    },\n    {\n      \"text\": \"Erfordert einen manuellen Lösch-Trigger\"\n    },\n    {\n      \"text\": \"Hintergrundlöschung nach bestem Ermessen (best-effort)\"\n    },\n    {\n      \"text\": \"Markiert Elemente als abgelaufen, speichert sie aber weiter\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie handhabt das TTL-Feature von DynamoDB das Löschen von Items?\"\n  ],\n  \"explanationProse\": [\n    \"Merkmale von DynamoDB TTL:\\n      - Ein Hintergrundprozess überwacht kontinuierlich das TTL-Attribut\\n      - Abgelaufene Elemente werden nach bestem Ermessen (best-effort) gelöscht, typischerweise innerhalb weniger Tage, um die Schreib-Performance der Datenbank nicht zu beeinträchtigen\\n      - Keine zusätzlichen Kosten für die TTL-Nutzung\\n      - Gelöschte Elemente erscheinen weiterhin in den Streams\\n\\n      Typische Anwendungsfälle:\\n      - Sitzungsverwaltung\\n      - Automatischer Log-Ablauf\\n      - Bereinigung temporärer Daten\\n      - Einhaltung gesetzlicher Aufbewahrungsfristen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 765,
+    "outputTokens": 3774,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69207
+  },
+  "cost": {
+    "inputUsd": 0.000248625,
+    "outputUsd": 0.0073593,
+    "totalUsd": 0.007607925,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

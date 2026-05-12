@@ -1,0 +1,51 @@
+{
+  "index": 6,
+  "originalTitle": "Cycle Detection in Graphs",
+  "translatedTitle": "Zyklenerkennung in Graphen",
+  "translation": {
+    "title": "Zyklenerkennung in Graphen",
+    "group": "Graphen",
+    "options": [
+      {
+        "text": "Quick Sort",
+        "hint": "Ein effizienter Sortieralgorithmus, aber für Graphenstrukturen ungeeignet."
+      },
+      {
+        "text": "Breitensuche",
+        "hint": "Durchsucht Ebene für Ebene, ist aber nicht die optimale Wahl für Zyklen."
+      },
+      {
+        "text": "Merge Sort",
+        "hint": "Teilt und erobert beim Sortieren, ignoriert jedoch Graphenverbindungen."
+      },
+      {
+        "text": "Tiefensuche",
+        "hint": "Verfolgt Pfade tief in den Graphen und erkennt Rückkanten sofort."
+      },
+      {
+        "text": "Bubble Sort",
+        "hint": "Vergleicht nur benachbarte Elemente und hat mit Graphen nichts zu tun."
+      }
+    ],
+    "questionProse": [
+      "Welchen Algorithmus ziehst du heran, um Zyklen in gerichteten Graphen zweifelsfrei zu identifizieren?"
+    ],
+    "explanationProse": [
+      "Die Tiefensuche (DFS) ist das Mittel der Wahl, weil sie den aktuellen Suchpfad über einen Rekursionsstapel nachverfolgt. Trifft sie dabei auf einen Knoten, der sich bereits im aktiven Stapel befindet, hat sie eine Rückkante entdeckt – und damit den eindeutigen Beweis für einen Zyklus."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zyklenerkennung in Graphen\",\n  \"group\": \"Graphen\",\n  \"options\": [\n    {\n      \"text\": \"Quick Sort\",\n      \"hint\": \"Ein effizienter Sortieralgorithmus, aber für Graphenstrukturen ungeeignet.\"\n    },\n    {\n      \"text\": \"Breitensuche\",\n      \"hint\": \"Durchsucht Ebene für Ebene, ist aber nicht die optimale Wahl für Zyklen.\"\n    },\n    {\n      \"text\": \"Merge Sort\",\n      \"hint\": \"Teilt und erobert beim Sortieren, ignoriert jedoch Graphenverbindungen.\"\n    },\n    {\n      \"text\": \"Tiefensuche\",\n      \"hint\": \"Verfolgt Pfade tief in den Graphen und erkennt Rückkanten sofort.\"\n    },\n    {\n      \"text\": \"Bubble Sort\",\n      \"hint\": \"Vergleicht nur benachbarte Elemente und hat mit Graphen nichts zu tun.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welchen Algorithmus ziehst du heran, um Zyklen in gerichteten Graphen zweifelsfrei zu identifizieren?\"\n  ],\n  \"explanationProse\": [\n    \"Die Tiefensuche (DFS) ist das Mittel der Wahl, weil sie den aktuellen Suchpfad über einen Rekursionsstapel nachverfolgt. Trifft sie dabei auf einen Knoten, der sich bereits im aktiven Stapel befindet, hat sie eine Rückkante entdeckt – und damit den eindeutigen Beweis für einen Zyklus.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 721,
+    "outputTokens": 3290,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 60483
+  },
+  "cost": {
+    "inputUsd": 0.000234325,
+    "outputUsd": 0.0064155,
+    "totalUsd": 0.006649825,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 16,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "Speicheroptimierung",
+  "translation": {
+    "title": "Speicheroptimierung",
+    "group": "Best Practices",
+    "options": [
+      {
+        "text": "16 Bytes",
+        "hint": "Beachte die Alignment-Anforderungen"
+      },
+      {
+        "text": "24 Bytes"
+      },
+      {
+        "text": "32 Bytes",
+        "hint": "Ein `String` ist größer als ein einzelner Zeiger."
+      },
+      {
+        "text": "Hängt von der Plattform ab",
+        "hint": "Wir haben ein 64-Bit-System spezifiziert."
+      }
+    ],
+    "questionProse": [
+      "Wie groß ist diese Struct auf einem typischen aktuellen 64-Bit-Rust-System?"
+    ],
+    "explanationProse": [
+      "Lass uns das Speicherlayout und die Optimierung von Structs Schritt für Schritt aufschlüsseln:",
+      "Überlegungen zum Speicherlayout:\n      1. Alignment-Anforderungen:\n         - u32: 4-Byte-Alignment\n         - String: 8-Byte-Alignment und 24-Byte-Größe auf gängigen 64-Bit-Targets\n         - bool: 1-Byte-Alignment\n\n      2. Strategien für die Feldreihenfolge:\n         - Gruppiere Felder ähnlicher Größe\n         - Platziere größere Alignments zuerst\n         - Berücksichtige die Optimierung von Cache-Lines\n\n      Best Practices:\n      1. Für FFI oder stabile Layout-Annahmen verwende ein passendes `repr(...)`\n      2. Nutze angemessene Integer-Größen\n      3. Erwäge die Verwendung von `Option` für optionale Felder\n      4. Miss speicherkritische Structs mit `std::mem::size_of`\n      5. Verwende `#[repr(packed)]` mit Bedacht – es kann die Performance beeinträchtigen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Speicheroptimierung\",\n  \"group\": \"Best Practices\",\n  \"options\": [\n    {\n      \"text\": \"16 Bytes\",\n      \"hint\": \"Beachte die Alignment-Anforderungen\"\n    },\n    {\n      \"text\": \"24 Bytes\"\n    },\n    {\n      \"text\": \"32 Bytes\",\n      \"hint\": \"Ein `String` ist größer als ein einzelner Zeiger.\"\n    },\n    {\n      \"text\": \"Hängt von der Plattform ab\",\n      \"hint\": \"Wir haben ein 64-Bit-System spezifiziert.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie groß ist diese Struct auf einem typischen aktuellen 64-Bit-Rust-System?\"\n  ],\n  \"explanationProse\": [\n    \"Lass uns das Speicherlayout und die Optimierung von Structs Schritt für Schritt aufschlüsseln:\",\n    \"Überlegungen zum Speicherlayout:\\n      1. Alignment-Anforderungen:\\n         - u32: 4-Byte-Alignment\\n         - String: 8-Byte-Alignment und 24-Byte-Größe auf gängigen 64-Bit-Targets\\n         - bool: 1-Byte-Alignment\\n\\n      2. Strategien für die Feldreihenfolge:\\n         - Gruppiere Felder ähnlicher Größe\\n         - Platziere größere Alignments zuerst\\n         - Berücksichtige die Optimierung von Cache-Lines\\n\\n      Best Practices:\\n      1. Für FFI oder stabile Layout-Annahmen verwende ein passendes `repr(...)`\\n      2. Nutze angemessene Integer-Größen\\n      3. Erwäge die Verwendung von `Option` für optionale Felder\\n      4. Miss speicherkritische Structs mit `std::mem::size_of`\\n      5. Verwende `#[repr(packed)]` mit Bedacht – es kann die Performance beeinträchtigen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 963,
+    "outputTokens": 6397,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 116778
+  },
+  "cost": {
+    "inputUsd": 0.000312975,
+    "outputUsd": 0.01247415,
+    "totalUsd": 0.012787125,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

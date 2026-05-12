@@ -1,0 +1,43 @@
+{
+  "index": 6,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Kontextbudget",
+  "translation": {
+    "title": "Kontextbudget",
+    "group": "Token-Management",
+    "options": [
+      {
+        "text": "Nutze 95 %+ des Kontextfensters, um die Informationsmenge zu maximieren"
+      },
+      {
+        "text": "Reserviere ausreichend Puffer für die Ausgabe, anstatt das gesamte Fenster zu füllen"
+      },
+      {
+        "text": "Das Kontextbudget ist nur bei Modellen unter 32K Tokens relevant"
+      },
+      {
+        "text": "Das Modell kürzt automatisch, wenn das Fenster überschritten wird"
+      }
+    ],
+    "questionProse": [
+      "Beim Erstellen eines RAG-Prompts mit abgerufenem Kontext lautet eine gute Faustregel für das Kontextbudget:"
+    ],
+    "explanationProse": [
+      "Das Kontextfenster wird zwischen **Input und Output** geteilt. Wenn du 90 % für den Input verwendest, bleiben dem Modell nur noch 10 % des Fensters, um eine Antwort zu generieren – was häufig zu abgeschnittenen oder qualitativ schlechteren Ausgaben führt.\n\nEine sinnvolle Heuristik: Bestimme zuerst die erwartete Ausgabegröße und halte deinen Input dann deutlich unter dem verbleibenden Budget. Für viele RAG-Aufgaben bedeutet das, dass du **nicht mehr als 60–70 % des gesamten Kontextfensters für den Input** (System-Prompt + Verlauf + abgerufener Kontext) nutzen solltest. Den Rest lässt du für die Generierung und als Sicherheitspuffer frei.\n\nZusätzlich arbeiten Modelle schlechter, wenn sie sich an den Rändern ihres Kontextfensters befinden – Verständnis und Befolgung von Anweisungen verschlechtern sich, je voller der Kontext wird. Ein Betrieb bei 95 % ist technisch zwar möglich. Das Erlebnis ist jedoch nicht dasselbe wie bei 50 %."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Kontextbudget\",\n  \"group\": \"Token-Management\",\n  \"options\": [\n    {\n      \"text\": \"Nutze 95 %+ des Kontextfensters, um die Informationsmenge zu maximieren\"\n    },\n    {\n      \"text\": \"Reserviere ausreichend Puffer für die Ausgabe, anstatt das gesamte Fenster zu füllen\"\n    },\n    {\n      \"text\": \"Das Kontextbudget ist nur bei Modellen unter 32K Tokens relevant\"\n    },\n    {\n      \"text\": \"Das Modell kürzt automatisch, wenn das Fenster überschritten wird\"\n    }\n  ],\n  \"questionProse\": [\n    \"Beim Erstellen eines RAG-Prompts mit abgerufenem Kontext lautet eine gute Faustregel für das Kontextbudget:\"\n  ],\n  \"explanationProse\": [\n    \"Das Kontextfenster wird zwischen **Input und Output** geteilt. Wenn du 90 % für den Input verwendest, bleiben dem Modell nur noch 10 % des Fensters, um eine Antwort zu generieren – was häufig zu abgeschnittenen oder qualitativ schlechteren Ausgaben führt.\\n\\nEine sinnvolle Heuristik: Bestimme zuerst die erwartete Ausgabegröße und halte deinen Input dann deutlich unter dem verbleibenden Budget. Für viele RAG-Aufgaben bedeutet das, dass du **nicht mehr als 60–70 % des gesamten Kontextfensters für den Input** (System-Prompt + Verlauf + abgerufener Kontext) nutzen solltest. Den Rest lässt du für die Generierung und als Sicherheitspuffer frei.\\n\\nZusätzlich arbeiten Modelle schlechter, wenn sie sich an den Rändern ihres Kontextfensters befinden – Verständnis und Befolgung von Anweisungen verschlechtern sich, je voller der Kontext wird. Ein Betrieb bei 95 % ist technisch zwar möglich. Das Erlebnis ist jedoch nicht dasselbe wie bei 50 %.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 907,
+    "outputTokens": 3644,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 66849
+  },
+  "cost": {
+    "inputUsd": 0.000294775,
+    "outputUsd": 0.0071058,
+    "totalUsd": 0.0074005749999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

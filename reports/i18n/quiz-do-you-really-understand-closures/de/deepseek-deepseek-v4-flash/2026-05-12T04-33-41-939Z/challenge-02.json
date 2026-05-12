@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Getrennte Closures",
+  "translation": {
+    "title": "Getrennte Closures",
+    "group": "Aufwärmen",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier ausgegeben?"
+    ],
+    "explanationProse": [
+      "Jeder Aufruf von `makeCounter()` erzeugt einen **neuen Ausführungskontext** mit einem eigenen frischen `count`. `a` und `b` schließen über *unterschiedliche* `count`-Bindungen. Sie teilen sich keinen Zustand.\n\n    Ergebnis: `1, 1`\n\n    Deshalb werden Closures verwendet, um privaten Zustand zu erstellen – jede „Instanz“ ist unabhängig."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Getrennte Closures\",\n  \"group\": \"Aufwärmen\",\n  \"options\": [\n    {\n      \"text\": \"1, 1\"\n    },\n    {\n      \"text\": \"1, 2\"\n    },\n    {\n      \"text\": \"2, 2\"\n    },\n    {\n      \"text\": \"0, 0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird hier ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Jeder Aufruf von `makeCounter()` erzeugt einen **neuen Ausführungskontext** mit einem eigenen frischen `count`. `a` und `b` schließen über *unterschiedliche* `count`-Bindungen. Sie teilen sich keinen Zustand.\\n\\n    Ergebnis: `1, 1`\\n\\n    Deshalb werden Closures verwendet, um privaten Zustand zu erstellen – jede „Instanz“ ist unabhängig.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 739,
+    "outputTokens": 871,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5496
+  },
+  "cost": {
+    "inputUsd": 0.00010346,
+    "outputUsd": 0.00024388000000000003,
+    "totalUsd": 0.00034734,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

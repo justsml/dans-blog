@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Wortgrenzen",
+  "translation": {
+    "title": "Wortgrenzen",
+    "group": "Grundlegende Übereinstimmung",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Was wird übereinstimmen?"
+    ],
+    "explanationProse": [
+      "`\\b` steht für eine Wortgrenze, die Folgendes erfasst:\n    - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen\n    - Am Anfang/Ende der Zeichenkette, wenn dort ein Wortzeichen steht\n\n    Daher erfasst `/\\bcat\\b/` nur „cat“, wenn es ein vollständiges Wort ist, nicht als Teil eines anderen Wortes.\n    - ✅ „cat“ (von Leerzeichen umgeben)\n    - ❌ „cats“ (keine Grenze nach „cat“)\n    - ❌ „category“ (keine Grenze nach „cat“)\n\n    [Mehr über Wortgrenzen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Wortgrenzen\",\n  \"group\": \"Grundlegende Übereinstimmung\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird übereinstimmen?\"\n  ],\n  \"explanationProse\": [\n    \"`\\\\b` steht für eine Wortgrenze, die Folgendes erfasst:\\n    - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen\\n    - Am Anfang/Ende der Zeichenkette, wenn dort ein Wortzeichen steht\\n\\n    Daher erfasst `/\\\\bcat\\\\b/` nur „cat“, wenn es ein vollständiges Wort ist, nicht als Teil eines anderen Wortes.\\n    - ✅ „cat“ (von Leerzeichen umgeben)\\n    - ❌ „cats“ (keine Grenze nach „cat“)\\n    - ❌ „category“ (keine Grenze nach „cat“)\\n\\n    [Mehr über Wortgrenzen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 789,
+    "outputTokens": 432,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 30499
+  },
+  "cost": {
+    "inputUsd": 0.00011046000000000001,
+    "outputUsd": 0.00012096000000000001,
+    "totalUsd": 0.00023142000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

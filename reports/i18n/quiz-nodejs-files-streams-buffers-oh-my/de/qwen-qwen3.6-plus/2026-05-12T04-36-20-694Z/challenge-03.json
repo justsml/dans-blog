@@ -1,0 +1,43 @@
+{
+  "index": 2,
+  "originalTitle": "Async File Operations",
+  "translatedTitle": "Asynchrone Dateioperationen",
+  "translation": {
+    "title": "Asynchrone Dateioperationen",
+    "group": "Warm-up: Dateisystem",
+    "options": [
+      {
+        "text": "Gibt den Dateiinhalt aus, dann \"Done\""
+      },
+      {
+        "text": "Gibt \"Done\" aus, dann den Dateiinhalt"
+      },
+      {
+        "text": "Gibt nur den Dateiinhalt aus"
+      },
+      {
+        "text": "Wirft einen Fehler"
+      }
+    ],
+    "questionProse": [
+      "In welcher Reihenfolge erfolgt die Ausgabe?"
+    ],
+    "explanationProse": [
+      "Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft einfach weiter, während die Datei im Hintergrund gelesen wird.\n    Deshalb erscheint \"Done\" vor dem Dateiinhalt.\n\n    Willst du sicherstellen, dass die Datei zuerst gelesen wird, greif zur Promise-basierten Variante:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Asynchrone Dateioperationen\",\n  \"group\": \"Warm-up: Dateisystem\",\n  \"options\": [\n    {\n      \"text\": \"Gibt den Dateiinhalt aus, dann \\\"Done\\\"\"\n    },\n    {\n      \"text\": \"Gibt \\\"Done\\\" aus, dann den Dateiinhalt\"\n    },\n    {\n      \"text\": \"Gibt nur den Dateiinhalt aus\"\n    },\n    {\n      \"text\": \"Wirft einen Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"In welcher Reihenfolge erfolgt die Ausgabe?\"\n  ],\n  \"explanationProse\": [\n    \"Da `readFile` asynchron ist, blockiert es den Event Loop nicht. Der Code läuft einfach weiter, während die Datei im Hintergrund gelesen wird.\\n    Deshalb erscheint \\\"Done\\\" vor dem Dateiinhalt.\\n\\n    Willst du sicherstellen, dass die Datei zuerst gelesen wird, greif zur Promise-basierten Variante:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 2957,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 54472
+  },
+  "cost": {
+    "inputUsd": 0.00026065,
+    "outputUsd": 0.00576615,
+    "totalUsd": 0.0060268000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

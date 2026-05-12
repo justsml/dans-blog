@@ -1,0 +1,48 @@
+{
+  "index": 3,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Implizite Lifetimes",
+  "translation": {
+    "title": "Implizite Lifetimes",
+    "group": "Lifetime-Elision",
+    "options": [
+      {
+        "text": "Kompiliert erfolgreich"
+      },
+      {
+        "text": "Fehler: fehlender Lifetime-Spezifizierer",
+        "hint": "Erinnere dich an die Lifetime-Elisionsregeln – sie sind dazu da, dir zu helfen!"
+      },
+      {
+        "text": "Fehler: explizite Lifetime erforderlich",
+        "hint": "Der Compiler kann das hier automatisch ableiten."
+      },
+      {
+        "text": "Fehler: Lifetime-Konflikt",
+        "hint": "Die Lifetimes passen hier perfekt zusammen."
+      }
+    ],
+    "questionProse": [
+      "Kompiliert dieser Code? Wenn ja, warum? Wenn nein, was ist das Problem?"
+    ],
+    "explanationProse": [
+      "Dieser Code kompiliert erfolgreich dank Rusts Lifetime-Elisionsregeln. \n      Diese Regeln ermöglichen es dem Compiler, Lifetimes in gängigen Mustern automatisch abzuleiten.\n\n      Die drei Lifetime-Elisionsregeln lauten:\n      1. Jeder Parameter erhält seinen eigenen Lifetime-Parameter.\n      2. Gibt es genau einen Eingabe-Lifetime-Parameter, wird dieser Lifetime allen Ausgabe-Lifetime-Parametern zugewiesen.\n      3. Gibt es mehrere Eingabe-Lifetime-Parameter, aber einer davon ist &self oder &mut self, wird der Lifetime von self allen Ausgabe-Lifetime-Parametern zugewiesen.\n\n      Diese Funktion ist äquivalent zu:",
+      "Häufige Muster, bei denen Elision funktioniert:",
+      "Best Practice: Lass die Elision für dich arbeiten, wann immer möglich, aber verstehe, wann explizite Lifetimes nötig sind."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Implizite Lifetimes\",\n  \"group\": \"Lifetime-Elision\",\n  \"options\": [\n    {\n      \"text\": \"Kompiliert erfolgreich\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lifetime-Spezifizierer\",\n      \"hint\": \"Erinnere dich an die Lifetime-Elisionsregeln – sie sind dazu da, dir zu helfen!\"\n    },\n    {\n      \"text\": \"Fehler: explizite Lifetime erforderlich\",\n      \"hint\": \"Der Compiler kann das hier automatisch ableiten.\"\n    },\n    {\n      \"text\": \"Fehler: Lifetime-Konflikt\",\n      \"hint\": \"Die Lifetimes passen hier perfekt zusammen.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Kompiliert dieser Code? Wenn ja, warum? Wenn nein, was ist das Problem?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code kompiliert erfolgreich dank Rusts Lifetime-Elisionsregeln. \\n      Diese Regeln ermöglichen es dem Compiler, Lifetimes in gängigen Mustern automatisch abzuleiten.\\n\\n      Die drei Lifetime-Elisionsregeln lauten:\\n      1. Jeder Parameter erhält seinen eigenen Lifetime-Parameter.\\n      2. Gibt es genau einen Eingabe-Lifetime-Parameter, wird dieser Lifetime allen Ausgabe-Lifetime-Parametern zugewiesen.\\n      3. Gibt es mehrere Eingabe-Lifetime-Parameter, aber einer davon ist &self oder &mut self, wird der Lifetime von self allen Ausgabe-Lifetime-Parametern zugewiesen.\\n\\n      Diese Funktion ist äquivalent zu:\",\n    \"Häufige Muster, bei denen Elision funktioniert:\",\n    \"Best Practice: Lass die Elision für dich arbeiten, wann immer möglich, aber verstehe, wann explizite Lifetimes nötig sind.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 976,
+    "outputTokens": 4590,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 83658
+  },
+  "cost": {
+    "inputUsd": 0.0003172,
+    "outputUsd": 0.0089505,
+    "totalUsd": 0.0092677,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

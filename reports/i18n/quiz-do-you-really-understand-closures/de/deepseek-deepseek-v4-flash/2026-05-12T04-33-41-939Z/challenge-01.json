@@ -1,0 +1,43 @@
+{
+  "index": 0,
+  "originalTitle": "Classic Counter",
+  "translatedTitle": "Klassischer Zähler",
+  "translation": {
+    "title": "Klassischer Zähler",
+    "group": "Aufwärmübung",
+    "options": [
+      {
+        "text": "0, 0, 0"
+      },
+      {
+        "text": "0, 1, 2"
+      },
+      {
+        "text": "1, 2, 3"
+      },
+      {
+        "text": "ReferenceError"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier ausgegeben?"
+    ],
+    "explanationProse": [
+      "`tick` schließt über `count`. Jeder Aufruf erhöht und gibt die *gleiche* `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.\n\n    Das Schlüsselwort: *gleiche*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf die Variablenbindung. Das ist der ganze Trick."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Klassischer Zähler\",\n  \"group\": \"Aufwärmübung\",\n  \"options\": [\n    {\n      \"text\": \"0, 0, 0\"\n    },\n    {\n      \"text\": \"0, 1, 2\"\n    },\n    {\n      \"text\": \"1, 2, 3\"\n    },\n    {\n      \"text\": \"ReferenceError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird hier ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"`tick` schließt über `count`. Jeder Aufruf erhöht und gibt die *gleiche* `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.\\n\\n    Das Schlüsselwort: *gleiche*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf die Variablenbindung. Das ist der ganze Trick.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 743,
+    "outputTokens": 1086,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6411
+  },
+  "cost": {
+    "inputUsd": 0.00010402,
+    "outputUsd": 0.00030408000000000003,
+    "totalUsd": 0.0004081,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

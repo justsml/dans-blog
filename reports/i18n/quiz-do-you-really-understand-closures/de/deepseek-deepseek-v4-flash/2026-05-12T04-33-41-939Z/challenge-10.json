@@ -1,0 +1,43 @@
+{
+  "index": 9,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Memoization durch Closure",
+  "translation": {
+    "title": "Memoization durch Closure",
+    "group": "Bonus",
+    "options": [
+      {
+        "text": "Ruft expensive() 3 Mal auf"
+      },
+      {
+        "text": "Ruft expensive() 1 Mal auf"
+      },
+      {
+        "text": "Ruft expensive() 2 Mal auf"
+      },
+      {
+        "text": "Wirft: Maximale Aufrufstapelgröße überschritten"
+      }
+    ],
+    "questionProse": [
+      "Wie oft wird `expensive()` tatsächlich aufgerufen?"
+    ],
+    "explanationProse": [
+      "Die memoized-Funktion schließt über `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort zurück.\n\n    `calls` ist `1`.\n\n    Das sind Closures, die echte Arbeit leisten. `cache` ist privat (kann von außerhalb von `memoize` nicht zugegriffen werden), persistent (lebt so lange wie `fast` existiert) und wird über alle Aufrufe von `fast` hinweg geteilt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Memoization durch Closure\",\n  \"group\": \"Bonus\",\n  \"options\": [\n    {\n      \"text\": \"Ruft expensive() 3 Mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 1 Mal auf\"\n    },\n    {\n      \"text\": \"Ruft expensive() 2 Mal auf\"\n    },\n    {\n      \"text\": \"Wirft: Maximale Aufrufstapelgröße überschritten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie oft wird `expensive()` tatsächlich aufgerufen?\"\n  ],\n  \"explanationProse\": [\n    \"Die memoized-Funktion schließt über `cache`. Der erste Aufruf (`fast(5)`) verfehlt den Cache, ruft `expensive` auf und speichert das Ergebnis. Der zweite und dritte Aufruf treffen den Cache und geben sofort zurück.\\n\\n    `calls` ist `1`.\\n\\n    Das sind Closures, die echte Arbeit leisten. `cache` ist privat (kann von außerhalb von `memoize` nicht zugegriffen werden), persistent (lebt so lange wie `fast` existiert) und wird über alle Aufrufe von `fast` hinweg geteilt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 781,
+    "outputTokens": 1115,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6468
+  },
+  "cost": {
+    "inputUsd": 0.00010934000000000001,
+    "outputUsd": 0.00031220000000000005,
+    "totalUsd": 0.0004215400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

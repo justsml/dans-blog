@@ -1,0 +1,48 @@
+{
+  "index": 14,
+  "originalTitle": "RAII Pattern",
+  "translatedTitle": "RAII-Muster",
+  "translation": {
+    "title": "RAII-Muster",
+    "group": "Speichermuster",
+    "options": [
+      {
+        "text": "Ressource wird nach Verlassen des Gültigkeitsbereichs freigegeben",
+        "hint": "Das `File`-Feld besitzt eine eigene `Drop`-Implementierung."
+      },
+      {
+        "text": "Ressourcenleck",
+        "hint": "Der Wrapper hat keine eigene `Drop`-Implementierung, aber seine Felder werden trotzdem automatisch freigegeben."
+      },
+      {
+        "text": "Kompilierfehler",
+        "hint": "Der Code kompiliert erfolgreich."
+      },
+      {
+        "text": "Laufzeitfehler",
+        "hint": "Es geht hier um die Ressourcenbereinigung."
+      }
+    ],
+    "questionProse": [
+      "Was passiert mit dem Dateihandle in diesem RAII-Beispiel?"
+    ],
+    "explanationProse": [
+      "RAII in Rust stellt sicher, dass Ressourcen ordnungsgemäß verwaltet werden. In diesem Beispiel benötigt `FileWrapper` keine eigene `Drop`-Implementierung, um das Dateihandle zu schließen: Das `File`-Feld wird automatisch freigegeben, sobald der Wrapper den Gültigkeitsbereich verlässt.\n\n      Du implementierst `Drop` nur dann, wenn der Wrapper selbst zusätzliche Bereinigungslogik benötigt, die über das Freigeben seiner Felder hinausgeht:",
+      "RAII-Muster:\n      1. Konstruktor erwirbt Ressourcen\n      2. Methoden nutzen Ressourcen sicher\n      3. Felder werden automatisch freigegeben, wenn der Besitzer den Gültigkeitsbereich verlässt\n      4. Eigene `Drop`-Implementierung fügt bei Bedarf zusätzliche Bereinigung hinzu\n      5. Nutze `?` für die Fehlerweitergabe\n\n      Best Practices:\n      1. Vertraue auf die `Drop`-Implementierungen der Standardbibliothek, wenn diese die Ressource bereits korrekt abbilden\n      2. Halte die Ressourcenverwaltung einfach und nachvollziehbar\n      3. Verwende nach Möglichkeit Typen der Standardbibliothek\n      4. Dokumentiere das Bereinigungsverhalten\n      5. Erwäge Guard-Patterns für bereichsbezogene Operationen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RAII-Muster\",\n  \"group\": \"Speichermuster\",\n  \"options\": [\n    {\n      \"text\": \"Ressource wird nach Verlassen des Gültigkeitsbereichs freigegeben\",\n      \"hint\": \"Das `File`-Feld besitzt eine eigene `Drop`-Implementierung.\"\n    },\n    {\n      \"text\": \"Ressourcenleck\",\n      \"hint\": \"Der Wrapper hat keine eigene `Drop`-Implementierung, aber seine Felder werden trotzdem automatisch freigegeben.\"\n    },\n    {\n      \"text\": \"Kompilierfehler\",\n      \"hint\": \"Der Code kompiliert erfolgreich.\"\n    },\n    {\n      \"text\": \"Laufzeitfehler\",\n      \"hint\": \"Es geht hier um die Ressourcenbereinigung.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert mit dem Dateihandle in diesem RAII-Beispiel?\"\n  ],\n  \"explanationProse\": [\n    \"RAII in Rust stellt sicher, dass Ressourcen ordnungsgemäß verwaltet werden. In diesem Beispiel benötigt `FileWrapper` keine eigene `Drop`-Implementierung, um das Dateihandle zu schließen: Das `File`-Feld wird automatisch freigegeben, sobald der Wrapper den Gültigkeitsbereich verlässt.\\n\\n      Du implementierst `Drop` nur dann, wenn der Wrapper selbst zusätzliche Bereinigungslogik benötigt, die über das Freigeben seiner Felder hinausgeht:\",\n    \"RAII-Muster:\\n      1. Konstruktor erwirbt Ressourcen\\n      2. Methoden nutzen Ressourcen sicher\\n      3. Felder werden automatisch freigegeben, wenn der Besitzer den Gültigkeitsbereich verlässt\\n      4. Eigene `Drop`-Implementierung fügt bei Bedarf zusätzliche Bereinigung hinzu\\n      5. Nutze `?` für die Fehlerweitergabe\\n\\n      Best Practices:\\n      1. Vertraue auf die `Drop`-Implementierungen der Standardbibliothek, wenn diese die Ressource bereits korrekt abbilden\\n      2. Halte die Ressourcenverwaltung einfach und nachvollziehbar\\n      3. Verwende nach Möglichkeit Typen der Standardbibliothek\\n      4. Dokumentiere das Bereinigungsverhalten\\n      5. Erwäge Guard-Patterns für bereichsbezogene Operationen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 999,
+    "outputTokens": 4783,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 87232
+  },
+  "cost": {
+    "inputUsd": 0.00032467500000000007,
+    "outputUsd": 0.00932685,
+    "totalUsd": 0.009651525,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

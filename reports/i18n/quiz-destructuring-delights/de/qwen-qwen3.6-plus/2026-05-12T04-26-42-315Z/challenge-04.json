@@ -1,0 +1,46 @@
+{
+  "index": 3,
+  "originalTitle": "Default Values in Object Destructuring",
+  "translatedTitle": "Standardwerte beim Objekt-Destructuring",
+  "translation": {
+    "title": "Standardwerte beim Objekt-Destructuring",
+    "group": "Standardwerte",
+    "options": [
+      {
+        "text": "Hi Dan aus Unknown"
+      },
+      {
+        "text": "Hi Dan aus Denver"
+      },
+      {
+        "text": "Hi Unknown aus Unknown"
+      },
+      {
+        "text": "Hi Unknown aus Denver"
+      },
+      {
+        "text": "Fehler"
+      }
+    ],
+    "questionProse": [
+      "Jetzt mit ein paar Standardwerten: Was passiert hier?"
+    ],
+    "explanationProse": [
+      "Die Eigenschaft `birth` existiert nicht auf `person`, daher benötigt das gesamte Objekt einen Standardwert, nicht nur die verschachtelte Eigenschaft. Im Grunde fehlt dort ein ` = {}` als Default.\n\n  So wie der Code geschrieben ist, bedeutet er: „Wenn `person.birth` `undefined` ist, dann ist `place` `Unknown`“. Da `person.birth` aber `undefined` ist, versucht JavaScript, `undefined` zu destrukturieren – was zu einem Fehler führt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Standardwerte beim Objekt-Destructuring\",\n  \"group\": \"Standardwerte\",\n  \"options\": [\n    {\n      \"text\": \"Hi Dan aus Unknown\"\n    },\n    {\n      \"text\": \"Hi Dan aus Denver\"\n    },\n    {\n      \"text\": \"Hi Unknown aus Unknown\"\n    },\n    {\n      \"text\": \"Hi Unknown aus Denver\"\n    },\n    {\n      \"text\": \"Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Jetzt mit ein paar Standardwerten: Was passiert hier?\"\n  ],\n  \"explanationProse\": [\n    \"Die Eigenschaft `birth` existiert nicht auf `person`, daher benötigt das gesamte Objekt einen Standardwert, nicht nur die verschachtelte Eigenschaft. Im Grunde fehlt dort ein ` = {}` als Default.\\n\\n  So wie der Code geschrieben ist, bedeutet er: „Wenn `person.birth` `undefined` ist, dann ist `place` `Unknown`“. Da `person.birth` aber `undefined` ist, versucht JavaScript, `undefined` zu destrukturieren – was zu einem Fehler führt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 3470,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63867
+  },
+  "cost": {
+    "inputUsd": 0.00027625,
+    "outputUsd": 0.0067665,
+    "totalUsd": 0.00704275,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 23,
+  "originalTitle": "S3 Strong Consistency",
+  "translatedTitle": "S3: Starke Konsistenz",
+  "translation": {
+    "title": "S3: Starke Konsistenz",
+    "group": "S3-Konsistenz",
+    "options": [
+      {
+        "text": "Nur für neue Objekte",
+        "hint": "Falsch – das war früher der Fall, aber nicht mehr."
+      },
+      {
+        "text": "Starke Konsistenz für alle Operationen",
+        "hint": "Richtig – AWS hat das Modell 2020 global umgestellt."
+      },
+      {
+        "text": "Letztendliche Konsistenz für Updates",
+        "hint": "Falsch – das alte Verhalten wurde abgeschafft."
+      },
+      {
+        "text": "Abhängig von der Region",
+        "hint": "Falsch – es gilt einheitlich für alle S3-Regionen."
+      }
+    ],
+    "questionProse": [
+      "Welches Konsistenzmodell garantiert S3 seit Ende 2020 für alle Operationen?"
+    ],
+    "explanationProse": [
+      "S3-Konsistenzmodell:\n- Starke Read-after-Write-Konsistenz für alle Operationen\n- Gilt für PUTs und DELETEs\n- Alte Workarounds sind überflüssig\n- Keine Mehrkosten\n\nWarum das wichtig ist:\n- Deine Anwendungslogik wird deutlich simpler\n- Du brauchst keine manuellen Konsistenzprüfungen mehr\n- Lesevorgänge nach einem Schreibvorgang sind sofort zuverlässig\n- Die Gesamtzuverlässigkeit deiner App steigt spürbar"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"S3: Starke Konsistenz\",\n  \"group\": \"S3-Konsistenz\",\n  \"options\": [\n    {\n      \"text\": \"Nur für neue Objekte\",\n      \"hint\": \"Falsch – das war früher der Fall, aber nicht mehr.\"\n    },\n    {\n      \"text\": \"Starke Konsistenz für alle Operationen\",\n      \"hint\": \"Richtig – AWS hat das Modell 2020 global umgestellt.\"\n    },\n    {\n      \"text\": \"Letztendliche Konsistenz für Updates\",\n      \"hint\": \"Falsch – das alte Verhalten wurde abgeschafft.\"\n    },\n    {\n      \"text\": \"Abhängig von der Region\",\n      \"hint\": \"Falsch – es gilt einheitlich für alle S3-Regionen.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches Konsistenzmodell garantiert S3 seit Ende 2020 für alle Operationen?\"\n  ],\n  \"explanationProse\": [\n    \"S3-Konsistenzmodell:\\n- Starke Read-after-Write-Konsistenz für alle Operationen\\n- Gilt für PUTs und DELETEs\\n- Alte Workarounds sind überflüssig\\n- Keine Mehrkosten\\n\\nWarum das wichtig ist:\\n- Deine Anwendungslogik wird deutlich simpler\\n- Du brauchst keine manuellen Konsistenzprüfungen mehr\\n- Lesevorgänge nach einem Schreibvorgang sind sofort zuverlässig\\n- Die Gesamtzuverlässigkeit deiner App steigt spürbar\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 769,
+    "outputTokens": 3437,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63232
+  },
+  "cost": {
+    "inputUsd": 0.000249925,
+    "outputUsd": 0.00670215,
+    "totalUsd": 0.006952074999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

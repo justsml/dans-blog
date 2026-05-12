@@ -1,0 +1,58 @@
+{
+  "index": 8,
+  "originalTitle": "BatchGetItem Limits",
+  "translatedTitle": "BatchGetItem-Limits",
+  "translation": {
+    "title": "BatchGetItem-Limits",
+    "group": "Batches, Teil 1!",
+    "options": [
+      {
+        "text": "1",
+        "hint": "... ich bestehe auf Batching."
+      },
+      {
+        "text": "25",
+        "hint": "Das ist das Limit für `BatchWriteItem`."
+      },
+      {
+        "text": "100"
+      },
+      {
+        "text": "75",
+        "hint": "Knapp daneben, aber es ist eine runde Zahl."
+      },
+      {
+        "text": "50",
+        "hint": "Für `BatchGetItem` ist es etwas höher."
+      },
+      {
+        "text": "200",
+        "hint": "Ein bisschen zu hoch..."
+      },
+      {
+        "text": "Unlimited",
+        "hint": "Für `BatchGetItem` gibt es ein festes Limit."
+      }
+    ],
+    "questionProse": [
+      "Noch eine DynamoDB-Batch-Frage!<br />\n      Wie viele Elemente kannst du maximal mit einer einzigen DynamoDB-`BatchGetItem`-Anfrage abrufen?"
+    ],
+    "explanationProse": [
+      "Das DynamoDB SDK ermöglicht es dir, bis zu **100** Elemente in einer einzigen `BatchGetItem`-Anfrage abzurufen. Das ist höher als das Limit für `BatchWriteItem`, das bei 25 Elementen liegt.\n      Zusätzlich gibt es Grenzen für die gesamte Payload-Größe, die Dokumentgröße und die Anfragerate.\n\n      Das Verständnis dieser Limits ist entscheidend, um die Leistung deiner Anwendung zu optimieren und effiziente Datenoperationen sicherzustellen.\n\n      **Hinweis:** Es ist möglich, _einige_ dieser Limits zu überschreiten – wenn du deinen AWS-Account-Manager gut überreden kannst. 😎"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"BatchGetItem-Limits\",\n  \"group\": \"Batches, Teil 1!\",\n  \"options\": [\n    {\n      \"text\": \"1\",\n      \"hint\": \"... ich bestehe auf Batching.\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"Das ist das Limit für `BatchWriteItem`.\"\n    },\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"75\",\n      \"hint\": \"Knapp daneben, aber es ist eine runde Zahl.\"\n    },\n    {\n      \"text\": \"50\",\n      \"hint\": \"Für `BatchGetItem` ist es etwas höher.\"\n    },\n    {\n      \"text\": \"200\",\n      \"hint\": \"Ein bisschen zu hoch...\"\n    },\n    {\n      \"text\": \"Unlimited\",\n      \"hint\": \"Für `BatchGetItem` gibt es ein festes Limit.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Noch eine DynamoDB-Batch-Frage!<br />\\n      Wie viele Elemente kannst du maximal mit einer einzigen DynamoDB-`BatchGetItem`-Anfrage abrufen?\"\n  ],\n  \"explanationProse\": [\n    \"Das DynamoDB SDK ermöglicht es dir, bis zu **100** Elemente in einer einzigen `BatchGetItem`-Anfrage abzurufen. Das ist höher als das Limit für `BatchWriteItem`, das bei 25 Elementen liegt.\\n      Zusätzlich gibt es Grenzen für die gesamte Payload-Größe, die Dokumentgröße und die Anfragerate.\\n\\n      Das Verständnis dieser Limits ist entscheidend, um die Leistung deiner Anwendung zu optimieren und effiziente Datenoperationen sicherzustellen.\\n\\n      **Hinweis:** Es ist möglich, _einige_ dieser Limits zu überschreiten – wenn du deinen AWS-Account-Manager gut überreden kannst. 😎\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 944,
+    "outputTokens": 4275,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 78231
+  },
+  "cost": {
+    "inputUsd": 0.0003068,
+    "outputUsd": 0.00833625,
+    "totalUsd": 0.00864305,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

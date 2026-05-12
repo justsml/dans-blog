@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "Console vs JSON",
+  "translation": {
+    "title": "Console vs JSON",
+    "group": "Serialisierungs-Überraschungen",
+    "options": [
+      {
+        "text": "Beide zeigen exakt dasselbe Ergebnis"
+      },
+      {
+        "text": "console.log zeigt mehr Informationen"
+      },
+      {
+        "text": "JSON.stringify zeigt mehr Informationen"
+      },
+      {
+        "text": "Beide zeigen leere Objekte"
+      }
+    ],
+    "questionProse": [
+      "Was unterscheidet die beiden eigentlich?"
+    ],
+    "explanationProse": [
+      "`console.log(err)` gibt die Fehlermeldung samt Stacktrace aus, da die Konsole Error-Objekte speziell behandelt. `JSON.stringify(err)` liefert hingegen `'{}'`, weil die Eigenschaften von Error-Objekten nicht enumerierbar sind. Dieser feine Unterschied lässt viele Entwickler beim API-Debugging ins Straucheln kommen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Console vs JSON\",\n  \"group\": \"Serialisierungs-Überraschungen\",\n  \"options\": [\n    {\"text\": \"Beide zeigen exakt dasselbe Ergebnis\"},\n    {\"text\": \"console.log zeigt mehr Informationen\"},\n    {\"text\": \"JSON.stringify zeigt mehr Informationen\"},\n    {\"text\": \"Beide zeigen leere Objekte\"}\n  ],\n  \"questionProse\": [\n    \"Was unterscheidet die beiden eigentlich?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)` gibt die Fehlermeldung samt Stacktrace aus, da die Konsole Error-Objekte speziell behandelt. `JSON.stringify(err)` liefert hingegen `'{}'`, weil die Eigenschaften von Error-Objekten nicht enumerierbar sind. Dieser feine Unterschied lässt viele Entwickler beim API-Debugging ins Straucheln kommen.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 754,
+    "outputTokens": 4214,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 77226
+  },
+  "cost": {
+    "inputUsd": 0.00024505,
+    "outputUsd": 0.0082173,
+    "totalUsd": 0.00846235,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

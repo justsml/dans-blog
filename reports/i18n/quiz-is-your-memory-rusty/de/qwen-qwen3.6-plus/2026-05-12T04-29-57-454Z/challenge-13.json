@@ -1,0 +1,51 @@
+{
+  "index": 12,
+  "originalTitle": "Arc and Mutex",
+  "translatedTitle": "Arc und Mutex",
+  "translation": {
+    "title": "Arc und Mutex",
+    "group": "Smart Pointer",
+    "options": [
+      {
+        "text": "Gibt aus: 42",
+        "hint": "Der Code erreicht die print-Anweisung nie."
+      },
+      {
+        "text": "Gibt aus: 43",
+        "hint": "Der Code hängt sich vor der Ausgabe auf."
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Der Code ist syntaktisch korrekt."
+      },
+      {
+        "text": "Laufzeit-Panic",
+        "hint": "Es ist schlimmer als ein Panic."
+      },
+      {
+        "text": "Deadlock"
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn dieser Code ausgeführt wird?"
+    ],
+    "explanationProse": [
+      "Dieser Code demonstriert ein klassisches Deadlock-Szenario. So lässt es sich beheben:",
+      "Best Practices zur Vermeidung von Deadlocks:\n      1. Halte kritische Abschnitte klein\n      2. Gib Sperren zügig durch Scopes frei\n      3. Fordere mehrere Sperren in einer konsistenten Reihenfolge an\n      4. Nutze parking_lot::Mutex für bessere Performance\n      5. Erwäge RwLock für leseintensive Workloads\n\n      Häufige Patterns:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Arc und Mutex\",\n  \"group\": \"Smart Pointer\",\n  \"options\": [\n    {\n      \"text\": \"Gibt aus: 42\",\n      \"hint\": \"Der Code erreicht die print-Anweisung nie.\"\n    },\n    {\n      \"text\": \"Gibt aus: 43\",\n      \"hint\": \"Der Code hängt sich vor der Ausgabe auf.\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Der Code ist syntaktisch korrekt.\"\n    },\n    {\n      \"text\": \"Laufzeit-Panic\",\n      \"hint\": \"Es ist schlimmer als ein Panic.\"\n    },\n    {\n      \"text\": \"Deadlock\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn dieser Code ausgeführt wird?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Dieser Code demonstriert ein klassisches Deadlock-Szenario. So lässt es sich beheben:\",\n    \"Best Practices zur Vermeidung von Deadlocks:\\n      1. Halte kritische Abschnitte klein\\n      2. Gib Sperren zügig durch Scopes frei\\n      3. Fordere mehrere Sperren in einer konsistenten Reihenfolge an\\n      4. Nutze parking_lot::Mutex für bessere Performance\\n      5. Erwäge RwLock für leseintensive Workloads\\n\\n      Häufige Patterns:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 924,
+    "outputTokens": 3339,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 61172
+  },
+  "cost": {
+    "inputUsd": 0.00030030000000000004,
+    "outputUsd": 0.00651105,
+    "totalUsd": 0.00681135,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 1,
+  "originalTitle": "Move Semantics with Functions",
+  "translatedTitle": "Move-Semantik mit Funktionen",
+  "translation": {
+    "title": "Move-Semantik mit Funktionen",
+    "group": "Ownership",
+    "options": [
+      {
+        "text": "Gibt beide Zeilen aus",
+        "hint": "Überlege, was mit `wisdom` passiert, nachdem es an die Funktion übergeben wurde"
+      },
+      {
+        "text": "Gibt nur die erste Zeile aus",
+        "hint": "Der Code wird gar nicht erst kompilieren."
+      },
+      {
+        "text": "Kompilierfehler"
+      },
+      {
+        "text": "Laufzeitfehler",
+        "hint": "Rusts Ownership-Regeln werden bereits zur Kompilierzeit durchgesetzt."
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du diesen Code ausführst? Denk genau an die Ownership-Übertragung:"
+    ],
+    "explanationProse": [
+      "Der Code lässt sich nicht kompilieren, weil der Besitz von `wisdom` an `take_knowledge` übergeben wurde und die Variable danach nicht mehr verwendet werden kann.\n\n      Hier sind drei Möglichkeiten, das Problem zu lösen:\n\n      1. Übergabe per Referenz (den Wert ausleihen):",
+      "2. Den Wert klonen (eine neue Kopie erstellen):",
+      "3. Den Besitz aus der Funktion zurückgeben:",
+      "Jeder Ansatz hat seine eigenen Anwendungsfälle:\n      - Referenzen: Am effizientesten, erfordern aber Lebensdauer-Management\n      - Klonen: Einfach, aber potenziell ressourcenintensiv\n      - Besitz zurückgeben: Nützlich zum Transformieren von Werten\n\n      Best Practice: Nutze Referenzen, solange du keine Ownership-Übertragung benötigst."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Move-Semantik mit Funktionen\",\n  \"group\": \"Ownership\",\n  \"options\": [\n    {\n      \"text\": \"Gibt beide Zeilen aus\",\n      \"hint\": \"Überlege, was mit `wisdom` passiert, nachdem es an die Funktion übergeben wurde\"\n    },\n    {\n      \"text\": \"Gibt nur die erste Zeile aus\",\n      \"hint\": \"Der Code wird gar nicht erst kompilieren.\"\n    },\n    {\n      \"text\": \"Kompilierfehler\"\n    },\n    {\n      \"text\": \"Laufzeitfehler\",\n      \"hint\": \"Rusts Ownership-Regeln werden bereits zur Kompilierzeit durchgesetzt.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du diesen Code ausführst? Denk genau an die Ownership-Übertragung:\"\n  ],\n  \"explanationProse\": [\n    \"Der Code lässt sich nicht kompilieren, weil der Besitz von `wisdom` an `take_knowledge` übergeben wurde und die Variable danach nicht mehr verwendet werden kann.\\n\\n      Hier sind drei Möglichkeiten, das Problem zu lösen:\\n\\n      1. Übergabe per Referenz (den Wert ausleihen):\",\n    \"2. Den Wert klonen (eine neue Kopie erstellen):\",\n    \"3. Den Besitz aus der Funktion zurückgeben:\",\n    \"Jeder Ansatz hat seine eigenen Anwendungsfälle:\\n      - Referenzen: Am effizientesten, erfordern aber Lebensdauer-Management\\n      - Klonen: Einfach, aber potenziell ressourcenintensiv\\n      - Besitz zurückgeben: Nützlich zum Transformieren von Werten\\n\\n      Best Practice: Nutze Referenzen, solange du keine Ownership-Übertragung benötigst.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 984,
+    "outputTokens": 3729,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69400
+  },
+  "cost": {
+    "inputUsd": 0.0003198,
+    "outputUsd": 0.00727155,
+    "totalUsd": 0.00759135,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

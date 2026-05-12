@@ -1,0 +1,598 @@
+---
+unlisted: false
+title: 'Quiz: Reguläre Ausdrücke meistern'
+subTitle: Kannst du wilde Regex zähmen?
+label: RegEx
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: RegEx
+date: '2024-11-15'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - regex
+  - javascript
+  - intermediate
+  - patterns
+cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
+cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Bereit, dich mit einigen regulären Ausdrücken zu messen? 🤼‍♂️</p>
+
+Teste dein RegEx-Wissen mit Fragen zu grundlegenden Mustern, Quantoren, Gruppen und den kniffligen Lookaround-Assertions. Von einfachem String-Matching bis zur komplexen Mustervalidierung – erkennst du den richtigen Regex?
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Aufwärmen"
+  title="Groß-/Kleinschreibung beachten"
+  options={[
+    {text: '["Cat"]'},
+    {text: '["cat", "CAT", "Cat"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird gematcht?
+```js
+    'cat CAT Cat'.match(/cat/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Dieses Muster verwendet `g`, aber nicht `i`:
+    - `g` findet alle Übereinstimmungen
+    - Ohne `i` wird die Groß-/Kleinschreibung beachtet
+
+    Ohne das `i`-Flag wird nur das kleingeschriebene "cat" gematcht.
+
+    Dies ist besonders nützlich bei Benutzereingaben oder HTML, wo die Groß-/Kleinschreibung variieren kann.
+
+    [Mehr über RegExp-Flags erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Aufwärmübung"
+  title="Einfaches Zeichen-Matching"
+  options={[
+    {text: '["cat", "hat"]', isAnswer: true},
+    {text: '["cat", "hat", "what"]'},
+    {text: '["cat"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt dieser Code zurück?
+```js
+    const words = ['cat', 'hat', 'what', 'bat'];
+    words.filter(word => word.match(/^[ch]at/))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster `/^[ch]at/` matcht Zeichenketten, die:
+    - Mit (`^`) entweder 'c' oder 'h' beginnen (das bedeutet `[ch]` – eine Zeichenklasse, die ein einzelnes Zeichen matcht)
+    - Gefolgt von buchstäblich 'at'
+
+    Daher matchen nur "cat" und "hat" dieses Muster. Die Methode `filter()` behält nur die übereinstimmenden Elemente.
+
+    [Erfahre mehr über Zeichenklassen auf MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Grundlegende Übereinstimmungen"
+  title="Gierig vs. Nicht-Gierig"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird hiermit gematcht?
+```js
+    '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster `/<div>.*?<\/div>/g` verwendet nicht-gieriges Matching mit `*?`, was bedeutet:
+    - Matche `<div>`
+    - Matche jedes Zeichen (`.*`) aber so wenige wie möglich (`?`)
+    - Bis `</div>` gefunden wird
+    - Das `g`-Flag sorgt dafür, dass alle Vorkommen gematcht werden
+
+    Ohne das `?` würde das gierige `.*` alles vom ersten `<div>` bis zum letzten `</div>` matchen, was einen großen Treffer ergibt. Mit `?` werden die Paare einzeln gematcht.
+
+    [Erfahre mehr über gieriges vs. nicht-gieriges Matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Häufige Fallstricke"
+  title="Der Punkt-Metacharakter"
+  options={[
+    {text: '["hello\nworld"]'},
+    {text: '["hello", "world"]', isAnswer: true},
+    {text: '["hello\n", "world"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird zurückgegeben?
+```js
+    'hello\nworld'.match(/\w+/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster `\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeilenumbruch vorkommt, matcht `\w`:
+    - Buchstaben (a-z, A-Z)
+    - Zahlen (0-9)
+    - Unterstrich (_)
+
+    Der Zeilenumbruch fungiert also als Wortgrenze, und wir erhalten zwei Treffer. Hätten wir `.*` verwendet, würde es standardmäßig nicht auf den Zeilenumbruch matchen (dafür bräuchte man das `s`-Flag).
+
+    [Mehr über Metazeichen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Lookahead"
+  title="Positiver Lookahead"
+  options={[
+    {text: '["$100", "€50"]'},
+    {text: '["100", "50"]'},
+    {text: '["$", "€"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird hiermit gematcht?
+```js
+    '$100 and €50'.match(/\d+(?=[\$€])/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Dieses Pattern matcht nichts, weil der Lookahead rückwärts gerichtet ist! Wenn du Ziffern suchst, denen `$` oder `€` vorausgehen, verwende einen Lookbehind: `/(?<=[\$€])\d+/g`.
+
+    Lookaheads prüfen, was *nach* der aktuellen Position kommt. Das Pattern sucht nach:
+    - Ein oder mehr Ziffern (`\d+`)
+    - Gefolgt von (`(?=...)`) entweder $ oder € (`[\$€]`)
+
+    Da es keine Zahlen gibt, denen Währungssymbole folgen (sie gehen ihnen voraus), erhalten wir keine Treffer.
+
+    [Mehr über Lookahead-Assertions erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Grundlegende Übereinstimmung"
+  title="Wortgrenzen"
+  options={[
+    {text: '["cat", "cats"]'},
+    {text: '["cat"]', isAnswer: true},
+    {text: '["cats"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird übereinstimmen?
+```js
+    'cat cats category'.match(/\bcat\b/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`\b` steht für eine Wortgrenze, die Folgendes erfasst:
+    - Zwischen einem Wortzeichen und einem Nicht-Wortzeichen
+    - Am Anfang/Ende der Zeichenkette, wenn dort ein Wortzeichen steht
+
+    Daher erfasst `/\bcat\b/` nur „cat“, wenn es ein vollständiges Wort ist, nicht als Teil eines anderen Wortes.
+    - ✅ „cat“ (von Leerzeichen umgeben)
+    - ❌ „cats“ (keine Grenze nach „cat“)
+    - ❌ „category“ (keine Grenze nach „cat“)
+
+    [Mehr über Wortgrenzen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Häufige Fallstricke"
+  title="Das globale Flag"
+  options={[
+    {text: 'null'},
+    {text: '["a"]'},
+    {text: '["a", "a", "a"]', isAnswer: true},
+    {text: '["b", "n", "n"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die Ausgabe?
+```js
+    'banana'.match(/a/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das `g`-Flag (global) ändert das Verhalten von `match()`:
+    - Ohne `g`: Gibt den ersten Treffer mit Erfassungsgruppen zurück
+    - Mit `g`: Gibt ein Array aller übereinstimmenden Zeichenfolgen zurück
+
+    In diesem Fall findet es alle Vorkommen von "a" in "banana".
+
+    Hinweis: Wenn du sowohl alle Treffer als auch Erfassungsgruppen benötigst, verwende `matchAll()` oder die `exec()`-Methode in einer Schleife.
+
+    [Erfahre mehr über das globale Flag](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Look-behind"
+  title="Negativer Look-behind"
+  options={[
+    {text: '["123"]'},
+    {text: '["123", "456"]'},
+    {text: '["23", "456"]', isAnswer: true},
+    {text: '["456"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was matcht dieses Muster?
+```js
+    'abc123 def456'.match(/(?<!abc)\d+/g)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der negative Look-behind `(?<!abc)` stellt sicher, dass den Ziffern nicht "abc" vorausgeht:
+    - ❌ "123" (vorausgehend "abc")
+    - ✅ "23" (vorausgehend "abc1")
+    - ✅ "456" (vorausgehend "def")
+
+    JavaScript unterstützt Look-behind-Assertions in modernen Engines. Dieses Beispiel verwendet einen Look-behind mit fester Länge: `abc` ist immer drei Zeichen. Look-behind mit variabler Länge ist der kniffligere engine-spezifische Sonderfall.
+
+    Hinweis: Die Unterstützung für Look-behind ist in JavaScript relativ neu. Überprüfe die [Browser-Kompatibilität](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility), wenn du ältere Browser unterstützen musst.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Grundlegendes Matching"
+  title="Erfassende Gruppen"
+  options={[
+    {text: '["2029-12-31"]'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
+    {text: '["20", "29", "12", "31"]'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt das zurück?
+```js
+    '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster verwendet drei erfassende Gruppen:
+    1. `(\d{4})` erfasst das Jahr
+    2. `(\d{2})` erfasst den Monat
+    3. `(\d{2})` erfasst den Tag
+
+    `match()` ohne das `g`-Flag gibt zurück:
+    - Index 0: Vollständige Übereinstimmung
+    - Index 1+: Erfassungsgruppen
+
+    `slice(1)` ist ein gängiger Trick, um nur die Erfassungsgruppen zu erhalten.
+
+    [Mehr über Gruppen und Erfassung](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Look-ahead"
+  title="Negativer Look-ahead"
+  options={[
+    {text: '["password123"]'},
+    {text: '["abc123"]'},
+    {text: '["123aBc"]'},
+    {text: '["12"]', isAnswer: true},
+    {text: '["abc"]'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welches wird das Ergebnis hiervon sein?
+```js
+    "123aBc".match(/^\d+(?![a-z])/ig)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der negative Look-ahead `(?![a-z])` stellt sicher, dass nach den Ziffern keine Kleinbuchstaben folgen. Da der Teil "3aBc" einen Kleinbuchstaben nach den Ziffern hat, passt sein Abschnitt nicht. Daher passt nur der Anfang "12".
+
+    [Mehr über negativen Look-ahead erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Look-behind"
+  title="Look-behind-Split"
+  options={[
+    {text: '["a,", "b,", "c"]', isAnswer: true},
+    {text: '["a,b,c"]'},
+    {text: '["a", ",", "b", ",", "c"]'},
+    {text: '["a,b,c", ""]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird zurückgegeben?
+```js
+    'a,b,c'.split(/(?<=,)/)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:
+    - `a,` (nach Komma)
+    - `b,` (nach Komma)
+    - `c` (kein Komma danach)
+
+    Der Look-behind verbraucht das Komma nicht, daher bleibt das Komma im Split-Ergebnis am vorherigen Segment hängen.
+
+    Dies ist nützlich, wenn du einen String basierend auf dem, was davor kommt, teilen möchtest, **ohne die Trennzeichen zu verlieren.**
+
+    [Erfahre mehr über Look-behind-Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Häufige Fallstricke"
+  title="Sonderzeichen escapen"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]'},
+    {text: '[]'},
+    {text: 'null', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird gematcht?
+```js
+    '$100'.match(/$\d+/)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Sonderzeichen müssen mit `\` escaped werden, um sie literal zu matchen:
+    - `$` ist ein Sonderzeichen (Ende des Strings)
+    - Um ein literal Dollarzeichen zu matchen, escape es: `\$`
+
+    Häufige Zeichen, die ein Escape benötigen:
+```js
+    . * + ? ^ $ [ ] \ ( ) { } |
+```
+Ohne Escaping haben viele Sonderzeichen eine Regex-Bedeutung, die vielleicht nicht das ist, was du möchtest.
+
+    [Erfahre mehr über das Escaping von Sonderzeichen](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Look-behind"
+  title="Positiver Look-behind"
+  options={[
+    {text: '["$100"]'},
+    {text: '["100"]', isAnswer: true},
+    {text: '["$"]'},
+    {text: '[]'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird gematcht?
+```js
+    '$100'.match(/(?<=\$)\d+/)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Der positive Look-behind `(?<=\$) stellt sicher, dass den Ziffern ein Dollarzeichen vorausgeht:
+    - `(?<=\$)`: Look-behind für Dollarzeichen
+    - `\d+`: Matcht eine oder mehrere Ziffern
+
+    Look-behind-Assertions verbrauchen keine Zeichen; sie prüfen nur, was davor kommt.
+    Dies ist nützlich, wenn du etwas basierend auf dem Vorhergehenden matchen möchtest, ohne den vorausgehenden Teil einzuschließen.
+
+    [Erfahre mehr über Look-behind-Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Grundlegende Mustererkennung"
+  title="Lazy vs. Greedy Quantoren"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird gematcht?
+```js
+    '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das Muster verwendet lazy Matching mit `*?`:
+    - `<b>`: Öffnendes Tag finden
+    - `(.*?)`: Beliebige Zeichen erfassen (lazy)
+    - `</b>`: Schließendes Tag finden
+
+    Das `?` nach `*` macht es lazy, es matcht so wenige Zeichen wie möglich.
+    Ohne `?` wäre es greedy und würde so viele Zeichen wie möglich matchen.
+
+    `slice(1)` gibt nur die erfasste Gruppe zurück.
+
+    [Mehr über greedy vs. lazy Matching erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Grundlegendes Matching"
+  title="Unicode-Flag"
+  options={[
+    {text: '["🙂"]'},
+    {text: '["😀", "🙂"]', isAnswer: true},
+    {text: 'null'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was wird gematcht?
+```js
+    '😀 🙂'.match(/\p{Emoji}/gu)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Das `u`-Flag ermöglicht:
+    - Unicode-Eigenschafts-Escapes (`\p{...}`)
+    - Korrekte Behandlung von Surrogatpaaren
+
+    Ohne `u` könnten Emojis und andere Unicode-Zeichen nicht korrekt gematcht werden.
+    Das Muster `\p{Emoji}` matcht Zeichen mit der Unicode-Eigenschaft `Emoji`. In diesem String bedeutet das die beiden Emoji-Piktogramme.
+
+    Hinweis: Unicode-Eigenschafts-Escapes benötigen das `u`-Flag.
+
+    [Mehr über den Unicode-Modus erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Blick-in-die-Hölle"
+  title="Passwort-Validierung"
+  options={[
+    {text: '"sassword123"'},
+    {text: '"Sass123!"', isAnswer: true},
+    {text: '"SASSWORD123"'},
+    {text: '"Sass word123"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Entschuldigung im Voraus! 😈<br />
+    Welches Passwort passt zu diesem Muster?
+```js
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Schreibe so etwas niemals in der Produktion! 😅
+
+    Dieses Muster verwendet mehrere positive Lookaheads, um Folgendes zu erzwingen:
+    - Mindestens ein Großbuchstabe: `(?=.*[A-Z])`
+    - Mindestens ein Kleinbuchstabe: `(?=.*[a-z])`
+    - Mindestens eine Ziffer: `(?=.*\d)`
+    - Mindestens ein Sonderzeichen: `(?=.*[!@#$%^&*])`
+    - Mindestlänge von 8: `.{8,}`
+
+    Lookaheads sind perfekt für die Passwortvalidierung, da sie mehrere Kriterien prüfen können, ohne Zeichen zu verbrauchen.
+
+    [Erfahre mehr über Passwort-Validierungsmuster](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<h2>Wie hast du abgeschnitten? 🧐</h2>
+
+Reguläre Ausdrücke können eine echte Bestie sein, aber sie sind unglaublich mächtig, sobald man den Dreh raus hat (und die ganze neuere Syntax). Übe weiter, und du wirst im Handumdrehen ein RegEx-Meister! 🧙‍♂️
+
+<p class="inset">Suchst du nach einer Pause nach all dem RegEx?<br />Pftt, denk dran: Pause *nach* den Skills! <br /><br />Ab in [mein Gym](/challenges/) und zermalme noch mehr Challenges! 💪</p>

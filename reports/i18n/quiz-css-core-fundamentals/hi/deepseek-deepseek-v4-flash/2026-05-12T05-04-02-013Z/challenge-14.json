@@ -1,0 +1,43 @@
+{
+  "index": 13,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "शून्य-विशिष्टता चयनकर्ता",
+  "translation": {
+    "title": "शून्य-विशिष्टता चयनकर्ता",
+    "group": "चयनकर्ता: विशिष्टता",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "किस चयनकर्ता की विशिष्टता सबसे कम है?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` की विशिष्टता सबसे कम है। `:where()` छद्म-वर्ग और इसके अंदर की हर चीज़ `0-0-0` योगदान देती है, इसलिए केवल `.title` गिना जाता है। `:is(.card) .title` में `.card` की विशिष्टता बनी रहती है, `.card .title` में दो क्लास हैं, और `#card .title` में एक आईडी शामिल है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"शून्य-विशिष्टता चयनकर्ता\",\n  \"group\": \"चयनकर्ता: विशिष्टता\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"किस चयनकर्ता की विशिष्टता सबसे कम है?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` की विशिष्टता सबसे कम है। `:where()` छद्म-वर्ग और इसके अंदर की हर चीज़ `0-0-0` योगदान देती है, इसलिए केवल `.title` गिना जाता है। `:is(.card) .title` में `.card` की विशिष्टता बनी रहती है, `.card .title` में दो क्लास हैं, और `#card .title` में एक आईडी शामिल है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 675,
+    "outputTokens": 921,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9511
+  },
+  "cost": {
+    "inputUsd": 0.00009450000000000002,
+    "outputUsd": 0.00025788000000000004,
+    "totalUsd": 0.00035238000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "Stale Closure in React",
+  "translation": {
+    "title": "Stale Closure in React",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Gibt bei jedem Klick den aktuellen Zählerwert aus"
+      },
+      {
+        "text": "Gibt immer 0 aus"
+      },
+      {
+        "text": "Gibt NaN aus"
+      },
+      {
+        "text": "Dieser Code kompiliert nicht"
+      }
+    ],
+    "questionProse": [
+      "Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrfach geklickt wird?"
+    ],
+    "explanationProse": [
+      "Klassischer Stale Closure. Der `useEffect` läuft nur einmal (leeres Dependency-Array) und erstellt ein Intervall, das `count` so einfängt, wie es beim Mounten war: `0`. Egal wie oft du klickst, der Closure des Intervalls sieht den aktualisierten Wert nie.\n\nDas Button-Label aktualisiert sich korrekt – das ist ein frisches Rendering. Aber `console.log` bleibt für immer bei `0` gefangen.\n\nBehebe es, indem du `count` zum Dependency-Array hinzufügst (erstellt das Intervall neu) oder einen Ref nutzt:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stale Closure in React\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Gibt bei jedem Klick den aktuellen Zählerwert aus\"\n    },\n    {\n      \"text\": \"Gibt immer 0 aus\"\n    },\n    {\n      \"text\": \"Gibt NaN aus\"\n    },\n    {\n      \"text\": \"Dieser Code kompiliert nicht\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrfach geklickt wird?\"\n  ],\n  \"explanationProse\": [\n    \"Klassischer Stale Closure. Der `useEffect` läuft nur einmal (leeres Dependency-Array) und erstellt ein Intervall, das `count` so einfängt, wie es beim Mounten war: `0`. Egal wie oft du klickst, der Closure des Intervalls sieht den aktualisierten Wert nie.\\n\\nDas Button-Label aktualisiert sich korrekt – das ist ein frisches Rendering. Aber `console.log` bleibt für immer bei `0` gefangen.\\n\\nBehebe es, indem du `count` zum Dependency-Array hinzufügst (erstellt das Intervall neu) oder einen Ref nutzt:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 860,
+    "outputTokens": 2714,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 50200
+  },
+  "cost": {
+    "inputUsd": 0.0002795,
+    "outputUsd": 0.0052923,
+    "totalUsd": 0.0055718,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

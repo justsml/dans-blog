@@ -1,0 +1,43 @@
+{
+  "index": 3,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "Der Punkt-Metacharakter",
+  "translation": {
+    "title": "Der Punkt-Metacharakter",
+    "group": "Häufige Fallstricke",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was wird zurückgegeben?"
+    ],
+    "explanationProse": [
+      "Das Muster `\\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeilenumbruch vorkommt, matcht `\\w`:\n    - Buchstaben (a-z, A-Z)\n    - Zahlen (0-9)\n    - Unterstrich (_)\n\n    Der Zeilenumbruch fungiert also als Wortgrenze, und wir erhalten zwei Treffer. Hätten wir `.*` verwendet, würde es standardmäßig nicht auf den Zeilenumbruch matchen (dafür bräuchte man das `s`-Flag).\n\n    [Mehr über Metazeichen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Der Punkt-Metacharakter\",\n  \"group\": \"Häufige Fallstricke\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird zurückgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Das Muster `\\\\w+` matcht ein oder mehrere Wortzeichen. Obwohl im String ein Zeilenumbruch vorkommt, matcht `\\\\w`:\\n    - Buchstaben (a-z, A-Z)\\n    - Zahlen (0-9)\\n    - Unterstrich (_)\\n\\n    Der Zeilenumbruch fungiert also als Wortgrenze, und wir erhalten zwei Treffer. Hätten wir `.*` verwendet, würde es standardmäßig nicht auf den Zeilenumbruch matchen (dafür bräuchte man das `s`-Flag).\\n\\n    [Mehr über Metazeichen erfahren](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 1507,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12627
+  },
+  "cost": {
+    "inputUsd": 0.00011088000000000001,
+    "outputUsd": 0.0004219600000000001,
+    "totalUsd": 0.0005328400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

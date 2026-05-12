@@ -1,0 +1,49 @@
+{
+  "index": 2,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Veränderbare Referenzen",
+  "translation": {
+    "title": "Veränderbare Referenzen",
+    "group": "Ausleihen",
+    "options": [
+      {
+        "text": "Kompiliert erfolgreich",
+        "hint": "Dürfen mehrere veränderbare Referenzen gleichzeitig existieren?"
+      },
+      {
+        "text": "Fehler: `wisdom` kann nicht mehr als einmal als veränderbar ausgeliehen werden"
+      },
+      {
+        "text": "Fehler: fehlender Lifetime-Spezifizierer",
+        "hint": "Hier geht es nicht um Lifetimes."
+      },
+      {
+        "text": "Laufzeit-Panic",
+        "hint": "Rust fängt solche Probleme bereits zur Kompilierzeit ab."
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei mehreren veränderbaren Referenzen?",
+      "Denk an Rusts strikte Regeln für veränderbare Referenzen."
+    ],
+    "explanationProse": [
+      "Dieser Code verstößt gegen Rusts fundamentale Ausleihregeln:\n      - Nur EINE veränderbare Referenz auf einen Wert gleichzeitig\n      - ODER beliebig viele unveränderbare Referenzen\n      - Referenzen dürfen nicht länger leben als der Wert, auf den sie zeigen\n\n      So behebst du den Code:\n\n      1. Nutze sequenzielle Scopes:",
+      "2. Oder ändere den String innerhalb eines einzigen Borrows:",
+      "Diese Regeln verhindern Data Races bereits zur Kompilierzeit und machen Rust standardmäßig thread-sicher.\n\n      Häufige Falle: Der Versuch, mehrere veränderbare Referenzen zu nutzen, um Cloning zu vermeiden oder\n      verschiedene Teile desselben Werts gleichzeitig zu ändern."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Veränderbare Referenzen\",\n  \"group\": \"Ausleihen\",\n  \"options\": [\n    {\n      \"text\": \"Kompiliert erfolgreich\",\n      \"hint\": \"Dürfen mehrere veränderbare Referenzen gleichzeitig existieren?\"\n    },\n    {\n      \"text\": \"Fehler: `wisdom` kann nicht mehr als einmal als veränderbar ausgeliehen werden\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lifetime-Spezifizierer\",\n      \"hint\": \"Hier geht es nicht um Lifetimes.\"\n    },\n    {\n      \"text\": \"Laufzeit-Panic\",\n      \"hint\": \"Rust fängt solche Probleme bereits zur Kompilierzeit ab.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei mehreren veränderbaren Referenzen?\",\n    \"Denk an Rusts strikte Regeln für veränderbare Referenzen.\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code verstößt gegen Rusts fundamentale Ausleihregeln:\\n      - Nur EINE veränderbare Referenz auf einen Wert gleichzeitig\\n      - ODER beliebig viele unveränderbare Referenzen\\n      - Referenzen dürfen nicht länger leben als der Wert, auf den sie zeigen\\n\\n      So behebst du den Code:\\n\\n      1. Nutze sequenzielle Scopes:\",\n    \"2. Oder ändere den String innerhalb eines einzigen Borrows:\",\n    \"Diese Regeln verhindern Data Races bereits zur Kompilierzeit und machen Rust standardmäßig thread-sicher.\\n\\n      Häufige Falle: Der Versuch, mehrere veränderbare Referenzen zu nutzen, um Cloning zu vermeiden oder\\n      verschiedene Teile desselben Werts gleichzeitig zu ändern.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 952,
+    "outputTokens": 4652,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 84958
+  },
+  "cost": {
+    "inputUsd": 0.00030940000000000004,
+    "outputUsd": 0.0090714,
+    "totalUsd": 0.0093808,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

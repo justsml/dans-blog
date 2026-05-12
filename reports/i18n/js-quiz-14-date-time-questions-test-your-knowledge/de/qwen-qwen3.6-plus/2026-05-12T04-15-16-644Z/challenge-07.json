@@ -1,0 +1,43 @@
+{
+  "index": 6,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC-Daten Teil 1",
+  "translation": {
+    "title": "UTC-Daten Teil 1",
+    "group": "Datumsverarbeitung",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [
+      "Was wird die Ausgabe enthalten?"
+    ],
+    "explanationProse": [
+      "Du erhältst `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Datumsinstanz.\n\n      {/* Die [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear)-Methode verwendet deinen lokalen Zeitversatz (für diese Fragen nehmen wir GMT-07:00 an).\n      Das bedeutet, dass sie das vorherige Jahr ausgibt (Silvester minus 7 Stunden).\n      Die [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)-Methode gibt das Jahr zurück, das wir an `Date.UTC()` übergeben haben, also 2020.\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC-Daten Teil 1\",\n  \"group\": \"Datumsverarbeitung\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird die Ausgabe enthalten?\"\n  ],\n  \"explanationProse\": [\n    \"Du erhältst `TypeError: date.toUTCString is not a function`, da [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) eine Ganzzahl in Millisekunden zurückgibt und keine Datumsinstanz.\\n\\n      {/* Die [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear)-Methode verwendet deinen lokalen Zeitversatz (für diese Fragen nehmen wir GMT-07:00 an).\\n      Das bedeutet, dass sie das vorherige Jahr ausgibt (Silvester minus 7 Stunden).\\n      Die [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear)-Methode gibt das Jahr zurück, das wir an `Date.UTC()` übergeben haben, also 2020.\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 919,
+    "outputTokens": 5021,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 91634
+  },
+  "cost": {
+    "inputUsd": 0.00029867500000000004,
+    "outputUsd": 0.00979095,
+    "totalUsd": 0.010089625,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

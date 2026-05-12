@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Look-behind-Split",
+  "translation": {
+    "title": "Look-behind-Split",
+    "group": "Look-behind",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Was wird zurückgegeben?"
+    ],
+    "explanationProse": [
+      "Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:\n    - `a,` (nach Komma)\n    - `b,` (nach Komma)\n    - `c` (kein Komma danach)\n\n    Der Look-behind verbraucht das Komma nicht, daher bleibt das Komma im Split-Ergebnis am vorherigen Segment hängen.\n\n    Dies ist nützlich, wenn du einen String basierend auf dem, was davor kommt, teilen möchtest, **ohne die Trennzeichen zu verlieren.**\n\n    [Erfahre mehr über Look-behind-Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-behind-Split\",\n  \"group\": \"Look-behind\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird zurückgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"Das Muster `/(?<=,)/` ist ein Look-behind, das nach einem Komma matcht:\\n    - `a,` (nach Komma)\\n    - `b,` (nach Komma)\\n    - `c` (kein Komma danach)\\n\\n    Der Look-behind verbraucht das Komma nicht, daher bleibt das Komma im Split-Ergebnis am vorherigen Segment hängen.\\n\\n    Dies ist nützlich, wenn du einen String basierend auf dem, was davor kommt, teilen möchtest, **ohne die Trennzeichen zu verlieren.**\\n\\n    [Erfahre mehr über Look-behind-Assertions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 987,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63157
+  },
+  "cost": {
+    "inputUsd": 0.00011312000000000001,
+    "outputUsd": 0.00027636,
+    "totalUsd": 0.00038948000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

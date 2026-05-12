@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Box Smart Pointer",
+  "translation": {
+    "title": "Box Smart Pointer",
+    "group": "Smart Pointer",
+    "options": [],
+    "questionProse": [
+      "Was ist an dieser rekursiven Typdefinition falsch?"
+    ],
+    "explanationProse": [
+      "Dieser Code scheitert, weil der Compiler die Größe von `CatList` zur Kompilierzeit nicht bestimmen kann. Die rekursive Natur des Typs bedeutet, dass er unendlich groß sein könnte!\n\n      So behebst du das Problem mit `Box<T>`:",
+      "Warum `Box<T>` funktioniert:\n      1. Box stellt einen Zeiger fester Größe bereit (normalerweise 8 Byte auf 64-Bit-Systemen)\n      2. Die eigentlichen Daten werden auf dem Heap gespeichert\n      3. Der Compiler weiß nun exakt, wie viel Speicher allokiert werden muss\n\n      Häufige Anwendungsfälle für `Box<T>`:\n      - Rekursive Datenstrukturen (verkettete Listen, Bäume)\n      - Große Daten, die garantiert auf dem Heap liegen sollen\n      - Trait-Objekte, wenn du dynamisches Dispatch benötigst\n\n      Best Practice: Verwende `Box<T>`, wenn du Folgendes benötigst:\n      - Rekursive Typen\n      - Eine garantierte Heap-Allokation\n      - Das Verschieben großer Daten ohne Kopieren"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Box Smart Pointer\",\n  \"group\": \"Smart Pointer\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Was ist an dieser rekursiven Typdefinition falsch?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code scheitert, weil der Compiler die Größe von `CatList` zur Kompilierzeit nicht bestimmen kann. Die rekursive Natur des Typs bedeutet, dass er unendlich groß sein könnte!\\n\\n      So behebst du das Problem mit `Box<T>`:\",\n    \"Warum `Box<T>` funktioniert:\\n      1. Box stellt einen Zeiger fester Größe bereit (normalerweise 8 Byte auf 64-Bit-Systemen)\\n      2. Die eigentlichen Daten werden auf dem Heap gespeichert\\n      3. Der Compiler weiß nun exakt, wie viel Speicher allokiert werden muss\\n\\n      Häufige Anwendungsfälle für `Box<T>`:\\n      - Rekursive Datenstrukturen (verkettete Listen, Bäume)\\n      - Große Daten, die garantiert auf dem Heap liegen sollen\\n      - Trait-Objekte, wenn du dynamisches Dispatch benötigst\\n\\n      Best Practice: Verwende `Box<T>`, wenn du Folgendes benötigst:\\n      - Rekursive Typen\\n      - Eine garantierte Heap-Allokation\\n      - Das Verschieben großer Daten ohne Kopieren\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 859,
+    "outputTokens": 3814,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 69600
+  },
+  "cost": {
+    "inputUsd": 0.000279175,
+    "outputUsd": 0.0074373,
+    "totalUsd": 0.007716475,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

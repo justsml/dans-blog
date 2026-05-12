@@ -1,0 +1,31 @@
+{
+  "index": 8,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "TABLESAMPLE-Syntax",
+  "translation": {
+    "title": "TABLESAMPLE-Syntax",
+    "group": "Datensampling",
+    "options": [],
+    "questionProse": [
+      "Welche Syntax ist gültig, um **10 % der Studenten zufällig auszuwählen**?"
+    ],
+    "explanationProse": [
+      "Diese Frage ist knifflig! Sie enthält etwa 6 Fallen, darunter:\n\n    1. Eine grobe Beschreibung + Syntax-Fragmente. Testet, wie du dich anpasst und unvollständige Informationen zusammensetzt.\n    2. Erfordert fundierte Kenntnisse der `TABLESAMPLE`-Syntax, da keine der `TABLESAMPLE`-Optionen die korrekte Syntax verwendet! (Hinterhältig! Ich weiß! Mach weiter, ich glaube an dich!!! ❤️)\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` und `ORDER BY RANDOM() > 10` sind weitere Ablenkungsmanöver. Sie sehen korrekt aus, sind es aber nicht. `RAND()` existiert nicht. Und `RANDOM() > 10` ist ein boolescher Ausdruck, der immer `false` ergibt, da `RANDOM()` immer im Bereich `0.0-1.0` liegt.\n    Ein weiteres Problem: `ORDER BY RANDOM() > 10` würde zudem nach einem booleschen Wert sortieren, nicht nach einer Zufallszahl. Aber dieses `> 10` fühlte sich doch irgendwie nach einem Prozentsatz an, nicht wahr?\n    4. `BERNOULLI` ist gültig, `SAMPLETABLE` jedoch nicht.\n    5. `WHERE RANDOM() >= 0.1` ist ein Trick! `RANDOM()` gibt einen Wert im Bereich `0.0 <= x < 1.0` zurück, sodass `>= 0.1` etwa 90 % der Zeilen zurückgeben würde, nicht 10 %.\n\n    Was die `TABLESAMPLE`-Methode betrifft, unterstützt PostgreSQL zwei Sampling-Verfahren:\n    - `BERNOULLI`: Jede Zeile hat die gleiche Wahrscheinlichkeit\n    - `SYSTEM`: Blockweises Sampling (schneller, aber weniger zufällig)\n\n    Um mehr über Sampling zu erfahren, schau dir diesen Artikel von [Render](https://render.com/blog/postgresql-random-samples-big-tables) an.\n\n    Beispiel:",
+      "Erwähnenswert ist auch, dass `TABLESAMPLE` [als nicht besonders zufällig gemeldet wurde](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql). Wenn du eine _zufälligere_ Stichprobe fester Größe benötigst, erwäge die Verwendung von `ORDER BY RANDOM() LIMIT 10`. Beachte jedoch, dass dies 10 Zeilen und nicht 10 % zurückgibt und bei großen Tabellen langsam sein kann.\n\n    Es gibt auch einige Drittanbieter-Erweiterungen, die bessere Verfahren für zufällige Stichproben bieten, aber das sprengt hier den Rahmen! 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"TABLESAMPLE-Syntax\",\n  \"group\": \"Datensampling\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Welche Syntax ist gültig, um **10 % der Studenten zufällig auszuwählen**?\"\n  ],\n  \"explanationProse\": [\n    \"Diese Frage ist knifflig! Sie enthält etwa 6 Fallen, darunter:\\n\\n    1. Eine grobe Beschreibung + Syntax-Fragmente. Testet, wie du dich anpasst und unvollständige Informationen zusammensetzt.\\n    2. Erfordert fundierte Kenntnisse der `TABLESAMPLE`-Syntax, da keine der `TABLESAMPLE`-Optionen die korrekte Syntax verwendet! (Hinterhältig! Ich weiß! Mach weiter, ich glaube an dich!!! ❤️)\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` und `ORDER BY RANDOM() > 10` sind weitere Ablenkungsmanöver. Sie sehen korrekt aus, sind es aber nicht. `RAND()` existiert nicht. Und `RANDOM() > 10` ist ein boolescher Ausdruck, der immer `false` ergibt, da `RANDOM()` immer im Bereich `0.0-1.0` liegt.\\n    Ein weiteres Problem: `ORDER BY RANDOM() > 10` würde zudem nach einem booleschen Wert sortieren, nicht nach einer Zufallszahl. Aber dieses `> 10` fühlte sich doch irgendwie nach einem Prozentsatz an, nicht wahr?\\n    4. `BERNOULLI` ist gültig, `SAMPLETABLE` jedoch nicht.\\n    5. `WHERE RANDOM() >= 0.1` ist ein Trick! `RANDOM()` gibt einen Wert im Bereich `0.0 <= x < 1.0` zurück, sodass `>= 0.1` etwa 90 % der Zeilen zurückgeben würde, nicht 10 %.\\n\\n    Was die `TABLESAMPLE`-Methode betrifft, unterstützt PostgreSQL zwei Sampling-Verfahren:\\n    - `BERNOULLI`: Jede Zeile hat die gleiche Wahrscheinlichkeit\\n    - `SYSTEM`: Blockweises Sampling (schneller, aber weniger zufällig)\\n\\n    Um mehr über Sampling zu erfahren, schau dir diesen Artikel von [Render](https://render.com/blog/postgresql-random-samples-big-tables) an.\\n\\n    Beispiel:\",\n    \"Erwähnenswert ist auch, dass `TABLESAMPLE` [als nicht besonders zufällig gemeldet wurde](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql). Wenn du eine _zufälligere_ Stichprobe fester Größe benötigst, erwäge die Verwendung von `ORDER BY RANDOM() LIMIT 10`. Beachte jedoch, dass dies 10 Zeilen und nicht 10 % zurückgibt und bei großen Tabellen langsam sein kann.\\n\\n    Es gibt auch einige Drittanbieter-Erweiterungen, die bessere Verfahren für zufällige Stichproben bieten, aber das sprengt hier den Rahmen! 😅\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1168,
+    "outputTokens": 5373,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1162,
+    "durationMs": 97607
+  },
+  "cost": {
+    "inputUsd": 0.0003796,
+    "outputUsd": 0.01047735,
+    "totalUsd": 0.01085695,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

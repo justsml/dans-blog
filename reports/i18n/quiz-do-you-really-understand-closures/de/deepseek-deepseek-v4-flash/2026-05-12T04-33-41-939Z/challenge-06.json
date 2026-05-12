@@ -1,0 +1,43 @@
+{
+  "index": 5,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "Stale Closure in React",
+  "translation": {
+    "title": "Stale Closure in React",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Protokolliert den aktuellen Zähler bei jedem Klick"
+      },
+      {
+        "text": "Protokolliert immer 0"
+      },
+      {
+        "text": "Protokolliert NaN"
+      },
+      {
+        "text": "Das lässt sich nicht kompilieren"
+      }
+    ],
+    "questionProse": [
+      "Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrmals geklickt wird?"
+    ],
+    "explanationProse": [
+      "Klassischer Stale Closure. Der `useEffect` wird einmal ausgeführt (leeres Abhängigkeitsarray) und erstellt ein Intervall, das `count` so einfängt, wie es zum Zeitpunkt des Mountens war: `0`. Egal wie oft du klickst, der Closure des Intervalls sieht niemals den aktualisierten Wert.\n\n    Der Button-Label aktualisiert sich korrekt – das ist ein neuer Render. Aber `console.log` ist für immer bei `0` gefangen.\n\n    Behebe es, indem du `count` zum Abhängigkeitsarray hinzufügst (das Intervall wird neu erstellt) oder einen Ref verwendest:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Stale Closure in React\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Protokolliert den aktuellen Zähler bei jedem Klick\"\n    },\n    {\n      \"text\": \"Protokolliert immer 0\"\n    },\n    {\n      \"text\": \"Protokolliert NaN\"\n    },\n    {\n      \"text\": \"Das lässt sich nicht kompilieren\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welches Verhalten zeigt diese React-Komponente, wenn der Button mehrmals geklickt wird?\"\n  ],\n  \"explanationProse\": [\n    \"Klassischer Stale Closure. Der `useEffect` wird einmal ausgeführt (leeres Abhängigkeitsarray) und erstellt ein Intervall, das `count` so einfängt, wie es zum Zeitpunkt des Mountens war: `0`. Egal wie oft du klickst, der Closure des Intervalls sieht niemals den aktualisierten Wert.\\n\\n    Der Button-Label aktualisiert sich korrekt – das ist ein neuer Render. Aber `console.log` ist für immer bei `0` gefangen.\\n\\n    Behebe es, indem du `count` zum Abhängigkeitsarray hinzufügst (das Intervall wird neu erstellt) oder einen Ref verwendest:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 813,
+    "outputTokens": 1793,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10885
+  },
+  "cost": {
+    "inputUsd": 0.00011382000000000002,
+    "outputUsd": 0.00050204,
+    "totalUsd": 0.0006158600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

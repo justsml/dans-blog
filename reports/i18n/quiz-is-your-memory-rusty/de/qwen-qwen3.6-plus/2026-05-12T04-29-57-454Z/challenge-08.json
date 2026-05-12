@@ -1,0 +1,48 @@
+{
+  "index": 7,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Lebensdauer-Annotationen",
+  "translation": {
+    "title": "Lebensdauer-Annotationen",
+    "group": "Lebensdauern",
+    "options": [
+      {
+        "text": "Ergebnis: Seneca der Jüngere",
+        "hint": "Der Code wird nicht kompilieren und daher keine Ausgabe erzeugen"
+      },
+      {
+        "text": "Fehler: fehlender Lebensdauer-Spezifizierer"
+      },
+      {
+        "text": "Fehler: Referenz auf lokale Variable kann nicht zurückgegeben werden",
+        "hint": "Die Referenz zeigt auf einen Eingabeparameter, nicht auf eine lokale Variable"
+      },
+      {
+        "text": "Fehler: Lebensdauer-Konflikt",
+        "hint": "Wir haben noch keine Lebensdauern spezifiziert, die in Konflikt stehen könnten"
+      }
+    ],
+    "questionProse": [
+      "Was passiert bei dieser Funktion, die die längere von zwei String-Slices zurückgibt?"
+    ],
+    "explanationProse": [
+      "Dieser Code schlägt fehl, weil der Compiler die Beziehung zwischen den Lebensdauern der Eingaben und der Ausgabe nicht bestimmen kann. Hier ist der Grund und die Lösung:",
+      "Warum Lebensdauern hier nötig sind:\n      1. Mehrere Eingabe-Referenzen können unterschiedliche Lebensdauern haben\n      2. Der Rückgabewert muss mindestens so lange leben wie beide Eingaben\n      3. Der Compiler muss diese Beziehungen überprüfen\n\n      Häufige Muster:",
+      "Best Practices:\n      1. Lass Lifetime Elision wirken, wenn möglich\n      2. Nutze explizite Lebensdauern, wenn Beziehungen klar sein müssen\n      3. Erwäge die Rückgabe von besitzenden Typen, um Lebensdauer-Komplexität zu vermeiden\n      4. Dokumentiere komplexe Lebensdauer-Beziehungen"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Lebensdauer-Annotationen\",\n  \"group\": \"Lebensdauern\",\n  \"options\": [\n    {\n      \"text\": \"Ergebnis: Seneca der Jüngere\",\n      \"hint\": \"Der Code wird nicht kompilieren und daher keine Ausgabe erzeugen\"\n    },\n    {\n      \"text\": \"Fehler: fehlender Lebensdauer-Spezifizierer\"\n    },\n    {\n      \"text\": \"Fehler: Referenz auf lokale Variable kann nicht zurückgegeben werden\",\n      \"hint\": \"Die Referenz zeigt auf einen Eingabeparameter, nicht auf eine lokale Variable\"\n    },\n    {\n      \"text\": \"Fehler: Lebensdauer-Konflikt\",\n      \"hint\": \"Wir haben noch keine Lebensdauern spezifiziert, die in Konflikt stehen könnten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert bei dieser Funktion, die die längere von zwei String-Slices zurückgibt?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code schlägt fehl, weil der Compiler die Beziehung zwischen den Lebensdauern der Eingaben und der Ausgabe nicht bestimmen kann. Hier ist der Grund und die Lösung:\",\n    \"Warum Lebensdauern hier nötig sind:\\n      1. Mehrere Eingabe-Referenzen können unterschiedliche Lebensdauern haben\\n      2. Der Rückgabewert muss mindestens so lange leben wie beide Eingaben\\n      3. Der Compiler muss diese Beziehungen überprüfen\\n\\n      Häufige Muster:\",\n    \"Best Practices:\\n      1. Lass Lifetime Elision wirken, wenn möglich\\n      2. Nutze explizite Lebensdauern, wenn Beziehungen klar sein müssen\\n      3. Erwäge die Rückgabe von besitzenden Typen, um Lebensdauer-Komplexität zu vermeiden\\n      4. Dokumentiere komplexe Lebensdauer-Beziehungen\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 969,
+    "outputTokens": 4088,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 74537
+  },
+  "cost": {
+    "inputUsd": 0.000314925,
+    "outputUsd": 0.007971599999999999,
+    "totalUsd": 0.008286525,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

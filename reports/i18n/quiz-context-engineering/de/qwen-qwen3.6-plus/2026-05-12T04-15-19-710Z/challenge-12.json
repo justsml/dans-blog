@@ -1,0 +1,46 @@
+{
+  "index": 11,
+  "originalTitle": "Prompt Caching",
+  "translatedTitle": "Prompt-Caching",
+  "translation": {
+    "title": "Prompt-Caching",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Caching speichert Antworten und spielt sie für identische Anfragen erneut ab"
+      },
+      {
+        "text": "Caching speichert kompilierte KV-Paare für statische Prompt-Präfixe und reduziert so die Kosten für Input-Tokens"
+      },
+      {
+        "text": "Caching ist nur in OpenAI-Modellen verfügbar"
+      },
+      {
+        "text": "Caching ist automatisch und erfordert keine Konfiguration durch Entwickler"
+      }
+    ],
+    "questionProse": [
+      "Was ist „Prompt-Caching“ im Kontext von LLM-APIs (Anthropic, OpenAI)?\n    <p className=\"text-sm\">Zuletzt geprüft: 8. Mai 2026. Cache-Steuerungen und Preisgestaltung der Anbieter ändern sich schnell.</p>"
+    ],
+    "explanationProse": [
+      "Prompt-Caching wiederverwendet den berechneten **KV-Cache / Prompt-Präfix-Status** für statische Prompt-Präfixe, wenn dein Anbieter dies unterstützt. Bei nachfolgenden Anfragen mit demselben Präfix kann das Modell die erneute Verarbeitung dieser Tokens überspringen – was die Latenz verringert und die Kosten drastisch senken kann.",
+      "Das ist kein Antwort-Caching. Das Modell generiert jedes Mal eine neue Antwort. Du vermeidest lediglich die erneute Tokenisierung und die Neuberechnung der Attention für den Teil des Prompts, der sich nicht ändert.",
+      "Am besten geeignet für: große System-Prompts, statische Dokumente, Tool-Definitionen, Few-Shot-Beispiele – also alles, was über viele Anfragen hinweg gleich bleibt. Das gecachte Präfix muss am *Anfang* deines Prompts stehen.",
+      "Nicht zu verwechseln mit: semantischer Deduplizierung, Antwort-Memoisierung oder Caching auf der Anwendungsebene."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Prompt-Caching\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Caching speichert Antworten und spielt sie für identische Anfragen erneut ab\"\n    },\n    {\n      \"text\": \"Caching speichert kompilierte KV-Paare für statische Prompt-Präfixe und reduziert so die Kosten für Input-Tokens\"\n    },\n    {\n      \"text\": \"Caching ist nur in OpenAI-Modellen verfügbar\"\n    },\n    {\n      \"text\": \"Caching ist automatisch und erfordert keine Konfiguration durch Entwickler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist „Prompt-Caching“ im Kontext von LLM-APIs (Anthropic, OpenAI)?\\n    <p className=\\\"text-sm\\\">Zuletzt geprüft: 8. Mai 2026. Cache-Steuerungen und Preisgestaltung der Anbieter ändern sich schnell.</p>\"\n  ],\n  \"explanationProse\": [\n    \"Prompt-Caching wiederverwendet den berechneten **KV-Cache / Prompt-Präfix-Status** für statische Prompt-Präfixe, wenn dein Anbieter dies unterstützt. Bei nachfolgenden Anfragen mit demselben Präfix kann das Modell die erneute Verarbeitung dieser Tokens überspringen – was die Latenz verringert und die Kosten drastisch senken kann.\",\n    \"Das ist kein Antwort-Caching. Das Modell generiert jedes Mal eine neue Antwort. Du vermeidest lediglich die erneute Tokenisierung und die Neuberechnung der Attention für den Teil des Prompts, der sich nicht ändert.\",\n    \"Am besten geeignet für: große System-Prompts, statische Dokumente, Tool-Definitionen, Few-Shot-Beispiele – also alles, was über viele Anfragen hinweg gleich bleibt. Das gecachte Präfix muss am *Anfang* deines Prompts stehen.\",\n    \"Nicht zu verwechseln mit: semantischer Deduplizierung, Antwort-Memoisierung oder Caching auf der Anwendungsebene.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 3042,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56457
+  },
+  "cost": {
+    "inputUsd": 0.000302575,
+    "outputUsd": 0.0059318999999999995,
+    "totalUsd": 0.006234475,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

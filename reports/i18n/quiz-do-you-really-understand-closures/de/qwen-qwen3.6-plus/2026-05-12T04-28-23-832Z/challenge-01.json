@@ -1,0 +1,43 @@
+{
+  "index": 0,
+  "originalTitle": "Classic Counter",
+  "translatedTitle": "Klassischer Zähler",
+  "translation": {
+    "title": "Klassischer Zähler",
+    "group": "Aufwärmen",
+    "options": [
+      {
+        "text": "0, 0, 0"
+      },
+      {
+        "text": "0, 1, 2"
+      },
+      {
+        "text": "1, 2, 3"
+      },
+      {
+        "text": "ReferenceError"
+      }
+    ],
+    "questionProse": [
+      "Was wird hier ausgegeben?"
+    ],
+    "explanationProse": [
+      "`tick` schließt `count` in einer Closure ein. Jeder Aufruf erhöht und gibt die *gleiche* `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.\n\nDas entscheidende Wort: *gleiche*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf die Variablenbindung. Genau das ist der springende Punkt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Klassischer Zähler\",\n  \"group\": \"Aufwärmen\",\n  \"options\": [\n    {\n      \"text\": \"0, 0, 0\"\n    },\n    {\n      \"text\": \"0, 1, 2\"\n    },\n    {\n      \"text\": \"1, 2, 3\"\n    },\n    {\n      \"text\": \"ReferenceError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird hier ausgegeben?\"\n  ],\n  \"explanationProse\": [\n    \"`tick` schließt `count` in einer Closure ein. Jeder Aufruf erhöht und gibt die *gleiche* `count`-Variable zurück. Die drei Aufrufe ergeben `1, 2, 3`.\\n\\nDas entscheidende Wort: *gleiche*. `count` wird nicht in die Closure kopiert. Die Closure hält eine **Live-Referenz** auf die Variablenbindung. Genau das ist der springende Punkt.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 791,
+    "outputTokens": 4231,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 78081
+  },
+  "cost": {
+    "inputUsd": 0.000257075,
+    "outputUsd": 0.008250450000000001,
+    "totalUsd": 0.008507525000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

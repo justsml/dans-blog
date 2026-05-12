@@ -1,0 +1,43 @@
+{
+  "index": 12,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Nicht-Standard-Eigenschaften",
+  "translation": {
+    "title": "Nicht-Standard-Eigenschaften",
+    "group": "Fehler-Eigenschaften",
+    "options": [
+      {
+        "text": "Immer verfügbar"
+      },
+      {
+        "text": "Möglicherweise nicht in allen Umgebungen vorhanden"
+      },
+      {
+        "text": "Nur in Node.js"
+      },
+      {
+        "text": "Veraltet und entfernt"
+      }
+    ],
+    "questionProse": [
+      "Wie zuverlässig sind `error.code` und `error.errno`?"
+    ],
+    "explanationProse": [
+      "Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error-Objekt. Im Browser existieren sie schlichtweg nicht. Prüfe daher immer explizit auf ihre Existenz: `if (err.code === 'ENOENT')`, anstatt sie blind vorauszusetzen."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nicht-Standard-Eigenschaften\",\n  \"group\": \"Fehler-Eigenschaften\",\n  \"options\": [\n    {\n      \"text\": \"Immer verfügbar\"\n    },\n    {\n      \"text\": \"Möglicherweise nicht in allen Umgebungen vorhanden\"\n    },\n    {\n      \"text\": \"Nur in Node.js\"\n    },\n    {\n      \"text\": \"Veraltet und entfernt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie zuverlässig sind `error.code` und `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error-Objekt. Im Browser existieren sie schlichtweg nicht. Prüfe daher immer explizit auf ihre Existenz: `if (err.code === 'ENOENT')`, anstatt sie blind vorauszusetzen.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 767,
+    "outputTokens": 3010,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 57200
+  },
+  "cost": {
+    "inputUsd": 0.00024927500000000003,
+    "outputUsd": 0.0058695,
+    "totalUsd": 0.006118775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

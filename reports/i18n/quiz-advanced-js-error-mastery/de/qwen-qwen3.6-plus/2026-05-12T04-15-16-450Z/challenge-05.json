@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "originalTitle": "String Throws",
+  "translatedTitle": "Strings werfen",
+  "translation": {
+    "title": "Strings werfen",
+    "group": "Werfen von Nicht-Fehler-Werten",
+    "options": [
+      {
+        "text": "TypeError: string ist kein Error",
+        "hint": "JavaScript prüft den geworfenen Wert nicht auf den Typ `Error`."
+      },
+      {
+        "text": "false, \"string\"",
+        "hint": "Prüfe, was `instanceof` und `typeof` bei primitiven Werten zurückgeben."
+      },
+      {
+        "text": "Erstellt automatisch ein Error-Objekt",
+        "hint": "Es gibt keine implizite Konvertierung von Primitiven zu `Error`-Instanzen."
+      },
+      {
+        "text": "Undefiniertes Verhalten",
+        "hint": "Das Verhalten ist in der ECMAScript-Spezifikation klar geregelt."
+      }
+    ],
+    "questionProse": [
+      "Was passiert eigentlich, wenn du einen String wirfst?"
+    ],
+    "explanationProse": [
+      "JavaScript erlaubt das Werfen *beliebiger* Werte. Hier ist `e instanceof Error` `false` und `typeof e` ist `\"string\"`. Das bricht Error-Handling-Code, der stillschweigend annimmt, dass alle abgefangenen Exceptions echte `Error`-Objekte sind. Wirf daher immer `Error`-Instanzen, um Stack-Traces und Debugging-Tools korrekt nutzen zu können."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Strings werfen\",\n  \"group\": \"Werfen von Nicht-Fehler-Werten\",\n  \"options\": [\n    {\n      \"text\": \"TypeError: string ist kein Error\",\n      \"hint\": \"JavaScript prüft den geworfenen Wert nicht auf den Typ `Error`.\"\n    },\n    {\n      \"text\": \"false, \\\"string\\\"\",\n      \"hint\": \"Prüfe, was `instanceof` und `typeof` bei primitiven Werten zurückgeben.\"\n    },\n    {\n      \"text\": \"Erstellt automatisch ein Error-Objekt\",\n      \"hint\": \"Es gibt keine implizite Konvertierung von Primitiven zu `Error`-Instanzen.\"\n    },\n    {\n      \"text\": \"Undefiniertes Verhalten\",\n      \"hint\": \"Das Verhalten ist in der ECMAScript-Spezifikation klar geregelt.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert eigentlich, wenn du einen String wirfst?\"\n  ],\n  \"explanationProse\": [\n    \"JavaScript erlaubt das Werfen *beliebiger* Werte. Hier ist `e instanceof Error` `false` und `typeof e` ist `\\\"string\\\"`. Das bricht Error-Handling-Code, der stillschweigend annimmt, dass alle abgefangenen Exceptions echte `Error`-Objekte sind. Wirf daher immer `Error`-Instanzen, um Stack-Traces und Debugging-Tools korrekt nutzen zu können.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 756,
+    "outputTokens": 4178,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 76249
+  },
+  "cost": {
+    "inputUsd": 0.0002457,
+    "outputUsd": 0.008147100000000001,
+    "totalUsd": 0.0083928,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

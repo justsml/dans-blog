@@ -1,0 +1,46 @@
+{
+  "index": 5,
+  "originalTitle": "Using clamp() for responsive design",
+  "translatedTitle": "`clamp()` für responsives Design einsetzen",
+  "translation": {
+    "title": "`clamp()` für responsives Design einsetzen",
+    "group": "CSS-Funktionen",
+    "options": [
+      {
+        "text": "Fallback für möglicherweise nicht unterstützte Einheiten"
+      },
+      {
+        "text": "Stellt sicher, dass `vw`-Einheiten zwischen 20px und 50px liegen"
+      },
+      {
+        "text": "Lineare Skalierung zwischen 200px und 500px"
+      },
+      {
+        "text": "Log₂-Skalierung zwischen 200px und 500px"
+      },
+      {
+        "text": "Fehler! Keine Unterstützung für IE 11"
+      }
+    ],
+    "questionProse": [
+      "Was macht `clamp()` eigentlich?"
+    ],
+    "explanationProse": [
+      "Die `clamp()`-Funktion lässt die Breite basierend auf `50vw` skalieren, hält sie aber strikt im Bereich von 200px bis 500px.\n\nKonkret heißt das: Die Breite bleibt bei 200px, wenn 50vw darunter fallen würde, springt auf 500px, wenn 50vw darüber liegt, und skaliert dazwischen linear.\n\nDamit wird dein Layout quasi automatisch responsiv! Der Clou bei `clamp` ist, dass es **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.\n\nNormalerweise würdest du Viewport-Einheiten nicht für Schriftgrößen verwenden wollen, aber mit `clamp()` garantierst du, dass die Schrift nie zu winzig oder zu riesig wird."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"`clamp()` für responsives Design einsetzen\",\n  \"group\": \"CSS-Funktionen\",\n  \"options\": [\n    {\n      \"text\": \"Fallback für möglicherweise nicht unterstützte Einheiten\"\n    },\n    {\n      \"text\": \"Stellt sicher, dass `vw`-Einheiten zwischen 20px und 50px liegen\"\n    },\n    {\n      \"text\": \"Lineare Skalierung zwischen 200px und 500px\"\n    },\n    {\n      \"text\": \"Log₂-Skalierung zwischen 200px und 500px\"\n    },\n    {\n      \"text\": \"Fehler! Keine Unterstützung für IE 11\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was macht `clamp()` eigentlich?\"\n  ],\n  \"explanationProse\": [\n    \"Die `clamp()`-Funktion lässt die Breite basierend auf `50vw` skalieren, hält sie aber strikt im Bereich von 200px bis 500px.\\n\\nKonkret heißt das: Die Breite bleibt bei 200px, wenn 50vw darunter fallen würde, springt auf 500px, wenn 50vw darüber liegt, und skaliert dazwischen linear.\\n\\nDamit wird dein Layout quasi automatisch responsiv! Der Clou bei `clamp` ist, dass es **feste Einheiten** mit **responsiven oder berechneten Einheiten** kombiniert.\\n\\nNormalerweise würdest du Viewport-Einheiten nicht für Schriftgrößen verwenden wollen, aber mit `clamp()` garantierst du, dass die Schrift nie zu winzig oder zu riesig wird.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 919,
+    "outputTokens": 4574,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 83287
+  },
+  "cost": {
+    "inputUsd": 0.00029867500000000004,
+    "outputUsd": 0.0089193,
+    "totalUsd": 0.009217975,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

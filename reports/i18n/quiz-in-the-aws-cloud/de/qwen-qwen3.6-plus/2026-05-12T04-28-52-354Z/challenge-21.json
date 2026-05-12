@@ -1,0 +1,43 @@
+{
+  "index": 20,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "Analyse der Speicherkosten",
+  "translation": {
+    "title": "Analyse der Speicherkosten",
+    "group": "Kostenoptimierung",
+    "options": [
+      {
+        "text": "S3 Standard für alle Daten"
+      },
+      {
+        "text": "Immer den günstigsten Speicher verwenden"
+      },
+      {
+        "text": "Speicherklassen basierend auf Zugriffsmustern mischen"
+      },
+      {
+        "text": "Alles in Glacier speichern"
+      }
+    ],
+    "questionProse": [
+      "Wie speicherst du 1 PB Daten am kosteneffizientesten, wenn 20 % täglich, 30 % monatlich und 50 % jährlich abgerufen werden?"
+    ],
+    "explanationProse": [
+      "Die optimale Speicherstrategie:\n  - 20 % in S3 Standard für täglichen Zugriff\n  - 30 % in S3 Standard-IA für monatlichen Zugriff\n  - 50 % in Glacier für jährlichen Zugriff\n\n  So hältst du die Kosten niedrig, ohne die Performance für häufig genutzte Daten zu opfern.\n\n  Wichtige Kostenfaktoren:\n  - Speicherpreis pro GB\n  - Abrufgebühren\n  - Zugriffsmuster\n  - Kosten für Klassenübergänge"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Analyse der Speicherkosten\",\n  \"group\": \"Kostenoptimierung\",\n  \"options\": [\n    {\n      \"text\": \"S3 Standard für alle Daten\"\n    },\n    {\n      \"text\": \"Immer den günstigsten Speicher verwenden\"\n    },\n    {\n      \"text\": \"Speicherklassen basierend auf Zugriffsmustern mischen\"\n    },\n    {\n      \"text\": \"Alles in Glacier speichern\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie speicherst du 1 PB Daten am kosteneffizientesten, wenn 20 % täglich, 30 % monatlich und 50 % jährlich abgerufen werden?\"\n  ],\n  \"explanationProse\": [\n    \"Die optimale Speicherstrategie:\\n  - 20 % in S3 Standard für täglichen Zugriff\\n  - 30 % in S3 Standard-IA für monatlichen Zugriff\\n  - 50 % in Glacier für jährlichen Zugriff\\n\\n  So hältst du die Kosten niedrig, ohne die Performance für häufig genutzte Daten zu opfern.\\n\\n  Wichtige Kostenfaktoren:\\n  - Speicherpreis pro GB\\n  - Abrufgebühren\\n  - Zugriffsmuster\\n  - Kosten für Klassenübergänge\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 3107,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 56852
+  },
+  "cost": {
+    "inputUsd": 0.00025935,
+    "outputUsd": 0.00605865,
+    "totalUsd": 0.006318,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

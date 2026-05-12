@@ -1,0 +1,41 @@
+{
+  "index": 2,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "Präzision bei Gleitkommazahlen",
+  "translation": {
+    "title": "Präzision bei Gleitkommazahlen",
+    "group": "Mathematik",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "Aufgrund von Gleitkomma-Präzisionsfehlern ergibt `0.1 + 0.2` nicht exakt `0.3`. Durch die Art und Weise, wie Gleitkommazahlen im Speicher abgelegt werden, lautet das Ergebnis `0.30000000000000004`. Der IEEE-754-Standard für Gleitkommaarithmetik ist der Übeltäter – er kann manche Zahlen nicht exakt darstellen. Dies ist ein bekanntes Problem in allen Programmiersprachen. Irgendwann stößt du auf eine unendlich periodische Dezimalzahl, und egal welche Sprache du nutzt: Der Computer muss einfach aufhören, unendlich viele Stellen zu verfolgen.\n\n  Einige Sprachen wie Python und Java bieten `Decimal` oder `BigDecimal`, um dieses Problem zu lösen, aber JavaScript hat dies nicht standardmäßig integriert. Du kannst Bibliotheken wie `big.js` oder `decimal.js` verwenden, um solche Fälle zu handhaben.\n\n  (Hinweis: Manche Sprachen sind darauf ausgelegt, Brüche, imaginäre Zahlen usw. auf einer höheren logischen Ebene zu verarbeiten und Literal-Ausdrücke beizubehalten. Dennoch müssen sie sich auf Hardware-Ebene mit denselben Gleitkomma-Präzisionsproblemen auseinandersetzen.)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Präzision bei Gleitkommazahlen\",\n  \"group\": \"Mathematik\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"Aufgrund von Gleitkomma-Präzisionsfehlern ergibt `0.1 + 0.2` nicht exakt `0.3`. Durch die Art und Weise, wie Gleitkommazahlen im Speicher abgelegt werden, lautet das Ergebnis `0.30000000000000004`. Der IEEE-754-Standard für Gleitkommaarithmetik ist der Übeltäter – er kann manche Zahlen nicht exakt darstellen. Dies ist ein bekanntes Problem in allen Programmiersprachen. Irgendwann stößt du auf eine unendlich periodische Dezimalzahl, und egal welche Sprache du nutzt: Der Computer muss einfach aufhören, unendlich viele Stellen zu verfolgen.\\n\\n  Einige Sprachen wie Python und Java bieten `Decimal` oder `BigDecimal`, um dieses Problem zu lösen, aber JavaScript hat dies nicht standardmäßig integriert. Du kannst Bibliotheken wie `big.js` oder `decimal.js` verwenden, um solche Fälle zu handhaben.\\n\\n  (Hinweis: Manche Sprachen sind darauf ausgelegt, Brüche, imaginäre Zahlen usw. auf einer höheren logischen Ebene zu verarbeiten und Literal-Ausdrücke beizubehalten. Dennoch müssen sie sich auf Hardware-Ebene mit denselben Gleitkomma-Präzisionsproblemen auseinandersetzen.)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 926,
+    "outputTokens": 3985,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 73001
+  },
+  "cost": {
+    "inputUsd": 0.00030094999999999997,
+    "outputUsd": 0.00777075,
+    "totalUsd": 0.0080717,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

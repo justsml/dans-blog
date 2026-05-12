@@ -1,0 +1,49 @@
+{
+  "index": 4,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz vs timestamp",
+  "translation": {
+    "title": "timestamptz vs timestamp",
+    "group": "Zeitstempel",
+    "options": [
+      {
+        "text": "Beide belegen 8 Byte, repräsentieren jedoch unterschiedliche Zeitstempel-Semantiken"
+      },
+      {
+        "text": "Sie\\"
+      },
+      {
+        "text": "timestamptz bewahrt jede angegebene Zeitzone"
+      },
+      {
+        "text": "timestamptz speichert den ursprünglichen Zonennamen oder Offset"
+      },
+      {
+        "text": "timestamptz speichert einen 2-Byte-Wert für TZ"
+      },
+      {
+        "text": "timestamptz ist der Nachfolger von timestamp"
+      }
+    ],
+    "questionProse": [
+      "Welche Aussage über `timestamptz` und `timestamp` ist am **präzisesten**?"
+    ],
+    "explanationProse": [
+      "Beide benötigen 8 Byte, speichern jedoch nicht dieselbe Art von Wert.\n\n    Was ist also der Unterschied? Er liegt im Eingabe-Parsing.\n\n    **`timestamptz`**\n    - Normalisiert die Eingabe zu einem absoluten Zeitpunkt.\n    - Berücksichtigt die `TimeZone`-Einstellung des Servers/der Verbindung beim Parsen von Eingaben ohne expliziten Offset sowie bei der Ausgabe.\n\n    **`timestamp`**\n    - Speichert Datum und Uhrzeit ohne Zeitzonenkonvertierung.\n    - Bewahrt oder normalisiert keine Zeitzoneninformationen.\n    \n    \n    **`timestamp`**\n\n    - Speichert Datum & Uhrzeit ohne Zeitzoneninformationen.\n    - Nützlich zum expliziten Speichern standardisierter Daten, entweder in UTC oder einer bestimmten Zeitzone."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz vs timestamp\",\n  \"group\": \"Zeitstempel\",\n  \"options\": [\n    {\n      \"text\": \"Beide belegen 8 Byte, repräsentieren jedoch unterschiedliche Zeitstempel-Semantiken\"\n    },\n    {\n      \"text\": \"Sie\\\\\"\n    },\n    {\n      \"text\": \"timestamptz bewahrt jede angegebene Zeitzone\"\n    },\n    {\n      \"text\": \"timestamptz speichert den ursprünglichen Zonennamen oder Offset\"\n    },\n    {\n      \"text\": \"timestamptz speichert einen 2-Byte-Wert für TZ\"\n    },\n    {\n      \"text\": \"timestamptz ist der Nachfolger von timestamp\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welche Aussage über `timestamptz` und `timestamp` ist am **präzisesten**?\"\n  ],\n  \"explanationProse\": [\n    \"Beide benötigen 8 Byte, speichern jedoch nicht dieselbe Art von Wert.\\n\\n    Was ist also der Unterschied? Er liegt im Eingabe-Parsing.\\n\\n    **`timestamptz`**\\n    - Normalisiert die Eingabe zu einem absoluten Zeitpunkt.\\n    - Berücksichtigt die `TimeZone`-Einstellung des Servers/der Verbindung beim Parsen von Eingaben ohne expliziten Offset sowie bei der Ausgabe.\\n\\n    **`timestamp`**\\n    - Speichert Datum und Uhrzeit ohne Zeitzonenkonvertierung.\\n    - Bewahrt oder normalisiert keine Zeitzoneninformationen.\\n    \\n    \\n    **`timestamp`**\\n\\n    - Speichert Datum & Uhrzeit ohne Zeitzoneninformationen.\\n    - Nützlich zum expliziten Speichern standardisierter Daten, entweder in UTC oder einer bestimmten Zeitzone.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 922,
+    "outputTokens": 4233,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 77378
+  },
+  "cost": {
+    "inputUsd": 0.00029965,
+    "outputUsd": 0.008254349999999999,
+    "totalUsd": 0.008553999999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

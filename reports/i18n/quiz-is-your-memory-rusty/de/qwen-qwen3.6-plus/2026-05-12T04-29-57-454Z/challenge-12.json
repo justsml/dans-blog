@@ -1,0 +1,51 @@
+{
+  "index": 11,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCell und Threading",
+  "translation": {
+    "title": "RefCell und Threading",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell wird für veränderliche Borrows verwendet, Rw für unveränderliche",
+        "hint": "Beide Typen unterstützen veränderliche und unveränderliche Borrows"
+      },
+      {
+        "text": "Rw wird für veränderliche Borrows verwendet, RefCell für unveränderliche",
+        "hint": "Beide unterstützen beide Arten von Borrows"
+      },
+      {
+        "text": "RefCell und Rw werden für denselben Zweck verwendet",
+        "hint": "Denk an die Thread-Sicherheit"
+      },
+      {
+        "text": "RefCell wird nur in Single-Threaded-Umgebungen verwendet"
+      },
+      {
+        "text": "Rw wird nur in Multi-Threaded-Umgebungen verwendet",
+        "hint": "Zwar typischerweise für Threads genutzt, aber das ist nicht der entscheidende Unterschied"
+      }
+    ],
+    "questionProse": [
+      "Was ist der entscheidende Unterschied zwischen RefCell und RwLock in Rust?\n\n      Betrachte diese Beispiele:"
+    ],
+    "explanationProse": [
+      "RefCell und RwLock erfüllen ähnliche Zwecke, jedoch in unterschiedlichen Kontexten:",
+      "Die wichtigsten Unterschiede:\n      1. RefCell:\n         - Ausschließlich für Single-Threaded-Anwendungen\n         - Kein Synchronisations-Overhead\n         - Löst eine Panik aus, wenn Borrow-Regeln verletzt werden\n         \n      2. RwLock:\n         - Thread-sicher\n         - Verursacht Synchronisations-Overhead\n         - Kann Threads blockieren, anstatt eine Panik auszulösen\n\n      Best Practices:\n      1. Verwende RefCell für Single-Threaded Interior Mutability\n      2. Verwende RwLock, wenn Thread-Sicherheit erforderlich ist\n      3. Erwäge Mutex für einfachere thread-sichere Veränderlichkeit\n      4. Dokumentiere Thread-Sicherheitsanforderungen klar"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCell und Threading\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell wird für veränderliche Borrows verwendet, Rw für unveränderliche\",\n      \"hint\": \"Beide Typen unterstützen veränderliche und unveränderliche Borrows\"\n    },\n    {\n      \"text\": \"Rw wird für veränderliche Borrows verwendet, RefCell für unveränderliche\",\n      \"hint\": \"Beide unterstützen beide Arten von Borrows\"\n    },\n    {\n      \"text\": \"RefCell und Rw werden für denselben Zweck verwendet\",\n      \"hint\": \"Denk an die Thread-Sicherheit\"\n    },\n    {\n      \"text\": \"RefCell wird nur in Single-Threaded-Umgebungen verwendet\"\n    },\n    {\n      \"text\": \"Rw wird nur in Multi-Threaded-Umgebungen verwendet\",\n      \"hint\": \"Zwar typischerweise für Threads genutzt, aber das ist nicht der entscheidende Unterschied\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist der entscheidende Unterschied zwischen RefCell und RwLock in Rust?\\n\\n      Betrachte diese Beispiele:\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"RefCell und RwLock erfüllen ähnliche Zwecke, jedoch in unterschiedlichen Kontexten:\",\n    \"Die wichtigsten Unterschiede:\\n      1. RefCell:\\n         - Ausschließlich für Single-Threaded-Anwendungen\\n         - Kein Synchronisations-Overhead\\n         - Löst eine Panik aus, wenn Borrow-Regeln verletzt werden\\n         \\n      2. RwLock:\\n         - Thread-sicher\\n         - Verursacht Synchronisations-Overhead\\n         - Kann Threads blockieren, anstatt eine Panik auszulösen\\n\\n      Best Practices:\\n      1. Verwende RefCell für Single-Threaded Interior Mutability\\n      2. Verwende RwLock, wenn Thread-Sicherheit erforderlich ist\\n      3. Erwäge Mutex für einfachere thread-sichere Veränderlichkeit\\n      4. Dokumentiere Thread-Sicherheitsanforderungen klar\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1000,
+    "outputTokens": 4787,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 87633
+  },
+  "cost": {
+    "inputUsd": 0.00032500000000000004,
+    "outputUsd": 0.009334649999999998,
+    "totalUsd": 0.009659649999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

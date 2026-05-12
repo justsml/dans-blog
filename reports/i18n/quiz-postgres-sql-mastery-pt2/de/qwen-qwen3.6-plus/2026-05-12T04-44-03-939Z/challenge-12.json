@@ -1,0 +1,43 @@
+{
+  "index": 11,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE: Die Stolperfalle",
+  "translation": {
+    "title": "EXPLAIN ANALYZE: Die Stolperfalle",
+    "group": "Performance",
+    "options": [
+      {
+        "text": "Leichte Plan-Schätzung"
+      },
+      {
+        "text": "Funktioniert nur bei SELECT"
+      },
+      {
+        "text": "Ändert Daten & liefert Plan"
+      },
+      {
+        "text": "Simuliert die Ausführung, um einen Plan zu erhalten"
+      }
+    ],
+    "questionProse": [
+      "Was macht `EXPLAIN ANALYZE` bei `UPDATE`-Statements?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seid vorsichtig, wenn ihr Schreiboperationen analysiert, insbesondere `UPDATE`-, `DELETE`- und `INSERT`-Statements. Möglicherweise müsst ihr nach jedem `EXPLAIN ANALYZE` Bereinigungsoperationen durchführen, um reproduzierbare Ergebnisse zu erhalten.\n\n    Best Practices:\n    - Verwendet `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\n    - Kapselt Änderungen in Transaktionen:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE: Die Stolperfalle\",\n  \"group\": \"Performance\",\n  \"options\": [\n    {\n      \"text\": \"Leichte Plan-Schätzung\"\n    },\n    {\n      \"text\": \"Funktioniert nur bei SELECT\"\n    },\n    {\n      \"text\": \"Ändert Daten & liefert Plan\"\n    },\n    {\n      \"text\": \"Simuliert die Ausführung, um einen Plan zu erhalten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was macht `EXPLAIN ANALYZE` bei `UPDATE`-Statements?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seid vorsichtig, wenn ihr Schreiboperationen analysiert, insbesondere `UPDATE`-, `DELETE`- und `INSERT`-Statements. Möglicherweise müsst ihr nach jedem `EXPLAIN ANALYZE` Bereinigungsoperationen durchführen, um reproduzierbare Ergebnisse zu erhalten.\\n\\n    Best Practices:\\n    - Verwendet `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\\n    - Kapselt Änderungen in Transaktionen:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 844,
+    "outputTokens": 3254,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 59643
+  },
+  "cost": {
+    "inputUsd": 0.0002743,
+    "outputUsd": 0.0063453,
+    "totalUsd": 0.0066196,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

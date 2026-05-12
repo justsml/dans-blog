@@ -1,0 +1,57 @@
+{
+  "index": 0,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Grundlagen der Move-Semantik",
+  "translation": {
+    "title": "Grundlagen der Move-Semantik",
+    "group": "Ownership",
+    "options": [
+      {
+        "text": "Hallo, !",
+        "hint": "Überlege, was mit `philosopher` passiert, nachdem es verschoben wurde."
+      },
+      {
+        "text": "Hallo, Zenon von Kition!",
+        "hint": "Kann ein Wert nach dem Verschieben noch verwendet werden?"
+      },
+      {
+        "text": "Hallo, Zenon von Elea!",
+        "hint": "Der String enthält 'Citium', nicht 'Elea'."
+      },
+      {
+        "text": "Hallo, Marcus Aurelius",
+        "hint": "Prüfe, ob dies mit dem Inhalt des Strings übereinstimmt."
+      },
+      {
+        "text": "Kompilierfehler: Wert wird nach dem Verschieben geliehen"
+      },
+      {
+        "text": "Laufzeitfehler: Null-Pointer-Exception",
+        "hint": "Rust erkennt solche Probleme bereits zur Kompilierzeit."
+      }
+    ],
+    "questionProse": [
+      "Was passiert, wenn du diesen Code ausführst? Versuche, die Ausgabe oder den Fehler vorherzusagen:"
+    ],
+    "explanationProse": [
+      "Dieser Code lässt sich nicht kompilieren, weil er gegen Rusts Ownership-Regeln verstößt. Wenn wir `philosopher` an `greeting` zuweisen, wird das Ownership des Strings an `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig und kann nicht mehr verwendet werden.\n\n      Hier sind drei Möglichkeiten, das Problem zu beheben:\n\n      1. Den String klonen (erstellt eine neue Kopie):",
+      "2. Eine Referenz verwenden (leiht den Wert aus):",
+      "3. Einen String-Slice verwenden (leiht einen Teil des Strings aus):",
+      "Jede Lösung hat unterschiedliche Anwendungsfälle und Auswirkungen auf die Performance. Klonen ist teurer, gibt dir aber volles Ownership, während Referenzen günstiger sind, aber an Lebenszeiten (Lifetimes) gebunden sind."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlagen der Move-Semantik\",\n  \"group\": \"Ownership\",\n  \"options\": [\n    {\n      \"text\": \"Hallo, !\",\n      \"hint\": \"Überlege, was mit `philosopher` passiert, nachdem es verschoben wurde.\"\n    },\n    {\n      \"text\": \"Hallo, Zenon von Kition!\",\n      \"hint\": \"Kann ein Wert nach dem Verschieben noch verwendet werden?\"\n    },\n    {\n      \"text\": \"Hallo, Zenon von Elea!\",\n      \"hint\": \"Der String enthält 'Citium', nicht 'Elea'.\"\n    },\n    {\n      \"text\": \"Hallo, Marcus Aurelius\",\n      \"hint\": \"Prüfe, ob dies mit dem Inhalt des Strings übereinstimmt.\"\n    },\n    {\n      \"text\": \"Kompilierfehler: Wert wird nach dem Verschieben geliehen\"\n    },\n    {\n      \"text\": \"Laufzeitfehler: Null-Pointer-Exception\",\n      \"hint\": \"Rust erkennt solche Probleme bereits zur Kompilierzeit.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert, wenn du diesen Code ausführst? Versuche, die Ausgabe oder den Fehler vorherzusagen:\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Code lässt sich nicht kompilieren, weil er gegen Rusts Ownership-Regeln verstößt. Wenn wir `philosopher` an `greeting` zuweisen, wird das Ownership des Strings an `greeting` verschoben. Nach diesem Move ist `philosopher` nicht mehr gültig und kann nicht mehr verwendet werden.\\n\\n      Hier sind drei Möglichkeiten, das Problem zu beheben:\\n\\n      1. Den String klonen (erstellt eine neue Kopie):\",\n    \"2. Eine Referenz verwenden (leiht den Wert aus):\",\n    \"3. Einen String-Slice verwenden (leiht einen Teil des Strings aus):\",\n    \"Jede Lösung hat unterschiedliche Anwendungsfälle und Auswirkungen auf die Performance. Klonen ist teurer, gibt dir aber volles Ownership, während Referenzen günstiger sind, aber an Lebenszeiten (Lifetimes) gebunden sind.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1070,
+    "outputTokens": 5027,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1064,
+    "durationMs": 93422
+  },
+  "cost": {
+    "inputUsd": 0.00034775,
+    "outputUsd": 0.00980265,
+    "totalUsd": 0.0101504,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

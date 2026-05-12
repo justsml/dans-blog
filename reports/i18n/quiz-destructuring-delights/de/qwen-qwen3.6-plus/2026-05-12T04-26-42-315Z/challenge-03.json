@@ -1,0 +1,46 @@
+{
+  "index": 2,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "Geschachteltes Destructuring",
+  "translation": {
+    "title": "Geschachteltes Destructuring",
+    "group": "Geschachteltes Destructuring",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "Fehler: Cannot read property 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "Fehler"
+      }
+    ],
+    "questionProse": [
+      "Zeit für etwas verschachteltes Destructuring?"
+    ],
+    "explanationProse": [
+      "Die Eigenschaft `birth: { place }` existiert nicht auf `person`, weshalb ein Fehler geworfen wird.\n  Eine Lösung besteht darin, Standardwerte für verschachtelte Eigenschaften zu definieren.\n\n  Beim Zugriff auf verschachtelte Eigenschaften – aufgepasst – können Fehler leicht übersehen werden. Fehlermeldungen unterscheiden sich zudem je nach Browser und Plattform, was das Debugging etwas kniffliger macht.\n\n  In modernem Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`\n\n  In Node handelt es sich ebenfalls um einen `TypeError`, da JavaScript versucht, `place` aus `undefined` zu destrukturieren, bevor `place` überhaupt gelesen wird.\n\n  Die exakte Formulierung variiert je nach Browser und Laufzeitumgebung."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Geschachteltes Destructuring\",\n  \"group\": \"Geschachteltes Destructuring\",\n  \"options\": [\n    {\n      \"text\": \"First: Dan, City: Denver\"\n    },\n    {\n      \"text\": \"First: undefined, City: Denver\"\n    },\n    {\n      \"text\": \"Fehler: Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"First: Dan, City: undefined\"\n    },\n    {\n      \"text\": \"Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Zeit für etwas verschachteltes Destructuring?\"\n  ],\n  \"explanationProse\": [\n    \"Die Eigenschaft `birth: { place }` existiert nicht auf `person`, weshalb ein Fehler geworfen wird.\\n  Eine Lösung besteht darin, Standardwerte für verschachtelte Eigenschaften zu definieren.\\n\\n  Beim Zugriff auf verschachtelte Eigenschaften – aufgepasst – können Fehler leicht übersehen werden. Fehlermeldungen unterscheiden sich zudem je nach Browser und Plattform, was das Debugging etwas kniffliger macht.\\n\\n  In modernem Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n  In Node handelt es sich ebenfalls um einen `TypeError`, da JavaScript versucht, `place` aus `undefined` zu destrukturieren, bevor `place` überhaupt gelesen wird.\\n\\n  Die exakte Formulierung variiert je nach Browser und Laufzeitumgebung.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 4660,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 84901
+  },
+  "cost": {
+    "inputUsd": 0.00028470000000000004,
+    "outputUsd": 0.009087,
+    "totalUsd": 0.0093717,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

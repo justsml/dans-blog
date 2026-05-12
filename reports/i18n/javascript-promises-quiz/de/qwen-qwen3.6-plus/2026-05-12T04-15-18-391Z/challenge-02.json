@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Mehrere `.catch` #2",
+  "translation": {
+    "title": "Mehrere `.catch` #2",
+    "group": "Fehlerbehandlung",
+    "options": [
+      {
+        "text": "Nachricht einmal ausgeben"
+      },
+      {
+        "text": "Nachricht zweimal ausgeben"
+      },
+      {
+        "text": "Unbehandelte abgelehnte Promise"
+      },
+      {
+        "text": "Prozess wird beendet"
+      }
+    ],
+    "questionProse": [
+      "Was gibt der folgende Code aus?"
+    ],
+    "explanationProse": [
+      "Bei der Verwendung des Promise-Konstruktors musst du entweder den `resolve()`- oder den `reject()`-Callback aufrufen. Der Promise-Konstruktor ignoriert den Rückgabewert der Executor-Funktion, daher wird die zusätzliche Promise, die mit `Promise.reject()` erstellt wird, nicht an `p` gekettet. Die beiden Handler sind an `p` angehängt, das im `pending`-Status verbleibt, während die zurückgegebene abgelehnte Promise von der Host-Umgebung als unbehandelt gemeldet wird."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mehrere `.catch` #2\",\n  \"group\": \"Fehlerbehandlung\",\n  \"options\": [\n    {\n      \"text\": \"Nachricht einmal ausgeben\"\n    },\n    {\n      \"text\": \"Nachricht zweimal ausgeben\"\n    },\n    {\n      \"text\": \"Unbehandelte abgelehnte Promise\"\n    },\n    {\n      \"text\": \"Prozess wird beendet\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt der folgende Code aus?\"\n  ],\n  \"explanationProse\": [\n    \"Bei der Verwendung des Promise-Konstruktors musst du entweder den `resolve()`- oder den `reject()`-Callback aufrufen. Der Promise-Konstruktor ignoriert den Rückgabewert der Executor-Funktion, daher wird die zusätzliche Promise, die mit `Promise.reject()` erstellt wird, nicht an `p` gekettet. Die beiden Handler sind an `p` angehängt, das im `pending`-Status verbleibt, während die zurückgegebene abgelehnte Promise von der Host-Umgebung als unbehandelt gemeldet wird.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 775,
+    "outputTokens": 2670,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 49294
+  },
+  "cost": {
+    "inputUsd": 0.000251875,
+    "outputUsd": 0.0052065,
+    "totalUsd": 0.0054583750000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell vs. RefCell",
+  "translation": {
+    "title": "Cell vs. RefCell",
+    "group": "Veränderbarkeit",
+    "options": [
+      {
+        "text": "Ausgabe: 42, 43"
+      },
+      {
+        "text": "Ausgabe: 43, 43",
+        "hint": "Cell::get() gibt den Wert zum Zeitpunkt des Aufrufs zurück"
+      },
+      {
+        "text": "Kompilierungsfehler",
+        "hint": "Cell ist genau für diesen Anwendungsfall konzipiert"
+      },
+      {
+        "text": "Panic zur Laufzeit",
+        "hint": "Cell-Operationen sind für Copy-Typen immer sicher"
+      }
+    ],
+    "questionProse": [
+      "Was gibt dieser Code aus?"
+    ],
+    "explanationProse": [
+      "Cell und RefCell dienen unterschiedlichen Zwecken bei der inneren Veränderbarkeit:",
+      "Wichtige Unterschiede:\n      1. Cell:\n         - Funktioniert am besten mit Copy-Typen\n         - Keine Borrowing-API\n         - Kopiert oder verschiebt Werte immer\n      \n      2. RefCell:\n         - Funktioniert mit beliebigen Typen\n         - Verfügt über eine Borrowing-API\n         - Laufzeit-Borrow-Checking\n\n      Best Practices:\n      1. Nutze Cell für einfache Copy-Typen (Zahlen, bool usw.)\n      2. Nutze RefCell, wenn du den Inhalt ausleihen musst\n      3. Halte Mutationen über Cell/RefCell minimal\n      4. Dokumentiere, warum innere Veränderbarkeit nötig ist"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell vs. RefCell\",\n  \"group\": \"Veränderbarkeit\",\n  \"options\": [\n    {\n      \"text\": \"Ausgabe: 42, 43\"\n    },\n    {\n      \"text\": \"Ausgabe: 43, 43\",\n      \"hint\": \"Cell::get() gibt den Wert zum Zeitpunkt des Aufrufs zurück\"\n    },\n    {\n      \"text\": \"Kompilierungsfehler\",\n      \"hint\": \"Cell ist genau für diesen Anwendungsfall konzipiert\"\n    },\n    {\n      \"text\": \"Panic zur Laufzeit\",\n      \"hint\": \"Cell-Operationen sind für Copy-Typen immer sicher\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt dieser Code aus?\"\n  ],\n  \"explanationProse\": [\n    \"Cell und RefCell dienen unterschiedlichen Zwecken bei der inneren Veränderbarkeit:\",\n    \"Wichtige Unterschiede:\\n      1. Cell:\\n         - Funktioniert am besten mit Copy-Typen\\n         - Keine Borrowing-API\\n         - Kopiert oder verschiebt Werte immer\\n      \\n      2. RefCell:\\n         - Funktioniert mit beliebigen Typen\\n         - Verfügt über eine Borrowing-API\\n         - Laufzeit-Borrow-Checking\\n\\n      Best Practices:\\n      1. Nutze Cell für einfache Copy-Typen (Zahlen, bool usw.)\\n      2. Nutze RefCell, wenn du den Inhalt ausleihen musst\\n      3. Halte Mutationen über Cell/RefCell minimal\\n      4. Dokumentiere, warum innere Veränderbarkeit nötig ist\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 934,
+    "outputTokens": 5162,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 94278
+  },
+  "cost": {
+    "inputUsd": 0.00030355000000000003,
+    "outputUsd": 0.0100659,
+    "totalUsd": 0.010369449999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

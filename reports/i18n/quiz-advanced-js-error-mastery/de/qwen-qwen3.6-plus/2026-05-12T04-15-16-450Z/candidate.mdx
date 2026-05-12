@@ -1,0 +1,496 @@
+---
+title: 'Quiz: Fortgeschrittene JS-Fehlerbehandlung'
+subTitle: Sind Ihre Exceptions wirklich die Ausnahme?
+label: Errors
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2025-11-03'
+modified: '2025-11-04'
+tags:
+  - quiz
+  - javascript
+  - error-handling
+  - debugging
+  - advanced
+cover_full_width: ./ahmed-slimene-c09hZthLq_s-unsplash-wide.webp
+cover_mobile: ./ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_icon: ./ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@assl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ahmed
+  Slimene</a> on <a
+  href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### Denkst du, du kennst JavaScript-Fehler wirklich bis ins kleinste Detail?
+
+* **Teste deine Expertise im Error Handling!** 💥
+* Kein Login oder Registrierung nötig. ✨
+* Multiple Choice. 🤖 ... _Das sind keine typischen try-catch-Fragen!_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Serialisierungsüberraschungen"
+  title="Das Rätsel des leeren Objekts"
+  options={[
+    {text: '{"message":"Oops","name":"Error"}'},
+    {text: '{}', isAnswer: true},
+    {text: '{"error":"Oops"}'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt `JSON.stringify(error)` zurück?
+```js
+    const error = new Error('Oops');
+    console.log(JSON.stringify(error));
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Error-Objekte besitzen nicht-enumerierbare Eigenschaften (`message`, `name`, `stack`), weshalb `JSON.stringify()` schlicht `{}` zurückgibt. Das ist ein klassischer Stolperstein, wenn du Fehler in API-Responses serialisierst. Greif stattdessen zu `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle ein Plain-Object.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Serialisierungs-Überraschungen"
+  title="Console vs JSON"
+  options={[
+    {text: 'Beide zeigen exakt dasselbe Ergebnis'},
+    {text: 'console.log zeigt mehr Informationen', isAnswer: true},
+    {text: 'JSON.stringify zeigt mehr Informationen'},
+    {text: 'Beide zeigen leere Objekte'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was unterscheidet die beiden eigentlich?
+```js
+    const err = new Error('Test');
+    console.log(err);
+    console.log(JSON.stringify(err));
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`console.log(err)` gibt die Fehlermeldung samt Stacktrace aus, da die Konsole Error-Objekte speziell behandelt. `JSON.stringify(err)` liefert hingegen `'{}'`, weil die Eigenschaften von Error-Objekten nicht enumerierbar sind. Dieser feine Unterschied lässt viele Entwickler beim API-Debugging ins Straucheln kommen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Typprüfungs-Tricks"
+  title="instanceof-Vererbung"
+  options={[
+    {text: 'true, true, true', isAnswer: true},
+    {text: 'true, false, false'},
+    {text: 'false, true, true'},
+    {text: 'true, true, false'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ergeben diese Checks?
+```js
+    class CustomError extends Error {}
+    const err = new CustomError('test');
+    
+    console.log(err instanceof CustomError);
+    console.log(err instanceof Error);
+    console.log(err instanceof Object);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Alle drei liefern `true`. `CustomError` erweitert `Error`, das seinerseits von `Object` abstammt. Der `instanceof`-Operator durchforstet die komplette Prototypenkette – eine `CustomError`-Instanz ist damit zwangsläufig auch eine Instanz von `Error` und `Object`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Tricks zur Typprüfung"
+  title="Cross-Frame instanceof"
+  options={[
+    {text: 'Immer true'},
+    {text: 'Immer false'},
+    {text: 'Kann über Frames hinweg false sein', isAnswer: true},
+    {text: 'Wirft einen Fehler'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was passiert eigentlich mit `instanceof Error`, wenn du es über iframes hinweg anwendest?
+```js
+    // In iframe:
+    const iframeError = new Error('test');
+    // In parent window:
+    console.log(iframeError instanceof Error);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`instanceof` kann über verschiedene Ausführungskontexte (iframes, Worker) hinweg `false` zurückgeben, da jeder Kontext seinen eigenen `Error`-Konstruktor besitzt. Nutze `Object.prototype.toString.call(obj) === '[object Error]'` für eine zuverlässige Fehlererkennung über Kontextgrenzen hinweg.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Werfen von Nicht-Fehler-Werten"
+  title="Strings werfen"
+  options={[
+    {text: 'TypeError: string ist kein Error', hint: 'JavaScript prüft den geworfenen Wert nicht auf den Typ `Error`.'},
+    {text: 'false, "string"', isAnswer: true, hint: 'Prüfe, was `instanceof` und `typeof` bei primitiven Werten zurückgeben.'},
+    {text: 'Erstellt automatisch ein Error-Objekt', hint: 'Es gibt keine implizite Konvertierung von Primitiven zu `Error`-Instanzen.'},
+    {text: 'Undefiniertes Verhalten', hint: 'Das Verhalten ist in der ECMAScript-Spezifikation klar geregelt.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was passiert eigentlich, wenn du einen String wirfst?
+```js
+    try {
+      throw "Oops!";
+    } catch (e) {
+      console.log(e instanceof Error);
+      console.log(typeof e);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+JavaScript erlaubt das Werfen *beliebiger* Werte. Hier ist `e instanceof Error` `false` und `typeof e` ist `"string"`. Das bricht Error-Handling-Code, der stillschweigend annimmt, dass alle abgefangenen Exceptions echte `Error`-Objekte sind. Wirf daher immer `Error`-Instanzen, um Stack-Traces und Debugging-Tools korrekt nutzen zu können.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Benutzerdefinierte Fehler"
+  title="Die `name`-Eigenschaft"
+  options={[
+    {text: '"Error"'},
+    {text: '"CustomError"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Hängt vom Browser ab'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Welchen Wert hat `err.name`?
+```js
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+      }
+    }
+    const err = new CustomError('test');
+    console.log(err.name);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`err.name` ist `"CustomError"`, da `this.constructor.name` den Klassennamen zurückgibt. Das Setzen von `this.name = this.constructor.name` ist ein gängiges Pattern, um sicherzustellen, dass benutzerdefinierte Fehlerklassen in Stack Traces und Fehlermeldungen den korrekten Namen anzeigen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Benutzerdefinierte Fehler"
+  title="Die Konstruktor-Name-Falle"
+  options={[
+    {text: '"MyError"'},
+    {text: '"Error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was ist die Ausgabe, wenn `name` nicht gesetzt wird?
+```js
+    class MyError extends Error {
+      // No constructor or name setting
+    }
+    const err = new MyError('test');
+    console.log(err.name);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Ohne die explizite Zuweisung von `this.name` erbt der Fehler die Standard-`name`-Eigenschaft der `Error`-Klasse – und die lautet schlicht `"Error"`. Genau deshalb muss in benutzerdefinierten Fehlerklassen im Konstruktor zwingend `this.name = this.constructor.name` stehen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Error.cause"
+  title="Modernes Error.cause"
+  options={[
+    {text: '"Original error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: '"Der umschließende Fehler"'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was gibt `wrapper.cause.message` zurück?
+```js
+    const original = new Error('Original error');
+    const wrapper = new Error('Wrapper', 
+      { cause: original }
+    );
+    console.log(wrapper.cause.message);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Error.cause` (ES2022) ermöglicht das Verketten von Fehlern, damit der ursprüngliche Kontext nicht im Debugging-Nirvana verschwindet. `wrapper.cause` referenziert direkt den Ursprungsfehler, weshalb `wrapper.cause.message` zuverlässig `"Original error"` ausspuckt. Ein bewährtes Pattern, um Low-Level-Fehler mit übergeordnetem Kontext zu wrappen, ohne die Stack-Trace-Übersicht zu ruinieren.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Stack-Traces"
+  title="Stack-Manipulation"
+  options={[
+    {text: 'Entfernt `createError` aus dem Stack', isAnswer: true},
+    {text: 'Löscht den gesamten Stack'},
+    {text: 'Bewirkt nichts'},
+    {text: 'Wirft einen TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was bewirkt `Error.captureStackTrace` eigentlich?
+```js
+    function createError(msg) {
+      const err = new Error(msg);
+      Error.captureStackTrace(err, createError);
+      return err;
+    }
+    const error = createError('test');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Error.captureStackTrace` (V8/Node.js) entfernt die angegebene Funktion (`createError`) aus dem Stack-Trace und macht Error-Factory-Funktionen für Endnutzer unsichtbar. Das sorgt für saubere Stack-Traces, die exakt zeigen, wo die Factory aufgerufen wurde – und nicht, wo sie definiert ist.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Fehlermeldungs-Templates"
+  title="Template Literals in Fehlermeldungen"
+  options={[
+    {text: '"Value ${value} is invalid"'},
+    {text: '"Value undefined is invalid"', isAnswer: true},
+    {text: 'ReferenceError: value is not defined'},
+    {text: '"Value  is invalid"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie lautet die Fehlermeldung?
+```js
+    function validate(value) {
+      if (!value) {
+        throw new Error(
+          `Value ${value} is invalid`
+        );
+      }
+    }
+    try {
+      validate(undefined);
+    } catch (e) {
+      console.log(e.message);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Template Literals verwandeln `undefined` bei der Interpolation gnadenlos in den String `"undefined"`. Die Fehlermeldung wird dadurch zu `"Value undefined is invalid"`. Für sauberere Ausgaben greif lieber zu `value ?? 'null'` oder prüfe den Wert vor der Interpolation.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="API-Fallstricke"
+  title="Express-Antwortfehler"
+  options={[
+    {text: 'Sendet das vollständige Fehlerobjekt'},
+    {text: 'Sendet {"error":{}}', isAnswer: true},
+    {text: 'Wirft einen Serverfehler'},
+    {text: 'Sendet nur die Fehlermeldung'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was landet tatsächlich beim Client?
+```js
+    // Express.js route
+    app.get('/api/data', (req, res) => {
+      const error = new Error('Database failed');
+      res.json({ error });
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`res.json()` nutzt intern `JSON.stringify()`, wodurch das Error-Objekt gnadenlos zu `{}` serialisiert wird. Der Client erhält `{"error":{}}`. Um das zu beheben, verwende `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Asynchrone Fehler"
+  title="Promise-Rejection-Werte"
+  options={[
+    {text: 'Immer Error-Objekte'},
+    {text: 'Jeder beliebige Wert kann eine Rejection sein', isAnswer: true},
+    {text: 'Nur Strings und Error-Objekte'},
+    {text: 'Automatisch in Error verpackt'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was akzeptiert `Promise.reject()`?
+```js
+    Promise.reject('string').catch(e => 
+      console.log(typeof e)
+    );
+    Promise.reject({code: 404}).catch(e => 
+      console.log(e.code)
+    );
+    Promise.reject(42).catch(e => 
+      console.log(e)
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Genau wie `throw` akzeptiert `Promise.reject()` absolut alles – Strings, Objekte, Zahlen, was auch immer. Deshalb wird hier `"string"`, `404` und `42` ausgegeben. Prüft in euren Promise-Ketten immer den Typ der abgefangenen Werte. Das ist besonders wichtig, wenn ihr mit Third-Party-Code arbeitet, der sich nicht an die Konvention hält und statt eines echten `Error` einfach einen primitiven Wert wirft.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Fehler-Eigenschaften"
+  title="Nicht-Standard-Eigenschaften"
+  options={[
+    {text: 'Immer verfügbar'},
+    {text: 'Möglicherweise nicht in allen Umgebungen vorhanden', isAnswer: true},
+    {text: 'Nur in Node.js'},
+    {text: 'Veraltet und entfernt'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Wie zuverlässig sind `error.code` und `error.errno`?
+```js
+    const fs = require('fs');
+    fs.readFile('missing.txt', (err, data) => {
+      if (err) {
+        console.log(err.code);    // 'ENOENT'
+        console.log(err.errno);   // -2
+      }
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error-Objekt. Im Browser existieren sie schlichtweg nicht. Prüfe daher immer explizit auf ihre Existenz: `if (err.code === 'ENOENT')`, anstatt sie blind vorauszusetzen.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Fehlergrenzen"
+  title="Objekt- vs. Error-Erkennung"
+  options={[
+    {text: 'true, true'},
+    {text: 'false, false', isAnswer: true},
+    {text: 'true, false'},
+    {text: 'false, true'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Was geben diese Prüfungen zurück?
+```js
+    const fakeError = {
+      name: 'Error',
+      message: 'Fake error',
+      stack: 'fake stack'
+    };
+    
+    console.log(fakeError instanceof Error);
+    console.log(Object.prototype.toString.call(
+      fakeError
+    ) === '[object Error]');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`instanceof Error` gibt `false` zurück, weil das Objekt nicht vom `Error`-Konstruktor instanziiert wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), da es den internen `[[Class]]`-Slot prüft. Beide Methoden entlarven dieses Objekt korrekt als Fake-Error.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+## Fehlerbehandlung meistern
+
+Von Serialisierungs-Fallstricken bis zu instanceof-Fehlern über Kontextgrenzen hinweg – diese fortgeschrittenen Konzepte trennen Junior-Entwickler von ~erfahrenen~ lädierten Profis.
+
+Noch nicht genug? In unserer [vollständigen Quiz-Sammlung](/challenges/) findest du weitere Denksportaufgaben zu JavaScript, Algorithmen und mehr!

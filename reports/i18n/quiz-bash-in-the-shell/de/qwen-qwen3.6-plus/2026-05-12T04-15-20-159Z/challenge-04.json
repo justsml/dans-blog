@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "originalTitle": "Escaping Characters",
+  "translatedTitle": "Zeichen escapen",
+  "translation": {
+    "title": "Zeichen escapen",
+    "group": "Variablen",
+    "options": [
+      {
+        "text": "Kosten: $$100"
+      },
+      {
+        "text": "Kosten: $100"
+      },
+      {
+        "text": "Kosten: 100"
+      },
+      {
+        "text": "Kosten: 00"
+      },
+      {
+        "text": "Kosten:"
+      },
+      {
+        "text": "Fehler"
+      }
+    ],
+    "questionProse": [
+      "Was gibt das hier wohl aus?"
+    ],
+    "explanationProse": [
+      "Nummerierte Variablen haben in Bash eine feste Bedeutung. In diesem Fall ist `$1` eine spezielle Variable, die das erste an das Skript oder die Funktion übergebene Argument speichert.\n\nDa wir das Skript hier direkt in einer REPL ausführen, werden keine Argumente mitgegeben – `$1` bleibt also leer. Der verbleibende Text `00` wird einfach unverändert ausgegeben.\n\nMöchtest du ein literales `$`-Zeichen ausgeben, nutze einfache Anführungszeichen oder maskiere es mit einem Backslash (`\\`):"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Zeichen escapen\",\n  \"group\": \"Variablen\",\n  \"options\": [\n    {\n      \"text\": \"Kosten: $$100\"\n    },\n    {\n      \"text\": \"Kosten: $100\"\n    },\n    {\n      \"text\": \"Kosten: 100\"\n    },\n    {\n      \"text\": \"Kosten: 00\"\n    },\n    {\n      \"text\": \"Kosten:\"\n    },\n    {\n      \"text\": \"Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt das hier wohl aus?\"\n  ],\n  \"explanationProse\": [\n    \"Nummerierte Variablen haben in Bash eine feste Bedeutung. In diesem Fall ist `$1` eine spezielle Variable, die das erste an das Skript oder die Funktion übergebene Argument speichert.\\n\\nDa wir das Skript hier direkt in einer REPL ausführen, werden keine Argumente mitgegeben – `$1` bleibt also leer. Der verbleibende Text `00` wird einfach unverändert ausgegeben.\\n\\nMöchtest du ein literales `$`-Zeichen ausgeben, nutze einfache Anführungszeichen oder maskiere es mit einem Backslash (`\\\\`):\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 873,
+    "outputTokens": 3361,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 61628
+  },
+  "cost": {
+    "inputUsd": 0.000283725,
+    "outputUsd": 0.006553949999999999,
+    "totalUsd": 0.006837675,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "index": 10,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT und NULL",
+  "translation": {
+    "title": "COUNT und NULL",
+    "group": "NULL-Verhalten",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "Wie viele *Zeilen* wird das zurückgeben?"
+    ],
+    "explanationProse": [
+      "Ok, das war ein bisschen knifflig. Der Knackpunkt ist, dass `x = NULL` niemals auf Zeilen zutrifft und IMMER eine einzelne Zeile mit dem Zählergebnis `0` zurückgibt.\n\n    Da `NULL` einen unbekannten Wert darstellt, kann er mit nichts verglichen werden – nicht einmal mit sich selbst.\n    \n    Der korrekte Weg, um auf `NULL`-Werte zu prüfen, ist die Verwendung von `IS NULL`.\n\n    Beispiel:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT und NULL\",\n  \"group\": \"NULL-Verhalten\",\n  \"options\": [\n    {\"text\": \"100\"},\n    {\"text\": \"90\"},\n    {\"text\": \"10\"},\n    {\"text\": \"1\"},\n    {\"text\": \"0\"}\n  ],\n  \"questionProse\": [\n    \"Wie viele *Zeilen* wird das zurückgeben?\"\n  ],\n  \"explanationProse\": [\n    \"Ok, das war ein bisschen knifflig. Der Knackpunkt ist, dass `x = NULL` niemals auf Zeilen zutrifft und IMMER eine einzelne Zeile mit dem Zählergebnis `0` zurückgibt.\\n\\n    Da `NULL` einen unbekannten Wert darstellt, kann er mit nichts verglichen werden – nicht einmal mit sich selbst.\\n    \\n    Der korrekte Weg, um auf `NULL`-Werte zu prüfen, ist die Verwendung von `IS NULL`.\\n\\n    Beispiel:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 839,
+    "outputTokens": 3378,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 61981
+  },
+  "cost": {
+    "inputUsd": 0.000272675,
+    "outputUsd": 0.006587099999999999,
+    "totalUsd": 0.006859774999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
