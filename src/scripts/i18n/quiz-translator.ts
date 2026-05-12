@@ -142,6 +142,7 @@ export async function translateChallenge(
 
   const result = await generateText({
     model,
+    allowSystemInMessages: true,
     messages: [
       {
         role: "system",
@@ -245,6 +246,7 @@ export async function generateQuizDescription(
 
   const result = await generateText({
     model,
+    allowSystemInMessages: true,
     messages: [
       {
         role: "system",

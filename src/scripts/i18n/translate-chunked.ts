@@ -618,6 +618,7 @@ async function translateProse(
 
   const result = await generateText({
     model,
+    allowSystemInMessages: true,
     messages: [
       {
         role: "system",
