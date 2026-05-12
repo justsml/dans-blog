@@ -1,0 +1,70 @@
+---
+social_image: ../desktop-social.webp
+title: Docker === любовь
+subTitle: Docker может всё!
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker может всё!\*
+
+> Историческая заметка: это снимок 2015 года, отражающий энтузиазм по поводу Docker и привычки локальной разработки, сохранённый в основном как капсула времени.
+
+Рассматривайте команды и настройки безопасности как отправные точки для модернизации, а не как руководство для продакшена.
+
+Улучшите свой процесс для:
+
+1.
+
+Тестирование инструментов разработки и серверов С ПРАКТИЧЕСКИ НУЛЕВЫМ риском испортить зависимости на вашем ПК  
+1.  Тестирование вашего ПО  
+1.  Заставляет писать более идемпотентный, модульный код...
+
+(О том, как это реализовать на практике, я расскажу в следующей статье)
+
+Может показаться, что нужно выучить огромный объем нового материала, **не позволяйте этому помешать вам начать**.
+
+### Примечания
+
+- Если вы видите команду `docker run` с опциями `-d` или `-it`:
+  _ `-it` или `-i -t` запускает настроенную команду в интерактивном режиме
+  _ `-d` запускает контейнер Docker как «демон», то есть фоновый сервис.
+
+---
+
+### ПРИМЕРЫ
+
+### nginx
+
+```bash
+# Примечание: используются общие папки на хосте
+#(общие папки невозможны с командой VOLUME в Dockerfile)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Локальные данные, изолированные внутри контейнера
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> Источник: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker упростит вашу жизнь на _всех_ этапах SDLC.
+
+> - Довольно близко

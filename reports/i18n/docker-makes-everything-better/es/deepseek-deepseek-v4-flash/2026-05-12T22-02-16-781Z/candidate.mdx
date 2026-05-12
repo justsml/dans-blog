@@ -1,0 +1,68 @@
+---
+social_image: ../desktop-social.webp
+title: Docker === Amor
+subTitle: 'Docker puede hacer :todaslascosas:!'
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker puede hacerlo todo!\*
+
+> Nota histórica: esta es una instantánea de 2015 del entusiasmo por Docker y los hábitos de desarrollo local, conservada principalmente como una cápsula del tiempo.
+
+Trate los comandos y la postura de seguridad como puntos de partida para modernizar, no como guía de producción. Mejore su proceso para:
+
+1.
+
+Probar herramientas de desarrollo y servidores CON UN RIESGO VIRTUALMENTE CERO de desordenar las dependencias en tu PC
+1.  Probar tu software
+1.  Te obliga a escribir código más idempotente y modular...
+
+(En un artículo posterior explicaré cómo llevar esto a la práctica)
+
+Puede parecer que hay un montón de cosas nuevas que aprender, **no dejes que eso te frene** para empezar.
+
+### Notas
+
+- Si ves un comando `docker run` con las opciones `-d` o `-it`:
+  _ `-it` o `-i -t` ejecutará el comando configurado de forma interactiva.
+  _ `-d` iniciará el contenedor Docker como un 'demonio', es decir, un servicio en segundo plano.
+
+---
+
+### EJEMPLOS
+
+### nginx
+
+```bash
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> Créditos: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker hará tu vida más fácil a lo largo de _todo_ el SDLC.
+
+> - Bastante cerca

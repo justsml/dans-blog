@@ -1,0 +1,64 @@
+---
+social_image: ../desktop-social.webp
+title: डॉकर === प्यार
+subTitle: Docker सब कुछ कर सकता है!
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker सब कुछ कर सकता है!\*
+
+> ऐतिहासिक टिप्पणी: यह 2015 के Docker उत्साह और स्थानीय-डेव आदतों का एक स्नैपशॉट है, जिसे अधिकतर एक समय-कैप्सूल के रूप में संरक्षित किया गया है।
+
+कमांड और सुरक्षा स्थिति को आधुनिक बनाने के लिए शुरुआती बिंदु मानें, न कि उत्पादन मार्गदर्शन। अपनी प्रक्रिया में सुधार करें: 1.
+
+अपने पीसी पर डिपेंडेंसीज़ को गड़बड़ करने के लगभग शून्य जोखिम के साथ डेव टूल्स और सर्वर का परीक्षण
+1.  अपने सॉफ्टवेयर का परीक्षण
+1.  आपको अधिक आइडेम्पोटेंट (idempotent), मॉड्यूलर कोड लिखने के लिए प्रेरित करता है...
+
+(इसे वास्तव में कैसे लागू किया जाए, इस पर मैं एक अनुवर्ती पोस्ट में लिखूंगा)
+
+सीखने के लिए बहुत सारी नई चीज़ें लग सकती हैं, **लेकिन इसे आपको शुरू करने से न रोकने दें**।
+
+### नोट्स
+
+- यदि आप `docker run` कमांड में `-d` या `-it` विकल्प देखते हैं:
+  _ `-it` या `-i -t` कॉन्फ़िगर किए गए कमांड को इंटरैक्टिव रूप से चलाएगा।
+  _ `-d` डॉकर कंटेनर को 'डेमॉन' यानी बैकग्राउंड सर्विस के रूप में शुरू करेगा।
+
+### उदाहरण
+
+### nginx
+
+```bash
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> श्रेय: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker पूरे SDLC में आपके जीवन को आसान बना देगा।
+
+> - काफी करीब

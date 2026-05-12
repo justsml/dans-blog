@@ -1,0 +1,70 @@
+---
+social_image: ../desktop-social.webp
+title: Docker === Liebe
+subTitle: 'Docker kann :allthethings:!'
+date: '2015-02-26'
+modified: '2024-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - devops
+  - patterns
+related:
+  - docker-server-setup-notes
+  - docker-rocks
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## Docker kann alles!\*
+
+> Historische Anmerkung: Dies ist eine Momentaufnahme aus dem Jahr 2015, die die damalige Docker-Euphorie und lokale Entwicklungsgewohnheiten zeigt – weitgehend als Zeitkapsel erhalten.
+
+Behandeln Sie die Befehle und die Sicherheitshaltung als Ausgangspunkte für die Modernisierung, nicht als Produktionsleitfaden.
+
+Verbessern Sie Ihren Prozess für:
+
+1.
+
+Testen von Entwickler-Tools und Servern MIT VIRTUELL NULL Risiko, Abhängigkeiten auf Ihrem PC zu vermasseln
+1.  Testen Ihrer Software
+1.  Zwingt Sie, idempotenteren, modulareren Code zu schreiben...
+
+(I'll write how to actually realize this in a follow up)
+
+Es mag nach einer Menge neuer Lerninhalte aussehen, **lass dich davon nicht abhalten**, loszulegen.
+
+### Anmerkungen
+
+- Wenn du einen `docker run`-Befehl mit den Optionen `-d` oder `-it` siehst:
+  _ `-it` oder `-i -t` führt den konfigurierten Befehl interaktiv aus
+  _ `-d` startet den Docker-Container als 'Daemon', also als Hintergrunddienst.
+
+---
+
+### BEISPIELE
+
+### nginx
+
+```bash
+# Note: using host-based, shared folders
+#(shared folders are not possible with the VOLUME Dockerfile cmd)
+sudo docker run --name web01 -d -p 8181:80 \
+  -v $(NGINX_DIR)/etc:/etc/nginx \
+  -v $(NGINX_DIR)/log:/var/log/nginx \
+  -v $(NGINX_DIR)/www:/var/www/html \
+  nginx:latest
+
+## Local data, isolated within instance
+sudo docker run --name web01 -d -p 8181:80 nginx:latest
+
+# nodejs
+sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
+```
+
+> Credits: [https://dockerfile.github.io/#/nginx](https://dockerfile.github.io/#/nginx)
+> Docker wird Ihnen während des _gesamten_ SDLC das Leben erleichtern.
+
+> - Ziemlich nah dran
