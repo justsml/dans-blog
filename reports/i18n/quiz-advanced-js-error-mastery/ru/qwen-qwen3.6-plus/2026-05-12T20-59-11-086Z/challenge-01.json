@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Загадка пустого объекта",
+  "translation": {
+    "title": "Загадка пустого объекта",
+    "group": "Сюрпризы сериализации",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Что вернёт `JSON.stringify(error)`?"
+    ],
+    "explanationProse": [
+      "У объектов ошибок свойства (`message`, `name`, `stack`) неперечисляемые, поэтому `JSON.stringify()` возвращает `{}`. Это классическая ловушка при отправке ошибок в ответах API. Используйте `JSON.stringify(error, Object.getOwnPropertyNames(error))` или создайте обычный объект."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Загадка пустого объекта\",\n  \"group\": \"Сюрпризы сериализации\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что вернёт `JSON.stringify(error)`?\"\n  ],\n  \"explanationProse\": [\n    \"У объектов ошибок свойства (`message`, `name`, `stack`) неперечисляемые, поэтому `JSON.stringify()` возвращает `{}`. Это классическая ловушка при отправке ошибок в ответах API. Используйте `JSON.stringify(error, Object.getOwnPropertyNames(error))` или создайте обычный объект.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 748,
+    "outputTokens": 2141,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 40912
+  },
+  "cost": {
+    "inputUsd": 0.0002431,
+    "outputUsd": 0.00417495,
+    "totalUsd": 0.00441805,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

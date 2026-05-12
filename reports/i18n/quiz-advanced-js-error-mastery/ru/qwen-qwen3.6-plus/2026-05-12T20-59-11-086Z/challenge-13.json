@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Нестандартные свойства",
+  "translation": {
+    "title": "Нестандартные свойства",
+    "group": "Свойства ошибок",
+    "options": [
+      {
+        "text": "Всегда доступны"
+      },
+      {
+        "text": "Могут отсутствовать в некоторых окружениях"
+      },
+      {
+        "text": "Только в Node.js"
+      },
+      {
+        "text": "Устарели и были удалены"
+      }
+    ],
+    "questionProse": [
+      "Насколько надежны `error.code` и `error.errno`?"
+    ],
+    "explanationProse": [
+      "Свойства `code` и `errno` привязаны к конкретному окружению (в данном случае к Node.js) и не входят в стандартный объект Error. Браузерные ошибки их просто не содержат. Поэтому всегда проверяйте их наличие: `if (err.code === 'ENOENT')`, вместо того чтобы слепо полагаться на их существование."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Нестандартные свойства\",\n  \"group\": \"Свойства ошибок\",\n  \"options\": [\n    {\n      \"text\": \"Всегда доступны\"\n    },\n    {\n      \"text\": \"Могут отсутствовать в некоторых окружениях\"\n    },\n    {\n      \"text\": \"Только в Node.js\"\n    },\n    {\n      \"text\": \"Устарели и были удалены\"\n    }\n  ],\n  \"questionProse\": [\n    \"Насколько надежны `error.code` и `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Свойства `code` и `errno` привязаны к конкретному окружению (в данном случае к Node.js) и не входят в стандартный объект Error. Браузерные ошибки их просто не содержат. Поэтому всегда проверяйте их наличие: `if (err.code === 'ENOENT')`, вместо того чтобы слепо полагаться на их существование.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 755,
+    "outputTokens": 1808,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 33423
+  },
+  "cost": {
+    "inputUsd": 0.00024537500000000004,
+    "outputUsd": 0.0035256,
+    "totalUsd": 0.0037709749999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

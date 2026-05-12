@@ -1,0 +1,48 @@
+{
+  "index": 14,
+  "attempt": 1,
+  "originalTitle": "Command Substitution",
+  "translatedTitle": "Substitution de commande",
+  "translation": {
+    "title": "Substitution de commande",
+    "group": "Pièges",
+    "options": [
+      {
+        "text": "'ls -l'"
+      },
+      {
+        "text": "% ls -l"
+      },
+      {
+        "text": "$ ls -l"
+      },
+      {
+        "text": "$(ls -l)"
+      },
+      {
+        "text": "${ls -l}"
+      }
+    ],
+    "questionProse": [
+      "Quelle option exécutera la commande `ls -l` et retournera la sortie ?"
+    ],
+    "explanationProse": [
+      "La syntaxe `$(ls -l)` exécute la commande entre **parenthèses** et substitue la sortie. Par exemple :",
+      "La première option utilise des guillemets simples `'`, **pas des backticks.** Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.\n\n    Bien que l'utilisation des backticks (`` `ls -l` ``) pour l'exécution de commandes soit toujours prise en charge, elle est récemment devenue un anti-patron (dans certains contextes). La plupart recommandent d'utiliser `$(command)` pour une meilleure lisibilité et cohérence avec différents shells et versions.\n\n    Les accolades `${}` sont utilisées pour l'expansion de variables, pas pour la substitution de commande.\n\n    Le caractère `%` n'est pas utilisé pour la substitution de commande."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Substitution de commande\",\n  \"group\": \"Pièges\",\n  \"options\": [\n    {\"text\": \"'ls -l'\"},\n    {\"text\": \"% ls -l\"},\n    {\"text\": \"$ ls -l\"},\n    {\"text\": \"$(ls -l)\"},\n    {\"text\": \"${ls -l}\"}\n  ],\n  \"questionProse\": [\n    \"Quelle option exécutera la commande `ls -l` et retournera la sortie ?\"\n  ],\n  \"explanationProse\": [\n    \"La syntaxe `$(ls -l)` exécute la commande entre **parenthèses** et substitue la sortie. Par exemple :\",\n    \"La première option utilise des guillemets simples `'`, **pas des backticks.** Cela empêche l'expansion, donc `'$(date +%F)'` afficherait simplement la chaîne littérale `$(date +%F)`.\\n\\n    Bien que l'utilisation des backticks (`` `ls -l` ``) pour l'exécution de commandes soit toujours prise en charge, elle est récemment devenue un anti-patron (dans certains contextes). La plupart recommandent d'utiliser `$(command)` pour une meilleure lisibilité et cohérence avec différents shells et versions.\\n\\n    Les accolades `${}` sont utilisées pour l'expansion de variables, pas pour la substitution de commande.\\n\\n    Le caractère `%` n'est pas utilisé pour la substitution de commande.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 825,
+    "outputTokens": 1713,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9836
+  },
+  "cost": {
+    "inputUsd": 0.00011550000000000002,
+    "outputUsd": 0.00047964000000000004,
+    "totalUsd": 0.0005951400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

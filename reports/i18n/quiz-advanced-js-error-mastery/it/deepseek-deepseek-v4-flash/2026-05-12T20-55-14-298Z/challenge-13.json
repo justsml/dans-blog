@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Proprietà non standard",
+  "translation": {
+    "title": "Proprietà non standard",
+    "group": "Proprietà degli errori",
+    "options": [
+      {
+        "text": "Sempre disponibili"
+      },
+      {
+        "text": "Potrebbero non esistere in tutti gli ambienti"
+      },
+      {
+        "text": "Solo in Node.js"
+      },
+      {
+        "text": "Deprecate e rimosse"
+      }
+    ],
+    "questionProse": [
+      "Quanto sono affidabili `error.code` e `error.errno`?"
+    ],
+    "explanationProse": [
+      "Proprietà come `code` e `errno` sono specifiche dell'ambiente (Node.js in questo caso) e non fanno parte dell'oggetto Error standard. Gli errori del browser non avranno queste proprietà. Controlla sempre la loro esistenza: `if (err.code === 'ENOENT')` piuttosto che presumere che esistano."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Proprietà non standard\",\n  \"group\": \"Proprietà degli errori\",\n  \"options\": [\n    { \"text\": \"Sempre disponibili\" },\n    { \"text\": \"Potrebbero non esistere in tutti gli ambienti\" },\n    { \"text\": \"Solo in Node.js\" },\n    { \"text\": \"Deprecate e rimosse\" }\n  ],\n  \"questionProse\": [\n    \"Quanto sono affidabili `error.code` e `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Proprietà come `code` e `errno` sono specifiche dell'ambiente (Node.js in questo caso) e non fanno parte dell'oggetto Error standard. Gli errori del browser non avranno queste proprietà. Controlla sempre la loro esistenza: `if (err.code === 'ENOENT')` piuttosto che presumere che esistano.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 727,
+    "outputTokens": 1260,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7774
+  },
+  "cost": {
+    "inputUsd": 0.00010178,
+    "outputUsd": 0.00035280000000000006,
+    "totalUsd": 0.00045458000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

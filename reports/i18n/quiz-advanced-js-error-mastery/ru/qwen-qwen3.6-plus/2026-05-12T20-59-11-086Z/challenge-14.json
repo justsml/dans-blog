@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Распознавание Object и Error",
+  "translation": {
+    "title": "Распознавание Object и Error",
+    "group": "Границы ошибок",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Что вернут эти проверки?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` возвращает `false`, так как объект не был создан конструктором `Error`. `Object.prototype.toString.call()` также возвращает `false` (на деле он возвращает `'[object Object]'`), поскольку проверяет внутренний слот `[[Class]]`. Оба метода верно определяют, что это поддельный объект ошибки."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Распознавание Object и Error\",\n  \"group\": \"Границы ошибок\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что вернут эти проверки?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` возвращает `false`, так как объект не был создан конструктором `Error`. `Object.prototype.toString.call()` также возвращает `false` (на деле он возвращает `'[object Object]'`), поскольку проверяет внутренний слот `[[Class]]`. Оба метода верно определяют, что это поддельный объект ошибки.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 748,
+    "outputTokens": 3027,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 55459
+  },
+  "cost": {
+    "inputUsd": 0.0002431,
+    "outputUsd": 0.005902650000000001,
+    "totalUsd": 0.00614575,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

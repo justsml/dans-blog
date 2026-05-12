@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Il Mistero dell'Oggetto Vuoto",
+  "translation": {
+    "title": "Il Mistero dell'Oggetto Vuoto",
+    "group": "Sorprese di Serializzazione",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Cosa restituisce `JSON.stringify(error)`?"
+    ],
+    "explanationProse": [
+      "Gli oggetti Error hanno proprietà non enumerabili (`message`, `name`, `stack`), quindi `JSON.stringify()` restituisce `{}`. Questo è un errore comune quando si inviano errori nelle risposte API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un oggetto semplice invece."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Il Mistero dell'Oggetto Vuoto\",\n  \"group\": \"Sorprese di Serializzazione\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa restituisce `JSON.stringify(error)`?\"\n  ],\n  \"explanationProse\": [\n    \"Gli oggetti Error hanno proprietà non enumerabili (`message`, `name`, `stack`), quindi `JSON.stringify()` restituisce `{}`. Questo è un errore comune quando si inviano errori nelle risposte API. Usa `JSON.stringify(error, Object.getOwnPropertyNames(error))` o crea un oggetto semplice invece.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 728,
+    "outputTokens": 837,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5977
+  },
+  "cost": {
+    "inputUsd": 0.00010192000000000001,
+    "outputUsd": 0.00023436,
+    "totalUsd": 0.00033628,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

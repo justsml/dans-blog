@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "Console vs JSON",
+  "translation": {
+    "title": "Console vs JSON",
+    "group": "Surprises de sérialisation",
+    "options": [
+      {
+        "text": "Les deux affichent la même sortie"
+      },
+      {
+        "text": "console.log affiche plus d'informations"
+      },
+      {
+        "text": "JSON.stringify affiche plus d'informations"
+      },
+      {
+        "text": "Les deux affichent des objets vides"
+      }
+    ],
+    "questionProse": [
+      "Quelle est la différence entre ces deux ?"
+    ],
+    "explanationProse": [
+      "`console.log(err)` affiche l'erreur avec son message et sa pile d'appels car la console a un traitement spécial pour les objets Error. `JSON.stringify(err)` renvoie `'{}'` car les propriétés de Error ne sont pas énumérables. Cette différence surprend de nombreux développeurs qui déboguent des API."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Console vs JSON\",\n  \"group\": \"Surprises de sérialisation\",\n  \"options\": [\n    {\n      \"text\": \"Les deux affichent la même sortie\"\n    },\n    {\n      \"text\": \"console.log affiche plus d'informations\"\n    },\n    {\n      \"text\": \"JSON.stringify affiche plus d'informations\"\n    },\n    {\n      \"text\": \"Les deux affichent des objets vides\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est la différence entre ces deux ?\"\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)` affiche l'erreur avec son message et sa pile d'appels car la console a un traitement spécial pour les objets Error. `JSON.stringify(err)` renvoie `'{}'` car les propriétés de Error ne sont pas énumérables. Cette différence surprend de nombreux développeurs qui déboguent des API.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 702,
+    "outputTokens": 834,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5766
+  },
+  "cost": {
+    "inputUsd": 0.00009828000000000001,
+    "outputUsd": 0.00023352000000000003,
+    "totalUsd": 0.00033180000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Errore di risposta Express",
+  "translation": {
+    "title": "Errore di risposta Express",
+    "group": "Insidie delle API",
+    "options": [
+      {
+        "text": "Invia l'oggetto errore completo"
+      },
+      {
+        "text": "Invia {\"error\":{}}"
+      },
+      {
+        "text": "Genera un errore del server"
+      },
+      {
+        "text": "Invia solo il messaggio di errore"
+      }
+    ],
+    "questionProse": [
+      "Cosa viene inviato al client?"
+    ],
+    "explanationProse": [
+      "`res.json()` usa internamente `JSON.stringify()`, quindi l'oggetto Error diventa `{}`. Il client riceve `{\"error\":{}}`. Per risolvere, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Errore di risposta Express\",\n  \"group\": \"Insidie delle API\",\n  \"options\": [\n    {\n      \"text\": \"Invia l'oggetto errore completo\"\n    },\n    {\n      \"text\": \"Invia {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Genera un errore del server\"\n    },\n    {\n      \"text\": \"Invia solo il messaggio di errore\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa viene inviato al client?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` usa internamente `JSON.stringify()`, quindi l'oggetto Error diventa `{}`. Il client riceve `{\\\"error\\\":{}}`. Per risolvere, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 733,
+    "outputTokens": 897,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8207
+  },
+  "cost": {
+    "inputUsd": 0.00010262000000000002,
+    "outputUsd": 0.00025116,
+    "totalUsd": 0.00035378000000000004,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

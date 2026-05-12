@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Ловушка с именем конструктора",
+  "translation": {
+    "title": "Ловушка с именем конструктора",
+    "group": "Пользовательские ошибки",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Какой будет вывод, если не задавать `name`?"
+    ],
+    "explanationProse": [
+      "Без явного задания `this.name` ошибка наследует свойство `name` по умолчанию от класса `Error`, которое равно `\"Error\"`. Вот почему пользовательские классы ошибок всегда должны устанавливать `this.name = this.constructor.name` в своём конструкторе."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ловушка с именем конструктора\",\n  \"group\": \"Пользовательские ошибки\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Какой будет вывод, если не задавать `name`?\"\n  ],\n  \"explanationProse\": [\n    \"Без явного задания `this.name` ошибка наследует свойство `name` по умолчанию от класса `Error`, которое равно `\\\"Error\\\"`. Вот почему пользовательские классы ошибок всегда должны устанавливать `this.name = this.constructor.name` в своём конструкторе.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 690,
+    "outputTokens": 1020,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6007
+  },
+  "cost": {
+    "inputUsd": 0.0000966,
+    "outputUsd": 0.00028560000000000006,
+    "totalUsd": 0.0003822000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

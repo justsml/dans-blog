@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "Héritage instanceof",
+  "translation": {
+    "title": "Héritage instanceof",
+    "group": "Astuces de vérification de type",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "Quels sont les résultats de ces vérifications ?"
+    ],
+    "explanationProse": [
+      "Les trois renvoient `true`. `CustomError` étend `Error`, qui étend `Object`. L'opérateur `instanceof` vérifie toute la chaîne de prototypes, donc une instance de `CustomError` est aussi une instance de `Error` et de `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Héritage instanceof\",\n  \"group\": \"Astuces de vérification de type\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quels sont les résultats de ces vérifications ?\"\n  ],\n  \"explanationProse\": [\n    \"Les trois renvoient `true`. `CustomError` étend `Error`, qui étend `Object`. L'opérateur `instanceof` vérifie toute la chaîne de prototypes, donc une instance de `CustomError` est aussi une instance de `Error` et de `Object`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 701,
+    "outputTokens": 978,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7855
+  },
+  "cost": {
+    "inputUsd": 0.00009814,
+    "outputUsd": 0.00027384,
+    "totalUsd": 0.00037198000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

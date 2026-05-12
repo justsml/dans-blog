@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Insidia del nome del costruttore",
+  "translation": {
+    "title": "Insidia del nome del costruttore",
+    "group": "Errori personalizzati",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Qual è l'output senza impostare `name`?"
+    ],
+    "explanationProse": [
+      "Senza impostare esplicitamente `this.name`, l'errore eredita la proprietà `name` predefinita dalla classe `Error`, che è `\"Error\"`. Questo è il motivo per cui le classi di errore personalizzate dovrebbero sempre impostare `this.name = this.constructor.name` nel loro costruttore."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Insidia del nome del costruttore\",\n  \"group\": \"Errori personalizzati\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qual è l'output senza impostare `name`?\"\n  ],\n  \"explanationProse\": [\n    \"Senza impostare esplicitamente `this.name`, l'errore eredita la proprietà `name` predefinita dalla classe `Error`, che è `\\\"Error\\\"`. Questo è il motivo per cui le classi di errore personalizzate dovrebbero sempre impostare `this.name = this.constructor.name` nel loro costruttore.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 708,
+    "outputTokens": 743,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7771
+  },
+  "cost": {
+    "inputUsd": 0.00009912,
+    "outputUsd": 0.00020804,
+    "totalUsd": 0.00030716,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

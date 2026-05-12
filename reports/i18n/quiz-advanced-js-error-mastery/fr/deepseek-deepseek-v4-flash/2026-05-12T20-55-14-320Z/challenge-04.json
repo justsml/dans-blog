@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof entre cadres",
+  "translation": {
+    "title": "instanceof entre cadres",
+    "group": "Astuces de vérification de type",
+    "options": [
+      {
+        "text": "Toujours vrai"
+      },
+      {
+        "text": "Toujours faux"
+      },
+      {
+        "text": "Peut être faux entre cadres"
+      },
+      {
+        "text": "Lève une erreur"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec `instanceof Error` entre iframes ?"
+    ],
+    "explanationProse": [
+      "`instanceof` peut retourner `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte a son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof entre cadres\",\n  \"group\": \"Astuces de vérification de type\",\n  \"options\": [\n    { \"text\": \"Toujours vrai\" },\n    { \"text\": \"Toujours faux\" },\n    { \"text\": \"Peut être faux entre cadres\" },\n    { \"text\": \"Lève une erreur\" }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec `instanceof Error` entre iframes ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`instanceof` peut retourner `false` entre différents contextes d'exécution (iframes, workers) car chaque contexte a son propre constructeur `Error`. Utilisez `Object.prototype.toString.call(obj) === '[object Error]'` pour une détection fiable des erreurs entre contextes.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 700,
+    "outputTokens": 1384,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8784
+  },
+  "cost": {
+    "inputUsd": 0.00009800000000000001,
+    "outputUsd": 0.00038752000000000003,
+    "totalUsd": 0.00048552,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

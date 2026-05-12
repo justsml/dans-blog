@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Ошибка ответа Express",
+  "translation": {
+    "title": "Ошибка ответа Express",
+    "group": "Ловушки API",
+    "options": [
+      {
+        "text": "Отправляет полный объект ошибки"
+      },
+      {
+        "text": "Отправляет {\"error\":{}}"
+      },
+      {
+        "text": "Выбрасывает серверную ошибку"
+      },
+      {
+        "text": "Отправляет только сообщение об ошибке"
+      }
+    ],
+    "questionProse": [
+      "Что отправляется клиенту?"
+    ],
+    "explanationProse": [
+      "`res.json()` использует `JSON.stringify()` внутри, поэтому объект Error становится `{}`. Клиент получает `{\"error\":{}}`. Чтобы исправить это, используйте `res.json({ error: error.message })` или `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ошибка ответа Express\",\n  \"group\": \"Ловушки API\",\n  \"options\": [\n    {\n      \"text\": \"Отправляет полный объект ошибки\"\n    },\n    {\n      \"text\": \"Отправляет {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Выбрасывает серверную ошибку\"\n    },\n    {\n      \"text\": \"Отправляет только сообщение об ошибке\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что отправляется клиенту?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` использует `JSON.stringify()` внутри, поэтому объект Error становится `{}`. Клиент получает `{\\\"error\\\":{}}`. Чтобы исправить это, используйте `res.json({ error: error.message })` или `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 715,
+    "outputTokens": 1048,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6912
+  },
+  "cost": {
+    "inputUsd": 0.00010010000000000002,
+    "outputUsd": 0.00029344000000000006,
+    "totalUsd": 0.00039354000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

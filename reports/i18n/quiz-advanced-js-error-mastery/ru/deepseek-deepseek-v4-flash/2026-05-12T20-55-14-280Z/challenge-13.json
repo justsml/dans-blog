@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Нестандартные свойства",
+  "translation": {
+    "title": "Нестандартные свойства",
+    "group": "Свойства ошибок",
+    "options": [
+      {
+        "text": "Всегда доступны"
+      },
+      {
+        "text": "Могут отсутствовать в некоторых окружениях"
+      },
+      {
+        "text": "Только в Node.js"
+      },
+      {
+        "text": "Устарели и удалены"
+      }
+    ],
+    "questionProse": [
+      "Насколько надёжны `error.code` и `error.errno`?"
+    ],
+    "explanationProse": [
+      "Свойства вроде `code` и `errno` зависят от окружения (в данном случае Node.js) и не являются частью стандартного объекта Error. Ошибки браузера не будут иметь этих свойств. Всегда проверяйте их наличие: `if (err.code === 'ENOENT')`, а не предполагайте, что они существуют."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Нестандартные свойства\",\n  \"group\": \"Свойства ошибок\",\n  \"options\": [\n    {\n      \"text\": \"Всегда доступны\"\n    },\n    {\n      \"text\": \"Могут отсутствовать в некоторых окружениях\"\n    },\n    {\n      \"text\": \"Только в Node.js\"\n    },\n    {\n      \"text\": \"Устарели и удалены\"\n    }\n  ],\n  \"questionProse\": [\n    \"Насколько надёжны `error.code` и `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Свойства вроде `code` и `errno` зависят от окружения (в данном случае Node.js) и не являются частью стандартного объекта Error. Ошибки браузера не будут иметь этих свойств. Всегда проверяйте их наличие: `if (err.code === 'ENOENT')`, а не предполагайте, что они существуют.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 709,
+    "outputTokens": 625,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6622
+  },
+  "cost": {
+    "inputUsd": 0.00009926000000000001,
+    "outputUsd": 0.00017500000000000003,
+    "totalUsd": 0.00027426,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

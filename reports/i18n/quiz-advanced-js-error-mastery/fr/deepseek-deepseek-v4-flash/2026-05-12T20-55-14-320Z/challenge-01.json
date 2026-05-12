@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Le mystère de l'objet vide",
+  "translation": {
+    "title": "Le mystère de l'objet vide",
+    "group": "Surprises de sérialisation",
+    "options": [
+      {
+        "text": "{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\\\"error\\\":\\\"Oops\\\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Que retourne `JSON.stringify(error)` ?"
+    ],
+    "explanationProse": [
+      "Les objets Error ont des propriétés non énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` retourne `{}`. C'est un piège courant lors de l'envoi d'erreurs dans les réponses API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le mystère de l'objet vide\",\n  \"group\": \"Surprises de sérialisation\",\n  \"options\": [\n    {\n      \"text\": \"{\\\\\\\"message\\\\\\\":\\\\\\\"Oops\\\\\\\",\\\\\\\"name\\\\\\\":\\\\\\\"Error\\\\\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\\\\\"error\\\\\\\":\\\\\\\"Oops\\\\\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que retourne `JSON.stringify(error)` ?\"\n  ],\n  \"explanationProse\": [\n    \"Les objets Error ont des propriétés non énumérables (`message`, `name`, `stack`), donc `JSON.stringify()` retourne `{}`. C'est un piège courant lors de l'envoi d'erreurs dans les réponses API. Utilisez `JSON.stringify(error, Object.getOwnPropertyNames(error))` ou créez un objet simple à la place.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 715,
+    "outputTokens": 1912,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11183
+  },
+  "cost": {
+    "inputUsd": 0.00010010000000000002,
+    "outputUsd": 0.00053536,
+    "totalUsd": 0.00063546,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

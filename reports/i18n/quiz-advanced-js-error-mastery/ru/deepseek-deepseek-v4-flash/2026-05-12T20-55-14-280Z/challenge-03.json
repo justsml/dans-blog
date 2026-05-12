@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof и наследование",
+  "translation": {
+    "title": "instanceof и наследование",
+    "group": "Хитрости проверки типов",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "Каковы результаты этих проверок?"
+    ],
+    "explanationProse": [
+      "Все три возвращают `true`. `CustomError` наследует от `Error`, который наследует от `Object`. Оператор `instanceof` проверяет всю цепочку прототипов, поэтому экземпляр `CustomError` также является экземпляром `Error` и `Object`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof и наследование\",\n  \"group\": \"Хитрости проверки типов\",\n  \"options\": [\n    { \"text\": \"true, true, true\" },\n    { \"text\": \"true, false, false\" },\n    { \"text\": \"false, true, true\" },\n    { \"text\": \"true, true, false\" }\n  ],\n  \"questionProse\": [\n    \"Каковы результаты этих проверок?\"\n  ],\n  \"explanationProse\": [\n    \"Все три возвращают `true`. `CustomError` наследует от `Error`, который наследует от `Object`. Оператор `instanceof` проверяет всю цепочку прототипов, поэтому экземпляр `CustomError` также является экземпляром `Error` и `Object`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 696,
+    "outputTokens": 854,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7937
+  },
+  "cost": {
+    "inputUsd": 0.00009744000000000002,
+    "outputUsd": 0.00023912000000000003,
+    "totalUsd": 0.00033656000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

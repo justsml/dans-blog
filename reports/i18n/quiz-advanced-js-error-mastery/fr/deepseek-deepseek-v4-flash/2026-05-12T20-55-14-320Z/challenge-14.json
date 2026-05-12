@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objet vs Détection d'erreur",
+  "translation": {
+    "title": "Objet vs Détection d'erreur",
+    "group": "Limites d'erreur",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Que retournent ces vérifications ?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` renvoie `false` car l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie également `false` (elle renvoie `'[object Object]'`) car elle vérifie l'emplacement interne `[[Class]]`. Les deux méthodes identifient correctement ceci comme un faux objet d'erreur."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objet vs Détection d'erreur\",\n  \"group\": \"Limites d'erreur\",\n  \"options\": [\n    {\"text\": \"true, true\"},\n    {\"text\": \"false, false\"},\n    {\"text\": \"true, false\"},\n    {\"text\": \"false, true\"}\n  ],\n  \"questionProse\": [\"Que retournent ces vérifications ?\"],\n  \"explanationProse\": [\"`instanceof Error` renvoie `false` car l'objet n'a pas été créé par le constructeur Error. `Object.prototype.toString.call()` renvoie également `false` (elle renvoie `'[object Object]'`) car elle vérifie l'emplacement interne `[[Class]]`. Les deux méthodes identifient correctement ceci comme un faux objet d'erreur.\"]\n}",
+  "telemetry": {
+    "inputTokens": 705,
+    "outputTokens": 1382,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13721
+  },
+  "cost": {
+    "inputUsd": 0.00009870000000000001,
+    "outputUsd": 0.00038696000000000005,
+    "totalUsd": 0.00048566000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

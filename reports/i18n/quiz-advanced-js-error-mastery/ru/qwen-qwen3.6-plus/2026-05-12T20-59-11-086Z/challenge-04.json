@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof между фреймами",
+  "translation": {
+    "title": "instanceof между фреймами",
+    "group": "Трюки проверки типов",
+    "options": [
+      {
+        "text": "Всегда true"
+      },
+      {
+        "text": "Всегда false"
+      },
+      {
+        "text": "Может быть false между фреймами"
+      },
+      {
+        "text": "Выбрасывает ошибку"
+      }
+    ],
+    "questionProse": [
+      "Что вернёт `instanceof Error` при проверке объектов из разных iframe?"
+    ],
+    "explanationProse": [
+      "`instanceof` может вернуть `false` при работе в разных контекстах выполнения (iframe, воркеры), поскольку у каждого контекста свой собственный конструктор `Error`. Для надёжной проверки ошибок между контекстами используйте `Object.prototype.toString.call(obj) === '[object Error]'`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof между фреймами\",\n  \"group\": \"Трюки проверки типов\",\n  \"options\": [\n    {\n      \"text\": \"Всегда true\"\n    },\n    {\n      \"text\": \"Всегда false\"\n    },\n    {\n      \"text\": \"Может быть false между фреймами\"\n    },\n    {\n      \"text\": \"Выбрасывает ошибку\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что вернёт `instanceof Error` при проверке объектов из разных iframe?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` может вернуть `false` при работе в разных контекстах выполнения (iframe, воркеры), поскольку у каждого контекста свой собственный конструктор `Error`. Для надёжной проверки ошибок между контекстами используйте `Object.prototype.toString.call(obj) === '[object Error]'`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 741,
+    "outputTokens": 2315,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 44610
+  },
+  "cost": {
+    "inputUsd": 0.000240825,
+    "outputUsd": 0.004514249999999999,
+    "totalUsd": 0.004755074999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

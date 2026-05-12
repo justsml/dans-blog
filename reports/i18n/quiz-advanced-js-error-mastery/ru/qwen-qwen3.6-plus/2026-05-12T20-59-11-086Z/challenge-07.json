@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Ловушка имени конструктора",
+  "translation": {
+    "title": "Ловушка имени конструктора",
+    "group": "Пользовательские ошибки",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "Что выведет код, если не задать `name`?"
+    ],
+    "explanationProse": [
+      "Если не задать `this.name` явно, ошибка унаследует дефолтное свойство `name` от класса `Error`, которое равно `\"Error\"`. Поэтому в конструкторе кастомных ошибок всегда нужно вручную прописывать `this.name = this.constructor.name`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ловушка имени конструктора\",\n  \"group\": \"Пользовательские ошибки\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что выведет код, если не задать `name`?\"\n  ],\n  \"explanationProse\": [\n    \"Если не задать `this.name` явно, ошибка унаследует дефолтное свойство `name` от класса `Error`, которое равно `\\\"Error\\\"`. Поэтому в конструкторе кастомных ошибок всегда нужно вручную прописывать `this.name = this.constructor.name`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 732,
+    "outputTokens": 3233,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 59479
+  },
+  "cost": {
+    "inputUsd": 0.0002379,
+    "outputUsd": 0.00630435,
+    "totalUsd": 0.00654225,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
