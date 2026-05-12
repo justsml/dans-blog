@@ -305,7 +305,10 @@ function normalizeCandidateForLocale(source: string, translatedBody: string): st
     .replace(/from "\.\.\/..\/..\//g, 'from "../../../../');
 
   // Ensure all source import lines are present (insert at top of body)
-  const sourceImports = source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [];
+  const sourceImports = (source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [])
+    .map((imp) => imp
+      .replace(/from '\.\.\/..\/..\//g, "from '../../../../")
+      .replace(/from "\.\.\/..\/..\//g, 'from "../../../../'));
   const translatedImports = result.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [];
 
   const missing = sourceImports.filter(
