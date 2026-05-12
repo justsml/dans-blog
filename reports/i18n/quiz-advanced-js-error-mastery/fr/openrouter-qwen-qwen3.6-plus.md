@@ -1,0 +1,13 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: fr
+- Model: openrouter/qwen/qwen3.6-plus
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/fr/index.mdx
+- Validation: rejected: validation failed
+- Runtime seconds: 230.76
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Estimated cost: $0.000000
+- Note: Command failed: bun run i18n:validate --slug quiz-advanced-js-error-mastery --locale fr --skip-global
