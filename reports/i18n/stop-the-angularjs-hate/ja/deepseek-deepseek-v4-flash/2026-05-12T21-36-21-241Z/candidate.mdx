@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: AngularJSの小技
+subTitle: AngularJSも楽しい！
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## AngularJS は楽しいこともある！
+
+> 対象：AngularJS v1.x
+
+1.  AngularJS開発者は、中〜大規模アプリが散在する`$watch`と、しばしば肥大化した頼りない杖こと`$scope`の重みで悲鳴を上げていることにすぐ気づく。
+2.  `$scope`に余計なUI状態を持たせず、階層全体のサイズと深さを制限するように心がけよ。
+
+### 2-wayデータバインディング：両刃の剣
+
+2-wayバインディングだけでも、Backboneのような他のフレームワークから移ってくると、もう、**めちゃくちゃすごい**と感じるだろう。
+
+問題は、多くのサイトがAngularのデザインパターンを**慢性的に使いすぎている**ことだ。
+
+これにより、ディレクティブが乱立し、`$scope/rootScope`に簡単に数千ものインスタンスが存在することになり、巨大なオブジェクトにしがみついて効果的なガベージコレクションの望みを完全に絶ってしまいます。
+
+この先どうなるかはおわかりでしょう。ブラウザは疲弊し、永遠に**狂ったようなペース**で動作し、無限で冗長なUI/DOMの再コンパイルを実行し続ける運命にあるのです。
+
+### Angular.JS化しすぎをやめよう
+
+> 「ハンマーしか持っていなければ、すべての問題が釘に見える。」
+>
+> — 古い格言
+
+あなたのアプリはディレクティブに問題を抱えていませんか？
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+柔軟なユーザーウィジェットを設計してみましょう。これにより以下のことが可能になります：
+
+1.  DRYなAngularコードによる汎用的なコンポーネント化
+
+1.  理解しやすいディレクティブ、かつ最小限のサイズ/深さ（ng-repeatに注意）
+1.  シンプルなサービス層
+1.
+
+実装するコードはほとんどなく、HTML/ビューコードのみ
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## 解決策
+
+### Angular のヒント
+
+1.  1-wayバインディングを使用する（例：`{ :: title }`）
+1.  ディレクティブの再帰的なネストを制限する
+1.
+
+どうしてもディレクティブをネストする必要があるなら、`ng-repeat` の中で _決して_ 行わないこと。パフォーマンスは `O(n^2)^3` のようなものになり始めるからだ ;)
+    I. ファクトリーパターンでネイティブのJS/DOMコードを使用して、基本的なDOM/UIフラグメント（例：モーダルメッセージボックス、ステータスバー）を作成する。UIファクトリーはディレクティブまたはコントローラーから呼び出す。
+1.
+
+_Bonus:_ [ブラウザレンダリングライフサイクル](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en)のコストとトリガーを理解する: アニメーション、コンポジットレンダリング、リフロー
+
+### Browserifyを使ってプロジェクトを整理する
+
+Angularに特化したものではないが、シンプルな依存関係解決には不可欠だ。
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports)は、実質的にコードのオーバーヘッドを追加することなく（まあ、数百文字程度だが）JSプロジェクトを管理可能にする。
+
+[Browserifyハンドブック](https://github.com/substack/browserify-handbook/)の[このセクション](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports)を読むだけでよい。
+
+## 代替案
+
+### [ReactJS](https://facebook.github.io/react/)（Facebook製）
+
+多数の小さな再利用可能なUIコンポーネントがある場合、ReactJSの方が適しているかもしれません：
+
+- プロジェクトが以下の条件に該当する場合...？:
+  - Angularとは異なるUI/DOM実装の哲学を持っている
+  - すでに何らかの「フレームワーク」がある - AngularJS、Ember、Backboneと**ReactJSを併用**できる
+
+（ただし可能なら避けること）。
+  - 自身のコード内で頻繁なデータモデルの変更を処理する場合、Angularのdigest/loopパターンのADHD的な性質を回避できる利点がある
+
+### Googleの[Polymer Project](http://www.Polymer-Project.org/)
+
+### よりピュアなJSアプローチ
+
+- ちなみに、ここではフレームワーク非依存のコードを書くようにしている（テスト容易性+1、再利用性+1）
+  1.  プレーンなJavaScriptクラスを使ってデータをロードする（AJAX/JSONP/ページ内埋め込みなど）
+
+1.  Mustacheテンプレートを使ってHTML文字列（または直接DOM）を生成する
+  1.  可能であれば、レンダリングしたコンテンツをlocalStorageにキャッシュする
+  1.
+
+(オプション) 次に、コンテンツを再レンダリングするイベントリスナーを追加します。私はイベント名を `refresh.<class-name>` に統一しています。

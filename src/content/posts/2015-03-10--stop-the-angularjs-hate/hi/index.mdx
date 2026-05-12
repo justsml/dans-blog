@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: AngularJS ट्रिक्स
+subTitle: AngularJS मज़ेदार हो सकता है!
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## AngularJS मज़ेदार हो सकता है!
+
+> के लिए: AngularJS v1.x
+
+1.  AngularJS डेवलपर्स जल्दी ही पाते हैं कि उनके मीडियम से लेकर बड़े ऐप्स बिखरे हुए `$watch` और अक्सर फूली हुई बैसाखी जैसे `$scope` के बोझ तले दब रहे हैं।
+2.  अपने `$scope` को अनावश्यक UI स्टेट से मुक्त रखें, अपने समग्र पदानुक्रम के आकार और गहराई को सीमित करने का प्रयास करें।
+
+### 2-तरफ़ा डेटा बाइंडिंग: 2-तरफ़ा तलवार
+
+अकेली 2-तरफ़ा बाइंडिंग ही Backbone जैसे दूसरे फ्रेमवर्क से आने वालों के लिए, सच में, **बेहद शानदार** अनुभव देती है।
+
+समस्या यह है: कई साइटें Angular के डिज़ाइन पैटर्न का **लगातार अत्यधिक उपयोग** करती हैं।
+
+इससे डायरेक्टिव स्प्रॉल और एक `$scope/rootScope` बनता है जिसमें आसानी से हजारों इंस्टेंस हो सकते हैं, और वे बड़ी ऑब्जेक्ट्स से चिपके रहते हैं, जिससे प्रभावी गार्बेज कलेक्शन की कोई उम्मीद नहीं रहती।
+
+आप जानते हैं कि यह कहाँ जा रहा है: एक थका हुआ ब्राउज़र! हमेशा के लिए **उन्मत्त गति** से काम करने को अभिशप्त, अंतहीन और अनावश्यक UI/DOM री-कम्पाइल्स को निष्पादित करते हुए।
+
+### अति-एंगुलर.जेएसीकरण (OVER-Angular.JSification) रोकें
+
+> “अगर आपके पास सिर्फ एक हथौड़ा है, तो हर समस्या एक कील लगती है।”
+>
+> - पुरानी कहावत
+
+क्या आपके ऐप को डायरेक्टिव्स से समस्या है?
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+आइए एक लचीला user-widget डिज़ाइन करें जो मदद करता है:
+
+1.  DRY Angular कोड के साथ बहुमुखी कम्पोनेंटीकरण
+
+1.  समझने योग्य डायरेक्टिव्स, न्यूनतम डायरेक्टिव आकार/गहराई के साथ (अपने ng-repeats का ध्यान रखें)
+1.  सरल सर्विस लेयर
+1.
+
+लागू करने के लिए बहुत कम कोडिंग - बस HTML/View Code
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## समाधान
+
+### Angular टिप्स
+
+1.  1-तरफ़ा बाइंडिंग का उपयोग करें (e.g. `{ :: title }` )
+1.  डायरेक्टिव्स की पुनरावर्ती नेस्टिंग को सीमित करें
+1.
+
+और यदि आपको डायरेक्टिव्स को नेस्ट करना ही है, तो उन्हें `ng-repeat` के अंदर _कभी_ न करें - प्रदर्शन `O(n^2)^3` जैसा हो जाएगा ;)
+    I. मूल JS/DOM कोड का उपयोग फ़ैक्टरी पैटर्न में करके बुनियादी DOM/UI टुकड़े बनाएं, उदाहरण: Modal msg box, status bar. UI फ़ैक्टरियों को डायरेक्टिव्स या कंट्रोलर्स से कॉल करें।
+1.
+
+_बोनस:_ [ब्राउज़र रेंडर लाइफसाइकिल](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en) की लागत और ट्रिगर्स को समझें: एनिमेशन, कम्पोज़िट रेंडरिंग, रीफ़्लो
+
+### प्रोजेक्ट को व्यवस्थित करने के लिए Browserify का उपयोग करें
+
+यह विशेष रूप से Angular के लिए नहीं है, लेकिन सरल डिपेंडेंसी रिज़ॉल्यूशन के लिए आवश्यक है।
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) JS प्रोजेक्ट्स को लगभग बिना किसी अतिरिक्त कोड ओवरहेड के प्रबंधनीय बनाता है (ठीक है, कुछ सौ कैरेक्टर)।
+
+[Browserify हैंडबुक](https://github.com/substack/browserify-handbook/) का [बस यह सेक्शन](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) पढ़ें।
+
+## विकल्प
+
+### [ReactJS](https://facebook.github.io/react/) फेसबुक से
+
+यदि आपके पास बहुत सारे छोटे पुन: प्रयोज्य UI घटक हैं - तो ReactJS बेहतर विकल्प हो सकता है:
+
+- यदि आपका प्रोजेक्ट...?:
+  - UI/DOM कार्यान्वयन के प्रति Angular से भिन्न दर्शन रखता है
+  - पहले से किसी प्रकार का 'फ्रेमवर्क' है - तो आप **ReactJS को AngularJS, Ember, Backbone के साथ-साथ उपयोग** कर सकते हैं।
+
+(हालांकि, यदि संभव हो तो इससे बचें)।
+  - यह अपने कोड में बार-बार डेटा मॉडल बदलावों को संभालता है, और आप Angular के digest/loop पैटर्न की ADHD जैसी प्रकृति से बचकर लाभ उठाएंगे।
+
+### [पॉलीमर प्रोजेक्ट](http://www.Polymer-Project.org/) गूगल द्वारा
+
+### शुद्धतर JS दृष्टिकोण
+
+- वैसे, यहाँ मैं फ्रेमवर्क-स्वतंत्र कोड बनाने का प्रयास करता हूँ (+1 परीक्षणीयता, +1 पुन: उपयोग)
+  1.  डेटा लोड करने के लिए सादा जावास्क्रिप्ट क्लास का उपयोग करें (AJAX/JSONP/पेज में एम्बेडेड, आदि)
+
+1.  HTML स्ट्रिंग्स (या सीधे DOM) बनाने के लिए मस्टैच टेम्पलेटिंग का उपयोग करें
+1.  यदि संभव हो, तो रेंडर की गई सामग्री को localStorage में कैश करें
+1.
+
+(वैकल्पिक) अब सामग्री को पुनः रेंडर करने के लिए एक इवेंट लिसनर जोड़ें। मैंने इवेंट नाम `refresh.<class-name>` को मानकीकृत किया है।

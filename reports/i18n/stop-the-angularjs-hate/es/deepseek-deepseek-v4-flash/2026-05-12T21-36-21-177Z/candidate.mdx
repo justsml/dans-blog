@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: Trucos de AngularJS
+subTitle: ¡AngularJS PUEDE SER divertido!
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## ¡AngularJS PUEDE SER Divertido!
+
+> Para: AngularJS v1.x
+
+1.  Los desarrolladores de AngularJS descubren rápidamente que sus aplicaciones de mediano a gran tamaño se están hundiendo bajo el peso de `$watch` dispersos y la a menudo inflada muleta conocida como `$scope`.
+2.  Mantén tu `$scope` libre de estado de UI excesivo, intenta limitar el tamaño y la profundidad de tu jerarquía general.
+
+### Binding bidireccional: la espada de doble filo
+
+El binding bidireccional por sí solo hace que venir de otros frameworks como Backbone sea, bueno, **jodidamente alucinante**.
+
+El problema es: muchos sitios **abusan crónicamente** de los patrones de diseño de Angular.
+
+Esto lleva a una proliferación de directivas y a un `$scope/rootScope` que fácilmente tiene miles de instancias, y puede aferrarse a objetos enormes, impidiendo cualquier esperanza de una recolección de basura efectiva.
+
+Ya sabes a dónde va esto: ¡un navegador agotado! Condenado para siempre a trabajar a un **ritmo frenético** ejecutando recompilaciones interminables y redundantes de la UI/DOM.
+
+### Detén la SOBRE-Angular.JSificación
+
+> “Si tu única herramienta es un martillo, entonces todo problema te parecerá un clavo.”
+>
+> - viejo proverbio
+
+¿Tu aplicación tiene un problema con las directivas?
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+Diseñemos un widget de usuario flexible que ayude:
+
+1.  Componentización versátil con código Angular DRY
+
+1.  Directivas comprensibles, con tamaño/profundidad mínimos de directiva (cuidado con tus ng-repeats)
+1.  Capa de servicios simple
+1.
+
+Poco código real que implementar - solo HTML/Código de Vista
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## Soluciones
+
+### Consejos de Angular
+
+1.  Usa binding unidireccional (ej. `{ :: title }`)
+1.  Limita el anidamiento recursivo de directivas
+1.
+
+Y si debes anidar directivas, _NUNCA_ lo hagas dentro de un `ng-repeat` – el rendimiento empezará a parecerse a algo como `O(n^2)^3` ;)
+    I. Usa código nativo JS/DOM en un patrón de fábrica para crear fragmentos básicos de DOM/UI, ejemplos: cuadro de mensaje Modal, barra de estado. Llama a las fábricas de UI desde directivas o controladores.
+1.
+
+_Bono:_ Comprende el costo y los desencadenantes del [ciclo de vida de renderizado del navegador](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en): animación, renderizado compuesto, reflujos
+
+### Usa Browserify para Organizar el Proyecto
+
+No es específico de Angular per se, pero es esencial para una resolución de dependencias simple.
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) hace que los proyectos JS sean manejables con prácticamente ningún overhead de código añadido (vale, unos pocos cientos de caracteres).
+
+[Solo lee esta sección](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) del [Manual de Browserify](https://github.com/substack/browserify-handbook/).
+
+## Alternativas
+
+### [ReactJS](https://facebook.github.io/react/) de Facebook
+
+Si tienes montones de componentes de UI pequeños y reutilizables, ReactJS podría ser una mejor opción:
+
+- Si tu proyecto...?:
+  - Tiene una filosofía diferente a la implementación de UI/DOM que Angular
+  - Ya tiene algún tipo de 'framework' - Puedes **usar ReactJS junto con** AngularJS, Ember, Backbone.
+
+(Evítalo si es posible, no obstante).
+  - Maneja cambios frecuentes del modelo de datos en su propio código; te beneficiarás al evitar la naturaleza ADHD del patrón digest/loop en Angular.
+
+### [Polymer Project](http://www.Polymer-Project.org/) de Google
+
+### Enfoque JS más puro
+
+- Por cierto, aquí es donde intento crear código independiente del framework (+1 testabilidad, +1 reutilización)
+  1.  Usa una clase JavaScript simple para cargar datos (AJAX/JSONP/Incrustado en la página, etc.)
+
+1.  Usa plantillas mustache para crear cadenas HTML (o DOM directamente)
+  1.  Almacena en caché el contenido renderizado en localStorage si puedes
+  1.
+
+(Opcional) Ahora agrega un listener de eventos para re-renderizar el contenido. He estandarizado el nombre del evento como `refresh.<class-name>`

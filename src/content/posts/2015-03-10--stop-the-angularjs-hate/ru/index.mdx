@@ -1,0 +1,130 @@
+---
+social_image: ../desktop-social.webp
+title: Трюки AngularJS
+subTitle: AngularJS МОЖЕТ БЫТЬ забавным!
+date: '2015-02-26'
+modified: '2016-02-01'
+category: Code
+subCategory: angularjs
+tags:
+  - angularjs
+  - development
+  - performance
+  - programming
+cover: ../sharon-mccutcheon-522851-unsplash.webp
+cover_mobile: ../w300_sharon-mccutcheon-522851-unsplash.webp
+cover_icon: ../icon_sharon-mccutcheon-522851-unsplash.webp
+---
+## AngularJS МОЖЕТ БЫТЬ Увлекательным!
+
+> Для: AngularJS v1.x
+
+1.  Разработчики AngularJS быстро обнаруживают, что их приложения среднего и большого размера начинают сдавать под тяжестью разбросанных `$watch` и часто раздутого костыля, известного как `$scope`.
+2.  Держите ваш `$scope` свободным от избыточного состояния UI, старайтесь ограничивать размер и глубину всей иерархии.
+
+### Двустороннее связывание данных: обоюдоострый меч
+
+Одно только двустороннее связывание делает переход с других фреймворков, например Backbone, ну, **просто офигенным**.
+
+Проблема в том, что многие сайты **хронически злоупотребляют** паттернами проектирования Angular.
+
+Это приводит к расползанию директив и `$scope/rootScope`, в котором легко могут быть тысячи экземпляров, и который может цепляться за огромные объекты, не оставляя надежды на эффективную сборку мусора.
+
+Вы знаете, к чему это ведет: измученный браузер! Обреченный вечно работать в **бешеном темпе**, выполняя бесконечные и избыточные перекомпиляции UI/DOM.
+
+### Прекратите OVER-Angular.JSификацию
+
+> “Если ваш единственный инструмент — молоток, то любая проблема кажется гвоздем.”
+>
+> - старая поговорка
+
+У вашего приложения проблемы с директивами?
+
+```jade
+current-user-status-label
+  div(ng-if='loggedIn')
+    view-user-surplusage(ng-if='!editMode')
+      .head: contact-details(user='user')
+      .tool: contact-buttons(loggedIn='loggedIn')
+      a.edit-icon(ng-click='editMode = true')
+    edit-user-surplusage(ng-if='editMode')
+      .head: avatar-edit(user='user')
+      .body: edit-contact-details(user='user')
+      a.save-icon(ng-click='editMode = false')
+```
+
+Давайте спроектируем гибкий пользовательский виджет, который помогает:
+
+1.  Универсальной компонентизации с сухим Angular-кодом
+
+1.  Понятные директивы с минимальным размером/глубиной (следите за ng-repeat)
+1.  Простой сервисный слой
+1.
+
+Минимум реального кода — только HTML/View Code
+
+```jade
+// jade
+user-widget
+  div(ng-if='loggedIn')
+    div.edit(ng-if='editMode')
+      h4.email-icon: input(type='email', ng-model='user.email')
+      h4.phone-icon: input(type='email', ng-model='user.phone')
+      a.save-icon(ng-click='editMode = false')
+    div.show(ng-if='!editMode')
+      h1.users-icon {{ user.name  }}
+      h4.email-icon {{ user.email }}
+      h4.phone-icon {{ user.phone }}
+      a.edit-icon(ng-click='editMode = true')
+  div(ng-if='!loggedIn')
+    h5: i Welcome User
+    a.btn(href='/login') Login
+```
+
+## Решения
+
+### Советы по Angular
+
+1. Используйте одностороннее связывание (например, `{ :: title }`)
+2. Ограничьте рекурсивную вложенность директив
+3.
+
+И если вам всё же нужно вкладывать директивы, _НИКОГДА_ не делайте этого внутри `ng-repeat` — производительность начнёт напоминать что-то вроде `O(n^2)^3` ;)
+    I. Используйте нативный JS/DOM-код в фабричном шаблоне для создания базовых фрагментов DOM/UI, примеры: модальное окно сообщений, строка состояния. Вызывайте UI-фабрики из директив или контроллеров.
+1.
+
+_Бонус:_ Поймите цену и триггеры [жизненного цикла рендеринга браузера](https://developers.google.com/web/fundamentals/performance/rendering/index?hl=en): анимация, композитный рендеринг, перекомпоновка
+
+### Используйте Browserify для организации проекта
+
+Не специфично для Angular как такового, но необходимо для простого разрешения зависимостей.
+
+[Browserify](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) делает JS-проекты управляемыми практически без дополнительных накладных расходов на код (ну, пара сотен символов).
+
+[Просто прочитайте этот раздел](https://github.com/substack/browserify-handbook/blob/master/readme.markdown#exports) из [Browserify Handbook](https://github.com/substack/browserify-handbook/).
+
+## Альтернативы
+
+### [ReactJS](https://facebook.github.io/react/) от Facebook
+
+Если у вас много мелких переиспользуемых UI-компонентов — ReactJS может быть лучшим выбором:
+
+- Если ваш проект...?:
+  - Имеет другую философию реализации UI/DOM, нежели Angular
+  - Уже имеет какой-то «фреймворк» — вы можете **использовать ReactJS совместно с** AngularJS, Ember, Backbone.
+
+(По возможности избегайте).
+  - Обрабатывает частые изменения модели данных в своем коде — вы выиграете, избегая ADHD-подобного цикла digest/loop в Angular
+
+### [Polymer Project](http://www.Polymer-Project.org/) от Google
+
+### Более чистый подход на JavaScript
+
+- Кстати, вот где я стараюсь писать код, не зависящий от фреймворка (+1 к тестируемости, +1 к переиспользованию)
+  1.  Используйте обычный JavaScript-класс для загрузки данных (AJAX/JSONP/встроенные в страницу и т.д.)
+
+1.  Используйте шаблонизацию Mustache для создания HTML-строк (или напрямую DOM)
+  1.  Кешируйте отрендеренный контент в localStorage, если это возможно
+  1.
+
+(Опционально) Теперь добавьте обработчик события для повторного рендеринга контента. Я стандартизировал имя события как `refresh.<class-name>`
