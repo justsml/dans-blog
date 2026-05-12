@@ -1,0 +1,39 @@
+{
+  "index": 2,
+  "originalTitle": "Precision with Floating Points",
+  "translatedTitle": "Precisión con números de punto flotante",
+  "translation": {
+    "title": "Precisión con números de punto flotante",
+    "group": "Matemáticas",
+    "options": [
+      {
+        "text": "0.1 + 0.2 === 0.3"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente igual a `0.3`. Por la forma en que los números de punto flotante se almacenan en memoria, el resultado es `0.30000000000000004`. El estándar IEEE 754 para manejar aritmética de punto flotante es el culpable: no puede representar algunos números con exactitud. Este es un problema común en todos los lenguajes de programación. Tarde o temprano te toparás con un decimal periódico y, sin importar el lenguaje, la computadora simplemente debe dejar de perseguir dígitos que se repiten infinitamente.\n\n  Algunos lenguajes como Python y Java cuentan con `Decimal` o `BigDecimal` para manejar esto, pero no viene integrado en JavaScript. Puedes usar bibliotecas como `big.js` o `decimal.js` para resolver estos casos.\n\n  (Nota: Algunos lenguajes están diseñados para manejar fracciones, números imaginarios, etc., a un nivel lógico superior, preservando expresiones literales. Pero, a nivel de hardware, siguen teniendo que lidiar con los mismos problemas de precisión de punto flotante.)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Precisión con números de punto flotante\",\n  \"group\": \"Matemáticas\",\n  \"options\": [\n    {\n      \"text\": \"0.1 + 0.2 === 0.3\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente igual a `0.3`. Por la forma en que los números de punto flotante se almacenan en memoria, el resultado es `0.30000000000000004`. El estándar IEEE 754 para manejar aritmética de punto flotante es el culpable: no puede representar algunos números con exactitud. Este es un problema común en todos los lenguajes de programación. Tarde o temprano te toparás con un decimal periódico y, sin importar el lenguaje, la computadora simplemente debe dejar de perseguir dígitos que se repiten infinitamente.\\n\\n  Algunos lenguajes como Python y Java cuentan con `Decimal` o `BigDecimal` para manejar esto, pero no viene integrado en JavaScript. Puedes usar bibliotecas como `big.js` o `decimal.js` para resolver estos casos.\\n\\n  (Nota: Algunos lenguajes están diseñados para manejar fracciones, números imaginarios, etc., a un nivel lógico superior, preservando expresiones literales. Pero, a nivel de hardware, siguen teniendo que lidiar con los mismos problemas de precisión de punto flotante.)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 930,
+    "outputTokens": 3200,
+    "durationMs": 58804
+  },
+  "cost": {
+    "inputUsd": 0.00030225,
+    "outputUsd": 0.00624,
+    "totalUsd": 0.0065422499999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

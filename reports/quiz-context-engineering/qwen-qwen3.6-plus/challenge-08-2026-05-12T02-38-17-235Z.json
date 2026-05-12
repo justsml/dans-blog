@@ -1,0 +1,45 @@
+{
+  "index": 7,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Gestión del historial de conversaciones",
+  "translation": {
+    "title": "Gestión del historial de conversaciones",
+    "group": "Gestión de tokens",
+    "options": [
+      {
+        "text": "Enviar siempre el historial completo de la conversación",
+        "hint": "Consume tokens rápidamente y aumenta la latencia."
+      },
+      {
+        "text": "Resumir los mensajes antiguos cuando el historial supera el presupuesto de tokens",
+        "hint": "Equilibrio ideal entre contexto y costo."
+      },
+      {
+        "text": "Eliminar los mensajes antiguos: el modelo tiene memoria persistente",
+        "hint": "Falso: los LLM son stateless por diseño."
+      },
+      {
+        "text": "Almacenar el historial en una base de datos vectorial y recuperar las intervenciones relevantes",
+        "hint": "Viable, pero complejo de implementar para un chat estándar."
+      }
+    ],
+    "questionProse": [
+      "En una aplicación de chat multipturno, ¿cuál es la estrategia correcta cuando el historial de conversación crece demasiado?"
+    ],
+    "explanationProse": [
+      "Los LLM no tienen memoria persistente. Cada llamada a la API es *stateless*: envías el contexto completo y obtienes una respuesta. La \"memoria\" de una conversación depende exclusivamente del historial de mensajes que incluyes en cada solicitud.\n\n    Cuando ese historial supera tu presupuesto, las opciones son:\n    1. **Resumir**: Comprime las intervenciones antiguas en un resumen acumulativo y mantén las recientes de forma literal.\n    2. **Ventana deslizante**: Conserva los últimos N turnos y descarta los anteriores.\n    3. **Recuperación selectiva**: Genera *embeddings* de los turnos de conversación y recupera los relevantes por consulta (complejo, pero potente).\n\n    La truncación simple —cortar mensajes antiguos para que quepan— es la peor opción, ya que elimina silenciosamente contexto que el modelo podría necesitar.\n\n    Recuperar el historial desde una base de datos vectorial suena bien en teoría, pero suele ser excesivo para la mayoría de las apps de chat. El resumen es la opción pragmática por defecto."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Gestión del historial de conversaciones\",\n  \"group\": \"Gestión de tokens\",\n  \"options\": [\n    {\n      \"text\": \"Enviar siempre el historial completo de la conversación\",\n      \"hint\": \"Consume tokens rápidamente y aumenta la latencia.\"\n    },\n    {\n      \"text\": \"Resumir los mensajes antiguos cuando el historial supera el presupuesto de tokens\",\n      \"hint\": \"Equilibrio ideal entre contexto y costo.\"\n    },\n    {\n      \"text\": \"Eliminar los mensajes antiguos: el modelo tiene memoria persistente\",\n      \"hint\": \"Falso: los LLM son stateless por diseño.\"\n    },\n    {\n      \"text\": \"Almacenar el historial en una base de datos vectorial y recuperar las intervenciones relevantes\",\n      \"hint\": \"Viable, pero complejo de implementar para un chat estándar.\"\n    }\n  ],\n  \"questionProse\": [\n    \"En una aplicación de chat multipturno, ¿cuál es la estrategia correcta cuando el historial de conversación crece demasiado?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"Los LLM no tienen memoria persistente. Cada llamada a la API es *stateless*: envías el contexto completo y obtienes una respuesta. La \\\"memoria\\\" de una conversación depende exclusivamente del historial de mensajes que incluyes en cada solicitud.\\n\\n    Cuando ese historial supera tu presupuesto, las opciones son:\\n    1. **Resumir**: Comprime las intervenciones antiguas en un resumen acumulativo y mantén las recientes de forma literal.\\n    2. **Ventana deslizante**: Conserva los últimos N turnos y descarta los anteriores.\\n    3. **Recuperación selectiva**: Genera *embeddings* de los turnos de conversación y recupera los relevantes por consulta (complejo, pero potente).\\n\\n    La truncación simple —cortar mensajes antiguos para que quepan— es la peor opción, ya que elimina silenciosamente contexto que el modelo podría necesitar.\\n\\n    Recuperar el historial desde una base de datos vectorial suena bien en teoría, pero suele ser excesivo para la mayoría de las apps de chat. El resumen es la opción pragmática por defecto.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 914,
+    "outputTokens": 3967,
+    "durationMs": 73363
+  },
+  "cost": {
+    "inputUsd": 0.00029705,
+    "outputUsd": 0.00773565,
+    "totalUsd": 0.0080327,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

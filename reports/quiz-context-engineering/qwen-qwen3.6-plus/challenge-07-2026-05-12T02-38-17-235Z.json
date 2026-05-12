@@ -1,0 +1,41 @@
+{
+  "index": 6,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Presupuesto de Contexto",
+  "translation": {
+    "title": "Presupuesto de Contexto",
+    "group": "Gestión de Tokens",
+    "options": [
+      {
+        "text": "Usar más del 95% de la ventana de contexto para maximizar la información"
+      },
+      {
+        "text": "Reservar un margen significativo para la salida en lugar de llenar toda la ventana"
+      },
+      {
+        "text": "El presupuesto de contexto solo importa para modelos de menos de 32K tokens"
+      },
+      {
+        "text": "El modelo trunca automáticamente cuando se excede la ventana"
+      }
+    ],
+    "questionProse": [
+      "Al construir un prompt de RAG con contexto recuperado, una buena regla general para el presupuesto de contexto es:"
+    ],
+    "explanationProse": [
+      "La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90% para la entrada, al modelo solo le queda el 10% de la ventana para generar una respuesta, lo que a menudo provoca salidas truncadas o degradadas.\n\n    Una heurística razonable: decide primero el tamaño esperado de tu salida y luego mantén tu entrada cómodamente por debajo del presupuesto restante. Para muchas tareas de RAG, esto significa usar no más del **60–70% del total de la ventana de contexto para la entrada** (prompt del sistema + historial + contexto recuperado). Deja el resto para la generación y un margen de seguridad.\n\n    Además, los modelos rinden peor cerca de los límites de su ventana de contexto: la comprensión y el seguimiento de instrucciones se degradan a medida que el contexto se llena. Ejecutarlo al 95% es técnicamente posible. No es la misma experiencia que hacerlo al 50%."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Presupuesto de Contexto\",\n  \"group\": \"Gestión de Tokens\",\n  \"options\": [\n    {\n      \"text\": \"Usar más del 95% de la ventana de contexto para maximizar la información\"\n    },\n    {\n      \"text\": \"Reservar un margen significativo para la salida en lugar de llenar toda la ventana\"\n    },\n    {\n      \"text\": \"El presupuesto de contexto solo importa para modelos de menos de 32K tokens\"\n    },\n    {\n      \"text\": \"El modelo trunca automáticamente cuando se excede la ventana\"\n    }\n  ],\n  \"questionProse\": [\n    \"Al construir un prompt de RAG con contexto recuperado, una buena regla general para el presupuesto de contexto es:\"\n  ],\n  \"explanationProse\": [\n    \"La ventana de contexto se comparte entre **entrada y salida**. Si usas el 90% para la entrada, al modelo solo le queda el 10% de la ventana para generar una respuesta, lo que a menudo provoca salidas truncadas o degradadas.\\n\\n    Una heurística razonable: decide primero el tamaño esperado de tu salida y luego mantén tu entrada cómodamente por debajo del presupuesto restante. Para muchas tareas de RAG, esto significa usar no más del **60–70% del total de la ventana de contexto para la entrada** (prompt del sistema + historial + contexto recuperado). Deja el resto para la generación y un margen de seguridad.\\n\\n    Además, los modelos rinden peor cerca de los límites de su ventana de contexto: la comprensión y el seguimiento de instrucciones se degradan a medida que el contexto se llena. Ejecutarlo al 95% es técnicamente posible. No es la misma experiencia que hacerlo al 50%.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 2970,
+    "durationMs": 54864
+  },
+  "cost": {
+    "inputUsd": 0.00029640000000000005,
+    "outputUsd": 0.0057915,
+    "totalUsd": 0.0060879,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
