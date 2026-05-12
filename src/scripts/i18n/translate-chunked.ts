@@ -14,7 +14,7 @@
  *   1000t = ~1000 tokens per chunk
  */
 
-import { readFileSync, existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { readFileSync, existsSync, mkdirSync, writeFileSync, appendFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import "dotenv/config";
 import matter from "gray-matter";
@@ -45,6 +45,7 @@ import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
+import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
 
 interface LlmConfig {
   modelId: string;
@@ -118,12 +119,134 @@ interface Telemetry {
   totalInputTokens: number;
   totalOutputTokens: number;
   totalDurationMs: number;
+  totalCostUsd: number;
+  pricingSource: string;
   chunks: Array<{
     index: number;
+    label?: string;
     inputTokens: number;
     outputTokens: number;
     durationMs: number;
+    costUsd: number;
   }>;
+}
+
+interface QuizReportOptions {
+  slug: string;
+  locale: ActiveLocale;
+  concurrency: number;
+}
+
+interface QuizRunReporter {
+  reportDir: string;
+  timestamp: string;
+  progressPath: string;
+  writeJson(name: string, data: unknown): void;
+  append(event: string, data: Record<string, unknown>): void;
+}
+
+function createQuizRunReporter(
+  slug: string,
+  locale: ActiveLocale,
+  llmConfig: LlmConfig,
+  concurrency: number,
+): QuizRunReporter {
+  const reportDir = join(process.cwd(), "reports", slug, safeModelPathName(llmConfig.modelId));
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const progressPath = join(reportDir, `progress-${timestamp}.jsonl`);
+
+  mkdirSync(reportDir, { recursive: true });
+
+  const reporter: QuizRunReporter = {
+    reportDir,
+    timestamp,
+    progressPath,
+    writeJson(name, data) {
+      writeFileSync(join(reportDir, `${name}-${timestamp}.json`), JSON.stringify(data, null, 2), "utf8");
+    },
+    append(event, data) {
+      appendFileSync(
+        progressPath,
+        JSON.stringify({
+          event,
+          slug,
+          locale,
+          model: llmConfig.modelId,
+          concurrency,
+          at: new Date().toISOString(),
+          ...data,
+        }) + "\n",
+        "utf8",
+      );
+    },
+  };
+
+  reporter.writeJson("run", {
+    slug,
+    locale,
+    model: llmConfig.modelId,
+    reasoningEffort: llmConfig.reasoningEffort,
+    temperature: llmConfig.temperature,
+    maxTokens: llmConfig.maxTokens,
+    concurrency,
+    startedAt: new Date().toISOString(),
+    progressPath: relativeToRepo(progressPath),
+  });
+  reporter.append("run_started", {});
+
+  return reporter;
+}
+
+function addTelemetry(
+  telemetry: Telemetry,
+  entry: { index: number; label?: string; inputTokens: number; outputTokens: number; durationMs: number },
+) {
+  const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens);
+  telemetry.chunks.push({ ...entry, costUsd: cost.totalUsd });
+  telemetry.totalInputTokens += entry.inputTokens;
+  telemetry.totalOutputTokens += entry.outputTokens;
+  telemetry.totalDurationMs += entry.durationMs;
+  telemetry.totalCostUsd += cost.totalUsd;
+  if (telemetry.pricingSource === "unknown" && cost.pricingSource !== "unknown") {
+    telemetry.pricingSource = cost.pricingSource;
+  }
+  return cost;
+}
+
+function createTelemetry(llmConfig: LlmConfig, chunkSize: string, totalChunks: number): Telemetry {
+  return {
+    model: llmConfig.modelId,
+    chunkSize,
+    totalChunks,
+    totalInputTokens: 0,
+    totalOutputTokens: 0,
+    totalDurationMs: 0,
+    totalCostUsd: 0,
+    pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
+    chunks: [],
+  };
+}
+
+async function mapLimit<T, R>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await worker(items[index], index);
+    }
+  }
+
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, () => runWorker()),
+  );
+  return results;
 }
 
 function normalizeCandidateForLocale(source: string, translatedBody: string): string {
@@ -215,16 +338,55 @@ async function translateQuiz(
   llmConfig: LlmConfig,
   skipSummary: boolean,
   dryRun: boolean,
+  reportOptions: QuizReportOptions,
 ): Promise<{ body: string; telemetry: Telemetry; articleSummary: string }> {
   console.log("🧩 Parsing quiz structure...");
   const quiz = parseQuiz(sourceBody);
   console.log(`   ${quiz.challenges.length} challenges found\n`);
 
+  const reporter = dryRun
+    ? undefined
+    : createQuizRunReporter(reportOptions.slug, locale, llmConfig, reportOptions.concurrency);
+  reporter?.writeJson("parsed-quiz", {
+    challengeCount: quiz.challenges.length,
+    introLength: quiz.intro.length,
+    outroLength: quiz.outro.length,
+    challenges: quiz.challenges.map((challenge) => ({
+      index: challenge.index,
+      title: challenge.title,
+      group: challenge.group,
+      optionCount: challenge.options.length,
+    })),
+  });
+  reporter?.append("quiz_parsed", { challengeCount: quiz.challenges.length });
+
+  const telemetry = createTelemetry(llmConfig, "quiz", quiz.challenges.length);
+
   // Generate quiz description
   let quizDescription = "";
   if (!skipSummary) {
     console.log("📝 Generating quiz description...");
-    quizDescription = await generateQuizDescription(quiz, llmConfig);
+    const summary = await generateQuizDescription(quiz, llmConfig);
+    quizDescription = summary.description;
+    const cost = addTelemetry(telemetry, {
+      index: -1,
+      label: "quiz-summary",
+      inputTokens: summary.telemetry.inputTokens,
+      outputTokens: summary.telemetry.outputTokens,
+      durationMs: summary.telemetry.durationMs,
+    });
+    reporter?.writeJson("quiz-summary", {
+      description: quizDescription,
+      rawText: summary.rawText,
+      telemetry: summary.telemetry,
+      cost,
+    });
+    reporter?.append("summary_done", {
+      inputTokens: summary.telemetry.inputTokens,
+      outputTokens: summary.telemetry.outputTokens,
+      durationMs: summary.telemetry.durationMs,
+      costUsd: cost.totalUsd,
+    });
     console.log(`   ${quizDescription.split("\n")[0]}\n`);
   } else {
     quizDescription = "Technical quiz. Translate each challenge precisely.";
@@ -246,54 +408,99 @@ async function translateQuiz(
     return { body: sourceBody, telemetry: createEmptyTelemetry(llmConfig, "quiz"), articleSummary: quizDescription };
   }
 
-  // Translate intro text using normal chunking
   let translatedIntro = quiz.intro;
   if (quiz.intro) {
     console.log("🔄 Translating quiz intro...");
-    translatedIntro = await translateProse(quiz.intro, locale, llmConfig, quizDescription);
+    reporter?.append("intro_started", {});
+    const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription);
+    translatedIntro = intro.text;
+    const cost = addTelemetry(telemetry, { index: -2, label: "intro", ...intro });
+    reporter?.writeJson("intro", { text: translatedIntro, telemetry: intro, cost });
+    reporter?.append("intro_done", {
+      inputTokens: intro.inputTokens,
+      outputTokens: intro.outputTokens,
+      durationMs: intro.durationMs,
+      costUsd: cost.totalUsd,
+    });
     console.log("   ✅ Intro done\n");
   }
 
-  // Translate each challenge one at a time
-  const translatedChallenges = [];
-  const telemetry: Telemetry = {
-    model: llmConfig.modelId,
-    chunkSize: "quiz",
-    totalChunks: quiz.challenges.length,
-    totalInputTokens: 0,
-    totalOutputTokens: 0,
-    totalDurationMs: 0,
-    chunks: [],
-  };
+  const translatedChallenges = await mapLimit(
+    quiz.challenges,
+    reportOptions.concurrency,
+    async (challenge, i) => {
+      console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}"`);
+      reporter?.append("challenge_started", { index: i, title: challenge.title });
 
-  for (let i = 0; i < quiz.challenges.length; i++) {
-    const challenge = quiz.challenges[i];
-    console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}"`);
+      try {
+        const { challenge: translatedChallenge, translation, rawText, telemetry: t } = await translateChallenge(
+          challenge,
+          locale,
+          llmConfig,
+          quizDescription,
+          true,
+        );
 
-    const { challenge: translatedChallenge, telemetry: t } = await translateChallenge(
-      challenge,
-      locale,
-      llmConfig,
-      quizDescription,
-      true,
-    );
+        const cost = addTelemetry(telemetry, {
+          index: i,
+          label: challenge.title,
+          inputTokens: t.inputTokens,
+          outputTokens: t.outputTokens,
+          durationMs: t.durationMs,
+        });
 
-    translatedChallenges.push(translatedChallenge);
-    telemetry.chunks.push({ index: i, inputTokens: t.inputTokens, outputTokens: t.outputTokens, durationMs: t.durationMs });
-    telemetry.totalInputTokens += t.inputTokens;
-    telemetry.totalOutputTokens += t.outputTokens;
-    telemetry.totalDurationMs += t.durationMs;
+        reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}`, {
+          index: i,
+          originalTitle: challenge.title,
+          translatedTitle: translatedChallenge.title,
+          translation,
+          rawText,
+          telemetry: t,
+          cost,
+        });
+        reporter?.append("challenge_done", {
+          index: i,
+          title: challenge.title,
+          inputTokens: t.inputTokens,
+          outputTokens: t.outputTokens,
+          durationMs: t.durationMs,
+          costUsd: cost.totalUsd,
+        });
 
-    console.log(
-      `   ✅ Done in ${t.durationMs}ms | input: ${t.inputTokens} | output: ${t.outputTokens}`,
-    );
-  }
+        console.log(
+          `   ✅ Challenge ${i + 1} done in ${t.durationMs}ms | input: ${t.inputTokens} | output: ${t.outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
+        );
+        return translatedChallenge;
+      } catch (err) {
+        reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}-error`, {
+          index: i,
+          title: challenge.title,
+          error: err instanceof Error ? err.message : String(err),
+        });
+        reporter?.append("challenge_failed", {
+          index: i,
+          title: challenge.title,
+          error: err instanceof Error ? err.message : String(err),
+        });
+        throw err;
+      }
+    },
+  );
 
-  // Translate outro text using normal chunking
   let translatedOutro = quiz.outro;
   if (quiz.outro) {
     console.log("\n🔄 Translating quiz outro...");
-    translatedOutro = await translateProse(quiz.outro, locale, llmConfig, quizDescription);
+    reporter?.append("outro_started", {});
+    const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription);
+    translatedOutro = outro.text;
+    const cost = addTelemetry(telemetry, { index: -3, label: "outro", ...outro });
+    reporter?.writeJson("outro", { text: translatedOutro, telemetry: outro, cost });
+    reporter?.append("outro_done", {
+      inputTokens: outro.inputTokens,
+      outputTokens: outro.outputTokens,
+      durationMs: outro.durationMs,
+      costUsd: cost.totalUsd,
+    });
     console.log("   ✅ Outro done\n");
   }
 
@@ -304,6 +511,20 @@ async function translateQuiz(
   };
 
   const body = assembleQuiz(translatedQuiz);
+  const summary = {
+    slug: reportOptions.slug,
+    locale,
+    model: llmConfig.modelId,
+    challengeCount: quiz.challenges.length,
+    totalInputTokens: telemetry.totalInputTokens,
+    totalOutputTokens: telemetry.totalOutputTokens,
+    totalDurationMs: telemetry.totalDurationMs,
+    totalCostUsd: telemetry.totalCostUsd,
+    pricingSource: telemetry.pricingSource,
+    progressPath: reporter ? relativeToRepo(reporter.progressPath) : undefined,
+  };
+  reporter?.writeJson("summary", summary);
+  reporter?.append("run_done", summary);
   return { body, telemetry, articleSummary: quizDescription };
 }
 
@@ -312,7 +533,8 @@ async function translateProse(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   context: string,
-): Promise<string> {
+): Promise<{ text: string; inputTokens: number; outputTokens: number; durationMs: number }> {
+  const start = performance.now();
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
 
@@ -333,7 +555,12 @@ async function translateProse(
     providerOptions: llmConfig.providerOptions,
   });
 
-  return result.text.trim();
+  return {
+    text: result.text.trim(),
+    inputTokens: result.usage?.inputTokens ?? 0,
+    outputTokens: result.usage?.outputTokens ?? 0,
+    durationMs: Math.round(performance.now() - start),
+  };
 }
 
 function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetry {
@@ -344,8 +571,19 @@ function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetr
     totalInputTokens: 0,
     totalOutputTokens: 0,
     totalDurationMs: 0,
+    totalCostUsd: 0,
+    pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
     chunks: [],
   };
+}
+
+function parseQuizConcurrency(value: string | boolean | undefined) {
+  if (value === undefined || value === true) return 8;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error(`--quiz-concurrency must be a positive integer. Received "${value}".`);
+  }
+  return Math.min(parsed, 8);
 }
 
 async function main() {
@@ -356,6 +594,7 @@ async function main() {
   const chunkSizeInput = options["chunk"] as string | undefined;
   const skipSummary = options["skip-summary"] === true;
   const dryRun = options["dry-run"] === true;
+  const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
 
   const llmConfig = resolveLlmConfig(modelId);
   const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
@@ -373,7 +612,7 @@ async function main() {
   console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
   console.log(`🌐 Locale: ${locale}`);
   if (isQuiz) {
-    console.log(`✂️  Strategy: 1 question per API call`);
+    console.log(`✂️  Strategy: 1 question per API call, up to ${quizConcurrency} in parallel`);
   } else {
     if (!chunkSizeInput) throw new Error(`Missing required --chunk for non-quiz articles`);
     console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
@@ -386,7 +625,11 @@ async function main() {
 
   if (isQuiz) {
     console.log(`🎯 Quiz detected: ${slug}\n`);
-    const result = await translateQuiz(sourceBody, locale, llmConfig, skipSummary, dryRun);
+    const result = await translateQuiz(sourceBody, locale, llmConfig, skipSummary, dryRun, {
+      slug,
+      locale,
+      concurrency: quizConcurrency,
+    });
     if (dryRun) return;
     translatedBody = result.body;
     telemetry = result.telemetry;
@@ -443,7 +686,7 @@ async function main() {
   console.log(`\n✅ Translation written to ${relativeToRepo(targetPath)}`);
   console.log(`📊 Report written to ${relativeToRepo(reportPath)}`);
   console.log(
-    `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms`,
+    `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms, $${telemetry.totalCostUsd.toFixed(6)} estimated`,
   );
 }
 
@@ -454,15 +697,7 @@ async function translateArticleChunks(
   articleSummary: string,
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
-  const telemetry: Telemetry = {
-    model: llmConfig.modelId,
-    chunkSize: "article",
-    totalChunks: chunks.length,
-    totalInputTokens: 0,
-    totalOutputTokens: 0,
-    totalDurationMs: 0,
-    chunks: [],
-  };
+  const telemetry = createTelemetry(llmConfig, "article", chunks.length);
 
   let previousTranslation: string | undefined;
 
@@ -481,10 +716,7 @@ async function translateArticleChunks(
       false,
     );
 
-    telemetry.chunks.push({ index: i, inputTokens, outputTokens, durationMs });
-    telemetry.totalInputTokens += inputTokens;
-    telemetry.totalOutputTokens += outputTokens;
-    telemetry.totalDurationMs += durationMs;
+    const cost = addTelemetry(telemetry, { index: i, inputTokens, outputTokens, durationMs });
 
     translatedChunks.push({
       index: i,
@@ -495,7 +727,7 @@ async function translateArticleChunks(
     previousTranslation = text;
 
     console.log(
-      `   ✅ Done in ${durationMs}ms | input: ${inputTokens} | output: ${outputTokens}`,
+      `   ✅ Done in ${durationMs}ms | input: ${inputTokens} | output: ${outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
     );
   }
 
@@ -565,16 +797,18 @@ function formatTelemetryReport(telemetry: Telemetry, summary: string): string {
   lines.push(`- **Total input tokens**: ${telemetry.totalInputTokens}`);
   lines.push(`- **Total output tokens**: ${telemetry.totalOutputTokens}`);
   lines.push(`- **Total duration**: ${telemetry.totalDurationMs}ms`);
+  lines.push(`- **Estimated cost**: $${telemetry.totalCostUsd.toFixed(6)} (${telemetry.pricingSource})`);
   lines.push("");
   lines.push(`## Article Summary`);
   lines.push(summary);
   lines.push("");
   lines.push(`## Per-Chunk Telemetry`);
   lines.push("");
-  lines.push("| Chunk | Input Tokens | Output Tokens | Duration (ms) |");
-  lines.push("|-------|-------------:|--------------:|--------------:|");
+  lines.push("| Chunk | Input Tokens | Output Tokens | Duration (ms) | Est. Cost |");
+  lines.push("|-------|-------------:|--------------:|--------------:|----------:|");
   for (const c of telemetry.chunks) {
-    lines.push(`| ${c.index + 1} | ${c.inputTokens} | ${c.outputTokens} | ${c.durationMs} |`);
+    const label = c.label ?? (c.index >= 0 ? String(c.index + 1) : String(c.index));
+    lines.push(`| ${label} | ${c.inputTokens} | ${c.outputTokens} | ${c.durationMs} | $${c.costUsd.toFixed(6)} |`);
   }
   lines.push("");
   return lines.join("\n");

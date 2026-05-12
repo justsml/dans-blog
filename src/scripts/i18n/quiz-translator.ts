@@ -34,7 +34,7 @@ const TranslationSchema = z.object({
   ),
 });
 
-type TranslationResult = z.infer<typeof TranslationSchema>;
+export type TranslationResult = z.infer<typeof TranslationSchema>;
 
 export interface LlmConfig {
   modelId: string;
@@ -133,7 +133,12 @@ export async function translateChallenge(
   llmConfig: LlmConfig,
   quizDescription: string,
   isQuiz: boolean,
-): Promise<{ challenge: QuizChallenge; telemetry: TranslationTelemetry }> {
+): Promise<{
+  challenge: QuizChallenge;
+  translation: TranslationResult;
+  rawText: string;
+  telemetry: TranslationTelemetry;
+}> {
   const start = performance.now();
 
   const provider = createOpenRouter(llmConfig.providerSettings);
@@ -177,6 +182,8 @@ export async function translateChallenge(
 
   return {
     challenge: merged,
+    translation: translated,
+    rawText: result.text,
     telemetry: {
       inputTokens: result.usage?.inputTokens ?? 0,
       outputTokens: result.usage?.outputTokens ?? 0,
@@ -218,7 +225,8 @@ function mergeTranslation(
 export async function generateQuizDescription(
   quiz: ParsedQuiz,
   llmConfig: LlmConfig,
-): Promise<string> {
+): Promise<{ description: string; telemetry: TranslationTelemetry; rawText: string }> {
+  const start = performance.now();
   const context = [
     quiz.intro.slice(0, 800),
     "---",
@@ -247,6 +255,7 @@ export async function generateQuizDescription(
     maxOutputTokens: 500,
     providerOptions: llmConfig.providerOptions,
   });
+  const durationMs = Math.round(performance.now() - start);
 
   let parsed: unknown;
   try {
@@ -270,9 +279,19 @@ export async function generateQuizDescription(
   }
 
   const d = validated.data;
-  return [
+  const description = [
     d.description,
     `Topics: ${d.topics.join(", ")}`,
     `Audience: ${d.audience}`,
   ].join("\n");
+
+  return {
+    description,
+    rawText: result.text,
+    telemetry: {
+      inputTokens: result.usage?.inputTokens ?? 0,
+      outputTokens: result.usage?.outputTokens ?? 0,
+      durationMs,
+    },
+  };
 }
