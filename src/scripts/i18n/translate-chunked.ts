@@ -46,6 +46,7 @@ import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
+import { cachedText, usageFromResult } from "./llm-telemetry.ts";
 
 interface LlmConfig {
   modelId: string;
@@ -60,9 +61,13 @@ interface LlmConfig {
   reasoningEffort: string;
   temperature: number;
   maxTokens: number;
+  timeoutMs: number;
 }
 
 const DEFAULT_REASONING_EFFORT = "low";
+const DEFAULT_LLM_TIMEOUT_MS = 200_000;
+const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
+const MAX_PARALLEL_CHALLENGE_CALLS = 18;
 
 function resolveLlmConfig(modelInput: string): LlmConfig {
   if (modelInput.startsWith("llm://")) {
@@ -90,6 +95,7 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
       reasoningEffort,
       temperature: Number(parsed.params.temperature ?? parsed.params.temp ?? 0.3),
       maxTokens: Number(parsed.params.max_tokens ?? parsed.params.maxTokens ?? 16000),
+      timeoutMs: Number(parsed.params.timeout_ms ?? parsed.params.timeoutMs ?? DEFAULT_LLM_TIMEOUT_MS),
     };
   }
 
@@ -109,6 +115,7 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
     reasoningEffort: DEFAULT_REASONING_EFFORT,
     temperature: 0.3,
     maxTokens: 16000,
+    timeoutMs: DEFAULT_LLM_TIMEOUT_MS,
   };
 }
 
@@ -118,6 +125,8 @@ interface Telemetry {
   totalChunks: number;
   totalInputTokens: number;
   totalOutputTokens: number;
+  totalCacheReadTokens: number;
+  totalCacheWriteTokens: number;
   totalDurationMs: number;
   totalCostUsd: number;
   pricingSource: string;
@@ -126,6 +135,8 @@ interface Telemetry {
     label?: string;
     inputTokens: number;
     outputTokens: number;
+    cacheReadTokens: number;
+    cacheWriteTokens: number;
     durationMs: number;
     costUsd: number;
   }>;
@@ -144,6 +155,27 @@ interface QuizRunReporter {
   writeJson(name: string, data: unknown): void;
   append(event: string, data: Record<string, unknown>): void;
 }
+
+let activeTelemetry: Telemetry | undefined;
+let activeRunLabel = "translation";
+
+function printTelemetryTotals(label: string, telemetry: Telemetry) {
+  console.log(
+    `${label}: ${telemetry.totalInputTokens} input, ${telemetry.totalOutputTokens} output, `
+    + `${telemetry.totalCacheReadTokens} cache read, ${telemetry.totalCacheWriteTokens} cache write, `
+    + `${telemetry.totalDurationMs}ms, $${telemetry.totalCostUsd.toFixed(6)} estimated`,
+  );
+}
+
+function printInterruptedTotals() {
+  if (activeTelemetry) {
+    printTelemetryTotals(`\nInterrupted ${activeRunLabel}`, activeTelemetry);
+  }
+  process.exit(130);
+}
+
+process.once("SIGINT", printInterruptedTotals);
+process.once("SIGTERM", printInterruptedTotals);
 
 function createQuizRunReporter(
   slug: string,
@@ -188,6 +220,7 @@ function createQuizRunReporter(
     reasoningEffort: llmConfig.reasoningEffort,
     temperature: llmConfig.temperature,
     maxTokens: llmConfig.maxTokens,
+    timeoutMs: llmConfig.timeoutMs,
     concurrency,
     startedAt: new Date().toISOString(),
     progressPath: relativeToRepo(progressPath),
@@ -199,12 +232,24 @@ function createQuizRunReporter(
 
 function addTelemetry(
   telemetry: Telemetry,
-  entry: { index: number; label?: string; inputTokens: number; outputTokens: number; durationMs: number },
+  entry: {
+    index: number;
+    label?: string;
+    inputTokens: number;
+    outputTokens: number;
+    cacheReadTokens?: number;
+    cacheWriteTokens?: number;
+    durationMs: number;
+  },
 ) {
-  const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens);
-  telemetry.chunks.push({ ...entry, costUsd: cost.totalUsd });
+  const cacheReadTokens = entry.cacheReadTokens ?? 0;
+  const cacheWriteTokens = entry.cacheWriteTokens ?? 0;
+  const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens, cacheReadTokens);
+  telemetry.chunks.push({ ...entry, cacheReadTokens, cacheWriteTokens, costUsd: cost.totalUsd });
   telemetry.totalInputTokens += entry.inputTokens;
   telemetry.totalOutputTokens += entry.outputTokens;
+  telemetry.totalCacheReadTokens += cacheReadTokens;
+  telemetry.totalCacheWriteTokens += cacheWriteTokens;
   telemetry.totalDurationMs += entry.durationMs;
   telemetry.totalCostUsd += cost.totalUsd;
   if (telemetry.pricingSource === "unknown" && cost.pricingSource !== "unknown") {
@@ -220,6 +265,8 @@ function createTelemetry(llmConfig: LlmConfig, chunkSize: string, totalChunks: n
     totalChunks,
     totalInputTokens: 0,
     totalOutputTokens: 0,
+    totalCacheReadTokens: 0,
+    totalCacheWriteTokens: 0,
     totalDurationMs: 0,
     totalCostUsd: 0,
     pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
@@ -279,7 +326,14 @@ async function translateChunk(
   articleSummary: string,
   previousTranslation: string | undefined,
   isQuiz: boolean,
-): Promise<{ text: string; inputTokens: number; outputTokens: number; durationMs: number }> {
+): Promise<{
+  text: string;
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheWriteTokens: number;
+  durationMs: number;
+}> {
   const start = performance.now();
 
   const system = buildSystemPrompt(locale, isQuiz);
@@ -299,16 +353,16 @@ async function translateChunk(
     prompt: user,
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
+    timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
 
   const durationMs = Math.round(performance.now() - start);
+  const usage = usageFromResult(result.usage, durationMs);
 
   return {
     text: result.text,
-    inputTokens: result.usage?.inputTokens ?? 0,
-    outputTokens: result.usage?.outputTokens ?? 0,
-    durationMs,
+    ...usage,
   };
 }
 
@@ -327,6 +381,7 @@ async function generateSummary(
     prompt: buildSummaryPrompt(title, body, isQuiz),
     temperature: llmConfig.temperature,
     maxOutputTokens: 500,
+    timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
   return result.text.trim();
@@ -361,6 +416,8 @@ async function translateQuiz(
   reporter?.append("quiz_parsed", { challengeCount: quiz.challenges.length });
 
   const telemetry = createTelemetry(llmConfig, "quiz", quiz.challenges.length);
+  activeTelemetry = telemetry;
+  activeRunLabel = `${reportOptions.slug} [${locale}]`;
 
   // Generate quiz description
   let quizDescription = "";
@@ -373,6 +430,8 @@ async function translateQuiz(
       label: "quiz-summary",
       inputTokens: summary.telemetry.inputTokens,
       outputTokens: summary.telemetry.outputTokens,
+      cacheReadTokens: summary.telemetry.cacheReadTokens,
+      cacheWriteTokens: summary.telemetry.cacheWriteTokens,
       durationMs: summary.telemetry.durationMs,
     });
     reporter?.writeJson("quiz-summary", {
@@ -384,6 +443,8 @@ async function translateQuiz(
     reporter?.append("summary_done", {
       inputTokens: summary.telemetry.inputTokens,
       outputTokens: summary.telemetry.outputTokens,
+      cacheReadTokens: summary.telemetry.cacheReadTokens,
+      cacheWriteTokens: summary.telemetry.cacheWriteTokens,
       durationMs: summary.telemetry.durationMs,
       costUsd: cost.totalUsd,
     });
@@ -419,6 +480,8 @@ async function translateQuiz(
     reporter?.append("intro_done", {
       inputTokens: intro.inputTokens,
       outputTokens: intro.outputTokens,
+      cacheReadTokens: intro.cacheReadTokens,
+      cacheWriteTokens: intro.cacheWriteTokens,
       durationMs: intro.durationMs,
       costUsd: cost.totalUsd,
     });
@@ -446,6 +509,8 @@ async function translateQuiz(
           label: challenge.title,
           inputTokens: t.inputTokens,
           outputTokens: t.outputTokens,
+          cacheReadTokens: t.cacheReadTokens,
+          cacheWriteTokens: t.cacheWriteTokens,
           durationMs: t.durationMs,
         });
 
@@ -463,6 +528,8 @@ async function translateQuiz(
           title: challenge.title,
           inputTokens: t.inputTokens,
           outputTokens: t.outputTokens,
+          cacheReadTokens: t.cacheReadTokens,
+          cacheWriteTokens: t.cacheWriteTokens,
           durationMs: t.durationMs,
           costUsd: cost.totalUsd,
         });
@@ -498,6 +565,8 @@ async function translateQuiz(
     reporter?.append("outro_done", {
       inputTokens: outro.inputTokens,
       outputTokens: outro.outputTokens,
+      cacheReadTokens: outro.cacheReadTokens,
+      cacheWriteTokens: outro.cacheWriteTokens,
       durationMs: outro.durationMs,
       costUsd: cost.totalUsd,
     });
@@ -518,6 +587,8 @@ async function translateQuiz(
     challengeCount: quiz.challenges.length,
     totalInputTokens: telemetry.totalInputTokens,
     totalOutputTokens: telemetry.totalOutputTokens,
+    totalCacheReadTokens: telemetry.totalCacheReadTokens,
+    totalCacheWriteTokens: telemetry.totalCacheWriteTokens,
     totalDurationMs: telemetry.totalDurationMs,
     totalCostUsd: telemetry.totalCostUsd,
     pricingSource: telemetry.pricingSource,
@@ -533,33 +604,52 @@ async function translateProse(
   locale: ActiveLocale,
   llmConfig: LlmConfig,
   context: string,
-): Promise<{ text: string; inputTokens: number; outputTokens: number; durationMs: number }> {
+): Promise<{
+  text: string;
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheWriteTokens: number;
+  durationMs: number;
+}> {
   const start = performance.now();
   const provider = createOpenRouter(llmConfig.providerSettings);
   const model = provider.chat(llmConfig.modelId);
 
   const result = await generateText({
     model,
-    system: buildSystemPrompt(locale, true),
-    prompt: [
-      `QUIZ CONTEXT:`,
-      context,
-      ``,
-      `Translate the following prose into ${LOCALE_LABELS[locale]}:`,
-      `---`,
-      text,
-      `---`,
-    ].join("\n"),
+    messages: [
+      {
+        role: "system",
+        content: buildSystemPrompt(locale, true),
+      },
+      {
+        role: "user",
+        content: [
+          cachedText(`QUIZ CONTEXT:\n${context}`),
+          {
+            type: "text",
+            text: [
+              `Translate the following prose into ${LOCALE_LABELS[locale]}:`,
+              `---`,
+              text,
+              `---`,
+            ].join("\n"),
+          },
+        ],
+      },
+    ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
+    timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
+  const durationMs = Math.round(performance.now() - start);
+  const usage = usageFromResult(result.usage, durationMs);
 
   return {
     text: result.text.trim(),
-    inputTokens: result.usage?.inputTokens ?? 0,
-    outputTokens: result.usage?.outputTokens ?? 0,
-    durationMs: Math.round(performance.now() - start),
+    ...usage,
   };
 }
 
@@ -570,6 +660,8 @@ function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetr
     totalChunks: 0,
     totalInputTokens: 0,
     totalOutputTokens: 0,
+    totalCacheReadTokens: 0,
+    totalCacheWriteTokens: 0,
     totalDurationMs: 0,
     totalCostUsd: 0,
     pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
@@ -578,12 +670,12 @@ function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetr
 }
 
 function parseQuizConcurrency(value: string | boolean | undefined) {
-  if (value === undefined || value === true) return 8;
+  if (value === undefined || value === true) return DEFAULT_PARALLEL_CHALLENGE_CALLS;
   const parsed = Number(value);
   if (!Number.isInteger(parsed) || parsed < 1) {
     throw new Error(`--quiz-concurrency must be a positive integer. Received "${value}".`);
   }
-  return Math.min(parsed, 8);
+  return Math.min(parsed, MAX_PARALLEL_CHALLENGE_CALLS);
 }
 
 async function main() {
@@ -612,12 +704,12 @@ async function main() {
   console.log(`🎯 Target: ${relativeToRepo(targetPath)}`);
   console.log(`🌐 Locale: ${locale}`);
   if (isQuiz) {
-    console.log(`✂️  Strategy: 1 question per API call, up to ${quizConcurrency} in parallel`);
+    console.log(`✂️  Strategy: 1 question per API call, ${quizConcurrency} parallel challenge calls`);
   } else {
     if (!chunkSizeInput) throw new Error(`Missing required --chunk for non-quiz articles`);
     console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
   }
-  console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens}, effort=${llmConfig.reasoningEffort})\n`);
+  console.log(`🤖 Model: ${llmConfig.modelId} (temp=${llmConfig.temperature}, maxTokens=${llmConfig.maxTokens}, effort=${llmConfig.reasoningEffort}, timeout=${llmConfig.timeoutMs}ms)\n`);
 
   let translatedBody: string;
   let telemetry: Telemetry;
@@ -625,6 +717,7 @@ async function main() {
 
   if (isQuiz) {
     console.log(`🎯 Quiz detected: ${slug}\n`);
+    activeRunLabel = `${slug} [${locale}]`;
     const result = await translateQuiz(sourceBody, locale, llmConfig, skipSummary, dryRun, {
       slug,
       locale,
@@ -635,6 +728,7 @@ async function main() {
     telemetry = result.telemetry;
     articleSummary = result.articleSummary;
   } else {
+    activeRunLabel = `${slug} [${locale}]`;
     // Regular article translation
     const strategy = parseChunkSize(chunkSizeInput!);
 
@@ -688,6 +782,7 @@ async function main() {
   console.log(
     `   Total: ${telemetry.totalInputTokens} input tokens, ${telemetry.totalOutputTokens} output tokens, ${telemetry.totalDurationMs}ms, $${telemetry.totalCostUsd.toFixed(6)} estimated`,
   );
+  printTelemetryTotals(`Article totals for ${slug} [${locale}]`, telemetry);
 }
 
 async function translateArticleChunks(
@@ -698,6 +793,7 @@ async function translateArticleChunks(
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
   const telemetry = createTelemetry(llmConfig, "article", chunks.length);
+  activeTelemetry = telemetry;
 
   let previousTranslation: string | undefined;
 
@@ -707,7 +803,7 @@ async function translateArticleChunks(
 
     console.log(`🔄 Translating chunk ${i + 1}/${chunks.length}...`);
 
-    const { text, inputTokens, outputTokens, durationMs } = await translateChunk(
+    const { text, inputTokens, outputTokens, cacheReadTokens, cacheWriteTokens, durationMs } = await translateChunk(
       chunk,
       locale,
       llmConfig,
@@ -716,7 +812,14 @@ async function translateArticleChunks(
       false,
     );
 
-    const cost = addTelemetry(telemetry, { index: i, inputTokens, outputTokens, durationMs });
+    const cost = addTelemetry(telemetry, {
+      index: i,
+      inputTokens,
+      outputTokens,
+      cacheReadTokens,
+      cacheWriteTokens,
+      durationMs,
+    });
 
     translatedChunks.push({
       index: i,
@@ -727,7 +830,7 @@ async function translateArticleChunks(
     previousTranslation = text;
 
     console.log(
-      `   ✅ Done in ${durationMs}ms | input: ${inputTokens} | output: ${outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
+      `   ✅ Done in ${durationMs}ms | input: ${inputTokens} (${cacheReadTokens} cached read, ${cacheWriteTokens} cached write) | output: ${outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
     );
   }
 
@@ -777,9 +880,10 @@ async function translateFrontmatter(
       system: buildSystemPrompt(locale, isQuiz),
       prompt: `Translate the following ${key} into ${locale}. Keep it concise and natural.\n\n${value}`,
       temperature: llmConfig.temperature,
-      maxOutputTokens: 500,
-      providerOptions: llmConfig.providerOptions,
-    });
+    maxOutputTokens: 500,
+    timeout: { totalMs: llmConfig.timeoutMs },
+    providerOptions: llmConfig.providerOptions,
+  });
 
     result[key] = translation.text.trim();
   }
@@ -796,6 +900,8 @@ function formatTelemetryReport(telemetry: Telemetry, summary: string): string {
   lines.push(`- **Total chunks**: ${telemetry.totalChunks}`);
   lines.push(`- **Total input tokens**: ${telemetry.totalInputTokens}`);
   lines.push(`- **Total output tokens**: ${telemetry.totalOutputTokens}`);
+  lines.push(`- **Cache read tokens**: ${telemetry.totalCacheReadTokens}`);
+  lines.push(`- **Cache write tokens**: ${telemetry.totalCacheWriteTokens}`);
   lines.push(`- **Total duration**: ${telemetry.totalDurationMs}ms`);
   lines.push(`- **Estimated cost**: $${telemetry.totalCostUsd.toFixed(6)} (${telemetry.pricingSource})`);
   lines.push("");
@@ -804,11 +910,11 @@ function formatTelemetryReport(telemetry: Telemetry, summary: string): string {
   lines.push("");
   lines.push(`## Per-Chunk Telemetry`);
   lines.push("");
-  lines.push("| Chunk | Input Tokens | Output Tokens | Duration (ms) | Est. Cost |");
-  lines.push("|-------|-------------:|--------------:|--------------:|----------:|");
+  lines.push("| Chunk | Input Tokens | Cache Read | Cache Write | Output Tokens | Duration (ms) | Est. Cost |");
+  lines.push("|-------|-------------:|-----------:|------------:|--------------:|--------------:|----------:|");
   for (const c of telemetry.chunks) {
     const label = c.label ?? (c.index >= 0 ? String(c.index + 1) : String(c.index));
-    lines.push(`| ${label} | ${c.inputTokens} | ${c.outputTokens} | ${c.durationMs} | $${c.costUsd.toFixed(6)} |`);
+    lines.push(`| ${label} | ${c.inputTokens} | ${c.cacheReadTokens} | ${c.cacheWriteTokens} | ${c.outputTokens} | ${c.durationMs} | $${c.costUsd.toFixed(6)} |`);
   }
   lines.push("");
   return lines.join("\n");

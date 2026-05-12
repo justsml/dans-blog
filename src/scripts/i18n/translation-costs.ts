@@ -7,6 +7,7 @@ export interface TokenCostEstimate {
 
 interface ModelPricing {
   inputPerMillionUsd: number;
+  cachedInputPerMillionUsd?: number;
   outputPerMillionUsd: number;
   source: string;
 }
@@ -19,6 +20,7 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
   },
   "deepseek/deepseek-v4-flash": {
     inputPerMillionUsd: 0.14,
+    cachedInputPerMillionUsd: 0.0028,
     outputPerMillionUsd: 0.28,
     source: "local-openrouter-estimate",
   },
@@ -36,6 +38,7 @@ export function estimateTokenCost(
   modelId: string,
   inputTokens: number,
   outputTokens: number,
+  cacheReadTokens = 0,
 ): TokenCostEstimate {
   const pricing = MODEL_PRICING[normalizeOpenRouterModelId(modelId)];
 
@@ -48,7 +51,10 @@ export function estimateTokenCost(
     };
   }
 
-  const inputUsd = (inputTokens / 1_000_000) * pricing.inputPerMillionUsd;
+  const nonCachedInputTokens = Math.max(inputTokens - cacheReadTokens, 0);
+  const inputUsd =
+    (nonCachedInputTokens / 1_000_000) * pricing.inputPerMillionUsd
+    + (cacheReadTokens / 1_000_000) * (pricing.cachedInputPerMillionUsd ?? pricing.inputPerMillionUsd);
   const outputUsd = (outputTokens / 1_000_000) * pricing.outputPerMillionUsd;
 
   return {

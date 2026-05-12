@@ -1,6 +1,6 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync, appendFileSync } from "node:fs";
 import { join } from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawn, type ChildProcess } from "node:child_process";
 import matter from "gray-matter";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
 import { parseArgs, parseList, relativeToRepo } from "./utils.ts";
@@ -10,10 +10,45 @@ const DEFAULT_MODELS = [
   "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
 ];
+const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
+const MAX_PARALLEL_CHALLENGE_CALLS = 18;
+const DEFAULT_FILE_CONCURRENCY = 6;
+const MAX_FILE_CONCURRENCY = 6;
 
 interface QuizPost {
   slug: string;
   path: string;
+}
+
+interface TranslationTask {
+  slug: string;
+  locale: ActiveLocale;
+}
+
+interface SummaryStats {
+  totalInputTokens?: number;
+  totalOutputTokens?: number;
+  totalCacheReadTokens?: number;
+  totalCacheWriteTokens?: number;
+  totalDurationMs?: number;
+  totalCostUsd?: number;
+}
+
+interface Outcome {
+  slug: string;
+  locale: ActiveLocale;
+  status: "exists" | "missing" | "translated" | "failed" | "skipped";
+  model?: string;
+  stats?: SummaryStats;
+}
+
+interface Totals {
+  inputTokens: number;
+  outputTokens: number;
+  cacheReadTokens: number;
+  cacheWriteTokens: number;
+  durationMs: number;
+  costUsd: number;
 }
 
 function findQuizPosts(): QuizPost[] {
@@ -49,68 +84,147 @@ function resolveLocales(options: Record<string, string | boolean>): ActiveLocale
   return locales;
 }
 
+function parseBoundedInt(
+  value: string | boolean | undefined,
+  fallback: number,
+  max: number,
+  optionName: string,
+) {
+  if (value === undefined || value === true) return fallback;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) {
+    throw new Error(`--${optionName} must be a positive integer. Received "${value}".`);
+  }
+  return Math.min(parsed, max);
+}
+
 function readSummaries(slug: string, model: string, locale: ActiveLocale) {
   const dir = join(process.cwd(), "reports", slug, safeModelPathName(model));
   if (!existsSync(dir)) return [];
 
   return readdirSync(dir)
     .filter((name) => name.startsWith("summary-") && name.endsWith(".json"))
+    .sort()
     .map((name) => {
       try {
         const json = JSON.parse(readFileSync(join(dir, name), "utf8"));
-        return json.locale === locale ? json : undefined;
+        return json.locale === locale ? json as SummaryStats : undefined;
       } catch {
         return undefined;
       }
     })
-    .filter(Boolean);
+    .filter((summary): summary is SummaryStats => summary !== undefined);
 }
 
-function hasModelOutput(slug: string, models: string[], locale: ActiveLocale) {
-  return models.some((model) => readSummaries(slug, model, locale).length > 0);
+function latestSummary(slug: string, model: string, locale: ActiveLocale) {
+  return readSummaries(slug, model, locale).at(-1);
+}
+
+function findExistingModel(slug: string, models: string[], locale: ActiveLocale) {
+  return models.find((model) => readSummaries(slug, model, locale).length > 0);
 }
 
 function appendJsonl(path: string, event: string, data: Record<string, unknown>) {
   appendFileSync(path, JSON.stringify({ event, at: new Date().toISOString(), ...data }) + "\n", "utf8");
 }
 
-function runTranslation(slug: string, locale: ActiveLocale, model: string, concurrency: number) {
-  const result = spawnSync(
-    "bun",
-    [
-      "run",
-      "i18n:translate:chunked",
-      "--",
-      "--slug",
-      slug,
-      "--locale",
-      locale,
-      "--chunk",
-      "1p",
-      "--model",
-      model,
-      "--quiz-concurrency",
-      String(concurrency),
-    ],
-    {
-      cwd: process.cwd(),
-      stdio: "inherit",
-      encoding: "utf8",
-    },
-  );
-
-  return result.status === 0;
+function addStats(totals: Totals, stats: SummaryStats | undefined) {
+  totals.inputTokens += Number(stats?.totalInputTokens ?? 0);
+  totals.outputTokens += Number(stats?.totalOutputTokens ?? 0);
+  totals.cacheReadTokens += Number(stats?.totalCacheReadTokens ?? 0);
+  totals.cacheWriteTokens += Number(stats?.totalCacheWriteTokens ?? 0);
+  totals.durationMs += Number(stats?.totalDurationMs ?? 0);
+  totals.costUsd += Number(stats?.totalCostUsd ?? 0);
 }
 
-function collectStats(slug: string, model: string, locale: ActiveLocale) {
-  const summaries = readSummaries(slug, model, locale);
-  return summaries.at(-1);
+function printArticleStats(outcome: Outcome) {
+  const stats = outcome.stats;
+  const prefix = `${outcome.slug} [${outcome.locale}] ${outcome.status}${outcome.model ? ` via ${outcome.model}` : ""}`;
+  console.log(
+    `${prefix}: ${Number(stats?.totalInputTokens ?? 0)} input, ${Number(stats?.totalOutputTokens ?? 0)} output, `
+    + `${Number(stats?.totalCacheReadTokens ?? 0)} cache read, ${Number(stats?.totalCacheWriteTokens ?? 0)} cache write, `
+    + `$${Number(stats?.totalCostUsd ?? 0).toFixed(6)} estimated`,
+  );
+}
+
+function runTranslation(
+  slug: string,
+  locale: ActiveLocale,
+  model: string,
+  quizConcurrency: number,
+  activeChildren: Set<ChildProcess>,
+) {
+  return new Promise<boolean>((resolve) => {
+    const child = spawn(
+      "bun",
+      [
+        "run",
+        "i18n:translate:chunked",
+        "--",
+        "--slug",
+        slug,
+        "--locale",
+        locale,
+        "--chunk",
+        "1p",
+        "--model",
+        model,
+        "--quiz-concurrency",
+        String(quizConcurrency),
+      ],
+      {
+        cwd: process.cwd(),
+        stdio: "inherit",
+      },
+    );
+
+    activeChildren.add(child);
+    child.once("close", (code) => {
+      activeChildren.delete(child);
+      resolve(code === 0);
+    });
+    child.once("error", () => {
+      activeChildren.delete(child);
+      resolve(false);
+    });
+  });
+}
+
+async function mapLimit<T, R>(
+  items: T[],
+  limit: number,
+  worker: (item: T, index: number) => Promise<R>,
+) {
+  const results: R[] = new Array(items.length);
+  let nextIndex = 0;
+
+  async function runWorker() {
+    while (nextIndex < items.length) {
+      const index = nextIndex;
+      nextIndex += 1;
+      results[index] = await worker(items[index], index);
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, () => runWorker()));
+  return results;
 }
 
 async function main() {
   const options = parseArgs();
   const dryRun = options["dry-run"] === true;
-  const concurrency = Math.min(Number(options["quiz-concurrency"] ?? 8), 8);
+  const quizConcurrency = parseBoundedInt(
+    options["quiz-concurrency"],
+    DEFAULT_PARALLEL_CHALLENGE_CALLS,
+    MAX_PARALLEL_CHALLENGE_CALLS,
+    "quiz-concurrency",
+  );
+  const fileConcurrency = parseBoundedInt(
+    options["file-concurrency"],
+    DEFAULT_FILE_CONCURRENCY,
+    MAX_FILE_CONCURRENCY,
+    "file-concurrency",
+  );
   const models = parseList(
     typeof options.models === "string" ? options.models : undefined,
     DEFAULT_MODELS,
@@ -124,85 +238,153 @@ async function main() {
   mkdirSync(reportDir, { recursive: true });
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
   const progressPath = join(reportDir, `progress-${timestamp}.jsonl`);
+  const summaryPath = join(reportDir, `summary-${timestamp}.json`);
+
+  const activeChildren = new Set<ChildProcess>();
+  const outcomes: Outcome[] = [];
+  const totals: Totals = {
+    inputTokens: 0,
+    outputTokens: 0,
+    cacheReadTokens: 0,
+    cacheWriteTokens: 0,
+    durationMs: 0,
+    costUsd: 0,
+  };
+  let interrupted = false;
+  let finished = false;
+
+  function writeSummary(status: "running" | "finished" | "interrupted" | "failed") {
+    const payload = {
+      status,
+      locales,
+      models,
+      quizCount: selectedPosts.length,
+      dryRun,
+      quizConcurrency,
+      fileConcurrency,
+      progressPath: relativeToRepo(progressPath),
+      totals,
+      outcomes,
+      updatedAt: new Date().toISOString(),
+    };
+    writeFileSync(summaryPath, JSON.stringify(payload, null, 2), "utf8");
+    return payload;
+  }
+
+  function printTotals(status: string) {
+    console.log(`\nBaseline ${status}: ${relativeToRepo(summaryPath)}`);
+    console.log(`Progress log: ${relativeToRepo(progressPath)}`);
+    console.log(
+      `Totals: ${totals.inputTokens} input, ${totals.outputTokens} output, `
+      + `${totals.cacheReadTokens} cache read, ${totals.cacheWriteTokens} cache write, `
+      + `${totals.durationMs}ms, $${totals.costUsd.toFixed(6)} estimated`,
+    );
+  }
+
+  function interrupt() {
+    if (interrupted) return;
+    interrupted = true;
+    appendJsonl(progressPath, "baseline_interrupted", {
+      activeChildren: activeChildren.size,
+      totals,
+    });
+    for (const child of activeChildren) {
+      child.kill("SIGINT");
+    }
+    writeSummary("interrupted");
+    printTotals("interrupted");
+  }
+
+  process.once("SIGINT", interrupt);
+  process.once("SIGTERM", interrupt);
 
   appendJsonl(progressPath, "baseline_started", {
     locales,
     models,
     quizCount: selectedPosts.length,
     dryRun,
+    quizConcurrency,
+    fileConcurrency,
   });
+  writeSummary("running");
 
-  const outcomes = [];
-
+  const tasks: TranslationTask[] = [];
   for (const post of selectedPosts) {
     for (const locale of locales) {
-      if (hasModelOutput(post.slug, models, locale)) {
-        const existingModel = models.find((model) => readSummaries(post.slug, model, locale).length > 0);
-        appendJsonl(progressPath, "baseline_exists", {
-          slug: post.slug,
-          locale,
-          model: existingModel,
-        });
-        outcomes.push({ slug: post.slug, locale, status: "exists", model: existingModel });
-        continue;
-      }
-
-      appendJsonl(progressPath, "baseline_missing", { slug: post.slug, locale });
-      if (dryRun) {
-        outcomes.push({ slug: post.slug, locale, status: "missing" });
-        continue;
-      }
-
-      let translated = false;
-      for (const model of models) {
-        appendJsonl(progressPath, "baseline_attempt_started", { slug: post.slug, locale, model });
-        translated = runTranslation(post.slug, locale, model, concurrency);
-        appendJsonl(progressPath, "baseline_attempt_finished", {
-          slug: post.slug,
-          locale,
-          model,
-          ok: translated,
-        });
-        if (translated) {
-          outcomes.push({ slug: post.slug, locale, status: "translated", model, stats: collectStats(post.slug, model, locale) });
-          break;
-        }
-      }
-
-      if (!translated) {
-        outcomes.push({ slug: post.slug, locale, status: "failed" });
+      const existingModel = findExistingModel(post.slug, models, locale);
+      if (existingModel) {
+        const stats = latestSummary(post.slug, existingModel, locale);
+        const outcome: Outcome = { slug: post.slug, locale, status: "exists", model: existingModel, stats };
+        outcomes.push(outcome);
+        addStats(totals, stats);
+        appendJsonl(progressPath, "baseline_exists", outcome as unknown as Record<string, unknown>);
+        printArticleStats(outcome);
+      } else {
+        tasks.push({ slug: post.slug, locale });
       }
     }
   }
 
-  const totals = outcomes.reduce(
-    (acc, outcome) => {
-      const stats = "stats" in outcome ? outcome.stats as Record<string, unknown> | undefined : undefined;
-      acc.inputTokens += Number(stats?.totalInputTokens ?? 0);
-      acc.outputTokens += Number(stats?.totalOutputTokens ?? 0);
-      acc.costUsd += Number(stats?.totalCostUsd ?? 0);
-      return acc;
-    },
-    { inputTokens: 0, outputTokens: 0, costUsd: 0 },
-  );
+  await mapLimit(tasks, fileConcurrency, async (task) => {
+    if (interrupted) {
+      const outcome: Outcome = { ...task, status: "skipped" };
+      outcomes.push(outcome);
+      appendJsonl(progressPath, "baseline_skipped", outcome as unknown as Record<string, unknown>);
+      return outcome;
+    }
 
-  const summaryPath = join(reportDir, `summary-${timestamp}.json`);
-  writeFileSync(summaryPath, JSON.stringify({
-    locales,
-    models,
-    quizCount: selectedPosts.length,
-    dryRun,
-    progressPath: relativeToRepo(progressPath),
-    totals,
-    outcomes,
-  }, null, 2), "utf8");
-  appendJsonl(progressPath, "baseline_finished", { totals, summaryPath: relativeToRepo(summaryPath) });
+    appendJsonl(progressPath, "baseline_missing", task as unknown as Record<string, unknown>);
+    if (dryRun) {
+      const outcome: Outcome = { ...task, status: "missing" };
+      outcomes.push(outcome);
+      appendJsonl(progressPath, "baseline_dry_run_missing", outcome as unknown as Record<string, unknown>);
+      return outcome;
+    }
 
-  console.log(`\nBaseline report: ${relativeToRepo(summaryPath)}`);
-  console.log(`Progress log: ${relativeToRepo(progressPath)}`);
-  console.log(
-    `Totals from newly translated runs: ${totals.inputTokens} input tokens, ${totals.outputTokens} output tokens, $${totals.costUsd.toFixed(6)} estimated`,
-  );
+    for (const model of models) {
+      if (interrupted) break;
+      appendJsonl(progressPath, "baseline_attempt_started", { ...task, model });
+      const translated = await runTranslation(
+        task.slug,
+        task.locale,
+        model,
+        quizConcurrency,
+        activeChildren,
+      );
+      const stats = latestSummary(task.slug, model, task.locale);
+      appendJsonl(progressPath, "baseline_attempt_finished", {
+        ...task,
+        model,
+        ok: translated,
+        stats,
+      });
+
+      if (translated) {
+        const outcome: Outcome = { ...task, status: "translated", model, stats };
+        outcomes.push(outcome);
+        addStats(totals, stats);
+        printArticleStats(outcome);
+        writeSummary("running");
+        return outcome;
+      }
+    }
+
+    const outcome: Outcome = { ...task, status: interrupted ? "skipped" : "failed" };
+    outcomes.push(outcome);
+    appendJsonl(progressPath, "baseline_failed", outcome as unknown as Record<string, unknown>);
+    writeSummary("running");
+    return outcome;
+  });
+
+  finished = !interrupted;
+  const finalStatus = finished ? "finished" : "interrupted";
+  writeSummary(finalStatus);
+  appendJsonl(progressPath, `baseline_${finalStatus}`, { totals, summaryPath: relativeToRepo(summaryPath) });
+  printTotals(finalStatus);
+
+  if (interrupted) {
+    process.exitCode = 130;
+  }
 }
 
 main().catch((err) => {

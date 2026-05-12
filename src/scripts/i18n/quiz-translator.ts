@@ -16,6 +16,7 @@ import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
 import { slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
+import { cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
 
 const TranslationSchema = z.object({
   title: z.string().describe("Translated question title"),
@@ -48,12 +49,7 @@ export interface LlmConfig {
   };
   temperature: number;
   maxTokens: number;
-}
-
-interface TranslationTelemetry {
-  inputTokens: number;
-  outputTokens: number;
-  durationMs: number;
+  timeoutMs: number;
 }
 
 function buildQuizSystemPrompt(locale: ActiveLocale, isQuiz: boolean): string {
@@ -105,10 +101,10 @@ function buildQuizUserPrompt(
     explanationCode: explanationCode.map((c) => ({ language: c.language, code: "[PRESERVED — do not translate]" })),
   };
 
+  const contextLines = quizDescription ? [`QUIZ CONTEXT:`, quizDescription, ``] : [];
+
   return [
-    `QUIZ CONTEXT:`,
-    quizDescription,
-    ``,
+    ...contextLines,
     `Translate this Challenge (index ${challenge.index}) into ${LOCALE_LABELS[locale]}.`,
     ``,
     `INPUT JSON:`,
@@ -146,10 +142,25 @@ export async function translateChallenge(
 
   const result = await generateText({
     model,
-    system: buildQuizSystemPrompt(locale, isQuiz),
-    prompt: buildQuizUserPrompt(challenge, locale, quizDescription),
+    messages: [
+      {
+        role: "system",
+        content: buildQuizSystemPrompt(locale, isQuiz),
+      },
+      {
+        role: "user",
+        content: [
+          cachedText(`QUIZ CONTEXT:\n${quizDescription}`),
+          {
+            type: "text",
+            text: buildQuizUserPrompt(challenge, locale, ""),
+          },
+        ],
+      },
+    ],
     temperature: llmConfig.temperature,
     maxOutputTokens: llmConfig.maxTokens,
+    timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
 
@@ -184,11 +195,7 @@ export async function translateChallenge(
     challenge: merged,
     translation: translated,
     rawText: result.text,
-    telemetry: {
-      inputTokens: result.usage?.inputTokens ?? 0,
-      outputTokens: result.usage?.outputTokens ?? 0,
-      durationMs,
-    },
+    telemetry: usageFromResult(result.usage, durationMs),
   };
 }
 
@@ -238,21 +245,38 @@ export async function generateQuizDescription(
 
   const result = await generateText({
     model,
-    system: `You are a technical editor. Summarize quiz content concisely. You must respond with valid JSON only. Do not wrap in markdown code fences.`,
-    prompt: [
-      `Summarize this technical quiz in 2-3 sentences.`,
-      `Focus on: what skills it tests, the difficulty level, and the teaching tone.`,
-      `Also list the key topics and target audience.`,
-      ``,
-      `Respond with a JSON object having these fields: description, topics (array of strings), audience.`,
-      ``,
-      `Quiz excerpt:`,
-      `---`,
-      context,
-      `---`,
-    ].join("\n"),
+    messages: [
+      {
+        role: "system",
+        content: `You are a technical editor. Summarize quiz content concisely. You must respond with valid JSON only. Do not wrap in markdown code fences.`,
+      },
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: [
+              `Summarize this technical quiz in 2-3 sentences.`,
+              `Focus on: what skills it tests, the difficulty level, and the teaching tone.`,
+              `Also list the key topics and target audience.`,
+              ``,
+              `Respond with a JSON object having these fields: description, topics (array of strings), audience.`,
+              ``,
+              `Quiz excerpt:`,
+              `---`,
+            ].join("\n"),
+          },
+          cachedText(context),
+          {
+            type: "text",
+            text: `---`,
+          },
+        ],
+      },
+    ],
     temperature: 0.3,
     maxOutputTokens: 500,
+    timeout: { totalMs: llmConfig.timeoutMs },
     providerOptions: llmConfig.providerOptions,
   });
   const durationMs = Math.round(performance.now() - start);
@@ -288,10 +312,6 @@ export async function generateQuizDescription(
   return {
     description,
     rawText: result.text,
-    telemetry: {
-      inputTokens: result.usage?.inputTokens ?? 0,
-      outputTokens: result.usage?.outputTokens ?? 0,
-      durationMs,
-    },
+    telemetry: usageFromResult(result.usage, durationMs),
   };
 }
