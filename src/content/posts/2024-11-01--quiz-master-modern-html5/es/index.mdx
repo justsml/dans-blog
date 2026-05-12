@@ -74,7 +74,6 @@ El [elemento `<dd>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/d
 
 Esto resulta muy útil al mostrar datos en formato clave-valor. La información de perfil, la Configuración y las Estadísticas son ejemplos comunes.
 ```html
-```html
 <dl>
   <dt>JS</dt>
   <dd>Client-side</dd>
@@ -84,7 +83,6 @@ Esto resulta muy útil al mostrar datos en formato clave-valor. La información 
   <dd>Client-side</dd>
 </dl>
 
-```
 ```
   </div>
   </slot>
@@ -109,12 +107,10 @@ La etiqueta [`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Eleme
 
 Esto es útil para imágenes, diagramas, fragmentos de código y más.
 ```html
-```html
 <figure>
   <img src="image.jpg" alt="Description of image">
   <figcaption>Image caption</figcaption>
 </figure>
-```
 ```
   </div>
   </slot>
@@ -141,7 +137,6 @@ Es ideal para entradas de blog, artículos de noticias, publicaciones en foros o
 
 Puedes colocar varios artículos en una misma página (piensa en el scroll infinito, por ejemplo). O incluso anidarlos entre sí para crear una jerarquía de "contenido independiente".
 ```html
-```html
 <article>
   <h2>Article Title</h2>
   <p>Article content...</p>
@@ -150,7 +145,6 @@ Puedes colocar varios artículos en una misma página (piensa en el scroll infin
     <p>Comment content...</p>
   </article>
 </article>
-```
 ```
   </div>
   </slot>
@@ -175,7 +169,6 @@ Puedes colocar varios artículos en una misma página (piensa en el scroll infin
 
 Esto resulta ideal para organizar secciones lógicas, como los datos de envío o la información de pago, sin tener que recurrir a `div`s genéricos.
 ```html
-```html
 <fieldset>
   <legend>Shipping Address</legend>
   <label for="name">Name:</label>
@@ -188,7 +181,6 @@ Esto resulta ideal para organizar secciones lógicas, como los datos de envío o
   <input type="text" id="card" name="card">
   ...
 </fieldset>
-```
 ```
   </div>
   </slot>
@@ -213,10 +205,8 @@ El elemento [`<meter>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Elemen
 
 Puede parecer similar a una barra de [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), sin embargo, las barras de progreso **SIEMPRE** comienzan en cero. Por lo tanto, los elementos `<progress>` muestran un `porcentaje de finalización`, mientras que un `<meter>` muestra cualquier valor dentro de un rango definible.
 ```html
-```html
 <meter min="-60" max="130" value="75" /> 75°F
 <meter min="0" max="100" value="75" /> 75%
-```
 ```
   </div>
   </slot>
@@ -241,12 +231,10 @@ El [elemento `<source>` se utiliza para especificar los formatos multimedia disp
 
 Se emplea específicamente con los elementos [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) y [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture), lo que permite que el navegador seleccione el formato más adecuado.
 ```html
-```html
 <video controls>
   <source src="movie.mp4" type="video/mp4">
   <source src="movie.ogg" type="video/ogg">
 </video>
-```
 ```
   </div>
   </slot>
@@ -271,7 +259,6 @@ El elemento [`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Eleme
 
 Resulta útil cuando un encabezado incluye un subtítulo, un lema o un título alternativo que no debe figurar como otro encabezado en el esquema del documento.
 ```html
-```html
 <article>
   <hgroup>
     <h1>Frankenstein</h1>
@@ -282,7 +269,6 @@ Resulta útil cuando un encabezado incluye un subtítulo, un lema o un título a
     <p>...</p>
   </section>
 </article>
-```
 ```
   </div>
   </slot>
@@ -307,12 +293,10 @@ El elemento [`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 
 Si tu lista contiene enlaces de navegación, usa `<nav>` con un `<ul>`. Reserva `<menu>` para controles tipo barra de herramientas o listas de comandos.
 ```html
-```html
 <menu>
   <li><button type="button">Copy</button></li>
   <li><button type="button">Paste</button></li>
 </menu>
-```
 ```
   </div>
   </slot>
@@ -337,12 +321,10 @@ Si tu lista contiene enlaces de navegación, usa `<nav>` con un `<ul>`. Reserva 
 
 Esto es útil para preguntas frecuentes, secciones colapsables o cualquier contenido que pueda mostrarse u ocultarse.
 ```html
-```html
 <details>
   <summary>Click to expand 🤯</summary>
   <p>Hidden content! 💥</p>
 </details>
-```
 ```
   </div>
   </slot>
@@ -367,13 +349,11 @@ El elemento [`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Eleme
 
 Utiliza JavaScript para abrirlo con `.showModal()` en diálogos modales o `.show()` en diálogos no modales, y ciérralo con `.close()` o mediante el envío de un formulario configurado con `method="dialog"`.
 ```html
-```html
 <dialog>
   <h2>Modal Title</h2>
   <p>Modal content...</p>
   <button>Close</button>
 </dialog>
-```
 ```
   </div>
   </slot>
@@ -418,7 +398,6 @@ Los atributos ARIA (Accessible Rich Internet Applications) mejoran la accesibili
 
 Existen roles, estados y propiedades que puedes usar para describir elementos.
 ```html
-```html
 <button aria-label="Close" aria-expanded="true">X</button>
 <main aria-live="polite">...</main>
 <dialog
@@ -427,7 +406,6 @@ Existen roles, estados y propiedades que puedes usar para describir elementos.
   aria-labelledby="dialog_label"
   aria-describedby="dialog_desc"
 ></dialog>
-```
 ```
   </div>
   </slot>

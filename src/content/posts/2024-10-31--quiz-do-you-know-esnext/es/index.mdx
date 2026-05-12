@@ -46,9 +46,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
 ¿Cuál es el valor de `result`?
 ```js
-    ```js
     console.log(null ?? 100);
-    ```
 ```
   </div>
   </slot>
@@ -76,11 +74,9 @@ El operador de coalescencia nula (`??`) devuelve el operando derecho (`b`) si el
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     const value = false;
     const defaultVal = 42;
     console.log(value ?? defaultVal);
-    ```
 ```
   </div>
   </slot>
@@ -107,11 +103,9 @@ El operador de coalescencia nula (`??`) considera valores *falsey* como `false` 
   <div className="question">
 ¿Cuál es la salida del siguiente código?
 ```js
-    ```js
     const obj = { foo: null };
     const result = obj.foo?.bar;
     console.log(result);
-    ```
 ```
   </div>
   </slot>
@@ -138,11 +132,9 @@ El operador de encadenamiento opcional (`?.`) detiene la evaluación si el lado 
   <div className="question">
 ¿Cuál es el resultado del siguiente código?
 ```js
-    ```js
     const a = 42n;
     const result = a * 2n;
     console.log(result);
-    ```
 ```
   </div>
   </slot>
@@ -170,10 +162,8 @@ Los valores BigInt se crean añadiendo `n` a un número. No puedes mezclar BigIn
   <div className="question">
 ¿Qué imprime esto en consola?
 ```js
-    ```js
     const modulePromise = import('./myModule.js');
     console.log(typeof modulePromise);
-    ```
 ```
   </div>
   </slot>
@@ -200,7 +190,6 @@ La función `import()` devuelve una `Promise` que se resuelve con el objeto del 
   <div className="question">
 ¿Qué imprime el siguiente código?
 ```js
-    ```js
     const promises = [
       Promise.resolve('success'),
       Promise.reject('error')
@@ -208,7 +197,6 @@ La función `import()` devuelve una `Promise` que se resuelve con el objeto del 
     Promise.allSettled(promises).then(results => {
       console.log(results[0].status + ': ' + results[0].value);
     });
-    ```
 ```
   </div>
   </slot>
@@ -235,10 +223,8 @@ La función `import()` devuelve una `Promise` que se resuelve con el objeto del 
   <div className="question">
 ¿Qué devuelve `str.matchAll()`?
 ```js
-    ```js
     const str = 'foo1bar2baz3';
     const matches = str.matchAll(/\d/g);
-    ```
 ```
   </div>
   </slot>
@@ -265,9 +251,7 @@ La función `import()` devuelve una `Promise` que se resuelve con el objeto del 
   <div className="question">
 ¿Qué representa `import.meta.url`?
 ```js
-    ```js
     console.log(import.meta.url);
-    ```
 ```
   </div>
   </slot>
@@ -294,11 +278,9 @@ La función `import()` devuelve una `Promise` que se resuelve con el objeto del 
   <div className="question">
 ¿Cuál es el valor de `a` después de la asignación lógica?
 ```js
-    ```js
     let a = null;
     a ||= 10;
     console.log(a);
-    ```
 ```
   </div>
   </slot>
@@ -325,11 +307,9 @@ La asignación OR lógica (`||=`) asigna el valor de la derecha si el valor de l
   <div className="question">
 ¿Cuál es el valor de `b` después de la asignación lógica nula?
 ```js
-    ```js
     let b = null;
     b ??= 10;
     console.log(b);
-    ```
 ```
   </div>
   </slot>
@@ -356,11 +336,9 @@ La asignación de fusión nula (`??=`) asigna el valor del lado derecho únicame
   <div className="question">
 ¿Qué proporciona `WeakRef`?
 ```js
-    ```js
     const obj = { data: 'important' };
     const ref = new WeakRef(obj);
     console.log(ref.deref());
-    ```
 ```
   </div>
   </slot>

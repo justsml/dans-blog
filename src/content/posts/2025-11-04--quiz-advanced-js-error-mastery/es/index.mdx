@@ -49,10 +49,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
 ¿Qué devuelve `JSON.stringify(error)`?
 ```js
-    ```js
     const error = new Error('Oops');
     console.log(JSON.stringify(error));
-    ```
 ```
   </div>
   </slot>
@@ -79,11 +77,9 @@ Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack
   <div className="question">
 ¿Cuál es la diferencia real entre estos dos?
 ```js
-    ```js
     const err = new Error('Test');
     console.log(err);
     console.log(JSON.stringify(err));
-    ```
 ```
   </div>
   </slot>
@@ -110,14 +106,12 @@ Los objetos `Error` tienen propiedades no enumerables (`message`, `name`, `stack
   <div className="question">
 ¿Qué devuelven estas comprobaciones?
 ```js
-    ```js
     class CustomError extends Error {}
     const err = new CustomError('test');
     
     console.log(err instanceof CustomError);
     console.log(err instanceof Error);
     console.log(err instanceof Object);
-    ```
 ```
   </div>
   </slot>
@@ -144,12 +138,10 @@ Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende
   <div className="question">
 ¿Qué ocurre con `instanceof Error` al cruzar iframes?
 ```js
-    ```js
     // In iframe:
     const iframeError = new Error('test');
     // In parent window:
     console.log(iframeError instanceof Error);
-    ```
 ```
   </div>
   </slot>
@@ -176,14 +168,12 @@ Las tres devuelven `true`. `CustomError` extiende `Error`, que a su vez extiende
   <div className="question">
 ¿Qué ocurre exactamente cuando lanzas un string?
 ```js
-    ```js
     try {
       throw "Oops!";
     } catch (e) {
       console.log(e instanceof Error);
       console.log(typeof e);
     }
-    ```
 ```
   </div>
   </slot>
@@ -210,7 +200,6 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
   <div className="question">
 ¿Cuál es el valor de `err.name`?
 ```js
-    ```js
     class CustomError extends Error {
       constructor(message) {
         super(message);
@@ -219,7 +208,6 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
     }
     const err = new CustomError('test');
     console.log(err.name);
-    ```
 ```
   </div>
   </slot>
@@ -246,13 +234,11 @@ JavaScript te permite lanzar cualquier valor. Aquí, `e instanceof Error` es `fa
   <div className="question">
 ¿Cuál es la salida si te olvidas de establecer `name`?
 ```js
-    ```js
     class MyError extends Error {
       // No constructor or name setting
     }
     const err = new MyError('test');
     console.log(err.name);
-    ```
 ```
   </div>
   </slot>
@@ -279,13 +265,11 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
   <div className="question">
 ¿Qué devuelve `wrapper.cause.message`?
 ```js
-    ```js
     const original = new Error('Original error');
     const wrapper = new Error('Wrapper', 
       { cause: original }
     );
     console.log(wrapper.cause.message);
-    ```
 ```
   </div>
   </slot>
@@ -312,14 +296,12 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
   <div className="question">
 ¿Qué hace `Error.captureStackTrace`?
 ```js
-    ```js
     function createError(msg) {
       const err = new Error(msg);
       Error.captureStackTrace(err, createError);
       return err;
     }
     const error = createError('test');
-    ```
 ```
   </div>
   </slot>
@@ -346,7 +328,6 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
   <div className="question">
 ¿Cuál es el mensaje de error?
 ```js
-    ```js
     function validate(value) {
       if (!value) {
         throw new Error(
@@ -359,7 +340,6 @@ Si no configuras explícitamente `this.name`, el error hereda la propiedad `name
     } catch (e) {
       console.log(e.message);
     }
-    ```
 ```
   </div>
   </slot>
@@ -386,13 +366,11 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
   <div className="question">
 ¿Qué se envía realmente al cliente?
 ```js
-    ```js
     // Express.js route
     app.get('/api/data', (req, res) => {
       const error = new Error('Database failed');
       res.json({ error });
     });
-    ```
 ```
   </div>
   </slot>
@@ -419,7 +397,6 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
   <div className="question">
 ¿Qué puede aceptar `Promise.reject()`?
 ```js
-    ```js
     Promise.reject('string').catch(e => 
       console.log(typeof e)
     );
@@ -429,7 +406,6 @@ Los literales de plantilla convierten `undefined` en la cadena `"undefined"` dur
     Promise.reject(42).catch(e => 
       console.log(e)
     );
-    ```
 ```
   </div>
   </slot>
@@ -456,7 +432,6 @@ Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: c
   <div className="question">
 ¿Qué tan fiables son realmente `error.code` y `error.errno`?
 ```js
-    ```js
     const fs = require('fs');
     fs.readFile('missing.txt', (err, data) => {
       if (err) {
@@ -464,7 +439,6 @@ Al igual que `throw`, `Promise.reject()` acepta cualquier valor que le lances: c
         console.log(err.errno);   // -2
       }
     });
-    ```
 ```
   </div>
   </slot>
@@ -491,7 +465,6 @@ Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este
   <div className="question">
 ¿Qué devuelven estas comprobaciones?
 ```js
-    ```js
     const fakeError = {
       name: 'Error',
       message: 'Fake error',
@@ -502,7 +475,6 @@ Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este
     console.log(Object.prototype.toString.call(
       fakeError
     ) === '[object Error]');
-    ```
 ```
   </div>
   </slot>

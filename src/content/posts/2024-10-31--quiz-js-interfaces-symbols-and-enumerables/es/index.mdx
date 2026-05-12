@@ -46,14 +46,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
 ¿Cómo accedes a una propiedad de un objeto en JavaScript que usa un getter?
 ```js
-    ```js
     const obj = {
       get val() {
         return 'got it!';
       }
     };
     console.log(obj.val);
-    ```
 ```
   </div>
   </slot>
@@ -80,13 +78,11 @@ En JavaScript, un getter se comporta como una propiedad estándar, no como una f
   <div className="question">
 ¿Cuál es la forma correcta de crear una clave de propiedad verdaderamente única para un objeto en JavaScript?
 ```js
-    ```js
     const uniqueKey = Symbol('myUniqueKey');
     const obj = {
       [uniqueKey]: 'unique value'
     };
     console.log(obj[uniqueKey]);
-    ```
 ```
   </div>
   </slot>
@@ -113,7 +109,6 @@ Los `Symbol` son un tipo primitivo único e inmutable diseñado específicamente
   <div className="question">
 ¿Se listará la propiedad `age` durante una iteración `for...in`?
 ```js
-    ```js
     const person = {};
     Object.defineProperty(person, 'age', {
       value: 25,
@@ -122,7 +117,6 @@ Los `Symbol` son un tipo primitivo único e inmutable diseñado específicamente
     for (let key in person) {
       console.log(key);
     }
-    ```
 ```
   </div>
   </slot>
@@ -149,13 +143,11 @@ La propiedad `enumerable` en `Object.defineProperty()` controla si la propiedad 
   <div className="question">
 ¿Cuál es la enumerabilidad predeterminada de una propiedad al usar `Object.defineProperty()` sin especificar `enumerable`?
 ```js
-    ```js
     const car = {};
     Object.defineProperty(car, 'make', {
       value: 'Toyota'
     });
     console.log(Object.keys(car));
-    ```
 ```
   </div>
   </slot>
@@ -182,11 +174,9 @@ Al usar `Object.defineProperty()` sin definir explícitamente `enumerable`, Java
   <div className="question">
 ¿Cuál será el resultado de la siguiente comparación?
 ```js
-    ```js
     const sym1 = Symbol('id');
     const sym2 = Symbol('id');
     console.log(sym1 === sym2);
-    ```
 ```
   </div>
   </slot>
@@ -213,7 +203,6 @@ Cada llamada a `Symbol()` crea un valor único e inmutable, incluso si la descri
   <div className="question">
 ¿Se listará la propiedad con clave Symbol durante una iteración `for...in`?
 ```js
-    ```js
     const sym = Symbol('uniqueKey');
     const obj = {
       [sym]: 'symbol value',
@@ -222,7 +211,6 @@ Cada llamada a `Symbol()` crea un valor único e inmutable, incluso si la descri
     for (let key in obj) {
       console.log(key);
     }
-    ```
 ```
   </div>
   </slot>
@@ -255,7 +243,6 @@ Las propiedades con clave Symbol pueden tener su propia bandera `enumerable`, pe
   <div className="explanation">
 El método `Object.getOwnPropertySymbols()` es el encargado de extraer las claves de propiedad Symbol propias de un objeto.
 ```js
-    ```js
     const sym1 = Symbol('id');
     const sym2 = Symbol('name');
     const obj = {
@@ -264,7 +251,6 @@ El método `Object.getOwnPropertySymbols()` es el encargado de extraer las clave
     };
     console.log(Object.getOwnPropertySymbols(obj));
     // [Symbol(id), Symbol(name)]
-    ```
 ```
   </div>
   </slot>

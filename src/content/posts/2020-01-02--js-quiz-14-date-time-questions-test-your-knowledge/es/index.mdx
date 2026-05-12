@@ -68,10 +68,8 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
   <div className="question">
 ¿Qué contendrá la salida?
 ```js
-    ```js
     const d1 = new Date(2020, 1, 1)
     console.log(d1)
-    ```
 ```
   </div>
   </slot>
@@ -99,10 +97,8 @@ El argumento del mes tiene base cero, con un rango de 0 a 11 (en calendarios occ
   <div className="question">
 ¿Qué contendrá la salida?
 ```js
-    ```js
     const d2 = new Date(2020, 0, 1)
     console.log(d2)
-    ```
 ```
   </div>
   </slot>
@@ -133,10 +129,8 @@ El argumento del mes tiene base cero, con un rango de 0 a 11 (en calendarios occ
   <div className="question">
 ¿Qué contendrá la salida?
 ```js
-    ```js
     const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
     console.log(d3)
-    ```
 ```
   </div>
   </slot>
@@ -169,10 +163,8 @@ Esta es una **trampa común** que es **muy fácil pasar por alto**, incluso en u
   <div className="question">
 ¿Qué incluirá la salida?
 ```js
-      ```js
       const date = new Date(2020)
       console.log(date.getFullYear())
-      ```
 ```
   </div>
   </slot>
@@ -205,11 +197,9 @@ Puedes evitar el desfase de la zona horaria local usando [`.getUTCFullYear()`](h
   <div className="question">
 ¿Qué valor se imprimirá en la consola?
 ```js
-      ```js
       const d1 = new Date('2020-01-01')
       const d2 = new Date('2020-01-01T00:00')
       console.log(d1.getFullYear(), d2.getFullYear())
-      ```
 ```
   </div>
   </slot>
@@ -269,10 +259,8 @@ Consulta la documentación de [`toLocaleDateString`](https://developer.mozilla.o
   <div className="question">
 ¿Qué contendrá la salida?
 ```js
-      ```js
       var date = Date.UTC('2020-01-02T00:00')
       console.log(date.toUTCString())
-      ```
 ```
   </div>
   </slot>
@@ -304,10 +292,8 @@ Obtendrás `TypeError: date.toUTCString is not a function`, ya que [`Date.UTC()`
   <div className="question">
 ¿Qué incluirá la salida?
 ```js
-      ```js
       const d = Date.UTC(2020, 0, 1)
       console.log(d)
-      ```
 ```
   </div>
   </slot>
@@ -335,11 +321,9 @@ El método auxiliar [`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/Ja
   <div className="question">
 ¿Qué mostrará la salida?
 ```js
-      ```js
       // Assume local TZ is -07:00
       const d = new Date(Date.UTC(2020, 0, 1))
       console.log(d.getTimezoneOffset())
-      ```
 ```
   </div>
   </slot>
@@ -367,11 +351,9 @@ Las instancias de `Date` no almacenan datos de zona horaria. Únicamente guardan
   <div className="question">
 ¿Qué incluirá la salida?
 ```js
-      ```js
       const d = new Date(2020, 0, 1)
       d.setDate(1)
       console.log(d)
-      ```
 ```
   </div>
   </slot>
@@ -401,11 +383,9 @@ El método [`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
   <div className="question">
 ¿Qué se imprimirá en la salida?
 ```js
-      ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(1)
       console.log(d)
-      ```
 ```
   </div>
   </slot>
@@ -434,11 +414,9 @@ Ten en cuenta que el mes tiene índice cero, por lo que el rango válido va de 0
   <div className="question">
 ¿Qué contendrá la salida?
 ```js
-      ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(12)
       console.log(d)
-      ```
 ```
   </div>
   </slot>
@@ -470,11 +448,9 @@ Aquí el año se ajusta automáticamente a 2021, ya que `setMonth(12)` supera en
   <div className="question">
 ¿Qué incluirá la salida?
 ```js
-      ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(13)
       console.log(d)
-      ```
 ```
   </div>
   </slot>
@@ -511,11 +487,9 @@ El método [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScri
   <div className="question">
 ¿Qué mostrará la salida?
 ```js
-      ```js
       const d = new Date(2020, 0, 1)
       d.setMonth(-1)
       console.log(d)
-      ```
 ```
   </div>
   </slot>

@@ -48,14 +48,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
 ¿Cuál es la forma correcta de usar una variable CSS llamada `--main-color` para establecer el color de fondo de un elemento?
 ```css
-    ```css
     :root {
       --main-color: blue;
     }
     div {
       /* How do we use --main-color here? */
     }
-    ```
 ```
   </div>
   </slot>
@@ -86,11 +84,9 @@ Las otras opciones pueden resultarte familiares por otros lenguajes o sintaxis d
   <div className="question">
 Si el contenedor padre mide 400px de ancho, ¿cuál será el ancho calculado real de este elemento?
 ```css
-    ```css
     div {
       width: min(250px, 50%);
     }
-    ```
 ```
   </div>
   </slot>
@@ -103,11 +99,9 @@ Para entender el valor calculado, hay que convertir las unidades relativas a pí
 - El `50%` de `400px` equivale a `200px`
 - `250px` ya está en píxeles
 ```css
-```css
 /* This gets computed to */
 width: min(250px, 200px);
 /* -> 200px wins */
-```
 ```
 La función `min()` es especialmente útil para el diseño responsivo, ya que te permite garantizar que un componente (o el tamaño de la fuente) nunca supere un límite establecido.
   </div>
@@ -132,11 +126,9 @@ La función `min()` es especialmente útil para el diseño responsivo, ya que te
   <div className="question">
 Dado un contenedor con un ancho de 200px, ¿cuál sería el ancho calculado del `<div>`?
 ```css
-    ```css
     div {
       width: max(50px, 10%, 6rem);
     }
-    ```
 ```
   </div>
   </slot>
@@ -150,11 +142,9 @@ Para entender el valor calculado, debemos convertir las unidades relativas a pí
 - `10%` de `200px` equivale a `20px`
 - `6rem` es `6 * 16px` (el tamaño de fuente predeterminado), lo que da `96px`
 ```css
-```css
 /* This gets computed to */
 width: max(50px, 20px, 96px);
 /* -> 96px wins */
-```
 ```
   </div>
   </slot>
@@ -176,9 +166,7 @@ width: max(50px, 20px, 96px);
   <div className="question">
 ¿Qué efecto tiene usar `minmax(100px, 200px)` en una pista de CSS Grid?
 ```css
-    ```css
     grid-template-columns: minmax(100px, 200px);
-    ```
 ```
   </div>
   </slot>
@@ -206,11 +194,9 @@ Usar `minmax(100px, 200px)` permite que la pista de la cuadrícula se redimensio
   <div className="question">
 ¿De qué color terminará el fondo con este CSS?
 ```css
-    ```css
     div {
       background: var(--primary, olivedrab);
     }
-    ```
 ```
   </div>
   </slot>
@@ -240,11 +226,9 @@ La función `var()` te permite inyectar un valor de respaldo por si la variable 
   <div className="question">
 ¿Qué hace `clamp()`?
 ```css
-    ```css
     .card {
       width: clamp(200px, 50vw, 500px);
     }
-    ```
 ```
   </div>
   </slot>
@@ -295,7 +279,6 @@ La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo
   <div className="question">
 ¿Es este un uso correcto del anidamiento nativo en CSS?
 ```css
-    ```css
     .container {
       color: black;
       .title {
@@ -303,7 +286,6 @@ La función `clamp()` permite que el ancho escale en función de `50vw`, pero lo
         background: black;
       }
     }
-    ```
 ```
   </div>
   </slot>
@@ -332,7 +314,6 @@ Es una excelente forma de mantener los estilos relacionados agrupados y evitar s
   <div className="question">
 ¿Qué color de fondo se aplicará a los `div` hijos directos de `.container`?
 ```css
-    ```css
     .container {
       background-color: red;
       > div {
@@ -340,7 +321,6 @@ Es una excelente forma de mantener los estilos relacionados agrupados y evitar s
       }
       background-color: blue !important;
     }
-    ```
 ```
   </div>
   </slot>
@@ -373,9 +353,7 @@ El selector `>` en la regla anidada aplica `background-color: white` únicamente
   <div className="explanation">
 Las variables CSS se pueden establecer mediante clases y JavaScript. Incluso pueden definirse 'después' de haberse utilizado técnicamente.
 ```js
-```js
 document.documentElement.style.setProperty('--main-color', 'blue');
-```
 ```
 Esto cambiará el valor de `--main-color` a `blue` para todo el documento.
 
@@ -402,14 +380,12 @@ También puedes modificarlas agregando o quitando clases, un patrón estándar p
   <div className="question">
 ¿Cuál es el ancho calculado final del elemento?
 ```css
-    ```css
     :root {
       --base-width: 100px;
     }
     div {
       width: calc(var(--base-width) + 10px);
     }
-    ```
 ```
   </div>
   </slot>

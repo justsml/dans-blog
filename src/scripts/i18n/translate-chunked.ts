@@ -304,6 +304,8 @@ function normalizeCandidateForLocale(source: string, translatedBody: string): st
     .replace(/from '\.\.\/..\/..\//g, "from '../../../../")
     .replace(/from "\.\.\/..\/..\//g, 'from "../../../../');
 
+  result = normalizeNestedCodeFences(result);
+
   // Ensure all source import lines are present (insert at top of body)
   const sourceImports = (source.match(/^import\s+.*?\s+from\s+['"].*?['"];?\s*$/gm) || [])
     .map((imp) => imp
@@ -320,6 +322,39 @@ function normalizeCandidateForLocale(source: string, translatedBody: string): st
   }
 
   return result;
+}
+
+function normalizeNestedCodeFences(source: string) {
+  let lines = source.split("\n");
+  let changed = true;
+
+  while (changed) {
+    changed = false;
+    for (let index = 0; index < lines.length - 3; index++) {
+      if (!isFenceLine(lines[index]) || !isFenceLine(lines[index + 1])) continue;
+
+      for (let closing = index + 2; closing < lines.length - 1; closing++) {
+        if (!isClosingFenceLine(lines[closing]) || !isClosingFenceLine(lines[closing + 1])) {
+          continue;
+        }
+
+        lines.splice(closing, 1);
+        lines.splice(index + 1, 1);
+        changed = true;
+        break;
+      }
+    }
+  }
+
+  return lines.join("\n");
+}
+
+function isFenceLine(line: string | undefined) {
+  return /^\s*```[\w-]*\s*$/.test(line ?? "");
+}
+
+function isClosingFenceLine(line: string | undefined) {
+  return /^\s*```\s*$/.test(line ?? "");
 }
 
 async function translateChunk(

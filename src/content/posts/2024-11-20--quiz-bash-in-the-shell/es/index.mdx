@@ -54,9 +54,7 @@ Afina (o demuestra) tus **habilidades** de scripting en shell.
   <div className="explanation">
 En Bash, las variables se declaran sin espacios alrededor del signo `=`. Por ejemplo:
 ```bash
-    ```bash
     name=Alice
-    ```
 ```
 Esto asigna el valor `"Alice"` a la variable `name`.
 
@@ -95,9 +93,7 @@ Lo sé. Es una locura lo rápido que el escape de caracteres complica el anális
 
     Las comillas simples deben escaparse dentro de cadenas entre comillas simples. La secuencia de cerrar comilla, comilla escapada y abrir comilla (`'\''`) permite generar:
 ```plaintext
-    ```plaintext
     It's 🔨 Time!
-    ```
 ```
 Existen otras formas de manejar esto, pero esta es la más común.
   </div>
@@ -122,9 +118,7 @@ Existen otras formas de manejar esto, pero esta es la más común.
   <div className="question">
 ¿Qué imprimirá este comando?
 ```bash
-    ```bash
     echo c{a,b}t
-    ```
 ```
   </div>
   </slot>
@@ -134,9 +128,7 @@ La expansión de llaves `{}` genera múltiples variantes de la cadena que la con
 
     En este caso, `c{a,b}t` se expande a:
 ```plaintext
-    ```plaintext
     cat cbt
-    ```
 ```
   </div>
   </slot>
@@ -160,10 +152,8 @@ La expansión de llaves `{}` genera múltiples variantes de la cadena que la con
   <div className="question">
 Ahora, ¿qué imprimirá esto?
 ```bash
-    ```bash
     price="$100"
     echo "Cost: $price"
-    ```
 ```
   </div>
   </slot>
@@ -175,10 +165,8 @@ Las variables numeradas tienen un significado especial. En este caso, `$1` es un
 
     Para imprimir un carácter `$` literal, usa comillas simples o escápalo con una barra invertida (`\`):
 ```bash
-    ```bash
     price="\$100"
     echo "Cost: $price"
-    ```
 ```
   </div>
   </slot>
@@ -201,10 +189,8 @@ Las variables numeradas tienen un significado especial. En este caso, `$1` es un
   <div className="question">
 ¿Qué está pasando aquí?
 ```bash
-    ```bash
     str="Bark bark"
     echo ${str/bark/meow}
-    ```
 ```
   </div>
   </slot>
@@ -212,9 +198,7 @@ Las variables numeradas tienen un significado especial. En este caso, `$1` es un
   <div className="explanation">
 La sintaxis `${var/pattern/replacement}` sustituye la primera coincidencia de `pattern` por `replacement`. En este caso, la salida es:
 ```plaintext
-    ```plaintext
     Bark meow
-    ```
 ```
 La búsqueda distingue entre mayúsculas y minúsculas. Para capturar tanto `bark` como `Bark`, utiliza un patrón como `${var/[Bb]ark/Bark}` o normaliza la cadena antes de reemplazar.
 
@@ -251,10 +235,8 @@ La sintaxis `${#username}` devuelve la longitud de `username`.
 
 Por ejemplo:
 ```bash
-    ```bash
     username="@justsml"
     echo ${#username} # => 8
-    ```
 ```
 Aunque `wc` funcionaría, técnicamente no forma parte de Bash.
 
@@ -283,13 +265,11 @@ En realidad, `wc` es un comando antiguo de POSIX (y de la época de Unix de AT&T
   <div className="question">
 ¿Qué imprime este script si el archivo `cats.txt` EXISTE?
 ```bash
-    ```bash
     if [ -e cats.txt]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-    ```
 ```
   </div>
   </slot>
@@ -303,13 +283,11 @@ En realidad, `wc` es un comando antiguo de POSIX (y de la época de Unix de AT&T
 
     La sintaxis correcta es:
 ```bash
-    ```bash
     if [ -e example.txt ]; then
       echo "File exists"
     else
       echo "File does not exist"
     fi
-    ```
 ```
 Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicionales. [Consulta el BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
@@ -332,7 +310,6 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
   <div className="question">
 ¿Cómo podemos comparar cadenas en Bash?
 ```bash
-    ```bash
     cat1="Rosie"
     cat2="Sunflower"
     if [ "$cat1" === "$cat2" ]; then
@@ -340,7 +317,6 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
     else
       echo "Different cats"
     fi
-    ```
 ```
   </div>
   </slot>
@@ -375,12 +351,10 @@ Nota: Se **recomienda** usar dobles corchetes `[[ ]]` para expresiones condicion
   <div className="question">
 ¿Qué mostrará este script?
 ```bash
-    ```bash
    function greet () {
       echo "$1"
     }
     greet Hi Dan
-    ```
 ```
   </div>
   </slot>
@@ -410,10 +384,8 @@ Las funciones en Bash pueden aceptar argumentos. La variable `$1` contiene el pr
   <div className="explanation">
 El operador de tubería `|` conecta la salida de un comando con la entrada de otro. Por ejemplo:
 ```bash
-    ```bash
     echo "Mr. Levy 👨🏻‍🔬" | wc -m
     # => 14
-    ```
 ```
   </div>
   </slot>
@@ -443,19 +415,15 @@ La sintaxis `(( ))` realiza operaciones matemáticas con enteros en Bash.
 
     Se puede usar para cálculos simples:
 ```bash
-    ```bash
     ((result = 2 + 2))
     echo $result # => 4
-    ```
 ```
 O para expresiones condicionales:
 ```bash
-    ```bash
 
     if (( 2 > 1 )); then
       echo "2 is greater than 1"
     fi
-    ```
 ```
 Para aritmética de punto flotante, considera usar [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) o [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
@@ -509,10 +477,8 @@ La sintaxis `(( ))` SOLO realiza aritmética de **enteros**. Ya sabes, números 
   <div className="question">
 ¿Qué hace el `:` en este script?
 ```bash
-    ```bash
     rosie="Bad cat, good cat"
     echo ${rosie:9}
-    ```
 ```
   </div>
   </slot>
@@ -520,9 +486,7 @@ La sintaxis `(( ))` SOLO realiza aritmética de **enteros**. Ya sabes, números 
   <div className="explanation">
 La sintaxis `${var:offset}` extrae una subcadena comenzando desde `offset`. En este caso, la salida es:
 ```plaintext
-    ```plaintext
     good cat
-    ```
 ```
 Para extraer una subcadena de una longitud específica, usa `${var:offset:length}`.
 
@@ -580,10 +544,8 @@ Para extraer una subcadena de una longitud específica, usa `${var:offset:length
   <div className="explanation">
 La sintaxis `$(ls -l)` ejecuta el comando dentro de los **paréntesis** y reemplaza la llamada con su salida. Por ejemplo:
 ```bash
-    ```bash
     echo "Today is $(date +%F)"
     # => Today is 2029-12-31
-    ```
 ```
 La primera opción usa comillas simples `'`, **no backticks.** Esto bloquea la expansión, así que `'$(date +%F)'` solo imprimirá la cadena literal `$(date +%F)`.
 

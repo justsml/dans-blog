@@ -50,14 +50,12 @@ Arranca con el calentamiento y demuestra que dominas la sintaxis. 👇
   <div className="question">
 ¿Qué imprimirá este código?
 ```js
-    ```js
     const person = {
       name: 'Dan Levy',
       location: 'Cape Town',
     };
     const { name, age } = person;
     console.log(`Name: ${name}, Age: ${age}`);
-    ```
 ```
   </div>
   </slot>
@@ -67,9 +65,7 @@ La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. De
 
     Esto da como resultado:
 ```plaintext
-    ```plaintext
     Name: Dan Levy, Age: undefined
-    ```
 ```
   </div>
   </slot>
@@ -93,11 +89,9 @@ La propiedad `age` no existe en `person`, por lo que `age` será `undefined`. De
   <div className="question">
 ¿Qué hará este código?
 ```js
-    ```js
     const person = [ 'Dan Levy', 'Cape Town' ];
     const [ name, origin, age ] = person;
     console.log(`Name: ${name}, Age: ${age}`);
-    ```
 ```
   </div>
   </slot>
@@ -107,9 +101,7 @@ La variable `age` no está presente en el array `tuple`, por lo que su valor ser
 
     Esto da como resultado:
 ```plaintext
-    ```plaintext
     Name: Dan Levy, Age: undefined
-    ```
 ```
   </div>
   </slot>
@@ -132,7 +124,6 @@ La variable `age` no está presente en el array `tuple`, por lo que su valor ser
   <div className="question">
 ¿Qué tal un poco de desestructuración anidada?
 ```js
-    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -146,7 +137,6 @@ La variable `age` no está presente en el array `tuple`, por lo que su valor ser
     console.log(
       `First: ${first}, City: ${place}`,
     );
-    ```
 ```
   </div>
   </slot>
@@ -183,7 +173,6 @@ La propiedad `birth: { place }` no existe en `person`, así que saltará un erro
   <div className="question">
 Ahora, con algunos valores predeterminados, ¿qué hará esto?
 ```js
-    ```js
     'use strict';
     const person = {
       name: { first: 'Dan' },
@@ -196,7 +185,6 @@ Ahora, con algunos valores predeterminados, ¿qué hará esto?
     console.log(
       `Hi ${first} from ${place}`,
     );
-    ```
 ```
   </div>
   </slot>
@@ -206,13 +194,11 @@ La propiedad `birth` no existe en `person`, por lo que el objeto completo aún n
 
   Tal como está escrito, dice "si `person.birth` es `undefined`, entonces `place` es `Unknown`". Pero `person.birth` es `undefined`, así que intenta desestructurar `undefined`, lo que provoca un error.
 ```plaintext
-  ```plaintext
   In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
 
   In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
 
   Exact wording varies between browsers and runtimes.
-  ```
 ```
   </div>
   </slot>
@@ -236,7 +222,6 @@ La propiedad `birth` no existe en `person`, por lo que el objeto completo aún n
   <div className="question">
 ¿Qué hará esto?
 ```js
-    ```js
     const person = {
       name: { first: 'Dan' },
       address: { city: 'Denver' },
@@ -249,7 +234,6 @@ La propiedad `birth` no existe en `person`, por lo que el objeto completo aún n
     console.log(
       `Hi ${first} from ${place}`,
     );
-    ```
 ```
   </div>
   </slot>
@@ -278,7 +262,6 @@ La propiedad `birth` no existe en `person`, por lo que se recurre a un objeto va
   <div className="question">
 Ahora como parámetros de función, ¿qué hará esto?
 ```js
-    ```js
     'use strict';
     function displayUser({
       name = "Unknown",
@@ -287,7 +270,6 @@ Ahora como parámetros de función, ¿qué hará esto?
       console.log(`Hi ${name} from ${place}`);
     }
     displayUser({ name: "Dan" });
-    ```
 ```
   </div>
   </slot>
@@ -318,7 +300,6 @@ Esta función extrae las propiedades `name` y `age`, aplicando valores predeterm
   <div className="question">
 ¿Cómo se manejan los valores `undefined`?
 ```js
-    ```js
     'use strict';
     function displayPlace({
       name = "N/A",
@@ -330,7 +311,6 @@ Esta función extrae las propiedades `name` y `age`, aplicando valores predeterm
     displayPlace({ name: "Dan" });
     displayPlace({ name: "Dan", place: undefined });
     displayPlace({ name: "Dan", place: "Joburg" });
-    ```
 ```
   </div>
   </slot>
@@ -338,11 +318,9 @@ Esta función extrae las propiedades `name` y `age`, aplicando valores predeterm
   <div className="explanation">
 La función `displayPlace` SOLO usará un objeto por defecto si no se le pasa ninguno. Por lo tanto, la única forma de obtener el valor `{ place: "Unknown" }` es con cero argumentos: `displayPlace()`.
 ```js
-  ```js
   displayPlace() // Unknown
   displayPlace({ name: "Dan" }) // N/A
   displayPlace({ name: "Dan", place: undefined }) // N/A
-  ```
 ```
   </div>
   </slot>
@@ -369,7 +347,6 @@ La función `displayPlace` SOLO usará un objeto por defecto si no se le pasa ni
   <div className="question">
 Al igual que en el anterior... ¿cómo se maneja `null`?_
 ```js
-    ```js
     function displayPlace({
       name = "N/A",
       place = "N/A",
@@ -379,7 +356,6 @@ Al igual que en el anterior... ¿cómo se maneja `null`?_
     }
     displayPlace({ name: "Dan", place: null });
     displayPlace({ name: "Dan", place: undefined });
-    ```
 ```
   </div>
   </slot>
@@ -407,7 +383,6 @@ En este caso, la propiedad `place` se establece en `null` en la primera llamada 
   <div className="question">
 Ahora en TypeScript... _¿qué hará esto?_
 ```ts
-    ```ts
     'use strict';
     function displayPlace(
       {
@@ -422,7 +397,6 @@ Ahora en TypeScript... _¿qué hará esto?_
       console.log(`${place}`);
     }
     displayPlace({ name: 'Dan', place: null });
-    ```
 ```
   </div>
   </slot>
@@ -455,7 +429,6 @@ TypeScript lanza un error porque `place` está tipado como `string`, pero la lla
   <div className="question">
 Probemos un poco de renombrado y asignación...
 ```ts
-    ```ts
     'use strict';
     function displayPlace({
       name = 'N/A',
@@ -468,7 +441,6 @@ Probemos un poco de renombrado y asignación...
       console.log(`${location}`);
     }
     displayPlace({ name: 'Dan', place: 'Denver' });
-    ```
 ```
   </div>
   </slot>
@@ -496,7 +468,6 @@ Esto imprimirá `Denver` en la consola. La propiedad `place` se renombra a `loca
   <div className="question">
 Detecta el error de tipo:
 ```ts
-    ```ts
     function greet({
       name: {first = "N/A", last = "N/A"},
       birth: {place = "N/A"} = {},
@@ -509,7 +480,6 @@ Detecta el error de tipo:
       console.log(`Hi ${first} ${last} from ${place}`);
     }
     greet({ name: {first: 'Dan'} });
-    ```
 ```
   </div>
   </slot>
@@ -541,7 +511,6 @@ El error está en la firma de la función `greet`. Las propiedades `age` y `birt
   <div className="question">
 Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
 ```ts
-    ```ts
     'use strict';
     function greet(
       {
@@ -561,7 +530,6 @@ Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
       name: {first: 'Dan', last: 'Levy'},
       birth: {place: 'Cape Town'},
     });
-    ```
 ```
   </div>
   </slot>
@@ -573,11 +541,9 @@ Ahora con **asignación** (fíjate en las variables `f`, `l` y `p`)
 
   En cuanto `place` se reasigna a la variable `p`, deja de estar definida en el ámbito de la sentencia `console.log`.
 ```ts
-  ```ts
   console.log(`Hi ${f} ${l} from ${place}`); // ❌
   // to:
   console.log(`Hi ${f} ${l} from ${p}`); // ✅
-  ```
 ```
   </div>
   </slot>

@@ -49,14 +49,12 @@ Las preguntas empiezan siendo razonables y luego empiezan a quitar los tablones 
   <div className="question">
 ¿Qué imprime esto?
 ```javascript
-    ```javascript
     function makeCounter() {
       let count = 0;
       return () => ++count;
     }
     const tick = makeCounter();
     console.log(tick(), tick(), tick());
-    ```
 ```
   </div>
   </slot>
@@ -85,7 +83,6 @@ La palabra clave: *misma*. `count` no se copia dentro del closure. El closure ma
   <div className="question">
 ¿Qué imprime esto?
 ```javascript
-    ```javascript
     function makeCounter() {
       let count = 0;
       return () => ++count;
@@ -93,7 +90,6 @@ La palabra clave: *misma*. `count` no se copia dentro del closure. El closure ma
     const a = makeCounter();
     const b = makeCounter();
     console.log(a(), b());
-    ```
 ```
   </div>
   </slot>
@@ -124,11 +120,9 @@ Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su p
   <div className="question">
 ¿Qué se registra en la consola después de 100 ms?
 ```javascript
-    ```javascript
     for (var i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
     }
-    ```
 ```
   </div>
   </slot>
@@ -140,11 +134,9 @@ Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su p
 
     La solución es `let` (alcance de bloque, nueva referencia en cada iteración) o envolverlo en una IIFE para capturar el valor actual:
 ```javascript
-    ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
     }
-    ```
 ```
   </div>
   </slot>
@@ -166,11 +158,9 @@ Cada llamada a `makeCounter()` crea un **nuevo contexto de ejecución** con su p
   <div className="question">
 Mismo bucle, distinta palabra clave. ¿Qué se imprime?
 ```javascript
-    ```javascript
     for (let i = 0; i < 5; i++) {
       setTimeout(() => console.log(i), 100);
     }
-    ```
 ```
   </div>
   </slot>
@@ -178,11 +168,9 @@ Mismo bucle, distinta palabra clave. ¿Qué se imprime?
   <div className="explanation">
 `let` en un bucle `for` es especial. La especificación dice: cada iteración obtiene su **nueva vinculación** de `i`. Es como si el bucle hiciera esto en secreto:
 ```javascript
-    ```javascript
     { let i = 0; setTimeout(() => console.log(i), 100) }
     { let i = 1; setTimeout(() => console.log(i), 100) }
     // ...
-    ```
 ```
 Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 1, 2, 3, 4`.
   </div>
@@ -205,7 +193,6 @@ Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 
   <div className="question">
 ¿Qué imprime esto?
 ```javascript
-    ```javascript
     function wrap() {
       const obj = { x: 1 };
       const getObj = () => obj;
@@ -214,7 +201,6 @@ Por eso, los cinco callbacks capturan cinco variables distintas. Resultado: `0, 
     }
     const get = wrap();
     console.log(get(), get());
-    ```
 ```
   </div>
   </slot>
@@ -243,7 +229,6 @@ El closure captura el **enlace** `obj`, no una instantánea del objeto. El objet
   <div className="question">
 ¿Qué comportamiento exhibe este componente de React al hacer clic en el botón varias veces?
 ```jsx
-    ```jsx
     function Counter() {
       const [count, setCount] = useState(0);
 
@@ -258,7 +243,6 @@ El closure captura el **enlace** `obj`, no una instantánea del objeto. El objet
         Click ({count})
       </button>;
     }
-    ```
 ```
   </div>
   </slot>
@@ -270,11 +254,9 @@ Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dep
 
     Arréglalo agregando `count` al array de dependencias (recrea el intervalo) o usando una ref:
 ```jsx
-    ```jsx
     const countRef = useRef(count);
     useEffect(() => { countRef.current = count; }, [count]);
     // then use countRef.current inside the interval
-    ```
 ```
   </div>
   </slot>
@@ -296,7 +278,6 @@ Clausura obsoleta clásica. El `useEffect` se ejecuta una sola vez (array de dep
   <div className="question">
 Espera, lee con atención. ¿Qué sucede realmente?
 ```javascript
-    ```javascript
     const bank = (() => {
       let balance = 0;
       return {
@@ -309,7 +290,6 @@ Espera, lee con atención. ¿Qué sucede realmente?
     bank.deposit(100);
     bank.withdraw(40);
     console.log(bank.getBalance());
-    ```
 ```
   </div>
   </slot>
@@ -319,9 +299,7 @@ La respuesta es `60`.
 
     Este es el **Patrón de Módulo** — una IIFE que devuelve un objeto de closures. Los tres métodos capturan el mismo binding de `balance`. Es genuinamente privado: no puedes acceder a `balance` desde fuera.
 ```javascript
-    ```javascript
     console.log(bank.balance); // undefined
-    ```
 ```
 Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Todavía lo verás en bases de código legacy y bibliotecas de utilidades.
   </div>
@@ -344,14 +322,12 @@ Antes de las clases, esta era *la* forma de encapsular estado en JavaScript. Tod
   <div className="question">
 ¿Cuál es el problema con este código?
 ```javascript
-    ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       element.addEventListener('click', () => {
         console.log('clicked!', data.length);
       });
     }
-    ```
 ```
   </div>
   </slot>
@@ -363,7 +339,6 @@ El *event listener* cierra sobre `data`, por lo que el array permanece accesible
 
     Solución: no captures datos pesados en listeners de larga duración a menos que sea estrictamente necesario, y elimina los listeners cuando desmontes la interfaz que los usa:
 ```javascript
-    ```javascript
     function attachHandler(element) {
       const data = new Array(100_000).fill('🔥');
       // do something with data...
@@ -375,7 +350,6 @@ El *event listener* cierra sobre `data`, por lo que el array permanece accesible
       element.addEventListener('click', onClick);
       return () => element.removeEventListener('click', onClick);
     }
-    ```
 ```
 El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga ejecución con muchos *event listeners*, este patrón sigue mordiendo a más de uno.
   </div>
@@ -398,7 +372,6 @@ El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga e
   <div className="question">
 ¿Qué imprime esto?
 ```javascript
-    ```javascript
     const user = {
       name: 'Dan',
       greetArrow: () => console.log(this?.name),
@@ -411,7 +384,6 @@ El motor V8 moderno gestiona esto mucho mejor que antes. Pero en SPAs de larga e
     user.greetArrow();
     const fn = user.greetRegular;
     fn();
-    ```
 ```
   </div>
   </slot>
@@ -446,7 +418,6 @@ Dos trampas sutiles:
   <div className="question">
 ¿Cuántas veces se llama realmente a `expensive()`?
 ```javascript
-    ```javascript
     function memoize(fn) {
       const cache = new Map();
       return (arg) => {
@@ -465,7 +436,6 @@ Dos trampas sutiles:
     fast(5);
     fast(5);
     console.log(calls);
-    ```
 ```
   </div>
   </slot>

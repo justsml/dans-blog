@@ -40,9 +40,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name="question">
   <div className="question">
 ```tsx
-```tsx
     parseInt(" 123456.00")
-    ```
 ```
   </div>
   </slot>
@@ -69,9 +67,7 @@ La función `parseInt` ignora los espacios y procesa la secuencia inicial de dí
   <slot name="question">
   <div className="question">
 ```tsx
-```tsx
     parseInt("123,456.00")
-    ```
 ```
   </div>
   </slot>
@@ -97,9 +93,7 @@ Por regla general, `parseInt` detiene el análisis en cuanto encuentra un carác
   <slot name="question">
   <div className="question">
 ```tsx
-```tsx
     0.1 + 0.2 === 0.3
-    ```
 ```
   </div>
   </slot>
@@ -129,9 +123,7 @@ Debido a errores de precisión en punto flotante, `0.1 + 0.2` no es exactamente 
   <slot name="question">
   <div className="question">
 ```tsx
-```tsx
     Number.MAX_VALUE * 2
-    ```
 ```
   </div>
   </slot>
@@ -162,9 +154,7 @@ Dado que `Number.MAX_VALUE` es el número regular más grande **representable** 
   <div className="question">
 ¿Qué devuelve esto?
 ```tsx
-    ```tsx
     5..toFixed(2)
-    ```
 ```
   </div>
   </slot>
@@ -191,9 +181,7 @@ Dado que `Number.MAX_VALUE` es el número regular más grande **representable** 
   <slot name="question">
   <div className="question">
 ```jsx
-```jsx
     parseInt("42") === parseFloat("42")
-    ```
 ```
   </div>
   </slot>
@@ -219,9 +207,7 @@ En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` c
   <slot name="question">
   <div className="question">
 ```jsx
-```jsx
     BigInt("42") === parseInt("42")
-    ```
 ```
   </div>
   </slot>
@@ -249,9 +235,7 @@ En JavaScript, tanto `parseInt` como `parseFloat` interpretan la cadena `"42"` c
   <div className="question">
 ¿Cuál será el resultado?
 ```jsx
-    ```jsx
     parseInt("0x2A") === parseInt("2a", 16)
-    ```
 ```
   </div>
   </slot>
@@ -279,9 +263,7 @@ Cualquier cadena que comience con `0x` se interpreta automáticamente como un he
   <div className="question">
 ¿Qué está pasando aquí?
 ```jsx
-    ```jsx
     parseInt('0xFF', 16)
-    ```
 ```
   </div>
   </slot>
@@ -307,9 +289,7 @@ Cualquier cadena que comience con `0x` se interpreta automáticamente como un he
   <slot name="question">
   <div className="question">
 ```jsx
-```jsx
     [24, 'One', 42].map(parseInt)
-    ```
 ```
   </div>
   </slot>
@@ -339,9 +319,7 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
   <slot name="question">
   <div className="question">
 ```jsx
-```jsx
     [24, 'Twenty1', 0o42].map(Number)
-    ```
 ```
   </div>
   </slot>
@@ -370,9 +348,7 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
   <div className="question">
 ¿Cuál será el resultado de este código?
 ```jsx
-    ```jsx
     console.log(parseInt(null), Number(null))
-    ```
 ```
   </div>
   </slot>
@@ -404,9 +380,7 @@ El segundo argumento de `parseInt` (la base o radix) se alinea con el argumento 
   <div className="question">
 ¿Cuál será el resultado de este hechizo?
 ```jsx
-    ```jsx
     parseInt(null, 36)
-    ```
 ```
   </div>
   </slot>

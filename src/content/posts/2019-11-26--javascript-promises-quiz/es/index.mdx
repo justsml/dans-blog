@@ -57,13 +57,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="question">
 ¿Qué va a imprimir el siguiente código?
 ```js
-    ```js
     var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     p.catch(error => console.log(error.message))
     p.catch(error => console.log(error.message))
-    ```
 ```
   </div>
   </slot>
@@ -92,13 +90,11 @@ Luego, los manejadores `.catch` funcionan igual que `.addEventListener(event, ca
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     var p = new Promise((resolve, reject) => {
       return Promise.reject(Error('The Fails!'))
     })
     p.catch(error => console.log(error.message))
     p.catch(error => console.log(error.message))
-    ```
 ```
   </div>
   </slot>
@@ -125,13 +121,11 @@ Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `rej
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-  ```js
   var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     .catch(error => console.log(error))
     .then(error => console.log(error))
-  ```
 ```
   </div>
   </slot>
@@ -158,13 +152,11 @@ Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-  ```js
   var p = new Promise((resolve, reject) => {
       reject(Error('The Fails!'))
     })
     .catch(error => console.log(error.message))
     .catch(error => console.log(error.message))
-  ```
 ```
   </div>
   </slot>
@@ -191,7 +183,6 @@ Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     new Promise((resolve, reject) => {
         resolve('Success!')
       })
@@ -202,7 +193,6 @@ Al encadenar `.catch`, cada uno solo maneja los errores lanzados en los pasos `.
         return "actually, that worked"
       })
       .catch(error => console.log(error.message))
-    ```
 ```
   </div>
   </slot>
@@ -231,7 +221,6 @@ Este truco solo funciona si hay un `.then` posterior listo para recibir el valor
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     Promise.resolve('Success!')
       .then(data => {
         return data.toUpperCase()
@@ -239,7 +228,6 @@ Este truco solo funciona si hay un `.then` posterior listo para recibir el valor
       .then(data => {
         console.log(data)
       })
-    ```
 ```
   </div>
   </slot>
@@ -268,7 +256,6 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     Promise.resolve('Success!')
       .then(data => {
         return data.toUpperCase()
@@ -278,7 +265,6 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
         return data
       })
       .then(console.log)
-    ```
 ```
   </div>
   </slot>
@@ -305,7 +291,6 @@ Se ejecutarán 2 llamadas a `console.log`.
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     Promise.resolve('Success!')
       .then(data => {
         data.toUpperCase()
@@ -313,7 +298,6 @@ Se ejecutarán 2 llamadas a `console.log`.
       .then(data => {
         console.log(data)
       })
-    ```
 ```
   </div>
   </slot>
@@ -343,7 +327,6 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
   <div className="question">
 ¿Cuál será la salida del siguiente código?
 ```js
-    ```js
     Promise.resolve('Success!')
       .then(() => {
         throw Error('Oh noes!')
@@ -355,7 +338,6 @@ Un `return` es clave para pasar un valor al siguiente `.then`.
         throw Error('The fails!')
       })
       .catch(error => console.log(error.message))
-    ```
 ```
   </div>
   </slot>
