@@ -1,0 +1,41 @@
+{
+  "index": 12,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Propiedades no estándar",
+  "translation": {
+    "title": "Propiedades no estándar",
+    "group": "Propiedades de Error",
+    "options": [
+      {
+        "text": "Siempre disponibles"
+      },
+      {
+        "text": "Pueden no existir en todos los entornos"
+      },
+      {
+        "text": "Exclusivas de Node.js"
+      },
+      {
+        "text": "Obsoletas y eliminadas"
+      }
+    ],
+    "questionProse": [
+      "¿Qué tan fiables son realmente `error.code` y `error.errno`?"
+    ],
+    "explanationProse": [
+      "Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este caso) y no forman parte del objeto `Error` estándar. Los errores en el navegador carecerán de ellas. Comprueba siempre su existencia con `if (err.code === 'ENOENT')` en lugar de asumir que están ahí por arte de magia."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Propiedades no estándar\",\n  \"group\": \"Propiedades de Error\",\n  \"options\": [\n    {\n      \"text\": \"Siempre disponibles\"\n    },\n    {\n      \"text\": \"Pueden no existir en todos los entornos\"\n    },\n    {\n      \"text\": \"Exclusivas de Node.js\"\n    },\n    {\n      \"text\": \"Obsoletas y eliminadas\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué tan fiables son realmente `error.code` y `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Propiedades como `code` y `errno` son específicas del entorno (Node.js, en este caso) y no forman parte del objeto `Error` estándar. Los errores en el navegador carecerán de ellas. Comprueba siempre su existencia con `if (err.code === 'ENOENT')` en lugar de asumir que están ahí por arte de magia.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 764,
+    "outputTokens": 3253,
+    "durationMs": 59406
+  },
+  "cost": {
+    "inputUsd": 0.0002483,
+    "outputUsd": 0.006343349999999999,
+    "totalUsd": 0.006591649999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "index": 1,
+  "originalTitle": "Multiple `.catch`'s #2",
+  "translatedTitle": "Múltiples `.catch` #2",
+  "translation": {
+    "title": "Múltiples `.catch` #2",
+    "group": "Manejo de errores",
+    "options": [
+      {
+        "text": "imprimir el mensaje una vez"
+      },
+      {
+        "text": "imprimir el mensaje dos veces"
+      },
+      {
+        "text": "promesa rechazada sin manejar"
+      },
+      {
+        "text": "el proceso termina"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será la salida del siguiente código?"
+    ],
+    "explanationProse": [
+      "Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `reject()`. El constructor `Promise` ignora el valor de retorno del ejecutor, por lo que la promesa adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores están adjuntos a `p`, que permanece en estado pendiente, mientras que la promesa rechazada devuelta es reportada como no manejada por el entorno host."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Múltiples `.catch` #2\",\n  \"group\": \"Manejo de errores\",\n  \"options\": [\n    {\n      \"text\": \"imprimir el mensaje una vez\"\n    },\n    {\n      \"text\": \"imprimir el mensaje dos veces\"\n    },\n    {\n      \"text\": \"promesa rechazada sin manejar\"\n    },\n    {\n      \"text\": \"el proceso termina\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será la salida del siguiente código?\"\n  ],\n  \"explanationProse\": [\n    \"Al usar el constructor `Promise`, debes invocar los callbacks `resolve()` o `reject()`. El constructor `Promise` ignora el valor de retorno del ejecutor, por lo que la promesa adicional creada con `Promise.reject()` no se encadena a `p`. Los dos manejadores están adjuntos a `p`, que permanece en estado pendiente, mientras que la promesa rechazada devuelta es reportada como no manejada por el entorno host.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 2358,
+    "durationMs": 43951
+  },
+  "cost": {
+    "inputUsd": 0.0002509,
+    "outputUsd": 0.0045981,
+    "totalUsd": 0.004849,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "index": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "Consola vs JSON",
+  "translation": {
+    "title": "Consola vs JSON",
+    "group": "Sorpresas de serialización",
+    "options": [
+      {
+        "text": "Ambos muestran la misma salida"
+      },
+      {
+        "text": "console.log muestra más información"
+      },
+      {
+        "text": "JSON.stringify muestra más información"
+      },
+      {
+        "text": "Ambos muestran objetos vacíos"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la diferencia real entre estos dos?"
+    ],
+    "explanationProse": [
+      "`console.log(err)` te muestra el error completo, con su mensaje y stack trace, porque la consola tiene un trato preferente para los objetos `Error`. `JSON.stringify(err)` escupe `'{}'` porque las propiedades de Error no son enumerables. Esta diferencia es la que hace tropezar a más de un dev cuando toca depurar APIs."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Consola vs JSON\",\n  \"group\": \"Sorpresas de serialización\",\n  \"options\": [\n    {\n      \"text\": \"Ambos muestran la misma salida\"\n    },\n    {\n      \"text\": \"console.log muestra más información\"\n    },\n    {\n      \"text\": \"JSON.stringify muestra más información\"\n    },\n    {\n      \"text\": \"Ambos muestran objetos vacíos\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la diferencia real entre estos dos?\"\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)` te muestra el error completo, con su mensaje y stack trace, porque la consola tiene un trato preferente para los objetos `Error`. `JSON.stringify(err)` escupe `'{}'` porque las propiedades de Error no son enumerables. Esta diferencia es la que hace tropezar a más de un dev cuando toca depurar APIs.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 751,
+    "outputTokens": 4617,
+    "durationMs": 84075
+  },
+  "cost": {
+    "inputUsd": 0.000244075,
+    "outputUsd": 0.00900315,
+    "totalUsd": 0.009247225,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

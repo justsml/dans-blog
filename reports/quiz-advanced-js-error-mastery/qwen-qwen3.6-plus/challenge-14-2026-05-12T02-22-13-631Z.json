@@ -1,0 +1,41 @@
+{
+  "index": 13,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Detección: Object vs Error",
+  "translation": {
+    "title": "Detección: Object vs Error",
+    "group": "Límites de error",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devuelven estas comprobaciones?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor `Error`. `Object.prototype.toString.call()` también devuelve `false` (retorna `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente esto como un objeto de error falso."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Detección: Object vs Error\",\n  \"group\": \"Límites de error\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devuelven estas comprobaciones?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` devuelve `false` porque el objeto no fue creado por el constructor `Error`. `Object.prototype.toString.call()` también devuelve `false` (retorna `'[object Object]'`) porque verifica el slot interno `[[Class]]`. Ambos métodos identifican correctamente esto como un objeto de error falso.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 757,
+    "outputTokens": 2613,
+    "durationMs": 48620
+  },
+  "cost": {
+    "inputUsd": 0.000246025,
+    "outputUsd": 0.005095349999999999,
+    "totalUsd": 0.005341374999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

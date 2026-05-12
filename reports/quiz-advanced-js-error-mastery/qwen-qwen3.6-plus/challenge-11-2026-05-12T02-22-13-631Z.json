@@ -1,0 +1,41 @@
+{
+  "index": 10,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Error de Respuesta en Express",
+  "translation": {
+    "title": "Error de Respuesta en Express",
+    "group": "Trampas de API",
+    "options": [
+      {
+        "text": "Envía el objeto de error completo"
+      },
+      {
+        "text": "Envía {\"error\":{}}"
+      },
+      {
+        "text": "Lanza un error de servidor"
+      },
+      {
+        "text": "Envía solo el mensaje de error"
+      }
+    ],
+    "questionProse": [
+      "¿Qué se envía realmente al cliente?"
+    ],
+    "explanationProse": [
+      "`res.json()` usa `JSON.stringify()` internamente, por lo que el objeto Error se convierte en `{}`. El cliente recibe `{\"error\":{}}`. Para solucionarlo, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Error de Respuesta en Express\",\n  \"group\": \"Trampas de API\",\n  \"options\": [\n    {\n      \"text\": \"Envía el objeto de error completo\"\n    },\n    {\n      \"text\": \"Envía {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Lanza un error de servidor\"\n    },\n    {\n      \"text\": \"Envía solo el mensaje de error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué se envía realmente al cliente?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`res.json()` usa `JSON.stringify()` internamente, por lo que el objeto Error se convierte en `{}`. El cliente recibe `{\\\"error\\\":{}}`. Para solucionarlo, usa `res.json({ error: error.message })` o `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 770,
+    "outputTokens": 3524,
+    "durationMs": 65221
+  },
+  "cost": {
+    "inputUsd": 0.00025025,
+    "outputUsd": 0.006871799999999999,
+    "totalUsd": 0.007122049999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

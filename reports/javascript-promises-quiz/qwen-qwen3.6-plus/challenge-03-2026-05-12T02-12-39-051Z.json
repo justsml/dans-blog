@@ -1,0 +1,41 @@
+{
+  "index": 2,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Encadenando `.then` y `.catch`",
+  "translation": {
+    "title": "Encadenando `.then` y `.catch`",
+    "group": "Manejo de errores",
+    "options": [
+      {
+        "text": "imprime el error y `undefined`"
+      },
+      {
+        "text": "imprime el error dos veces"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "`undefined`"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será la salida del siguiente código?"
+    ],
+    "explanationProse": [
+      "Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu \"paso\" encuentra un error, cualquier \"paso\" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si quieres anular un error, todo lo que necesitas hacer es devolver un valor que no sea un error. Este podrá ser accedido por cualquier `.then` posterior."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Encadenando `.then` y `.catch`\",\n  \"group\": \"Manejo de errores\",\n  \"options\": [\n    {\n      \"text\": \"imprime el error y `undefined`\"\n    },\n    {\n      \"text\": \"imprime el error dos veces\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"`undefined`\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será la salida del siguiente código?\"\n  ],\n  \"explanationProse\": [\n    \"Al encadenar `.then` y `.catch`, resulta útil pensar en ellos como una serie de pasos. Cada `.then` recibe el valor devuelto por el `.then` anterior (como su argumento). Sin embargo, si tu \\\"paso\\\" encuentra un error, cualquier \\\"paso\\\" `.then` posterior se omitirá hasta que se encuentre un `.catch`. Si quieres anular un error, todo lo que necesitas hacer es devolver un valor que no sea un error. Este podrá ser accedido por cualquier `.then` posterior.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 3767,
+    "durationMs": 69300
+  },
+  "cost": {
+    "inputUsd": 0.000263575,
+    "outputUsd": 0.00734565,
+    "totalUsd": 0.007609225,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

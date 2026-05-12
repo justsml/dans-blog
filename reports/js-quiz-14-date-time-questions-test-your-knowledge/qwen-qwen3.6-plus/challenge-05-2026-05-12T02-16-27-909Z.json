@@ -1,0 +1,41 @@
+{
+  "index": 4,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Interpretación de cadenas de fecha",
+  "translation": {
+    "title": "Interpretación de cadenas de fecha",
+    "group": "Manejo de fechas",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "¿Qué valor se imprimirá en la consola?"
+    ],
+    "explanationProse": [
+      "La cadena sin la `T` de hora podría parecer el 1 de enero de 2020, pero las cadenas de solo fecha se interpretan como UTC. Al ajustarse a nuestra zona horaria local (GMT-7), descubrimos que en realidad seguimos en 2019.\n\n      Las cadenas de fecha y hora sin una zona horaria explícita se interpretan en hora local.\n  \n      El formato `T00:00` hace que el segundo valor se interprete como la medianoche local.\n\n      La primera fecha se interpreta como `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\n      La segunda fecha se interpreta como `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Interpretación de cadenas de fecha\",\n  \"group\": \"Manejo de fechas\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué valor se imprimirá en la consola?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"La cadena sin la `T` de hora podría parecer el 1 de enero de 2020, pero las cadenas de solo fecha se interpretan como UTC. Al ajustarse a nuestra zona horaria local (GMT-7), descubrimos que en realidad seguimos en 2019.\\n\\n      Las cadenas de fecha y hora sin una zona horaria explícita se interpretan en hora local.\\n  \\n      El formato `T00:00` hace que el segundo valor se interprete como la medianoche local.\\n\\n      La primera fecha se interpreta como `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)`.\\n      La segunda fecha se interpreta como `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)`.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 897,
+    "outputTokens": 4139,
+    "durationMs": 77052
+  },
+  "cost": {
+    "inputUsd": 0.000291525,
+    "outputUsd": 0.00807105,
+    "totalUsd": 0.008362575,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
