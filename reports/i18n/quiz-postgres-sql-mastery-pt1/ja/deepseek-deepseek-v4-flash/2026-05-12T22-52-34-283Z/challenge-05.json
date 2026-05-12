@@ -1,0 +1,50 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "timestamptz vs timestamp",
+  "translatedTitle": "timestamptz と timestamp",
+  "translation": {
+    "title": "timestamptz と timestamp",
+    "group": "タイムスタンプ",
+    "options": [
+      {
+        "text": "どちらも8バイトを占めますが、異なるタイムスタンプのセマンティクスを表します"
+      },
+      {
+        "text": "それらは\\"
+      },
+      {
+        "text": "timestamptz は入力されたタイムゾーンを保持する"
+      },
+      {
+        "text": "timestamptz は元のタイムゾーン名またはオフセットを保存する"
+      },
+      {
+        "text": "timestamptz はTZに2バイトの値を保存する"
+      },
+      {
+        "text": "timestamptz は timestamp の後継である"
+      }
+    ],
+    "questionProse": [
+      "`timestamptz` と `timestamp` について、**最も正確**な記述はどれですか？"
+    ],
+    "explanationProse": [
+      "どちらも8バイトですが、同じ種類の値を保存するわけではありません。\n\n    では、違いは何でしょうか？それは入力の解析にあります。\n\n    **`timestamptz`**\n    - 入力を絶対的な時点に正規化します。\n    - 明示的なオフセットなしで入力を解析する際や出力を表示する際に、サーバー/接続の `TimeZone` 設定を考慮します。\n\n    **`timestamp`**\n    - タイムゾーン変換なしで日時を保存します。\n    - タイムゾーン情報を保持または正規化しません。\n    \n    \n    **`timestamp`**\n\n    - タイムゾーン情報なしで日時を保存します。\n    - UTCまたは特定のタイムゾーンで標準化された日付を明示的に保存するのに便利です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"timestamptz と timestamp\",\n  \"group\": \"タイムスタンプ\",\n  \"options\": [\n    {\n      \"text\": \"どちらも8バイトを占めますが、異なるタイムスタンプのセマンティクスを表します\"\n    },\n    {\n      \"text\": \"それらは\\\\\"\n    },\n    {\n      \"text\": \"timestamptz は入力されたタイムゾーンを保持する\"\n    },\n    {\n      \"text\": \"timestamptz は元のタイムゾーン名またはオフセットを保存する\"\n    },\n    {\n      \"text\": \"timestamptz はTZに2バイトの値を保存する\"\n    },\n    {\n      \"text\": \"timestamptz は timestamp の後継である\"\n    }\n  ],\n  \"questionProse\": [\n    \"`timestamptz` と `timestamp` について、**最も正確**な記述はどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"どちらも8バイトですが、同じ種類の値を保存するわけではありません。\\n\\n    では、違いは何でしょうか？それは入力の解析にあります。\\n\\n    **`timestamptz`**\\n    - 入力を絶対的な時点に正規化します。\\n    - 明示的なオフセットなしで入力を解析する際や出力を表示する際に、サーバー/接続の `TimeZone` 設定を考慮します。\\n\\n    **`timestamp`**\\n    - タイムゾーン変換なしで日時を保存します。\\n    - タイムゾーン情報を保持または正規化しません。\\n    \\n    \\n    **`timestamp`**\\n\\n    - タイムゾーン情報なしで日時を保存します。\\n    - UTCまたは特定のタイムゾーンで標準化された日付を明示的に保存するのに便利です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 860,
+    "outputTokens": 4431,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 127297
+  },
+  "cost": {
+    "inputUsd": 0.00012040000000000001,
+    "outputUsd": 0.00124068,
+    "totalUsd": 0.0013610800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

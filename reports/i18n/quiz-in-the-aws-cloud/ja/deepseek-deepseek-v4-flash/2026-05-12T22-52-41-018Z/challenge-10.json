@@ -1,0 +1,57 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "バッチ操作",
+  "translation": {
+    "title": "バッチ操作",
+    "group": "バッチ、その2！",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "良い推測ですね..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "GetItemの制限を考えていますか？"
+      },
+      {
+        "text": "100（ストリーミング時）"
+      },
+      {
+        "text": "上記のいずれでもない",
+        "hint": "これは少しトリッキーです..."
+      }
+    ],
+    "questionProse": [
+      "DynamoDBが1バッチあたりに`UPDATE`できるドキュメントの最大数はいくつですか？"
+    ],
+    "explanationProse": [
+      "DynamoDBクライアントは基本的にすべてHTTP APIのラッパーです。`BatchWriteItem`オペレーションは1回のHTTPリクエストで最大**25**ドキュメントを`PUT`または`DELETE`できますが、複数のドキュメントを`UPDATE`することはできません。",
+      "DynamoDBは1回のHTTPリクエストで最大**25**ドキュメントを`INSERT`できますが、`UpdateItem`オペレーションを使用すると1リクエストあたり**1**ドキュメントしか`UPDATE`できません。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"バッチ操作\",\n  \"group\": \"バッチ、その2！\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"良い推測ですね...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"GetItemの制限を考えていますか？\"\n    },\n    {\n      \"text\": \"100（ストリーミング時）\"\n    },\n    {\n      \"text\": \"上記のいずれでもない\",\n      \"hint\": \"これは少しトリッキーです...\"\n    }\n  ],\n  \"questionProse\": [\n    \"DynamoDBが1バッチあたりに`UPDATE`できるドキュメントの最大数はいくつですか？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDBクライアントは基本的にすべてHTTP APIのラッパーです。`BatchWriteItem`オペレーションは1回のHTTPリクエストで最大**25**ドキュメントを`PUT`または`DELETE`できますが、複数のドキュメントを`UPDATE`することはできません。\",\n    \"DynamoDBは1回のHTTPリクエストで最大**25**ドキュメントを`INSERT`できますが、`UpdateItem`オペレーションを使用すると1リクエストあたり**1**ドキュメントしか`UPDATE`できません。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 803,
+    "outputTokens": 1032,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15478
+  },
+  "cost": {
+    "inputUsd": 0.00011242000000000001,
+    "outputUsd": 0.00028896,
+    "totalUsd": 0.00040138,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE の落とし穴",
+  "translation": {
+    "title": "EXPLAIN ANALYZE の落とし穴",
+    "group": "パフォーマンス",
+    "options": [
+      {
+        "text": "軽量な計画見積もり"
+      },
+      {
+        "text": "SELECT にしか動作しない"
+      },
+      {
+        "text": "データを変更し、計画を出力する"
+      },
+      {
+        "text": "実行をシミュレートして計画を取得する"
+      }
+    ],
+    "questionProse": [
+      "`EXPLAIN ANALYZE` は `UPDATE` 文に対して何を行いますか？"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意してください。再現可能な結果を得るには、各 `EXPLAIN ANALYZE` の後にクリーンアップ操作を実行する必要があるかもしれません。\n\n    ベストプラクティス:\n    - UPDATE/DELETE/INSERT には `EXPLAIN` (ANALYZE なし) を使用する\n    - 変更をトランザクションでラップする:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE の落とし穴\",\n  \"group\": \"パフォーマンス\",\n  \"options\": [\n    {\n      \"text\": \"軽量な計画見積もり\"\n    },\n    {\n      \"text\": \"SELECT にしか動作しない\"\n    },\n    {\n      \"text\": \"データを変更し、計画を出力する\"\n    },\n    {\n      \"text\": \"実行をシミュレートして計画を取得する\"\n    }\n  ],\n  \"questionProse\": [\n    \"`EXPLAIN ANALYZE` は `UPDATE` 文に対して何を行いますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` は実際にクエリを実行します！書き込み操作、特に `UPDATE`、`DELETE`、`INSERT` 文を分析する際は注意してください。再現可能な結果を得るには、各 `EXPLAIN ANALYZE` の後にクリーンアップ操作を実行する必要があるかもしれません。\\n\\n    ベストプラクティス:\\n    - UPDATE/DELETE/INSERT には `EXPLAIN` (ANALYZE なし) を使用する\\n    - 変更をトランザクションでラップする:\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 1594,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8592
+  },
+  "cost": {
+    "inputUsd": 0.00010794000000000001,
+    "outputUsd": 0.00044632000000000005,
+    "totalUsd": 0.0005542600000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

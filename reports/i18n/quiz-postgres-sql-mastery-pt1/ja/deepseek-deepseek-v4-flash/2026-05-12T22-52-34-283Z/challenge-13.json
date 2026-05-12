@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を見分ける",
+  "translation": {
+    "title": "無効な型を見分ける",
+    "group": "PostgreSQLの型",
+    "options": [
+      {
+        "text": "lseg"
+      },
+      {
+        "text": "bytea"
+      },
+      {
+        "text": "tsquery"
+      },
+      {
+        "text": "tsvector"
+      },
+      {
+        "text": "tsrank"
+      }
+    ],
+    "questionProse": [
+      "次のうち、❌ 有効なPostgreSQL型ではないものはどれ？\n\n    （マジで、これらは（ほとんど）実在する型だ。）"
+    ],
+    "explanationProse": [
+      "PostgreSQLには幾何学型やテキスト検索型が組み込みでいくつかあるが、`tsrank` はその中に含まれない。\n\n    正しい幾何学型とテキスト検索型は次の通り：\n    - `lseg`（線分）\n    - `bytea`（バイナリデータ）\n    - `tsquery`（テキスト検索クエリ）\n    - `tsvector`（テキスト検索ドキュメント）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を見分ける\",\n  \"group\": \"PostgreSQLの型\",\n  \"options\": [\n    {\n      \"text\": \"lseg\"\n    },\n    {\n      \"text\": \"bytea\"\n    },\n    {\n      \"text\": \"tsquery\"\n    },\n    {\n      \"text\": \"tsvector\"\n    },\n    {\n      \"text\": \"tsrank\"\n    }\n  ],\n  \"questionProse\": [\n    \"次のうち、❌ 有効なPostgreSQL型ではないものはどれ？\\n\\n    （マジで、これらは（ほとんど）実在する型だ。）\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQLには幾何学型やテキスト検索型が組み込みでいくつかあるが、`tsrank` はその中に含まれない。\\n\\n    正しい幾何学型とテキスト検索型は次の通り：\\n    - `lseg`（線分）\\n    - `bytea`（バイナリデータ）\\n    - `tsquery`（テキスト検索クエリ）\\n    - `tsvector`（テキスト検索ドキュメント）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 715,
+    "outputTokens": 852,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5537
+  },
+  "cost": {
+    "inputUsd": 0.00010010000000000002,
+    "outputUsd": 0.00023856000000000002,
+    "totalUsd": 0.00033866000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

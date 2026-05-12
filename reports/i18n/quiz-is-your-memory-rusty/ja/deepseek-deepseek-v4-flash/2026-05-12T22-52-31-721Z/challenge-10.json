@@ -1,0 +1,48 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Cell vs RefCell",
+  "translatedTitle": "Cell と RefCell",
+  "translation": {
+    "title": "Cell と RefCell",
+    "group": "可変性",
+    "options": [
+      {
+        "text": "出力: 42, 43"
+      },
+      {
+        "text": "出力: 43, 43",
+        "hint": "Cell::get() は呼び出し時の値を返します"
+      },
+      {
+        "text": "コンパイルエラー",
+        "hint": "Cell はまさにこのユースケースのために設計されています"
+      },
+      {
+        "text": "実行時パニック",
+        "hint": "Cell の操作は Copy 型に対して常に安全です"
+      }
+    ],
+    "questionProse": [
+      "このコードは何を出力しますか？"
+    ],
+    "explanationProse": [
+      "Cell と RefCell は内部可変性のために異なる目的を持っています:",
+      "主な違い:\n      1. Cell:\n         - Copy 型に最適\n         - 借用 API はない\n         - 常に値をコピーまたはムーブする\n      \n      2. RefCell:\n         - 任意の型で動作する\n         - 借用 API がある\n         - 実行時に借用チェックを行う\n\n      ベストプラクティス:\n      1. 単純な Copy 型（数値、bool など）には Cell を使う\n      2. 内容を借用する必要がある場合は RefCell を使う\n      3. Cell/RefCell による変更は最小限に抑える\n      4. 内部可変性が必要な理由を文書化する"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cell と RefCell\",\n  \"group\": \"可変性\",\n  \"options\": [\n    {\n      \"text\": \"出力: 42, 43\"\n    },\n    {\n      \"text\": \"出力: 43, 43\",\n      \"hint\": \"Cell::get() は呼び出し時の値を返します\"\n    },\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"Cell はまさにこのユースケースのために設計されています\"\n    },\n    {\n      \"text\": \"実行時パニック\",\n      \"hint\": \"Cell の操作は Copy 型に対して常に安全です\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何を出力しますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Cell と RefCell は内部可変性のために異なる目的を持っています:\",\n    \"主な違い:\\n      1. Cell:\\n         - Copy 型に最適\\n         - 借用 API はない\\n         - 常に値をコピーまたはムーブする\\n      \\n      2. RefCell:\\n         - 任意の型で動作する\\n         - 借用 API がある\\n         - 実行時に借用チェックを行う\\n\\n      ベストプラクティス:\\n      1. 単純な Copy 型（数値、bool など）には Cell を使う\\n      2. 内容を借用する必要がある場合は RefCell を使う\\n      3. Cell/RefCell による変更は最小限に抑える\\n      4. 内部可変性が必要な理由を文書化する\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 861,
+    "outputTokens": 2353,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11774
+  },
+  "cost": {
+    "inputUsd": 0.00012054000000000001,
+    "outputUsd": 0.0006588400000000001,
+    "totalUsd": 0.0007793800000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

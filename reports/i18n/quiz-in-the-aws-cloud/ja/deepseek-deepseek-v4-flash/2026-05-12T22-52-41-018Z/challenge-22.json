@@ -1,0 +1,44 @@
+{
+  "index": 21,
+  "attempt": 1,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "一貫性モデル",
+  "translation": {
+    "title": "一貫性モデル",
+    "group": "DynamoDBの一貫性",
+    "options": [
+      {
+        "text": "1秒あたり100回の読み取り"
+      },
+      {
+        "text": "1秒あたり50回の読み取り"
+      },
+      {
+        "text": "1秒あたり200回の読み取り"
+      },
+      {
+        "text": "1秒あたり無制限の読み取り"
+      }
+    ],
+    "questionProse": [
+      "DynamoDBテーブルに100 RCUのプロビジョンド読み取り容量があります。4KBアイテムの強力な一貫性読み取りは1秒あたり何回実行できますか？"
+    ],
+    "explanationProse": [
+      "DynamoDBの一貫性モデルを理解することが重要です：\n\n      - 1 RCU = 4KBまでのアイテムに対して1秒あたり1回の強力な一貫性読み取り\n      - 1 RCU = 4KBまでのアイテムに対して1秒あたり2回の結果整合性読み取り\n\n      したがって：\n      - 100 RCU = 1秒あたり100回の強力な一貫性4KB読み取り\n      - 100 RCU = 1秒あたり200回の結果整合性4KB読み取り\n\n      一貫性モデルは以下に基づいて選択します：\n      - アプリケーションの要件\n      - コストの考慮\n      - パフォーマンスのニーズ\n      - データの鮮度要件"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"一貫性モデル\",\n  \"group\": \"DynamoDBの一貫性\",\n  \"options\": [\n    {\n      \"text\": \"1秒あたり100回の読み取り\"\n    },\n    {\n      \"text\": \"1秒あたり50回の読み取り\"\n    },\n    {\n      \"text\": \"1秒あたり200回の読み取り\"\n    },\n    {\n      \"text\": \"1秒あたり無制限の読み取り\"\n    }\n  ],\n  \"questionProse\": [\n    \"DynamoDBテーブルに100 RCUのプロビジョンド読み取り容量があります。4KBアイテムの強力な一貫性読み取りは1秒あたり何回実行できますか？\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDBの一貫性モデルを理解することが重要です：\\n\\n      - 1 RCU = 4KBまでのアイテムに対して1秒あたり1回の強力な一貫性読み取り\\n      - 1 RCU = 4KBまでのアイテムに対して1秒あたり2回の結果整合性読み取り\\n\\n      したがって：\\n      - 100 RCU = 1秒あたり100回の強力な一貫性4KB読み取り\\n      - 100 RCU = 1秒あたり200回の結果整合性4KB読み取り\\n\\n      一貫性モデルは以下に基づいて選択します：\\n      - アプリケーションの要件\\n      - コストの考慮\\n      - パフォーマンスのニーズ\\n      - データの鮮度要件\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 999,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10073
+  },
+  "cost": {
+    "inputUsd": 0.00011088000000000001,
+    "outputUsd": 0.00027972000000000007,
+    "totalUsd": 0.00039060000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

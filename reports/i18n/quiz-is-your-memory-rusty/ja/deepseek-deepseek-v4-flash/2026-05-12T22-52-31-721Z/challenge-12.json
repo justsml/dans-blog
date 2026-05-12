@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCellとスレッディング",
+  "translation": {
+    "title": "RefCellとスレッディング",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCellは可変借用に使われ、Rwは不変借用に使われる",
+        "hint": "両方の型が可変借用と不変借用をサポートしている"
+      },
+      {
+        "text": "Rwは可変借用に使われ、RefCellは不変借用に使われる",
+        "hint": "両方とも両方の借用タイプをサポートしている"
+      },
+      {
+        "text": "RefCellとRwは同じ目的で使われる",
+        "hint": "スレッドセーフティについて考えてみよう"
+      },
+      {
+        "text": "RefCellはシングルスレッド環境でのみ使われる"
+      },
+      {
+        "text": "Rwはマルチスレッド環境でのみ使われる",
+        "hint": "通常はスレッドで使われるが、それが主要な違いではない"
+      }
+    ],
+    "questionProse": [
+      "RustにおけるRefCellとRwLockの主な違いは何ですか？\n\n      以下の例を考えてみましょう："
+    ],
+    "explanationProse": [
+      "RefCellとRwLockは似た目的を持つが、異なるコンテキストで使われる：",
+      "主な違い：\n      1. RefCell:\n         - シングルスレッドのみ\n         - 同期オーバーヘッドなし\n         - 借用違反でパニック\n         \n      2. RwLock:\n         - スレッドセーフ\n         - 同期オーバーヘッドあり\n         - パニックではなくスレッドをブロック可能\n\n      ベストプラクティス：\n      1. シングルスレッドの内部可変性にはRefCellを使う\n      2. スレッドセーフが必要な場合はRwLockを使う\n      3. よりシンプルなスレッドセーフ可変性にはMutexを検討する\n      4. スレッドセーフ要件を明確に文書化する"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCellとスレッディング\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCellは可変借用に使われ、Rwは不変借用に使われる\",\n      \"hint\": \"両方の型が可変借用と不変借用をサポートしている\"\n    },\n    {\n      \"text\": \"Rwは可変借用に使われ、RefCellは不変借用に使われる\",\n      \"hint\": \"両方とも両方の借用タイプをサポートしている\"\n    },\n    {\n      \"text\": \"RefCellとRwは同じ目的で使われる\",\n      \"hint\": \"スレッドセーフティについて考えてみよう\"\n    },\n    {\n      \"text\": \"RefCellはシングルスレッド環境でのみ使われる\"\n    },\n    {\n      \"text\": \"Rwはマルチスレッド環境でのみ使われる\",\n      \"hint\": \"通常はスレッドで使われるが、それが主要な違いではない\"\n    }\n  ],\n  \"questionProse\": [\n    \"RustにおけるRefCellとRwLockの主な違いは何ですか？\\n\\n      以下の例を考えてみましょう：\"\n  ],\n  \"explanationProse\": [\n    \"RefCellとRwLockは似た目的を持つが、異なるコンテキストで使われる：\",\n    \"主な違い：\\n      1. RefCell:\\n         - シングルスレッドのみ\\n         - 同期オーバーヘッドなし\\n         - 借用違反でパニック\\n         \\n      2. RwLock:\\n         - スレッドセーフ\\n         - 同期オーバーヘッドあり\\n         - パニックではなくスレッドをブロック可能\\n\\n      ベストプラクティス：\\n      1. シングルスレッドの内部可変性にはRefCellを使う\\n      2. スレッドセーフが必要な場合はRwLockを使う\\n      3. よりシンプルなスレッドセーフ可変性にはMutexを検討する\\n      4. スレッドセーフ要件を明確に文書化する\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 1948,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 81409
+  },
+  "cost": {
+    "inputUsd": 0.00013034,
+    "outputUsd": 0.0005454400000000001,
+    "totalUsd": 0.0006757800000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

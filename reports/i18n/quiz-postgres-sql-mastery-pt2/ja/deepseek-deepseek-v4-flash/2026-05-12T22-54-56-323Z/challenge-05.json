@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "ハッシュ結合の適用条件",
+  "translation": {
+    "title": "ハッシュ結合の適用条件",
+    "group": "SQL内部構造",
+    "options": [],
+    "questionProse": [
+      "PostgreSQLが`HASH JOIN`で使用できる`ON`条件はどれですか？"
+    ],
+    "explanationProse": [
+      "ハッシュ結合は`ON`句の等価条件（`=`）で可能です。\n\n    - `=` はハッシュ結合の主要な述語形状です\n    - `>` や `>=` はハッシュ結合の述語ではありません\n    - `HASH JOIN` はPostgreSQLで有効な構文ではありません\n\n    プランナはテーブルサイズ、統計情報、インデックス、メモリ設定に応じて、ネステッドループ結合やマージ結合を選択することもあります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ハッシュ結合の適用条件\",\n  \"group\": \"SQL内部構造\",\n  \"options\": [],\n  \"questionProse\": [\n    \"PostgreSQLが`HASH JOIN`で使用できる`ON`条件はどれですか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"sql\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"ハッシュ結合は`ON`句の等価条件（`=`）で可能です。\\n\\n    - `=` はハッシュ結合の主要な述語形状です\\n    - `>` や `>=` はハッシュ結合の述語ではありません\\n    - `HASH JOIN` はPostgreSQLで有効な構文ではありません\\n\\n    プランナはテーブルサイズ、統計情報、インデックス、メモリ設定に応じて、ネステッドループ結合やマージ結合を選択することもあります。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 673,
+    "outputTokens": 522,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5106
+  },
+  "cost": {
+    "inputUsd": 0.00009422,
+    "outputUsd": 0.00014616000000000002,
+    "totalUsd": 0.00024038000000000003,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "列名の引用符",
+  "translation": {
+    "title": "列名の引用符",
+    "group": "引用 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "ピリオドを含む**列名**を指定するにはどうすればよいですか？"
+    ],
+    "explanationProse": [
+      "PostgreSQLでは識別子の引用に二重引用符を使用します:\n    - 識別子（列名、テーブル名）には二重引用符 `\"...\"` を使用します\n    - 文字列リテラルには一重引用符 `'...'` を使用します\n    - `first.name` の形式は `テーブル名.列名` として解釈されます\n\n    引用符がないと、列名内のピリオドはスキーマ/テーブルの区切り文字として解釈されてしまいます！さらに、引用符で囲まれていない識別子はデフォルトで小文字に変換されます。\n\n    驚きを減らすために、`snake_case` を使用し、特殊文字を避けるのが最善です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"列名の引用符\",\n  \"group\": \"引用 2\",\n  \"options\": [\n    {\"text\": \"first.name\"},\n    {\"text\": \"\\\"first.name\\\"\"},\n    {\"text\": \"\\\\\"},\n    {\"text\": \"[first.name]\"},\n    {\"text\": \"[first].[name]\"}\n  ],\n  \"questionProse\": [\n    \"ピリオドを含む**列名**を指定するにはどうすればよいですか？\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQLでは識別子の引用に二重引用符を使用します:\\n    - 識別子（列名、テーブル名）には二重引用符 `\\\"...\\\"` を使用します\\n    - 文字列リテラルには一重引用符 `'...'` を使用します\\n    - `first.name` の形式は `テーブル名.列名` として解釈されます\\n\\n    引用符がないと、列名内のピリオドはスキーマ/テーブルの区切り文字として解釈されてしまいます！さらに、引用符で囲まれていない識別子はデフォルトで小文字に変換されます。\\n\\n    驚きを減らすために、`snake_case` を使用し、特殊文字を避けるのが最善です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 2497,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 45352
+  },
+  "cost": {
+    "inputUsd": 0.00010808000000000001,
+    "outputUsd": 0.0006991600000000001,
+    "totalUsd": 0.0008072400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

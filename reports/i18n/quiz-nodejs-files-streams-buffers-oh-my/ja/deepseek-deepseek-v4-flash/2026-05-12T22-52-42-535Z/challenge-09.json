@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "File Watching",
+  "translatedTitle": "ファイル監視",
+  "translation": {
+    "title": "ファイル監視",
+    "group": "ファイルシステム",
+    "options": [
+      {
+        "text": "ファイル変更ごとに1回"
+      },
+      {
+        "text": "保証されず、複数回発火する可能性がある"
+      },
+      {
+        "text": "決して発火しない"
+      },
+      {
+        "text": "ファイル削除時のみ"
+      }
+    ],
+    "questionProse": [
+      "ファイルが変更されたとき、`fs.watch()` は何回発火することが保証されていますか？"
+    ],
+    "explanationProse": [
+      "`fs.watch()` は、論理的なファイル変更ごとに正確に1回発火することは保証されていません。多くのテキストエディタが以下のように動作するため、複数回発火することがよくあります：\n    1. 一時ファイルに保存する\n    2. それをターゲットファイルにリネームする\n\n    より信頼性の高い監視には、以下を検討してください：\n    - `chokidar` パッケージ\n    - コールバックのデバウンス\n    - `fs.watchFile()` の使用（ただし効率は低い）\n\n    [fs.watch() について詳しく学ぶ](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ファイル監視\",\n  \"group\": \"ファイルシステム\",\n  \"options\": [\n    {\n      \"text\": \"ファイル変更ごとに1回\"\n    },\n    {\n      \"text\": \"保証されず、複数回発火する可能性がある\"\n    },\n    {\n      \"text\": \"決して発火しない\"\n    },\n    {\n      \"text\": \"ファイル削除時のみ\"\n    }\n  ],\n  \"questionProse\": [\n    \"ファイルが変更されたとき、`fs.watch()` は何回発火することが保証されていますか？\"\n  ],\n  \"explanationProse\": [\n    \"`fs.watch()` は、論理的なファイル変更ごとに正確に1回発火することは保証されていません。多くのテキストエディタが以下のように動作するため、複数回発火することがよくあります：\\n    1. 一時ファイルに保存する\\n    2. それをターゲットファイルにリネームする\\n\\n    より信頼性の高い監視には、以下を検討してください：\\n    - `chokidar` パッケージ\\n    - コールバックのデバウンス\\n    - `fs.watchFile()` の使用（ただし効率は低い）\\n\\n    [fs.watch() について詳しく学ぶ](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 762,
+    "outputTokens": 1038,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 119642
+  },
+  "cost": {
+    "inputUsd": 0.00010668,
+    "outputUsd": 0.00029064000000000005,
+    "totalUsd": 0.00039732000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

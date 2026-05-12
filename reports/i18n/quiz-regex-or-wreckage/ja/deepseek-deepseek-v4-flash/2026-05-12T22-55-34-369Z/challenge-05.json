@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "肯定先読み",
+  "translation": {
+    "title": "肯定先読み",
+    "group": "先読み",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "これは何にマッチしますか？"
+    ],
+    "explanationProse": [
+      "このパターンは先読みが逆方向なので何にもマッチしません！`$` または `€` の前に数字が欲しい場合は、後読みを使用してください：`/(?<=[\\$€])\\d+/g`。\n\n    先読みは現在位置の*後ろ*に何が来るかをチェックします。このパターンは次のものを探します：\n    - 1つ以上の数字（`\\d+`）\n    - その後に（`(?=...)`）$ または €（`[\\$€]`）が続く\n\n    数字の後に通貨記号が続くものはない（通貨記号の前に数字がある）ため、マッチはありません。\n\n    [先読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"肯定先読み\",\n  \"group\": \"先読み\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"これは何にマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"このパターンは先読みが逆方向なので何にもマッチしません！`$` または `€` の前に数字が欲しい場合は、後読みを使用してください：`/(?<=[\\\\$€])\\\\d+/g`。\\n\\n    先読みは現在位置の*後ろ*に何が来るかをチェックします。このパターンは次のものを探します：\\n    - 1つ以上の数字（`\\\\d+`）\\n    - その後に（`(?=...)`）$ または €（`[\\\\$€]`）が続く\\n\\n    数字の後に通貨記号が続くものはない（通貨記号の前に数字がある）ため、マッチはありません。\\n\\n    [先読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 1383,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 53454
+  },
+  "cost": {
+    "inputUsd": 0.00011578000000000002,
+    "outputUsd": 0.00038724,
+    "totalUsd": 0.0005030200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

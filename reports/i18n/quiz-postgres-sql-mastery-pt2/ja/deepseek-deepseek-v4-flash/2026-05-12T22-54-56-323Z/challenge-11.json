@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNTとNULL",
+  "translation": {
+    "title": "COUNTとNULL",
+    "group": "NULLの動作",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "このクエリは何*行*を返しますか？"
+    ],
+    "explanationProse": [
+      "さて、これは少し厄介でした。落とし穴は、`x = NULL` は決して行にマッチせず、常にカウントが `0` の1行を返すことです。\n\n    `NULL` は未知の値であるため、それ自体を含め、何とも比較できません。\n    \n    `NULL` 値をチェックする正しい方法は `IS NULL` を使うことです。\n\n    例："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNTとNULL\",\n  \"group\": \"NULLの動作\",\n  \"options\": [\n    {\"text\": \"100\"},\n    {\"text\": \"90\"},\n    {\"text\": \"10\"},\n    {\"text\": \"1\"},\n    {\"text\": \"0\"}\n  ],\n  \"questionProse\": [\n    \"このクエリは何*行*を返しますか？\"\n  ],\n  \"explanationProse\": [\n    \"さて、これは少し厄介でした。落とし穴は、`x = NULL` は決して行にマッチせず、常にカウントが `0` の1行を返すことです。\\n\\n    `NULL` は未知の値であるため、それ自体を含め、何とも比較できません。\\n    \\n    `NULL` 値をチェックする正しい方法は `IS NULL` を使うことです。\\n\\n    例：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 752,
+    "outputTokens": 1351,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7442
+  },
+  "cost": {
+    "inputUsd": 0.00010528000000000001,
+    "outputUsd": 0.00037828000000000004,
+    "totalUsd": 0.00048356000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

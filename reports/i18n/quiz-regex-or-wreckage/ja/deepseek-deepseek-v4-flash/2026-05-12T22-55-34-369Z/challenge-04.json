@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "ドットメタキャラクター",
+  "translation": {
+    "title": "ドットメタキャラクター",
+    "group": "よくある落とし穴",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "このコードは何を返しますか？"
+    ],
+    "explanationProse": [
+      "`\\w+` パターンは1つ以上の単語文字にマッチします。文字列に改行があっても、`\\w` は以下にマッチします：\n    - 英字 (a-z, A-Z)\n    - 数字 (0-9)\n    - アンダースコア (_)\n\n    そのため、改行が単語の境界として機能し、2つのマッチが得られます。もし `.*` を使っていた場合、デフォルトでは改行にマッチしません（そのためには `s` フラグが必要です）。\n\n    [メタキャラクターについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ドットメタキャラクター\",\n  \"group\": \"よくある落とし穴\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何を返しますか？\"\n  ],\n  \"explanationProse\": [\n    \"`\\\\w+` パターンは1つ以上の単語文字にマッチします。文字列に改行があっても、`\\\\w` は以下にマッチします：\\n    - 英字 (a-z, A-Z)\\n    - 数字 (0-9)\\n    - アンダースコア (_)\\n\\n    そのため、改行が単語の境界として機能し、2つのマッチが得られます。もし `.*` を使っていた場合、デフォルトでは改行にマッチしません（そのためには `s` フラグが必要です）。\\n\\n    [メタキャラクターについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 1629,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15539
+  },
+  "cost": {
+    "inputUsd": 0.00011144000000000002,
+    "outputUsd": 0.00045612000000000007,
+    "totalUsd": 0.00056756,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

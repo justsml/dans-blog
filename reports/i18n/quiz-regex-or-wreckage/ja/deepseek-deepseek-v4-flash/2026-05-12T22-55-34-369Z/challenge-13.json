@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Positive Look-behind",
+  "translatedTitle": "肯定の後読み",
+  "translation": {
+    "title": "肯定の後読み",
+    "group": "後読み",
+    "options": [
+      {
+        "text": "[\"$100\"]"
+      },
+      {
+        "text": "[\"100\"]"
+      },
+      {
+        "text": "[\"$\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "何がマッチする？"
+    ],
+    "explanationProse": [
+      "肯定の後読み `(?<=\\$)` は、数字の前にドル記号があることを保証します：\n    - `(?<=\\$)`: ドル記号の後読み\n    - `\\d+`: 1つ以上の数字にマッチ\n\n    後読みアサーションは文字を消費せず、前に何があるかをチェックするだけです。\n    これは、前にあるものに基づいてマッチさせたいが、その前の部分を含めたくない場合に便利です。\n\n    [後読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"肯定の後読み\",\n  \"group\": \"後読み\",\n  \"options\": [\n    { \"text\": \"[\\\"$100\\\"]\" },\n    { \"text\": \"[\\\"100\\\"]\" },\n    { \"text\": \"[\\\"$\\\"]\" },\n    { \"text\": \"[]\" }\n  ],\n  \"questionProse\": [\"何がマッチする？\"],\n  \"explanationProse\": [\"肯定の後読み `(?<=\\\\$)` は、数字の前にドル記号があることを保証します：\\n    - `(?<=\\\\$)`: ドル記号の後読み\\n    - `\\\\d+`: 1つ以上の数字にマッチ\\n\\n    後読みアサーションは文字を消費せず、前に何があるかをチェックするだけです。\\n    これは、前にあるものに基づいてマッチさせたいが、その前の部分を含めたくない場合に便利です。\\n\\n    [後読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"]\n}",
+  "telemetry": {
+    "inputTokens": 765,
+    "outputTokens": 1624,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15735
+  },
+  "cost": {
+    "inputUsd": 0.0001071,
+    "outputUsd": 0.00045472000000000004,
+    "totalUsd": 0.00056182,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

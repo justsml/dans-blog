@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "貪欲マッチと非貪欲マッチ",
+  "translation": {
+    "title": "貪欲マッチと非貪欲マッチ",
+    "group": "基本マッチング",
+    "options": [],
+    "questionProse": [
+      "これは何にマッチしますか？"
+    ],
+    "explanationProse": [
+      "パターン `/<div>.*?<\\/div>/g` は `*?` を使った非貪欲マッチングです。意味は以下の通りです：\n    - `<div>` にマッチ\n    - 任意の文字 (`.*`) にマッチするが、できるだけ少なく (`?`)\n    - `</div>` が見つかるまで\n    - `g` フラグによりすべての出現にマッチ\n\n    `?` がない場合、貪欲な `.*` は最初の `<div>` から最後の `</div>` までのすべてにマッチし、1つの大きなマッチになります。`?` があると、各ペアを個別にマッチします。\n\n    [貪欲マッチと遅延マッチについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"貪欲マッチと非貪欲マッチ\",\n  \"group\": \"基本マッチング\",\n  \"options\": [],\n  \"questionProse\": [\n    \"これは何にマッチしますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"パターン `/<div>.*?<\\\\/div>/g` は `*?` を使った非貪欲マッチングです。意味は以下の通りです：\\n    - `<div>` にマッチ\\n    - 任意の文字 (`.*`) にマッチするが、できるだけ少なく (`?`)\\n    - `</div>` が見つかるまで\\n    - `g` フラグによりすべての出現にマッチ\\n\\n    `?` がない場合、貪欲な `.*` は最初の `<div>` から最後の `</div>` までのすべてにマッチし、1つの大きなマッチになります。`?` があると、各ペアを個別にマッチします。\\n\\n    [貪欲マッチと遅延マッチについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 757,
+    "outputTokens": 1493,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11750
+  },
+  "cost": {
+    "inputUsd": 0.00010598000000000001,
+    "outputUsd": 0.00041804000000000006,
+    "totalUsd": 0.00052402,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

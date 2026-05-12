@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "単語境界",
+  "translation": {
+    "title": "単語境界",
+    "group": "基本マッチング",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "何がマッチしますか？"
+    ],
+    "explanationProse": [
+      "`\\b`は単語境界を表し、以下の位置にマッチします：\n    - 単語文字と非単語文字の間\n    - 文字列の先頭または末尾（単語文字がある場合）\n\n    したがって、`/\\bcat\\b/`は「cat」が完全な単語として現れる場合のみマッチし、他の単語の一部としてはマッチしません。\n    - ✅ 「cat」（スペースで囲まれている）\n    - ❌ 「cats」（「cat」の後に境界がない）\n    - ❌ 「category」（「cat」の後に境界がない）\n\n    [単語境界について詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"単語境界\",\n  \"group\": \"基本マッチング\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"何がマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"`\\\\b`は単語境界を表し、以下の位置にマッチします：\\n    - 単語文字と非単語文字の間\\n    - 文字列の先頭または末尾（単語文字がある場合）\\n\\n    したがって、`/\\\\bcat\\\\b/`は「cat」が完全な単語として現れる場合のみマッチし、他の単語の一部としてはマッチしません。\\n    - ✅ 「cat」（スペースで囲まれている）\\n    - ❌ 「cats」（「cat」の後に境界がない）\\n    - ❌ 「category」（「cat」の後に境界がない）\\n\\n    [単語境界について詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 883,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 47130
+  },
+  "cost": {
+    "inputUsd": 0.00011102,
+    "outputUsd": 0.00024724,
+    "totalUsd": 0.00035826,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "WebSocket Wizardry",
+  "translatedTitle": "WebSocketの魔術",
+  "translation": {
+    "title": "WebSocketの魔術",
+    "group": "WebSocket",
+    "options": [
+      {
+        "text": "API Gateway"
+      },
+      {
+        "text": "EKS",
+        "hint": "EKSは独自の長期間稼働するWebSocketサービスを実行できます。"
+      },
+      {
+        "text": "Lightsail",
+        "hint": "Lightsailインスタンスで独自のWebSocketサーバーを実行できます。"
+      },
+      {
+        "text": "AppSync",
+        "hint": "AppSyncはWebSocketを介したマネージドリアルタイムGraphQLサブスクリプションを提供しますが、任意の生のソケットではありません。"
+      },
+      {
+        "text": "EC2",
+        "hint": "EC2は独自の長期間稼働するWebSocketサーバープロセスを実行できます。"
+      }
+    ],
+    "questionProse": [
+      "👋 ここまで楽しんでいただけていますか？\n\n      では、難しい問題です...\n\n      AWSがクライアント接続を管理し、メッセージを統合先にルーティングする、マネージドWebSocket APIを提供するAWSサービスはどれですか？"
+    ],
+    "explanationProse": [
+      "API Gatewayは双方向WebSocket APIをサポートしていますが、実装はAPI Gatewayによって管理されており、独自のサーバープロセスへの直接ソケットではありません。\n      API Gatewayはクライアント接続を維持し、メッセージをLambda、HTTPエンドポイント、その他の統合先にルーティングします。接続されたクライアントへのメッセージ送信は、API Gateway Management APIを通じて行えます。\n\n      他のサービスはWebSocketに対してより親和性が高いです：\n      - Lightsail：シンプルなWebSocket設定に最適 👌\n      - AppSync：マネージドGraphQLサブスクリプションにWebSocketを使用\n      - EC2：WebSocketで「好きなことをやる」定番の選択肢\n      - EKS：スケーラブルなWebSocketクラスターの実行に最適\n\n      プロのヒント：生のWebSocketパワーが必要なら、コンピュートサービスを使いましょう！"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"WebSocketの魔術\",\n  \"group\": \"WebSocket\",\n  \"options\": [\n    {\n      \"text\": \"API Gateway\"\n    },\n    {\n      \"text\": \"EKS\",\n      \"hint\": \"EKSは独自の長期間稼働するWebSocketサービスを実行できます。\"\n    },\n    {\n      \"text\": \"Lightsail\",\n      \"hint\": \"Lightsailインスタンスで独自のWebSocketサーバーを実行できます。\"\n    },\n    {\n      \"text\": \"AppSync\",\n      \"hint\": \"AppSyncはWebSocketを介したマネージドリアルタイムGraphQLサブスクリプションを提供しますが、任意の生のソケットではありません。\"\n    },\n    {\n      \"text\": \"EC2\",\n      \"hint\": \"EC2は独自の長期間稼働するWebSocketサーバープロセスを実行できます。\"\n    }\n  ],\n  \"questionProse\": [\n    \"👋 ここまで楽しんでいただけていますか？\\n\\n      では、難しい問題です...\\n\\n      AWSがクライアント接続を管理し、メッセージを統合先にルーティングする、マネージドWebSocket APIを提供するAWSサービスはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"API Gatewayは双方向WebSocket APIをサポートしていますが、実装はAPI Gatewayによって管理されており、独自のサーバープロセスへの直接ソケットではありません。\\n      API Gatewayはクライアント接続を維持し、メッセージをLambda、HTTPエンドポイント、その他の統合先にルーティングします。接続されたクライアントへのメッセージ送信は、API Gateway Management APIを通じて行えます。\\n\\n      他のサービスはWebSocketに対してより親和性が高いです：\\n      - Lightsail：シンプルなWebSocket設定に最適 👌\\n      - AppSync：マネージドGraphQLサブスクリプションにWebSocketを使用\\n      - EC2：WebSocketで「好きなことをやる」定番の選択肢\\n      - EKS：スケーラブルなWebSocketクラスターの実行に最適\\n\\n      プロのヒント：生のWebSocketパワーが必要なら、コンピュートサービスを使いましょう！\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 922,
+    "outputTokens": 1787,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 38868
+  },
+  "cost": {
+    "inputUsd": 0.00012908,
+    "outputUsd": 0.00050036,
+    "totalUsd": 0.00062944,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 20,
+  "attempt": 1,
+  "originalTitle": "Storage Cost Analysis",
+  "translatedTitle": "ストレージコスト分析",
+  "translation": {
+    "title": "ストレージコスト分析",
+    "group": "コスト最適化",
+    "options": [
+      {
+        "text": "すべてのデータにS3 Standard"
+      },
+      {
+        "text": "常に最も安いストレージを使用する"
+      },
+      {
+        "text": "アクセスパターンに基づいてストレージクラスを組み合わせる"
+      },
+      {
+        "text": "すべてをGlacierに保存する"
+      }
+    ],
+    "questionProse": [
+      "1PBのデータを保存する際、20%が毎日、30%が毎月、50%が毎年アクセスされる場合、最もコスト効率の良いアプローチは何ですか？"
+    ],
+    "explanationProse": [
+      "最適なストレージ戦略:\n  - 20%をS3 Standard（毎日アクセス）\n  - 30%をS3 Standard-IA（毎月アクセス）\n  - 50%をGlacier（毎年アクセス）\n\n  このアプローチは、適切なアクセスパターンを維持しながらコストを最適化します。\n\n  コスト考慮事項:\n  - GBあたりのストレージ料金\n  - 取得コスト\n  - アクセスパターン\n  - 移行コスト"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ストレージコスト分析\",\n  \"group\": \"コスト最適化\",\n  \"options\": [\n    {\n      \"text\": \"すべてのデータにS3 Standard\"\n    },\n    {\n      \"text\": \"常に最も安いストレージを使用する\"\n    },\n    {\n      \"text\": \"アクセスパターンに基づいてストレージクラスを組み合わせる\"\n    },\n    {\n      \"text\": \"すべてをGlacierに保存する\"\n    }\n  ],\n  \"questionProse\": [\n    \"1PBのデータを保存する際、20%が毎日、30%が毎月、50%が毎年アクセスされる場合、最もコスト効率の良いアプローチは何ですか？\"\n  ],\n  \"explanationProse\": [\n    \"最適なストレージ戦略:\\n  - 20%をS3 Standard（毎日アクセス）\\n  - 30%をS3 Standard-IA（毎月アクセス）\\n  - 50%をGlacier（毎年アクセス）\\n\\n  このアプローチは、適切なアクセスパターンを維持しながらコストを最適化します。\\n\\n  コスト考慮事項:\\n  - GBあたりのストレージ料金\\n  - 取得コスト\\n  - アクセスパターン\\n  - 移行コスト\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 759,
+    "outputTokens": 932,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7271
+  },
+  "cost": {
+    "inputUsd": 0.00010626000000000002,
+    "outputUsd": 0.00026096,
+    "totalUsd": 0.00036722,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

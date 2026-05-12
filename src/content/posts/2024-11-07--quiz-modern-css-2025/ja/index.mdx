@@ -1,0 +1,408 @@
+---
+unlisted: false
+title: クイズ：モダンCSSを知っていますか？（2025年版）
+subTitle: フロントエンド、どれだけわかってる？
+label: Advanced CSS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## クイズ：CSSを知ってる？
+
+* モダンCSS？ 🤔
+* **CSSはあなたの履歴書に載ってる？？？** 🚀
+* 選択式。🤖 … _どれだけ難しいって？ねえ？_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォームアップ"
+  title="CSS変数の使い方"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    CSS変数 `--main-color` を使って要素の背景色を設定する正しい方法はどれですか？
+    ```css
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    CSS変数は `var` 関数を使って使用します。したがって、正解は `background-color: var(--main-color);` です。この構文で `--main-color` の値を取得し、適用します。
+
+    他の選択肢は、他の言語やプリプロセッサ（SassやLessなど）の構文に由来するものです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="CSS 関数"
+  title="CSS min() 関数"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Invalid syntax'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    親/コンテナの幅が400pxの場合、次の要素の計算幅はいくつになりますか？
+    ```css
+        div {
+          width: min(250px, 50%);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `min()` 関数は、250px と親の幅の50% のうち、最も小さい値を選択します。
+
+    計算値を理解するには、相対単位をピクセルに変換する必要があります:
+
+    - `400px` の `50%` は `200px`
+    - `250px` はすでにピクセル単位です
+    ```css
+    /* This gets computed to */
+    width: min(250px, 200px);
+    /* -> 200px wins */
+    ```
+    `min()` 関数はレスポンシブデザインに特に便利で、コンポーネント（またはフォントサイズ）が特定の制限を超えないようにすることができます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="CSS 関数"
+  title="CSS max() 関数"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: '無効な構文'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    コンテナの幅が200pxの場合、`<div>`の計算上の幅はいくらになりますか？
+    ```css
+        div {
+          width: max(50px, 10%, 6rem);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `max()`関数は2つ以上の入力を受け取り、自動的に最大値を使用します。ルートフォントサイズがブラウザのデフォルト`16px`であると仮定すると、幅は`96px`になります。
+
+    計算値を理解するには、相対単位をピクセルに変換する必要があります:
+
+    - `50px`はすでにピクセルです
+    - `200px`の`10%`は`20px`です
+    - `6rem`は`6 * 16px`（デフォルトフォントサイズ）で`96px`です
+    ```css
+    /* This gets computed to */
+    width: max(50px, 20px, 96px);
+    /* -> 96px wins */
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="CSS グリッド関数"
+  title="CSS minmax() 関数"
+  options={[
+    {text: 'すべての列幅が 100px から 200px の間になる'},
+    {text: '列を 100px、行を 200px に設定する'},
+    {text: '1 列目が 100px から 200px の間になる', isAnswer: true},
+    {text: '範囲を再帰的に適用（サブグリッドを含む）'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    CSS グリッドトラックに `minmax(100px, 200px)` を使用すると、どのような効果がありますか？
+    ```css
+        grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `minmax(100px, 200px)` を使用すると、グリッドトラックは `100px` から `200px` の間でサイズ変更され、利用可能なスペースに適応しますが、`100px` 未満または `200px` を超えることはありません。
+
+    コンテナと子要素がそれぞれレイアウト計算に役割を果たす、自動調整レイアウトを作成できます。これは `repeat()` と `auto-fill` または `auto-fit` と組み合わせると強力で、制約内で可能な限り多くのトラックを作成します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="CSS変数"
+  title="CSS変数のフォールバック"
+  options={[
+    {text: '青'},
+    {text: '赤'},
+    {text: 'システムデフォルト'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    以下のCSSの場合、背景色は何色になるでしょうか？
+    ```css
+        div {
+          background: var(--primary, olivedrab);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `var()`関数を使用すると、変数が定義されていない場合のフォールバック値を設定できます。この場合、`--primary`が定義されていないため、背景は`olivedrab`（`#6b8e23`）になります。
+
+    変数が欠けていたりサポートされていない場合でもスタイルが壊れないようにするための優れた方法です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CSS関数"
+  title="clamp()を使ったレスポンシブデザイン"
+  options={[
+    {text: 'サポートされていない可能性のある単位のフォールバック'},
+    {text: '`vw`単位が20pxから50pxの間になるようにする'},
+    {text: '200pxから500pxの間の線形スケール', isAnswer: true},
+    {text: '200pxから500pxの間の対数（log₂）スケール'},
+    {text: '失敗！IE 11非対応'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `clamp()`は何をする関数ですか？
+    ```css
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `clamp()`関数は、`50vw`に基づいて幅をスケーリングできますが、200pxから500pxの範囲内に収めます。
+
+    つまり、50vwが200px未満の場合は幅が200px、50vwが500pxを超える場合は500pxとなり、その間は線形に変化します。
+
+    これにより、自動的にレスポンシブになります！`clamp`について知っておくべきことは、**固定単位**と**レスポンシブまたは計算単位**を組み合わせている点です。
+
+    通常、フォントサイズにビューポート単位を使いたくはありませんが、`clamp()`を使えばフォントサイズが小さくなりすぎたり大きくなりすぎたりするのを防げます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="CSSネスト"
+  title="ネイティブCSSネスト"
+  options={[
+    {text: 'SCSSのみ'},
+    {text: '技術的にはPostCSS'},
+    {text: 'はい', isAnswer: true},
+    {text: 'いいえ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    CSSはネイティブでネストをサポートしていますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    はい！ついにネイティブCSSネストが実現しました！CSSは近年（2023年）にネイティブのネスト構文を導入し、CSS内で直接階層的なスタイリングが可能になりました。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="CSSネスティング"
+  title="CSSネスティング"
+  options={[
+    {text: 'ファイル名は.scssで終わる必要がある'},
+    {text: '`.title`は`color`のようなプロパティの前に置く必要がある'},
+    {text: 'PostCSSでのみ可能'},
+    {text: '完璧。問題なし。', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    これはネイティブCSSネスティングの正しい使い方ですか？
+    ```css
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `.title`クラスは`.container`クラス内にネストされており、プロパティは期待通りに適用されます。
+
+    これは関連するスタイルをまとめ、長いセレクタを避ける優れた方法です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="CSSネスト"
+  title="ネストを使用した直接子セレクター"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: '無効な構文'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    `.container`の直接子要素`div`にはどの背景色が適用されますか？
+    ```css
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ネストされたルール内の`>`セレクターは、`.container`内の直接の子`div`要素にのみ`background-color: white`を適用します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="CSS変数"
+  title="実行時にCSS変数を変更する方法"
+  options={[
+    {text: 'CSS変数は不変である'},
+    {text: 'JavaScriptを使用する', isAnswer: true},
+    {text: 'SCSSのみ'},
+    {text: 'インラインスタイルのみ'},
+    {text: 'レスポンシブユニットを使用する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    実行時にCSS変数の値を変更するにはどうすればよいですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    CSS変数はクラスとJavaScriptを使用して設定できます。技術的には使用された後でも定義できます。
+    ```js
+    document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    これにより、ドキュメント全体の `--main-color` の値が `blue` に変更されます。
+
+    CSS変数は可変であり、JavaScriptを使用して実行時に変更できます。
+
+    また、クラスの追加や削除によっても変更できます。これはテーマ設定の一般的なパターンです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="CSS変数"
+  title="calc()とCSS変数の使用"
+  options={[
+    {text: '幅: 50px'},
+    {text: '幅: 100px'},
+    {text: '幅: 110px', isAnswer: true},
+    {text: '幅: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    この要素の計算後の幅はいくつになるでしょうか？
+    ```css
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `calc()`関数は`--base-width`の値(100px)と追加の10pxを組み合わせ、幅110pxになります。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

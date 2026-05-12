@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "否定の先読み",
+  "translation": {
+    "title": "否定の先読み",
+    "group": "先読み",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "このコードの結果はどれですか？"
+    ],
+    "explanationProse": [
+      "否定の先読み `(?![a-z])` は、数字の後に小文字が続かないことを保証します。\"3aBc\" の部分は数字の後に小文字があるため、その部分はマッチしません。そのため、先頭の \"12\" だけがマッチします。\n\n    [否定の先読みについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"否定の先読み\",\n  \"group\": \"先読み\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードの結果はどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"否定の先読み `(?![a-z])` は、数字の後に小文字が続かないことを保証します。\\\"3aBc\\\" の部分は数字の後に小文字があるため、その部分はマッチしません。そのため、先頭の \\\"12\\\" だけがマッチします。\\n\\n    [否定の先読みについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 1109,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13782
+  },
+  "cost": {
+    "inputUsd": 0.00010724000000000001,
+    "outputUsd": 0.00031052,
+    "totalUsd": 0.00041776,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

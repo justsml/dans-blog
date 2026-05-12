@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "集約関数 COUNT",
+  "translation": {
+    "title": "集約関数 COUNT",
+    "group": "SQL 基礎",
+    "options": [
+      {
+        "text": "NULL値を含むすべての行をカウントする"
+      },
+      {
+        "text": "列内の非NULL値のみをカウントする"
+      },
+      {
+        "text": "NULL値を1つの一意な値としてカウントする"
+      },
+      {
+        "text": "各NULL値をNaN !== NaNと同様に一意として扱う"
+      }
+    ],
+    "questionProse": [
+      "SQLの `COUNT(column_name)` は何を行いますか？"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` は指定された列の非NULL値の数をカウントします。NULLを含むすべての行をカウントするには、`COUNT(*)` を使用します。\n\nまた、`COALESCE` を使用してNULLを非NULL値にデフォルト設定することもできます。例: `COUNT(COALESCE(column_name, 0))`"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"集約関数 COUNT\",\n  \"group\": \"SQL 基礎\",\n  \"options\": [\n    {\n      \"text\": \"NULL値を含むすべての行をカウントする\"\n    },\n    {\n      \"text\": \"列内の非NULL値のみをカウントする\"\n    },\n    {\n      \"text\": \"NULL値を1つの一意な値としてカウントする\"\n    },\n    {\n      \"text\": \"各NULL値をNaN !== NaNと同様に一意として扱う\"\n    }\n  ],\n  \"questionProse\": [\n    \"SQLの `COUNT(column_name)` は何を行いますか？\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` は指定された列の非NULL値の数をカウントします。NULLを含むすべての行をカウントするには、`COUNT(*)` を使用します。\\n\\nまた、`COALESCE` を使用してNULLを非NULL値にデフォルト設定することもできます。例: `COUNT(COALESCE(column_name, 0))`\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 735,
+    "outputTokens": 861,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 49414
+  },
+  "cost": {
+    "inputUsd": 0.00010290000000000001,
+    "outputUsd": 0.00024108000000000002,
+    "totalUsd": 0.00034398,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

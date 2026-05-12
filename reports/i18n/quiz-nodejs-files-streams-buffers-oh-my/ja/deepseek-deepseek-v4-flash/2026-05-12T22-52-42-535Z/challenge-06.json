@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stream Piping",
+  "translatedTitle": "ストリームパイピング",
+  "translation": {
+    "title": "ストリームパイピング",
+    "group": "ストリーム",
+    "options": [
+      {
+        "text": "ファイルを圧縮してコピーする"
+      },
+      {
+        "text": "メモリバッファリングなしでファイルをコピーする"
+      },
+      {
+        "text": "ファイル全体をメモリに読み込む"
+      },
+      {
+        "text": "シンボリックリンクを作成する"
+      }
+    ],
+    "questionProse": [
+      "このコードは何をしますか？"
+    ],
+    "explanationProse": [
+      "`pipe()`は読み取り可能ストリームを書き込み可能ストリームに接続し、バックプレッシャーを自動管理しながらデータをチャンク単位でコピーするため、ファイル全体をメモリに読み込むことはありません。\n\n    これは`fs.readFile()`と`fs.writeFile()`を順に使う方法と比べて、大きなファイルに対してメモリ効率が良いです。\n\n    [pipe()の詳細はこちら](https://nodejs.org/api/stream.html#readablepipedestination-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ストリームパイピング\",\n  \"group\": \"ストリーム\",\n  \"options\": [\n    {\n      \"text\": \"ファイルを圧縮してコピーする\"\n    },\n    {\n      \"text\": \"メモリバッファリングなしでファイルをコピーする\"\n    },\n    {\n      \"text\": \"ファイル全体をメモリに読み込む\"\n    },\n    {\n      \"text\": \"シンボリックリンクを作成する\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何をしますか？\"\n  ],\n  \"explanationProse\": [\n    \"`pipe()`は読み取り可能ストリームを書き込み可能ストリームに接続し、バックプレッシャーを自動管理しながらデータをチャンク単位でコピーするため、ファイル全体をメモリに読み込むことはありません。\\n\\n    これは`fs.readFile()`と`fs.writeFile()`を順に使う方法と比べて、大きなファイルに対してメモリ効率が良いです。\\n\\n    [pipe()の詳細はこちら](https://nodejs.org/api/stream.html#readablepipedestination-options)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 717,
+    "outputTokens": 1093,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 6910
+  },
+  "cost": {
+    "inputUsd": 0.00010038000000000001,
+    "outputUsd": 0.00030604000000000004,
+    "totalUsd": 0.00040642000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "否定の後読み",
+  "translation": {
+    "title": "否定の後読み",
+    "group": "後読み",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "このパターンにマッチするのは？"
+    ],
+    "explanationProse": [
+      "否定の後読み `(?<!abc)` は、数字の前に \"abc\" がないことを保証します。\n    - ❌ \"123\" (前に \"abc\" がある)\n    - ✅ \"23\" (前に \"abc1\" がある)\n    - ✅ \"456\" (前に \"def\" がある)\n\n    JavaScript は最新のエンジンで後読みアサーションをサポートしています。この例では固定長の後読みを使用しています：`abc` は常に3文字です。可変長の後読みは、エンジン固有のよりトリッキーな部分です。\n\n    注意：後読みのサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"否定の後読み\",\n  \"group\": \"後読み\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"このパターンにマッチするのは？\"\n  ],\n  \"explanationProse\": [\n    \"否定の後読み `(?<!abc)` は、数字の前に \\\"abc\\\" がないことを保証します。\\n    - ❌ \\\"123\\\" (前に \\\"abc\\\" がある)\\n    - ✅ \\\"23\\\" (前に \\\"abc1\\\" がある)\\n    - ✅ \\\"456\\\" (前に \\\"def\\\" がある)\\n\\n    JavaScript は最新のエンジンで後読みアサーションをサポートしています。この例では固定長の後読みを使用しています：`abc` は常に3文字です。可変長の後読みは、エンジン固有のよりトリッキーな部分です。\\n\\n    注意：後読みのサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 1419,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8083
+  },
+  "cost": {
+    "inputUsd": 0.00011564000000000001,
+    "outputUsd": 0.00039732,
+    "totalUsd": 0.00051296,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

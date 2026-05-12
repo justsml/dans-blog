@@ -1,0 +1,600 @@
+---
+unlisted: false
+title: NodeJS IO マスタークイズ
+subTitle: ファイル、ストリーム、バッファの知識テスト
+label: NodeJS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: NodeJS
+date: '2024-11-15'
+modified: '2024-11-15'
+tags:
+  - quiz
+  - nodejs
+  - io
+  - streams
+  - buffers
+  - filesystem
+  - intermediate
+cover_full_width: ../data-streaming-wide.webp
+cover_mobile: ../data-streaming-square.webp
+cover_icon: ../data-streaming-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">NodeJS IOの世界に飛び込む準備はできていますか？🌊</p>
+
+このクイズでは、NodeのIO操作に関する理解をテストします。基本的なファイルシステム操作から高度なストリーミングの概念まで、バッファ、エンコーディング、データを効率的に扱うためのベストプラクティスをカバーします。
+
+ストリームとバッファの違いをどれだけ理解しているか、試してみましょう！🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォームアップ: バッファ"
+  title="バッファの割り当て"
+  options={[
+    {text: 'サイズ5のバッファをゼロで作成する', isAnswer: true},
+    {text: 'サイズ5のバッファをランダムデータで作成する'},
+    {text: 'エラーをスローする'},
+    {text: '空のバッファを作成する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードは何をしますか？
+    ```js
+        const buf = Buffer.alloc(5);
+        console.log(buf);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Buffer.alloc(size)` は指定されたサイズの新しいバッファをゼロで埋めて作成します。
+    出力は次のようになります: `<Buffer 00 00 00 00 00>`
+
+    ランダムデータでバッファを作成したい場合は、`Buffer.allocUnsafe(5)` を使用します。
+
+    [バッファ割り当ての詳細](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ウォームアップ：バッファ"
+  title="バッファから文字列への変換"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'バイナリデータ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    これは何を出力するでしょうか？
+    ```js
+        const buf = Buffer.from([65]);
+        console.log(buf.toString());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    配列内の数値はASCIIコードを表しています：
+
+    - 65: 'A'
+
+    `toString()` はデフォルトでUTF-8エンコーディングを使用して、これらのバイトを文字列表現に変換します。
+
+    [バッファエンコーディングについて詳しく学ぶ](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="ウォームアップ: ファイルシステム"
+  title="非同期ファイル操作"
+  options={[
+    {text: 'ファイルの内容を表示し、その後「Done」を表示'},
+    {text: '「Done」を表示し、その後ファイルの内容を表示', isAnswer: true},
+    {text: 'ファイルの内容のみ表示'},
+    {text: 'エラーをスロー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    出力の順序は？
+    ```js
+        import fs from 'fs';
+        fs.readFile('test.txt', 'utf8', (err, data) => {
+          console.log(data);
+        });
+        console.log('Done');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `readFile`は非同期なので、ファイルが読み込まれている間もコードは実行を続けます。
+    そのため、「Done」がファイルの内容より先に表示されます。
+
+    ファイルの読み込みを待つには、Promiseベースのバージョンを使用できます：
+    ```js
+        import { promises as fs } from 'fs';
+    
+        async function read() {
+          const data = await fs.readFile('test.txt', 'utf8');
+          console.log(data);
+          console.log('Done');
+        }
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="ファイルシステムの基本"
+  title="ファイルの同期的読み取り"
+  options={[
+    {text: 'Bufferを返す', isAnswer: true},
+    {text: '文字列を返す'},
+    {text: 'undefinedを返す'},
+    {text: 'Promiseを返す'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    デフォルトで `fs.readFileSync()` は何を返しますか？
+    ```js
+        import fs from 'fs';
+        const content = fs.readFileSync('test.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.readFileSync()` はエンコーディングが指定されていない場合、デフォルトで Buffer を返します。文字列を取得したい場合は、次のいずれかを行う必要があります：
+    1. エンコーディングを指定する: `fs.readFileSync('test.txt', 'utf8')`
+    2. Buffer を変換する: `content.toString()`
+
+    [Node.js ドキュメントで fs.readFileSync について詳しく見る](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="ストリーム"
+  title="ストリームイベント"
+  options={[
+    {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
+    {text: '\'finish\', \'drain\', \'pipe\''},
+    {text: '\'read\', \'write\', \'end\''},
+    {text: '\'open\', \'close\', \'data\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Readableストリームで一般的に使用されるイベントのセットはどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Readableストリームはいくつかの重要なイベントを発行します:
+    - 'data': 読み取り可能なデータがあるとき
+    - 'end': 読み取るデータがもうないとき
+    - 'error': エラーが発生したとき
+    - 'close': ストリームと基盤となるリソースが閉じられたとき
+    ```js
+        const readable = fs.createReadStream('file.txt');
+        readable.on('data', chunk => console.log(chunk));
+        readable.on('end', () => console.log('Done!'));
+    ```
+    [ストリームイベントの詳細](https://nodejs.org/api/stream.html#class-streamreadable)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="ストリーム"
+  title="ストリームパイピング"
+  options={[
+    {text: 'ファイルを圧縮してコピーする'},
+    {text: 'メモリバッファリングなしでファイルをコピーする', isAnswer: true},
+    {text: 'ファイル全体をメモリに読み込む'},
+    {text: 'シンボリックリンクを作成する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードは何をしますか？
+    ```js
+        import fs from 'fs';
+        const readable = fs.createReadStream('source.txt');
+        const writable = fs.createWriteStream('dest.txt');
+        readable.pipe(writable);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `pipe()`は読み取り可能ストリームを書き込み可能ストリームに接続し、バックプレッシャーを自動管理しながらデータをチャンク単位でコピーするため、ファイル全体をメモリに読み込むことはありません。
+
+    これは`fs.readFile()`と`fs.writeFile()`を順に使う方法と比べて、大きなファイルに対してメモリ効率が良いです。
+
+    [pipe()の詳細はこちら](https://nodejs.org/api/stream.html#readablepipedestination-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="ファイルシステム"
+  title="ディレクトリ操作"
+  options={[
+    {text: '必要に応じてネストされたディレクトリを作成する', isAnswer: true},
+    {text: '最後のディレクトリのみを作成する'},
+    {text: 'エラーをスローする'},
+    {text: 'シンボリックリンクを作成する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    再帰オプションは何をしますか？
+    ```js
+        import fs from 'fs';
+        fs.mkdirSync('./a/b/c', { recursive: true });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `recursive: true` オプションは、親ディレクトリが存在しない場合にそれを作成します。
+    このオプションがないと、'./a/b/c' を作成しようとしたときに、'./a' や './a/b' が存在しない場合はエラーがスローされます。
+
+    これはシェルコマンド `mkdir -p` と似ています。
+
+    [mkdir について詳しく見る](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="ストリーム"
+  title="変換ストリーム"
+  options={[
+    {text: 'hello world'},
+    {text: 'HELLO WORLD', isAnswer: true},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードの出力は何ですか？
+    ```js
+        import { Transform } from 'stream';
+        const upperCase = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk.toString().toUpperCase());
+          }
+        });
+        process.stdin
+          .pipe(upperCase)
+          .pipe(process.stdout);
+        // Input: "hello world"
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    変換ストリームはデータが通過する際に変更を加えます。ここでは、各チャンクは:
+    1. 文字列に変換される
+    2. 大文字に変換される
+    3. stdoutに渡される
+
+    これにより、すべての入力を大文字に変換するパイプラインが作成されます。
+
+    [Transformストリームについて詳しく学ぶ](https://nodejs.org/api/stream.html#class-streamtransform)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="ファイルシステム"
+  title="ファイル監視"
+  options={[
+    {text: 'ファイル変更ごとに1回'},
+    {text: '保証されず、複数回発火する可能性がある', isAnswer: true},
+    {text: '決して発火しない'},
+    {text: 'ファイル削除時のみ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ファイルが変更されたとき、`fs.watch()` は何回発火することが保証されていますか？
+    ```js
+        import fs from 'fs';
+        fs.watch('test.txt', (eventType, filename) => {
+          console.log(`${filename} was changed`);
+        });
+        // Then modify test.txt once
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `fs.watch()` は、論理的なファイル変更ごとに正確に1回発火することは保証されていません。多くのテキストエディタが以下のように動作するため、複数回発火することがよくあります：
+    1. 一時ファイルに保存する
+    2. それをターゲットファイルにリネームする
+
+    より信頼性の高い監視には、以下を検討してください：
+    - `chokidar` パッケージ
+    - コールバックのデバウンス
+    - `fs.watchFile()` の使用（ただし効率は低い）
+
+    [fs.watch() について詳しく学ぶ](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="バッファ"
+  title="バッファ比較"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    出力は何ですか？
+    ```js
+        const buf1 = Buffer.from('Hello');
+        const buf2 = Buffer.from('Hello');
+        console.log(buf1 === buf2);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    バッファは値ではなく参照で比較されます。同じデータを含んでいても、異なるオブジェクトです。
+
+    バッファの内容を比較するには、次を使用します：
+    ```js
+        buf1.equals(buf2)  // true
+        // or
+        Buffer.compare(buf1, buf2) === 0  // true
+    ```
+    [バッファ比較の詳細](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="ストリーム"
+  title="ストリームのバックプレッシャー"
+  options={[
+    {text: 'メモリオーバーフローを防ぐ', isAnswer: true},
+    {text: '読み取り速度を上げる'},
+    {text: 'データを圧縮する'},
+    {text: 'データを暗号化する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    ストリームのバックプレッシャーの主な目的は何ですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    バックプレッシャーは、書き込み側が追いつかないときに読み取りを一時停止することでメモリオーバーフローを防ぐ仕組みです。
+
+    手動バックプレッシャーの例：
+    ```js
+        readable.on('data', (chunk) => {
+          const canContinue = writable.write(chunk);
+          if (!canContinue) {
+            readable.pause();
+            writable.once('drain', () => readable.resume());
+          }
+        });
+    ```
+    `pipe()` はこれを自動的に処理します！
+
+    [バックプレッシャーの詳細](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="ファイルシステム"
+  title="シンボリックリンク"
+  options={[
+    {text: 'ハードリンクを作成する'},
+    {text: 'コピーを作成する'},
+    {text: 'シンボリックリンクを作成する', isAnswer: true},
+    {text: 'ファイルを移動する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコードは何をしますか？
+    ```js
+        import fs from 'fs';
+        fs.symlinkSync('target.txt', 'link.txt');
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `symlinkSync` はターゲットファイルへのシンボリックリンク（ショートカットのようなもの）を作成します。
+
+    ハードリンクとの主な違い：
+    - ディレクトリへのリンクが可能
+    - 異なるファイルシステム間でリンク可能
+    - ターゲットが削除されるとリンクが切れる
+
+    代わりにハードリンクを作成するには：
+    ```js
+        fs.linkSync('target.txt', 'hardlink.txt');
+    ```
+    [シンボリックリンクの詳細](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="ストリーム"
+  title="ストリームモード"
+  options={[
+    {text: 'バイナリモードのみ'},
+    {text: 'オブジェクトモードのみ'},
+    {text: '両方のモード', isAnswer: true},
+    {text: 'どちらでもない'},
+    {text: '入力モードと出力モード'},
+    {text: '読み取りモードと書き込みモード'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Node.jsのストリームはどのモードで動作できますか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ストリームは次のモードで動作できます：
+    1. バイナリモード（デフォルト）：バッファと文字列用
+    2. オブジェクトモード：任意のJavaScript値用
+
+    オブジェクトモードの例：
+    ```js
+        import { Transform } from 'stream';
+        const objectStream = new Transform({
+          objectMode: true,
+          transform(chunk, encoding, callback) {
+            callback(null, { value: chunk });
+          }
+        });
+    ```
+    [ストリームモードの詳細](https://nodejs.org/api/stream.html#object-mode)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="ファイルシステム"
+  title="ファイルディスクリプタ"
+  options={[
+    {text: '数値', isAnswer: true},
+    {text: '文字列'},
+    {text: 'オブジェクト'},
+    {text: 'バッファ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    このコールバックの `fd` パラメータの型は何ですか？
+    ```js
+        import fs from 'fs';
+        fs.open('test.txt', 'r', (err, fd) => {
+          console.log(typeof fd);
+        });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    ファイルディスクリプタは、オペレーティングシステムで開いているファイルを一意に識別する数値です。
+
+    最初の3つのファイルディスクリプタは予約されています：
+    - 0: stdin
+    - 1: stdout
+    - 2: stderr
+
+    ファイルディスクリプタは必ず閉じることを忘れないでください：
+    ```js
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
+    ```
+    [ファイルディスクリプタの詳細](https://nodejs.org/api/fs.html#file-descriptors)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="エンコーディング"
+  title="バッファエンコーディング"
+  options={[
+    {text: '3'},
+    {text: '4'},
+    {text: '6'},
+    {text: '8'},
+    {text: '10', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    この文字列はUTF-8で何バイトになりますか？
+    ```js
+        const str = "Hello 🌍";
+        const buf = Buffer.from(str);
+        console.log(buf.length);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    UTF-8では:
+    - ASCII文字（'Hello 'など）はそれぞれ1バイト
+    - 地球の絵文字🌍は4バイト
+
+    つまり: 5 (Hello) + 1 (スペース) + 4 (🌍) = 10バイト
+
+    バイトを確認するには:
+    ```js
+        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+    ```
+    [UTF-8エンコーディングについてもっと学ぶ](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+NodeJS IOの知識を試すのを楽しんでいただけたでしょうか？もっと挑戦したいですか？私の[クイズコレクション](/challenges/)でさらにチャレンジをチェックしてください！

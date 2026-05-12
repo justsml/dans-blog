@@ -1,0 +1,48 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "コピー vs クローン",
+  "translation": {
+    "title": "コピー vs クローン",
+    "group": "デザインパターン",
+    "options": [
+      {
+        "text": "コンパイルエラー",
+        "hint": "derive属性は正しく使われています"
+      },
+      {
+        "text": "ディープコピーが作成される"
+      },
+      {
+        "text": "シャローコピーが作成される",
+        "hint": "CloneはStringフィールドのディープコピーを作成します"
+      },
+      {
+        "text": "ムーブセマンティクスが適用される",
+        "hint": "Cloneは明示的に新しいコピーを作成します"
+      }
+    ],
+    "questionProse": [
+      "このPhilosophy構造体をクローンするとどうなりますか？"
+    ],
+    "explanationProse": [
+      "CopyとCloneの違いを詳しく見てみましょう：",
+      "主な違い：\n      1. Copy:\n         - 暗黙的、ビット単位のコピー\n         - Copy-safeである必要がある（ヒープ割り当てなし）\n         - 通常は小さなスタックのみの型に使用\n         \n      2. Clone:\n         - 明示的、潜在的にディープコピー\n         - ヒープ割り当てを扱える\n         - より柔軟だがコストがかかる可能性あり\n\n      ベストプラクティス：\n      1. 小さなスタックのみの型にはCopyを実装する\n      2. 所有リソースを持つ型にはCloneを使用する\n      3. Cloneのパフォーマンスへの影響を文書化する\n      4. 最適化のためにカスタムClone実装を検討する\n      5. 自動導出には注意する"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"コピー vs クローン\",\n  \"group\": \"デザインパターン\",\n  \"options\": [\n    {\n      \"text\": \"コンパイルエラー\",\n      \"hint\": \"derive属性は正しく使われています\"\n    },\n    {\n      \"text\": \"ディープコピーが作成される\"\n    },\n    {\n      \"text\": \"シャローコピーが作成される\",\n      \"hint\": \"CloneはStringフィールドのディープコピーを作成します\"\n    },\n    {\n      \"text\": \"ムーブセマンティクスが適用される\",\n      \"hint\": \"Cloneは明示的に新しいコピーを作成します\"\n    }\n  ],\n  \"questionProse\": [\n    \"このPhilosophy構造体をクローンするとどうなりますか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"CopyとCloneの違いを詳しく見てみましょう：\",\n    \"主な違い：\\n      1. Copy:\\n         - 暗黙的、ビット単位のコピー\\n         - Copy-safeである必要がある（ヒープ割り当てなし）\\n         - 通常は小さなスタックのみの型に使用\\n         \\n      2. Clone:\\n         - 明示的、潜在的にディープコピー\\n         - ヒープ割り当てを扱える\\n         - より柔軟だがコストがかかる可能性あり\\n\\n      ベストプラクティス：\\n      1. 小さなスタックのみの型にはCopyを実装する\\n      2. 所有リソースを持つ型にはCloneを使用する\\n      3. Cloneのパフォーマンスへの影響を文書化する\\n      4. 最適化のためにカスタムClone実装を検討する\\n      5. 自動導出には注意する\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 851,
+    "outputTokens": 2117,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 12128
+  },
+  "cost": {
+    "inputUsd": 0.00011914000000000001,
+    "outputUsd": 0.00059276,
+    "totalUsd": 0.0007119,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

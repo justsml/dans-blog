@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Check Constraint Timing",
+  "translatedTitle": "チェック制約のタイミング",
+  "translation": {
+    "title": "チェック制約のタイミング",
+    "group": "制約",
+    "options": [
+      {
+        "text": "新規または変更された行に対して即時"
+      },
+      {
+        "text": "トランザクションコミット時"
+      },
+      {
+        "text": "次のクエリ時"
+      },
+      {
+        "text": "なし - 制約はINSERT時のみチェックされる"
+      }
+    ],
+    "questionProse": [
+      "このgrade制約はいつチェックされますか？"
+    ],
+    "explanationProse": [
+      "`NOT VALID`制約:\n    - 新しい挿入や更新に対して即時チェックされる\n    - 既存の行は検証しない\n    - 後で`VALIDATE CONSTRAINT`を使って既存の行を検証できる\n    - 大規模テーブルに有用\n    \n    `NOT VALID`なしの場合:\n    - 制約は即時チェックされる\n    - すべての既存行が検証される\n    - 大規模テーブルでは遅くなる可能性がある"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"チェック制約のタイミング\",\n  \"group\": \"制約\",\n  \"options\": [\n    {\n      \"text\": \"新規または変更された行に対して即時\"\n    },\n    {\n      \"text\": \"トランザクションコミット時\"\n    },\n    {\n      \"text\": \"次のクエリ時\"\n    },\n    {\n      \"text\": \"なし - 制約はINSERT時のみチェックされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"このgrade制約はいつチェックされますか？\"\n  ],\n  \"explanationProse\": [\n    \"`NOT VALID`制約:\\n    - 新しい挿入や更新に対して即時チェックされる\\n    - 既存の行は検証しない\\n    - 後で`VALIDATE CONSTRAINT`を使って既存の行を検証できる\\n    - 大規模テーブルに有用\\n    \\n    `NOT VALID`なしの場合:\\n    - 制約は即時チェックされる\\n    - すべての既存行が検証される\\n    - 大規模テーブルでは遅くなる可能性がある\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 728,
+    "outputTokens": 1694,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15831
+  },
+  "cost": {
+    "inputUsd": 0.00010192000000000001,
+    "outputUsd": 0.00047432,
+    "totalUsd": 0.00057624,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

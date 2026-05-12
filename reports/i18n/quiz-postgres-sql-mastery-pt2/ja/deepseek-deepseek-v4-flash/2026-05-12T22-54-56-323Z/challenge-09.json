@@ -1,0 +1,32 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "TABLESAMPLE Syntax",
+  "translatedTitle": "TABLESAMPLE 構文",
+  "translation": {
+    "title": "TABLESAMPLE 構文",
+    "group": "データサンプリング",
+    "options": [],
+    "questionProse": [
+      "学生の **10% をランダムにサンプリング** する正しい構文はどれですか？"
+    ],
+    "explanationProse": [
+      "これは難しい問題です！おおよそ6つの罠が仕掛けられています。その一部を紹介します：\n\n    1. 高レベルの説明と構文の断片が混在。不完全な情報をどう適応・組み立てるかを試します。\n    2. `TABLESAMPLE` 構文の知識が必要です。なぜなら、どの `TABLESAMPLE` オプションも正しい構文を使っていないからです！（意地悪ですよね！でも大丈夫、あなたならできると信じています！！！ ❤️）\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` と `ORDER BY RANDOM() > 10` はさらにミスリードです。一見正しそうに見えますが、違います。`RAND()` は存在しません。そして `RANDOM() > 10` は常に偽となるブール式です。なぜなら `RANDOM()` は常に `0.0-1.0` の範囲だからです。\n    もう一つ問題があります。`ORDER BY RANDOM() > 10` はブール値でソートするのであって、乱数ではありません。でも `> 10` はパーセンテージのように感じられますよね？\n    4. `BERNOULLI` は有効ですが、`SAMPLETABLE` は無効です。\n    5. `WHERE RANDOM() >= 0.1` はトリックです！`RANDOM()` は `0.0 <= x < 1.0` の範囲の値を返すので、`>= 0.1` は約90%の行を返し、10%ではありません。\n\n    `TABLESAMPLE` メソッドについて、PostgreSQLは2つのサンプリング方法をサポートしています：\n    - `BERNOULLI`: 各行が等しい確率で選択される\n    - `SYSTEM`: ブロックレベルのサンプリング（高速だがランダム性は低い）\n\n    サンプリングについてもっと学ぶには、[Render](https://render.com/blog/postgresql-random-samples-big-tables) の記事をチェックしてください。\n\n    例：",
+      "また、`TABLESAMPLE` は[あまりランダムではないと報告されています](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql)。もっとランダムな固定サイズのサンプルが必要な場合は、`ORDER BY RANDOM() LIMIT 10` の使用を検討してください。ただし、これは10%ではなく10行を返し、大きなテーブルでは遅くなる可能性があることに注意してください。\n\n    より良いランダムサンプリング方法を提供するサードパーティの拡張機能もありますが、それは今回の範囲外です！ 😅"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"TABLESAMPLE 構文\",\n  \"group\": \"データサンプリング\",\n  \"options\": [],\n  \"questionProse\": [\n    \"学生の **10% をランダムにサンプリング** する正しい構文はどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"これは難しい問題です！おおよそ6つの罠が仕掛けられています。その一部を紹介します：\\n\\n    1. 高レベルの説明と構文の断片が混在。不完全な情報をどう適応・組み立てるかを試します。\\n    2. `TABLESAMPLE` 構文の知識が必要です。なぜなら、どの `TABLESAMPLE` オプションも正しい構文を使っていないからです！（意地悪ですよね！でも大丈夫、あなたならできると信じています！！！ ❤️）\\n    3. `ROW_NUMBER() OVER (ORDER BY RAND())` と `ORDER BY RANDOM() > 10` はさらにミスリードです。一見正しそうに見えますが、違います。`RAND()` は存在しません。そして `RANDOM() > 10` は常に偽となるブール式です。なぜなら `RANDOM()` は常に `0.0-1.0` の範囲だからです。\\n    もう一つ問題があります。`ORDER BY RANDOM() > 10` はブール値でソートするのであって、乱数ではありません。でも `> 10` はパーセンテージのように感じられますよね？\\n    4. `BERNOULLI` は有効ですが、`SAMPLETABLE` は無効です。\\n    5. `WHERE RANDOM() >= 0.1` はトリックです！`RANDOM()` は `0.0 <= x < 1.0` の範囲の値を返すので、`>= 0.1` は約90%の行を返し、10%ではありません。\\n\\n    `TABLESAMPLE` メソッドについて、PostgreSQLは2つのサンプリング方法をサポートしています：\\n    - `BERNOULLI`: 各行が等しい確率で選択される\\n    - `SYSTEM`: ブロックレベルのサンプリング（高速だがランダム性は低い）\\n\\n    サンプリングについてもっと学ぶには、[Render](https://render.com/blog/postgresql-random-samples-big-tables) の記事をチェックしてください。\\n\\n    例：\",\n    \"また、`TABLESAMPLE` は[あまりランダムではないと報告されています](https://stackoverflow.com/questions/8674718/best-way-to-select-random-rows-postgresql)。もっとランダムな固定サイズのサンプルが必要な場合は、`ORDER BY RANDOM() LIMIT 10` の使用を検討してください。ただし、これは10%ではなく10行を返し、大きなテーブルでは遅くなる可能性があることに注意してください。\\n\\n    より良いランダムサンプリング方法を提供するサードパーティの拡張機能もありますが、それは今回の範囲外です！ 😅\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1121,
+    "outputTokens": 3578,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 22532
+  },
+  "cost": {
+    "inputUsd": 0.00015694000000000003,
+    "outputUsd": 0.0010018400000000002,
+    "totalUsd": 0.00115878,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

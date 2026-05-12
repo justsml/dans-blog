@@ -1,0 +1,53 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を特定する",
+  "translation": {
+    "title": "無効な型を特定する",
+    "group": "PostgreSQLの型",
+    "options": [
+      {
+        "text": "int"
+      },
+      {
+        "text": "real"
+      },
+      {
+        "text": "bigint"
+      },
+      {
+        "text": "bigserial"
+      },
+      {
+        "text": "smallserial"
+      },
+      {
+        "text": "decimal128"
+      },
+      {
+        "text": "double precision"
+      }
+    ],
+    "questionProse": [
+      "次のうち、PostgreSQLの有効な型でないものはどれでしょう？❌"
+    ],
+    "explanationProse": [
+      "`decimal128`は（MongoやJavaを含む）多くの場所で使われる型なので、見覚えがあるかもしれません。しかし、PostgreSQLの有効な型ではなく、`decimal`が正しい型です。\n\n正しい数値型は次の通りです：\n- `int`（4バイト整数）\n- `bigint`（8バイト整数）\n- `real`（4バイト浮動小数点数）\n- `double precision`（8バイト浮動小数点数）\n- `bigserial`（自動インクリメント8バイト整数）\n- `smallserial`（自動インクリメント2バイト整数）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を特定する\",\n  \"group\": \"PostgreSQLの型\",\n  \"options\": [\n    {\"text\": \"int\"},\n    {\"text\": \"real\"},\n    {\"text\": \"bigint\"},\n    {\"text\": \"bigserial\"},\n    {\"text\": \"smallserial\"},\n    {\"text\": \"decimal128\"},\n    {\"text\": \"double precision\"}\n  ],\n  \"questionProse\": [\n    \"次のうち、PostgreSQLの有効な型でないものはどれでしょう？❌\"\n  ],\n  \"explanationProse\": [\n    \"`decimal128`は（MongoやJavaを含む）多くの場所で使われる型なので、見覚えがあるかもしれません。しかし、PostgreSQLの有効な型ではなく、`decimal`が正しい型です。\\n\\n正しい数値型は次の通りです：\\n- `int`（4バイト整数）\\n- `bigint`（8バイト整数）\\n- `real`（4バイト浮動小数点数）\\n- `double precision`（8バイト浮動小数点数）\\n- `bigserial`（自動インクリメント8バイト整数）\\n- `smallserial`（自動インクリメント2バイト整数）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 1042,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 27046
+  },
+  "cost": {
+    "inputUsd": 0.00010794000000000001,
+    "outputUsd": 0.00029176,
+    "totalUsd": 0.0003997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

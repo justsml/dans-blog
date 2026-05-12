@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "後読み分割",
+  "translation": {
+    "title": "後読み分割",
+    "group": "後読み",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "何が返されますか？"
+    ],
+    "explanationProse": [
+      "パターン `/(?<=,)/` はカンマの後にマッチする後読みです：\n    - `a,` (カンマの後)\n    - `b,` (カンマの後)\n    - `c` (カンマの後なし)\n\n    後読みはカンマを消費しないため、分割結果ではカンマが前のセグメントに付いたままになります。\n\n    これは、分割文字を**失わずに**、その前に来るものに基づいて文字列を分割したい場合に便利です。\n\n    [後読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"後読み分割\",\n  \"group\": \"後読み\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"何が返されますか？\"\n  ],\n  \"explanationProse\": [\n    \"パターン `/(?<=,)/` はカンマの後にマッチする後読みです：\\n    - `a,` (カンマの後)\\n    - `b,` (カンマの後)\\n    - `c` (カンマの後なし)\\n\\n    後読みはカンマを消費しないため、分割結果ではカンマが前のセグメントに付いたままになります。\\n\\n    これは、分割文字を**失わずに**、その前に来るものに基づいて文字列を分割したい場合に便利です。\\n\\n    [後読みアサーションについて詳しく学ぶ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 812,
+    "outputTokens": 1283,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13212
+  },
+  "cost": {
+    "inputUsd": 0.00011368000000000001,
+    "outputUsd": 0.00035924000000000004,
+    "totalUsd": 0.00047292000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

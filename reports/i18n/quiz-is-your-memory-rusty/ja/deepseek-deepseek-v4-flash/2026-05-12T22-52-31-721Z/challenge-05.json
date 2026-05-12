@@ -1,0 +1,32 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Box Smart Pointer",
+  "translatedTitle": "Boxスマートポインタ",
+  "translation": {
+    "title": "Boxスマートポインタ",
+    "group": "スマートポインタ",
+    "options": [],
+    "questionProse": [
+      "この再帰的な型定義の何が問題ですか？"
+    ],
+    "explanationProse": [
+      "このコードは、コンパイラがコンパイル時に`CatList`のサイズを決定できないために失敗します。型の再帰的な性質により、無限に大きくなる可能性があります！\n\n      以下が`Box<T>`を使用した修正方法です：",
+      "なぜ`Box<T>`が機能するのか：\n      1. Boxは固定サイズのポインタを提供します（64ビットシステムでは通常8バイト）\n      2. 実際のデータはヒープに格納されます\n      3. コンパイラは割り当てるべき正確なサイズを把握できるようになります\n\n      `Box<T>`の一般的な使用例：\n      - 再帰的なデータ構造（連結リスト、ツリー）\n      - ヒープに確実に割り当てたい大きなデータ\n      - 動的ディスパッチが必要なトレイトオブジェクト\n\n      ベストプラクティス：次の場合に`Box<T>`を使用します：\n      - 再帰的な型\n      - ヒープ割り当てを確実に行いたい場合\n      - コピーせずに大きなデータを移動したい場合"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Boxスマートポインタ\",\n  \"group\": \"スマートポインタ\",\n  \"options\": [],\n  \"questionProse\": [\"この再帰的な型定義の何が問題ですか？\"],\n  \"questionCode\": [{\"language\": \"rust\", \"code\": \"[PRESERVED — do not translate]\"}],\n  \"explanationProse\": [\n    \"このコードは、コンパイラがコンパイル時に`CatList`のサイズを決定できないために失敗します。型の再帰的な性質により、無限に大きくなる可能性があります！\\n\\n      以下が`Box<T>`を使用した修正方法です：\",\n    \"なぜ`Box<T>`が機能するのか：\\n      1. Boxは固定サイズのポインタを提供します（64ビットシステムでは通常8バイト）\\n      2. 実際のデータはヒープに格納されます\\n      3. コンパイラは割り当てるべき正確なサイズを把握できるようになります\\n\\n      `Box<T>`の一般的な使用例：\\n      - 再帰的なデータ構造（連結リスト、ツリー）\\n      - ヒープに確実に割り当てたい大きなデータ\\n      - 動的ディスパッチが必要なトレイトオブジェクト\\n\\n      ベストプラクティス：次の場合に`Box<T>`を使用します：\\n      - 再帰的な型\\n      - ヒープ割り当てを確実に行いたい場合\\n      - コピーせずに大きなデータを移動したい場合\"\n  ],\n  \"explanationCode\": [{\"language\": \"rust\", \"code\": \"[PRESERVED — do not translate]\"}]\n}",
+  "telemetry": {
+    "inputTokens": 807,
+    "outputTokens": 1747,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 85681
+  },
+  "cost": {
+    "inputUsd": 0.00011298,
+    "outputUsd": 0.0004891600000000001,
+    "totalUsd": 0.0006021400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

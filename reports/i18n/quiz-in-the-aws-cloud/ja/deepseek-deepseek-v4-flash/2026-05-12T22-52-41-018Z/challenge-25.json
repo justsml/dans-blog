@@ -1,0 +1,44 @@
+{
+  "index": 24,
+  "attempt": 1,
+  "originalTitle": "Time To Live (TTL)",
+  "translatedTitle": "有効期限（TTL）",
+  "translation": {
+    "title": "有効期限（TTL）",
+    "group": "DynamoDBの機能",
+    "options": [
+      {
+        "text": "有効期限が切れるとすぐにアイテムを削除する"
+      },
+      {
+        "text": "手動の削除トリガーが必要"
+      },
+      {
+        "text": "バックグラウンドでベストエフォート方式で削除"
+      },
+      {
+        "text": "アイテムを期限切れにするが、保存は維持する"
+      }
+    ],
+    "questionProse": [
+      "DynamoDBのTTL機能はアイテムの削除をどのように処理しますか？"
+    ],
+    "explanationProse": [
+      "DynamoDB TTLの特徴：\n      - バックグラウンドプロセスがTTL属性を監視\n      - 期限切れアイテムはベストエフォートスケジュールで削除され、通常は数日以内\n      - TTLに追加費用は不要\n      - 削除されたアイテムはストリームに表示\n\n      ユースケース：\n      - セッション管理\n      - ログの期限切れ\n      - 一時データのクリーンアップ\n      - 規制コンプライアンス"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"有効期限（TTL）\",\n  \"group\": \"DynamoDBの機能\",\n  \"options\": [\n    {\"text\": \"有効期限が切れるとすぐにアイテムを削除する\"},\n    {\"text\": \"手動の削除トリガーが必要\"},\n    {\"text\": \"バックグラウンドでベストエフォート方式で削除\"},\n    {\"text\": \"アイテムを期限切れにするが、保存は維持する\"}\n  ],\n  \"questionProse\": [\"DynamoDBのTTL機能はアイテムの削除をどのように処理しますか？\"],\n  \"explanationProse\": [\"DynamoDB TTLの特徴：\\n      - バックグラウンドプロセスがTTL属性を監視\\n      - 期限切れアイテムはベストエフォートスケジュールで削除され、通常は数日以内\\n      - TTLに追加費用は不要\\n      - 削除されたアイテムはストリームに表示\\n\\n      ユースケース：\\n      - セッション管理\\n      - ログの期限切れ\\n      - 一時データのクリーンアップ\\n      - 規制コンプライアンス\"]\n}",
+  "telemetry": {
+    "inputTokens": 744,
+    "outputTokens": 1305,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 108288
+  },
+  "cost": {
+    "inputUsd": 0.00010416,
+    "outputUsd": 0.00036540000000000005,
+    "totalUsd": 0.00046956000000000005,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

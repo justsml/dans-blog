@@ -1,0 +1,50 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Identify Invalid Types",
+  "translatedTitle": "無効な型を見分ける",
+  "translation": {
+    "title": "無効な型を見分ける",
+    "group": "PostgreSQLの型",
+    "options": [
+      {
+        "text": "cidr"
+      },
+      {
+        "text": "inet"
+      },
+      {
+        "text": "ipv4"
+      },
+      {
+        "text": "macaddr"
+      },
+      {
+        "text": "macaddr8"
+      },
+      {
+        "text": "interval"
+      }
+    ],
+    "questionProse": [
+      "次のうち、PostgreSQLの有効な型ではないものはどれですか？❌"
+    ],
+    "explanationProse": [
+      "これにイライラして、_怒り_さえ感じましたか？あなただけではありません！匿名の「コア」データベースコントリビューターの言葉を借りれば、「なんてこった、ダン？！型の問題でクラッシュしたよ！それは暴力的だ、サー！スコアは共有しない、はは。」😈 どういたしまして。\n\n    PostgreSQLの豊富なネットワーク型には`ipv4`は含まれていません。ググらずに使おうとするたびに、間違えてしまいます。おそらく`macaddr8`があるせいで、`ipv4`と`ipv6`の型が_あるはず_だと思ってしまうのでしょう。違います、`inet`が両方をカバーしています。また、`cidr`は両方のネットワークマスクをカバーしています。\n\n    有効なネットワーク型は次の通りです：\n    - `cidr`（IPv4/IPv6ネットワークアドレス）\n    - `inet`（IPv4/IPv6ホストアドレス）\n    - `macaddr`（MACアドレス）\n    - `macaddr8`（EUI-64 MACアドレス）"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"無効な型を見分ける\",\n  \"group\": \"PostgreSQLの型\",\n  \"options\": [\n    {\"text\": \"cidr\"},\n    {\"text\": \"inet\"},\n    {\"text\": \"ipv4\"},\n    {\"text\": \"macaddr\"},\n    {\"text\": \"macaddr8\"},\n    {\"text\": \"interval\"}\n  ],\n  \"questionProse\": [\n    \"次のうち、PostgreSQLの有効な型ではないものはどれですか？❌\"\n  ],\n  \"explanationProse\": [\n    \"これにイライラして、_怒り_さえ感じましたか？あなただけではありません！匿名の「コア」データベースコントリビューターの言葉を借りれば、「なんてこった、ダン？！型の問題でクラッシュしたよ！それは暴力的だ、サー！スコアは共有しない、はは。」😈 どういたしまして。\\n\\n    PostgreSQLの豊富なネットワーク型には`ipv4`は含まれていません。ググらずに使おうとするたびに、間違えてしまいます。おそらく`macaddr8`があるせいで、`ipv4`と`ipv6`の型が_あるはず_だと思ってしまうのでしょう。違います、`inet`が両方をカバーしています。また、`cidr`は両方のネットワークマスクをカバーしています。\\n\\n    有効なネットワーク型は次の通りです：\\n    - `cidr`（IPv4/IPv6ネットワークアドレス）\\n    - `inet`（IPv4/IPv6ホストアドレス）\\n    - `macaddr`（MACアドレス）\\n    - `macaddr8`（EUI-64 MACアドレス）\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 841,
+    "outputTokens": 1062,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 23511
+  },
+  "cost": {
+    "inputUsd": 0.00011774000000000001,
+    "outputUsd": 0.00029736000000000004,
+    "totalUsd": 0.00041510000000000006,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

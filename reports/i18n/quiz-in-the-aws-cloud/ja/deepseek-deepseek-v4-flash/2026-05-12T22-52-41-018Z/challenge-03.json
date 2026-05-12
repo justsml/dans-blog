@@ -1,0 +1,60 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "DynamoDB",
+  "translatedTitle": "DynamoDB",
+  "translation": {
+    "title": "DynamoDB",
+    "group": "スキーマレス",
+    "options": [
+      {
+        "text": "PutItem",
+        "hint": "新しいアイテムを作成するか、既存のアイテムを新しいアイテムで置き換えます。"
+      },
+      {
+        "text": "BatchUpdateItem",
+        "hint": "存在しません。"
+      },
+      {
+        "text": "BatchWriteItem",
+        "hint": "単一の呼び出しで複数のアイテムをPUT（挿入）または削除します。"
+      },
+      {
+        "text": "UpdateItem"
+      },
+      {
+        "text": "BatchUpsertItem",
+        "hint": "DynamoDBにありますか？"
+      },
+      {
+        "text": "TransactWriteItems",
+        "hint": "複数のPutItem、UpdateItem、DeleteItem、ConditionCheck操作を単一の呼び出しにまとめます。"
+      }
+    ],
+    "questionProse": [
+      "既存の1つのアイテムの属性を更新するDynamoDB APIはどれですか？"
+    ],
+    "explanationProse": [
+      "ここでのポイントは<b>更新</b>であり、挿入やPUTではありません。挿入を行う場合は、`BatchWriteItem`または`TransactWriteItems`を使用できます。",
+      "`BatchWriteItem`は複数の操作を処理できますが、PUTとDELETEに限定されています。`TransactWriteItems`はより強力ですが、単純な更新には大げさすぎます。",
+      "単純な更新には、`UpdateItem`が最適です。これにより、既存のアイテムの1つ以上の属性を更新（UPDATE）または変更できます。",
+      "`UpdateItem`操作はリクエストごとに1つのアイテムを変更します。大規模なバックフィルや一括更新の場合は、通常、多数の`UpdateItem`呼び出しを調整するか、PartiQLバッチ実行、Step Functions、Glue、EMR、カスタムワーカープロセスなどの大規模なワークフローを使用します。",
+      "`UpdateItem`操作:\n  - 既存のアイテムの属性を更新します。\n  - 既存のアイテムに新しい属性を追加します。\n  - 既存のアイテムから属性を削除します。\n  - アイテムが存在するか特定の条件を満たす場合に条件付きで更新を実行します。",
+      "[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"DynamoDB\",\n  \"group\": \"スキーマレス\",\n  \"options\": [\n    {\n      \"text\": \"PutItem\",\n      \"hint\": \"新しいアイテムを作成するか、既存のアイテムを新しいアイテムで置き換えます。\"\n    },\n    {\n      \"text\": \"BatchUpdateItem\",\n      \"hint\": \"存在しません。\"\n    },\n    {\n      \"text\": \"BatchWriteItem\",\n      \"hint\": \"単一の呼び出しで複数のアイテムをPUT（挿入）または削除します。\"\n    },\n    {\n      \"text\": \"UpdateItem\"\n    },\n    {\n      \"text\": \"BatchUpsertItem\",\n      \"hint\": \"DynamoDBにありますか？\"\n    },\n    {\n      \"text\": \"TransactWriteItems\",\n      \"hint\": \"複数のPutItem、UpdateItem、DeleteItem、ConditionCheck操作を単一の呼び出しにまとめます。\"\n    }\n  ],\n  \"questionProse\": [\n    \"既存の1つのアイテムの属性を更新するDynamoDB APIはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"ここでのポイントは<b>更新</b>であり、挿入やPUTではありません。挿入を行う場合は、`BatchWriteItem`または`TransactWriteItems`を使用できます。\",\n    \"`BatchWriteItem`は複数の操作を処理できますが、PUTとDELETEに限定されています。`TransactWriteItems`はより強力ですが、単純な更新には大げさすぎます。\",\n    \"単純な更新には、`UpdateItem`が最適です。これにより、既存のアイテムの1つ以上の属性を更新（UPDATE）または変更できます。\",\n    \"`UpdateItem`操作はリクエストごとに1つのアイテムを変更します。大規模なバックフィルや一括更新の場合は、通常、多数の`UpdateItem`呼び出しを調整するか、PartiQLバッチ実行、Step Functions、Glue、EMR、カスタムワーカープロセスなどの大規模なワークフローを使用します。\",\n    \"`UpdateItem`操作:\\n  - 既存のアイテムの属性を更新します。\\n  - 既存のアイテムに新しい属性を追加します。\\n  - 既存のアイテムから属性を削除します。\\n  - アイテムが存在するか特定の条件を満たす場合に条件付きで更新を実行します。\",\n    \"[DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1038,
+    "outputTokens": 1976,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 58533
+  },
+  "cost": {
+    "inputUsd": 0.00014532000000000002,
+    "outputUsd": 0.0005532800000000001,
+    "totalUsd": 0.0006986000000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

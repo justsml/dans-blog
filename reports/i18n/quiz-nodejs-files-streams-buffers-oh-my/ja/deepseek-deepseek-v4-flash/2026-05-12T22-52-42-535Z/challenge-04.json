@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Reading Files Synchronously",
+  "translatedTitle": "ファイルの同期的読み取り",
+  "translation": {
+    "title": "ファイルの同期的読み取り",
+    "group": "ファイルシステムの基本",
+    "options": [
+      {
+        "text": "Bufferを返す"
+      },
+      {
+        "text": "文字列を返す"
+      },
+      {
+        "text": "undefinedを返す"
+      },
+      {
+        "text": "Promiseを返す"
+      }
+    ],
+    "questionProse": [
+      "デフォルトで `fs.readFileSync()` は何を返しますか？"
+    ],
+    "explanationProse": [
+      "`fs.readFileSync()` はエンコーディングが指定されていない場合、デフォルトで Buffer を返します。文字列を取得したい場合は、次のいずれかを行う必要があります：\n    1. エンコーディングを指定する: `fs.readFileSync('test.txt', 'utf8')`\n    2. Buffer を変換する: `content.toString()`\n\n    [Node.js ドキュメントで fs.readFileSync について詳しく見る](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ファイルの同期的読み取り\",\n  \"group\": \"ファイルシステムの基本\",\n  \"options\": [\n    {\n      \"text\": \"Bufferを返す\"\n    },\n    {\n      \"text\": \"文字列を返す\"\n    },\n    {\n      \"text\": \"undefinedを返す\"\n    },\n    {\n      \"text\": \"Promiseを返す\"\n    }\n  ],\n  \"questionProse\": [\n    \"デフォルトで `fs.readFileSync()` は何を返しますか？\"\n  ],\n  \"explanationProse\": [\n    \"`fs.readFileSync()` はエンコーディングが指定されていない場合、デフォルトで Buffer を返します。文字列を取得したい場合は、次のいずれかを行う必要があります：\\n    1. エンコーディングを指定する: `fs.readFileSync('test.txt', 'utf8')`\\n    2. Buffer を変換する: `content.toString()`\\n\\n    [Node.js ドキュメントで fs.readFileSync について詳しく見る](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 728,
+    "outputTokens": 976,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 7036
+  },
+  "cost": {
+    "inputUsd": 0.00010192000000000001,
+    "outputUsd": 0.00027328000000000004,
+    "totalUsd": 0.00037520000000000007,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

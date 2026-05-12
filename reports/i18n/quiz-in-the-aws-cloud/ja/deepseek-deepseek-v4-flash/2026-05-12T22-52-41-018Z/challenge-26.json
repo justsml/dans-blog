@@ -1,0 +1,44 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "スケーリング動作",
+  "translation": {
+    "title": "スケーリング動作",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "スケーリング速度は現在の容量と設定された容量に依存します"
+      },
+      {
+        "text": "オンデマンドで即座にスケールします"
+      },
+      {
+        "text": "事前設定された間隔でのみスケールします"
+      },
+      {
+        "text": "手動スケーリングのみ"
+      }
+    ],
+    "questionProse": [
+      "突然のトラフィックスパイクに対処するためにAurora Serverlessに依存する場合の重要な考慮事項は何ですか？"
+    ],
+    "explanationProse": [
+      "Aurora Serverlessのスケーリング:\n      - Aurora Serverless v2は細かいACU単位で容量をスケールします\n      - スケーリング速度は現在の容量と最小/最大ACU設定に依存します\n      - サポートされているバージョンでは、設定により0 ACUで自動一時停止が可能です\n      - ACUに基づく秒単位の課金\n\n      ベストプラクティス:\n      - 重要なワークロードで突然のスパイクに対応するために、最小容量を十分高く設定する\n      - スケーリングイベントを監視する\n      - 接続管理を考慮する"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"スケーリング動作\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"スケーリング速度は現在の容量と設定された容量に依存します\"\n    },\n    {\n      \"text\": \"オンデマンドで即座にスケールします\"\n    },\n    {\n      \"text\": \"事前設定された間隔でのみスケールします\"\n    },\n    {\n      \"text\": \"手動スケーリングのみ\"\n    }\n  ],\n  \"questionProse\": [\n    \"突然のトラフィックスパイクに対処するためにAurora Serverlessに依存する場合の重要な考慮事項は何ですか？\"\n  ],\n  \"explanationProse\": [\n    \"Aurora Serverlessのスケーリング:\\n      - Aurora Serverless v2は細かいACU単位で容量をスケールします\\n      - スケーリング速度は現在の容量と最小/最大ACU設定に依存します\\n      - サポートされているバージョンでは、設定により0 ACUで自動一時停止が可能です\\n      - ACUに基づく秒単位の課金\\n\\n      ベストプラクティス:\\n      - 重要なワークロードで突然のスパイクに対応するために、最小容量を十分高く設定する\\n      - スケーリングイベントを監視する\\n      - 接続管理を考慮する\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 760,
+    "outputTokens": 1108,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 11844
+  },
+  "cost": {
+    "inputUsd": 0.00010640000000000001,
+    "outputUsd": 0.00031024000000000004,
+    "totalUsd": 0.00041664,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
