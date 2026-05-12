@@ -325,6 +325,9 @@ export function initQuizSlideManager(
     const isQuestionCorrect = (index: number) =>
       answeredQuestions.get(index) === true;
 
+    const isQuestionAnswered = (index: number) =>
+      answeredQuestions.has(index);
+
     const isQuizCorrectlyCompleted = () =>
       Array.from({ length: totalQuestions }, (_, index) =>
         isQuestionCorrect(index),
@@ -349,7 +352,7 @@ export function initQuizSlideManager(
     const findNextUnansweredIndex = (fromIndex: number) => {
       for (let offset = 1; offset <= totalQuestions; offset++) {
         const candidateIndex = (fromIndex + offset) % totalQuestions;
-        if (!isQuestionCorrect(candidateIndex)) return candidateIndex;
+        if (!isQuestionAnswered(candidateIndex)) return candidateIndex;
       }
 
       return null;
