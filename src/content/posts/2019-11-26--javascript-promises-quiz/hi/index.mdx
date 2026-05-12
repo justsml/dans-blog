@@ -1,0 +1,351 @@
+---
+social_image: ./desktop-social.webp
+title: 'क्विज़: JavaScript Promise के 9 प्रश्न'
+subTitle: अब कभी प्रॉमिस ड्रॉप नहीं!
+label: Promise Gotchas
+date: '2019-11-26'
+modified: '2024-11-28'
+tags:
+  - promises
+  - programming
+  - async
+  - javascript
+  - guides
+  - quiz
+  - intermediate
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+category: Quiz
+unlisted: false
+subCategory: JavaScript
+cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## क्या आप JavaScript Promises जानते हैं?
+
+> * **अपनी JavaScript स्किल्स साबित करें!** 🚀
+
+1. **Hints चेक करें** (बड़ा बटन, नीचे के कोने में).
+2. कोड को अपने ब्राउज़र के Console में ट्राई करें (`F12` शॉर्टकट दबाएं या सर्च करें) या [repl.it](https://repl.it)* का उपयोग करें।
+3. बेझिझक मुझे [मुझे @justsml पर Tweet करें](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/)। **आपके विचार जानना अच्छा लगेगा!**
+
+### 👇 नीचे दिए गए 9 सवाल पूरे करें 👇
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="त्रुटियाँ संभालना"
+  title="एकाधिक `.catch` #1"
+  options={[
+    {text: 'संदेश एक बार प्रिंट होगा'},
+    {text: 'संदेश दो बार प्रिंट होगा', isAnswer: true},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'प्रोसेस समाप्त हो जाएगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित कोड का आउटपुट क्या होगा?
+```js
+    var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+हम कंस्ट्रक्टर मेथड से एक Promise बनाते हैं, जो `reject` कॉलबैक के ज़रिए तुरंत एक एरर फेंकता है।
+
+इसके बाद `.catch` हैंडलर्स बिल्कुल DOM के `.addEventListener(event, callback)` या Event Emitter के `.on(event, callback)` की तरह काम करते हैं — यहाँ **आप जितने चाहें उतने हैंडलर कॉलबैक जोड़ सकते हैं।** हर एक को वही आर्गुमेंट्स मिलेंगे।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="त्रुटि हैंडलिंग"
+  title="एकाधिक `.catch` #2"
+  options={[
+    {text: 'संदेश एक बार प्रिंट होगा', hint: 'क्या `.catch` चेन में सभी हैंडलर्स ट्रिगर होंगे?'},
+    {text: 'संदेश दो बार प्रिंट होगा', hint: 'क्या दोनों `.catch` ब्लॉक निष्पादित होंगे?'},
+    {text: 'अनहैंडल्ड रिजेक्टेड प्रॉमिस', isAnswer: true, hint: 'ध्यान दें कि `Promise.reject()` कहाँ रिटर्न हो रहा है।'},
+    {text: 'प्रोसेस समाप्त हो जाएगा', hint: 'क्या यह कोड प्रोसेस को तुरंत बंद कर देगा?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या आएगा?
+```js
+    var p = new Promise((resolve, reject) => {
+      return Promise.reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Promise` कंस्ट्रक्टर का इस्तेमाल करते वक्त आपको `resolve()` या `reject()` में से किसी एक को कॉल करना ही होता है। ध्यान रहे, `Promise` कंस्ट्रक्टर एक्जीक्यूटर के रिटर्न वैल्यू को पूरी तरह इग्नोर कर देता है। इसीलिए, `Promise.reject()` से बना अतिरिक्त प्रॉमिस `p` के साथ चेन नहीं होता। आपके दोनों हैंडलर्स `p` से अटैच हैं, जो `pending` ही रहता है। जबकि रिटर्न किया गया रिजेक्टेड प्रॉमिस होस्ट एनवायरनमेंट को 'अनहैंडल्ड' (unhandled) के रूप में रिपोर्ट होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible=
+  index={2}
+  group="त्रुटि हैंडलिंग"
+  title="`.then` और `.catch` की चेनिंग"
+  options={[
+    {text: 'error और `undefined` प्रिंट होगा', isAnswer: true},
+    {text: 'error दो बार प्रिंट होगा'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या होगा?
+```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error))
+    .then(error => console.log(error))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.then` और `.catch` को चेन करते समय इन्हें चरणों (steps) की एक श्रृंखला मानना सबसे कारगर तरीका है। हर `.then` को पिछले `.then` द्वारा रिटर्न किया गया वैल्यू मिलता है। लेकिन, ध्यान रहे: अगर किसी चरण में error आता है, तो `.catch` मिलने तक आगे के सभी `.then` चरण स्किप हो जाएँगे। error को ओवरराइड करने का सीधा तरीका है कि आप वहाँ से कोई non-error वैल्यू रिटर्न कर दें। इस वैल्यू को आप अगले किसी भी `.then` में कैच कर सकते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible=
+  index={3}
+  group="त्रुटि हैंडलिंग"
+  title=".catch को चेन करना"
+  options={[
+    {text: 'एरर मैसेज एक बार प्रिंट होगा', isAnswer: true},
+    {text: 'एरर मैसेज दो बार प्रिंट होगा'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'प्रोसेस एग्जिट हो जाएगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या होगा?
+```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error.message))
+    .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.catch` को चेन करते वक्त, हर एक `.catch` सिर्फ पिछले `.then` या `.catch` "स्टेप" में थ्रो हुई एरर को ही हैंडल करता है। इस उदाहरण में पहला `.catch` `console.log` को रिटर्न करता है, जिसे एक्सेस करने का एकमात्र तरीका है कि दोनों `.catch` के बाद एक `.then()` जोड़ा जाए।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="त्रुटि प्रबंधन"
+  title="एकाधिक `.catch`"
+  options={[
+    {text: 'संदेश एक बार प्रिंट होगा'},
+    {text: 'संदेश दो बार प्रिंट होगा'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'कुछ भी प्रिंट नहीं होगा', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या आएगा?
+```js
+    new Promise((resolve, reject) => {
+        resolve('Success!')
+      })
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return "actually, that worked"
+      })
+      .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**संकेत:** `.catch` में सिर्फ़ एक सामान्य वैल्यू रिटर्न करके आप एरर को आसानी से इग्नोर (या ओवरराइड) कर सकते हैं।
+
+ध्यान रहे, यह ट्रिक तभी काम करती है जब उस वैल्यू को आगे `.then` द्वारा रिसीव किया जा सके।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="डेटा हैंडलिंग"
+  title="`.then` के बीच डेटा फ्लो"
+  options={[
+    {text: '"Success!" और "SUCCESS!" प्रिंट होगा'},
+    {text: '"Success!" प्रिंट होगा'},
+    {text: '"SUCCESS!" प्रिंट होगा', isAnswer: true},
+    {text: 'कुछ भी प्रिंट नहीं होगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या आएगा?
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**संकेत:** `.then` डेटा को क्रमिक रूप से पास करते हैं, `return value` से लेकर अगले `.then(value => /* handle value */)` तक।
+
+अगले `.then` में वैल्यू पहुँचाने के लिए `return` ही असली कुंजी है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="डेटा हैंडलिंग"
+  title="`.then` के बीच प्रवाह"
+  options={[
+    {text: '"SUCCESS!" प्रिंट होगा'},
+    {text: '"Success!" प्रिंट होगा'},
+    {text: '"SUCCESS!" और "SUCCESS!" दोनों प्रिंट होंगे', isAnswer: true},
+    {text: 'कुछ भी प्रिंट नहीं होगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित कोड का आउटपुट क्या होगा?
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+        return data
+      })
+      .then(console.log)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+इसमें 2 `console.log` कॉल्स हैं जो निश्चित रूप से निष्पादित होंगे।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="डेटा हैंडलिंग"
+  title="`.then` के बीच प्रवाह"
+  options={[
+    {text: '"SUCCESS!" प्रिंट करेगा'},
+    {text: '"Success!" प्रिंट करेगा'},
+    {text: '"SUCCESS!" और "SUCCESS!" प्रिंट करेगा'},
+    {text: '`undefined` प्रिंट करेगा', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित कोड का आउटपुट क्या होगा?
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**संकेत:** `.then` डेटा को क्रमिक रूप से पास करते हैं, `return value` से अगले `.then(value => /* handle value */)` तक।
+
+अगले `.then` को मान पास करने के लिए `return` महत्वपूर्ण है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="डेटा हैंडलिंग"
+  title="`.then` और `.catch` के बीच का प्रवाह"
+  options={[
+    {text: '"Oh noes!" और "The fails!" प्रिंट होगा'},
+    {text: '"Oh noes!" प्रिंट होगा'},
+    {text: '"The fails!" प्रिंट होगा', isAnswer: true},
+    {text: '"actually, that worked" प्रिंट होगा'},
+    {text: 'कुछ भी प्रिंट नहीं होगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित कोड का आउटपुट क्या होगा?
+```js
+    Promise.resolve('Success!')
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return 'actually, that worked'
+      })
+      .then(data => {
+        throw Error('The fails!')
+      })
+      .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

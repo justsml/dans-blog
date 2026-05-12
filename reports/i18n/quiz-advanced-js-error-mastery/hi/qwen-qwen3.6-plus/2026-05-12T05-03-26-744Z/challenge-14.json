@@ -1,0 +1,43 @@
+{
+  "index": 13,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "ऑब्जेक्ट बनाम एरर डिटेक्शन",
+  "translation": {
+    "title": "ऑब्जेक्ट बनाम एरर डिटेक्शन",
+    "group": "एरर बाउंडरी",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "इन चेक्स का रिटर्न वैल्यू क्या होगी?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` `false` लौटाता है क्योंकि यह ऑब्जेक्ट `Error` कंस्ट्रक्टर से नहीं बना है। `Object.prototype.toString.call()` भी `false` ही देता है (यह `'[object Object]'` रिटर्न करता है) क्योंकि यह इंटरनल `[[Class]]` स्लॉट को चेक करता है। दोनों मेथड्स इसे सही मायने में एक फर्ज़ी एरर ऑब्जेक्ट के रूप में पहचान लेते हैं।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ऑब्जेक्ट बनाम एरर डिटेक्शन\",\n  \"group\": \"एरर बाउंडरी\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"इन चेक्स का रिटर्न वैल्यू क्या होगी?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` `false` लौटाता है क्योंकि यह ऑब्जेक्ट `Error` कंस्ट्रक्टर से नहीं बना है। `Object.prototype.toString.call()` भी `false` ही देता है (यह `'[object Object]'` रिटर्न करता है) क्योंकि यह इंटरनल `[[Class]]` स्लॉट को चेक करता है। दोनों मेथड्स इसे सही मायने में एक फर्ज़ी एरर ऑब्जेक्ट के रूप में पहचान लेते हैं।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 777,
+    "outputTokens": 3951,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 72111
+  },
+  "cost": {
+    "inputUsd": 0.000252525,
+    "outputUsd": 0.007704449999999999,
+    "totalUsd": 0.007956975,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

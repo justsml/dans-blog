@@ -69,6 +69,8 @@ const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 18;
+const DEFAULT_CHALLENGE_RETRIES = 2;
+const MAX_CHALLENGE_RETRIES = 5;
 
 function resolveLlmConfig(modelInput: string): LlmConfig {
   if (modelInput.startsWith("llm://")) {
@@ -147,6 +149,7 @@ interface QuizReportOptions {
   slug: string;
   locale: ActiveLocale;
   concurrency: number;
+  challengeRetries: number;
   runDir: string;
   timestamp: string;
 }
@@ -667,65 +670,83 @@ async function translateQuiz(
     quiz.challenges,
     reportOptions.concurrency,
     async (challenge, i) => {
-      console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}"`);
-      reporter?.append("challenge_started", { index: i, title: challenge.title });
+      for (let attempt = 1; attempt <= reportOptions.challengeRetries + 1; attempt++) {
+        console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}" (attempt ${attempt}/${reportOptions.challengeRetries + 1})`);
+        reporter?.append("challenge_started", { index: i, title: challenge.title, attempt });
 
-      try {
-        const { challenge: translatedChallenge, translation, rawText, telemetry: t } = await translateChallenge(
-          challenge,
-          locale,
-          llmConfig,
-          quizDescription,
-          true,
-        );
+        try {
+          const { challenge: translatedChallenge, translation, rawText, telemetry: t } = await translateChallenge(
+            challenge,
+            locale,
+            llmConfig,
+            quizDescription,
+            true,
+          );
 
-        const cost = addTelemetry(telemetry, {
-          index: i,
-          label: challenge.title,
-          inputTokens: t.inputTokens,
-          outputTokens: t.outputTokens,
-          cacheReadTokens: t.cacheReadTokens,
-          cacheWriteTokens: t.cacheWriteTokens,
-          durationMs: t.durationMs,
-        });
+          const cost = addTelemetry(telemetry, {
+            index: i,
+            label: challenge.title,
+            inputTokens: t.inputTokens,
+            outputTokens: t.outputTokens,
+            cacheReadTokens: t.cacheReadTokens,
+            cacheWriteTokens: t.cacheWriteTokens,
+            durationMs: t.durationMs,
+          });
 
-        reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}`, {
-          index: i,
-          originalTitle: challenge.title,
-          translatedTitle: translatedChallenge.title,
-          translation,
-          rawText,
-          telemetry: t,
-          cost,
-        });
-        reporter?.append("challenge_done", {
-          index: i,
-          title: challenge.title,
-          inputTokens: t.inputTokens,
-          outputTokens: t.outputTokens,
-          cacheReadTokens: t.cacheReadTokens,
-          cacheWriteTokens: t.cacheWriteTokens,
-          durationMs: t.durationMs,
-          costUsd: cost.totalUsd,
-        });
+          reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}`, {
+            index: i,
+            attempt,
+            originalTitle: challenge.title,
+            translatedTitle: translatedChallenge.title,
+            translation,
+            rawText,
+            telemetry: t,
+            cost,
+          });
+          reporter?.append("challenge_done", {
+            index: i,
+            title: challenge.title,
+            attempt,
+            inputTokens: t.inputTokens,
+            outputTokens: t.outputTokens,
+            cacheReadTokens: t.cacheReadTokens,
+            cacheWriteTokens: t.cacheWriteTokens,
+            durationMs: t.durationMs,
+            costUsd: cost.totalUsd,
+          });
 
-        console.log(
-          `   ✅ Challenge ${i + 1} done in ${t.durationMs}ms | input: ${t.inputTokens} | output: ${t.outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
-        );
-        return translatedChallenge;
-      } catch (err) {
-        reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}-error`, {
-          index: i,
-          title: challenge.title,
-          error: err instanceof Error ? err.message : String(err),
-        });
-        reporter?.append("challenge_failed", {
-          index: i,
-          title: challenge.title,
-          error: err instanceof Error ? err.message : String(err),
-        });
-        throw err;
+          console.log(
+            `   ✅ Challenge ${i + 1} done in ${t.durationMs}ms | input: ${t.inputTokens} | output: ${t.outputTokens} | cost: $${cost.totalUsd.toFixed(6)}`,
+          );
+          return translatedChallenge;
+        } catch (err) {
+          const error = err instanceof Error ? err.message : String(err);
+          reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}-attempt-${attempt}-error`, {
+            index: i,
+            attempt,
+            title: challenge.title,
+            error,
+          });
+          reporter?.append("challenge_failed", {
+            index: i,
+            title: challenge.title,
+            attempt,
+            retrying: attempt <= reportOptions.challengeRetries,
+            error,
+          });
+          if (attempt > reportOptions.challengeRetries) {
+            reporter?.writeJson(`challenge-${String(i + 1).padStart(2, "0")}-error`, {
+              index: i,
+              attempts: attempt,
+              title: challenge.title,
+              error,
+            });
+            throw err;
+          }
+        }
       }
+
+      throw new Error(`Challenge ${i + 1} failed after ${reportOptions.challengeRetries + 1} attempts`);
     },
   );
 
@@ -854,6 +875,15 @@ function parseQuizConcurrency(value: string | boolean | undefined) {
   return Math.min(parsed, MAX_PARALLEL_CHALLENGE_CALLS);
 }
 
+function parseChallengeRetries(value: string | boolean | undefined) {
+  if (value === undefined || value === true) return DEFAULT_CHALLENGE_RETRIES;
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 0) {
+    throw new Error(`--challenge-retries must be a non-negative integer. Received "${value}".`);
+  }
+  return Math.min(parsed, MAX_CHALLENGE_RETRIES);
+}
+
 async function main() {
   const options = parseArgs();
   const slug = requireString(options, "slug");
@@ -864,6 +894,7 @@ async function main() {
   const dryRun = options["dry-run"] === true;
   const shouldPublish = options["no-publish"] !== true;
   const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
+  const challengeRetries = parseChallengeRetries(options["challenge-retries"]);
 
   const llmConfig = resolveLlmConfig(modelId);
   const { sourcePath, targetPath } = getPostPaths(slug, locale);
@@ -884,7 +915,7 @@ async function main() {
   console.log(`🌐 Locale: ${locale}`);
   console.log(`🗂️  Candidate run: ${safeModelPathName(llmConfig.modelId)}@${runTimestamp}`);
   if (isQuiz) {
-    console.log(`✂️  Strategy: 1 question per API call, ${quizConcurrency} parallel challenge calls`);
+    console.log(`✂️  Strategy: 1 question per API call, ${quizConcurrency} parallel challenge calls, ${challengeRetries} retries`);
   } else {
     if (!chunkSizeInput) throw new Error(`Missing required --chunk for non-quiz articles`);
     console.log(`✂️  Chunk strategy: ${chunkSizeInput}`);
@@ -902,6 +933,7 @@ async function main() {
       slug,
       locale,
       concurrency: quizConcurrency,
+      challengeRetries,
       runDir: runPaths.runDir,
       timestamp: runTimestamp,
     });

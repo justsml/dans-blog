@@ -1,0 +1,43 @@
+{
+  "index": 6,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "Constructor Name का Gotcha",
+  "translation": {
+    "title": "Constructor Name का Gotcha",
+    "group": "कस्टम एरर्स",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "`name` सेट न करने पर आउटपुट क्या निकलेगा?"
+    ],
+    "explanationProse": [
+      "`this.name` को एक्सप्लिसिटली सेट न करने पर, एरर `Error` क्लास से डिफ़ॉल्ट `name` प्रॉपर्टी इनहेरिट कर लेता है, जो कि `\"Error\"` होती है। यही कारण है कि कस्टम एरर क्लासेस को हमेशा अपने कंस्ट्रक्टर में `this.name = this.constructor.name` सेट करना चाहिए, वरना स्टैक ट्रेस देखते वक्त आपका वक्त बर्बाद हो जाएगा।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Constructor Name का Gotcha\",\n  \"group\": \"कस्टम एरर्स\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"`name` सेट न करने पर आउटपुट क्या निकलेगा?\"\n  ],\n  \"explanationProse\": [\n    \"`this.name` को एक्सप्लिसिटली सेट न करने पर, एरर `Error` क्लास से डिफ़ॉल्ट `name` प्रॉपर्टी इनहेरिट कर लेता है, जो कि `\\\"Error\\\"` होती है। यही कारण है कि कस्टम एरर क्लासेस को हमेशा अपने कंस्ट्रक्टर में `this.name = this.constructor.name` सेट करना चाहिए, वरना स्टैक ट्रेस देखते वक्त आपका वक्त बर्बाद हो जाएगा।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 761,
+    "outputTokens": 4967,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 90557
+  },
+  "cost": {
+    "inputUsd": 0.000247325,
+    "outputUsd": 0.00968565,
+    "totalUsd": 0.009932975,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

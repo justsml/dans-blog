@@ -12,6 +12,8 @@ const DEFAULT_MODELS = [
 ];
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 18;
+const DEFAULT_CHALLENGE_RETRIES = 2;
+const MAX_CHALLENGE_RETRIES = 5;
 const DEFAULT_FILE_CONCURRENCY = 6;
 const MAX_FILE_CONCURRENCY = 6;
 
@@ -196,6 +198,7 @@ function runTranslation(
   locale: ActiveLocale,
   model: string,
   quizConcurrency: number,
+  challengeRetries: number,
   activeChildren: Set<ChildProcess>,
 ) {
   return new Promise<boolean>((resolve) => {
@@ -215,6 +218,8 @@ function runTranslation(
         model,
         "--quiz-concurrency",
         String(quizConcurrency),
+        "--challenge-retries",
+        String(challengeRetries),
       ],
       {
         cwd: process.cwd(),
@@ -271,6 +276,12 @@ async function main() {
     MAX_FILE_CONCURRENCY,
     "file-concurrency",
   );
+  const challengeRetries = parseBoundedInt(
+    options["challenge-retries"],
+    DEFAULT_CHALLENGE_RETRIES,
+    MAX_CHALLENGE_RETRIES,
+    "challenge-retries",
+  );
   const models = parseList(
     typeof options.models === "string" ? options.models : undefined,
     DEFAULT_MODELS,
@@ -309,6 +320,7 @@ async function main() {
       skipExisting,
       taskOrder: shouldRotateLocales ? "locale-rotated" : "post-ordered",
       quizConcurrency,
+      challengeRetries,
       fileConcurrency,
       progressPath: relativeToRepo(progressPath),
       totals,
@@ -354,6 +366,7 @@ async function main() {
     skipExisting,
     taskOrder: shouldRotateLocales ? "locale-rotated" : "post-ordered",
     quizConcurrency,
+    challengeRetries,
     fileConcurrency,
   });
   writeSummary("running");
@@ -419,6 +432,7 @@ async function main() {
         task.locale,
         model,
         quizConcurrency,
+        challengeRetries,
         activeChildren,
       );
       const stats = latestSummary(task.slug, model, task.locale);

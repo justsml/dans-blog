@@ -10,6 +10,7 @@
  */
 
 import { generateText } from "ai";
+import { jsonrepair } from "jsonrepair";
 import { z } from "zod";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
@@ -167,16 +168,7 @@ export async function translateChallenge(
 
   const durationMs = Math.round(performance.now() - start);
 
-  // Parse JSON from text response
-  let parsed: unknown;
-  try {
-    const cleaned = result.text.trim().replace(/^```json\s*/, "").replace(/```\s*$/, "");
-    parsed = JSON.parse(cleaned);
-  } catch (err) {
-    console.error("\n❌ Failed to parse JSON response. Raw text:");
-    console.error(result.text);
-    throw new Error(`JSON parse failed: ${err instanceof Error ? err.message : String(err)}`);
-  }
+  const parsed = parseLlmJson(result.text, "challenge translation");
 
   // Validate with Zod
   const validated = TranslationSchema.safeParse(parsed);
@@ -283,14 +275,7 @@ export async function generateQuizDescription(
   });
   const durationMs = Math.round(performance.now() - start);
 
-  let parsed: unknown;
-  try {
-    const cleaned = result.text.trim().replace(/^```json\s*/, "").replace(/```\s*$/, "");
-    parsed = JSON.parse(cleaned);
-  } catch (err) {
-    console.error("Failed to parse quiz description JSON:", result.text);
-    throw new Error(`Quiz description JSON parse failed: ${err instanceof Error ? err.message : String(err)}`);
-  }
+  const parsed = parseLlmJson(result.text, "quiz description");
 
   const descSchema = z.object({
     description: z.string(),
@@ -316,4 +301,32 @@ export async function generateQuizDescription(
     rawText: result.text,
     telemetry: usageFromResult(result.usage, durationMs),
   };
+}
+
+function parseLlmJson(text: string, label: string): unknown {
+  const cleaned = stripJsonFences(text);
+
+  try {
+    return JSON.parse(cleaned);
+  } catch (firstErr) {
+    try {
+      return JSON.parse(jsonrepair(cleaned));
+    } catch (repairErr) {
+      console.error(`\n❌ Failed to parse ${label} JSON response. Raw text:`);
+      console.error(text);
+      throw new Error([
+        `${label} JSON parse failed`,
+        `parse: ${firstErr instanceof Error ? firstErr.message : String(firstErr)}`,
+        `repair: ${repairErr instanceof Error ? repairErr.message : String(repairErr)}`,
+      ].join("; "));
+    }
+  }
+}
+
+function stripJsonFences(text: string) {
+  return text
+    .trim()
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/```\s*$/i, "")
+    .trim();
 }

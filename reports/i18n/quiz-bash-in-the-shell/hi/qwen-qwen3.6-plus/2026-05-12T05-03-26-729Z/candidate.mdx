@@ -1,0 +1,604 @@
+---
+unlisted: false
+title: 'क्विज़: Bash और Shell में महारत'
+subTitle: क्या आप कंप्यूटर से बात कर सकते हैं? वो भी सही-सही?
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ./desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">इन 16 सवालों के साथ अपनी Bash स्क्रिप्टिंग क्षमताओं को परखें!</p>
+
+वेरिएबल्स, लूप्स, कंडीशनल्स, स्ट्रिंग मैनिपुलेशन, फंक्शन्स और बेसिक से लेकर ट्रिकी सिंटैक्स गॉचस तक शामिल हैं।
+
+अपनी शेल स्क्रिप्टिंग **कौशल** को निखारें (या साबित करें)!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title="वेरिएबल डिक्लेरेशन"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bash में वेरिएबल्स सही तरीके से कैसे डिक्लेयर किए जाते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bash में वेरिएबल्स को `=` साइन के आसपास बिना किसी स्पेस के डिक्लेयर किया जाता है। उदाहरण के लिए:
+```bash
+    name=Alice
+```
+यह `"Alice"` वैल्यू को `name` वेरिएबल में असाइन करता है।
+
+    नोट: `$name` का उपयोग वेरिएबल की वैल्यू को **रेफरेंस** करने या पढ़ने के लिए किया जाता है।
+
+    स्पेस जोड़ने से शेल कमांड को एक प्रोग्राम के रूप में इंटरप्रिट करने लगता है, जो वेरिएबल सेट करते समय बिल्कुल नहीं चाहिए।
+
+    साथ ही, Bash केस-सेंसिटिव है, इसलिए `name`, `NAME` और `Name` अलग-अलग वेरिएबल्स हैं।
+
+    अंत में, वेरिएबल्स के नामों में स्पेस या डैश (`-`) नहीं हो सकते। इसके बजाय अंडरस्कोर (`_`) या camelCase का उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="वार्मअप: एस्केपिंग"
+  title="कोट्स को एस्केप करना"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'त्रुटि'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+_कौन सा कमांड `It's 🔨 Time!` प्रिंट करेगा?_
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+मैं समझता हूँ। एस्केपिंग स्ट्रिंग्स को पार्स करना कितनी जल्दी पेचीदा बना देती है, यह देखकर हैरानी होती है। Bash स्ट्रिंग्स में दूसरी भाषाओं के एस्केपिंग की कल्पना करो - उन सभी कोट्स, एपोस्ट्रोफी और `$` सिंबल्स के साथ जो तुम्हें फँसा सकते हैं। 🫠
+
+    सिंगल-कोटेड स्ट्रिंग्स के अंदर सिंगल कोट्स को एस्केप करने की ज़रूरत होती है। क्लोज़-कोट, एस्केप्ड-कोट, रीओपन-कोट का क्रम (`'\''`) इसका आउटपुट देता है:
+```plaintext
+    It's 🔨 Time!
+```
+इसे हैंडल करने के अन्य तरीके भी हैं, लेकिन यह सबसे आम है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="वार्मअप: एक्सपैंशन"
+  title="echo कमांड"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कमांड का आउटपुट क्या होगा?
+```bash
+    echo c{a,b}t
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`{}` ब्रेस एक्सपैंशन अपने स्ट्रिंग कॉन्टेक्स्ट के कई वर्जन जनरेट करता है, प्रत्येक कॉमा-सेपरेटेड वैल्यू या पैटर्न के लिए एक (या अधिक)।
+
+    यहाँ, `c{a,b}t` का विस्तार इस प्रकार होता है:
+```plaintext
+    cat cbt
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="वेरिएबल्स"
+  title="कैरेक्टर एस्केपिंग"
+  options={[
+    {text: 'Cost: $$100'},
+    {text: 'Cost: $100'},
+    {text: 'Cost: 100'},
+    {text: 'Cost: 00', isAnswer: true},
+    {text: 'Cost:'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब बताइए, यह क्या प्रिंट करेगा?
+```bash
+    price="$100"
+    echo "Cost: $price"
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+नंबर वाले वेरिएबल्स का एक विशेष अर्थ होता है। इस मामले में, `$1` एक स्पेशल वेरिएबल है जो स्क्रिप्ट या फंक्शन को पास किए गए पहले आर्गुमेंट को होल्ड करता है।
+
+    चूँकि हम स्क्रिप्ट को REPL में चला रहे हैं, इसलिए कोई आर्गुमेंट नहीं है, और `$1` खाली रहता है। बचा हुआ टेक्स्ट `00` ज्यों का त्यों प्रिंट हो जाता है।
+
+    लिटरल `$` कैरेक्टर प्रिंट करने के लिए, सिंगल कोट्स का उपयोग करें या इसे बैकस्लैश (`\`) से एस्केप करें:
+```bash
+    price="\$100"
+    echo "Cost: $price"
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="सबस्ट्रिंग बदलना"
+  title="सबस्ट्रिंग बदलें"
+  options={[
+    {text: 'meow meow'},
+    {text: 'Meow meow'},
+    {text: 'Bark meow', isAnswer: true},
+    {text: 'Bark bark'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यहाँ क्या हो रहा है?
+```bash
+    str="Bark bark"
+    echo ${str/bark/meow}
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${var/pattern/replacement}` सिंटैक्स `pattern` के पहले मिलान को `replacement` से बदल देता है। यहाँ आउटपुट यह है:
+```plaintext
+    Bark meow
+```
+यह केस-सेंसिटिव है। `bark` और `Bark` दोनों को हैंडल करने के लिए `${var/[Bb]ark/Bark}` जैसे पैटर्न का उपयोग करें, या रिप्लेसमेंट से पहले स्ट्रिंग को नॉर्मलाइज़ कर लें।
+
+    सभी मिलानों को बदलने के लिए `${var//pattern/replacement}` का उपयोग करें।
+
+    स्ट्रिंग की शुरुआत से मिलान बदलने के लिए `${var/#pattern/replacement}` का उपयोग करें।
+
+    स्ट्रिंग के अंत से मिलान बदलने के लिए `${var/%pattern/replacement}` का उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="स्ट्रिंग की लंबाई"
+  title="स्ट्रिंग की लंबाई"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bash में किसी वेरिएबल की लंबाई कैसे प्राप्त करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${#username}` सिंटैक्स `username` वेरिएबल की लंबाई रिटर्न करता है।
+    
+    उदाहरण के लिए:
+```bash
+    username="@justsml"
+    echo ${#username} # => 8
+```
+हालाँकि `wc` काम करेगा, लेकिन तकनीकी रूप से यह Bash का हिस्सा नहीं है।
+
+    `wc` यूटिलिटी को लेकर एक पुराना मज़ाक चलता है कि यह "water closet" यानी टॉयलेट को दर्शाता है।
+    मज़ाक कर रहा हूँ! क्या कोई ये लाइनें पढ़ता भी है?
+
+    असल में `wc` POSIX (और AT&T Unix के दौर) का एक प्राचीन कमांड है। यह "word count" का संक्षिप्त रूप है और यह किसी फ़ाइल या इनपुट स्ट्रीम में लाइनों, शब्दों और कैरेक्टर्स की गिनती कर सकता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="कंडीशनल्स"
+  title="बेसिक If-Else"
+  options={[
+    {text: 'फ़ाइल मौजूद है'},
+    {text: 'फ़ाइल मौजूद नहीं है, एक टेस्ट डायग्नोस्टिक के बाद', isAnswer: true},
+    {text: 'केवल एरर'},
+    {text: 'डबल ब्रैकेट्स गायब हैं'},
+    {text: 'कुछ नहीं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अगर `cats.txt` फ़ाइल मौजूद है, तो यह स्क्रिप्ट क्या आउटपुट देगी?
+```bash
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+क्या आपने क्लोजिंग ब्रैकेट से पहले गायब स्पेस को पकड़ा?
+
+Bash यहाँ थोड़ा सेंसिटिव है: ब्रैकेट एक्सप्रेशन के अंदर स्पेस होना अनिवार्य है।
+
+गायब स्पेस की वजह से `[` कमांड को क्लोजिंग `]` नहीं मिलता, इसलिए Bash एक डायग्नोस्टिक प्रिंट करता है, टेस्ट को फ़ेल मानता है, और `else` ब्रांच पर आगे बढ़ जाता है।
+
+सही सिंटैक्स यह है:
+```bash
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+```
+नोट: कंडीशनल एक्सप्रेशन्स के लिए डबल ब्रैकेट्स `[[ ]]` का उपयोग **अनुशंसित** है। [BashFAQ देखें।](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="शर्तें"
+  title="स्ट्रिंग तुलना"
+  options={[
+    {text: 'एक ही बिल्ली'},
+    {text: 'अलग-अलग बिल्लियाँ, टेस्ट सिंटैक्स एरर के बाद', isAnswer: true},
+    {text: 'ज़ाल्गो'},
+    {text: 'केवल एरर'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bash में स्ट्रिंग्स की तुलना कैसे करते हैं?
+```bash
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+एक और सिंटैक्स एरर!
+
+    क्या आपने गलत `===` ऑपरेटर को नोटिस किया?
+
+    शायद आपका दिमाग JavaScript पर चल रहा था...
+
+    `[ ... ]` के अंदर, Bash एक एरर मैसेज देता है और कंडीशन `false` हो जाती है, इसलिए `else` ब्रांच `Different cats` प्रिंट कर देती है। Bash में समानता की तुलना के लिए `=` या `==` का उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="फंक्शन्स"
+  title="फंक्शन घोषणा"
+  options={[
+    {text: 'Hi', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hi Dan'},
+    {text: 'greet'},
+    {text: 'Error'},
+    {text: 'Syntax Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह स्क्रिप्ट क्या आउटपुट देगी?
+```bash
+   function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bash में फंक्शन्स आर्ग्युमेंट्स स्वीकार कर सकते हैं। `$1` वैरिएबल फंक्शन को पास किए गए पहले आर्ग्युमेंट को होल्ड करता है।
+    
+    याद रखें, `$0` स्क्रिप्ट का नाम है, `$1` पहला आर्ग्युमेंट है, `$2` दूसरा, और इसी तरह। **स्पेस आर्ग्युमेंट्स को अलग करते हैं।** इसलिए, `greet Hi Dan` `"Hi"` को पहले आर्ग्युमेंट के रूप में पास करता है। `"Hi Dan"` को एक ही आर्ग्युमेंट के रूप में पास करने के लिए, आपको इसे कोट्स में लिखना होगा: `greet "Hi Dan"`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="कमांड संयोजन"
+  title="पाइपिंग का उपयोग"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा ऑपरेटर एक कमांड के **आउटपुट** को अगले कमांड के **इनपुट** से जोड़ता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`|` पाइप ऑपरेटर एक कमांड के आउटपुट को दूसरे कमांड के इनपुट से जोड़ता है। उदाहरण के लिए:
+```bash
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="अंकगणित"
+  title="मूल अंकगणित"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bash में अंकगणित (math) वास्तव में कैसे काम करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bash में `(( ))` सिंटैक्स पूर्णांक गणना (integer math) करता है।
+
+    इसका उपयोग साधारण गणनाओं के लिए किया जा सकता है:
+```bash
+    ((result = 2 + 2))
+    echo $result # => 4
+```
+या फिर इसे कंडीशनल एक्सप्रेशन (conditional expressions) में भी इस्तेमाल कर सकते हैं:
+```bash
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
+```
+चूंकि Bash मूल रूप से फ्लोटिंग-पॉइंट नंबर्स को सपोर्ट नहीं करता, इसलिए दशमलव गणनाओं के लिए [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) या [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) जैसे टूल्स का सहारा लें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="गुणा"
+  title="मूल अंकगणित"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'त्रुटि'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा विकल्प 10 और 0.5 को सही तरीके से गुणा करके 5 प्रिंट करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`(( ))` सिंटैक्स केवल **पूर्णांक** अंकगणित ही करता है। यानी सिर्फ़ पूर्ण संख्याएँ, कोई फ्लोटिंग पॉइंट नहीं!
+
+Bash में (शायद आपको हैरानी हो) **बिल्ट-इन** फ्लोटिंग-पॉइंट अंकगणित का सपोर्ट नहीं होता।
+
+इसका सबसे आम समाधान GNU यूटिल्स [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) या [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) का उपयोग करना है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="स्ट्रिंग हेरफेर"
+  title="सबस्ट्रिंग एक्सट्रैक्शन"
+  options={[
+    {text: 'Bad cat'},
+    {text: 'Bad cat, good cat:9'},
+    {text: 'good cat', isAnswer: true},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस स्क्रिप्ट में `:` आखिर करता क्या है?
+```bash
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${var:offset}` सिंटैक्स `offset` से शुरू होने वाली एक सबस्ट्रिंग निकालता है। यहाँ, आउटपुट है:
+```plaintext
+    good cat
+```
+किसी विशिष्ट लंबाई की सबस्ट्रिंग निकालने के लिए, `${var:offset:length}` का उपयोग करें।
+
+    स्ट्रिंग के अंत से निकालने के लिए, `${var: -offset}` का उपयोग करें। (`-` से पहले स्पेस का ध्यान रखें!)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="लूप्स"
+  title="Bash में लूप्स"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bash में लूपिंग के लिए कौन सा कीवर्ड ❌ नहीं है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`each` Bash में कोई लूप कीवर्ड नहीं है। मुख्य लूप कीवर्ड `for`, `while`, और `until` हैं।
+
+    हालाँकि `do` तकनीकी रूप से लूप कीवर्ड नहीं है, लेकिन यह लूप सिंटैक्स का एक अहम हिस्सा है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="गोटचाज़"
+  title="कमांड सब्स्टीट्यूशन"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा विकल्प `ls -l` कमांड को निष्पादित करेगा और उसका आउटपुट वापस करेगा?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`$(ls -l)` सिंटैक्स **कोष्ठक** के अंदर लिखे कमांड को निष्पादित करता है और आउटपुट को वहीं प्रतिस्थापित कर देता है। उदाहरण के लिए:
+```bash
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
+```
+पहला विकल्प सिंगल कोट्स `'` का उपयोग करता है, **बैकटिक्स का नहीं।** यह एक्सपेंशन को रोक देता है, इसलिए `'$(date +%F)'` बस लिटरल स्ट्रिंग `$(date +%F)` ही प्रिंट करेगा।
+
+    कमांड चलाने के लिए बैकटिक्स (`` `ls -l` ``) का उपयोग तकनीकी रूप से अभी भी काम करता है, लेकिन अब इसे कई संदर्भों में एक एंटी-पैटर्न माना जाता है। बेहतर पठनीयता और अलग-अलग शेल व वर्ज़न के साथ स्थिरता के लिए `$(command)` का ही उपयोग करना ज़्यादा मानक है।
+
+    कर्ली ब्रेस `${}` का इस्तेमाल वेरिएबल एक्सपेंशन के लिए होता है, कमांड सब्स्टीट्यूशन के लिए नहीं।
+
+    `%` कैरेक्टर का कमांड सब्स्टीट्यूशन से कोई लेना-देना नहीं है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="स्टैंडर्ड इन/आउट"
+  title="डिफ़ॉल्ट मान"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+त्रुटि आउटपुट को स्टैंडर्ड आउटपुट के साथ मिलाने के लिए किस ऑपरेटर का उपयोग किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`2>&1` ऑपरेटर स्टैंडर्ड एरर (फ़ाइल डिस्क्रिप्टर 2) को स्टैंडर्ड आउटपुट (फ़ाइल डिस्क्रिप्टर 1) पर रीडायरेक्ट करता है। यह त्रुटि संदेशों को नियमित आउटपुट के समान आउटपुट स्ट्रीम में कैप्चर करने के लिए उपयोगी है।
+
+`1>&2` ऑपरेटर स्टैंडर्ड आउटपुट को स्टैंडर्ड एरर पर रीडायरेक्ट करता है, हालाँकि, प्रश्न में स्टैंडर्ड एरर को स्टैंडर्ड आउटपुट पर रीडायरेक्ट करने के बारे में पूछा गया था।
+
+अंतर्निहित प्रक्रिया के बारे में अधिक जानने के लिए, [ग्रेग का उत्कृष्ट रीडायरेक्शन FAQ](https://mywiki.wooledge.org/BashFAQ/055) देखें।
+
+इसके अलावा, कॉपी में सुधार सुझाने के लिए Reddit उपयोगकर्ता [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) को धन्यवाद।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">क्या मेरे Bash Quiz ने आपको पूरी तरह उलझन में डाल दिया?</p>
+
+नीचे कमेंट्स में ज़रूर बताएं!
+
+### आगे पढ़ने के लिए
+
+इन संसाधनों के साथ अपने Bash कौशल को और निखारें:
+
+- [Bash गाइड](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [Bash अकादमी](https://guide.bash.academy/)
+- [Bash स्क्रिप्टिंग ट्यूटोरियल](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash रेफरेंस मैनुअल](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash हैकर्स विकी](http://wiki.bash-hackers.org/)
+- [शुरुआती लोगों के लिए Bash गाइड](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash रेफरेंस कार्ड](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)

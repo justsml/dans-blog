@@ -1,0 +1,43 @@
+{
+  "index": 0,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "खाली ऑब्जेक्ट का रहस्य",
+  "translation": {
+    "title": "खाली ऑब्जेक्ट का रहस्य",
+    "group": "सीरियलाइज़ेशन के सरप्राइज़",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "`JSON.stringify(error)` क्या रिटर्न करता है?"
+    ],
+    "explanationProse": [
+      "`Error` ऑब्जेक्ट्स की प्रॉपर्टीज़ (`message`, `name`, `stack`) `non-enumerable` होती हैं, इसलिए `JSON.stringify()` उन्हें इग्नोर करके `{}` रिटर्न कर देता है। API रिस्पॉन्स में एरर भेजते समय यह एक क्लासिक गोटचा है। सही डेटा पाने के लिए `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या एक प्लेन ऑब्जेक्ट बना लें।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"खाली ऑब्जेक्ट का रहस्य\",\n  \"group\": \"सीरियलाइज़ेशन के सरप्राइज़\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` क्या रिटर्न करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`Error` ऑब्जेक्ट्स की प्रॉपर्टीज़ (`message`, `name`, `stack`) `non-enumerable` होती हैं, इसलिए `JSON.stringify()` उन्हें इग्नोर करके `{}` रिटर्न कर देता है। API रिस्पॉन्स में एरर भेजते समय यह एक क्लासिक गोटचा है। सही डेटा पाने के लिए `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या एक प्लेन ऑब्जेक्ट बना लें।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 777,
+    "outputTokens": 3121,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 57026
+  },
+  "cost": {
+    "inputUsd": 0.000252525,
+    "outputUsd": 0.00608595,
+    "totalUsd": 0.006338475,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

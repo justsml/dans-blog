@@ -1,0 +1,43 @@
+{
+  "index": 6,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC तिथियाँ: भाग 1",
+  "translation": {
+    "title": "UTC तिथियाँ: भाग 1",
+    "group": "तिथियों का प्रबंधन",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [
+      "आउटपुट में क्या मिलेगा?"
+    ],
+    "explanationProse": [
+      "आपको `TypeError: date.toUTCString is not a function` ही मिलेगा, क्योंकि [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई डेट इंस्टेंस नहीं, बल्कि मिलीसेकंड में एक इंटिजर लौटाता है।\n\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) मेथड आपके लोकल ऑफसेट का इस्तेमाल करता है (इन सवालों के लिए GMT-07:00 मान लें।)\n      यानी यह आपको पिछला साल देगा (न्यू ईयर -7 घंटे)।\n      वहीं, [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) मेथड वही साल देगा जो हमने `Date.UTC()` को पास किया था, यानी 2020।\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC तिथियाँ: भाग 1\",\n  \"group\": \"तिथियों का प्रबंधन\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"आउटपुट में क्या मिलेगा?\"\n  ],\n  \"explanationProse\": [\n    \"आपको `TypeError: date.toUTCString is not a function` ही मिलेगा, क्योंकि [`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) कोई डेट इंस्टेंस नहीं, बल्कि मिलीसेकंड में एक इंटिजर लौटाता है।\\n\\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) मेथड आपके लोकल ऑफसेट का इस्तेमाल करता है (इन सवालों के लिए GMT-07:00 मान लें।)\\n      यानी यह आपको पिछला साल देगा (न्यू ईयर -7 घंटे)।\\n      वहीं, [`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) मेथड वही साल देगा जो हमने `Date.UTC()` को पास किया था, यानी 2020।\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 4204,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 76767
+  },
+  "cost": {
+    "inputUsd": 0.00029055000000000004,
+    "outputUsd": 0.0081978,
+    "totalUsd": 0.00848835,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

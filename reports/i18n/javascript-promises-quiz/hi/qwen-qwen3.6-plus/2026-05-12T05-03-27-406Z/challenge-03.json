@@ -1,0 +1,43 @@
+{
+  "index": 2,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "`.then` और `.catch` की चेनिंग",
+  "translation": {
+    "title": "`.then` और `.catch` की चेनिंग",
+    "group": "त्रुटि हैंडलिंग",
+    "options": [
+      {
+        "text": "error और `undefined` प्रिंट होगा"
+      },
+      {
+        "text": "error दो बार प्रिंट होगा"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "इस कोड का आउटपुट क्या होगा?"
+    ],
+    "explanationProse": [
+      "`.then` और `.catch` को चेन करते समय इन्हें चरणों (steps) की एक श्रृंखला मानना सबसे कारगर तरीका है। हर `.then` को पिछले `.then` द्वारा रिटर्न किया गया वैल्यू मिलता है। लेकिन, ध्यान रहे: अगर किसी चरण में error आता है, तो `.catch` मिलने तक आगे के सभी `.then` चरण स्किप हो जाएँगे। error को ओवरराइड करने का सीधा तरीका है कि आप वहाँ से कोई non-error वैल्यू रिटर्न कर दें। इस वैल्यू को आप अगले किसी भी `.then` में कैच कर सकते हैं।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"`.then` और `.catch` की चेनिंग\",\n  \"group\": \"त्रुटि हैंडलिंग\",\n  \"options\": [\n    {\n      \"text\": \"error और `undefined` प्रिंट होगा\"\n    },\n    {\n      \"text\": \"error दो बार प्रिंट होगा\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस कोड का आउटपुट क्या होगा?\"\n  ],\n  \"explanationProse\": [\n    \"`.then` और `.catch` को चेन करते समय इन्हें चरणों (steps) की एक श्रृंखला मानना सबसे कारगर तरीका है। हर `.then` को पिछले `.then` द्वारा रिटर्न किया गया वैल्यू मिलता है। लेकिन, ध्यान रहे: अगर किसी चरण में error आता है, तो `.catch` मिलने तक आगे के सभी `.then` चरण स्किप हो जाएँगे। error को ओवरराइड करने का सीधा तरीका है कि आप वहाँ से कोई non-error वैल्यू रिटर्न कर दें। इस वैल्यू को आप अगले किसी भी `.then` में कैच कर सकते हैं।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 815,
+    "outputTokens": 4455,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 81691
+  },
+  "cost": {
+    "inputUsd": 0.000264875,
+    "outputUsd": 0.008687249999999999,
+    "totalUsd": 0.008952124999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

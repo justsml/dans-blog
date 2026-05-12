@@ -1,0 +1,49 @@
+{
+  "index": 11,
+  "originalTitle": "Handling nulls",
+  "translatedTitle": "null को हैंडल करना",
+  "translation": {
+    "title": "null को हैंडल करना",
+    "group": "पार्सिंग",
+    "options": [
+      {
+        "text": "0 NaN"
+      },
+      {
+        "text": "0 0"
+      },
+      {
+        "text": "NaN NaN"
+      },
+      {
+        "text": "NaN 0"
+      },
+      {
+        "text": "null null"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "इस कोड का आउटपुट क्या होगा?"
+    ],
+    "explanationProse": [
+      "`parseInt` इनपुट को स्ट्रिंग में coerce कर देता है, इसलिए `null`, `\"null\"` बन जाता है। चूंकि `\"null\"` में कोई वैध बेस-10 अंक नहीं हैं, यह `NaN` लौटाएगा।\n\n`Number(null)` का रिजल्ट `0` आता है, क्योंकि JS आपको हमेशा अलर्ट रखना पसंद करता है।\nक्यों? खैर, अगर इसमें रुचि हो तो मैं इस पर और गहराई से बात कर सकता हूँ।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"null को हैंडल करना\",\n  \"group\": \"पार्सिंग\",\n  \"options\": [\n    {\n      \"text\": \"0 NaN\"\n    },\n    {\n      \"text\": \"0 0\"\n    },\n    {\n      \"text\": \"NaN NaN\"\n    },\n    {\n      \"text\": \"NaN 0\"\n    },\n    {\n      \"text\": \"null null\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस कोड का आउटपुट क्या होगा?\"\n  ],\n  \"explanationProse\": [\n    \"`parseInt` इनपुट को स्ट्रिंग में coerce कर देता है, इसलिए `null`, `\\\"null\\\"` बन जाता है। चूंकि `\\\"null\\\"` में कोई वैध बेस-10 अंक नहीं हैं, यह `NaN` लौटाएगा।\\n\\n`Number(null)` का रिजल्ट `0` आता है, क्योंकि JS आपको हमेशा अलर्ट रखना पसंद करता है।\\nक्यों? खैर, अगर इसमें रुचि हो तो मैं इस पर और गहराई से बात कर सकता हूँ।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 821,
+    "outputTokens": 4926,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 89720
+  },
+  "cost": {
+    "inputUsd": 0.000266825,
+    "outputUsd": 0.0096057,
+    "totalUsd": 0.009872525,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

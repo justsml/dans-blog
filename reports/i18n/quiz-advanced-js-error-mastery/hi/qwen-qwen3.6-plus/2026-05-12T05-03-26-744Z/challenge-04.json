@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "क्रॉस-फ्रेम instanceof",
+  "translation": {
+    "title": "क्रॉस-फ्रेम instanceof",
+    "group": "टाइप चेकिंग ट्रिक्स",
+    "options": [
+      {
+        "text": "हमेशा true",
+        "hint": "JS इतना सीधा नहीं है।"
+      },
+      {
+        "text": "हमेशा false",
+        "hint": "लगभग सही, पर हमेशा नहीं।"
+      },
+      {
+        "text": "फ्रेम के पार false हो सकता है",
+        "hint": "बिल्कुल सही! हर context का अपना constructor होता है।"
+      },
+      {
+        "text": "एक error throw करता है",
+        "hint": "नहीं, यह चुपचाप false लौटाता है।"
+      }
+    ],
+    "questionProse": [
+      "iframes के आर-पार `instanceof Error` चेक करने पर क्या होता है?"
+    ],
+    "explanationProse": [
+      "अलग-अलग execution contexts (जैसे iframes या workers) में `instanceof` `false` लौटा सकता है, क्योंकि हर context का अपना अलग `Error` constructor होता है। contexts के बीच errors को सही से पहचानने के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का इस्तेमाल करें।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"क्रॉस-फ्रेम instanceof\",\n  \"group\": \"टाइप चेकिंग ट्रिक्स\",\n  \"options\": [\n    {\n      \"text\": \"हमेशा true\",\n      \"hint\": \"JS इतना सीधा नहीं है।\"\n    },\n    {\n      \"text\": \"हमेशा false\",\n      \"hint\": \"लगभग सही, पर हमेशा नहीं।\"\n    },\n    {\n      \"text\": \"फ्रेम के पार false हो सकता है\",\n      \"hint\": \"बिल्कुल सही! हर context का अपना constructor होता है।\"\n    },\n    {\n      \"text\": \"एक error throw करता है\",\n      \"hint\": \"नहीं, यह चुपचाप false लौटाता है।\"\n    }\n  ],\n  \"questionProse\": [\n    \"iframes के आर-पार `instanceof Error` चेक करने पर क्या होता है?\"\n  ],\n  \"explanationProse\": [\n    \"अलग-अलग execution contexts (जैसे iframes या workers) में `instanceof` `false` लौटा सकता है, क्योंकि हर context का अपना अलग `Error` constructor होता है। contexts के बीच errors को सही से पहचानने के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का इस्तेमाल करें।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 770,
+    "outputTokens": 4056,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 74116
+  },
+  "cost": {
+    "inputUsd": 0.00025025,
+    "outputUsd": 0.0079092,
+    "totalUsd": 0.00815945,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

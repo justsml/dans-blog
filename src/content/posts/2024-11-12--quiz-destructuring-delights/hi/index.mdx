@@ -1,0 +1,554 @@
+---
+unlisted: false
+title: 'क्विज़: डीस्ट्रक्चरिंग के रोचक प्रश्न'
+subTitle: क्या आप Destructuring में माहिर हैं?
+label: Destructuring
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-11-12'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - intro
+  - javascript
+  - es2015
+  - destructuring
+  - beginner
+  - intermediate
+cover_full_width: ../boxes-of-nesting-dolls.webp
+cover_mobile: ../boxes-of-nesting-dolls-square.webp
+cover_icon: ../boxes-of-nesting-dolls-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+{/* क्या आप Destructuring के मास्टर हैं?<br/> */}
+<p class="inset">या फिर यह आपकी <em>Symphony of Destruction?</em></p>
+
+यह क्विज़ JavaScript में Destructuring के आपके ज्ञान की परख करेगा: "basic" ऑब्जेक्ट सिंटैक्स से लेकर नेस्टेड डिस्ट्रक्चरिंग और डिफ़ॉल्ट वैल्यूज़ तक। साथ ही, TypeScript और इनलाइन टाइप्स पर बोनस सवाल भी हैं!
+
+वार्मअप से सीधे शुरू करें — अपनी Destructuring स्किल्स साबित करें! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप: ऑब्जेक्ट्स"
+  title="बेसिक ऑब्जेक्ट डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'नाम: Dan Levy, उम्र: 20'},
+    {text: 'नाम: Dan Levy, उम्र: 40'},
+    {text: 'नाम: Dan Levy, उम्र: Infinity'},
+    {text: 'नाम: Dan Levy, उम्र: undefined', isAnswer: true},
+    {text: 'Error: Cannot read property \'age\''},
+    {text: 'नाम: undefined, उम्र: 40'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या प्रिंट करेगा?
+```js
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` ऑब्जेक्ट में `age` प्रॉपर्टी मौजूद ही नहीं है, इसलिए `age` का मान `undefined` होगा। `Infinity` तो बिल्कुल नहीं 😅
+
+    नतीजा यह निकलेगा:
+```plaintext
+    Name: Dan Levy, Age: undefined
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="वार्मअप: ऐरेज़"
+  title="ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यू"
+  options={[
+    {text: 'Name: Dan Levy, Age: NaN'},
+    {text: 'Name: Dan Levy, Age: null'},
+    {text: 'Name: Dan Levy, Age: undefined', isAnswer: true},
+    {text: 'Name: Dan Levy, Age: 40'},
+    {text: 'Error: Cannot destructure property \'age\''},
+    {text: 'SyntaxError: Unexpected token \',\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या करेगा?
+```js
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`age` वेरिएबल `tuple` ऐरे में मौजूद नहीं है, इसलिए यह `undefined` रहेगा।
+
+    इसका परिणाम यह होगा:
+```plaintext
+    Name: Dan Levy, Age: undefined
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="नेस्टेड डिस्ट्रक्चरिंग"
+  title="नेस्टेड डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'पहला: Dan, शहर: Denver'},
+    {text: 'पहला: undefined, शहर: Denver'},
+    {text: 'त्रुटि: Cannot read property \'first\''},
+    {text: 'पहला: Dan, शहर: undefined'},
+    {text: 'त्रुटि', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब नेस्टेड डिस्ट्रक्चरिंग की बारी?
+```js
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` ऑब्जेक्ट पर `birth: { place }` प्रॉपर्टी मौजूद नहीं है, इसलिए यह एक एरर थ्रो करेगा।
+  इसका एक समाधान नेस्टेड प्रॉपर्टीज़ के लिए डिफ़ॉल्ट वैल्यूज़ प्रदान करना है।
+
+  नेस्टेड प्रॉपर्टीज़ एक्सेस करते समय सावधान रहें — क्योंकि एरर्स को पकड़ना मुश्किल हो सकता है। साथ ही, ब्राउज़र और अन्य प्लेटफ़ॉर्म पर एरर मैसेज अलग-अलग होते हैं, जिससे डिबगिंग थोड़ी चुनौतीपूर्ण हो जाती है।
+
+  आधुनिक Chrome में: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  Node.js में भी यह एक `TypeError` ही होता है, क्योंकि JavaScript `place` को पढ़ने से पहले ही उसे `undefined` से डिस्ट्रक्चर करने की कोशिश करता है।
+
+  ब्राउज़र और रनटाइम के बीच सटीक शब्दों में भिन्नता हो सकती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="डिफ़ॉल्ट्स"
+  title="ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यूज़"
+  options={[
+    {text: 'Hi Dan from Unknown', hint: 'क्या डिफ़ॉल्ट वैल्यू सीधे नेस्टेड प्रॉपर्टी पर लागू होती है?'},
+    {text: 'Hi Dan from Denver', hint: 'क्या `birth` ऑब्जेक्ट वास्तव में मौजूद है?'},
+    {text: 'Hi Unknown from Unknown', hint: 'क्या दोनों डिफ़ॉल्ट वैल्यूज़ एक साथ काम करेंगी?'},
+    {text: 'Hi Unknown from Denver', hint: 'क्या `place` का डिफ़ॉल्ट वैल्यू काम करेगा?'},
+    {text: 'Error', isAnswer: true, hint: 'क्या `undefined` को डिस्ट्रक्चर किया जा सकता है?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब डिफ़ॉल्ट वैल्यूज़ डालने पर यह क्या आउटपुट देगा?
+```js
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए सिर्फ़ नेस्टेड प्रॉपर्टी का नहीं, बल्कि पूरे ऑब्जेक्ट का डिफ़ॉल्ट वैल्यू सेट करना ज़रूरी है। असल में, वहाँ ` = {}` डिफ़ॉल्ट मिसिंग है।
+
+  कोड का यह हिस्सा कहता है कि "अगर `person.birth` `undefined` है, तो `place` को `Unknown` मान लो"। लेकिन चूँकि `person.birth` खुद `undefined` है, JS `undefined` को डिस्ट्रक्चर करने की कोशिश करता है, और यही एरर का कारण बनता है।
+```plaintext
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+
+  Exact wording varies between browsers and runtimes.
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="डिफ़ॉल्ट"
+  title="ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यू"
+  options={[
+    {text: 'Hi Denver से Dan'},
+    {text: 'Hi Johannesburg से Dan'},
+    {text: 'Hi Unknown से Dan', isAnswer: true},
+    {text: 'Hi Unknown से Unknown'},
+    {text: 'Hi Denver से Unknown'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इसका आउटपुट क्या निकलेगा?
+```js
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
+
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` ऑब्जेक्ट पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए यह एक खाली ऑब्जेक्ट ` = {}` पर फॉलबैक कर लेता है। यही ट्रिक डिफ़ॉल्ट वैल्यू को एक्टिव करती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="फ़ंक्शन आर्ग्युमेंट्स"
+  title="डिफ़ॉल्ट वैल्यूज़ के साथ फ़ंक्शन पैरामीटर्स का डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'Hi Dan from undefined'},
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब फ़ंक्शन पैरामीटर्स के रूप में, यह क्या करेगा?
+```js
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह फ़ंक्शन `name` और `age` प्रॉपर्टीज़ को एक्सट्रैक्ट करता है, और ज़रूरत पड़ने पर डिफ़ॉल्ट वैल्यूज़ का इस्तेमाल करता है। इस केस में, डिफ़ॉल्ट ऑब्जेक्ट का `place` की सिर्फ़ शोर है—इसका `displayUser()` के अंदर कोई इस्तेमाल नहीं है।
+
+  स्ट्रिक्ट मोड इसमें कोई बदलाव नहीं लाता: बिना डिक्लेयर किए गए `place` बाइंडिंग को एक्सेस करने पर `ReferenceError` थ्रो होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="फ़ंक्शन आर्गुमेंट्स"
+  title="नेस्टेड डिफ़ॉल्ट वैल्यूज़ के साथ डीस्ट्रक्चरिंग"
+  options={[
+    {text: 'Unknown, Unknown, Joburg'},
+    {text: 'Unknown, Unknown, Unknown'},
+    {text: 'Unknown, `undefined`, Joburg'},
+    {text: 'N/A, `undefined`, Joburg'},
+    {text: 'N/A, Unknown, Joburg'},
+    {text: 'N/A, N/A, Joburg', isAnswer: true},
+    {text: 'Unknown, N/A, Joburg'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`undefined` वैल्यूज़ को कैसे हैंडल किया जाता है?
+```js
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`displayPlace` फ़ंक्शन डिफ़ॉल्ट ऑब्जेक्ट का उपयोग तभी करेगा जब कोई ऑब्जेक्ट पास न किया गया हो। इसलिए, `{ place: "Unknown" }` डिफ़ॉल्ट प्राप्त करने का एकमात्र तरीका बिना किसी आर्गुमेंट के `displayPlace()` को कॉल करना है।
+
+  यहाँ एक और उल्लेखनीय व्यवहार यह है कि `place` के लिए `undefined` पास करने से डिफ़ॉल्ट वैल्यू का उपयोग होगा, जो `JSON.stringify` के व्यवहार के थोड़ा मिलता-जुलता है (`undefined` को नज़रअंदाज़ करना, `null` को पहचानना)।
+
+  इसका परिणाम यह होगा:
+```js
+  displayPlace() // Unknown
+  displayPlace({ name: "Dan" }) // N/A
+  displayPlace({ name: "Dan", place: undefined }) // N/A
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="फ़ंक्शन आर्ग्युमेंट्स"
+  title="नेस्टेड डिफ़ॉल्ट वैल्यूज़ के साथ डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'N/A, N/A'},
+    {text: 'N/A, undefined'},
+    {text: 'Unknown, N/A'},
+    {text: 'Unknown, Unknown'},
+    {text: 'Unknown, undefined'},
+    {text: 'null, N/A', isAnswer: true},
+    {text: 'null, Unknown'},
+    {text: 'null, undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+पिछले सवाल की तरह... इस बार `null` को कैसे हैंडल किया जाएगा?_
+```js
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+इस केस में, पहले कॉल में `place` प्रॉपर्टी को `null` सेट किया गया है और दूसरे में `undefined`। `place` के लिए डिफ़ॉल्ट वैल्यू केवल तभी यूज़ होती है जब पूरा ऑब्जेक्ट मिसिंग हो **या** `undefined` हो। `null` वैल्यूज़ `null` के रूप में ही पास होंगी।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="टाइपस्क्रिप्ट इनलाइन टाइप्स"
+  title="नेस्टेड डिफ़ॉल्ट वैल्यूज़ के साथ डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'N/A'},
+    {text: '`undefined`'},
+    {text: '`Unknown`'},
+    {text: '`\'null\'`'},
+    {text: 'TypeScript Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब टाइपस्क्रिप्ट में... _यह क्या करेगा?_
+```ts
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+टाइपस्क्रिप्ट एक एरर रिपोर्ट करता है क्योंकि `place` को `string` टाइप दिया गया है, लेकिन कॉल में `null` पास किया गया है। साथ ही, इस कॉल में ज़रूरी `age` प्रॉपर्टी को छोड़ दिया गया है।
+
+  अगर आप टाइप एरर्स को नज़रअंदाज़ कर दें, तो कोड चलने पर कंसोल में `null` प्रिंट होगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="टाइपस्क्रिप्ट: असाइनमेंट के साथ"
+  title="नेस्टेड डिफ़ॉल्ट वैल्यूज़ के साथ डीस्ट्रक्चरिंग"
+  options={[
+    {text: 'undefined'},
+    {text: 'null'},
+    {text: 'N/A'},
+    {text: 'Unknown'},
+    {text: 'Denver', isAnswer: true},
+    {text: 'SyntaxError'},
+    {text: 'Error: Invalid type'},
+    {text: 'Error: Invalid Arguments'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब कुछ रीनेमिंग/असाइनमेंट ट्राई करते हैं...
+```ts
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कंसोल पर `Denver` प्रिंट करेगा। ऐसा इसलिए होता है क्योंकि फ़ंक्शन सिग्नेचर में `place` प्रॉपर्टी को `location` नाम से रीनेम कर दिया गया है। बाहरी या थर्ड-पार्टी डेटा स्ट्रक्चर्स को अपने कोड में फिट करते समय डीस्ट्रक्चरिंग के दौरान प्रॉपर्टीज़ को रीनेम करना एक स्टैंडर्ड और बेहद उपयोगी पैटर्न है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="TS में नेस्टेड डिस्ट्रक्चरिंग"
+  title="नेस्टेड डिफ़ॉल्ट वैल्यूज़ के साथ डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'त्रुटि: प्रॉपर्टी \'first\' गायब है', hint: 'क्या आपने टाइप डिफिनिशन में सभी प्रॉपर्टीज़ चेक की हैं?'},
+    {text: 'त्रुटि: प्रॉपर्टी \'last\' गायब है', hint: 'ध्यान दें कि कौन सी प्रॉपर्टी ऑब्जेक्ट में पास नहीं की गई है।'},
+    {text: 'त्रुटि: प्रॉपर्टीज़ \'birth\' और \'age\' गायब हैं', isAnswer: true, hint: 'डिफ़ॉल्ट वैल्यू का मतलब टाइप में ऑप्शनल होना नहीं होता।'},
+    {text: 'त्रुटि: प्रॉपर्टी \'place\' गायब है', hint: 'नेस्टेड ऑब्जेक्ट की स्ट्रक्चर पर गौर करें।'},
+    {text: 'त्रुटि: \'string\' में {...} के अंदर कोई प्रॉपर्टी नहीं है', hint: 'यह एरर टाइप मिमैच की ओर इशारा करता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+टाइप एरर पहचानें:
+```ts
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+एरर `greet` फंक्शन सिग्नेचर में है। पास किए गए ऑब्जेक्ट में `age` और `birth` प्रॉपर्टीज़ गायब हैं, इसलिए टाइप डिफिनिशन में इन्हें ऑप्शनल होना चाहिए।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="टाइपस्क्रिप्ट + असाइनमेंट"
+  title="नेस्टेड वैल्यूज़, असाइनमेंट और टाइप्स के साथ डिस्ट्रक्चरिंग"
+  options={[
+    {text: 'हाय डेन लेवी N/A से'},
+    {text: 'हाय डेन लेवी केप टाउन से'},
+    {text: 'हाय N/A N/A N/A से'},
+    {text: 'हाय N/A N/A केप टाउन से'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अब **असाइनमेंट** के साथ (`f`, `l` और `p` वेरिएबल्स पर ध्यान दें)
+```ts
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+एक और Error! अब आप अंदाज़ा लगाने लगे हैं, है न?!
+
+  डिफ़ॉल्ट, असाइनमेंट और टाइप्स के साथ डिस्ट्रक्चरिंग की परतों को पढ़ना वाकई मुश्किल होता है!
+
+  जैसे ही `place` को `p` वेरिएबल में रीअसाइन किया जाता है, यह `console.log` स्टेटमेंट के स्कोप में अब डिफ़ाइंड नहीं रहता।
+```ts
+  console.log(`Hi ${f} ${l} from ${place}`); // ❌
+  // to:
+  console.log(`Hi ${f} ${l} from ${p}`); // ✅
+```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

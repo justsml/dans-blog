@@ -1,0 +1,354 @@
+---
+title: 'क्विज़: क्या आप मॉडर्न जावास्क्रिप्ट जानते हैं?'
+subTitle: अपने JavaScript कौशल साबित करें!
+label: ES2019+ Features
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### क्या आप ES2015 और ES2022 के बीच का अंतर जानते हैं?
+
+* **अपनी JavaScript स्किल्स साबित करें!** 🚀
+* लॉगिन या साइनअप की ज़रूरत नहीं। ✨
+* मल्टीपल चॉइस। 🤖 ... _कितना मुश्किल हो सकता है, है न?_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Null Coalescing"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`result` का वैल्यू क्या होगा?
+```js
+    console.log(null ?? 100);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+नल कोएलेसिंग ऑपरेटर (`??`) तभी दाईं ओर का ऑपरेंड (`b`) रिटर्न करता है जब बाईं ओर का ऑपरेंड (`a`) `null` या `undefined` हो। इस केस में, `a` का मान `null` है, इसलिए `result` को `100` मिलता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="नल कोएलिसिंग"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या होगा?
+```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+नल कोएलिसिंग ऑपरेटर (`??`) केवल `null` या `undefined` को ही नकारता है, `false` जैसे फाल्सी (falsey) मानों को पूरी तरह से वैध मानता है। चूंकि `value` का मान `false` है, ऑपरेटर उसे ही रिटर्न कर देता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="ऑप्शनल चेनिंग"
+  title="ऑप्शनल चेनिंग"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Error: Cannot read property of undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित कोड का आउटपुट क्या होगा?
+```js
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ऑप्शनल चेनिंग ऑपरेटर (`?.`) इवैल्यूएशन को तुरंत रोक देता है अगर लेफ्ट-हैंड साइड `null` या `undefined` हो। चूंकि `obj.foo` का मान `null` है, इसलिए `obj.foo?.bar` का रिजल्ट `undefined` आता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="BigInt का उपयोग"
+  options={[
+    {text: 'TypeError: Cannot mix BigInt and number'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड को रन करने पर कौन सा आउटपुट मिलेगा?
+```js
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+BigInt वैल्यू किसी भी नंबर के आखिर में `n` लगाकर बनाई जाती है। अंकगणितीय ऑपरेशन्स में BigInt और सामान्य नंबर को आपस में मिक्स नहीं किया जा सकता। चूँकि यहाँ दोनों ही वैल्यूज BigInt हैं, इसलिए गुणा (multiplication) बिना किसी दिक्कत के हो जाता है, जिसका नतीजा `84n` है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="डायनामिक इम्पोर्ट"
+  title="डायनामिक इम्पोर्ट सिंटैक्स"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह क्या लॉग करेगा?
+```js
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`import()` फ़ंक्शन एक `Promise` रिटर्न करता है जो मॉड्यूल ऑब्जेक्ट में रिज़ॉल्व होता है। चूँकि `Promise` इंस्टेंस ऑब्जेक्ट ही होते हैं, इसलिए `typeof modulePromise` `'object'` लॉग करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'fulfilled: success', isAnswer: true},
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड को चलाने पर कौन सा आउटपुट मिलेगा?
+```js
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Promise.allSettled` हर प्रॉमिस के रिज़ल्ट को ऑब्जेक्ट्स की एक ऐरे के रूप में रिटर्न करता है। चूँकि पहला प्रॉमिस `'success'` वैल्यू के साथ `fulfilled` होता है, इसलिए लॉग स्टेटमेंट `fulfilled: success` ही प्रिंट करेगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="String.matchAll का उपयोग"
+  options={[
+    {text: 'मिलानों की Array'},
+    {text: 'मिलानों का Iterator', isAnswer: true},
+    {text: 'त्रुटि: अमान्य कॉल'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`str.matchAll()` क्या रिटर्न करता है?
+```js
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`String.matchAll` मिलानों की Array नहीं, बल्कि एक Iterator रिटर्न करता है। यह इसलिए किया गया है क्योंकि Iterators मेमोरी-कुशल होते हैं और आपको स्ट्रिंग से सभी मैचिंग ग्रुप्स को ज़रूरत पड़ने पर ही (lazy evaluation) एक्सेस करने की सुविधा देते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="`import.meta`"
+  title="`import.meta` का उपयोग"
+  options={[
+    {text: 'वर्तमान मॉड्यूल का URL', isAnswer: true},
+    {text: 'वर्तमान टाइमस्टैम्प'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`import.meta.url` क्या दर्शाता है?
+```js
+    console.log(import.meta.url);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`import.meta` एक ऑब्जेक्ट है जो वर्तमान मॉड्यूल का मेटाडेटा संभालता है। `import.meta.url` प्रॉपर्टी सीधे उस मॉड्यूल का URL देती है, जिससे आपको पता चलता है कि आपकी स्क्रिप्ट वास्तव में कहाँ से लोड या एक्जीक्यूट हो रही है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="लॉजिकल असाइनमेंट"
+  title="लॉजिकल असाइनमेंट"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+लॉजिकल असाइनमेंट के बाद `a` का मान क्या होगा?
+```js
+    let a = null;
+    a ||= 10;
+    console.log(a);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+लॉजिकल OR असाइनमेंट (`||=`) तब दाईं ओर का मान असाइन करता है जब बाईं ओर का मान falsy (`null`, `undefined`, `0`, `false` आदि) हो। चूंकि `a` का मान `null` है, इसलिए इसे `10` असाइन कर दिया जाएगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="तार्किक नल असाइनमेंट"
+  title="तार्किक नल असाइनमेंट"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+नल असाइनमेंट के बाद `b` का मान क्या होगा?
+```js
+    let b = null;
+    b ??= 10;
+    console.log(b);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+नल कोएलेसिंग असाइनमेंट (`??=`) दाहिने पक्ष का मान तब असाइन करता है जब बाएं पक्ष का मान `null` या `undefined` हो। चूंकि `b` का मान `null` है, इसलिए इसे `10` असाइन किया जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="`WeakRef`"
+  title="`WeakRef` का उपयोग"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`WeakRef` क्या प्रदान करता है?
+```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`WeakRef` किसी ऑब्जेक्ट का एक weak reference प्रदान करता है, जिससे यदि कोई अन्य reference मौजूद न हो तो उस ऑब्जेक्ट को garbage collect किया जा सके। चूँकि यहाँ `obj` अभी भी strongly referenced है, `deref()` मूल ऑब्जेक्ट को ही लौटाता है। यदि target reclaim हो चुका होता, तो `deref()` `undefined` लौटाता।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

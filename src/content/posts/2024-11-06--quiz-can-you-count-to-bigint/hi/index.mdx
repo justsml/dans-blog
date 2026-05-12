@@ -1,0 +1,414 @@
+---
+unlisted: false
+title: 'क्विज़: क्या जावास्क्रिप्ट में गिनती पर भरोसा किया जा सकता है?'
+subTitle: '`parseInt` और `parseFloat` में अंतर पता है?'
+label: Numbers
+date: '2024-10-31'
+modified: '2024-11-09'
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+cover: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_full_width: ../victor-freitas-hOuJYX2K5DA-unsplash-wide.webp
+cover_mobile: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+cover_icon: ../victor-freitas-hOuJYX2K5DA-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्म-अप"
+  title="`parseInt` के साथ पार्सिंग"
+  options={[
+    {text: '123456', isAnswer: true},
+    {text: '123'},
+    {text: '12345600'},
+    {text: '456.00'},
+    {text: 'Error'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    parseInt(" 123456.00")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` फ़ंक्शन स्पेस को नज़रअंदाज़ कर देता है और अंकों के शुरुआती क्रम को एक पूर्णांक के रूप में पार्स करता है। चूँकि यह दशमलव बिंदु को पूर्णांक का हिस्सा नहीं मानता, इसलिए यह वहीं पार्सिंग रोक देता है और केवल `123456` ही लौटाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="पार्सिंग"
+  title="कॉमा हैंडलिंग"
+  options={[
+    {text: '123', isAnswer: true},
+    {text: '12345600'},
+    {text: '123456.00'},
+    {text: '456.00'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    parseInt("123,456.00")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+आम तौर पर, `parseInt` किसी भी गैर-संख्यात्मक वर्ण को देखते ही पार्सिंग रोक देता है। यहाँ, यह कॉमा पर रुक जाता है, इसलिए केवल `123` ही रिटर्न होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="गणित"
+  title="फ़्लोटिंग पॉइंट्स की सटीकता"
+  options={[
+    {text: '0.1 + 0.2 === 0.3'},
+    {text: 'false', isAnswer: true},
+    {text: 'true'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    0.1 + 0.2 === 0.3
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+फ़्लोटिंग-पॉइंट प्रिसिज़न त्रुटियों के कारण, `0.1 + 0.2` का मान `0.3` के बिल्कुल बराबर नहीं होता। मेमोरी में फ़्लोटिंग-पॉइंट नंबरों को स्टोर करने के बाइनरी फॉर्मेट के कारण, इसका नतीजा `0.30000000000000004` आता है। फ़्लोटिंग-पॉइंट अरिथमेटिक को हैंडल करने वाला IEEE 754 स्टैंडर्ड ही इसका मुख्य कारण है, क्योंकि यह कुछ दशमलव संख्याओं को बिल्कुल सटीक रूप से दर्शा नहीं सकता। यह सभी प्रोग्रामिंग लैंग्वेज में एक आम समस्या है। आखिरकार आपको ऐसी दशमलव वैल्यू मिलेगी जो अनंत तक रिपीट होती है, और चाहे कोई भी लैंग्वेज हो — कंप्यूटर को बस अनंत रूप से रिपीट होने वाले डिजिट्स को ट्रैक करना बंद करना पड़ता है।
+
+  Python और Java जैसी कुछ लैंग्वेज में इसे हैंडल करने के लिए `Decimal` या `BigDecimal` बिल्ट-इन होते हैं, लेकिन JavaScript में यह फीचर नहीं है। आप `big.js` या `decimal.js` जैसी लाइब्रेरीज़ का उपयोग करके इन केसेस को हैंडल कर सकते हैं।
+
+  (नोट: कुछ लैंग्वेज को फ्रैक्शन्स, इमेजिनरी नंबर आदि को हायर लॉजिकल लेवल पर हैंडल करने के लिए डिज़ाइन किया गया है, जो लिटरल एक्सप्रेशन्स को प्रिज़र्व करते हैं। लेकिन हार्डवेयर लेवल पर उन्हें फ़्लोटिंग-पॉइंट प्रिसिज़न की वही समस्याएं झेलनी पड़ती हैं।)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="ओवरफ्लोइंग नंबर्स"
+  title="Infinity को हैंडल करना"
+  options={[
+    {text: 'Infinity', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```tsx
+    Number.MAX_VALUE * 2
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+चूंकि `Number.MAX_VALUE` JavaScript का सबसे बड़ा **representable** regular number है, इसकी सीमा पार करते ही यह तुरंत overflow हो जाता है — बेसिकली आपको बेमतलब रिजल्ट्स मिल सकते हैं। इसे `2` से मल्टीप्लाई करने पर आउटपुट `Infinity` आता है।
+  
+  *खैर, JavaScript कभी-कभी ऐसा ही करता है।*
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="फॉर्मेटिंग"
+  title="`.toFixed()` के साथ स्ट्रिंग कन्वर्ज़न"
+  options={[
+    {text: 'TypeError'},
+    {text: 'SyntaxError'},
+    {text: '"5"'},
+    {text: '5'},
+    {text: '"5.00"', isAnswer: true},
+    {text: '5.0'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या करेगा?
+```tsx
+    5..toFixed(2)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.toFixed(2)` `5` को दो दशमलव स्थानों वाली स्ट्रिंग में बदल देता है, इसलिए आउटपुट `"5.00"` होगा।
+
+  डबल डॉट (`5..toFixed(2)`) नंबर लिटरल्स के ऑब्जेक्ट मॉडल तक पहुँचने का एक 'ट्रिक' है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="प्रकारों की तुलना"
+  title="`parseInt` और `parseFloat` के बीच समानता तुलना"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    parseInt("42") === parseFloat("42")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+JavaScript में, `parseInt` और `parseFloat` दोनों स्ट्रिंग `"42"` को संख्या `42` के रूप में पार्स करते हैं। इसलिए, `parseInt("42") === parseFloat("42")` तुलना का मान `true` होगा। `parseInt` पहले गैर-अंकीय वर्ण पर पार्सिंग रोक देता है, जबकि `parseFloat` तब तक पार्सिंग जारी रखता है जब तक कि उसे कोई ऐसा वर्ण न मिले जो फ्लोटिंग-पॉइंट संख्या का हिस्सा न हो। चूँकि `"42"` में कोई दशमलव बिंदु या अन्य गैर-संख्यात्मक वर्ण मौजूद नहीं हैं, इसलिए दोनों फ़ंक्शन एक ही मान लौटाते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="समानता"
+  title="BigInt के साथ समानता तुलना"
+  options={[
+    {text: 'TypeError'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    BigInt("42") === parseInt("42")
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt), `number` से एक अलग डेटा टाइप है, इसलिए `parseInt("42")` (एक रेगुलर नंबर) `BigInt("42")` के स्ट्रिक्टली इक्वल नहीं है। सही तुलना के लिए, आपको दोनों को एक ही टाइप में कन्वर्ट करना होगा: `BigInt(parseInt("42")) === BigInt("42")`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="आधारित"
+  title="हेक्साडेसिमल पार्सिंग"
+  options={[
+    {text: 'true', isAnswer: true},
+    {text: 'false'},
+    {text: 'NaN'},
+    {text: 'अपरकेस होना चाहिए: 2A'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इसका नतीजा क्या होगा?
+```jsx
+    parseInt("0x2A") === parseInt("2a", 16)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+कोई भी इनपुट स्ट्रिंग जो `0x` से शुरू होती है, उसे `parseInt` स्वचालित रूप से हेक्साडेसिमल (रेडिक्स `16`) मान लेता है।
+  इसका सीधा मतलब है कि आपने रेडिक्स 16 पास कर दिया है। इसलिए, `parseInt("0x2A")` और `parseInt("2a", 16)` बिल्कुल एक जैसे काम करेंगे। (यह केस-इनसेंसिटिव है, यानी अक्षरों का साइज़ मायने नहीं रखता।)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="मूलभूत"
+  title="Radix के साथ Parsing"
+  options={[
+    {text: '255', isAnswer: true},
+    {text: '0'},
+    {text: '16'},
+    {text: '0.16'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यहाँ क्या चल रहा है?
+```jsx
+    parseInt('0xFF', 16)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` को हेक्साडेसिमल (`16`) बेस के साथ उपयोग करने पर `"FF"` दशमलव में `255` में बदल जाता है। आपने इसे शायद CSS के RGB/Hex कलर कोड्स में देखा होगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Number[]"
+  title="`.map(parseInt)` का उपयोग"
+  options={[
+    {text: '[24, NaN, NaN]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    [24, 'One', 42].map(parseInt)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` का दूसरा आर्गुमेंट (radix) एरे मेथड्स के `index` आर्गुमेंट के साथ ओवरलैप हो जाता है। इससे अनपेक्षित परिणाम मिलते हैं, क्योंकि `parseInt("One", 1)` अमान्य इनपुट के कारण `NaN` रिटर्न करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Number[]"
+  title="`.map(Number)` का उपयोग"
+  options={[
+    {text: '[24, NaN, 34]', isAnswer: true},
+    {text: '[24, NaN, 42]'},
+    {text: '[24, 1, 42]'},
+    {text: '[24, 42]'},
+    {text: 'NaN'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+```jsx
+    [24, 'Twenty1', 0o42].map(Number)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Number` कन्स्ट्रक्टर मानों को `parseInt` की तुलना में काफी सख्ती से संख्या में बदलता है। इस वजह से, `'Twenty1'` `NaN` बन जाता है, जबकि `0o42` को ऑक्टल लिटरल समझकर `34` में कन्वर्ट कर दिया जाता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="पार्सिंग"
+  title="null को हैंडल करना"
+  options={[
+    {text: '0 NaN'},
+    {text: '0 0'},
+    {text: 'NaN NaN'},
+    {text: 'NaN 0', isAnswer: true},
+    {text: 'null null'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या होगा?
+```jsx
+    console.log(parseInt(null), Number(null))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`parseInt` इनपुट को स्ट्रिंग में coerce कर देता है, इसलिए `null`, `"null"` बन जाता है। चूंकि `"null"` में कोई वैध बेस-10 अंक नहीं हैं, यह `NaN` लौटाएगा।
+
+`Number(null)` का रिजल्ट `0` आता है, क्योंकि JS आपको हमेशा अलर्ट रखना पसंद करता है।
+क्यों? खैर, अगर इसमें रुचि हो तो मैं इस पर और गहराई से बात कर सकता हूँ।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="पार्सिंग"
+  title="बेस पर पार्सिंग"
+  options={[
+    {text: 'NaN'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '36'},
+    {text: '1112745', isAnswer: true},
+    {text: '01001001'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड का आउटपुट क्या होगा?
+```jsx
+    parseInt(null, 36)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+चूंकि `parseInt` हमेशा इनपुट को स्ट्रिंग में बदल देता है, इसलिए `null` स्ट्रिंग `"null"` बन जाता है।
+  
+  बेस 36 (hexatrigesimal, अगर आप ध्यान दे रहे हैं) में, स्ट्रिंग `"null"` का मान `1112745` होता है।
+
+  बेस 36 में `nulk`, `null`, और `nulm` के क्रमिक मान क्रमशः `1112744`, `1112745`, और `1112746` हैं।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<section className="scroll-x">
+## तुलना तालिका
+
+| फ़ंक्शन | `parseInt` | `parseFloat` | `Number` | `BigInt` |
+| --- | --- | --- | --- | --- |
+| व्हाइटस्पेस इग्नोर करता है | ✅ | ✅ | ✅ | ✅ |
+| `.map(FN)`  | ❌ | ☑️ | ✅ | ✅ |
+| रेडिक्स आर्गुमेंट सपोर्ट करता है | ✅ | ❌ | ❌ | ❌ |
+| बाइनरी/ऑक्टल/हेक्स लिटरल्स | ✅ | ❌ | ✅ | ✅ |
+| अमान्य कैरेक्टर्स `42 oh no` | `42` | `42`  | `NaN` | `SyntaxError` |
+</section>
+
+<h2>आपने कैसा किया? 🧐</h2>
+
+{/* <h4>Are you ok?</h4> */}
+
+<p class="inset">इतना बाइनरी पचाने के बाद थोड़ा आराम करना चाहते हैं?<br />पफ़्ट, याद रखें: ब्रेक *स्किल्स* के *बाद* लेना है! <br /><br />और कुछ और चैलेंजेस को कुचलने के लिए [मेरी जिम](/challenges/) पर जाएं! 💪</p>

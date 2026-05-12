@@ -1,0 +1,43 @@
+{
+  "index": 10,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Express रिस्पॉन्स एरर",
+  "translation": {
+    "title": "Express रिस्पॉन्स एरर",
+    "group": "API Gotchas",
+    "options": [
+      {
+        "text": "पूरा error object भेजता है"
+      },
+      {
+        "text": "{\"error\":{}} भेजता है"
+      },
+      {
+        "text": "एक server error throw करता है"
+      },
+      {
+        "text": "केवल error message भेजता है"
+      }
+    ],
+    "questionProse": [
+      "क्लाइंट को आखिर क्या भेजा जाता है?"
+    ],
+    "explanationProse": [
+      "`res.json()` internally `JSON.stringify()` का उपयोग करता है, जिसके कारण Error object सीरियलाइज़ होकर खाली `{}` बन जाता है। इसलिए क्लाइंट को `{\"error\":{}}` ही मिलता है। इस पिटफॉल से बचने के लिए, हमेशा `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का ही उपयोग करें।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Express रिस्पॉन्स एरर\",\n  \"group\": \"API Gotchas\",\n  \"options\": [\n    {\n      \"text\": \"पूरा error object भेजता है\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":{}} भेजता है\"\n    },\n    {\n      \"text\": \"एक server error throw करता है\"\n    },\n    {\n      \"text\": \"केवल error message भेजता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"क्लाइंट को आखिर क्या भेजा जाता है?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` internally `JSON.stringify()` का उपयोग करता है, जिसके कारण Error object सीरियलाइज़ होकर खाली `{}` बन जाता है। इसलिए क्लाइंट को `{\\\"error\\\":{}}` ही मिलता है। इस पिटफॉल से बचने के लिए, हमेशा `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का ही उपयोग करें।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 790,
+    "outputTokens": 5760,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 104673
+  },
+  "cost": {
+    "inputUsd": 0.00025675000000000003,
+    "outputUsd": 0.011232,
+    "totalUsd": 0.01148875,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

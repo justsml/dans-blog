@@ -1,0 +1,43 @@
+{
+  "index": 1,
+  "originalTitle": "Console vs JSON",
+  "translatedTitle": "Console बनाम JSON",
+  "translation": {
+    "title": "Console बनाम JSON",
+    "group": "सीरियलाइज़ेशन के धोखे",
+    "options": [
+      {
+        "text": "दोनों का आउटपुट एक जैसा होता है"
+      },
+      {
+        "text": "console.log ज़्यादा जानकारी दिखाता है"
+      },
+      {
+        "text": "JSON.stringify ज़्यादा जानकारी दिखाता है"
+      },
+      {
+        "text": "दोनों खाली ऑब्जेक्ट दिखाते हैं"
+      }
+    ],
+    "questionProse": [
+      "इन दोनों में क्या फर्क है?"
+    ],
+    "explanationProse": [
+      "`console.log(err)` एरर को उसके मैसेज और स्टैक ट्रेस के साथ दिखाता है, क्योंकि कंसोल में `Error` ऑब्जेक्ट्स के लिए स्पेशल हैंडलिंग बिल्ट-इन होती है। `JSON.stringify(err)` `'{}'` रिटर्न करता है क्योंकि एरर की प्रॉपर्टीज़ एन्यूमरेबल (enumerable) नहीं होतीं। API डिबग करते वक्त यही अंतर अक्सर डेवलपर्स को फँसा देता है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Console बनाम JSON\",\n  \"group\": \"सीरियलाइज़ेशन के धोखे\",\n  \"options\": [\n    {\n      \"text\": \"दोनों का आउटपुट एक जैसा होता है\"\n    },\n    {\n      \"text\": \"console.log ज़्यादा जानकारी दिखाता है\"\n    },\n    {\n      \"text\": \"JSON.stringify ज़्यादा जानकारी दिखाता है\"\n    },\n    {\n      \"text\": \"दोनों खाली ऑब्जेक्ट दिखाते हैं\"\n    }\n  ],\n  \"questionProse\": [\n    \"इन दोनों में क्या फर्क है?\"\n  ],\n  \"explanationProse\": [\n    \"`console.log(err)` एरर को उसके मैसेज और स्टैक ट्रेस के साथ दिखाता है, क्योंकि कंसोल में `Error` ऑब्जेक्ट्स के लिए स्पेशल हैंडलिंग बिल्ट-इन होती है। `JSON.stringify(err)` `'{}'` रिटर्न करता है क्योंकि एरर की प्रॉपर्टीज़ एन्यूमरेबल (enumerable) नहीं होतीं। API डिबग करते वक्त यही अंतर अक्सर डेवलपर्स को फँसा देता है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 3866,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 70709
+  },
+  "cost": {
+    "inputUsd": 0.000250575,
+    "outputUsd": 0.0075387,
+    "totalUsd": 0.007789275,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

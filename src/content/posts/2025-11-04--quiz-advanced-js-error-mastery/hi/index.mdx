@@ -1,0 +1,496 @@
+---
+title: 'क्विज़: उन्नत JS एरर मास्टरी'
+subTitle: क्या आपके अपवाद वास्तव में अपवादात्मक हैं?
+label: Errors
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2025-11-03'
+modified: '2025-11-04'
+tags:
+  - quiz
+  - javascript
+  - error-handling
+  - debugging
+  - advanced
+cover_full_width: ./ahmed-slimene-c09hZthLq_s-unsplash-wide.webp
+cover_mobile: ./ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_icon: ./ahmed-slimene-c09hZthLq_s-unsplash-square-300px.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@assl?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Ahmed
+  Slimene</a> on <a
+  href="https://unsplash.com/photos/a-tall-white-building-with-balconies-on-top-of-it-c09hZthLq_s?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### क्या आपको लगता है कि आप JavaScript errors को अंदर से बाहर तक जानते हैं?
+
+* **अपनी error handling की पकड़ को परखें!** 💥
+* लॉगिन या साइनअप की ज़रूरत नहीं। ✨
+* मल्टीपल चॉइस। 🤖 ... _ये आपके आम try-catch सवाल नहीं हैं!_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="सीरियलाइज़ेशन के सरप्राइज़"
+  title="खाली ऑब्जेक्ट का रहस्य"
+  options={[
+    {text: '{"message":"Oops","name":"Error"}'},
+    {text: '{}', isAnswer: true},
+    {text: '{"error":"Oops"}'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`JSON.stringify(error)` क्या रिटर्न करता है?
+```js
+    const error = new Error('Oops');
+    console.log(JSON.stringify(error));
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Error` ऑब्जेक्ट्स की प्रॉपर्टीज़ (`message`, `name`, `stack`) `non-enumerable` होती हैं, इसलिए `JSON.stringify()` उन्हें इग्नोर करके `{}` रिटर्न कर देता है। API रिस्पॉन्स में एरर भेजते समय यह एक क्लासिक गोटचा है। सही डेटा पाने के लिए `JSON.stringify(error, Object.getOwnPropertyNames(error))` का उपयोग करें या एक प्लेन ऑब्जेक्ट बना लें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="सीरियलाइज़ेशन के धोखे"
+  title="Console बनाम JSON"
+  options={[
+    {text: 'दोनों का आउटपुट एक जैसा होता है'},
+    {text: 'console.log ज़्यादा जानकारी दिखाता है', isAnswer: true},
+    {text: 'JSON.stringify ज़्यादा जानकारी दिखाता है'},
+    {text: 'दोनों खाली ऑब्जेक्ट दिखाते हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इन दोनों में क्या फर्क है?
+```js
+    const err = new Error('Test');
+    console.log(err);
+    console.log(JSON.stringify(err));
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`console.log(err)` एरर को उसके मैसेज और स्टैक ट्रेस के साथ दिखाता है, क्योंकि कंसोल में `Error` ऑब्जेक्ट्स के लिए स्पेशल हैंडलिंग बिल्ट-इन होती है। `JSON.stringify(err)` `'{}'` रिटर्न करता है क्योंकि एरर की प्रॉपर्टीज़ एन्यूमरेबल (enumerable) नहीं होतीं। API डिबग करते वक्त यही अंतर अक्सर डेवलपर्स को फँसा देता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="टाइप चेकिंग ट्रिक्स"
+  title="`instanceof` इनहेरिटेंस"
+  options={[
+    {text: 'true, true, true', isAnswer: true},
+    {text: 'true, false, false'},
+    {text: 'false, true, true'},
+    {text: 'true, true, false'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इन चेक्स का रिजल्ट क्या होगा?
+```js
+    class CustomError extends Error {}
+    const err = new CustomError('test');
+    
+    console.log(err instanceof CustomError);
+    console.log(err instanceof Error);
+    console.log(err instanceof Object);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+तीनों ही `true` रिटर्न करते हैं। `CustomError`, `Error` को एक्सटेंड करता है, जो आगे चलकर `Object` को एक्सटेंड करता है। `instanceof` ऑपरेटर पूरी प्रोटोटाइप चेन को चेक करता है, इसलिए `CustomError` का इंस्टेंस, `Error` और `Object` का भी इंस्टेंस होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="टाइप चेकिंग ट्रिक्स"
+  title="क्रॉस-फ्रेम instanceof"
+  options={[
+    {text: 'हमेशा true', hint: 'JS इतना सीधा नहीं है।'},
+    {text: 'हमेशा false', hint: 'लगभग सही, पर हमेशा नहीं।'},
+    {text: 'फ्रेम के पार false हो सकता है', isAnswer: true, hint: 'बिल्कुल सही! हर context का अपना constructor होता है।'},
+    {text: 'एक error throw करता है', hint: 'नहीं, यह चुपचाप false लौटाता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+iframes के आर-पार `instanceof Error` चेक करने पर क्या होता है?
+```js
+    // In iframe:
+    const iframeError = new Error('test');
+    // In parent window:
+    console.log(iframeError instanceof Error);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+अलग-अलग execution contexts (जैसे iframes या workers) में `instanceof` `false` लौटा सकता है, क्योंकि हर context का अपना अलग `Error` constructor होता है। contexts के बीच errors को सही से पहचानने के लिए `Object.prototype.toString.call(obj) === '[object Error]'` का इस्तेमाल करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="नॉन-एरर थ्रो करना"
+  title="स्ट्रिंग थ्रो"
+  options={[
+    {text: 'TypeError: स्ट्रिंग एक Error नहीं है'},
+    {text: 'false, "string"', isAnswer: true},
+    {text: 'स्वचालित रूप से एक Error ऑब्जेक्ट बनाता है'},
+    {text: 'अनिश्चित व्यवहार'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब आप एक स्ट्रिंग को थ्रो करते हैं तो क्या होता है?
+```js
+    try {
+      throw "Oops!";
+    } catch (e) {
+      console.log(e instanceof Error);
+      console.log(typeof e);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+JavaScript आपको किसी भी वैल्यू को थ्रो करने देता है। यहाँ, `e instanceof Error` `false` है और `typeof e` `"string"` है। यह उन एरर हैंडलिंग कोड्स को बुरी तरह तोड़ देगा जो यह मानते हैं कि हर कैच किया गया एक्सेप्शन एक Error ऑब्जेक्ट ही होगा। बेहतर डिबगिंग के लिए हमेशा `Error` इंस्टेंस ही थ्रो करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="कस्टम एरर्स"
+  title="Error Name प्रॉपर्टी"
+  options={[
+    {text: '"Error"'},
+    {text: '"CustomError"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'ब्राउज़र पर निर्भर करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`err.name` का मान क्या है?
+```js
+    class CustomError extends Error {
+      constructor(message) {
+        super(message);
+        this.name = this.constructor.name;
+      }
+    }
+    const err = new CustomError('test');
+    console.log(err.name);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`err.name` का मान `"CustomError"` है, क्योंकि `this.constructor.name` सीधे क्लास का नाम लौटाता है। `this.name = this.constructor.name` सेट करना एक स्टैंडर्ड पैटर्न है, जो यह सुनिश्चित करता है कि आपकी कस्टम एरर क्लासेस स्टैक ट्रेस और एरर मैसेज में सही नाम ही दिखाएँ।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="कस्टम एरर्स"
+  title="Constructor Name का Gotcha"
+  options={[
+    {text: '"MyError"'},
+    {text: '"Error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'TypeError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`name` सेट न करने पर आउटपुट क्या निकलेगा?
+```js
+    class MyError extends Error {
+      // No constructor or name setting
+    }
+    const err = new MyError('test');
+    console.log(err.name);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`this.name` को एक्सप्लिसिटली सेट न करने पर, एरर `Error` क्लास से डिफ़ॉल्ट `name` प्रॉपर्टी इनहेरिट कर लेता है, जो कि `"Error"` होती है। यही कारण है कि कस्टम एरर क्लासेस को हमेशा अपने कंस्ट्रक्टर में `this.name = this.constructor.name` सेट करना चाहिए, वरना स्टैक ट्रेस देखते वक्त आपका वक्त बर्बाद हो जाएगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Error Cause"
+  title="आधुनिक Error.cause"
+  options={[
+    {text: '"Original error"', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'रैपिंग त्रुटि'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`wrapper.cause.message` क्या रिटर्न करता है?
+```js
+    const original = new Error('Original error');
+    const wrapper = new Error('Wrapper', 
+      { cause: original }
+    );
+    console.log(wrapper.cause.message);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Error.cause` (ES2022) एरर चेनिंग की सुविधा देता है, जिससे मूल एरर का कॉन्टेक्स्ट सुरक्षित रहता है। `wrapper.cause` मूल एरर को रेफरेंस करता है, इसलिए `wrapper.cause.message` `"Original error"` रिटर्न करता है। यह लो-लेवल एरर्स को हायर-लेवल कॉन्टेक्स्ट के साथ रैप करने के लिए बेहद उपयोगी है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="स्टैक ट्रेस"
+  title="स्टैक मैनिपुलेशन"
+  options={[
+    {text: '`createError` को स्टैक से हटा देता है', isAnswer: true},
+    {text: 'पूरे स्टैक को साफ़ कर देता है'},
+    {text: 'कुछ नहीं करता'},
+    {text: 'एक `TypeError` थ्रो कर देता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`Error.captureStackTrace` असल में करता क्या है?
+```js
+    function createError(msg) {
+      const err = new Error(msg);
+      Error.captureStackTrace(err, createError);
+      return err;
+    }
+    const error = createError('test');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Error.captureStackTrace` (V8/Node.js) स्टैक ट्रेस से निर्दिष्ट फंक्शन (`createError`) को जानबूझकर हटा देता है। इसका मकसद? एरर फैक्ट्री फंक्शन्स को एंड यूज़र्स की नज़रों से छुपाना। इससे एक साफ़-सुथरा स्टैक ट्रेस तैयार होता है जो सीधे उस जगह की ओर इशारा करता है जहाँ फैक्ट्री को कॉल किया गया था, न कि खुद उस फैक्ट्री फंक्शन की ओर जो सिर्फ़ बूटस्ट्रैपिंग का काम करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="मैसेज टेम्पलेट्स"
+  title="त्रुटियों में टेम्पलेट लिटरल्स"
+  options={[
+    {text: '"Value ${value} is invalid"'},
+    {text: '"Value undefined is invalid"', isAnswer: true},
+    {text: 'ReferenceError: value is not defined'},
+    {text: '"Value  is invalid"'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा एरर मैसेज मिलेगा?
+```js
+    function validate(value) {
+      if (!value) {
+        throw new Error(
+          `Value ${value} is invalid`
+        );
+      }
+    }
+    try {
+      validate(undefined);
+    } catch (e) {
+      console.log(e.message);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+इंटरपोलेशन के दौरान टेम्पलेट लिटरल्स `undefined` को स्ट्रिंग `"undefined"` में बदल देते हैं। इसी वजह से एरर मैसेज `"Value undefined is invalid"` बन जाता है। साफ-सुथरे मैसेज के लिए, इंटरपोलेशन से पहले `value ?? 'null'` या इसी तरह की वैलिडेशन चेक का उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="API Gotchas"
+  title="Express रिस्पॉन्स एरर"
+  options={[
+    {text: 'पूरा error object भेजता है'},
+    {text: '{"error":{}} भेजता है', isAnswer: true},
+    {text: 'एक server error throw करता है'},
+    {text: 'केवल error message भेजता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्लाइंट को आखिर क्या भेजा जाता है?
+```js
+    // Express.js route
+    app.get('/api/data', (req, res) => {
+      const error = new Error('Database failed');
+      res.json({ error });
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`res.json()` internally `JSON.stringify()` का उपयोग करता है, जिसके कारण Error object सीरियलाइज़ होकर खाली `{}` बन जाता है। इसलिए क्लाइंट को `{"error":{}}` ही मिलता है। इस पिटफॉल से बचने के लिए, हमेशा `res.json({ error: error.message })` या `res.json({ error: { message: error.message, name: error.name } })` का ही उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="असिंक्रोनस त्रुटियाँ"
+  title="प्रॉमिस रिजेक्शन वैल्यूज़"
+  options={[
+    {text: 'हमेशा Error ऑब्जेक्ट्स'},
+    {text: 'कोई भी वैल्यू रिजेक्शन हो सकती है', isAnswer: true},
+    {text: 'केवल स्ट्रिंग्स और Error ऑब्जेक्ट्स'},
+    {text: 'स्वचालित रूप से Error में रैप हो जाती है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`Promise.reject()` क्या एक्सेप्ट कर सकता है?
+```js
+    Promise.reject('string').catch(e => 
+      console.log(typeof e)
+    );
+    Promise.reject({code: 404}).catch(e => 
+      console.log(e.code)
+    );
+    Promise.reject(42).catch(e => 
+      console.log(e)
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`throw` की तरह ही, `Promise.reject()` भी किसी भी वैल्यू को स्वीकार करता है — चाहे स्ट्रिंग हो, ऑब्जेक्ट हो या नंबर। यह `"string"`, `404`, और `42` प्रिंट करेगा। प्रॉमिस चेन में कैच की गई वैल्यूज़ के टाइप को हमेशा चेक करें, खासकर तब जब आप थर्ड-पार्टी कोड के साथ काम कर रहे हों जो गैर-Error वैल्यूज़ के साथ रिजेक्ट कर सकता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="एरर प्रॉपर्टीज़"
+  title="गैर-मानक प्रॉपर्टीज़"
+  options={[
+    {text: 'हमेशा उपलब्ध'},
+    {text: 'सभी एनवायरनमेंट्स में मौजूद नहीं हो सकतीं', isAnswer: true},
+    {text: 'केवल Node.js में'},
+    {text: 'डिप्रेकेटेड और हटा दी गईं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`error.code` और `error.errno` कितने भरोसेमंद हैं?
+```js
+    const fs = require('fs');
+    fs.readFile('missing.txt', (err, data) => {
+      if (err) {
+        console.log(err.code);    // 'ENOENT'
+        console.log(err.errno);   // -2
+      }
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`code` और `errno` जैसी प्रॉपर्टीज़ पूरी तरह से एनवायरनमेंट पर निर्भर करती हैं (यहाँ Node.js) और ये स्टैंडर्ड `Error` ऑब्जेक्ट का हिस्सा नहीं हैं। ब्राउज़र में ये प्रॉपर्टीज़ मौजूद ही नहीं होंगी। इन्हें इस्तेमाल करने से पहले हमेशा चेक करें: `if (err.code === 'ENOENT')`। बिना चेक किए यह मान लेना कि ये मौजूद हैं, सीधा क्रैश का रास्ता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="एरर बाउंडरी"
+  title="ऑब्जेक्ट बनाम एरर डिटेक्शन"
+  options={[
+    {text: 'true, true'},
+    {text: 'false, false', isAnswer: true},
+    {text: 'true, false'},
+    {text: 'false, true'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इन चेक्स का रिटर्न वैल्यू क्या होगी?
+```js
+    const fakeError = {
+      name: 'Error',
+      message: 'Fake error',
+      stack: 'fake stack'
+    };
+    
+    console.log(fakeError instanceof Error);
+    console.log(Object.prototype.toString.call(
+      fakeError
+    ) === '[object Error]');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`instanceof Error` `false` लौटाता है क्योंकि यह ऑब्जेक्ट `Error` कंस्ट्रक्टर से नहीं बना है। `Object.prototype.toString.call()` भी `false` ही देता है (यह `'[object Object]'` रिटर्न करता है) क्योंकि यह इंटरनल `[[Class]]` स्लॉट को चेक करता है। दोनों मेथड्स इसे सही मायने में एक फर्ज़ी एरर ऑब्जेक्ट के रूप में पहचान लेते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+## Error Handling में महारत हासिल करें
+
+सीरियलाइज़ेशन की पिटफ़ॉल्स से लेकर क्रॉस-कॉन्टेक्स्ट `instanceof` फ़ेलियर तक, ये एडवांस्ड कॉन्सेप्ट्स जूनियर डेवलपर्स को ~अनुभवी~ ज़ख्मी प्रोफेशनल्स से अलग करते हैं।
+
+और चुनौतियों के लिए तैयार हैं? JavaScript, एल्गोरिदम और अन्य विषयों पर और भी दिमागी कसरतों के लिए हमारा [पूरा क्विज़ संग्रह](/challenges/) देखें!

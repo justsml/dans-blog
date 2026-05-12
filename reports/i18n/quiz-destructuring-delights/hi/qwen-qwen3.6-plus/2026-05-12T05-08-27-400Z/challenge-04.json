@@ -1,0 +1,51 @@
+{
+  "index": 3,
+  "originalTitle": "Default Values in Object Destructuring",
+  "translatedTitle": "ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यूज़",
+  "translation": {
+    "title": "ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यूज़",
+    "group": "डिफ़ॉल्ट्स",
+    "options": [
+      {
+        "text": "Hi Dan from Unknown",
+        "hint": "क्या डिफ़ॉल्ट वैल्यू सीधे नेस्टेड प्रॉपर्टी पर लागू होती है?"
+      },
+      {
+        "text": "Hi Dan from Denver",
+        "hint": "क्या `birth` ऑब्जेक्ट वास्तव में मौजूद है?"
+      },
+      {
+        "text": "Hi Unknown from Unknown",
+        "hint": "क्या दोनों डिफ़ॉल्ट वैल्यूज़ एक साथ काम करेंगी?"
+      },
+      {
+        "text": "Hi Unknown from Denver",
+        "hint": "क्या `place` का डिफ़ॉल्ट वैल्यू काम करेगा?"
+      },
+      {
+        "text": "Error",
+        "hint": "क्या `undefined` को डिस्ट्रक्चर किया जा सकता है?"
+      }
+    ],
+    "questionProse": [
+      "अब डिफ़ॉल्ट वैल्यूज़ डालने पर यह क्या आउटपुट देगा?"
+    ],
+    "explanationProse": [
+      "`person` पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए सिर्फ़ नेस्टेड प्रॉपर्टी का नहीं, बल्कि पूरे ऑब्जेक्ट का डिफ़ॉल्ट वैल्यू सेट करना ज़रूरी है। असल में, वहाँ ` = {}` डिफ़ॉल्ट मिसिंग है।\n\n  कोड का यह हिस्सा कहता है कि \"अगर `person.birth` `undefined` है, तो `place` को `Unknown` मान लो\"। लेकिन चूँकि `person.birth` खुद `undefined` है, JS `undefined` को डिस्ट्रक्चर करने की कोशिश करता है, और यही एरर का कारण बनता है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ऑब्जेक्ट डिस्ट्रक्चरिंग में डिफ़ॉल्ट वैल्यूज़\",\n  \"group\": \"डिफ़ॉल्ट्स\",\n  \"options\": [\n    {\n      \"text\": \"Hi Dan from Unknown\",\n      \"hint\": \"क्या डिफ़ॉल्ट वैल्यू सीधे नेस्टेड प्रॉपर्टी पर लागू होती है?\"\n    },\n    {\n      \"text\": \"Hi Dan from Denver\",\n      \"hint\": \"क्या `birth` ऑब्जेक्ट वास्तव में मौजूद है?\"\n    },\n    {\n      \"text\": \"Hi Unknown from Unknown\",\n      \"hint\": \"क्या दोनों डिफ़ॉल्ट वैल्यूज़ एक साथ काम करेंगी?\"\n    },\n    {\n      \"text\": \"Hi Unknown from Denver\",\n      \"hint\": \"क्या `place` का डिफ़ॉल्ट वैल्यू काम करेगा?\"\n    },\n    {\n      \"text\": \"Error\",\n      \"hint\": \"क्या `undefined` को डिस्ट्रक्चर किया जा सकता है?\"\n    }\n  ],\n  \"questionProse\": [\n    \"अब डिफ़ॉल्ट वैल्यूज़ डालने पर यह क्या आउटपुट देगा?\"\n  ],\n  \"explanationProse\": [\n    \"`person` पर `birth` प्रॉपर्टी मौजूद ही नहीं है, इसलिए सिर्फ़ नेस्टेड प्रॉपर्टी का नहीं, बल्कि पूरे ऑब्जेक्ट का डिफ़ॉल्ट वैल्यू सेट करना ज़रूरी है। असल में, वहाँ ` = {}` डिफ़ॉल्ट मिसिंग है।\\n\\n  कोड का यह हिस्सा कहता है कि \\\"अगर `person.birth` `undefined` है, तो `place` को `Unknown` मान लो\\\"। लेकिन चूँकि `person.birth` खुद `undefined` है, JS `undefined` को डिस्ट्रक्चर करने की कोशिश करता है, और यही एरर का कारण बनता है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 849,
+    "outputTokens": 5160,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 93979
+  },
+  "cost": {
+    "inputUsd": 0.000275925,
+    "outputUsd": 0.010062,
+    "totalUsd": 0.010337925,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
