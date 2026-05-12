@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE का छुपा खतरा",
+  "translation": {
+    "title": "EXPLAIN ANALYZE का छुपा खतरा",
+    "group": "प्रदर्शन",
+    "options": [
+      {
+        "text": "केवल प्लान का अनुमान"
+      },
+      {
+        "text": "केवल `SELECT` पर काम करता है"
+      },
+      {
+        "text": "डेटा को बदलता है और प्लान देता है"
+      },
+      {
+        "text": "प्लान पाने के लिए निष्पादन का सिमुलेशन करता है"
+      }
+    ],
+    "questionProse": [
+      "`UPDATE` स्टेटमेंट्स के लिए `EXPLAIN ANALYZE` क्या करता है?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` वास्तव में क्वेरी को निष्पादित करता है! डेटा लिखने वाले ऑपरेशन्स, खासकर `UPDATE`, `DELETE`, और `INSERT` स्टेटमेंट्स का विश्लेषण करते समय सावधान रहें। दोहराने योग्य परिणाम पाने के लिए आपको हर `EXPLAIN ANALYZE` के बाद क्लीनअप ऑपरेशन चलाने पड़ सकते हैं।\n\n    सर्वोत्तम अभ्यास:\n    - UPDATE/DELETE/INSERT के लिए `EXPLAIN` (बिना ANALYZE के) का उपयोग करें\n    - डेटा परिवर्तनों को ट्रांजैक्शन के अंदर रखें:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE का छुपा खतरा\",\n  \"group\": \"प्रदर्शन\",\n  \"options\": [\n    {\n      \"text\": \"केवल प्लान का अनुमान\"\n    },\n    {\n      \"text\": \"केवल `SELECT` पर काम करता है\"\n    },\n    {\n      \"text\": \"डेटा को बदलता है और प्लान देता है\"\n    },\n    {\n      \"text\": \"प्लान पाने के लिए निष्पादन का सिमुलेशन करता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"`UPDATE` स्टेटमेंट्स के लिए `EXPLAIN ANALYZE` क्या करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` वास्तव में क्वेरी को निष्पादित करता है! डेटा लिखने वाले ऑपरेशन्स, खासकर `UPDATE`, `DELETE`, और `INSERT` स्टेटमेंट्स का विश्लेषण करते समय सावधान रहें। दोहराने योग्य परिणाम पाने के लिए आपको हर `EXPLAIN ANALYZE` के बाद क्लीनअप ऑपरेशन चलाने पड़ सकते हैं।\\n\\n    सर्वोत्तम अभ्यास:\\n    - UPDATE/DELETE/INSERT के लिए `EXPLAIN` (बिना ANALYZE के) का उपयोग करें\\n    - डेटा परिवर्तनों को ट्रांजैक्शन के अंदर रखें:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 850,
+    "outputTokens": 5775,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 104901
+  },
+  "cost": {
+    "inputUsd": 0.00027625,
+    "outputUsd": 0.011261249999999999,
+    "totalUsd": 0.0115375,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

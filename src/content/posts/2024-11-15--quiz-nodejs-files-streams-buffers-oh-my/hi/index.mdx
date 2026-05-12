@@ -1,0 +1,596 @@
+---
+unlisted: false
+title: 'क्विज़: NodeJS I/O में महारत'
+subTitle: 'फ़ाइल्स, स्ट्रीम्स और बफ़र्स पर अपना ज्ञान परखें'
+label: NodeJS
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: NodeJS
+date: '2024-11-15'
+modified: '2024-11-15'
+tags:
+  - quiz
+  - nodejs
+  - io
+  - streams
+  - buffers
+  - filesystem
+  - intermediate
+cover_full_width: ../data-streaming-wide.webp
+cover_mobile: ../data-streaming-square.webp
+cover_icon: ../data-streaming-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Node.js I/O की दुनिया में गोता लगाने के लिए तैयार हैं? 🌊</p>
+
+यह क्विज़ Node.js के I/O ऑपरेशन्स पर आपकी समझ का परीक्षण करेगा, जिसमें बेसिक फाइल सिस्टम ऑपरेशन्स से लेकर एडवांस्ड स्ट्रीमिंग कॉन्सेप्ट्स तक शामिल हैं। हम बफर्स, डेटा एन्कोडिंग और डेटा को कुशलतापूर्वक हैंडल करने के बेस्ट प्रैक्टिसेज को कवर करेंगे।
+
+चलिए देखते हैं कि आप स्ट्रीम्स और बफर्स के बीच का अंतर कितनी सटीकता से पहचानते हैं! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप: बफर्स"
+  title="बफर अलोकेशन"
+  options={[
+    {text: '5 बाइट का एक बफर बनाता है जिसमें शून्य (zeros) भरे होते हैं', isAnswer: true},
+    {text: '5 बाइट का एक बफर बनाता है जिसमें रैंडम डेटा होता है'},
+    {text: 'एक एरर फेंकता है'},
+    {text: 'एक खाली बफर बनाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या करता है?
+```js
+    const buf = Buffer.alloc(5);
+    console.log(buf);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Buffer.alloc(size)` निर्दिष्ट आकार का एक नया बफर बनाता है जो शून्य (zeros) से भरा होता है।
+    आउटपुट होगा: `<Buffer 00 00 00 00 00>`
+
+    यदि आप रैंडम डेटा वाला बफर बनाना चाहते हैं, तो `Buffer.allocUnsafe(5)` का उपयोग करें।
+    
+    [बफर अलोकेशन के बारे में और जानें](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="वार्मअप: Buffers"
+  title="Buffer को String में बदलना"
+  options={[
+    {text: 'A', isAnswer: true},
+    {text: '65'},
+    {text: '[Object object]'},
+    {text: 'Undefined'},
+    {text: 'बाइनरी डेटा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह क्या प्रिंट करेगा?
+```js
+    const buf = Buffer.from([65]);
+    console.log(buf.toString());
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ऐरे में दिए गए नंबर ASCII कोड्स हैं:
+
+    - 65: 'A'
+
+    `toString()` डिफ़ॉल्ट रूप से UTF-8 एन्कोडिंग का उपयोग करके इन बाइट्स को स्ट्रिंग में बदल देता है।
+    
+    [Buffer एन्कोडिंग के बारे में और जानें](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="वार्मअप: फ़ाइल सिस्टम"
+  title="असिंक फ़ाइल ऑपरेशन्स"
+  options={[
+    {text: 'पहले फ़ाइल का कंटेंट प्रिंट करता है, फिर "Done"'},
+    {text: 'पहले "Done" प्रिंट करता है, फिर फ़ाइल का कंटेंट', isAnswer: true},
+    {text: 'केवल फ़ाइल का कंटेंट प्रिंट करता है'},
+    {text: 'एक एरर थ्रो करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+आउटपुट का क्रम क्या है?
+```js
+    import fs from 'fs';
+    fs.readFile('test.txt', 'utf8', (err, data) => {
+      console.log(data);
+    });
+    console.log('Done');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+चूंकि `readFile` असिंक्रोनस है, फ़ाइल पढ़े जाने के दौरान कोड का निष्पादन नहीं रुकता।
+    इसलिए, फ़ाइल का कंटेंट प्रिंट होने से पहले "Done" स्क्रीन पर आएगा।
+
+    अगर आप चाहते हैं कि फ़ाइल पहले पूरी तरह रीड हो जाए, तो आप इसका Promise-आधारित वर्जन इस्तेमाल कर सकते हैं:
+```js
+    import { promises as fs } from 'fs';
+    
+    async function read() {
+      const data = await fs.readFile('test.txt', 'utf8');
+      console.log(data);
+      console.log('Done');
+    }
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="फ़ाइल सिस्टम की मूल बातें"
+  title="फ़ाइलों को सिंक्रोनस तरीके से पढ़ना"
+  options={[
+    {text: 'एक Buffer लौटाता है', isAnswer: true},
+    {text: 'एक string लौटाता है'},
+    {text: 'undefined लौटाता है'},
+    {text: 'एक Promise लौटाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`fs.readFileSync()` डिफ़ॉल्ट रूप से क्या रिटर्न करता है?
+```js
+    import fs from 'fs';
+    const content = fs.readFileSync('test.txt');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+जब एन्कोडिंग निर्दिष्ट नहीं होती, तो `fs.readFileSync()` डिफ़ॉल्ट रूप से एक Buffer ही रिटर्न करता है। अगर आपको सीधे string चाहिए, तो आपके पास दो विकल्प हैं:
+    1. एन्कोडिंग निर्दिष्ट करें: `fs.readFileSync('test.txt', 'utf8')`
+    2. Buffer को कन्वर्ट करें: `content.toString()`
+
+    [Node.js docs पर `fs.readFileSync` के बारे में और जानें](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="स्ट्रीम्स"
+  title="स्ट्रीम इवेंट्स"
+  options={[
+    {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
+    {text: '\'finish\', \'drain\', \'pipe\''},
+    {text: '\'read\', \'write\', \'end\''},
+    {text: '\'open\', \'close\', \'data\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+रीडेबल स्ट्रीम्स (Readable streams) के साथ आमतौर पर किन इवेंट्स का उपयोग किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+रीडेबल स्ट्रीम्स कई महत्वपूर्ण इवेंट्स उत्सर्जित करते हैं:
+    - 'data': जब डेटा पढ़ने के लिए उपलब्ध हो
+    - 'end': जब पढ़ने के लिए और कोई डेटा न बचे
+    - 'error': जब कोई त्रुटि उत्पन्न होती है
+    - 'close': जब स्ट्रीम और अंतर्निहित रिसोर्स बंद हो जाते हैं
+```js
+    const readable = fs.createReadStream('file.txt');
+    readable.on('data', chunk => console.log(chunk));
+    readable.on('end', () => console.log('Done!'));
+```
+[स्ट्रीम इवेंट्स के बारे में और जानें](https://nodejs.org/api/stream.html#class-streamreadable)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="स्ट्रीम्स"
+  title="स्ट्रीम पाइपिंग"
+  options={[
+    {text: 'फ़ाइल को कंप्रेशन के साथ कॉपी करता है'},
+    {text: 'फ़ाइल को मेमोरी बफरिंग के बिना कॉपी करता है', isAnswer: true},
+    {text: 'पूरी फ़ाइल को मेमोरी में लोड करता है'},
+    {text: 'एक सिंबॉलिक लिंक बनाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या करता है?
+```js
+    import fs from 'fs';
+    const readable = fs.createReadStream('source.txt');
+    const writable = fs.createWriteStream('dest.txt');
+    readable.pipe(writable);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`pipe()` एक रीडेबल स्ट्रीम को राइटेबल स्ट्रीम से जोड़ता है, जो बैकप्रेशर को स्वचालित रूप से हैंडल करता है और पूरी फ़ाइल को मेमोरी में लोड किए बिना डेटा को चंक्स में कॉपी करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="फ़ाइल सिस्टम"
+  title="डायरेक्टरी ऑपरेशन्स"
+  options={[
+    {text: 'जरूरत पड़ने पर नेस्टेड डायरेक्टरी बनाता है', isAnswer: true},
+    {text: 'केवल अंतिम डायरेक्टरी बनाता है'},
+    {text: 'एक एरर थ्रो करता है'},
+    {text: 'सिंबॉलिक लिंक बनाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`recursive` ऑप्शन क्या करता है?
+```js
+    import fs from 'fs';
+    fs.mkdirSync('./a/b/c', { recursive: true });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`recursive: true` ऑप्शन पैरेंट डायरेक्टरी बना देता है अगर वे मौजूद नहीं हैं।
+    इस ऑप्शन के बिना, अगर './a' या './a/b' मौजूद नहीं हैं, तो './a/b/c' बनाने की कोशिश करने पर एक एरर थ्रो होगा।
+
+    यह शेल कमांड `mkdir -p` जैसा ही है।
+
+    [mkdir के बारे में और जानें](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="स्ट्रीम्स"
+  title="ट्रांसफ़ॉर्म स्ट्रीम्स"
+  options={[
+    {text: 'hello world'},
+    {text: 'HELLO WORLD', isAnswer: true},
+    {text: 'Error'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इसका आउटपुट क्या होगा?
+```js
+    import { Transform } from 'stream';
+    const upperCase = new Transform({
+      transform(chunk, encoding, callback) {
+        callback(null, chunk.toString().toUpperCase());
+      }
+    });
+    process.stdin
+      .pipe(upperCase)
+      .pipe(process.stdout);
+    // Input: "hello world"
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ट्रांसफ़ॉर्म स्ट्रीम्स डेटा को गुज़रते समय संशोधित करती हैं। यहाँ, प्रत्येक चंक के साथ यह होता है:
+    1. इसे स्ट्रिंग में बदला जाता है
+    2. इसे अपरकेस में परिवर्तित किया जाता है
+    3. इसे stdout पर पास किया जाता है
+
+    यह एक पाइपलाइन बनाता है जो सभी इनपुट को अपरकेस में बदल देता है।
+
+    [ट्रांसफ़ॉर्म स्ट्रीम्स के बारे में अधिक जानें](https://nodejs.org/api/stream.html#class-streamtransform)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="फ़ाइल सिस्टम"
+  title="फ़ाइल वॉचिंग"
+  options={[
+    {text: 'हर फ़ाइल बदलाव पर एक बार'},
+    {text: 'गारंटी नहीं है; कई बार ट्रिगर हो सकता है', isAnswer: true},
+    {text: 'कभी नहीं'},
+    {text: 'केवल फ़ाइल डिलीट होने पर'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब कोई फ़ाइल मॉडिफ़ाई होती है, तो `fs.watch()` कितनी बार फायर होने की गारंटी देता है?
+```js
+    import fs from 'fs';
+    fs.watch('test.txt', (eventType, filename) => {
+      console.log(`${filename} was changed`);
+    });
+    // Then modify test.txt once
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`fs.watch()` हर तार्किक फ़ाइल बदलाव पर ठीक एक बार फायर होने की गारंटी नहीं देता। यह अक्सर कई बार ट्रिगर होता है क्योंकि कई टेक्स्ट एडिटर:
+    1. डेटा को एक अस्थायी फ़ाइल में सेव करते हैं
+    2. फिर उसे टारगेट फ़ाइल के नाम से रीनेम कर देते हैं
+
+    अधिक विश्वसनीय वॉचिंग के लिए, इनका उपयोग करने पर विचार करें:
+    - `chokidar` पैकेज
+    - कॉलबैक को डीबाउंस (debounce) करना
+    - `fs.watchFile()` का उपयोग करना (हालाँकि यह कम कुशल है)
+
+    [fs.watch() के बारे में और जानें](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="बफर्स"
+  title="बफर तुलना"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+आउटपुट क्या होगा?
+```js
+    const buf1 = Buffer.from('Hello');
+    const buf2 = Buffer.from('Hello');
+    console.log(buf1 === buf2);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+बफर्स की तुलना वैल्यू से नहीं, बल्कि रेफरेंस से की जाती है। भले ही उनमें समान डेटा हो, वे अलग-अलग ऑब्जेक्ट्स हैं।
+
+    बफर कंटेंट की तुलना करने के लिए, इसका उपयोग करें:
+```js
+    buf1.equals(buf2)  // true
+    // or
+    Buffer.compare(buf1, buf2) === 0  // true
+```
+[बफर तुलना के बारे में और जानें](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="स्ट्रीम्स"
+  title="स्ट्रीम बैकप्रेशर"
+  options={[
+    {text: 'मेमोरी ओवरफ़्लो को रोकता है', isAnswer: true},
+    {text: 'रीड स्पीड बढ़ाता है'},
+    {text: 'डेटा को कंप्रेस करता है'},
+    {text: 'डेटा को एन्क्रिप्ट करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+स्ट्रीम बैकप्रेशर का मुख्य उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+बैकप्रेशर एक ऐसी प्रक्रिया है जो मेमोरी ओवरफ़्लो को रोकती है। जब राइटिंग एंड डेटा को हैंडल करने में पीछे रह जाता है, तो यह रीडिंग को अस्थायी रूप से रोक देता है।
+
+    मैनुअल बैकप्रेशर का उदाहरण:
+```js
+    readable.on('data', (chunk) => {
+      const canContinue = writable.write(chunk);
+      if (!canContinue) {
+        readable.pause();
+        writable.once('drain', () => readable.resume());
+      }
+    });
+```
+`pipe()` इसे ऑटोमैटिकली हैंडल कर लेता है!
+
+    [बैकप्रेशर के बारे में और जानें](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="फाइल सिस्टम"
+  title="सिम्बोलिक लिंक्स"
+  options={[
+    {text: 'हार्ड लिंक बनाता है'},
+    {text: 'कॉपी बनाता है'},
+    {text: 'सिम्बोलिक लिंक बनाता है', isAnswer: true},
+    {text: 'फाइल को मूव करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या करता है?
+```js
+    import fs from 'fs';
+    fs.symlinkSync('target.txt', 'link.txt');
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`symlinkSync` टारगेट फाइल के लिए एक सिम्बोलिक लिंक (शॉर्टकट की तरह) बनाता है।
+
+    हार्ड लिंक्स से मुख्य अंतर:
+    - डायरेक्टरीज को लिंक कर सकता है
+    - अलग-अलग फाइल सिस्टम पर काम कर सकता है
+    - टारगेट डिलीट होने पर लिंक टूट जाता है
+
+    अगर हार्ड लिंक बनाना हो, तो:
+```js
+    fs.linkSync('target.txt', 'hardlink.txt');
+```
+[सिम्बोलिक लिंक्स के बारे में और जानें](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="स्ट्रीम"
+  title="स्ट्रीम मोड"
+  options={[
+    {text: 'केवल बाइनरी मोड'},
+    {text: 'केवल ऑब्जेक्ट मोड'},
+    {text: 'दोनों मोड', isAnswer: true},
+    {text: 'कोई भी मोड नहीं'},
+    {text: 'इनपुट और आउटपुट मोड'},
+    {text: 'रीड और राइट मोड'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Node.js स्ट्रीम किन मोड्स में संचालित हो सकते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+स्ट्रीम निम्नलिखित मोड्स में संचालित हो सकते हैं:
+    1. बाइनरी मोड (डिफ़ॉल्ट): बफ़र्स और स्ट्रिंग्स के लिए
+    2. ऑब्जेक्ट मोड: किसी भी JavaScript वैल्यू के लिए
+
+    ऑब्जेक्ट मोड का उदाहरण:
+```js
+    import { Transform } from 'stream';
+    const objectStream = new Transform({
+      objectMode: true,
+      transform(chunk, encoding, callback) {
+        callback(null, { value: chunk });
+      }
+    });
+```
+[स्ट्रीम मोड्स के बारे में अधिक जानें](https://nodejs.org/api/stream.html#object-mode)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="फ़ाइल सिस्टम"
+  title="फ़ाइल डिस्क्रिप्टर्स"
+  options={[
+    {text: 'एक नंबर', isAnswer: true},
+    {text: 'एक स्ट्रिंग'},
+    {text: 'एक ऑब्जेक्ट'},
+    {text: 'एक बफ़र'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कॉलबैक में `fd` पैरामीटर का टाइप क्या है?
+```js
+    import fs from 'fs';
+    fs.open('test.txt', 'r', (err, fd) => {
+      console.log(typeof fd);
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+फ़ाइल डिस्क्रिप्टर्स वे नंबर होते हैं जो ऑपरेटिंग सिस्टम में खुली फ़ाइलों को यूनिकली आइडेंटिफाई करते हैं।
+
+    पहले तीन फ़ाइल डिस्क्रिप्टर्स रिज़र्व रहते हैं:
+    - 0: stdin
+    - 1: stdout
+    - 2: stderr
+
+    हमेशा फ़ाइल डिस्क्रिप्टर्स को बंद करना न भूलें:
+```js
+    fs.close(fd, (err) => {
+      if (err) throw err;
+    });
+```
+[फ़ाइल डिस्क्रिप्टर्स के बारे में अधिक जानें](https://nodejs.org/api/fs.html#file-descriptors)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="एन्कोडिंग"
+  title="बफर एन्कोडिंग"
+  options={[
+    {text: '3'},
+    {text: '4'},
+    {text: '6'},
+    {text: '8'},
+    {text: '10', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+UTF-8 में इस स्ट्रिंग को कितने बाइट्स लगेंगे?
+```js
+    const str = "Hello 🌍";
+    const buf = Buffer.from(str);
+    console.log(buf.length);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+UTF-8 में:
+    - ASCII वर्ण (जैसे 'Hello ') प्रत्येक 1 बाइट लेते हैं
+    - अर्थ इमोजी 🌍 4 बाइट्स लेता है
+
+    तो: 5 (Hello) + 1 (space) + 4 (🌍) = 10 बाइट्स
+
+    बाइट्स देखने के लिए:
+```js
+    console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+```
+[UTF-8 एन्कोडिंग के बारे में और जानें](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+उम्मीद है NodeJS I/O के अपने ज्ञान को परखने में आपको मज़ा आया। और चाहिए? और चुनौतियों के लिए मेरा [क्विज़ कलेक्शन](/challenges/) देखें।

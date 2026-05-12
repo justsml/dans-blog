@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "詳細度0のセレクター",
+  "translation": {
+    "title": "詳細度0のセレクター",
+    "group": "セレクター：詳細度",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "最も詳細度が低いセレクターはどれ？"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` が最も詳細度が低くなります。`:where()` 疑似クラスとその内部のセレクターは詳細度に `0-0-0` を寄与するため、結果として `.title` の詳細度のみが計算されます。一方、`:is(.card) .title` は `.card` の詳細度をそのまま引き継ぎ、`.card .title` はクラスが2つ、`#card .title` はIDセレクターを含むため、詳細度が上がります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"詳細度0のセレクター\",\n  \"group\": \"セレクター：詳細度\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"最も詳細度が低いセレクターはどれ？\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` が最も詳細度が低くなります。`:where()` 疑似クラスとその内部のセレクターは詳細度に `0-0-0` を寄与するため、結果として `.title` の詳細度のみが計算されます。一方、`:is(.card) .title` は `.card` の詳細度をそのまま引き継ぎ、`.card .title` はクラスが2つ、`#card .title` はIDセレクターを含むため、詳細度が上がります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 745,
+    "outputTokens": 2466,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 45260
+  },
+  "cost": {
+    "inputUsd": 0.00024212500000000002,
+    "outputUsd": 0.0048087,
+    "totalUsd": 0.005050825,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

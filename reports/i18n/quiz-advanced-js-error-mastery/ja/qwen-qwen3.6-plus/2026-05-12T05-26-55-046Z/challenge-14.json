@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Object vs Error の検出",
+  "translation": {
+    "title": "Object vs Error の検出",
+    "group": "エラー境界",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "このチェック、何を返す？"
+    ],
+    "explanationProse": [
+      "`instanceof Error` が `false` を返すのは、オブジェクトが `Error` コンストラクタ経由で生成されていないためだ。`Object.prototype.toString.call()` も `false` を返す（実際には `'[object Object]'` が返る）。これは内部の `[[Class]]` スロットをチェックしているからだ。どちらも、これが偽のエラーオブジェクトであることを正しく見抜いている。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Object vs Error の検出\",\n  \"group\": \"エラー境界\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"このチェック、何を返す？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` が `false` を返すのは、オブジェクトが `Error` コンストラクタ経由で生成されていないためだ。`Object.prototype.toString.call()` も `false` を返す（実際には `'[object Object]'` が返る）。これは内部の `[[Class]]` スロットをチェックしているからだ。どちらも、これが偽のエラーオブジェクトであることを正しく見抜いている。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 753,
+    "outputTokens": 4072,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 74276
+  },
+  "cost": {
+    "inputUsd": 0.000244725,
+    "outputUsd": 0.0079404,
+    "totalUsd": 0.008185125,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

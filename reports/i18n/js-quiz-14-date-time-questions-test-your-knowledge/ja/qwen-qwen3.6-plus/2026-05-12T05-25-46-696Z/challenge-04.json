@@ -1,0 +1,50 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Date Constructor Part 4",
+  "translatedTitle": "Date コンストラクタ パート4",
+  "translation": {
+    "title": "Date コンストラクタ パート4",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "1969"
+      },
+      {
+        "text": "1970"
+      },
+      {
+        "text": "2019"
+      },
+      {
+        "text": "2020"
+      },
+      {
+        "text": "2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "questionProse": [
+      "出力結果はどうなる？"
+    ],
+    "explanationProse": [
+      "整数1つだけを引数に渡すと、`Date` コンストラクタはそれを Unix `Epoch` 値として解釈します。`Epoch` とは、1970年1月1日0時（UTC）からの経過ミリ秒数です。\n\nつまり、`2020` という値は 1970年1月1日のちょうど2秒後を指します。\n\nここでローカルタイムゾーンが UTC-7（7時間遅れ）の場合、時刻は前日に巻き戻され、`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)` という結果になります。\n\nタイムゾーンのオフセットに振り回されたくないなら、[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) を使いましょう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Date コンストラクタ パート4\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\n      \"text\": \"1969\"\n    },\n    {\n      \"text\": \"1970\"\n    },\n    {\n      \"text\": \"2019\"\n    },\n    {\n      \"text\": \"2020\"\n    },\n    {\n      \"text\": \"2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力結果はどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"整数1つだけを引数に渡すと、`Date` コンストラクタはそれを Unix `Epoch` 値として解釈します。`Epoch` とは、1970年1月1日0時（UTC）からの経過ミリ秒数です。\\n\\nつまり、`2020` という値は 1970年1月1日のちょうど2秒後を指します。\\n\\nここでローカルタイムゾーンが UTC-7（7時間遅れ）の場合、時刻は前日に巻き戻され、`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)` という結果になります。\\n\\nタイムゾーンのオフセットに振り回されたくないなら、[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) を使いましょう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 912,
+    "outputTokens": 4353,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 79558
+  },
+  "cost": {
+    "inputUsd": 0.00029640000000000005,
+    "outputUsd": 0.00848835,
+    "totalUsd": 0.008784750000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

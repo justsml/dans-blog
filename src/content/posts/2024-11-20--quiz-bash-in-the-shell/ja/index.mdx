@@ -1,0 +1,604 @@
+---
+unlisted: false
+title: クイズ：Bash & シェル徹底攻略
+subTitle: コンピュータと話せますか？ しかも、ちゃんと？
+label: Bash
+category: Quiz
+subCategory: Bash
+date: '2024-11-20'
+modified: '2024-11-21'
+tags:
+  - quiz
+  - bash
+  - scripting
+  - shell
+  - linux
+  - beginner
+  - intermediate
+  - advanced
+social_image: ./desktop-social.webp
+cover_full_width: ../psychedelic-shell-wide.webp
+cover_mobile: ../psychedelic-shell-square-200.webp
+cover_icon: ../psychedelic-shell-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">全16問でBashスクリプティングの腕前を試そう！</p>
+
+変数、ループ、条件分岐、文字列操作、関数、そして初歩から難易度高めの構文の落とし穴までをカバー。
+
+シェルスクリプティングの**スキル**を研ぎ澄ませ（あるいは証明しろ）！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォーミングアップ"
+  title="変数の宣言"
+  options={[
+    {text: '$name=Dan'},
+    {text: 'name=Dan', isAnswer: true},
+    {text: 'name =Dan'},
+    {text: 'name == Dan'},
+    {text: 'name : Dan'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bashで変数を定義する正しい方法は？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bashでの変数宣言では、`=` の前後にスペースを入れてはいけません。例えば：
+```bash
+    name=Alice
+```
+変数 `name` に値 `"Alice"` を代入しています。
+
+    注意：`$name` は変数の値を**参照**（読み取り）する際に使用します。
+
+    スペースを入れると、シェルはそのコマンドを実行するプログラムとして解釈してしまいます。変数を設定する際に、これは望まない動作です。
+
+    また、Bashは大文字と小文字を区別するため、`name`、`NAME`、`Name` はすべて別の変数として扱われます。
+
+    最後に、変数名にスペースやハイフン（`-`）を含めることはできません。代わりにアンダースコア（`_`）やキャメルケースを使用してください。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ウォームアップ：エスケープ"
+  title="クォートのエスケープ"
+  options={[
+    {text: 'echo \'It\'s 🔨 Time!\''},
+    {text: 'echo \'It\\\'s 🔨 Time!\''},
+    {text: 'echo \'It\'\\\'\'s 🔨 Time!\'', isAnswer: true},
+    {text: 'echo \'It\'\'s 🔨 Time!\''},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+_`It's 🔨 Time!` を出力するのはどれ？_
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+分かる。エスケープ処理が文字列の解析をいかに難しくするか、すぐに実感できるよな。Bashの文字列内で他の言語のエスケープを想像してみろ。クォート、アポストロフィ、`$` シンボルがお前を翻弄する。🫠
+
+    シングルクォートで囲まれた文字列内でシングルクォートを使うにはエスケープが必要だ。クォート閉じ → エスケープ済みクォート → クォート再開のシーケンス（`'\''`）を使えば、以下を出力できる：
+```plaintext
+    It's 🔨 Time!
+```
+他にも対処法はあるが、これが最も一般的だ。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="ウォームアップ：展開"
+  title="echoコマンド"
+  options={[
+    {text: 'cat cab'},
+    {text: 'cat cbt', isAnswer: true},
+    {text: 'ca bt'},
+    {text: 'cat'},
+    {text: 'cbd'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このコマンドを実行すると、何が出力されるでしょうか？
+```bash
+    echo c{a,b}t
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ブレース展開（`{}`）は、カンマ区切りの各値やパターンに対して、その文字列コンテキストの複数のバージョンを生成します。
+
+    ここでは、`c{a,b}t` が次のように展開されます：
+```plaintext
+    cat cbt
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="変数"
+  title="文字のエスケープ"
+  options={[
+    {text: 'コスト: $$100'},
+    {text: 'コスト: $100'},
+    {text: 'コスト: 100'},
+    {text: 'コスト: 00', isAnswer: true},
+    {text: 'コスト:'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+さて、これは何を出力するでしょうか？
+```bash
+    price="$100"
+    echo "Cost: $price"
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+数字付きの変数には特別な意味があります。この場合、`$1` はスクリプトや関数に渡された最初の引数を保持する特殊変数です。
+
+REPLでスクリプトを実行しているため引数が渡されておらず、`$1` は空になります。残りのテキスト `00` がそのまま出力されます。
+
+リテラルの `$` 文字を出力するには、シングルクォートで囲むか、バックスラッシュ（`\`）でエスケープします：
+```bash
+    price="\$100"
+    echo "Cost: $price"
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="部分文字列の置換"
+  title="部分文字列の置換"
+  options={[
+    {text: 'meow meow'},
+    {text: 'Meow meow'},
+    {text: 'Bark meow', isAnswer: true},
+    {text: 'Bark bark'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ここで何が起きているか、分かるか？
+```bash
+    str="Bark bark"
+    echo ${str/bark/meow}
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${var/pattern/replacement}` 構文は、`pattern` の最初の出現箇所を `replacement` に置き換えます。今回の出力は次の通りです：
+```plaintext
+    Bark meow
+```
+大文字・小文字は厳密に区別されます。`bark` と `Bark` の両方を処理したい場合は、`${var/[Bb]ark/Bark}` のようなパターンを使うか、置換前に文字列を正規化してください。
+
+    すべての出現箇所を置換するには、`${var//pattern/replacement}` を使います。
+
+    文字列の先頭から置換するには、`${var/#pattern/replacement}` を使います。
+
+    文字列の末尾から置換するには、`${var/%pattern/replacement}` を使います。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="文字列の長さ"
+  title="文字列の長さ"
+  options={[
+    {text: '$#username'},
+    {text: '#$username'},
+    {text: '${#username}', isAnswer: true},
+    {text: '${username#}'},
+    {text: 'echo $username | wc -c'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bashで変数の長さを取得するにはどうすればよいですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${#username}`構文は`username`の長さを返します。
+    
+    例：
+```bash
+    username="@justsml"
+    echo ${#username} # => 8
+```
+`wc`でも動作しますが、技術的にはBashの一部ではありません。
+
+    `wc`というユーティリティは、かつて「water closet（便所）」を指す古いジョークでした。
+    冗談です！こんな説明、誰も読んでませんよね？
+
+    実際には、`wc`はPOSIX（およびAT&T Unix時代）からの古いコマンドです。「word count」の略称であり、ファイルや入力ストリーム内の行数、単語数、文字数をカウントできます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="条件分岐"
+  title="基本的なif-else"
+  options={[
+    {text: 'ファイルが存在する'},
+    {text: 'テストの診断メッセージの後、ファイルが存在しない', isAnswer: true},
+    {text: 'エラーのみ'},
+    {text: '二重括弧の欠落'},
+    {text: '何も出力されない'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ファイル `cats.txt` が存在する場合、このスクリプトの出力はどうなるか？
+```bash
+    if [ -e cats.txt]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+閉じ括弧の前のスペースが抜けているのに気づいただろうか？
+
+Bashはこの点に非常にうるさい。括弧式の内側にはスペースが必須だ。
+
+スペースが抜けているため、`[` コマンドは閉じ括弧 `]` を認識できず、Bashは診断メッセージを出力してテストを失敗と判定し、`else` ブランチへ進む。
+
+正しい構文は以下の通りだ：
+```bash
+    if [ -e example.txt ]; then
+      echo "File exists"
+    else
+      echo "File does not exist"
+    fi
+```
+注：条件式には二重括弧 `[[ ]]` の使用が**推奨される**。[BashFAQを参照。](https://mywiki.wooledge.org/BashFAQ/031)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="条件分岐"
+  title="文字列比較"
+  options={[
+    {text: '同じ猫'},
+    {text: 'テスト構文エラーの後、異なる猫', isAnswer: true},
+    {text: 'Zalgo'},
+    {text: 'エラーのみ'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bashで文字列を比較するには？
+```bash
+    cat1="Rosie"
+    cat2="Sunflower"
+    if [ "$cat1" === "$cat2" ]; then
+      echo "Same cat"
+    else
+      echo "Different cats"
+    fi
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+またもやテスト構文エラー！
+
+    無効な `===` 演算子に気づいた？
+
+    JavaScriptと混同していたかもしれないが……
+
+    `[ ... ]` を使用する場合、Bashはエラーを出力して条件は偽と判定されるため、`else` ブランチが `Different cats` を出力する。Bashで等値比較を行うには、`=` または `==` を使用しよう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="関数"
+  title="関数の宣言"
+  options={[
+    {text: 'Hi', isAnswer: true},
+    {text: 'Dan'},
+    {text: 'Hi Dan'},
+    {text: 'greet'},
+    {text: 'エラー'},
+    {text: '構文エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このスクリプトの出力結果は？
+```bash
+   function greet () {
+      echo "$1"
+    }
+    greet Hi Dan
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bashの関数は引数を受け取ることができる。`$1`変数には関数に渡された最初の引数が格納される。
+
+覚えておこう。`$0`はスクリプト名、`$1`は第1引数、`$2`は第2引数……という具合だ。**スペースが引数の区切り文字になる。** つまり、`greet Hi Dan`と書くと、`"Hi"`が第1引数として渡される。`"Hi Dan"`を1つの引数として渡したい場合は、クォートで囲む必要がある：`greet "Hi Dan"`。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="コマンドの構成"
+  title="パイプの使用"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+あるコマンドの**出力**を次のコマンドの**入力**に接続する演算子はどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`|` パイプ演算子は、あるコマンドの出力を別のコマンドの入力に接続します。例えば：
+```bash
+    echo "Mr. Levy 👨🏻‍🔬" | wc -m
+    # => 14
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="算術演算"
+  title="基本的な算術演算"
+  options={[
+    {text: 'echo 2 + 2'},
+    {text: 'echo ${2 + 2}'},
+    {text: 'echo %(2 + 2)'},
+    {text: 'echo $(( 2 + 2 ))', isAnswer: true},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bashで算術演算はどう扱う？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Bashでは `(( ))` 構文を使って整数演算を行います。
+
+    単純な計算ならこう書きます：
+```bash
+    ((result = 2 + 2))
+    echo $result # => 4
+```
+条件式でも使えます：
+```bash
+    if (( 2 > 1 )); then
+      echo "2 is greater than 1"
+    fi
+```
+浮動小数点数の計算が必要な場合は、[`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) や [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) の使用を検討しましょう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="乗算"
+  title="基本的な算術演算"
+  options={[
+    {text: 'echo 10 * 0.5'},
+    {text: 'echo (10 * 0.5)'},
+    {text: 'echo ${ 10 * 0.5 }'},
+    {text: 'echo %( 10 * 0.5 )'},
+    {text: 'echo $(( 10 * 0.5 ))'},
+    {text: 'echo \'10 * 0.5\' | bc', isAnswer: true},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+10と0.5を掛け算して、正しく「5」を出力するコマンドはどれ？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`(( ))` 構文は **整数** 演算のみを実行します。ご存知の通り、小数点のない整数だけです。
+
+Bash は（意外かもしれませんが）浮動小数点演算の **組み込み** サポートを備えていません。
+
+最も一般的な解決策は、GNU ユーティリティの [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) や [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="文字列操作"
+  title="部分文字列の抽出"
+  options={[
+    {text: 'Bad cat'},
+    {text: 'Bad cat, good cat:9'},
+    {text: 'good cat', isAnswer: true},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このスクリプト内の `:` はどのような処理を行っていますか？
+```bash
+    rosie="Bad cat, good cat"
+    echo ${rosie:9}
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`${var:offset}` 構文は、`offset` で指定した位置から部分文字列を抽出します。今回の出力は次の通りです：
+```plaintext
+    good cat
+```
+特定の長さの部分文字列を抽出するには `${var:offset:length}` を使用します。
+
+    文字列の末尾から抽出する場合は `${var: -offset}` を使います。（`-` の前のスペースを忘れないように！）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="ループ"
+  title="Bashのループ構文"
+  options={[
+    {text: 'do'},
+    {text: 'each', isAnswer: true},
+    {text: 'for'},
+    {text: 'until'},
+    {text: 'while'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Bashのループ構文において、キーワードとして存在しないものはどれ？❌
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`each` はBashのループキーワードではありません。主なループキーワードは `for`、`while`、`until` です。
+
+    `do` は厳密にはループキーワードではありませんが、ループ構文の必須パーツです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="落とし穴"
+  title="コマンド置換"
+  options={[
+    {text: '\'ls -l\''},
+    {text: '% ls -l'},
+    {text: '$ ls -l'},
+    {text: '$(ls -l)', isAnswer: true},
+    {text: '${ls -l}'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`ls -l` コマンドを実行し、その出力を返すのはどれ？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`$(ls -l)` 構文は、**括弧**内のコマンドを実行し、出力をその結果に置き換えます。例：
+```bash
+    echo "Today is $(date +%F)"
+    # => Today is 2029-12-31
+```
+1番目のオプションはシングルクォート `'` を使用しており、**バッククォートではありません。** これにより展開が抑制されるため、`'$(date +%F)'` は単にリテラル文字列 `$(date +%F)` を出力するだけです。
+
+コマンド実行にバッククォート（`` `ls -l` ``）を使用することは依然としてサポートされていますが、最近では（一部の文脈において）アンチパターンと見なされることが多くなりました。可読性の向上や、異なるシェル・バージョン間での一貫性を考慮し、多くの開発者が `$(command)` の使用を推奨しています。
+
+波括弧 `${}` は変数展開に使用されるものであり、コマンド置換ではありません。
+
+`%` 文字はコマンド置換には使用されません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="標準入出力"
+  title="デフォルト値"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+エラー出力を標準出力に結合するために使用される演算子はどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`2>&1` 演算子は標準エラー（ファイルディスクリプタ 2）を標準出力（ファイルディスクリプタ 1）へリダイレクトします。これにより、通常の出力と同じストリームでエラーメッセージをまとめてキャプチャできるため非常に便利です。
+
+`1>&2` 演算子は標準出力を標準エラーへリダイレクトしますが、今回の質問は「標準エラーを標準出力へリダイレクトする方法」を尋ねています。
+
+内部の仕組みについてさらに詳しく知りたい場合は、[Greg の優れたリダイレクト FAQ](https://mywiki.wooledge.org/BashFAQ/055) を参照してください。
+
+また、コピーの改善提案をしてくれた Reddit ユーザーの [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) にも感謝します。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+<p className="inset">Bashクイズでボロボロにされましたか？</p>
+
+コメント欄で結果を教えてください。
+
+### 参考資料
+
+以下のリソースでBashのスキルを磨きましょう。
+
+- [Bash ガイド](https://www.gnu.org/software/bash/manual/bash.html)
+- [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
+- [ShellCheck](https://www.shellcheck.net/)
+- [Bash Academy](https://guide.bash.academy/)
+- [Bash スクリプティングチュートリアル](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash リファレンスマニュアル](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
+- [Bash 初心者ガイド](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash リファレンスカード](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)

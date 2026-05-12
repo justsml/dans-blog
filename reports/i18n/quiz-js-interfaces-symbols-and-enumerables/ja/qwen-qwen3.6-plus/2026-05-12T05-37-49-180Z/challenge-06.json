@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Symbols as Non-Enumerable Keys",
+  "translatedTitle": "列挙されないキーとしてのシンボル",
+  "translation": {
+    "title": "列挙されないキーとしてのシンボル",
+    "group": "高度なインターフェース",
+    "options": [
+      {
+        "text": "いいえ、列挙されません"
+      },
+      {
+        "text": "はい、列挙されます"
+      },
+      {
+        "text": "反復処理の方法によります"
+      },
+      {
+        "text": "エラーがスローされます"
+      }
+    ],
+    "questionProse": [
+      "シンボルキーのプロパティは、`for...in` ループで列挙されるでしょうか？"
+    ],
+    "explanationProse": [
+      "シンボルキーのプロパティ自体に `enumerable` フラグを設定することは可能ですが、`for...in` や `Object.keys()` は仕様上、文字列キーを持つ列挙可能プロパティのみを対象とします。そのため、この例では `regularKey` だけが列挙され、シンボルキーのプロパティは完全にスルーされます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"列挙されないキーとしてのシンボル\",\n  \"group\": \"高度なインターフェース\",\n  \"options\": [\n    {\"text\": \"いいえ、列挙されません\"},\n    {\"text\": \"はい、列挙されます\"},\n    {\"text\": \"反復処理の方法によります\"},\n    {\"text\": \"エラーがスローされます\"}\n  ],\n  \"questionProse\": [\n    \"シンボルキーのプロパティは、`for...in` ループで列挙されるでしょうか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"シンボルキーのプロパティ自体に `enumerable` フラグを設定することは可能ですが、`for...in` や `Object.keys()` は仕様上、文字列キーを持つ列挙可能プロパティのみを対象とします。そのため、この例では `regularKey` だけが列挙され、シンボルキーのプロパティは完全にスルーされます。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 763,
+    "outputTokens": 3761,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 68646
+  },
+  "cost": {
+    "inputUsd": 0.000247975,
+    "outputUsd": 0.00733395,
+    "totalUsd": 0.007581925,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

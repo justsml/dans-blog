@@ -1,0 +1,353 @@
+---
+title: クイズ：モダンJavaScriptをどれだけ知っている？
+subTitle: JavaScriptスキル、その実力を見せろ！
+label: ES2019+ Features
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+### ES2015とES2022、ちゃんと区別ついてますか？
+
+* **JavaScriptの実力、証明してみろ！** 🚀
+* ログインもサインアップも不要。 ✨
+* 選択式。 🤖 ... _大したことないだろ？_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Null Coalescing (??演算子)"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`result` の値は一体何になる？
+```js
+    console.log(null ?? 100);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Null合体演算子（`??`）は、左辺（`a`）が `null` または `undefined` の場合にのみ右辺（`b`）を返すよう設計されています。ここでは `a` が `null` なので、フォールバック値として `100` が `result` に代入されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="Null合体演算子"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードを実行すると、何が出力されるでしょうか？
+```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Null合体演算子（`??`）は、`false` のようなfalsy値も有効な値として扱います。`value` が `false` であるため、有効な値とみなされ、そのまま返されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="オプショナルチェーン"
+  title="オプショナルチェーン"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Error: Cannot read property of undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードを実行すると、何が出力されるか？
+```js
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+オプショナルチェーン演算子（`?.`）は、左辺が `null` または `undefined` の場合、評価をそこで停止します。このコードでは `obj.foo` が `null` であるため、`obj.foo?.bar` は `undefined` に評価されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="BigIntの使い方"
+  options={[
+    {text: 'TypeError: BigIntと数値は混在できません'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+以下のコードを実行すると、何が出力される？
+```js
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+数値の末尾に `n` を付けるだけで、簡単にBigInt値が作れます。ただし、算術演算でBigIntと通常の数値を混ぜるのはご法度です。このコードでは両方の値がBigIntなので、乗算は問題なく動作し、結果として `84n` が返されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="動的インポート"
+  title="動的インポートの構文"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+コンソールに何が出力されますか？
+```js
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`import()` 関数は、モジュールオブジェクトに解決される `Promise` を返します。`Promise` インスタンスはオブジェクトであるため、`typeof modulePromise` は `'object'` を出力します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'fulfilled: success', isAnswer: true},
+    {text: 'Rejected: error'},
+    {text: 'Pending'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードを実行すると、何が出力される？
+```js
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Promise.allSettled` は各 Promise の結果を記述したオブジェクトの配列を返します。最初の Promise は値 `'success'` で `fulfilled` となるため、ログ出力は `fulfilled: success` となります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="String.matchAll の使い方"
+  options={[
+    {text: 'マッチ結果の配列'},
+    {text: 'マッチ結果のイテレータ', isAnswer: true},
+    {text: 'エラー：無効な呼び出し'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`str.matchAll()` は何を返す？
+```js
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`String.matchAll` が返すのは配列ではなく、マッチ結果のイテレータです。このイテレータを回すことで、文字列内のすべてのマッチグループを漏れなく取得できます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="`import.meta`"
+  title="`import.meta` の使い方"
+  options={[
+    {text: '現在のモジュールのURL', isAnswer: true},
+    {text: '現在のタイムスタンプ'},
+    {text: '`undefined`'},
+    {text: '`SyntaxError`'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`import.meta.url` が表すものはどれですか？
+```js
+    console.log(import.meta.url);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`import.meta` は現在のモジュールに関するメタデータを保持する組み込みオブジェクトです。`import.meta.url` プロパティはそのモジュールの絶対URLを返すため、スクリプトの実行場所を特定したり、相対パスを解決してリソースを読み込んだりする際に活用できます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="論理代入"
+  title="論理代入"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+論理代入を実行した後の `a` の値は？
+```js
+    let a = null;
+    a ||= 10;
+    console.log(a);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+論理OR代入（`||=`）は、左辺が偽値（`null`、`undefined`、`0`、`false`など）の場合に右辺の値を代入します。`a` は `null` なので、結果として `10` が代入されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Null合体代入"
+  title="Null合体代入"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Null合体代入後の `b` の値は？
+```js
+    let b = null;
+    b ??= 10;
+    console.log(b);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Null合体代入演算子（`??=`）は、左辺が `null` または `undefined` の場合にのみ右辺の値を代入する仕様です。このケースでは `b` が `null` であるため、右辺の `10` が正しく代入されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="WeakRefの使い方"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`WeakRef`は何を返す？
+```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`WeakRef`はオブジェクトへの弱い参照を保持します。これにより、他に強い参照が存在しない場合、そのオブジェクトはガベージコレクションの対象となります。このコードでは`obj`がまだ強い参照を保持しているため、`deref()`は元のオブジェクトをそのまま返します。もしターゲットがすでに回収されていた場合、`deref()`は`undefined`を返す仕様です。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

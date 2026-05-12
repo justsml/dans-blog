@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Using `.map(parseInt)`",
+  "translatedTitle": ".map(parseInt) の使用",
+  "translation": {
+    "title": ".map(parseInt) の使用",
+    "group": "Number[]",
+    "options": [
+      {
+        "text": "[24, NaN, NaN]"
+      },
+      {
+        "text": "[24, NaN, 42]"
+      },
+      {
+        "text": "[24, 42]"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "`parseInt` の第2引数（基数）は、配列メソッドのコールバックに渡される `index` 引数と勝手に紐付いてしまいます。これが予期せぬ結果を招く原因です。例えば `parseInt(\"One\", 1)` は基数1が不正なため `NaN` を返します。",
+      "最初の要素 `24` は基数0（自動判定）で処理され、そのまま `24` になります。2番目の要素 `'One'` は基数1で処理され `NaN` になります。3番目の要素 `42` は基数2で処理されます。2進数において `'42'` は無効なため `NaN` となり、結果は `[24, NaN, NaN]` です。",
+      "これは `parseInt` と `map` を組み合わせる際によくある落とし穴です。文字列の配列を数値に変換したい場合、安全な「組み込み」メソッドは `.map(Number)` を使うか、コールバックで明示的に基数を指定する `.map(x => parseInt(x, 10))` のみです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \".map(parseInt) の使用\",\n  \"group\": \"Number[]\",\n  \"options\": [\n    {\"text\": \"[24, NaN, NaN]\"},\n    {\"text\": \"[24, NaN, 42]\"},\n    {\"text\": \"[24, 42]\"},\n    {\"text\": \"NaN\"}\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"`parseInt` の第2引数（基数）は、配列メソッドのコールバックに渡される `index` 引数と勝手に紐付いてしまいます。これが予期せぬ結果を招く原因です。例えば `parseInt(\\\"One\\\", 1)` は基数1が不正なため `NaN` を返します。\",\n    \"最初の要素 `24` は基数0（自動判定）で処理され、そのまま `24` になります。2番目の要素 `'One'` は基数1で処理され `NaN` になります。3番目の要素 `42` は基数2で処理されます。2進数において `'42'` は無効なため `NaN` となり、結果は `[24, NaN, NaN]` です。\",\n    \"これは `parseInt` と `map` を組み合わせる際によくある落とし穴です。文字列の配列を数値に変換したい場合、安全な「組み込み」メソッドは `.map(Number)` を使うか、コールバックで明示的に基数を指定する `.map(x => parseInt(x, 10))` のみです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 917,
+    "outputTokens": 3854,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 71900
+  },
+  "cost": {
+    "inputUsd": 0.000298025,
+    "outputUsd": 0.007515299999999999,
+    "totalUsd": 0.007813325,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

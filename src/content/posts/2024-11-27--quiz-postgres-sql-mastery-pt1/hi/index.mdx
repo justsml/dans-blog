@@ -1,0 +1,552 @@
+---
+unlisted: false
+social_image: ../mobile.webp
+title: 'क्विज़: डीप पोस्टग्रेस: भाग 1'
+subTitle: क्या SQL से आपका सिर घूमता है?
+label: 'Deep PostgreSQL #1'
+category: Quiz
+subCategory: Database
+date: '2024-11-27'
+modified: '2024-12-03'
+tags:
+  - quiz
+  - postgresql
+  - sql
+  - database
+  - intermediate
+  - advanced
+cover_full_width: ../elephant-synthwave-gym-wide.webp
+cover_mobile: ../elephant-synthwave-gym-square-200.webp
+cover_icon: ../elephant-synthwave-gym-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+> **भाग 1 / 2.** [भाग 2 पर जाएं](/quiz-postgres-sql-mastery-pt2/)
+
+<p class="inset">PostgreSQL 🐘 मेरी पसंदीदा डेटाबेस है। मैं लगातार नए ट्रिक्स और gotchas सीखता रहता हूँ, इसलिए मैंने इन्हें एक नए क्विज़ में समेटने का फैसला किया!</p>
+
+यह क्विज़ PostgreSQL के कुछ परिचित और कुछ कम ज्ञात फीचर्स व gotchas को कवर करता है: बिल्ट-इन aggregates से लेकर type casting, constraints और अन्य।
+
+शुभकामनाएँ! 🍀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप: फ़ंक्शन्स"
+  title="अंतर्निहित एग्रीगेट्स"
+  options={[
+    {text: 'MIN'},
+    {text: 'MAX'},
+    {text: 'AVG'},
+    {text: 'MEDIAN', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा PostgreSQL का बिल्ट-इन एग्रीगेट फ़ंक्शन नहीं है?
+```sql
+    SELECT 
+      MIN(grade) as lowest,
+      MAX(grade) as highest,
+      AVG(grade) as average,
+      MEDIAN(grade) as middle
+    FROM grades;
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`MEDIAN` बिल्ट-इन नहीं है! PostgreSQL में मध्यिका (median) निकालने के लिए आपको `percentile_cont` या कस्टम एग्रीगेट बनाना होगा:
+```sql
+    PERCENTILE_CONT(0.5) 
+    WITHIN GROUP (ORDER BY grade)
+```
+आम बिल्ट-इन एग्रीगेट्स:
+    - `MIN`, `MAX`, `COUNT`
+    - `AVG`, `SUM`
+    - `ARRAY_AGG`, `STRING_AGG`
+    - विभिन्न सांख्यिकीय फ़ंक्शन्स
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="वार्मअप: टाइप कास्टिंग"
+  title="कास्ट सिंटैक्स के विकल्प"
+  options={[
+    {text: '\'95\'::INTEGER'},
+    {text: 'INTEGER \'95\''},
+    {text: 'CAST(\'95\', INTEGER)', isAnswer: true},
+    {text: 'CAST(\'95\' AS INTEGER)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा टाइप कास्टिंग **अमान्य** ❌ है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL तीन कास्टिंग सिंटैक्स को सपोर्ट करता है:
+
+    1. ANSI SQL: `CAST(expression AS type)`.
+    2. PostgreSQL: `expression::type`.
+    3. टाइप फंक्शन: `type 'literal'`.
+
+    ये सभी कार्यात्मक रूप से समान हैं, लेकिन:
+    - `CAST()` सबसे अधिक पोर्टेबल है।
+    - `::` PostgreSQL-विशिष्ट है, लेकिन आमतौर पर इस्तेमाल किया जाता है।
+    - इनफिक्स-स्टाइल `type 'literal'` कम प्रचलित है, फिर भी यह पूरी तरह मान्य है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Constraints"
+  title="UNIQUE Constraints और NULL"
+  options={[
+    {text: 'कोई NULL मान अनुमति नहीं है'},
+    {text: 'केवल एक NULL मान अनुमति है'},
+    {text: 'कई NULL मानों की अनुमति है', isAnswer: true},
+    {text: 'PostgreSQL के वर्जन पर निर्भर करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यहाँ कितने NULL मानों की अनुमति है?
+```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255),
+      UNIQUE(email)
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL में UNIQUE constraints:
+    - कई NULL मानों की अनुमति देते हैं।
+    - uniqueness checks में `NULL` ≠ `NULL` होता है।
+
+    `NULL` मानों को रोकने के लिए, `NOT NULL` जोड़ें:
+```sql
+    CREATE TABLE student_emails (
+      student_id INTEGER,
+      email VARCHAR(255) NOT NULL,
+      UNIQUE(email)
+    );
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="दिनांक/समय"
+  title="तिथि अंकगणित"
+  options={[
+    {text: '2024-11-27'},
+    {text: '2024-11-27 00:00:00'},
+    {text: '2024-11-28'},
+    {text: '2024-11-28 00:00:00', isAnswer: true},
+    {text: 'त्रुटि: अमान्य समय'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह क्या रिटर्न करेगा?
+```sql
+    SELECT '2024-11-27'::date + interval '24 hours';
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+इंटरवल डेट रेंज ऑपरेशंस को सरल बनाने के लिए एक शक्तिशाली टूल हैं!
+
+    PostgreSQL में दिनांक अंकगणित:
+    - `+ interval '24 hours'` 24 घंटे जोड़ता है
+    - `+ interval '1 day'` 1 दिन जोड़ता है
+    - `+ interval '1 month'` 1 महीना जोड़ता है
+    - `+ interval '1 year'` 1 वर्ष जोड़ता है
+
+    परिणाम `2024-11-28 00:00:00` है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="टाइमस्टैम्प्स"
+  title="timestamptz बनाम timestamp"
+  options={[
+    {text: 'दोनों 8 बाइट्स का स्थान घेरते हैं, लेकिन अलग-अलग टाइमस्टैम्प सेमेंटिक्स को दर्शाते हैं', isAnswer: true},
+    {text: 'वे\'},
+    {text: '`timestamptz` किसी भी इनपुट टाइमज़ोन को संरक्षित रखता है'},
+    {text: '`timestamptz` मूल टाइमज़ोन का नाम या ऑफ़सेट स्टोर करता है'},
+    {text: '`timestamptz` TZ के लिए 2-बाइट वैल्यू स्टोर करता है'},
+    {text: '`timestamptz`, `timestamp` का उत्तराधिकारी है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`timestamptz` और `timestamp` के बारे में **सबसे सटीक** कथन कौन सा है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+दोनों ही 8 बाइट्स का स्थान घेरते हैं, लेकिन ये एक ही प्रकार की वैल्यू स्टोर नहीं करते।
+
+    तो असली फर्क कहाँ है? यह इनपुट पार्सिंग में है।
+
+    **`timestamptz`**
+    - इनपुट को समय के एक निश्चित बिंदु में नॉर्मलाइज़ कर देता है।
+    - जब इनपुट में कोई स्पष्ट ऑफ़सेट नहीं होता, या आउटपुट दिखाते समय, यह सर्वर/कनेक्शन की `TimeZone` सेटिंग को ध्यान में रखता है।
+
+    **`timestamp`**
+    - टाइमज़ोन कन्वर्शन के बिना केवल डेट और टाइम स्टोर करता है।
+    - यह टाइमज़ोन की जानकारी को न तो संरक्षित करता है और न ही नॉर्मलाइज़।
+    
+    
+    **`timestamp`**
+
+    - टाइमज़ोन जानकारी के बिना डेट और टाइम स्टोर करता है।
+    - यह UTC या किसी विशिष्ट टाइमज़ोन में मानकीकृत डेट्स को स्पष्ट रूप से स्टोर करने के लिए बेहद उपयोगी है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Postgres टाइप्स"
+  title="अमान्य टाइप की पहचान करें"
+  options={[
+    {text: 'VARCHAR(100)'},
+    {text: 'CHAR(100)'},
+    {text: 'TEXT'},
+    {text: 'STRING(100)', isAnswer: true},
+    {text: 'CHARACTER VARYING(100)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा ❌ वैध PostgreSQL टाइप नहीं है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL में डेटा टाइप्स का एक समृद्ध सेट है, लेकिन `STRING(100)` उनमें से कोई नहीं है।
+
+    सही स्ट्रिंग टाइप्स में शामिल हैं:
+    - `VARCHAR(100)` (परिवर्तनीय लंबाई वाली स्ट्रिंग)
+    - `CHAR(100)` (निश्चित लंबाई वाली स्ट्रिंग)
+    - `TEXT` (असीमित लंबाई)
+    - `CHARACTER VARYING(100)` (`VARCHAR(100)` के समान)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Postgres टाइप्स"
+  title="अमान्य डेटा टाइप्स की पहचान करें"
+  options={[
+    {text: 'int'},
+    {text: 'real'},
+    {text: 'bigint'},
+    {text: 'bigserial'},
+    {text: 'smallserial'},
+    {text: 'decimal128', isAnswer: true},
+    {text: 'double precision'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा PostgreSQL के लिए ❌ मान्य डेटा टाइप नहीं है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह नाम परिचित लग सकता है क्योंकि `decimal128` कई डेटाबेस और लैंग्वेज (जैसे Mongo और Java) में मौजूद है। लेकिन PostgreSQL में यह एक मान्य टाइप नहीं है; यहाँ आपको `decimal` का उपयोग करना होगा।
+
+PostgreSQL में मान्य न्यूमेरिक टाइप्स ये हैं:
+- `int` (4-बाइट पूर्णांक)
+- `bigint` (8-बाइट पूर्णांक)
+- `real` (4-बाइट फ्लोटिंग-पॉइंट)
+- `double precision` (8-बाइट फ्लोटिंग-पॉइंट)
+- `bigserial` (ऑटो-इंक्रीमेंटिंग 8-बाइट पूर्णांक)
+- `smallserial` (ऑटो-इंक्रीमेंटिंग 2-बाइट पूर्णांक)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="पोस्टग्रेस टाइप्स"
+  title="अमान्य टाइप्स की पहचान करें"
+  options={[
+    {text: 'cidr'},
+    {text: 'inet'},
+    {text: 'ipv4', isAnswer: true},
+    {text: 'macaddr'},
+    {text: 'macaddr8'},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा ❌ एक वैध PostgreSQL टाइप नहीं है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+क्या इसने आपको निराश, या शायद _क्रोधित_ कर दिया? आप अकेले नहीं हैं! एक अनाम "कोर" डेटाबेस कंट्रीब्यूटर के शब्दों में, "अरे यार, डैन?! मैं टाइप वाले सवालों में ही फँस गया! यह तो बहुत ज़्यादा है सर! अपना स्कोर शेयर नहीं कर रहा, हहा।" 😈 आपका स्वागत है।
+
+PostgreSQL के नेटवर्क टाइप्स के विस्तृत सेट में `ipv4` शामिल नहीं है। हर बार जब मैं बिना गूगल किए इसका इस्तेमाल करने की कोशिश करता हूँ, तो गलत हो जाता हूँ। शायद `macaddr8` देखकर लगता है कि `ipv4` और `ipv6` टाइप्स _ज़रूर_ होने चाहिए। लेकिन नहीं, `inet` दोनों को कवर करता है। साथ ही, `cidr` दोनों के लिए नेटवर्क मास्क को कवर करता है।
+
+वैध नेटवर्क टाइप्स में शामिल हैं:
+- `cidr` (IPv4/IPv6 नेटवर्क एड्रेस)
+- `inet` (IPv4/IPv6 होस्ट एड्रेस)
+- `macaddr` (MAC एड्रेस)
+- `macaddr8` (EUI-64 MAC एड्रेस)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Postgres डेटा टाइप्स"
+  title="अमान्य डेटा टाइप्स की पहचान करें"
+  options={[
+    {text: 'xml'},
+    {text: 'uuid'},
+    {text: 'money'},
+    {text: 'currency', isAnswer: true},
+    {text: 'interval'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा PostgreSQL का मान्य डेटा टाइप नहीं है ❌?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL में डेटा टाइप्स का एक विस्तृत सेट मौजूद है, लेकिन `currency` उनमें से कोई नहीं है!
+
+वैध टाइप्स ये हैं:
+- `xml` (XML डेटा)
+- `uuid` (UUID)
+- `money` (मुद्रा राशि)
+- `interval` (समय अंतराल)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="PostgreSQL टाइप्स"
+  title="अमान्य डेटा टाइप्स की पहचान करें"
+  options={[
+    {text: 'box'},
+    {text: 'line'},
+    {text: 'point'},
+    {text: 'circle'},
+    {text: 'polygon'},
+    {text: 'triangle', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा ❌ एक वैध PostgreSQL टाइप नहीं है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL में विशेष टाइप्स का एक समृद्ध सेट है, लेकिन `triangle` उनमें से एक नहीं है।
+
+    मेरा मानना है कि [GEOS](https://libgeos.org/) के आगामी संस्करणों में `Triangle` OGC/WKT सपोर्ट शामिल होगा, जिसका अर्थ है कि इसे अंततः PostGIS में शामिल किया जाना चाहिए। (मूल रूप से, भविष्य में यह उत्तर गलत हो सकता है।)
+
+    सही विशेष टाइप्स में शामिल हैं:
+    - `box` (आयताकार बॉक्स)
+    - `line` (अनंत रेखा)
+    - `point` (2D बिंदु)
+    - `circle` (2D वृत्त)
+    - `polygon` (2D बहुभुज)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="पूर्णांक अंकगणित"
+  title="पूर्णांक ओवरफ़्लो"
+  options={[
+    {text: '4294967296'},
+    {text: 'त्रुटि: integer out of range', isAnswer: true},
+    {text: '0'},
+    {text: '2147483647'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कुल संभावित स्टूडेंट आईडी की गणना करते समय क्या होता है?
+```sql
+    SELECT 256 * 256 * 256 * 256;
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL का `integer` टाइप 32-bit signed होता है, जिसकी रेंज `-2,147,483,648` से `2,147,483,647` तक होती है।
+
+    गणना `256^4` = `4,294,967,296` इस रेंज को पार कर जाती है।
+
+    बड़ी संख्याओं को हैंडल करने के लिए:
+```sql
+    -- Use BIGINT
+    SELECT 256::bigint * 256 * 256 * 256;
+
+    -- Or numeric for arbitrary precision
+    SELECT 256::numeric * 256 * 256 * 256;
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="दिनांक/समय"
+  title="टाइमस्टैम्प की सटीकता"
+  options={[
+    {text: '2024-01-08 13:30:00+00'},
+    {text: '2024-01-08 13:30:00.123456+00'},
+    {text: '2024-01-08 13:30:00.123456789+00'},
+    {text: '2024-01-08 13:30:00.1234567', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Postgres में अधिकतम `time` प्रिसिज़न को पार करने वाला सबसे छोटा `timestamp` लिटरल कौन सा है?
+```sql
+    CREATE TABLE class_sessions (
+      id INT GENERATED BY DEFAULT AS IDENTITY,
+      start_time timestamptz,
+      end_time timestamptz
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL टाइमस्टैम्प्स में माइक्रोसेकंड (6 दशमलव स्थान) की सटीकता होती है।
+
+    - अधिकतम: `.123456` (6 अंक)
+    - नैनोसेकंड (9 अंक) को समर्थित सटीकता तक राउंड या ट्रंकेट कर दिया जाता है
+    - `timestamptz` के लिए टाइमज़ोन ऑफ़सेट स्वीकार किए जाते हैं, लेकिन ये अनिवार्य नहीं हैं
+
+    **कम ज्ञात गॉटचा:** कुछ भाषाएँ/फ्रेमवर्क नैनोसेकंड प्रिसिज़न भेजते हैं, लेकिन PostgreSQL टाइमस्टैम्प्स को माइक्रोसेकंड प्रिसिज़न पर ही स्टोर करता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Postgres टाइप्स"
+  title="अमान्य डेटा टाइप्स पहचानें"
+  options={[
+    {text: 'lseg'},
+    {text: 'bytea'},
+    {text: 'tsquery'},
+    {text: 'tsvector'},
+    {text: 'tsrank', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सा ❌ मान्य PostgreSQL टाइप नहीं है?
+
+    (सच में, ये (ज्यादातर) असली टाइप्स हैं।)
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+PostgreSQL में कई बिल्ट-इन ज्योमेट्रिक और टेक्स्ट सर्च टाइप्स होते हैं, लेकिन `tsrank` उनमें से एक नहीं है।
+
+    सही ज्योमेट्रिक और टेक्स्ट सर्च टाइप्स में ये शामिल हैं:
+    - `lseg` (लाइन सेगमेंट)
+    - `bytea` (बाइनरी डेटा)
+    - `tsquery` (टेक्स्ट सर्च क्वेरी)
+    - `tsvector` (टेक्स्ट सर्च डॉक्यूमेंट)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="कंस्ट्रेंट्स"
+  title="कंस्ट्रेंट चेक का समय"
+  options={[
+    {text: 'नई या बदली गई पंक्तियों के लिए तुरंत', isAnswer: true},
+    {text: 'ट्रांजैक्शन कमिट के समय'},
+    {text: 'अगली क्वेरी पर'},
+    {text: 'कभी नहीं - कंस्ट्रेंट्स केवल INSERT पर चेक किए जाते हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह ग्रेड कंस्ट्रेंट आखिर कब चेक होता है?
+```sql
+    ALTER TABLE students 
+    ADD CONSTRAINT valid_grade 
+    CHECK (
+      (grade >= 0 AND grade <= 100) OR 
+      grade IS NULL
+    ) NOT VALID;
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`NOT VALID` कंस्ट्रेंट्स:
+    - नए inserts और updates के लिए तुरंत चेक होते हैं
+    - मौजूदा पंक्तियों को वैलिडेट नहीं करते
+    - बाद में `VALIDATE CONSTRAINT` के साथ मौजूदा पंक्तियों को वैलिडेट किया जा सकता है
+    - बड़ी टेबल्स पर डाउनटाइम बचाने के लिए बेहद उपयोगी
+    
+    `NOT VALID` के बिना:
+    - कंस्ट्रेंट तुरंत चेक होता है
+    - सभी मौजूदा पंक्तियाँ वैलिडेट होती हैं
+    - बड़ी टेबल्स पर यह प्रक्रिया काफी धीमी हो सकती है
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+बढ़िया! आपने PostgreSQL के कई क्षेत्रों में गहराई तक उतरकर काम किया! 🐘
+
+उम्मीद है कि आपको कुछ नया सीखने को मिला, या कम से कम इतना अच्छा स्कोर मिला कि आप थोड़ा शेखी बघा सकें! 🏆
+
+<p class="inset">अधिक Postgres मज़े के लिए [Part 2](/quiz-postgres-sql-mastery-pt2/) देखें! 🚀</p>
+
+ज़िंदगी में थोड़ा और एक्शन चाहिए? अनंत* मज़े के लिए मेरा [Quiz Collection](/challenges/) चेक करें!

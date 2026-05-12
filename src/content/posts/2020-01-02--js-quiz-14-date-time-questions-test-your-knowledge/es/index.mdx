@@ -223,10 +223,10 @@ La cadena sin la `T` de hora podría parecer el 1 de enero de 2020, pero las cad
   group="Manejo de fechas"
   title="Formateo: Parte 1"
   options={[
-    {text: 'new Intl.DateTimeFormat(\'},
-    {text: 'date.toLocaleFormat(\', isAnswer: true},
-    {text: 'date.toLocaleString(\'},
-    {text: 'date.toLocaleDateString(\'},
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true },
+    {text: 'date.toLocaleString(\'en-GB\', { timeZone: \'UTC\' })'},
+    {text: 'date.toLocaleDateString(\'en-US\', { timeZone: \'UTC\', timeZoneName: \'short\' })'},
   ]}
 >
   <slot name="question">

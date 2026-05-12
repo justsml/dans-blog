@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "`.then`と`.catch`のチェーン",
+  "translation": {
+    "title": "`.then`と`.catch`のチェーン",
+    "group": "エラーハンドリング",
+    "options": [
+      {
+        "text": "エラーと`undefined`を出力する"
+      },
+      {
+        "text": "エラーを2回出力する"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "次のコードの出力は何ですか？"
+    ],
+    "explanationProse": [
+      "`.then`と`.catch`をチェーンするときは、それらを一連のステップとして考えると便利です。各`.then`は、前の`.then`が返した値（を引数として）を受け取ります。ただし、その「ステップ」でエラーが発生した場合、`.catch`に到達するまで後続の`.then`の「ステップ」はスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけで済みます。その値は後続の任意の`.then`からアクセスできます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"`.then`と`.catch`のチェーン\",\n  \"group\": \"エラーハンドリング\",\n  \"options\": [\n    {\n      \"text\": \"エラーと`undefined`を出力する\"\n    },\n    {\n      \"text\": \"エラーを2回出力する\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"次のコードの出力は何ですか？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`.then`と`.catch`をチェーンするときは、それらを一連のステップとして考えると便利です。各`.then`は、前の`.then`が返した値（を引数として）を受け取ります。ただし、その「ステップ」でエラーが発生した場合、`.catch`に到達するまで後続の`.then`の「ステップ」はスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけで済みます。その値は後続の任意の`.then`からアクセスできます。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 744,
+    "outputTokens": 1641,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 15037
+  },
+  "cost": {
+    "inputUsd": 0.00010416,
+    "outputUsd": 0.00045948000000000007,
+    "totalUsd": 0.00056364,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

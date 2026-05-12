@@ -1,0 +1,47 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Nested Destructuring",
+  "translatedTitle": "入れ子構造の分割代入",
+  "translation": {
+    "title": "入れ子構造の分割代入",
+    "group": "入れ子構造の分割代入",
+    "options": [
+      {
+        "text": "First: Dan, City: Denver"
+      },
+      {
+        "text": "First: undefined, City: Denver"
+      },
+      {
+        "text": "Error: Cannot read property 'first'"
+      },
+      {
+        "text": "First: Dan, City: undefined"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "ネストされた分割代入、腕試ししてみますか？🔍"
+    ],
+    "explanationProse": [
+      "`person` オブジェクトには `birth: { place }` プロパティが存在しないため、エラーがスローされます。\n  対策としては、ネストされたプロパティにデフォルト値を割り当てるのが有効です。\n\n  ネストされたプロパティへのアクセスは要注意です。エラーの原因が隠れやすく、ブラウザや実行環境によってメッセージが異なるため、デバッグが少しトリッキーになることがあります。\n\n  最新のChromeでは：`TypeError: Cannot read properties of undefined (reading 'place')`\n\n  Node.js でも `TypeError` が発生します。これは、JavaScript が実際に `place` を読み取る前に、`undefined` から `place` を分割代入しようとするためです。\n\n  正確な文言はブラウザやランタイムによって異なります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"入れ子構造の分割代入\",\n  \"group\": \"入れ子構造の分割代入\",\n  \"options\": [\n    {\n      \"text\": \"First: Dan, City: Denver\"\n    },\n    {\n      \"text\": \"First: undefined, City: Denver\"\n    },\n    {\n      \"text\": \"Error: Cannot read property 'first'\"\n    },\n    {\n      \"text\": \"First: Dan, City: undefined\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"ネストされた分割代入、腕試ししてみますか？🔍\"\n  ],\n  \"explanationProse\": [\n    \"`person` オブジェクトには `birth: { place }` プロパティが存在しないため、エラーがスローされます。\\n  対策としては、ネストされたプロパティにデフォルト値を割り当てるのが有効です。\\n\\n  ネストされたプロパティへのアクセスは要注意です。エラーの原因が隠れやすく、ブラウザや実行環境によってメッセージが異なるため、デバッグが少しトリッキーになることがあります。\\n\\n  最新のChromeでは：`TypeError: Cannot read properties of undefined (reading 'place')`\\n\\n  Node.js でも `TypeError` が発生します。これは、JavaScript が実際に `place` を読み取る前に、`undefined` から `place` を分割代入しようとするためです。\\n\\n  正確な文言はブラウザやランタイムによって異なります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 894,
+    "outputTokens": 5326,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 96929
+  },
+  "cost": {
+    "inputUsd": 0.00029055000000000004,
+    "outputUsd": 0.0103857,
+    "totalUsd": 0.01067625,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

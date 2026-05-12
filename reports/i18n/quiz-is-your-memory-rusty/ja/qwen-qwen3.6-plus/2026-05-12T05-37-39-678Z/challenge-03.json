@@ -1,0 +1,50 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "可変参照",
+  "translation": {
+    "title": "可変参照",
+    "group": "借用",
+    "options": [
+      {
+        "text": "コンパイルに成功する",
+        "hint": "同時に複数の可変参照を持てると思う？"
+      },
+      {
+        "text": "エラー: cannot borrow `wisdom` as mutable more than once"
+      },
+      {
+        "text": "エラー: missing lifetime specifier",
+        "hint": "ここで問題なのはライフタイムじゃないよ"
+      },
+      {
+        "text": "実行時パニック",
+        "hint": "Rust はこういう問題をコンパイル時に弾くんだ"
+      }
+    ],
+    "questionProse": [
+      "複数の可変参照を同時に使ったら何が起きる？",
+      "Rust の可変参照ルールを思い出そう。"
+    ],
+    "explanationProse": [
+      "このコードは Rust の基本的な借用ルールに違反しています：\n      - 値に対する可変参照は同時に 1 つのみ\n      - または、不変参照はいくつでも可\n      - 参照は参照先より長く存続できない\n\n      コードを修正する方法は以下の通りです：\n\n      1. 連続したスコープを使用する：",
+      "2. または、1 回の借用で文字列を変更する：",
+      "これらのルールにより、データ競合がコンパイル時に防止され、Rust はデフォルトでスレッドセーフになります。\n\n      よくある落とし穴：クローンを避けたり、同じ値の異なる部分を同時に修正しようとして、複数の可変参照を使おうとすることです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"可変参照\",\n  \"group\": \"借用\",\n  \"options\": [\n    {\n      \"text\": \"コンパイルに成功する\",\n      \"hint\": \"同時に複数の可変参照を持てると思う？\"\n    },\n    {\n      \"text\": \"エラー: cannot borrow `wisdom` as mutable more than once\"\n    },\n    {\n      \"text\": \"エラー: missing lifetime specifier\",\n      \"hint\": \"ここで問題なのはライフタイムじゃないよ\"\n    },\n    {\n      \"text\": \"実行時パニック\",\n      \"hint\": \"Rust はこういう問題をコンパイル時に弾くんだ\"\n    }\n  ],\n  \"questionProse\": [\n    \"複数の可変参照を同時に使ったら何が起きる？\",\n    \"Rust の可変参照ルールを思い出そう。\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"このコードは Rust の基本的な借用ルールに違反しています：\\n      - 値に対する可変参照は同時に 1 つのみ\\n      - または、不変参照はいくつでも可\\n      - 参照は参照先より長く存続できない\\n\\n      コードを修正する方法は以下の通りです：\\n\\n      1. 連続したスコープを使用する：\",\n    \"2. または、1 回の借用で文字列を変更する：\",\n    \"これらのルールにより、データ競合がコンパイル時に防止され、Rust はデフォルトでスレッドセーフになります。\\n\\n      よくある落とし穴：クローンを避けたり、同じ値の異なる部分を同時に修正しようとして、複数の可変参照を使おうとすることです。\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    },\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 955,
+    "outputTokens": 6611,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 120343
+  },
+  "cost": {
+    "inputUsd": 0.000310375,
+    "outputUsd": 0.012891449999999999,
+    "totalUsd": 0.013201824999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

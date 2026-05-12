@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "ग्रीडी बनाम नॉन-ग्रीडी",
+  "translation": {
+    "title": "ग्रीडी बनाम नॉन-ग्रीडी",
+    "group": "बेसिक मैचिंग",
+    "options": [],
+    "questionProse": [
+      "यह किससे मैच करेगा?"
+    ],
+    "explanationProse": [
+      "पैटर्न `/<div>.*?<\\/div>/g` `*?` का उपयोग करके नॉन-ग्रीडी मैचिंग करता है, जिसका अर्थ है:\n    - `<div>` से मैच करें\n    - किसी भी कैरेक्टर (`.*`) से मैच करें, लेकिन जितना संभव हो उतना कम (`?`)\n    - जब तक `</div>` न मिल जाए\n    - `g` फ्लैग इसे सभी occurrences को मैच करने देता है\n\n    `?` के बिना, ग्रीडी `.*` पहले `<div>` से लेकर आखिरी `</div>` तक सब कुछ निगल जाएगा, जिससे एक ही बड़ा मैच मिलेगा। `?` के साथ, यह हर जोड़ी को अलग-अलग मैच करता है।\n\n    [ग्रीडी बनाम लेज़ी मैचिंग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ग्रीडी बनाम नॉन-ग्रीडी\",\n  \"group\": \"बेसिक मैचिंग\",\n  \"options\": [],\n  \"questionProse\": [\n    \"यह किससे मैच करेगा?\"\n  ],\n  \"explanationProse\": [\n    \"पैटर्न `/<div>.*?<\\\\/div>/g` `*?` का उपयोग करके नॉन-ग्रीडी मैचिंग करता है, जिसका अर्थ है:\\n    - `<div>` से मैच करें\\n    - किसी भी कैरेक्टर (`.*`) से मैच करें, लेकिन जितना संभव हो उतना कम (`?`)\\n    - जब तक `</div>` न मिल जाए\\n    - `g` फ्लैग इसे सभी occurrences को मैच करने देता है\\n\\n    `?` के बिना, ग्रीडी `.*` पहले `<div>` से लेकर आखिरी `</div>` तक सब कुछ निगल जाएगा, जिससे एक ही बड़ा मैच मिलेगा। `?` के साथ, यह हर जोड़ी को अलग-अलग मैच करता है।\\n\\n    [ग्रीडी बनाम लेज़ी मैचिंग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 3963,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 72394
+  },
+  "cost": {
+    "inputUsd": 0.00026845,
+    "outputUsd": 0.0077278500000000005,
+    "totalUsd": 0.007996300000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

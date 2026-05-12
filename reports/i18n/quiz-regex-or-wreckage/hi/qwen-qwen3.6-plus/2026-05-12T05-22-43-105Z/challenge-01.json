@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Case-Sensitive Matching",
+  "translatedTitle": "केस-सेंसिटिव मैचिंग",
+  "translation": {
+    "title": "केस-सेंसिटिव मैचिंग",
+    "group": "वार्मअप",
+    "options": [
+      {
+        "text": "[\"Cat\"]"
+      },
+      {
+        "text": "[\"cat\", \"CAT\", \"Cat\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "क्या मैच होगा?"
+    ],
+    "explanationProse": [
+      "इस पैटर्न में `g` तो है, पर `i` नहीं है:\n    - `g` सभी मैच ढूंढता है\n    - `i` के बिना, मिलान केस-सेंसिटिव रहता है\n\n    `i` फ्लैग न होने पर, सिर्फ लोअरकेस \"cat\" ही मैच करेगा।\n\n    यह तब बहुत काम आता है जब आप यूज़र इनपुट या HTML हैंडल कर रहे हों, जहाँ केस की कोई गारंटी नहीं होती।\n\n    [RegExp फ्लैग्स के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"केस-सेंसिटिव मैचिंग\",\n  \"group\": \"वार्मअप\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"Cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\", \\\"CAT\\\", \\\"Cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"क्या मैच होगा?\"\n  ],\n  \"explanationProse\": [\n    \"इस पैटर्न में `g` तो है, पर `i` नहीं है:\\n    - `g` सभी मैच ढूंढता है\\n    - `i` के बिना, मिलान केस-सेंसिटिव रहता है\\n\\n    `i` फ्लैग न होने पर, सिर्फ लोअरकेस \\\"cat\\\" ही मैच करेगा।\\n\\n    यह तब बहुत काम आता है जब आप यूज़र इनपुट या HTML हैंडल कर रहे हों, जहाँ केस की कोई गारंटी नहीं होती।\\n\\n    [RegExp फ्लैग्स के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 2744,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 50523
+  },
+  "cost": {
+    "inputUsd": 0.000268775,
+    "outputUsd": 0.005350799999999999,
+    "totalUsd": 0.005619574999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Equality Comparison with BigInt",
+  "translatedTitle": "BigInt との等値比較",
+  "translation": {
+    "title": "BigInt との等値比較",
+    "group": "等値比較",
+    "options": [
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "true"
+      },
+      {
+        "text": "false"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [],
+    "explanationProse": [
+      "[`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) は `number` とは異なるプリミティブ型です。そのため、`parseInt(\"42\")` が返す通常の数値は、`BigInt(\"42\")` と厳密等価（`===`）にはなりません。値を正しく比較するには、両方を同じ型に揃える必要があります。例えば `BigInt(parseInt(\"42\")) === BigInt(\"42\")` のように明示的に変換してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"BigInt との等値比較\",\n  \"group\": \"等値比較\",\n  \"options\": [\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"true\"\n    },\n    {\n      \"text\": \"false\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [],\n  \"explanationProse\": [\n    \"[`BigInt`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) は `number` とは異なるプリミティブ型です。そのため、`parseInt(\\\"42\\\")` が返す通常の数値は、`BigInt(\\\"42\\\")` と厳密等価（`===`）にはなりません。値を正しく比較するには、両方を同じ型に揃える必要があります。例えば `BigInt(parseInt(\\\"42\\\")) === BigInt(\\\"42\\\")` のように明示的に変換してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 776,
+    "outputTokens": 2619,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 48265
+  },
+  "cost": {
+    "inputUsd": 0.0002522,
+    "outputUsd": 0.005107049999999999,
+    "totalUsd": 0.005359249999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

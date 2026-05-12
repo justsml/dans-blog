@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "日付文字列の解析",
+  "translation": {
+    "title": "日付文字列の解析",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "コンソールに出力される値は？"
+    ],
+    "explanationProse": [
+      "`T` を含まない文字列は一見すると 2020年1月1日に見えますが、日付のみの文字列は UTC として解釈される仕様です。ローカルタイムゾーン（GMT-7）に調整すると、実際にはまだ 2019年であることがわかります。\n\n明示的なタイムゾーンが指定されていない日付時刻文字列は、ローカル時間として解釈されます。\n\n`T00:00` の形式が含まれているため、2番目の値はローカルの深夜0時として扱われます。\n\n結果として、1番目の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` に、2番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` に解釈されます。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"日付文字列の解析\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\n      \"text\": \"2019 2020\"\n    },\n    {\n      \"text\": \"2020 2021\"\n    },\n    {\n      \"text\": \"2020 2020\"\n    },\n    {\n      \"text\": \"2020 2019\"\n    }\n  ],\n  \"questionProse\": [\n    \"コンソールに出力される値は？\"\n  ],\n  \"explanationProse\": [\n    \"`T` を含まない文字列は一見すると 2020年1月1日に見えますが、日付のみの文字列は UTC として解釈される仕様です。ローカルタイムゾーン（GMT-7）に調整すると、実際にはまだ 2019年であることがわかります。\\n\\n明示的なタイムゾーンが指定されていない日付時刻文字列は、ローカル時間として解釈されます。\\n\\n`T00:00` の形式が含まれているため、2番目の値はローカルの深夜0時として扱われます。\\n\\n結果として、1番目の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` に、2番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` に解釈されます。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 905,
+    "outputTokens": 4403,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 80229
+  },
+  "cost": {
+    "inputUsd": 0.000294125,
+    "outputUsd": 0.008585849999999999,
+    "totalUsd": 0.008879974999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

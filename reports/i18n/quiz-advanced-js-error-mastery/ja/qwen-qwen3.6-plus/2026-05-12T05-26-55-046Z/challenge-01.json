@@ -1,0 +1,48 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "空のオブジェクトの謎",
+  "translation": {
+    "title": "空のオブジェクトの謎",
+    "group": "シリアライズのサプライズ",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}",
+        "hint": "プロパティがそのまま残ると予想しがち"
+      },
+      {
+        "text": "{}",
+        "hint": "正解"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}",
+        "hint": "キー名が変わるとは限らない"
+      },
+      {
+        "text": "null",
+        "hint": "シリアライズ不能ではない"
+      }
+    ],
+    "questionProse": [
+      "`JSON.stringify(error)` を実行すると、一体何が返ってくる？"
+    ],
+    "explanationProse": [
+      "Error オブジェクトの `message`、`name`、`stack` といったプロパティは、デフォルトで列挙不可（non-enumerable）に設定されています。そのため、`JSON.stringify()` はこれらのプロパティを完全に無視し、結果として空の `{}` を返します。これは API レスポンスでエラーオブジェクトをそのまま送ろうとした際によく遭遇する典型的な落とし穴です。回避策としては、`JSON.stringify(error, Object.getOwnPropertyNames(error))` を使って列挙不可プロパティも含めるか、必要な情報だけを抽出したプレーンなオブジェクトを作成してシリアライズしましょう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"空のオブジェクトの謎\",\n  \"group\": \"シリアライズのサプライズ\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\",\n      \"hint\": \"プロパティがそのまま残ると予想しがち\"\n    },\n    {\n      \"text\": \"{}\",\n      \"hint\": \"正解\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\",\n      \"hint\": \"キー名が変わるとは限らない\"\n    },\n    {\n      \"text\": \"null\",\n      \"hint\": \"シリアライズ不能ではない\"\n    }\n  ],\n  \"questionProse\": [\n    \"`JSON.stringify(error)` を実行すると、一体何が返ってくる？\"\n  ],\n  \"explanationProse\": [\n    \"Error オブジェクトの `message`、`name`、`stack` といったプロパティは、デフォルトで列挙不可（non-enumerable）に設定されています。そのため、`JSON.stringify()` はこれらのプロパティを完全に無視し、結果として空の `{}` を返します。これは API レスポンスでエラーオブジェクトをそのまま送ろうとした際によく遭遇する典型的な落とし穴です。回避策としては、`JSON.stringify(error, Object.getOwnPropertyNames(error))` を使って列挙不可プロパティも含めるか、必要な情報だけを抽出したプレーンなオブジェクトを作成してシリアライズしましょう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 753,
+    "outputTokens": 2992,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 54714
+  },
+  "cost": {
+    "inputUsd": 0.000244725,
+    "outputUsd": 0.0058344,
+    "totalUsd": 0.006079125,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Template Literals in Errors",
+  "translatedTitle": "エラー内のテンプレートリテラル",
+  "translation": {
+    "title": "エラー内のテンプレートリテラル",
+    "group": "メッセージテンプレート",
+    "options": [
+      {
+        "text": "\"Value ${value} is invalid\""
+      },
+      {
+        "text": "\"Value undefined is invalid\""
+      },
+      {
+        "text": "ReferenceError: value is not defined"
+      },
+      {
+        "text": "\"Value  is invalid\""
+      }
+    ],
+    "questionProse": [
+      "実際に出力されるメッセージはどれだ？"
+    ],
+    "explanationProse": [
+      "テンプレートリテラルは補間時に `undefined` を文字列 `\"undefined\"` に変換します。その結果、メッセージは `\"Value undefined is invalid\"` になります。余計な文字列を出力したくないなら、補間前に `value ?? 'null'` などで値をチェックするのが定石です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"エラー内のテンプレートリテラル\",\n  \"group\": \"メッセージテンプレート\",\n  \"options\": [\n    {\n      \"text\": \"\\\"Value ${value} is invalid\\\"\"\n    },\n    {\n      \"text\": \"\\\"Value undefined is invalid\\\"\"\n    },\n    {\n      \"text\": \"ReferenceError: value is not defined\"\n    },\n    {\n      \"text\": \"\\\"Value  is invalid\\\"\"\n    }\n  ],\n  \"questionProse\": [\n    \"実際に出力されるメッセージはどれだ？\"\n  ],\n  \"explanationProse\": [\n    \"テンプレートリテラルは補間時に `undefined` を文字列 `\\\"undefined\\\"` に変換します。その結果、メッセージは `\\\"Value undefined is invalid\\\"` になります。余計な文字列を出力したくないなら、補間前に `value ?? 'null'` などで値をチェックするのが定石です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 747,
+    "outputTokens": 3459,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63498
+  },
+  "cost": {
+    "inputUsd": 0.00024277500000000003,
+    "outputUsd": 0.00674505,
+    "totalUsd": 0.006987825,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,401 @@
+---
+unlisted: false
+title: 'क्विज़: क्या आप आधुनिक CSS जानते हैं? (2025)'
+subTitle: क्या आपका फ्रंट-एंड ज्ञान पर्याप्त है?
+label: Advanced CSS
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## क्विज़: क्या आपको CSS आती है?
+
+* Modern CSS? 🤔
+* **क्या CSS _आपके_ रिज़्यूमे में जगह बनाती है???** 🚀
+* मल्टीपल चॉइस। 🤖 ... _कितना मुश्किल हो सकता है, वैसे?_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title="CSS Variables का उपयोग"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`--main-color` नामक CSS variable का उपयोग करके किसी element का background color सेट करने का सही तरीका क्या है?
+```css
+    :root {
+      --main-color: blue;
+    }
+    div {
+      /* How do we use --main-color here? */
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+CSS variables को `var` फ़ंक्शन के साथ इस्तेमाल किया जाता है, इसलिए सही जवाब `background-color: var(--main-color);` है। यह syntax `--main-color` की value को retrieve करके उसे apply करता है।
+
+बाकी विकल्प आपको शायद दूसरी programming languages या preprocessor syntaxes (जैसे Sass या Less) से जाने-पहचाने लगें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="CSS फ़ंक्शन्स"
+  title="CSS min() फ़ंक्शन"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'अमान्य सिंटैक्स'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अगर पैरेंट/कंटेनर की चौड़ाई 400px है, तो नीचे दिए गए एलिमेंट की कम्प्यूटेड चौड़ाई क्या होगी?
+```css
+    div {
+      width: min(250px, 50%);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`min()` फ़ंक्शन `250px` और इसके पैरेंट की चौड़ाई के `50%` में से सबसे छोटा मान चुनेगा।
+
+कम्प्यूटेड वैल्यू समझने के लिए, हमें रिलेटिव यूनिट्स को पिक्सेल में बदलना होगा:
+
+- `400px` का `50%` यानी `200px`
+- `250px` पहले से ही पिक्सेल में है
+```css
+/* This gets computed to */
+width: min(250px, 200px);
+/* -> 200px wins */
+```
+`min()` फ़ंक्शन रेस्पॉन्सिव डिज़ाइन के लिए खासतौर पर उपयोगी है, जहाँ आप यह सुनिश्चित कर सकते हैं कि कोई कंपोनेंट (या फ़ॉन्ट साइज़) किसी निर्धारित सीमा से आगे न बढ़े।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="CSS फ़ंक्शन्स"
+  title="CSS `max()` फ़ंक्शन"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'अमान्य सिंटैक्स'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+200px चौड़े कंटेनर को देखते हुए, `<div>` की कम्प्यूटेड चौड़ाई क्या होगी?
+```css
+    div {
+      width: max(50px, 10%, 6rem);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`max()` फ़ंक्शन 2 या उससे ज़्यादा इनपुट लेता है और अपने आप सबसे बड़ा मान चुन लेता है। अगर हम रूट फ़ॉन्ट साइज़ को ब्राउज़र डिफ़ॉल्ट `16px` मानें, तो चौड़ाई `96px` आती है।
+
+कम्प्यूटेड वैल्यू को समझने के लिए, हमें सापेक्ष यूनिट्स को पिक्सेल में बदलना होगा:
+
+- `50px` पहले से ही पिक्सेल में है
+- `200px` का `10%` होता है `20px`
+- `6rem` का मतलब है `6 * 16px` (डिफ़ॉल्ट फ़ॉन्ट साइज़), जो `96px` के बराबर है
+```css
+/* This gets computed to */
+width: max(50px, 20px, 96px);
+/* -> 96px wins */
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="CSS ग्रिड फ़ंक्शन्स"
+  title="CSS minmax() फ़ंक्शन"
+  options={[
+    {text: 'सभी कॉलम की चौड़ाई 100px और 200px के बीच रहेगी'},
+    {text: 'कॉलम 100px और पंक्तियाँ 200px पर सेट होंगी'},
+    {text: 'केवल पहला कॉलम 100px और 200px के बीच होगा', isAnswer: true},
+    {text: 'रेंज को सबग्रिड्स सहित रिकर्सिव रूप से लागू किया जाएगा'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+CSS ग्रिड ट्रैक के लिए `minmax(100px, 200px)` का इस्तेमाल करने पर क्या असर पड़ता है?
+```css
+    grid-template-columns: minmax(100px, 200px);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`minmax(100px, 200px)` का उपयोग करने से ग्रिड ट्रैक `100px` और `200px` के बीच अपनी चौड़ाई बदल सकता है। यह उपलब्ध जगह के हिसाब से एडजस्ट होता है, लेकिन कभी भी `100px` से कम या `200px` से ज्यादा नहीं होगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="CSS वेरिएबल्स"
+  title="CSS वेरिएबल फ़ॉलबैक"
+  options={[
+    {text: 'blue'},
+    {text: 'red'},
+    {text: 'सिस्टम डिफ़ॉल्ट'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस CSS कोड के हिसाब से बैकग्राउंड का रंग क्या होगा?
+```css
+    div {
+      background: var(--primary, olivedrab);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`var()` फ़ंक्शन का काम ही है कि अगर वेरिएबल डिफ़ाइन नहीं मिला, तो एक फ़ॉलबैक वैल्यू इस्तेमाल करे। यहाँ `--primary` कहीं डिफ़ाइन ही नहीं है, इसलिए बैकग्राउंड `olivedrab` (`#6b8e23`) ही रेंडर होगा।
+
+यह फीचर इसलिए ज़रूरी है ताकि अगर कोई वेरिएबल मिस हो जाए या पुराने ब्राउज़र में सपोर्ट न करे, तो आपकी स्टाइलिंग पूरी तरह से क्रैश न हो।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="CSS फ़ंक्शन्स"
+  title="रेस्पॉन्सिव डिज़ाइन के लिए `clamp()` का उपयोग"
+  options={[
+    {text: 'संभावित रूप से असमर्थित यूनिट्स के लिए फ़ॉलबैक'},
+    {text: 'सुनिश्चित करें कि `vw` यूनिट्स 20px और 50px के बीच हों'},
+    {text: '200px और 500px के बीच लीनियर स्केल', isAnswer: true},
+    {text: '200px और 500px के बीच Log₂ स्केल'},
+    {text: 'फ़ेल! IE 11 सपोर्ट नहीं है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`clamp()` क्या करता है?
+```css
+    .card {
+      width: clamp(200px, 50vw, 500px);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`clamp()` फ़ंक्शन चौड़ाई को `50vw` के आधार पर स्केल करने देता है, लेकिन इसे 200px से 500px की रेंज के भीतर ही बांधे रखता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="CSS नेस्टिंग"
+  title="नेटिव CSS नेस्टिंग"
+  options={[
+    {text: 'केवल SCSS के साथ'},
+    {text: 'तकनीकी रूप से PostCSS के साथ'},
+    {text: 'हाँ', isAnswer: true},
+    {text: 'नहीं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या CSS में नेटिव नेस्टिंग का सपोर्ट है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+हाँ! आखिरकार हमारे पास नेटिव CSS नेस्टिंग आ गई है। CSS ने हाल के वर्षों (2023) में नेटिव नेस्टिंग सिंटैक्स पेश किया, जिससे अब आपको बाहरी टूल्स या प्रीप्रोसेसर के बिना सीधे CSS में ही हायरार्किकल स्टाइलिंग लिखने की सुविधा मिल गई है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="CSS नेस्टिंग"
+  title="CSS नेस्टिंग"
+  options={[
+    {text: 'फ़ाइलनाम `.scss` पर ही खत्म होना चाहिए'},
+    {text: '`.title` को `color` जैसी प्रॉपर्टीज़ से पहले आना चाहिए'},
+    {text: 'सिर्फ़ PostCSS के साथ ही काम करता है'},
+    {text: 'बिल्कुल सही। कोई सुझाव नहीं।', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या यह नेटिव CSS नेस्टिंग का सही इस्तेमाल है?
+```css
+    .container {
+      color: black;
+      .title {
+        color: white;
+        background: black;
+      }
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.title` क्लास को `.container` क्लास के अंदर नेस्ट किया गया है, और प्रॉपर्टीज़ उम्मीद के मुताबिक लागू हो रही हैं।
+
+यह संबंधित स्टाइल्स को एक साथ रखने और लंबे सेलेक्टर्स से बचने का एक शानदार तरीका है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="CSS नेस्टिंग"
+  title="नेस्टिंग के साथ डायरेक्ट चाइल्ड सेलेक्टर"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'अमान्य सिंटैक्स'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`.container` के डायरेक्ट चाइल्ड `div`s पर कौन सा बैकग्राउंड कलर लागू होगा?
+```css
+    .container {
+      background-color: red;
+      > div {
+        background-color: white;
+      }
+      background-color: blue !important;
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+नेस्टेड रूल में `>` सेलेक्टर केवल `.container` के अंदर मौजूद डायरेक्ट चाइल्ड `div` एलिमेंट्स पर ही `background-color: white` लागू करता है।
+
+आखिरी रूल, `background-color: blue !important;`, बस एक छोटा सा डिस्ट्रैक्शन है। यह **नेस्टेड रूल के बाहर** है और सभी `.container` एलिमेंट्स पर लागू होगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="CSS वेरिएबल्स"
+  title="रनटाइम पर CSS वेरिएबल बदलना"
+  options={[
+    {text: 'CSS वेरिएबल्स अपरिवर्तनीय होते हैं'},
+    {text: 'JavaScript का उपयोग करके', isAnswer: true},
+    {text: 'केवल SCSS के साथ'},
+    {text: 'केवल इनलाइन स्टाइल्स के साथ'},
+    {text: 'रेस्पॉन्सिव यूनिट्स का उपयोग करके'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+रनटाइम पर CSS वेरिएबल का मान कैसे बदलें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+CSS वेरिएबल्स को क्लासेस और JavaScript से कंट्रोल किया जा सकता है। मज़ेदार बात यह है कि इन्हें तकनीकी रूप से यूज़ होने के 'बाद' भी डिफाइन किया जा सकता है।
+```js
+document.documentElement.style.setProperty('--main-color', 'blue');
+```
+यह पूरे डॉक्यूमेंट के लिए `--main-color` को `blue` में बदल देगा।
+
+CSS वेरिएबल्स स्टैटिक नहीं होते, JavaScript के ज़रिए इन्हें रनटाइम पर लाइव बदला जा सकता है।
+
+क्लासेस टॉगल करके भी इन्हें अपडेट किया जा सकता है, जो थीमिंग के लिए सबसे क्लीन और कॉमन तरीका है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="CSS Variables"
+  title="`calc()` को CSS Variables के साथ उपयोग करना"
+  options={[
+    {text: 'चौड़ाई: 50px'},
+    {text: 'चौड़ाई: 100px'},
+    {text: 'चौड़ाई: 110px', isAnswer: true},
+    {text: 'चौड़ाई: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस एलिमेंट की computed width क्या होगी?
+```css
+    :root {
+      --base-width: 100px;
+    }
+    div {
+      width: calc(var(--base-width) + 10px);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`calc()` फ़ंक्शन `--base-width` (100px) के मान में सीधे 10px जोड़ देता है, जिसके परिणामस्वरूप एलिमेंट की कुल चौड़ाई 110px हो जाती है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

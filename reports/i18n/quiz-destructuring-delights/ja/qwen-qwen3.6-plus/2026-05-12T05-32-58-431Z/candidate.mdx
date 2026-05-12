@@ -1,0 +1,550 @@
+---
+unlisted: false
+title: クイズ：分割代入の醍醐味
+subTitle: 分割代入の達人ですか？
+label: Destructuring
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-11-12'
+modified: '2024-11-16'
+tags:
+  - quiz
+  - intro
+  - javascript
+  - es2015
+  - destructuring
+  - beginner
+  - intermediate
+cover_full_width: ../boxes-of-nesting-dolls.webp
+cover_mobile: ../boxes-of-nesting-dolls-square.webp
+cover_icon: ../boxes-of-nesting-dolls-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+{/* デストラクチャリングのマエストロか？<br/> */}
+<p class="inset">それとも、お前の<em>Symphony of Destruction</em>か？</p>
+
+このクイズでは、JavaScriptのデストラクチャリングの実力を試す。「基本」のオブジェクト構文から、ネストされたデストラクチャリングやデフォルト値の処理まで。TypeScriptとインライン型に関するボーナス問題も用意してある。
+
+ウォーミングアップに飛び込んで、デストラクチャリングの腕前を証明してくれ。👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ウォームアップ：オブジェクト"
+  title="基本的なオブジェクトの分割代入"
+  options={[
+    {text: '名前: Dan Levy, 年齢: 20'},
+    {text: '名前: Dan Levy, 年齢: 40'},
+    {text: '名前: Dan Levy, 年齢: Infinity'},
+    {text: '名前: Dan Levy, 年齢: undefined', isAnswer: true},
+    {text: 'エラー: Cannot read property \'age\''},
+    {text: '名前: undefined, 年齢: 40'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このコードは何を出力するでしょうか？
+```js
+    const person = {
+      name: 'Dan Levy',
+      location: 'Cape Town',
+    };
+    const { name, age } = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` オブジェクトに `age` プロパティが存在しないため、`age` は `undefined` になります。もちろん `Infinity` なんてありえません 😅
+
+    結果はこうなります：
+```plaintext
+    Name: Dan Levy, Age: undefined
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ウォームアップ：配列"
+  title="オブジェクト分割代入におけるデフォルト値"
+  options={[
+    {text: '名前: Dan Levy, 年齢: NaN'},
+    {text: '名前: Dan Levy, 年齢: null'},
+    {text: '名前: Dan Levy, 年齢: undefined', isAnswer: true},
+    {text: '名前: Dan Levy, 年齢: 40'},
+    {text: 'エラー: プロパティ \'age\' を分割代入できません'},
+    {text: 'SyntaxError: 予期しないトークン \',\''},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このコードを実行すると、どのような結果が出力されるでしょうか？
+```js
+    const person = [ 'Dan Levy', 'Cape Town' ];
+    const [ name, origin, age ] = person;
+    console.log(`Name: ${name}, Age: ${age}`);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`age` は `tuple` 配列内に存在しないため、分割代入の結果は `undefined` になります。
+
+    これにより、出力は以下のようになります：
+```plaintext
+    Name: Dan Levy, Age: undefined
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="入れ子構造の分割代入"
+  title="入れ子構造の分割代入"
+  options={[
+    {text: 'First: Dan, City: Denver'},
+    {text: 'First: undefined, City: Denver'},
+    {text: 'Error: Cannot read property \'first\''},
+    {text: 'First: Dan, City: undefined'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ネストされた分割代入、腕試ししてみますか？🔍
+```js
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first },
+      address: { city },
+      birth: { place },
+    } = person;
+    console.log(
+      `First: ${first}, City: ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` オブジェクトには `birth: { place }` プロパティが存在しないため、エラーがスローされます。
+  対策としては、ネストされたプロパティにデフォルト値を割り当てるのが有効です。
+
+  ネストされたプロパティへのアクセスは要注意です。エラーの原因が隠れやすく、ブラウザや実行環境によってメッセージが異なるため、デバッグが少しトリッキーになることがあります。
+
+  最新のChromeでは：`TypeError: Cannot read properties of undefined (reading 'place')`
+
+  Node.js でも `TypeError` が発生します。これは、JavaScript が実際に `place` を読み取る前に、`undefined` から `place` を分割代入しようとするためです。
+
+  正確な文言はブラウザやランタイムによって異なります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="デフォルト値"
+  title="オブジェクトの分割代入におけるデフォルト値"
+  options={[
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'Error', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+さて、デフォルト値をいくつか設定した場合、これはどう動くでしょうか？
+```js
+    'use strict';
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' },
+    } = person;
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`birth` プロパティは `person` に存在しないため、ネストされたプロパティだけでなく、オブジェクト全体にデフォルト値が必要です。つまり、そこに ` = {}` のデフォルト指定が抜けています。
+
+  現在の書き方では、「`person.birth` が `undefined` の場合、`place` は `Unknown` になる」と解釈されます。しかし `person.birth` は実際に `undefined` なので、`undefined` を分割代入しようとしてしまい、結果としてエラーが発生します。
+```plaintext
+  In modern Chrome: `TypeError: Cannot read properties of undefined (reading 'place')`
+
+  In Node, this is also a `TypeError` because JavaScript tries to destructure `place` from `undefined`.
+
+  Exact wording varies between browsers and runtimes.
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="デフォルト値"
+  title="オブジェクト分割代入におけるデフォルト値"
+  options={[
+    {text: 'こんにちは、デンバー出身のDanさん'},
+    {text: 'こんにちは、ヨハネスブルグ出身のDanさん'},
+    {text: 'こんにちは、出身地不明のDanさん', isAnswer: true},
+    {text: 'こんにちは、名前も出身地も不明さん'},
+    {text: 'こんにちは、デンバー出身の不明さん'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+このコードを実行すると、どうなるでしょうか？
+```js
+    const person = {
+      name: { first: 'Dan' },
+      address: { city: 'Denver' },
+    };
+    const {
+      name: { first = 'Unknown' },
+      birth: { place = 'Unknown' } = {},
+    } = person;
+
+    console.log(
+      `Hi ${first} from ${place}`,
+    );
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`person` に `birth` プロパティが存在しないため、空のオブジェクト ` = {}` にフォールバックします。このフォールバック機構のおかげで、ネストされたデフォルト値が安全に展開されるわけです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="関数の引数"
+  title="デフォルト値付き関数パラメータの分割代入"
+  options={[
+    {text: 'Hi Dan from undefined'},
+    {text: 'Hi Dan from Unknown'},
+    {text: 'Hi Dan from Denver'},
+    {text: 'Hi Unknown from Unknown'},
+    {text: 'Hi Unknown from Denver'},
+    {text: 'エラー', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+これを関数のパラメータとして渡した場合、どうなるでしょうか？
+```js
+    'use strict';
+    function displayUser({
+      name = "Unknown",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`Hi ${name} from ${place}`);
+    }
+    displayUser({ name: "Dan" });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+この関数は `name` と `age` プロパティを抽出し、必要に応じてデフォルト値を適用します。今回のケースでは、デフォルトオブジェクトにある `place` キーはただのノイズ（おまけ）で、`displayUser()` 内では一切使われていません。
+
+  厳格モード（strict mode）にしても結果は同じです。宣言されていない `place` バインディングにアクセスしようとすると、`ReferenceError` が叩きつけられます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="関数の引数"
+  title="入れ子構造のデフォルト値を用いた分割代入"
+  options={[
+    {text: '不明, 不明, Joburg'},
+    {text: '不明, 不明, 不明'},
+    {text: '不明, `undefined`, Joburg'},
+    {text: 'N/A, `undefined`, Joburg'},
+    {text: 'N/A, 不明, Joburg'},
+    {text: 'N/A, N/A, Joburg', isAnswer: true},
+    {text: '不明, N/A, Joburg'},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`undefined` はどう処理される？
+```js
+    'use strict';
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan" });
+    displayPlace({ name: "Dan", place: undefined });
+    displayPlace({ name: "Dan", place: "Joburg" });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+関数 `displayPlace` がデフォルトオブジェクトを使うのは、オブジェクトが渡されなかった場合**のみ**です。つまり、`{ place: "Unknown" }` のデフォルト値が適用される唯一のシチュエーションは、引数ゼロで `displayPlace()` を呼び出した時だけ。
+```js
+  displayPlace() // Unknown
+  displayPlace({ name: "Dan" }) // N/A
+  displayPlace({ name: "Dan", place: undefined }) // N/A
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="関数の引数"
+  title="入れ子構造のデフォルト値を用いた分割代入"
+  options={[
+    {text: 'N/A, N/A'},
+    {text: 'N/A, undefined'},
+    {text: 'Unknown, N/A'},
+    {text: 'Unknown, Unknown'},
+    {text: 'Unknown, undefined'},
+    {text: 'null, N/A', isAnswer: true},
+    {text: 'null, Unknown'},
+    {text: 'null, undefined'},
+    {text: 'Error'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+前問と同じノリです… `null` はどう捌かれるでしょうか？_
+```js
+    function displayPlace({
+      name = "N/A",
+      place = "N/A",
+      age = -1,
+    } = { place: "Unknown" }) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: "Dan", place: null });
+    displayPlace({ name: "Dan", place: undefined });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+今回のケースでは、1回目の呼び出しで `place` プロパティが `null` に、2回目で `undefined` にセットされています。`place` のデフォルト値が適用されるのは、オブジェクト自体が存在しない場合 **または** `undefined` のときだけ。`null` はデフォルト値をスルーして、そのまま `null` として渡されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="TypeScript インライン型"
+  title="ネストされたデフォルト値での分割代入"
+  options={[
+    {text: 'N/A'},
+    {text: 'undefined'},
+    {text: 'Unknown'},
+    {text: '\'null\''},
+    {text: 'TypeScript エラー', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+さて、TypeScriptの世界へ……_これはどう動く？_
+```ts
+    'use strict';
+    function displayPlace(
+      {
+        name = 'N/A',
+        place = 'N/A',
+      }: {
+        name: string;
+        place: string;
+        age: number;
+      },
+    ) {
+      console.log(`${place}`);
+    }
+    displayPlace({ name: 'Dan', place: null });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+TypeScriptがエラーを吐く理由は明白だ。`place`は`string`型として宣言されているのに、呼び出し側が`null`を渡しているから。加えて、必須プロパティの`age`もすっぽ抜けている。
+
+  型チェックを無視して無理やり実行すれば、コンソールには`null`が表示されるぞ。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="TypeScript：代入（リネーム）あり"
+  title="入れ子デフォルト値を使った分割代入"
+  options={[
+    {text: 'undefined'},
+    {text: 'null'},
+    {text: 'N/A'},
+    {text: 'Unknown'},
+    {text: 'Denver', isAnswer: true},
+    {text: 'SyntaxError'},
+    {text: 'Error: Invalid type'},
+    {text: 'Error: Invalid Arguments'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+リネーム／代入の腕試しをしてみましょう…
+```ts
+    'use strict';
+    function displayPlace({
+      name = 'N/A',
+      place: location = 'N/A',
+    }: {
+      name: string;
+      place: string;
+      age?: number;
+    }) {
+      console.log(`${location}`);
+    }
+    displayPlace({ name: 'Dan', place: 'Denver' });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+コンソールには `Denver` が出力されます。関数の引数定義で `place` プロパティが `location` にリネームされているためです。これはサードパーティのデータ構造を扱う際、分割代入でプロパティ名をローカル変数に合わせたいときによく使われる定番パターンです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="TSにおけるネスト分割代入"
+  title="ネストされたデフォルト値を用いた分割代入"
+  options={[
+    {text: 'エラー: プロパティ \'first\' がありません'},
+    {text: 'エラー: プロパティ \'last\' がありません'},
+    {text: 'エラー: プロパティ \'birth\' および \'age\' がありません', isAnswer: true},
+    {text: 'エラー: プロパティ \'place\' がありません'},
+    {text: 'エラー: \'string\' に {...} のプロパティがありません'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+型エラーを見つけてください：
+```ts
+    function greet({
+      name: {first = "N/A", last = "N/A"},
+      birth: {place = "N/A"} = {},
+      age = -1,
+    }: {
+      name: {first?: string, last?: string};
+      birth: {place?: string};
+      age: number;
+    }) {
+      console.log(`Hi ${first} ${last} from ${place}`);
+    }
+    greet({ name: {first: 'Dan'} });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+エラーは `greet` 関数のシグネチャにあります。渡されたオブジェクトに `age` と `birth` プロパティが含まれていないため、型定義ではこれらをオプショナル（任意）として扱う必要があります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="TypeScript + 代入"
+  title="ネストされた値・代入・型を伴う分割代入"
+  options={[
+    {text: 'Hi Dan Levy from N/A'},
+    {text: 'Hi Dan Levy from Cape Town'},
+    {text: 'Hi N/A N/A from N/A'},
+    {text: 'Hi N/A N/A from Cape Town'},
+    {text: 'エラー', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+今度は**代入**パターンだ（`f`、`l`、`p` 変数の動きに注目してね）
+```ts
+    'use strict';
+    function greet(
+      {
+        name: {first: f = "N/A", last: l = "N/A"},
+        birth: {place: p = "N/A"} = {},
+        age = -1,
+      }: {
+        name: {first?: string, last?: string};
+        birth?: {place?: string};
+        age?: number;
+      }
+    ) {
+      console.log(`Hi ${f} ${l} from ${place}`);
+      // What will 👆 do?
+    }
+    greet({
+      name: {first: 'Dan', last: 'Levy'},
+      birth: {place: 'Cape Town'},
+    });
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+またもやエラー！そろそろ当てずっぽうになってきた？！😅
+
+  デフォルト値、代入、型が絡むネストされた分割代入は、パッと見で読み解くのが本当に骨が折れるよね！
+
+  `place` が `p` 変数に再代入された瞬間、元の `place` は `console.log` のスコープ内では未定義になってしまうんだ。
+```ts
+  console.log(`Hi ${f} ${l} from ${place}`); // ❌
+  // to:
+  console.log(`Hi ${f} ${l} from ${p}`); // ✅
+```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

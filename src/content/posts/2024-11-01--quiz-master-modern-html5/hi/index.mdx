@@ -1,0 +1,443 @@
+---
+unlisted: false
+title: 'क्विज़: क्या रिज़्यूमे में HTML अब भी जगह बनाता है?'
+subTitle: खुद को साबित करो!
+label: Semantic HTML5
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: HTML
+date: '2024-10-31'
+modified: '2024-11-06'
+tags:
+  - quiz
+  - web
+  - quiz
+  - semantic
+  - html5
+  - web
+  - beginner
+  - intermediate
+cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
+cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## तो, क्या आपको लगता है कि आपमें HTML5 की स्किल्स हैं?
+
+आखिरकार, आपको `<div>` और `<span>` का फर्क तो पता है, है न? लेकिन HTML5 के उन एडवांस्ड, सेमेंटिक एलिमेंट्स की आपको कितनी गहरी समझ है?
+
+> नोट: अगर आप यह टेस्ट पास नहीं कर पाते, तो कानूनी तौर पर आपको अपनी रेज़्यूमे से `HTML Skills` हटानी होगी।
+
+### शुरू करें!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<ul>` एलिमेंट की मुख्य भूमिका क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`<ul>` टैग एक अनऑर्डर्ड लिस्ट बनाता है, जिसके आइटम आमतौर पर बुलेट्स से चिह्नित होते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<dd>` एलिमेंट क्या दर्शाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<dd>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dd) डिस्क्रिप्शन लिस्ट के अंदर किसी विवरण, परिभाषा या मान को दर्शाता है। इसे `<dl>` टैग्स के अंदर `<dt>` (_Description Term_) के साथ जोड़ी बनाने के लिए इस्तेमाल किया जाता है।
+
+यह की-वैल्यू डेटा प्रस्तुत करने के लिए बेहद कारगर है। प्रोफ़ाइल डिटेल्स, सेटिंग्स या स्टैट्स जैसे सेक्शन इसके क्लासिक उदाहरण हैं।
+```html
+<dl>
+  <dt>JS</dt>
+  <dd>Client-side</dd>
+  <dd>Server-side</dd>
+
+  <dt>HTML</dt>
+  <dd>Client-side</dd>
+</dl>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`<figure>` और `<figcaption>` एलिमेंट्स का उपयोग कब किया जाना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<figure>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure) टैग का उपयोग आमतौर पर स्वयं-निहित (self-contained) मीडिया कंटेंट, जैसे इमेज या चार्ट, को रैप करने के लिए किया जाता है, जबकि [`<figcaption>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figcaption) का इस्तेमाल उस कंटेंट के लिए कैप्शन प्रदान करने के लिए किया जाता है।
+
+यह इमेजेस, डायग्राम, कोड स्निपेट्स और अन्य आइसोलेटेड कंटेंट के लिए बेहद उपयोगी है।
+```html
+<figure>
+  <img src="image.jpg" alt="Description of image">
+  <figcaption>Image caption</figcaption>
+</figure>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<article>` एलिमेंट का असल में क्या काम है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<article>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/article) का उपयोग कंटेंट के उस स्वतंत्र हिस्से को परिभाषित करने के लिए किया जाता है, जिसे अलग से डिस्ट्रीब्यूट या रीयूज़ किया जा सकता है।
+
+इसका इस्तेमाल अक्सर ब्लॉग पोस्ट, न्यूज़ आर्टिकल्स, फोरम पोस्ट या यूज़र कमेंट्स के लिए किया जाता है।
+
+आप एक पेज पर कई आर्टिकल्स का उपयोग कर सकते हैं (जैसे कि इन्फिनिट स्क्रॉलिंग वाले पेज के लिए)। या फिर, आप उन्हें एक-दूसरे के अंदर नेस्ट करके "स्वतंत्र कंटेंट" की एक हायरार्की बना सकते हैं।
+```html
+<article>
+  <h2>Article Title</h2>
+  <p>Article content...</p>
+  <article class="discussion">
+    <h3>Comment by User</h3>
+    <p>Comment content...</p>
+  </article>
+</article>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+फॉर्म में `<fieldset>` और `<legend>` एलिमेंट्स का क्या उद्देश्य है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<fieldset>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/fieldset) का उपयोग संबंधित फॉर्म कंट्रोल्स को समूहित करने के लिए किया जाता है, और `<legend>` उस समूह के लिए एक शीर्षक/लेबल प्रदान करता है, जिससे एक्सेसिबिलिटी में सुधार होता है।
+
+यह संबंधित फॉर्म एलिमेंट्स को समूहित करने के लिए उपयोगी है, जैसे शिपिंग एड्रेस या पेमेंट डिटेल्स के लिए एक सेक्शन।
+```html
+<fieldset>
+  <legend>Shipping Address</legend>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  ...
+</fieldset>
+<fieldset>
+  <legend>Payment Details</legend>
+  <label for="card">Card Number:</label>
+  <input type="text" id="card" name="card">
+  ...
+</fieldset>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`<meter>` एलिमेंट का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<meter>` एलिमेंट](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meter) का उपयोग किसी निर्धारित रेंज के भीतर एक स्केलर (एकल) माप को दर्शाने के लिए किया जाता है, जैसे तापमान, डिस्क उपयोग या वोटों की गिनती।
+
+यह [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress) बार जैसा लग सकता है, लेकिन प्रोग्रेस बार **हमेशा** शून्य से शुरू होते हैं। इसलिए `<progress>` एलिमेंट `percent of completion` दिखाते हैं, जबकि `<meter>` किसी भी डिफ़ाइन की गई रेंज के भीतर कोई भी वैल्यू दिखा सकता है।
+```html
+<meter min="-60" max="130" value="75" /> 75°F
+<meter min="0" max="100" value="75" /> 75%
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`<source>` एलिमेंट का उपयोग क्यों किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<source>` एलिमेंट का उपयोग उपलब्ध मीडिया फॉर्मेट्स निर्दिष्ट करने के लिए किया जाता है](https://developer.mozilla.org/en-us/docs/web/html/element/source)।
+
+इसका उपयोग विशेष रूप से [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio), और [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture) एलिमेंट्स के साथ किया जाता है, जिससे ब्राउज़र सबसे उपयुक्त फॉर्मेट चुन सकता है।
+```html
+<video controls>
+  <source src="movie.mp4" type="video/mp4">
+  <source src="movie.ogg" type="video/ogg">
+</video>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`<hgroup>` एलिमेंट का उपयोग कैसे करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<hgroup>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/hgroup) एलिमेंट एक हेडिंग को उससे जुड़े सेकेंडरी कंटेंट के साथ ग्रुप करता है, आमतौर पर एक या अधिक `<p>` एलिमेंट्स के साथ।
+
+यह तब उपयोगी होता है जब किसी हेडिंग का एक सबटाइटल, टैगलाइन या वैकल्पिक शीर्षक हो, जिसे डॉक्यूमेंट आउटलाइन में अलग हेडिंग नहीं बनना चाहिए।
+```html
+<article>
+  <hgroup>
+    <h1>Frankenstein</h1>
+    <p>Or: The Modern Prometheus</p>
+  </hgroup>
+  <section>
+    <h2>Chapter 1</h2>
+    <p>...</p>
+  </section>
+</article>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<menu>` एलिमेंट का उपयोग किस लिए किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<menu>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu) एलिमेंट कमांड्स या इंटरैक्टिव कंट्रोल्स की एक लिस्ट को दर्शाता है।
+
+अगर आपकी लिस्ट नेविगेशन लिंक्स की है, तो `<ul>` के साथ `<nav>` का उपयोग करें। टूलबार जैसे कंट्रोल्स या कमांड लिस्ट के लिए `<menu>` का ही इस्तेमाल करें।
+```html
+<menu>
+  <li><button type="button">Copy</button></li>
+  <li><button type="button">Paste</button></li>
+</menu>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<details>` और `<summary>` असल में क्या करते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<details>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/details) कॉलैप्सिबल कंटेंट को सपोर्ट करता है, और [`<summary>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/summary) उस कंटेंट के लिए एक दृश्यमान शीर्षक प्रदान करता है।
+
+यह FAQs, कॉलैप्सिबल सेक्शन्स, या किसी भी ऐसे कंटेंट के लिए उपयोगी है जिसे टॉगल किया जा सकता है।
+```html
+<details>
+  <summary>Click to expand 🤯</summary>
+  <p>Hidden content! 💥</p>
+</details>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`<dialog>` एलिमेंट का उपयोग क्यों करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`<dialog>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog) एलिमेंट का उपयोग पॉप-अप या मोडल के लिए किया जाता है। यह इन इंटरैक्शन के लिए सेमेंटिक मार्कअप, एक्सटेंडेड CSS और एक नेटिव API प्रदान करता है।
+
+मोडल डायलॉग के लिए इसे `.showModal()` से, और नॉन-मोडल डायलॉग के लिए `.show()` से खोलने के लिए JavaScript का उपयोग करें। इसे `.close()` या `method="dialog"` वाले फॉर्म सबमिशन से बंद करें।
+```html
+<dialog>
+  <h2>Modal Title</h2>
+  <p>Modal content...</p>
+  <button>Close</button>
+</dialog>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="उन्नत सेमेंटिक HTML"
+  title=""
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `<time>` एलिमेंट का उपयोग कैसे किया जाता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`<time>` एलिमेंट का उपयोग तारीखों, समय या अवधियों को सेमेंटिकली मार्कअप करने के लिए किया जाता है। यह इंसानों के लिए पढ़ने योग्य कंटेंट और मशीनों द्वारा पढ़े जाने वाले `datetime` एट्रिब्यूट दोनों को सपोर्ट करता है। याद रखें, HTML स्पेसिफिकेशन में `<date>` नाम का कोई एलिमेंट मौजूद ही नहीं है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="एडवांस्ड सेमेंटिक HTML"
+  title="ARIA एट्रिब्यूट्स का उद्देश्य"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ARIA एट्रिब्यूट्स का असल उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ARIA (Accessible Rich Internet Applications) एट्रिब्यूट्स स्क्रीन रीडर्स और अन्य सहायक तकनीकों को अतिरिक्त कॉन्टेक्स्ट देकर वेब एक्सेसिबिलिटी को बढ़ाते हैं।
+
+एलिमेंट्स को सही तरीके से डिस्क्राइब करने के लिए आप roles, states और properties का उपयोग कर सकते हैं।
+```html
+<button aria-label="Close" aria-expanded="true">X</button>
+<main aria-live="polite">...</main>
+<dialog
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="dialog_label"
+  aria-describedby="dialog_desc"
+></dialog>
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="उन्नत सेमेंटिक HTML"
+  title="`role` attribute का उपयोग"
+  options={[
+    {text: 'कंपोनेंट के व्यवहार को परिभाषित करने के लिए'},
+    {text: 'एलिमेंट के उद्देश्य को बताने के लिए', isAnswer: true},
+    {text: 'एलिमेंट्स तक पहुँच को प्रतिबंधित करने के लिए'},
+    {text: 'केवल Web Components के लिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+HTML में `role` attribute का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`role` attribute assistive technologies (जैसे screen readers) को स्पष्ट रूप से बताता है कि किसी एलिमेंट का उद्देश्य क्या है। चूँकि ब्राउज़र हमेशा सेमेंटिक टैग्स का सही अर्थ नहीं निकाल पाते, यह attribute उन्हें गाइड करता है, जिससे आपकी वेबसाइट की accessibility अपने आप बेहतर हो जाती है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+तो, कैसा रहा प्रदर्शन? अगले प्रोजेक्ट में सेमेंटिक HTML एलिमेंट्स इस्तेमाल करने के लिए उत्साहित हैं? 🚀
+
+या फिर `<div>` और `<span>` के साथ ही ज़िंदगी भर का समझौता कर लिया है? 😅
+
+नीचे कमेंट्स में बताइए! 👇

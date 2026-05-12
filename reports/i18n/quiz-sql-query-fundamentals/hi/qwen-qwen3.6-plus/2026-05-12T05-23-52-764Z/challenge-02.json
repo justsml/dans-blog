@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "एग्रीगेट फंक्शन COUNT",
+  "translation": {
+    "title": "एग्रीगेट फंक्शन COUNT",
+    "group": "SQL बेसिक्स",
+    "options": [
+      {
+        "text": "सभी rows को गिनता है, जिसमें NULL values भी शामिल हैं"
+      },
+      {
+        "text": "कॉलम में केवल non-NULL values को गिनता है"
+      },
+      {
+        "text": "NULL values को एक unique value के रूप में गिनता है"
+      },
+      {
+        "text": "हर NULL value को unique मानता है, जैसे `NaN !== NaN` होता है"
+      }
+    ],
+    "questionProse": [
+      "SQL में `COUNT(column_name)` असल में क्या करता है?"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` सिर्फ़ उन rows को गिनता है जहाँ कॉलम में actual data (non-NULL) मौजूद है। SQL में NULL का मतलब 'अज्ञात' होता है, इसलिए `COUNT` उसे अनदेखा कर देता है। अगर आपको हर single row को गिनना है, तो `COUNT(*)` का इस्तेमाल करें।\n\nअगर आप NULLs को भी गिनना चाहते हैं, तो `COALESCE` का उपयोग करके उन्हें किसी डिफ़ॉल्ट non-NULL value में बदल सकते हैं। उदाहरण: `COUNT(COALESCE(column_name, 0))`।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"एग्रीगेट फंक्शन COUNT\",\n  \"group\": \"SQL बेसिक्स\",\n  \"options\": [\n    {\n      \"text\": \"सभी rows को गिनता है, जिसमें NULL values भी शामिल हैं\"\n    },\n    {\n      \"text\": \"कॉलम में केवल non-NULL values को गिनता है\"\n    },\n    {\n      \"text\": \"NULL values को एक unique value के रूप में गिनता है\"\n    },\n    {\n      \"text\": \"हर NULL value को unique मानता है, जैसे `NaN !== NaN` होता है\"\n    }\n  ],\n  \"questionProse\": [\n    \"SQL में `COUNT(column_name)` असल में क्या करता है?\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` सिर्फ़ उन rows को गिनता है जहाँ कॉलम में actual data (non-NULL) मौजूद है। SQL में NULL का मतलब 'अज्ञात' होता है, इसलिए `COUNT` उसे अनदेखा कर देता है। अगर आपको हर single row को गिनना है, तो `COUNT(*)` का इस्तेमाल करें।\\n\\nअगर आप NULLs को भी गिनना चाहते हैं, तो `COALESCE` का उपयोग करके उन्हें किसी डिफ़ॉल्ट non-NULL value में बदल सकते हैं। उदाहरण: `COUNT(COALESCE(column_name, 0))`।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 764,
+    "outputTokens": 4079,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 74778
+  },
+  "cost": {
+    "inputUsd": 0.0002483,
+    "outputUsd": 0.00795405,
+    "totalUsd": 0.00820235,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

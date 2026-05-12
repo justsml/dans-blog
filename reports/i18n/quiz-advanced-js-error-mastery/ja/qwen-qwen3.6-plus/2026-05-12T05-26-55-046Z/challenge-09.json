@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Stack Manipulation",
+  "translatedTitle": "スタック操作",
+  "translation": {
+    "title": "スタック操作",
+    "group": "スタックトレース",
+    "options": [
+      {
+        "text": "`createError` をスタックから削除する"
+      },
+      {
+        "text": "スタック全体をクリアする"
+      },
+      {
+        "text": "何もしない"
+      },
+      {
+        "text": "`TypeError` をスローする"
+      }
+    ],
+    "questionProse": [
+      "`Error.captureStackTrace` は実際何をするのか？"
+    ],
+    "explanationProse": [
+      "`Error.captureStackTrace`（V8/Node.js）は、指定した関数（`createError`）をスタックトレースから意図的に除外します。これにより、エラー生成関数の内部実装がエンドユーザーから隠蔽され、呼び出し元のコードを直接指し示すクリーンなスタックトレースが得られます。デバッグ時のノイズを排除し、本来のエラー発生箇所を明確にするためのV8固有の機能です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"スタック操作\",\n  \"group\": \"スタックトレース\",\n  \"options\": [\n    {\n      \"text\": \"`createError` をスタックから削除する\"\n    },\n    {\n      \"text\": \"スタック全体をクリアする\"\n    },\n    {\n      \"text\": \"何もしない\"\n    },\n    {\n      \"text\": \"`TypeError` をスローする\"\n    }\n  ],\n  \"questionProse\": [\n    \"`Error.captureStackTrace` は実際何をするのか？\"\n  ],\n  \"explanationProse\": [\n    \"`Error.captureStackTrace`（V8/Node.js）は、指定した関数（`createError`）をスタックトレースから意図的に除外します。これにより、エラー生成関数の内部実装がエンドユーザーから隠蔽され、呼び出し元のコードを直接指し示すクリーンなスタックトレースが得られます。デバッグ時のノイズを排除し、本来のエラー発生箇所を明確にするためのV8固有の機能です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 748,
+    "outputTokens": 2443,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 44893
+  },
+  "cost": {
+    "inputUsd": 0.0002431,
+    "outputUsd": 0.00476385,
+    "totalUsd": 0.00500695,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

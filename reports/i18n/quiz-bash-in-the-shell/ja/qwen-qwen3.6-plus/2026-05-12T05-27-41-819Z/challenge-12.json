@@ -1,0 +1,53 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Basic Arithmetic",
+  "translatedTitle": "基本的な算術演算",
+  "translation": {
+    "title": "基本的な算術演算",
+    "group": "乗算",
+    "options": [
+      {
+        "text": "echo 10 * 0.5"
+      },
+      {
+        "text": "echo (10 * 0.5)"
+      },
+      {
+        "text": "echo ${ 10 * 0.5 }"
+      },
+      {
+        "text": "echo %( 10 * 0.5 )"
+      },
+      {
+        "text": "echo $(( 10 * 0.5 ))"
+      },
+      {
+        "text": "echo '10 * 0.5' | bc"
+      },
+      {
+        "text": "エラー"
+      }
+    ],
+    "questionProse": [
+      "10と0.5を掛け算して、正しく「5」を出力するコマンドはどれ？"
+    ],
+    "explanationProse": [
+      "`(( ))` 構文は **整数** 演算のみを実行します。ご存知の通り、小数点のない整数だけです。\n\nBash は（意外かもしれませんが）浮動小数点演算の **組み込み** サポートを備えていません。\n\n最も一般的な解決策は、GNU ユーティリティの [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) や [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"基本的な算術演算\",\n  \"group\": \"乗算\",\n  \"options\": [\n    {\"text\": \"echo 10 * 0.5\"},\n    {\"text\": \"echo (10 * 0.5)\"},\n    {\"text\": \"echo ${ 10 * 0.5 }\"},\n    {\"text\": \"echo %( 10 * 0.5 )\"},\n    {\"text\": \"echo $(( 10 * 0.5 ))\"},\n    {\"text\": \"echo '10 * 0.5' | bc\"},\n    {\"text\": \"エラー\"}\n  ],\n  \"questionProse\": [\n    \"10と0.5を掛け算して、正しく「5」を出力するコマンドはどれ？\"\n  ],\n  \"explanationProse\": [\n    \"`(( ))` 構文は **整数** 演算のみを実行します。ご存知の通り、小数点のない整数だけです。\\n\\nBash は（意外かもしれませんが）浮動小数点演算の **組み込み** サポートを備えていません。\\n\\n最も一般的な解決策は、GNU ユーティリティの [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) や [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html) を使用することです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 876,
+    "outputTokens": 3304,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 60385
+  },
+  "cost": {
+    "inputUsd": 0.00028470000000000004,
+    "outputUsd": 0.0064428,
+    "totalUsd": 0.0067275,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

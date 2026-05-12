@@ -1,0 +1,43 @@
+{
+  "index": 21,
+  "originalTitle": "Consistency Models",
+  "translatedTitle": "कंसिस्टेंसी मॉडल",
+  "translation": {
+    "title": "कंसिस्टेंसी मॉडल",
+    "group": "DynamoDB कंसिस्टेंसी",
+    "options": [
+      {
+        "text": "प्रति सेकंड 100 रीड्स"
+      },
+      {
+        "text": "प्रति सेकंड 50 रीड्स"
+      },
+      {
+        "text": "प्रति सेकंड 200 रीड्स"
+      },
+      {
+        "text": "प्रति सेकंड अनलिमिटेड रीड्स"
+      }
+    ],
+    "questionProse": [
+      "एक DynamoDB टेबल की प्रोविजंड रीड कैपेसिटी 100 RCUs है। प्रति सेकंड 4KB आइटम्स की कितनी strongly consistent reads की जा सकती हैं?"
+    ],
+    "explanationProse": [
+      "DynamoDB के consistency models को समझना बेहद ज़रूरी है:\n\n- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 1 strongly consistent read\n- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 2 eventually consistent reads\n\nइसलिए:\n- 100 RCUs = प्रति सेकंड 100 strongly consistent 4KB reads\n- 100 RCUs = प्रति सेकंड 200 eventually consistent 4KB reads\n\nConsistency model का चुनाव इन बातों के आधार पर करें:\n- एप्लिकेशन की ज़रूरतें\n- कॉस्ट (लागत) का विचार\n- परफॉर्मेंस की मांग\n- डेटा फ्रेशनेस (ताज़गी) की आवश्यकता"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"कंसिस्टेंसी मॉडल\",\n  \"group\": \"DynamoDB कंसिस्टेंसी\",\n  \"options\": [\n    {\n      \"text\": \"प्रति सेकंड 100 रीड्स\"\n    },\n    {\n      \"text\": \"प्रति सेकंड 50 रीड्स\"\n    },\n    {\n      \"text\": \"प्रति सेकंड 200 रीड्स\"\n    },\n    {\n      \"text\": \"प्रति सेकंड अनलिमिटेड रीड्स\"\n    }\n  ],\n  \"questionProse\": [\n    \"एक DynamoDB टेबल की प्रोविजंड रीड कैपेसिटी 100 RCUs है। प्रति सेकंड 4KB आइटम्स की कितनी strongly consistent reads की जा सकती हैं?\"\n  ],\n  \"explanationProse\": [\n    \"DynamoDB के consistency models को समझना बेहद ज़रूरी है:\\n\\n- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 1 strongly consistent read\\n- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 2 eventually consistent reads\\n\\nइसलिए:\\n- 100 RCUs = प्रति सेकंड 100 strongly consistent 4KB reads\\n- 100 RCUs = प्रति सेकंड 200 eventually consistent 4KB reads\\n\\nConsistency model का चुनाव इन बातों के आधार पर करें:\\n- एप्लिकेशन की ज़रूरतें\\n- कॉस्ट (लागत) का विचार\\n- परफॉर्मेंस की मांग\\n- डेटा फ्रेशनेस (ताज़गी) की आवश्यकता\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 838,
+    "outputTokens": 3436,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 64543
+  },
+  "cost": {
+    "inputUsd": 0.00027235,
+    "outputUsd": 0.0067002,
+    "totalUsd": 0.00697255,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

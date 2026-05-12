@@ -44,15 +44,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-Wie greifst du auf eine JavaScript-Objekteigenschaft zu, die einen Getter verwendet?
-```js
-    const obj = {
-      get val() {
-        return 'got it!';
-      }
-    };
-    console.log(obj.val);
-```
+    Wie greifst du auf eine JavaScript-Objekteigenschaft zu, die einen Getter verwendet?
+    <pre><code>{`const obj = {
+  get val() {
+    return 'got it!';
+  }
+};
+console.log(obj.val);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -78,13 +76,11 @@ In JavaScript greifst du auf einen Getter wie auf eine normale Eigenschaft zu. D
   <slot name="question">
   <div className="question">
 Wie legst du einen absolut einzigartigen Property-Key für ein JavaScript-Objekt an?
-```js
-    const uniqueKey = Symbol('myUniqueKey');
-    const obj = {
-      [uniqueKey]: 'unique value'
-    };
-    console.log(obj[uniqueKey]);
-```
+<pre><code>{`const uniqueKey = Symbol('myUniqueKey');
+const obj = {
+  [uniqueKey]: 'unique value'
+};
+console.log(obj[uniqueKey]);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -109,16 +105,14 @@ Symbole sind ein einzigartiger und unveränderlicher primitiver Datentyp, der si
   <slot name="question">
   <div className="question">
 Wird die Eigenschaft `age` bei einer `for...in`-Iteration aufgelistet?
-```js
-    const person = {};
-    Object.defineProperty(person, 'age', {
-      value: 25,
-      enumerable: true
-    });
-    for (let key in person) {
-      console.log(key);
-    }
-```
+<pre><code>{`const person = {};
+Object.defineProperty(person, 'age', {
+  value: 25,
+  enumerable: true
+});
+for (let key in person) {
+  console.log(key);
+}`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -143,13 +137,11 @@ Die `enumerable`-Eigenschaft in `Object.defineProperty()` steuert, ob eine Eigen
   <slot name="question">
   <div className="question">
 Was ist der Standardwert für die Enumerierbarkeit einer Eigenschaft, wenn du `Object.defineProperty()` nutzt, ohne `enumerable` explizit anzugeben?
-```js
-    const car = {};
-    Object.defineProperty(car, 'make', {
-      value: 'Toyota'
-    });
-    console.log(Object.keys(car));
-```
+<pre><code>{`const car = {};
+Object.defineProperty(car, 'make', {
+  value: 'Toyota'
+});
+console.log(Object.keys(car));`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -174,11 +166,9 @@ Wenn du `Object.defineProperty()` aufrufst, ohne `enumerable` zu setzen, ist der
   <slot name="question">
   <div className="question">
 Was ergibt der folgende Vergleich?
-```js
-    const sym1 = Symbol('id');
-    const sym2 = Symbol('id');
-    console.log(sym1 === sym2);
-```
+<pre><code>{`const sym1 = Symbol('id');
+const sym2 = Symbol('id');
+console.log(sym1 === sym2);`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -203,16 +193,14 @@ Jeder Aufruf von `Symbol()` erzeugt einen einzigartigen, unveränderlichen Wert 
   <slot name="question">
   <div className="question">
 Wird die mit einem Symbol versehene Eigenschaft bei einer `for...in`-Iteration tatsächlich mit aufgelistet?
-```js
-    const sym = Symbol('uniqueKey');
-    const obj = {
-      [sym]: 'symbol value',
-      regularKey: 'regular value'
-    };
-    for (let key in obj) {
-      console.log(key);
-    }
-```
+<pre><code>{`const sym = Symbol('uniqueKey');
+const obj = {
+  [sym]: 'symbol value',
+  regularKey: 'regular value'
+};
+for (let key in obj) {
+  console.log(key);
+}`}</code></pre>
   </div>
   </slot>
   <slot name='explanation'>
@@ -243,16 +231,14 @@ Welche Methode extrahiert alle Symbol-Keys eines Objekts?
   <slot name='explanation'>
   <div className="explanation">
 Die Methode `Object.getOwnPropertySymbols()` ist dein Werkzeug, um gezielt die eigenen Symbol-Keys eines Objekts abzurufen. Sie filtert explizit nach Symbolen und ignoriert String-Keys sowie vererbte Eigenschaften – so isolierst du zuverlässig die direkt am Objekt definierten Symbole.
-```js
-    const sym1 = Symbol('id');
-    const sym2 = Symbol('name');
-    const obj = {
-      [sym1]: 'symbol value',
-      [sym2]: 'another symbol value'
-    };
-    console.log(Object.getOwnPropertySymbols(obj));
-    // [Symbol(id), Symbol(name)]
-```
+<pre><code>{`const sym1 = Symbol('id');
+const sym2 = Symbol('name');
+const obj = {
+  [sym1]: 'symbol value',
+  [sym2]: 'another symbol value'
+};
+console.log(Object.getOwnPropertySymbols(obj));
+// [Symbol(id), Symbol(name)]`}</code></pre>
   </div>
   </slot>
 </Challenge>

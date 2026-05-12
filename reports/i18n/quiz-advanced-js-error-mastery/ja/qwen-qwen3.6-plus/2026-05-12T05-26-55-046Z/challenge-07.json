@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "コンストラクタ名の罠",
+  "translation": {
+    "title": "コンストラクタ名の罠",
+    "group": "カスタムエラー",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "`name` を設定しなかった場合、出力はどうなる？"
+    ],
+    "explanationProse": [
+      "`this.name` を明示的に設定しない限り、エラーは `Error` クラスのデフォルト値である `\"Error\"` をそのまま継承してしまいます。だからこそ、カスタムエラークラスのコンストラクタでは必ず `this.name = this.constructor.name` を設定する必要があるのです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"コンストラクタ名の罠\",\n  \"group\": \"カスタムエラー\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"`name` を設定しなかった場合、出力はどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"`this.name` を明示的に設定しない限り、エラーは `Error` クラスのデフォルト値である `\\\"Error\\\"` をそのまま継承してしまいます。だからこそ、カスタムエラークラスのコンストラクタでは必ず `this.name = this.constructor.name` を設定する必要があるのです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 737,
+    "outputTokens": 2606,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 47873
+  },
+  "cost": {
+    "inputUsd": 0.000239525,
+    "outputUsd": 0.0050817,
+    "totalUsd": 0.005321225,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

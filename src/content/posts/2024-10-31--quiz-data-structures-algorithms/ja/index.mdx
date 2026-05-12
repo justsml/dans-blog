@@ -1,0 +1,527 @@
+---
+title: クイズ：データ構造とアルゴリズム
+subTitle: 二分木をごまかせるか？
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  データ構造とアルゴリズムのクイズへようこそ。
+</section>
+
+本クイズでは、データ構造（スタック、リスト、木構造など）、アルゴリズム（）、および時間計算量に関する知識を問う。
+
+### 全20問…スタート！
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="データ構造"
+  title="スタック vs キュー"
+  options={[
+    {text: '両方'},
+    {text: 'キュー'},
+    {text: 'スタック', isAnswer: true},
+    {text: 'どちらでもない'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+LIFO（Last In, First Out：後入れ先出し）のアクセスパターンに最も適したデータ構造はどれだ？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+スタックはLIFOアクセスパターンに最適だ。キューはFIFO（First In, First Out：先入れ先出し）アクセスパターンに適している。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="アルゴリズム"
+  title="ビッグオー記法"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+入力サイズに関わらず、常に一定の実行時間で完了するアルゴリズムの時間計算量は？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+O(1) は定数時間計算量を意味します。つまり、入力データがどれだけ巨大になろうとも、アルゴリズムの実行時間は一切変化しないということです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="データ構造"
+  title="連結リストの長さ計算"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+単方向連結リストの長さを計算する際の時間計算量は？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+単方向連結リストの長さを求めるには、先頭から末尾まで全ノードを走査する必要があります。このため、時間計算量は O(n) となります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="データ構造"
+  title="二分探索木の探索"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+平衡二分探索木で要素を探索する場合の平均時間計算量は？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+平衡二分探索木（BST）では、各レベルで探索範囲が半分ずつに分割されるため、平均時間計算量は O(log n) に収まります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="ソートアルゴリズム"
+  title="マージソートの計算量"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+マージソートアルゴリズムの最悪時間計算量はいくつですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+マージソートは配列を再帰的に半分へ分割し、ソート済みの部分配列を結合していくため、最悪ケースでも計算量は一貫して O(n log n) に収まります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="グラフ"
+  title="DFS vs BFS"
+  options={[
+    {text: 'キュー', isAnswer: true},
+    {text: 'スタック'},
+    {text: '優先度付きキュー'},
+    {text: 'ハッシュマップ'},
+    {text: 'セット'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+幅優先探索（BFS）の実装に標準的に使われるデータ構造はどれだ？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+BFSはキューを使用することで、ノードをレベルごとに確実に探索できる。これにより、幅優先（「行」単位）でノードを順次処理する仕組みを実現している。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="グラフ"
+  title="グラフのサイクル検出"
+  options={[
+    {text: 'クイックソート'},
+    {text: '幅優先探索'},
+    {text: 'マージソート'},
+    {text: '深さ優先探索', isAnswer: true},
+    {text: 'バブルソート'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+有向グラフにおけるサイクル検出で、一般的に用いられるアルゴリズムはどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+深さ優先探索（DFS）は、訪問済みノードを追跡する再帰スタックを維持することで、現在探索中のパス上にあるノードへ再び戻る「バックエッジ」を検出できます。この仕組みにより、サイクルの有無を効率的に判定できるため、グラフのサイクル検出に標準的に用いられます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="ソートアルゴリズム"
+  title="ヒープソートの計算量"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ヒープソートの最悪ケースにおける時間計算量はどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ヒープソートは配列をヒープ構造に再構築し、最大要素を繰り返し抽出してソートを進めます。このアルゴリズムの特性により、最悪ケースでも時間計算量は O(n log n) に維持されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="データ構造"
+  title="ハッシュテーブルの時間計算量"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+ハッシュテーブルの要素アクセスにおける平均時間計算量はどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+適切なハッシュ関数によって衝突が最小限に抑えられている場合、ハッシュテーブルの要素アクセスは平均 O(1) の時間計算量になります。キーから直接メモリ上のインデックスを算出できるため、データ量が増加しても探索時間がほぼ一定に保たれるのがその理由です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="データ構造"
+  title="スタックの操作"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: '挿入、検索、削除'},
+    {text: '走査、訪問、ソート'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+スタックで一般的に行われる操作の組み合わせはどれですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+スタックの主要な操作は、Push（要素の追加）、Pop（要素の削除）、Peek（要素を削除せずに最上位の要素を参照）です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="グラフアルゴリズム"
+  title="最短経路アルゴリズム"
+  options={[
+    {text: 'クラスカル法'},
+    {text: 'プリム法'},
+    {text: 'ベルマン・フォード法'},
+    {text: 'ダイクストラ法', isAnswer: true},
+    {text: 'フロイド・ワーシャル法'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+重み付きグラフで辺の重みが非負の場合、最短経路を特定するのに定石とされるアルゴリズムはどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ダイクストラ法は、辺の重みが非負のグラフにおける最短経路探索のデファクトスタンダードだ。優先度キューを活用することで、未確定ノードの中から最も距離が短いものを逐次選択し、最短距離を効率的に確定できる仕組みになっている。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="木データ構造"
+  title="自己平衡探索木"
+  options={[
+    {text: '二分探索木と最小ヒープ'},
+    {text: 'AVL木と赤黒木', isAnswer: true},
+    {text: '最小ヒープと最大ヒープ'},
+    {text: 'スタックとキュー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+自己平衡二分探索木のデータ構造に該当する組み合わせはどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+AVL木と赤黒木は自己平衡木の一種です。これらは、要素の挿入や削除が行われるたびに自動的に構造を調整し、木の高さのバランスを維持することで、最悪ケースでも効率的な探索性能を保証します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="再帰"
+  title="再帰の基底条件"
+  options={[
+    {text: '無限ループ'},
+    {text: 'スタックオーバーフロー'},
+    {text: '基底条件', isAnswer: true},
+    {text: 'グローバル変数'},
+    {text: 'スコープの制限'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+再帰関数で暴走（無限再帰）を防ぐために、絶対に定義しなければならないものは何？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+再帰関数には基底条件が必須です。これが特定の条件を満たした時点で再帰呼び出しを停止させることで、関数が無限に自身を呼び出し続けるのを防ぎます。処理に明確な「出口」を用意しないと、メモリが枯渇するまで延々と実行され続けることになります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="データ構造"
+  title="キューの操作"
+  options={[
+    {text: 'エンキューとデキュー', isAnswer: true},
+    {text: 'プッシュとポップ'},
+    {text: 'ピークとトップ'},
+    {text: 'トラバースとソート'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+キューの主要な2つの操作はどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+キューは先入れ先出し（FIFO）の原則に従うため、要素の追加は常に末尾（エンキュー）、削除は常に先頭（デキュー）で行われます。この順序がキューの動作原理そのものであり、順序を逆転させるとデータ構造の特性が失われてしまいます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="グラフアルゴリズム"
+  title="トポロジカルソート"
+  options={[
+    {text: 'グラフに閉路が含まれている必要がある'},
+    {text: 'グラフが重み付きかつ連結している必要がある'},
+    {text: 'グラフが無向かつ非巡回である必要がある'},
+    {text: 'グラフが有向かつ非巡回である必要がある', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+トポロジカルソートを実行するために、グラフが満たすべき絶対条件は何か？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+トポロジカルソートは、グラフが有向非巡回グラフ（DAG）である場合にのみ実行可能だ。閉路が存在すると依存関係が循環してしまい、線形な順序付けが数学的に不可能になるためである。この順序付けは、タスクのスケジューリングやビルド依存関係の解決などで広く利用される。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="動的計画法"
+  title="フィボナッチ再帰の時間計算量"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+何も最適化しない再帰実装でフィボナッチ数列を求めた場合、時間計算量はどうなる？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+素朴な再帰では、同じ部分問題が何度も重複して計算されるため、関数呼び出し回数が指数関数的に膨れ上がる。その結果、時間計算量は O(2^n) となる。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="データ構造"
+  title="優先度付きキューの実装"
+  options={[
+    {text: '配列'},
+    {text: 'スタック'},
+    {text: 'ヒープ', isAnswer: true},
+    {text: 'キュー'},
+    {text: '連結リスト'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+優先度付きキューの実装に一般的に使用されるデータ構造はどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+優先度付きキューは、最高または最低優先度の要素を効率的に取り出せるため、ヒープを用いて実装されるのが標準的だ。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="データ構造"
+  title="二分木の走査"
+  options={[
+    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
+    {text: '幅優先、深さ優先、ヒープ化'},
+    {text: 'ソート、探索、回転'},
+    {text: 'Push, Pop, Peek'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+二分木における一般的な深さ優先探索（DFS）の走査順序を列挙しているのはどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+In-order、Pre-order、Post-order は二分木で使われる3つの標準的な深さ優先走査順序だ。それぞれノードを訪問するタイミングが異なるのがポイント。幅優先探索も頻出だが、これは深さ優先とは異なるカテゴリーなので混同しないように。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="木構造データ構造"
+  title="ヒープの性質"
+  options={[
+    {text: '全ノードが左から右へソートされている'},
+    {text: 'ルートが常に最大要素である'},
+    {text: '全ての葉が同じレベルにある'},
+    {text: 'ルートが最小要素であり、高さが O(log n) である', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+最小ヒープ（min-heap）の性質として、正しいものはどれか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+最小ヒープではルートノードが常に最小要素を保持し、木の高さは O(log n) に収まる。この構造により、要素の挿入と抽出が対数時間で効率的に処理できるわけだ。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="ソートアルゴリズム"
+  title="バブルソートの安定性"
+  options={[
+    {text: '不安定'},
+    {text: '安定', isAnswer: true},
+    {text: '実装に依存する'},
+    {text: 'どちらでもない'},
+    {text: '計算量が安定性を決定する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+バブルソートアルゴリズムは安定ソートですか？
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+バブルソートは安定ソートアルゴリズムです。ソート処理中に等しい要素の相対的な順序を保持するためです。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "String Throws",
+  "translatedTitle": "文字列を throw する",
+  "translation": {
+    "title": "文字列を throw する",
+    "group": "エラー以外を throw する",
+    "options": [
+      {
+        "text": "TypeError: string is not an Error"
+      },
+      {
+        "text": "false, \"string\""
+      },
+      {
+        "text": "自動的に Error オブジェクトが生成される"
+      },
+      {
+        "text": "未定義の動作"
+      }
+    ],
+    "questionProse": [
+      "文字列を throw するとどうなる？"
+    ],
+    "explanationProse": [
+      "JavaScript では任意の値を throw できる。この場合、`e instanceof Error` は `false` になり、`typeof e` は `\"string\"` だ。キャッチした例外がすべて Error オブジェクトであると前提したエラーハンドリング処理は、この仕様で簡単に破綻する。デバッグ時のトレースを確実にするためにも、例外を投げる際は常に Error インスタンスを使う癖をつけよう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"文字列を throw する\",\n  \"group\": \"エラー以外を throw する\",\n  \"options\": [\n    {\n      \"text\": \"TypeError: string is not an Error\"\n    },\n    {\n      \"text\": \"false, \\\"string\\\"\"\n    },\n    {\n      \"text\": \"自動的に Error オブジェクトが生成される\"\n    },\n    {\n      \"text\": \"未定義の動作\"\n    }\n  ],\n  \"questionProse\": [\n    \"文字列を throw するとどうなる？\"\n  ],\n  \"explanationProse\": [\n    \"JavaScript では任意の値を throw できる。この場合、`e instanceof Error` は `false` になり、`typeof e` は `\\\"string\\\"` だ。キャッチした例外がすべて Error オブジェクトであると前提したエラーハンドリング処理は、この仕様で簡単に破綻する。デバッグ時のトレースを確実にするためにも、例外を投げる際は常に Error インスタンスを使う癖をつけよう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 749,
+    "outputTokens": 3481,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 63671
+  },
+  "cost": {
+    "inputUsd": 0.000243425,
+    "outputUsd": 0.00678795,
+    "totalUsd": 0.007031375,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

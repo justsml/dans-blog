@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "WeakRef Usage",
+  "translatedTitle": "WeakRefの使い方",
+  "translation": {
+    "title": "WeakRefの使い方",
+    "group": "WeakRef",
+    "options": [
+      {
+        "text": "ReferenceError"
+      },
+      {
+        "text": "{ data: 'important' }"
+      },
+      {
+        "text": "null"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "`WeakRef`は何を返す？"
+    ],
+    "explanationProse": [
+      "`WeakRef`はオブジェクトへの弱い参照を保持します。これにより、他に強い参照が存在しない場合、そのオブジェクトはガベージコレクションの対象となります。このコードでは`obj`がまだ強い参照を保持しているため、`deref()`は元のオブジェクトをそのまま返します。もしターゲットがすでに回収されていた場合、`deref()`は`undefined`を返す仕様です。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"WeakRefの使い方\",\n  \"group\": \"WeakRef\",\n  \"options\": [\n    {\n      \"text\": \"ReferenceError\"\n    },\n    {\n      \"text\": \"{ data: 'important' }\"\n    },\n    {\n      \"text\": \"null\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"`WeakRef`は何を返す？\"\n  ],\n  \"explanationProse\": [\n    \"`WeakRef`はオブジェクトへの弱い参照を保持します。これにより、他に強い参照が存在しない場合、そのオブジェクトはガベージコレクションの対象となります。このコードでは`obj`がまだ強い参照を保持しているため、`deref()`は元のオブジェクトをそのまま返します。もしターゲットがすでに回収されていた場合、`deref()`は`undefined`を返す仕様です。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 772,
+    "outputTokens": 4062,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 74029
+  },
+  "cost": {
+    "inputUsd": 0.0002509,
+    "outputUsd": 0.0079209,
+    "totalUsd": 0.0081718,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

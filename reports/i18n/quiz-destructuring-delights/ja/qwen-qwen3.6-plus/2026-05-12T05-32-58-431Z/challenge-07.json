@@ -1,0 +1,58 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "入れ子構造のデフォルト値を用いた分割代入",
+  "translation": {
+    "title": "入れ子構造のデフォルト値を用いた分割代入",
+    "group": "関数の引数",
+    "options": [
+      {
+        "text": "不明, 不明, Joburg"
+      },
+      {
+        "text": "不明, 不明, 不明"
+      },
+      {
+        "text": "不明, `undefined`, Joburg"
+      },
+      {
+        "text": "N/A, `undefined`, Joburg"
+      },
+      {
+        "text": "N/A, 不明, Joburg"
+      },
+      {
+        "text": "N/A, N/A, Joburg"
+      },
+      {
+        "text": "不明, N/A, Joburg"
+      },
+      {
+        "text": "エラー"
+      }
+    ],
+    "questionProse": [
+      "`undefined` はどう処理される？"
+    ],
+    "explanationProse": [
+      "関数 `displayPlace` がデフォルトオブジェクトを使うのは、オブジェクトが渡されなかった場合**のみ**です。つまり、`{ place: \"Unknown\" }` のデフォルト値が適用される唯一のシチュエーションは、引数ゼロで `displayPlace()` を呼び出した時だけ。",
+      "もう1つ押さえておくべき挙動として、`place` に `undefined` を渡すとデフォルト値が適用される点があります。これは `JSON.stringify` の挙動（`undefined` はスルーして `null` は認識する）とちょっと似ていますね。",
+      "結果はこうなります："
+    ]
+  },
+  "rawText": "{\n  \"title\": \"入れ子構造のデフォルト値を用いた分割代入\",\n  \"group\": \"関数の引数\",\n  \"options\": [\n    {\n      \"text\": \"不明, 不明, Joburg\"\n    },\n    {\n      \"text\": \"不明, 不明, 不明\"\n    },\n    {\n      \"text\": \"不明, `undefined`, Joburg\"\n    },\n    {\n      \"text\": \"N/A, `undefined`, Joburg\"\n    },\n    {\n      \"text\": \"N/A, 不明, Joburg\"\n    },\n    {\n      \"text\": \"N/A, N/A, Joburg\"\n    },\n    {\n      \"text\": \"不明, N/A, Joburg\"\n    },\n    {\n      \"text\": \"エラー\"\n    }\n  ],\n  \"questionProse\": [\n    \"`undefined` はどう処理される？\"\n  ],\n  \"explanationProse\": [\n    \"関数 `displayPlace` がデフォルトオブジェクトを使うのは、オブジェクトが渡されなかった場合**のみ**です。つまり、`{ place: \\\"Unknown\\\" }` のデフォルト値が適用される唯一のシチュエーションは、引数ゼロで `displayPlace()` を呼び出した時だけ。\",\n    \"もう1つ押さえておくべき挙動として、`place` に `undefined` を渡すとデフォルト値が適用される点があります。これは `JSON.stringify` の挙動（`undefined` はスルーして `null` は認識する）とちょっと似ていますね。\",\n    \"結果はこうなります：\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 941,
+    "outputTokens": 4775,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 86878
+  },
+  "cost": {
+    "inputUsd": 0.000305825,
+    "outputUsd": 0.00931125,
+    "totalUsd": 0.009617075,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

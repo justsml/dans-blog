@@ -1,0 +1,260 @@
+---
+unlisted: false
+title: 'क्विज़: सिंबल्स और एन्यूमरेबल्स'
+subTitle: क्या आप ES2015 के कम चर्चित फीचर्स जानते हैं?
+label: Symbols
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+date: '2024-10-31'
+modified: '2024-11-07'
+tags:
+  - quiz
+  - javascript
+  - interfaces
+  - symbols
+  - enumerables
+cover_full_width: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash.webp
+cover_mobile: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+cover_icon: ../logan-weaver-lgnwvr-96ES9AOLRzQ-unsplash_w300.webp
+---
+## क्विज़: JavaScript Interfaces, Symbols और Enumerables
+
+> * **अपनी JavaScript स्किल्स साबित करो!** 🚀
+> * लॉगिन या साइनअप की ज़रूरत नहीं। ✨
+> * मल्टीपल चॉइस। 🤖 ... _कितना मुश्किल हो सकता है, है न?_
+
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="एडवांस्ड इंटरफेस"
+  title="Getter बनाम Direct Property Access"
+  options={[
+    {text: 'लूप का उपयोग करें'},
+    {text: 'वैल्यू एक्सेस करने के लिए मेथड कॉल करें'},
+    {text: 'वैल्यू को सीधे एक्सेस करें', isAnswer: true},
+    {text: 'एरर थ्रो करें'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+JavaScript में getter वाली प्रॉपर्टी को एक्सेस करने का सही तरीका क्या है?
+```js
+    const obj = {
+      get val() {
+        return 'got it!';
+      }
+    };
+    console.log(obj.val);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+JavaScript में, getter को बिल्कुल एक नॉर्मल प्रॉपर्टी की तरह ही एक्सेस किया जाता है। इसे फंक्शन की तरह कॉल करने की ज़रूरत नहीं पड़ती।
+    इस उदाहरण में, `obj.val` को सीधे एक्सेस करने से getter मेथड ट्रिगर होता है और `got it!` आउटपुट मिलता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="एडवांस्ड इंटरफेस"
+  title="ऑब्जेक्ट कीज़ में Symbol का उपयोग"
+  options={[
+    {text: 'एक Symbol का उपयोग करके', isAnswer: true, hint: 'बिल्कुल सही। Symbols गारंटीकृत यूनिक होते हैं।'},
+    {text: 'एक string का उपयोग करके', hint: 'स्ट्रिंग्स अक्सर एक्सीडेंट से ओवरराइट हो जाती हैं।'},
+    {text: 'एक number का उपयोग करके', hint: 'नंबर्स को ऑटोमैटिकली स्ट्रिंग में बदल दिया जाता है।'},
+    {text: 'एक ऑब्जेक्ट को key के रूप में उपयोग करके', hint: 'ऑब्जेक्ट्स को `[object Object]` में बदल दिया जाता है, जो यूनिक नहीं है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+JavaScript ऑब्जेक्ट के लिए एक वास्तव में यूनिक प्रॉपर्टी key बनाने का सही तरीका क्या है?
+```js
+    const uniqueKey = Symbol('myUniqueKey');
+    const obj = {
+      [uniqueKey]: 'unique value'
+    };
+    console.log(obj[uniqueKey]);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Symbols एक यूनिक और immutable primitive type हैं जिनका उपयोग ऑब्जेक्ट प्रॉपर्टीज़ की keys के रूप में किया जा सकता है। यह नेम कोलिज़न से बचने में मदद करता है, खासकर बड़े कोडबेस में या रीयूज़ेबल लाइब्रेरीज़ लिखते समय।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="उन्नत इंटरफेस"
+  title="एन्यूमरेबल प्रॉपर्टीज़"
+  options={[
+    {text: 'एक एरर फेंकता है'},
+    {text: 'नहीं, यह नहीं होगा'},
+    {text: 'यह वैल्यू के टाइप पर निर्भर करता है'},
+    {text: 'हाँ, यह लिस्ट में दिखाई देगा', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`for...in` इटरेशन चलाते वक्त `age` प्रॉपर्टी लिस्ट में आएगी या नहीं?
+```js
+    const person = {};
+    Object.defineProperty(person, 'age', {
+      value: 25,
+      enumerable: true
+    });
+    for (let key in person) {
+      console.log(key);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Object.defineProperty()` में `enumerable` फ्लैग ही कंट्रोल करता है कि कोई प्रॉपर्टी `for...in` जैसी एन्यूमरेशन मेथड्स में दिखेगी या नहीं। इस केस में `enumerable: true` सेट है, इसलिए इटरेशन के दौरान `age` प्रॉपर्टी पक्का लिस्ट होगी।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="ऑब्जेक्ट्स के साथ काम करना"
+  title="Object.defineProperty() के साथ डिफ़ॉल्ट एन्यूमरेबिलिटी"
+  options={[
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'संदर्भ पर निर्भर करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब आप `enumerable` को निर्दिष्ट किए बिना `Object.defineProperty()` का उपयोग करते हैं, तो प्रॉपर्टी की डिफ़ॉल्ट एन्यूमरेबिलिटी क्या होती है?
+```js
+    const car = {};
+    Object.defineProperty(car, 'make', {
+      value: 'Toyota'
+    });
+    console.log(Object.keys(car));
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+जब आप `enumerable` को निर्दिष्ट किए बिना `Object.defineProperty()` का उपयोग करते हैं, तो इसका डिफ़ॉल्ट मान `false` होता है। इसका मतलब है कि `make` प्रॉपर्टी `Object.keys()` या अन्य एन्यूमरेशन मेथड्स में दिखाई नहीं देगी।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="उन्नत इंटरफेस"
+  title="अद्वितीय Symbols"
+  options={[
+    {text: 'उनके डिस्क्रिप्शन पर निर्भर करता है'},
+    {text: 'true'},
+    {text: 'false', isAnswer: true},
+    {text: 'एक Error फेंकता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस तुलना का परिणाम क्या होगा?
+```js
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('id');
+    console.log(sym1 === sym2);
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Symbol()` की हर कॉल एक अद्वितीय और अपरिवर्तनीय वैल्यू बनाती है, भले ही डिस्क्रिप्शन समान हो। इस केस में, `sym1` और `sym2` अलग-अलग सिंबल्स हैं, इसलिए तुलना `false` रिटर्न करती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="एडवांस्ड इंटरफेस"
+  title="Symbols को Non-Enumerable Keys के रूप में"
+  options={[
+    {text: 'नहीं, यह नहीं होगा', isAnswer: true, hint: '`for...in` सिर्फ़ string keys को ही देखता है।'},
+    {text: 'हाँ, यह लिस्ट हो जाएगा', hint: 'क्या Symbols डिफ़ॉल्ट रूप से enumerable होते हैं?'},
+    {text: 'यह इटरेशन मेथड पर निर्भर करता है', hint: 'क्या इटरेशन का तरीका मायने रखता है?'},
+    {text: 'एक एरर थ्रो करता है', hint: 'क्या यह सिंटैक्स या रनटाइम एरर देगा?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या `for...in` इटरेशन के दौरान Symbol-keyed property लिस्ट होगी?
+```js
+    const sym = Symbol('uniqueKey');
+    const obj = {
+      [sym]: 'symbol value',
+      regularKey: 'regular value'
+    };
+    for (let key in obj) {
+      console.log(key);
+    }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+हालाँकि Symbol-keyed properties का अपना `enumerable` flag हो सकता है, लेकिन `for...in` और `Object.keys()` सिर्फ़ string-keyed enumerable properties को ही इटरेट करते हैं। इस उदाहरण में केवल `regularKey` ही लिस्ट होगा, Symbol-keyed property नहीं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="उन्नत इंटरफेस"
+  title="सभी Symbol Keys प्राप्त करें"
+  options={[
+    {text: 'Object.keys()'},
+    {text: 'Symbol.keys()'},
+    {text: 'Object.symbols()'},
+    {text: 'Object.getOwnPropertySymbols()', isAnswer: true},
+    {text: 'Object.entries()'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+किसी ऑब्जेक्ट की सभी Symbol keys प्राप्त करने के लिए किस मेथड का उपयोग किया जाएगा?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Object.getOwnPropertySymbols()` मेथड का उपयोग ऑब्जेक्ट की अपनी Symbol प्रॉपर्टी keys को प्राप्त करने के लिए किया जाता है। चूंकि `Object.keys()` या `for...in` जैसे स्टैंडर्ड इटरेटर्स Symbol keys को इग्नोर कर देते हैं, इसलिए आपको इन्हें एक्सप्लिसिटली फेच करने के लिए इसी मेथड की ज़रूरत पड़ती है।
+```js
+    const sym1 = Symbol('id');
+    const sym2 = Symbol('name');
+    const obj = {
+      [sym1]: 'symbol value',
+      [sym2]: 'another symbol value'
+    };
+    console.log(Object.getOwnPropertySymbols(obj));
+    // [Symbol(id), Symbol(name)]
+```
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

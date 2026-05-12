@@ -1,0 +1,912 @@
+---
+unlisted: false
+title: 'क्विज़: AWS स्टोरेज: 20+ प्रश्न!'
+subTitle: क्या आप क्लाउड के भूलभुलैया में रास्ता निकाल पाएंगे?
+label: AWS Storage
+category: Quiz
+subCategory: Cloud
+date: '2024-12-28'
+modified: '2024-12-29'
+tags:
+  - quiz
+  - aws
+  - cloud
+  - storage
+  - databases
+  - s3
+  - dynamodb
+  - rds
+  - elasticache
+social_image: ../mobile.webp
+cover_full_width: ../aws-cloud--city-focus-wide.webp
+cover_mobile: ../aws-cloud--city-focus-square.webp
+cover_icon: ../aws-cloud--city-focus-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">क्लाउड के लिए तैयार हो?! 🤡</p>
+
+AWS स्टोरेज सर्विसेज की गहराइयों में उतरते हैं! यह क्विज़ S3, DynamoDB, Aurora, RDS, ElastiCache और अन्य सर्विसेज पर आपकी पकड़ की परख करेगा। बेस्ट प्रैक्टिसेज से लेकर ट्रिकी गॉचाज़ तक, हम क्लाउड स्टोरेज के पूरे लैंडस्केप का जायज़ा लेंगे।
+
+अपनी क्लाउड एक्सपर्टीज़ साबित करने के लिए तैयार हो जाओ! 🚀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="वार्मअप"
+  title="S3 ट्रिविया"
+  options={[
+    {text: 'सर्वर स्टोरेज v3'},
+    {text: 'स्टोरेज ऐज़ ए सर्विस'},
+    {text: 'सिंपल स्टोरेज सर्विस', isAnswer: true},
+    {text: 'सैसी स्टोरेज सर्विस'},
+    {text: 'सिंपल सिंक्रोनाइज़्ड स्टोर'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+<p className="text-sm">आखिरी वेरिफाइड: 8 मई, 2026। AWS की लिमिट्स और प्राइसिंग तेज़ी से बदलती रहती हैं।</p>
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+S3 का फुल फॉर्म **Simple Storage Service** है। यह लार्ज-स्केल डेटा स्टोरेज के लिए डिज़ाइन की गई एक स्केलेबल ऑब्जेक्ट स्टोरेज सर्विस है।
+
+  AWS S3 कई स्टोरेज क्लासेस ऑफर करता है:
+  - Standard: अक्सर एक्सेस होने वाले डेटा के लिए
+  - Infrequent Access (IA): कम बार एक्सेस होने वाले डेटा के लिए कम खर्च
+  - Glacier: लॉन्ग-टर्म, लो-कॉस्ट आर्काइवल स्टोरेज
+
+  हर क्लास की अलग प्राइसिंग और एक्सेस फीचर्स होते हैं, जिससे आप अपने डेटा यूज़ पैटर्न के हिसाब से कॉस्ट ऑप्टिमाइज़ कर सकते हैं।
+
+  [S3 स्टोरेज क्लासेस के बारे में और जानें](https://aws.amazon.com/s3/storage-classes/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="स्कीमा-रहित"
+  title="DynamoDB"
+  options={[
+    {text: 'मनचाहे प्रॉपर्टीज़ स्टोर करना', isAnswer: true},
+    {text: 'डायनामिक पार्टीशन कीज़'},
+    {text: 'कॉलम्स अनटाइप्ड होते हैं'},
+    {text: 'स्वचालित रूप से प्रबंधित JSON स्कीमा'},
+    {text: 'स्कीमा सपोर्ट के लिए RDS पर निर्भर रहना'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब DynamoDB को "schema-less" कहा जाता है, तो इसका असल मतलब क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB को "schema-less" इसलिए कहा जाता है क्योंकि यह आपको बिना किसी पूर्वनिर्धारित स्कीमा के आइटम्स में कोई भी प्रॉपर्टी स्टोर करने देता है।
+
+  [DynamoDB Best Practices](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/best-practices.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="स्कीमा-लेस"
+  title="DynamoDB"
+  options={[
+    {text: 'PutItem', hint: 'नया आइटम बनाता है, या पुराने आइटम को नए आइटम से बदल देता है।'},
+    {text: 'BatchUpdateItem', hint: 'ऐसा कोई ऑपरेशन मौजूद नहीं है।'},
+    {text: 'BatchWriteItem', hint: 'एक ही कॉल में कई आइटम डालता (PUT) या हटाता (DELETE) है।'},
+    {text: 'UpdateItem', isAnswer: true},
+    {text: 'BatchUpsertItem', hint: 'DynamoDB में?'},
+    {text: 'TransactWriteItems', hint: 'कई `PutItem`, `UpdateItem`, `DeleteItem` और `ConditionCheck` ऑपरेशन्स को एक ही कॉल में जोड़ता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कौन सा DynamoDB API किसी एक मौजूदा आइटम के एट्रिब्यूट्स को अपडेट करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यहाँ मुख्य बात <b>अपडेट</b> है, इंसर्ट या PUT नहीं। अगर आप इंसर्ट कर रहे हैं, तो आप `BatchWriteItem` या `TransactWriteItems` का उपयोग कर सकते हैं।
+
+  हालाँकि `BatchWriteItem` कई ऑपरेशन्स हैंडल कर सकता है, लेकिन यह केवल PUTs और DELETES तक सीमित है। `TransactWriteItems` ज़्यादा शक्तिशाली है, लेकिन साधारण अपडेट्स के लिए यह थोड़ा ज़्यादा भारी-भरकम है।
+  साधारण अपडेट्स के लिए `UpdateItem` सबसे बेहतर विकल्प है। यह आपको मौजूदा आइटम में एक या एक से ज़्यादा एट्रिब्यूट्स को अपडेट या मॉडिफाई करने की अनुमति देता है।
+
+  `UpdateItem` ऑपरेशन प्रति रिक्वेस्ट केवल एक आइटम को मॉडिफाई करता है। बड़े बैकफिल या बल्क अपडेट्स के लिए, आप आमतौर पर कई `UpdateItem` कॉल्स को ऑर्केस्ट्रेट करते हैं या PartiQL बैच एक्जीक्यूशन, Step Functions, Glue, EMR, या कस्टम वर्कर प्रोसेस जैसे बड़े वर्कफ़्लो का उपयोग करते हैं।
+
+  `UpdateItem` ऑपरेशन:
+  - मौजूदा आइटम के एट्रिब्यूट्स को अपडेट करता है।
+  - मौजूदा आइटम में नए एट्रिब्यूट्स जोड़ता है।
+  - मौजूदा आइटम से एट्रिब्यूट्स हटाता है।
+  - अगर आइटम मौजूद है या कुछ शर्तें पूरी करता है, तो सशर्त रूप से अपडेट करता है।
+
+  [DynamoDB UpdateItem](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="क्वेरी क्षमताएँ"
+  title="उन्नत खोज सुविधाएँ"
+  options={[
+    {text: 'ElastiCache', hint: 'मुख्य रूप से एक इन-मेमोरी कैश है; नए Valkey वर्ज़न में सर्च फीचर्स शामिल हैं।'},
+    {text: 'OpenSearch', isAnswer: true},
+    {text: 'Neptune', hint: 'एडवांस्ड क्वेरी क्षमताओं वाला ग्राफ डेटाबेस'},
+    {text: 'Redshift', hint: 'जटिल एनालिटिकल क्वेरीज़'},
+    {text: 'DocumentDB', hint: 'MongoDB-कम्पैटिबल क्वेरीज़'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इनमें से कौन सी AWS सर्विस फुल-टेक्स्ट सर्च और सर्च एनालिटिक्स के लिए खासतौर पर बनी है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+OpenSearch AWS की मैनेज्ड सर्विस है जो खासतौर पर सर्च, लॉग एनालिटिक्स और फुल-टेक्स्ट सर्च वर्कलोड्स के लिए बनी है।
+
+बाकी विकल्प भी उपयोगी हैं, लेकिन इस लिस्ट में वे 'प्यरपस-बिल्ट' सर्च इंजन नहीं हैं:
+- ElastiCache: मुख्य रूप से एक इन-मेमोरी कैश है। हालाँकि, नए ElastiCache for Valkey में इंडेक्स्ड डेटा के लिए सर्च कमांड्स आते हैं, इसलिए इसे पूरी तरह से 'बिना सर्च वाली' सर्विस कहना अब सटीक नहीं है।
+- Neptune: यह एक ग्राफ डेटाबेस है। फुल-टेक्स्ट सर्च के लिए इसे अक्सर OpenSearch के साथ जोड़ा जाता है।
+- Redshift: यह SQL एनालिटिक्स के लिए बना डेटा वेयरहाउस है।
+- DocumentDB: यह एक डॉक्यूमेंट डेटाबेस है, जिसके सपोर्टेड वर्ज़न्स में MongoDB-जैसी टेक्स्ट सर्च की सुविधा मिलती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="RDS"
+  title="Multi-AZ डिप्लॉयमेंट"
+  options={[
+    {text: 'स्टोरेज लागत कम करता है'},
+    {text: 'ईग्रेस समस्या को हल करता है'},
+    {text: 'स्वचालित फेलओवर प्रदान करता है', isAnswer: true},
+    {text: 'रीड परफॉर्मेंस बढ़ाता है'},
+    {text: 'जियो-डिस्ट्रिब्यूटेड ट्रैफ़िक में सुधार करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+RDS Multi-AZ डिप्लॉयमेंट का **मुख्य** लाभ क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+एवेलिएबिलिटी ज़ोन (AZs) एक ही **रीजन के भीतर** स्थित अलग-अलग डेटा सेंटर होते हैं। RDS Multi-AZ डिप्लॉयमेंट *नज़दीकी* AZ में मौजूद स्टैंडबाय रेप्लिका पर स्वचालित फेलओवर प्रदान करता है।
+
+  Multi-AZ डिप्लॉयमेंट:
+  - स्वचालित फेलओवर प्रदान करता है
+  - डेटाबेस की उपलब्धता बढ़ाता है
+  - एक सिंक्रोनस स्टैंडबाय रेप्लिका बनाता है
+  - इन्फ्रास्ट्रक्चर फेल्योर के दौरान डाउनटाइम को न्यूनतम करता है
+
+  Multi-AZ डिप्लॉयमेंट को रीड रेप्लिकाज़ (Read Replicas) के साथ कन्फ्यूज़ न करें, जिनका उपयोग रीड ऑपरेशन्स को स्केल करने के लिए किया जाता है।
+
+  {/* [RDS Multi-AZ Details](https://aws.amazon.com/rds/features/multi-az/) */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="WebSockets"
+  title="WebSocket जादूगरी"
+  options={[
+    {text: 'API Gateway', isAnswer: true},
+    {text: 'EKS', hint: 'EKS पर आप अपनी लॉन्ग-लाइव्ड WebSocket सर्विसेज चला सकते हैं।'},
+    {text: 'Lightsail', hint: 'Lightsail इंस्टेंसेज पर आप अपना खुद का WebSocket सर्वर चला सकते हैं।'},
+    {text: 'AppSync', hint: 'AppSync WebSockets के ज़रिए मैनेज्ड रियल-टाइम GraphQL सब्सक्रिप्शंस ऑफर करता है, न कि आर्बिट्रेरी रॉ सॉकेट्स।'},
+    {text: 'EC2', hint: 'EC2 पर आप अपना लॉन्ग-लाइव्ड WebSocket सर्वर प्रोसेस चला सकते हैं।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+👋 उम्मीद है अब तक मज़ा आ रहा होगा!
+
+      अब बारी है एक थोड़े पेचीदा सवाल की...
+
+      कौन सी AWS सर्विस मैनेज्ड WebSocket APIs प्रदान करती है, जहाँ क्लाइंट कनेक्शन AWS के पास होता है और वह मैसेजेस को इंटीग्रेशंस तक रूट करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+API Gateway बाइडायरेक्शनल WebSocket APIs को सपोर्ट करता है, लेकिन इसका इम्प्लीमेंटेशन API Gateway द्वारा मैनेज किया जाता है, न कि आपके अपने सर्वर प्रोसेस में डायरेक्ट सॉकेट के रूप में।
+      API Gateway क्लाइंट कनेक्शन को मेंटेन करता है और मैसेजेस को Lambda, HTTP एंडपॉइंट्स या अन्य इंटीग्रेशंस तक रूट करता है। कनेक्टेड क्लाइंट्स को मैसेजेस वापस भेजने के लिए API Gateway Management API का उपयोग किया जा सकता है।
+
+      बाकी विकल्प WebSockets के लिए काफी ज़्यादा फ्रेंडली हैं:
+      - Lightsail: सिंपल WebSocket सेटअप्स के लिए बिल्कुल परफेक्ट 👌
+      - AppSync: मैनेज्ड GraphQL सब्सक्रिप्शंस के लिए WebSockets का उपयोग करता है
+      - EC2: WebSockets के लिए आपका क्लासिक "जो मन करे करो" वाला ऑप्शन
+      - EKS: स्केलेबल WebSocket क्लस्टर्स चलाने के लिए बेहतरीन
+
+      प्रो टिप: अगर आपको रॉ WebSocket पावर की ज़रूरत है, तो कंप्यूट सर्विसेज के साथ ही बने रहें!
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="S3 सुरक्षा"
+  title="S3 बकेट पॉलिसी"
+  options={[
+    {text: 'नए बकेट्स को पब्लिक बनाएं', hint: 'सबसे पहले न्यूनतम विशेषाधिकार (Least Privilege) का सिद्धांत अपनाएं।'},
+    {text: 'ACLs पर पूर्ण नियंत्रण के लिए S3 को ऑन-प्रेमिसेस ले जाएं'},
+    {text: 'डेटा को प्राइवेट ब्लॉकचेन पर ले जाएं', hint: 'मज़ाक कर रहे हैं, है न?'},
+    {text: 'न्यूनतम विशेषाधिकार सिद्धांत का उपयोग करें', isAnswer: true},
+    {text: 'ज़रूरी एक्सेस सुनिश्चित करने के लिए पॉलिसी वाइल्डकार्ड्स का उपयोग करें', hint: '😯 नहीं!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+S3 बकेट परमिशंस के लिए अनुशंसित दृष्टिकोण क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+लगभग सभी सिस्टम्स में, "न्यूनतम विशेषाधिकार" (least privilege) डिज़ाइन को अपनाना सिस्टम की सुरक्षा को मजबूत करने और भविष्य के लिए तैयार करने का एक प्रमुख तरीका है। किसी मौजूदा सिस्टम को लॉक डाउन करने की कोशिश करना लगभग उतना ही मुश्किल है, जितना किसी पूरी ऑफिस बिल्डिंग को नई फाउंडेशन पर शिफ्ट करना।
+
+  S3 बकेट्स भी इससे अलग नहीं हैं। न्यूनतम विशेषाधिकार के सिद्धांत को लागू करने के लिए, बिना किसी परमिशन के शुरुआत करें और केवल ज़रूरी एक्सेस ही प्रदान करें। एक्सेस को कंट्रोल करने के लिए IAM roles और policies का उपयोग करें और बकेट परमिशंस का नियमित रूप से ऑडिट करें।
+
+  सुरक्षा के सर्वोत्तम तरीके:
+  - न्यूनतम विशेषाधिकार सिद्धांत लागू करें
+  - बिना किसी परमिशन के शुरुआत करें
+  - केवल ज़रूरी एक्सेस प्रदान करें
+  - IAM roles और policies का उपयोग करें
+  - बकेट परमिशंस का नियमित ऑडिट करें
+
+  ऐसी सेटिंग्स से बचें जो बहुत ज़्यादा खुली हों और संवेदनशील डेटा को एक्सपोज़ कर सकती हैं।
+
+  [S3 सुरक्षा सर्वोत्तम प्रथाएँ](https://aws.amazon.com/s3/security/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Aurora"
+  title="Aurora Serverless"
+  options={[
+    {text: 'प्रोविजंड (Provisioned) से हमेशा सस्ता होता है'},
+    {text: 'कंप्यूट कैपेसिटी को स्वचालित रूप से स्केल करता है', isAnswer: true},
+    {text: 'असीमित स्टोरेज प्रदान करता है'},
+    {text: 'डेटाबेस मैनेजमेंट की ज़िम्मेदारी पूरी तरह हटा देता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Aurora Serverless की असली खूबी क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Aurora Serverless:
+  - कंप्यूट कैपेसिटी को ऑटोमैटिकली स्केल करता है
+  - वर्कलोड के हिसाब से रिसोर्सेस को एडजस्ट करता है
+  - अनप्रिडिक्टेबल वर्कलोड के लिए परफेक्ट
+  - सिर्फ़ इस्तेमाल किए गए रिसोर्सेस का ही चार्ज लगता है
+
+  अगर आपकी ऐप की ट्रैफ़िक कम-ज़्यादा होती रहती है, तो यह सबसे बढ़िया विकल्प है।
+
+  [Aurora Serverless Overview](https://aws.amazon.com/rds/aurora/serverless/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="बैच ऑपरेशन्स, भाग 1!"
+  title="BatchGetItem की सीमाएँ"
+  options={[
+    {text: '1', hint: '... मुझे बैचिंग ही चाहिए।'},
+    {text: '25', hint: 'यह `BatchWriteItem` की सीमा है।'},
+    {text: '100', isAnswer: true},
+    {text: '75', hint: 'करीब है, लेकिन एक गोल नंबर है।'},
+    {text: '50', hint: '`BatchGetItem` के लिए थोड़ा ज़्यादा है।'},
+    {text: '200', hint: 'थोड़ा ज़्यादा हो गया...'},
+    {text: 'Unlimited', hint: '`BatchGetItem` के लिए एक निश्चित सीमा होती है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+DynamoDB बैच का एक और सवाल!<br />
+      एक ही DynamoDB `BatchGetItem` रिक्वेस्ट का उपयोग करके आप अधिकतम कितने आइटम रीट्रीव कर सकते हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB SDK आपको एक ही `BatchGetItem` रिक्वेस्ट में **100** तक आइटम रीट्रीव करने की अनुमति देता है। यह `BatchWriteItem` की सीमा (जो 25 आइटम है) से अधिक है।
+      इसके अलावा, कुल पेडलोड साइज़, डॉक्यूमेंट साइज़ और रिक्वेस्ट रेट पर भी सीमाएँ होती हैं।
+
+      इन सीमाओं को समझना आपके एप्लिकेशन के प्रदर्शन को ऑप्टिमाइज़ करने और डेटा ऑपरेशन्स को कुशल बनाने के लिए बेहद ज़रूरी है।
+
+      **नोट:** इनमें से _कुछ_ सीमाओं को पार करना संभव है - बशर्ते आप अपने AWS अकाउंट मैनेजर को मीठी-मीठी बातें करके मना लें। 😎
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="बैच, भाग 2!"
+  title="बैच संचालन"
+  options={[
+    {text: '1', isAnswer: true},
+    {text: '10'},
+    {text: '25', hint: 'अच्छा अनुमान...'},
+    {text: '50'},
+    {text: '100', hint: 'GetItem सीमा के बारे में सोच रहे हैं?'},
+    {text: 'स्ट्रीमिंग करते समय 100'},
+    {text: 'उपरोक्त में से कोई नहीं', hint: 'यह थोड़ा पेचीदा है...'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+DynamoDB प्रति बैच अधिकतम कितने दस्तावेज़ `UPDATE` कर सकता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB क्लाइंट्स मूल रूप से इसके HTTP API के रैपर हैं। `BatchWriteItem` ऑपरेशन प्रति HTTP अनुरोध **25** दस्तावेज़ों तक `PUT` या `DELETE` कर सकता है, लेकिन यह कई दस्तावेज़ों को `UPDATE` नहीं कर सकता।
+
+  हालाँकि DynamoDB प्रति HTTP अनुरोध **25** दस्तावेज़ों तक `INSERT` कर सकता है, लेकिन `UpdateItem` ऑपरेशन का उपयोग करके यह प्रति अनुरोध केवल **1** दस्तावेज़ को `UPDATE` कर सकता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="DynamoDB"
+  title="प्रोविजन्ड बनाम ऑन-डिमांड कैपेसिटी"
+  options={[
+    {text: 'प्रोविजन्ड हमेशा बेहतर होता है'},
+    {text: 'ऑन-डिमांड में असीमित क्षमता होती है'},
+    {text: 'दोनों का प्रदर्शन बिल्कुल समान होता है'},
+    {text: 'अनपेक्षित वर्कलोड के लिए ऑन-डिमांड सस्ता पड़ता है', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+DynamoDB ऑन-डिमांड कैपेसिटी का इस्तेमाल आपको कब करना चाहिए?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ऑन-डिमांड क्षमता तब सबसे अच्छी काम करती है जब:
+  - आपके वर्कलोड अनपेक्षित हों
+  - ट्रैफ़िक अचानक बढ़े या घटे
+  - एप्लिकेशन के एक्सेस पैटर्न अभी स्पष्ट न हों
+  - आप ओवर-प्रोविजनिंग और अनावश्यक खर्च से बचना चाहते हों
+
+  वहीं, प्रोविजन्ड क्षमता तब बेहतर विकल्प है जब:
+  - वर्कलोड अनुमानित और स्थिर हों
+  - आपको प्रदर्शन पर सख्त नियंत्रण चाहिए हो
+  - आप लंबी अवधि में लागत बचाना चाहते हों
+
+  [DynamoDB Capacity Modes](https://aws.amazon.com/dynamodb/pricing/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="S3 प्रदर्शन"
+  title="S3 प्रदर्शन अनुकूलन"
+  options={[
+    {text: 'रैंडम/हैश प्रीफ़िक्स का उपयोग करें'},
+    {text: 'तार्किक प्रीफ़िक्स का उपयोग करें; रैंडमाइज़ेशन की आवश्यकता नहीं है', isAnswer: true},
+    {text: 'हमेशा सबसे बड़े ऑब्जेक्ट्स का उपयोग करें'},
+    {text: 'ऑब्जेक्ट्स की संख्या को न्यूनतम रखें'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+उच्च रिक्वेस्ट रेट्स के लिए S3 प्रदर्शन को कैसे ऑप्टिमाइज़ करें?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+S3 प्रदर्शन टिप्स:
+  - आधुनिक S3 प्रति प्रीफ़िक्स रिक्वेस्ट रेट्स को स्वचालित रूप से स्केल करता है
+  - प्रदर्शन के लिए आपको रैंडम/हैश प्रीफ़िक्स की आवश्यकता नहीं है
+  - ऐसे लॉजिकल की नेम्स का उपयोग करें जो आपके एक्सेस पैटर्न के अनुकूल हों
+  - यदि आप बहुत हाई रिक्वेस्ट रेट्स भेजते हैं, तो 503 Slow Down रिस्पॉन्स को मॉनिटर करें
+
+  पुराने दिशानिर्देशों में हॉट पार्टिशन्स से बचने के लिए प्रीफ़िक्स को रैंडमाइज़ करने की सलाह दी जाती थी, लेकिन AWS अब इसे डिफ़ॉल्ट प्रदर्शन आवश्यकता के रूप में सुझाव नहीं देता है।
+
+  [S3 प्रदर्शन दिशानिर्देश](https://aws.amazon.com/s3/performance/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="RDS बैकअप"
+  title="RDS बैकअप रणनीति"
+  options={[
+    {text: 'केवल मैनुअल स्नैपशॉट', hint: 'मैनुअल प्रक्रिया में मानवीय त्रुटि या भूलने का जोखिम रहता है।'},
+    {text: 'बैकअप की आवश्यकता नहीं', hint: 'क्लाउड में बिना बैकअप के डेटा चलाना गंभीर जोखिम है।'},
+    {text: 'पॉइंट-इन-टाइम रिकवरी के साथ ऑटोमेटेड बैकअप', isAnswer: true, hint: 'यह AWS की मानक सिफारिश है जो डेटा हानि को न्यूनतम करती है।'},
+    {text: 'साप्ताहिक फुल बैकअप', hint: 'साप्ताहिक अंतराल से हाल के डेटा या ट्रांजेक्शन खो सकते हैं।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+RDS बैकअप के लिए AWS की अनुशंसित रणनीति क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+बेहतरीन बैकअप प्रैक्टिसेज़:
+  - ऑटोमेटेड बैकअप को सक्षम करें
+  - पॉइंट-इन-टाइम रिकवरी का उपयोग करें
+  - कंप्लायंस आवश्यकताओं के अनुसार बैकअप को रिटेन करें
+  - रिस्टोरेशन प्रोसेस की नियमित रूप से जाँच करें
+  - क्रॉस-रीजन बैकअप पर विचार करें
+
+  ऑटोमेटेड बैकअप क्यों ज़रूरी हैं:
+  - ये निरंतर डेटा सुरक्षा प्रदान करते हैं
+  - लचीले रिकवरी विकल्प देते हैं, जिससे आप किसी भी विशिष्ट क्षण तक डेटा वापस ला सकते हैं
+
+  [RDS बैकअप बेस्ट प्रैक्टिसेज़](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_CommonTasks.BackupRestore.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="ElastiCache"
+  title="Redis बनाम Memcached"
+  options={[
+    {text: 'Redis ज़्यादा डेटा स्ट्रक्चर्स और ऑपरेशन्स सपोर्ट करता है', isAnswer: true},
+    {text: 'हर लिहाज़ से बिल्कुल एक जैसे'},
+    {text: 'API-स्तर पर संगतता'},
+    {text: 'Memcached हमेशा तेज़ चलता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+`ElastiCache` में `Redis` और `Memcached` के बीच सबसे बड़ा फर्क क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Redis के फायदे:
+  - जटिल डेटा स्ट्रक्चर्स को सपोर्ट करता है
+  - डेटा पर्सिस्टेंस के विकल्प
+  - एडवांस्ड ऑपरेशन्स
+  - Pub/Sub मैसेजिंग
+
+  Memcached:
+  - सिंपल की-वैल्यू स्टोर
+  - शुद्ध कैशिंग
+  - सिंपल यूज़ केस के लिए हाई परफॉर्मेंस
+
+  [Redis बनाम Memcached](https://aws.amazon.com/elasticache/redis-vs-memcached/)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="डायनेमोडीबी इंडेक्स"
+  title="ग्लोबल सेकेंडरी इंडेक्स"
+  options={[
+    {text: 'प्राइमरी की के समान'},
+    {text: 'अतिरिक्त लागत से मुक्त'},
+    {text: 'राइट परफॉर्मेंस को कम करता है'},
+    {text: 'नॉन-प्राइमरी एट्रिब्यूट्स पर क्वेरी करने की अनुमति देता है', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+डायनेमोडीबी में ग्लोबल सेकेंडरी इंडेक्स का उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ग्लोबल सेकेंडरी इंडेक्स (GSI):
+  - नॉन-प्राइमरी की एट्रिब्यूट्स पर क्वेरी करने की अनुमति देता है
+  - वैकल्पिक एक्सेस पैटर्न बनाता है
+  - क्वेरी की लचीलापन बढ़ाता है
+  - अतिरिक्त राइट कैपेसिटी लागत के साथ आता है
+
+  प्राइमरी की से परे जटिल क्वेरी आवश्यकताओं के लिए उपयोगी।
+
+  [डायनेमोडीबी इंडेक्स](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GSI.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="S3 लाइफसाइकल"
+  title="S3 लाइफसाइकल मैनेजमेंट"
+  options={[
+    {text: 'ऑब्जेक्ट्स को मैन्युअली मूव करें', hint: 'क्या यह स्केलेबल है?'},
+    {text: 'ऑब्जेक्ट्स को स्टोरेज क्लासेस के बीच ऑटोमैटिकली ट्रांजिशन करें', isAnswer: true, hint: 'AWS का मुख्य फीचर यही है।'},
+    {text: 'पुराने ऑब्जेक्ट्स को कभी डिलीट न करें', hint: 'कॉस्ट बढ़ जाएगी!'},
+    {text: 'सब कुछ स्टैंडर्ड क्लास में स्टोर करें', hint: 'क्या यह कॉस्ट-इफेक्टिव है?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+S3 लाइफसाइकल मैनेजमेंट असल में क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+लाइफसाइकल मैनेजमेंट का असली मकसद है कॉस्ट और एफिशिएंसी को बैलेंस करना:
+  - यह ऑब्जेक्ट्स को स्टोरेज क्लासेस के बीच ऑटोमैटिकली ट्रांजिशन करता है
+  - कम इस्तेमाल होने वाले डेटा को सस्ते स्टोरेज में मूव कर देता है
+  - ऑब्जेक्ट एक्सपायरेशन के लिए रूल्स सेट करने देता है
+  - स्टोरेज कॉस्ट को ऑप्टिमाइज़ करता है
+  - मैन्युअल मैनेजमेंट का ओवरहेड खत्म कर देता है
+
+  [S3 लाइफसाइकल रूल्स](https://docs.aws.amazon.com/AmazonS3/latest/userguide/lifecycle-configuration-examples.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="Aurora स्केलिंग"
+  title="Amazon Aurora के साथ Read स्केलिंग"
+  options={[
+    {text: 'केवल एक ही read replica तक सीमित', hint: 'Aurora की स्केलेबिलिटी फीचर्स के बारे में सोचें।'},
+    {text: 'Read स्केलिंग संभव नहीं है', hint: 'क्या यह Aurora की क्षमताओं से मेल खाता है?'},
+    {text: '15 तक read replicas को सपोर्ट करता है', isAnswer: true},
+    {text: 'असीमित read replicas', hint: 'एक व्यावहारिक सीमा है जिसे ध्यान में रखना चाहिए।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Amazon Aurora अधिकतम कितने read replicas को सपोर्ट करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Amazon Aurora **15 तक read replicas** को सपोर्ट करता है, जिससे आप अपने read ऑपरेशन्स को काफी हद तक स्केल कर सकते हैं। इन replicas को निम्नलिखित लाभ मिलते हैं:
+
+      - replicas के बीच **लगभग तत्काल replication**
+      - primary instance पर **न्यूनतम performance impact**
+      - read workloads का **कुशल वितरण**
+
+      यह सेटअप उन एप्लिकेशन्स के लिए horizontal scaling को सक्षम बनाता है जिनकी read demands बहुत अधिक होती हैं।
+
+      [Aurora Read Replicas के बारे में अधिक जानें](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/Aurora.Replicas.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="RDS सुरक्षा"
+  title="RDS एन्क्रिप्शन"
+  options={[
+    {text: 'डेटा को रेस्ट (at rest) और ट्रांजिट (in transit) दोनों स्थितियों में एन्क्रिप्ट करें', isAnswer: true},
+    {text: 'एन्क्रिप्शन वैकल्पिक है'},
+    {text: 'कोई एन्क्रिप्शन उपलब्ध नहीं है'},
+    {text: 'केवल विशिष्ट कॉलम को एन्क्रिप्ट करें'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+RDS एन्क्रिप्शन की क्या सुविधाएँ प्रदान करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+RDS एन्क्रिप्शन की मुख्य विशेषताएँ:
+  - KMS का उपयोग करके डेटा को रेस्ट (at rest) पर एन्क्रिप्ट करें
+  - SSL/TLS का उपयोग करके डेटा को ट्रांजिट (in transit) में एन्क्रिप्ट करें
+  - डेटाबेस क्रिएशन के दौरान ही एन्क्रिप्शन को सक्षम करें
+  - संवेदनशील डेटा को सुरक्षित रखें
+  - सुरक्षा मानकों के साथ पूर्ण अनुपालन सुनिश्चित करें
+
+  [RDS एन्क्रिप्शन विकल्प](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/encryption-options.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="DynamoDB Streams"
+  title="DynamoDB Streams का उद्देश्य"
+  options={[
+    {text: 'अतिरिक्त डेटा कॉपी स्टोर करना'},
+    {text: 'ग्रीन वेंडर्स के लिए DynamoDB क्रेडिट', hint: 'सच में?'},
+    {text: 'राइट परफॉर्मेंस बढ़ाना', hint: 'स्ट्रीम्स तो...'},
+    {text: 'इवेंट-ड्रिवन आर्किटेक्चर के लिए आइटम-लेवल बदलावों को कैप्चर करना', isAnswer: true},
+    {text: 'ग्लोबल सेकेंडरी इंडेक्स का विकल्प', hint: 'क्या आप अंदाज़ा लगा रहे हैं?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+DynamoDB Streams का मुख्य उपयोग क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB Streams:
+  - आइटम-लेवल बदलावों को कैप्चर करता है
+  - इवेंट-ड्रिवन आर्किटेक्चर को सक्षम बनाता है
+  - Lambda फंक्शन्स को ट्रिगर करता है
+  - क्रॉस-रीजन रेप्लिकेशन को सपोर्ट करता है
+  - लगभग रियल-टाइम डेटा मूवमेंट प्रदान करता है
+
+  [DynamoDB Streams Overview](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Streams.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="S3 ट्रांसफर"
+  title="बड़ी फ़ाइल ट्रांसफर"
+  options={[
+    {text: 'हमेशा सिंगल PUT रिक्वेस्ट का इस्तेमाल करें'},
+    {text: 'बड़ी फ़ाइलों के लिए Multipart Upload का इस्तेमाल करें', isAnswer: true},
+    {text: 'अपलोड से पहले फ़ाइल को कंप्रेस करें'},
+    {text: 'अपलोड से पहले मैन्युअली फ़ाइल को स्प्लिट करें'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+S3 पर बड़ी फ़ाइलें अपलोड करने का सबसे सही तरीका कौन सा है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Multipart Upload के फायदे:
+  - बड़ी फ़ाइलों को कुशलता से हैंडल करता है
+  - बाधित अपलोड को आसानी से रिज्यूम (resume) कर सकता है
+  - फ़ाइल पार्ट्स का पैरलल अपलोड संभव है
+  - 100MB से बड़ी फ़ाइलों के लिए यही रिकमेंड किया जाता है
+  - नेटवर्क रिलायबिलिटी में सुधार
+
+  [S3 Multipart Upload](https://docs.aws.amazon.com/AmazonS3/latest/userguide/mpuoverview.html)
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={20}
+  group="लागत अनुकूलन"
+  title="स्टोरेज लागत विश्लेषण"
+  options={[
+    {text: 'सभी डेटा के लिए S3 Standard'},
+    {text: 'हमेशा सबसे सस्ते स्टोरेज का उपयोग करें'},
+    {text: 'एक्सेस पैटर्न के आधार पर स्टोरेज क्लासेस को मिक्स करें', isAnswer: true},
+    {text: 'सब कुछ Glacier में स्टोर करें'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+1PB डेटा को स्टोर करते वक्त सबसे स्मार्ट (और सस्ता) तरीका कौन सा है, जबकि 20% डेटा रोज़, 30% महीने में और 50% साल में ही एक्सेस होता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+इष्टतम स्टोरेज रणनीति:
+  - दैनिक एक्सेस के लिए 20% डेटा S3 Standard में
+  - मासिक एक्सेस के लिए 30% डेटा S3 Standard-IA में
+  - वार्षिक एक्सेस के लिए 50% डेटा Glacier में
+
+  यह रणनीति इसलिए काम करती है क्योंकि यह आपके एक्सेस पैटर्न के हिसाब से स्टोरेज को बाँट देती है, जिससे बिना परफॉर्मेंस खोए लागत काफी कम हो जाती है।
+
+  लागत का सही अनुमान लगाने के लिए इन बातों पर गौर करें:
+  - प्रति GB स्टोरेज प्राइसिंग
+  - रिट्रीवल (पुनर्प्राप्ति) लागत
+  - एक्सेस पैटर्न
+  - ट्रांज़िशन (स्थानांतरण) लागत
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={21}
+  group="DynamoDB कंसिस्टेंसी"
+  title="कंसिस्टेंसी मॉडल"
+  options={[
+    {text: 'प्रति सेकंड 100 रीड्स', isAnswer: true},
+    {text: 'प्रति सेकंड 50 रीड्स'},
+    {text: 'प्रति सेकंड 200 रीड्स'},
+    {text: 'प्रति सेकंड अनलिमिटेड रीड्स'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+एक DynamoDB टेबल की प्रोविजंड रीड कैपेसिटी 100 RCUs है। प्रति सेकंड 4KB आइटम्स की कितनी strongly consistent reads की जा सकती हैं?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB के consistency models को समझना बेहद ज़रूरी है:
+
+- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 1 strongly consistent read
+- 1 RCU = 4KB तक के आइटम्स के लिए प्रति सेकंड 2 eventually consistent reads
+
+इसलिए:
+- 100 RCUs = प्रति सेकंड 100 strongly consistent 4KB reads
+- 100 RCUs = प्रति सेकंड 200 eventually consistent 4KB reads
+
+Consistency model का चुनाव इन बातों के आधार पर करें:
+- एप्लिकेशन की ज़रूरतें
+- कॉस्ट (लागत) का विचार
+- परफॉर्मेंस की मांग
+- डेटा फ्रेशनेस (ताज़गी) की आवश्यकता
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={22}
+  group="Aurora उच्च उपलब्धता"
+  title="Aurora फ़ेलओवर तंत्र"
+  options={[
+    {text: 'मैन्युअल हस्तक्षेप आवश्यक है'},
+    {text: 'एप्लिकेशन पुनः कॉन्फ़िगरेशन की आवश्यकता होती है'},
+    {text: 'हमेशा सबसे पुराने रेप्लिका पर फ़ेलओवर होता है'},
+    {text: 'फ़ेलओवर प्राथमिकता टियर के आधार पर स्वचालित प्रमोशन', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कई रीड रेप्लिका वाले Aurora क्लस्टर में, जब प्राइमरी इंस्टेंस फ़ेल हो जाता है तो ऑटोमैटिक फ़ेलओवर के दौरान क्या होता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Aurora फ़ेलओवर प्रक्रिया:
+      1. प्राइमरी इंस्टेंस के फ़ेल होने का पता लगाता है
+      2. फ़ेलओवर प्राथमिकता टियर के आधार पर एक Aurora रेप्लिका चुनता है
+      3. यदि प्राथमिकताएँ समान हों, तो इंस्टेंस की विशेषताओं को टाई-ब्रेकर के रूप में इस्तेमाल करता है
+      4. क्लस्टर एंडपॉइंट को स्वचालित रूप से अपडेट कर देता है
+
+      बेस्ट प्रैक्टिसेज़:
+      - विभिन्न AZs में कई रेप्लिका रखें
+      - प्रमोशन टियर्स को समझदारी से कॉन्फ़िगर करें
+      - एप्लिकेशन में हमेशा क्लस्टर एंडपॉइंट का ही उपयोग करें
+      - फ़ेलओवर सीनारियो का नियमित परीक्षण करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={23}
+  group="S3 कंसिस्टेंसी"
+  title="S3 स्ट्रांग कंसिस्टेंसी"
+  options={[
+    {text: 'केवल नई ऑब्जेक्ट्स के लिए'},
+    {text: 'सभी ऑपरेशन्स के लिए स्ट्रांग कंसिस्टेंसी', isAnswer: true},
+    {text: 'अपडेट्स के लिए इवेंचुअल कंसिस्टेंसी'},
+    {text: 'रीजन पर निर्भर करता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+2020 के अंत से, S3 सभी ऑपरेशन्स के लिए कौन सा कंसिस्टेंसी मॉडल ऑफर करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+S3 कंसिस्टेंसी मॉडल:
+- सभी ऑपरेशन्स के लिए स्ट्रांग read-after-write कंसिस्टेंसी
+- PUTs और DELETEs पर लागू
+- अब पुराने वर्कअराउंड्स की ज़रूरत नहीं
+- कोई अतिरिक्त चार्ज नहीं
+
+प्रभाव:
+- एप्लिकेशन लॉजिक काफी सरल
+- कंसिस्टेंसी चेक्स की फालतू मेहनत खत्म
+- राइट्स के तुरंत बाद रिलायबल रीड्स
+- एप्लिकेशन की रिलायबिलिटी में सीधा सुधार
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={24}
+  group="DynamoDB फीचर्स"
+  title="Time To Live (TTL)"
+  options={[
+    {text: 'एक्सपायर होते ही आइटम्स को तुरंत डिलीट कर देता है', hint: 'तुरंत डिलीशन डीबी परफॉर्मेंस को प्रभावित कर सकता है।'},
+    {text: 'मैन्युअल डिलीशन ट्रिगर की आवश्यकता होती है', hint: 'TTL का मकसद ही ऑटोमेशन है।'},
+    {text: 'बेस्ट-एफर्ट टाइमिंग के साथ बैकग्राउंड डिलीशन', isAnswer: true, hint: 'सही! बैकग्राउंड प्रोसेसिंग से परफॉर्मेंस सुरक्षित रहती है।'},
+    {text: 'आइटम्स को एक्सपायर करता है लेकिन स्टोर रखता है', hint: 'एक्सपायर होने के बाद डेटा स्टोरेज से हट जाता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+DynamoDB का TTL फीचर आइटम डिलीशन को वास्तव में कैसे हैंडल करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+DynamoDB TTL की विशेषताएं:
+      - एक बैकग्राउंड प्रोसेस TTL एट्रिब्यूट को मॉनिटर करता है
+      - एक्सपायर्ड आइटम्स को बेस्ट-एफर्ट बेसिस पर डिलीट किया जाता है, आमतौर पर कुछ दिनों के भीतर। ऐसा इसलिए किया जाता है ताकि डेटाबेस की परफॉर्मेंस पर कोई अतिरिक्त लोड न पड़े।
+      - TTL फीचर के लिए कोई अतिरिक्त कॉस्ट नहीं आती
+      - डिलीट हुए आइटम्स DynamoDB Streams में कैप्चर हो जाते हैं
+
+      बेस्ट यूज़ केसेस:
+      - सेशन मैनेजमेंट
+      - लॉग एक्सपायरेशन
+      - टेम्पररी डेटा क्लीनअप
+      - रेगुलेटरी कंप्लायंस
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={25}
+  group="ऑरोरा सर्वरलेस"
+  title="स्केलिंग व्यवहार"
+  options={[
+    {text: 'स्केलिंग की गति वर्तमान और कॉन्फ़िगर की गई क्षमता पर निर्भर करती है', isAnswer: true},
+    {text: 'डिमांड पर तुरंत स्केल होता है'},
+    {text: 'केवल पूर्व-निर्धारित अंतराल पर ही स्केल होता है'},
+    {text: 'केवल मैन्युअल स्केलिंग'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+अचानक ट्रैफ़िक स्पाइक्स को हैंडल करने के लिए Aurora Serverless पर भरोसा करते समय सबसे महत्वपूर्ण बात क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Aurora Serverless स्केलिंग:
+- Aurora Serverless v2 अपनी क्षमता को बारीक ACU इंक्रीमेंट्स में स्केल करता है
+- स्केलिंग की गति वर्तमान क्षमता और min/max ACU सेटिंग्स पर निर्भर करती है (इसलिए यह तुरंत नहीं होती)
+- सपोर्टेड वर्ज़न कॉन्फ़िगर किए जाने पर 0 ACUs पर ऑटो-पॉज़ हो सकते हैं
+- ACUs के आधार पर प्रति-सेकंड बिलिंग
+
+बेस्ट प्रैक्टिसेज़:
+- क्रिटिकल वर्कलोड्स पर अचानक स्पाइक्स के लिए मिनिमम कैपेसिटी को पर्याप्त ऊँचा रखें (ताकि स्केलिंग लेग से परफॉर्मेंस प्रभावित न हो)
+- स्केलिंग इवेंट्स को मॉनिटर करें
+- कनेक्शन मैनेजमेंट को ध्यान में रखें
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+वाह, यह सफर काफी गहराइयों में उतर गया! 🚀☁️
+उम्मीद है आपको यह यात्रा पसंद आई होगी, और AWS Storage Services के बारे में एक-दो काम की बातें सीखने को भी मिली होंगी।
+
+[डैन की चुनौतियाँ](/challenges/) और भी देखें! 🧠
+
+कानूनी: यह क्विज़ केवल शैक्षिक उद्देश्यों के लिए है। सभी ट्रेडमार्क और कॉपीराइट अपने-अपने मालिकों की संपत्ति हैं, खासकर उन बड़े दिग्गजों की।

@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Dateセッター Part 4",
+  "translation": {
+    "title": "Dateセッター Part 4",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Invalid argument."
+      }
+    ],
+    "questionProse": [
+      "出力結果に含まれるのはどれですか？"
+    ],
+    "explanationProse": [
+      "[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。\n\n月の引数は0始まりで、範囲は0〜11です（西暦カレンダーを使用）。\n\nここでは、`setMonth(13)`が11（12月）より2大きい値であるため、月と年が2021年2月に調整されているのがわかります。\n\n<aside class=\"hint\">`setMonth`はインデックスで月を設定します。12ヶ月は0〜11でインデックス付けされます。</aside>\n<aside class=\"hint\">\n0〜11の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)`は年を2021年に調整します（13は11より2大きいため、2月になります）。\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Dateセッター Part 4\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Invalid argument.\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力結果に含まれるのはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。\\n\\n月の引数は0始まりで、範囲は0〜11です（西暦カレンダーを使用）。\\n\\nここでは、`setMonth(13)`が11（12月）より2大きい値であるため、月と年が2021年2月に調整されているのがわかります。\\n\\n<aside class=\\\"hint\\\">`setMonth`はインデックスで月を設定します。12ヶ月は0〜11でインデックス付けされます。</aside>\\n<aside class=\\\"hint\\\">\\n0〜11の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)`は年を2021年に調整します（13は11より2大きいため、2月になります）。\\n</aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 957,
+    "outputTokens": 3865,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 71143
+  },
+  "cost": {
+    "inputUsd": 0.000311025,
+    "outputUsd": 0.00753675,
+    "totalUsd": 0.007847775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

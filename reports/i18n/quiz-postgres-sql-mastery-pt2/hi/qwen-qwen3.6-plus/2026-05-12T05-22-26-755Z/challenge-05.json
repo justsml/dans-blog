@@ -1,0 +1,31 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Hash Join Eligibility",
+  "translatedTitle": "हैश जॉइन की पात्रता",
+  "translation": {
+    "title": "हैश जॉइन की पात्रता",
+    "group": "SQL इंटरनल्स",
+    "options": [],
+    "questionProse": [
+      "PostgreSQL `HASH JOIN` के लिए किस `ON` शर्त का उपयोग कर सकता है?"
+    ],
+    "explanationProse": [
+      "`ON` क्लॉज़ में समानता (`=`) शर्त होने पर ही हैश जॉइन संभव है।\n\n- `=` हैश जॉइन के लिए मुख्य प्रेडिकेट रूप है\n- `>` और `>=` हैश-जॉइन प्रेडिकेट नहीं हैं\n- PostgreSQL में `HASH JOIN` कोई मान्य सिंटैक्स नहीं है\n\nटेबल के आकार, स्टैटिस्टिक्स, इंडेक्स और मेमोरी सेटिंग्स के आधार पर प्लानर फिर भी नेस्टेड लूप या मर्ज जॉइन चुन सकता है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"हैश जॉइन की पात्रता\",\n  \"group\": \"SQL इंटरनल्स\",\n  \"options\": [],\n  \"questionProse\": [\n    \"PostgreSQL `HASH JOIN` के लिए किस `ON` शर्त का उपयोग कर सकता है?\"\n  ],\n  \"explanationProse\": [\n    \"`ON` क्लॉज़ में समानता (`=`) शर्त होने पर ही हैश जॉइन संभव है।\\n\\n- `=` हैश जॉइन के लिए मुख्य प्रेडिकेट रूप है\\n- `>` और `>=` हैश-जॉइन प्रेडिकेट नहीं हैं\\n- PostgreSQL में `HASH JOIN` कोई मान्य सिंटैक्स नहीं है\\n\\nटेबल के आकार, स्टैटिस्टिक्स, इंडेक्स और मेमोरी सेटिंग्स के आधार पर प्लानर फिर भी नेस्टेड लूप या मर्ज जॉइन चुन सकता है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 744,
+    "outputTokens": 3419,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 62866
+  },
+  "cost": {
+    "inputUsd": 0.0002418,
+    "outputUsd": 0.00666705,
+    "totalUsd": 0.00690885,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

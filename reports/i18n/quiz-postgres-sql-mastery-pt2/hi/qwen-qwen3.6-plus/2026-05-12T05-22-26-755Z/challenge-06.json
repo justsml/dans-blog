@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "मल्टी-कॉलम इंडेक्स का क्रम",
+  "translation": {
+    "title": "मल्टी-कॉलम इंडेक्स का क्रम",
+    "group": "इंडेक्सिंग",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "इस क्वेरी के लिए कौन सा इंडेक्स बेहतर है?"
+    ],
+    "explanationProse": [
+      "मेरे लिए यहाँ सबसे आश्चर्यजनक बात यह है कि एक मल्टी-कॉलम इंडेक्स का उपयोग तब भी किया जा सकता है जब क्वेरी टेक्स्ट में कॉलम का क्रम इंडेक्स डेफिनिशन से मेल नहीं खाता।\n\n**नोट:** B-tree इंडेक्स में, पहला कॉलम (leading column) सबसे मायने रखता है। चूंकि यह क्वेरी `grade_level` और `last_name` के आधार पर फ़िल्टर करती है, इसलिए `grade_level` से शुरू होकर `last_name` वाला इंडेक्स सबसे उपयुक्त रहेगा।\n\nSQL जितनी जल्दी कम से कम पंक्तियों (rows) को चुन लेगा, प्रदर्शन उतना ही बेहतर होगा।\n\nउदाहरण के लिए, यदि आपके पास एक `task` टेबल है और आप जानते हैं कि `status`, `created_at` की तुलना में अधिक चयनात्मक (selective) है, तो आप `status = 'done' AND created_at > '2024-01-01'` जैसी क्वेरी के लिए `status` से शुरू होने वाले इंडेक्स को चुन सकते हैं। `WHERE` क्लॉज़ के टेक्स्ट में शर्तों का क्रम मायने नहीं रखता; मायने रखता है इंडेक्स कॉलम का क्रम और प्रेडिकेट का स्वरूप।\n\nB+Tree इंडेक्स का उपयोग इनके लिए किया जा सकता है:\n- पहले कॉलम, या कॉलम के लेफ्टमोस्ट प्रीफ़िक्स (leftmost prefix) के लिए।\n- क्वेरी के स्वरूप के आधार पर `=`, `>`, `<`, `BETWEEN`, और `IN` जैसे ऑपरेटर्स के लिए।\n- प्रीफ़िक्स मैचिंग, जैसे `LIKE 'prefix%'`।\n\nइस व्याख्या में पहले की एक गलती की ओर ध्यान दिलाने के लिए [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) का धन्यवाद!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"मल्टी-कॉलम इंडेक्स का क्रम\",\n  \"group\": \"इंडेक्सिंग\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस क्वेरी के लिए कौन सा इंडेक्स बेहतर है?\"\n  ],\n  \"explanationProse\": [\n    \"मेरे लिए यहाँ सबसे आश्चर्यजनक बात यह है कि एक मल्टी-कॉलम इंडेक्स का उपयोग तब भी किया जा सकता है जब क्वेरी टेक्स्ट में कॉलम का क्रम इंडेक्स डेफिनिशन से मेल नहीं खाता।\\n\\n**नोट:** B-tree इंडेक्स में, पहला कॉलम (leading column) सबसे मायने रखता है। चूंकि यह क्वेरी `grade_level` और `last_name` के आधार पर फ़िल्टर करती है, इसलिए `grade_level` से शुरू होकर `last_name` वाला इंडेक्स सबसे उपयुक्त रहेगा।\\n\\nSQL जितनी जल्दी कम से कम पंक्तियों (rows) को चुन लेगा, प्रदर्शन उतना ही बेहतर होगा।\\n\\nउदाहरण के लिए, यदि आपके पास एक `task` टेबल है और आप जानते हैं कि `status`, `created_at` की तुलना में अधिक चयनात्मक (selective) है, तो आप `status = 'done' AND created_at > '2024-01-01'` जैसी क्वेरी के लिए `status` से शुरू होने वाले इंडेक्स को चुन सकते हैं। `WHERE` क्लॉज़ के टेक्स्ट में शर्तों का क्रम मायने नहीं रखता; मायने रखता है इंडेक्स कॉलम का क्रम और प्रेडिकेट का स्वरूप।\\n\\nB+Tree इंडेक्स का उपयोग इनके लिए किया जा सकता है:\\n- पहले कॉलम, या कॉलम के लेफ्टमोस्ट प्रीफ़िक्स (leftmost prefix) के लिए।\\n- क्वेरी के स्वरूप के आधार पर `=`, `>`, `<`, `BETWEEN`, और `IN` जैसे ऑपरेटर्स के लिए।\\n- प्रीफ़िक्स मैचिंग, जैसे `LIKE 'prefix%'`।\\n\\nइस व्याख्या में पहले की एक गलती की ओर ध्यान दिलाने के लिए [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) का धन्यवाद!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1074,
+    "outputTokens": 4963,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1068,
+    "durationMs": 90607
+  },
+  "cost": {
+    "inputUsd": 0.00034905000000000005,
+    "outputUsd": 0.00967785,
+    "totalUsd": 0.0100269,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

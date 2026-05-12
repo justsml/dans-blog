@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "ムーブセマンティクスの基礎",
+  "translation": {
+    "title": "ムーブセマンティクスの基礎",
+    "group": "所有権",
+    "options": [
+      {
+        "text": "Hello, !",
+        "hint": "`philosopher`がムーブされた後に何が起こるか考えてみよう"
+      },
+      {
+        "text": "Hello, Zeno of Citium!",
+        "hint": "値がムーブされた後、まだ使えるだろうか？"
+      },
+      {
+        "text": "Hello, Zeno of Elea!",
+        "hint": "文字列には 'Elea' ではなく 'Citium' が含まれているよ"
+      },
+      {
+        "text": "Hello, Marcus Aurelius",
+        "hint": "文字列の内容と一致するか確認してみよう"
+      },
+      {
+        "text": "コンパイルエラー: ムーブ後に値が借用されている"
+      },
+      {
+        "text": "ランタイムエラー: ヌルポインタ例外",
+        "hint": "Rustはこれらの問題をコンパイル時に検知するよ"
+      }
+    ],
+    "questionProse": [
+      "このコードを実行するとどうなる？出力かエラーを予想してみよう："
+    ],
+    "explanationProse": [
+      "このコードはRustの所有権ルールによりコンパイルに失敗します。`philosopher`を`greeting`に代入すると、Stringの所有権が`greeting`にムーブされます。このムーブの後、`philosopher`は使用できなくなります。\n\n      これを修正する方法は3つあります：\n\n      1. 文字列をクローンする（新しいコピーを作成）：",
+      "2. 参照を使う（値を借用する）：",
+      "3. 文字列スライスを使う（文字列の一部を借用する）：",
+      "各解決策には異なるユースケースとパフォーマンスへの影響があります。クローンはコストが高いですが所有権を得られる一方、参照はコストが低い代わりにライフタイムの制約があります。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ムーブセマンティクスの基礎\",\n  \"group\": \"所有権\",\n  \"options\": [\n    {\n      \"text\": \"Hello, !\",\n      \"hint\": \"`philosopher`がムーブされた後に何が起こるか考えてみよう\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Citium!\",\n      \"hint\": \"値がムーブされた後、まだ使えるだろうか？\"\n    },\n    {\n      \"text\": \"Hello, Zeno of Elea!\",\n      \"hint\": \"文字列には 'Elea' ではなく 'Citium' が含まれているよ\"\n    },\n    {\n      \"text\": \"Hello, Marcus Aurelius\",\n      \"hint\": \"文字列の内容と一致するか確認してみよう\"\n    },\n    {\n      \"text\": \"コンパイルエラー: ムーブ後に値が借用されている\"\n    },\n    {\n      \"text\": \"ランタイムエラー: ヌルポインタ例外\",\n      \"hint\": \"Rustはこれらの問題をコンパイル時に検知するよ\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードを実行するとどうなる？出力かエラーを予想してみよう：\"\n  ],\n  \"explanationProse\": [\n    \"このコードはRustの所有権ルールによりコンパイルに失敗します。`philosopher`を`greeting`に代入すると、Stringの所有権が`greeting`にムーブされます。このムーブの後、`philosopher`は使用できなくなります。\\n\\n      これを修正する方法は3つあります：\\n\\n      1. 文字列をクローンする（新しいコピーを作成）：\",\n    \"2. 参照を使う（値を借用する）：\",\n    \"3. 文字列スライスを使う（文字列の一部を借用する）：\",\n    \"各解決策には異なるユースケースとパフォーマンスへの影響があります。クローンはコストが高いですが所有権を得られる一方、参照はコストが低い代わりにライフタイムの制約があります。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1073,
+    "outputTokens": 4041,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 1067,
+    "durationMs": 73796
+  },
+  "cost": {
+    "inputUsd": 0.000348725,
+    "outputUsd": 0.00787995,
+    "totalUsd": 0.008228675,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

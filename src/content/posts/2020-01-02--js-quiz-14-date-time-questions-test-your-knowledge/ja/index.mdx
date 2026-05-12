@@ -1,0 +1,501 @@
+---
+unlisted: false
+title: クイズ：JavaScript Date 14問
+subTitle: パーティーで自慢できるJSトリビアを学ぼう！✨
+label: Dates & Times
+date: '2020-01-02'
+modified: '2024-11-27'
+tags:
+  - quiz
+  - javascript
+  - date
+  - date class
+  - gotchas
+  - challenge
+  - intermediate
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+cover: ../pocket-watch.webp
+cover_mobile: ../w300_pocket-watch.webp
+cover_icon: ../icon_pocket-watch.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+## `Date` クラスをどのくらい理解しているか？
+
+> * **JavaScript の腕前を証明しろ！** 🚀
+> * ログインやアカウント登録は不要。✨
+> * 択一問題。🤖 ... _どれほど難しいというんだ？_
+
+### 概要
+
+JavaScript の `Date` クラスは、悪名高いほど扱いにくい API を持っている。Java から継承されたもので、おそらく古代新石器時代の時刻計測方法にインスパイアされたのだろうと推測するしかない。
+
+`Date` の仕様と格闘する苦労から、多くの開発者は疑問を持たずにサードパーティ製ライブラリに頼りがちだ。確かに安全で信頼性の高い選択肢ではあるが、日付のフォーマットやローカライズだけであれば、それらのライブラリはほとんど必要ない！
+
+このクイズは、ネイティブの `Date` API に関する知識を試す（そして深める）ために設計されている。ヒントや解説には緑色のボタンを使ってくれ。チャレンジを終える頃には、JavaScript の `Date` に関する理解が確実に固まっているはずだ。
+
+{/* 
+#### 詰まった場合
+
+1. **ヒントを読む**（右下の緑色のボタン）。詳細な注釈付きのアニメーション解答が含まれるものもあれば、わずかな手がかりだけのものもある。そう簡単に答えを全部バラすわけにはいかない！  <br>とはいえこれは意図的な設計だ。答えはちゃんと用意してある。先に進んだり、コードスニペットを実際に実行したり、書き換えて試行錯誤してくれ。
+2. ブラウザのコンソールでコードを試す（Windows は `F12`、Mac は `Command + Option + J`）。
+3. 気軽に [@justsml にツイートしてくれ](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20Date%20quiz%2E%2E%2E&url=https://danlevy.net/)。**感想を聞かせてほしい！** */}
+
+
+#### **注意:** 以下の例はすべて GMT-7 のローカルタイムゾーンを前提とする。
+
+
+### 👇 以下 14 問 👇
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="日付の操作"
+  title="Dateコンストラクタ パート1"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果はどうなるでしょうか？
+```js
+    const d1 = new Date(2020, 1, 1)
+    console.log(d1)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+月の引数は0始まりです。範囲は0〜11（西暦カレンダー基準）です。
+
+    'February'のインデックス値は1になります。（配列のインデックス参照と同じ感覚で捉えてください。）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="日付の操作"
+  title="Dateコンストラクタ その2"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果はどうなりますか？
+```js
+    const d2 = new Date(2020, 0, 1)
+    console.log(d2)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+月の引数は0始まりです。範囲は0〜11（西暦カレンダーの場合）です。
+
+「1月」のインデックス値は0です。（配列のインデックスアクセスと同じだと思ってください。）
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="日付の操作"
+  title="Dateコンストラクタ パート3"
+  options={[
+    {text: '1970年1月1日'},
+    {text: 'Unixエポックの0'},
+    {text: '現在の日時（UTC/GMT）'},
+    {text: '現在の日時', isAnswer: true},
+    {text: 'NaN'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果はどうなる？
+```js
+    const d3 = Date('Thu, 01 Jan 1970 00:00:00 GMT')
+    console.log(d3)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`new`キーワードを忘れずに！`Date`はクラスなので、必ず`new`を付けて呼び出しましょう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="日付の操作"
+  title="Date コンストラクタ パート4"
+  options={[
+    {text: '1969', isAnswer: true},
+    {text: '1970'},
+    {text: '2019'},
+    {text: '2020'},
+    {text: '2021'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果はどうなる？
+```js
+      const date = new Date(2020)
+      console.log(date.getFullYear())
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+整数1つだけを引数に渡すと、`Date` コンストラクタはそれを Unix `Epoch` 値として解釈します。`Epoch` とは、1970年1月1日0時（UTC）からの経過ミリ秒数です。
+
+つまり、`2020` という値は 1970年1月1日のちょうど2秒後を指します。
+
+ここでローカルタイムゾーンが UTC-7（7時間遅れ）の場合、時刻は前日に巻き戻され、`Wed Dec 31 1969 17:00:02 GMT-0700 (Mountain Standard Time)` という結果になります。
+
+タイムゾーンのオフセットに振り回されたくないなら、[`.getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) を使いましょう。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="日付の操作"
+  title="日付文字列の解析"
+  options={[
+    {text: '2019 2020', isAnswer: true},
+    {text: '2020 2021'},
+    {text: '2020 2020'},
+    {text: '2020 2019'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+コンソールに出力される値は？
+```js
+      const d1 = new Date('2020-01-01')
+      const d2 = new Date('2020-01-01T00:00')
+      console.log(d1.getFullYear(), d2.getFullYear())
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`T` を含まない文字列は一見すると 2020年1月1日に見えますが、日付のみの文字列は UTC として解釈される仕様です。ローカルタイムゾーン（GMT-7）に調整すると、実際にはまだ 2019年であることがわかります。
+
+明示的なタイムゾーンが指定されていない日付時刻文字列は、ローカル時間として解釈されます。
+
+`T00:00` の形式が含まれているため、2番目の値はローカルの深夜0時として扱われます。
+
+結果として、1番目の日付は `Tue Dec 31 2019 17:00:00 GMT-0700 (Mountain Standard Time)` に、2番目の日付は `Wed Jan 01 2020 00:00:00 GMT-0700 (Mountain Standard Time)` に解釈されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="日付の操作"
+  title="フォーマット Part 1"
+  options={[
+    {text: 'new Intl.DateTimeFormat(\'en-US\').format(date)'},
+    {text: 'date.toLocaleFormat(\'en-US\')', isAnswer: true},
+    {text: 'date.toLocaleString(\'en-US\')'},
+    {text: 'date.toLocaleDateString(\'en-US\')'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+_誤った_ フォーマットメソッドを1つ選んでください：
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`toLocaleFormat()` は標準メソッドではありません！昔のサードパーティ製ライブラリから来ているので見覚えがあるかもしれませんが、JavaScript のネイティブ API には存在しません。
+
+代わりに [`toLocaleDateString` のドキュメント](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString) を確認しましょう。このメソッドの実際の動作は [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat) で規定されています。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="日付の操作"
+  title="UTC日付 パート1"
+  options={[
+    {text: 'Wed, 01 Jan 2020 00:00:00 GMT'},
+    {text: 'Thu, 02 Jan 2020 00:00:00 GMT'},
+    {text: 'TypeError', isAnswer: true},
+    {text: 'NaN'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果には何が含まれる？
+```js
+      var date = Date.UTC('2020-01-02T00:00')
+      console.log(date.toUTCString())
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`TypeError: date.toUTCString is not a function` が発生します。これは、[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) が日付インスタンスではなく、ミリ秒単位の整数を返すためです。
+
+      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルのタイムゾーンオフセットを使用します（この問題では GMT-07:00 を想定）。つまり、前年の値が返されます（大晦日から7時間遡るため）。
+      一方、[`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した通りの年（2020年）を返します。
+      */}
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="日付の操作"
+  title="UTC日付 パート2"
+  options={[
+    {text: 'UTCベースの日付インスタンス'},
+    {text: 'ローカルタイムゾーンに調整された日付インスタンス'},
+    {text: '1970年1月1日 GMTからの経過ミリ秒', isAnswer: true},
+    {text: 'エラー'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果には何が含まれるでしょうか？
+```js
+      const d = Date.UTC(2020, 0, 1)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+ヘルパーメソッド[`Date.UTC`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC)は日付インスタンスを返しません。単にミリ秒単位の整数を返すだけです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="日付の操作"
+  title="UTC日付 パート3"
+  options={[
+    {text: '0'},
+    {text: '420', isAnswer: true},
+    {text: '700'},
+    {text: '1400'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果に含まれる値はどれでしょうか？
+```js
+      // Assume local TZ is -07:00
+      const d = new Date(Date.UTC(2020, 0, 1))
+      console.log(d.getTimezoneOffset())
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`Date` インスタンスは暗黙的にローカル時間で表示され、[`.getTimezoneOffset()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTimezoneOffset) の値は（実質的に）変化しません。
+
+`Date` インスタンス自体はタイムゾーンデータを保持していません。保持しているのは、Unixエポック（1970年1月1日）からの経過ミリ秒数だけです。タイムゾーンの考慮は、日付文字列の解析や表示を行う際に行われます。デフォルトの表示動作は、システムやブラウザのロケール設定に基づいて自動的に決定されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="日付の操作"
+  title="Date Setters パート1"
+  options={[
+    {text: 'Jan 01 2020', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果に含まれるのはどれ？
+```js
+      const d = new Date(2020, 0, 1)
+      d.setDate(1)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`.setDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setDate)メソッドは、対象のDateインスタンスが持つ現在の月を基準に、日付を設定します。
+
+指定した値がその月の日数を超えている場合、Dateインスタンスの「月」が自動的に調整されます（例：1月に`setDate(32)`を実行すると、2月1日として計算されます）。
+
+<aside class="hint">`setDate`は月の日付を設定するメソッドであり、通常は1〜31の範囲の値を扱います。</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="日付の操作"
+  title="Date セッター Part 2"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果には何が含まれるでしょうか？
+```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(1)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) メソッドは、指定された Date インスタンスの月を設定します。
+
+月の引数は 0 始まり（ゼロベース）であり、西暦カレンダーでは 0〜11 の範囲で指定する必要があります。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="日付の操作"
+  title="Dateセッター Part 3"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Jan 01 2021', isAnswer: true},
+    {text: 'Feb 01 2020'},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果に含まれるのはどれでしょうか？
+```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(12)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。
+
+`month`引数は0始まり（ゼロベース）で、西暦カレンダーでは0〜11の12種類の値を取ります。
+
+ここでは`setMonth(12)`が11（12月）より1大きい値であるため、年が自動的に2021年に繰り上がります。Dateオブジェクトは範囲外の値を自動的に正規化する仕様になっているのです。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="日付の操作"
+  title="Dateセッター Part 4"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2021'},
+    {text: 'Feb 01 2021', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果に含まれるのはどれですか？
+```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(13)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。
+
+月の引数は0始まりで、範囲は0〜11です（西暦カレンダーを使用）。
+
+ここでは、`setMonth(13)`が11（12月）より2大きい値であるため、月と年が2021年2月に調整されているのがわかります。
+
+<aside class="hint">`setMonth`はインデックスで月を設定します。12ヶ月は0〜11でインデックス付けされます。</aside>
+<aside class="hint">
+0〜11の範囲外の数値を指定すると、年がオーバーフローまたはアンダーフローします。例えば、`setMonth(13)`は年を2021年に調整します（13は11より2大きいため、2月になります）。
+</aside>
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="日付の操作"
+  title="Dateセッター Part 5"
+  options={[
+    {text: 'Jan 01 2020'},
+    {text: 'Feb 01 2020'},
+    {text: 'Jan 01 2019'},
+    {text: 'Dec 01 2019', isAnswer: true},
+    {text: 'RangeError: Invalid argument.'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+出力結果には何が含まれるでしょうか？
+```js
+      const d = new Date(2020, 0, 1)
+      d.setMonth(-1)
+      console.log(d)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+[`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth)メソッドは、指定されたDateインスタンスの月を設定します。
+
+月の引数は0始まり（ゼロベース）で、0〜11の範囲を取ります（西暦カレンダーを使用する場合）。
+
+ここでは、`setMonth(-1)`が0（1月）より小さい値であるため、JavaScriptが月と年を自動的に2019年12月に巻き戻して補正しているのがわかります。
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

@@ -1,0 +1,327 @@
+---
+unlisted: false
+title: 'क्विज़: अपनी SQL स्किल्स साबित करें!'
+subTitle: आप SQL के हैं या NoSQL के?
+label: SQL 101
+social_image: ./desktop-social.webp
+category: Quiz
+subCategory: Database
+date: '2024-11-08'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - intro
+  - sql
+  - core
+  - fundamentals
+  - beginner
+  - intermediate
+cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
+cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## अपने SQL क्वेरी फंडामेंटल्स को परखें
+
+क्या ORM का इस्तेमाल आपकी कोर स्किल्स को थोड़ा ज़ंग खा रहा है?
+फिक्र मत करो, यह ज़्यादातर डेवलपर्स के साथ होता है।
+
+बिना देर किए शुरू करें और अपने SQL क्वेरी फंडामेंटल्स को साबित करें! 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="SQL बेसिक्स"
+  title="बेसिक WHERE क्लॉज़"
+  options={[
+    {text: 'SELECT * FROM users WHERE name LIKE(John);'},
+    {text: 'SELECT * FROM users WHERE name = "', isAnswer: true},
+    {text: 'SELECT * FROM users WHERE name == "John";'},
+    {text: 'SELECT * FROM users WHERE name === "John";'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+निम्नलिखित में से कौन सी SQL क्वेरी उन पंक्तियों को सही तरीके से प्राप्त करती है जहाँ नाम "John" है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+SQL में, `WHERE` क्लॉज़ में इक्वैलिटी चेक के लिए सिंगल इक्वल साइन (`=`) का उपयोग होता है, `==` या `===` का नहीं—ये तो JavaScript के ऑपरेटर्स हैं।
+
+सही सिंटैक्स है: `SELECT * FROM users WHERE name = 'John';`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="SQL बेसिक्स"
+  title="एग्रीगेट फंक्शन COUNT"
+  options={[
+    {text: 'सभी rows को गिनता है, जिसमें NULL values भी शामिल हैं'},
+    {text: 'कॉलम में केवल non-NULL values को गिनता है', isAnswer: true},
+    {text: 'NULL values को एक unique value के रूप में गिनता है'},
+    {text: 'हर NULL value को unique मानता है, जैसे `NaN !== NaN` होता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `COUNT(column_name)` असल में क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`COUNT(column_name)` सिर्फ़ उन rows को गिनता है जहाँ कॉलम में actual data (non-NULL) मौजूद है। SQL में NULL का मतलब 'अज्ञात' होता है, इसलिए `COUNT` उसे अनदेखा कर देता है। अगर आपको हर single row को गिनना है, तो `COUNT(*)` का इस्तेमाल करें।
+
+अगर आप NULLs को भी गिनना चाहते हैं, तो `COALESCE` का उपयोग करके उन्हें किसी डिफ़ॉल्ट non-NULL value में बदल सकते हैं। उदाहरण: `COUNT(COALESCE(column_name, 0))`।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="SQL जॉइन्स"
+  title="`LEFT JOIN` की मूल बातें"
+  options={[
+    {text: 'हर मिलान वाली पंक्ति के लिए एक पंक्ति लौटाता है, बिना मिलान वाली पंक्तियों को नज़रअंदाज़ करता है'},
+    {text: 'बाईं तालिका की सभी पंक्तियाँ लौटाता है, साथ ही दाईं तालिका की मिलान वाली पंक्तियाँ भी', isAnswer: true},
+    {text: 'सभी मिलान वाली या बिना मिलान वाली पंक्तियाँ लौटाता है, जहाँ `NULL` का मतलब है कोई मिलान नहीं'},
+    {text: 'दाईं तालिका की सभी पंक्तियाँ लौटाता है, साथ ही बाईं तालिका की मिलान वाली पंक्तियाँ भी'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `LEFT JOIN` असल में क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`LEFT JOIN` बाईं तालिका की सभी पंक्तियाँ लौटाता है और दाईं तालिका से केवल मिलान वाली पंक्तियाँ जोड़ता है। जहाँ दाईं तरफ कोई मिलान नहीं मिलता, वहाँ `NULL` आ जाता है। सीधा और स्पष्ट।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="SQL जॉइन्स"
+  title="`INNER JOIN` का उपयोग"
+  options={[
+    {text: 'दोनों टेबल्स से अनमैच्ड पंक्तियाँ लौटाता है', hint: 'यह OUTER JOIN का काम है।'},
+    {text: 'दोनों टेबल्स की सभी पंक्तियाँ लौटाता है, अनमैच्ड पंक्तियों के लिए NULL के साथ', hint: 'यह FULL OUTER JOIN का काम है।'},
+    {text: 'उन पंक्तियों को लौटाता है जो दोनों टेबल्स में जॉइन कंडीशन को संतुष्ट करती हैं', isAnswer: true, hint: 'बिल्कुल सही! केवल मिलान वाली पंक्तियाँ ही रिटर्न होती हैं।'},
+    {text: 'राइट टेबल से अनमैच्ड पंक्तियाँ लौटाता है', hint: 'यह RIGHT JOIN का काम है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `INNER JOIN` क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`INNER JOIN` केवल वही पंक्तियाँ रिटर्न करता है जहाँ जॉइन कंडीशन दोनों टेबल्स में मेल खाती है। जो पंक्तियाँ मेल नहीं खातीं, वे रिजल्ट सेट से बाहर रहती हैं। सीधे शब्दों में: केवल कॉमन डेटा ही मिलेगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="SQL सबक्वेरीज़"
+  title="कोरिलेटेड सबक्वेरी"
+  options={[
+    {text: 'एक ऐसी सबक्वेरी जो पूरे क्वेरी में सिर्फ़ एक बार चलती है'},
+    {text: 'एक ऐसी सबक्वेरी जो सिर्फ़ JOIN स्टेटमेंट्स में काम आती है'},
+    {text: 'एक ऐसी सबक्वेरी जो सिर्फ़ मल्टीपल कॉलम रिटर्न करती है'},
+    {text: 'एक ऐसी सबक्वेरी जो आउटर क्वेरी की हर एक रो के लिए अलग से चलती है', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में कोरिलेटेड सबक्वेरी आखिर होती क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+कोरिलेटेड सबक्वेरी आउटर क्वेरी की हर एक रो के लिए अलग से एक्सिक्यूट होती है। चूंकि यह आउटर क्वेरी के कॉलम्स को रेफरेंस करती है, इसलिए यह हर रो के डेटा पर निर्भर हो जाती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="SQL CTEs"
+  title="`WITH` क्लॉज का सिंटैक्स"
+  options={[
+    {text: 'केवल DELETE स्टेटमेंट्स में अनुमति है', hint: 'CTE का उपयोग कई प्रकार के स्टेटमेंट्स में होता है, सिर्फ DELETE में नहीं।'},
+    {text: 'एग्रीगेशन फंक्शंस के लिए उपयोग किया जाता है', hint: 'डेटा समूहीकरण के लिए GROUP BY और SUM() जैसे फंक्शंस होते हैं।'},
+    {text: 'केवल व्यूज़ (views) को परिभाषित करने के लिए उपयोग किया जाता है', hint: 'व्यूज़ बनाने के लिए CREATE VIEW कमांड का उपयोग होता है।'},
+    {text: 'किसी बड़े SQL स्टेटमेंट में उपयोग के लिए एक अस्थायी रिजल्ट सेट को परिभाषित करना', isAnswer: true, hint: 'बिल्कुल सही! CTE अस्थायी डेटा सेट बनाकर क्वेरी को साफ और मॉड्यूलर बनाता है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `WITH` क्लॉज (Common Table Expression) का मुख्य उद्देश्य क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`WITH` क्लॉज, जिसे Common Table Expression (CTE) भी कहा जाता है, का उपयोग एक अस्थायी रिजल्ट सेट को परिभाषित करने के लिए किया जाता है, जिसे मुख्य क्वेरी के भीतर रेफरेंस किया जा सकता है। PostgreSQL में, `WITH` को `SELECT`, `INSERT`, `UPDATE`, `DELETE`, या `MERGE` जैसे स्टेटमेंट्स के साथ जोड़ा जा सकता है।
+
+यह जटिल क्वेरीज़ की पठनीयता और मेंटेनेबिलिटी को काफी बेहतर बनाता है।
+
+इसका सिंटैक्स इस प्रकार है:
+```sql
+WITH cte_name AS (
+  SELECT column_name
+  FROM table_name
+)
+SELECT *
+FROM cte_name;
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="SQL की मूल बातें"
+  title="IS NULL vs IS NOT NULL"
+  options={[
+    {text: 'जाँचता है कि क्या कोई मान NULL है', isAnswer: true},
+    {text: 'जाँचता है कि क्या कोई मान खाली है'},
+    {text: 'जाँचता है कि क्या कोई मान स्ट्रिंग है'},
+    {text: 'जाँचता है कि क्या कोई मान संख्यात्मक है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `IS NULL` ऑपरेटर असल में क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`IS NULL` यह पुष्टि करता है कि क्या किसी निर्दिष्ट कॉलम में वास्तव में `NULL` (अनुपस्थित डेटा) मौजूद है, न कि केवल खाली स्ट्रिंग या शून्य। `IS NOT NULL` ठीक इसके विपरीत काम करता है, यानी केवल उन्हीं पंक्तियों को फ़िल्टर करता है जहाँ डेटा वास्तव में भरा हुआ हो।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="SQL ऑपरेटर्स"
+  title="`IN` ऑपरेटर का उपयोग"
+  options={[
+    {text: 'अद्वितीय पंक्तियाँ लौटाता है'},
+    {text: 'इंडेक्स वाले कॉलम की आवश्यकता होती है'},
+    {text: 'केवल संख्यात्मक कॉलम पर लागू होता है'},
+    {text: 'निर्दिष्ट सूची में मौजूद मानों से मेल खाने वाली पंक्तियाँ लौटाता है', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `IN` ऑपरेटर का असली काम क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`IN` ऑपरेटर पंक्तियों को फ़िल्टर करता है ताकि वे किसी निर्दिष्ट सूची में मौजूद किसी भी मान से मेल खा सकें। यह अक्सर कई `OR` कंडीशन्स का विकल्प होता है।
+
+हालाँकि यह *अद्वितीय पंक्तियाँ* लौटा *सकता है* (और अक्सर लौटाता भी है), लेकिन यह इसका मुख्य उद्देश्य नहीं है।
+
+यहाँ इंडेक्सिंग अनिवार्य नहीं है, हालाँकि `IN` का उपयोग इंडेक्स वाले कॉलम पर करना एक बेहतर प्रैक्टिस है, खासकर अगर वह `UNIQUE` इंडेक्स हो, क्योंकि इससे परफॉर्मेंस में सुधार होता है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="SQL फ़ंक्शन्स"
+  title="COALESCE फ़ंक्शन का उपयोग"
+  options={[
+    {text: 'NULL मानों की गिनती करता है', hint: 'गलत। यह COUNT() फ़ंक्शन का काम है।'},
+    {text: 'अंतिम non-NULL आर्गुमेंट रिटर्न करता है', hint: 'गलत। यह अंतिम नहीं, बल्कि पहला मान चुनता है।'},
+    {text: 'पहला non-NULL आर्गुमेंट रिटर्न करता है', isAnswer: true, hint: 'बिल्कुल सही! यह सूची में मिलने वाला पहला वैध मान लौटाता है।'},
+    {text: 'केवल IDENTITY कॉलम तक सीमित है', hint: 'गलत। यह किसी भी कॉलम या एक्सप्रेशन पर काम करता है।'},
+    {text: 'मूल रूप से प्रिंटर कोएलिशन से आया है', hint: 'गलत। यह एक मज़ेदार डिस्ट्रैक्टर है, इसका प्रिंटर से कोई लेना-देना नहीं है।'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `COALESCE` फ़ंक्शन असल में क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`COALESCE` फ़ंक्शन दी गई सूची में पहला non-NULL मान रिटर्न करता है। यह तब बेहद उपयोगी होता है जब आपको NULL मिलने पर डिफ़ॉल्ट मान सेट करना हो।
+
+उदाहरण के लिए, यदि `column_name` का मान `NULL` है, तो `COALESCE(column_name, 0)` `0` रिटर्न करेगा।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="SQL एग्रीगेट फ़ंक्शन्स"
+  title="`GROUP BY` का उपयोग"
+  options={[
+    {text: 'डुप्लिकेट्स को छुपाता है'},
+    {text: 'सिर्फ़ `JOIN` के साथ काम आता है'},
+    {text: 'पंक्तियों को आरोही क्रम में सॉर्ट करता है'},
+    {text: 'निर्दिष्ट कॉलम(ओं) के आधार पर पंक्तियों को समूहित करता है', isAnswer: true},
+    {text: 'सिंटैक्स `GROUP WITH/USING` होना चाहिए'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `GROUP BY` क्लॉज़ असल में करता क्या है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`GROUP BY` क्लॉज़ उन पंक्तियों को एक साथ बाँध देता है जिनके निर्दिष्ट कॉलम में वैल्यू समान होती है। इससे आप हर समूह पर एग्रीगेट फ़ंक्शन्स लागू कर सकते हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="SQL Joins"
+  title="`FULL OUTER JOIN` की मूल बातें"
+  options={[
+    {text: 'केवल मिलान वाली rows लौटाता है'},
+    {text: 'केवल non-NULL values वाली rows लौटाता है'},
+    {text: 'केवल left table से unmatched rows लौटाता है'},
+    {text: 'केवल right table से unmatched rows लौटाता है'},
+    {text: 'दोनों tables से सभी rows लौटाता है, unmatched rows के लिए NULLs भर देता है', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+SQL में `FULL OUTER JOIN` क्या करता है?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`FULL OUTER JOIN` दोनों tables से सभी rows लौटाता है, और unmatched rows में missing values के लिए NULL भर देता है।
+
+यह दो tables को compare करने और उनके बीच के differences को पकड़ने के लिए बेहद उपयोगी है।
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

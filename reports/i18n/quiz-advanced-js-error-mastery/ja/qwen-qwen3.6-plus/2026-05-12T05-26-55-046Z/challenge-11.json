@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Expressレスポンスのエラー",
+  "translation": {
+    "title": "Expressレスポンスのエラー",
+    "group": "APIの罠",
+    "options": [
+      {
+        "text": "エラーオブジェクトを丸ごと送信する"
+      },
+      {
+        "text": "{\"error\":{}} を送信する"
+      },
+      {
+        "text": "サーバーエラーをスローする"
+      },
+      {
+        "text": "エラーメッセージのみを送信する"
+      }
+    ],
+    "questionProse": [
+      "クライアントには何が返ってくる？"
+    ],
+    "explanationProse": [
+      "`res.json()` は内部で `JSON.stringify()` を呼び出すため、Errorオブジェクトは空の `{}` にシリアライズされます。結果として、クライアントには `{\"error\":{}}` という空っぽのオブジェクトが届くだけです。これを修正するには、`res.json({ error: error.message })` のように明示的にプロパティを抽出するか、`res.json({ error: { message: error.message, name: error.name } })` で必要な情報を渡しましょう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Expressレスポンスのエラー\",\n  \"group\": \"APIの罠\",\n  \"options\": [\n    {\n      \"text\": \"エラーオブジェクトを丸ごと送信する\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":{}} を送信する\"\n    },\n    {\n      \"text\": \"サーバーエラーをスローする\"\n    },\n    {\n      \"text\": \"エラーメッセージのみを送信する\"\n    }\n  ],\n  \"questionProse\": [\n    \"クライアントには何が返ってくる？\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` は内部で `JSON.stringify()` を呼び出すため、Errorオブジェクトは空の `{}` にシリアライズされます。結果として、クライアントには `{\\\"error\\\":{}}` という空っぽのオブジェクトが届くだけです。これを修正するには、`res.json({ error: error.message })` のように明示的にプロパティを抽出するか、`res.json({ error: { message: error.message, name: error.name } })` で必要な情報を渡しましょう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 2162,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 39845
+  },
+  "cost": {
+    "inputUsd": 0.00024895,
+    "outputUsd": 0.0042159,
+    "totalUsd": 0.00446485,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

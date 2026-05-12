@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "UTC Dates Part 1",
+  "translatedTitle": "UTC日付 パート1",
+  "translation": {
+    "title": "UTC日付 パート1",
+    "group": "日付の操作",
+    "options": [
+      {
+        "text": "Wed, 01 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "Thu, 02 Jan 2020 00:00:00 GMT"
+      },
+      {
+        "text": "TypeError"
+      },
+      {
+        "text": "NaN"
+      }
+    ],
+    "questionProse": [
+      "出力結果には何が含まれる？"
+    ],
+    "explanationProse": [
+      "`TypeError: date.toUTCString is not a function` が発生します。これは、[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) が日付インスタンスではなく、ミリ秒単位の整数を返すためです。\n\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルのタイムゾーンオフセットを使用します（この問題では GMT-07:00 を想定）。つまり、前年の値が返されます（大晦日から7時間遡るため）。\n      一方、[`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した通りの年（2020年）を返します。\n      */}"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"UTC日付 パート1\",\n  \"group\": \"日付の操作\",\n  \"options\": [\n    {\n      \"text\": \"Wed, 01 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"Thu, 02 Jan 2020 00:00:00 GMT\"\n    },\n    {\n      \"text\": \"TypeError\"\n    },\n    {\n      \"text\": \"NaN\"\n    }\n  ],\n  \"questionProse\": [\n    \"出力結果には何が含まれる？\"\n  ],\n  \"explanationProse\": [\n    \"`TypeError: date.toUTCString is not a function` が発生します。これは、[`Date.UTC()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/UTC) が日付インスタンスではなく、ミリ秒単位の整数を返すためです。\\n\\n      {/* [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear) メソッドはローカルのタイムゾーンオフセットを使用します（この問題では GMT-07:00 を想定）。つまり、前年の値が返されます（大晦日から7時間遡るため）。\\n      一方、[`getUTCFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getUTCFullYear) メソッドは、`Date.UTC()` に指定した通りの年（2020年）を返します。\\n      */}\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 910,
+    "outputTokens": 3879,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 70706
+  },
+  "cost": {
+    "inputUsd": 0.00029575,
+    "outputUsd": 0.00756405,
+    "totalUsd": 0.0078598,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

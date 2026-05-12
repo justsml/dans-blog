@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Matching Selectors to HTML Elements",
+  "translatedTitle": "セレクタとHTML要素のマッチング",
+  "translation": {
+    "title": "セレクタとHTML要素のマッチング",
+    "group": "セレクタ：基礎",
+    "options": [
+      {
+        "text": "#Home"
+      },
+      {
+        "text": "a [id='home']"
+      },
+      {
+        "text": "a:contains(home)"
+      },
+      {
+        "text": "a#home[name='home']"
+      }
+    ],
+    "questionProse": [
+      "以下のHTMLに最も正確にマッチするセレクタはどれ？"
+    ],
+    "explanationProse": [
+      "正解は `a#home[name='home']` です。このセレクタは `id` と `name` の両方の属性を同時に指定しています。CSSセレクタは大文字・小文字を厳密に区別するため、`#Home` はマッチしません。また、セレクタ内のスペースは子孫結合子を意味するため、このケースには当てはまりません。\n\n`:contains()` は標準CSSセレクタではなく、jQueryなどの一部のJSライブラリで独自に実装されている擬似クラスです。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"セレクタとHTML要素のマッチング\",\n  \"group\": \"セレクタ：基礎\",\n  \"options\": [\n    {\"text\": \"#Home\"},\n    {\"text\": \"a [id='home']\"},\n    {\"text\": \"a:contains(home)\"},\n    {\"text\": \"a#home[name='home']\"}\n  ],\n  \"questionProse\": [\n    \"以下のHTMLに最も正確にマッチするセレクタはどれ？\"\n  ],\n  \"explanationProse\": [\n    \"正解は `a#home[name='home']` です。このセレクタは `id` と `name` の両方の属性を同時に指定しています。CSSセレクタは大文字・小文字を厳密に区別するため、`#Home` はマッチしません。また、セレクタ内のスペースは子孫結合子を意味するため、このケースには当てはまりません。\\n\\n`:contains()` は標準CSSセレクタではなく、jQueryなどの一部のJSライブラリで独自に実装されている擬似クラスです。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 778,
+    "outputTokens": 2950,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 54053
+  },
+  "cost": {
+    "inputUsd": 0.00025285000000000005,
+    "outputUsd": 0.0057525,
+    "totalUsd": 0.00600535,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

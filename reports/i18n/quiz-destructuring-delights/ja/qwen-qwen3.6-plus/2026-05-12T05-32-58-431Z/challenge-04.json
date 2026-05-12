@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Default Values in Object Destructuring",
+  "translatedTitle": "オブジェクトの分割代入におけるデフォルト値",
+  "translation": {
+    "title": "オブジェクトの分割代入におけるデフォルト値",
+    "group": "デフォルト値",
+    "options": [
+      {
+        "text": "Hi Dan from Unknown"
+      },
+      {
+        "text": "Hi Dan from Denver"
+      },
+      {
+        "text": "Hi Unknown from Unknown"
+      },
+      {
+        "text": "Hi Unknown from Denver"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "さて、デフォルト値をいくつか設定した場合、これはどう動くでしょうか？"
+    ],
+    "explanationProse": [
+      "`birth` プロパティは `person` に存在しないため、ネストされたプロパティだけでなく、オブジェクト全体にデフォルト値が必要です。つまり、そこに ` = {}` のデフォルト指定が抜けています。\n\n  現在の書き方では、「`person.birth` が `undefined` の場合、`place` は `Unknown` になる」と解釈されます。しかし `person.birth` は実際に `undefined` なので、`undefined` を分割代入しようとしてしまい、結果としてエラーが発生します。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"オブジェクトの分割代入におけるデフォルト値\",\n  \"group\": \"デフォルト値\",\n  \"options\": [\n    {\n      \"text\": \"Hi Dan from Unknown\"\n    },\n    {\n      \"text\": \"Hi Dan from Denver\"\n    },\n    {\n      \"text\": \"Hi Unknown from Unknown\"\n    },\n    {\n      \"text\": \"Hi Unknown from Denver\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"さて、デフォルト値をいくつか設定した場合、これはどう動くでしょうか？\"\n  ],\n  \"explanationProse\": [\n    \"`birth` プロパティは `person` に存在しないため、ネストされたプロパティだけでなく、オブジェクト全体にデフォルト値が必要です。つまり、そこに ` = {}` のデフォルト指定が抜けています。\\n\\n  現在の書き方では、「`person.birth` が `undefined` の場合、`place` は `Unknown` になる」と解釈されます。しかし `person.birth` は実際に `undefined` なので、`undefined` を分割代入しようとしてしまい、結果としてエラーが発生します。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 868,
+    "outputTokens": 2009,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 862,
+    "durationMs": 38156
+  },
+  "cost": {
+    "inputUsd": 0.00028209999999999997,
+    "outputUsd": 0.00391755,
+    "totalUsd": 0.004199649999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

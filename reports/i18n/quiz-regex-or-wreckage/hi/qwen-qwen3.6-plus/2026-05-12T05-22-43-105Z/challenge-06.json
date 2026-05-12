@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "शब्द सीमाएँ (Word Boundaries)",
+  "translation": {
+    "title": "शब्द सीमाएँ (Word Boundaries)",
+    "group": "मूल मिलान (Basic Matching)",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "इस रेगेक्स से क्या मैच होगा?"
+    ],
+    "explanationProse": [
+      "`\\b` एक वर्ड बाउंडरी को दर्शाता है, जो तब मैच करता है जब:\n    - एक वर्ड कैरेक्टर और नॉन-वर्ड कैरेक्टर के बीच सीमा हो\n    - स्ट्रिंग की शुरुआत या अंत में कोई वर्ड कैरेक्टर मौजूद हो\n\n    इसलिए `/\\bcat\\b/` केवल तभी \"cat\" को पकड़ेगा जब यह एक अलग/पूर्ण शब्द हो। यह किसी बड़े शब्द के अंदर छिपे \"cat\" को इग्नोर कर देगा।\n    - ✅ \"cat\" (दोनों तरफ स्पेस है)\n    - ❌ \"cats\" (\"cat\" के तुरंत बाद 's' है, कोई बाउंडरी नहीं)\n    - ❌ \"category\" (\"cat\" के तुरंत बाद 'e' है, कोई बाउंडरी नहीं)\n\n    [वर्ड बाउंडरीज़ के बारे में गहराई से जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"शब्द सीमाएँ (Word Boundaries)\",\n  \"group\": \"मूल मिलान (Basic Matching)\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"इस रेगेक्स से क्या मैच होगा?\"\n  ],\n  \"explanationProse\": [\n    \"`\\\\b` एक वर्ड बाउंडरी को दर्शाता है, जो तब मैच करता है जब:\\n    - एक वर्ड कैरेक्टर और नॉन-वर्ड कैरेक्टर के बीच सीमा हो\\n    - स्ट्रिंग की शुरुआत या अंत में कोई वर्ड कैरेक्टर मौजूद हो\\n\\n    इसलिए `/\\\\bcat\\\\b/` केवल तभी \\\"cat\\\" को पकड़ेगा जब यह एक अलग/पूर्ण शब्द हो। यह किसी बड़े शब्द के अंदर छिपे \\\"cat\\\" को इग्नोर कर देगा।\\n    - ✅ \\\"cat\\\" (दोनों तरफ स्पेस है)\\n    - ❌ \\\"cats\\\" (\\\"cat\\\" के तुरंत बाद 's' है, कोई बाउंडरी नहीं)\\n    - ❌ \\\"category\\\" (\\\"cat\\\" के तुरंत बाद 'e' है, कोई बाउंडरी नहीं)\\n\\n    [वर्ड बाउंडरीज़ के बारे में गहराई से जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 872,
+    "outputTokens": 5139,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 93382
+  },
+  "cost": {
+    "inputUsd": 0.0002834,
+    "outputUsd": 0.01002105,
+    "totalUsd": 0.01030445,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

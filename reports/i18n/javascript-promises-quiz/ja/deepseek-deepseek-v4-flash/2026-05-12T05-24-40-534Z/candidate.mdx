@@ -1,0 +1,351 @@
+---
+social_image: ./desktop-social.webp
+title: 'クイズ: JavaScript Promise 9問'
+subTitle: Promiseを絶対に落とさない！
+label: Promise Gotchas
+date: '2019-11-26'
+modified: '2024-11-28'
+tags:
+  - promises
+  - programming
+  - async
+  - javascript
+  - guides
+  - quiz
+  - intermediate
+related:
+  - intro-to-promises
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+category: Quiz
+unlisted: false
+subCategory: JavaScript
+cover: ../olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_mobile: ../w300_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+cover_icon: ../icon_olav-ahrens-rotne-jvBXiynINGE-resized.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## JavaScript Promise を知っていますか？
+
+> * **JavaScript スキルを証明しよう！** 🚀
+
+1. **ヒントを確認**（右下隅の大きなボタン）。
+2. コードをブラウザのコンソールで試してみてください（ショートカット `F12` または検索して開く）。または [repl.it](https://repl.it)* を使用してください。
+3. お気軽に [@justsml にツイート](https://x.com/intent/tweet?text=Hey%20Dan%2C%20I%20was%20taking%20your%20promises%20quiz%2E%2E%2E&url=https://danlevy.net/) してください。**感想をお聞かせください！**
+
+### 👇 以下の9問に回答してください 👇
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="エラーハンドリング"
+  title="複数の `.catch` #1"
+  options={[
+    {text: 'メッセージを1回出力する'},
+    {text: 'メッセージを2回出力する', isAnswer: true},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'プロセスが終了する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+コンストラクタメソッドを使ってPromiseを作成し、`reject`コールバックで即座にエラーを発生させます。
+
+そして、`.catch`ハンドラはDOMの`.addEventListener(event, callback)`やEvent Emitterの`.on(event, callback)`のように動作し、**複数のハンドラコールバックを追加できます。** それぞれが同じ引数で呼び出されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="エラーハンドリング"
+  title="複数の`.catch` #2"
+  options={[
+    {text: 'メッセージを1回出力する'},
+    {text: 'メッセージを2回出力する'},
+    {text: '未処理の拒否されたPromise', isAnswer: true},
+    {text: 'プロセスが終了する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    var p = new Promise((resolve, reject) => {
+      return Promise.reject(Error('The Fails!'))
+    })
+    p.catch(error => console.log(error.message))
+    p.catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Promiseコンストラクタを使用する場合、`resolve()`または`reject()`コールバックのいずれかを呼び出す必要があります。Promiseコンストラクタはexecutorの戻り値を無視するため、`Promise.reject()`で作成された追加のPromiseは`p`にチェーンされません。2つのハンドラは`p`にアタッチされますが、`p`はpendingのままです。一方、返された拒否されたPromiseは、ホスト環境によって未処理として報告されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible=
+  index={2}
+  group="エラーハンドリング"
+  title="`.then`と`.catch`のチェーン"
+  options={[
+    {text: 'エラーと`undefined`を出力する', isAnswer: true},
+    {text: 'エラーを2回出力する'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error))
+    .then(error => console.log(error))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.then`と`.catch`をチェーンするときは、それらを一連のステップとして考えると便利です。各`.then`は、前の`.then`が返した値（を引数として）を受け取ります。ただし、その「ステップ」でエラーが発生した場合、`.catch`に到達するまで後続の`.then`の「ステップ」はスキップされます。エラーを上書きしたい場合は、エラーでない値を返すだけで済みます。その値は後続の任意の`.then`からアクセスできます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible=
+  index={3}
+  group="エラーハンドリング"
+  title="`.catch`の連鎖"
+  options={[
+    {text: 'エラーメッセージが1回出力される', isAnswer: true},
+    {text: 'エラーメッセージが2回出力される'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: 'プロセスが終了する'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+  var p = new Promise((resolve, reject) => {
+      reject(Error('The Fails!'))
+    })
+    .catch(error => console.log(error.message))
+    .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+`.catch`を連鎖させる場合、各`.catch`は前の`.then`または`.catch`の「ステップ」でスローされたエラーのみを処理します。この例では、最初の`.catch`は`console.log`を返しますが、これは両方の`.catch`の後に`.then()`を追加することでしかアクセスできません。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="エラーハンドリング"
+  title="複数の `.catch`"
+  options={[
+    {text: 'メッセージが1回表示される'},
+    {text: 'メッセージが2回表示される'},
+    {text: 'UnhandledPromiseRejectionWarning'},
+    {text: '何も表示されない', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    new Promise((resolve, reject) => {
+        resolve('Success!')
+      })
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return "actually, that worked"
+      })
+      .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**ヒント:** `.catch` は、通常の値を返すだけでエラーを無視（または上書き）するために使用できます。
+
+このトリックは、値を受け取る後続の `.then` がある場合にのみ機能します。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="データ処理"
+  title="`.then`間の流れ"
+  options={[
+    {text: '「Success!」と「SUCCESS!」を出力する'},
+    {text: '「Success!」を出力する'},
+    {text: '「SUCCESS!」を出力する', isAnswer: true},
+    {text: '何も出力されない'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**ヒント:** `.then`はデータを順次渡します。`return value`から次の`.then(value => /* handle value */)`へ渡されます。
+
+値を次の`.then`に渡すには`return`が重要です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="データの処理"
+  title="`.then`間の流れ"
+  options={[
+    {text: 'print "SUCCESS!"'},
+    {text: 'print "Success!"'},
+    {text: 'print "SUCCESS!" and "SUCCESS!"', isAnswer: true},
+    {text: 'nothing prints'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        return data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+        return data
+      })
+      .then(console.log)
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+2つの `console.log` が呼び出されます。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="データの処理"
+  title="`.then`間の流れ"
+  options={[
+    {text: '「SUCCESS!」を表示'},
+    {text: '「Success!」を表示'},
+    {text: '「SUCCESS!」と「SUCCESS!」を表示'},
+    {text: '`undefined`を表示', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    Promise.resolve('Success!')
+      .then(data => {
+        data.toUpperCase()
+      })
+      .then(data => {
+        console.log(data)
+      })
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+**ヒント:** `.then`はデータを順次渡します。`return`の値が次の`.then(value => /* handle value */)`に渡されます。
+
+値を次の`.then`に渡すには`return`が重要です。
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="データの処理"
+  title="`.then`と`.catch`の間のフロー"
+  options={[
+    {text: '「あらら！」と「失敗だ！」を表示する'},
+    {text: '「あらら！」を表示する'},
+    {text: '「失敗だ！」を表示する', isAnswer: true},
+    {text: '「実は、それはうまくいった」を表示する'},
+    {text: '何も表示されない'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+次のコードの出力は何ですか？
+```js
+    Promise.resolve('Success!')
+      .then(() => {
+        throw Error('Oh noes!')
+      })
+      .catch(error => {
+        return 'actually, that worked'
+      })
+      .then(data => {
+        throw Error('The fails!')
+      })
+      .catch(error => console.log(error.message))
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+![annotated-code/question-9-4.webp](annotated-code/question-9-4.webp)
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>

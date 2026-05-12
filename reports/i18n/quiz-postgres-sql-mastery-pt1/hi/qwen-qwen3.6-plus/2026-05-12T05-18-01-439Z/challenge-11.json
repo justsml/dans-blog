@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Integer Overflow",
+  "translatedTitle": "पूर्णांक ओवरफ़्लो",
+  "translation": {
+    "title": "पूर्णांक ओवरफ़्लो",
+    "group": "पूर्णांक अंकगणित",
+    "options": [
+      {
+        "text": "4294967296"
+      },
+      {
+        "text": "त्रुटि: integer out of range"
+      },
+      {
+        "text": "0"
+      },
+      {
+        "text": "2147483647"
+      }
+    ],
+    "questionProse": [
+      "कुल संभावित स्टूडेंट आईडी की गणना करते समय क्या होता है?"
+    ],
+    "explanationProse": [
+      "PostgreSQL का `integer` टाइप 32-bit signed होता है, जिसकी रेंज `-2,147,483,648` से `2,147,483,647` तक होती है।\n\n    गणना `256^4` = `4,294,967,296` इस रेंज को पार कर जाती है।\n\n    बड़ी संख्याओं को हैंडल करने के लिए:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"पूर्णांक ओवरफ़्लो\",\n  \"group\": \"पूर्णांक अंकगणित\",\n  \"options\": [\n    {\n      \"text\": \"4294967296\"\n    },\n    {\n      \"text\": \"त्रुटि: integer out of range\"\n    },\n    {\n      \"text\": \"0\"\n    },\n    {\n      \"text\": \"2147483647\"\n    }\n  ],\n  \"questionProse\": [\n    \"कुल संभावित स्टूडेंट आईडी की गणना करते समय क्या होता है?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL का `integer` टाइप 32-bit signed होता है, जिसकी रेंज `-2,147,483,648` से `2,147,483,647` तक होती है।\\n\\n    गणना `256^4` = `4,294,967,296` इस रेंज को पार कर जाती है।\\n\\n    बड़ी संख्याओं को हैंडल करने के लिए:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 4153,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 75661
+  },
+  "cost": {
+    "inputUsd": 0.000268775,
+    "outputUsd": 0.008098349999999999,
+    "totalUsd": 0.008367125,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "Promise Rejection Values",
+  "translatedTitle": "Promiseのreject値",
+  "translation": {
+    "title": "Promiseのreject値",
+    "group": "非同期エラー",
+    "options": [
+      {
+        "text": "常にErrorオブジェクト"
+      },
+      {
+        "text": "任意の値をreject可能"
+      },
+      {
+        "text": "文字列とErrorオブジェクトのみ"
+      },
+      {
+        "text": "自動的にErrorでラップされる"
+      }
+    ],
+    "questionProse": [
+      "`Promise.reject()`はどのような値を受け取れる？"
+    ],
+    "explanationProse": [
+      "`throw`と同じく、`Promise.reject()`は文字列、オブジェクト、数値など**何でも**受け付ける。このコードは`\"string\"`、`404`、`42`を出力する。Promiseチェーンでcatchした値の型チェックを怠るな。サードパーティのライブラリが平気でError以外の値を投げてくるのは日常茶飯事だ。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Promiseのreject値\",\n  \"group\": \"非同期エラー\",\n  \"options\": [\n    {\n      \"text\": \"常にErrorオブジェクト\"\n    },\n    {\n      \"text\": \"任意の値をreject可能\"\n    },\n    {\n      \"text\": \"文字列とErrorオブジェクトのみ\"\n    },\n    {\n      \"text\": \"自動的にErrorでラップされる\"\n    }\n  ],\n  \"questionProse\": [\n    \"`Promise.reject()`はどのような値を受け取れる？\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"`throw`と同じく、`Promise.reject()`は文字列、オブジェクト、数値など**何でも**受け付ける。このコードは`\\\"string\\\"`、`404`、`42`を出力する。Promiseチェーンでcatchした値の型チェックを怠るな。サードパーティのライブラリが平気でError以外の値を投げてくるのは日常茶飯事だ。\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 763,
+    "outputTokens": 3544,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 64731
+  },
+  "cost": {
+    "inputUsd": 0.000247975,
+    "outputUsd": 0.0069108,
+    "totalUsd": 0.007158775,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

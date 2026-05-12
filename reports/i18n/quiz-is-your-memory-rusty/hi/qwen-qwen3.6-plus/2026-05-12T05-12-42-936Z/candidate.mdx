@@ -1,0 +1,1360 @@
+---
+unlisted: false
+draft: false
+title: 'क्विज़: रस्ट मेमोरी मैनेजमेंट की मूल बातें'
+subTitle: "(Borrow) चेक: पहले खुद को जांचो, वरना कोड टूट जाएगा! \U0001F980"
+label: 'Memory, man'
+category: Quiz
+subCategory: Rust
+date: '2024-12-28'
+modified: '2024-12-29'
+social_image: ../mobile.webp
+tags:
+  - quiz
+  - rust
+  - memory-management
+  - ownership
+  - borrowing
+  - lifetimes
+  - intermediate
+  - advanced
+redirects:
+  - /quiz/rust/memory/
+cover_full_width: ../fade-to-clouds-wide.webp
+cover_mobile: ../fade-to-clouds-square-200.webp
+cover_icon: ../fade-to-clouds-square-200.webp
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+<p class="inset">Rust मेमोरी मैनेजमेंट के अपने कौशल को परखने के लिए तैयार हैं? 🦀</p>
+
+यह क्विज़ Rust के ओनरशिप सिस्टम, बॉरोइंग रूल्स, लाइफटाइम और स्मार्ट पॉइंटर्स पर आपकी समझ को चुनौती देगा।
+
+**नोट:** सभी डिवाइस पर पठनीयता सुनिश्चित करने के लिए प्रश्नों को ~50 कॉलम की चौड़ाई में फॉर्मेट किया गया है। (सुधार के सुझावों का स्वागत है!)
+
+चाहे आप अनुभवी Rustacean हों या मेमोरी मैनेजमेंट के साथ शुरुआत कर रहे हों, यह क्विज़ आपके कॉन्सेप्ट्स को और मजबूत करेगा। **चलिए शुरू करते हैं!** 🦀
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="स्वामित्व"
+  title="मूव सेमेंटिक्स की मूल बातें"
+  options={[
+    {text: 'नमस्ते, !', hint: '\'philosopher\' को मूव करने के बाद क्या होता है, इस पर विचार करें'},
+    {text: 'नमस्ते, सिटियम के ज़ेनो!', hint: 'किसी वैल्यू को मूव करने के बाद, क्या हम उसका उपयोग कर सकते हैं?'},
+    {text: 'नमस्ते, एलिया के ज़ेनो!', hint: 'स्ट्रिंग में \'Citium\' है, \'Elea\' नहीं'},
+    {text: 'नमस्ते, मार्कस ऑरेलियस', hint: 'जाँचें कि क्या यह स्ट्रिंग की सामग्री से मेल खाता है'},
+    {text: 'कंपाइलेशन एरर: मूव के बाद वैल्यू बॉरो की गई', isAnswer: true},
+    {text: 'रनटाइम एरर: नल पॉइंटर एक्सेप्शन', hint: 'Rust इन समस्याओं को कंपाइल टाइम पर ही पकड़ लेता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड को चलाने पर क्या होगा? आउटपुट या एरर का अनुमान लगाने की कोशिश करें:
+```rust
+      fn main() {
+          let philosopher =
+              String::from("Zeno of Citium");
+          let greeting = philosopher;
+
+          println!("Hello, {}!", philosopher);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कोड Rust के ओनरशिप नियमों के कारण कंपाइल नहीं होता। जब हम `philosopher` को `greeting` में असाइन करते हैं, तो String का ओनरशिप `greeting` को मूव हो जाता है। इस मूव के बाद, `philosopher` अब उपयोग के लिए अमान्य हो जाता है।
+
+      इसे ठीक करने के तीन तरीके हैं:
+
+      1. स्ट्रिंग को क्लोन करें (यह एक नई कॉपी बनाता है):
+```rust
+      let greeting = philosopher.clone();
+```
+2. एक रेफरेंस का उपयोग करें (वैल्यू को बॉरो करता है):
+```rust
+      let greeting = &philosopher;
+```
+3. एक स्ट्रिंग स्लाइस का उपयोग करें (स्ट्रिंग के हिस्से को बॉरो करता है):
+```rust
+      let greeting = &philosopher[..];
+```
+हर समाधान के अलग-अलग यूज़ केस और परफॉर्मेंस इम्प्लिकेशन्स होते हैं। क्लोनिंग थोड़ी महंगी है लेकिन आपको ओनरशिप देती है, जबकि रेफरेंस हल्के होते हैं लेकिन इन पर लाइफटाइम की पाबंदियाँ लागू होती हैं।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ओनरशिप"
+  title="फ़ंक्शन्स के साथ मूव सेमेंटिक्स"
+  options={[
+    {text: 'दोनों लाइनें प्रिंट होती हैं', hint: 'ध्यान दें कि फ़ंक्शन को पास करने के बाद `wisdom` का क्या होता है'},
+    {text: 'केवल पहली लाइन प्रिंट होती है', hint: 'कोड रनटाइम तक पहुँचने के लिए कंपाइल भी नहीं होगा'},
+    {text: 'कंपाइलेशन एरर', isAnswer: true},
+    {text: 'रनटाइम एरर', hint: 'Rust के ओनरशिप नियम कंपाइल टाइम पर लागू होते हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब आप इस कोड को चलाते हैं तो क्या होता है? ओनरशिप ट्रांसफर के बारे में सोचें:
+```rust
+      fn take_knowledge(knowledge: String) {
+          println!("Knowledge: {}", knowledge);
+      }
+
+      fn main() {
+          let wisdom = String::from("know thyself");
+          take_knowledge(wisdom);
+          // What happens to our wisdom?
+          println!("Do you {}", wisdom);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+कोड कंपाइल होने में विफल रहता है क्योंकि `wisdom` की ओनरशिप `take_knowledge` में ट्रांसफर हो गई है, इसलिए इसका बाद में उपयोग नहीं किया जा सकता।
+
+      इस समस्या को ठीक करने के तीन तरीके हैं:
+
+      1. रेफरेंस द्वारा पास करें (वैल्यू को बॉरो करें):
+```rust
+      fn borrow_it(text: &String) {
+          println!("Inside: {}", text);
+      }
+      borrow_it(&wisdom);  // Now wisdom can be used after
+```
+2. वैल्यू को क्लोन करें (एक नई कॉपी बनाएं):
+```rust
+      take_knowledge(wisdom.clone());  // Original wisdom remains valid
+```
+3. फ़ंक्शन से ओनरशिप वापस लौटाएं:
+```rust
+      fn take_and_return(text: String) -> String {
+          println!("Inside: {}", text);
+          text  // Return ownership back
+      }
+      let wisdom = take_and_return(wisdom);  // Reassign returned ownership
+```
+हर तरीके के अलग-अलग उपयोग के मामले हैं:
+      - रेफरेंसेस: सबसे कुशल, लेकिन लाइफटाइम मैनेजमेंट की आवश्यकता होती है
+      - क्लोनिंग: सरल लेकिन संभावित रूप से महंगा
+      - ओनरशिप वापस लौटाना: वैल्यू को ट्रांसफॉर्म करने के लिए उपयोगी
+
+      बेस्ट प्रैक्टिस: जब तक आपको ओनरशिप ट्रांसफर की आवश्यकता न हो, रेफरेंसेस का उपयोग करें।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="बोरोइंग"
+  title="म्यूटेबल रेफरेंसेस"
+  options={[
+    {text: 'सफलतापूर्वक कंपाइल हो जाता है', hint: 'क्या हमारे पास एक ही समय में कई म्यूटेबल रेफरेंसेस हो सकते हैं?'},
+    {text: 'त्रुटि: `wisdom` को एक से अधिक बार म्यूटेबल के रूप में उधार नहीं लिया जा सकता', isAnswer: true},
+    {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', hint: 'यहाँ समस्या लाइफटाइम की नहीं है'},
+    {text: 'रनटाइम पैनिक', hint: 'Rust इन समस्याओं को कंपाइल टाइम पर ही पकड़ लेता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+कई म्यूटेबल रेफरेंसेस के साथ क्या होता है?
+```rust
+      fn main() {
+          let mut wisdom = String::from("He who laughs at");
+          let ref1 = &mut wisdom;  // First mutable borrow
+          let ref2 = &mut wisdom;  // Second mutable borrow
+          ref1.push_str(" himself never runs");
+          ref2.push_str(" out of things to laugh at.");
+      }
+```
+म्यूटेबल रेफरेंसेस के लिए Rust के नियमों पर गौर करें।
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कोड Rust के मूल बोरोइंग नियमों का उल्लंघन करता है:
+      - किसी वैल्यू के लिए एक समय में केवल एक म्यूटेबल रेफरेंस
+      - या फिर जितने चाहें उतने इम्यूटेबल रेफरेंस
+      - रेफरेंस अपने रेफरेंट से अधिक समय तक जीवित नहीं रह सकते
+
+      कोड को ठीक करने का तरीका:
+
+      1. सीक्वेंशियल स्कोपिंग का उपयोग करें:
+```rust
+      let mut wisdom = String::from("He who laughs at");
+      {
+          let ref1 = &mut wisdom;
+          ref1.push_str(" himself never runs");
+      }  // ref1 goes out of scope
+      let ref2 = &mut wisdom;  // Now this is valid
+      ref2.push_str(" out of things to laugh at.");
+```
+2. या फिर एक ही बोरो में स्ट्रिंग को मॉडिफाई करें:
+```rust
+      let mut wisdom = String::from("He who laughs at");
+      let ref1 = &mut wisdom;
+      ref1.push_str(" himself never runs out of things to laugh at.");
+```
+ये नियम कंपाइल टाइम पर ही डेटा रेस को रोकते हैं, जिससे Rust डिफ़ॉल्ट रूप से थ्रेड-सेफ बनता है।
+
+      आम गलती: क्लोनिंग से बचने के लिए या एक ही वैल्यू के अलग-अलग हिस्सों को एक साथ मॉडिफाई करने के लिए कई म्यूटेबल रेफरेंसेस का उपयोग करने की कोशिश करना।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="लाइफटाइम एलिजन"
+  title="अंतर्निहित लाइफटाइम"
+  options={[
+    {text: 'कोड सफलतापूर्वक कंपाइल हो जाता है', isAnswer: true},
+    {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', hint: 'लाइफटाइम एलिजन के नियमों को याद रखें - वे आपकी मदद के लिए ही हैं!'},
+    {text: 'त्रुटि: स्पष्ट लाइफटाइम आवश्यक है', hint: 'कंपाइलर इसे स्वचालित रूप से समझ सकता है'},
+    {text: 'त्रुटि: लाइफटाइम बेमेल है', hint: 'यहाँ लाइफटाइम पूरी तरह से संरेखित हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या यह कोड कंपाइल होगा? अगर हाँ, तो क्यों? अगर नहीं, तो क्या गड़बड़ है?
+```rust
+      fn first_word(s: &str) -> &str {  // No explicit lifetimes?
+          match s.find(' ') {
+              Some(pos) => &s[0..pos],
+              None => s,
+          }
+      }
+
+      fn main() {
+          let name = String::from("Seneca the Younger");
+          let first = first_word(&name);
+          println!("Hello, {}", first);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Rust के लाइफटाइम एलिजन नियमों के कारण यह कोड सफलतापूर्वक कंपाइल हो जाता है। 
+      ये नियम कंपाइलर को सामान्य पैटर्न में लाइफटाइम को स्वचालित रूप से अनुमानित करने की अनुमति देते हैं।
+
+      तीन लाइफटाइम एलिजन नियम ये हैं:
+      1. प्रत्येक पैरामीटर को अपना खुद का लाइफटाइम पैरामीटर मिलता है
+      2. यदि केवल एक इनपुट लाइफटाइम पैरामीटर है, तो वह लाइफटाइम सभी आउटपुट लाइफटाइम पैरामीटर्स को असाइन किया जाता है
+      3. यदि कई इनपुट लाइफटाइम पैरामीटर्स हैं, लेकिन उनमें से एक &self या &mut self है, तो self का लाइफटाइम सभी आउटपुट लाइफटाइम पैरामीटर्स को असाइन किया जाता है
+
+      यह फ़ंक्शन इसके बराबर है:
+```rust
+      fn first_word<'a>(s: &'a str) -> &'a str {
+          // ... same implementation
+      }
+```
+वे सामान्य पैटर्न जहाँ एलिजन काम करता है:
+```rust
+      // These don't need explicit lifetimes
+      fn get_str(s: &str) -> &str { s }
+      fn get_first(s: &str) -> &str { &s[0..1] }
+
+      // These would need explicit lifetimes
+      fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+          if x.len() > y.len() { x } else { y }
+      }
+```
+सर्वोत्तम अभ्यास: जब भी संभव हो, एलिजन को अपने लिए काम करने दें, लेकिन यह समझें कि स्पष्ट लाइफटाइम की कब आवश्यकता होती है।
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="स्मार्ट पॉइंटर्स"
+  title="`Box` स्मार्ट पॉइंटर"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस रिकर्सिव टाइप डिफिनिशन में क्या गड़बड़ है?
+```rust
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, CatList),  // Recursive without indirection
+          Nil,
+      }
+
+      fn main() {
+          let catlist = CatList::Cons(1,
+              CatList::Cons(2,
+                  CatList::Cons(3,
+                      CatList::Nil)));
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कोड फेल हो जाता है क्योंकि कंपाइलर कंपाइल टाइम पर `CatList` का साइज़ निर्धारित नहीं कर पाता। टाइप की रिकर्सिव प्रकृति का अर्थ है कि यह अनंत रूप से बड़ा हो सकता है!
+
+      `Box<T>` का उपयोग करके इसे ठीक करने का तरीका यहाँ है:
+```rust
+      #[derive(Debug)]
+      enum CatList {
+          Cons(i32, Box<CatList>),  // Box provides a fixed-size pointer
+          Nil,
+      }
+
+      fn main() {
+          let catlist = CatList::Cons(1,
+              Box::new(CatList::Cons(2,
+                  Box::new(CatList::Cons(3,
+                      Box::new(CatList::Nil))))));
+      }
+```
+`Box<T>` क्यों काम करता है:
+      1. Box एक फिक्स्ड-साइज़ पॉइंटर प्रदान करता है (आमतौर पर 64-बिट सिस्टम पर 8 बाइट्स)
+      2. वास्तविक डेटा हीप (heap) पर स्टोर होता है
+      3. कंपाइलर को अब सटीक रूप से पता चल जाता है कि कितनी मेमोरी अलॉकेट करनी है
+
+      `Box<T>` के सामान्य उपयोग के मामले:
+      - रिकर्सिव डेटा स्ट्रक्चर्स (लिंक्ड लिस्ट, ट्रीज़)
+      - बड़ा डेटा जिसे आप हीप पर अलॉकेट करना चाहते हैं
+      - ट्रैइट ऑब्जेक्ट्स जब आपको डायनेमिक डिस्पैच की आवश्यकता हो
+
+      बेस्ट प्रैक्टिस: `Box<T>` का उपयोग तब करें जब आपको चाहिए:
+      - रिकर्सिव टाइप्स
+      - हीप अलोकेशन सुनिश्चित करना
+      - बिना कॉपी किए बड़े डेटा को मूव करना
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="रेफरेंस काउंटिंग"
+  title="Rc स्मार्ट पॉइंटर"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या प्रिंट करेगा? ध्यान से गिनें!
+```rust
+      use std::rc::Rc;
+
+      fn main() {
+          let text = Rc::new(String::from("Meditations"));  // Count: 1
+          let marcus = Rc::clone(&text);    // What happens here?
+          let aurelius = Rc::clone(&text);  // And here?
+          println!(
+              "Reference count: {}",
+              Rc::strong_count(&text)
+          );
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+आइए देखें कि `Rc` कैसे काम करता है:
+
+      1. `Rc::new()` के साथ प्रारंभिक निर्माण: count = 1
+      2. `marcus` के लिए पहला क्लोन: count = 2
+      3. `aurelius` के लिए दूसरा क्लोन: count = 3
+
+      `Rc` की महत्वपूर्ण विशेषताएँ:
+```rust
+      use std::rc::Rc;
+      
+      fn demonstrate_rc() {
+          let original = Rc::new(String::from("Shared"));
+          println!("Count after creation: {}", Rc::strong_count(&original)); // 1
+          
+          {
+              let copy = Rc::clone(&original);
+              println!("Count inside scope: {}", Rc::strong_count(&original)); // 2
+          } // copy is dropped here
+          
+          println!("Count after scope: {}", Rc::strong_count(&original)); // 1
+      }
+```
+मुख्य बिंदु:
+      - `Rc::clone()` कम खर्चीला है - यह केवल एक काउंटर बढ़ाता है
+      - `Rc` केवल सिंगल-थ्रेडेड परिदृश्यों के लिए है
+      - जब अंतिम रेफरेंस ड्रॉप होता है, तो डेटा साफ हो जाता है
+      - रेफरेंस साइकल्स को रोकने के लिए `Weak` रेफरेंस का उपयोग करें
+
+      सर्वोत्तम प्रथाएँ:
+      - जब आपको साझा स्वामित्व की आवश्यकता हो तो `Rc` का उपयोग करें
+      - थ्रेड-सुरक्षित परिदृश्यों के लिए `Arc` पर विचार करें
+      - रेफरेंस साइकल्स बनाने से बचें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="लाइफटाइम"
+  title="स्ट्रक्ट लाइफटाइम"
+  options={[
+    {text: 'सफलतापूर्वक कंपाइल हो जाता है', hint: 'रेफरेंस वाले स्ट्रक्ट्स को लाइफटाइम एनोटेशन की आवश्यकता होती है'},
+    {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', isAnswer: true},
+    {text: 'त्रुटि: लाइफटाइम मिसमैच', hint: 'हमने अभी तक कोई लाइफटाइम निर्दिष्ट नहीं किया है'},
+    {text: 'त्रुटि: अमान्य रेफरेंस', hint: 'रेफरेंस वैध हैं, लेकिन कुछ और गायब है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+क्या यह स्ट्रक्ट डिफिनिशन कंपाइल होगी? क्यों या क्यों नहीं?
+```rust
+      struct Philosopher {
+          name: &str,    // Reference without lifetime
+          quote: &str,   // Another reference without lifetime
+      }
+
+      fn main() {
+          let phil = Philosopher {
+              name: "Seneca",
+              quote: "Luck happens when preparation meets opportunity",
+          };
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+कोड फेल हो जाता है क्योंकि रेफरेंस वाले स्ट्रक्ट्स को लाइफटाइम निर्दिष्ट करना अनिवार्य है। इसे ठीक करने का तरीका यहाँ है:
+```rust
+      // Single lifetime parameter
+      struct Philosopher<'a> {
+          name: &'a str,
+          quote: &'a str,
+      }
+
+      // Or different lifetimes if needed
+      struct PhilosopherFlex<'n, 'q> {
+          name: &'n str,
+          quote: &'q str,
+      }
+```
+सामान्य पैटर्न:
+```rust
+      // Own the data instead
+      struct PhilosopherOwned {
+          name: String,
+          quote: String,
+      }
+
+      // Mixed ownership
+      struct PhilosopherMixed<'a> {
+          name: String,      // Owned
+          quote: &'a str,    // Borrowed
+      }
+```
+सर्वोत्तम प्रथाएँ:
+      1. जब डेटा को स्थायी रूप से स्टोर करना हो, तो ओन्ड टाइप्स (String) का उपयोग करें
+      2. जब स्ट्रक्ट का जीवनकाल डेटा से स्पष्ट रूप से छोटा हो, तो रेफरेंस का उपयोग करें
+      3. यदि रेफरेंस के अलग-अलग लाइफटाइम हो सकते हैं, तो एकाधिक लाइफटाइम पैरामीटर पर विचार करें
+      4. जटिल स्ट्रक्चर्स में लाइफटाइम संबंधों को स्पष्ट रूप से डॉक्यूमेंट करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="लाइफटाइम्स"
+  title="लाइफटाइम एनोटेशन"
+  options={[
+    {text: 'परिणाम: सेनेका द यंगर', hint: 'कोड कंपाइल ही नहीं होगा, इसलिए कोई आउटपुट नहीं मिलेगा'},
+    {text: 'त्रुटि: लाइफटाइम स्पेसिफायर गायब है', isAnswer: true},
+    {text: 'त्रुटि: लोकल वेरिएबल का रेफरेंस रिटर्न नहीं किया जा सकता', hint: 'यह रेफरेंस किसी लोकल वेरिएबल का नहीं, बल्कि इनपुट पैरामीटर का है'},
+    {text: 'त्रुटि: लाइफटाइम मिसमैच', hint: 'हमने अभी तक लाइफटाइम स्पेसिफाई ही नहीं किए हैं, तो मिसमैच कहाँ से आएगा?'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+दो स्ट्रिंग स्लाइस में से लंबी वाली को रिटर्न करने वाले इस फंक्शन के साथ क्या होगा?
+```rust
+      fn longest(text1: &str, text2: &str) -> &str {
+          if text1.len() > text2.len() {
+              text1    // Returning a reference, but which lifetime?
+          } else {
+              text2    // Could be this reference instead
+          }
+      }
+
+      fn main() {
+          println!("{}", longest(
+              "Seneca the Younger",
+              "Marcus Aurelius"
+          ));
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कोड फेल हो जाता है क्योंकि कंपाइलर इनपुट और आउटपुट लाइफटाइम्स के बीच के संबंध को समझ नहीं पाता। यहाँ बताया गया है कि ऐसा क्यों होता है और इसे कैसे ठीक करें:
+```rust
+      // Correct version with explicit lifetime annotation
+      fn longest<'a>(text1: &'a str, text2: &'a str) -> &'a str {
+          if text1.len() > text2.len() {
+              text1
+          } else {
+              text2
+          }
+      }
+
+      // Alternative with different lifetimes
+      fn longest_flex<'a, 'b>(text1: &'a str, text2: &'b str) -> &'a str {
+          if text1.len() > text2.len() {
+              text1
+          } else {
+              text2.to_string().as_str() // Won't compile! Shows why we need same lifetime
+          }
+      }
+```
+यहाँ लाइफटाइम्स की ज़रूरत क्यों है:
+      1. कई इनपुट रेफरेंस की लाइफटाइम अलग-अलग हो सकती है
+      2. रिटर्न वैल्यू को दोनों इनपुट्स जितनी देर तक जीवित रहना चाहिए
+      3. कंपाइलर को इन संबंधों को वेरिफाई करने की ज़रूरत होती है
+
+      कॉमन पैटर्न:
+```rust
+      // Single input reference - elision works
+      fn first_word(s: &str) -> &str { /* ... */ }
+
+      // Multiple references, same lifetime needed
+      fn compare_str<'a>(s1: &'a str, s2: &'a str) -> &'a str { /* ... */ }
+
+      // Different lifetimes possible
+      fn combine<'a, 'b>(s1: &'a str, s2: &'b str) -> String { /* ... */ }
+```
+बेस्ट प्रैक्टिसेज़:
+      1. जहाँ संभव हो, लाइफटाइम एलिज़न को काम करने दें
+      2. जब संबंध स्पष्ट करने हों, तो एक्सप्लिसिट लाइफटाइम्स का उपयोग करें
+      3. लाइफटाइम की जटिलता से बचने के लिए ओन्ड टाइप्स रिटर्न करने पर विचार करें
+      4. कॉम्प्लेक्स लाइफटाइम संबंधों को डॉक्युमेंट करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="RefCells"
+  title="RefCell का व्यवहार"
+  options={[
+    {text: 'आउटपुट: 42', hint: 'क्या हम एक साथ दो mutable borrows ले सकते हैं?'},
+    {text: 'रनटाइम पैनिक: RefCell already borrowed', isAnswer: true},
+    {text: 'कंपाइलेशन एरर', hint: 'RefCell चेकिंग को रनटाइम पर शिफ्ट कर देता है'},
+    {text: 'रनटाइम पैनिक: अलग मैसेज', hint: 'त्रुटि विशेष रूप से borrowing का उल्लेख करती है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड को चलाने पर क्या होगा?
+```rust
+      use std::cell::RefCell;
+
+      fn main() {
+          let data = RefCell::new(42);
+          let _borrow1 = data.borrow_mut();  // First mutable borrow
+          let _borrow2 = data.borrow_mut();  // Second mutable borrow
+          println!("Value: {}", _borrow2);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+RefCell इंटीरियर म्यूटेबिलिटी प्रदान करता है, लेकिन यह रनटाइम पर Rust के borrowing नियमों को लागू करता रहता है:
+```rust
+      use std::cell::RefCell;
+
+      fn demonstrate_refcell() {
+          let data = RefCell::new(42);
+          
+          // Correct way to use RefCell
+          {
+              let mut first = data.borrow_mut();
+              *first += 1;
+          } // first is dropped here
+          
+          // Now we can borrow again
+          let second = data.borrow_mut();
+          
+          // Or multiple immutable borrows
+          let read1 = data.borrow();
+          let read2 = data.borrow(); // This is OK
+      }
+```
+मुख्य अवधारणाएँ:
+      1. RefCell borrowing चेक को रनटाइम पर शिफ्ट कर देता है
+      2. नियमों का उल्लंघन होने पर पैनिक हो सकता है
+      3. इंटीरियर म्यूटेबिलिटी पैटर्न के लिए उपयोगी
+
+      सामान्य उपयोग के मामले:
+      - टेस्ट में मॉक ऑब्जेक्ट्स
+      - सेल्फ-रेफरेंशियल स्ट्रक्चर्स को इम्प्लीमेंट करना
+      - जब आपको शेयर्ड रेफरेंस के पीछे डेटा को म्यूटेट करना हो
+      
+      बेस्ट प्रैक्टिसेज़:
+      1. जहाँ तक संभव हो, कंपाइल-टाइम borrowing को प्राथमिकता दें
+      2. RefCell borrows को छोटे स्कोप में रखें
+      3. borrows को स्पष्ट रूप से समाप्त करने के लिए drop() का उपयोग करने पर विचार करें
+      4. जब आपको इंटीरियर म्यूटेबिलिटी की आवश्यकता हो, तभी RefCell का उपयोग करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="परिवर्तनशीलता"
+  title="Cell बनाम RefCell"
+  options={[
+    {text: 'आउटपुट: 42, 43', isAnswer: true},
+    {text: 'आउटपुट: 43, 43', hint: 'Cell::get() कॉल करने के समय का मान लौटाता है'},
+    {text: 'कंपाइलेशन त्रुटि', hint: 'Cell को इसी उपयोग के मामले के लिए डिज़ाइन किया गया है'},
+    {text: 'रनटाइम पैनिक', hint: 'Copy टाइप्स के लिए Cell ऑपरेशन्स हमेशा सुरक्षित होते हैं'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+यह कोड क्या प्रिंट करेगा?
+```rust
+      use std::cell::Cell;
+
+      fn main() {
+          let life = Cell::new(42);
+          let meaning = &life;        // Shared reference
+          println!("{}", life.get()); // What prints here?
+          meaning.set(43);            // Mutation through shared ref
+          println!("{}", life.get()); // And here?
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Cell और RefCell आंतरिक परिवर्तनशीलता (interior mutability) के लिए अलग-अलग उद्देश्यों की पूर्ति करते हैं:
+```rust
+      use std::cell::{Cell, RefCell};
+
+      // Cell for Copy types
+      struct Counter {
+          count: Cell<i32>,
+      }
+
+      impl Counter {
+          fn increment(&self) {
+              self.count.set(self.count.get() + 1);
+          }
+      }
+
+      // RefCell for non-Copy types
+      struct Logger {
+          messages: RefCell<Vec<String>>,
+      }
+
+      impl Logger {
+          fn log(&self, msg: &str) {
+              self.messages.borrow_mut().push(msg.to_string());
+          }
+      }
+```
+मुख्य अंतर:
+      1. Cell:
+         - Copy टाइप्स के साथ सबसे अच्छा काम करता है
+         - इसमें borrowing API नहीं होता
+         - मान हमेशा कॉपी या मूव होते हैं
+      
+      2. RefCell:
+         - किसी भी टाइप के साथ काम करता है
+         - इसमें borrowing API उपलब्ध है
+         - रनटाइम पर borrow चेकिंग होती है
+
+      सर्वोत्तम अभ्यास:
+      1. सरल Copy टाइप्स (संख्याएँ, bool आदि) के लिए Cell का उपयोग करें
+      2. जब आपको सामग्री को borrow करने की आवश्यकता हो, तो RefCell का उपयोग करें
+      3. Cell/RefCell के माध्यम से होने वाले म्यूटेशन को न्यूनतम रखें
+      4. आंतरिक परिवर्तनशीलता की आवश्यकता क्यों है, इसे स्पष्ट रूप से दस्तावेज़ित करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="रेफरेंस काउंटिंग"
+  title="Rc को समझना"
+  options={[
+    {text: 'Rc का उपयोग सिंगल-थ्रेडेड वातावरण के लिए किया जाता है', isAnswer: true},
+    {text: 'Rc का उपयोग मल्टी-थ्रेडेड वातावरण के लिए किया जाता है', hint: 'थ्रेड सेफ्टी के बारे में सोचें - Rc में कोई सिंक्रोनाइज़ेशन नहीं होता है'},
+    {text: 'Rc का उपयोग केवल इम्यूटेबल डेटा के लिए किया जाता है', hint: 'Rc को इंटीरियर म्यूटेबिलिटी के साथ जोड़ा जा सकता है'},
+    {text: 'Rc का उपयोग केवल म्यूटेबल डेटा के लिए किया जाता है', hint: 'Rc म्यूटेबल और इम्यूटेबल दोनों प्रकार के डेटा के साथ काम करता है'},
+    {text: 'Rc का मतलब रिमोट कंट्रोल है', hint: 'चालाकी भरा है, लेकिन यह प्रोग्रामिंग का कॉन्सेप्ट नहीं है!'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Rust में आपको Rc (Reference Counting) का उपयोग कब करना चाहिए?
+
+      इस उदाहरण पर गौर करें:
+```rust
+      use std::rc::Rc;
+
+      struct SharedConfig {
+          name: String,
+          value: i32,
+      }
+
+      fn main() {
+          let config = Rc::new(SharedConfig {
+              name: "settings".to_string(),
+              value: 42,
+          });
+          
+          let config2 = Rc::clone(&config);
+          // Both config and config2 share ownership
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Rc (Reference Counting) को उन सिंगल-थ्रेडेड परिदृश्यों के लिए डिज़ाइन किया गया है जहाँ आपको शेयर्ड ओनरशिप की आवश्यकता होती है।
+
+      सामान्य उपयोग के मामले:
+```rust
+      use std::rc::Rc;
+      use std::cell::RefCell;
+
+      // Shared ownership in data structures
+      struct Node {
+          next: Option<Rc<Node>>,
+          value: i32,
+      }
+
+      // Combining with interior mutability
+      struct SharedState {
+          data: Rc<RefCell<Vec<String>>>,
+      }
+
+      // Multiple owners of same data
+      let original = Rc::new(vec![1, 2, 3]);
+      let clone1 = Rc::clone(&original);
+      let clone2 = Rc::clone(&original);
+```
+मुख्य बिंदु:
+      1. Rc का उपयोग तब करें जब:
+         - आपके कोड के कई हिस्सों को ओनरशिप की आवश्यकता हो
+         - आप जानते हों कि शेयरिंग सिंगल-थ्रेडेड है
+         - लाइफटाइम को स्टैटिक रूप से निर्धारित नहीं किया जा सकता
+
+      2. इसके बजाय Arc का उपयोग तब करें जब:
+         - आपको थ्रेड-सेफ शेयरिंग की आवश्यकता हो
+         - कई थ्रेड्स को ओनरशिप की आवश्यकता हो
+
+      3. Rc की सीमाएँ:
+         - थ्रेड-सेफ नहीं है
+         - मामूली रनटाइम ओवरहेड
+         - रेफरेंस साइकल्स को स्वचालित रूप से नहीं तोड़ सकता
+
+      सर्वोत्तम प्रथाएँ:
+      1. जहाँ तक संभव हो, यूनिक ओनरशिप को प्राथमिकता दें
+      2. सिंगल-थ्रेडेड शेयर्ड ओनरशिप के लिए Rc का उपयोग करें
+      3. मल्टी-थ्रेडेड परिदृश्यों के लिए Arc का उपयोग करें
+      4. रेफरेंस साइकल्स को रोकने के लिए Weak के साथ संयोजन करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="RefCell"
+  title="RefCell और थ्रेडिंग"
+  options={[
+    {text: 'RefCell का उपयोग म्यूटेबल बॉरो के लिए होता है, Rw का इम्यूटेबल बॉरो के लिए', hint: 'दोनों ही टाइप्स म्यूटेबल और इम्यूटेबल बॉरो दोनों सपोर्ट करते हैं'},
+    {text: 'Rw का उपयोग म्यूटेबल बॉरो के लिए होता है, RefCell का इम्यूटेबल बॉरो के लिए', hint: 'दोनों ही बॉरो के दोनों प्रकारों को सपोर्ट करते हैं'},
+    {text: 'RefCell और Rw का उपयोग एक ही उद्देश्य के लिए किया जाता है', hint: 'थ्रेड सेफ्टी के बारे में सोचें'},
+    {text: 'RefCell का उपयोग केवल सिंगल-थ्रेडेड एनवायरनमेंट में होता है', isAnswer: true},
+    {text: 'Rw का उपयोग केवल मल्टी-थ्रेडेड एनवायरनमेंट में होता है', hint: 'हालाँकि यह आमतौर पर थ्रेड्स के लिए उपयोग होता है, लेकिन यह मुख्य अंतर नहीं है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+Rust में RefCell और RwLock के बीच मुख्य अंतर क्या है?
+
+      इन उदाहरणों पर गौर करें:
+```rust
+      use std::cell::RefCell;
+      use std::sync::RwLock;
+
+      // Example 1
+      let data = RefCell::new(vec![1, 2, 3]);
+      let borrowed = data.borrow_mut();
+
+      // Example 2
+      let shared = RwLock::new(vec![1, 2, 3]);
+      let locked = shared.write().unwrap();
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+RefCell और RwLock समान उद्देश्यों की पूर्ति करते हैं, लेकिन अलग-अलग संदर्भों में:
+```rust
+      // Single-threaded scenario with RefCell
+      use std::cell::RefCell;
+      
+      struct SingleThreaded {
+          data: RefCell<Vec<i32>>,
+      }
+
+      impl SingleThreaded {
+          fn modify(&self) {
+              self.data.borrow_mut().push(42);
+          }
+      }
+
+      // Multi-threaded scenario with RwLock
+      use std::sync::RwLock;
+      
+      struct ThreadSafe {
+          data: RwLock<Vec<i32>>,
+      }
+
+      impl ThreadSafe {
+          fn modify(&self) {
+              self.data.write().unwrap().push(42);
+          }
+      }
+```
+मुख्य अंतर:
+      1. RefCell:
+         - केवल सिंगल-थ्रेडेड
+         - कोई सिंक्रनाइज़ेशन ओवरहेड नहीं
+         - बॉरो नियमों के उल्लंघन पर पैनिक करता है
+         
+      2. RwLock:
+         - थ्रेड-सेफ
+         - सिंक्रनाइज़ेशन ओवरहेड होता है
+         - पैनिक करने के बजाय थ्रेड्स को ब्लॉक कर सकता है
+
+      सर्वोत्तम प्रथाएँ:
+      1. सिंगल-थ्रेडेड इंटीरियर म्यूटेबिलिटी के लिए RefCell का उपयोग करें
+      2. थ्रेड सेफ्टी की आवश्यकता होने पर RwLock का उपयोग करें
+      3. सरल थ्रेड-सेफ म्यूटेबिलिटी के लिए Mutex पर विचार करें
+      4. थ्रेड सेफ्टी की आवश्यकताओं को स्पष्ट रूप से डॉक्यूमेंट करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="स्मार्ट पॉइंटर्स"
+  title="Arc और Mutex"
+  options={[
+    {text: 'आउटपुट: 42', hint: 'कोड प्रिंट स्टेटमेंट तक कभी नहीं पहुँचेगा'},
+    {text: 'आउटपुट: 43', hint: 'कोड प्रिंट होने से पहले ही अटक जाएगा'},
+    {text: 'कंपाइलेशन एरर', hint: 'कोड का सिंटैक्स बिल्कुल सही है'},
+    {text: 'रनटाइम पैनिक', hint: 'यह पैनिक से भी बदतर स्थिति है'},
+    {text: 'डेडलॉक', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस कोड को रन करने पर क्या नतीजा निकलेगा?
+```rust
+      use std::sync::{Arc, Mutex};
+
+      fn main() {
+          let lock = Arc::new(Mutex::new(42));
+          let lock2 = Arc::clone(&lock);
+          
+          let _guard1 = lock.lock().unwrap();   // First lock
+          let _guard2 = lock2.lock().unwrap();  // Second lock attempt
+          
+          println!("Value: {}", _guard2);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+यह कोड एक क्लासिक डेडलॉक स्थिति को दर्शाता है। इसे ठीक करने का तरीका यहाँ दिया गया है:
+```rust
+      use std::sync::{Arc, Mutex};
+
+      // Correct way - Release lock before acquiring it again
+      fn safe_mutex() {
+          let lock = Arc::new(Mutex::new(42));
+          
+          {
+              let mut data = lock.lock().unwrap();
+              *data += 1;
+          } // Lock is released here
+          
+          // Now we can acquire it again
+          let data2 = lock.lock().unwrap();
+          println!("Value: {}", data2);
+      }
+
+      // Using multiple mutexes safely
+      fn multiple_mutexes() {
+          let lock1 = Arc::new(Mutex::new(42));
+          let lock2 = Arc::new(Mutex::new(43));
+          
+          // Always acquire locks in the same order
+          let guard1 = lock1.lock().unwrap();
+          let guard2 = lock2.lock().unwrap();
+      }
+```
+डेडलॉक से बचने के लिए बेस्ट प्रैक्टिसेज़:
+      1. क्रिटिकल सेक्शन को जितना हो सके छोटा रखें
+      2. स्कोप्स का उपयोग करके लॉक्स को तुरंत रिलीज़ करें
+      3. हमेशा एक ही क्रम में मल्टीपल लॉक्स अक्वायर करें
+      4. बेहतर परफॉर्मेंस के लिए parking_lot::Mutex का इस्तेमाल करें
+      5. रीड-हेवी वर्कलोड के लिए RwLock पर विचार करें
+
+      कॉमन पैटर्न:
+```rust
+      // Thread-safe counter
+      struct Counter {
+          count: Arc<Mutex<i32>>,
+      }
+
+      impl Counter {
+          fn increment(&self) {
+              let mut count = self.count.lock().unwrap();
+              *count += 1;
+          } // Lock automatically released here
+      }
+```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="स्मार्ट पॉइंटर्स"
+  title="कमज़ोर रेफ़रेंस"
+  options={[
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+जब आप इस कोड को कमज़ोर रेफ़रेंस के साथ चलाते हैं, तो क्या होता है?
+```rust
+      use std::rc::{Rc, Weak};
+
+      fn main() {
+          let data = Rc::new(String::from("Wisdom"));
+          let weak = Rc::downgrade(&data);  // Create weak reference
+          drop(data);                       // Drop strong reference
+          
+          println!("Value: {:?}", weak.upgrade());
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+कमज़ोर रेफ़रेंस अपने टारगेट के डीलोकेशन को रोकते नहीं हैं। यहाँ एक विस्तृत उदाहरण दिया गया है:
+```rust
+      use std::rc::{Rc, Weak};
+      use std::cell::RefCell;
+
+      // Parent-child tree structure avoiding reference cycles
+      struct Node {
+          next: Option<Rc<Node>>,
+          parent: RefCell<Weak<Node>>,  // Weak to prevent cycles
+          value: i32,
+      }
+
+      impl Node {
+          fn new(value: i32) -> Rc<Node> {
+              Rc::new(Node {
+                  next: None,
+                  parent: RefCell::new(Weak::new()),
+                  value,
+              })
+          }
+
+          fn set_parent(&self, parent: &Rc<Node>) {
+              *self.parent.borrow_mut() = Rc::downgrade(parent);
+          }
+
+          fn get_parent(&self) -> Option<Rc<Node>> {
+              self.parent.borrow().upgrade()
+          }
+      }
+```
+सामान्य उपयोग के मामले:
+      1. कैश-जैसी संरचनाएँ जहाँ एंट्रीज़ को हटाया जा सकता है
+      2. ट्री स्ट्रक्चर जहाँ पैरेंट रेफ़रेंस मौजूद होते हैं
+      3. ऑब्ज़र्वर पैटर्न जहाँ सब्जेक्ट्स को ड्रॉप किया जा सकता है
+      4. जटिल डेटा स्ट्रक्चर्स में रेफ़रेंस साइकल्स को तोड़ना
+
+      बेस्ट प्रैक्टिसेज़:
+      1. ऑप्शनल रिलेशनशिप के लिए Weak रेफ़रेंस का उपयोग करें
+      2. इस्तेमाल करने से पहले `upgrade()` के रिज़ल्ट को चेक करें
+      3. ओनरशिप रिलेशनशिप को स्पष्ट रूप से डॉक्यूमेंट करें
+      4. सरल मामलों के लिए इंडेक्स जैसे विकल्पों पर विचार करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="मेमोरी पैटर्न"
+  title="RAII पैटर्न"
+  options={[
+    {text: 'स्कोप के बाद रिसोर्स मुक्त हो जाता है', isAnswer: true, hint: '`File` फ़ील्ड का अपना `Drop` इम्प्लीमेंटेशन होता है।'},
+    {text: 'रिसोर्स लीक हो जाता है', hint: 'रैपर का कोई कस्टम `Drop` नहीं है, लेकिन इसके फ़ील्ड्स फिर भी ड्रॉप हो जाते हैं।'},
+    {text: 'कम्पाइलेशन एरर', hint: 'कोड सफलतापूर्वक कम्पाइल हो जाता है'},
+    {text: 'रनटाइम एरर', hint: 'समस्या रिसोर्स क्लीनअप से संबंधित है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस RAII उदाहरण में फ़ाइल हैंडल का क्या होता है?
+```rust
+      use std::fs::File;
+      
+      struct FileWrapper {
+          file: File,
+      }
+      
+      fn main() {
+          let file = File::create("test.txt").unwrap();
+          let wrapper = FileWrapper { file };
+          // ... use wrapper ...
+          // No Drop implementation
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Rust में RAII यह सुनिश्चित करता है कि रिसोर्सेस का सही तरीके से प्रबंधन हो। इस उदाहरण में, `FileWrapper` को फ़ाइल हैंडल बंद करने के लिए कस्टम `Drop` इम्प्लीमेंटेशन की आवश्यकता नहीं है: जब रैपर स्कोप से बाहर जाता है, तो उसका `File` फ़ील्ड स्वचालित रूप से ड्रॉप हो जाता है।
+
+आप `Drop` को केवल तभी इम्प्लीमेंट करते हैं जब रैपर के अपने फ़ील्ड्स को ड्रॉप करने के अलावा अतिरिक्त क्लीनअप व्यवहार की आवश्यकता हो:
+```rust
+      use std::fs::File;
+      use std::io::{self, Write};
+
+      struct FileWrapper {
+          file: File,
+          path: String,
+      }
+
+      impl FileWrapper {
+          fn new(path: &str) -> io::Result<FileWrapper> {
+              Ok(FileWrapper {
+                  file: File::create(path)?,
+                  path: path.to_string(),
+              })
+          }
+
+          fn write(&mut self, content: &str) -> io::Result<()> {
+              self.file.write_all(content.as_bytes())
+          }
+      }
+
+      impl Drop for FileWrapper {
+          fn drop(&mut self) {
+              // Ensure file is properly closed
+              // Could also do cleanup like deletion
+              println!("Closing file: {}", self.path);
+          }
+      }
+```
+RAII पैटर्न:
+1. कंस्ट्रक्टर रिसोर्सेस प्राप्त करता है
+2. मेथड्स रिसोर्सेस का सुरक्षित उपयोग करती हैं
+3. जब ओनर स्कोप से बाहर जाता है तो फ़ील्ड्स स्वचालित रूप से ड्रॉप हो जाते हैं
+4. आवश्यकता पड़ने पर कस्टम `Drop` अतिरिक्त क्लीनअप जोड़ता है
+5. एरर प्रोपेगेशन के लिए `?` का उपयोग करें
+
+सर्वोत्तम अभ्यास:
+1. जब स्टैंडर्ड लाइब्रेरी के `Drop` इम्प्लीमेंटेशन पहले से ही रिसोर्स को मॉडल करते हैं, तो उन पर भरोसा करें
+2. रिसोर्स मैनेजमेंट को सरल और स्पष्ट रखें
+3. जहाँ संभव हो, स्टैंडर्ड लाइब्रेरी टाइप्स का उपयोग करें
+4. क्लीनअप व्यवहार को डॉक्यूमेंट करें
+5. स्कोप्ड ऑपरेशंस के लिए गार्ड पैटर्न का उपयोग करने पर विचार करें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="डिज़ाइन पैटर्न"
+  title="Copy बनाम Clone"
+  options={[
+    {text: 'कंपाइलेशन एरर', hint: 'derive एट्रिब्यूट का उपयोग सही तरीके से किया गया है'},
+    {text: 'डीप कॉपी बनाई गई', isAnswer: true},
+    {text: 'शैलो कॉपी बनाई गई', hint: 'Clone, String फ़ील्ड्स की डीप कॉपी बनाता है'},
+    {text: 'मूव सेमेंटिक्स लागू हुई', hint: 'Clone स्पष्ट रूप से एक नई कॉपी बनाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इस Philosophy स्ट्रक्चर को क्लोन करने पर क्या होता है?
+```rust
+      #[derive(Clone)]
+      struct Philosophy {
+          school: String,
+          founder: String,
+      }
+
+      fn main() {
+          let stoicism = Philosophy {
+              school: String::from("Stoicism"),
+              founder: String::from("Zeno of Citium")
+          };
+          let new_school = stoicism.clone();
+          println!("{} - {}", 
+              stoicism.school, new_school.school);
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+आइए Copy और Clone को विस्तार से समझें:
+```rust
+      // Types that can be Copy
+      #[derive(Copy, Clone)]
+      struct Point {
+          x: i32,
+          y: i32,
+      }
+
+      // Types that can only be Clone
+      #[derive(Clone)]
+      struct ComplexData {
+          name: String,    // String can't be Copy
+          points: Vec<i32> // Vec can't be Copy
+      }
+
+      // Manual implementation example
+      #[derive(Debug)]
+      struct Custom {
+          data: Vec<i32>,
+          identifier: u32,
+      }
+
+      impl Clone for Custom {
+          fn clone(&self) -> Self {
+              Custom {
+                  data: self.data.clone(),
+                  identifier: self.identifier,  // Copy type
+              }
+          }
+      }
+```
+मुख्य अंतर:
+      1. Copy:
+         - इम्प्लिसिट, बिटवाइज़ कॉपी
+         - Copy-safe होना चाहिए (कोई हीप अलोकेशन नहीं)
+         - आमतौर पर छोटे, स्टैक-ओनली टाइप्स के लिए
+         
+      2. Clone:
+         - एक्सप्लिसिट, संभावित रूप से डीप कॉपी
+         - हीप अलोकेशन को हैंडल कर सकता है
+         - अधिक लचीला लेकिन संभावित रूप से महंगा
+
+      सर्वोत्तम प्रथाएं:
+      1. छोटे, स्टैक-ओनली टाइप्स के लिए Copy इम्प्लीमेंट करें
+      2. ओन्ड रिसोर्सेज वाले टाइप्स के लिए Clone का उपयोग करें
+      3. Clone के परफॉर्मेंस प्रभावों को डॉक्यूमेंट करें
+      4. ऑप्टिमाइज़ेशन के लिए कस्टम Clone इम्प्लीमेंटेशन पर विचार करें
+      5. ऑटोमैटिक डेरिवेशन के प्रति सावधान रहें
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="सर्वोत्तम प्रथाएँ"
+  title="मेमोरी ऑप्टिमाइज़ेशन"
+  options={[
+    {text: '16 बाइट्स', hint: 'अलाइनमेंट आवश्यकताओं पर ध्यान दें'},
+    {text: '24 बाइट्स'},
+    {text: '32 बाइट्स', isAnswer: true, hint: 'String एक सिंगल पॉइंटर से बड़ा होता है।'},
+    {text: 'प्लेटफ़ॉर्म पर निर्भर करता है', hint: 'हमने 64-बिट सिस्टम निर्दिष्ट किया था'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+एक स्टैंडर्ड 64-बिट Rust टारगेट पर इस struct का साइज़ क्या होगा?
+```rust
+      struct Metadata {
+          id: u32,        // How many bytes?
+          name: String,   // How many bytes?
+          active: bool    // How many bytes + padding?
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+आइए struct के मेमोरी लेआउट और ऑप्टिमाइज़ेशन को विस्तार से समझते हैं:
+```rust
+      // Typical current 64-bit Rust layout: 32 bytes
+      struct Metadata {
+          id: u32,       // 4 bytes
+          name: String,  // 24 bytes on 64-bit systems
+          active: bool   // 1 byte + padding/alignment
+      }
+
+      // Reordering fields may reduce padding for repr(C) structs,
+      // but default Rust layout is not a stable ABI guarantee.
+      struct OptimizedMetadata {
+          name: String,   // 24 bytes
+          id: u32,       // 4 bytes
+          active: bool    // 1 byte + 3 padding
+      }
+
+      // Further optimization with packing
+      #[repr(packed)]
+      struct PackedMetadata {
+          id: u32,
+          active: bool,
+          name: String,
+      }
+```
+मेमोरी लेआउट पर विचार:
+      1. अलाइनमेंट आवश्यकताएँ:
+         - u32: 4-बाइट अलाइनमेंट
+         - String: सामान्य 64-बिट टारगेट पर 8-बाइट अलाइनमेंट और 24-बाइट साइज़
+         - bool: 1-बाइट अलाइनमेंट
+
+      2. फ़ील्ड ऑर्डरिंग रणनीतियाँ:
+         - समान साइज़ वाली फ़ील्ड्स को एक साथ रखें
+         - बड़े अलाइनमेंट वाले को पहले रखें
+         - कैश लाइन ऑप्टिमाइज़ेशन पर विचार करें
+
+      सर्वोत्तम प्रथाएँ:
+      1. FFI या स्थिर लेआउट मान्यताओं के लिए उपयुक्त `repr(...)` का उपयोग करें
+      2. उचित इंटीजर साइज़ चुनें
+      3. वैकल्पिक फ़ील्ड्स के लिए Option का उपयोग करने पर विचार करें
+      4. साइज़-क्रिटिकल structs को `std::mem::size_of` से मापें
+      5. #[repr(packed)] का उपयोग सावधानी से करें - यह प्रदर्शन को प्रभावित कर सकता है
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="उन्नत पैटर्न"
+  title="शून्य-लागत अमूर्तन"
+  options={[
+    {text: 'Iterator के कारण रनटाइम ओवरहेड', hint: 'Rust iterators शून्य-लागत अमूर्तन हैं'},
+    {text: 'raw loop जैसा ही प्रदर्शन', isAnswer: true},
+    {text: 'धीमा लेकिन अधिक पठनीय', hint: 'यह अमूर्तन रनटाइम प्रदर्शन को प्रभावित नहीं करता है'},
+    {text: 'ऑप्टिमाइज़ेशन लेवल पर निर्भर करता है', hint: 'कंपाइल समय पर इस अमूर्तन को हटा दिया जाता है'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+इन दोनों इम्प्लीमेंटेशन के प्रदर्शन की तुलना कैसे होगी?
+```rust
+      // Implementation A: Iterator
+      fn sum_iterator(v: &[i32]) -> i32 {
+          v.iter().fold(0, |acc, &x| acc + x)
+      }
+
+      // Implementation B: Raw loop
+      fn sum_loop(v: &[i32]) -> i32 {
+          let mut sum = 0;
+          for i in 0..v.len() {
+              sum += v[i];
+          }
+          sum
+      }
+```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+Rust के शून्य-लागत अमूर्तन समान रूप से कुशल कोड में कंपाइल होते हैं:
+```rust
+      use std::ops::Range;
+
+      // High-level abstraction
+      trait ZeroCost {
+          fn process(&self) -> u32;
+      }
+
+      impl ZeroCost for Range<u32> {
+          fn process(&self) -> u32 {
+              self.fold(0, |acc, x| acc + x)
+          }
+      }
+
+      // Compiles to essentially the same code as:
+      fn manual_process(range: Range<u32>) -> u32 {
+          let mut sum = 0;
+          let mut i = range.start;
+          while i < range.end {
+              sum += i;
+              i += 1;
+          }
+          sum
+      }
+
+      // Even more abstractions, still zero-cost
+      fn complex_processing<T>(data: &[T]) -> u32 
+      where T: AsRef<str> {
+          data.iter()
+              .map(|s| s.as_ref().len())
+              .filter(|&n| n > 3)
+              .fold(0, |acc, n| acc + n as u32)
+      }
+```
+मुख्य सिद्धांत:
+      1. जो आप उपयोग नहीं करते, उसके लिए आपको कीमत नहीं चुकानी पड़ती
+      2. जो आप उपयोग करते हैं, उसे आप मैन्युअल कोडिंग से इससे बेहतर नहीं लिख सकते
+
+      सर्वोत्तम प्रथाएँ:
+      1. हाई-लेवल अमूर्तनों का बेझिझक उपयोग करें
+      2. कंपाइलर के ऑप्टिमाइज़ेशन पर भरोसा रखें
+      3. ऑप्टिमाइज़ करने से पहले प्रोफाइलिंग करें
+      4. सबसे पहले कोड की पठनीयता पर ध्यान दें
+      5. iterators और closures का बिना किसी डर के उपयोग करें
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+
+क्विज़ देने के लिए धन्यवाद। अगर आपको अपनी Rust की समझ परखने में मज़ा आया, तो मेरे अन्य [प्रोग्रामिंग चैलेंजेस](/challenges/) भी देखें। 🧠
+
+**अपनी Rust स्किल्स को अगले लेवल पर ले जाना चाहते हैं?** यहाँ कुछ अनुशंसित संसाधन दिए गए हैं:
+
+- [Rust Book - अध्याय 4: Ownership](https://doc.rust-lang.org/book/ch04-00-understanding-ownership.html)
+- [Rust By Example - मेमोरी मैनेजमेंट](https://doc.rust-lang.org/rust-by-example/scope.html)
+- [Rust Reference - मेमोरी मॉडल](https://doc.rust-lang.org/reference/memory-model.html)

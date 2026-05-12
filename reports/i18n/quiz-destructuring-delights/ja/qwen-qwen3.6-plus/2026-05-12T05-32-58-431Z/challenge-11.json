@@ -1,0 +1,49 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Destructuring with Nested Default Values",
+  "translatedTitle": "ネストされたデフォルト値を用いた分割代入",
+  "translation": {
+    "title": "ネストされたデフォルト値を用いた分割代入",
+    "group": "TSにおけるネスト分割代入",
+    "options": [
+      {
+        "text": "エラー: プロパティ 'first' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'last' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'birth' および 'age' がありません"
+      },
+      {
+        "text": "エラー: プロパティ 'place' がありません"
+      },
+      {
+        "text": "エラー: 'string' に {...} のプロパティがありません"
+      }
+    ],
+    "questionProse": [
+      "型エラーを見つけてください："
+    ],
+    "explanationProse": [
+      "エラーは `greet` 関数のシグネチャにあります。渡されたオブジェクトに `age` と `birth` プロパティが含まれていないため、型定義ではこれらをオプショナル（任意）として扱う必要があります。",
+      "`birth` プロパティにデフォルト値を設定して分割代入しているからといって、型定義上での必須要件が消えるわけではありません。TypeScriptでプロパティをオプショナルとしてマークするには、`?` 演算子を正しく使う必要があります。",
+      "`birth?: { place?: string }` と `birth: { place?: string } | undefined` は等価ではない点に注意してください。前者は `birth` プロパティ自体の省略を許可しますが、後者は `birth` が常に存在することを前提としています。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ネストされたデフォルト値を用いた分割代入\",\n  \"group\": \"TSにおけるネスト分割代入\",\n  \"options\": [\n    {\n      \"text\": \"エラー: プロパティ 'first' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'last' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'birth' および 'age' がありません\"\n    },\n    {\n      \"text\": \"エラー: プロパティ 'place' がありません\"\n    },\n    {\n      \"text\": \"エラー: 'string' に {...} のプロパティがありません\"\n    }\n  ],\n  \"questionProse\": [\n    \"型エラーを見つけてください：\"\n  ],\n  \"explanationProse\": [\n    \"エラーは `greet` 関数のシグネチャにあります。渡されたオブジェクトに `age` と `birth` プロパティが含まれていないため、型定義ではこれらをオプショナル（任意）として扱う必要があります。\",\n    \"`birth` プロパティにデフォルト値を設定して分割代入しているからといって、型定義上での必須要件が消えるわけではありません。TypeScriptでプロパティをオプショナルとしてマークするには、`?` 演算子を正しく使う必要があります。\",\n    \"`birth?: { place?: string }` と `birth: { place?: string } | undefined` は等価ではない点に注意してください。前者は `birth` プロパティ自体の省略を許可しますが、後者は `birth` が常に存在することを前提としています。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 890,
+    "outputTokens": 3166,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 58101
+  },
+  "cost": {
+    "inputUsd": 0.00028925,
+    "outputUsd": 0.0061737,
+    "totalUsd": 0.00646295,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
