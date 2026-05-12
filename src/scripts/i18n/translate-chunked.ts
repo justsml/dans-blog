@@ -811,9 +811,11 @@ async function main() {
   mkdirSync(dirname(targetPath), { recursive: true });
   writeFileSync(targetPath, finalOutput, "utf8");
 
-  // Write telemetry report
+  // Write telemetry report. Keep model in the path so repeated runs with
+  // different models do not overwrite each other's chunked report.
   const reportName = chunkSizeInput ?? (isQuiz ? "quiz" : "article");
-  const reportPath = join(reportDir, `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`);
+  const modelReportDir = join(reportDir, safeModelPathName(llmConfig.modelId));
+  const reportPath = join(modelReportDir, `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`);
   writeTextFile(reportPath, formatTelemetryReport(telemetry, articleSummary));
 
   console.log(`\n✅ Translation written to ${relativeToRepo(targetPath)}`);
