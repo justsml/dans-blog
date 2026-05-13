@@ -7,6 +7,7 @@ import { PostCollections } from "@/shared/postsCache";
 import SearchBar from "@/components/SearchUI/SearchBar.astro";
 import type { ArticlePost } from "../types";
 import {
+  ACTIVE_LOCALES,
   DEFAULT_LOCALE,
   getPageLanguageOptions,
   type LanguageOption,
@@ -27,6 +28,11 @@ type Props = {
 const { className, locale = DEFAULT_LOCALE } = Astro.props as Props;
 const languageOptions =
   Astro.props.languageOptions ?? getPageLanguageOptions(Astro.url.pathname, locale);
+const languagePreferenceConfig = JSON.stringify({
+  currentLocale: locale,
+  defaultLocale: DEFAULT_LOCALE,
+  locales: [DEFAULT_LOCALE, ...ACTIVE_LOCALES],
+});
 const copy = getUiCopy(locale);
 const currentLanguage =
   languageOptions.find((option) => option.isCurrent) ?? languageOptions[0];
@@ -91,6 +97,7 @@ function getNavPostData(post: MyPost) {
                 <a
                   href={option.href}
                   aria-current={option.isCurrent ? "page" : undefined}
+                  data-language-locale={option.locale}
                   data-missing={!option.isTranslated ? "true" : undefined}
                   title={
                     option.isTranslated
@@ -116,3 +123,68 @@ function getNavPostData(post: MyPost) {
 </header>
 
 <SearchBar showImages={true} />
+
+<script
+  is:inline
+  set:html={`
+    (() => {
+      const KEY = "danlevy:preferred-locale";
+      const config = ${languagePreferenceConfig};
+      const supportedLocales = new Set(config.locales);
+
+      const readPreferredLocale = () => {
+        try {
+          const stored = window.localStorage.getItem(KEY);
+          return supportedLocales.has(stored) ? stored : null;
+        } catch {
+          return null;
+        }
+      };
+
+      const writePreferredLocale = (nextLocale) => {
+        if (!supportedLocales.has(nextLocale)) return;
+        try {
+          window.localStorage.setItem(KEY, nextLocale);
+        } catch {
+          // Private browsing and locked-down browsers can reject storage.
+        }
+      };
+
+      const menu = document.querySelector(".header-language-menu");
+
+      menu?.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const link = target.closest("a[data-language-locale]");
+        if (!(link instanceof HTMLAnchorElement)) return;
+        writePreferredLocale(link.dataset.languageLocale);
+      });
+
+      if (config.currentLocale !== config.defaultLocale) {
+        writePreferredLocale(config.currentLocale);
+      }
+
+      const preferredLocale = readPreferredLocale();
+      if (
+        !preferredLocale ||
+        preferredLocale === config.defaultLocale ||
+        config.currentLocale !== config.defaultLocale
+      ) {
+        return;
+      }
+
+      const preferredOption = menu?.querySelector(
+        \`a[data-language-locale="\${preferredLocale}"]:not([data-missing="true"])\`,
+      );
+      if (!(preferredOption instanceof HTMLAnchorElement)) return;
+
+      const preferredUrl = new URL(preferredOption.href, window.location.href);
+      if (
+        preferredUrl.origin === window.location.origin &&
+        preferredUrl.pathname !== window.location.pathname
+      ) {
+        window.location.replace(preferredUrl.href);
+      }
+    })();
+  `}
+/>

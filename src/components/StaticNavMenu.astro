@@ -2,12 +2,19 @@
 import { slugify } from "@/shared/pathHelpers";
 import { getComputedDates } from "@/shared/dateUtils";
 import avatarImage from "@/assets/avatar-256.webp";
-import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "@/shared/i18n";
+import {
+  DEFAULT_LOCALE,
+  getLocalizedPagePath,
+  getLocalizedPostPath,
+  type Locale,
+} from "@/shared/i18n";
+import { PostCollections } from "@/shared/postsCache";
 import { getUiCopy } from "@/shared/uiTranslations";
 import "./StaticNavMenu.css";
 
 type NavPost = {
   slug: string;
+  baseSlug?: string;
   data: {
     title: string;
     subTitle?: string;
@@ -26,6 +33,15 @@ type Props = {
 const { categories, popularPosts, recentPosts, locale = DEFAULT_LOCALE } = Astro.props;
 const copy = getUiCopy(locale);
 const pagePath = (path: string) => getLocalizedPagePath(path, locale);
+
+function getPostPath(post: NavPost) {
+  const baseSlug = post.baseSlug ?? post.slug;
+  if (locale === DEFAULT_LOCALE) return getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
+
+  return PostCollections._postsBySlug[`${locale}/${baseSlug}`]
+    ? getLocalizedPostPath(baseSlug, locale)
+    : getLocalizedPostPath(baseSlug, DEFAULT_LOCALE);
+}
 ---
 
 <nav class="NavigationMenuRoot static-nav" aria-label={copy.nav.primaryLabel}>
@@ -78,10 +94,11 @@ const pagePath = (path: string) => getLocalizedPagePath(path, locale);
                 <div class="CalloutHeading">{copy.nav.popular}</div>
                 <div class="CalloutText">
                   {
-                    popularPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
+                    popularPosts.map((post) => {
+                      const { title, subTitle, modified, date } = post.data;
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
-                        <a title={`${title} - ${subTitle ?? ""}`} href={`/${slug}/`} class="CalloutItem">
+                        <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
                           {title}
                           <sup>{modifiedAgo} ago</sup>
                         </a>
@@ -97,10 +114,11 @@ const pagePath = (path: string) => getLocalizedPagePath(path, locale);
                 <div class="CalloutHeading">{copy.nav.recent}</div>
                 <div class="CalloutText">
                   {
-                    recentPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
+                    recentPosts.map((post) => {
+                      const { title, subTitle, modified, date } = post.data;
                       const { modifiedAgo } = getComputedDates({ date, modified: modified ?? date });
                       return (
-                        <a title={`${title} - ${subTitle ?? ""}`} href={`/${slug}/`} class="CalloutItem">
+                        <a title={`${title} - ${subTitle ?? ""}`} href={getPostPath(post)} class="CalloutItem">
                           {title}
                           <sup>{modifiedAgo} ago</sup>
                         </a>

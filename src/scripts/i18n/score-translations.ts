@@ -221,7 +221,7 @@ async function processTask(task: TranslationTask) {
   writeFileSync(archiveMarkdownPath, markdown, "utf8");
   writeFileSync(latestJsonPath, json, "utf8");
   writeFileSync(latestMarkdownPath, markdown, "utf8");
-  appendJsonl(outputLogPath, record);
+  appendJsonl(outputLogPath, toTranslationLogRecord(record));
 
   console.log([
     `Scored ${task.locale}/${task.slug}: ${averageScore(response.parsed.scores).toFixed(1)}/100 (${response.parsed.recommendation})`,
@@ -559,6 +559,90 @@ function getStatsRatios(
     challengeComponentsDelta: translationStats.challengeComponents - sourceStats.challengeComponents,
     markdownLinksDelta: translationStats.markdownLinks - sourceStats.markdownLinks,
     imagesDelta: translationStats.images - sourceStats.images,
+  };
+}
+
+function toTranslationLogRecord(record: {
+  event: string;
+  isoDate: string;
+  at: string;
+  slug: string;
+  locale: ActiveLocale;
+  model: string;
+  sourcePath: string;
+  targetPath: string;
+  reportPath: string;
+  hash: string;
+  sourceHash: string;
+  translationHash: string;
+  scores: ScoreMap;
+  overallScore: number;
+  recommendation: ScoreResponse["recommendation"];
+  stats: {
+    source: ReturnType<typeof collectStats>;
+    translation: ReturnType<typeof collectStats>;
+    ratios: ReturnType<typeof getStatsRatios>;
+    prompt: {
+      sourceCharsIncluded: number;
+      translationCharsIncluded: number;
+      sourceTruncated: boolean;
+      translationTruncated: boolean;
+    };
+  };
+  costs: {
+    inputTokens: number;
+    outputTokens: number;
+    cacheReadTokens: number;
+    cacheWriteTokens: number;
+    durationMs: number;
+    inputUsd: number;
+    outputUsd: number;
+    totalUsd: number;
+    pricingSource: string;
+  };
+}) {
+  return {
+    event: record.event,
+    isoDate: record.isoDate,
+    at: record.at,
+    slug: record.slug,
+    locale: record.locale,
+    model: record.model,
+    sourcePath: record.sourcePath,
+    targetPath: record.targetPath,
+    reportPath: record.reportPath,
+    hash: record.hash,
+    sourceHash: record.sourceHash,
+    translationHash: record.translationHash,
+    readability: record.scores.readability,
+    technicalAccuracy: record.scores.technicalAccuracy,
+    coherence: record.scores.coherence,
+    relevance: record.scores.relevance,
+    translationQuality: record.scores.translationQuality,
+    overallScore: record.overallScore,
+    recommendation: record.recommendation,
+    sourceChars: record.stats.source.chars,
+    translationChars: record.stats.translation.chars,
+    sourceWords: record.stats.source.words,
+    translationWords: record.stats.translation.words,
+    sourceParagraphs: record.stats.source.paragraphs,
+    translationParagraphs: record.stats.translation.paragraphs,
+    charRatio: record.stats.ratios.chars,
+    wordRatio: record.stats.ratios.words,
+    paragraphRatio: record.stats.ratios.paragraphs,
+    codeFencesDelta: record.stats.ratios.codeFencesDelta,
+    challengeComponentsDelta: record.stats.ratios.challengeComponentsDelta,
+    markdownLinksDelta: record.stats.ratios.markdownLinksDelta,
+    imagesDelta: record.stats.ratios.imagesDelta,
+    sourceTruncated: record.stats.prompt.sourceTruncated,
+    translationTruncated: record.stats.prompt.translationTruncated,
+    inputTokens: record.costs.inputTokens,
+    outputTokens: record.costs.outputTokens,
+    cacheReadTokens: record.costs.cacheReadTokens,
+    cacheWriteTokens: record.costs.cacheWriteTokens,
+    durationMs: record.costs.durationMs,
+    totalUsd: record.costs.totalUsd,
+    pricingSource: record.costs.pricingSource,
   };
 }
 
