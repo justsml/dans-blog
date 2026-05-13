@@ -3,23 +3,23 @@
 - Locale: hi
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2015-06-11--docker-rocks/hi/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 0.71
-- Input tokens: 1839
-- Output tokens: 428
+- Validation: deferred
+- Runtime seconds: 0.85
+- Input tokens: 1949
+- Output tokens: 501
 - Thinking tokens: unknown
-- Cached input tokens: 1024
+- Cached input tokens: 0
 - Cache write tokens: 0
-- Estimated cost: $0.000149
+- Estimated cost: $0.000166
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: git add src/content/posts/2015-06-11--docker-rocks/hi/index.mdx reports/i18n/docker-rocks/hi
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Docker शानदार, अब macOS पर काम करता है'
-subTitle: 'Docker अद्भुत, तेज़ और लचीला है।'
+subTitle: 'Docker अद्भुत, तेज़ और लचीला है'
 date: '2015-06-11'
 modified: '2024-08-10'
 category: DevOps
@@ -38,30 +38,30 @@ cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
 ---
 ## Docker Rocks
 
-> अपडेट्स सितंबर 2016, 2018  
+> अपडेट्स सितंबर 2016, 2018  
 > Boot2Docker को Docker for Mac ने बदल दिया है
 
-> ऐतिहासिक नोट: यह पोस्ट जानबूझकर 2015‑युग के Docker‑for‑Mac स्नैपशॉट के रूप में संरक्षित है। प्रदर्शन सलाह और टूलिंग के नाम उस समय को दर्शाते हैं; वर्तमान Docker Desktop और Compose वर्कफ़्लो आगे बढ़ चुके हैं।
+> ऐतिहासिक नोट: यह पोस्ट जानबूझकर 2015‑युग के Docker‑for‑Mac स्नैपशॉट के रूप में रखी गई है। प्रदर्शन सलाह और टूलिंग के नाम उस समय को दर्शाते हैं; वर्तमान Docker Desktop और Compose वर्कफ़्लो आगे बढ़ चुके हैं।
 
 1. Docker अद्भुत, तेज़, और लचीला है।  
-2. पहले के टूल, विशेषकर boot2docker, धीमे और क्रैश‑प्रवण थे।
+1. पहले के टूल, विशेषकर boot2docker, धीमे और क्रैश‑प्रोन थे।
 
-Docker अब मूल रूप से Linux Kernel v3.4+ पर चल सकता है — और वर्तमान boot2docker VM वास्तव में v4 चलाता है।
+Docker वर्तमान में Linux Kernel v3.4+ पर मूल रूप से चल सकता है — और मौजूदा boot2docker VM वास्तव में v4 चलाता है।
 
 आपके हार्डवेयर का सर्वोत्तम उपयोग: अपने Mac/Windows बॉक्स पर नवीनतम Debian या Ubuntu स्थापित करें।
 
-... चलो, वो गेम्स आपके कोड की मदद नहीं कर रहे हैं...
+... चलो, वो गेम्स आपके कोड में मदद नहीं कर रहे हैं...
 
-### अपनी सेटअप जांचें
+### अपनी सेटअप की जाँच करें
 
-`docker info` कमांड के आउटपुट की समीक्षा करें।
+`docker info` कमांड का आउटपुट देखें।
 
-1. सुरक्षा: सर्वर पर अनपेक्षित खुले पोर्ट की जाँच करें (`nmap` का उपयोग रिमोट नेटवर्क से)
-1. DNS: स्थानीय कैश या कम‑लेटेंसी DNS सर्वर का उपयोग करें।
-1. स्टोरेज: सही स्टोरेज ड्राइवर चुनें (`overlay2` आमतौर पर उपयुक्त है)
+1. सुरक्षा: सर्वर पर अनपेक्षित खुले पोर्ट की जाँच करें (`nmap` को रिमोट नेटवर्क से चलाएँ)  
+2. DNS: स्थानीय कैश या कम लेटेंसी वाला DNS सर्वर उपयोग करें।  
+3. स्टोरेज: सही स्टोरेज ड्राइवर चुनें (`overlay2` अधिकांश मामलों में उपयुक्त है)
 
-2024 में अपडेट:
+अद्यतन 2024:
 
-- Docker Desktop स्वामित्व वाला है, लेकिन व्यक्तिगत उपयोग के लिए मुफ्त है। यह OSX या Windows पर Docker शुरू करने का एक आसान तरीका है।
-- यदि आप अधिक ओपन‑सोर्स समाधान चाहते हैं, तो देखें [Rancher Desktop](../https://rancherdesktop.io/)।
+- Docker Desktop स्वामित्व वाला है, लेकिन व्यक्तिगत उपयोग के लिए मुफ्त है। macOS या Windows पर Docker शुरू करने का यह एक ठोस तरीका है।  
+- यदि आप अधिक ओपन‑सोर्स विकल्प चाहते हैं, तो [Rancher Desktop](https://rancherdesktop.io/) देखें।
 ````
