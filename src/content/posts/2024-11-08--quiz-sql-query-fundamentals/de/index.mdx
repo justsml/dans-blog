@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz: Beweise deine SQL‑Fähigkeiten!'
-subTitle: Sind Sie Team SQL oder NoSQL?
+title: 'Quiz: Beweise deine SQL-Kenntnisse!'
+subTitle: Bist du Team SQL? Oder NoSQL?
 label: SQL 101
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,16 +20,18 @@ cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
 cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 ---
+```jsx
 import Challenge from '../../../../../components/QuizUI/Challenge';
 import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## Testen Sie Ihre SQL‑Grundlagen
+## Testen Sie Ihre SQL-Abfrage-Grundlagen
 
-Macht Ihnen die Arbeit mit einem ORM das SQL‑Handwerk schwer?  
-Keine Sorge, das geht vielen Entwicklern so.
+Macht Ihnen die Nutzung eines ORMs die Hände weich – im Skills-Bereich? 
+Keine Sorge, das passiert vielen Entwicklern. 
 
-Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
+Springen Sie direkt ein, um Ihre SQL-Abfrage-Grundlagen unter Beweis zu stellen! 👇
+```
 
 <QuizUI>
 
@@ -37,7 +39,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="SQL Grundlagen"
-  title="Einfacher WHERE-Abschnitt"
+  title="Grundlegende WHERE-Klausel"
   options={[
     {text: 'SELECT * FROM users WHERE name LIKE(John);'},
     {text: 'SELECT * FROM users WHERE name = \', isAnswer: true},
@@ -47,12 +49,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 >
   <slot name="question">
   <div className="question">
-    Welcher der folgenden SQL‑Abfragen ruft korrekt Zeilen ab, bei denen der Name "John" ist?
+    Welcher der folgenden SQL-Abfragen ruft Zeilen ab, bei denen der Name "John" ist?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    In SQL wird das einfache Gleichheitszeichen (`=`) für Gleichheitsprüfungen im `WHERE`‑Clause verwendet, nicht `==` oder `===`, das sind JavaScript‑Operatoren.
+    In SQL wird das einzelne Gleichheitszeichen (`=`) in der `WHERE`-Klausel für Vergleiche verwendet, nicht `==` oder `===`, die JavaScript-Operatoren sind.
 
     Die korrekte Syntax lautet `SELECT * FROM users WHERE name = 'John';`.
   </div>
@@ -65,8 +67,8 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   group="SQL Grundlagen"
   title="Aggregatfunktion COUNT"
   options={[
-    {text: 'Zählt alle Zeilen, einschließlich NULL-Werten'},
-    {text: 'Zählt nur Nicht-NULL-Werte in einer Spalte', isAnswer: true},
+    {text: 'Zählt alle Zeilen einschließlich NULL-Werte'},
+    {text: 'Zählt nur nicht-NULL-Werte in einer Spalte', isAnswer: true},
     {text: 'Zählt NULL-Werte als einen eindeutigen Wert'},
     {text: 'Behandelt jeden NULL-Wert als eindeutig, ähnlich wie NaN !== NaN'},
   ]}
@@ -78,9 +80,9 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `COUNT(column_name)` zählt die Anzahl der Nicht-NULL-Werte in einer angegebenen Spalte. Um alle Zeilen, einschließlich NULLs, zu zählen, verwende `COUNT(*)`.
+    `COUNT(column_name)` zählt die Anzahl der nicht-NULL-Werte in einer bestimmten Spalte. Um alle Zeilen zu zählen, einschließlich NULLs, verwende `COUNT(*)`.
 
-    Du kannst auch `COALESCE` benutzen, um sicherzustellen, dass NULLs zu einem Nicht-NULL-Wert defaulten. Zum Beispiel: `COUNT(COALESCE(column_name, 0))`.
+    Du kannst auch `COALESCE` verwenden, um sicherzustellen, dass NULLs auf einen nicht-NULL-Wert zurückfallen. So etwas wie: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -89,12 +91,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={2}
   group="SQL-Joins"
-  title="LEFT JOIN Grundlagen"
+  title="Grundlagen von LEFT JOIN"
   options={[
-    {text: 'Gibt für jede passende Zeile genau eine Zeile zurück und ignoriert nicht passende Zeilen'},
-    {text: 'Gibt alle Zeilen der linken Tabelle zurück, plus die passenden Zeilen der rechten Tabelle', isAnswer: true},
-    {text: 'Gibt alle passenden oder nicht passenden Zeilen zurück, wobei NULLs das Fehlen einer Übereinstimmung anzeigen'},
-    {text: 'Gibt alle Zeilen der rechten Tabelle zurück, mit allen passenden Zeilen der linken Tabelle'},
+    {text: 'Gibt eine Zeile pro übereinstimmender Zeile zurück, ignoriert nicht übereinstimmende Zeilen'},
+    {text: 'Gibt alle Zeilen aus der linken Tabelle plus übereinstimmende Zeilen der rechten Tabelle zurück', isAnswer: true},
+    {text: 'Gibt alle übereinstimmenden oder nicht übereinstimmenden Zeilen zurück, wobei NULLs keine Übereinstimmung anzeigen'},
+    {text: 'Gibt alle Zeilen aus der rechten Tabelle mit eventuell übereinstimmenden linken Zeilen zurück'},
   ]}
 >
   <slot name="question">
@@ -104,7 +106,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ein `LEFT JOIN` gibt alle Zeilen der linken Tabelle und die passenden Zeilen der rechten Tabelle zurück, wobei nicht passende Zeilen in der rechten Tabelle mit NULL gefüllt werden.
+    Ein `LEFT JOIN` gibt alle Zeilen aus der linken Tabelle und übereinstimmende Zeilen aus der rechten Tabelle zurück, wobei nicht übereinstimmende Zeilen in der rechten Tabelle mit NULL gefüllt werden.
   </div>
   </slot>
 </Challenge>
@@ -113,12 +115,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="SQL Joins"
-  title="Verwendung von INNER JOIN"
+  title="INNER JOIN verwenden"
   options={[
-    {text: 'Gibt nicht passende Zeilen aus beiden Tabellen zurück'},
-    {text: 'Gibt alle Zeilen aus beiden Tabellen zurück, mit NULL für nicht passende Zeilen'},
-    {text: 'Gibt Zeilen zurück, die die Join‑Bedingung in beiden Tabellen erfüllen', isAnswer: true},
-    {text: 'Gibt nicht passende Zeilen aus der rechten Tabelle zurück'},
+    {text: 'Gibt nicht abgepasste Zeilen aus beiden Tabellen zurück'},
+    {text: 'Gibt alle Zeilen aus beiden Tabellen zurück, mit NULLs für nicht abgepasste Zeilen'},
+    {text: 'Gibt Zeilen zurück, die die Join-Bedingung in beiden Tabellen erfüllen', isAnswer: true},
+    {text: 'Gibt nicht abgepasste Zeilen aus der rechten Tabelle zurück'},
   ]}
 >
   <slot name="question">
@@ -128,7 +130,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ein `INNER JOIN` gibt Zeilen zurück, bei denen die Join‑Bedingung Zeilen aus beiden Tabellen entspricht. Nicht passende Zeilen werden nicht im Ergebnis enthalten.
+    Ein `INNER JOIN` gibt Zeilen zurück, bei denen die Join-Bedingung Zeilen aus beiden Tabellen übereinstimmt. Nicht abgepasste Zeilen werden im Ergebnis nicht enthalten.
   </div>
   </slot>
 </Challenge>
@@ -137,12 +139,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="SQL-Unterabfragen"
-  title="Korreliertes Unterabfrage"
+  title="Korrelierte Unterabfrage"
   options={[
-    {text: 'Eine Unterabfrage, die einmal insgesamt ausgeführt wird'},
-    {text: 'Eine Unterabfrage, die nur in JOIN‑Anweisungen verwendet wird'},
-    {text: 'Eine Unterabfrage, die ausschließlich mehrere Spalten zurückgibt'},
-    {text: 'Eine Unterabfrage, die für jede Zeile der äußeren Abfrage einmal ausgeführt wird', isAnswer: true},
+    {text: 'Eine Unterabfrage, die insgesamt einmal ausgeführt wird'},
+    {text: 'Eine Unterabfrage, die ausschließlich in JOIN-Statements verwendet wird'},
+    {text: 'Eine Unterabfrage, die nur mehrere Spalten zurückgibt'},
+    {text: 'Eine Unterabfrage, die einmal für jede Zeile der äußeren Abfrage ausgeführt wird', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -152,7 +154,7 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Eine korrelierte Unterabfrage wird einmal pro Zeile der äußeren Abfrage ausgewertet. Sie bezieht sich auf Spalten der äußeren Abfrage und ist damit von jeder Zeile abhängig.
+    Eine korrelierte Unterabfrage wird einmal pro Zeile der äußeren Abfrage ausgewertet. Sie verweist auf Spalten der äußeren Abfrage, wodurch sie von jeder Zeile abhängig ist.
   </div>
   </slot>
 </Challenge>
@@ -160,34 +162,34 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="SQL‑CTEs"
-  title="WITH‑Klausel‑Syntax"
+  group="SQL CTEs"
+  title="WITH-Klausel-Syntax"
   options={[
-    {text: 'Nur in DELETE‑Anweisungen erlaubt'},
-    {text: 'Wird für Aggregationsfunktionen verwendet'},
-    {text: 'Nur zur Definition von Views verwendet'},
-    {text: 'Definiert ein temporäres Resultat‑Set zur Verwendung in einer größeren SQL‑Anweisung', isAnswer: true},
+    {text: 'Nur in DELETE-Anweisungen erlaubt'},
+    {text: 'Wird für Aggregatfunktionen verwendet'},
+    {text: 'Wird ausschließlich zur Definition von Sichten verwendet'},
+    {text: 'Definieren eines temporären Ergebnisdatensatzes für die Verwendung in einer größeren SQL-Anweisung', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was ist der Zweck der `WITH`‑Klausel (Common Table Expression) in SQL?
+    Welchem Zweck dient die `WITH`-Klausel (Common Table Expression) in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `WITH`‑Klausel, oder Common Table Expression (CTE), wird verwendet, um ein temporäres Resultat‑Set zu definieren, das innerhalb der Hauptabfrage referenziert werden kann. In PostgreSQL kann `WITH` an Anweisungen wie `SELECT`, `INSERT`, `UPDATE`, `DELETE` oder `MERGE` angehängt werden.
+    Die `WITH`-Klausel, auch als Common Table Expression (CTE) bezeichnet, dient dazu, einen temporären Ergebnisdatensatz zu definieren, der in der Hauptabfrage referenziert werden kann. In PostgreSQL kann `WITH` an Anweisungen wie `SELECT`, `INSERT`, `UPDATE`, `DELETE` oder `MERGE` angehängt werden.
 
-    Das kann die Lesbarkeit und Wartbarkeit komplexer Abfragen verbessern.
+    Dies kann die Lesbarkeit und Wartbarkeit komplexer Abfragen verbessern.
 
-    Die Syntax lautet:
+    Die Syntax ist:
     ```sql
-    WITH cte_name AS (
-    SELECT column_name
-    FROM table_name
-    )
-    SELECT *
-    FROM cte_name;
+        WITH cte_name AS (
+        SELECT column_name
+        FROM table_name
+        )
+        SELECT *
+        FROM cte_name;
     ```
   </div>
   </slot>
@@ -207,12 +209,12 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 >
   <slot name="question">
   <div className="question">
-    Was macht der `IS NULL`‑Operator in SQL?
+    Was tut der `IS NULL`-Operator in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `IS NULL` prüft, ob eine angegebene Spalte einen NULL‑Wert enthält. `IS NOT NULL` prüft das Gegenteil.
+    `IS NULL` prüft, ob eine angegebene Spalte einen NULL-Wert enthält. `IS NOT NULL` prüft das Gegenteil.
   </div>
   </slot>
 </Challenge>
@@ -220,27 +222,27 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="SQL‑Operatoren"
+  group="SQL-Operatoren"
   title="Verwendung des IN-Operators"
   options={[
     {text: 'Gibt eindeutige Zeilen zurück'},
     {text: 'Erfordert eine indizierte Spalte'},
-    {text: 'Gilt nur für numerische Spalten'},
-    {text: 'Gibt Zeilen zurück, die den Werten in einer angegebenen Liste entsprechen', isAnswer: true},
+    {text: 'Wird nur auf numerische Spalten angewandt'},
+    {text: 'Gibt Zeilen zurück, die Werte in einer angegebenen Liste entsprechen', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was macht der `IN`‑Operator in SQL?
+    Was tut der `IN`-Operator in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Der `IN`‑Operator filtert Zeilen, sodass sie zu irgendeinem Wert in einer angegebenen Liste passen, häufig als Alternative zu mehreren OR‑Bedingungen.
+    Der `IN`-Operator filtert Zeilen, um auf Werte in einer angegebenen Liste zu übereinstimmen, oft als Alternative zu mehreren OR-Bedingungen.
 
-    Während er *möglicherweise* "eindeutige Zeilen" zurückgibt (und das oft tut), ist das nicht unbedingt der Hauptzweck.
+    Er *könnte* zwar "eindeutige Zeilen" zurückgeben (und tut es oft), aber das ist nicht unbedingt sein primäres Ziel.
 
-    Indexierung ist hier nicht erforderlich, obwohl es durchaus eine bewährte Praxis ist, `IN` auf einer Spalte mit Index zu verwenden, vorzugsweise einem `UNIQUE`‑Index, da dies die Leistung verbessern kann.
+    Eine Indizierung ist hier nicht erforderlich, obwohl es eine gute Praxis ist, `IN` auf eine Spalte mit Index anzuwenden – idealerweise einen `UNIQUE`-Index –, da dies die Leistung verbessern kann.
   </div>
   </slot>
 </Challenge>
@@ -252,9 +254,9 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   title="Verwendung der COALESCE-Funktion"
   options={[
     {text: 'Zählt NULL-Werte'},
-    {text: 'Gibt das letzte Nicht-NULL-Argument zurück'},
-    {text: 'Gibt das erste Nicht-NULL-Argument zurück', isAnswer: true},
-    {text: 'Begrenzt auf IDENTITY-Spalten'},
+    {text: 'Gibt das letzte nicht-NULL-Argument zurück'},
+    {text: 'Gibt das erste nicht-NULL-Argument zurück', isAnswer: true},
+    {text: 'Beschränkt auf IDENTITY-Spalten'},
     {text: 'Ursprünglich von Printer Coalation'},
   ]}
 >
@@ -265,9 +267,9 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `COALESCE`-Funktion gibt den ersten Nicht-NULL-Wert in einer angegebenen Liste zurück und ist nützlich, um Standardwerte zu substituieren, wenn NULL‑Werte auftreten.
+    Die `COALESCE`-Funktion gibt den ersten nicht-NULL-Wert in einer angegebenen Liste zurück, nützlich, um Standardwerte zu substituieren, wenn NULLs vorkommen.
 
-    Zum Beispiel würde `COALESCE(column_name, 0)` `0` zurückgeben, wenn `column_name` `NULL` ist.
+    Zum Beispiel würde `COALESCE(column_name, 0)` den Wert `0` zurückgeben, wenn `column_name` `NULL` ist.
   </div>
   </slot>
 </Challenge>
@@ -280,19 +282,19 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   options={[
     {text: 'Versteckt Duplikate'},
     {text: 'Nur in Joins verwendet'},
-    {text: 'Sortiert Zeilen aufsteigend'},
+    {text: 'Sortiert Zeilen in aufsteigender Reihenfolge'},
     {text: 'Gruppiert Zeilen nach den angegebenen Spalten', isAnswer: true},
-    {text: 'Die Syntax sollte GROUP WITH/USING sein'},
+    {text: 'Syntax sollte GROUP WITH/USING sein'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Was ist der Zweck der `GROUP BY`-Klausel in SQL?
+    Welchem Zweck dient die `GROUP BY`-Klausel in SQL?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Die `GROUP BY`-Klausel gruppiert Zeilen, die in den angegebenen Spalten gleiche Werte haben, sodass Aggregatfunktionen auf jede Gruppe angewendet werden können.
+    Die `GROUP BY`-Klausel gruppiert Zeilen, die in den spezifizierten Spalten gleiche Werte haben, und ermöglicht die Anwendung von Aggregatfunktionen auf jede Gruppe.
   </div>
   </slot>
 </Challenge>
@@ -300,14 +302,14 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="SQL-Joins"
-  title="FULL OUTER JOIN Grundlagen"
+  group="SQL Joins"
+  title="Grundlagen von FULL OUTER JOIN"
   options={[
-    {text: 'Gibt nur passende Zeilen zurück'},
+    {text: 'Gibt nur übereinstimmende Zeilen zurück'},
     {text: 'Gibt nur Zeilen mit nicht-NULL-Werten zurück'},
-    {text: 'Gibt nur nicht passende Zeilen der linken Tabelle zurück'},
-    {text: 'Gibt nur nicht passende Zeilen der rechten Tabelle zurück'},
-    {text: 'Gibt alle Zeilen beider Tabellen zurück, mit NULLs für nicht passende Zeilen', isAnswer: true},
+    {text: 'Gibt nur nicht übereinstimmende Zeilen aus der linken Tabelle zurück'},
+    {text: 'Gibt nur nicht übereinstimmende Zeilen aus der rechten Tabelle zurück'},
+    {text: 'Gibt alle Zeilen aus beiden Tabellen zurück, mit NULLs für nicht übereinstimmende Zeilen', isAnswer: true},
   ]}
 >
   <slot name="question">
@@ -317,9 +319,9 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Ein `FULL OUTER JOIN` gibt alle Zeilen beider Tabellen zurück und füllt nicht passende Zeilen mit NULLs für fehlende Werte.
+    Ein `FULL OUTER JOIN` gibt alle Zeilen aus beiden Tabellen zurück, füllt nicht übereinstimmende Zeilen mit NULLs für fehlende Werte.
 
-    Das ist nützlich, um zwei Tabellen zu vergleichen und Unterschiede zwischen ihnen zu finden.
+    Dies ist nützlich, um zwei Tabellen zu vergleichen und Unterschiede zwischen ihnen zu finden.
   </div>
   </slot>
 </Challenge>
