@@ -1,0 +1,85 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: hi
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 50.50
+- Input tokens: 2689
+- Output tokens: 14857
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.015260
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: NVMe SSD क्लाउड विकल्पों की तुलना करें
+subTitle: 'NVMe SSD का सीधा मुकाबला: AWS, DigitalOcean, Packet.net'
+date: '2017-04-15'
+modified: '2020-01-30'
+category: DevOps
+subCategory: programming
+tags:
+  - cloud
+  - servers
+  - architecture
+  - scaling
+  - digital-ocean
+  - amazon-web-services
+  - google-cloud-engine
+  - azure
+  - packet
+  - ovh
+  - ssd
+  - io
+cover: ../solaiman-hossen-553024-unsplash.webp
+cover_mobile: ../w300_solaiman-hossen-553024-unsplash.webp
+cover_icon: ../icon_solaiman-hossen-553024-unsplash.webp
+---
+## क्लाउड प्रदर्शन को 70% तक बढ़ाएं
+
+> नीचे चुने हुए होस्टिंग प्रदाताओं के लिए सामान्य नोट्स और अनुभाग (मध्य-2017)।
+
+- [AWS (Amazon Web Services), EC2 (Elastic Compute Cloud), EBS (Elastic Block Storage), आदि](#aws_tips)
+- [Digital Ocean](#do_tips)
+- [Packet.net](#packet_tips)
+
+<a id='aws_tips'></a>
+
+### Amazon Web Services / EC2 / EBS / S3
+
+> TLDR; हालांकि AWS आमतौर पर सीमित हार्डवेयर और जटिल प्राइसिंग टियर पेश करता है, **i3.large** (और उससे बड़े) हार्डवेयर कीमत बनाम I/O प्रदर्शन के अनुपात में सबसे अधिक कुशल है, AND कुल प्रदर्शन में सबसे तेज़ है।
+
+> EC2 **i3.large** में **475GB NVMe SSD** आमतौर पर **$110/महीना** में आती है! > <br />
+> **1.9TB NVMe** वाले **i3.2xlarge** का खर्च लगभग **$450/महीना** है * > <br /> > \_*USA/2018\_
+
+<br />
+<br />
+
+### Head to Head
+
+\[[फुल-स्क्रीन डेटा व्यू](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 650px; width: 990px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=116848524&amp;format=interactive"></iframe>
+
+[EC2 पर कीमतें देखें](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+
+![ec2instances.info](../ec2-updated-prices-2018.webp)
+
+ध्यान दें कि **i3.\*xlarge** श्रृंखला ही एकमात्र हार्डवेयर है जिसमें प्रतिस्पर्धी मूल्य वाली NVMe स्टोरेज उपलब्ध है (अल्ट्रा-फास्ट +1GB/s गति)। मुझे जिस प्रमुख बाधा का सामना करना पड़ा, वह थी वास्तविक नेटवर्क बैंडविड्थ। जिन सर्वरों की विज्ञापित गति "10/Gb/s तक" दर्ज की गई थी, वे 1/Gb/s (60-80MB/s) के स्तर तक भी पहुँचने में असमर्थ रहे।
+
+नेटवर्क बेंचमार्किंग के लिए समान Availability Zone में अधिकतम 9 अतिरिक्त इन्स्टेंस का उपयोग किया गया। मैंने किसी भी त्रुटिपूर्ण डेटा पॉइंट को 0 से बदल दिया। चूंकि केवल 1-2 सैंपल एकत्र किए गए थे, इसलिए अतिरिक्त परीक्षणों की आवश्यकता है।
+
+\[[फुल-स्क्रीन डेटा व्यू](https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&format=interactive)\]
+
+<iframe style="position: relative; left: -150px; height: 790px; width: 950px; min-width: 100%;" seamless frameborder="0" scrolling="no" src="https://docs.google.com/spreadsheets/d/1qQ62m1RFj73YScdS77Q9R2GpRqJOk7JHuTEOFDR4jJE/pubchart?oid=13370750&amp;format=interactive"></iframe>
+
+#### स्रोत
+
+- [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
