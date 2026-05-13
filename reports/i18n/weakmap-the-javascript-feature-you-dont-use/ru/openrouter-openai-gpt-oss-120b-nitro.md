@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 5.22
+- Input tokens: 5764
+- Output tokens: 1881
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000563
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Остановите утечки памяти с WeakMap
 subTitle: Исправляем плохой код с помощью слабых ссылок!
@@ -126,3 +144,4 @@ WeakMap особенно полезен, когда вы связываете д
 - [MDN: Memory Management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [V8 Blog: Weak References and Finalizers](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap and WeakSet](https://javascript.info/weakmap-weakset)
+````
