@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 0.70
+- Input tokens: 1970
+- Output tokens: 718
+- Thinking tokens: unknown
+- Cached input tokens: 896
+- Cache write tokens: 0
+- Estimated cost: $0.000206
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: Le dernier à réfléchir
@@ -33,3 +51,4 @@ Nous avons survécu aux calculatrices, aux CliffsNotes et (jusqu’à présent) 
 <p> </p>
 
 \* _En supposant que nous puissions améliorer l’impact environnemental et éviter un cauchemar dystopique. Mais c’est un sujet pour une autre fois._
+````
