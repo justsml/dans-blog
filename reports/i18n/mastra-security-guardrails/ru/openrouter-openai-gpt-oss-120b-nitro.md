@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.72
+- Input tokens: 6869
+- Output tokens: 2521
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.000722
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Производственный ИИ — страшно (и как это исправить)
 subTitle: 'Если у вашего агентанет ограничений, вы не готовы к продакшену.'
@@ -171,3 +189,4 @@ if (result.tripwire) {
 2. **Безопасность и Guardrails** (Этот пост)
 3. [MCP и интеграции инструментов](../mastra-mcp-tool-integrations)
 4. [Рабочие процессы и память](../mastra-workflows-memory)
+````
