@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.79
+- Input tokens: 4570
+- Output tokens: 1950
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.000529
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: मॉडल से शादी न करें
 subTitle: 'LLM रूटिंग, अभी बहुत चर्चित'
@@ -113,3 +131,4 @@ export const mastra = new Mastra({
 2. [सुरक्षा एवं गार्डरेल्स](../mastra-security-guardrails)
 3. [MCP एवं टूल इंटीग्रेशन](../mastra-mcp-tool-integrations)
 4. [वर्कफ़्लो एवं मेमोरी](../mastra-workflows-memory)
+````
