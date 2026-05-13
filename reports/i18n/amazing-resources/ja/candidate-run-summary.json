@@ -1,53 +1,43 @@
 {
-  "runId": "2026-05-13T17-13-01-955Z",
-  "runStatus": "completed",
+  "runId": "2026-05-13T18-32-42-420Z",
+  "runStatus": "running",
   "slug": "amazing-resources",
   "locale": "ja",
-  "startedAt": "2026-05-13T17:13:01.955Z",
-  "updatedAt": "2026-05-13T17:20:58.639Z",
+  "startedAt": "2026-05-13T18:32:42.420Z",
+  "updatedAt": "2026-05-13T18:36:43.789Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 3,
-  "skippedModels": 1,
+  "attemptedModels": 1,
+  "skippedModels": 3,
   "rejectedModels": 1,
-  "candidateModels": 2,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 20112,
-    "outputTokens": 14310,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 3840,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.005354,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "450.61"
+    "runtimeSeconds": "240.32"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/amazing-resources/ja/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "6.82",
-        "tokens": {
-          "input": 10340,
-          "output": 4245,
-          "cached": 3840,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.00116736,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
@@ -57,30 +47,18 @@
     },
     {
       "model": "deepseek/deepseek-v4-flash",
-      "status": "candidate",
-      "validationStatus": "deferred",
+      "status": "skipped",
       "reportPath": "reports/i18n/amazing-resources/ja/deepseek-deepseek-v4-flash.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "203.78",
-        "tokens": {
-          "input": 9772,
-          "output": 10065,
-          "cached": 0,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0041862800000000006,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "qwen/qwen3.6-plus",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/amazing-resources/ja/qwen-qwen3.6-plus.md",
-      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug amazing-resources --locale ja --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug amazing-resources --locale ja --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24",
       "telemetry": {
-        "runtimeSeconds": "240.01",
+        "runtimeSeconds": "240.32",
         "tokens": {}
       }
     }
