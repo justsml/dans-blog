@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.98
+- Input tokens: 8549
+- Output tokens: 3369
+- Thinking tokens: unknown
+- Cached input tokens: 2176
+- Cache write tokens: 0
+- Estimated cost: $0.000940
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'फ़्लैकी एजेंट बनाना बंद करें: वर्कफ़्लो और मेमोरी का उपयोग करें'
 subTitle: असंतत मॉडल के लिए निर्धारक पैटर्न।
@@ -252,3 +270,4 @@ export const coordinatorAgent = new Agent({
 2. [Security & Guardrails](../mastra-security-guardrails)
 3. [MCP & Tool Integrations](../mastra-mcp-tool-integrations)
 4. **Workflows & Memory** (यह पोस्ट)
+````
