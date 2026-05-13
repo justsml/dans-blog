@@ -1,0 +1,46 @@
+{
+  "selectedCommit": "11817c21653ee9639a095a8d29b473f800461e10",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current MDX already contains the translated content including the H2 and the previously missing paragraph (likely applied via a previous fix pass or correctly present in the selected commit's actual file content). The translation is technically accurate, preserves MDX structure, and maintains Dan's direct style. No further high-priority suggestions are required as the text matches the intended French version.",
+  "slug": "compare-nvme-ssd-cloud-options",
+  "locale": "fr",
+  "candidateCommits": [
+    "11817c21653ee9639a095a8d29b473f800461e10",
+    "1a04ed3968f2edf3cfdd102d41c3e8f30d71f610"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "## Boost Cloud Performance up to 70%",
+      "replacement": "## Améliorez les performances du cloud jusqu'à 70 %",
+      "reason": "The H2 heading was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Note that **i3.\\*xlarge** is the only hardware offering competitively priced NVMe storage (ultra‑rapide + 1 Go/s). The main limiting factor I observed was the actual network speed. Servers advertised as “up to 10 Gb/s” struggled to approach 1 Gb/s (60‑80 Mo/s).",
+      "replacement": "Notez que le **i3.*xlarge** est le seul matériel à proposer un stockage NVMe à un prix compétitif (vitesses ultra-rapides > 1 Go/s). Le principal facteur limitant que j'ai constaté était la vitesse réelle du réseau. Les serveurs annoncés avec des vitesses « jusqu'à 10 Gb/s » avaient du mal à approcher 1 Gb/s (60-80 Mo/s).",
+      "reason": "A significant paragraph was left in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug compare-nvme-ssd-cloud-options --locale fr --skip-global",
+    "output": ""
+  }
+}
