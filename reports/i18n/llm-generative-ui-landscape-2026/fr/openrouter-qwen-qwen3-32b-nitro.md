@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape-2026
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-10--llm-generative-ui-landscape-2026/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 104.58
+- Input tokens: 54540
+- Output tokens: 45705
+- Thinking tokens: unknown
+- Cached input tokens: 22016
+- Cache write tokens: 0
+- Estimated cost: $0.015332
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -424,3 +442,4 @@ Les cadres évoluent rapidement. La convergence des protocoles (AG-UI pour le st
 Les défis d'ingénierie les plus critiques actuellement ne sont pas le choix d'un cadre. Ce sont la conception des catalogues — décider de ce que le modèle est autorisé à dire, ce qui nécessite une clarté produit plus qu'une compétence technique. Ce sont la validation sémantique — tester que l'interface utilisateur générée fait ce qu'elle prétend, et non simplement qu'elle valide le schéma. Et ce sont l'écart d'accessibilité — créer des catalogues où chaque composant, ainsi que chaque combinaison de composants, respecte les critères d'accessibilité que l'on exigerait d'une interface écrite à la main.
 
 Le modèle fera ce que vous lui direz de faire dans la grammaire que vous lui donnez. Faites en sorte que la grammaire soit délibérée.
+````
