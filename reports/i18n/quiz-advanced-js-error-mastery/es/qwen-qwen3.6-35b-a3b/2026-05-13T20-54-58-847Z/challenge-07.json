@@ -1,0 +1,44 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Constructor Name Gotcha",
+  "translatedTitle": "La trampa del nombre del constructor",
+  "translation": {
+    "title": "La trampa del nombre del constructor",
+    "group": "Errores personalizados",
+    "options": [
+      {
+        "text": "\"MyError\""
+      },
+      {
+        "text": "\"Error\""
+      },
+      {
+        "text": "undefined"
+      },
+      {
+        "text": "TypeError"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál es la salida si no configuras `name`?"
+    ],
+    "explanationProse": [
+      "Si no asignas explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `\"Error\"`. Ahí está la razón por la que las clases de errores personalizados siempre deben configurar `this.name = this.constructor.name` en su constructor."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"La trampa del nombre del constructor\",\n  \"group\": \"Errores personalizados\",\n  \"options\": [\n    {\n      \"text\": \"\\\"MyError\\\"\"\n    },\n    {\n      \"text\": \"\\\"Error\\\"\"\n    },\n    {\n      \"text\": \"undefined\"\n    },\n    {\n      \"text\": \"TypeError\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál es la salida si no configuras `name`?\"\n  ],\n  \"explanationProse\": [\n    \"Si no asignas explícitamente `this.name`, el error hereda la propiedad `name` predeterminada de la clase `Error`, que es `\\\"Error\\\"`. Ahí está la razón por la que las clases de errores personalizados siempre deben configurar `this.name = this.constructor.name` en su constructor.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 776,
+    "outputTokens": 2444,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14251
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}

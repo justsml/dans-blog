@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Detección de objetos vs errores",
+  "translation": {
+    "title": "Detección de objetos vs errores",
+    "group": "Límites de error",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devuelven estas comprobaciones?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` retorna `false` porque el objeto no fue instanciado mediante el constructor `Error`. `Object.prototype.toString.call()` también retorna `false` (devuelve `'[object Object]'`) porque inspecciona el slot interno `[[Class]]`. Ambas formas detectan correctamente que se trata de un objeto de error falso."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Detección de objetos vs errores\",\n  \"group\": \"Límites de error\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devuelven estas comprobaciones?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` retorna `false` porque el objeto no fue instanciado mediante el constructor `Error`. `Object.prototype.toString.call()` también retorna `false` (devuelve `'[object Object]'`) porque inspecciona el slot interno `[[Class]]`. Ambas formas detectan correctamente que se trata de un objeto de error falso.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 792,
+    "outputTokens": 2575,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16211
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
