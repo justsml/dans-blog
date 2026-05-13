@@ -1,0 +1,27 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "manual",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current translation is already of high quality, technically accurate, and follows the MDX structure perfectly. Candidate 4317b03a uses 'Tokens' (plural) in the H2 which is fine, but it changes the link in the related article block to a relative path '../' which might break depending on the routing, whereas the current version uses the absolute-style path '/'. Candidate 14ba0fd1 is nearly identical to the current version. The current version is natural and correct.",
+  "slug": "protect-your-tokens",
+  "locale": "de",
+  "candidateCommits": [
+    "4317b03a1b143eda56452eb1ae279ebf53af5bca",
+    "14ba0fd13b631d17d5d3c5b515891b634ee193a8"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug protect-your-tokens --locale de --skip-global",
+    "output": ""
+  }
+}
