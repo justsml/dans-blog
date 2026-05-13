@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 121.49
+- Input tokens: 6480
+- Output tokens: 5533
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002456
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Понимание международных чисел и валют
@@ -126,3 +144,4 @@ console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
 
 - [currency](https://github.com/bojanz/currency) — мой текущий выбор для Golang.
  */}
+````
