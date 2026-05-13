@@ -1,0 +1,285 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: de
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/de/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug from-zero-to-regex-hero-extract-url-like-strings --locale de --model qwen/qwen3.5-9b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+title: 'Regex: Vom Anfänger zum Profi'
+subTitle: URL-ähnliche Strings extrahieren & parsen mit einem einzigen Regex
+category: Regex
+subCategory: Data Extraction
+date: '2024-12-29'
+modified: '2025-01-06'
+tags:
+  - regex
+  - url
+  - data-extraction
+  - data-processing
+social_image: ../desktop-social.webp
+cover_full_width: ../regex-url-parsing-wide.webp
+cover_mobile: ../regex-url-parsing-square-200.webp
+cover_icon: ../regex-url-parsing-square-200.webp
+---
+import { CodeTabs } from '../../../../components/CodeTabs';
+
+**Inhaltsverzeichnis**
+
+- 🚀 [Einleitung](#-introduction)
+- 🔍 [URLs aus Text extrahieren](#-extracting-urls-from-text)
+- 🛳️ [Der 120+ Byte Regex](#️-the-120-byte-regex)
+- 🧩 [Schritt-für-Schritt-Zerlegung](#-breaking-it-down-step-by-step)
+- 🛠️ [Parsing-Beispiel](#-pa)
+- ☑️ [Nächste Schritte](#-next-steps)
+- 📝 [Zusammenfassung](#-summary)
+- 📚 [Weiterführende Literatur](#-further-learning)
+
+**TL;DR:** Springen Sie direkt zum [120+ Byte Regex](#️-the-120-byte-regex).
+
+## 🚀 Einleitung
+
+Das Extrahieren von URLs aus rohem Text kann sich schnell in ein mühsames Whack-a-Mole-Spiel verwandeln. Interpunktion, umgebende Klammern und mehrdeutige Formatierungen arbeiten zusammen, um Ihre Bemühungen zu vereiteln. Ob Sie einen Web-Scraper, einen Datenanalysator oder eine Chat-Anwendung entwickeln – das präzise Extrahieren von URLs ist unverzichtbar.
+
+In diesem Beitrag gehen wir das Problem direkt an und setzen auf einen flexiblen, zweistufigen Ansatz. Unser Ziel ist es, **zunächst alle _potenziellen_ URL-ähnlichen Strings zu erfassen** und die Validierung einem nachgelagerten Schritt zu überlassen.
+
+> 💡 **Hinweis:** Dieses Muster dient nicht der **_Validierung_** von URLs! Es ist bewusst tolerant gegenüber Interpunktion und Tippfehlern.
+
+## 🔍 Ziel: URLs aus Text extrahieren
+
+Beim Extrahieren von URLs aus rohem Text bewährt sich ein zweistufiger Ansatz:
+
+1. **Alles URL-ähnliche erfassen**: Ein weites Netz werfen, um alle Strings zu sammeln, die *möglicherweise* URLs sind. Genau hier kommt unser „120-Byte-Regex“ ins Spiel.
+2. **Validieren**: Sobald diese Kandidaten erfasst sind, nutzen Sie sekundäre Prüfungen (z. B. DNS-Auflösung, Abgleich mit bekannten Domains), um ungültige Einträge herauszufiltern.
+
+### Die Herausforderung visualisieren
+
+Begriffe wie `extract` und `parse` werden oft synonym verwendet, bezeichnen jedoch unterschiedliche Prozesse. Das Extrahieren von URLs bedeutet, potenzielle URLs aus einem größeren Textkorpus zu identifizieren und zu erfassen. Das Parsen hingegen zerlegt diese URLs in ihre Einzelkomponenten.
+
+Wenn ich von Parsing oder „URL-Teilen“ spreche, meine ich folgende Komponenten:
+
+<figure>
+  <figcaption>Die 5 Bestandteile jeder URL</figcaption>
+![Anatomie einer URL, visualisiert](../WhatUrlsAreMadeOf-ColorMatched.svg "Anatomie einer URL, visualisiert")
+</figure>
+
+<details class="inset breakout">
+  <summary>Klicken Sie, um einen Screenshot der Substring-Matches in RegEx101 zu sehen.</summary>
+
+  Bevor wir zu tief in die Regex einsteigen, nutzen wir ein visuelles Tool, um zu prüfen, wie gut mein Muster mehrere Treffer erfasst:
+
+  <figure>
+    <figcaption>Visualisierung von Mehrzeilen-Treffern mit [RegEx101.com](https://regex101.com/r/jO8bC4/69)</figcaption>
+    ![Vorschau der „Bulk“-Mehrzeilen-Treffer](../RegEx101-Matches-Screenshot.webp "Vorschau der „Bulk“-Mehrzeilen-Ergebnisse")
+  </figure>
+</details>
+
+## Die 120+ Byte Regex
+
+Im Folgenden finden Sie eine kompakte Regex, die URLs in einem einzigen Durchlauf extrahiert und parst. Sie unterstützt verschiedene Protokolle, Domains, Pfade sowie optionale Query- und Fragment-Bereiche.
+
+Keine Sorge – wir zerlegen das Schritt für Schritt!
+
+```js title="120+ Byte URL Regex" frame="code"
+const urlRegex = /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+// Compatibility: ES5+
+
+// Same pattern, split on newlines for readability:
+([-.a-z0-9]+:\/{1,3})
+([^-\/\.[\](|)\s?][^`\/\s\]?]+)
+([-_a-z0-9!@$%^&*()=+;/~\.]*)
+[?]?([^#\s`?]*)
+[#]?([^#\s'"`\.,!]*)
+
+```
+
+<blockquote class="inset">Teilt die wildesten Regex-Patterns, die ihr je gesehen (oder selbst verfasst) habt, in den <a href="#post-comments">Kommentaren unten!</a> 🚀</blockquote>
+
+## 🧩 Schritt für Schritt zerlegt
+
+Wir zerlegen die Regex in ihre Komponenten, um den Aufbau zu verstehen:
+
+<h3>1. Protokoll (Gruppe 1): <code>{`([-.a-z0-9]+:\/{1,3})`}</code></h3>
+
+<ul>
+  <li>**Zweck:** Erfasst den Protokollteil der URL (z. B. `http://`, `ftp://`, `custom-scheme://`).</li>
+  <li>
+    **Erklärung:**
+    <ul>
+      <li><code>[-.a-z0-9]+</code>: Stimmt auf mindestens einen Kleinbuchstaben, eine Ziffer, einen Bindestrich oder einen Punkt überein (häufig in Protokoll-Schemata).</li>
+      <li><code>{`:\/{1,3}`}</code>: Stimmt auf einen Doppelpunkt, gefolgt von einem bis drei Schrägstrichen, überein (<code>:/</code>, <code>://</code> oder <code>:///</code>).</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>2. Domain (Gruppe 2): <code>{`([^-\/\.[\](|)\s?][^\`\/\s\]?]+)`}</code></h3>
+
+<ul>
+  <li>**Zweck:** Erfasst den Domain- oder Hostteil der URL.</li>
+  <li>
+    **Erklärung:**
+    <ul>
+      <li><code>[^-\/\.[\](|)\s?]</code>: Stimmt auf jedes Zeichen außer den angegebenen Sonderzeichen und Leerzeichen überein.</li>
+      <li><code>[^`\/\s\]?]+</code>: Stimmt auf mindestens ein Zeichen außer Backticks, Schrägstrichen, Leerzeichen oder schließenden eckigen Klammern überein.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>3. Pfad (Gruppe 3): <code>{`([-_a-z0-9!@$%^&*()=+;/~\\.]*)`}</code></h3>
+
+<ul>
+  <li>**Zweck:** Stimmt auf die Pfadkomponente der URL überein.</li>
+  <li>
+    **Erklärung:**
+    <ul>
+      <li><code>[-_a-z0-9!@$%^&*()=+;/~\.]*</code>: Stimmt auf null oder mehr URL-sichere Zeichen überein, die typischerweise in Pfaden vorkommen.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>4. Query (Gruppe 4): <code>[?]?([^#\s`?]*)</code></h3>
+
+<ul>
+  <li>**Zweck:** Stimmt optional auf eine Query-Zeichenkette überein, die mit einem beliebigen <code>?</code>-Zeichen beginnt.</li>
+  <li>
+    **Erklärung:**
+    <ul>
+      <li><code>[?]?</code>: Stimmt optional auf ein <code>?</code> überein. (Die eckigen Klammern sind nicht zwingend erforderlich, erhöhen jedoch die Lesbarkeit gegenüber der extrem knappen Doppelung <code>??</code>. Zudem schaffen sie eine visuelle Parallele zur (ähnlichen) nächsten Matching-Gruppe <code>[#]?</code>.)</li>
+      <li><code>([^#\s`?]*)</code>: Stimmt auf null oder mehr Zeichen überein, die kein Hash, Leerzeichen, Backtick oder Fragezeichen sind.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>5. Fragment (Gruppe 5): <code>[#]?([^#\s'"`\.,!]*)</code></h3>
+
+<ul>
+  <li>**Zweck:** Stimmt optional auf den Fragment-Bezeichner überein, der mit einem <code>#</code> beginnt.</li>
+  <li>
+    **Erklärung:**
+    <ul>
+      <li><code>[#]?</code>: Stimmt optional auf ein <code>#</code> überein.</li>
+      <li><code>([^#\s'"`\.,!]*)</code>: Stimmt auf null oder mehr Zeichen überein, die keine nicht erlaubten Satzzeichen oder Leerzeichen enthalten.</li>
+    </ul>
+  </li>
+</ul>
+
+## 🛠️ Parsing-Beispiel
+
+So setzen Sie diesen Regex-Monster mit etwas JavaScript in die Praxis um:
+
+<CodeTabs client:only
+ tabs={[
+    "Code: URLs extrahieren",
+    "Ergebnisse: Extrahierte URLs",
+    "Ergebnisse: URL-Teile",
+  ]} >
+```js title="extract-urls.js" frame="code"
+const text = `
+Check this out: https://example.com/path?query=123#section
+And also (ftp://files.server.org/index).
+Plus a weird one: custom-scheme://host/param;weird^stuff
+`;
+
+const urlRegex =
+  /([-.a-z0-9]+:\/{1,3})([^-\/\.[\](|)\s?][^`\/\s\]?]+)([-_a-z0-9!@$%^&*()=+;/~\.]*)[?]?([^#\s`?]*)[#]?([^#\s'"`\.,!]*)/gi;
+
+const matches = [
+  ...text.matchAll(urlRegex),
+].map((match) => match[0]);
+console.log("Extracted URLs:", matches);
+
+const parts = [
+  ...text.matchAll(urlRegex),
+].map((match) => match.slice(1));
+console.log("Extracted Parts:", parts);
+```
+
+```json title="extracted-urls.json"
+[
+  "https://example.com/path?query=123#section",
+  "ftp://files.server.org/index",
+  "custom-scheme://host/param;weird^stuff"
+]
+```
+
+```json title="urls-parts.json"
+[
+  [
+    "https://",    // Protokoll
+    "example.com", // Domain
+    "/path",       // Pfad
+    "query=123",   // Query
+    "section"      // Fragment
+  ],
+  [
+    "ftp://",           // Protokoll
+    "files.server.org", // Domain
+    "/index",           // Pfad
+    "",                 // Query
+    ""                  // Fragment
+  ],
+  [
+    "custom-scheme://",   // Protokoll
+    "host",               // Domain
+    "/param;weird^stuff", // Pfad
+    "",                   // Query
+    ""                    // Fragment
+  ]
+]
+```
+
+</CodeTabs>
+
+## ☑️ Nächste Schritte
+
+Je nach Anwendungsfall müssen Sie diesen Regex möglicherweise verfeinern oder zusätzliche Validierungs- und Nachbearbeitungsschritte einfügen.
+
+### Unterschiedliche Projekte, unterschiedliche Anforderungen
+
+Projekte unterscheiden sich in ihren Anforderungen und Sicherheitsbedenken:
+
+1. **Web Scraping**: URLs validieren, um Erreichbarkeit und Vertrauenswürdigkeit sicherzustellen.
+2. **Datenverarbeitung**: URLs aus nutzergenerierten Inhalten extrahieren, dabei Sicherheitsaspekte wahren.
+3. **Datenanalyse**: Duplikate oder irrelevante Links für Forschungs- oder Marketingzwecke herausfiltern.
+4. **Anwendungen mit Benutzeroberfläche**: URLs in Chat-Apps oder Foren automatisch verlinken.
+
+### Nachbearbeitung und Validierung
+
+Nach dem Sammeln potenzieller URLs sind zusätzliche Prüfungen erforderlich:
+
+- **DNS-Lookup**: Prüfen, ob Domains tatsächlich auflösbar sind.
+- **Sicherheitsprüfungen**: Dienste einsetzen, um bösartige oder Phishing-Websites zu identifizieren.
+- **Eigene Regeln**: Projektspezifische Filter anwenden (z. B. erlaubte TLDs, maximale URL-Länge).
+
+## 📝 Zusammenfassung
+
+Das Extrahieren semistrukturierter String-Daten ist vielleicht der befriedigendste Aspekt der Regex-Meisterschaft.
+
+Hier ist eine Zusammenfassung der wichtigsten Erkenntnisse:
+
+- **Nutze ein visuelles Tool zum Schreiben, Testen** und Verstehen deiner [Regex-Muster.](https://regex101.com/r/jO8bC4/69)
+- **Zerlege die Herausforderung in einzelne Teile** und bearbeite jeden separat. In gewisser Weise dienen Capture Groups als figurative 'Wegweiser' für unseren Regex.
+- **Nutze 'lockere' Match-Ausdrücke, vermeide strikte Spezifikationskonformität** bei der Datenaufnahme.
+- **Validierungsschritte nach der initialen Extraktion** sind essenziell—berücksichtige dabei stets die Sicherheit und die spezifischen Anforderungen deines Projekts.
+
+Die Einhaltung dieser Schritte ermöglicht die effektive Extraktion beliebiger semistrukturierter String-Daten und schafft die Voraussetzung für nachgelagerte Verarbeitung und Validierung.
+
+## 📚 Weiterführende Ressourcen
+
+- Probier die [Live-Demo auf RegEx101.com](https://regex101.com/r/jO8bC4/69) unbedingt aus!
+- Die ursprüngliche StackOverflow-Frage sowie ein [Link zu meiner Antwort direkt hier](https://stackoverflow.com/a/34669019/369727).
+- [MDN-Dokumentation zu Regulären Ausdrücken](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
+- [Fortgeschrittene Regex-Techniken](https://www.regular-expressions.info/): Erkunde Lookaheads, Lookbehinds und weitere fortgeschrittene Muster für präzisere Matches.
+- [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
+````
