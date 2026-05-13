@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 28.11
+- Input tokens: 16130
+- Output tokens: 11981
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.002786
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'प्रश्नोत्तरी: रेगुलर एक्सप्रेशन में महारत'
@@ -596,3 +614,4 @@ RegEx ज्ञान को परखें उन प्रश्नों स
 Regular Expressions को काबू में करना मुश्किल हो सकता है, लेकिन एक बार समझ आ जाए (और नई सिंटैक्स सीख लें) तो ये बेहद शक्तिशाली होते हैं। अभ्यास करते रहें, और आप जल्द ही रेगएक्स के माहिर बन जाएंगे! 🧙‍♂️
 
 <p class="inset">सारा रेगएक्स करने के बाद थोड़ा ब्रेक चाहिए?<br />हँ, याद रखें: ब्रेक *स्किल्स के बाद* ही लेना चाहिए! <br /><br />और चुनौतियों को तोड़ने के लिए [मेरे जिम](/challenges/) पर जाएँ! 💪</p>
+````

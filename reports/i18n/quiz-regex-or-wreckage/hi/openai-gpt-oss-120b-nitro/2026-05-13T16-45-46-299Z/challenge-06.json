@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "शब्द सीमाएँ",
+  "translation": {
+    "title": "शब्द सीमाएँ",
+    "group": "बेसिक मिलान",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "क्या मेल करेगा?"
+    ],
+    "explanationProse": [
+      "The `\\b` represents a word boundary, which matches:\n    - Between a word character and a non-word character\n    - At the start/end of the string if there's a word character\n\n    So `/\\bcat\\b/` matches \"cat\" only when it's a complete word, not part of another word.\n    - ✅ \"cat\" (surrounded by spaces)\n    - ❌ \"cats\" (no boundary after \"cat\")\n    - ❌ \"category\" (no boundary after \"cat\")\n\n    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"शब्द सीमाएँ\",\n  \"group\": \"बेसिक मिलान\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"क्या मेल करेगा?\"\n  ],\n  \"explanationProse\": [\n    \"The `\\\\b` represents a word boundary, which matches:\\n    - Between a word character and a non-word character\\n    - At the start/end of the string if there's a word character\\n\\n    So `/\\\\bcat\\\\b/` matches \\\"cat\\\" only when it's a complete word, not part of another word.\\n    - ✅ \\\"cat\\\" (surrounded by spaces)\\n    - ❌ \\\"cats\\\" (no boundary after \\\"cat\\\")\\n    - ❌ \\\"category\\\" (no boundary after \\\"cat\\\")\\n\\n    [Learn more about word boundaries](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 866,
+    "outputTokens": 665,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1030
+  },
+  "cost": {
+    "inputUsd": 0.000033774,
+    "outputUsd": 0.0001197,
+    "totalUsd": 0.000153474,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

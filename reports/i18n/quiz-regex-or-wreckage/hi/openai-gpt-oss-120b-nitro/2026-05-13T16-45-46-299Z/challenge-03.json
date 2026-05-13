@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "ग्रीडी बनाम नॉन-ग्रीडी",
+  "translation": {
+    "title": "ग्रीडी बनाम नॉन-ग्रीडी",
+    "group": "बेसिक मैचिंग",
+    "options": [],
+    "questionProse": [
+      "यह क्या मैच करेगा?"
+    ],
+    "explanationProse": [
+      "`/<div>.*?<\\/div>/g` पैटर्न `*?` के साथ नॉन-ग्रीडी मैचिंग का उपयोग करता है, जिसका अर्थ है:\n    - `<div>` से मिलाएँ\n    - किसी भी अक्षर (`.*`) को मिलाएँ लेकिन यथासंभव कम (`?`)\n    - `</div>` मिलने तक\n    - `g` फ़्लैग सभी occurrences को मैच करता है\n\n    यदि `?` न हो तो ग्रीडी `.*` पहले `<div>` से लेकर आखिरी `</div>` तक सब कुछ मैच करेगा, जिससे एक बड़ा मैच मिलेगा। `?` के साथ यह प्रत्येक जोड़ी को अलग‑अलग मैच करता है।\n\n    [greedy vs lazy matching के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"ग्रीडी बनाम नॉन-ग्रीडी\",\n  \"group\": \"बेसिक मैचिंग\",\n  \"options\": [],\n  \"questionProse\": [\n    \"यह क्या मैच करेगा?\"\n  ],\n  \"explanationProse\": [\n    \"`/<div>.*?<\\\\/div>/g` पैटर्न `*?` के साथ नॉन-ग्रीडी मैचिंग का उपयोग करता है, जिसका अर्थ है:\\n    - `<div>` से मिलाएँ\\n    - किसी भी अक्षर (`.*`) को मिलाएँ लेकिन यथासंभव कम (`?`)\\n    - `</div>` मिलने तक\\n    - `g` फ़्लैग सभी occurrences को मैच करता है\\n\\n    यदि `?` न हो तो ग्रीडी `.*` पहले `<div>` से लेकर आखिरी `</div>` तक सब कुछ मैच करेगा, जिससे एक बड़ा मैच मिलेगा। `?` के साथ यह प्रत्येक जोड़ी को अलग‑अलग मैच करता है।\\n\\n    [greedy vs lazy matching के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 834,
+    "outputTokens": 735,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 876
+  },
+  "cost": {
+    "inputUsd": 0.000032526,
+    "outputUsd": 0.0001323,
+    "totalUsd": 0.000164826,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

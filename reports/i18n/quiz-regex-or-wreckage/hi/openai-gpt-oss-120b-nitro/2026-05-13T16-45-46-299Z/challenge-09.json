@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "कैप्चरिंग समूह",
+  "translation": {
+    "title": "कैप्चरिंग समूह",
+    "group": "बेसिक मिलान",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "यह क्या लौटाएगा?"
+    ],
+    "explanationProse": [
+      "पैटर्न में तीन कैप्चरिंग ग्रुप्स हैं:\n    1. `(\\d{4})` वर्ष को कैप्चर करता है\n    2. `(\\d{2})` महीने को कैप्चर करता है\n    3. `(\\d{2})` दिन को कैप्चर करता है\n\n    `match()` बिना `g` फ़्लैग के लौटाता है:\n    - इंडेक्स 0: पूरा मिलान\n    - इंडेक्स 1+: कैप्चर ग्रुप्स\n\n    `slice(1)` एक आम ट्रिक है जिससे केवल कैप्चर ग्रुप्स मिलते हैं।\n\n    [ग्रुप्स और कैप्चरिंग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"कैप्चरिंग समूह\",\n  \"group\": \"बेसिक मिलान\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"यह क्या लौटाएगा?\"\n  ],\n  \"explanationProse\": [\n    \"पैटर्न में तीन कैप्चरिंग ग्रुप्स हैं:\\n    1. `(\\\\d{4})` वर्ष को कैप्चर करता है\\n    2. `(\\\\d{2})` महीने को कैप्चर करता है\\n    3. `(\\\\d{2})` दिन को कैप्चर करता है\\n\\n    `match()` बिना `g` फ़्लैग के लौटाता है:\\n    - इंडेक्स 0: पूरा मिलान\\n    - इंडेक्स 1+: कैप्चर ग्रुप्स\\n\\n    `slice(1)` एक आम ट्रिक है जिससे केवल कैप्चर ग्रुप्स मिलते हैं।\\n\\n    [ग्रुप्स और कैप्चरिंग के बारे में और जानें](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 874,
+    "outputTokens": 768,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 945
+  },
+  "cost": {
+    "inputUsd": 0.000034086,
+    "outputUsd": 0.00013824,
+    "totalUsd": 0.000172326,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
