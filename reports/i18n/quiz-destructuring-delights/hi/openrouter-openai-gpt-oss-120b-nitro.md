@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.26
+- Input tokens: 11749
+- Output tokens: 9289
+- Thinking tokens: unknown
+- Cached input tokens: 4480
+- Cache write tokens: 0
+- Estimated cost: $0.002130
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'क्विज़: डीस्ट्रक्चरिंग का आनंद'
@@ -556,3 +574,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
