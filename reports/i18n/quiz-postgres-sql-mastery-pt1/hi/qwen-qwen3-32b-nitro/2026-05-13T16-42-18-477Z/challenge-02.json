@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Cast Syntax Variations",
+  "translatedTitle": "कास्टिंग सिंटैक्स वैरिएशन्स",
+  "translation": {
+    "title": "कास्टिंग सिंटैक्स वैरिएशन्स",
+    "group": "गर्मी: प्रकार परिवर्तन",
+    "options": [
+      {
+        "text": "'95'::INTEGER"
+      },
+      {
+        "text": "INTEGER '95'"
+      },
+      {
+        "text": "CAST('95', INTEGER)"
+      },
+      {
+        "text": "CAST('95' AS INTEGER)"
+      }
+    ],
+    "questionProse": [
+      "इनमें से कौन-सा प्रकार परिवर्तन ❌ अमान्य है?"
+    ],
+    "explanationProse": [
+      "PostgreSQL तीन कास्टिंग सिंटैक्स समर्थित करता है:\n\n    1. ANSI SQL: `CAST(अभिव्यक्ति AS प्रकार)`.\n    2. PostgreSQL: `अभिव्यक्ति::प्रकार`.\n    3. प्रकार फ़ंक्शन: `प्रकार 'लिटरल'`.\n\n    सभी कार्यात्मक रूप से एक-समान हैं, लेकिन:\n    - `CAST()` सबसे अधिक पोर्टेबल है।\n    - `::` PostgreSQL-विशिष्ट है लेकिन अक्सर उपयोग में लिया जाता है।\n    - इनफिक्स-स्टाइल `प्रकार 'लिटरल'` कम आम है लेकिन अभी भी वैध है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"कास्टिंग सिंटैक्स वैरिएशन्स\",\n  \"group\": \"गर्मी: प्रकार परिवर्तन\",\n  \"options\": [\n    { \"text\": \"'95'::INTEGER\" },\n    { \"text\": \"INTEGER '95'\" },\n    { \"text\": \"CAST('95', INTEGER)\" },\n    { \"text\": \"CAST('95' AS INTEGER)\" }\n  ],\n  \"questionProse\": [\n    \"इनमें से कौन-सा प्रकार परिवर्तन ❌ अमान्य है?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL तीन कास्टिंग सिंटैक्स समर्थित करता है:\\n\\n    1. ANSI SQL: `CAST(अभिव्यक्ति AS प्रकार)`.\\n    2. PostgreSQL: `अभिव्यक्ति::प्रकार`.\\n    3. प्रकार फ़ंक्शन: `प्रकार 'लिटरल'`.\\n\\n    सभी कार्यात्मक रूप से एक-समान हैं, लेकिन:\\n    - `CAST()` सबसे अधिक पोर्टेबल है।\\n    - `::` PostgreSQL-विशिष्ट है लेकिन अक्सर उपयोग में लिया जाता है।\\n    - इनफिक्स-स्टाइल `प्रकार 'लिटरल'` कम आम है लेकिन अभी भी वैध है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 741,
+    "outputTokens": 922,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 10861
+  },
+  "cost": {
+    "inputUsd": 0.00005928,
+    "outputUsd": 0.00022128,
+    "totalUsd": 0.00028056,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
