@@ -1,0 +1,28 @@
+{
+  "selectedCommit": "b03eb802a044b49fa43f59598b7ccd5b3f860343",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The candidate 'b03eb802a044b49fa43f59598b7ccd5b3f860343' (DeepSeek v4 Flash) is identical to the 'current' version, which is already a high-quality translation. It maintains all MDX structures, heading counts, and captures the satirical tone perfectly. It correctly handles the technical terms and the informal, punchy style of the original English text.",
+  "slug": "breaking-unicorns",
+  "locale": "es",
+  "candidateCommits": [
+    "9f56865156b2b8a948d8408e985455f8a6882169",
+    "f159edbbec631f485d9b373388f6ea7e496bb923",
+    "b03eb802a044b49fa43f59598b7ccd5b3f860343"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale es --skip-global\n73 |   const sourceComponents = new Set(\n74 |     [...sourceContents.matchAll(/<\\/?([A-Z][A-Za-z0-9_.]*)\\b/g)].map((match) => match[1]),\n75 |   );\n76 |   for (const component of sourceComponents) {\n77 |     if (!new RegExp(`</?${escapeRegExp(component)}\\\\b`).test(targetContents)) {\n78 |       throw new Error(`Missing preserved MDX component in ${targetPath}: ${component}`);\n                     ^\nerror: Missing preserved MDX component in /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/es/index.mdx: Insert\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:78:17)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
