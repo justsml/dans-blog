@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: compare-nvme-ssd-cloud-options
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2017-04-15--compare-nvme-ssd-cloud-options/de/index.mdx
+- Validation: passed
+- Runtime seconds: 9.85
+- Input tokens: 4085
+- Output tokens: 4076
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001305
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -65,3 +83,4 @@ Zur Netzwerküberprüfung wurden bis zu 9 zusätzliche Instanzen im gleichen Ver
 #### Credits
 
 - [ec2instances.info](https://www.ec2instances.info/?filter=nvm&region=us-east-2&cost_duration=monthly&selected=c5d.large,i3.large,i3.xlarge,i3.2xlarge)
+````
