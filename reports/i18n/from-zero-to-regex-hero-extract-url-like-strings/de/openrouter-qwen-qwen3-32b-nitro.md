@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: from-zero-to-regex-hero-extract-url-like-strings
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-29--from-zero-to-regex-hero-extract-url-like-strings/de/index.mdx
+- Validation: passed
+- Runtime seconds: 24.78
+- Input tokens: 10039
+- Output tokens: 10792
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.003393
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Von Null zum Regex-Held
 subTitle: ''
@@ -264,3 +282,4 @@ Durch diese Schritte können Sie effektiv jede halbstrukturierte Zeichenketten-D
 - [MDN-Dokumentation zu regulären Ausdrücken](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions)
 - [Erweiterte Regex-Techniken](https://www.regular-expressions.info/): Erforschen Sie Lookaheads, Lookbehinds und andere erweiterte Muster für präzisere Übereinstimmungen.
 - [RFC 3986 - URI Generic Syntax](https://datatracker.ietf.org/doc/html/rfc3986)
+````
