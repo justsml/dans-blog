@@ -1,0 +1,59 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Batch Operations",
+  "translatedTitle": "Opérations par lots",
+  "translation": {
+    "title": "Opérations par lots",
+    "group": "Lots, partie 2 !",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "25",
+        "hint": "Bonne supposition..."
+      },
+      {
+        "text": "50"
+      },
+      {
+        "text": "100",
+        "hint": "Vous pensez à la limite de GetItem ?"
+      },
+      {
+        "text": "100 when streaming"
+      },
+      {
+        "text": "None of the above",
+        "hint": "C'est un peu délicat..."
+      }
+    ],
+    "questionProse": [
+      "Quel est le nombre maximal de documents que DynamoDB peut `UPDATE` par lot ?"
+    ],
+    "explanationProse": [
+      "Les clients DynamoDB sont essentiellement des wrappers de son API HTTP. L'opération `BatchWriteItem` peut `PUT` ou `DELETE` jusqu'à **25** documents par requête HTTP, mais elle ne peut pas `UPDATE` plusieurs documents.\n\n    Bien que DynamoDB puisse `INSERT` jusqu'à **25** documents par requête HTTP, il ne peut `UPDATE` qu'**1** document par requête en utilisant l'opération `UpdateItem`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Opérations par lots\",\n  \"group\": \"Lots, partie 2 !\",\n  \"options\": [\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"25\",\n      \"hint\": \"Bonne supposition...\"\n    },\n    {\n      \"text\": \"50\"\n    },\n    {\n      \"text\": \"100\",\n      \"hint\": \"Vous pensez à la limite de GetItem ?\"\n    },\n    {\n      \"text\": \"100 when streaming\"\n    },\n    {\n      \"text\": \"None of the above\",\n      \"hint\": \"C'est un peu délicat...\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le nombre maximal de documents que DynamoDB peut `UPDATE` par lot ?\"\n  ],\n  \"explanationProse\": [\n    \"Les clients DynamoDB sont essentiellement des wrappers de son API HTTP. L'opération `BatchWriteItem` peut `PUT` ou `DELETE` jusqu'à **25** documents par requête HTTP, mais elle ne peut pas `UPDATE` plusieurs documents.\\n\\n    Bien que DynamoDB puisse `INSERT` jusqu'à **25** documents par requête HTTP, il ne peut `UPDATE` qu'**1** document par requête en utilisant l'opération `UpdateItem`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 898,
+    "outputTokens": 672,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2574,
+    "providerCostUsd": 0.0004995,
+    "providerUpstreamCostUsd": 0.0004995,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035022,
+    "outputUsd": 0.00012096,
+    "totalUsd": 0.00015598199999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

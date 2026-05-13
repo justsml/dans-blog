@@ -1,0 +1,54 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "WebSocket Wizardry",
+  "translatedTitle": "Sorcellerie WebSocket",
+  "translation": {
+    "title": "Sorcellerie WebSocket",
+    "group": "WebSockets",
+    "options": [
+      {
+        "text": "API Gateway"
+      },
+      {
+        "text": "EKS",
+        "hint": "EKS peut exécuter vos propres services WebSocket à longue durée de vie."
+      },
+      {
+        "text": "Lightsail",
+        "hint": "Les instances Lightsail peuvent exécuter votre propre serveur WebSocket."
+      },
+      {
+        "text": "AppSync",
+        "hint": "AppSync propose des abonnements GraphQL en temps réel gérés via WebSockets, pas des sockets bruts arbitraires."
+      },
+      {
+        "text": "EC2",
+        "hint": "EC2 peut exécuter votre propre processus serveur WebSocket à longue durée de vie."
+      }
+    ],
+    "questionProse": [
+      "👋 J'espère que vous vous amusez jusqu'ici !\n\n      Passons à une question corsée...\n\n      Quel service AWS fournit des API WebSocket gérées où AWS possède la connexion client et achemine les messages vers les intégrations ?"
+    ],
+    "explanationProse": [
+      "API Gateway prend en charge les API WebSocket bidirectionnelles, mais l’implémentation est gérée par API Gateway plutôt que d’être un socket direct vers votre propre processus serveur.\n      API Gateway conserve la connexion client et achemine les messages vers Lambda, des points de terminaison HTTP ou d’autres intégrations. Les messages peuvent être renvoyés aux clients connectés via l’API de gestion d’API Gateway.\n\n      Les autres sont beaucoup plus compatibles WebSocket :\n      - Lightsail : parfait pour des configurations WebSocket simples 👌\n      - AppSync : utilise les WebSockets pour des abonnements GraphQL gérés\n      - EC2 : votre option classique « faites ce que vous voulez » pour les WebSockets\n      - EKS : idéal pour exécuter des clusters WebSocket évolutifs\n\n      Astuce pro : si vous avez besoin de la puissance brute des WebSockets, restez avec les services de calcul !"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sorcellerie WebSocket\",\n  \"group\": \"WebSockets\",\n  \"options\": [\n    {\n      \"text\": \"API Gateway\"\n    },\n    {\n      \"text\": \"EKS\",\n      \"hint\": \"EKS peut exécuter vos propres services WebSocket à longue durée de vie.\"\n    },\n    {\n      \"text\": \"Lightsail\",\n      \"hint\": \"Les instances Lightsail peuvent exécuter votre propre serveur WebSocket.\"\n    },\n    {\n      \"text\": \"AppSync\",\n      \"hint\": \"AppSync propose des abonnements GraphQL en temps réel gérés via WebSockets, pas des sockets bruts arbitraires.\"\n    },\n    {\n      \"text\": \"EC2\",\n      \"hint\": \"EC2 peut exécuter votre propre processus serveur WebSocket à longue durée de vie.\"\n    }\n  ],\n  \"questionProse\": [\n    \"👋 J'espère que vous vous amusez jusqu'ici !\\n\\n      Passons à une question corsée...\\n\\n      Quel service AWS fournit des API WebSocket gérées où AWS possède la connexion client et achemine les messages vers les intégrations ?\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"API Gateway prend en charge les API WebSocket bidirectionnelles, mais l’implémentation est gérée par API Gateway plutôt que d’être un socket direct vers votre propre processus serveur.\\n      API Gateway conserve la connexion client et achemine les messages vers Lambda, des points de terminaison HTTP ou d’autres intégrations. Les messages peuvent être renvoyés aux clients connectés via l’API de gestion d’API Gateway.\\n\\n      Les autres sont beaucoup plus compatibles WebSocket :\\n      - Lightsail : parfait pour des configurations WebSocket simples 👌\\n      - AppSync : utilise les WebSockets pour des abonnements GraphQL gérés\\n      - EC2 : votre option classique « faites ce que vous voulez » pour les WebSockets\\n      - EKS : idéal pour exécuter des clusters WebSocket évolutifs\\n\\n      Astuce pro : si vous avez besoin de la puissance brute des WebSockets, restez avec les services de calcul !\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 1015,
+    "outputTokens": 1235,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 5384,
+    "providerCostUsd": 0.00085485,
+    "providerUpstreamCostUsd": 0.00085485,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000039584999999999995,
+    "outputUsd": 0.00022229999999999998,
+    "totalUsd": 0.000261885,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "index": 25,
+  "attempt": 1,
+  "originalTitle": "Scaling Behavior",
+  "translatedTitle": "Comportement de mise à l'échelle",
+  "translation": {
+    "title": "Comportement de mise à l'échelle",
+    "group": "Aurora Serverless",
+    "options": [
+      {
+        "text": "La vitesse de mise à l'échelle dépend de la capacité actuelle et configurée"
+      },
+      {
+        "text": "S'agrandit instantanément à la demande"
+      },
+      {
+        "text": "Ne s'agrandit qu'aux intervalles prédéfinis"
+      },
+      {
+        "text": "Mise à l'échelle manuelle uniquement"
+      }
+    ],
+    "questionProse": [
+      "Quelle est la considération principale lorsqu'on compte sur Aurora Serverless pour gérer des pics de trafic soudains ?"
+    ],
+    "explanationProse": [
+      "Échelle d'Aurora Serverless :\n      - Aurora Serverless v2 augmente la capacité par incréments fins d'ACU\n      - La vitesse de mise à l'échelle dépend de la capacité actuelle et des paramètres ACU min/max\n      - Les versions prises en charge peuvent se mettre en pause automatiquement à 0 ACU lorsqu'elles sont configurées\n      - Facturation à la seconde basée sur les ACU\n\n      Bonnes pratiques :\n      - Fixez une capacité minimale suffisamment élevée pour les pics soudains sur les charges critiques\n      - Surveillez les événements de mise à l'échelle\n      - Gardez la gestion des connexions à l'esprit"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comportement de mise à l'échelle\",\n  \"group\": \"Aurora Serverless\",\n  \"options\": [\n    {\n      \"text\": \"La vitesse de mise à l'échelle dépend de la capacité actuelle et configurée\"\n    },\n    {\n      \"text\": \"S'agrandit instantanément à la demande\"\n    },\n    {\n      \"text\": \"Ne s'agrandit qu'aux intervalles prédéfinis\"\n    },\n    {\n      \"text\": \"Mise à l'échelle manuelle uniquement\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est la considération principale lorsqu'on compte sur Aurora Serverless pour gérer des pics de trafic soudains ?\"\n  ],\n  \"explanationProse\": [\n    \"Échelle d'Aurora Serverless :\\n      - Aurora Serverless v2 augmente la capacité par incréments fins d'ACU\\n      - La vitesse de mise à l'échelle dépend de la capacité actuelle et des paramètres ACU min/max\\n      - Les versions prises en charge peuvent se mettre en pause automatiquement à 0 ACU lorsqu'elles sont configurées\\n      - Facturation à la seconde basée sur les ACU\\n\\n      Bonnes pratiques :\\n      - Fixez une capacité minimale suffisamment élevée pour les pics soudains sur les charges critiques\\n      - Surveillez les événements de mise à l'échelle\\n      - Gardez la gestion des connexions à l'esprit\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 858,
+    "outputTokens": 764,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 1837,
+    "providerCostUsd": 0.0005487,
+    "providerUpstreamCostUsd": 0.0005487,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033462,
+    "outputUsd": 0.00013752,
+    "totalUsd": 0.000170982,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
