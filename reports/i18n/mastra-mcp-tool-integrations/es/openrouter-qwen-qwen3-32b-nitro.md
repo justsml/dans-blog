@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/es/index.mdx
+- Validation: passed
+- Runtime seconds: 18.02
+- Input tokens: 7644
+- Output tokens: 7930
+- Thinking tokens: unknown
+- Cached input tokens: 2560
+- Cache write tokens: 0
+- Estimated cost: $0.002515
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: Por qué MCP es el USB-C de la Inteligencia Artificial
@@ -213,3 +231,4 @@ Si estás diseñando un sistema de IA que necesite interactuar con servicios ext
 2. [Seguridad y guardarrails](/mastra-security-guardrails)  
 3. **MCP y integraciones de herramientas** (Este post)  
 4. [Flujos de trabajo y memoria](/mastra-workflows-memory)
+````
