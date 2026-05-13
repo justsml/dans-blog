@@ -1,0 +1,211 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T20-47-17-644Z",
+  "slug": "quiz-context-engineering",
+  "locale": "hi",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T20:47:28.165Z",
+  "sourcePath": "src/content/posts/2026-05-09--quiz-context-engineering/index.mdx",
+  "targetPath": "src/content/posts/2026-05-09--quiz-context-engineering/hi/index.mdx",
+  "candidatePath": "reports/i18n/quiz-context-engineering/hi/openai-gpt-oss-120b-nitro/2026-05-13T20-47-17-644Z/candidate.mdx",
+  "sourceHash": "80bb5fc16b497b3b59ea5d61677bbb1d2c11b1569c5926640320b7a8ce3fe3e7",
+  "outputHash": "57443a07115b8f82da7345b1d596cd17370840585b8afb38b5ed9df9ffe2f30c",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The quiz evaluates knowledge of AI system context management, testing skills in handling context windows, token budgets, retrieval strategies, prompt structuring, and diagnosing failure modes. It ranges from beginner-friendly to advanced, reflecting a moderate difficulty that escalates as you progress. The tone is instructional yet practical, guiding learners from basic concepts toward production‑grade expertise.\nTopics: Context windows, Token budgeting, Retrieval mechanisms, Prompt structure, Failure modes in AI products, Prompt caching, Hybrid search\nAudience: Developers and engineers building or scaling production AI applications, as well as practitioners familiar with LLMs who want deeper insight into context engineering.",
+  "totalInputTokens": 15783,
+  "totalOutputTokens": 16362,
+  "totalCacheReadTokens": 7168,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 53343,
+  "totalCostUsd": 0.003560697,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "quiz",
+    "totalChunks": 14,
+    "totalInputTokens": 15783,
+    "totalOutputTokens": 16362,
+    "totalCacheReadTokens": 7168,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 53343,
+    "totalCostUsd": 0.003560697,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": -1,
+        "label": "quiz-summary",
+        "inputTokens": 368,
+        "outputTokens": 188,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2543,
+        "costUsd": 0.000048191999999999995
+      },
+      {
+        "index": -2,
+        "label": "intro",
+        "text": "import Challenge from '../../../components/QuizUI/Challenge';\nimport QuizUI from '../../../components/QuizUI/QuizUI';\n\n<p class=\"inset\">प्रॉम्प्ट इंजीनियरिंग को नारे मिलते हैं। कॉन्टेक्स्ट इंजीनियरिंग को पेजर मिलता है। AI सिस्टम के उस हिस्से को आप कितनी अच्छी तरह जानते हैं जो वास्तव में प्रोडक्शन में जाता है?</p>\n\nयह क्विज़ कॉन्टेक्स्ट विंडो, टोकन बजट, रिट्रीवल, प्रॉम्प्ट स्ट्रक्चर, और उन फेल्योर मोड्स को कवर करता है जो साफ़ डेमो को उलझे हुए प्रोडक्ट में बदल देते हैं। यह धीरे‑धीरे शुरू होता है, लेकिन वहीं नहीं रुकता।\n\nसबूत लाओ।",
+        "inputTokens": 1137,
+        "outputTokens": 389,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 455,
+        "costUsd": 0.000114363
+      },
+      {
+        "index": 0,
+        "label": "Context Window Basics",
+        "inputTokens": 862,
+        "outputTokens": 803,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 872,
+        "costUsd": 0.00017815799999999998
+      },
+      {
+        "index": 8,
+        "label": "Few-Shot Examples",
+        "inputTokens": 921,
+        "outputTokens": 1038,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1197,
+        "costUsd": 0.00022275900000000003
+      },
+      {
+        "index": 1,
+        "label": "Token Estimation",
+        "inputTokens": 886,
+        "outputTokens": 895,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1282,
+        "costUsd": 0.000195654
+      },
+      {
+        "index": 10,
+        "label": "Temperature and Determinism",
+        "inputTokens": 923,
+        "outputTokens": 1148,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1285,
+        "costUsd": 0.00024263699999999997
+      },
+      {
+        "index": 7,
+        "label": "Conversation History Management",
+        "inputTokens": 959,
+        "outputTokens": 1201,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1726,
+        "costUsd": 0.000253581
+      },
+      {
+        "index": 5,
+        "label": "Hybrid Search",
+        "inputTokens": 909,
+        "outputTokens": 1048,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1739,
+        "costUsd": 0.000224091
+      },
+      {
+        "index": 6,
+        "label": "Context Budget",
+        "inputTokens": 949,
+        "outputTokens": 1163,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1811,
+        "costUsd": 0.000246351
+      },
+      {
+        "index": 13,
+        "label": "Context Engineering vs. Fine-Tuning",
+        "inputTokens": 1031,
+        "outputTokens": 1664,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 1911,
+        "costUsd": 0.00033972899999999993
+      },
+      {
+        "index": 4,
+        "label": "Chunking Strategy",
+        "inputTokens": 907,
+        "outputTokens": 641,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6121,
+        "costUsd": 0.000150753
+      },
+      {
+        "index": 12,
+        "label": "Grounding vs. Hallucination",
+        "inputTokens": 953,
+        "outputTokens": 1112,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6117,
+        "costUsd": 0.00023732699999999999
+      },
+      {
+        "index": 9,
+        "label": "XML Tags for Structure",
+        "inputTokens": 961,
+        "outputTokens": 1293,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6240,
+        "costUsd": 0.000270219
+      },
+      {
+        "index": 11,
+        "label": "Prompt Caching",
+        "inputTokens": 973,
+        "outputTokens": 1371,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6340,
+        "costUsd": 0.00028472699999999997
+      },
+      {
+        "index": 3,
+        "label": "Lost in the Middle",
+        "inputTokens": 914,
+        "outputTokens": 1014,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6659,
+        "costUsd": 0.000218166
+      },
+      {
+        "index": 2,
+        "label": "Role of the System Prompt",
+        "inputTokens": 918,
+        "outputTokens": 1054,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 6665,
+        "costUsd": 0.000225522
+      },
+      {
+        "index": -3,
+        "label": "outro",
+        "text": "---\n\nआपका प्रदर्शन कैसा रहा?\n\n- **13–14**: आप उत्पादन‑स्तर के AI सिस्टम बना रहे हैं, सिर्फ डेमो नहीं। यह दुर्लभ है।  \n- **9–12**: ठोस प्रैक्टिशनर। आपको टूल्स पता हैं; किनारे अभी भी धुंधले हैं।  \n- **5–8**: आपने LLM का बहुत उपयोग किया है लेकिन संदर्भ प्रबंधन पर गहराई से नहीं सोचा। प्रॉम्प्ट कैशिंग और हाइब्रिड सर्च के बारे में पढ़ें — ये लागत के बारे में आपका सोच बदल देंगे।  \n- **0–4**: अच्छी खबर: इस क्विज़ का हर भाग सीखने योग्य है और तुरंत लागू किया जा सकता है। “मिडल में खो गया” प्रश्न को समझना ही आपके अगले RAG डिप्लॉयमेंट से पहले बहुत फायदेमंद रहेगा।\n\nसंदर्भ इंजीनियरिंग वह अनुशासन है जिसमें आप जानबूझकर तय करते हैं कि कौन‑सी जानकारी विंडो में रखनी है, कहाँ रखनी है, और उसे कैसे संरचित करना है। मॉडल आपके सिस्टम का सबसे कम नियंत्रित भाग है। उसके आसपास की सभी चीज़ें आपका नियंत्रण में हैं।---",
+        "inputTokens": 1212,
+        "outputTokens": 340,
+        "cacheReadTokens": 1024,
+        "cacheWriteTokens": 0,
+        "durationMs": 380,
+        "costUsd": 0.00010846799999999999
+      }
+    ]
+  }
+}
