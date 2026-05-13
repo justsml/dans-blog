@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 4.54
+- Input tokens: 10437
+- Output tokens: 3440
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.001026
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: आपका टाइमस्टैम्पझूठ है
 subTitle: एक ट्रेन टिकट ने डेटाबेस में समय संग्रहीत करने के बारे में मुझे क्या सिखाया।
@@ -139,3 +157,4 @@ SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 - [ISO 8601 तिथि और समय स्वरूप](https://en.wikipedia.org/wiki/ISO_8601)
 - [टाइम ज़ोन डेटाबेस (IANA)](https://www.iana.org/time-zones)
 - [वितरित प्रणालियों में टाइमस्टैम्प संभालना](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
