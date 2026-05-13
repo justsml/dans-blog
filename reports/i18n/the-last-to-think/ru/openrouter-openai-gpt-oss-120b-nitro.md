@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 2.45
+- Input tokens: 2009
+- Output tokens: 720
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000208
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: 'Последний, кто думает'
@@ -33,3 +51,4 @@ cover_icon: ../banner-thinking-decay-square-200.webp
 <p> </p>
 
 \* _При условии, что нам удастся снизить экологический след и избежать дистопической ночной кошмарности. Но об этом в другой раз._
+````
