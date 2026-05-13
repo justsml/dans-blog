@@ -1,0 +1,90 @@
+---
+social_image: ../desktop-social.webp
+title: Trappole comuni delle Promesse
+subTitle: Evitare gli errori comuni
+date: '2018-09-26'
+modified: '2024-07-30'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - debugging
+  - errors
+  - javascript
+  - composition
+related:
+  - intro-to-promises
+  - visualizing-promises
+  - are-promises-broken
+  - javascript-promises-quiz
+cover: ../michal-parzuchowski-224092-unsplash.webp
+cover_mobile: ../w300_michal-parzuchowski-224092-unsplash.webp
+cover_icon: ../icon_michal-parzuchowski-224092-unsplash.webp
+---
+### Le promise non funzionano come gli altri valori
+
+Non puoi stamparne il valore come faresti con la maggior parte dei valori:
+
+```js
+// Questo non ha senso con le promise:
+console.log(Promise.resolve(42));
+
+// Dobbiamo utilizzare l'interfaccia `.then`:
+Promise.resolve(42).then(value => console.log(value));
+```
+
+### Le promise non ti avvertono quando commetti un errore
+
+Beh, un errore probabile.
+
+Per diversi motivi, il comitato TC39 ha deciso che `.then` e `.catch` possono ricevere `null`. Per esempio, `.then(null, null)` è valido e il comportamento richiesto è saltare quel "passo" nella catena.
+
+La conseguenza spiacevole di questa decisione è che è molto facile combinare pasticci.
+
+##### Per esempio
+
+Consideriamo una piccola sfida: quale/i delle seguenti opzioni eseguirà/no `console.log` per stampare 42?
+
+```js
+// Opzione #1:
+Promise.resolve(42).then(console.log());
+
+// Opzione #2:
+Promise.resolve(42).then(console.log);
+
+// Opzione #3:
+Promise.resolve(42).then(value => console.log(value));
+
+// Opzione #4:
+Promise.resolve(42)
+  .then(console.log())
+  .then(console.log);
+```
+
+##### La risposta
+
+La risposta è #2, #3 e #4.
+
+Perché? Analizziamo i **tipi** degli argomenti passati a `.then()`:
+
+```js
+var arg1 = console.log();
+var arg2 = console.log;
+var arg3 = value => console.log(value);
+
+typeof arg1 === "undefined";
+typeof arg2 === "function";
+typeof arg3 === "function";
+```
+
+Ancora curioso di sapere come funziona la quarta opzione?
+
+Funziona effettivamente così:
+
+```js
+// Opzione #4 - in pratica
+Promise.resolve(42)
+  .then(undefined) // non ha alcun effetto sul valore, verrà passato al `.then(fn)` successivo
+  .then(console.log);
+```
