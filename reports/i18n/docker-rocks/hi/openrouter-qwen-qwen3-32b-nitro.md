@@ -1,0 +1,67 @@
+# Translation Candidate
+- Slug: docker-rocks
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-11--docker-rocks/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 6.48
+- Input tokens: 1946
+- Output tokens: 2692
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000802
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: ''
+subTitle: 'डॉकर अद्भुत, तेज़ और सुगम है।'
+date: '2015-06-11'
+modified: '2024-08-10'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - boot2docker
+  - devops
+related:
+  - docker-makes-everything-better
+  - docker-server-setup-notes
+  - docker-security-tips-for-self-hosting
+cover: ../guillaume-bolduc-259596-unsplash.webp
+cover_mobile: ../w300_guillaume-bolduc-259596-unsplash.webp
+cover_icon: ../icon_guillaume-bolduc-259596-unsplash.webp
+---
+## डॉकर शानदार है
+
+> सितंबर 2016, 2018 में अपडेट  
+> बूट2डॉकर को मैक के लिए डॉकर द्वारा बदल दिया गया है
+
+> ऐतिहासिक नोट: यह पोस्ट जाब्ता से 2015 के डॉकर-मैक के एक अंकित चित्र के रूप में बरकरार रखा गया है। प्रदरम्भन टिप्पणियां और उपकरणों के नाम उस क्षण को दर्शाते हैं; वर्तमान डॉकर डेस्कटॉप और कॉम्पोज़ वर्कफ्लो आगे बढ़ चुके हैं।
+
+1. डॉकर अद्भुत, तेज़ और लचीला है।  
+1. पिछले उपकरण, खासकर बूट2डॉकर, धीमे थे और बार-बार क्रैश हो जाते थे।
+
+डॉकर वर्तमान में एक लिनक्स कर्नल v3.4+ पर प्राकृतिक रूप से चल सकता है - और वर्तमान बूट2डॉकर वीएम वास्तव में v4 चला रहा है।
+
+अपने हार्डवेयर का सर्वोत्तम उपयोग: अपने मैक/विंडोज़ बॉक्स पर नवीनतम डेबियन या यूबंटू इंस्टॉल करें,
+
+आओ, आपकोड के लिए उन गेम्स की आवश्यकता नहीं है...
+
+### अपनी सेटअप की जांच करें
+
+`docker info` कमांड के आउटपुट की समीक्षा करें।
+
+1. सुरक्षा: सर्वर की अप्रत्याशित रूप से खुले पोर्ट की जांच करें (एक रिमोट नेटवर्क से `nmap` का उपयोग करके)  
+1. DNS: लोकल कैश या कम लेटेंसी वाला DNS सर्वर उपयोग करें।  
+1. स्टोरेज: सही स्टोरेज ड्राइवर का उपयोग करें (`overlay2` संभवतः है)  
+
+अपडेट 2024:  
+
+- डॉकर डेस्कटॉप प्रापराइटरी है, लेकिन व्यक्तिगत उपयोग के लिए मुफ्त है। यह ओएसएक्स या विंडोज़ पर डॉकर के साथ शुरूआत करने का एक शानदार तरीका है।  
+- यदि आप एक अधिक ओपन-सोर्स समाधान की तलाश में हैं, तो [Rancher Desktop](https://rancherdesktop.io/) की जांच करें।
+````
