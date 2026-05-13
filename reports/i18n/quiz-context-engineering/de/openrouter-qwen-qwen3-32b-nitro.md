@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/de/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 4.50
+- Runtime seconds: 4.58
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
@@ -44,8 +44,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Prompt‑Engineering bekommt die Slogans. Kontext‑Engineering bekommt den Pager. Wie gut kennst du den Teil eines KI‑Systems, der tatsächlich ausgeliefert wird?</p>
 
@@ -174,9 +174,9 @@ Belege vorlegen.
   title="Chunking-Strategie"
   options={[
     {text: 'Verwende die größte Chunk-Größe, die dein Kontextfenster zulässt'},
-    {text: 'Verwende immer 512 Tokens — es'},
+    {text: 'Verwende immer 512 Tokens — das ist der Standard'},
     {text: 'Verwende überlappende Chunks, die zu deiner Inhaltsstruktur passen', isAnswer: true},
-    {text: 'Chunk-Größe tut nicht'},
+    {text: 'Die Chunk-Größe ist egal, solange das Embedding-Modell gut ist'},
   ]}
 >
   <slot name="question">
@@ -358,7 +358,7 @@ Belege vorlegen.
   options={[
     {text: 'temperature=0 erzeugt immer identische Ausgaben für dieselbe Eingabe'},
     {text: 'temperature=0 macht Ausgaben deterministischer, aber nicht garantiert identisch', isAnswer: true},
-    {text: 'temperature=0 deaktiviert das Modell'},
+    {text: 'temperature=0 deaktiviert die Fähigkeit des Modells, Anfragen abzulehnen'},
     {text: 'temperature beeinflusst nur die Länge der Antwort'},
   ]}
 >
@@ -429,8 +429,8 @@ Belege vorlegen.
 
     Was tatsächlich funktioniert: **grounding**. Gib dem Modell die Informationen, die es braucht, um korrekt zu antworten, und beschränke es auf diese Informationen:
     ```
-        Answer only using the provided documents.
-        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
     ```
     Dann validiere die Ausgabe: prüfe, ob Behauptungen in der Antwort im abgerufenen Kontext vorkommen. Das ist die Zitations‑Grounding‑Prüfung — siehe die RAG‑Eval‑Diskussion zur Implementierung.
 

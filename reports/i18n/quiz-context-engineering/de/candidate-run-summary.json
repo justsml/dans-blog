@@ -1,59 +1,48 @@
 {
-  "runId": "2026-05-13T06-36-43-841Z",
+  "runId": "2026-05-13T14-34-14-963Z",
+  "runStatus": "running",
   "slug": "quiz-context-engineering",
   "locale": "de",
-  "startedAt": "2026-05-13T06:36:43.841Z",
-  "updatedAt": "2026-05-13T06:37:03.592Z",
+  "startedAt": "2026-05-13T14:34:14.963Z",
+  "updatedAt": "2026-05-13T14:34:19.737Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 2,
-  "skippedModels": 0,
+  "attemptedModels": 1,
+  "skippedModels": 1,
   "rejectedModels": 1,
-  "candidateModels": 1,
+  "candidateModels": 0,
   "totals": {
-    "inputTokens": 14815,
-    "outputTokens": 13479,
+    "inputTokens": 0,
+    "outputTokens": 0,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1920,
+    "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.003004,
+    "estimatedCostUsd": 0,
     "hasUnknownInputTokens": true,
     "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": true,
     "hasUnknownCacheWriteTokens": true,
     "hasUnknownEstimatedCost": true,
-    "runtimeSeconds": "37.20"
+    "runtimeSeconds": "4.58"
   },
   "attempts": [
     {
       "model": "openrouter/openai/gpt-oss-120b:nitro",
-      "status": "candidate",
-      "validationStatus": "passed",
+      "status": "skipped",
       "reportPath": "reports/i18n/quiz-context-engineering/de/openrouter-openai-gpt-oss-120b-nitro.md",
-      "note": "Generated through the direct AI SDK chunked translator.",
-      "telemetry": {
-        "runtimeSeconds": "32.70",
-        "tokens": {
-          "input": 14815,
-          "output": 13479,
-          "cached": 1920,
-          "cacheWrite": 0
-        },
-        "estimatedCostUsd": 0.0030040049999999993,
-        "pricingSource": "local-openrouter-estimate"
-      }
+      "note": "Existing non-rejected report found. Pass --overwrite to rerun."
     },
     {
       "model": "openrouter/qwen/qwen3-32b:nitro",
       "status": "rejected",
       "validationStatus": "rejected: direct AI SDK translation failed",
       "reportPath": "reports/i18n/quiz-context-engineering/de/openrouter-qwen-qwen3-32b-nitro.md",
-      "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2",
+      "note": "Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale de --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20",
       "telemetry": {
-        "runtimeSeconds": "4.50",
+        "runtimeSeconds": "4.58",
         "tokens": {}
       }
     }
