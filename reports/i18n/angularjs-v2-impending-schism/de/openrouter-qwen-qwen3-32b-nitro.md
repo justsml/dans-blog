@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/de/index.mdx
+- Validation: passed
+- Runtime seconds: 4.11
+- Input tokens: 1708
+- Output tokens: 1869
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000585
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS v2.0 und die drohende Spaltung
@@ -39,3 +57,4 @@ Nun, ich füge es der Anfänger-Trainingsliste hinzu: irgendwo zwischen `Basic S
 <div class="anigif top end">
   <img alt='Alles wird gut' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
