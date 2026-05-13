@@ -1,0 +1,153 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 49.28
+- Input tokens: 6212
+- Output tokens: 5197
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001744
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 'Scontro a morte: Git Rebase contro Merge'
+subTitle: Una domanda eterna...
+date: '2023-08-27'
+modified: '2024-07-28'
+tags:
+  - engineering
+  - git
+  - rebase
+  - merge
+category: Thoughts
+subCategory: Git
+cover: ../casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_mobile: ../w300_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+cover_icon: ../icon_casper-johansson-GBHnQXbY2Ts-unsplash-cropped.webp
+---
+## Scontro mortale: Git Rebase vs. (Squash) Merge!
+
+Dovrei fare Rebase o Squash Merge?
+
+- È una preferenza personale?
+  - _Risposta: No, quando sono coinvolti uno o più team! **Qualsiasi scelta influenzerà l'usabilità dell'altra!**_
+
+### Perché questo argomento suscita un fervore religioso?
+
+Alcuni ingegneri usano la conoscenza di git (e il terminale) come segnale del proprio livello di abilità. E qualsiasi pratica legata alla nostra identità/ego può essere impossibile da analizzare in modo imparziale, figuriamoci cambiarla.
+
+Altri fattori probabilmente includono la Familiarità e la Survivorship Bias, che possono rendere ancora più confuse le nostre stesse valutazioni e assunzioni.
+
+<!-- Falsa convinzione sulle virtù intrinseche di certi processi di progetti OSS. (Il Kernel Linux utilizza il rebasing, e se non lo fai, **_ArE yOu EvEn A rEaL eNgInEeR?!_**) -->
+
+### Domanda chiave: Qual è lo scopo di un commit git?
+
+1. Fai commit frequentemente e spesso? Utilizzando un mindset di "punto di controllo" o di backup?
+    - Dove tutto viene registrato, anche i tentativi falliti e gli esperimenti? (es. `git commit -am "Updated deps" && git push`, ripetere regolarmente)
+    - Forse i messaggi di commit sono meno importanti del codice per te?
+1. Oppure i tuoi commit sono un'opera curata con attenzione, scolpita come un'arte?
+    - Forse ogni commit è un'unità di lavoro autonoma e atomica? (es. `git add package.json && git commit -m "Updated deps"`)
+    - Oppure semplicemente non tolleri i log di commit "disordinati"?
+    - Le tue revisioni di PR spesso coinvolgono la revisione commit per commit?
+
+| 💡 Quali altri modelli mentali definiscono come vedi i commit? Fammelo sapere @justsml!
+
+Stai considerando Git in un modo che fornisce il **massimo valore** a te, al tuo team e alla tua organizzazione?
+
+<!-- Ciò che ha senso per un progetto Open Source come Postgres o il Kernel Linux potrebbe non essere la scelta migliore per te o il tuo team. -->
+
+Data la diversità di mentalità intorno alla strategia dei commit, non è sorprendente che esista tanto disorientamento riguardo al modo "giusto" di usare Git.
+
+### Scenario: Creare un tag di rilascio rivisto
+
+Confrontiamo il processo di creare un tag di rilascio escludendo alcuni commit recenti su `main`.
+
+![Git Tag Releasing from main with 2 feature branches](../git-branching-with-main-simplified.svg)
+
+### Il modo Rebase
+
+Mental model: "Voglio creare una versione alternativa di una storia esistente. (es. Ho commesso un errore 16 merges fa, e potrebbe servirmi un controllo fine-grained per correggerlo. Inoltre, potrei finire in un ciclo sembrantemente infinito di conflitti e `--continue`.)"
+
+1.  Aggiorna: `git checkout main` && `git pull`
+2.  Crea nuova branch: `git checkout -b release/hot-newness-and-stuff`
+3.  Avvia rebase interattivo e includi il riferimento git per dove vuoi tornare indietro nel tempo. `git rebase -i HEAD~6` (Nota: `HEAD~6` è la sintassi abbreviata di git per `6 commit fa`)
+4.  Elimina i commit desiderati cambiando il loro prefisso in `drop`. Salva e chiudi l'editor.
+5.  Risolvi i conflitti di merge, `git add .` && `git rebase --continue` (NON usare `git commit`).
+6.  Ripeti il passo precedente fino al completamento.
+7.  Taggia/pubblica usando il processo corrente. Esempio `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### Vantaggi
+
+#### Vantaggi
+
+- 🔌 Potere assoluto. Puoi modificare la storia.
+  <!-- - 🎭 Pratica le tue abilità di Engineering Theater. -->
+
+#### Svantaggi
+
+- 😰 Potere assoluto. Puoi modificare la storia. (Okay, un Vantaggio e uno Svantaggio...)
+- 🔂 Puoi finire in un ciclo apparentemente infinito di conflitti e `—-continue`. (A volte anche con `git rerere`)
+- 🙀 Rompe funzionalità collaborative chiave: commenti persi o orfani di PR. Sgarbato.
+- 🖇️ I permalink possono non essere così permanenti.
+
+### Il metodo (Squash) Merge
+
+Modello mentale: "Voglio un rilascio personalizzato, partendo da un punto specifico, includendo qualsiasi branch desiderato."
+
+1.  Aggiorna: `git checkout main` && `git pull`
+2.  Crea un nuovo branch: `git checkout -b release/hot-newness-and-stuff`
+3.  Fai il merge dei branch e/o commit desiderati: `git merge --no-ff feature/hot-newness bug/fix-123` (usa il flag `--no-ff` quando possibile.)
+4.  Risolvi eventuali conflitti di merge (se necessario).
+5.  Taggia/pubblica usando il processo corrente. Esempio `git tag -a v1.2.3 -m 'Release v1.2.3'` && `git push --tags`
+
+#### Vantaggi
+
+- 💪 Meno processi, pochi conflitti e utilizza conoscenze sui comandi Git esistenti.
+- 🚀 Ti permette di pensare a un livello più alto di PR/branch, ignorando la granularità dei commit (a meno che non necessario.)
+- 🦺 Non distruttivo. Puoi tornare indietro e/o creare nuovi branch in qualsiasi momento.
+- 🎥 Lascia i commit esistenti e i messaggi invariati, riducendo il rumore del 'blame'.
+
+#### Svantaggi
+
+- 🔏 Più difficile modificare i messaggi dei commit.
+- 🤐 Più difficile nascondere il proprio lavoro.
+
+### Conclusione
+
+Alla fine, **un processo più semplice con meno rischi dovrebbe prevalere.**
+
+<!-- **Squash merge** è chiaramente il vincitore qui. È **più semplice** e **meno propenso agli errori**. Lascia anche **la storia dei commit esistente invariata**. Questo è un **grande vantaggio** per **collaborazione** e **revisione del codice**. -->
+
+<!-- Includi un diagramma di un flusso di rebase con 2 branch di funzionalità -->
+
+Anche se i sostenitori del _rebase_ hanno modi per risolvere (o evitare) i loro problemi, **rimane un fatto: alla fine avrai bisogno di una cintura nera in git fu** (ad esempio, persino un umile `git push` può affrontare complessità aggiuntive: era `git push --force` o `git push --force-with-lease`? Perché affrontare questo affatto?).
+
+C'è un'altra ragione per cui **il rebase per creare una storia rivista sarà sempre svantaggiato** rispetto a **`git merge ...`**. Un `git merge` permette al CLI di `git` di applicare algoritmi avanzati per evitare conflitti analizzando ogni branch HEAD.
+
+Questo può essere più intelligente perché ogni merge considera solo lo stato più recente di ogni branch desiderato, mentre **il rebase deve riassegnare (o eliminare) la storia dei commit seguendo la sequenza** specificata. Questo **limita la capacità di `git` di ottimizzare** il merge poiché **confronta solo 2 commit** alla volta.
+
+Alla fine **il rebase significa che occasionalmente ti troverai a rivedere vecchi commit e conflitti irrilevanti** - anche se sai che sono già stati rimossi o risolti.
+
+### Riepilogo
+
+- 💃 Risposta: **ESEGUE SQUASH MERGE** delle tue PR su `main`.
+  - La tua storia del branch sarà lì se necessario, e `main` rimarrà relativamente "pulito".
+- _🔤 Committa Sempre!_
+  - Nei >95% dei progetti aziendali la "mente di backup" è preferibile alla "mente di arte scolpita". Man mano che il tempo passa, il significato dei tuoi messaggi di commit si offuscherà più velocemente rispetto al codice, la cui logica e i test manterranno la loro rilevanza.
+
+#### Bonus: Consiglio per le Release
+
+Hai mai avuto bisogno solo di un singolo file o di poche cartelle da un branch? Senza la storia dei commit?
+
+- Puoi utilizzare il separatore speciale "--" con `git checkout` per rimanere nel branch corrente mentre copi i file specificati:
+- `git checkout feature/half-a-feature **--** <folder or file path>`
+- Assicurati di aver committato eventuali modifiche che desideri conservare prima, poiché questo sovrascriverà eventuali modifiche locali.
+````
