@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-js-interfaces-symbols-and-enumerables
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 37.31
+- Input tokens: 5946
+- Output tokens: 5715
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001847
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: ''
@@ -257,3 +275,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
