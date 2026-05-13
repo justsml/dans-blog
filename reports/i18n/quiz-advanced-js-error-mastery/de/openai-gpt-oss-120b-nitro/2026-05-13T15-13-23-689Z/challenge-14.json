@@ -1,0 +1,44 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Object vs Error Detection",
+  "translatedTitle": "Objekt‑vs‑Fehler‑Erkennung",
+  "translation": {
+    "title": "Objekt‑vs‑Fehler‑Erkennung",
+    "group": "Fehlergrenzen",
+    "options": [
+      {
+        "text": "true, true"
+      },
+      {
+        "text": "false, false"
+      },
+      {
+        "text": "true, false"
+      },
+      {
+        "text": "false, true"
+      }
+    ],
+    "questionProse": [
+      "Was geben diese Prüfungen zurück?"
+    ],
+    "explanationProse": [
+      "`instanceof Error` gibt `false` zurück, weil das Objekt nicht vom Error‑Konstruktor erstellt wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), weil es den internen `[[Class]]`‑Slot prüft. Beide Methoden erkennen korrekt, dass es sich um ein gefälschtes Fehlerobjekt handelt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Objekt‑vs‑Fehler‑Erkennung\",\n  \"group\": \"Fehlergrenzen\",\n  \"options\": [\n    {\n      \"text\": \"true, true\"\n    },\n    {\n      \"text\": \"false, false\"\n    },\n    {\n      \"text\": \"true, false\"\n    },\n    {\n      \"text\": \"false, true\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was geben diese Prüfungen zurück?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof Error` gibt `false` zurück, weil das Objekt nicht vom Error‑Konstruktor erstellt wurde. `Object.prototype.toString.call()` liefert ebenfalls `false` (es gibt `'[object Object]'` zurück), weil es den internen `[[Class]]`‑Slot prüft. Beide Methoden erkennen korrekt, dass es sich um ein gefälschtes Fehlerobjekt handelt.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 797,
+    "outputTokens": 459,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1394
+  },
+  "cost": {
+    "inputUsd": 0.000031083,
+    "outputUsd": 0.00008261999999999999,
+    "totalUsd": 0.00011370299999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

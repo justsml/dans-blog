@@ -1,0 +1,44 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Non-Standard Properties",
+  "translatedTitle": "Nicht‑standardmäßige Eigenschaften",
+  "translation": {
+    "title": "Nicht‑standardmäßige Eigenschaften",
+    "group": "Fehler‑Eigenschaften",
+    "options": [
+      {
+        "text": "Immer verfügbar"
+      },
+      {
+        "text": "Möglicherweise nicht in allen Umgebungen vorhanden"
+      },
+      {
+        "text": "Nur in Node.js"
+      },
+      {
+        "text": "Veraltet und entfernt"
+      }
+    ],
+    "questionProse": [
+      "Wie zuverlässig sind `error.code` und `error.errno`?"
+    ],
+    "explanationProse": [
+      "Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error‑Objekt. Browser‑Fehler besitzen diese Eigenschaften nicht. Prüfe immer, ob sie existieren: `if (err.code === 'ENOENT')` anstatt anzunehmen, dass sie vorhanden sind."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Nicht‑standardmäßige Eigenschaften\",\n  \"group\": \"Fehler‑Eigenschaften\",\n  \"options\": [\n    {\n      \"text\": \"Immer verfügbar\"\n    },\n    {\n      \"text\": \"Möglicherweise nicht in allen Umgebungen vorhanden\"\n    },\n    {\n      \"text\": \"Nur in Node.js\"\n    },\n    {\n      \"text\": \"Veraltet und entfernt\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie zuverlässig sind `error.code` und `error.errno`?\"\n  ],\n  \"explanationProse\": [\n    \"Eigenschaften wie `code` und `errno` sind umgebungsspezifisch (hier Node.js) und gehören nicht zum standardmäßigen Error‑Objekt. Browser‑Fehler besitzen diese Eigenschaften nicht. Prüfe immer, ob sie existieren: `if (err.code === 'ENOENT')` anstatt anzunehmen, dass sie vorhanden sind.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 803,
+    "outputTokens": 497,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1528
+  },
+  "cost": {
+    "inputUsd": 0.000031317,
+    "outputUsd": 0.00008946,
+    "totalUsd": 0.000120777,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

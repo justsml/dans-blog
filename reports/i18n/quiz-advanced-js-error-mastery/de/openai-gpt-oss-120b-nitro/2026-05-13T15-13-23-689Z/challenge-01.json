@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "The Empty Object Mystery",
+  "translatedTitle": "Das Geheimnis des leeren Objekts",
+  "translation": {
+    "title": "Das Geheimnis des leeren Objekts",
+    "group": "Serialisierungsüberraschungen",
+    "options": [
+      {
+        "text": "{\"message\":\"Oops\",\"name\":\"Error\"}"
+      },
+      {
+        "text": "{}"
+      },
+      {
+        "text": "{\"error\":\"Oops\"}"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Was gibt `JSON.stringify(error)` zurück?"
+    ],
+    "explanationProse": [
+      "Error-Objekte haben nicht aufzählbare Eigenschaften (`message`, `name`, `stack`), daher gibt `JSON.stringify()` `{}` zurück. Das ist ein häufiger Stolperstein beim Senden von Fehlern in API‑Antworten. Verwende `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle stattdessen ein einfaches Objekt."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Das Geheimnis des leeren Objekts\",\n  \"group\": \"Serialisierungsüberraschungen\",\n  \"options\": [\n    {\n      \"text\": \"{\\\"message\\\":\\\"Oops\\\",\\\"name\\\":\\\"Error\\\"}\"\n    },\n    {\n      \"text\": \"{}\"\n    },\n    {\n      \"text\": \"{\\\"error\\\":\\\"Oops\\\"}\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was gibt `JSON.stringify(error)` zurück?\"\n  ],\n  \"explanationProse\": [\n    \"Error-Objekte haben nicht aufzählbare Eigenschaften (`message`, `name`, `stack`), daher gibt `JSON.stringify()` `{}` zurück. Das ist ein häufiger Stolperstein beim Senden von Fehlern in API‑Antworten. Verwende `JSON.stringify(error, Object.getOwnPropertyNames(error))` oder erstelle stattdessen ein einfaches Objekt.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 800,
+    "outputTokens": 471,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2223
+  },
+  "cost": {
+    "inputUsd": 0.0000312,
+    "outputUsd": 0.00008478,
+    "totalUsd": 0.00011598,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

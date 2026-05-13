@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "Cross-Frame instanceof",
+  "translation": {
+    "title": "Cross-Frame instanceof",
+    "group": "Typprüfungs-Tricks",
+    "options": [
+      {
+        "text": "Immer wahr"
+      },
+      {
+        "text": "Immer falsch"
+      },
+      {
+        "text": "Kann über Frames hinweg falsch sein"
+      },
+      {
+        "text": "Wirft einen Fehler"
+      }
+    ],
+    "questionProse": [
+      "Was passiert mit `instanceof Error` über iframes hinweg?"
+    ],
+    "explanationProse": [
+      "`instanceof` kann über verschiedene Ausführungskontexte (iframes, Workers) `false` zurückgeben, weil jeder Kontext seinen eigenen `Error`‑Konstruktor hat. Verwende `Object.prototype.toString.call(obj) === '[object Error]'` für zuverlässige Fehlererkennung über Kontextgrenzen hinweg."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Cross-Frame instanceof\",\n  \"group\": \"Typprüfungs-Tricks\",\n  \"options\": [\n    {\n      \"text\": \"Immer wahr\"\n    },\n    {\n      \"text\": \"Immer falsch\"\n    },\n    {\n      \"text\": \"Kann über Frames hinweg falsch sein\"\n    },\n    {\n      \"text\": \"Wirft einen Fehler\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was passiert mit `instanceof Error` über iframes hinweg?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` kann über verschiedene Ausführungskontexte (iframes, Workers) `false` zurückgeben, weil jeder Kontext seinen eigenen `Error`‑Konstruktor hat. Verwende `Object.prototype.toString.call(obj) === '[object Error]'` für zuverlässige Fehlererkennung über Kontextgrenzen hinweg.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 793,
+    "outputTokens": 521,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1789
+  },
+  "cost": {
+    "inputUsd": 0.000030927000000000004,
+    "outputUsd": 0.00009377999999999999,
+    "totalUsd": 0.000124707,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

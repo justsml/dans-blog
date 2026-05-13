@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "instanceof Inheritance",
+  "translatedTitle": "instanceof Vererbung",
+  "translation": {
+    "title": "instanceof Vererbung",
+    "group": "Typprüfungs-Tricks",
+    "options": [
+      {
+        "text": "true, true, true"
+      },
+      {
+        "text": "true, false, false"
+      },
+      {
+        "text": "false, true, true"
+      },
+      {
+        "text": "true, true, false"
+      }
+    ],
+    "questionProse": [
+      "Was sind die Ergebnisse dieser Prüfungen?"
+    ],
+    "explanationProse": [
+      "Alle drei geben `true` zurück. `CustomError` erweitert `Error`, das wiederum `Object` erweitert. Der `instanceof`‑Operator prüft die gesamte Prototypkette, sodass eine `CustomError`‑Instanz auch eine Instanz von `Error` und `Object` ist."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof Vererbung\",\n  \"group\": \"Typprüfungs-Tricks\",\n  \"options\": [\n    {\n      \"text\": \"true, true, true\"\n    },\n    {\n      \"text\": \"true, false, false\"\n    },\n    {\n      \"text\": \"false, true, true\"\n    },\n    {\n      \"text\": \"true, true, false\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was sind die Ergebnisse dieser Prüfungen?\"\n  ],\n  \"explanationProse\": [\n    \"Alle drei geben `true` zurück. `CustomError` erweitert `Error`, das wiederum `Object` erweitert. Der `instanceof`‑Operator prüft die gesamte Prototypkette, sodass eine `CustomError`‑Instanz auch eine Instanz von `Error` und `Object` ist.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 796,
+    "outputTokens": 465,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2223
+  },
+  "cost": {
+    "inputUsd": 0.000031044,
+    "outputUsd": 0.0000837,
+    "totalUsd": 0.00011474400000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

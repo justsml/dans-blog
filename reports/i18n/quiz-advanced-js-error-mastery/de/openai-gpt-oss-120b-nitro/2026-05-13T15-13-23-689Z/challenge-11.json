@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Express Response Error",
+  "translatedTitle": "Express-Antwortfehler",
+  "translation": {
+    "title": "Express-Antwortfehler",
+    "group": "API-Fallen",
+    "options": [
+      {
+        "text": "Sendet das komplette Fehlerobjekt"
+      },
+      {
+        "text": "Sendet {\"error\":{}}"
+      },
+      {
+        "text": "Wirft einen Serverfehler"
+      },
+      {
+        "text": "Sendet nur die Fehlermeldung"
+      }
+    ],
+    "questionProse": [
+      "Was wird an den Client gesendet?"
+    ],
+    "explanationProse": [
+      "`res.json()` verwendet intern `JSON.stringify()`, sodass das Error‑Objekt zu `{}` wird. Der Client erhält `{\"error\":{}}`. Um das zu beheben, benutze `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Express-Antwortfehler\",\n  \"group\": \"API-Fallen\",\n  \"options\": [\n    {\n      \"text\": \"Sendet das komplette Fehlerobjekt\"\n    },\n    {\n      \"text\": \"Sendet {\\\"error\\\":{}}\"\n    },\n    {\n      \"text\": \"Wirft einen Serverfehler\"\n    },\n    {\n      \"text\": \"Sendet nur die Fehlermeldung\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was wird an den Client gesendet?\"\n  ],\n  \"explanationProse\": [\n    \"`res.json()` verwendet intern `JSON.stringify()`, sodass das Error‑Objekt zu `{}` wird. Der Client erhält `{\\\"error\\\":{}}`. Um das zu beheben, benutze `res.json({ error: error.message })` oder `res.json({ error: { message: error.message, name: error.name } })`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 811,
+    "outputTokens": 559,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 656
+  },
+  "cost": {
+    "inputUsd": 0.000031629,
+    "outputUsd": 0.00010062000000000001,
+    "totalUsd": 0.000132249,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
