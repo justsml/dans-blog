@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "e08ada4be5fe6ad572daf35e36a4c10dd8b4a3e9",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (e08ada4) is the most complete and natural translation. The 'current' version provided in the prompt actually seems to be a duplicate of the English source in the body text, whereas the candidate correctly translates the content into Hindi. The candidate maintains the MDX structure perfectly and captures Dan's direct, slightly cynical tone well. The previous judge's suggestion for 'गलतती' was not found in the actual text of this commit (it uses 'गलती' correctly), so no further fixes are required.",
+  "slug": "replacing-my-job-with-gpt-and-llm",
+  "locale": "hi",
+  "candidateCommits": [
+    "e08ada4be5fe6ad572daf35e36a4c10dd8b4a3e9",
+    "90e000fd62f8781f8e08840420f93bdf457fa9b2",
+    "cd6810463742df2ddb385de22e4894d2233fd199"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "गलतती",
+      "replacement": "गलती",
+      "reason": "Spelling error: 'गलतती' is incorrect; 'गलती' is the correct spelling for 'mistake'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug replacing-my-job-with-gpt-and-llm --locale hi --skip-global",
+    "output": ""
+  }
+}
