@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "Température et Déterminisme",
+  "translation": {
+    "title": "Température et Déterminisme",
+    "group": "Avancé",
+    "options": [
+      {
+        "text": "temperature=0 produit toujours des sorties identiques pour la même entrée"
+      },
+      {
+        "text": "temperature=0 rend les sorties plus déterministes mais pas garanties identiques"
+      },
+      {
+        "text": "temperature=0 désactive le modèle"
+      },
+      {
+        "text": "temperature n'affecte que la longueur de la réponse"
+      }
+    ],
+    "questionProse": [
+      "Définir `temperature=0` dans votre appel LLM signifie :"
+    ],
+    "explanationProse": [
+      "`temperature=0` fait que le modèle choisit le token le plus probable à chaque étape (décodage glouton), ce qui produit des sorties **plus cohérentes** — mais pas forcément identiques.\n\nSources de variation à temperature=0:\n- **Non‑déterminisme en virgule flottante** dans les calculs GPU, surtout entre différents matériels ou tailles de lot\n- **Modifications de l’infrastructure côté serveur** (mises à jour du modèle, infrastructure de service)\n- **Les longues réponses** accumulent de petites variations\n\nPour les suites de tests et les évaluations qui exigent une stricte déterminisme, `temperature=0` est le bon choix — il suffit de ne pas écrire d’assertions qui dépendent de sorties identiques octet à octet. Vérifiez la structure, le contenu clé et le comportement, pas les chaînes exactes."
+    ]
+  },
+  "rawText": "{\n  \"title\":\"Température et Déterminisme\",\n  \"group\": \"Avancé\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0 produit toujours des sorties identiques pour la même entrée\"\n    },\n    {\n      \"text\": \"temperature=0 rend les sorties plus déterministes mais pas garanties identiques\"\n    },\n    {\n      \"text\": \"temperature=0 désactive le modèle\"\n    },\n    {\n      \"text\": \"temperature n'affecte que la longueur de la réponse\"\n    }\n  ],\n  \"questionProse\": [\n    \"Définir `temperature=0` dans votre appel LLM signifie :\"\n  ],\n  \"questionCode\": [],\n  \"explanationProse\": [\n    \"`temperature=0` fait que le modèle choisit le token le plus probable à chaque étape (décodage glouton), ce qui produit des sorties **plus cohérentes** — mais pas forcément identiques.\\n\\nSources de variation à temperature=0:\\n- **Non‑déterminisme en virgule flottante** dans les calculs GPU, surtout entre différents matériels ou tailles de lot\\n- **Modifications de l’infrastructure côté serveur** (mises à jour du modèle, infrastructure de service)\\n- **Les longues réponses** accumulent de petites variations\\n\\nPour les suites de tests et les évaluations qui exigent une stricte déterminisme, `temperature=0` est le bon choix — il suffit de ne pas écrire d’assertions qui dépendent de sorties identiques octet à octet. Vérifiez la structure, le contenu clé et le comportement, pas les chaînes exactes.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 925,
+    "outputTokens": 818,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 840
+  },
+  "cost": {
+    "inputUsd": 0.000036075,
+    "outputUsd": 0.00014724,
+    "totalUsd": 0.000183315,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
