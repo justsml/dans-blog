@@ -1,0 +1,45 @@
+{
+  "selectedCommit": "a59be6644861f75769295fa28290899d71c59d0b",
+  "selectedModel": "deepseek/deepseek-v4-flash",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected a59be6644861f75769295fa28290899d71c59d0b.",
+  "slug": "breaking-unicorns",
+  "locale": "de",
+  "candidateCommits": [
+    "1eb6b4de53b09d972526b6748450761489bd7fae",
+    "67148c78de7ed95df7b6c0daff5db46febf2a529",
+    "a59be6644861f75769295fa28290899d71c59d0b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug breaking-unicorns --locale de --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug breaking-unicorns --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug breaking-unicorns --locale de --skip-global\n12 |   const minimumTargetLength = 600;\n13 |   const minimumRatio = 0.65;\n14 |   const maximumRatio = 1.35;\n15 | \n16 |   if (targetLength <= minimumTargetLength) {\n17 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-09-01--breaking-unicorns/de/index.mdx is too short after translation. Comparable body length is 0 chars; expected more than 600.\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:17:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
