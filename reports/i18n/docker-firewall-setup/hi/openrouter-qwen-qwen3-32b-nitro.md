@@ -1,0 +1,124 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 8.96
+- Input tokens: 4202
+- Output tokens: 4147
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001331
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: डॉकर फायरवॉल सेटअप
+subTitle: ''
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## डॉकर होस्ट के फायरवॉल को सेटअप करें
+
+1. डेबियन/यूबंटु सर्वर का उपयोग किया गया है  
+1. डॉकर होस्ट सर्वर पर चलने के लिए डिज़ाइन किया गया है  
+
+### आवश्यकताओं को इंस्टॉल करें  
+
+~~~sh
+# अंतिम फायरवॉल की आवश्यकता है
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### अपने आंतरिक और बाहरी IP पते प्राप्त करें  
+
+~~~sh
+# अपने IP पते प्राप्त करें, सरल आउटपुट:
+hostname --all-ip-addresses
+~~~
+
+# या तो ip टूल का उपयोग करें, उदाहरण:
+ip addr
+~~~
+
+### फायरवॉल (UFW) सेटअप - उदाहरण कमांड्स
+
+~~~sh
+ufw logging on # on=low - medium डायग्नोस्टिक्स के लिए बेहतर हो सकता है
+ufw logging medium
+# सबसे पहले, ब्लॉक करें सब कुछ
+ufw default deny incoming
+
+# आवश्यक: निम्नलिखित में से *एक* प्रामाणिक बाहरी नियम चुनें:
+ufw default deny outgoing
+ufw default allow outgoing
+
+# एसएसएच कनेक्शन की अनुमति और लॉग करें,
+ufw allow log proto tcp from any to any port 22
+## HTTP ट्रैफ़िक की अनुमति (विशिष्ट लॉगिंग के बिना)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# विस्तृत: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # मूलभूत दर सीमा 4 SSH ब्रूट फोर्स मिटिगेशन
+~~~
+
+# अपना बाहरी IP सेट करें
+export EXTERNAL_IP=123.123.123.123
+# आवश्यकता पड़ने पर डॉकर IP अपडेट करें
+export DOCKER_IP=172.17.42.1
+# टीसीपी 8080 ट्रैफ़िक को डॉकराइज़्ड एप्प पर फॉरवर्ड करें
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## फायरवॉल को सक्षम / शुरू करें
+
+> सावधान रहें, अपना SSH पोर्ट बंद न करें (sshd डिफ़ॉल्ट 22 होता है)
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+### अपने फायरवॉल का परीक्षण करें
+
+> महत्वपूर्ण: एक दूरस्थ IP पता/स्थान का उपयोग करें
+
+~~~sh
+# निर्भरता की पुष्टि करें
+apt-get update && apt-get install -y nmap
+
+# परीक्षण लक्ष्य सेट करें
+export TARGET_HOST=123.123.123.123
+
+# उदाहरण स्कैन कमांड:
+# त्वरित खुले पोर्ट जांच
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# विस्तृत स्कैन
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# सेवा निरीक्षण
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> कर लिया! अब आपको केवल उन पोर्ट दिखाई देने चाहिए जिन्हें आपने निर्धारित किया है!
+````
