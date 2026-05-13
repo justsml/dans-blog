@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Aggregate Function COUNT",
+  "translatedTitle": "集計関数 COUNT",
+  "translation": {
+    "title": "集計関数 COUNT",
+    "group": "SQL 基礎",
+    "options": [
+      {
+        "text": "NULL 値を含むすべての行をカウントする"
+      },
+      {
+        "text": "列の非 NULL 値のみをカウントする"
+      },
+      {
+        "text": "NULL 値を 1 つのユニークな値としてカウントする"
+      },
+      {
+        "text": "各 NULL 値をユニークとみなし、NaN !== NaN と同様に扱う"
+      }
+    ],
+    "questionProse": [
+      "SQL で `COUNT(column_name)` は何を行いますか？"
+    ],
+    "explanationProse": [
+      "`COUNT(column_name)` は指定された列の非 NULL 値の数をカウントします。NULL を含むすべての行をカウントしたい場合は `COUNT(*)` を使用します。\n\n    また、`COALESCE` を使って NULL を非 NULL 値にデフォルトさせることもできます。例えば: `COUNT(COALESCE(column_name, 0))`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"集計関数 COUNT\",\n  \"group\": \"SQL 基礎\",\n  \"options\": [\n    {\n      \"text\": \"NULL 値を含むすべての行をカウントする\"\n    },\n    {\n      \"text\": \"列の非 NULL 値のみをカウントする\"\n    },\n    {\n      \"text\": \"NULL 値を 1 つのユニークな値としてカウントする\"\n    },\n    {\n      \"text\": \"各 NULL 値をユニークとみなし、NaN !== NaN と同様に扱う\"\n    }\n  ],\n  \"questionProse\": [\n    \"SQL で `COUNT(column_name)` は何を行いますか？\"\n  ],\n  \"explanationProse\": [\n    \"`COUNT(column_name)` は指定された列の非 NULL 値の数をカウントします。NULL を含むすべての行をカウントしたい場合は `COUNT(*)` を使用します。\\n\\n    また、`COALESCE` を使って NULL を非 NULL 値にデフォルトさせることもできます。例えば: `COUNT(COALESCE(column_name, 0))`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 806,
+    "outputTokens": 678,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1983
+  },
+  "cost": {
+    "inputUsd": 0.000031434,
+    "outputUsd": 0.00012203999999999999,
+    "totalUsd": 0.000153474,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
