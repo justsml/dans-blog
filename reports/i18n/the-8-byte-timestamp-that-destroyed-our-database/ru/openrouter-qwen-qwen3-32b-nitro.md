@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 84.66
+- Input tokens: 10063
+- Output tokens: 8139
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002758
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ваша метка времени — обман
 subTitle: Как железнодорожный билет научил меня хранить время в базах данных
@@ -138,3 +156,4 @@ SELECT * FROM orders WHERE created_at = '2026-01-15 10:00:00.123';
 - [Формат даты и времени ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
 - [База данных часовых поясов (IANA)](https://www.iana.org/time-zones)  
 - [Работа с временным метками в распределённых системах](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
