@@ -158,13 +158,36 @@ function getNavPostData(post: MyPost) {
       };
 
       const menu = document.querySelector(".header-language-menu");
+      const closeLanguageMenu = () => {
+        menu?.removeAttribute("open");
+      };
 
       menu?.addEventListener("click", (event) => {
         const target = event.target;
         if (!(target instanceof Element)) return;
+
+        if (target.closest("summary") && !menu.open) {
+          document.dispatchEvent(new CustomEvent("closeNavPanels"));
+          document.dispatchEvent(new CustomEvent("closeSearchPanel"));
+          return;
+        }
+
         const link = target.closest("a[data-language-locale]");
         if (!(link instanceof HTMLAnchorElement)) return;
         writePreferredLocale(link.dataset.languageLocale);
+      });
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element) || target.closest(".header-language-menu")) return;
+        closeLanguageMenu();
+      });
+
+      document.addEventListener("closeNavPanels", closeLanguageMenu);
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape") return;
+        closeLanguageMenu();
       });
 
       if (config.currentLocale !== config.defaultLocale) {

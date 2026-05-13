@@ -23,6 +23,7 @@ import { generateText } from "ai";
 import { createOpenRouter, type OpenRouterProviderSettings } from "@openrouter/ai-sdk-provider";
 import { parse as parseLlmString } from "llm-strings";
 import {
+  assertRunLock,
   parseArgs,
   requireString,
   requireActiveLocale,
@@ -72,7 +73,7 @@ const DEFAULT_REASONING_EFFORT = "low";
 const DEFAULT_LLM_TIMEOUT_MS = 200_000;
 const DEFAULT_CHUNK_SIZE = "6p";
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
-const MAX_PARALLEL_CHALLENGE_CALLS = 18;
+const MAX_PARALLEL_CHALLENGE_CALLS = 32;
 const DEFAULT_CHALLENGE_RETRIES = 2;
 const MAX_CHALLENGE_RETRIES = 5;
 
@@ -106,7 +107,7 @@ function resolveLlmConfig(modelInput: string): LlmConfig {
     };
   }
 
-  // Normalize opencode-style model IDs like "openrouter/qwen/qwen3.6-plus"
+  // Normalize OpenRouter-prefixed model IDs like "openrouter/qwen/qwen3.6-plus"
   const modelId = modelInput.replace(/^openrouter\//, "");
 
   return {
@@ -156,6 +157,7 @@ interface QuizReportOptions {
   challengeRetries: number;
   runDir: string;
   timestamp: string;
+  assertActiveRun: () => void;
 }
 
 interface QuizRunReporter {
@@ -194,6 +196,7 @@ function createQuizRunReporter(
   concurrency: number,
   runDir: string,
   timestamp: string,
+  assertActiveRun: () => void,
 ): QuizRunReporter {
   const reportDir = runDir;
   const progressPath = join(reportDir, "progress.jsonl");
@@ -205,9 +208,11 @@ function createQuizRunReporter(
     timestamp,
     progressPath,
     writeJson(name, data) {
+      assertActiveRun();
       writeFileSync(join(reportDir, `${name}.json`), JSON.stringify(data, null, 2), "utf8");
     },
     append(event, data) {
+      assertActiveRun();
       appendFileSync(
         progressPath,
         JSON.stringify({
@@ -603,6 +608,7 @@ async function translateQuiz(
       reportOptions.concurrency,
       reportOptions.runDir,
       reportOptions.timestamp,
+      reportOptions.assertActiveRun,
     );
   reporter?.writeJson("parsed-quiz", {
     challengeCount: quiz.challenges.length,
@@ -624,8 +630,10 @@ async function translateQuiz(
   // Generate quiz description
   let quizDescription = "";
   if (!skipSummary) {
+    reportOptions.assertActiveRun();
     console.log("📝 Generating quiz description...");
     const summary = await generateQuizDescription(quiz, llmConfig);
+    reportOptions.assertActiveRun();
     quizDescription = summary.description;
     const cost = addTelemetry(telemetry, {
       index: -1,
@@ -676,6 +684,7 @@ async function translateQuiz(
     console.log("🔄 Translating quiz intro...");
     reporter?.append("intro_started", {});
     const intro = await translateProse(quiz.intro, locale, llmConfig, quizDescription);
+    reportOptions.assertActiveRun();
     translatedIntro = intro.text;
     const cost = addTelemetry(telemetry, { index: -2, label: "intro", ...intro });
     reporter?.writeJson("intro", { text: translatedIntro, telemetry: intro, cost });
@@ -695,6 +704,7 @@ async function translateQuiz(
     reportOptions.concurrency,
     async (challenge, i) => {
       for (let attempt = 1; attempt <= reportOptions.challengeRetries + 1; attempt++) {
+        reportOptions.assertActiveRun();
         console.log(`🎯 Translating challenge ${i + 1}/${quiz.challenges.length}: "${challenge.title}" (attempt ${attempt}/${reportOptions.challengeRetries + 1})`);
         reporter?.append("challenge_started", { index: i, title: challenge.title, attempt });
 
@@ -706,6 +716,7 @@ async function translateQuiz(
             quizDescription,
             true,
           );
+          reportOptions.assertActiveRun();
 
           const cost = addTelemetry(telemetry, {
             index: i,
@@ -779,6 +790,7 @@ async function translateQuiz(
     console.log("\n🔄 Translating quiz outro...");
     reporter?.append("outro_started", {});
     const outro = await translateProse(quiz.outro, locale, llmConfig, quizDescription);
+    reportOptions.assertActiveRun();
     translatedOutro = outro.text;
     const cost = addTelemetry(telemetry, { index: -3, label: "outro", ...outro });
     reporter?.writeJson("outro", { text: translatedOutro, telemetry: outro, cost });
@@ -800,6 +812,7 @@ async function translateQuiz(
   };
 
   const body = assembleQuiz(translatedQuiz);
+  reportOptions.assertActiveRun();
   const summary = {
     slug: reportOptions.slug,
     locale,
@@ -919,6 +932,10 @@ async function main() {
   const shouldPublish = options["no-publish"] !== true;
   const quizConcurrency = parseQuizConcurrency(options["quiz-concurrency"]);
   const challengeRetries = parseChallengeRetries(options["challenge-retries"]);
+  const runLockPath = typeof options["run-lock-path"] === "string" ? options["run-lock-path"] : undefined;
+  const expectedRunId = typeof options["run-id"] === "string" ? options["run-id"] : undefined;
+  const assertActiveRun = () => assertRunLock(runLockPath, expectedRunId);
+  assertActiveRun();
 
   const llmConfig = resolveLlmConfig(modelId);
   const { sourcePath, targetPath } = getPostPaths(slug, locale);
@@ -952,6 +969,7 @@ async function main() {
   if (isQuiz) {
     console.log(`🎯 Quiz detected: ${slug}\n`);
     activeRunLabel = `${slug} [${locale}]`;
+    assertActiveRun();
     const result = await translateQuiz(sourceBody, locale, llmConfig, skipSummary, dryRun, {
       slug,
       locale,
@@ -959,6 +977,7 @@ async function main() {
       challengeRetries,
       runDir: runPaths.runDir,
       timestamp: runTimestamp,
+      assertActiveRun,
     });
     if (dryRun) return;
     translatedBody = result.body;
@@ -970,8 +989,10 @@ async function main() {
     const strategy = parseChunkSize(chunkSizeInput);
 
     if (!skipSummary) {
+      assertActiveRun();
       console.log("📝 Generating article summary...");
       articleSummary = await generateSummary(parsed.data.title ?? slug, sourceBody, llmConfig, false);
+      assertActiveRun();
       console.log(`   Summary: ${articleSummary.slice(0, 120)}...\n`);
     } else {
       articleSummary = "No summary provided. Translate each chunk independently.";
@@ -991,16 +1012,20 @@ async function main() {
       return;
     }
 
-    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput);
+    assertActiveRun();
+    const result = await translateArticleChunks(chunks, locale, llmConfig, articleSummary, chunkSizeInput, assertActiveRun);
+    assertActiveRun();
     translatedBody = reassembleChunks(result.translatedChunks);
     telemetry = result.telemetry;
   }
 
+  assertActiveRun();
   const normalizedBody = normalizeCandidateForLocale(sourceRaw, translatedBody);
 
   // Build frontmatter
   const frontmatter: Record<string, unknown> = { ...parsed.data };
   const translatedFrontmatter = await translateFrontmatter(frontmatter, locale, llmConfig, isQuiz);
+  assertActiveRun();
   const frontmatterYaml = matter.stringify("", translatedFrontmatter).trim();
 
   const finalOutput = frontmatterYaml + "\n" + normalizedBody;
@@ -1008,6 +1033,7 @@ async function main() {
   const reportName = isQuiz ? "quiz" : chunkSizeInput;
   const chunkReportName = `chunked-${reportName.replace(/[^a-z0-9]/gi, "")}.md`;
   const chunkReport = formatTelemetryReport(telemetry, articleSummary);
+  assertActiveRun();
   const candidatePaths = writeCandidateRun({
     slug,
     locale,
@@ -1025,14 +1051,17 @@ async function main() {
 
   // Keep a latest-by-model telemetry report for quick human inspection.
   const reportPath = join(runPaths.modelDir, chunkReportName);
+  assertActiveRun();
   writeTextFile(reportPath, chunkReport);
 
   if (shouldPublish) {
+    assertActiveRun();
     assertTranslationLength({
       sourceContents: sourceRaw,
       targetContents: finalOutput,
       targetPath,
     });
+    assertActiveRun();
     mkdirSync(dirname(targetPath), { recursive: true });
     writeFileSync(targetPath, finalOutput, "utf8");
   }
@@ -1056,6 +1085,7 @@ async function translateArticleChunks(
   llmConfig: LlmConfig,
   articleSummary: string,
   chunkSize: string,
+  assertActiveRun: () => void,
 ): Promise<{ translatedChunks: Chunk[]; telemetry: Telemetry }> {
   const translatedChunks: Chunk[] = [];
   const telemetry = createTelemetry(llmConfig, chunkSize, chunks.length);
@@ -1064,6 +1094,7 @@ async function translateArticleChunks(
   let previousTranslation: string | undefined;
 
   for (let i = 0; i < chunks.length; i++) {
+    assertActiveRun();
     const chunk = chunks[i];
     chunk.totalChunks = chunks.length;
 
@@ -1079,6 +1110,7 @@ async function translateArticleChunks(
       nextParagraphContext(chunks, i),
       false,
     );
+    assertActiveRun();
 
     const cost = addTelemetry(telemetry, {
       index: i,

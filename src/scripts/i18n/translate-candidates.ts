@@ -3,8 +3,11 @@ import { dirname, join } from "node:path";
 import { spawn, type ChildProcess } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
 import {
+  assertRunLock,
+  createRunLock,
   getPostPaths,
   gitCommit,
+  releaseRunLock,
   optionalString,
   parseArgs,
   parseList,
@@ -102,6 +105,10 @@ const taskConcurrency = getTaskConcurrency();
 const chunkSize = optionalString(options, "chunk") ?? DEFAULT_CHUNK_SIZE;
 const quizConcurrency = optionalString(options, "quiz-concurrency");
 const challengeRetries = optionalString(options, "challenge-retries");
+const runLockPath = optionalString(options, "run-lock-path") ?? join(process.cwd(), ".git/codex-i18n-translation-run.json");
+const inheritedRunId = optionalString(options, "run-id");
+const processRunId = inheritedRunId ?? `${new Date().toISOString().replace(/[:.]/g, "-")}-${process.pid}`;
+const ownsRunLock = inheritedRunId == null && !shouldDryRun;
 const requestedSlug = optionalString(options, "slug");
 const requestedSlugs = parseList(optionalString(options, "slugs"), requestedSlug == null ? [] : [requestedSlug]);
 const slugs = requestedSlugs.length > 0 ? requestedSlugs : getAllPostSlugs();
@@ -129,6 +136,14 @@ const activeChildren = new Set<ChildProcess>();
 
 registerProcessCleanup();
 
+if (ownsRunLock) {
+  createRunLock(runLockPath, processRunId, "i18n:translate:candidates");
+}
+
+if (!shouldDryRun) {
+  assertRunLock(runLockPath, processRunId);
+}
+
 if (shouldDryRun) {
   console.log(`Candidate tasks:`);
   for (const task of getCandidateTasks()) {
@@ -151,6 +166,7 @@ if (isTaskWorker) {
 }
 
 async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
+  assertRunLock(runLockPath, processRunId);
   slug = currentSlug;
   locale = currentLocale;
   const paths = getPostPaths(slug, locale);
@@ -177,6 +193,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
     writeCandidateRunSummary(buildCandidateRunSummary());
 
     for (const model of models) {
+      assertRunLock(runLockPath, processRunId);
       const reportPath = `${reportDir}/${safeModelName(model)}.md`;
       if (!shouldOverwrite && existsSync(reportPath) && !isRejectedReport(reportPath)) {
         console.log(`Skipping existing ${locale}/${model} report at ${relativeToRepo(reportPath)}. Pass --overwrite to rerun.`);
@@ -195,6 +212,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
       const startedAt = Date.now();
       try {
         await runDirectTranslation(model);
+        assertRunLock(runLockPath, processRunId);
 
         if (!existsSync(targetPath)) {
           throw new Error(`Direct translator did not create ${targetRelPath}.`);
@@ -209,9 +227,11 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
 
         let validationStatus = "deferred";
         normalizeCandidateForLocale();
+        assertRunLock(runLockPath, processRunId);
         if (shouldValidateCandidates) {
           validationStatus = await validateCandidate();
         }
+        assertRunLock(runLockPath, processRunId);
 
         writeCandidateReport({
           reportPath,
@@ -238,6 +258,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
           ]);
         }
       } catch (error) {
+        assertRunLock(runLockPath, processRunId);
         const telemetry = getDirectTelemetry(model, startedAt);
         const rawOutput = existsSync(targetPath) ? readFileSync(targetPath, "utf8") : undefined;
         cleanupRejectedTarget();
@@ -269,6 +290,7 @@ async function processTask(currentSlug: string, currentLocale: ActiveLocale) {
 
     finalizeCandidateRun("completed", { commit: true, print: true });
   } catch (error) {
+    assertRunLock(runLockPath, processRunId);
     finalizeCandidateRun("failed", { commit: !shouldSkipCommit, print: true });
     throw error;
   } finally {
@@ -319,6 +341,10 @@ function runTaskWorker(task: CandidateTask) {
     String(timeoutSeconds),
     "--chunk",
     chunkSize,
+    "--run-id",
+    processRunId,
+    "--run-lock-path",
+    runLockPath,
     ...optionalFlag("--validate-candidates", shouldValidateCandidates),
     ...optionalFlag("--full-validation", shouldRunFullCandidateValidation),
     ...optionalFlag("--no-commit", shouldSkipCommit),
@@ -458,6 +484,10 @@ async function runDirectTranslation(model: string) {
     model,
     "--chunk",
     chunkSize,
+    "--run-id",
+    processRunId,
+    "--run-lock-path",
+    runLockPath,
   ];
 
   if (quizConcurrency != null) {
@@ -794,6 +824,7 @@ function registerProcessCleanup() {
       console.error(`Received ${signal}; stopping active translation children and preserving run accounting.`);
       killActiveChildren();
       finalizeCandidateRun("interrupted", { commit: false, print: true });
+      if (ownsRunLock) releaseRunLock(runLockPath, processRunId);
       process.exit(signal === "SIGINT" ? 130 : 143);
     });
   }
@@ -803,6 +834,7 @@ function registerProcessCleanup() {
     if (isProcessingTask && !candidateRunFinalized) {
       finalizeCandidateRun("interrupted", { commit: false, print: false });
     }
+    if (ownsRunLock) releaseRunLock(runLockPath, processRunId);
   });
 }
 

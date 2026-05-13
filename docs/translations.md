@@ -67,7 +67,7 @@ bun run i18n:report:models
 
 Validation checks frontmatter, preserved imports/components, fenced code counts, nested locale asset paths, per-level heading counts, and comparable body length. English and translated files must keep the same number of H1, H2, H3, H4, H5, and H6 headings; translate the heading text, but do not promote, demote, add, or drop headings. Translated bodies must be longer than 600 characters and stay within 35% of the English body length.
 
-Judge runs may return structured `suggestions` in `judge.json`. High-priority suggestions must include an exact `match`, exact `replacement`, and English `reason`; the judge wrapper applies those exact replacements, re-runs judge scoring, and repeats once more if another high-priority fix appears. Every suggestion is written to `judge-suggestions.jsonl` when present and summarized in `judge-summary.md`.
+Judge runs compare at most three candidate commits per model call, with any pre-existing translated file included as `<current>` context. Runs may return structured `suggestions` in `judge.json`. Medium/high-priority suggestions must include an exact `match`, exact `replacement`, and English `reason`; the judge wrapper applies those exact replacements, re-runs judge scoring, and repeats until no medium/high issues remain or `--fix-pass-limit` is reached. The default fix pass limit is 2. Every suggestion is written to `judge-suggestions.jsonl` when present and summarized in `judge-summary.md`. Every judge call and fix application appends an accounting row to `reports/i18n/{slug}/judgements.jsonl`, next to the article-level `candidates.jsonl`.
 
 Candidate generation validates and commits each model output unless `--no-commit` is passed.
 
@@ -98,7 +98,7 @@ Every future candidate report includes run telemetry:
 - cached input tokens
 - estimated cost when the model has known pricing in `translate-candidates.ts`
 
-Token fields are best-effort because provider and OpenCode output formats vary. Unknown token counts are still written explicitly so model reports keep a stable shape.
+Token fields are best-effort because provider output formats vary. Unknown token counts are still written explicitly so model reports keep a stable shape.
 
 OpenRouter usage metadata is read from the response `usage` object. As of the 2026-05-13 OpenRouter docs check, the useful fields are `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost` in OpenRouter credits, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
 
@@ -111,7 +111,7 @@ bun run i18n:translate:candidates -- \
   --models openrouter/z-ai/glm-5.1,openrouter/minimax/minimax-m2.7
 ```
 
-OpenCode calls default to a 240 second timeout. Override it per run when needed:
+AI SDK translation and judge calls default to a 240 second timeout. Override it per run when needed:
 
 ```sh
 bun run i18n:translate:candidates -- \
@@ -124,6 +124,8 @@ bun run i18n:judge -- \
   --locale es \
   --timeout-seconds 240
 ```
+
+Judge comparison calls are capped at three candidate commits by default. `--judge-batch-size` may be set lower, but values above 3 are capped to keep prompts bounded. `--fix-pass-limit` controls the medium/high-priority fix loop and defaults to 2.
 
 Article translation chunks default to `6p`: six paragraphs per translated chunk. For non-quiz prose, the prompt also includes one neighboring source paragraph before and after the active chunk when available. That padding is context only; the model is told to translate only the active chunk. Quiz posts ignore chunk padding because they use structured Challenge input/output instead of prose chunking.
 
@@ -226,11 +228,10 @@ Older batches also used Gemma, DeepSeek V4 Pro, Kimi, GLM 5.1, and OpenAI mini j
 
 Qwen availability notes from earlier checks:
 
-- OpenCode exposed `openrouter/qwen/qwen3.6-plus` and `openrouter/qwen/qwen-3.6-27b`.
 - OpenRouter's public API exposed `qwen/qwen3.6-plus`, `qwen/qwen3.6-35b-a3b`, and `qwen/qwen3.6-flash`.
-- OpenCode did not expose `qwen/qwen3.6-flash`, and it rejected `qwen/qwen3.6-35b-a3b`.
+- The current script model list uses runnable OpenRouter IDs through the AI SDK provider.
 
-`minimax-m2.6` was requested during setup, but `opencode models openrouter` did not expose that model ID. The closest available MiniMax candidate at the time was `openrouter/minimax/minimax-m2.7`.
+`minimax-m2.6` was requested during setup, but the available OpenRouter catalog did not expose that model ID. The closest available MiniMax candidate at the time was `openrouter/minimax/minimax-m2.7`.
 
 For judging, start cheap:
 
@@ -303,8 +304,8 @@ OpenRouter providers can fail in awkward ways. A provider may print an SSE or JS
 Rules:
 
 - A model attempt is a candidate only if it leaves a diff in the translated MDX target file.
-- If OpenCode exits non-zero, commit a rejection report only.
-- If OpenCode exits zero but the target file is unchanged, commit a rejection report only.
+- If the AI SDK/provider call fails, commit a rejection report only.
+- If the model call succeeds but the target file is unchanged, commit a rejection report only.
 - If a later judge, promotion, or final validation pass finds broken MDX, do not silently promote the file. Either fix and commit the fix or keep the attempt out of the final selection.
 
 Example rejected report note:

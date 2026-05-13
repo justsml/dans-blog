@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { ACTIVE_LOCALES, isActiveLocale, type ActiveLocale } from "../../shared/i18n.ts";
@@ -170,6 +170,58 @@ export function normalizeLocaleImportPaths(contents: string) {
   return contents
     .replace(LOCALE_IMPORT_FROM_PATTERN, "$1../../../../$2")
     .replace(LOCALE_SIDE_EFFECT_IMPORT_PATTERN, "$1../../../../$2");
+}
+
+type RunLockPayload = {
+  runId: string;
+  pid: number;
+  startedAt: string;
+  label?: string;
+};
+
+export function createRunLock(lockPath: string, runId: string, label?: string) {
+  mkdirSync(dirname(lockPath), { recursive: true });
+  const payload: RunLockPayload = {
+    runId,
+    pid: process.pid,
+    startedAt: new Date().toISOString(),
+    label,
+  };
+  writeFileSync(lockPath, JSON.stringify(payload, null, 2), "utf8");
+}
+
+export function assertRunLock(lockPath: string | undefined, expectedRunId: string | undefined) {
+  if (lockPath == null || expectedRunId == null) return;
+
+  const current = readRunLock(lockPath);
+  if (current?.runId === expectedRunId) return;
+
+  throw new Error([
+    "Stale i18n translation worker stopped before writing output.",
+    `Expected run id: ${expectedRunId}`,
+    `Current run id: ${current?.runId ?? "missing"}`,
+    `Lock: ${relativeToRepo(lockPath)}`,
+  ].join(" "));
+}
+
+export function releaseRunLock(lockPath: string | undefined, expectedRunId: string | undefined) {
+  if (lockPath == null || expectedRunId == null || !existsSync(lockPath)) return;
+  const current = readRunLock(lockPath);
+  if (current?.runId !== expectedRunId) return;
+  rmSync(lockPath, { force: true });
+}
+
+function readRunLock(lockPath: string): RunLockPayload | undefined {
+  if (!existsSync(lockPath)) return undefined;
+
+  try {
+    const parsed = JSON.parse(readFileSync(lockPath, "utf8"));
+    return parsed != null && typeof parsed === "object" && typeof parsed.runId === "string"
+      ? parsed as RunLockPayload
+      : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export function gitCommit(message: string, paths: string[]) {

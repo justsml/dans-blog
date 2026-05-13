@@ -1096,6 +1096,7 @@ function startCandidateWorker() {
   const child = spawn("bun", args, {
     cwd: process.cwd(),
     stdio: ["ignore", "pipe", "pipe"],
+    detached: true,
   });
   workerProcess = child;
 
@@ -1122,7 +1123,27 @@ function stopCandidateWorker(reason: string) {
   workerState.status = "stopped";
   workerState.finishedAt = new Date();
   appendWorkerOutput(`stopping worker: ${reason}`);
-  workerProcess.kill("SIGTERM");
+  killWorkerTree(workerProcess);
+}
+
+function killWorkerTree(child: ChildProcess) {
+  if (child.pid == null) return;
+  try {
+    process.kill(-child.pid, "SIGTERM");
+    setTimeout(() => {
+      try {
+        if (child.pid != null) process.kill(-child.pid, "SIGKILL");
+      } catch {
+        // Worker group already exited.
+      }
+    }, 5000).unref();
+  } catch {
+    try {
+      child.kill("SIGTERM");
+    } catch {
+      // Worker already exited.
+    }
+  }
 }
 
 function isWorkerFinished() {

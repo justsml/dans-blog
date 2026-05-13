@@ -295,6 +295,10 @@ function getPostPath(post: NavPost) {
     closeMenus();
   });
 
+  document.addEventListener("closeNavPanels", () => {
+    closeMenus();
+  });
+
   searchButton?.addEventListener("click", async (event) => {
     event.preventDefault();
     stickyMenu = null;

@@ -1,6 +1,6 @@
 ---
 name: article-i18n-translator
-description: Generate and judge DanLevy.net article translations with OpenCode/OpenRouter candidate models, locale-prefixed Astro routes, and full Git provenance. Use when translating posts, adding i18n candidates, judging translations, preserving messy model history, or debugging translated article routing.
+description: Generate and judge DanLevy.net article translations with AI SDK/OpenRouter candidate models, locale-prefixed Astro routes, and full Git provenance. Use when translating posts, adding i18n candidates, judging translations, preserving messy model history, or debugging translated article routing.
 ---
 
 # Article I18n Translator
@@ -48,8 +48,6 @@ Older candidates retained in history:
 - `openrouter/moonshotai/kimi-k2.6`
 - `openrouter/z-ai/glm-5.1`
 
-Note: the Gemma 4 26B A4B and Gemma 4 31B entries were added as the cheapest paid runnable options from the requested model list at the time of the OpenRouter/OpenCode check. OpenRouter's public API listed `qwen/qwen3.6-35b-a3b` as cheaper than DeepSeek V4 Pro, but OpenCode rejected that model ID with `ProviderModelNotFoundError`, so the runnable third addition is `openrouter/deepseek/deepseek-v4-pro`. `gpt-5.5-mini` was not present in OpenRouter's model list, and OpenCode exposed `anthropic/claude-haiku-4.5` rather than `anthropic/claude-haiku-latest`. `minimax-m2.6` was requested earlier, but OpenCode's OpenRouter catalog did not expose that ID during setup. Use the nearest available MiniMax model unless the catalog changes.
-
 Judge with Gemini Flash by default:
 
 - `openrouter/google/gemini-3-flash-preview`
@@ -67,11 +65,11 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    Candidate generation skips existing slug+locale+model reports by default. Use `--overwrite` only when you intentionally want to rerun that model and replace its target-file output.
 
-   OpenCode calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen, gpt-oss, and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
+   AI SDK translation and judge calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen, gpt-oss, and GLM run with low reasoning effort; Gemini 3 Flash runs with minimal reasoning effort.
 
    Article translation chunks default to `6p`: six paragraphs per active chunk, with one neighboring source paragraph before and after as context padding when available. Quiz posts ignore chunk padding because they use structured Challenge input/output.
 
-   Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from OpenCode/provider output; write `unknown` rather than omitting unavailable fields.
+   Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from provider output; write `unknown` rather than omitting unavailable fields.
 
    OpenRouter usage metadata is read from `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost` in OpenRouter credits, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
 
@@ -97,6 +95,10 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
      --model openrouter/google/gemini-3-flash-preview \
      --timeout-seconds 240
    ```
+
+   Judge calls compare at most three candidate commits at a time and include any existing translated file as `<current>` context. The judge wrapper appends every judge call and automatic fix application to `reports/i18n/{slug}/judgements.jsonl`, next to the article-level `candidates.jsonl`.
+
+   Automatic pre-publish fixes loop until no medium/high-priority issues remain or `--fix-pass-limit` is reached. The default limit is 2.
 
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:

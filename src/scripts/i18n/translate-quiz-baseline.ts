@@ -13,7 +13,7 @@ const DEFAULT_MODELS = [
   "openrouter/qwen/qwen3-32b:nitro",
 ];
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
-const MAX_PARALLEL_CHALLENGE_CALLS = 18;
+const MAX_PARALLEL_CHALLENGE_CALLS = 32;
 const DEFAULT_CHALLENGE_RETRIES = 2;
 const MAX_CHALLENGE_RETRIES = 5;
 const DEFAULT_FILE_CONCURRENCY = 6;
@@ -241,6 +241,7 @@ function runTranslation(
       {
         cwd: process.cwd(),
         stdio: "inherit",
+        detached: true,
       },
     );
 
@@ -254,6 +255,26 @@ function runTranslation(
       resolve(false);
     });
   });
+}
+
+function killChildTree(child: ChildProcess) {
+  if (child.pid == null) return;
+  try {
+    process.kill(-child.pid, "SIGTERM");
+    setTimeout(() => {
+      try {
+        if (child.pid != null) process.kill(-child.pid, "SIGKILL");
+      } catch {
+        // Child group already exited.
+      }
+    }, 5000).unref();
+  } catch {
+    try {
+      child.kill("SIGTERM");
+    } catch {
+      // Child already exited.
+    }
+  }
 }
 
 async function mapLimit<T, R>(
@@ -370,7 +391,7 @@ async function main() {
       totals,
     });
     for (const child of activeChildren) {
-      child.kill("SIGINT");
+      killChildTree(child);
     }
     writeSummary("interrupted");
     printTotals("interrupted");

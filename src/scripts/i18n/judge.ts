@@ -10,9 +10,11 @@ import {
   run,
   writeTextFile,
 } from "./utils.ts";
-import { getRunTelemetry, renderTelemetryLines, runMeasuredCommand } from "./telemetry.ts";
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { getRunTelemetry, renderTelemetryLines } from "./telemetry.ts";
+import { generateText } from "ai";
+import { createOpenRouter } from "@openrouter/ai-sdk-provider";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 
 type JudgeSuggestion = {
   priority: "low" | "medium" | "high";
@@ -27,9 +29,21 @@ type SuggestionLogEntry = JudgeSuggestion & {
   note: string;
 };
 
-const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
-  ? "/Users/dan/.opencode/bin/opencode"
-  : "opencode";
+type JudgeCommandResult = {
+  ok: boolean;
+  runtimeMs: number;
+  output: string;
+  errorMessage?: string;
+};
+
+type CandidateRef = {
+  id: string;
+  label: string;
+  source: "commit" | "current";
+  model: string;
+};
+
+type JudgeOperationKind = "candidate-batch" | "final" | "fix-rescore" | "second" | "escalation";
 
 const options = parseArgs();
 const slug = requireString(options, "slug");
@@ -48,11 +62,19 @@ const timeoutSeconds = getTimeoutSeconds();
 const { sourcePath, targetPath, reportDir } = getPostPaths(slug, locale);
 const sourceRelPath = relativeToRepo(sourcePath);
 const targetRelPath = relativeToRepo(targetPath);
-const maxPrePublishFixPasses = 2;
+const articleReportDir = join(process.cwd(), "reports/i18n", slug);
+const judgementsPath = join(articleReportDir, "judgements.jsonl");
+const maxCandidatesPerJudgePass = Math.min(
+  3,
+  parseOptionalPositiveInteger(optionalString(options, "judge-batch-size"), "judge-batch-size") ?? 3,
+);
+const maxPrePublishFixPasses =
+  parseOptionalPositiveInteger(optionalString(options, "fix-pass-limit"), "fix-pass-limit") ?? 2;
 
 const releaseJudgeLock = acquireJudgeLock();
 try {
   const candidateCommits = getCandidateCommits();
+  const initialCandidates = getInitialCandidateRefs(candidateCommits);
   if (candidateCommits.length === 0) {
     throw new Error(`No candidate commits found for ${slug} ${locale}.`);
   }
@@ -65,37 +87,22 @@ try {
   const candidateSummary = candidateCommits
     .map((commit) => `- ${commit} ${run("git", ["show", "-s", "--format=%s", commit])}`)
     .join("\n");
+  const currentSummary = existsSync(targetPath)
+    ? `- current ${targetRelPath}`
+    : "- current not present";
 
-  const prompt = [
-    "You are a constrained translation judge.",
-    `Judge the ${locale} translation candidates for ${slug}.`,
-    `Candidate commits:`,
-    candidateSummary,
-    ``,
-    selectedCommit
-      ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken.`
-      : "Choose the best candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
-    `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
-    `The final translated body must be longer than 600 characters and within 35% of the English body length.`,
-    `Use git show <sha>:${targetRelPath} to inspect candidates.`,
-    `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
-    `Also explain the decision in reports/i18n/${slug}/${locale}/judge.md.`,
-    `Also write strict JSON to reports/i18n/${slug}/${locale}/judge.json with this shape:`,
-    JSON.stringify(getJudgeJsonShape()),
-    `Use suggestions only for concrete pre-publish fixes. Each high-priority suggestion must include an exact match string and exact replacement string from ${targetRelPath}.`,
-    `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
-    `Do not create temporary candidate files. Inspect candidates directly from git when needed.`,
-  ].join("\n");
-
-  let primaryJudge = runJudgeCommand(judgeModel, prompt);
+  const tournament = await selectCandidateInBatches(initialCandidates, candidateSummary);
+  let primaryJudge = tournament.finalJudge;
   if (!primaryJudge.ok) {
     throw new Error(primaryJudge.errorMessage);
   }
+  materializePrimaryJudgeResult(primaryJudge, tournament.finalCandidates);
 
   const primaryTelemetry = getRunTelemetry(judgeModel, primaryJudge);
   const prePublishRescoreTelemetries: Array<{ pass: number; telemetry: ReturnType<typeof getRunTelemetry> }> = [];
-  const suggestionLog = applyHighPrioritySuggestionsAndRescore({
+  const suggestionLog = await applyHighPrioritySuggestionsAndRescore({
     initialJudge: primaryJudge,
+    latestCandidates: tournament.finalCandidates,
     candidateSummary,
     telemetrySink: prePublishRescoreTelemetries,
   });
@@ -103,12 +110,15 @@ try {
 
   const secondJudge = secondJudgeModel == null
     ? undefined
-    : runJudgeCommand(secondJudgeModel, getSecondJudgePrompt(candidateSummary), [
+    : await runJudgeOperation(secondJudgeModel, getSecondJudgePrompt(candidateSummary), [
       targetPath,
       `${reportDir}/judge.md`,
-    ].filter((path) => existsSync(path)));
+    ].filter((path) => existsSync(path)), "second");
   if (secondJudge != null && !secondJudge.ok) {
     throw new Error(secondJudge.errorMessage);
+  }
+  if (secondJudge != null) {
+    writeTextFile(`${reportDir}/judge-second.md`, renderJudgeMarkdown(secondJudge.output));
   }
 
   const secondTelemetry = secondJudge == null || secondJudgeModel == null
@@ -120,10 +130,13 @@ try {
     secondOutput: secondJudge.output,
   });
   const escalationJudge = shouldEscalate && escalationJudgeModel != null
-    ? runJudgeCommand(escalationJudgeModel, getEscalationPrompt(candidateSummary))
+    ? await runJudgeOperation(escalationJudgeModel, getEscalationPrompt(candidateSummary), tournament.finalCandidates, "escalation")
     : undefined;
   if (escalationJudge != null && !escalationJudge.ok) {
     throw new Error(escalationJudge.errorMessage);
+  }
+  if (escalationJudge != null) {
+    materializePrimaryJudgeResult(escalationJudge, tournament.finalCandidates, "judge-escalation.md", escalationJudgeModel);
   }
 
   const escalationTelemetry = escalationJudge == null || escalationJudgeModel == null
@@ -152,11 +165,19 @@ try {
       `- Judge model: ${judgeModel}`,
       `- Second judge model: ${secondJudgeModel ?? "not run"}`,
       `- Escalation judge model: ${escalationJudge == null ? "not run" : escalationJudgeModel}`,
+      `- Max candidate commits per judge call: ${maxCandidatesPerJudgePass}`,
+      `- Fix pass limit: ${maxPrePublishFixPasses}`,
       `- Selected commit hint: ${selectedCommit ?? "judge selected"}`,
       `- Validation: ${validation.ok ? "passed" : "failed"}`,
       `- Validation scope: ${validation.scope}`,
       validation.ok ? undefined : `- Validation error: ${validation.error}`,
       ``,
+      tournament.telemetries.length === 0 ? undefined : `## Batch Judge Telemetry`,
+      ...tournament.telemetries.flatMap(({ round, batch, telemetry }) => [
+        `### Round ${round}, Batch ${batch}`,
+        ...renderTelemetryLines(telemetry),
+        ``,
+      ]),
       `## Primary Judge Telemetry`,
       ...renderTelemetryLines(primaryTelemetry),
       ``,
@@ -176,6 +197,7 @@ try {
       ...(escalationTelemetry == null ? [] : renderTelemetryLines(escalationTelemetry)),
       escalationTelemetry == null ? undefined : ``,
       `## Candidates`,
+      currentSummary,
       candidateSummary,
       ``,
     ].filter((line) => line != null).join("\n"),
@@ -187,6 +209,7 @@ try {
     const secondJudgePath = `reports/i18n/${slug}/${locale}/judge-second.md`;
     const escalationJudgePath = `reports/i18n/${slug}/${locale}/judge-escalation.md`;
     const suggestionRelPath = `reports/i18n/${slug}/${locale}/judge-suggestions.jsonl`;
+    const judgementsRelPath = `reports/i18n/${slug}/judgements.jsonl`;
     gitCommit(`i18n judge(${locale}): select translation for ${slug}`, [
       targetRelPath,
       relativeToRepo(reportPath),
@@ -195,6 +218,7 @@ try {
       ...(existsSync(secondJudgePath) ? [secondJudgePath] : []),
       ...(existsSync(escalationJudgePath) ? [escalationJudgePath] : []),
       ...(suggestionLog.entries.length > 0 ? [suggestionRelPath] : []),
+      ...(existsSync(judgementsRelPath) ? [judgementsRelPath] : []),
     ]);
   }
 } finally {
@@ -218,19 +242,21 @@ function getJudgeJsonShape() {
         priority: "high",
         match: "exact translated text currently in the selected MDX",
         replacement: "exact replacement text to write into the selected MDX",
-        reason: "English explanation of why this change is needed",
+        reason: "English explanation of why this medium/high-priority change is needed",
       },
     ],
     rationale: "brief selection rationale",
   };
 }
 
-function applyHighPrioritySuggestionsAndRescore({
+async function applyHighPrioritySuggestionsAndRescore({
   initialJudge,
+  latestCandidates,
   candidateSummary,
   telemetrySink,
 }: {
-  initialJudge: ReturnType<typeof runJudgeCommand>;
+  initialJudge: JudgeCommandResult;
+  latestCandidates: CandidateRef[];
   candidateSummary: string;
   telemetrySink: Array<{ pass: number; telemetry: ReturnType<typeof getRunTelemetry> }>;
 }) {
@@ -239,15 +265,26 @@ function applyHighPrioritySuggestionsAndRescore({
 
   for (let pass = 1; pass <= maxPrePublishFixPasses; pass += 1) {
     const suggestions = readJudgeSuggestions();
-    if (suggestions.length === 0) {
-      console.log(`[i18n judge] pre-publish suggestion pass ${pass}: no suggestions.`);
+    const blockingSuggestions = suggestions.filter((suggestion) => isBlockingSuggestion(suggestion));
+    if (blockingSuggestions.length === 0) {
+      console.log(`[i18n judge] pre-publish suggestion pass ${pass}: no medium/high suggestions.`);
       break;
     }
 
     let appliedCount = 0;
-    for (const suggestion of suggestions) {
+    for (const suggestion of blockingSuggestions) {
       const entry = applyJudgeSuggestion(suggestion, pass);
       entries.push(entry);
+      appendJudgement({
+        event: "fix-application",
+        slug,
+        locale,
+        pass,
+        priority: entry.priority,
+        applied: entry.applied,
+        note: entry.note,
+        reason: entry.reason,
+      });
       if (entry.applied) appliedCount += 1;
       console.log([
         `[i18n judge] pre-publish suggestion pass ${pass}:`,
@@ -262,16 +299,17 @@ function applyHighPrioritySuggestionsAndRescore({
 
     if (appliedCount === 0) break;
 
-    const rescoreJudge = runJudgeCommand(judgeModel, getPrePublishRescorePrompt(pass, candidateSummary), [
+    const rescoreJudge = await runJudgeOperation(judgeModel, getPrePublishRescorePrompt(pass, candidateSummary), [
       sourcePath,
       targetPath,
       `${reportDir}/judge.md`,
       `${reportDir}/judge.json`,
-    ].filter((path) => existsSync(path)));
+    ].filter((path) => existsSync(path)), "fix-rescore", { pass });
     if (!rescoreJudge.ok) {
       throw new Error(rescoreJudge.errorMessage);
     }
 
+    materializePrimaryJudgeResult(rescoreJudge, latestCandidates);
     telemetrySink.push({
       pass,
       telemetry: getRunTelemetry(judgeModel, rescoreJudge),
@@ -279,20 +317,20 @@ function applyHighPrioritySuggestionsAndRescore({
     latestJudge = rescoreJudge;
   }
 
-  if (entries.some((entry) => entry.priority === "high" && !entry.applied)) {
-    console.warn("[i18n judge] Some high-priority suggestions were not auto-applied; see judge-suggestions.jsonl and judge-summary.md.");
+  if (entries.some((entry) => isBlockingSuggestion(entry) && !entry.applied)) {
+    console.warn("[i18n judge] Some medium/high-priority suggestions were not auto-applied; see judge-suggestions.jsonl and judge-summary.md.");
   }
 
   return { latestJudge, entries };
 }
 
 function applyJudgeSuggestion(suggestion: JudgeSuggestion, pass: number): SuggestionLogEntry {
-  if (suggestion.priority !== "high") {
+  if (!isBlockingSuggestion(suggestion)) {
     return {
       ...suggestion,
       pass,
       applied: false,
-      note: "Not high priority; recorded for manual review.",
+      note: "Not medium/high priority; recorded for manual review.",
     };
   }
 
@@ -301,7 +339,7 @@ function applyJudgeSuggestion(suggestion: JudgeSuggestion, pass: number): Sugges
       ...suggestion,
       pass,
       applied: false,
-      note: "High-priority suggestion did not include a non-empty exact match and replacement.",
+      note: "Medium/high-priority suggestion did not include a non-empty exact match and replacement.",
     };
   }
 
@@ -396,6 +434,10 @@ function normalizePriority(value: unknown): JudgeSuggestion["priority"] | undefi
   return undefined;
 }
 
+function isBlockingSuggestion(suggestion: Pick<JudgeSuggestion, "priority">) {
+  return suggestion.priority === "high" || suggestion.priority === "medium";
+}
+
 function normalizeSuggestionString(value: unknown) {
   return typeof value === "string" ? value : undefined;
 }
@@ -443,7 +485,7 @@ function runJudgeValidation() {
 
 function writeJudgeJsonValidation(
   validation: ReturnType<typeof runJudgeValidation>,
-  primaryJudge: ReturnType<typeof runJudgeCommand>,
+  primaryJudge: JudgeCommandResult,
   candidateCommits: string[],
   suggestionLogEntries: SuggestionLogEntry[],
 ) {
@@ -551,16 +593,335 @@ function sleep(milliseconds: number) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds);
 }
 
-function runJudgeCommand(model: string, judgePrompt: string, files: string[] = []) {
-  return runMeasuredCommand(OPENCODE_COMMAND, [
-    "run",
-    "--model",
+async function selectCandidateInBatches(candidates: CandidateRef[], candidateSummary: string) {
+  let round = 1;
+  const currentCandidate = candidates.find((candidate) => candidate.source === "current");
+  let remaining = candidates.filter((candidate) => candidate.source === "commit");
+  const telemetries: Array<{ round: number; batch: number; telemetry: ReturnType<typeof getRunTelemetry> }> = [];
+
+  while (remaining.length > maxCandidatesPerJudgePass) {
+    const winners: CandidateRef[] = [];
+    const batches = chunkArray(remaining, maxCandidatesPerJudgePass);
+
+    for (let batchIndex = 0; batchIndex < batches.length; batchIndex += 1) {
+      const batch = batches[batchIndex];
+      const comparisonCandidates = withCurrentCandidate(batch, currentCandidate);
+      const batchJudge = await runJudgeOperation(
+        judgeModel,
+        getPrimaryJudgePrompt(candidateSummary, comparisonCandidates, `round ${round}, batch ${batchIndex + 1}`),
+        comparisonCandidates,
+        "candidate-batch",
+        { round, batch: batchIndex + 1 },
+      );
+      if (!batchJudge.ok) throw new Error(batchJudge.errorMessage);
+
+      telemetries.push({
+        round,
+        batch: batchIndex + 1,
+        telemetry: getRunTelemetry(judgeModel, batchJudge),
+      });
+      winners.push(resolveSelectedCandidate(batchJudge, comparisonCandidates));
+    }
+
+    remaining = uniqueCandidates(winners).filter((candidate) => candidate.source === "commit");
+    if (remaining.length === 0 && currentCandidate != null) {
+      remaining = [];
+      break;
+    }
+    round += 1;
+  }
+
+  const finalCandidates = withCurrentCandidate(remaining, currentCandidate);
+  const finalJudge = await runJudgeOperation(
+    judgeModel,
+    getPrimaryJudgePrompt(candidateSummary, finalCandidates, "final"),
+    finalCandidates,
+    "final",
+    { round },
+  );
+  if (!finalJudge.ok) throw new Error(finalJudge.errorMessage);
+
+  return {
+    finalJudge,
+    finalCandidates,
+    telemetries,
+  };
+}
+
+function getPrimaryJudgePrompt(candidateSummary: string, candidates: CandidateRef[], passLabel: string) {
+  return [
+    "You are a constrained translation judge.",
+    `Judge the ${locale} translation candidates for ${slug}.`,
+    `This is the ${passLabel} comparison. Consider only these selectable candidates:`,
+    ...candidates.map((candidate) => `- ${candidate.id} (${candidate.model})`),
+    ``,
+    `All candidate commits in the run:`,
+    candidateSummary,
+    ``,
+    selectedCommit
+      ? `Use ${selectedCommit} as the selected candidate unless it is structurally broken and it is selectable in this comparison.`
+      : "Choose the best selectable candidate by technical accuracy, natural language quality, Dan's direct style, and MDX preservation.",
+    `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings. Translate heading text, but do not add, remove, promote, or demote headings.`,
+    `The final translated body must be longer than 600 characters and within 35% of the English body length.`,
+    `Candidate MDX contents are attached below; do not ask to run git show.`,
+    `Return the selected candidate id in selectedCommit. Use "current" only if the <current> pre-existing translation is best and selectable.`,
+    `Return any exact medium/high-priority fixes as suggestions. The wrapper script writes ${targetRelPath} and judge reports.`,
+    `Use this JSON shape:`,
+    JSON.stringify(getJudgeJsonShape()),
+    `Each medium/high-priority suggestion must include an exact match string and exact replacement string from ${targetRelPath}.`,
+    `Do not run package installation, build, or content validation commands. The wrapper script owns validation.`,
+    `Do not create temporary candidate files.`,
+  ].join("\n");
+}
+
+async function runJudgeOperation(
+  model: string,
+  judgePrompt: string,
+  contextItems: Array<CandidateRef | string>,
+  kind: JudgeOperationKind,
+  extra: Record<string, unknown> = {},
+) {
+  const result = await runJudgeCommand(model, judgePrompt, contextItems);
+  appendJudgement({
+    event: kind,
+    slug,
+    locale,
     model,
-    ...getVariantArgs(model),
-    ...files.flatMap((file) => ["--file", file]),
-    "--dangerously-skip-permissions",
-    judgePrompt,
-  ], timeoutSeconds * 1000);
+    ok: result.ok,
+    runtimeMs: result.runtimeMs,
+    selected: result.ok ? parseJudgeOutput(result.output).selectedCommit : undefined,
+    context: contextItems.map(describeJudgeContextItem),
+    errorMessage: result.errorMessage,
+    ...extra,
+  });
+  return result;
+}
+
+function appendJudgement(data: Record<string, unknown>) {
+  mkdirSync(dirname(judgementsPath), { recursive: true });
+  appendFileSync(judgementsPath, `${JSON.stringify({
+    at: new Date().toISOString(),
+    ...data,
+  })}\n`, "utf8");
+}
+
+async function runJudgeCommand(
+  model: string,
+  judgePrompt: string,
+  contextItems: Array<CandidateRef | string> = [],
+): Promise<JudgeCommandResult> {
+  const startedAt = Date.now();
+  const provider = createOpenRouter({});
+  const modelId = model.replace(/^openrouter\//, "");
+
+  try {
+    const result = await generateText({
+      model: provider.chat(modelId),
+      system: [
+        "You are a constrained translation judge.",
+        "You cannot edit files or run shell commands.",
+        "Return strict JSON only. No markdown fences.",
+        'When selecting a candidate, use one of the provided ids exactly. Commit candidates use full SHAs; the pre-existing translation uses "current".',
+      ].join("\n"),
+      prompt: [
+        judgePrompt,
+        "",
+        buildJudgeContext(contextItems),
+        "",
+        "Return strict JSON with this shape:",
+        JSON.stringify(getJudgeJsonShape()),
+      ].join("\n"),
+      temperature: 0.1,
+      maxOutputTokens: 4000,
+      timeout: { totalMs: timeoutSeconds * 1000 },
+      providerOptions: getReasoningProviderOptions(model),
+    });
+    const runtimeMs = Date.now() - startedAt;
+    const usage = result.usage as {
+      inputTokens?: number;
+      outputTokens?: number;
+      inputTokenDetails?: {
+        cacheReadTokens?: number;
+        cacheWriteTokens?: number;
+      };
+    } | undefined;
+    const usageLine = JSON.stringify({
+      usage: {
+        inputTokens: usage?.inputTokens,
+        outputTokens: usage?.outputTokens,
+        cachedInputTokens: usage?.inputTokenDetails?.cacheReadTokens,
+        cache_write_tokens: usage?.inputTokenDetails?.cacheWriteTokens,
+      },
+    });
+
+    return {
+      ok: true,
+      runtimeMs,
+      output: `${result.text.trim()}\n${usageLine}`,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      runtimeMs: Date.now() - startedAt,
+      output: "",
+      errorMessage: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+function buildJudgeContext(contextItems: Array<CandidateRef | string>) {
+  const sections = [
+    renderContextSection(sourceRelPath, readFileSync(sourcePath, "utf8")),
+  ];
+
+  for (const item of contextItems) {
+    if (typeof item !== "string") {
+      sections.push(renderContextSection(
+        item.label,
+        readCandidateContents(item),
+      ));
+      continue;
+    }
+
+    if (/^[a-f0-9]{40}$/i.test(item)) {
+      sections.push(renderContextSection(
+        `candidate ${item} (${getCandidateModel(item)})`,
+        run("git", ["show", `${item}:${targetRelPath}`]),
+      ));
+      continue;
+    }
+
+    if (existsSync(item)) {
+      sections.push(renderContextSection(relativeToRepo(item), readFileSync(item, "utf8")));
+    }
+  }
+
+  return sections.join("\n\n");
+}
+
+function readCandidateContents(candidate: CandidateRef) {
+  if (candidate.source === "current") return readFileSync(targetPath, "utf8");
+  return run("git", ["show", `${candidate.id}:${targetRelPath}`]);
+}
+
+function describeJudgeContextItem(item: CandidateRef | string) {
+  if (typeof item !== "string") {
+    return {
+      id: item.id,
+      source: item.source,
+      model: item.model,
+    };
+  }
+
+  return {
+    id: item,
+    source: /^[a-f0-9]{40}$/i.test(item) ? "commit" : "file",
+  };
+}
+
+function renderContextSection(label: string, contents: string) {
+  return [
+    `--- BEGIN ${label} ---`,
+    contents,
+    `--- END ${label} ---`,
+  ].join("\n");
+}
+
+function materializePrimaryJudgeResult(
+  judge: JudgeCommandResult,
+  candidates: CandidateRef[],
+  judgeReportName = "judge.md",
+  reportJudgeModel = judgeModel,
+) {
+  const parsed = parseJudgeOutput(judge.output);
+  const selected = normalizeSelectedCandidate(parsed.selectedCommit, candidates);
+  const selectedBody = readCandidateContents(selected);
+  const rationale = typeof parsed.rationale === "string"
+    ? parsed.rationale
+    : `Selected ${selected.id}.`;
+
+  writeTextFile(targetPath, selectedBody);
+  writeTextFile(`${reportDir}/${judgeReportName}`, [
+    `# Translation Judge`,
+    ``,
+    `- Selected candidate: ${selected.id}`,
+    `- Selected model: ${parsed.selectedModel ?? selected.model}`,
+    `- Judge model: ${reportJudgeModel}`,
+    ``,
+    rationale,
+  ].join("\n"));
+  writeTextFile(`${reportDir}/judge.json`, JSON.stringify({
+    ...getJudgeJsonShape(),
+    ...parsed,
+    selectedCommit: selected.id,
+    selectedModel: parsed.selectedModel ?? selected.model,
+    rationale,
+  }, null, 2));
+}
+
+function renderJudgeMarkdown(output: string) {
+  const parsed = parseJudgeOutput(output);
+  return [
+    `# Translation Judge Pass`,
+    ``,
+    parsed.selectedCommit == null ? undefined : `- Selected candidate: ${parsed.selectedCommit}`,
+    parsed.selectedModel == null ? undefined : `- Selected model: ${parsed.selectedModel}`,
+    ``,
+    typeof parsed.rationale === "string" ? parsed.rationale : output.trim(),
+  ].filter((line) => line != null).join("\n");
+}
+
+function parseJudgeOutput(output: string): Record<string, unknown> {
+  const jsonText = extractJsonObject(output);
+  if (jsonText == null) return {};
+
+  try {
+    const parsed = JSON.parse(jsonText);
+    return parsed != null && typeof parsed === "object" ? parsed as Record<string, unknown> : {};
+  } catch {
+    return {};
+  }
+}
+
+function extractJsonObject(output: string) {
+  const withoutUsage = output
+    .split(/\r?\n/)
+    .filter((line) => !line.trim().startsWith('{"usage"'))
+    .join("\n")
+    .trim();
+  const fenced = withoutUsage.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const candidate = fenced?.[1]?.trim() ?? withoutUsage;
+  const firstBrace = candidate.indexOf("{");
+  const lastBrace = candidate.lastIndexOf("}");
+  if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) return undefined;
+  return candidate.slice(firstBrace, lastBrace + 1);
+}
+
+function normalizeSelectedCandidate(value: unknown, candidates: CandidateRef[]) {
+  const selected = typeof value === "string" ? value.trim() : undefined;
+  const bySelected = selected == null ? undefined : candidates.find((candidate) => candidate.id === selected);
+  if (bySelected != null) return bySelected;
+  const byHint = selectedCommit == null ? undefined : candidates.find((candidate) => candidate.id === selectedCommit);
+  if (byHint != null) return byHint;
+  const latest = candidates.at(-1);
+  if (latest == null) throw new Error("No candidate commits available.");
+  return latest;
+}
+
+function resolveSelectedCandidate(judge: JudgeCommandResult, candidates: CandidateRef[]) {
+  return normalizeSelectedCandidate(parseJudgeOutput(judge.output).selectedCommit, candidates);
+}
+
+function getReasoningProviderOptions(model: string) {
+  if (model.includes("gpt-5") || model.includes("gpt-oss") || model.includes("qwen") || model.includes("glm")) {
+    return { openrouter: { reasoning: { effort: "low" } } };
+  }
+
+  if (model.includes("gemini-3")) {
+    return { openrouter: { reasoning: { effort: "minimal" } } };
+  }
+
+  return undefined;
 }
 
 function validateJudgeModels({
@@ -602,12 +963,11 @@ function getPrePublishRescorePrompt(pass: number, candidateSummary: string) {
     candidateSummary,
     ``,
     `Check ${targetRelPath} against ${sourceRelPath} for technical accuracy, natural language quality, Dan's direct style, MDX preservation, per-level heading count preservation, and comparable body length.`,
-    `Do not edit ${targetRelPath}. The wrapper script applies exact high-priority replacements after you write JSON.`,
-    `Update reports/i18n/${slug}/${locale}/judge.md with the refreshed scoring and pre-publish status.`,
-    `Update reports/i18n/${slug}/${locale}/judge.json as strict JSON with this shape:`,
+    `Return refreshed scoring and pre-publish status as strict JSON. The wrapper script writes reports and applies exact medium/high-priority replacements.`,
+    `Use this JSON shape:`,
     JSON.stringify(getJudgeJsonShape()),
-    `Use suggestions only for concrete pre-publish fixes. Each high-priority suggestion must include an exact match string currently present in ${targetRelPath}, an exact replacement string, and an English reason.`,
-    `If no high-priority fixes remain, return "suggestions": [].`,
+    `Use suggestions only for concrete pre-publish fixes. Each medium/high-priority suggestion must include an exact match string currently present in ${targetRelPath}, an exact replacement string, and an English reason.`,
+    `If no medium/high-priority fixes remain, return "suggestions": [].`,
   ].join("\n");
 }
 
@@ -623,8 +983,7 @@ function getSecondJudgePrompt(candidateSummary: string) {
     candidateSummary,
     ``,
     `Check for MDX/frontmatter breakage, heading count mismatches by level, untranslated reader-facing prose, major terminology errors, and obvious tone regressions.`,
-    `Write your agreement or disagreement in reports/i18n/${slug}/${locale}/judge-second.md.`,
-    `Keep the report concise. If acceptable, include the exact phrase "No escalation required".`,
+    `Return your agreement or disagreement as strict JSON. If acceptable, put the exact phrase "No escalation required" in rationale.`,
     `Do not edit ${targetRelPath}. If you disagree, state the exact candidate SHA or issue that requires escalation.`,
   ].join("\n");
 }
@@ -635,11 +994,10 @@ function getEscalationPrompt(candidateSummary: string) {
     `Candidate commits:`,
     candidateSummary,
     ``,
-    `Read reports/i18n/${slug}/${locale}/judge.md and reports/i18n/${slug}/${locale}/judge-second.md.`,
-    `Use git show <sha>:${targetRelPath} to inspect candidates.`,
+    `Read the attached primary and second judge reports.`,
+    `Candidate MDX contents are attached below; do not ask to run git show.`,
     `The final MDX must preserve the English file's per-level heading counts: same number of H1, H2, H3, H4, H5, and H6 headings.`,
-    `Write the final selected and lightly polished MDX to ${targetRelPath}.`,
-    `Explain the escalation decision in reports/i18n/${slug}/${locale}/judge-escalation.md.`,
+    `Return the final selected candidate SHA and rationale as strict JSON. The wrapper script writes ${targetRelPath} and judge reports.`,
   ].join("\n");
 }
 
@@ -682,6 +1040,12 @@ function shouldEscalateSecondJudge({
 }
 
 function parseSelectedCommit(output: string) {
+  const parsed = parseJudgeOutput(output);
+  if (typeof parsed.selectedCommit === "string" && /^[a-f0-9]{40}$/i.test(parsed.selectedCommit)) {
+    return parsed.selectedCommit;
+  }
+  if (parsed.selectedCommit === "current") return "current";
+
   const selectedPatterns = [
     /selected candidate:\s*`?([a-f0-9]{40})/i,
     /recommendation:\s*(?:\r?\n)?accept[^\r\n]*?`?([a-f0-9]{40})/i,
@@ -713,6 +1077,48 @@ function getCandidateCommits() {
   return candidateLimit == null ? commits : commits.slice(-candidateLimit);
 }
 
+function getInitialCandidateRefs(candidateCommits: string[]): CandidateRef[] {
+  const refs = candidateCommits.map((commit) => ({
+    id: commit,
+    label: `<candidate id="${commit}" model="${getCandidateModel(commit)}">`,
+    source: "commit" as const,
+    model: getCandidateModel(commit),
+  }));
+
+  if (!existsSync(targetPath)) return refs;
+
+  return [
+    {
+      id: "current",
+      label: `<current path="${targetRelPath}">`,
+      source: "current",
+      model: "current/pre-existing",
+    },
+    ...refs,
+  ];
+}
+
+function chunkArray<T>(items: T[], size: number) {
+  const chunks: T[][] = [];
+  for (let index = 0; index < items.length; index += size) {
+    chunks.push(items.slice(index, index + size));
+  }
+  return chunks;
+}
+
+function uniqueCandidates(candidates: CandidateRef[]) {
+  const seen = new Set<string>();
+  return candidates.filter((candidate) => {
+    if (seen.has(candidate.id)) return false;
+    seen.add(candidate.id);
+    return true;
+  });
+}
+
+function withCurrentCandidate(candidates: CandidateRef[], currentCandidate: CandidateRef | undefined) {
+  return currentCandidate == null ? candidates : uniqueCandidates([currentCandidate, ...candidates]);
+}
+
 function getCandidateModel(commit: string) {
   const subject = run("git", ["show", "-s", "--format=%s", commit]);
   return subject.match(/ via (.+)$/)?.[1] ?? "";
@@ -727,18 +1133,6 @@ function commitChangesTarget(commit: string) {
     commit,
   ]);
   return changedFiles.split(/\r?\n/).includes(targetRelPath);
-}
-
-function getVariantArgs(model: string) {
-  if (model.includes("gpt-5") || model.includes("gpt-oss") || model.includes("qwen") || model.includes("glm")) {
-    return ["--variant", "low"];
-  }
-
-  if (model.includes("gemini-3")) {
-    return ["--variant", "minimal"];
-  }
-
-  return [];
 }
 
 function getTimeoutSeconds() {
