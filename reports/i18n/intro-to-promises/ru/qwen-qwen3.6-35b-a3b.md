@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: ru
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 60.68
+- Input tokens: 3983
+- Output tokens: 12639
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Введение в промисы
@@ -106,3 +124,4 @@ API промисов на самом деле включает лишь небо
 * `Promise.reject(Error)` — создаёт промис с ошибкой, запускает последующий `.catch()`
 * `Promise.all([...promises])` — ждёт, пока ВСЕ промисы в массиве завершатся
 * `Promise.race([...promises])` — разрешается сразу, как только первый промис разрешится
+````
