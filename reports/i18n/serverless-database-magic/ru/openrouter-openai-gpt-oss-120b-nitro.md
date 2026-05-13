@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 7.15
+- Input tokens: 6147
+- Output tokens: 3206
+- Thinking tokens: unknown
+- Cached input tokens: 1280
+- Cache write tokens: 0
+- Estimated cost: $0.000817
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: '2025 год: волна инноваций в базах данных'
 subTitle: Можно поблагодарить ИИ.
@@ -228,3 +246,4 @@ const results = await collection.query({
 > **Disclaimer:** Я использую Pagefind уже несколько лет и стал контрибьютором в 2025 году. Пробовал Orama и Chroma в небольших проектах и исследую LanceDB для крупных AI‑приложений. Финансовой привязанности к этим проектам нет — просто живой интерес к меняющемуся ландшафту баз данных.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
