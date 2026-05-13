@@ -1,0 +1,147 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: it
+- Model: qwen/qwen3.5-9b
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/it/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.52
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug handling-international-numbers-and-currency --locale it --model qwen/qwen3.5-9b --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Numeri e valute internazionali
+subTitle: 'Valuta localizzata: spiegata'
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Money: Localizzazione (L10n) e Internazionalizzazione (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Concetti Critici](#critical-concepts)
+  - [I numeri sono locali 🏘️](#numbers-are-local-️)
+  - [La valuta è globale 🌎](#currency-is-global-️)
+  - [Quando la locale conta](#when-locale-matters)
+- [Una Soluzione](#a-solution)
+- [Prossimi Passi](#next-steps)
+
+## Money: Localizzazione (L10n) e Internazionalizzazione (i18n)
+
+Non servono solo a dominare una partita a Scrabble. _Localizzazione_ e _internazionalizzazione_ definiscono il processo di adattamento di un prodotto in modo che **risulti naturale in un paese diverso.**
+
+<p class="breakout quote">Mostrare una valuta con un formato locale errato è un segnale inequivocabile: non ci hai messo alcun impegno.<br/>Se non riesci a formattare un prezzo, come pensi di gestire le spedizioni?</p>
+
+L'internazionalizzazione è un argomento vasto, che spazia dalla traduzione del testo alla formattazione delle date. In questo post ci concentreremo su un sottoargomento specifico, **la formattazione di numeri e valute.**
+
+Esaminiamo le differenze di formattazione tra tre paesi dell'Eurozona, gli USA e l'India:
+
+- `€1,234,567.89` Irlanda 🇮🇪
+- `1.234.567,89 €` Germania 🇩🇪
+- `1 234 567,89 €` Francia 🇫🇷
+- `$1,234,567.89` USA 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+Caos, vero? Simboli, spaziatura e punteggiatura volano ovunque! È incredibile come l'UE riesca a mettersi d'accordo su qualcosa! 😅
+
+## Concetti Critici
+
+Prima di approfondire le soluzioni, cosa intendiamo con "I numeri sono locali"?
+
+### I numeri sono locali 🏘️
+
+Ogni locale ([Paese secondo ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) definisce le regole per la formattazione dei numeri.
+
+Le regole di formattazione dei numeri includono:
+
+- Separatore decimale: virgola, punto.
+- Separatore delle migliaia: virgola, punto, spazio.
+- Posizione e spaziatura del simbolo di valuta.
+
+### La valuta è globale 🌎
+
+Una `currency` indica un'unità monetaria specifica. (Vedi [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) per l'elenco.)
+
+- Definisce un simbolo: `$`, `€`, `£`, `¥`. (Spesso riutilizzato.)
+- Dispone sempre di un codice a 3 lettere: `USD`, `EUR`, `GBP`, `JPY`.
+- Può essere utilizzata o scambiata in "qualsiasi" paese. In teoria.
+- La conversione tra valute richiede dati sui tassi di cambio.
+- Il valore non varia in base alla locale.
+
+### Quando la locale conta
+
+La maggior parte delle API REST per e-commerce e pagamenti gestisce solo `price` + `currencyCode`. Perché niente locale?
+
+Le impostazioni di locale sono (tipicamente) configurate a livello di SO/dispositivo e i browser le espongono tramite `navigator.language`. Poiché ogni utente può avere una locale diversa, è logico delegare la formattazione di numeri e valute al client.
+
+## Una Soluzione
+
+Ok, buona notizia: i linguaggi di programmazione moderni offrono supporto nativo per questo. In JavaScript, abbiamo la classe [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) e `Intl.NumberFormat`!
+
+Diamo un'occhiata al codice:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+Se hai bisogno di operazioni più complesse, come il calcolo delle tasse, l'applicazione di sconti o la conversione tra valute, è il caso di affidarsi a una libreria dedicata come [dinero.js](https://v2.dinerojs.com/).
+
+## Prossimi passi
+
+In base alle tue esigenze specifiche, potresti voler esplorare concetti correlati:
+
+- Best practice per le impostazioni locali dell'utente. Rilevamento + override consentiti. (es. un menu a tendina per la selezione della nazione.)
+- Persistenza di numeri interi (archivia i centesimi, non i dollari.)
+- Operazioni aritmetiche con le valute. (es. applicazione di un coupon `20% off`, calcolo di `subTotal + taxes`, ecc.)
+- Tassi di cambio in tempo reale. (Per acquisti al dettaglio, cambi valuta/forex.)
+
+<p class="breakout quote">Fammi sapere se vorresti un futuro articolo su questi argomenti!</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks:
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) supporta calcoli monetari, tassi di cambio, formattazione e parsing!
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) è la mia libreria Rust preferita.
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) è la mia scelta attuale per Golang.
+*/}
+````
