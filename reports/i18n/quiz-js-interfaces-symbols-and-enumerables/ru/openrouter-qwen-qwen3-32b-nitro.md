@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-js-interfaces-symbols-and-enumerables
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-js-interfaces-symbols-and-enumerables/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 43.86
+- Input tokens: 5965
+- Output tokens: 5863
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001884
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Тест: Символы и Перечисляемые'
@@ -259,3 +277,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
