@@ -1,6 +1,6 @@
 ---
-title: 'Cuestionario: ¿Sabes JavaScript moderno?'
-subTitle: ¡Demuestra tus habilidades JavaScript!
+title: 'Quiz: ¿Conoces JavaScript moderno?'
+subTitle: ¡Demuestra tu dominio de JavaScript!
 label: ES2019+ Features
 social_image: ../desktop-social.webp
 category: Quiz
@@ -19,15 +19,15 @@ cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
 cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-### ¿Conoces ES2015 de ES2022?
+### ¿Conoces la diferencia entre ES2015 y ES2022?
 
-* **¡Demuestra tus habilidades en JavaScript!** 🚀
+* **¡Demuestra tu dominio de JavaScript!** 🚀
 * No se requiere iniciar sesión ni registrarse. ✨
-* Opciones múltiples. 🤖 ... _¿Qué tan difícil puede ser, eh?_
+* Preguntas de opción múltiple. 🤖 … _¿Qué tan difícil puede ser, no?_
 
 <QuizUI>
 
@@ -35,7 +35,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="ES2020"
-  title="Coalescencia nula"
+  title="Coalescencia Nula"
   options={[
     {text: '42'},
     {text: 'null'},
@@ -53,7 +53,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El operador de coalescencia nula (`??`) devuelve el operando del lado derecho (`b`) si el lado izquierdo (`a`) es `null` o `undefined`. En este caso, `a` es `null`, por lo que `result` es `100`.
+    El operador de coalescencia nula (`??`) devuelve el operando del lado derecho (`b`) si el operando del lado izquierdo (`a`) es `null` o `undefined`. En este caso, `a` es `null`, por lo que `result` es `100`.
   </div>
   </slot>
 </Challenge>
@@ -62,7 +62,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="ES2020"
-  title="Coalescencia nula"
+  title="Coalescencia Nula"
   options={[
     {text: 'false', isAnswer: true},
     {text: '42'},
@@ -83,7 +83,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El operador de coalescencia nula (`??`) trata los valores falsos como `false` como valores válidos. Dado que `value` es `false`, se considera un valor válido y se devuelve.
+    El operador de coalescencia nula (`??`) trata los valores falsy como `false` como valores válidos. Dado que `value` es `false`, se considera un valor válido y se devuelve.
   </div>
   </slot>
 </Challenge>
@@ -95,7 +95,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Encadenamiento Opcional"
   options={[
     {text: 'undefined', isAnswer: true},
-    {text: 'Error: Cannot read property of undefined'},
+    {text: 'Error: No se puede leer la propiedad de undefined'},
     {text: 'null'},
     {text: '100'},
   ]}
@@ -112,7 +112,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El operador de encadenamiento opcional (`?.`) detiene la evaluación si el lado izquierdo es `null` o `undefined`. Como `obj.foo` es `null`, `obj.foo?.bar` se evalúa a `undefined`.
+    El operador de encadenamiento opcional (`?.`) detiene la evaluación si el lado izquierdo es `null` o `undefined`. Como `obj.foo` es `null`, `obj.foo?.bar` evalúa a `undefined`.
   </div>
   </slot>
 </Challenge>
@@ -123,7 +123,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="BigInt"
   title="Uso de BigInt"
   options={[
-    {text: 'TypeError: No se pueden mezclar BigInt y número'},
+    {text: 'TypeError: No se pueden mezclar BigInt y number'},
     {text: '42n'},
     {text: '84n', isAnswer: true},
     {text: 'undefined'},
@@ -141,7 +141,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Los valores BigInt se crean añadiendo `n` a un número. No se pueden mezclar BigInt con números normales en operaciones aritméticas. Aquí, ambos valores son BigInt, por lo que la multiplicación funciona, resultando en `84n`.
+    Los valores BigInt se crean añadiendo `n` a un número. No puedes mezclar BigInt con números normales en operaciones aritméticas. Aquí, ambos valores son BigInt, así que la multiplicación funciona, resultando en `84n`.
   </div>
   </slot>
 </Challenge>
@@ -161,7 +161,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Qué se muestra en la consola?
+    ¿Qué muestra esto?
     ```js
     const modulePromise = import('./myModule.js');
     console.log(typeof modulePromise);
@@ -170,7 +170,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La función `import()` devuelve una `Promise` que se resuelve en el objeto módulo. Dado que las instancias de `Promise` son objetos, `typeof modulePromise` muestra `'object'`.
+    La función `import()` devuelve una `Promise` que se resuelve al objeto del módulo. Como las instancias de `Promise` son objetos, `typeof modulePromise` muestra `'object'`.
   </div>
   </slot>
 </Challenge>
@@ -181,9 +181,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Promise.allSettled"
   title="Promise.allSettled"
   options={[
-    {text: 'fulfilled: success', isAnswer: true},
-    {text: 'Rejected: error'},
-    {text: 'Pending'},
+    {text: 'cumplido: éxito', isAnswer: true},
+    {text: 'Rechazado: error'},
+    {text: 'Pendiente'},
     {text: 'null'},
   ]}
 >
@@ -203,7 +203,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `Promise.allSettled` devuelve un array de objetos que describen el resultado de cada promesa. La primera promesa es `fulfilled` con el valor `'success'`, por lo que la declaración de registro imprimirá `fulfilled: success`.
+    `Promise.allSettled` devuelve un array de objetos que describen el resultado de cada promesa. La primera promesa está `fulfilled` con el valor `'success'`, por lo que la instrucción de registro imprimirá `fulfilled: success`.
   </div>
   </slot>
 </Challenge>
@@ -231,7 +231,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `String.matchAll` devuelve un iterador de coincidencias, no un arreglo. Este iterador se puede usar para obtener todos los grupos de coincidencia de una cadena.
+    `String.matchAll` devuelve un iterador de coincidencias, no un arreglo. Este iterador puede usarse para obtener todos los grupos coincidentes de una cadena.
   </div>
   </slot>
 </Challenge>
@@ -239,8 +239,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="Metadatos de import.meta"
-  title="Uso de import.meta"
+  group="Import Meta"
+  title="Uso deimport.meta"
   options={[
     {text: 'URL del módulo actual', isAnswer: true},
     {text: 'Marca de tiempo actual'},
@@ -258,7 +258,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    El objeto `import.meta` contiene metadatos sobre el módulo actual. La propiedad `import.meta.url` representa la URL del módulo actual, útil para obtener información sobre dónde se está ejecutando el script.
+    `import.meta` es un objeto que contiene metadatos sobre el módulo actual. La propiedad `import.meta.url` representa la URL del módulo actual, lo que permite obtener información sobre dónde se está ejecutando el script.
   </div>
   </slot>
 </Challenge>
@@ -287,7 +287,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La asignación OR lógica (`||=`) asigna el valor del lado derecho si el valor del lado izquierdo es falso (`null`, `undefined`, `0`, `false`, etc.). Como `a` es `null`, se le asigna el valor `10`.
+    La asignación lógica OR (`||=`) asigna el valor de la derecha si el valor de la izquierda es falsy (`null`, `undefined`, `0`, `false`, etc.). Como `a` es `null`, se le asigna el valor `10`.
   </div>
   </slot>
 </Challenge>
@@ -295,8 +295,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="Asignación lógica nula"
-  title="Asignación lógica nula"
+  group="Asignación Nula Lógica"
+  title="Asignación Nula Lógica"
   options={[
     {text: '5'},
     {text: '10', isAnswer: true},
@@ -306,7 +306,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    ¿Cuál es el valor de `b` después de la asignación nula lógica?
+    ¿Cuál es el valor de `b` después de la asignación nullish?
     ```js
     let b = null;
     b ??= 10;
@@ -316,7 +316,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La asignación de coalescencia nula (`??=`) asigna el valor del lado derecho si el valor del lado izquierdo es `null` o `undefined`. Dado que `b` es `null`, se le asigna el valor `10`.
+    La asignación de coalescencia nula (`??=`) asigna el valor de la derecha si el valor de la izquierda es `null` o `undefined`. Como `b` es `null`, se le asigna el valor `10`.
   </div>
   </slot>
 </Challenge>
@@ -345,7 +345,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WeakRef` proporciona una referencia débil a un objeto, lo que permite que el objeto sea recolectado por el recolector de basura si no existen otras referencias. Como `obj` aún está fuertemente referenciado aquí, `deref()` devuelve el objeto original. Si el objetivo hubiera sido reclamado, `deref()` devolvería `undefined`.
+    `WeakRef` proporciona una referencia débil a un objeto, lo que permite que el objeto sea recolectado por el garbage collector si no existen otras referencias. Como `obj` sigue estando fuertemente referenciado aquí, `deref()` devuelve el objeto original. Si el objetivo hubiera sido reclamado, `deref()` devolvería `undefined`.
   </div>
   </slot>
 </Challenge>
