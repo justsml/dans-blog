@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: replacing-my-job-with-gpt-and-llm
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 14.09
+- Input tokens: 5555
+- Output tokens: 5581
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001784
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: Remplacer moi-même par l'IA
@@ -104,3 +122,4 @@ Les parties que je ne peux pas remplacer sont celles que les lecteurs remarquent
 L'IA m'a rendu plus rapide. Plus important encore, elle a rendu certains de mes points faibles plus faciles à voir. Le coût est que je dois maintenant être plus délibéré sur ne pas publier de prose qui ne se comporte que comme de la prose.  
 
 C'est le compromis que je peux accepter.
+````
