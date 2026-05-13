@@ -1,0 +1,222 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 11.97
+- Input tokens: 14110
+- Output tokens: 3604
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.001199
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Axiosは不要かもしれません
+subTitle: Fetch APIが救う！
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../../components/Gist/index.astro'
+
+## Axios は不要かもしれません
+
+<p class="breakout call-to-action">これは **Axios**（https://www.npmjs.com/package/axios）への **攻撃ではありません**。<br />
+むしろ、**`fetch` API が十分に機能するようになったことを推奨する** 内容です。🦄</p>
+
+### 概要
+
+この記事は、見つけにくいと感じる「足りない」`fetch` のコードスニペットと、よくあるユースケースをまとめたものです。
+
+-[概要](#overview)
+- [機能比較](#feature-comparison)
+- [Fetch レシピ](#fetch-recipes)
+  - [URL から JSON を取得](#get-json-from-a-url)
+  - [カスタムヘッダー](#custom-headers)
+  - [HTTP エラー処理](#http-error-handling)
+  - [CORS の例](#cors-example)
+  - [JSON を POST](#posting-json)
+  - [HTML `<form>` を POST](#posting-an-html-form)
+  - [フォームエンコードデータ](#form-encoded-data)
+  - [ファイルをアップロード](#uploading-a-file)
+  - [複数ファイルをアップロード](#uploading-multiple-files)
+  - [タイムアウト](#timeouts)
+  - [ダウンロード進捗ヘルパー](#download-progress-helper)
+  - [再帰的リトライヘルパー](#recursive-retry-helper)
+  - [HTTP リダイレクトの処理](#handling-http-redirects)
+  - [fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨
+- [互換性](#compatibility)
+
+> ユースケースが一覧にないですか？ [ご連絡ください ✉️](/contact/)
+
+<br />
+
+### 機能比較
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| Intercept request and response                  |✅        |✅         |✅       |
+| Transform request and response data             |✅        |✅         |✅       |
+| Cancel requests                                 |✅        |✅         |❌       |
+| Automatic transforms for JSON data              |manual helpers |✅         |✅       |
+| Client side support for protecting against XSRF |✅        |✅         |✅       |
+| Progress                                        |✅        |✅         |✅       |
+| Streaming                                       |✅        |✅         |✅       |
+| Redirects                                       |✅        |✅         |✅       |
+
+<br /><br />
+
+この記事を書き始めた（2018 年後期、2024 年に更新）当時は、チェックボックスが混在した表で締めくくるつもりでした。`axios`（https://www.npmjs.com/package/axios）や `request`（https://www.npmjs.com/package/request）、`r2`（https://www.npmjs.com/package/r2）、`superagent`（https://www.npmjs.com/package/superagent）、`got`（https://www.npmjs.com/package/got）など、特定の **ユースケース** が存在してそれらのライブラリが正当化されると考えていました。
+
+しかし実際には、**サードパーティの HTTP ライブラリの必要性を過大評価していました**。
+
+`fetch` を数年にわたって（ファイルアップロードやエラー/リトライ対応といった非自明なタスクも含めて）使用してきましたが、`fetch` の機能と制限についていまだに誤解がありました。
+
+ネイティブ `fetch` は JSON レスポンスを自動でパースしたり、JSON リクエストボディを自動で文字列化したりしません。レスポンス側で `response.json()` を呼び、リクエスト側で `JSON.stringify()` を使う必要があります。この点だけは Axios の方が ergonomics が優れていますが、`fetch` の主張は「ごく小さなヘルパーを追加すればギャップは埋まる」ということです。
+
+では、`fetch` が実際に何ができるか見てみましょう…
+
+## Fetch レシピ
+
+### URL から JSON を取得
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### カスタムヘッダー
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTP エラー処理
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORS の例
+
+CORS は主にサーバ側でチェックされるため、サーバ側の設定が正しいことを確認してください。
+
+`credentials` オプションは、クッキーを自動的に含めるかどうかを制御します。
+
+<Gist path='../justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### JSON の投稿
+
+<Gist path='../justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### HTML `<form>` の投稿
+
+<Gist path='../justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### フォームエンコードデータ
+
+`Content-Type` を `application/x-www-form-urlencoded` にしてデータを送信するには、`URLSearchParams` を使ってクエリ文字列形式にエンコードします。
+
+例として、`new URLSearchParams({a: 1, b: 2})` は `a=1&b=2` を生成します。
+
+<Gist path='../justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### ファイルのアップロード
+
+<Gist path='../justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### 複数ファイルのアップロード
+
+`multiple` 属性を付けたファイル入力要素を用意します:
+
+<Gist path='../justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+その後、以下のように使用します:
+
+<Gist path='../justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### タイムアウト
+
+以下は「部分適用」パターンを用いた汎用的な Promise タイムアウトです。任意の Promise インターフェースで使用できます。渡す Promise チェーン内で過剰な処理を行わないようにしてください。処理は走り続け、失敗が長期的なメモリリークを引き起こす可能性があります。
+
+<Gist path='../justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+さらに複雑な例です。フラグ `__timeout` を追跡し、**コストのかかる処理をインターセプト**できるようにしています。
+
+<Gist path='../justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### ダウンロード進捗ヘルパー
+
+アップロード進捗は Chrome 以外では現在少々不安定です。
+
+以下のプログレスハンドラの手法は、`fetch` 呼び出しをクロージャでラップしないことを **回避しています**。👍
+
+`progressHelper` は次のインターフェースを提供します（実装は下記参照）
+
+<Gist path='../justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+使用例を見てみましょう：
+
+<Gist path='../justsml/9bec219590ff50688972c1caff67c14b' />
+
+再利用可能な画像ダウンローダは `getBlob()` のように実装できます:
+
+<Gist path='../justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+ちなみに、`Blob` は Binary Large Object の略です。
+
+以下の 2 つの使用パターンは機能的に同等です。どちらか **一方** を必ず選んでください:
+
+<Gist path='../justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+私の好みは `Option #1` です。ただし、プロジェクトのスコープ設計次第では `Option #2` を選択せざるを得ない場合もあります。
+
+最後に、このレシピの残りの部分である `progressHelper` を示します。
+
+##### Source: Progress Helper
+
+<Gist path='../justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_クレジット:_ Anthum Chris と彼の [素晴らしい Progress+Fetch PoC（こちら）](https://github.com/AnthumChris/fetch-progress-indicators) に特別感謝
+
+### Recursive Retry Helper
+
+<Gist path='../justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### HTTP リダイレクトの処理
+
+<Gist path='../justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### fetch リクエストのキャンセル
+
+<Gist path='../justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### 互換性
+
+2022 年時点で、`fetch` API はすべてのモダンブラウザと、Node.js v18 以降の比較的新しいバージョンで **広くサポート** されています（[Can I use](https://caniuse.com/#feat=fetch)）。
+
+IE のサポートが必須の場合は、GitHub の優秀なチームがメンテナンスしている `github/fetch` パッケージで **fetch をポリフィル** できます（[polyfill fetch](https://github.com/github/fetch#browser-support)）。最古では [IE8 まで遡ることも可能](https://github.com/camsong/fetch-ie8) ですが、実際の挙動は環境次第です。
+
+Node.js の古いバージョンでも、[`node-fetch`](https://www.npmjs.com/package/node-fetch) パッケージを使えば `fetch` API を利用できます。
+
+```sh
+npm install node-fetch
+```
+
+_ポリフィル + node-fetch を導入すれば、互換性は 99.99% ✅_
+
+> 他に見てほしい **ユースケース** があれば、ぜひ [Tweet で教えてください](https://x.com/justsml) ❤️
+````
