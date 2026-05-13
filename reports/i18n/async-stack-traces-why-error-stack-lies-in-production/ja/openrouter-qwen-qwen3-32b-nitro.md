@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.92
+- Input tokens: 4743
+- Output tokens: 3420
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001200
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: '非同期スタックトレース: Error.stackが正しく表示しない理由'
 subTitle: マイクロタスクキューが宿題を食べてしまった（そしてデバッグコンテキストも）
@@ -96,3 +114,4 @@ async function processOrder() {
 3. スタックではなくトレースしてください。OpenTelemetryを使用しましょう。これはサービス間の因果関係を可視化し、実際に気にすべき点を示します。
 
 あなたのコードは非同期です。デバッグコンテキストはそうあってはいけません。
+````
