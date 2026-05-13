@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: promise-gotchas
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-26--promise-gotchas/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 5.81
+- Input tokens: 2643
+- Output tokens: 1869
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000660
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -90,3 +108,4 @@ Promise.resolve(42)
 ```
 
 Le `undefined` passé à `.then(undefined)` n'affecte pas la valeur, qui est donc transmise au `.then(console.log)` suivant.
+````

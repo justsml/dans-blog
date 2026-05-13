@@ -1,0 +1,66 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T16-13-05-963Z",
+  "slug": "promise-gotchas",
+  "locale": "fr",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T16:13:15.797Z",
+  "sourcePath": "src/content/posts/2018-09-26--promise-gotchas/index.md",
+  "targetPath": "src/content/posts/2018-09-26--promise-gotchas/fr/index.mdx",
+  "candidatePath": "reports/i18n/promise-gotchas/fr/qwen-qwen3-32b-nitro/2026-05-13T16-13-05-963Z/candidate.mdx",
+  "sourceHash": "585ef3acb24711b5dc9644d20cfc4e64a997bcdd11408aaa68156dd3f28e5615",
+  "outputHash": "d817b87bb61737915dc0f7ffbf56ab74d507620402ee9c2a6ddef566ff9729a9",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article \"Promise Gotchas\" argues that JavaScript Promises have unintuitive behaviors that trip up developers, emphasizing two core pitfalls: (1) Promises cannot be treated like regular values (e.g., `console.log(Promise.resolve(42))` won't output 42 directly), requiring `.then()` for value access, and (2) `.then()`/`.catch()` silently accept `null` or `undefined`, leading to silent failures (e.g., `Promise.then(null)` skips steps without warnings). It dissects a common mistake in passing `console.log()` vs. `console.log` to `.then()`, using a code-based analysis to explain why only certain options in a four-option challenge work. The intended audience is developers familiar with Promises but unaware of these edge cases, and the tone is analytical, using code examples and type-checking to clarify behavior. Recurring framing devices include direct code comparisons and step-by-step execution breakdowns.",
+  "totalInputTokens": 2643,
+  "totalOutputTokens": 1869,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 5810,
+  "totalCostUsd": 0.00066,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 3,
+    "totalInputTokens": 2643,
+    "totalOutputTokens": 1869,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 5810,
+    "totalCostUsd": 0.00066,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 807,
+        "outputTokens": 711,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2065,
+        "costUsd": 0.00023520000000000002
+      },
+      {
+        "index": 1,
+        "inputTokens": 995,
+        "outputTokens": 614,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1671,
+        "costUsd": 0.00022696
+      },
+      {
+        "index": 2,
+        "inputTokens": 841,
+        "outputTokens": 544,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2074,
+        "costUsd": 0.00019784
+      }
+    ]
+  }
+}
