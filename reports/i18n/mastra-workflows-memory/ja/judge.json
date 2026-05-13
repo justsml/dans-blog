@@ -1,0 +1,32 @@
+{
+  "selectedCommit": "4bf40b8246977463ade6ce24738373866ec874df",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "This candidate provides a high-quality, natural translation that captures the author's direct and slightly informal tone ('...は絶望的に苦手だ', '...ワクワクするものではない'). It correctly translates the frontmatter titles which were missing in the 'current' version. It also correctly handles technical terms and maintains all MDX structures and code blocks perfectly. The translation of 'lost in the middle' as '木を見て森を見ず' (though slightly different from the literal research term) fits the context of the author's explanation well, though the candidate also includes the literal term.",
+  "slug": "mastra-workflows-memory",
+  "locale": "ja",
+  "candidateCommits": [
+    "4bf40b8246977463ade6ce24738373866ec874df",
+    "66871a5d01de6f989e1cbb356c0008c48e38d749",
+    "37135d38f4c0b4fc7155f51647670cb6aa839e37",
+    "a7c71d91e77d4b768d3626e808df645562d24d45",
+    "49d156c89f6fadef9b7d53ce34e1090830142bd1",
+    "8b4fa203842e796106e22d824e9dfa4567a0104f",
+    "e08b987accf949e3608fb6c5d0ef230cd1dc3263"
+  ],
+  "suggestionLog": [],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug mastra-workflows-memory --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug mastra-workflows-memory --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug mastra-workflows-memory --locale ja --skip-global\n207 |     ...targetContents.matchAll(/=[\"']\\.\\/(?!\\.)[^\"']+\\.(?:avif|gif|jpe?g|png|svg|webp)[\"']/g),\n208 |   ];\n209 | \n210 |   if (nestedAssetReferences.length === 0) return;\n211 | \n212 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2026-01-05--mastra-workflows-memory/ja/index.mdx uses ./ asset paths inside a locale folder. Use ../ for inherited post assets.\n      at assertNestedAssetPaths (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:212:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:29:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
