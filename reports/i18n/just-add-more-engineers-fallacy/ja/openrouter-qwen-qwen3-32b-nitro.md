@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: just-add-more-engineers-fallacy
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--just-add-more-engineers-fallacy/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 90.25
+- Input tokens: 8886
+- Output tokens: 8263
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002694
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 draft: true
 hidden: true
@@ -111,3 +129,4 @@ Matthew SkeltonとManuel Paisの『Team Topologies』では、7〜9人のチー�
 - DORAによるDevOpsの現状レポート
 
 ---
+````
