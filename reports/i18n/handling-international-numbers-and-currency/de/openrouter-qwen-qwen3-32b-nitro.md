@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.86
+- Input tokens: 5945
+- Output tokens: 5377
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001766
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Internationale Zahlen und Währungen verstehen
@@ -126,3 +144,4 @@ Einige Bibliotheken können Ihnen bei diesen Aufgaben helfen: */}
 
 - [currency](https://github.com/bojanz/currency) ist meine aktuelle Golang-Option.
 `}`
+````
