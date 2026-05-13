@@ -1,0 +1,143 @@
+# Translation Candidate
+- Slug: beware-the-single-purpose-people
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-04-03--beware-the-single-purpose-people/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 66.67
+- Input tokens: 6280
+- Output tokens: 8771
+- Thinking tokens: unknown
+- Cached input tokens: 768
+- Cache write tokens: 0
+- Estimated cost: $0.003230
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+language: English
+title: Attenzione alle persone monotematiche
+subTitle: Così puro che fa male
+category: Code
+subCategory: Best Practices
+date: '2025-04-14'
+modified: '2025-04-15'
+tags:
+  - software-development
+  - code-organization
+  - maintainability
+  - testing
+  - dogma
+  - pragmatism
+social_image: ../desktop-social.webp
+cover_full_width: ../endless-little-boxes.webp
+cover_mobile: ../endless-little-boxes-square-200.webp
+cover_icon: ../endless-little-boxes-square-200.webp
+---
+Il `Single Responsibility Principle` è una di quelle idee che sembrano così sensate da poter aggirare il tuo giudizio.
+
+Fai una cosa. Fallo bene. Mantieni i moduli focalizzati. Dai al codice una ragione per cambiare. Buon consiglio.
+
+Poi qualcuno trasforma il consiglio in un metro e inizia a dichiarare che qualsiasi funzione oltre le cinque righe è un code smell.
+
+<p class="inset">Il problema non è l'SRP. Il problema è trattare "piccolo" come un sostituto di "coeso".</p>
+
+A quel punto hai incontrato le Persone Monoscopo: sviluppatori che non hanno torto sulla modularità, esattamente, ma hanno confuso confini utili con la massima frammentazione.
+
+<figure class="inset-right">
+  <figcaption>Violenza nell'architettura software</figcaption>
+![Componenti, componenti ovunque](../software-patterns__the-dismembered-architecture.webp "Componenti, componenti ovunque")
+</figure>
+
+## I. L'idea utile sottostante
+
+> Aggiungere una singola checkbox a un modulo dovrebbe idealmente riguardare un solo file. Non 8 file in 5 directory... Sto guardando voi, React/Redux.
+
+Quando l'SRP viene applicato con giudizio, aiuta. Unità di codice focalizzate su un singolo compito concettuale sono più facili da comprendere. I test possono colpire il comportamento a un confine sensato. Moduli chiari rendono più facile cambiare una parte del sistema senza trascinare il resto dell'applicazione nella stanza.
+
+Anche gli esempi classici di Unix sono più pragmatici di quanto lo slogan suggerisca. `ls` elenca i file, sì, ma coordina anche chiamate come `opendir`, `readdir`, `closedir` e `stat`. L'unità utile non è l'operazione più piccola possibile. L'unità utile è la più piccola cosa coerente che risolve il compito.
+
+<p class="inset">La filosofia Unix originale riguardava la *composizione* e la *semplicità*, **non la riduzione di tutto** a una singola funzione o file.</p>
+
+Questa distinzione è importante. "Una responsabilità" non è la stessa cosa di "una riga di comportamento".
+
+## II. Iperastrazione: quando la semplicità si trasforma in caos
+
+> Il nostro architetto insiste che ogni funzione più lunga di 5 righe sia un 'code smell'. Ora il nostro codebase odora vagamente di disperazione confusa.
+
+La modalità di fallimento è facile da individuare dopo che ti ha già rovinato la settimana.
+
+Il codebase ha più file, ma meno forma. Ogni helper ha un helper. Ogni concetto è stato suddiviso in cartelle con nomi basati su ruoli tecnici anziché sul significato del prodotto. Aggiungere una checkbox richiede di toccare un componente, un hook, un selettore, un'azione, un reducer, una costante, un test fixture e un barrel export che esiste principalmente per evitare che i percorsi di import sembrino colpevoli.
+
+<figure class="inset-left">
+  <figcaption>Nessuna via d'uscita da questo schema di lavoro infinito</figcaption>
+![Componenti, componenti ovunque](../software-patterns__the-mc-escher-stack.webp "Lo schema MC Escher")
+</figure>
+
+Cosa ha comprato tutta quella purezza?
+
+-   **Shrapnel del filesystem:** Le directory sorgente che sbocciano in paesaggi da incubo di innumerevoli file minuscoli, spesso contenenti una singola, tragicamente solitaria funzione. La navigazione diventa un esercizio di speleologia.
+-   **Grovigli di dipendenze:** Una rete di import ed export così fitta che tracciare l'esecuzione richiede una grande lavagna e più pazienza di quanto la funzionalità meriti. File importati esattamente una volta se ne stanno lì a fingere di essere riutilizzabili.
+-   **Insidie nei test:** I test diventano fragili, sentinelle iper-specifiche che sorvegliano dettagli di implementazione minuscoli. Cambi una firma di funzione? Vedi dozzine di test crollare come antica ceramica. La suite di test si trasforma da rete di sicurezza a campo minato.
+-   **Velocità svanita:** Modifiche semplici metastatizzano in saghe di modifiche multi-file. Inserire nuovi sviluppatori richiede settimane di consegna di mappe e bussole solo per trovare dove *vive effettivamente* il componente `UserProfile` questa settimana. Il progresso rallenta a un passo geologico sotto il peso schiacciante di questa "organizzazione".
+
+Ho fissato l'abisso di codebase in cui una funzionalità lineare di 100 righe veniva sezionata in 15+ file, ciascuno un piccolo angioletto "puro" contenente forse una o due funzioni. Il raggio di esplosione cognitiva nel tentativo di tenere a mente quel pasticcio annullava completamente qualsiasi vantaggio teorico della separazione. Non era più semplice; era solo disperso.
+
+## III. Il costo della perfezione: impatto sugli sviluppatori
+
+> Passiamo più tempo a discutere di struttura dei file e convenzioni di denominazione che a consegnare funzionalità. È questo l'Agile?
+
+<figure class="inset-left">
+  <figcaption>Così disordinato da rasentare l'arte</figcaption>
+![Così disordinato da rasentare l'arte](../software-patterns__the-rube-goldberg-architecture.webp "Il pattern Rube Goldberg")
+</figure>
+
+Questa frammentazione patologica non è solo un problema estetico. Cambia il modo in cui gli sviluppatori impiegano la loro attenzione:
+
+**Il drenaggio di produttività:** Dimentica il debito tecnico; questo è debito organizzativo accumulato attraverso un annidamento ossessivo-compulsivo delle directory. Ogni piccola modifica diventa uno scavo archeologico attraverso strati di astrazione. Il tempo sparisce nel buco nero di `cd ..` e `grep`.
+
+**La tassa dei test:** Invece di fornire fiducia, la suite di test diventa una fonte di attrito. Ore svaniscono per sistemare test rotti da refactoring banali, test troppo accoppiati ai dettagli microscopici che avrebbero dovuto verificare.
+
+**Il carico cognitivo:** C'è un limite rigido a quanti pezzi di informazione sconnessi un cervello umano può gestire. Costringere gli sviluppatori a ricostruire il flusso del programma da una dozzina di file sparsi ostacola attivamente la comprensione e rende più difficili le modifiche sicure.
+
+## IV. Abbracciare il pragmatismo: un'alternativa pratica
+
+> Ho suggerito di mettere due funzioni correlate nello stesso file. La stanza ha reagito come se avessi proposto di cancellare lo staging.
+> — Un lettore purista in via di guarigione
+
+La via di fuga non è abbandonare l'SRP. La risposta è applicarlo al giusto livello di significato.
+
+Ecco come si presenta nella pratica:
+
+-   **Concentrati sulla coesione, non sugli atomi:** Raggruppa le cose che *cambiano insieme* e *appartengono insieme* concettualmente. Un modulo può gestire diversi aspetti correlati dell'autenticazione utente. Va bene. Probabilmente è *meglio* di sei file separati, ciascuno con una singola funzione relativa allo stato di login.
+-   **Tieni insieme i parenti:** Non separare codice correlato a meno che non ci sia un beneficio tangibile e palesemente ovvio – come una reale riusabilità *nella pratica*, non in un ipotetico futuro che non arriva mai. La vicinanza è importante per la comprensione.
+-   **Lascia che sia la realtà a guidare:** Organizza in base alle funzionalità e ai flussi di lavoro effettivi della tua applicazione, non a un ideale astratto di purezza funzionale³. Questa struttura rende più facile o più difficile per qualcuno comprendere e modificare `Feature X`?
+-   **Ricordati del meatware:** Ricorda il povero sviluppatore. Quale organizzazione minimizza il gioco di destrezza mentale necessario per lavorare sul codice? Ottimizza per la comprensione umana.
+-   **Testa ciò che conta:** Scrivi test che verifichino il comportamento a un confine sensato, non test saldati intimamente ai cablaggi interni di ogni piccola funzione. Punta alla fiducia, non solo al teatro della percentuale di copertura.
+
+<p class="inset">L'obiettivo non è la perfezione teorica degna di una tesi di dottorato; è creare codice che i tuoi colleghi (e il te del futuro) possano navigare, comprendere e modificare senza voler dare fuoco all'edificio.</p>
+
+A volte questo significa che un file è lungo 200 righe invece di 50. A volte una funzione gestisce il recupero dei dati *e* li trasforma leggermente. A volte una classe ha due responsabilità così strettamente accoppiate che dovrebbero vivere insieme. Se rende il sistema più facile da gestire nel complesso, probabilmente è la scelta giusta.
+
+Rimani implacabilmente concentrato sulle domande pratiche:
+- Un nuovo arrivato riesce a orientarsi?
+- Possiamo cambiare `X` senza rompere `Y` non correlato?
+- Questo test mi dice effettivamente se la funzionalità funziona?
+- Stiamo fornendo valore, o stiamo solo riorganizzando cartelle?
+
+## V. Conclusione: Promuovere codice coeso e manutenibile
+
+Il Principio di Responsabilità Unica è uno strumento utile. Non è un mandato per polverizzare il tuo codebase in polvere atomica. Come ogni strumento, il suo valore dipende dal giudizio di chi lo usa.
+
+Quindi quando incontri le Persone Monoscopo, pronte a dichiarare guerra a qualsiasi funzione che osi superare le tre righe, fai un respiro. Ricorda la checkbox dei 12 file.
+
+Il nostro lavoro non è costruire funzioni fiocco di neve teoricamente immacolate. Il nostro lavoro è costruire software che funzioni, risolva problemi e non punisca la prossima persona che dovrà toccarlo.
+
+Rimani pragmatico. Concentrati sui risultati. Non lasciare che la ricerca della purezza perfetta diventi nemica del codice manutenibile. La tua sanità mentale e la velocità del tuo team dipendono da questo.
+
+¹ L'ironia è che raggiungere uno *scopo singolo effettivo* ai livelli più bassi richiede un'immensa complessità nascosta appena sotto la superficie.
+
+Stiamo parlando di purezza concettuale qui: l'idea che una funzione dovrebbe fare solo "una cosa" logicamente. Non confondere questo con il concetto di programmazione funzionale di "funzione pura" senza effetti collaterali, che è un'idea diversa, sebbene a volte correlata.
+````
