@@ -1,0 +1,101 @@
+{
+  "selectedCommit": "b8ed3a8970efa1fcd5c6a4782af02d10c6c1d18c",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "Single quotes need escaping inside single-quoted strings. Последовательность «закрывающая кавычка, экранированная кавычка, открывающая кавычка» (`'\\''`) позволяет вывести:",
+      "replacement": "Одинарные кавычки требуют экранирования внутри строк в одинарных кавычках. Последовательность «закрывающая кавычка, экранированная кавычка, открывающая кавычка» (`'\\''`) позволяет вывести:",
+      "reason": "The candidate left a sentence in English in the explanation for Challenge 1."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"Заменитьподстроку\"",
+      "replacement": "title=\"Замена подстроки\"",
+      "reason": "Typo: missing space in the title of Challenge 4."
+    },
+    {
+      "priority": "high",
+      "match": "Оставил ли мой Bash‑квиз вас в полном разруше‑нном состоянии?",
+      "replacement": "Мой Bash-тест оставил вас в руинах?",
+      "reason": "The translation of 'shambles' is awkward and contains unnecessary hyphens; using a more direct style consistent with Dan's voice."
+    }
+  ],
+  "rationale": "Candidate b8ed3a89 is selected because it maintains the correct structure and heading count of the source file. It captures the technical nuances well, though it required a few fixes for untranslated strings and minor typos. The 'current' version in the prompt actually contains the fixes from the previous pass but still has the English sentence in Challenge 1 and the typo in Challenge 4.",
+  "slug": "quiz-bash-in-the-shell",
+  "locale": "ru",
+  "candidateCommits": [
+    "b8ed3a8970efa1fcd5c6a4782af02d10c6c1d18c",
+    "1b65b90668a04d52562cf356748bfcddb517fa90"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "Single quotes need escaping inside single-quoted strings.",
+      "replacement": "Одинарные кавычки требуют экранирования внутри строк, заключенных в одинарные кавычки.",
+      "reason": "The candidate left a paragraph in English in the explanation for Challenge 1.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    { text: \">\" },\n    { text: \">>\" },\n    { text: \"|\", isAnswer: true },\n    { text: \"||\" },\n    { text: \"|>\" },\n    { text: \"Error\" },\n  ]}",
+      "reason": "The options for Challenge 9 are missing in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    { text: \"1>&2\" },\n    { text: \"&2>&1\" },\n    { text: \"2>&1\", isAnswer: true },\n    { text: \"2>1\" },\n    { text: \"&2>1\" },\n  ]}",
+      "reason": "The options for Challenge 15 are missing in the candidate.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "The close-quote, escaped-quote, reopen-quote sequence (`'\\''`) allows output of:",
+      "replacement": "Последовательность «закрывающая кавычка, экранированная кавычка, открывающая кавычка» (`'\\''`) позволяет вывести:",
+      "reason": "The candidate left a sentence in English in the explanation for Challenge 1.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "title=\"Заменитьподстроку\"",
+      "replacement": "title=\"Замена подстроки\"",
+      "reason": "Typo: missing space in the title of Challenge 4.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Оставил ли мой Bash‑квиз вас в полном разруше‑нном состоянии?",
+      "replacement": "Мой Bash-тест оставил вас в руинах?",
+      "reason": "The translation of 'shambles' is awkward and contains unnecessary hyphens; using a more direct style consistent with Dan's voice.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-bash-in-the-shell --locale ru --skip-global",
+    "output": ""
+  }
+}

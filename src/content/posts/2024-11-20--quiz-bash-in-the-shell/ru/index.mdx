@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Тест: Bash и Shell мастерство'
-subTitle: Умеете ли вы говорить с компьютерами? Хорошо?
+title: 'Тест: Bash и Shell mastery'
+subTitle: 'Вы умеете разговаривать с компьютерами? Ну, вроде бы?'
 label: Bash
 category: Quiz
 subCategory: Bash
@@ -21,14 +21,14 @@ cover_full_width: ../psychedelic-shell-wide.webp
 cover_mobile: ../psychedelic-shell-square-200.webp
 cover_icon: ../psychedelic-shell-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Проверьте свои навыки написания сценариев Bash с помощью этих 16 вопросов!</p>
+<p class="inset">Проверьте свои навыки Bash‑скриптинга с этими 16 вопросами!</p>
 
-Включает переменные, циклы, условные конструкции, манипуляции со строками, функции и синтаксические подводные камни от простых до сложных.
+Охватывая переменные, циклы, условные конструкции, работу со строками, функции и от простых до хитрых подводных камней синтаксиса.
 
-Улучшите (или докажите) свои навыки написания сценариев оболочки!
+Отточите (или докажите) свои навыки shell‑скриптинга **навыки**!
 
 <QuizUI>
 
@@ -36,7 +36,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={0}
   group="Разминка"
-  title="Объявление переменных"
+  title="Объявление переменной"
   options={[
     {text: '$name=Dan'},
     {text: 'name=Dan', isAnswer: true},
@@ -47,12 +47,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Как определяются переменные в Bash?
+    Как объявляются переменные в Bash?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Переменные в Bash объявляются без пробелов вокруг знака `=`. Например:
+    В Bash переменные объявляются без пробелов вокруг знака `=`. Например:
     ```bash
         name=Alice
     ```
@@ -60,11 +60,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 
     Примечание: `$name` используется для **ссылки** или чтения значения переменной.
 
-    Добавление пробелов заставляет оболочку интерпретировать команду как программу для запуска, что не нужно при установке переменной.
+    Добавление пробелов заставляет оболочку интерпретировать команду как программу для запуска, что не то, что вам нужно при установке переменной.
 
-    Также Bash чувствителен к регистру, поэтому `name`, `NAME` и `Name` — разные переменные.
+    Кроме того, Bash чувствителен к регистру, поэтому `name`, `NAME` и `Name` — разные переменные.
 
-    Наконец, в именах переменных не могут быть пробелы или дефисы (`-`). Используйте подчеркивания (`_`) или camelCase вместо этого.
+    Наконец, в именах переменных нельзя использовать пробелы или дефисы (`-`). Используйте подчёркивания (`_`) или camelCase вместо этого.
   </div>
   </slot>
 </Challenge>
@@ -72,8 +72,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="Разминка: Использование"
-  title="Использование кавычек"
+  group="Разминка: Экранирование"
+  title="Экранирование кавычек"
   options={[
     {text: 'echo \'It\'s 🔨 Time!\''},
     {text: 'echo \'It\\\'s 🔨 Time!\''},
@@ -84,18 +84,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какая команда выведет `It's 🔨 Time!`?
+    _Что выведет `It's 🔨 Time!`?_
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Понимаю. Как быстро экранирование делает строки сложными для анализа. Представьте, как экранировать другие языки в строках Bash — там же куча кавычек, апострофов и `$`-символов, которые могут всё испортить. 🫠
+    Знаю. Сумасшедше, как быстро экранирование делает строки трудными для разбора. Представьте, как экранировать другие языки в Bash‑строках — со всеми этими кавычками, апострофами и символами `$`, которые могут вас сломать. 🫠
 
-    Одиночные кавычки нужно экранировать внутри одиночно-закавыченных строк. Последовательность закрытие-кавычки, экранированная-кавычка, открытие-кавычки (`'\''`) позволяет вывести:
+    Single quotes need escaping inside single-quoted strings. The close-quote, escaped-quote, reopen-quote sequence (`'\''`) allows output of:
     ```plaintext
         It's 🔨 Time!
     ```
-    Существуют и другие способы, но это самый распространённый.
+    Есть и другие способы решить эту задачу, но это самый распространённый.
   </div>
   </slot>
 </Challenge>
@@ -111,12 +111,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'ca bt'},
     {text: 'cat'},
     {text: 'cbd'},
-    {text: 'Ошибка'},
+    {text: 'Error'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой вывод будет у этой команды?
+    Что выведет эта команда?
     ```bash
         echo c{a,b}t
     ```
@@ -124,9 +124,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Расширение фигурных скобок `{}` генерирует несколько версий строки, по одной (или больше) для каждого значения или шаблона, разделённого запятыми.
+    Расширение фигурных скобок `{}` генерирует несколько вариантов строки, по одному (или более) для каждого значения, разделённого запятыми, или шаблона.
 
-    Здесь `c{a,b}t` расширяется до:
+    Здесь `c{a,b}t` разворачивается в:
     ```plaintext
         cat cbt
     ```
@@ -138,19 +138,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Переменные"
-  title="Использование специальных символов"
+  title="Экранирование символов"
   options={[
     {text: 'Стоимость: $$100'},
     {text: 'Стоимость: $100'},
     {text: 'Стоимость: 100'},
     {text: 'Стоимость: 00', isAnswer: true},
-    {text: 'Стоимость: '},
+    {text: 'Стоимость:'},
     {text: 'Ошибка'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Теперь, что будет напечатано?
+    Итак, что будет выведено?
     ```bash
         price="$100"
         echo "Cost: $price"
@@ -159,11 +159,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Нумерованные переменные имеют специальное значение. В данном случае `$1` — это специальная переменная, которая хранит первый аргумент, переданный скрипту или функции.
+    Нумерованные переменные имеют особое значение. В данном случае `$1` — это специальная переменная, содержащая первый аргумент, переданный скрипту или функции.
 
-    Поскольку мы запускаем скрипт в REPL, аргументов нет, поэтому `$1` пуст. Оставшийся текст `00` печатается как есть.
+    Поскольку мы запускаем скрипт в REPL, аргументов нет, поэтому `$1` пустая. Оставшийся текст `00` выводится как есть.
 
-    Чтобы вывести символ `$` в буквальном виде, используйте одинарные кавычки или экранируйте его с помощью обратного слэша (`\`):
+    Чтобы вывести буквальный символ `$`, используйте одинарные кавычки или экранируйте его обратным слешем (`\\`):
     ```bash
         price="\$100"
         echo "Cost: $price"
@@ -176,18 +176,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Замена подстрок"
-  title="Замена подстроки"
+  title="Заменитьподстроку"
   options={[
     {text: 'meow meow'},
     {text: 'Meow meow'},
-    {text: 'Bark meow', isAnswer: true},
-    {text: 'Bark bark'},
-    {text: 'Error'},
+    {text: 'Гав мяу', isAnswer: true},
+    {text: 'Гав гав'},
+    {text: 'Ошибка'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что происходит здесь?
+    Что здесь происходит?
     ```bash
         str="Bark bark"
         echo ${str/bark/meow}
@@ -196,17 +196,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Синтаксис `${var/pattern/replacement}` заменяет первое вхождение `pattern` на `replacement`. Здесь результат будет:
+    Синтаксис `${var/pattern/replacement}` заменяет первое вхождение `pattern` на `replacement`. Здесь вывод:
     ```plaintext
         Bark meow
     ```
-    Это чувствительно к регистру. Чтобы заменить как `bark`, так и `Bark`, используйте шаблон вроде `${var/[Bb]ark/Bark}` или нормализуйте строку перед заменой.
+    Он чувствителен к регистру. Чтобы обработать как `bark`, так и `Bark`, используйте шаблон вроде `${var/[Bb]ark/Bark}` или нормализуйте строку перед заменой.
 
-    Для замены всех вхождений используйте `${var//pattern/replacement}`.
+    Чтобы заменить все вхождения, используйте `${var//pattern/replacement}`.
 
-    Для замены с начала строки используйте `${var/#pattern/replacement}`.
+    Чтобы заменить с начала строки, используйте `${var/#pattern/replacement}`.
 
-    Для замены с конца строки используйте `${var/%pattern/replacement}`.
+    Чтобы заменить с конца строки, используйте `${var/%pattern/replacement}`.
   </div>
   </slot>
 </Challenge>
@@ -221,12 +221,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: '#$username'},
     {text: '${#username}', isAnswer: true},
     {text: '${username#}'},
-    {text: 'echo $username | wc -c', hint: 'Использует внешнюю утилиту'},
+    {text: 'echo $username | wc -c'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Как можно получить длину переменной в Bash?
+    Как получить длину переменной в Bash?
   </div>
   </slot>
   <slot name='explanation'>
@@ -238,12 +238,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
         username="@justsml"
         echo ${#username} # => 8
     ```
-    Хотя `wc` тоже сработает, это не часть самого Bash.
+    Хотя `wc` сработает, технически это не часть Bash.
 
-    Утилита `wc` — древняя шутка, связанная с английским "water closet" (туалет).
-    Шутка? Кто вообще читает эти примечания?
+    Утилита `wc` — старый внутренний шутливый термин, означающий "water closet", то есть туалет.
+    ШУТКА! Кто‑нибудь это читает?
 
-    На самом деле `wc` — это древняя команда из Posix (и времён AT&T Unix). Это аббревиатура от "word count", она подсчитывает строки, слова и символы в файле или потоке.
+    На самом деле `wc` — древняя команда из POSIX (и эпохи AT&T Unix). Она сокращённо означает "word count" и может подсчитывать строки, слова и символы в файле или потоке ввода.
   </div>
   </slot>
 </Challenge>
@@ -251,19 +251,19 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Условия"
-  title="Базовый if-else"
+  group="Условные конструкции"
+  title="Базовый If-Else"
   options={[
     {text: 'Файл существует'},
-    {text: 'Файл не существует, после диагностического теста', isAnswer: true},
+    {text: 'Файл не существует, после диагностического сообщения', isAnswer: true},
     {text: 'Только ошибка'},
-    {text: 'Отсутствуют двойные скобки'},
+    {text: 'Отсутствуют двойные квадратные скобки'},
     {text: 'Ничего'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что выводит этот скрипт, если файл `cats.txt` СУЩЕСТВУЕТ?
+    Что выведет этот скрипт, если файл `cats.txt` СУЩЕСТВУЕТ?
     ```bash
         if [ -e cats.txt]; then
           echo "File exists"
@@ -275,11 +275,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Вы заметили пропущенное пространство перед закрывающей скобкой?
+    Вы заметили отсутствующий пробел перед закрывающей скобкой?
 
-    Bash здесь очень чувствителен: внутри выражений в скобках требуются пробелы.
+    Bash здесь довольно чувствителен: внутри скобочных выражений требуются пробелы.
 
-    Из-за отсутствия пробела команда `[` не видит закрывающую `]`, Bash выводит диагностическое сообщение, считает тест проваленным и переходит к ветке `else`.
+    Из‑за отсутствующего пробела команда `[` не видит закрывающую `]`, Bash выводит диагностическое сообщение, считает проверку неуспешной и переходит к ветке `else`.
 
     Правильный синтаксис:
     ```bash
@@ -289,7 +289,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           echo "File does not exist"
         fi
     ```
-    Примечание: Двойные скобки `[[ ]]` **рекомендуются** для условных выражений. [См. BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
+    Примечание: двойные квадратные скобки `[[ ]]` **рекомендованы** для условных выражений. [См. BashFAQ.](https://mywiki.wooledge.org/BashFAQ/031)
   </div>
   </slot>
 </Challenge>
@@ -297,18 +297,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="Условия"
+  group="Условные конструкции"
   title="Сравнение строк"
   options={[
-    {text: 'Тот же кот'},
-    {text: 'Разные коты, после синтаксической ошибки', isAnswer: true},
-    {text: 'Залго'},
+    {text: 'Та же кошка'},
+    {text: 'Разные кошки, после тестовой синтаксической ошибки', isAnswer: true},
+    {text: 'Zalgo'},
     {text: 'Только ошибка'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Как мы можем сравнивать строки в Bash?
+    Как сравнивать строки в Bash?
     ```bash
         cat1="Rosie"
         cat2="Sunflower"
@@ -322,13 +322,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Еще одна синтаксическая ошибка!
+    Еще одна тестовая синтаксическая ошибка!
 
     Вы заметили недопустимый оператор `===`?
 
     Возможно, вы думали о JavaScript...
 
-    В Bash с `[ ... ]` выводится диагностическое сообщение, а условие считается ложным, поэтому ветка `else` выводит `Разные коты`. В Bash для сравнения на равенство используйте `=` или `==`.
+    С `[ ... ]` Bash выводит диагностическое сообщение, и условие считается ложным, поэтому ветка `else` выводит `Different cats`. В Bash используйте `=` или `==` для сравнения на равенство.
   </div>
   </slot>
 </Challenge>
@@ -340,9 +340,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Объявление функции"
   options={[
     {text: 'Привет', isAnswer: true},
-    {text: 'Дэн'},
-    {text: 'Привет Дэн'},
-    {text: 'greet'},
+    {text: 'Dan'},
+    {text: 'Привет Dan'},
+    {text: 'привет'},
     {text: 'Ошибка'},
     {text: 'Синтаксическая ошибка'},
   ]}
@@ -360,9 +360,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Функции в Bash могут принимать аргументы. Переменная `$1` содержит первый переданный аргумент.
+    Функции в Bash могут принимать аргументы. Переменная `$1` содержит первый аргумент, переданный функции.
 
-    Помните: `$0` — это название скрипта, `$1` — первый аргумент, `$2` — второй и так далее. **Пробелы разделяют аргументы.** Таким образом, `greet Hi Dan` передаёт `"Hi"` как первый аргумент. Чтобы передать `"Hi Dan"` как один аргумент, нужно использовать кавычки: `greet "Hi Dan"`.
+    Помните, `$0` — имя скрипта, `$1` — первый аргумент, `$2` — второй и так далее. **Пробелы разделяют аргументы.** Поэтому `greet Hi Dan` передаёт `"Hi"` как первый аргумент. Чтобы передать `"Hi Dan"` как один аргумент, нужно заключить его в кавычки: `greet "Hi Dan"`.
   </div>
   </slot>
 </Challenge>
@@ -371,18 +371,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={9}
   group="Композиция"
-  title="Использование конвейеров"
+  title="Использование конвейера"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    Какой оператор соединяет **выход** одной команды с **входом** следующей команды?
+    Какой оператор соединяет **output** одной команды со **input** следующей команды?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор конвейера `|` соединяет выход одной команды с входом другой. Например:
+    Оператор `|` соединяет вывод одной команды со вводом другой. Например:
     ```bash
         echo "Mr. Levy 👨🏻‍🔬" | wc -m
         # => 14
@@ -411,7 +411,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Синтаксис `(( ))` выполняет целочисленную математику в Bash.
+    Синтаксис `(( ))` выполняет целочисленную арифметику в Bash.
 
     Его можно использовать для простых вычислений:
     ```bash
@@ -446,16 +446,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой из этих вариантов правильно умножает 10 на 0,5, выводя 5?
+    Какой из вариантов правильно умножает 10 и 0.5, выводя 5?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Синтаксис `(( ))` выполняет **только целочисленную** арифметику. То есть, работает с целыми числами, без дробной части!
+    Синтаксис `(( ))` выполняет ТОЛЬКО **целочисленную** арифметику. То есть только целые числа, без плавающей запятой!
 
-    Bash (возможно, неожиданно) не имеет **встроенной** поддержки арифметики с плавающей точкой.
+    Bash (что может удивлять) не имеет **встроенной** поддержки арифметики с плавающей точкой.
 
-    Самое частое решение — использовать GNU-утилиты [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) или [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
+    Наиболее распространённое решение — использовать утилиты GNU [`bc`](https://www.gnu.org/software/bc/manual/html_mono/bc.html) или [`awk`](https://www.gnu.org/software/gawk/manual/gawk.html).
   </div>
   </slot>
 </Challenge>
@@ -463,18 +463,18 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={12}
-  group="Манипуляции со строками"
+  group="Работа со строками"
   title="Извлечение подстроки"
   options={[
     {text: 'Плохой кот'},
     {text: 'Плохой кот, хороший кот:9'},
-    {text: 'Хороший кот', isAnswer: true},
+    {text: 'хороший кот', isAnswer: true},
     {text: 'Ошибка'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что делает `:` в этом сценарии?
+    Что делает `:` в этом скрипте?
     ```bash
         rosie="Bad cat, good cat"
         echo ${rosie:9}
@@ -483,13 +483,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Синтаксис `${var:offset}` извлекает подстроку, начиная с `offset`. Здесь результат будет:
+    Синтаксис `${var:offset}` извлекает подстроку, начиная с `offset`. Здесь вывод:
     ```plaintext
         good cat
     ```
-    Чтобы извлечь подстроку определённой длины, используйте `${var:offset:length}`.
+    Чтобы извлечь подстроку заданной длины, используйте `${var:offset:length}`.
 
-    Для извлечения с конца строки используйте `${var: -offset}`. (Обратите внимание на пробел перед `-`!)
+    Чтобы извлечь из конца строки, используйте `${var: -offset}`. (Обратите внимание на пробел перед `-`!)
   </div>
   </slot>
 </Challenge>
@@ -514,9 +514,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `each` не является ключевым словом цикла в Bash. Основные ключевые слова циклов — это `for`, `while` и `until`.
+    `each` не является ключевым словом цикла в Bash. Основные ключевые слова циклов — `for`, `while` и `until`.
 
-    Хотя `do` технически не является ключевым словом цикла, оно является важной частью синтаксиса циклов.
+    Хотя `do` технически не считается ключевым словом цикла, оно является важной частью синтаксиса цикла.
   </div>
   </slot>
 </Challenge>
@@ -524,7 +524,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="Питки"
+  group="Подводные камни"
   title="Подстановка команд"
   options={[
     {text: '\'ls -l\''},
@@ -536,21 +536,21 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой вариант выполнит команду `ls -l` и вернет вывод?
+    Какой вариант выполнит команду `ls -l` и вернёт её вывод?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Синтаксис `$(ls -l)` выполняет команду внутри **скобок** и подставляет вывод. Например:
+    Синтаксис `$(ls -l)` выполняет команду внутри **скобок** и подставляет её вывод. Например:
     ```bash
         echo "Today is $(date +%F)"
         # => Today is 2029-12-31
     ```
-    Первый вариант использует одинарные кавычки `'`, **а не обратные кавычки.** Это предотвращает расширение, поэтому `'$(date +%F)'` просто напечатает строку `$(date +%F)`.
+    Первый вариант использует одинарные кавычки `'`, **а не обратные кавычки**. Это подавляет расширение, поэтому `'$(date +%F)'` просто выведет буквальную строку `$(date +%F)`.
 
-    Хотя использование обратных кавычек (`` `ls -l` ``) все еще поддерживается, это стало антипаттерном (в некоторых контекстах). Рекомендуется использовать `$(command)` для лучшей читаемости и совместимости с различными оболочками.
+    Хотя обратные кавычки (`` `ls -l` ``) всё ещё поддерживаются для выполнения команд, в последнее время их считают антипаттерном (в некоторых контекстах). Большинство советует использовать `$(command)` для лучшей читаемости и совместимости с разными оболочками и версиями.
 
-    Фигурные скобки `${}` используются для расширения переменных, а не для подстановки команд.
+    Фигурные скобки `${}` применяются для расширения переменных, а не для подстановки команд.
 
     Символ `%` не используется для подстановки команд.
   </div>
@@ -567,61 +567,32 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой оператор используется для объединения вывода ошибок в стандартный вывод?
+    Какой оператор используется для объединения вывода ошибок со стандартным выводом?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Оператор `2>&1` перенаправляет стандартный вывод ошибок (файловый дескриптор 2) в стандартный вывод (файловый дескриптор 1). Это полезно для захвата сообщений об ошибках в том же потоке вывода, что и обычный вывод.
-
-    Оператор `1>&2` перенаправляет стандартный вывод в стандартный вывод ошибок, однако вопрос спрашивает, как перенаправить стандартный вывод ошибок в стандартный вывод.
-
-    Чтобы узнать больше о том, что происходит под капотом, ознакомьтесь с [превосходной статьёй Greg о перенаправлении](https://mywiki.wooledge.org/BashFAQ/055).
-
-    Также спасибо пользователю Reddit [u/OneTurnMore](https://www.reddit.com/user/OneTurnMore/) за улучшения формулировок.
+    Оператор `2>&1` перенаправляет стандартный поток ошибок (дескриптор файла 2) в стандартный вывод (дескриптор файла 1). Это полезно для захвата сообщений об ошибках в том же потоке вывода, что и обычный вывод.
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<p className="inset">Оставил ли мой тест по Bash вас в замешательстве?</p>
+<p className="inset">Оставил ли мой Bash‑квиз вас в полном разруше‑нном состоянии?</p>
 
-Напишите в комментариях ниже!
+Дайте знать в комментариях ниже!
 
-### Дополнительное чтение
+### Дополнительные материалы
 
-Повторите основы Bash с помощью следующих ресурсов:
+Подтяните свои навыки Bash с помощью следующих ресурсов:
 
-- [Руководство по Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Guide](https://www.gnu.org/software/bash/manual/bash.html)
 - [BashFAQ](http://mywiki.wooledge.org/BashFAQ)
 - [ShellCheck](https://www.shellcheck.net/)
 - [Bash Academy](https://guide.bash.academy/)
-- [Руководство по скриптам Bash](https://ryanstutorials.net/bash-scripting-tutorial/)
-- [Справочное руководство Bash](https://www.gnu.org/software/bash/manual/bash.html)
+- [Bash Scripting Tutorial](https://ryanstutorials.net/bash-scripting-tutorial/)
+- [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
 - [Bash Hackers Wiki](http://wiki.bash-hackers.org/)
-- [Руководство для начинающих по Bash](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
-- [Справочная карточка Bash](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
-
-<Challenge 
-  index={0} 
-  client:visible 
-  group="Введение" 
-  title="Что выводит этот скрипт?"
-  options={[
-    { text: '`echo "Hello World"`', isAnswer: false },
-    { text: '`echo "Hello World" && echo "!"`', isAnswer: true },
-    { text: '`echo "Hello World" || echo "!"`', isAnswer: false },
-    { text: '`echo "Hello World" | wc -l`', isAnswer: false }
-  ]}
->
-  <slot name="question">
-    Что выводит следующий скрипт?
-    ```bash
-    echo "Hello World"
-    ```
-  </slot>
-  <slot name="explanation">
-    Команда `echo` выводит текст, указанный в кавычках. В данном случае выводится строка `Hello World`. Остальные варианты либо добавляют дополнительные команды (`&&`, `||`, `|`), либо изменяют логику выполнения, что не соответствует оригинальному скрипту.
-  </slot>
-</Challenge>
+- [Bash Guide for Beginners](http://tldp.org/LDP/Bash-Beginners-Guide/html/index.html)
+- [Bash Reference Card](http://www.tldp.org/LDP/Bash-Beginners-Guide/html/Bash-Beginners-Guide.html)
