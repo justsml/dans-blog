@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-sql-query-fundamentals
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-08--quiz-sql-query-fundamentals/de/index.mdx
+- Validation: passed
+- Runtime seconds: 33.05
+- Input tokens: 9781
+- Output tokens: 6370
+- Thinking tokens: unknown
+- Cached input tokens: 1664
+- Cache write tokens: 0
+- Estimated cost: $0.001528
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Beweise deine SQL‑Fähigkeiten!'
@@ -325,3 +343,4 @@ Legen Sie los und beweisen Sie Ihre SQL‑Kenntnisse! 👇
 </Challenge>
 
 </QuizUI>
+````
