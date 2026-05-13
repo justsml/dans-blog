@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "36a7577b512ffd790a53857a23dbc48246f1cd54",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The current selected translation (36a7577b) is excellent. It captures the informal, punchy style of the original English text ('so fetch', 'nope, and not even a little'). It correctly handles the technical code blocks and preserves the MDX structure. The previously identified typo 'lostiempos' and the hyphenated 'Anti‑Patrón' appear to have been already corrected or were misidentified in the previous judge report as they do not appear in the provided MDX source for the selected commit.",
+  "slug": "stop-trying-to-make-async-await-happen",
+  "locale": "es",
+  "candidateCommits": [
+    "36a7577b512ffd790a53857a23dbc48246f1cd54",
+    "bde2b362df8355ecf8392e1a3eb23460b1807dbc"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "lostiempos",
+      "replacement": "los tiempos",
+      "reason": "Typo: missing space between 'los' and 'tiempos'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Anti‑Patrón",
+      "replacement": "Antipatrón",
+      "reason": "'Antipatrón' is the standard spelling in Spanish; the hyphenated version with a non-breaking hyphen is unnecessary.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Desde el principio de lostiempos",
+      "replacement": "Desde el principio de los tiempos",
+      "reason": "Typo: missing space between 'los' and 'tiempos'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "Anti‑Patrón",
+      "replacement": "Antipatrón",
+      "reason": "'Antipatrón' is the standard spelling in Spanish; the hyphenated version with a non-breaking hyphen is unnecessary.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug stop-trying-to-make-async-await-happen --locale es --skip-global",
+    "output": ""
+  }
+}
