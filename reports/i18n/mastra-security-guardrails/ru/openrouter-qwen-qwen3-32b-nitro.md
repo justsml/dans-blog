@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 15.79
+- Input tokens: 6585
+- Output tokens: 6621
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002116
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: 'Если у вашего агента нет ограничений, вы не готовы к продакшну.'
@@ -170,3 +188,4 @@ if (result.tripwire) {
 2. **Безопасность и защитные барьеры** (Эта статья)  
 3. [MCP и Интеграции с Инструментами](../mastra-mcp-tool-integrations)  
 4. [Рабочие процессы и Память](../mastra-workflows-memory)
+````
