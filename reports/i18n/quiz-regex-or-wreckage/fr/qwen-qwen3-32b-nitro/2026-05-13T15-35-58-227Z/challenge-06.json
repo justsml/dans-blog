@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Limites de mots",
+  "translation": {
+    "title": "Limites de mots",
+    "group": "Correspondance de base",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Quel élément correspondra ?"
+    ],
+    "explanationProse": [
+      "Le `\\b` représente une limite de mot, qui correspond à :\n    - Entre un caractère alphanumérique et un caractère non alphanumérique\n    - Au début/à la fin de la chaîne s'il y a un caractère alphanumérique\n\n    Ainsi, `/\\bcat\\b/` correspond uniquement à \"cat\" lorsqu'il s'agit d'un mot complet, pas d'une partie d'un autre mot.\n    - ✅ \"cat\" (entouré d'espaces)\n    - ❌ \"cats\" (aucune limite après \"cat\")\n    - ❌ \"category\" (aucune limite après \"cat\")\n\n    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Limites de mots\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel élément correspondra ?\"\n  ],\n  \"explanationProse\": [\n    \"Le `\\\\b` représente une limite de mot, qui correspond à :\\n    - Entre un caractère alphanumérique et un caractère non alphanumérique\\n    - Au début/à la fin de la chaîne s'il y a un caractère alphanumérique\\n\\n    Ainsi, `/\\\\bcat\\\\b/` correspond uniquement à \\\"cat\\\" lorsqu'il s'agit d'un mot complet, pas d'une partie d'un autre mot.\\n    - ✅ \\\"cat\\\" (entouré d'espaces)\\n    - ❌ \\\"cats\\\" (aucune limite après \\\"cat\\\")\\n    - ❌ \\\"category\\\" (aucune limite après \\\"cat\\\")\\n\\n    [En savoir plus sur les limites de mots](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 637,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1750
+  },
+  "cost": {
+    "inputUsd": 0.0000628,
+    "outputUsd": 0.00015287999999999999,
+    "totalUsd": 0.00021568,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

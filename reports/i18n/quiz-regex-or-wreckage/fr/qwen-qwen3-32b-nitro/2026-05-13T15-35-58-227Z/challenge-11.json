@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Look-behind Split",
+  "translatedTitle": "Division avec assertion de regard arrière",
+  "translation": {
+    "title": "Division avec assertion de regard arrière",
+    "group": "Assertions de regard arrière",
+    "options": [
+      {
+        "text": "[\"a,\", \"b,\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\"]"
+      },
+      {
+        "text": "[\"a\", \",\", \"b\", \",\", \"c\"]"
+      },
+      {
+        "text": "[\"a,b,c\", \"\"]"
+      }
+    ],
+    "questionProse": [
+      "Quel résultat est retourné ?"
+    ],
+    "explanationProse": [
+      "Le motif `/(?<=,)/` est une assertion de regard arrière qui correspond après une virgule:\n    - `a,` (après une virgule)\n    - `b,` (après une virgule)\n    - `c` (aucune virgule après)\n\n    L'assertion de regard arrière ne consomme pas la virgule, donc la virgule reste attachée au segment précédent dans le résultat de la division.\n\n    C'est utile lorsque vous souhaitez diviser une chaîne en fonction de ce qui précède **sans perdre le caractère de division.**\n\n    [En savoir plus sur les assertions de regard arrière](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Division avec assertion de regard arrière\",\n  \"group\": \"Assertions de regard arrière\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"a,\\\", \\\"b,\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a\\\", \\\",\\\", \\\"b\\\", \\\",\\\", \\\"c\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"a,b,c\\\", \\\"\\\"]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel résultat est retourné ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif `/(?<=,)/` est une assertion de regard arrière qui correspond après une virgule:\\n    - `a,` (après une virgule)\\n    - `b,` (après une virgule)\\n    - `c` (aucune virgule après)\\n\\n    L'assertion de regard arrière ne consomme pas la virgule, donc la virgule reste attachée au segment précédent dans le résultat de la division.\\n\\n    C'est utile lorsque vous souhaitez diviser une chaîne en fonction de ce qui précède **sans perdre le caractère de division.**\\n\\n    [En savoir plus sur les assertions de regard arrière](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 925,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2363
+  },
+  "cost": {
+    "inputUsd": 0.00006416,
+    "outputUsd": 0.000222,
+    "totalUsd": 0.00028616,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

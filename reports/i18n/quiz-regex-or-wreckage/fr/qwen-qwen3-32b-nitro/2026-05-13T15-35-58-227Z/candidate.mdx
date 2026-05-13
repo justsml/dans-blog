@@ -18,8 +18,8 @@ cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Prêt à vous mesurer aux Expressions Régulières ? 🤼‍♂️</p>
 
@@ -43,7 +43,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quelles correspondances ?
     ```js
-    'cat CAT Cat'.match(/cat/g)
+        'cat CAT Cat'.match(/cat/g)
     ```
   </div>
   </slot>
@@ -78,8 +78,8 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel résultat renverra ce code ?
     ```js
-    const words = ['cat', 'hat', 'what', 'bat'];
-    words.filter(word => word.match(/^[ch]at/))
+        const words = ['cat', 'hat', 'what', 'bat'];
+        words.filter(word => word.match(/^[ch]at/))
     ```
   </div>
   </slot>
@@ -108,7 +108,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Qu'est-ce que cela correspondra ?
     ```js
-    '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
+        '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
   </div>
   </slot>
@@ -143,7 +143,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel résultat retournera-t-il ?
     ```js
-    'hello\nworld'.match(/\w+/g)
+        'hello\nworld'.match(/\w+/g)
     ```
   </div>
   </slot>
@@ -178,7 +178,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Qu'est-ce que cela correspondra-t-il ?
     ```js
-    '$100 and €50'.match(/\d+(?=[\$€])/g)
+        '$100 and €50'.match(/\d+(?=[\$€])/g)
     ```
   </div>
   </slot>
@@ -213,7 +213,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel élément correspondra ?
     ```js
-    'cat cats category'.match(/\bcat\b/g)
+        'cat cats category'.match(/\bcat\b/g)
     ```
   </div>
   </slot>
@@ -250,7 +250,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quelle est la sortie ?
     ```js
-    'banana'.match(/a/g)
+        'banana'.match(/a/g)
     ```
   </div>
   </slot>
@@ -286,7 +286,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel motif correspond à cette expression rationnelle ?
     ```js
-    'abc123 def456'.match(/(?<!abc)\d+/g)
+        'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
   </div>
   </slot>
@@ -320,7 +320,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel résultat renverra-t-il ?
     ```js
-    '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
+        '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
     ```
   </div>
   </slot>
@@ -360,7 +360,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel sera le résultat de ceci ?
     ```js
-    "123aBc".match(/^\d+(?![a-z])/ig)
+        "123aBc".match(/^\d+(?![a-z])/ig)
     ```
   </div>
   </slot>
@@ -389,7 +389,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel résultat est retourné ?
     ```js
-    'a,b,c'.split(/(?<=,)/)
+        'a,b,c'.split(/(?<=,)/)
     ```
   </div>
   </slot>
@@ -426,7 +426,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Qu'est-ce qui correspond ?
     ```js
-    '$100'.match(/$\d+/)
+        '$100'.match(/$\d+/)
     ```
   </div>
   </slot>
@@ -434,7 +434,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="explanation">
     Les caractères spéciaux doivent être échappés avec `\` pour correspondre littéralement :\n    - `$` est un caractère spécial (fin de chaîne)\n    - Pour correspondre à un signe dollar littéral, échappez-le : `\$`\n\n    Caractères courants nécessitant un échappement :
     ```js
-    . * + ? ^ $ [ ] \ ( ) { } |
+        . * + ? ^ $ [ ] \ ( ) { } |
     ```
     Sans échappement, de nombreux caractères spéciaux ont des significations regex qui pourraient ne pas être celles que vous souhaitez.\n\n    [En savoir plus sur l'échappement des caractères spéciaux](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
@@ -457,7 +457,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Qu'est-ce qui est correspondant ?
     ```js
-    '$100'.match(/(?<=\$)\d+/)
+        '$100'.match(/(?<=\$)\d+/)
     ```
   </div>
   </slot>
@@ -487,7 +487,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Quel est le motif correspondant ?
     ```js
-    '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
+        '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
     ```
   </div>
   </slot>
@@ -524,7 +524,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
   <div className="question">
     Qu'est-ce qui correspond ?
     ```js
-    '😀 🙂'.match(/\p{Emoji}/gu)
+        '😀 🙂'.match(/\p{Emoji}/gu)
     ```
   </div>
   </slot>
@@ -561,7 +561,7 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
     Excusez-moi à l'avance ! 😈<br />
     Quel mot de passe correspond à ce modèle ?
     ```js
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
+        /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
     ```
   </div>
   </slot>

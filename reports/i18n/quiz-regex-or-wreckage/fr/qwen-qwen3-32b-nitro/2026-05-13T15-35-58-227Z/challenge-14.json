@@ -1,0 +1,31 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Quantificateurs paresseux vs gourmands",
+  "translation": {
+    "title": "Quantificateurs paresseux vs gourmands",
+    "group": "Correspondance de base",
+    "options": [],
+    "questionProse": [
+      "Quel est le motif correspondant ?"
+    ],
+    "explanationProse": [
+      "Le motif utilise un appariement paresseux avec `*?`:\n    - `<b>`: Correspondre à l'ouverture de la balise\n    - `(.*?)`: Capturer n'importe quels caractères (paresseux)\n    - `</b>`: Correspondre à la fermeture de la balise\n\n    Le `?` après `*` le rend paresseux, correspondant au minimum de caractères possible.\n    Sans `?`, il serait gourmand et correspondrait au maximum possible.\n\n    `slice(1)` retourne uniquement le groupe capturé.\n\n    [En savoir plus sur les quantificateurs gourmands vs paresseux](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quantificateurs paresseux vs gourmands\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Quel est le motif correspondant ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif utilise un appariement paresseux avec `*?`:\\n    - `<b>`: Correspondre à l'ouverture de la balise\\n    - `(.*?)`: Capturer n'importe quels caractères (paresseux)\\n    - `</b>`: Correspondre à la fermeture de la balise\\n\\n    Le `?` après `*` le rend paresseux, correspondant au minimum de caractères possible.\\n    Sans `?`, il serait gourmand et correspondrait au maximum possible.\\n\\n    `slice(1)` retourne uniquement le groupe capturé.\\n\\n    [En savoir plus sur les quantificateurs gourmands vs paresseux](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 725,
+    "outputTokens": 777,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2069
+  },
+  "cost": {
+    "inputUsd": 0.000058,
+    "outputUsd": 0.00018648,
+    "totalUsd": 0.00024448,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Look-ahead négatif",
+  "translation": {
+    "title": "Look-ahead négatif",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Erreur"
+      }
+    ],
+    "questionProse": [
+      "Quel sera le résultat de ceci ?"
+    ],
+    "explanationProse": [
+      "Le look-ahead négatif `(?![a-z])` garantit qu'il n'y a pas de lettres minuscules après les chiffres. Comme la partie \"3aBc\" contient une lettre minuscule après les chiffres, cette portion ne correspond pas. Seule la partie \"12\" au début correspond.\n\n    [En savoir plus sur le look-ahead négatif](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead négatif\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    { \"text\": \"[\\\"password123\\\"]\" },\n    { \"text\": \"[\\\"abc123\\\"]\" },\n    { \"text\": \"[\\\"123aBc\\\"]\" },\n    { \"text\": \"[\\\"12\\\"]\" },\n    { \"text\": \"[\\\"abc\\\"]\" },\n    { \"text\": \"Erreur\" }\n  ],\n  \"questionProse\": [\n    \"Quel sera le résultat de ceci ?\"\n  ],\n  \"explanationProse\": [\n    \"Le look-ahead négatif `(?![a-z])` garantit qu'il n'y a pas de lettres minuscules après les chiffres. Comme la partie \\\"3aBc\\\" contient une lettre minuscule après les chiffres, cette portion ne correspond pas. Seule la partie \\\"12\\\" au début correspond.\\n\\n    [En savoir plus sur le look-ahead négatif](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 758,
+    "outputTokens": 1031,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3145
+  },
+  "cost": {
+    "inputUsd": 0.00006064,
+    "outputUsd": 0.00024744,
+    "totalUsd": 0.00030807999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 58.05
+- Input tokens: 14652
+- Output tokens: 15580
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.004911
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz : Maîtrise des expressions régulières'
@@ -590,3 +608,4 @@ Testez vos connaissances en Expressions Régulières avec des questions couvrant
 Les Expressions régulières sont une bête à apprivoiser, mais elles deviennent incroyablement puissantes une fois que vous les maîtrisez (et toute la nouvelle syntaxe). Continuez à pratiquer, et vous serez un maître des expressions régulières en un rien de temps ! 🧙‍♂️
 
 <p class="inset">En quête d'une pause après tout ce RegEx ?<br />Pfft, souvenez-vous : pause *après* les compétences !<br /><br />Allez sur [mon gym](/challenges/) pour relever d'autres défis ! 💪</p>
+````

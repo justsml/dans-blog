@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "Contournement négatif",
+  "translation": {
+    "title": "Contournement négatif",
+    "group": "Contournement arrière",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "Quel motif correspond à cette expression rationnelle ?"
+    ],
+    "explanationProse": [
+      "Le contournement négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de \"abc\" : \n    - ❌ \"123\" (précédé de \"abc\")\n    - ✅ \"23\" (précédé de \"abc1\")\n    - ✅ \"456\" (précédé de \"def\")\n\n    JavaScript supporte les assertions de contournement dans les moteurs modernes. Cet exemple utilise un contournement de longueur fixe : `abc` compte toujours trois caractères. Le contournement variable (longueur variable) reste un cas délicat dépendant du moteur.\n\n    Remarque : Le support des contournements est récent en JavaScript. Vérifiez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter des navigateurs anciens."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Contournement négatif\",\n  \"group\": \"Contournement arrière\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel motif correspond à cette expression rationnelle ?\"\n  ],\n  \"explanationProse\": [\n    \"Le contournement négatif `(?<!abc)` garantit que les chiffres ne sont pas précédés de \\\"abc\\\" : \\n    - ❌ \\\"123\\\" (précédé de \\\"abc\\\")\\n    - ✅ \\\"23\\\" (précédé de \\\"abc1\\\")\\n    - ✅ \\\"456\\\" (précédé de \\\"def\\\")\\n\\n    JavaScript supporte les assertions de contournement dans les moteurs modernes. Cet exemple utilise un contournement de longueur fixe : `abc` compte toujours trois caractères. Le contournement variable (longueur variable) reste un cas délicat dépendant du moteur.\\n\\n    Remarque : Le support des contournements est récent en JavaScript. Vérifiez la [compatibilité des navigateurs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) si vous devez supporter des navigateurs anciens.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 835,
+    "outputTokens": 1392,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 14850
+  },
+  "cost": {
+    "inputUsd": 0.0000668,
+    "outputUsd": 0.00033408,
+    "totalUsd": 0.00040088,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

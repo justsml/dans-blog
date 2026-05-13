@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "Groupes de capture",
+  "translation": {
+    "title": "Groupes de capture",
+    "group": "Correspondance de base",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "Quel résultat renverra-t-il ?"
+    ],
+    "explanationProse": [
+      "Le motif utilise trois groupes de capture : \n    1. `(\\d{4})` capture l'année\n    2. `(\\d{2})` capture le mois\n    3. `(\\d{2})` capture le jour\n\n    `match()` sans le drapeau `g` renvoie : \n    - Index 0 : Correspondance complète\n    - Index 1+ : Groupes de capture\n\n    `slice(1)` est une astuce courante pour obtenir uniquement les groupes capturés.\n\n    [En savoir plus sur les groupes et la capture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Groupes de capture\",\n  \"group\": \"Correspondance de base\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel résultat renverra-t-il ?\"\n  ],\n  \"explanationProse\": [\n    \"Le motif utilise trois groupes de capture : \\n    1. `(\\\\d{4})` capture l'année\\n    2. `(\\\\d{2})` capture le mois\\n    3. `(\\\\d{2})` capture le jour\\n\\n    `match()` sans le drapeau `g` renvoie : \\n    - Index 0 : Correspondance complète\\n    - Index 1+ : Groupes de capture\\n\\n    `slice(1)` est une astuce courante pour obtenir uniquement les groupes capturés.\\n\\n    [En savoir plus sur les groupes et la capture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 802,
+    "outputTokens": 746,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1789
+  },
+  "cost": {
+    "inputUsd": 0.00006416,
+    "outputUsd": 0.00017904,
+    "totalUsd": 0.0002432,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
