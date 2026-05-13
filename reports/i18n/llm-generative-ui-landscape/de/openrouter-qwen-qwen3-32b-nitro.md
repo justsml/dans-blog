@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/de/index.mdx
+- Validation: passed
+- Runtime seconds: 49.45
+- Input tokens: 17915
+- Output tokens: 20830
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.006432
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -332,3 +350,4 @@ Die besten Systeme werden nicht zulassen, dass das Modell alles im Freestyle-Mod
 Die Zukunft ist nicht "Das Modell schreibt Ihr Frontend."
 
 Die Zukunft ist vielmehr: **Ihr Frontend wird ein Instrument, das der Agent spielen kann, aber Sie entscheiden nach wie vor, wie das Instrument klingen darf.**
+````
