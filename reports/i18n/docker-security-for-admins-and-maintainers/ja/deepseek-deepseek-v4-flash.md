@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: ja
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 152.37
+- Input tokens: 10373
+- Output tokens: 9051
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.003934
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -333,3 +351,4 @@ nmap -A -p1-65535 --open --reason $target_host
    - 現実：ファイアウォールは、あなたが設定したルールだけをブロックする。
 3. **「プライベートIPは安全だ」**
    - 現実：NATバイパスなどの攻撃手法は、依然としてあなたのネットワークに影響を及ぼし得る。
+````
