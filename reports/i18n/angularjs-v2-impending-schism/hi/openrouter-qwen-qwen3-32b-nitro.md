@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 5.80
+- Input tokens: 1855
+- Output tokens: 2672
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000790
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -39,3 +57,4 @@ cover_icon: ../icon_alex-perez-753751-unsplash.webp
 <div class="anigif top end">
   <img alt='सब कुछ ठीक हो जाएगा' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
