@@ -1,0 +1,47 @@
+{
+  "selectedCommit": "d3fdc63b33cdee42491125e09fdfb21d5b2f76a7",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation already incorporates the high and medium priority fixes suggested in the previous judge report (changing '品味' to '「センス」の問題' and adding quotes to 'インフラのコスプレ'). It maintains Dan's direct 'da/aru' style, preserves all MDX structures, and accurately translates technical concepts like 'infrastructure cosplay' and 'failure mode'.",
+  "slug": "you-might-not-need-algolia",
+  "locale": "ja",
+  "candidateCommits": [
+    "d3fdc63b33cdee42491125e09fdfb21d5b2f76a7",
+    "62e1e5a229a0002f764f61fc33717d0e6c1d3f5a",
+    "56fc8b713a264d42f3f5bc2aaa07d58189b13efb"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "それは品味だ。",
+      "replacement": "それは「センス」の問題だ。",
+      "reason": "'品味' is a literal translation of 'taste' that sounds unnatural in Japanese technical writing. 'センス' or '好みの問題' is better.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "インフラのコスプレに過ぎないかもしれない。",
+      "replacement": "「インフラのコスプレ」になってしまっているかもしれない。",
+      "reason": "Adding quotes helps convey the metaphorical nature of 'infrastructure cosplay' in Japanese.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug you-might-not-need-algolia --locale ja --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug you-might-not-need-algolia --locale ja --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug you-might-not-need-algolia --locale ja --skip-global\n20 |   }\n21 | \n22 |   const minimumLength = Math.floor(sourceLength * minimumRatio);\n23 |   const maximumLength = Math.ceil(sourceLength * maximumRatio);\n24 |   if (targetLength < minimumLength || targetLength > maximumLength) {\n25 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2025-03-01--you-might-not-need-algolia/ja/index.mdx changed comparable body length from 4859 chars in English to 2731 chars. Expected 3158-6560 chars (within 35%).\n      at assertTranslationLength (/Users/dan/code/oss/dans-blog/src/scripts/i18n/structural-validation.ts:25:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:26:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
