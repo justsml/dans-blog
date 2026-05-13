@@ -1,0 +1,52 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Dynamic Import Syntax",
+  "translatedTitle": "Динамический импорт (синтаксис)",
+  "translation": {
+    "title": "Динамический импорт (синтаксис)",
+    "group": "Динамический импорт",
+    "options": [
+      {
+        "text": "SyntaxError",
+        "hint": "import() не может быть вызвана в выражении"
+      },
+      {
+        "text": "Promise",
+        "hint": "Динамический импорт возвращает Promise"
+      },
+      {
+        "text": "Module",
+        "hint": "Модуль разрешается через Promise"
+      },
+      {
+        "text": "object",
+        "hint": "typeof для Promise возвращает 'object'"
+      },
+      {
+        "text": "undefined",
+        "hint": "Модуль не загружен синхронно"
+      }
+    ],
+    "questionProse": [
+      "Что будет выведено этим кодом?"
+    ],
+    "explanationProse": [
+      "Функция `import()` возвращает `Promise`, который разрешается в объект модуля. Поскольку экземпляры `Promise` являются объектами, `typeof modulePromise` выводит `'object'`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Динамический импорт (синтаксис)\",\n  \"group\": \"Динамический импорт\",\n  \"options\": [\n    {\n      \"text\": \"SyntaxError\",\n      \"hint\": \"import() не может быть вызвана в выражении\"\n    },\n    {\n      \"text\": \"Promise\",\n      \"hint\": \"Динамический импорт возвращает Promise\"\n    },\n    {\n      \"text\": \"Module\",\n      \"hint\": \"Модуль разрешается через Promise\"\n    },\n    {\n      \"text\": \"object\",\n      \"hint\": \"typeof для Promise возвращает 'object'\"\n    },\n    {\n      \"text\": \"undefined\",\n      \"hint\": \"Модуль не загружен синхронно\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что будет выведено этим кодом?\"\n  ],\n  \"explanationProse\": [\n    \"Функция `import()` возвращает `Promise`, который разрешается в объект модуля. Поскольку экземпляры `Promise` являются объектами, `typeof modulePromise` выводит `'object'`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 727,
+    "outputTokens": 642,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8442
+  },
+  "cost": {
+    "inputUsd": 0.00005816,
+    "outputUsd": 0.00015408,
+    "totalUsd": 0.00021224,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
