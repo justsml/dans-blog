@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: honest-priorities
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-23--honest-priorities/de/index.mdx
+- Validation: passed
+- Runtime seconds: 19.63
+- Input tokens: 6677
+- Output tokens: 6303
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002047
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Die Prioritätenfalle
@@ -121,3 +139,4 @@ Oder, Sie können ***echt*** mit Ihrem Backlog umgehen.
 - Anhand meiner Erfahrung habe ich null Schaden davon gesehen, ältere und unvollständige Tickets zu entsorgen.
 - Endlos an ein Backlog als Datenbank anzuhängen, verpasst die Gelegenheit, Ihr Team und Ihre Organisation auf das zu fokussieren, was zählt. (Dinge, die vor uns liegen. Während Backlogs inhärent nach hinten schauen.)
 - Ein tiefes Backlog endet wie ein Bizzaro-Trophäensaal, der die Scheiße ehrt, die du nie lieferst.
+````
