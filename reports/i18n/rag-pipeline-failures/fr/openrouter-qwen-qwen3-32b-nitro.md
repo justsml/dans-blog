@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: rag-pipeline-failures
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-05--rag-pipeline-failures/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 35.60
+- Input tokens: 10001
+- Output tokens: 10164
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.003239
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Cinq façons dont RAG échoue en production
 subTitle: ''
@@ -197,3 +215,4 @@ Les démos RAG fonctionnent car les conditions de démo sont contrôlées : docu
 Chaque échec décrit ci-dessus est diagnostiquable, mais uniquement si vous mesurez. Les équipes fiables en RAG ne font rien d'exotique. Elles traitent la qualité de la récupération comme un sous-système réel, et non comme un artefact de démo.  
 
 Installez d'abord la boucle d'évaluation. Tout le reste devient plus simple une fois que vous pouvez mesurer.
+````
