@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-4-pillars-of-collaborative-culture
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2021-03-03--the-4-pillars-of-collaborative-culture/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 18.79
+- Input tokens: 6174
+- Output tokens: 8992
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002652
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: सहयोगात्मक संस्कृति के 4 स्तंभ
@@ -109,3 +127,4 @@ credit: Photo by fauxels from Pexels
 - कर्मचारी के पहले सुझाव के औसत समय क्या है? दिन? महीने? साल?!?!?
 - क्या आपकी टीम के सभी सदस्य नियमित रूप से विचार साझा करते हैं?
 - लोगों को सुरक्षित महसूस होता है? क्या वे नम्र हो सकते हैं? यहां तक कि मिशन को भी चुनौती दे सकते हैं?
+````
