@@ -1,0 +1,206 @@
+---
+social_image: ../desktop-social.webp
+title: パイプラインの達人：ステートの受け渡し
+subTitle: やあ、Closure、久しぶりだ。
+date: '2023-08-09'
+modified: '2024-07-30'
+tags:
+  - typescript
+  - closure
+  - stateful
+  - scoping
+  - hoisting
+  - functional
+  - pipeline
+category: Guides
+subCategory: JavaScript
+cover: ../sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_mobile: ../w300_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+cover_icon: ../icon_sven-kucinic-LxYxC6jdjcA-unsplash-cropped-1200.webp
+---
+## パイプラインの達人: 状態の受け渡し
+
+関数型パイプラインで状態を渡す際に、困ったことはありませんか？
+
+コードの構造（あるいは構造の欠如）は、状態をどれだけ簡単に受け渡せるかに直結します。
+
+この記事では、パイプラインを通して状態を渡す実用的な手法を探ります。途中でコードの整理と可読性も向上させます。
+
+今回の対象となる「実例」スニペットは次です。`userId` と `products` 配列を受け取り、4 つの関数を順に実行する Promise チェーンを返すチェックアウト関数です。
+
+```tsx
+const checkout = (userId: number, products: number[]) => {
+  return getProductsSubtotal(userId, products)
+    .then(subTotal => applyTaxes(userId, subTotal))
+    .then(total => purchaseProducts(userId, total))
+    .then(result => sendReceipt(userId, result));
+};
+```
+
+ちょっと待ってください。このコード、JS のパイプラインとしては実はかなり良い出来です！
+
+それでも、いくつかの微妙な問題があり、組み合わせるとより大きな課題になる可能性があります。
+
+1 つ目の問題は、（論理的に関連する）各関数に対して `userId` を何度も渡していることです。これに加えて、開発者や TypeScript が見落としがちな別の問題があります。数値引数の順序を入れ替えると、静かにバグが発生します。（`applyTaxes` と `purchaseProducts` を参照してください。_最初に来るべきは `userId` か `amount` か_）
+
+このコードをどう改善するか検討する前に、まずは長所と短所を整理しましょう。
+
+### 長所と短所
+
+#### 長所
+
+- クロージャを上手く利用している！`userId` と `products` を一度だけ渡している。
+- 引数名が一貫している。
+- チェックアウトに必要な 4 つの主要関数を比較的効果的かつ簡潔に合成できている。
+- 「無料」のエラーフロー制御。（ネストされた関数のいずれかでエラーが発生すると、`checkout()` が返す Promise が拒否されてエラーが伝搬する。）
+
+####欠点
+
+- `userId` を何度も渡すのは手間がかかる。
+- 関数が単一パラメータ（ユニary）になっていない。_これが合成性に影響する。なぜかは [最終例](#checkout-with-further-improvements) を参照。_
+- 各関数が何を返すかが分かりにくい。（メール送信結果か、`result` 変数か、あるいは別のものか？）
+- 機能追加が直感的でない（例：顧客の割引・クレジット・ポイント等をロードする必要が出た場合）。
+- 時折 `.then(param => {})` のような「一時」パラメータ名が文脈を提供するが、時間が経つと命名のゴミが溜まりやすい。
+
+### 解決策、パート 1：モジュール化する！
+
+この手法は、関連する関数を単一のモジュール（例：`CartHelpers`）にまとめることにある。特定のパターンを強制するものではない。[ファクトリ関数](#carthelpers-factory)、[クラス](#carthelpers-class)、クロージャ、ミックスイン等を検討し、プロジェクトやチームに適した形を選べ。
+
+#### CartHelpers ファクトリ
+
+`userId` を一度だけ渡し、すべてのメソッドが単一引数になる `CartHelpers` モジュールの例。
+
+```tsx
+const CartHelpers = (userId: number) => {
+  return {
+    getProductsSubtotal: products => getProductsSubtotal(userId, products),
+    applyTaxes: subTotal => applyTaxes(userId, subTotal),
+    purchaseProducts: total => purchaseProducts(userId, total),
+    sendReceipt: invoice => sendReceipt(userId, invoice)
+  };
+};
+```
+
+#### CartHelpers クラス
+
+クラス派ならこちらでも簡単に適用できる：
+
+```tsx
+class CartHelpers {
+  constructor(userId) {
+    this.userId = userId;
+  }
+  getProductsSubtotal = products => getProductsSubtotal(this.userId, products);
+  applyTaxes = subTotal => applyTaxes(this.userId, subTotal);
+  purchaseProducts = total => purchaseProducts(this.userId, total);
+  sendReceipt = invoice => sendReceipt(this.userId, invoice);
+}
+```
+
+すぐに得られるメリット：
+
+- 繰り返しの変数受け渡しを排除する。
+  - DRY: `CartHelpers` が `userId` という重複引数を隠蔽する。
+  - 各メソッドは **_必要な引数だけ_** を受け取る。`cart.applyTaxes(subTotal)` が何をしているか直感的に分かる。
+- `CartHelpers` 内の単一引数関数は可読性が高く、目的が明確になる。
+
+関連関数をひとまとめにすることで、公開インターフェース（例：`checkout()`、`CartHelpers` の公開メソッド）の表面積を削減できる機会が生まれる。
+
+> 表面積が小さいほど認知負荷が減り、テストしやすく保守性も向上する。  
+> _意図と焦点を持ってデザインシステムを構築しよう。 ✨_
+
+#### Checkout と CartHelpers の使い方
+
+`checkout()` 関数が現在どのようになるか見てみましょう:
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  return Promise.resolve(products)
+    .then(products => cart.getProductsSubtotal(products))
+    .then(subTotal => cart.applyTaxes(subTotal))
+    .then(total => cart.purchaseProducts(total))
+    .then(result => cart.sendReceipt(result));
+};
+```
+
+##### さらに改善した Checkout
+
+> もっと改善できるか？ もちろんです！ 引数を全く繰り返す必要はありません。
+
+関数の引数が前の関数の出力で供給される場合、コードはさらにシンプルにできます。
+
+```tsx
+export const checkout = ({ userId, products }) => {
+  const cart = CartHelpers(userId);
+
+  // 🌈 関数はレゴのように積み上げられ、普通の「人間の言葉」みたいに読めます！ 💅
+  return Promise.resolve(products)
+    .then(cart.getProductsSubtotal)
+    .then(cart.applyTaxes)
+    .then(cart.purchaseProducts)
+    .then(cart.sendReceipt);
+};
+```
+
+**パラメータを単一（オブジェクト）引数にまとめるのが不自然に感じる場合は、** 関数を分割する **または** より適切なスコープのモジュールにまとめることを検討してください。
+
+#### どこから始める？
+
+関連する関数を見つけて、ひとまとめにする。（例：`CartHelpers`）
+
+論理的なモジュールを見つける際の課題のひとつは、**まずコードが関連しているかどうかを特定すること**です。
+
+##### 関数が関連しているかどうかの判断基準
+
+ひとつの便利な手法：関数のパラメータに繰り返しがないか探す。何らかの関係性や共通の責務が隠れていないか？
+
+- ✅ **共通の引数が繰り返し現れる関数**  
+  （例：4つのメソッドがすべて `userRewards` を受け取るなら、`Rewards` などのモジュールが必要になる可能性が高い。）
+- ✅ **引数が直前の関数の出力として提供される関数**  
+  （ステップの連続。例：`Extract`、`Transform`、`Load`。）
+- ❌ 機能領域と漠然とだけ関係があるもの、たとえば「商品購入？」といった曖昧さ。
+- ❌ 共通のプレフィックスやサフィックスで名前付けされた関数だけを根拠にすること。
+- ❌ 内部でほんの一部の値しか使わない大きなオブジェクトを引数に取る関数  
+  （例：`applyTaxes({ user, business, rewards, kitchenSink })` と `applyTaxes({ subTotal })` を比較した場合）。
+
+単一の「正解」なるモジュール設計は存在しませんが、整理のために 2〜3 種類の構成案を挙げてみると良いでしょう。概要を描き、**ファンタジーコード**を書き、**「これで楽しいか？」** と自問してください。
+
+<aside>
+📌 モジュール構成を試行錯誤するうちに、ドメインモデルが徐々に形を成していきます。完璧を求めて悩む必要はありません。
+</aside>
+
+> `cart.sendReceipt()` が決済系メソッドと合わないと感じるかもしれません。その場合は `customerNotifications.sendReceipt()` に移す方が、顧客向けメッセージングとして自然です。`CartHelper` の重要度が十分高ければ、内部で必要な **_サービス_**（例: `customerNotifications`）を呼び出す **_コントローラ_** として機能させても構いません。
+
+#### どのように自分の取り組みが有効か判断するか？
+
+アドホックな引数を削除しても可読性が損なわれなければ、**おめでとうございます！！！** 明確で長く使えるスコープを持つモジュールができ上がっているはずです。
+
+- 中間引数を取り除くことで、自然と「層」が浮かび上がってきます。  
+- アドホックなコードを誤った場所に投げ込むのは **難しいはず** です。
+
+それでは、機能はどこに追加すべきか、という問いが出てきます。
+
+私の経験上、機能追加を検討する際に評価すべき主な戦略は 2 つあります。
+
+1.  既存メソッドを拡張／リファクタリングする。  
+    （新しいコードが既存コードに十分近い場合。）
+2.  チェーン内の適切な位置に新しい（5 番目の）関数を作成する。  
+    （新しいコードが既存関数と無関係であると判断した場合。）
+
+この二分法に従うことで、どこに新機能を置くべきかが判断しやすくなります（例: `cart.applyDiscounts()`、`cart.applyTaxes()`、`rewards.getBalance()`）。
+
+### 結論
+
+複雑なパイプラインを通して状態を渡すのは手間がかかりますが、リファクタリングを少しずつ実践すれば、認知負荷を減らしつつ、より読みやすいコードを書けるようになります。
+
+質問やコメント、懸念があれば遠慮なく [@justsml](https://x.com/justsml) まで、または [email](mailto:dan@danlevy.net) へお問い合わせください。
+
+#### 次回予告
+
+次回は状態の外部化と、モジュール内での機能拡張について掘り下げます！
+
+#### 関連記事
+
+- [Component 主導の React 世界でも同様の課題があります。](https://kyleshevlin.com/quit-your-yapping)
