@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 14.47
+- Input tokens: 10002
+- Output tokens: 5265
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.001338
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'क्विज़: क्या आप आधुनिक जावास्क्रिप्ट जानते हैं?'
 subTitle: अपनीउत्कृष्ट जावास्क्रिप्ट कौशल साबित करें!
@@ -351,3 +369,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
