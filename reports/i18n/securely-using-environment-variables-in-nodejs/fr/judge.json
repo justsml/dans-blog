@@ -1,0 +1,38 @@
+{
+  "selectedCommit": "9c10efa0a8376b3fd2f890e51cb69c624f3953ac",
+  "selectedModel": "openrouter/qwen/qwen3.6-plus",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The translation is technically accurate and follows Dan's direct style. It correctly handles frontmatter and MDX components. The suggestion from the previous judge to translate a string inside a template literal in a code block is considered low priority/optional in this context as it's a debug log, and the current translation is already high quality.",
+  "slug": "securely-using-environment-variables-in-nodejs",
+  "locale": "fr",
+  "candidateCommits": [
+    "9c10efa0a8376b3fd2f890e51cb69c624f3953ac",
+    "5c34c7badd8022cddd1cf2cecfbbacb8875f087b",
+    "0bf9e0a213c03fe67ab57c3da46dd3750b4c39e6"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "medium",
+      "match": "Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}",
+      "replacement": "Connexion à ${PGUSER} @ ${PGHOST}:${PGHOST}",
+      "reason": "The console log message should be translated for consistency with the rest of the French content, as seen in other candidates.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug securely-using-environment-variables-in-nodejs --locale fr --skip-global",
+    "output": ""
+  }
+}
