@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-security-guardrails
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-03--mastra-security-guardrails/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 20.96
+- Input tokens: 6867
+- Output tokens: 7781
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002417
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -171,3 +189,4 @@ if (result.tripwire) {
 2. **セキュリティ & ガードレール** (この投稿)  
 3. [MCP & ツール統合](../mastra-mcp-tool-integrations)  
 4. [ワークフロー & メモリ](../mastra-workflows-memory)
+````
