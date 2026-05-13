@@ -4,29 +4,29 @@
   "slug": "llm-generative-ui-landscape",
   "locale": "fr",
   "startedAt": "2026-05-13T14:38:24.522Z",
-  "updatedAt": "2026-05-13T14:38:56.988Z",
+  "updatedAt": "2026-05-13T14:39:51.622Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro"
   ],
-  "attemptedModels": 1,
+  "attemptedModels": 2,
   "skippedModels": 0,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 1,
   "totals": {
-    "inputTokens": 21853,
-    "outputTokens": 7916,
+    "inputTokens": 41674,
+    "outputTokens": 26666,
     "thinkingTokens": 0,
-    "cachedInputTokens": 1792,
+    "cachedInputTokens": 5376,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0.002277,
+    "estimatedCostUsd": 0.008363,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
     "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "21.50"
+    "runtimeSeconds": "70.25"
   },
   "attempts": [
     {
@@ -44,6 +44,24 @@
           "cacheWrite": 0
         },
         "estimatedCostUsd": 0.0022771469999999998,
+        "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/llm-generative-ui-landscape/fr/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Command failed: bun run i18n:validate --slug llm-generative-ui-landscape --locale fr",
+      "telemetry": {
+        "runtimeSeconds": "48.75",
+        "tokens": {
+          "input": 19821,
+          "output": 18750,
+          "cached": 3584,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00608568,
         "pricingSource": "local-openrouter-estimate"
       }
     }
