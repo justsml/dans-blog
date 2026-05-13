@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 30.31
+- Input tokens: 11659
+- Output tokens: 11333
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.003653
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Implementare Beam Search in Transformers.js
 subTitle: >-
@@ -178,3 +196,4 @@ Se stai lavorando a problemi seq2seq in JavaScript e desideri una ricerca per fa
 ¹ Sì, so che `num_beams=1` corrisponde alla ricerca golosa. Il caso degenere è ben definito.
 
 ² I modelli a solo encoder (BERT, ecc.) non generano affatto token, quindi nulla di questo li riguarda. Sono solo vibrazioni.
+````

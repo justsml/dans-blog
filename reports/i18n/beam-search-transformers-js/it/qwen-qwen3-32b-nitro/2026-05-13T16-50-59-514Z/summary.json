@@ -1,0 +1,147 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T16-50-59-514Z",
+  "slug": "beam-search-transformers-js",
+  "locale": "it",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T16:51:35.912Z",
+  "sourcePath": "src/content/posts/2026-04-16--beam-search-transformers-js/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--beam-search-transformers-js/it/index.mdx",
+  "candidatePath": "reports/i18n/beam-search-transformers-js/it/qwen-qwen3-32b-nitro/2026-05-13T16-50-59-514Z/candidate.mdx",
+  "sourceHash": "f18620b582f1c2a340c4b7d98da5cb544cd646463534f4076975963727af3149",
+  "outputHash": "dd5d5348c2497f280ff52d54fa1c1c0b6399bad60307754f6e85e77fa9091beb",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "The article details the implementation of beam search in the **Transformers.js** library, addressing a critical bug where models incorrectly used greedy decoding instead of beam search when `num_beams > 1`. The core thesis is that proper beam search requires tracking all `num_beams × vocab_size` candidates per step, not just top tokens per beam, and involves careful management of key-value (KV) caches during beam reordering. Key technical challenges include implementing diverse beam search (with sequential group processing) and ensuring cache consistency across CPU/GPU tensors. The tone is analytical and tutorial, blending code examples with algorithmic explanations. Framed as a \"bounded breadth-first search through token space,\" the work targets developers working on NLP generation in JavaScript, emphasizing precise state management and performance trade-offs in transformer-based models.",
+  "totalInputTokens": 11659,
+  "totalOutputTokens": 11333,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 30310,
+  "totalCostUsd": 0.0036526399999999995,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 12,
+    "totalInputTokens": 11659,
+    "totalOutputTokens": 11333,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 30310,
+    "totalCostUsd": 0.0036526399999999995,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 843,
+        "outputTokens": 892,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2763,
+        "costUsd": 0.00028152
+      },
+      {
+        "index": 1,
+        "inputTokens": 948,
+        "outputTokens": 984,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2649,
+        "costUsd": 0.000312
+      },
+      {
+        "index": 2,
+        "inputTokens": 973,
+        "outputTokens": 772,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1994,
+        "costUsd": 0.00026312
+      },
+      {
+        "index": 3,
+        "inputTokens": 1012,
+        "outputTokens": 1112,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2853,
+        "costUsd": 0.00034784
+      },
+      {
+        "index": 4,
+        "inputTokens": 1058,
+        "outputTokens": 958,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2615,
+        "costUsd": 0.00031455999999999997
+      },
+      {
+        "index": 5,
+        "inputTokens": 980,
+        "outputTokens": 658,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1942,
+        "costUsd": 0.00023632
+      },
+      {
+        "index": 6,
+        "inputTokens": 1002,
+        "outputTokens": 1087,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2533,
+        "costUsd": 0.00034104000000000003
+      },
+      {
+        "index": 7,
+        "inputTokens": 1012,
+        "outputTokens": 1670,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 4061,
+        "costUsd": 0.00048176
+      },
+      {
+        "index": 8,
+        "inputTokens": 986,
+        "outputTokens": 908,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2740,
+        "costUsd": 0.00029679999999999995
+      },
+      {
+        "index": 9,
+        "inputTokens": 968,
+        "outputTokens": 763,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2113,
+        "costUsd": 0.00026056
+      },
+      {
+        "index": 10,
+        "inputTokens": 1028,
+        "outputTokens": 1009,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 2530,
+        "costUsd": 0.00032439999999999997
+      },
+      {
+        "index": 11,
+        "inputTokens": 849,
+        "outputTokens": 520,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1517,
+        "costUsd": 0.00019272
+      }
+    ]
+  }
+}
