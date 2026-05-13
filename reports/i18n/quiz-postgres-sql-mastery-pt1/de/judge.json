@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "bf72457b74530893d362b1e842ba9125bedfdd70",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "{text: 'Sie belegen beide 8 Bytes, aber sie speichern unterschiedliche Daten'},",
+      "replacement": "{text: 'Sie sind austauschbar seit Pg v10'},",
+      "reason": "The second option in Challenge 4 was incorrectly translated/duplicated from the first option's logic in the candidate, losing the 'interchangeable since Pg v10' distractor from the source."
+    },
+    {
+      "priority": "high",
+      "match": "Du hast inmehreren Bereichen",
+      "replacement": "Du hast in mehreren Bereichen",
+      "reason": "Missing space between words in the conclusion."
+    }
+  ],
+  "rationale": "The candidate bf72457b74530893d362b1e842ba9125bedfdd70 captures Dan's direct and informal style ('Du') much better than the current version which uses formal 'Sie'. It also correctly translates the subtitle. The suggestions fix a typo and a logic error in the distractors.",
+  "slug": "quiz-postgres-sql-mastery-pt1",
+  "locale": "de",
+  "candidateCommits": [
+    "bf72457b74530893d362b1e842ba9125bedfdd70",
+    "d42f5de60f05c3f125218921a0d29065713e991b"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Sie belegen beide 8 Bytes, aber sie speichern unterschiedliche Daten'},",
+      "reason": "The candidate has a broken string/syntax error in the second option of Challenge 4.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Du hast inmehreren Bereichen",
+      "replacement": "Du hast in mehreren Bereichen",
+      "reason": "Missing space between words.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Sie belegen beide 8 Bytes, aber sie speichern unterschiedliche Daten'},",
+      "reason": "The candidate has a broken string/syntax error in the second option of Challenge 4.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Du hast inmehreren Bereichen",
+      "replacement": "Du hast in mehreren Bereichen",
+      "reason": "Missing space between words.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale de --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale de --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt1\" --locale de --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/de/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
