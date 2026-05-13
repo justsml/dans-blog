@@ -1,0 +1,372 @@
+# Translation Candidate
+- Slug: quiz-do-you-know-esnext
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-do-you-know-esnext/fr/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 5.76
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-do-you-know-esnext --locale fr --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+title: 'Quiz : Maîtrisez‑vous le JavaScript moderne ?'
+subTitle: Prouvez votre maîtrise JavaScript !
+label: ES2019+ Features
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: JavaScript
+unlisted: false
+date: '2024-10-31'
+modified: '2024-11-08'
+tags:
+  - quiz
+  - javascript
+  - intro
+  - esnext
+  - features
+  - intermediate
+cover_full_width: ../christopher-burns-8KfCR12oeUM-unsplash-wide.webp
+cover_mobile: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+cover_icon: ../christopher-burns-8KfCR12oeUM-unsplash-square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+
+### Connaissez‑vous l’ES2015 de l’ES2022 ?
+
+* **Prouvez votre maîtrise de JavaScript !** 🚀  
+* Aucun login ou inscription requis. ✨  
+* Choix multiples. 🤖 … _À quel point cela peut‑il être difficile, hein ?_
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="ES2020"
+  title="Coalescence nulle"
+  options={[
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la valeur de `result` ?
+    ```js
+    console.log(null ?? 100);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'opérateur de coalescence nulle (`??`) renvoie l'opérande du côté droit (`b`) si l'opérande du côté gauche (`a`) est `null` ou `undefined`. Dans ce cas, `a` vaut `null`, donc `result` vaut `100`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="ES2020"
+  title="Coalescence nulle"
+  options={[
+    {text: 'false', isAnswer: true},
+    {text: '42'},
+    {text: 'null'},
+    {text: 'undefined'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat du code suivant ?
+    ```js
+    const value = false;
+    const defaultVal = 42;
+    console.log(value ?? defaultVal);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'opérateur de coalescence nulle (`??`) considère les valeurs falsy comme `false` comme des valeurs valides. Comme `value` vaut `false`, il est considéré comme une valeur valide et est renvoyé.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Chaînage optionnel"
+  title="Chaînage optionnel"
+  options={[
+    {text: 'undefined', isAnswer: true},
+    {text: 'Erreur : Impossible de lire la propriété d\'un undefined'},
+    {text: 'null'},
+    {text: '100'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel est le résultat du code suivant ?
+    ```js
+    const obj = { foo: null };
+    const result = obj.foo?.bar;
+    console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'opérateur de chaînage optionnel (`?.`) interrompt l'évaluation si le côté gauche est `null` ou `undefined`. Comme `obj.foo` vaut `null`, `obj.foo?.bar` évalue à `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="BigInt"
+  title="Utilisation de BigInt"
+  options={[
+    {text: 'TypeError : impossible de mélanger BigInt et nombre'},
+    {text: '42n'},
+    {text: '84n', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel est le résultat du code suivant ?
+    ```js
+    const a = 42n;
+    const result = a * 2n;
+    console.log(result);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Les valeurs BigInt sont créées en ajoutant `n` à un nombre. Vous ne pouvez pas mélanger BigInt et nombres ordinaires dans les opérations arithmétiques. Ici, les deux valeurs sont des BigInt, donc la multiplication fonctionne, produisant `84n`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Import dynamique"
+  title="Syntaxe d'import dynamique"
+  options={[
+    {text: 'SyntaxError'},
+    {text: 'Promise'},
+    {text: 'Module'},
+    {text: 'object', isAnswer: true},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que cela affiche-t-il ?
+    ```js
+    const modulePromise = import('./myModule.js');
+    console.log(typeof modulePromise);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La fonction `import()` renvoie une `Promise` qui se résout en l'objet du module. Comme les instances de `Promise` sont des objets, `typeof modulePromise` affiche `'object'`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Promise.allSettled"
+  title="Promise.allSettled"
+  options={[
+    {text: 'rempli : succès', isAnswer: true},
+    {text: 'Rejeté : erreur'},
+    {text: 'En attente'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quel sera le résultat du code suivant ?
+    ```js
+    const promises = [
+      Promise.resolve('success'),
+      Promise.reject('error')
+    ];
+    Promise.allSettled(promises).then(results => {
+      console.log(results[0].status + ': ' + results[0].value);
+    });
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `Promise.allSettled` renvoie un tableau d'objets décrivant le résultat de chaque promesse. La première promesse est `fulfilled` avec la valeur `'success'`, donc l'instruction console affichera `fulfilled: success`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="String.matchAll"
+  title="Utilisation de String.matchAll"
+  options={[
+    {text: 'Tableau de correspondances'},
+    {text: 'Itérateur de correspondances', isAnswer: true},
+    {text: 'Erreur : appel invalide'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que renvoie `str.matchAll()` ?
+    ```js
+    const str = 'foo1bar2baz3';
+    const matches = str.matchAll(/\d/g);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `String.matchAll` renvoie un itérateur de correspondances, pas un tableau. Cet itérateur peut être utilisé pour obtenir tous les groupes correspondants d’une chaîne.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Import Meta"
+  title="Utilisation de import.meta"
+  options={[
+    {text: 'URL du module actuel', isAnswer: true},
+    {text: 'Horodatage actuel'},
+    {text: 'undefined'},
+    {text: 'SyntaxError'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que représente `import.meta.url` ?
+    ```js
+    console.log(import.meta.url);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `import.meta` est un objet qui contient des métadonnées sur le module actuel. La propriété `import.meta.url` représente l'URL du module actuel, qui peut être utilisée pour obtenir des informations sur l'emplacement d'exécution du script.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Assignation logique"
+  title="Assignation logique"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la valeur de `a` après l'assignation logique ?
+    ```js
+    let a = null;
+    a ||= 10;
+    console.log(a);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'assignation logique OU (`||=`) attribue la valeur de droite si la valeur de gauche est falsy (`null`, `undefined`, `0`, `false`, etc.). Puisque `a` vaut `null`, elle reçoit la valeur `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Assignation Nullish Logique"
+  title="Assignation Nullish Logique"
+  options={[
+    {text: '5'},
+    {text: '10', isAnswer: true},
+    {text: 'undefined'},
+    {text: 'null'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quelle est la valeur de `b` après l'assignation nullish ?
+    ```js
+    let b = null;
+    b ??= 10;
+    console.log(b);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'assignation de coalescence nullish (`??=`) attribue la valeur de droite si la valeur de gauche est `null` ou `undefined`. Comme `b` vaut `null`, elle reçoit la valeur `10`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="WeakRef"
+  title="Utilisation de WeakRef"
+  options={[
+    {text: 'ReferenceError'},
+    {text: '{ data: \'important\' }', isAnswer: true},
+    {text: 'null'},
+    {text: 'undefined'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Que fournit `WeakRef` ?
+    ```js
+    const obj = { data: 'important' };
+    const ref = new WeakRef(obj);
+    console.log(ref.deref());
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    `WeakRef` fournit une référence faible à un objet, ce qui permet à l'objet d'être récupéré par le ramasse‑miettes s'il n'existe aucune autre référence. Comme `obj` est encore fortement référencé ici, `deref()` renvoie l'objet original. Si la cible avait été libérée, `deref()` renverrait `undefined`.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
