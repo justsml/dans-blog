@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 72.01
+- Input tokens: 10981
+- Output tokens: 13393
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.004093
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -327,3 +345,4 @@ nmap -A -p1-65535 --open --reason $target_host
    - तथ्य: वे केवल उन चीजों को ब्लॉक करते हैं जिन्हें आप उन्हें निर्देशित करते हैं।  
 3. **निजी आईपी निश्चित हैं।**  
    - तथ्य: एनएएटी पार करने जैसे नुकसान अभी भी आपके नेटवर्क को प्रभावित कर सकते हैं।
+````
