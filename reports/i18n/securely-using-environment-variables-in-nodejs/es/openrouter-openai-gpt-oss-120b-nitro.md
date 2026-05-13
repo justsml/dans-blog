@@ -1,0 +1,159 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/es/index.mdx
+- Validation: passed
+- Runtime seconds: 5.97
+- Input tokens: 5007
+- Output tokens: 1246
+- Thinking tokens: unknown
+- Cached input tokens: 1408
+- Cache write tokens: 0
+- Estimated cost: $0.000420
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Uso devariables de entorno en NodeJS
+subTitle: Usando `dotenv`
+date: '2018-11-13'
+modified: '2020-07-30'
+tags:
+  - dotenv
+  - api-keys
+  - secrets
+  - tokens
+  - security
+  - nodejs
+category: Code
+subCategory: howto
+cover: ../john-salvino-417565-unsplash.webp
+cover_mobile: ../w300_john-salvino-417565-unsplash.webp
+cover_icon: ../icon_john-salvino-417565-unsplash.webp
+---
+## Manejo seguro de secretos y tokens de API
+
+### Artículo relacionado: [Protege tus tokens](../protect-your-tokens/)
+
+Recapitulemos rápidamente la diferencia entre `secret` y `non-secret`.
+
+* 🔒 `Secret keys` DEBEN usarse en un servidor personalizado (p. ej., Node/Express/Heroku) para ocultar (proxy) las solicitudes a servicios de API de terceros.
+* 🌍 `Non-secret keys` describe claves que pueden enviarse al navegador.
+
+> Nos enfocaremos en manejar 🔒 `Secret keys` usando **Variables de Entorno** en este artículo.
+
+[Los ejemplos de código están incluidos a continuación.](#️-code-example)
+
+#### Visión general
+
+Para **acceder de forma segura a los secretos en tu código NodeJS**:
+
+1. Sustituye las claves codificadas en duro por variables de entorno. p. ej. `process.env.API_SECRET`
+1. Usa una biblioteca como [`dotenv`](https://github.com/motdotla/dotenv) junto con un archivo `.env`. Añade tus secretos previamente codificados en duro al archivo `.env`.
+1. ¡Verifica que la línea `.env` esté en tu archivo `.gitignore`!
+
+> **NO** crees un archivo `.env` en los servidores de producción. Utiliza la herramienta de gestión de variables de entorno que ofrece tu servicio de hosting (p. ej. [Heroku](https://devcenter.heroku.com/articles/config-vars), Netlify, AWS EC2): p. ej. **panel de control o línea de comandos**.
+
+### Ejemplo de código
+
+Vamos a definir unos pocos archivos.
+
+1. `.env`
+1. `./db/connection.js`
+1. `./api/users.js`
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+Primero, instala el paquete [`dotenv`](https://www.npmjs.com/package/dotenv).
+
+```bash
+npm install dotenv
+```
+
+A continuación, crea un archivo `.env` en la raíz de tu proyecto.
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+❌ **NUNCA** comprometas el archivo `.env`.
+
+❌ Evita crear `.env` en los servidores.
+
+Revisa la documentación de tu proveedor de hosting para configurar _variables de entorno_.
+
+Para asegurarte rápidamente de que tu `.gitignore` contiene una línea para `.env`.
+
+```bash
+# Actualiza automáticamente .gitignore
+# Ejecuta en la terminal:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# nota: no se imprimirá salida
+```
+
+El archivo `./db/connection.js` proporciona una instancia compartida de `pg.Pool`. Se usará para consultar la base de datos.
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ Load .env file
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ only for showing debug connection vars
+
+// pg automatically uses PG* env variables
+module.exports = new pg.Pool();
+```
+
+La carpeta `./api` contiene interfaces a tus tablas/vistas.
+
+Aquí tienes un ejemplo `./api/users.js` para la tabla `users`.
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+-  ¡Nunca comprometas tus secretos de `.env` en git!
+-  No compartas archivos `.env` dentro del equipo. *
+
+\* Cada nuevo portátil o escritorio de desarrollo debe **generar nuevas claves de acceso y tokens**.  
+Si no es posible, maneja con mucho cuidado la compartición de tu `.env` (por ejemplo, cuando un servicio pueda invalidar todas las claves anteriores, o tengas un token de acceso limitado de una API de pago).
+
+#### ⚠️ Importante: si es necesario, siempre usa un servicio de mensajería segura (preferiblemente con soporte para mensajes que expiren).
+
+¡Buena suerte y avísame si tienes alguna pregunta! 🎉
+````
