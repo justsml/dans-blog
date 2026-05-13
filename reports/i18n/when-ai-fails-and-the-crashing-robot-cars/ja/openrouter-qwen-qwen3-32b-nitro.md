@@ -1,0 +1,69 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: ja
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 7.43
+- Input tokens: 3252
+- Output tokens: 2653
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000897
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: AIの失敗とクラッシュする
+subTitle: グーグルの自動運転車は、人間の運転手よりも事故が2倍多い。
+date: '2015-12-18'
+modified: '2024-07-30'
+category: AI
+subCategory: machine-learning
+tags:
+  - artificial-intelligence
+  - ai
+  - self-driving-cars
+  - fails
+cover: ../sandy-millar-749381-unsplash.webp
+cover_mobile: ../w300_sandy-millar-749381-unsplash.webp
+cover_icon: ../icon_sandy-millar-749381-unsplash.webp
+---
+## ロボットカー：事故は増えるのか、それとも減るのか？
+
+グーグルの自動運転車は、人間のドライバーに比べて2倍も多くの事故を起こしている。もしこれが単にバグのある新技術であり、最初から複雑すぎると考えているなら、あなたは部分的に正解している。[私が共有すべき重要な点：2015年12月時点では、**事故の原因はロボットではなく人間のドライバー**であった](http://www.bloomberg.com/news/articles/2015-12-18/humans-are-slamming-into-driverless-cars-and-exposing-a-key-flaw)。
+
+事故の原因は、ロボットカーの運転に慣れていない**人間のドライバー**にある。さらに、グーグルは車両に法律を絶対的に遵守させるようプログラミングしている—速度超過を一切行わず、混雑した高速道路の合流にも苦労する。これは法律的・倫理的な問題を引き起こす（これは[トロッコ問題](https://en.wikipedia.org/wiki/Trolley_problem)と呼ばれる）。
+
+- これは許容されるべきか：
+  - 走行帯が空いている場合、赤信号で歩道を通過して追突を避けるのは？
+  - 自転車が車線を横切るのを避けるために歩道を走行するのは？—AIが「道路交通のルール」の違反を許容しても良いのか？
+
+グーグルのアプローチは理解できる。特に責任を最小限に抑えることを目指す際には、常にルールに従うという論理が成り立つ。常に法律を遵守していれば、事故の原因者とされるリスクがなくなるからだ。
+
+法律の柔軟性を意図的に設計した結果、事故が発生した場合、**巨額な責任**を負うことになる。
+
+未来がロボットが80代のドライバーのように運転していても、逃げることはできない。  
+
+現状の単純な対策として、赤色の点滅LED（スクールバスをイメージ）を用いて、人間のドライバーが無実のロボットに追突する寸前を警告する方法があるだろう。  
+
+私は「遵守レベルの階層」を持つ車の方が安心できる。人間の運転に近い方法だと思う。  
+
+以下のように3段階のシステム認識を想定する（決定やその他のレイヤーは単純化のため省略）：  
+
+1. ベース：法律をうるさいほど正確に遵守する  
+2. ローカル：現在の交通状況に基づいて柔軟に調整。例えば、高速道路で10MPH以上が必要な場合に合流を許容。逆に交通が速すぎる場合は、他のドライバーに迷惑をかけないよう、車が賢く脇へ寄せる。  
+3. 360：**すべての**潜在的な極端な衝突リスク/回避策を計算。歩道を走行するなど、緊急時の対応を検討する。
+
+これはおそらく、スマートなバランスの取れた調整が求められる。たとえば、レベル1が法律に従っても避けられない直面事故を検出したら、すべてのプロセッサのパワーをレベル3にシフトし、危害を回避する創造的な方法を探る。
+
+ロボティックカーはすでに技術的に人間のドライバーをはるかに上回る性能を備えている。受け入れよう。歓迎しよう。
+
+### 参考文献
+
+1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
