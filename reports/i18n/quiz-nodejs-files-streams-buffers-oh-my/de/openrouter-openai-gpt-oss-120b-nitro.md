@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/de/index.mdx
+- Validation: passed
+- Runtime seconds: 43.71
+- Input tokens: 14631
+- Output tokens: 9007
+- Thinking tokens: unknown
+- Cached input tokens: 4736
+- Cache write tokens: 0
+- Estimated cost: $0.002192
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: NodeJS‑IO‑Meisterschaft'
@@ -598,3 +616,4 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 </QuizUI>
 
 Ich hoffe,Ihnen hat das Testen Ihres NodeJS‑IO‑Wissens gefallen! Noch mehr? Schauen Sie sich meine <a href="/challenges/">Quiz‑Sammlung</a> für weitere Aufgaben an!
+````

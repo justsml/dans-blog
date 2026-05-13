@@ -20,8 +20,8 @@ cover_full_width: ../data-streaming-wide.webp
 cover_mobile: ../data-streaming-square.webp
 cover_icon: ../data-streaming-square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Bereit, in die Welt von NodeJS IO einzutauchen? 🌊</p>
 
@@ -47,8 +47,8 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was macht dieser Code?
     ```js
-    const buf = Buffer.alloc(5);
-    console.log(buf);
+        const buf = Buffer.alloc(5);
+        console.log(buf);
     ```
   </div>
   </slot>
@@ -81,8 +81,8 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was wird das ausgeben?
     ```js
-    const buf = Buffer.from([65]);
-    console.log(buf.toString());
+        const buf = Buffer.from([65]);
+        console.log(buf.toString());
     ```
   </div>
   </slot>
@@ -115,11 +115,11 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Wie lautet die Ausgabereihenfolge?
     ```js
-    import fs from 'fs';
-    fs.readFile('test.txt', 'utf8', (err, data) => {
-      console.log(data);
-    });
-    console.log('Done');
+        import fs from 'fs';
+        fs.readFile('test.txt', 'utf8', (err, data) => {
+          console.log(data);
+        });
+        console.log('Done');
     ```
   </div>
   </slot>
@@ -130,13 +130,13 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Um zuerst auf das Lesen der Datei zu warten, könntest du die Promise-basierte Version verwenden:
     ```js
-    import { promises as fs } from 'fs';
+        import { promises as fs } from 'fs';
     
-    async function read() {
-      const data = await fs.readFile('test.txt', 'utf8');
-      console.log(data);
-      console.log('Done');
-    }
+        async function read() {
+          const data = await fs.readFile('test.txt', 'utf8');
+          console.log(data);
+          console.log('Done');
+        }
     ```
   </div>
   </slot>
@@ -158,8 +158,8 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was gibt `fs.readFileSync()` standardmäßig zurück?
     ```js
-    import fs from 'fs';
-    const content = fs.readFileSync('test.txt');
+        import fs from 'fs';
+        const content = fs.readFileSync('test.txt');
     ```
   </div>
   </slot>
@@ -199,9 +199,9 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
     - 'error': Wenn ein Fehler auftritt
     - 'close': Wenn der Stream und die zugrunde liegende Ressource geschlossen wurden
     ```js
-    const readable = fs.createReadStream('file.txt');
-    readable.on('data', chunk => console.log(chunk));
-    readable.on('end', () => console.log('Done!'));
+        const readable = fs.createReadStream('file.txt');
+        readable.on('data', chunk => console.log(chunk));
+        readable.on('end', () => console.log('Done!'));
     ```
     [Mehr über Stream‑Ereignisse erfahren](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
@@ -224,10 +224,10 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was macht dieser Code?
     ```js
-    import fs from 'fs';
-    const readable = fs.createReadStream('source.txt');
-    const writable = fs.createWriteStream('dest.txt');
-    readable.pipe(writable);
+        import fs from 'fs';
+        const readable = fs.createReadStream('source.txt');
+        const writable = fs.createWriteStream('dest.txt');
+        readable.pipe(writable);
     ```
   </div>
   </slot>
@@ -258,8 +258,8 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was bewirkt die Option `recursive`?
     ```js
-    import fs from 'fs';
-    fs.mkdirSync('./a/b/c', { recursive: true });
+        import fs from 'fs';
+        fs.mkdirSync('./a/b/c', { recursive: true });
     ```
   </div>
   </slot>
@@ -291,16 +291,16 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was wird das ausgeben?
     ```js
-    import { Transform } from 'stream';
-    const upperCase = new Transform({
-      transform(chunk, encoding, callback) {
-        callback(null, chunk.toString().toUpperCase());
-      }
-    });
-    process.stdin
-      .pipe(upperCase)
-      .pipe(process.stdout);
-    // Input: "hello world"
+        import { Transform } from 'stream';
+        const upperCase = new Transform({
+          transform(chunk, encoding, callback) {
+            callback(null, chunk.toString().toUpperCase());
+          }
+        });
+        process.stdin
+          .pipe(upperCase)
+          .pipe(process.stdout);
+        // Input: "hello world"
     ```
   </div>
   </slot>
@@ -334,11 +334,11 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Wie oft wird `fs.watch()` garantiert ausgelöst, wenn eine Datei geändert wird?
     ```js
-    import fs from 'fs';
-    fs.watch('test.txt', (eventType, filename) => {
-      console.log(`${filename} was changed`);
-    });
-    // Then modify test.txt once
+        import fs from 'fs';
+        fs.watch('test.txt', (eventType, filename) => {
+          console.log(`${filename} was changed`);
+        });
+        // Then modify test.txt once
     ```
   </div>
   </slot>
@@ -374,9 +374,9 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was ist die Ausgabe?
     ```js
-    const buf1 = Buffer.from('Hello');
-    const buf2 = Buffer.from('Hello');
-    console.log(buf1 === buf2);
+        const buf1 = Buffer.from('Hello');
+        const buf2 = Buffer.from('Hello');
+        console.log(buf1 === buf2);
     ```
   </div>
   </slot>
@@ -386,9 +386,9 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Um Buffer-Inhalte zu vergleichen, verwende:
     ```js
-    buf1.equals(buf2)  // true
-    // or
-    Buffer.compare(buf1, buf2) === 0  // true
+        buf1.equals(buf2)  // true
+        // or
+        Buffer.compare(buf1, buf2) === 0  // true
     ```
     [Erfahren Sie mehr über den Buffer-Vergleich](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
@@ -418,13 +418,13 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Beispiel für manuelle Backpressure:
     ```js
-    readable.on('data', (chunk) => {
-      const canContinue = writable.write(chunk);
-      if (!canContinue) {
-        readable.pause();
-        writable.once('drain', () => readable.resume());
-      }
-    });
+        readable.on('data', (chunk) => {
+          const canContinue = writable.write(chunk);
+          if (!canContinue) {
+            readable.pause();
+            writable.once('drain', () => readable.resume());
+          }
+        });
     ```
     `pipe()` erledigt das automatisch!
 
@@ -449,8 +449,8 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Was macht dieser Code?
     ```js
-    import fs from 'fs';
-    fs.symlinkSync('target.txt', 'link.txt');
+        import fs from 'fs';
+        fs.symlinkSync('target.txt', 'link.txt');
     ```
   </div>
   </slot>
@@ -465,7 +465,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     So erstellst du stattdessen einen Hardlink:
     ```js
-    fs.linkSync('target.txt', 'hardlink.txt');
+        fs.linkSync('target.txt', 'hardlink.txt');
     ```
     [Mehr über Symlinks erfahren](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
@@ -499,13 +499,13 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Beispiel für Objektmodus:
     ```js
-    import { Transform } from 'stream';
-    const objectStream = new Transform({
-      objectMode: true,
-      transform(chunk, encoding, callback) {
-        callback(null, { value: chunk });
-      }
-    });
+        import { Transform } from 'stream';
+        const objectStream = new Transform({
+          objectMode: true,
+          transform(chunk, encoding, callback) {
+            callback(null, { value: chunk });
+          }
+        });
     ```
     [Mehr über Stream‑Modi erfahren](https://nodejs.org/api/stream.html#object-mode)
   </div>
@@ -528,10 +528,10 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Welchen Typ hat der `fd`‑Parameter in diesem Callback?
     ```js
-    import fs from 'fs';
-    fs.open('test.txt', 'r', (err, fd) => {
-      console.log(typeof fd);
-    });
+        import fs from 'fs';
+        fs.open('test.txt', 'r', (err, fd) => {
+          console.log(typeof fd);
+        });
     ```
   </div>
   </slot>
@@ -546,9 +546,9 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Denk immer daran, Dateideskriptoren zu schließen:
     ```js
-    fs.close(fd, (err) => {
-      if (err) throw err;
-    });
+        fs.close(fd, (err) => {
+          if (err) throw err;
+        });
     ```
     [Mehr über Dateideskriptoren erfahren](https://nodejs.org/api/fs.html#file-descriptors)
   </div>
@@ -572,9 +572,9 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
   <div className="question">
     Wie viele Bytes benötigt dieser String in UTF‑8?
     ```js
-    const str = "Hello 🌍";
-    const buf = Buffer.from(str);
-    console.log(buf.length);
+        const str = "Hello 🌍";
+        const buf = Buffer.from(str);
+        console.log(buf.length);
     ```
   </div>
   </slot>
@@ -588,7 +588,7 @@ Mal sehen, wie gut Sie Ihre Streams im Vergleich zu Ihren Buffern kennen! 🚀
 
     Um die Bytes zu sehen:
     ```js
-    console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
+        console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
     ```
     [Mehr über UTF‑8‑Kodierung erfahren](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
