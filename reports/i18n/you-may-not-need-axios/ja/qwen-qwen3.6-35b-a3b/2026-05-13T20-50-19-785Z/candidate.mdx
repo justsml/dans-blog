@@ -1,0 +1,204 @@
+---
+social_image: ../desktop-social.webp
+title: Axios は必須ではない
+subTitle: Fetch API が活躍する
+date: '2018-11-14'
+modified: '2024-08-21'
+tags:
+  - programming
+  - patterns
+  - examples
+  - nodejs
+  - javascript
+  - promises
+  - axios
+  - fetch
+category: Guides
+subCategory: fetch
+cover: ../brock-dupont-575648-unsplash.webp
+cover_mobile: ../w300_brock-dupont-575648-unsplash.webp
+cover_icon: ../icon_brock-dupont-575648-unsplash.webp
+---
+import Gist from '../../../../components/Gist/index.astro'
+
+## Axios が必ずしも必要とは限らない
+
+<p class="breakout call-to-action">これは [Axios](https://www.npmjs.com/package/axios) に対する**攻撃ではありません**。 <br />
+
+むしろ、**かなり能力が向上した `fetch` API を推奨するものです**。 🦄</p>
+
+### 概要
+
+本記事は、もっと簡単に探せるようになっていればよかった「欠落していた」`fetch` のコードスニペットと、よくあるユースケースをまとめたものです。
+
+- [概要](#overview)
+- [機能比較](#feature-comparison)
+- [fetch レシピ](#fetch-recipes)
+  - [URL から JSON を取得する](#get-json-from-a-url)
+  - [カスタムヘッダー](#custom headers)
+  - [HTTP エラーハンドリング](#http-error-handling)
+  - [CORS の例](#cors-example)
+  - [JSON の送信](#posting-json)
+  - [HTML `<form>` の送信](#posting-an-html-form)
+  - [フォームエンコードされたデータ](#form-encoded-data)
+  - [ファイルのアップロード](#uploading-a-file)
+  - [複数ファイルのアップロード](#uploading-multiple-files)
+  - [タイムアウト](#timeouts)
+  - [ダウンロード進捗ヘルパー](#download-progress-helper)
+  - [再帰的リトライヘルパー](#recursive-retry-helper)
+  - [HTTP リダイレクトの処理](#handling-http-redirects)
+  - [fetch リクエストのキャンセル](#canceling-a-fetch-request) ✨new✨
+- [互換性](#compatibility)
+
+> あなたのユースケースがリストにありませんか？ [お知らせください ✉️](../contact/)
+
+<br />
+
+### 機能比較
+
+|                                                 | fetch    | axios    | request |
+|-------------------------------------------------|:--------:|:--------:|:-------:|
+| リクエストとレスポンスのインターセプト          |✅        |✅         |✅       |
+| リクエストとレスポンスデータのトランスフォーム  |✅        |✅         |✅       |
+| リクエストのキャンセル                          |✅        |✅         |❌       |
+| JSONデータの自動トランスフォーム                 |手動ヘルパー|✅         |✅       |
+| XSRF対策のクライアントサイドサポート           |✅        |✅         |✅       |
+| 進捗                                            |✅        |✅         |✅       |
+| ストリーミング                                  |✅        |✅         |✅       |
+| リダイレクト                                    |✅        |✅         |✅       |
+
+<br /><br />
+
+この記事を執筆し始めた頃（2018年末、2024年に更新）は、最終的にチェックボックスが混在した表になるものだと思っていた。確かに、[`axios`](https://www.npmjs.com/package/axios)、[`request`](https://www.npmjs.com/package/request)、[`r2`](https://www.npmjs.com/package/r2)、[`superagent`](https://www.npmjs.com/package/superagent)、[`got`](https://www.npmjs.com/package/got) などのサードパーティ製ライブラリを正当化する特別な _ユースケース_ が存在するに違いない。
+
+しかし結果として、**サードパーティ製HTTPライブラリに対する需要を過大評価していた**ことがわかった。
+
+`fetch`を数年間使用してきたにもかかわらず（ファイルアップロードやエラー/リトライ対応といった実務レベルのタスクも含めて）、`fetch`の能力と制限に対する誤解はまだ残っていた。
+
+ネイティブの `fetch` は、JSONレスポンスの自動パースやJSONリクエストボディの文字列化を行わない。受信時は `response.json()` を呼び出し、送信時は `JSON.stringify()` を使う。その点の操作性ではAxiosがまだ勝るが、`fetch` の主張は、小さなヘルパー関数でほとんど差を埋められるという点にある。
+
+さて、`fetch` が何ができるか見ていこう。
+
+## fetchレシピ
+
+### URLからJSONを取得する
+
+<Gist path='justsml/de941bd61cc86e30beedbb8a3a646f81'></Gist>
+
+### カスタムヘッダー
+
+<Gist path='justsml/fca7cd72ec1ebc07d994eac13a665ddf' />
+
+### HTTP エラーハンドリング
+
+<Gist path='justsml/81919a72897ebc503c6b34a556a9bde2' />
+
+### CORS の例
+
+CORS の検証は主にサーバー側で実行されるため、サーバー側の設定が正しいことを確認してください。
+
+`credentials` オプションは、クッキーを自動的にリクエストに含めるかどうかを制御します。
+
+<Gist path='justsml/3ddd9ed8705f48cdf45d313d1e57aa2a' />
+
+### JSON の送信
+
+<Gist path='justsml/13915347d6c8413c73f4bd7240c68e51' />
+
+### HTML `<form>` の送信
+
+<Gist path='justsml/ef2e356bec0ef7c6e528d84a5f75ba7e' />
+
+### フォームエンコードデータ
+
+`Content-Type` を `application/x-www-form-urlencoded` に設定してデータを送信するには、`URLSearchParams` を用いてクエリ文字列形式でデータをエンコードします。
+
+例えば、`new URLSearchParams({a: 1, b: 2})` は `a=1&b=2` を返します。
+
+<Gist path='justsml/716c4534ef4afb22f65d4fc4367c7136' />
+
+### ファイルのアップロード
+
+<Gist path='justsml/301f22aa37df565ba3051bd5f95b4df1' />
+
+### 複数ファイルのアップロード
+
+`multiple` 属性を指定してファイルアップロード要素を設定します：
+
+<Gist path='justsml/37836357041d8ca4d1b32e12638cb0ba' />
+
+以下のように呼び出します：
+
+<Gist path='justsml/d17f50c36a5ddb70f584c0aa6de94237' />
+
+### タイムアウト
+
+「部分適用（Partial Application）」パターンを用いた汎用的な Promise タイムアウト関数です。Promise インターフェースが実装されていれば、どのような非同期オブジェクトでも動作します。渡された Promise チェーン内で重い処理を行わないでください。処理は継続して実行され、失敗した場合に長期のメモリリークを引き起こす原因になりかねません。
+
+<Gist path='justsml/f93b2ef6457b3e52eb995831b67cab85' />
+
+より複雑な例として、`__timeout` というフラグによる追跡機能を実装したパターンがあります。これにより、**高コストな処理をすべてインターセプト（中断）できます。**
+
+<Gist path='justsml/5e492db8997a4f7e22e61b7486cbf273' />
+
+### ダウンロード進捗ヘルパー
+
+アップロード進捗の監視は、現在 Chrome 以外のブラウザでは少し問題があります。
+
+Progress Handler については、[以下に示す手法が](#source-progress-helper) `fetch` 呼び出しをクロージャで囲まない](#source-progress-helper) 👍
+
+`progressHelper` のインターフェースは以下の通りです（ソースは後述）。
+
+<Gist path='justsml/db5ccc55ffb93c75e04e014d1f553cfb' />
+
+使用例を見てみましょう：
+
+<Gist path='justsml/9bec219590ff50688972c1caff67c14b' />
+
+再利用可能な画像ダウンローダーは、例えば `getBlob()` のようになります：
+
+<Gist path='justsml/bef2dd7e630eb7642beb3e2be29489b2' />
+
+ちなみに、`Blob` とは Binary Large Object（バイナリ大規模オブジェクト）の略称です。
+
+以下の 2 つの使用パターンのうち、どちらか一方を必ず選択してください（機能的には同等です）：
+
+<Gist path='justsml/6ad9e37a96ad1f3a75ca509038510a5b' />
+
+私の好みは `Option #1` だが、スコープ設計によっては `Option #2` を採用せざるを得ない場合もある。
+
+最後に、このレシピの最後のパート、`progressHelper` を示す。
+
+##### ソース：Progress Helper
+
+<Gist path='justsml/a8ffd810fc7e5a5295dfc898302ddbfc' />
+
+_credit:_ Anthum Chris 氏に感謝。同氏の[こちらで公開されている優れた Progress+Fetch PoC](https://github.com/AnthumChris/fetch-progress-indicators) を参照。
+
+### 再帰的リトライヘルパー
+
+<Gist path='justsml/7e52521a0af50fa590be57d5b4593120' />
+
+### HTTP リダイレクトの処理
+
+<Gist path='justsml/3dd0a799ada8da7cd15943ff254266de' />
+
+### fetch リクエストのキャンセル
+
+<Gist path='justsml/7f257ac3de3c7792db8485588c54e938' />
+
+### 互換性
+
+2022年現在、`fetch` APIはすべての主要ブラウザおよびNodeJS v18以降で[広くサポートされています](https://caniuse.com/#feat=fetch)。
+
+IEのサポートが必須の場合、`github/fetch`パッケージを使用して`fetch`をポリフィルできます（GitHubのチームが保守しています）。[IE8](https://github.com/camsong/fetch-ie8)まで対応させることも可能ですが、_環境や要件によって結果は異なります_。
+
+より古いNodeJSでも、[`node-fetch`](https://www.npmjs.com/package/node-fetch)パッケージを導入すれば`fetch` APIを利用可能です：
+
+```sh
+npm install node-fetch
+```
+
+_ポリフィルとnode-fetchの併用で、互換性は99.99%に到達_ ✅
+
+> 他の_ユースケース_について知りたい場合は、[私にツイートしてください](https://x.com/justsml)。❤️
