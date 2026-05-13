@@ -53,11 +53,11 @@ function assertFrontmatter(contents: string) {
 }
 
 function assertProtectedTokens(sourceContents: string, targetContents: string) {
-  const sourceImports = sourceContents.match(/^import\s.+$/gm) ?? [];
+  const sourceImports = extractImportSignatures(sourceContents);
+  const targetImports = extractImportSignatures(targetContents);
   for (const importLine of sourceImports) {
-    const localeImportLine = importLine.replaceAll(" from '../../../", " from '../../../../");
-    if (!targetContents.includes(importLine) && !targetContents.includes(localeImportLine)) {
-      throw new Error(`Missing preserved import in ${targetPath}: ${importLine}`);
+    if (!targetImports.some((targetImport) => importsMatch(importLine, targetImport))) {
+      throw new Error(`Missing preserved import in ${targetPath}: ${importLine.raw}`);
     }
   }
 
@@ -85,6 +85,57 @@ function assertProtectedTokens(sourceContents: string, targetContents: string) {
       `${targetPath} changed <pre><code> block count from ${sourcePreCode} to ${targetPreCode}`,
     );
   }
+}
+
+type ImportSignature = {
+  raw: string;
+  clause: string;
+  moduleSpecifier: string;
+  moduleSuffix: string;
+};
+
+function extractImportSignatures(contents: string): ImportSignature[] {
+  return (contents.match(/^import\s.+$/gm) ?? [])
+    .map((raw) => parseImportSignature(raw))
+    .filter((signature): signature is ImportSignature => signature != null);
+}
+
+function parseImportSignature(raw: string): ImportSignature | undefined {
+  const normalized = raw.trim().replace(/;$/, "").replace(/\s+/g, " ");
+  const sideEffectMatch = normalized.match(/^import\s+['"]([^'"]+)['"]$/);
+  if (sideEffectMatch != null) {
+    const moduleSpecifier = sideEffectMatch[1];
+    return {
+      raw,
+      clause: "",
+      moduleSpecifier,
+      moduleSuffix: stripRelativePrefix(moduleSpecifier),
+    };
+  }
+
+  const match = normalized.match(/^import\s+(.+?)\s+from\s+['"]([^'"]+)['"]$/);
+  if (match == null) return undefined;
+
+  const moduleSpecifier = match[2];
+  return {
+    raw,
+    clause: match[1].trim(),
+    moduleSpecifier,
+    moduleSuffix: stripRelativePrefix(moduleSpecifier),
+  };
+}
+
+function importsMatch(sourceImport: ImportSignature, targetImport: ImportSignature) {
+  if (sourceImport.raw === targetImport.raw) return true;
+  if (sourceImport.clause !== targetImport.clause) return false;
+  if (sourceImport.moduleSpecifier === targetImport.moduleSpecifier) return true;
+
+  return sourceImport.moduleSuffix !== ""
+    && sourceImport.moduleSuffix === targetImport.moduleSuffix;
+}
+
+function stripRelativePrefix(moduleSpecifier: string) {
+  return moduleSpecifier.replace(/^(\.\.\/)+/, "");
 }
 
 function assertNestedAssetPaths(targetContents: string) {
