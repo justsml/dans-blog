@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/ja/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.04
+- Input tokens: 13977
+- Output tokens: 19612
+- Thinking tokens: unknown
+- Cached input tokens: 7040
+- Cache write tokens: 0
+- Estimated cost: $0.004075
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Transformers.jsでビームサーチを実装する
 subTitle: 千行のコード、数か月の待機、そしてテキスト生成の内部を徹底解析。
@@ -179,4 +197,5 @@ JavaScript で seq2seq を扱い、今日から本格的なビームサーチを
 ---  
 ¹ はい、`num_beams=1` が単なるグリーディ探索であることは承知しています。退化ケースは明確に定義されています。  
 
-² エンコーダーのみのモデル（BERT など）はトークンを生成しないため、ここで述べた内容は適用されません。単に雰囲気です。  
+² エンコーダーのみのモデル（BERT など）はトークンを生成しないため、ここで述べた内容は適用されません。単に雰囲気です。
+````
