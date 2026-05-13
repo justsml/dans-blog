@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 3.63
+- Input tokens: 8410
+- Output tokens: 2274
+- Thinking tokens: unknown
+- Cached input tokens: 3456
+- Cache write tokens: 0
+- Estimated cost: $0.000737
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Схватка: Git Rebase vs. Merge'
@@ -126,3 +144,4 @@ Mental model: "I want to create an alternate version of an existing history. (e.
 - Вы можете использовать специальный разделитель `--` с `git checkout`, чтобы оставаться в текущей ветке и копировать указанные файлы:
 - `git checkout feature/half-a-feature **--** <путь к папке или файлу>`
 - Сначала убедитесь, что все изменения, которые нужно сохранить, закоммичены, иначе команда перезапишет локальные изменения.
+````
