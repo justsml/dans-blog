@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'Quiz: Padronanza delle Espressioni Regolari'
-subTitle: Riesci a domare alcuni RegEx selvaggi?
+title: 'Quiz: Padronanza delle espressioni regolari'
+subTitle: Riesci a domare qualche espressione regolare selvaggia?
 label: RegEx
 social_image: ../desktop-social.webp
 category: Quiz
@@ -18,20 +18,20 @@ cover_full_width: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-wide.webp
 cover_mobile: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 cover_icon: ../dan-lounsbury-uHZ2-nzYuIs-unsplash-square-200.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Pronto a scontrarti con alcune Espressioni Regolari? 🤼‍♂️</p>
+<p class="inset">Pronto a lottare con alcune Espressioni Regolari? 🤼‍♂️</p>
 
-Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che coprono pattern di base, quantificatori, gruppi e quelle complicate asserzioni look-around. Dallo semplice abbinamento di stringhe alla complessa validazione di pattern - riesci a individuare la regex corretta?
+Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern di base, quantificatori, gruppi e quelle insidiose asserzioni look‑around. Dalla semplice corrispondenza di stringhe alla complessa validazione di pattern – riesci a individuare la regex corretta?
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Scaldausi"
-  title="Corrispondenza sensibile al maiuscolo/minuscolo"
+  group="Riscaldamento"
+  title="Corrispondenza Sensibile al Caso"
   options={[
     {text: '["Cat"]'},
     {text: '["cat", "CAT", "Cat"]'},
@@ -49,15 +49,15 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Questo modello utilizza `g`, ma non `i`:
+    Questo pattern usa `g`, ma non `i`:
     - `g` trova tutte le corrispondenze
-    - Senza `i`, la corrispondenza è sensibile al maiuscolo/minuscolo
+    - Senza `i`, il matching è sensibile al caso
 
-    Senza la bandiera `i`, solo la versione minuscola "cat" corrisponde.
+    Senza il flag `i`, solo "cat" in minuscolo corrisponde.
 
-    Questo è particolarmente utile quando si gestiscono input utente o HTML dove il maiuscolo/minuscolo potrebbe variare.
+    È particolarmente utile quando si gestiscono input utente o HTML dove il caso può variare.
 
-    [Scopri di più sulle bandiere di RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
+    [Scopri di più sui flag RegExp](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags)
   </div>
   </slot>
 </Challenge>
@@ -66,7 +66,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   client:visible={{rootMargin: "150px"}}
   index={1}
   group="Riscaldamento"
-  title="Corrispondenza di caratteri semplice"
+  title="Corrispondenza di Caratteri Semplice"
   options={[
     {text: '["cat", "hat"]', isAnswer: true},
     {text: '["cat", "hat", "what"]'},
@@ -85,13 +85,13 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il pattern `/^[ch]at/` corrisponde a stringhe che:
-    - Iniziano (`^`) con 'c' o 'h' (questo è il significato di `[ch]` - una classe di caratteri che matcha un singolo carattere)
-    - Seguiti letteralmente da 'at'
+    Il pattern `/^[ch]at/` corrisponde alle stringhe che:
+    - Iniziano (`^`) con 'c' o 'h' (ecco cosa significa `[ch]` – una classe di caratteri che accetta un solo carattere)
+    - Sono seguite letteralmente da 'at'
 
-    Pertanto, solo "cat" e "hat" corrispondono a questo pattern. Il metodo `filter()` mantiene solo gli elementi corrispondenti.
+    Pertanto, solo "cat" e "hat" soddisfano questo pattern. Il metodo `filter()` conserva solo gli elementi corrispondenti.
 
-    [Scopri di più sulle classi di caratteri su MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
+    [Maggiori informazioni sulle classi di caratteri su MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes)
   </div>
   </slot>
 </Challenge>
@@ -99,14 +99,14 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="Corrispondenza di Base"
-  title="Goloso vs Non Goloso"
+  group="Corrispondenza di base"
+  title="Greedy vs Non-Greedy"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    A cosa corrisponderà questo?
+    Cosa corrisponderà questo?
     ```js
         '<div>Hello</div><div>World</div>'.match(/<div>.*?<\/div>/g)
     ```
@@ -114,15 +114,15 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il pattern `/<div>.*?<\/div>/g` utilizza la corrispondenza non golosa con `*?` che significa:
-    - Corrispondi a `<div>`
-    - Corrispondi a qualsiasi carattere (`.*`) ma nel modo meno possibile (`?`)
+    Il pattern `/<div>.*?<\/div>/g` utilizza il matching non‑greedy con `*?`, che significa:
+    - Corrispondi `<div>`
+    - Corrispondi qualsiasi carattere (`.*`) ma il meno possibile (`?`)
     - Fino a trovare `</div>`
-    - Il flag `g` fa sì che corrisponda a tutte le occorrenze
+    - Il flag `g` fa sì che vengano trovate tutte le occorrenze
 
-    Senza il `?`, il goloso `.*` corrisponderebbe a tutto da `<div>` iniziale a `</div>` finale, producendo un'unica corrispondenza. Con `?`, invece, corrisponde a ciascuna coppia separatamente.
+    Senza il `?`, il greedy `.*` corrisponderebbe a tutto, dal primo `<div>` all'ultimo `</div>`, producendo un'unica corrispondenza grande. Con `?`, corrisponde a ciascuna coppia separatamente.
 
-    [Scopri di più su goloso vs non goloso](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [Scopri di più sul matching greedy vs lazy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -130,8 +130,8 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="Errori comuni"
-  title="Il metacarattere punto"
+  group="Trappole comuni"
+  title="Il Metacarattere Punto"
   options={[
     {text: '["hello\nworld"]'},
     {text: '["hello", "world"]', isAnswer: true},
@@ -141,7 +141,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Cosa restituirà questo?
+    Cosa restituirà?
     ```js
         'hello\nworld'.match(/\w+/g)
     ```
@@ -149,12 +149,12 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il pattern `\w+` cerca uno o più caratteri alfanumerici. Anche se c'è un newline nella stringa, `\w` corrisponde a:
+    Il pattern `\w+` corrisponde a uno o più caratteri di parola. Anche se nella stringa c'è un newline, `\w` corrisponde a:
     - Lettere (a-z, A-Z)
     - Numeri (0-9)
-    - Sottolineatura (_)
+    - Underscore (_)
 
-    Quindi il newline agisce come un confine di parola, ottenendo due corrispondenze. Se avessimo usato `.*`, non avrebbe corrisposto al newline di default (sarebbe servito il flag `s`).
+    Quindi il newline funge da confine di parola, e otteniamo due corrispondenze. Se avessimo usato `.*`, non corrisponderebbe al newline per impostazione predefinita (bisognerebbe il flag `s` per farlo).
 
     [Scopri di più sui metacaratteri](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)
   </div>
@@ -184,15 +184,15 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Questo modello non corrisponderà a niente perché il look-ahead è invertito! Se vuoi numeri preceduti da `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
+    Questo pattern non corrisponde a nulla perché il look-ahead è al contrario! Se vuoi cifre precedute da `$` o `€`, usa un look-behind: `/(?<=[\$€])\d+/g`.
 
-    I look-ahead controllano ciò che viene *dopo* la posizione corrente. Il modello scritto cerca:
-    - Uno o più numeri (`\d+`)
-    - Seguiti da (`(?=...)`) `$` o `€` (`[\$€]`)
+    I look-ahead controllano cosa viene *dopo* la posizione corrente. Il pattern così scritto cerca:
+    - Una o più cifre (`\d+`)
+    - Seguite da (`(?=...)`) oppure $ o € (`[\$€]`)
 
-    Poiché non ci sono numeri seguiti da simboli di valuta (sono preceduti da loro), non otteniamo corrispondenze.
+    Poiché non ci sono numeri seguiti da simboli di valuta (sono preceduti da essi), non otteniamo corrispondenze.
 
-    [Scopri di più sugli asserti di look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Scopri di più sulle asserzioni look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -200,8 +200,8 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="Corrispondenza di base"
-  title="Confini delle parole"
+  group="Corrispondenza Base"
+  title="Confini di Parola"
   options={[
     {text: '["cat", "cats"]'},
     {text: '["cat"]', isAnswer: true},
@@ -211,7 +211,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Cosa verrà corrisposto?
+    Cosa corrisponderà?
     ```js
         'cat cats category'.match(/\bcat\b/g)
     ```
@@ -219,8 +219,8 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'`\b` rappresenta un confine di parola, che corrisponde:
-    - Tra un carattere di parola e un non-carattere di parola
+    Il `\b` rappresenta un confine di parola, che corrisponde:
+    - Tra un carattere di parola e un carattere non‑parola
     - All'inizio/fine della stringa se c'è un carattere di parola
 
     Quindi `/\bcat\b/` corrisponde a "cat" solo quando è una parola completa, non parte di un'altra parola.
@@ -236,14 +236,14 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="Errori comuni"
-  title="La bandiera globale"
+  group="Trappole comuni"
+  title="Il flag globale"
   options={[
     {text: 'null'},
     {text: '["a"]'},
     {text: '["a", "a", "a"]', isAnswer: true},
     {text: '["b", "n", "n"]'},
-    {text: 'Error'},
+    {text: 'Errore'},
   ]}
 >
   <slot name="question">
@@ -256,15 +256,15 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La bandiera `g` (globale) modifica il comportamento di `match()`:
-    - Senza `g`: Restituisce il primo match con i gruppi di acquisizione
-    - Con `g`: Restituisce un array di tutte le stringhe corrispondenti
+    Il flag `g` (global) cambia il comportamento di `match()`:
+    - Senza `g`: restituisce la prima corrispondenza con i gruppi di cattura
+    - Con `g`: restituisce un array di tutte le stringhe corrispondenti
 
     In questo caso, trova tutte le occorrenze di "a" in "banana".
 
-    Nota: Se hai bisogno sia di tutti i match che dei gruppi di acquisizione, usa `matchAll()` o il metodo `exec()` in un ciclo.
+    Nota: se ti servono sia tutte le corrispondenze CHE i gruppi di cattura, usa `matchAll()` o il metodo `exec()` in un ciclo.
 
-    [Scopri di più sulla bandiera globale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
+    [Scopri di più sul flag globale](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/global)
   </div>
   </slot>
 </Challenge>
@@ -284,7 +284,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Quali corrispondono a questa espressione?
+    Cosa corrisponde a questo modello?
     ```js
         'abc123 def456'.match(/(?<!abc)\d+/g)
     ```
@@ -292,14 +292,14 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'assertione di look-behind negativo `(?<!abc)` garantisce che le cifre non siano precedute da "abc":
-    - ❌ "123" (precede "abc")
-    - ✅ "23" (precede "abc1")
-    - ✅ "456" (precede "def")
+    Il look-behind negativo `(?<!abc)` garantisce che le cifre non siano precedute da "abc":
+    - ❌ "123" (preceduto da "abc")
+    - ✅ "23" (preceduto da "abc1")
+    - ✅ "456" (preceduto da "def")
 
-    JavaScript supporta le asserzioni di look-behind in motori moderni. Questo esempio usa un look-behind di lunghezza fissa: `abc` è sempre di tre caratteri. Il look-behind di lunghezza variabile è un caso più complesso e dipendente dal motore.
+    JavaScript supporta le asserzioni look-behind nei motori moderni. Questo esempio usa un look-behind a lunghezza fissa: `abc` è sempre di tre caratteri. Il look-behind a lunghezza variabile è l'aspetto più complicato e dipende dal motore.
 
-    Nota: Il supporto al look-behind è relativamente recente in JavaScript. Controlla la [compatibilità tra i browser](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) se devi supportare browser datati.
+    Nota: il supporto al look-behind è relativamente recente in JavaScript. Controlla la [compatibilità del browser](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) se devi supportare browser più vecchi.
   </div>
   </slot>
 </Challenge>
@@ -311,14 +311,14 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   title="Gruppi di cattura"
   options={[
     {text: '["2029-12-31"]'},
-    {text: '["2029", "12", "31"]', isAnswer: true, hint: 'I gruppi catturano anno, mese e giorno separatamente'},
+    {text: '["2029", "12", "31"]', isAnswer: true},
     {text: '["20", "29", "12", "31"]'},
     {text: 'null'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Cosa restituirà questo?
+    Cosa restituirà?
     ```js
         '2029-12-31'.match(/(\d{4})-(\d{2})-(\d{2})/).slice(1)
     ```
@@ -331,13 +331,13 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
     2. `(\d{2})` cattura il mese
     3. `(\d{2})` cattura il giorno
 
-    `match()` senza la bandiera `g` restituisce:
+    `match()` senza il flag `g` restituisce:
     - Indice 0: Corrispondenza completa
     - Indice 1+: Gruppi di cattura
 
     `slice(1)` è un trucco comune per ottenere solo i gruppi di cattura.
 
-    [Scopri di più sui gruppi e le catture](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
+    [Maggiori informazioni su gruppi e cattura](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)
   </div>
   </slot>
 </Challenge>
@@ -358,7 +358,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Qual sarà il risultato di questo?
+    Quale sarà il risultato di questo?
     ```js
         "123aBc".match(/^\d+(?![a-z])/ig)
     ```
@@ -366,9 +366,9 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'asserzione di look-ahead negativo `(?![a-z])` garantisce che non ci siano lettere minuscole dopo le cifre. Poiché la parte "3aBc" contiene una lettera minuscola dopo le cifre, questa non corrisponde. Pertanto, solo l'inizio "12" corrisponde.
+    Il look-ahead negativo `(?![a-z])` assicura che non ci siano lettere minuscole dopo le cifre. Poiché la parte "3aBc" contiene una lettera minuscola dopo le cifre, la sua porzione non corrisponde. Quindi solo l'inizio "12" corrisponde.
 
-    [Scopri di più sul look-ahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Approfondisci il look-ahead negativo](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -377,7 +377,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Look-behind"
-  title="Divisione con look-behind"
+  title="Split con Look-behind"
   options={[
     {text: '["a,", "b,", "c"]', isAnswer: true},
     {text: '["a,b,c"]'},
@@ -387,7 +387,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Cosa viene restituito?
+    Cosa restituisce?
     ```js
         'a,b,c'.split(/(?<=,)/)
     ```
@@ -395,16 +395,16 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il pattern `/(?<=,)/` è un look-behind che corrisponde al testo dopo la virgola:
+    Il pattern `/(?<=,)/` è un look-behind che corrisponde dopo una virgola:
     - `a,` (dopo la virgola)
     - `b,` (dopo la virgola)
     - `c` (nessuna virgola dopo)
 
-    Il look-behind non consuma la virgola, quindi la virgola rimane attaccata al segmento precedente nel risultato della divisione.
+    Il look-behind non consuma la virgola, quindi la virgola rimane collegata al segmento precedente nel risultato dello split.
 
-    Questo è utile quando si vuole dividere una stringa in base a ciò che precede **senza perdere il carattere (i) di divisione.**
+    Questo è utile quando vuoi dividere una stringa in base a ciò che la precede **senza perdere il(i) carattere(i) di split.**
 
-    [Scopri di più sugli assert di look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Scopri di più sulle asserzioni look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -412,7 +412,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={11}
-  group="Errori comuni"
+  group="Trappole comuni"
   title="Escape dei caratteri speciali"
   options={[
     {text: '["$100"]'},
@@ -432,17 +432,17 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    I caratteri speciali devono essere escapati con `\` per essere corrisposti letteralmente:
+    I caratteri speciali devono essere escapati con `\\` per corrispondere letteralmente:
     - `$` è un carattere speciale (fine della stringa)
-    - Per corrispondere un dollaro letterale, escapalo: `\$`
+    - Per corrispondere a un segno di dollaro letterale, escapalo: `\\$`
 
-    Caratteri comuni che richiedono escape:
+    Caratteri comuni che necessitano di escape:
     ```js
         . * + ? ^ $ [ ] \ ( ) { } |
     ```
-    Senza escape, molti caratteri speciali hanno significati nel regex che potrebbero non essere quelli desiderati.
+    Senza escape, molti caratteri speciali hanno significati regex che potrebbero non essere quelli desiderati.
 
-    [Scopri di più sull'escape dei caratteri speciali](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
+    [Scopri di più su come escapare i caratteri speciali](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping)
   </div>
   </slot>
 </Challenge>
@@ -461,7 +461,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 >
   <slot name="question">
   <div className="question">
-    Cosa viene corrisposto?
+    Cosa viene abbinato?
     ```js
         '$100'.match(/(?<=\$)\d+/)
     ```
@@ -469,14 +469,14 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    L'asserzione di look-behind positivo `(?<=\$)` assicura che le cifre siano precedute da un segno di dollaro:
-    - `(?<=\$)`: Look-behind per il segno di dollaro
-    - `\d+`: Corrispondi una o più cifre
+    Il look-behind positivo `(?<=\$)` assicura che le cifre siano precedute da un simbolo di dollaro:
+    - `(?<=\$)`: Look-behind per il simbolo di dollaro
+    - `\d+`: Corrisponde a una o più cifre
 
-    Le asserzioni di look-behind non consumano caratteri; verificano soltanto ciò che precede.
-    Questo è utile quando desideri corrispondere qualcosa in base a ciò che lo precede senza includere la parte precedente.
+    Le asserzioni look-behind non consumano caratteri; controllano solo ciò che precede.
+    È utile quando vuoi abbinare qualcosa in base a ciò che lo precede senza includere la parte precedente.
 
-    [Scopri di più sulle asserzioni di look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Scopri di più sulle asserzioni look-behind](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
@@ -485,13 +485,13 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   client:visible={{rootMargin: "150px"}}
   index={13}
   group="Corrispondenza di base"
-  title="Quantificatori pigri vs golosi"
+  title="Quantificatori lazy vs greedy"
   options={[
   ]}
 >
   <slot name="question">
   <div className="question">
-    Cosa viene corrisposto?
+    Cosa viene abbinato?
     ```js
         '<b>bold</b>'.match(/<b>(.*?)<\/b>/).slice(1)
     ```
@@ -499,17 +499,17 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Il pattern utilizza la corrispondenza pigra con `*?`:
-    - `<b>`: Corrispondi l'etichetta di apertura
-    - `(.*?)`: Cattura qualsiasi carattere (pigro)
-    - `</b>`: Corrispondi l'etichetta di chiusura
+    Il pattern utilizza il matching lazy con `*?`:
+    - `<b>`: corrisponde al tag di apertura
+    - `(.*?)`: cattura qualsiasi carattere (lazy)
+    - `</b>`: corrisponde al tag di chiusura
 
-    L'`?` dopo `*` lo rende pigro, corrispondendo il minor numero possibile di caratteri.
-    Senza `?`, sarebbe goloso e corrisponderebbe il più possibile.
+    Il `?` dopo `*` lo rende lazy, abbinando il minor numero possibile di caratteri.
+    Senza `?` sarebbe greedy e abbinerebbe il più possibile.
 
     `slice(1)` restituisce solo il gruppo catturato.
 
-    [Scopri di più sul matching goloso vs pigro](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
+    [Scopri di più su greedy vs lazy matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)
   </div>
   </slot>
 </Challenge>
@@ -517,8 +517,8 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="Corrispondenza di base"
-  title="Bandiera Unicode"
+  group="Corrispondenza Base"
+  title="Flag Unicode"
   options={[
     {text: '["🙂"]'},
     {text: '["😀", "🙂"]', isAnswer: true},
@@ -536,16 +536,16 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    La bandiera `u` abilita:
-    - Escape delle proprietà Unicode (`\p{...}`)
-    - Gestione corretta delle coppie surrogato
+    La flag `u` abilita:
+    - le escape di proprietà Unicode (`\p{...}`)
+    - la corretta gestione delle coppie surrogate
 
-    Senza `u`, emoji e altri caratteri Unicode potrebbero non corrispondere correttamente.
-    Il pattern `\p{Emoji}` corrisponde ai caratteri con la proprietà Unicode `Emoji`. In questa stringa, significa i due emoji.
+    Senza `u`, le emoji e altri caratteri Unicode potrebbero non corrispondere correttamente.
+    Il pattern `\p{Emoji}` corrisponde ai caratteri con la proprietà Unicode `Emoji`. In questa stringa, ciò significa le due pictogrammi emoji.
 
-    Nota: le escape delle proprietà Unicode richiedono la bandiera `u`.
+    Nota: le escape di proprietà Unicode richiedono la flag `u`.
 
-    [Scopri di più su Unicode mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
+    [Approfondisci la modalità Unicode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Unicode_Property_Escapes)
   </div>
   </slot>
 </Challenge>
@@ -553,8 +553,8 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={15}
-  group="Look-into-hell"
-  title="Convalida della password"
+  group="Guarda-nell'inferno"
+  title="Validazione della password"
   options={[
     {text: '"sassword123"'},
     {text: '"Sass123!"', isAnswer: true},
@@ -565,7 +565,7 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   <slot name="question">
   <div className="question">
     Scusate in anticipo! 😈<br />
-    Quale password corrisponde a questa espressione?
+    Quale password corrisponde a questo pattern?
     ```js
         /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/
     ```
@@ -573,26 +573,26 @@ Metti alla prova le tue conoscenze sulle Espressioni Regolari con domande che co
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Non usate niente del genere in produzione! 😅
+    Non scrivete nulla del genere in produzione! 😅
 
-    Questo pattern utilizza diversi lookahead positivi per verificare:
+    Questo pattern utilizza più look-ahead positivi per imporre:
     - Almeno una lettera maiuscola: `(?=.*[A-Z])`
     - Almeno una lettera minuscola: `(?=.*[a-z])`
-    - Almeno un numero: `(?=.*\d)`
+    - Almeno una cifra: `(?=.*\d)`
     - Almeno un carattere speciale: `(?=.*[!@#$%^&*])`
     - Lunghezza minima di 8: `.{8,}`
 
-    I lookahead sono perfetti per la convalida delle password perché possono verificare criteri multipli senza consumare caratteri.
+    I look-ahead sono perfetti per la validazione delle password perché possono verificare più criteri senza consumare caratteri.
 
-    [Scopri di più sulle espressioni per la convalida delle password](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
+    [Scopri di più sui pattern di validazione delle password](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-<h2>Come ti sei trovato? 🧐</h2>
+<h2>Come è andata? 🧐</h2>
 
-Le espressioni regolari possono essere un mostro da domare, ma sono incredibilmente potenti una volta che ci prendi la mano (e tutti i nuovi elementi di sintassi). Continua ad esercitarti e diventerai un maestro delle RegEx in un batter d'occhio! 🧙‍♂️
+Le espressioni regolari possono essere una bestia da domare, ma sono incredibilmente potenti una volta che le prendi in mano (e tutta la sintassi più recente). Continua a esercitarti, e diventerai un maestro di RegEx in men che non si dica! 🧙‍♂️
 
-<p class="inset">Cerchi una pausa dopo tutta questa RegEx?<br />Pf, ricorda: pausa *dopo* le competenze! <br /><br />Vai al [mio gym](/challenges/) per sconfiggere altre sfide! 💪</p>
+<p class="inset">Cerchi una pausa dopo tutto quel RegEx?<br />Pftt, ricorda: pausa *dopo* le competenze! <br /><br />Vai al <a href="/challenges/">la mia palestra</a> per affrontare altre sfide! 💪</p>

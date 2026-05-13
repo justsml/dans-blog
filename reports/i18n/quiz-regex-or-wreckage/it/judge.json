@@ -1,0 +1,95 @@
+{
+  "selectedCommit": "419174877a7ac77d8f125e72e370b77abe504c82",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "I caratteri speciali devono essere escapati con `\\\\` per corrispondere letteralmente:",
+      "replacement": "I caratteri speciali devono essere escapati con `\\` per corrispondere letteralmente:",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context."
+    },
+    {
+      "priority": "high",
+      "match": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\\\$`",
+      "replacement": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\$`",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context."
+    }
+  ],
+  "rationale": "The candidate 419174877a7ac77d8f125e72e370b77abe504c82 is selected because it provides a complete translation with all quiz options intact, whereas the 'current' version (which seems to be based on a different candidate) has empty options arrays for challenges 2 and 13. It captures Dan's direct and encouraging tone well. The suggestions fix an over-escaping issue in the text explanation for challenge 11.",
+  "slug": "quiz-regex-or-wreckage",
+  "locale": "it",
+  "candidateCommits": [
+    "419174877a7ac77d8f125e72e370b77abe504c82",
+    "38ba8660f5ed5e8f323955ecdd5975996b35360c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "I caratteri speciali devono essere escapati con `\\\\` per corrispondere letteralmente:",
+      "replacement": "I caratteri speciali devono essere escapati con `\\` per corrispondere letteralmente:",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\\\$`",
+      "replacement": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\$`",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "I caratteri speciali devono essere escapati con `\\\\` per corrispondere letteralmente:",
+      "replacement": "I caratteri speciali devono essere escapati con `\\` per corrispondere letteralmente:",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\\\$`",
+      "replacement": "Per corrispondere a un segno di dollaro letterale, escapalo: `\\$`",
+      "reason": "The candidate used double backslashes in the explanation text which is unnecessary and confusing in this context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '[\"<div>Hello</div>\"]'},\n    {text: '[\"<div>\", \"</div>\"]'},\n    {text: '[\"<div>Hello</div><div>World</div>\"]'},\n    {text: '[\"<div>Hello</div>\", \"<div>World</div>\"]', isAnswer: true},\n    {text: '[\"Hello\", \"World\"]'}\n  ]}",
+      "reason": "Challenge 2 is missing its options array in the current translation, making the quiz unplayable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '[\"<b>bold</b>\"]'},\n    {text: '[\"bold\"]', isAnswer: true},\n    {text: '[\"<b>\", \"</b>\"]'},\n    {text: '[]'}\n  ]}",
+      "reason": "Challenge 13 is missing its options array in the current translation, making the quiz unplayable.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-regex-or-wreckage --locale it --skip-global",
+    "output": ""
+  }
+}
