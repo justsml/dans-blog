@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 58.63
+- Input tokens: 14055
+- Output tokens: 17321
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.005281
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Quiz : Structures de données & Algorithmes'
 subTitle: ''
@@ -526,3 +544,4 @@ Ce quiz va tester vos connaissances sur les structures de données (Piles, Liste
 </Challenge>
 
 </QuizUI>
+````
