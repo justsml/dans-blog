@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: love-computer-languages
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-06-12--love-computer-languages/it/index.mdx
+- Validation: passed
+- Runtime seconds: 20.16
+- Input tokens: 7626
+- Output tokens: 7462
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.002401
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Amare i Linguaggi (di Programmazione)
 date: '2015-06-12'
@@ -188,3 +206,4 @@ x, y, r, g, b = pixel(10, 20, 255, 255, 255)
   - Probabilmente non userai mai questo linguaggio per niente. Zero progetti. Tuttavia avrà un impatto maggiore sul tuo stile di programmazione, più velocemente di altri linguaggi funzionali... Questo dovrebbe essere nella lista dei vantaggi)
 
 #### _Lavoro in corso (aggiornato Dicembre 2015)_
+````
