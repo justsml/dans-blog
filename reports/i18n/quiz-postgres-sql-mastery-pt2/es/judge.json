@@ -1,0 +1,44 @@
+{
+  "selectedCommit": "378e9792ed9fe5cd51f01f130f580b1c4a6661e0",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 0,
+    "technicalAccuracy": 0,
+    "coherence": 0,
+    "relevance": 0,
+    "translationQuality": 0,
+    "mdxPreservation": 0
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed"
+    }
+  ],
+  "rationale": "Selected 378e9792ed9fe5cd51f01f130f580b1c4a6661e0.",
+  "slug": "quiz-postgres-sql-mastery-pt2",
+  "locale": "es",
+  "candidateCommits": [
+    "74a9bf6f63755607105a7c7137e46b5751e17f44",
+    "378e9792ed9fe5cd51f01f130f580b1c4a6661e0"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "exact translated text currently in the selected MDX",
+      "replacement": "exact replacement text to write into the selected MDX",
+      "reason": "English explanation of why this medium/high-priority change is needed",
+      "pass": 1,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt2\" --locale es --skip-global\n80 |   }\n81 | \n82 |   const sourceFences = sourceContents.match(/```/g)?.length ?? 0;\n83 |   const targetFences = targetContents.match(/```/g)?.length ?? 0;\n84 |   if (sourceFences !== targetFences) {\n85 |     throw new Error(\n                   ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-28--quiz-postgres-sql-mastery-pt2/es/index.mdx changed fenced code block count from 26 to 28\n      at assertProtectedTokens (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:85:15)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:28:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
