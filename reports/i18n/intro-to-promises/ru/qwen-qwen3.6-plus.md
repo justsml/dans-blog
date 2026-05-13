@@ -1,0 +1,125 @@
+# Translation Candidate
+- Slug: intro-to-promises
+- Locale: ru
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.08
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug intro-to-promises --locale ru --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: Введение в промисы
+subTitle: JavaScript-промисы — это весело!
+date: '2018-08-01'
+modified: '2024-07-31'
+category: Code
+subCategory: promises
+tags:
+  - promises
+  - async
+  - javascript
+  - composition
+related:
+  - promise-gotchas
+  - visualizing-promises
+  - stop-trying-to-make-async-await-happen
+  - javascript-promises-quiz
+cover: ../joe-yates-480485-unsplash.webp
+cover_mobile: ../w300_joe-yates-480485-unsplash.webp
+cover_icon: ../icon_joe-yates-480485-unsplash.webp
+---
+## Промисы... В чём их суть?
+
+При выполнении любого компьютерного кода возможны два исхода: **успех** или **неудача**.
+
+Если этот код асинхронный по своей природе, полагаться на результат становится сложнее.
+
+**`Промисы`** предоставляют удобный способ справиться с этим.
+
+```
+                        +--Promise---+
+                        |            |
+                        | <-either-> |
+                        |            |
+                <-------+            +-------->
+                |Failure?             Success?|
+                |                             |
+                v                             v
+                (Rejected)           (Resolved)
+```
+
+> Примечание: Хотя промисы должны разрешаться или отклоняться, они могут не сделать ни того, ни другого. Это приводит к зависанию приложений, и такие ошибки очень трудно отлаживать.
+
+### Откуда берутся промисы?
+
+Часто вам не придётся создавать промис самостоятельно. Нативные API, такие как `fetch`, и популярные библиотеки, например `axios`, уже возвращают промисы.
+
+Однако если вам всё же нужно создать промис, есть два способа:
+
+### Создание промисов #1/2:
+
+Самый простой способ создать промис — воспользоваться вспомогательным методом `Promise.resolve()`. Вы можете обернуть (или «преобразовать») любое значение в промис с помощью `Promise.resolve(value)`.
+
+```js
+// Without Promises:
+function add10(num) {
+  return num + 10
+}
+
+// With Promises:
+function add10Promised(num) {
+  return Promise.resolve(num + 10)
+}
+
+console.log(add10(10)) //=> 20
+
+add10Promised(10)
+  .then(x => console.log(x)) //=> 20
+```
+
+### Создание промисов #2/2:
+
+Другой, более гибкий метод: используйте конструктор `Promise`.
+
+`new Promise(callback)` принимает функцию `callback` со следующим интерфейсом:
+
+```js
+new Promise(function(resolve, reject) {
+  // Аргументы `resolve` и `reject` — это функции.
+  // typeof resolve === 'function'
+  // typeof reject === 'function'
+
+  // `resolve(result)` должна быть вызвана, когда промис выполнен успешно
+  // `reject(Error)` должна быть вызвана, если промис отклонён
+})
+```
+
+### API промисов
+
+API промисов на самом деле состоит из небольшого числа методов.
+
+2 метода экземпляра и 4 статических/вспомогательных функции.
+
+#### Методы экземпляра Promise
+
+Получить значение из промиса обычными трюками (например, `console.log(promise)`) не получится.
+
+Все промисы возвращают либо успех (через `.then(fn)`), либо ошибку (через `.catch(fn)`).
+
+#### Вспомогательные методы Promise
+
+* `Promise.resolve(value)` — Преобразует любое значение в промис
+* `Promise.reject(Error)` — Создаёт промис с ошибкой, запускает последующий `.catch()`
+* `Promise.all([...promises])` — Ожидает завершения ВСЕХ промисов из массива
+* `Promise.race([...promises])` — Разрешается, как только первый промис разрешится
+````
