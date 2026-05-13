@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: weakmap-the-javascript-feature-you-dont-use
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--weakmap-the-javascript-feature-you-dont-use/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 76.35
+- Input tokens: 5329
+- Output tokens: 4760
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001569
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Прекратите утечку памяти с помощью WeakMap
 subTitle: Исправление слабого кода с помощью слабых ссылок!
@@ -126,3 +144,4 @@ function expensiveCalc(obj) {
 - [MDN: Управление памятью](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)
 - [Блог V8: Слабые ссылки и финализаторы](https://v8.dev/features/weak-references)
 - [JavaScript.info: WeakMap и WeakSet](https://javascript.info/weakmap-weakset)
+````
