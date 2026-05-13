@@ -3,7 +3,7 @@
 - Locale: ja
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2026-05-01--semantic-vector-search-landscape/ja/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 17.32
 - Input tokens: 20859
 - Output tokens: 9631
@@ -12,7 +12,7 @@
 - Cache write tokens: 0
 - Estimated cost: $0.002547
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(ja): semantic-vector-search-landscape via openrouter/openai/gpt-oss-120b:nitro -- src/content/posts/2026-05-01--semantic-vector-search-landscape/ja/index.mdx reports/i18n/semantic-vector-search-landscape/ja
 ## Raw Output
 
 ````mdx
