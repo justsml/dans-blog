@@ -1,0 +1,68 @@
+{
+  "selectedCommit": "0a64a4bb41109ee9b67e558f29ceadd29d207402",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "New‑bie‑Schulungsliste",
+      "replacement": "Newbie-Schulungsliste",
+      "reason": "The word 'Newbie' should not be hyphenated internally with a non-breaking hyphen; it's a standard loanword in German tech circles."
+    },
+    {
+      "priority": "medium",
+      "match": "AngularJSv2.0",
+      "replacement": "AngularJS v2.0",
+      "reason": "Missing space between the product name and version number in the title."
+    }
+  ],
+  "rationale": "The translation is technically accurate and captures the informal, slightly cynical tone of the original post. It correctly handles the MDX components and frontmatter. The suggested fix for the formal 'Sie' from the previous judge report has already been applied in the current version, leaving only minor spacing and hyphenation improvements.",
+  "slug": "angularjs-v2-impending-schism",
+  "locale": "de",
+  "candidateCommits": [
+    "0a64a4bb41109ee9b67e558f29ceadd29d207402",
+    "d0f6c7e53bc7ad9aeeb9ab1b09ca4804511d7a20"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "AngularJSv2.0",
+      "replacement": "AngularJS v2.0",
+      "reason": "Missing space between the name and version number in the title.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "New‑bie‑Schulungsliste",
+      "replacement": "Newbie-Schulungsliste",
+      "reason": "Unnecessary non-breaking hyphens make the word harder to read.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "Lassen Sie mich klar sagen",
+      "replacement": "Lass es mich klar sagen",
+      "reason": "The original text uses Dan's direct, informal style. 'Lassen Sie mich' is overly formal (Sie-form) and doesn't match the blog's persona.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug angularjs-v2-impending-schism --locale de --skip-global",
+    "output": ""
+  }
+}
