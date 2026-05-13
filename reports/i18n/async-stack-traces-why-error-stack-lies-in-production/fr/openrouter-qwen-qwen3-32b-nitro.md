@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 9.73
+- Input tokens: 4542
+- Output tokens: 3786
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001272
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Traces de pile asynchrones : pourquoi `Error.stack` vous trompe'
 subTitle: La file de microtâches a dévoré mes devoirs (et mon contexte de débogage).
@@ -95,3 +113,4 @@ Le nombre d'`await` intermédiaires n'a aucune importance. Le contexte survit.
 3.  Tracez, ne pilez pas. Utilisez OpenTelemetry. Il visualise la chaîne de causalité entre les services, ce qui est réellement important.
 
 Votre code est asynchrone. Le contexte de débogage ne devrait pas l'être.
+````
