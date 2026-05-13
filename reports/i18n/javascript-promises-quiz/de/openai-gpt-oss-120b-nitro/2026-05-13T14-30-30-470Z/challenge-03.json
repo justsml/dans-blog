@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Verkettung von `.then` und `.catch`",
+  "translation": {
+    "title": "Verkettung von `.then` und `.catch`",
+    "group": "Fehlerbehandlung",
+    "options": [
+      {
+        "text": "gibt Fehler und `undefined` aus"
+      },
+      {
+        "text": "gibt Fehler zweimal aus"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Wie lautet die Ausgabe des folgenden Codes?"
+    ],
+    "explanationProse": [
+      "Beim Verketten von `.then`- und `.catch`-Aufrufen ist es hilfreich, sie als Reihe von Schritten zu betrachten. Jeder `.then` erhält den von dem vorherigen `.then` zurückgegebenen Wert (als Argument). Wenn jedoch dein „Schritt“ einen Fehler verursacht, werden alle nachfolgenden `.then`‑„Schritte“ übersprungen, bis ein `.catch` gefunden wird. Möchtest du einen Fehler überschreiben, musst du einfach einen Nicht‑Fehler‑Wert zurückgeben. Dieser kann dann in jedem nachfolgenden `.then` verwendet werden."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verkettung von `.then` und `.catch`\",\n  \"group\": \"Fehlerbehandlung\",\n  \"options\": [\n    {\n      \"text\": \"gibt Fehler und `undefined` aus\"\n    },\n    {\n      \"text\": \"gibt Fehler zweimal aus\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie lautet die Ausgabe des folgenden Codes?\"\n  ],\n  \"explanationProse\": [\n    \"Beim Verketten von `.then`- und `.catch`-Aufrufen ist es hilfreich, sie als Reihe von Schritten zu betrachten. Jeder `.then` erhält den von dem vorherigen `.then` zurückgegebenen Wert (als Argument). Wenn jedoch dein „Schritt“ einen Fehler verursacht, werden alle nachfolgenden `.then`‑„Schritte“ übersprungen, bis ein `.catch` gefunden wird. Möchtest du einen Fehler überschreiben, musst du einfach einen Nicht‑Fehler‑Wert zurückgeben. Dieser kann dann in jedem nachfolgenden `.then` verwendet werden.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 831,
+    "outputTokens": 752,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 617
+  },
+  "cost": {
+    "inputUsd": 0.000032409,
+    "outputUsd": 0.00013535999999999998,
+    "totalUsd": 0.00016776899999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
