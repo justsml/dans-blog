@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/it/index.mdx
+- Validation: passed
+- Runtime seconds: 3.34
+- Input tokens: 8577
+- Output tokens: 2441
+- Thinking tokens: unknown
+- Cached input tokens: 3712
+- Cache write tokens: 0
+- Estimated cost: $0.000774
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Scontro: Git Rebase vs. Merge'
@@ -127,3 +145,4 @@ In definitiva, **il rebase fa sì che a volte ti ritrovi a rivivere commit e con
 - Puoi usare il separatore speciale “--” con `git checkout` per rimanere nel branch corrente mentre copi i file specificati:
 - `git checkout feature/half-a-feature **--** <percorso della cartella o del file>`
 - Assicurati di aver committato prima tutte le modifiche che vuoi conservare, poiché questo sovrascriverà eventuali modifiche locali.
+````
