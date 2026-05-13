@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "संवाद इतिहास प्रबंधन",
+  "translation": {
+    "title": "संवाद इतिहास प्रबंधन",
+    "group": "टोकन प्रबंधन",
+    "options": [
+      {
+        "text": "हमेशा पूरा संवाद इतिहास भेजें"
+      },
+      {
+        "text": "जब इतिहास टोकन बजट से अधिक हो जाए, तो पुराने संदेशों का सारांश दें"
+      },
+      {
+        "text": "पुराने संदेश हटा दें — मॉडल में स्थायी मेमोरी होती है"
+      },
+      {
+        "text": "इतिहास को वेक्टर डेटाबेस में स्टोर करें और प्रासंगिक टर्न्स को पुनः प्राप्त करें"
+      }
+    ],
+    "questionProse": [
+      "मल्टी-टर्न चैट ऐप में जब संवाद इतिहास बहुत लंबा हो जाए, तो सही रणनीति क्या अपनाएं?"
+    ],
+    "explanationProse": [
+      "LLMs में स्थायी मेमोरी नहीं होती। हर API कॉल stateless होती है — आप पूरा context भेजते हैं, और रिस्पॉन्स मिलता है। चैट की \"मेमोरी\" पूरी तरह उस message history पर निर्भर करती है जिसे आप हर request में शामिल करते हैं。\n\n    जब यह history आपके budget से आगे निकल जाती है, तो आपके पास ये विकल्प होते हैं:\n    1. **Summarize**: पुराने turns को एक running summary में compress करें, recent turns को verbatim रखें\n    2. **Sliding window**: आखिरी N turns रखें, पहले वाले drop कर दें\n    3. **Selective retrieval**: chat turns को embed करें और query के हिसाब से relevant turns निकालें (complex लेकिन powerful)\n\n    Plain truncation — fit करने के लिए पुराने messages काट देना — सबसे बुरा विकल्प है क्योंकि यह चुपचाप उस context को हटा देता है जिसकी model को जरूरत हो सकती है。\n\n    Conversation history के लिए Vector DB retrieval theoretically appealing लग सकता है, लेकिन ज्यादातर chat apps के लिए यह overkill है। Summarization सबसे pragmatic default है।"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"संवाद इतिहास प्रबंधन\",\n  \"group\": \"टोकन प्रबंधन\",\n  \"options\": [\n    {\n      \"text\": \"हमेशा पूरा संवाद इतिहास भेजें\"\n    },\n    {\n      \"text\": \"जब इतिहास टोकन बजट से अधिक हो जाए, तो पुराने संदेशों का सारांश दें\"\n    },\n    {\n      \"text\": \"पुराने संदेश हटा दें — मॉडल में स्थायी मेमोरी होती है\"\n    },\n    {\n      \"text\": \"इतिहास को वेक्टर डेटाबेस में स्टोर करें और प्रासंगिक टर्न्स को पुनः प्राप्त करें\"\n    }\n  ],\n  \"questionProse\": [\n    \"मल्टी-टर्न चैट ऐप में जब संवाद इतिहास बहुत लंबा हो जाए, तो सही रणनीति क्या अपनाएं?\"\n  ],\n  \"explanationProse\": [\n    \"LLMs में स्थायी मेमोरी नहीं होती। हर API कॉल stateless होती है — आप पूरा context भेजते हैं, और रिस्पॉन्स मिलता है। चैट की \\\"मेमोरी\\\" पूरी तरह उस message history पर निर्भर करती है जिसे आप हर request में शामिल करते हैं。\\n\\n    जब यह history आपके budget से आगे निकल जाती है, तो आपके पास ये विकल्प होते हैं:\\n    1. **Summarize**: पुराने turns को एक running summary में compress करें, recent turns को verbatim रखें\\n    2. **Sliding window**: आखिरी N turns रखें, पहले वाले drop कर दें\\n    3. **Selective retrieval**: chat turns को embed करें और query के हिसाब से relevant turns निकालें (complex लेकिन powerful)\\n\\n    Plain truncation — fit करने के लिए पुराने messages काट देना — सबसे बुरा विकल्प है क्योंकि यह चुपचाप उस context को हटा देता है जिसकी model को जरूरत हो सकती है。\\n\\n    Conversation history के लिए Vector DB retrieval theoretically appealing लग सकता है, लेकिन ज्यादातर chat apps के लिए यह overkill है। Summarization सबसे pragmatic default है।\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 932,
+    "outputTokens": 4972,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 29637
+  },
+  "cost": {
+    "inputUsd": 0,
+    "outputUsd": 0,
+    "totalUsd": 0,
+    "pricingSource": "unknown"
+  }
+}
