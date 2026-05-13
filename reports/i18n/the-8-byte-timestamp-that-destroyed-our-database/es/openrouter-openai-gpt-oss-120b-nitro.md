@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-8-byte-timestamp-that-destroyed-our-database
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-12-29--the-8-byte-timestamp-that-destroyed-our-database/es/index.mdx
+- Validation: passed
+- Runtime seconds: 10.52
+- Input tokens: 10230
+- Output tokens: 2839
+- Thinking tokens: unknown
+- Cached input tokens: 5248
+- Cache write tokens: 0
+- Estimated cost: $0.000910
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Tu marca de tiempo es una mentira
 subTitle: Lo que un billete de tren me enseñó sobre almacenar tiempo en bases de datos
@@ -138,3 +156,4 @@ Piensa en lo que tus usuarios necesitan ver. Entonces almacena los datos que te 
 - [ISO 8601 Date and Time Format](https://en.wikipedia.org/wiki/ISO_8601)
 - [Time Zone Database (IANA)](https://www.iana.org/time-zones)
 - [Dealing with Timestamps in Distributed Systems](https://www.postgresql.org/docs/current/functions-datetime.html)
+````
