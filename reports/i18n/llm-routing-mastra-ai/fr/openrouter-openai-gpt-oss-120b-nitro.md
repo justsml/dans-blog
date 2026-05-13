@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-routing-mastra-ai
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-02--llm-routing-mastra-ai/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 1.93
+- Input tokens: 4452
+- Output tokens: 1702
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000480
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ne mariez pas votre modèle
 subTitle: 'Routage LLM, très tendance'
@@ -113,3 +131,4 @@ Le point fort de cette approche, c’est que votre code d’application ne chang
 2. [Sécurité & garde-fous](../mastra-security-guardrails)
 3. [MCP & intégrations d’outils](../mastra-mcp-tool-integrations)
 4. [Flux de travail & mémoire](../mastra-workflows-memory)
+````
