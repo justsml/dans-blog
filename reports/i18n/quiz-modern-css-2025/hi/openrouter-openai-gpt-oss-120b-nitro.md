@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-modern-css-2025
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-07--quiz-modern-css-2025/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.75
+- Input tokens: 10071
+- Output tokens: 7926
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.001819
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'प्रश्नोत्तरी: क्या आप आधुनिक CSS जानते हैं? (2025 के लिए)'
@@ -408,3 +426,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 </Challenge>
 
 </QuizUI>
+````
