@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastering-functional-pipelines-passing-state
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2023-08-13--mastering-functional-pipelines-passing-state/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 175.89
+- Input tokens: 9596
+- Output tokens: 7910
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.003400
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Maestro delle pipeline: Trasferimento dello stato'
@@ -199,3 +217,4 @@ Esploreremo l'esternalizzazione dello stato e l'estensione delle funzionalità n
 #### Letture correlate
 
 - [Lotte simili esistono nel mondo dei componenti React.](https://kyleshevlin.com/quit-your-yapping)
+````
