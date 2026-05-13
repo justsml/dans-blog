@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: visualizing-promises
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-09-30--visualizing-promises/it/index.mdx
+- Validation: passed
+- Runtime seconds: 48.87
+- Input tokens: 4675
+- Output tokens: 3609
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001240
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Visualizzare le Promesse
@@ -132,3 +150,4 @@ Promise.all()  |--------------|-------------- > console.log([1000, 2000, 3000])
   </ul>  
   <div class="description">Qual è il significato della vita?</div>  
 </div> -->
+````
