@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/de/index.mdx
+- Validation: passed
+- Runtime seconds: 17.82
+- Input tokens: 7610
+- Output tokens: 7098
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.002312
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ihr KI-Agent ist ohne das unbrauchbar.
 subTitle: ''
@@ -213,3 +231,4 @@ Wenn Sie ein AI-System entwerfen, das mit externen Diensten interagieren muss, l
 2. [Sicherheit & Schutzvorrichtungen](/mastra-security-guardrails)  
 3. **MCP & Tool-Integrationen** (Dieser Beitrag)  
 4. [Workflows & Gedächtnis](/mastra-workflows-memory)
+````
