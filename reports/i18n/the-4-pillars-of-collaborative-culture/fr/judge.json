@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "1efd812a8655986a1dd7df2dadfc818afa56f933",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected commit is of high quality, maintaining the direct tone of the original while adapting it naturally into French. It correctly handles the frontmatter and MDX structure. The previous judge's suggestion regarding labels has already been incorporated into the current version of the file (e.g., 'Nécessite approbation direction' is already present), so no further high-priority suggestions are required.",
+  "slug": "the-4-pillars-of-collaborative-culture",
+  "locale": "fr",
+  "candidateCommits": [
+    "1efd812a8655986a1dd7df2dadfc818afa56f933",
+    "2e90dbee3c4152d30f8c77e4de3ef06ad1847fb4"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "(ex. `Urgent`, `[Team-Name]`, `Needs C-Level Approval`, `Hackathon`, `Spike related`.)",
+      "replacement": "(ex. `Urgent`, `[Nom-Équipe]`, `Nécessite approbation direction`, `Hackathon`, `Relatif au Spike`.)",
+      "reason": "The labels in the list were left in English, which breaks the flow for a French reader.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug the-4-pillars-of-collaborative-culture --locale fr --skip-global",
+    "output": ""
+  }
+}
