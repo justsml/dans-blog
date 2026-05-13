@@ -1,0 +1,64 @@
+{
+  "selectedCommit": "0fa7c1b8249c70165cd9a57d015a4a240a214092",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 9,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [],
+  "rationale": "The selected candidate (0fa7c1b8) is significantly better than the current version, which contains hallucinated words like 'अस्तीर्ष'. The candidate uses standard Hindi terminology ('अस्वीकरण' for Disclaimer) and maintains Dan's energetic tone. The suggestions from the previous judge report were already incorporated or addressed in the candidate text provided in the prompt (e.g., '3 सरल चरणों में' already has the space, and 'इस प्रकार की' is used correctly in the candidate body). The translation is technically accurate and preserves all MDX formatting.",
+  "slug": "contribute-to-open-source-the-easy-way",
+  "locale": "hi",
+  "candidateCommits": [
+    "0fa7c1b8249c70165cd9a57d015a4a240a214092",
+    "1b1f7067a1a655b9d433f5c7f0e8610524abe47d"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "3सरल चरणों में…",
+      "replacement": "3 सरल चरणों में...",
+      "reason": "Missing space between number and word, and standard ellipsis usage.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "इन प्रकारकी समस्याओं",
+      "replacement": "इस प्रकार की समस्याओं",
+      "reason": "Grammar: 'इन' should be 'इस' or 'प्रकारकी' should be 'प्रकार की' (with space).",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "3सरल चरणों में…",
+      "replacement": "3 सरल चरणों में...",
+      "reason": "Missing space between number and word, and standard ellipsis usage.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "इन प्रकारकी समस्याओं",
+      "replacement": "इस प्रकार की समस्याओं",
+      "reason": "Grammar: 'इन' should be 'इस' or 'प्रकारकी' should be 'प्रकार की' (with space).",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug contribute-to-open-source-the-easy-way --locale hi --skip-global",
+    "output": ""
+  }
+}
