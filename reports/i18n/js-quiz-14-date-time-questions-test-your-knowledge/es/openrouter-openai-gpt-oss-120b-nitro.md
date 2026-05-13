@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: js-quiz-14-date-time-questions-test-your-knowledge
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2020-01-02--js-quiz-14-date-time-questions-test-your-knowledge/es/index.mdx
+- Validation: passed
+- Runtime seconds: 30.80
+- Input tokens: 13431
+- Output tokens: 9173
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.002175
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: 14 preguntas sobre JavaScript Date'
@@ -495,3 +513,4 @@ Este cuestionario está diseñado para poner a prueba (y profundizar) tu conocim
 </Challenge>
 
 </QuizUI>
+````
