@@ -1,0 +1,45 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Grounding vs. Hallucination",
+  "translatedTitle": "Ankerung vs. Halluzination",
+  "translation": {
+    "title": "Ankerung vs. Halluzination",
+    "group": "Fortgeschritten",
+    "options": [
+      {
+        "text": "Sagen Sie dem Modell 'halluzinieren Sie nicht' im Systemprompt"
+      },
+      {
+        "text": "Verwenden Sie eine höhere Temperatur, um konfidentere Antworten zu generieren"
+      },
+      {
+        "text": "Stellen Sie abgerufene Queldokumente bereit und weisen Sie das Modell an, sie zu zitieren"
+      },
+      {
+        "text": "Verwenden Sie ein größeres Modell — Halluzinationen treten nur in kleineren Modellen auf"
+      }
+    ],
+    "questionProse": [
+      "Die wirksamste Technik, um Halluzinationen in einem Produktions-AI-System zu reduzieren, ist:"
+    ],
+    "explanationProse": [
+      "Dem Modell beizubringen, nicht zu halluzinieren, verhindert nicht die Halluzination – das Modell hat keine verlässliche introspektive Signalisierung für 'Ich erfinde das gerade'. Es bedeutet nur, dass das Modell sich selbst überzeugend vorgaukelt, es mache nichts erfunden, während es genau das tut.\n\n    Was tatsächlich funktioniert: **Ankerung**. Geben Sie dem Modell die Informationen, die es benötigt, um korrekt zu antworten, und beschränken Sie es auf diese Informationen:",
+      "Validieren Sie anschließend die Ausgabe: Stellen Sie sicher, dass Behauptungen in der Antwort im abgerufenen Kontext erscheinen. Dies ist die zitierbasierte Ankerungsprüfung – siehe Diskussion zu RAG-Evaluation für die Implementierung.\n\n    Größere Modelle halluzinieren im Durchschnitt weniger, aber alle Modelle halluzinieren. Ankerung ist die Abmilderungsstrategie, nicht die Modellgröße."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ankerung vs. Halluzination\",\n  \"group\": \"Fortgeschritten\",\n  \"options\": [\n    {\n      \"text\": \"Sagen Sie dem Modell 'halluzinieren Sie nicht' im Systemprompt\"\n    },\n    {\n      \"text\": \"Verwenden Sie eine höhere Temperatur, um konfidentere Antworten zu generieren\"\n    },\n    {\n      \"text\": \"Stellen Sie abgerufene Queldokumente bereit und weisen Sie das Modell an, sie zu zitieren\"\n    },\n    {\n      \"text\": \"Verwenden Sie ein größeres Modell — Halluzinationen treten nur in kleineren Modellen auf\"\n    }\n  ],\n  \"questionProse\": [\n    \"Die wirksamste Technik, um Halluzinationen in einem Produktions-AI-System zu reduzieren, ist:\"\n  ],\n  \"explanationProse\": [\n    \"Dem Modell beizubringen, nicht zu halluzinieren, verhindert nicht die Halluzination – das Modell hat keine verlässliche introspektive Signalisierung für 'Ich erfinde das gerade'. Es bedeutet nur, dass das Modell sich selbst überzeugend vorgaukelt, es mache nichts erfunden, während es genau das tut.\\n\\n    Was tatsächlich funktioniert: **Ankerung**. Geben Sie dem Modell die Informationen, die es benötigt, um korrekt zu antworten, und beschränken Sie es auf diese Informationen:\",\n    \"Validieren Sie anschließend die Ausgabe: Stellen Sie sicher, dass Behauptungen in der Antwort im abgerufenen Kontext erscheinen. Dies ist die zitierbasierte Ankerungsprüfung – siehe Diskussion zu RAG-Evaluation für die Implementierung.\\n\\n    Größere Modelle halluzinieren im Durchschnitt weniger, aber alle Modelle halluzinieren. Ankerung ist die Abmilderungsstrategie, nicht die Modellgröße.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 826,
+    "outputTokens": 1348,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3565
+  },
+  "cost": {
+    "inputUsd": 0.00006608,
+    "outputUsd": 0.00032352,
+    "totalUsd": 0.0003896,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

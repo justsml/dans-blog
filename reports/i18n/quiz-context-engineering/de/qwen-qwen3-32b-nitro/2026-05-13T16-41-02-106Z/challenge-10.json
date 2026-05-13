@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "XML Tags for Structure",
+  "translatedTitle": "XML-Tags für Struktur",
+  "translation": {
+    "title": "XML-Tags für Struktur",
+    "group": "Prompt-Struktur",
+    "options": [
+      {
+        "text": "XML-Tags sind nur in Anthropic-Modellen gültig"
+      },
+      {
+        "text": "XML-Tags helfen Modellen, Anweisungen von Daten zu unterscheiden und die Genauigkeit des Parsings zu verbessern"
+      },
+      {
+        "text": "XML-Tags verlangsamen die Tokenisierung und sollten vermieden werden"
+      },
+      {
+        "text": "XML-Tags sind äquivalent zu Markdown-Überschriften"
+      }
+    ],
+    "questionProse": [
+      "Warum verwenden viele Produktionsprompts XML-stil-Tags wie `<document>`, `<context>`, `<instructions>`?"
+    ],
+    "explanationProse": [
+      "XML-stil-Tags liefern **explizite strukturelle Grenzen**, die Modelle trainiert sind, zu erkennen und zu respektieren. Sie tun zwei Dinge:\n\n    1. **Trennung**: Sie signalisieren dem Modell, wo die Anweisungen enden und die Daten beginnen – kritisch für RAG und zur Reduzierung des Prompt-Injections-Risikos aus abgerufenen Dokumenten.\n    2. **Parsebarkeit**: Wenn Sie das Modell bitten, auf XML zu antworten (z. B. `<answer>...</answer>`), geben die Tags saubere Extraktionspunkte ohne Regex-Hacks.\n\n    Das ist nicht XML als Markup-Sprache. Es ist XML als Trennzeichen-Konvention, auf die Modelle trainiert sind. Es funktioniert, weil das Modell dieses Muster in der Ausbildung häufig gesehen hat, nicht weil es Schemas validiert.\n\n    Funktioniert bei den meisten instruction-tuned-Modellen oft genug, um nützlich zu sein – es ist eine trainingsdatenbasierte Konvention, keine Herstellerfunktion oder Sicherheitsgarantie."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"XML-Tags für Struktur\",\n  \"group\": \"Prompt-Struktur\",\n  \"options\": [\n    {\n      \"text\": \"XML-Tags sind nur in Anthropic-Modellen gültig\"\n    },\n    {\n      \"text\": \"XML-Tags helfen Modellen, Anweisungen von Daten zu unterscheiden und die Genauigkeit des Parsings zu verbessern\"\n    },\n    {\n      \"text\": \"XML-Tags verlangsamen die Tokenisierung und sollten vermieden werden\"\n    },\n    {\n      \"text\": \"XML-Tags sind äquivalent zu Markdown-Überschriften\"\n    }\n  ],\n  \"questionProse\": [\n    \"Warum verwenden viele Produktionsprompts XML-stil-Tags wie `<document>`, `<context>`, `<instructions>`?\"\n  ],\n  \"explanationProse\": [\n    \"XML-stil-Tags liefern **explizite strukturelle Grenzen**, die Modelle trainiert sind, zu erkennen und zu respektieren. Sie tun zwei Dinge:\\n\\n    1. **Trennung**: Sie signalisieren dem Modell, wo die Anweisungen enden und die Daten beginnen – kritisch für RAG und zur Reduzierung des Prompt-Injections-Risikos aus abgerufenen Dokumenten.\\n    2. **Parsebarkeit**: Wenn Sie das Modell bitten, auf XML zu antworten (z. B. `<answer>...</answer>`), geben die Tags saubere Extraktionspunkte ohne Regex-Hacks.\\n\\n    Das ist nicht XML als Markup-Sprache. Es ist XML als Trennzeichen-Konvention, auf die Modelle trainiert sind. Es funktioniert, weil das Modell dieses Muster in der Ausbildung häufig gesehen hat, nicht weil es Schemas validiert.\\n\\n    Funktioniert bei den meisten instruction-tuned-Modellen oft genug, um nützlich zu sein – es ist eine trainingsdatenbasierte Konvention, keine Herstellerfunktion oder Sicherheitsgarantie.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 833,
+    "outputTokens": 1573,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 16488
+  },
+  "cost": {
+    "inputUsd": 0.00006664,
+    "outputUsd": 0.00037752,
+    "totalUsd": 0.00044416,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

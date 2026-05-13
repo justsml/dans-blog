@@ -1,0 +1,48 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Context Budget",
+  "translatedTitle": "Kontextbudget",
+  "translation": {
+    "title": "Kontextbudget",
+    "group": "Tokenverwaltung",
+    "options": [
+      {
+        "text": "Verwenden Sie 95 %+ des Kontextfensters, um maximale Informationen zu nutzen",
+        "hint": "Das Modell benötigt Platz für die Ausgabe – 95 % Eingabe führen oft zu abgeschnittenen Antworten."
+      },
+      {
+        "text": "Bewahren Sie ausreichend Platz für die Ausgabe auf, anstatt das gesamte Fenster zu füllen",
+        "hint": "Weiser Ansatz: Schätzen Sie die Ausgabegröße zuerst, dann passen Sie die Eingabe an."
+      },
+      {
+        "text": "Das Kontextbudget ist nur für Modelle unter 32K Token relevant",
+        "hint": "Das Kontextbudget ist für alle Modelle wichtig, unabhängig von der Größe."
+      },
+      {
+        "text": "Das Modell kürzt automatisch, wenn das Fenster überschritten wird",
+        "hint": "Manche Modelle tun das, aber es ist nicht zuverlässig – planen Sie lieber voraus."
+      }
+    ],
+    "questionProse": [
+      "Beim Erstellen eines RAG-Prompts mit abgerufenem Kontext ist eine gute Faustregel für das Kontextbudget:"
+    ],
+    "explanationProse": [
+      "Das Kontextfenster wird zwischen **Eingabe und Ausgabe** geteilt. Wenn Sie 90 % für die Eingabe nutzen, bleibt dem Modell nur noch 10 % des Fensters für die Antwort – was oft zu abgeschnittenen oder eingeschränkten Ausgaben führt.\n\n    Eine vernünftige Faustregel: Schätzen Sie zuerst die erwartete Ausgabegröße und halten Sie die Eingabe deutlich unter dem verbleibenden Budget. Für viele RAG-Aufgaben bedeutet das, maximal **60–70 % des gesamten Kontextfensters für die Eingabe** (Systemprompt + Verlauf + abgerufener Kontext) zu nutzen. Der Rest bleibt für die Generierung und Puffer.\n\n    Zusätzlich leisten sich Modelle schlechter, je näher sie am Ende des Kontextfensters sind – Verständnis und Anweisungsbefolgung verschlechtern sich, je voller der Kontext wird. Laufen bei 95 % ist technisch möglich. Es ist nicht das gleiche Erlebnis wie bei 50 %."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Kontextbudget\",\n  \"group\": \"Tokenverwaltung\",\n  \"options\": [\n    {\n      \"text\": \"Verwenden Sie 95 %+ des Kontextfensters, um maximale Informationen zu nutzen\",\n      \"hint\": \"Das Modell benötigt Platz für die Ausgabe – 95 % Eingabe führen oft zu abgeschnittenen Antworten.\"\n    },\n    {\n      \"text\": \"Bewahren Sie ausreichend Platz für die Ausgabe auf, anstatt das gesamte Fenster zu füllen\",\n      \"hint\": \"Weiser Ansatz: Schätzen Sie die Ausgabegröße zuerst, dann passen Sie die Eingabe an.\"\n    },\n    {\n      \"text\": \"Das Kontextbudget ist nur für Modelle unter 32K Token relevant\",\n      \"hint\": \"Das Kontextbudget ist für alle Modelle wichtig, unabhängig von der Größe.\"\n    },\n    {\n      \"text\": \"Das Modell kürzt automatisch, wenn das Fenster überschritten wird\",\n      \"hint\": \"Manche Modelle tun das, aber es ist nicht zuverlässig – planen Sie lieber voraus.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Beim Erstellen eines RAG-Prompts mit abgerufenem Kontext ist eine gute Faustregel für das Kontextbudget:\"\n  ],\n  \"explanationProse\": [\n    \"Das Kontextfenster wird zwischen **Eingabe und Ausgabe** geteilt. Wenn Sie 90 % für die Eingabe nutzen, bleibt dem Modell nur noch 10 % des Fensters für die Antwort – was oft zu abgeschnittenen oder eingeschränkten Ausgaben führt.\\n\\n    Eine vernünftige Faustregel: Schätzen Sie zuerst die erwartete Ausgabegröße und halten Sie die Eingabe deutlich unter dem verbleibenden Budget. Für viele RAG-Aufgaben bedeutet das, maximal **60–70 % des gesamten Kontextfensters für die Eingabe** (Systemprompt + Verlauf + abgerufener Kontext) zu nutzen. Der Rest bleibt für die Generierung und Puffer.\\n\\n    Zusätzlich leisten sich Modelle schlechter, je näher sie am Ende des Kontextfensters sind – Verständnis und Anweisungsbefolgung verschlechtern sich, je voller der Kontext wird. Laufen bei 95 % ist technisch möglich. Es ist nicht das gleiche Erlebnis wie bei 50 %.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 827,
+    "outputTokens": 1351,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2813
+  },
+  "cost": {
+    "inputUsd": 0.00006616,
+    "outputUsd": 0.00032424,
+    "totalUsd": 0.0003904,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Hybrid Search",
+  "translatedTitle": "Hybride Suche",
+  "translation": {
+    "title": "Hybride Suche",
+    "group": "Retrieval",
+    "options": [
+      {
+        "text": "Das gleiche Abfrage zweimal ausführen, um Redundanz zu gewährleisten"
+      },
+      {
+        "text": "Zwei verschiedene Embedding-Modelle auf dem gleichen Korpus verwenden"
+      },
+      {
+        "text": "Vektor-Suche mit Schlüsselwort-Suche kombinieren, um bessere Retrieval-Ergebnisse zu erzielen"
+      },
+      {
+        "text": "Gleichzeitige Suche in mehreren Vektor-Datenbanken"
+      }
+    ],
+    "questionProse": [
+      "In RAG-Systemen bezieht sich 'hybride Suche' auf:"
+    ],
+    "explanationProse": [
+      "Hybride Suche kombiniert **Vektor-Suche** (semantische Ähnlichkeit über Embeddings) und **Schlüsselwort-Suche** (BM25 / Volltextsuche), da sie sich in komplementären Fehlern verhalten:\n\n    - Vektor-Suche hat Schwierigkeiten mit exakten Begriffen: Produktbezeichnungen, Fehlercodes, Modellnummern, technische Identifikatoren\n    - Schlüsselwort-Suche hat Schwierigkeiten mit Paraphrasen: 'how do I cancel' vs. 'terminate subscription'\n\n    Die Ergebnisse beider Methoden werden mithilfe von **Reciprocal Rank Fusion (RRF)** kombiniert – ein Rangieralgorithmus, der Positionen aus mehreren sortierten Listen zusammenführt, ohne normalisierte Scores zu benötigen.\n\n    Beide sind in Postgres mit `pgvector` + `tsvector` verfügbar. Ein separater Suchdienst ist möglicherweise nicht erforderlich."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Hybride Suche\",\n  \"group\": \"Retrieval\",\n  \"options\": [\n    {\n      \"text\": \"Das gleiche Abfrage zweimal ausführen, um Redundanz zu gewährleisten\"\n    },\n    {\n      \"text\": \"Zwei verschiedene Embedding-Modelle auf dem gleichen Korpus verwenden\"\n    },\n    {\n      \"text\": \"Vektor-Suche mit Schlüsselwort-Suche kombinieren, um bessere Retrieval-Ergebnisse zu erzielen\"\n    },\n    {\n      \"text\": \"Gleichzeitige Suche in mehreren Vektor-Datenbanken\"\n    }\n  ],\n  \"questionProse\": [\n    \"In RAG-Systemen bezieht sich 'hybride Suche' auf:\"\n  ],\n  \"explanationProse\": [\n    \"Hybride Suche kombiniert **Vektor-Suche** (semantische Ähnlichkeit über Embeddings) und **Schlüsselwort-Suche** (BM25 / Volltextsuche), da sie sich in komplementären Fehlern verhalten:\\n\\n    - Vektor-Suche hat Schwierigkeiten mit exakten Begriffen: Produktbezeichnungen, Fehlercodes, Modellnummern, technische Identifikatoren\\n    - Schlüsselwort-Suche hat Schwierigkeiten mit Paraphrasen: 'how do I cancel' vs. 'terminate subscription'\\n\\n    Die Ergebnisse beider Methoden werden mithilfe von **Reciprocal Rank Fusion (RRF)** kombiniert – ein Rangieralgorithmus, der Positionen aus mehreren sortierten Listen zusammenführt, ohne normalisierte Scores zu benötigen.\\n\\n    Beide sind in Postgres mit `pgvector` + `tsvector` verfügbar. Ein separater Suchdienst ist möglicherweise nicht erforderlich.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 780,
+    "outputTokens": 1404,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3247
+  },
+  "cost": {
+    "inputUsd": 0.0000624,
+    "outputUsd": 0.00033696,
+    "totalUsd": 0.00039936,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

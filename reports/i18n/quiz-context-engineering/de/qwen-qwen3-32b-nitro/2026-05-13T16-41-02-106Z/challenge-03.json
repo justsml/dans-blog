@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Role of the System Prompt",
+  "translatedTitle": "Rolle des System-Prompts",
+  "translation": {
+    "title": "Rolle des System-Prompts",
+    "group": "Grundlagen",
+    "options": [
+      {
+        "text": "Es wird zuerst verarbeitet und hat ein höheres Gewicht als Benutzer-Nachrichten"
+      },
+      {
+        "text": "Es ist identisch mit einer Benutzer-Nachricht, wird aber anders dargestellt"
+      },
+      {
+        "text": "Es wird nur für API-Aufrufe verwendet, nicht für Chat-Oberflächen"
+      },
+      {
+        "text": "Es bleibt über Sitzungen hinweg als langfristiges Gedächtnis bestehen"
+      }
+    ],
+    "questionProse": [
+      "Was ist der praktische Effekt des Verwendens der Rolle `system` im Vergleich zur Rolle `user` im Nachrichten-Array?"
+    ],
+    "explanationProse": [
+      "Die Rolle `system` wird als höher priorisierte Anweisung verarbeitet. Modelle sind trainiert, mehr Gewicht darauf zu legen als auf Benutzer-Nachrichten – es ist die architektonische Grenze zwischen „was der Entwickler gesagt hat“ und „was der Benutzer gesagt hat\".\n\n    Es ist nicht magisch. Es garantiert nicht, dass das Modell konträre Benutzer-Anweisungen ignoriert (siehe: Prompt-Injection). Aber es steigert signifikant die Neigung des Modells, Ihre Anweisungen zu befolgen, besonders bei Modellen mit starker Befehlsfolge.\n\n    Praktisch: Setzen Sie Ihre Persönlichkeit, Regeln und Verhaltensbeschränkungen in `system`. Setzen Sie abgerufene Kontexte und Benutzerdaten in `user`. Setzen Sie niemals Benutzer-kontrollierte Eingaben in `system`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Rolle des System-Prompts\",\n  \"group\": \"Grundlagen\",\n  \"options\": [\n    {\n      \"text\": \"Es wird zuerst verarbeitet und hat ein höheres Gewicht als Benutzer-Nachrichten\"\n    },\n    {\n      \"text\": \"Es ist identisch mit einer Benutzer-Nachricht, wird aber anders dargestellt\"\n    },\n    {\n      \"text\": \"Es wird nur für API-Aufrufe verwendet, nicht für Chat-Oberflächen\"\n    },\n    {\n      \"text\": \"Es bleibt über Sitzungen hinweg als langfristiges Gedächtnis bestehen\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was ist der praktische Effekt des Verwendens der Rolle `system` im Vergleich zur Rolle `user` im Nachrichten-Array?\"\n  ],\n  \"explanationProse\": [\n    \"Die Rolle `system` wird als höher priorisierte Anweisung verarbeitet. Modelle sind trainiert, mehr Gewicht darauf zu legen als auf Benutzer-Nachrichten – es ist die architektonische Grenze zwischen „was der Entwickler gesagt hat“ und „was der Benutzer gesagt hat\\\".\\n\\n    Es ist nicht magisch. Es garantiert nicht, dass das Modell konträre Benutzer-Anweisungen ignoriert (siehe: Prompt-Injection). Aber es steigert signifikant die Neigung des Modells, Ihre Anweisungen zu befolgen, besonders bei Modellen mit starker Befehlsfolge.\\n\\n    Praktisch: Setzen Sie Ihre Persönlichkeit, Regeln und Verhaltensbeschränkungen in `system`. Setzen Sie abgerufene Kontexte und Benutzerdaten in `user`. Setzen Sie niemals Benutzer-kontrollierte Eingaben in `system`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 791,
+    "outputTokens": 864,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 8909
+  },
+  "cost": {
+    "inputUsd": 0.00006328,
+    "outputUsd": 0.00020736,
+    "totalUsd": 0.00027064,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

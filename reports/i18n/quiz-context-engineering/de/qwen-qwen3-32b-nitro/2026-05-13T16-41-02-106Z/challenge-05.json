@@ -1,0 +1,45 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Chunking Strategy",
+  "translatedTitle": "Chunking-Strategie",
+  "translation": {
+    "title": "Chunking-Strategie",
+    "group": "Retrieval",
+    "options": [
+      {
+        "text": "Verwenden Sie die größtmögliche Chunk-Größe, die Ihr Kontextfenster zulässt"
+      },
+      {
+        "text": "Immer 512 Token verwenden — es"
+      },
+      {
+        "text": "Verwenden Sie überlappende Chunks, die in der Größe zu Ihrer Inhaltsstruktur passen",
+        "hint": "Richtig: Überlappung und Anpassung an die Inhaltsstruktur sind entscheidend"
+      },
+      {
+        "text": "Chunk-Größe hängt nicht von der Modellgröße ab"
+      }
+    ],
+    "questionProse": [
+      "Bei der Aufteilung von Dokumenten für RAG, welches ist das wichtigste Prinzip?"
+    ],
+    "explanationProse": [
+      "Es gibt keine universelle korrekte Chunk-Größe – sie hängt von Ihrem Inhalt ab. Die wichtigsten Prinzipien sind:\n\n    1. **Passen Sie sich der Inhaltsstruktur an.** FAQ-Seiten eignen sich gut für Chunks auf Ebene von Frage+Antwort. Rechtstexte auf Klausurebene, Code auf FunktionsEbene.\n    2. **Verwenden Sie Überlappung.** Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite bedeutet, dass Antworten, die eine Grenze überspannen, dennoch abgerufen werden.\n    3. **Messen Sie.** Erstellen Sie eine Evaluierungsdatenmenge und testen Sie mehrere Chunk-Größen. Die Chunk-Größe ist wichtiger als das Embedding-Modell.\n\n    „512 Token“ ist ein vernünftiger Ausgangspunkt, kein Gesetz."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Chunking-Strategie\",\n  \"group\": \"Retrieval\",\n  \"options\": [\n    {\n      \"text\": \"Verwenden Sie die größtmögliche Chunk-Größe, die Ihr Kontextfenster zulässt\"\n    },\n    {\n      \"text\": \"Immer 512 Token verwenden — es\"\n    },\n    {\n      \"text\": \"Verwenden Sie überlappende Chunks, die in der Größe zu Ihrer Inhaltsstruktur passen\",\n      \"hint\": \"Richtig: Überlappung und Anpassung an die Inhaltsstruktur sind entscheidend\"\n    },\n    {\n      \"text\": \"Chunk-Größe hängt nicht von der Modellgröße ab\"\n    }\n  ],\n  \"questionProse\": [\n    \"Bei der Aufteilung von Dokumenten für RAG, welches ist das wichtigste Prinzip?\"\n  ],\n  \"explanationProse\": [\n    \"Es gibt keine universelle korrekte Chunk-Größe – sie hängt von Ihrem Inhalt ab. Die wichtigsten Prinzipien sind:\\n\\n    1. **Passen Sie sich der Inhaltsstruktur an.** FAQ-Seiten eignen sich gut für Chunks auf Ebene von Frage+Antwort. Rechtstexte auf Klausurebene, Code auf FunktionsEbene.\\n    2. **Verwenden Sie Überlappung.** Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite bedeutet, dass Antworten, die eine Grenze überspannen, dennoch abgerufen werden.\\n    3. **Messen Sie.** Erstellen Sie eine Evaluierungsdatenmenge und testen Sie mehrere Chunk-Größen. Die Chunk-Größe ist wichtiger als das Embedding-Modell.\\n\\n    „512 Token“ ist ein vernünftiger Ausgangspunkt, kein Gesetz.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 785,
+    "outputTokens": 985,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3009
+  },
+  "cost": {
+    "inputUsd": 0.0000628,
+    "outputUsd": 0.0002364,
+    "totalUsd": 0.0002992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

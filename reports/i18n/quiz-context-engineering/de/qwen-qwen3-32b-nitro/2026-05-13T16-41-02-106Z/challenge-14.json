@@ -1,0 +1,48 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Context Engineering vs. Fine-Tuning",
+  "translatedTitle": "Kontext-Engineering vs. Feinabstimmung",
+  "translation": {
+    "title": "Kontext-Engineering vs. Feinabstimmung",
+    "group": "Experte",
+    "options": [
+      {
+        "text": "Feinabstimmung ist immer besser — Kontext-Engineering ist ein Workaround",
+        "hint": "Das ist ein verbreiteter Irrtum — die Kosten/Nutzen-Abwägung hängt vom Use Case ab"
+      },
+      {
+        "text": "Kontext-Engineering ist kostenlos; Feinabstimmung ist teuer; immer Kontext-Engineering verwenden",
+        "hint": "Übersehen Sie die permanente Änderung von Modellgewichten bei Feinabstimmung"
+      },
+      {
+        "text": "Kontext-Engineering ändert das Verhalten pro Anfrage; Feinabstimmung ändert die Modellgewichte dauerhaft",
+        "hint": "Richtig! Das ist der entscheidende Unterschied zwischen den beiden Techniken"
+      },
+      {
+        "text": "Sie sind verschiedene Namen für dieselbe Technik",
+        "hint": "Nein — das sind grundlegend verschiedene Ansätze"
+      }
+    ],
+    "questionProse": [
+      "Welcher ist der entscheidende Unterschied zwischen Kontext-Engineering und Feinabstimmung, und wann ist Feinabstimmung tatsächlich sinnvoll?"
+    ],
+    "explanationProse": [
+      "**Kontext-Engineering** formt das Modellverhalten durch den Prompt — Systemanweisungen, wenige Beispiele, abgerufene Kontexte. Es ist pro Anfrage, umkehrbar und erfordert keine Ausbildung.\n\n**Feinabstimmung** aktualisiert die Modellgewichte anhand Ihrer Daten. Änderungen sind dauerhaft (für diesen Checkpoint) und gelten für jede Inferenz.\n\nFeinabstimmung ist tatsächlich besser, wenn:\n- Sie einen konsistenten Stil/Format benötigen, den das Modell allein aus Anweisungen nicht zuverlässig einhalten kann\n- Ihre Aufgabe wiederholbare Verhaltensweisen auf domänenspezifischen Mustern erfordert, die Prompting und Retrieval nicht lösen\n- Sie die Prompt-Länge reduzieren müssen — feinabgestimmtes Verhalten muss nicht jedes Mal erklärt werden\n- Sie viele Anfragen haben, bei denen konsistente wenige Beispiele erhebliche Tokens fressen\n\nFeinabstimmung ist übertrieben, wenn:\n- Ihre Anweisungen in einen Systemprompt passen\n- Sie hauptsächlich aktuelle oder proprietäre Fakten benötigen, die bei Bedarf abgerufen werden können\n- Anforderungen sich häufig ändern (Sie müssten erneut feinabstimmen)\n- Sie Kontext-Engineering nicht ausgeschöpft haben\n\nDie richtige Reihenfolge: Erst Kontext-Engineering optimieren. Feinabstimmen, wenn nachweislich nicht ausreichend."
+    ]
+  },
+  "rawText": "{\"title\":\"Kontext-Engineering vs. Feinabstimmung\",\"group\":\"Experte\",\"options\":[{\"text\":\"Feinabstimmung ist immer besser — Kontext-Engineering ist ein Workaround\",\"hint\":\"Das ist ein verbreiteter Irrtum — die Kosten/Nutzen-Abwägung hängt vom Use Case ab\"},{\"text\":\"Kontext-Engineering ist kostenlos; Feinabstimmung ist teuer; immer Kontext-Engineering verwenden\",\"hint\":\"Übersehen Sie die permanente Änderung von Modellgewichten bei Feinabstimmung\"},{\"text\":\"Kontext-Engineering ändert das Verhalten pro Anfrage; Feinabstimmung ändert die Modellgewichte dauerhaft\",\"hint\":\"Richtig! Das ist der entscheidende Unterschied zwischen den beiden Techniken\"},{\"text\":\"Sie sind verschiedene Namen für dieselbe Technik\",\"hint\":\"Nein — das sind grundlegend verschiedene Ansätze\"}],\"questionProse\":[\"Welcher ist der entscheidende Unterschied zwischen Kontext-Engineering und Feinabstimmung, und wann ist Feinabstimmung tatsächlich sinnvoll?\"],\"explanationProse\":[\"**Kontext-Engineering** formt das Modellverhalten durch den Prompt — Systemanweisungen, wenige Beispiele, abgerufene Kontexte. Es ist pro Anfrage, umkehrbar und erfordert keine Ausbildung.\\n\\n**Feinabstimmung** aktualisiert die Modellgewichte anhand Ihrer Daten. Änderungen sind dauerhaft (für diesen Checkpoint) und gelten für jede Inferenz.\\n\\nFeinabstimmung ist tatsächlich besser, wenn:\\n- Sie einen konsistenten Stil/Format benötigen, den das Modell allein aus Anweisungen nicht zuverlässig einhalten kann\\n- Ihre Aufgabe wiederholbare Verhaltensweisen auf domänenspezifischen Mustern erfordert, die Prompting und Retrieval nicht lösen\\n- Sie die Prompt-Länge reduzieren müssen — feinabgestimmtes Verhalten muss nicht jedes Mal erklärt werden\\n- Sie viele Anfragen haben, bei denen konsistente wenige Beispiele erhebliche Tokens fressen\\n\\nFeinabstimmung ist übertrieben, wenn:\\n- Ihre Anweisungen in einen Systemprompt passen\\n- Sie hauptsächlich aktuelle oder proprietäre Fakten benötigen, die bei Bedarf abgerufen werden können\\n- Anforderungen sich häufig ändern (Sie müssten erneut feinabstimmen)\\n- Sie Kontext-Engineering nicht ausgeschöpft haben\\n\\nDie richtige Reihenfolge: Erst Kontext-Engineering optimieren. Feinabstimmen, wenn nachweislich nicht ausreichend.\"]}",
+  "telemetry": {
+    "inputTokens": 909,
+    "outputTokens": 1266,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13204
+  },
+  "cost": {
+    "inputUsd": 0.00007272,
+    "outputUsd": 0.00030384,
+    "totalUsd": 0.00037655999999999996,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

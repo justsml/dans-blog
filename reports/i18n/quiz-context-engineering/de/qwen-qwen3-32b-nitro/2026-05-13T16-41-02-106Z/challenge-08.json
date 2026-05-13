@@ -1,0 +1,44 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Conversation History Management",
+  "translatedTitle": "Verwaltung der Konversationshistorie",
+  "translation": {
+    "title": "Verwaltung der Konversationshistorie",
+    "group": "Token-Management",
+    "options": [
+      {
+        "text": "Immer die komplette Konversationshistorie senden"
+      },
+      {
+        "text": "Alte Nachrichten zusammenfassen, wenn die Historie das Token-Budget überschreitet"
+      },
+      {
+        "text": "Alte Nachrichten löschen – das Modell hat persistente Erinnerung"
+      },
+      {
+        "text": "Historie in einer Vektor-Datenbank speichern und relevante Abschnitte abrufen"
+      }
+    ],
+    "questionProse": [
+      "In einer Chat-Anwendung mit mehreren Interaktionen: Welte Strategie ist korrekt, wenn die Konversationshistorie sehr lang wird?"
+    ],
+    "explanationProse": [
+      "LLMs haben keine persistente Erinnerung. Jeder API-Aufruf ist stateless – Sie senden den vollständigen Kontext und erhalten eine Antwort. Die \"Erinnerung\" eines Gesprächs besteht ausschließlich aus der Nachrichtenhistorie, die Sie in jeder Anfrage einbeziehen.\n\nWenn diese Historie das Budget überschreitet, gibt es folgende Optionen:\n1. **Zusammenfassen**: Ältere Interaktionen in eine laufende Zusammenfassung komprimieren, aktuelle verbatim beibehalten\n2. **Gleitendes Fenster**: Letzte N Interaktionen beibehalten, frühere löschen\n3. **Selektiver Abruf**: Konversationsabschnitte embedden und pro Anfrage relevante abrufen (komplex, aber mächtig)\n\nDie einfache Kürzung – alte Nachrichten einfach wegschneiden – ist die schlechteste Option, da sie stille Kontextverluste verursacht, die das Modell benötigen könnte.\n\nDer selektive Abruf von Konversationshistorie über eine Vektor-Datenbank ist theoretisch ansprechend, ist aber für die meisten Chat-Anwendungen übertrieben. Zusammenfassung ist die pragmatische Standardlösung."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Verwaltung der Konversationshistorie\",\n  \"group\": \"Token-Management\",\n  \"options\": [\n    {\n      \"text\": \"Immer die komplette Konversationshistorie senden\"\n    },\n    {\n      \"text\": \"Alte Nachrichten zusammenfassen, wenn die Historie das Token-Budget überschreitet\"\n    },\n    {\n      \"text\": \"Alte Nachrichten löschen – das Modell hat persistente Erinnerung\"\n    },\n    {\n      \"text\": \"Historie in einer Vektor-Datenbank speichern und relevante Abschnitte abrufen\"\n    }\n  ],\n  \"questionProse\": [\n    \"In einer Chat-Anwendung mit mehreren Interaktionen: Welte Strategie ist korrekt, wenn die Konversationshistorie sehr lang wird?\"\n  ],\n  \"explanationProse\": [\n    \"LLMs haben keine persistente Erinnerung. Jeder API-Aufruf ist stateless – Sie senden den vollständigen Kontext und erhalten eine Antwort. Die \\\"Erinnerung\\\" eines Gesprächs besteht ausschließlich aus der Nachrichtenhistorie, die Sie in jeder Anfrage einbeziehen.\\n\\nWenn diese Historie das Budget überschreitet, gibt es folgende Optionen:\\n1. **Zusammenfassen**: Ältere Interaktionen in eine laufende Zusammenfassung komprimieren, aktuelle verbatim beibehalten\\n2. **Gleitendes Fenster**: Letzte N Interaktionen beibehalten, frühere löschen\\n3. **Selektiver Abruf**: Konversationsabschnitte embedden und pro Anfrage relevante abrufen (komplex, aber mächtig)\\n\\nDie einfache Kürzung – alte Nachrichten einfach wegschneiden – ist die schlechteste Option, da sie stille Kontextverluste verursacht, die das Modell benötigen könnte.\\n\\nDer selektive Abruf von Konversationshistorie über eine Vektor-Datenbank ist theoretisch ansprechend, ist aber für die meisten Chat-Anwendungen übertrieben. Zusammenfassung ist die pragmatische Standardlösung.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 828,
+    "outputTokens": 889,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2225
+  },
+  "cost": {
+    "inputUsd": 0.00006624,
+    "outputUsd": 0.00021336,
+    "totalUsd": 0.0002796,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

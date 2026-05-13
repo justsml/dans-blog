@@ -1,0 +1,44 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Context Window Basics",
+  "translatedTitle": "Grundlagen des Kontextfensters",
+  "translation": {
+    "title": "Grundlagen des Kontextfensters",
+    "group": "Grundlagen",
+    "options": [
+      {
+        "text": "Die maximale Anzahl von Anfragen pro Minute"
+      },
+      {
+        "text": "Die kombinierte Tokenbegrenzung für Eingabe und Ausgabe"
+      },
+      {
+        "text": "Die Anzahl der Nachrichten in einem Gespräch"
+      },
+      {
+        "text": "Der Speicher zwischen Sitzungen"
+      }
+    ],
+    "questionProse": [
+      "Was bezeichnet „Kontextfenster“ bei einem LLM?"
+    ],
+    "explanationProse": [
+      "Das Kontextfenster ist die Gesamtzahl der Token, die ein Modell in einem einzelnen Aufruf verarbeiten kann – **Eingabe + Ausgabe kombiniert**. Ein Kontextfenster von 128 K bedeutet, dass Ihr Prompt + abgerufene Dokumente + Gesprächsgeschichte + die Antwort des Modells alle in 128.000 Token passen müssen.\n\nEs hat nichts mit Sitzungen, Speicher oder Ratenbegrenzungen zu tun. Wenn Sie die Grenze erreichen, kürzt das Modell entweder, gibt einen Fehler aus oder – schlimmer – löscht Token, die Sie nicht erwartet haben."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Grundlagen des Kontextfensters\",\n  \"group\": \"Grundlagen\",\n  \"options\": [\n    {\n      \"text\": \"Die maximale Anzahl von Anfragen pro Minute\"\n    },\n    {\n      \"text\": \"Die kombinierte Tokenbegrenzung für Eingabe und Ausgabe\"\n    },\n    {\n      \"text\": \"Die Anzahl der Nachrichten in einem Gespräch\"\n    },\n    {\n      \"text\": \"Der Speicher zwischen Sitzungen\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was bezeichnet „Kontextfenster“ bei einem LLM?\"\n  ],\n  \"explanationProse\": [\n    \"Das Kontextfenster ist die Gesamtzahl der Token, die ein Modell in einem einzelnen Aufruf verarbeiten kann – **Eingabe + Ausgabe kombiniert**. Ein Kontextfenster von 128 K bedeutet, dass Ihr Prompt + abgerufene Dokumente + Gesprächsgeschichte + die Antwort des Modells alle in 128.000 Token passen müssen.\\n\\nEs hat nichts mit Sitzungen, Speicher oder Ratenbegrenzungen zu tun. Wenn Sie die Grenze erreichen, kürzt das Modell entweder, gibt einen Fehler aus oder – schlimmer – löscht Token, die Sie nicht erwartet haben.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 737,
+    "outputTokens": 1463,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3939
+  },
+  "cost": {
+    "inputUsd": 0.000058960000000000005,
+    "outputUsd": 0.00035112,
+    "totalUsd": 0.00041008,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
