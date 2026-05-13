@@ -1,0 +1,83 @@
+{
+  "selectedCommit": "6addb4758ac681f9668f90b5fe3d3458f41c6e2d",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 8,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 8,
+    "mdxPreservation": 9
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "index={4}\n  group=\"SQL आंतरिक\"\n  title=\"हैश जॉइन पात्रता\"\n  options={[\n  ]}",
+      "replacement": "index={4}\n  group=\"SQL आंतरिक\"\n  title=\"हैश जॉइन पात्रता\"\n  options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
+      "reason": "The options for Challenge index 4 (Hash Join Eligibility) are missing in the translated file, making the question unanswerable."
+    },
+    {
+      "priority": "high",
+      "match": "index={8}\n  group=\"डेटा सैंपलिंग\"\n  title=\"TABLESAMPLE सिंटैक्स\"\n  options={[\n  ]}",
+      "replacement": "index={8}\n  group=\"डेटा सैंपलिंग\"\n  title=\"TABLESAMPLE सिंटैक्स\"\n  options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
+      "reason": "The options for Challenge index 8 (TABLESAMPLE Syntax) are missing in the translated file, making the question unanswerable."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: 'इनमें से कौन-सा PostgreSQL फीचर **NOT** ❌ ANSI SQL मानक का हिस्सा नहीं है?'}",
+      "replacement": "{text: 'इनमें से कौन-सा PostgreSQL फीचर ANSI SQL मानक का हिस्सा **नहीं** ❌ है?'}",
+      "reason": "The original Hindi translation uses a double negative ('NOT' + 'नहीं है'), which is confusing. Simplified to 'is not part of'."
+    }
+  ],
+  "rationale": "The selected candidate has the best overall Hindi flow and correctly handles the frontmatter and MDX structure. However, it contains two critical errors where the 'options' arrays for challenges 4 and 8 were left empty. These must be restored to make the quiz functional. It also had a minor double-negative phrasing issue in one question.",
+  "slug": "quiz-postgres-sql-mastery-pt2",
+  "locale": "hi",
+  "candidateCommits": [
+    "6addb4758ac681f9668f90b5fe3d3458f41c6e2d",
+    "5437f1a3848df6fd37eb8ea3800122da8215736a"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "> **Part 2 of 2.** [Back to Part 1](/quiz-postgres-sql-mastery-pt1/)",
+      "replacement": "> **भाग 2 (कुल 2)।** [भाग 1 पर वापस जाएं](/quiz-postgres-sql-mastery-pt1/)",
+      "reason": "The candidate left the introductory navigation link in English.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
+      "reason": "The options for Challenge index 4 (Hash Join Eligibility) are missing in the translated file.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
+      "reason": "The options for Challenge index 8 (TABLESAMPLE Syntax) are missing in the translated file.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "{text: '\\'}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The single quote option in Challenge index 7 was truncated or incorrectly escaped.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale hi --skip-global",
+    "output": ""
+  }
+}
