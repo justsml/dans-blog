@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: when-ai-fails-and-the-crashing-robot-cars
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2015-12-18--when-ai-fails-and-the-crashing-robot-cars/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 1.24
+- Input tokens: 3081
+- Output tokens: 1000
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000300
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Quand l'IA échoue et les voitures robotiques s’écrasent
@@ -53,3 +71,4 @@ Les voitures robotiques sont sur le point d’être techniquement plus intellige
 ### Références
 
 1.  [http://nn.cs.utexas.edu/pages/research/neat-warning/](http://nn.cs.utexas.edu/pages/research/neat-warning/)
+````
