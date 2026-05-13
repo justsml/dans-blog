@@ -21,8 +21,8 @@ cover_full_width: ../jakob-owens-FBih1nqPi0w-unsplash-wide.webp
 cover_mobile: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
 cover_icon: ../jakob-owens-FBih1nqPi0w-unsplash-square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 
 ## Alors, vous pensez maîtriser le HTML5 ?
@@ -74,14 +74,14 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Ceci est utile lorsqu'on affiche des données clé‑valeur. Les informations de profil, les paramètres et les statistiques sont des exemples courants.
     ```html
-    <dl>
-    <dt>JS</dt>
-    <dd>Client-side</dd>
-    <dd>Server-side</dd>
+        <dl>
+        <dt>JS</dt>
+        <dd>Client-side</dd>
+        <dd>Server-side</dd>
 
-    <dt>HTML</dt>
-    <dd>Client-side</dd>
-    </dl>
+        <dt>HTML</dt>
+        <dd>Client-side</dd>
+        </dl>
     ```
   </div>
   </slot>
@@ -106,10 +106,10 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Ceci est utile pour les images, diagrammes, extraits de code, et plus encore.
     ```html
-    <figure>
-    <img src="image.jpg" alt="Description of image">
-    <figcaption>Image caption</figcaption>
-    </figure>
+        <figure>
+        <img src="image.jpg" alt="Description of image">
+        <figcaption>Image caption</figcaption>
+        </figure>
     ```
   </div>
   </slot>
@@ -136,14 +136,14 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Vous pouvez placer plusieurs `<article>` sur une même page (par exemple pour des pages à défilement infini). Vous pouvez également les imbriquer les uns dans les autres afin de créer une hiérarchie de « contenu autonome ».
     ```html
-    <article>
-    <h2>Article Title</h2>
-    <p>Article content...</p>
-    <article class="discussion">
-    <h3>Comment by User</h3>
-    <p>Comment content...</p>
-    </article>
-    </article>
+        <article>
+        <h2>Article Title</h2>
+        <p>Article content...</p>
+        <article class="discussion">
+        <h3>Comment by User</h3>
+        <p>Comment content...</p>
+        </article>
+        </article>
     ```
   </div>
   </slot>
@@ -168,18 +168,18 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Ceci est utile pour regrouper des éléments de formulaire connexes, comme une section pour l'adresse de livraison ou les détails de paiement.
     ```html
-    <fieldset>
-    <legend>Shipping Address</legend>
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name">
-    ...
-    </fieldset>
-    <fieldset>
-    <legend>Payment Details</legend>
-    <label for="card">Card Number:</label>
-    <input type="text" id="card" name="card">
-    ...
-    </fieldset>
+        <fieldset>
+        <legend>Shipping Address</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        ...
+        </fieldset>
+        <fieldset>
+        <legend>Payment Details</legend>
+        <label for="card">Card Number:</label>
+        <input type="text" id="card" name="card">
+        ...
+        </fieldset>
     ```
   </div>
   </slot>
@@ -204,8 +204,8 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Il peut sembler similaire à une barre [`<progress>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/progress), cependant les barres de progression **TOUJOURS** commencent à zéro. Ainsi les éléments `<progress>` affichent un `pourcentage d'achèvement`, tandis qu'un `<meter>` montre n'importe quelle valeur dans une plage définissable.
     ```html
-    <meter min="-60" max="130" value="75" /> 75°F
-    <meter min="0" max="100" value="75" /> 75%
+        <meter min="-60" max="130" value="75" /> 75°F
+        <meter min="0" max="100" value="75" /> 75%
     ```
   </div>
   </slot>
@@ -230,10 +230,10 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Utilisé spécifiquement avec [`<video>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video), [`<audio>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) et [`<picture>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture), permettant au navigateur de choisir le format le plus approprié.
     ```html
-    <video controls>
-    <source src="movie.mp4" type="video/mp4">
-    <source src="movie.ogg" type="video/ogg">
-    </video>
+        <video controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        </video>
     ```
   </div>
   </slot>
@@ -258,16 +258,16 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Il peut être utile lorsqu’un titre possède un sous‑titre, un slogan ou un titre alternatif qui ne doit pas devenir un autre titre dans le plan du document.
     ```html
-    <article>
-    <hgroup>
-    <h1>Frankenstein</h1>
-    <p>Or: The Modern Prometheus</p>
-    </hgroup>
-    <section>
-    <h2>Chapter 1</h2>
-    <p>...</p>
-    </section>
-    </article>
+        <article>
+        <hgroup>
+        <h1>Frankenstein</h1>
+        <p>Or: The Modern Prometheus</p>
+        </hgroup>
+        <section>
+        <h2>Chapter 1</h2>
+        <p>...</p>
+        </section>
+        </article>
     ```
   </div>
   </slot>
@@ -292,10 +292,10 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Si votre liste contient des liens de navigation, utilisez `<nav>` avec un `<ul>`. Utilisez `<menu>` pour des contrôles de type barre d'outils ou des listes de commandes.
     ```html
-    <menu>
-    <li><button type="button">Copy</button></li>
-    <li><button type="button">Paste</button></li>
-    </menu>
+        <menu>
+        <li><button type="button">Copy</button></li>
+        <li><button type="button">Paste</button></li>
+        </menu>
     ```
   </div>
   </slot>
@@ -320,10 +320,10 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Ceci est utile pour les FAQ, les sections pliables, ou tout contenu qui peut être basculé.
     ```html
-    <details>
-    <summary>Click to expand 🤯</summary>
-    <p>Hidden content! 💥</p>
-    </details>
+        <details>
+        <summary>Click to expand 🤯</summary>
+        <p>Hidden content! 💥</p>
+        </details>
     ```
   </div>
   </slot>
@@ -348,11 +348,11 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Utilisez JavaScript pour l’ouvrir avec `.showModal()` pour les dialogues modaux ou `.show()` pour les dialogues non modaux, et fermez‑le avec `.close()` ou une soumission de formulaire en utilisant `method="dialog"`.
     ```html
-    <dialog>
-    <h2>Modal Title</h2>
-    <p>Modal content...</p>
-    <button>Close</button>
-    </dialog>
+        <dialog>
+        <h2>Modal Title</h2>
+        <p>Modal content...</p>
+        <button>Close</button>
+        </dialog>
     ```
   </div>
   </slot>
@@ -397,14 +397,14 @@ Après tout, vous savez faire la différence entre un `<div>` et un `<span>`, no
 
     Il existe des rôles, des états et des propriétés qui peuvent être utilisés pour décrire les éléments.
     ```html
-    <button aria-label="Close" aria-expanded="true">X</button>
-    <main aria-live="polite">...</main>
-    <dialog
-    role="alertdialog"
-    aria-modal="true"
-    aria-labelledby="dialog_label"
-    aria-describedby="dialog_desc"
-    ></dialog>
+        <button aria-label="Close" aria-expanded="true">X</button>
+        <main aria-live="polite">...</main>
+        <dialog
+        role="alertdialog"
+        aria-modal="true"
+        aria-labelledby="dialog_label"
+        aria-describedby="dialog_desc"
+        ></dialog>
     ```
   </div>
   </slot>

@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-master-modern-html5
+- Locale: fr
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-01--quiz-master-modern-html5/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 22.36
+- Input tokens: 13152
+- Output tokens: 6752
+- Thinking tokens: unknown
+- Cached input tokens: 5056
+- Cache write tokens: 0
+- Estimated cost: $0.001728
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz : le HTML a-t-il encore sa place sur votre CV ?'
@@ -443,3 +461,4 @@ Alors, comment ça s’est passé ? Vous avez hâte d’utiliser davantage d�
 Ou bien vous êtes résigné à rester fidèle à `<div>` et `<span>` pour toujours ? 😅
 
 Dites‑moi tout dans les commentaires ci‑dessous ! 👇
+````
