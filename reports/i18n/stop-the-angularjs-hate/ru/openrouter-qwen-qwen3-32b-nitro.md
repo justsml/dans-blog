@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: stop-the-angularjs-hate
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-03-10--stop-the-angularjs-hate/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 11.25
+- Input tokens: 4976
+- Output tokens: 4413
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001457
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: AngularJS хитрости
@@ -115,3 +133,4 @@ user-widget
   1. Используйте шаблонизацию Mustache для создания строк HTML (или DOM напрямую)
   1. Кэшируйте отрендеренный контент в localStorage, если возможно
   1. (Опционально) Теперь добавьте обработчик событий для повторного рендера содержимого. Я стандартизировал имя события как `refresh.<class-name>`
+````
