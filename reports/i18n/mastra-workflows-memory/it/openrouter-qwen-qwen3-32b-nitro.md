@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 153.16
+- Input tokens: 8144
+- Output tokens: 7683
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002495
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Smetti di costruire agenti instabili: usa flussi di lavoro e memoria'
 subTitle: Schema deterministici per modelli non deterministici.
@@ -251,3 +269,4 @@ Il tuo risultato può variare, ma dalla mia esperienza, i sistemi che effettivam
 2. [Sicurezza e Guardrails](../mastra-security-guardrails)
 3. [MCP e integrazioni con gli strumenti](../mastra-mcp-tool-integrations)
 4. **Workflow e Memoria** (Questo articolo)
+````
