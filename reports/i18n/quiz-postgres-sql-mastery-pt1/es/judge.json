@@ -1,0 +1,71 @@
+{
+  "selectedCommit": "current",
+  "selectedModel": "current",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 10,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "medium",
+      "match": "¡Bien hecho! ¡Profundizaste en varias áreas de PostgreSQL! 🐘  \n\nEspero que hayas aprendido algo nuevo, o al menos tengas una puntuación de la que presumir. 🏆  \n\n<p class=\"inset\">Echa un vistazo a <a href=\"../quiz-postgres-sql-mastery-pt2/\">Parte 2</a> para más diversión con Postgres! 🚀</p>  \n\n¿Quieres más emociones en la vida? Revisa mi <a href=\"../challenges/\">Colección de Quiz</a> para diversión sin fin*.",
+      "replacement": "¡Bien hecho! ¡Profundizaste en varias áreas de PostgreSQL! 🐘\n\nEspero que hayas aprendido algo nuevo, o al menos tengas una puntuación de la que presumir. 🏆\n\n<p class=\"inset\">Check out [Part 2](/quiz-postgres-sql-mastery-pt2/) for more Postgres fun! 🚀</p>\n\nWant more thrills in life? Check out my [Quiz Collection](/challenges/) for endless* fun!",
+      "reason": "The current translation uses HTML <a> tags instead of Markdown links for the footer, which is inconsistent with the source and other posts. Also, the spacing is slightly off."
+    }
+  ],
+  "rationale": "The current translation is actually very high quality, technically accurate, and preserves the MDX structure perfectly. The judge report suggested switching to a candidate that had corrupted strings (e.g., '{text: 'They\"'},'), which is a regression. I am sticking with 'current' as it is the most stable and accurate version, with only a minor suggestion to align the footer link syntax with the rest of the site's style.",
+  "slug": "quiz-postgres-sql-mastery-pt1",
+  "locale": "es",
+  "candidateCommits": [
+    "683b11adcdb3c322a03780cd38984a3f0c1e5e45",
+    "6cb69653e5e0b572a25f1c957d6c6b7a30358c7c"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Son intercambiables desde Pg v10'},",
+      "reason": "The candidate has a corrupted option text in Challenge 4, losing the original meaning.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "group=\"Tiposde Postgres\"",
+      "replacement": "group=\"Tipos de Postgres\"",
+      "reason": "Missing space in the group name for Challenge 8.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: 'They\"'},",
+      "replacement": "{text: 'Son intercambiables desde Pg v10'},",
+      "reason": "The candidate has a corrupted option text in Challenge 4, losing the original meaning and breaking the syntax.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "group=\"Tiposde Postgres\"",
+      "replacement": "group=\"Tipos de Postgres\"",
+      "reason": "Missing space in the group name for Challenge 8.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": false,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale es --skip-global",
+    "error": "Command failed: bun run i18n:validate --slug quiz-postgres-sql-mastery-pt1 --locale es --skip-global\n$ bun ./src/scripts/i18n/validate.ts --slug \"quiz-postgres-sql-mastery-pt1\" --locale es --skip-global\n109 |     })\n110 |     .filter((message): message is string => message != null);\n111 | \n112 |   if (mismatches.length === 0) return;\n113 | \n114 |   throw new Error(\n                  ^\nerror: /Users/dan/code/oss/dans-blog/src/content/posts/2024-11-27--quiz-postgres-sql-mastery-pt1/es/index.mdx changed heading counts. H2: English has 1, translation has 0\n      at assertHeadingCounts (/Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:114:13)\n      at /Users/dan/code/oss/dans-blog/src/scripts/i18n/validate.ts:27:1\n      at loadAndEvaluateModule (2:1)\n\nBun v1.3.1 (macOS arm64)\nerror: script \"i18n:validate\" exited with code 1\n"
+  }
+}
