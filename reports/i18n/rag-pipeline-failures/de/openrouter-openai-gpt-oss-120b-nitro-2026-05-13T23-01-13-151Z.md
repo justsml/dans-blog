@@ -3,7 +3,7 @@
 - Locale: de
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2026-05-05--rag-pipeline-failures/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 14.62
 - Input tokens: 10642
 - Output tokens: 2901
@@ -12,13 +12,13 @@
 - Cache write tokens: 0
 - Estimated cost: $0.000937
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): rag-pipeline-failures via openrouter/openai/gpt-oss-120b:nitro -- reports/i18n/rag-pipeline-failures/de reports/i18n/rag-pipeline-failures/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: 'Fünf Wege, wie RAG in der Produktion scheitert'
-subTitle: Die Demo funktionierte. Bei echten Nutzern bricht die Pipeline.
+title: 'Fünf Gründe, warum RAG in der Produktion versagt'
+subTitle: ''
 date: '2026-05-04'
 modified: '2026-05-05'
 tags:
@@ -41,45 +41,41 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Das RAG‑Demo wirkt immer großartig.
+Die RAG-Demo sieht immer großartig aus.  
 
-Sie betten einige Dokumente ein, starten einen Vektor‑Store, verbinden ihn mit dem Chat und sehen zu, wie das Modell Ihre interne Wissensdatenbank zitiert, als hätte es dort jahrelang gearbeitet. Schön. Stakeholder sind beeindruckt. Jemand sagt: „Lassen wir das raus.“
+Sie betten einige Dokumente ein, starten einen Vektorstore, verbinden ihn mit einem Chat und beobachten, wie das Modell auf Ihre interne Wissensbasis verweist, als hätte es dort seit Jahren gearbeitet. Herrlich. Die Stakeholder sind beeindruckt. Jemand sagt: „Lassen Sie uns das veröffentlichen.“  
 
-Sechs Wochen später erhalten die Nutzer selbstbewusst falsche Antworten. Support‑Tickets häufen sich. Das System *funktioniert*, nur nicht so, wie es die Anwender benötigen.
+Sechs Wochen später erhalten die Benutzer überzeugend falsche Antworten. Support-Tickets häufen sich. Das System *funktioniert*, nur nicht in der Weise, wie die Menschen es benötigen.  
 
-Der Fehler ist meist nicht ein dramatischer Fehltritt. Es sind fünf langweilige Fehler, die sich addieren.
+Der Fehler ist in der Regel kein dramatischer Einzelfehler. Es sind fünf langweilige Fehler, die sich überschneiden.  
 
----
+## 1. Ihre Chunk-Größe ist falsch
 
-## 1. Ihre Chunks haben die falsche Größe
+Dieser Fehler stürzt nicht ab. Er macht nur jede Antwort leicht schlechter, bis das gesamte Feature unvertrauenswürdig wirkt.  
 
-Dieser Fehler führt nicht zu einem Crash. Er verschlechtert jede Antwort ein wenig, bis das gesamte Feature als unzuverlässig empfunden wird.
+Vektorsearch ruft *Chunks* ab, nicht Dokumente. Jede Aufteilung Ihrer Quellen wird zur Einheit der Wahrheit für den Retriever. Wenn die Chunks falsch sind, antwortet das Modell mit den falschen Fragmenten.  
 
-Die Vektorsuche holt *Chunks*, nicht Dokumente. Was immer Sie Ihr Ausgangsmaterial aufteilen, wird zur Wahrheitseinheit des Retrievers. Wenn die Chunks falsch dimensioniert sind, liefert das Modell falsche Fragmente.
+**Zu klein**: Der Chunk enthält eine unvollständige Antwort. Der Embedding fängt das richtige Thema ein, aber der abgerufene Text fehlt den Kontext. Sie erhalten „Die maximale Timeout-Dauer beträgt 30 Sekunden“, ohne den vorherigen Satz, der „bei Verwendung der Legacy-API“ lautet.  
 
-**Zu klein**: Der Chunk enthält nur einen Teil einer Antwort. Die Einbettung erfasst das richtige Thema, aber der abgerufene Text fehlt der Kontext. Sie erhalten „Der maximale Timeout beträgt 30 Sekunden“ ohne den vorhergehenden Satz, der lautet „bei Verwendung der Legacy‑API“.
+**Zu groß**: Der Embedding wird zu einem verschwommenen Durchschnitt vieler Ideen. Die semantische Suche wird verwirrt, weil der Chunk über mehrere Dinge spricht, und der resultierende Vektor repräsentiert keins davon sauber.  
 
-**Zu groß**: Die Einbettung wird zu einem unscharfen Mittelwert vieler Ideen. Die semantische Suche gerät durcheinander, weil der Chunk mehrere Themen abdeckt, und der resultierende Vektor repräsentiert keines davon sauber.
+Die richtige Chunk-Größe hängt ganz von Ihrem Inhalt ab. Technische Dokumente, Rechtsverträge und Support-Transkripte werden alle anders in Chunks unterteilt. Es gibt keine universelle Antwort.  
 
-Die richtige Chunk‑Größe hängt ausschließlich vom Inhalt ab. Technische Dokumentationen, Rechtsverträge und Support‑Transkripte werden jeweils anders chunked. Es gibt keine universelle Lösung.
+Was tun: messen. Erstellen Sie eine Evaluationsmenge aus Frage/Antwort-Paaren aus Ihrem Korpus. Testen Sie 256-, 512- und 1024-Token-Chunks. Messen Sie die Retrieval-Präzision: Erscheint der richtige Chunk in den Top 5? Sie werden schnell lernen, dass die Chunk-Größe wichtiger ist als der Embedding-Modell, über den Sie sich den Kopf zerbrochen haben.
 
-**Was zu tun ist:** Messen. Erstellen Sie ein Evaluierungs‑Set aus Frage‑Antwort‑Paaren Ihres Korpus. Probieren Sie 256‑, 512‑ und 1024‑Token‑Chunks. Messen Sie die Retrieval‑Präzision: erscheint der richtige Chunk in den Top 5? Sie werden schnell feststellen, dass die Chunk‑Größe wichtiger ist als das Einbettungs‑Modell, über das Sie sich den Kopf zerbrochen haben.
+Auch Überlappung nutzen. Ein 512-Token-Chunk mit 64 Token Überlappung auf jeder Seite bedeutet, dass Antworten, die Grenzen überschreiten, dennoch abgerufen werden. Die meisten Vektorbibliotheken unterstützen dies. Die meisten Leute meiden es.
 
-Verwenden Sie außerdem Overlap. Ein 512‑Token‑Chunk mit 64 Token Überlappung auf jeder Seite sorgt dafür, dass Antworten, die über Grenzen hinweg reichen, trotzdem abgerufen werden. Die meisten Vektor‑Bibliotheken unterstützen das. Die meisten Leute überspringen es.
+## 2. Ihre Embeddings veralten (Und Sie merken es nicht)
 
----
+Stellen Sie sich vor, Ihr Unternehmen rebrandet. Oder benennt ein Produkt um. Oder aktualisiert seine Preise. Oder deaktiviert eine API.
 
-## 2. Ihre Einbettungen werden veraltet (und Sie merken es nicht)
+Sie aktualisieren die Dokumentation, aber nicht die Embeddings. Der Vektorindex repräsentiert weiterhin den alten Inhalt.
 
-Stellen Sie sich vor, Ihr Unternehmen führt ein Re‑Branding durch. Oder benennt ein Produkt um. Oder aktualisiert seine Preisgestaltung. Oder stellt eine API ein.
+Benutzer fragen nach den neuen Preisen. Die Embeddings leiten sie zum alten Inhalt weiter. Das Modell liest den alten Inhalt und erklärt konsequent die alten Preise. Support erhält eine Anfrage.
 
-Sie aktualisieren die Dokumentation, aber betten die Chunks nicht neu ein. Der Vektor‑Index repräsentiert weiterhin den alten Inhalt.
+Jeder ernsthafte RAG-System stößt früher oder später auf dieses Problem. Die Lösung erscheint offensichtlich – Embeddings neu generieren, wenn sich der Inhalt ändert –, doch Teams bauen diesen Pipeline selten vor dem ersten Zwischenfall aus.
 
-Nutzer fragen nach der neuen Preisgestaltung. Die Einbettungen leiten sie zum alten Inhalt weiter. Das Modell liest den alten Inhalt und erklärt selbstsicher die alte Preisgestaltung. Der Support erhält ein Ticket.
-
-Jedes ernsthafte RAG‑System stößt irgendwann darauf. Die Lösung klingt offensichtlich – bei Inhaltsänderungen neu einbetten – aber Teams bauen diese Pipeline selten vor dem ersten Vorfall auf.
-
-Sie benötigen inkrementelles Re‑Indexieren mit Inhalts‑Fingerprinting:
+Sie benötigen inkrementelles Re-Indexing mit Inhaltshashierung:
 
 ```typescript
 import { createHash } from 'crypto';
@@ -92,7 +88,7 @@ async function upsertDocument(doc: Document, vectorStore: VectorStore) {
   const existing = await vectorStore.getBySourceId(doc.id);
 
   if (existing?.fingerprint === fingerprint) {
-    return; // Content unchanged, skip re-embedding
+    return; // Inhalt unverändert, Re-Embedding überspringen
   }
 
   const chunks = chunkDocument(doc);
@@ -111,77 +107,73 @@ async function upsertDocument(doc: Document, vectorStore: VectorStore) {
 }
 ```
 
-Re‑Indexierung beim Schreiben, Fingerprint auf Inhalt, nicht auf Zeitstempel. Dokumente werden in Ihrem CMS ständig aktualisiert, ohne dass sich der eigentliche Inhalt ändert.
+Indexieren Sie bei Schreibvorgängen neu, hashen Sie den Inhalt, nicht Zeitstempel. Dokumente werden in Ihrem CMS ständig aktualisiert, ohne dass sich der eigentliche Inhalt geändert hat.
 
 ---
 
-## 3. Retrieval‑Präzision vs. Recall: Sie optimieren das falsche Ziel
+## 3. Retrieval-Präzision vs. Recall: Sie optimieren die falsche
 
-Die meisten RAG‑Tutorials zeigen, wie man die Top‑K‑Chunks abruft. Sie erklären nicht den Trade‑off zwischen zwei Zielen, die in entgegengesetzte Richtungen zeigen.
+Die meisten RAG-Tutorials zeigen, wie man die Top-K-Chunk abruft. Sie erklären aber nicht den Tradeoff zwischen zwei Zielen, die in entgegengesetzte Richtungen zeigen.
 
-**Hoher Recall**: Alles zurückgeben, was potenziell relevant sein könnte. Nutzer erhalten immer eine Antwort. Aber das Kontextfenster des Modells ist voller tangentialer Geräusche, und das Modell halluziniert, um Lücken zwischen Fragmenten zu füllen.
+**Hohe Recall-Rate**: Gibt alles zurück, was möglicherweise relevant ist. Benutzer erhalten immer eine Antwort. Doch der Kontextfenster des Modells ist voller peripherer Rauschinformationen, und es erfindet Dinge, um die Lücken zwischen Fragmenten zu füllen.
 
-**Hohe Präzision**: Nur die relevantesten Chunks zurückgeben. Das Modell arbeitet mit sauberem, fokussiertem Kontext. Fehlt jedoch der richtige Chunk unter den Top‑3, hat das Modell nicht die Information und erfindet trotzdem selbstsicher etwas.
+**Hohe Präzision**: Gibt nur die relevantesten Chunks zurück. Das Modell arbeitet mit sauberem, fokussiertem Kontext. Doch wenn der richtige Chunk nicht in den Top-3 ist, hat das Modell die Information nicht und erfindet dennoch etwas, obwohl es sich sicher anmutet.
 
-Die Fehlermodi sehen für Nutzer identisch aus: falsche Antworten. Doch die Ursachen und die Gegenmaßnahmen sind gegensätzlich.
+Die Fehlermodi sehen für Benutzer gleich aus: falsche Antworten. Doch die Ursachen und Lösungen sind gegensätzlich.
 
 Zwei Techniken, die tatsächlich helfen:
 
-**Reranking**: Mehr Kandidaten (Top‑20) abrufen und dann ein Cross‑Encoder‑Modell verwenden, um sie nach Relevanz neu zu ordnen, bevor sie an das LLM übergeben werden. Cross‑Encoder sind langsamer als Vektor‑Ähnlichkeit, liefern aber beim finalen Ranking deutlich höhere Genauigkeit.
+**Reranking**: Rufen Sie mehr Kandidaten ab (Top-20), dann verwenden Sie ein Cross-Encoder-Modell, um sie nach Relevanz neu zu rangieren, bevor sie an das LLM weitergegeben werden. Cross-Encoder sind langsamer als Vektorsimilarität, liefern aber deutlich genauere Rangfolgen am Ende.
 
 ```typescript
 import { Reranker } from '@mastra/rag';
 
 const results = await vectorStore.search(queryEmbedding, { topK: 20 });
 const reranked = await reranker.rank(query, results);
-const context = reranked.slice(0, 5); // Jetzt bedeutet Top‑5 tatsächlich etwas
+const context = reranked.slice(0, 5); // Jetzt bedeutet Top-5 tatsächlich etwas
 ```
 
-**Hybrid‑Suche**: Vektorsuche (semantische Ähnlichkeit) mit Stichwortsuche (BM25) kombinieren. Sie scheitern auf unterschiedliche Weise. Vektorsuche hat Probleme mit konkreten Begriffen, Modellnamen und IDs. Stichwortsuche hat Schwierigkeiten bei Paraphrasierungen und Synonymen. Zusammen decken sie die blinden Flecken des jeweils anderen ab.
+**Hybrid-Suche**: Kombinieren Sie Vektorsuche (semantische Similarität) mit Keywordsuche (BM25). Sie scheitern auf unterschiedliche Weise. Vektorsuche hat Probleme mit spezifischen Begriffen, Modellnamen und IDs. Keywordsuche hat Probleme mit Paraphrasen und Synonymen. Zusammen decken sie sich gegenseitig die Blind spots.
 
----
+## 4. Ihr Kontextfenster hat die falsche Form  
 
-## 4. Ihr Kontextfenster hat die falsche Form
+Sie haben die richtigen Chunke abgerufen. Glückwunsch. Das Modell wird dies dennoch falsch verstehen.  
 
-Sie haben die richtigen Chunks abgerufen. Glückwunsch. Das Modell wird trotzdem Fehler machen.
+Das Problem betrifft nicht nur die abgerufenen Inhalte. Es betrifft auch, wo Sie sie platzieren.  
 
-Das Problem ist nicht nur, was Sie abrufen. Es ist, wo Sie es platzieren.
+Großsprachmodelle leiden unter dem „lost in the middle“-Problem. Liu et al. stellten fest, dass Modelle mit langen Kontextfenstern relevante Informationen weniger verlässlich verarbeiten, wenn sie sich in der Mitte des Prompts befinden, statt nahe Beginn oder Ende.  
 
-LLMs können unter dem „verloren‑in‑der‑Mitte“-Problem leiden. Liu et al. haben gezeigt, dass Langzeit‑Kontext‑Modelle relevante Informationen weniger zuverlässig nutzen, wenn sie in der Mitte des Prompts auftauchen statt am Anfang oder Ende.
-
-Wenn Sie 20 Chunks in eine flache Liste stopfen und hoffen, dass das Modell sie korrekt synthetisiert, lassen Sie Leistung auf dem Tisch liegen.
+Wenn Sie 20 Chunke in eine flache Liste packen und hoffen, dass das Modell sie korrekt zusammenfasst, lassen Sie Leistungspotenzial ungenutzt.
 
 Dinge, die tatsächlich helfen:
 
-**Bewerten Sie die Start‑/End‑Platzierung Ihrer relevantesten Chunks.** Eine gängige Heuristik lautet: höchst‑rankierte zuerst, zweithöchste zuletzt und den Rest in der Mitte. Gegenintuitiv, aber einen Test wert gegen Ihr Modell und Prompt‑Design.
+**Bewerten Sie die Platzierung am Anfang/Ende Ihrer wichtigsten Chunks.** Eine gängige Heuristik ist: Top-Ranking zuerst, zweit-Ranking zuletzt und den Rest dazwischen. Kontraintuitiv, aber es lohnt sich, dies an Ihrem Modell und Prompt-Format zu testen.
 
-**Nummerieren und labeln Sie Ihre Kontextabschnitte explizit.** `[Source 1]` … `[Source 2]` gibt dem Modell Anker, an denen es argumentieren kann.
+**Nummerieren und beschriften Sie Ihre Kontextabschnitte explizit.** `[Quelle 1]` ... `[Quelle 2]` gibt dem Modell Ankerpunkte für die Analogisierung.
 
-**Fügen Sie ein Retrieval‑Vertrauenssignal hinzu.** Wenn Ihr Ähnlichkeitswert 0,65 auf einer Skala von 0‑1 beträgt, sagen Sie dem Modell: „Der folgende Kontext wurde mit mittlerer Sicherheit abgerufen. Zeigen Sie Unsicherheit, falls die Antwort unklar ist.“
+**Fügen Sie ein Retrieval-Vertrauenssignal hinzu.** Wenn Ihr Ähnlichkeitswert 0,65 auf einer 0-1-Skala beträgt, informieren Sie das Modell: „Der folgende Kontext wurde mit mittlerer Sicherheit abgerufen. Anerkennen Sie Unsicherheit, wenn die Antwort unklar ist.“
 
-**Setzen Sie ein Kontext‑Budget.** Übergeben Sie nicht einfach alles, was Sie abgerufen haben. Zählen Sie Tokens, priorisieren Sie nach Relevanz‑Score und schneiden Sie hart bei 60‑70 % des Kontextfensters des Modells zu. Lassen Sie dem Modell Raum zum Denken, ohne dass es „thrashen“ muss.
+**Setzen Sie ein Kontextbudget.** Übergeben Sie nicht einfach alles, was Sie abgerufen haben. Zählen Sie Tokens, priorisieren Sie nach Relevanzscore und schneiden Sie bei 60–70 % des Modellkontextfensters scharf ab. Lassen Sie Platz, damit das Modell ohne unnötiges Herumirren denken kann.
 
-Reference: [Lost in the Middle: How Language Models Use Long Contexts](https://arxiv.org/abs/2307.03172).
+Referenz: [Verloren in der Mitte: Wie Sprachmodelle lange Kontexte nutzen](https://arxiv.org/abs/2307.03172).
 
----
+## 5. Sie wissen nicht, wann es falsch liegt  
 
-## 5. Sie haben keine Ahnung, wann es falsch ist
+Das ist der leise Fehler: Die Antwort wird zurückgegeben, die Benutzeroberfläche sieht gesund aus und der Inhalt ist falsch.  
 
-Das ist das stille Versagen: Die Antwort kommt, die UI sieht gut aus, und der Inhalt ist falsch.
+Bei einer traditionellen API sind Fehler sichtbar: HTTP 500, Timeout, Schema-Validierungsfehler. Sie erkennen sie sofort. RAG-Fehler sind leiser: Das System gibt eine Antwort zurück, sie wirkt plausibel und ist dennoch falsch.  
 
-Bei einer traditionellen API sind Fehler sichtbar: HTTP 500, Timeout, Schema‑Validierungsfehler. Sie wissen es sofort. RAG‑Fehler sind leiser: Das System liefert eine Antwort, sie wirkt plausibel, und sie ist falsch.
+Sie erfahren möglicherweise erst dann, dass Ihre RAG-Pipeline fehlschlägt, wenn Benutzer es Ihnen mitteilen. Oft tun sie das nicht. Sie verlieren einfach das Vertrauen und wechseln zurück zu Strg+F.  
 
-Vielleicht merken Sie nicht, dass Ihre RAG‑Pipeline scheitert, bis Nutzer es Ihnen sagen. Oft tun sie das nicht. Sie verlieren einfach das Vertrauen und greifen wieder zu Ctrl + F.
+Das mindestens erforderliche Beobachtbarkeits-Setup für ein Produktivsystem mit RAG:
 
-Das minimal funktionsfähige Observability‑Setup für ein produktives RAG‑System:
+**Protokollierung der Retrieval-Kette.** Jede Abfrage, was abgerufen wurde (Chunk-IDs + Scores) und was das Modell erzeugt hat. Dies benötigen Sie, um alles zu debuggen.  
 
-**Protokollieren Sie Ihre Retrieval‑Kette.** Jede Anfrage, was abgerufen wurde (Chunk‑IDs + Scores) und was das Modell ausgegeben hat. Das benötigen Sie, um irgendetwas zu debuggen.
+**Tracking von Retrieval-Metriken.** Mittelwert des reziproken Ranks (MRR) und NDCG, wenn Sie Ground-Truth-Labels haben. Mindestens die Verteilung der Ähnlichkeitspunkte verfolgen – fällt der P50-Retrieval-Score ab, sank die Index-Qualität ab.  
 
-**Verfolgen Sie Retrieval‑Metriken.** Mean Reciprocal Rank (MRR) und NDCG, falls Sie Ground‑Truth‑Labels haben. Mindestens sollten Sie die Verteilung der Ähnlichkeits‑Scores beobachten — wenn Ihr P50‑Retrieval‑Score fällt, ist die Qualität Ihres Indexes gesunken.
+**Ein Feedback-Loop aufbauen.** Selbst ein Daumen-hoch/Daumen-runter für Antworten, zurück an die Abfrage und die abgerufenen Chunk-IDs verknüpfen, gibt Ihnen ein Trainingsignal. Ohne das fliegen Sie im Blindflug.  
 
-**Bauen Sie einen Feedback‑Loop auf.** Selbst ein Daumen‑hoch/‑runter bei Antworten, zurückverknüpft mit der Anfrage und den abgerufenen Chunks, liefert ein Trainingssignal. Ohne dieses fliegen Sie blind.
-
-**Führen Sie periodische Evaluierungen durch.** Ein Test‑Set von 50‑100 Fragen mit bekannten korrekten Antworten, wöchentlich ausgeführt, erkennt Regressionen, bevor Nutzer sie bemerken. Eine Tabellenkalkulation und ein Skript reichen aus, um zu starten.
+**Periodische Evaluierungen durchführen.** Eine Testmenge mit 50-100 Fragen mit bekannten korrekten Antworten, wöchentlich durchlaufen, erwischt Regressionsprobleme, bevor Benutzer sie bemerken. Ein Tabellenkalkulationsprogramm und ein Skript reichen aus, um zu beginnen.  
 
 ```typescript
 async function runEval(
@@ -197,11 +189,11 @@ async function runEval(
   );
 
   const avgScore = results.reduce((s, r) => s + r.score, 0) / results.length;
-  console.log(`Eval score: ${(avgScore * 100).toFixed(1)}%`);
+  console.log(`Bewertungsergebnis: ${(avgScore * 100).toFixed(1)}%`);
   
-  // Alarm, wenn der Score unter die Schwelle fällt
+  // Wenn das Ergebnis unter den Schwellenwert fällt, eine Warnung senden
   if (avgScore < 0.75) {
-    await notifyTeam(`RAG eval score dropped to ${(avgScore * 100).toFixed(1)}%`);
+    await notifyTeam(`RAG-Bewertungsergebnis sank auf ${(avgScore * 100).toFixed(1)}%`);
   }
 
   return results;
@@ -212,11 +204,11 @@ async function runEval(
 
 ## Das eigentliche Problem
 
-Diese Fehler gehen nicht primär auf das Embedding‑Modell oder die Vektordatenbank zurück. Sie betreffen das System, das sie umgibt.
+Diese Fehler sind nicht hauptsächlich auf das Embedding-Modell oder die Vektor-Datenbank zurückzuführen. Es geht um das System, das sie umgibt.
 
-RAG‑Demos funktionieren, weil die Demo‑Bedingungen kontrolliert sind: saubere Dokumente, wohlgeformte Fragen, nachsichtige Evaluatoren. In der Produktion scheitert es, weil keiner dieser Bedingungen erfüllt ist.
+RAG-Demos funktionieren, weil die Demonstrationsbedingungen kontrolliert sind: saubere Dokumente, gut formulierte Fragen, tolerante Bewertung. Im Produktivbetrieb scheitert es, weil keine dieser Bedingungen gilt.
 
-Jeder der oben genannten Fehler ist diagnostizierbar – aber nur, wenn Sie messen. Zuverlässige RAG‑Teams setzen nichts Exotisches ein. Sie behandeln die Retrieval‑Qualität wie ein echtes Subsystem statt wie ein Demo‑Artefakt.
+Jeder der oben genannte Fehler ist diagnostizierbar, aber nur, wenn Sie messen. Zuverlässige RAG-Teams tun nichts Exotisches. Sie betrachten die Retrieval-Qualität als echtes Unter-system statt als Demonstrationsartefakt.
 
-Richten Sie zuerst den Evaluierungs‑Loop ein. Alles andere wird einfacher, sobald Sie es messen können.
+Richten Sie zuerst die Evaluierungs-Schleife ein. Alles andere ist einfacher, sobald Sie messen können.
 ````
