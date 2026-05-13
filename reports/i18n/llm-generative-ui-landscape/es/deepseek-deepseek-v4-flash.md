@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: llm-generative-ui-landscape
+- Locale: es
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2026-05-06--llm-generative-ui-landscape/es/index.mdx
+- Validation: deferred
+- Runtime seconds: 178.19
+- Input tokens: 20844
+- Output tokens: 23134
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.009185
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: El panorama de la UI generativa con LLM
 subTitle: >-
@@ -334,3 +352,4 @@ Los mejores sistemas no dejarán que el modelo improvise todo. Le darán un conj
 El futuro no es "el modelo escribe tu frontend."
 
 El futuro se acerca más a: **tu frontend se convierte en un instrumento que el agente puede tocar, pero tú decides qué sonidos puede emitir ese instrumento.**
+````
