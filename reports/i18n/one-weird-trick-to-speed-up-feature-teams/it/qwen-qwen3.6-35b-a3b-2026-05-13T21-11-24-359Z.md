@@ -1,0 +1,171 @@
+# Translation Candidate
+- Slug: one-weird-trick-to-speed-up-feature-teams
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-09-29--one-weird-trick-to-speed-up-feature-teams/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 96.55
+- Input tokens: 6303
+- Output tokens: 21723
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.022668
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: Un trucco inusuale per accelerare i team di feature!
+subTitle: Gli ingegneri staff odiano questo!
+date: '2024-09-29'
+modified: '2024-09-30'
+tags:
+  - agile
+  - teams
+category: Engineering
+social_image: ../desktop-social.webp
+cover_full_width: ../wide_danny-howe-98KlbUsOO_w-unsplash.webp
+cover_mobile: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_icon: ../danny-howe-98KlbUsOO_w-unsplash__w200.webp
+cover_credit: >-
+  Photo by <a
+  href="https://unsplash.com/@dannyhowe?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Danny
+  Howe</a> on <a
+  href="https://unsplash.com/photos/red-and-white-neon-light-signage-98KlbUsOO_w?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+---
+{/* Aggiungi elemento toggle HTML5 */}
+
+<details>
+<summary>Indice</summary>
+
+- [Pensare per chiavi](#thinking-in-keys)
+  - [Progettare con le chiavi](#designing-with-keys)
+  - [I KV come grafi e alberi?](#kvs-as-graphs--trees)
+  - [Quando usare i pattern KV](#when-to-use-kv-patterns)
+  - [Quando evitare i pattern KV](#when-to-avoid-kv-patterns)
+  - [Quando serve più di un KV](#when-you-need-more-than-kv)
+- [Prossimi passi](#next-steps)
+  - [Fact Service - Progetto di riferimento](#fact-service---reference-project)
+- [Conclusioni](#conclusion)
+  - [Approfondimenti](#further-reading)
+
+</details>
+
+Quando si progetta un nuovo sistema o una nuova funzionalità, è facile incagliarsi nella progettazione dello schema. In questo articolo condividerò un trucco efficace che mi ha ripagato ampiamente nel corso della mia carriera.
+
+<section class="breakout">
+  _Provate_ a usare la persistenza dei dati più semplice possibile quando progettate un nuovo sistema o una nuova funzionalità.
+</section>
+
+Capita troppo spesso di vedere team che puntano su SQL o MongoDB come unica opzione per la persistenza dei dati. Certo, nessuno viene licenziato per aver scelto SQL. Ma vi dico che esiste un modo più semplice, veloce ed economico per iniziare?
+
+Un database KV (Key-Value) potrebbe essere tutto ciò di cui avete bisogno. Qualcosa come Redis o S3.
+
+Non è sempre la scelta giusta, ma forse **più spesso di quanto si pensi.**
+
+Un layer di storage semplice può accelerare moderatamente lo sviluppo *iniziale* riutilizzando il codice del data layer ed evitando i costi legati al churn nella progettazione dello schema e nelle migrazioni. Il churn ci sarà comunque; lasciate che il codice lo gestisca per quanto possibile. Meglio evitare di dover gestire le modifiche in due punti distinti.
+
+È probabile un guadagno in prestazioni, dato che le lookup per `key` sono altamente ottimizzate e le scritture possono beneficiare di aggiornamenti in batch.
+
+{/* Evitate i pattern KV se avete bisogno di JOIN o di query basate su proprietà nel dataset. O nei casi in cui i dataset siano illimitati/crescano all'infinito. (`Logs`, `Signups`, ecc.) */}
+
+## Pensare in Chiavi
+
+Progettare partendo da un pattern Key-Value può sembrare strano, soprattutto se sei abituato a disegnare sistemi con gerarchie di oggetti o Diagrammi Entità-Relazione per poi implementarli direttamente in SQL.
+
+Probabilmente hai già ***usato*** pattern key-value! Sono ovunque, dalle configurazioni e agli URL fino allo Storage Oggetti in stile S3! Ogni volta che gestisci dati tramite un valore `ID` univoco, indovina un po'? Un altro pattern Key-Value! (Anche se non necessariamente un KV Store.)
+
+### Progettare con le Chiavi
+
+Quasi tutti i dati _possono_ essere rappresentati usando pattern KV. (Anzi, molti DB di livello superiore si basano su pattern KV di livello inferiore.) Vediamo alcuni esempi:
+
+```markdown
+user/123          {id: 123, ...}
+user/123/block    ['user/456', 'user/789']
+user/123/groups   ['admin', 'staff']
+user/420/friends  ['user/456', 'user/789']
+
+group/admin       {user: '*:rw'}
+group/default     {user: '*:r'}
+
+product/42/discount/<UUID>	{percentOff: '10%'}
+product/42/discount/<UUID>	{percentOff: '20%', minTotal: 100.0}
+```
+
+Potresti averlo notato, ma l'`ID` è spesso una chiave di per sé! Questo è un pattern comune nei KV store. La chiave è spesso un composito del tipo di entità e dell'identificatore univoco. (es. `user/123`, `user:456`)
+
+### KV come Grafi e Alberi?
+
+Rappresentare strutture dati complesse come Grafi o Alberi usando pattern KV può essere utile. (Ancora una volta, gli URL REST ne sono un ottimo esempio.)
+
+La gerarchia delle chiavi (`user/420` -> `user/420/friends`) codifica naturalmente una relazione di grafo tra l'`user` e i suoi `friends`.
+
+Questo è un modo rapido ed economico per serializzare strutture dati a grafo. Soprattutto se non hai bisogno della complessità di un database a grafo (come Neo4j).
+
+<figure>
+![Grafo di user/123](../KVsCanBeGraphs.webp)
+<figcaption>Grafo di user/123</figcaption>
+</figure>
+
+### Quando usare pattern KV
+
+- Quando serve una scalabilità massiva. (Miliardi o persino trilioni di coppie chiave-valore.)
+- Quando l'accesso ai dati avviene principalmente tramite una chiave univoca.
+- Quando servono strutture dati semplici.
+- Quando i dati presentano una struttura gerarchica, a grafo o ad albero.
+
+### Quando evitare pattern KV
+
+Non memorizzare elementi come i commenti di un blog in un _**singolo**_ KV pair. Ad esempio, `post/666 -> {comments: [...too many...]}`. In alternativa potresti usare `post/666/comments/1`, o `post/666/comments/<UUID>`, ecc. Oppure optare per una tabella SQL.
+
+- Quando devi effettuare ricerche per proprietà (non per Chiave o ID) nel dataset.
+- Quando devi eseguire JOIN tra dati di più entità.
+- Quando devi imporre vincoli o relazioni complesse.
+
+### Quando hai bisogno di più di KV
+
+Man mano che i requisiti del progetto evolvono naturalmente, potresti aver bisogno di funzionalità che superano le capacità del tuo KV store. A quel punto dovrai valutare la migrazione verso un data store più complesso.
+
+{/* The good news is that you can often start with a KV pattern and evolve it into a more complex system as needed. S3 has features beyond simple storage, from Athena for searching files, Glacier, and Expire policies there's a lot you can do with it. Also, Redis has added many high-level features (like Pub/Sub, Geo-spatial, Streams, and Sorted Sets) that can help you meet some requirements. */}
+
+La buona notizia è che migrare un singolo KV store verso SQL è relativamente più semplice rispetto a migrare uno schema SQL complesso in un KV store. (Con multiple tabelle, indici, vincoli, ecc.) L'ho fatto più volte con uno script di 50 righe.
+
+Sperimentalmente, ho riscontrato che la qualità dei progetti SQL è maggiore se si inizia con un pattern KV. Ti obbliga a ragionare sui dati in modo diverso e a comprendere _esattamente_ quali sono le tue reali esigenze per SQL.
+
+## Passi successivi
+
+Il modo migliore per imparare è provarlo direttamente! Se sei interessato ad approfondire questo pattern, ti consiglio di **costruire qualcosa** con Redis, DynamoDB o S3.
+Ognuno di questi è un eccellente KV store con trade-off differenti.
+
+### Fact Service - Progetto di riferimento
+
+Dai un'occhiata al mio progetto Open Source ["Fact Service," un progetto di riferimento su GitHub](https://github.com/justsml/fact-service).
+
+È un'API RESTful standalone che implementa un servizio di dati KV.
+
+Include numerosi [adattatori dati](https://github.com/justsml/fact-service/tree/main/lib/providers).
+Tra cui per Postgres, Redis, DynamoDB, Firestore e Cassandra! (Corredato di [comandi Docker](https://github.com/justsml/fact-service/tree/main/lib/providers) per iniziare rapidamente.)
+
+Fact Service è pensato come progetto introduttivo e didattico: forkalo e costruisci il tuo servizio di dati KV!
+
+## Conclusioni
+
+Spero che questo articolo ti sia stato utile! Se hai domande o feedback, sentiti libero di commentare o `@`-armi su [Twitter](https://x.com/justsml).
+
+### Crediti
+
+- [Modellazione di dati ad albero gerarchico in PostgreSQL](https://leonardqmarcq.com/posts/modeling-hierarchical-tree-data)
+- [Cosa fare e cosa non fare nello storage di alberi di grandi dimensioni in PostgreSQL](https://leonardqmarcq.com/posts/dos-and-donts-of-modeling-hierarchical-trees-in-postgres)
+
+### Approfondimenti
+
+- [Fact Service](https://github.com/justsml/fact-service)
+- [Postgres](https://www.postgresql.org/)
+- [Redis](https://redis.io/)
+- [DynamoDB](https://aws.amazon.com/dynamodb/)
+- [S3](https://aws.amazon.com/s3/)
+- [Cassandra](https://cassandra.apache.org/)
+- [Firestore](https://firebase.google.com/docs/firestore)
+````
