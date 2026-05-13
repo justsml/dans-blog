@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-mcp-tool-integrations
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-04--mastra-mcp-tool-integrations/de/index.mdx
+- Validation: passed
+- Runtime seconds: 10.17
+- Input tokens: 8075
+- Output tokens: 2535
+- Thinking tokens: unknown
+- Cached input tokens: 2688
+- Cache write tokens: 0
+- Estimated cost: $0.000771
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Ihr KI‑Agent ist ohne das nutzlos
 subTitle: Warum MCP das USB‑C der Künstlichen Intelligenz ist.
@@ -218,3 +236,4 @@ Wenn Sie ein KI‑System entwerfen, das mit externen Diensten interagieren muss,
 2. [Sicherheit & Leitplanken](../mastra-security-guardrails)  
 3. **MCP & Tool-Integrationen** (Dieser Beitrag)  
 4. [Workflows & Speicher](../mastra-workflows-memory)
+````
