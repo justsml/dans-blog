@@ -3,23 +3,23 @@
 - Locale: ru
 - Model: openrouter/openai/gpt-oss-120b:nitro
 - Target: src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 2.59
-- Input tokens: 3923
-- Output tokens: 787
+- Validation: deferred
+- Runtime seconds: 1.65
+- Input tokens: 4224
+- Output tokens: 779
 - Thinking tokens: unknown
-- Cached input tokens: 2048
+- Cached input tokens: 1920
 - Cache write tokens: 0
-- Estimated cost: $0.000295
+- Estimated cost: $0.000305
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: git add src/content/posts/2018-08-01--intro-to-promises/ru/index.mdx reports/i18n/intro-to-promises/ru
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
 title: Введение в промисы
-subTitle: Промисы в JavaScript — это весело!
+subTitle: JavaScript‑промисы — это весело!
 date: '2018-08-01'
 modified: '2024-07-31'
 category: Code
@@ -38,11 +38,11 @@ cover: ../joe-yates-480485-unsplash.webp
 cover_mobile: ../w300_joe-yates-480485-unsplash.webp
 cover_icon: ../icon_joe-yates-480485-unsplash.webp
 ---
-## Promises... Что это такое?
+##Что такое Promises и зачем они нужны?
 
 Когда вы запускаете любой код, существует 2 возможных результата: **успех** или **неудача**.
 
-Если этот код асинхронный, надёжно полагаться на результат сложнее.
+Если код асинхронный, полагаться на результат сложнее.
 
 **`Promises`** предоставляют удобный способ справиться с этим.
 
@@ -58,19 +58,19 @@ cover_icon: ../icon_joe-yates-480485-unsplash.webp
                 (Rejected)           (Resolved)
 ```
 
-> Пояснение: хотя промисы должны либо разрешаться, либо отклоняться, они могут не сделать ни того, ни другого. Это приводит к зависанию приложений и трудно отлаживается.
+> Замечание: хотя обещания должны либо разрешаться, либо отклоняться, они могут не сделать ни того, ни другого. Это приводит к зависанию приложений и трудно отлаживается.
 
 ### Откуда берутся Promises?
 
-Много раз вам не понадобится создавать промис вручную. Встроенные API, такие как `fetch`, и популярные библиотеки, например `axios`, уже возвращают промисы.
+Много развам не придётся создавать обещание вручную. Встроенные API, такие как `fetch`, и популярные библиотеки вроде `axios` уже возвращают Promises.
 
-Однако если всё же нужно создать промис, существует 2 способа:
+Однако если всё же нужно создать обещание, существует 2 способа сделать это:
 
-### Создание промисов #1/2:
+### Создание Promises #1/2:
 
-Самый простой способ создать промис — воспользоваться вспомогательным методом `Promise.resolve()`.
+Самый простой способ создать Promise — это вспомогательный метод `Promise.resolve()`.
 
-Любое значение можно «обернуть» (или «преобразовать») в промис с помощью `Promise.resolve(value)`.
+Любое значение можно «обернуть» (или «преобразовать») в Promise с помощью `Promise.resolve(value)`.
 
 ```js
 // Without Promises:
@@ -89,7 +89,7 @@ add10Promised(10)
   .then(x => console.log(x)) //=> 20
 ```
 
-### Создание промисов #2/2:
+### Создание Promises #2/2:
 
 Другой, более гибкий способ: использовать конструктор `Promise`.
 
@@ -101,8 +101,8 @@ new Promise(function(resolve, reject) {
   // typeof resolve === 'function'
   // typeof reject === 'function'
 
-  // `resolve(result)` должен быть вызван, когда промис выполнен успешно
-  // `reject(Error)` должен быть вызван, если промис отклонён
+  // `resolve(result)` должен вызываться, когда промис выполнен успешно
+  // `reject(Error)` должен вызываться, если промис отклонён
 })
 ```
 
@@ -110,18 +110,18 @@ new Promise(function(resolve, reject) {
 
 API промисов на самом деле состоит из небольшого набора методов.
 
-2 методов экземпляра и 4 статических/утилитарных функций.
+2 методов экземпляра и 4 статических/утилитных функций.
 
 #### Методы экземпляра Promise
 
-Получить значение из промиса обычными приёмами (например, `console.log(promise)`) не получится.
+Доступ к значениям промиса не получится получить обычными приёмами (например, `console.log(promise)`).
 
 Все промисы завершаются либо успешно (через `.then(fn)`), либо с ошибкой (через `.catch(fn)`).
 
-#### Утилитарные методы Promise
+#### Утилитные методы Promise
 
 * `Promise.resolve(value)` — преобразует любое значение в промис
-* `Promise.reject(Error)` — создаёт промис‑отклонение, активирует последующий `.catch()`
+* `Promise.reject(Error)` — создаёт промис‑ошибку, активирует последующий `.catch()`
 * `Promise.all([...promises])` — ожидает, пока **все** промисы в массиве завершатся
-* `Promise.race([...promises])` — разрешается, как только первый промис завершится успешно
+* `Promise.race([...promises])` — завершается, как только первый промис из массива выполнится
 ````
