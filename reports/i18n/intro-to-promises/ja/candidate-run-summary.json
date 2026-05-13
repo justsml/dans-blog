@@ -1,34 +1,36 @@
 {
-  "runId": "2026-05-13T17-30-36-546Z",
-  "runStatus": "interrupted",
+  "runId": "2026-05-13T18-41-45-976Z",
+  "runStatus": "running",
   "slug": "intro-to-promises",
   "locale": "ja",
-  "startedAt": "2026-05-13T17:30:36.546Z",
-  "updatedAt": "2026-05-13T17:30:55.499Z",
+  "startedAt": "2026-05-13T18:41:45.976Z",
+  "updatedAt": "2026-05-13T18:42:11.643Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
-    "qwen/qwen3.6-plus"
+    "qwen/qwen3.6-plus",
+    "qwen/qwen3.6-35b-a3b",
+    "qwen/qwen3.5-9b"
   ],
-  "attemptedModels": 0,
+  "attemptedModels": 1,
   "skippedModels": 1,
   "rejectedModels": 0,
-  "candidateModels": 0,
+  "candidateModels": 1,
   "totals": {
-    "inputTokens": 0,
-    "outputTokens": 0,
+    "inputTokens": 3928,
+    "outputTokens": 3118,
     "thinkingTokens": 0,
     "cachedInputTokens": 0,
     "cacheWriteTokens": 0,
-    "estimatedCostUsd": 0,
+    "estimatedCostUsd": 0.001063,
     "hasUnknownInputTokens": false,
     "hasUnknownOutputTokens": false,
-    "hasUnknownThinkingTokens": false,
+    "hasUnknownThinkingTokens": true,
     "hasUnknownCachedInputTokens": false,
     "hasUnknownCacheWriteTokens": false,
     "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "0.00"
+    "runtimeSeconds": "8.90"
   },
   "attempts": [
     {
@@ -36,6 +38,24 @@
       "status": "skipped",
       "reportPath": "reports/i18n/intro-to-promises/ja/openrouter-openai-gpt-oss-120b-nitro.md",
       "note": "Existing non-rejected report found. Pass --overwrite to rerun."
+    },
+    {
+      "model": "openrouter/qwen/qwen3-32b:nitro",
+      "status": "candidate",
+      "validationStatus": "deferred",
+      "reportPath": "reports/i18n/intro-to-promises/ja/openrouter-qwen-qwen3-32b-nitro.md",
+      "note": "Generated through the direct AI SDK chunked translator.",
+      "telemetry": {
+        "runtimeSeconds": "8.90",
+        "tokens": {
+          "input": 3928,
+          "output": 3118,
+          "cached": 0,
+          "cacheWrite": 0
+        },
+        "estimatedCostUsd": 0.00106256,
+        "pricingSource": "local-openrouter-estimate"
+      }
     }
   ]
 }

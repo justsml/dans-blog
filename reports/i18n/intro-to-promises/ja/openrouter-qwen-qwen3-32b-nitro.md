@@ -3,23 +3,23 @@
 - Locale: ja
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2018-08-01--intro-to-promises/ja/index.mdx
-- Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 8.17
-- Input tokens: 3565
-- Output tokens: 2728
+- Validation: deferred
+- Runtime seconds: 8.90
+- Input tokens: 3928
+- Output tokens: 3118
 - Thinking tokens: unknown
 - Cached input tokens: 0
 - Cache write tokens: 0
-- Estimated cost: $0.000940
+- Estimated cost: $0.001063
 - Pricing source: local-openrouter-estimate
-- Note: Command failed: git add src/content/posts/2018-08-01--intro-to-promises/ja/index.mdx reports/i18n/intro-to-promises/ja
+- Note: Generated through the direct AI SDK chunked translator.
 ## Raw Output
 
 ````mdx
 ---
 social_image: ../desktop-social.webp
-title: プロミス入門
-subTitle: ジャバスクリプトのプロミスは楽しい！
+title: Promise入門
+subTitle: ''
 date: '2018-08-01'
 modified: '2024-07-31'
 category: Code
@@ -38,13 +38,13 @@ cover: ../joe-yates-480485-unsplash.webp
 cover_mobile: ../w300_joe-yates-480485-unsplash.webp
 cover_icon: ../icon_joe-yates-480485-unsplash.webp
 ---
-## Promiseとは？その真価とは
+## プロミス... その扱いは？
 
-コンピュータコードを実行する際、2つの可能性がある：**成功**または**失敗**。
+コンピュータコードを実行するたびに、2つの可能性があります: 成功または失敗。
 
-コードが非同期である場合、その結果を信頼して扱うのはさらに難しくなる。
+そのコードが非同期である場合、その結果を信頼して依存するのは難しくなります。
 
-**`Promise`** はこれを扱うための便利な仕組みである。
+**`プロミス`**は、これに対処するための便利な方法を提供します。
 
 ```
                         +--Promise---+
@@ -58,17 +58,17 @@ cover_icon: ../icon_joe-yates-480485-unsplash.webp
                 (Rejected)           (Resolved)
 ```
 
-> 傍注：Promiseは解決または拒否されるべきだが、どちらにも失敗する可能性がある。これによりアプリがフリーズし、デバッグが非常に困難になる。
+> 傍記: プロミスは解決または拒否されるべきですが、どちらも行わない場合があります。これによりアプリがフリーズし、デバッグが非常に難しくなることがあります。
 
-### Promiseはどこから来るのか
+### プロミスはどこから来るのか？
 
-多くの場合、自分でPromiseを作成する必要はありません。ネイティブAPI（`fetch`など）や人気のあるライブラリ（`axios`など）はすでにPromiseを返しています。
+多くの場合、自分でPromiseを作成する必要はありません。`fetch`のようなネイティブAPIや`axios`のような人気ライブラリはすでにPromiseを返却しています。
 
-ただし、Promiseを作成しなければならない場合は、以下の2つの方法があります。
+ただし、Promiseを作成しなければならない場合は、以下の2つの方法があります：
 
 ### Promiseの作成方法 #1/2
 
-Promiseを作成する最も簡単な方法は、ヘルパーメソッド`Promise.resolve()`を使用することです。
+Promiseを作成する最も簡単な方法は、ヘルパーメソッド`Promise.resolve()`を使うことです。
 
 `Promise.resolve(value)`を使って、任意の値をPromiseにラップ（または「変換」）できます。
 
@@ -91,10 +91,11 @@ add10Promised(10)
 
 ### Promiseの作成方法 #2/2：
 
-### Promiseの作成方法 #2/2:  
-もう1つの柔軟な方法: `Promise`コンストラクタを使用する。  
+## Promiseの作成方法 #2/2：Promiseコンストラクタを使う
 
-`new Promise(callback)`は、次のインターフェースを持つ`callback`関数を受け取ります:  
+より柔軟な方法：`Promise`コンストラクタを使う。
+
+`new Promise(callback)`は、以下のインターフェースを持つ`callback`関数を受け取ります：
 
 ```js
 new Promise(function(resolve, reject) {
@@ -102,27 +103,28 @@ new Promise(function(resolve, reject) {
   // typeof resolve === 'function'
   // typeof reject === 'function'
 
-  // Promiseが履行されたときに`resolve(result)`を実行しなければなりません
-  // Promiseが拒否された場合に`reject(Error)`を実行しなければなりません
+  // Promiseがfulfilled（成功）したときに`resolve(result)`を実行する必要があります
+  // Promiseがrejected（失敗）したときに`reject(Error)`を実行する必要があります
 })
 ```
 
-### Promise API  
-Promise APIは実際には少数のメソッドのみで構成されています。  
+### Promise API
 
-- 2つのインスタンスメソッド  
-- 4つのスタティック/ユーティリティ関数  
+PromiseのAPIは実際には少数のメソッドのみで構成されています。
+
+- 2つのインスタンスメソッド
+- 4つのスタティック/ユーティリティメソッド
 
 #### Promiseインスタンスメソッド
 
-Promiseから値を取得するには通常の方法（例: `console.log(promise)`）は動作しません。  
+Promiseから値を取得するには通常の方法（例: `console.log(promise)`）は動作しません。
 
-すべてのPromiseは、`.then(fn)`を介して成功を返すか、`.catch(fn)`を介して失敗を返します。  
+すべてのPromiseは、`.then(fn)`を通じて成功を返すか、`.catch(fn)`を通じて失敗を返します。
 
-#### Promiseユーティリティ関数  
+#### Promiseユーティリティメソッド
 
-* `Promise.resolve(value)` - 任意の値をPromiseに変換  
-* `Promise.reject(Error)` - 失敗するPromiseを作成し、その後の`.catch()`をトリガーします  
-* `Promise.all([...promises])` - Promiseの配列がすべて完了するのを待ちます  
-* `Promise.race([...promises])` - 最初に解決したPromiseに応じて解決します
+* `Promise.resolve(value)` - 任意の値をPromiseに変換します
+* `Promise.reject(Error)` - 失敗するPromiseを作成し、後続の`.catch()`をトリガーします
+* `Promise.all([...promises])` - Promiseの配列がすべて完了するまで待ちます
+* `Promise.race([...promises])` - 最初に解決したPromiseで即座に解決します
 ````
