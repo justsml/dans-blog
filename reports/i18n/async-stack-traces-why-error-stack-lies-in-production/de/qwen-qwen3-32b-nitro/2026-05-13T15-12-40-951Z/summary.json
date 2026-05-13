@@ -1,0 +1,84 @@
+{
+  "runId": "qwen-qwen3-32b-nitro@2026-05-13T15-12-40-951Z",
+  "slug": "async-stack-traces-why-error-stack-lies-in-production",
+  "locale": "de",
+  "model": "qwen/qwen3-32b:nitro",
+  "modelPath": "qwen-qwen3-32b-nitro",
+  "createdAt": "2026-05-13T15:12:56.890Z",
+  "sourcePath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/index.mdx",
+  "targetPath": "src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/de/index.mdx",
+  "candidatePath": "reports/i18n/async-stack-traces-why-error-stack-lies-in-production/de/qwen-qwen3-32b-nitro/2026-05-13T15-12-40-951Z/candidate.mdx",
+  "sourceHash": "bda8adb66cf30fc89c91baea70bf6d81ae97177b838379f1fd437c2da47c9917",
+  "outputHash": "a43cf5c18fcda369cb1bc3587e61c9ca535049851cce32f07dc96269e3db447b",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary:**  \nThe article argues that async JavaScript's `Error.stack` is inherently unreliable due to the nature of `async/await`, which suspends and resumes execution, erasing call stack history. It explains how V8's attempts to preserve async stack traces (e.g., `--async-stack-traces`) are costly and incomplete, while emphasizing that developers should abandon stack trace dependency in favor of context-aware tools like `AsyncLocalStorage` for production debugging. The intended audience is Node.js developers troubleshooting async issues, with a technical tone blending analysis and practical advice. Key metaphors include \"cryogenic freezer\" for the Microtask Queue and \"genealogy\" for synchronous call stacks. The core thesis: prioritize causal context (e.g., request IDs) over broken stack traces in async environments.",
+  "totalInputTokens": 4427,
+  "totalOutputTokens": 4543,
+  "totalCacheReadTokens": 1536,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 11273,
+  "totalCostUsd": 0.0014444800000000002,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "qwen/qwen3-32b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 5,
+    "totalInputTokens": 4427,
+    "totalOutputTokens": 4543,
+    "totalCacheReadTokens": 1536,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 11273,
+    "totalCostUsd": 0.0014444800000000002,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 761,
+        "outputTokens": 779,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1939,
+        "costUsd": 0.00024784
+      },
+      {
+        "index": 1,
+        "inputTokens": 900,
+        "outputTokens": 1146,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2764,
+        "costUsd": 0.00034704
+      },
+      {
+        "index": 2,
+        "inputTokens": 908,
+        "outputTokens": 865,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 2156,
+        "costUsd": 0.00028023999999999996
+      },
+      {
+        "index": 3,
+        "inputTokens": 1033,
+        "outputTokens": 1317,
+        "cacheReadTokens": 512,
+        "cacheWriteTokens": 0,
+        "durationMs": 3171,
+        "costUsd": 0.00039872
+      },
+      {
+        "index": 4,
+        "inputTokens": 825,
+        "outputTokens": 436,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 1243,
+        "costUsd": 0.00017064
+      }
+    ]
+  }
+}

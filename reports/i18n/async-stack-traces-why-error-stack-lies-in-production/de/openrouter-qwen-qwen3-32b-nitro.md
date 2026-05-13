@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: async-stack-traces-why-error-stack-lies-in-production
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-12-29--async-stack-traces-why-error-stack-lies-in-production/de/index.mdx
+- Validation: passed
+- Runtime seconds: 11.27
+- Input tokens: 4427
+- Output tokens: 4543
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.001444
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -94,3 +112,4 @@ Es spielt keine Rolle, wie viele `await`s dazwischen stattfinden. Der Kontext ü
 3.  Verfolgen Sie, statt zu stapeln. Nutzen Sie OpenTelemetry. Es visualisiert die kausale Kette über Dienste hinweg, was Sie tatsächlich interessiert.
 
 Ihr Code ist asynchron. Ihr Debugging-Kontext sollte nicht asynchron sein.
+````
