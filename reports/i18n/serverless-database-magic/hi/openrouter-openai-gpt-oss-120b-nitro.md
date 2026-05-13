@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.47
+- Input tokens: 6113
+- Output tokens: 3735
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000911
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 2025की डेटाबेस नवाचार लहर
 subTitle: आप AI का धन्यवाद कर सकते हैं।
@@ -244,3 +262,4 @@ AWS भी इस दिशा में आगे बढ़ रहा है, S
 > **डिस्क्लेमर:** मैंने वर्षों से Pagefind इस्तेमाल किया है और 2025 में योगदानकर्ता बना। मैंने छोटे प्रोजेक्ट्स के लिए Orama और Chroma के साथ प्रयोग किया और बड़े AI एप्लिकेशन के लिए LanceDB को एक्सप्लोर कर रहा हूँ। इन प्रोजेक्ट्स के साथ कोई वित्तीय संबंध नहीं—सिर्फ डेटाबेस परिदृश्य के विकास में गहरी रुचि है।
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
