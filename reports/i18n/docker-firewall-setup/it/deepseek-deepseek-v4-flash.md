@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: it
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 24.11
+- Input tokens: 3618
+- Output tokens: 3796
+- Thinking tokens: unknown
+- Cached input tokens: 384
+- Cache write tokens: 0
+- Estimated cost: $0.001517
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Configurazione del firewall Docker
 subTitle: Configurare il firewall di un host Docker
@@ -101,3 +119,4 @@ nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
 ~~~
 
 > FATTO! Ora dovresti vedere SOLO le porte che hai configurato!
+````
