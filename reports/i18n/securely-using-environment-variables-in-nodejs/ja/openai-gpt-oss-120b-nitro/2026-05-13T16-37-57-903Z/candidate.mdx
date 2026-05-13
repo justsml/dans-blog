@@ -1,0 +1,144 @@
+---
+social_image: ../desktop-social.webp
+title: NodeJSで環境変数を使用する
+subTitle: '`dotenv` を使用'
+date: '2018-11-13'
+modified: '2020-07-30'
+tags:
+  - dotenv
+  - api-keys
+  - secrets
+  - tokens
+  - security
+  - nodejs
+category: Code
+subCategory: howto
+cover: ../john-salvino-417565-unsplash.webp
+cover_mobile: ../w300_john-salvino-417565-unsplash.webp
+cover_icon: ../icon_john-salvino-417565-unsplash.webp
+---
+## 秘密情報と API トークンの安全な取り扱い
+
+### 関連記事: [トークンを保護する](/protect-your-tokens/)
+
+`secret` と `non-secret` の違いを手短に復習しましょう。
+
+* 🔒 `Secret keys` は、サードパーティ API へのリクエストを隠蔽（プロキシ）するために、カスタムサーバー（例: Node/Express/Heroku）で使用しなければなりません。
+* 🌍 `Non-secret keys` は、ブラウザへ送信しても問題ないキーを指します。
+
+<br />
+
+---------------------------------------------
+
+> この章では 🔒 `Secret keys` を **環境変数** で扱う方法に焦点を当てます。
+
+[コード例は下記をご参照ください。](#️-code-example)
+
+#### 概要
+
+NodeJS のコードで **シークレットを安全に取得する** には:
+
+1. ハードコードされたキーを環境変数に置き換える。例: `process.env.API_SECRET`
+2. `.env` ファイルと併せて [`dotenv`](https://github.com/motdotla/dotenv) のようなライブラリを使用する。以前ハードコードしていたシークレットを `.env` に移す。
+3. `.gitignore` に `.env` 行が入っていることを確認する！
+
+> **DON'T** デプロイ先サーバーで `.env` ファイルを作成しないこと。ホスティングサービス（例: [Heroku](https://devcenter.heroku.com/articles/config-vars)、Netlify、AWS EC2）で提供されている環境変数管理ツール（ダッシュボードまたは CLI）を利用してください。
+
+### コード例
+
+いくつかのファイルを定義します。
+
+1. `.env`
+1. `./db/connection.js`
+1. `./api/users.js`
+
+<!-- Example config object which uses `process.env.PG*`
+
+```js
+// ./db/config.js
+module.exports = {
+  postgres: {
+    host: process.env.PGHOST || 'localhost',
+    port: process.env.PGPORT || 5234,
+    user: process.env.PGUSER || 'postgres',
+    password: process.env.PGPASSWORD || 'password',
+    database: process.env.PGDATABASE || 'postgres',
+  }
+};
+```
+
+The `db/config.js` file is just an example of how your secrets should be stored for re-use in your code.
+-->
+
+まず、[`dotenv`](https://www.npmjs.com/package/dotenv) パッケージをインストールします。
+
+```bash
+npm install dotenv
+```
+
+次に、プロジェクトのルートに `.env` ファイルを作成します。
+
+```
+# .env
+PGDATABASE="postgres"
+PGHOST="localhost"
+PGPORT=5234
+PGUSER="postgres"
+PGPASSWORD="password"
+```
+
+❌ **絶対に** `.env` ファイルをコミットしないでください。
+
+❌ サーバ上で `.env` を作成しないでください。
+
+ホスティングプロバイダーのドキュメントを確認し、_環境変数_ を設定します。
+
+`.gitignore` に `.env` 行が入っているか簡単に確認するには次のコマンドを実行します。
+
+```bash
+# Automatically update .gitignore
+# Run in terminal:
+[ "$(grep '^.env' .gitignore)" == "" ] && echo '.env' >> .gitignore
+# note: no output will print
+```
+
+`./db/connection.js` は共有の `pg.Pool` インスタンスを提供します。これがデータベースへのクエリに使用されます。
+
+```js
+// ./db/connection.js
+require('dotenv').config(); // ✅ .env ファイルをロード
+const pg = require('pg');
+const {PGUSER, PGHOST, PGPORT} = process.env;
+
+if (process.env.NODE_ENV === 'development')
+  console.log(`Connecting to ${PGUSER} @ ${PGHOST}:${PGHOST}`);
+// ^^ デバッグ用に接続情報を表示するだけ
+
+// pg は自動的に PG* 環境変数を使用します
+module.exports = new pg.Pool();
+```
+
+`./api` フォルダーにはテーブル／ビューへのインターフェースが格納されています。
+
+以下は `users` テーブル用の例 `./api/users.js` です。
+
+```js
+// ./api/users.js
+const db = require('../db/connection.js');
+
+module.exports = {
+  findUsername: function(username) {
+    return db.query('SELECT * FROM users WHERE username=$1', username);
+  }
+};
+```
+
+- `.env` のシークレットを git に絶対にコミットしないこと！
+- チームで `.env` ファイルを共有しないこと。 *
+
+\* 新しい開発用ノートPC やデスクトップは **必ず新しいアクセスキーとトークンを生成** してください。  
+   どうしても不可能な場合は、`.env` を共有する際に十分に注意してください（サービス側が古いキーを無効化する可能性がある、または有料 API の利用回数が制限されている場合など）。
+
+#### ⚠️ 重要: 必要に応じて、必ず安全なメッセージングサービス（できればメッセージの有効期限機能付き）を使用してください。
+
+頑張ってください。質問があれば遠慮なくどうぞ！ 🎉
