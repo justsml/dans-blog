@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-nodejs-files-streams-buffers-oh-my
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-11-15--quiz-nodejs-files-streams-buffers-oh-my/es/index.mdx
+- Validation: passed
+- Runtime seconds: 45.84
+- Input tokens: 12983
+- Output tokens: 12397
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.004014
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Cuestionario: Maestría en NodeJS IO'
@@ -598,3 +616,4 @@ Veamos cuán bien conoces tus flujos de tus buffers. 🚀
 </QuizUI>
 
 Espero que hayas disfrutado poniendo a prueba tus conocimientos de NodeJS IO. ¿Quieres más? ¡Echa un vistazo a [nuestra Colección de Pruebas](/challenges/) para más desafíos!
+````
