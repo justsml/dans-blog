@@ -1,0 +1,37 @@
+{
+  "selectedCommit": "40e23f7cca8ea20a6c853bd189e6c3537c6ec8af",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 5,
+    "technicalAccuracy": 5,
+    "coherence": 5,
+    "relevance": 5,
+    "translationQuality": 5,
+    "mdxPreservation": 5
+  },
+  "suggestions": [],
+  "rationale": "The current translation in the ja/index.mdx file already contains the correct SQL string for the first challenge ('SELECT * FROM users WHERE name = \\'John\\';'), so the high-priority fix suggested in the previous judge report is no longer necessary. The translation is accurate, maintains the MDX structure, and captures the tone of the original English content well.",
+  "slug": "quiz-sql-query-fundamentals",
+  "locale": "ja",
+  "candidateCommits": [
+    "40e23f7cca8ea20a6c853bd189e6c3537c6ec8af",
+    "4a0deff8808943ca979f32058a820164a4002971"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: 'SELECT * FROM users WHERE name = \\', isAnswer: true},",
+      "replacement": "{text: 'SELECT * FROM users WHERE name = \\'John\\';', isAnswer: true },",
+      "reason": "The SQL string in the correct answer option was truncated, making the quiz question broken.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-sql-query-fundamentals --locale ja --skip-global",
+    "output": ""
+  }
+}

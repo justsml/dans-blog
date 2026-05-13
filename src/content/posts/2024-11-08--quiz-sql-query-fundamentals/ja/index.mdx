@@ -1,7 +1,7 @@
 ---
 unlisted: false
-title: 'クイズ: あなたのSQLスキルを証明してみよう！'
-subTitle: ''
+title: 'クイズ: SQLスキルを証明しよう！'
+subTitle: SQL派ですか？それともNoSQL派ですか？
 label: SQL 101
 social_image: ../desktop-social.webp
 category: Quiz
@@ -20,24 +20,24 @@ cover_full_width: ../peter-thomas-os14nsuXdI4-unsplash-wide.webp
 cover_mobile: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 cover_icon: ../peter-thomas-os14nsuXdI4-unsplash-square.webp
 ---
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
 
-## SQLクエリの基礎をテスト
+## SQLクエリ基礎をテストしよう
 
-ORMを使うことでスキルがおざなりになっていませんか？  
-心配しないでください、多くの開発者が同じ経験をしています。  
+ORMを使いすぎてスキルが鈍っていませんか？  
+心配はいりません。多くの開発者が同じ状況です。
 
-さっそく始めてみましょう！👇
+さっそくSQLクエリ基礎を証明してみましょう！ 👇
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="SQLの基礎"
-  title="基本的なWHERE句"
+  group="SQL 基礎"
+  title="基本的な WHERE 句"
   options={[
     {text: 'SELECT * FROM users WHERE name LIKE(John);'},
     {text: 'SELECT * FROM users WHERE name = \', isAnswer: true},
@@ -47,14 +47,14 @@ ORMを使うことでスキルがおざなりになっていませんか？
 >
   <slot name="question">
   <div className="question">
-    以下のSQLクエリのうち、名前が"John"である行を正しく取得するのはどれですか？
+    次の SQL クエリのうち、名前が "John" の行を正しく取得するものはどれですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    SQLでは、`WHERE`句の等価比較に単一の等号(`=`)を使用します。`==`や`===`はJavaScriptの演算子であり、SQLでは使用しません。
+    SQL では、等価比較にはシングルイコール (`=`) を `WHERE` 句で使用し、`==` や `===` は JavaScript の演算子であり使用しません。
 
-    正しい構文は`SELECT * FROM users WHERE name = 'John';`です。
+    正しい構文は `SELECT * FROM users WHERE name = 'John';` です。
   </div>
   </slot>
 </Challenge>
@@ -62,25 +62,25 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={1}
-  group="SQLの基礎"
-  title="集計関数COUNT"
+  group="SQL 基礎"
+  title="集計関数 COUNT"
   options={[
-    {text: 'NULL値を含むすべての行をカウントします'},
-    {text: '列内のNULLでない値のみをカウントします', isAnswer: true},
-    {text: 'NULL値を1つのユニーク値としてカウントします'},
-    {text: '各NULL値をユニークと見なし、NaN !== NaNのように扱います'},
+    {text: 'NULL 値を含むすべての行をカウントする'},
+    {text: '列の非 NULL 値のみをカウントする', isAnswer: true},
+    {text: 'NULL 値を 1 つのユニークな値としてカウントする'},
+    {text: '各 NULL 値をユニークとみなし、NaN !== NaN と同様に扱う'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`COUNT(column_name)`はどのような動作を行いますか？
+    SQL で `COUNT(column_name)` は何を行いますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `COUNT(column_name)`は指定された列内のNULLでない値の数をカウントします。NULLを含むすべての行をカウントするには`COUNT(*)`を使用してください。
+    `COUNT(column_name)` は指定された列の非 NULL 値の数をカウントします。NULL を含むすべての行をカウントしたい場合は `COUNT(*)` を使用します。
 
-    `COALESCE`を用いてNULLを非NULL値にデフォルト設定することも可能です。たとえば：`COUNT(COALESCE(column_name, 0))`のように。
+    また、`COALESCE` を使って NULL を非 NULL 値にデフォルトさせることもできます。例えば: `COUNT(COALESCE(column_name, 0))`.
   </div>
   </slot>
 </Challenge>
@@ -88,23 +88,23 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={2}
-  group="SQL結合"
-  title="LEFT JOINの基礎"
+  group="SQL 結合"
+  title="LEFT JOIN の基本"
   options={[
-    {text: '一致する行ごとに1行を返し、一致しない行は無視する'},
-    {text: '左のテーブルのすべての行を返し、一致する右の行を追加する', isAnswer: true},
-    {text: '一致したまたは一致しないすべての行を返し、NULLは一致なしを示す'},
-    {text: '右のテーブルのすべての行を返し、一致する左の行を含める'},
+    {text: '一致する行ごとに1行を返し、マッチしない行は無視します'},
+    {text: '左テーブルのすべての行と、マッチする右テーブルの行を返します', isAnswer: true},
+    {text: 'マッチした行もマッチしなかった行もすべて返し、NULL は一致なしを示します'},
+    {text: '右テーブルのすべての行と、マッチする左テーブルの行を返します'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`LEFT JOIN`はどのような動作をするか？
+    SQLで `LEFT JOIN` は何を行いますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `LEFT JOIN`は左のテーブルのすべての行と、右のテーブルで一致した行を返し、右のテーブルで一致しない行はNULLになる。
+    `LEFT JOIN` は左テーブルのすべての行と、右テーブルのマッチする行を返し、右テーブルでマッチしない行には NULL が入ります。
   </div>
   </slot>
 </Challenge>
@@ -112,23 +112,23 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={3}
-  group="SQL結合"
-  title="INNER JOINの使用"
+  group="SQL 結合"
+  title="INNER JOIN の使用"
   options={[
-    {text: '両方のテーブルから一致しない行を返す'},
-    {text: '両方のテーブルからすべての行を返し、一致しない行にはNULLを設定する'},
-    {text: '結合条件を両方のテーブルで満たす行を返す', isAnswer: true},
-    {text: '右側のテーブルから一致しない行を返す'},
+    {text: '両方のテーブルで一致しない行を返す'},
+    {text: '両方のテーブルのすべての行を返し、一致しない行には NULL を入れる'},
+    {text: '結合条件を満たす両テーブルの行を返す', isAnswer: true},
+    {text: '右側テーブルで一致しない行を返す'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`INNER JOIN`はどのような動作を行いますか？
+    SQL で `INNER JOIN` は何を行いますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `INNER JOIN`は、結合条件が両方のテーブルの行と一致する行を返します。一致しない行は結果セットに含まれません。
+    `INNER JOIN` は結合条件が両テーブルの行と一致する行だけを返します。条件に合わない行は結果セットに含まれません。
   </div>
   </slot>
 </Challenge>
@@ -141,18 +141,18 @@ ORMを使うことでスキルがおざなりになっていませんか？
   options={[
     {text: '全体で一度だけ実行されるサブクエリ'},
     {text: 'JOIN 文でのみ使用されるサブクエリ'},
-    {text: '複数の列のみを返すサブクエリ'},
+    {text: '複数列のみを返すサブクエリ'},
     {text: '外部クエリの各行に対して一度実行されるサブクエリ', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLにおける相関サブクエリとは何ですか？
+    SQL における相関サブクエリとは何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    相関サブクエリは、外部クエリの各行に対して1回ずつ評価されます。外部クエリの列を参照するため、各行に依存しています。
+    相関サブクエリは外部クエリの各行ごとに一度評価されます。外部クエリの列を参照するため、各行に依存します。
   </div>
   </slot>
 </Challenge>
@@ -160,27 +160,27 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={5}
-  group="SQL CTE"
+  group="SQL CTE（共通テーブル式）"
   title="WITH句の構文"
   options={[
     {text: 'DELETE文でのみ使用可能'},
-    {text: '集計関数に使用'},
+    {text: '集計関数で使用される'},
     {text: 'ビュー定義専用'},
-    {text: '大規模SQL文で使用する一時結果セットの定義', isAnswer: true},
+    {text: '大きなSQL文で使用する一時的な結果セットを定義する', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLにおける`WITH`句（共通テーブル式）の目的は何ですか？
+    `WITH`句（共通テーブル式）の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `WITH`句（共通テーブル式）は、メインクエリ内で参照可能な一時結果セットを定義するために使われます。PostgreSQLでは`WITH`は`SELECT`、`INSERT`、`UPDATE`、`DELETE`、`MERGE`などの文に接続可能です。
+    `WITH`句、または共通テーブル式（CTE）は、メインクエリ内で参照できる一時的な結果セットを定義するために使用されます。PostgreSQLでは、`WITH`は`SELECT`、`INSERT`、`UPDATE`、`DELETE`、`MERGE`などの文に付けることができます。
 
-    これにより複雑なクエリの可読性とメンテナビリティを向上させることができます。
+    これにより、複雑なクエリの可読性と保守性が向上します。
 
-    構文は次の通りです：
+    構文は次のとおりです:
     ```sql
         WITH cte_name AS (
         SELECT column_name
@@ -196,23 +196,23 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={6}
-  group="SQLの基礎"
-  title="IS NULL と IS NOT NULL の違い"
+  group="SQL 基礎"
+  title="IS NULL と IS NOT NULL"
   options={[
-    {text: '値がNULLかどうかを確認します', isAnswer: true},
-    {text: '値が空かどうかを確認します'},
-    {text: '値が文字列かどうかを確認します'},
-    {text: '値が数値かどうかを確認します'},
+    {text: '値が NULL かどうかをチェックする', isAnswer: true},
+    {text: '値が空かどうかをチェックする'},
+    {text: '値が文字列かどうかをチェックする'},
+    {text: '値が数値かどうかをチェックする'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`IS NULL`演算子は何を行いますか？
+    SQL で `IS NULL` 演算子は何をしますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `IS NULL`は指定された列にNULL値が含まれているかどうかを確認します。`IS NOT NULL`は逆の確認を行います。
+    `IS NULL` は指定した列に NULL 値が含まれているかをチェックします。`IS NOT NULL` はその逆をチェックします。
   </div>
   </slot>
 </Challenge>
@@ -220,27 +220,27 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={7}
-  group="SQL演算子"
-  title="IN演算子の使用"
+  group="SQL 演算子"
+  title="IN 演算子の使用"
   options={[
-    {text: '一意の行を返す'},
-    {text: 'インデックス付きの列を必要とする'},
-    {text: '数値列でのみ適用される'},
-    {text: '指定されたリスト内の値に一致する行を返す', isAnswer: true},
+    {text: 'ユニークな行を返す'},
+    {text: 'インデックス付き列が必要'},
+    {text: '数値列にのみ適用される'},
+    {text: '指定リストの値に一致する行を返す', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`IN`演算子は何をするのか？
+    SQLで `IN` 演算子は何をしますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `IN`演算子は、指定されたリスト内の値に一致する行をフィルタリングするためのもので、複数の`OR`条件の代替としてよく使われます。
+    `IN` 演算子は、指定されたリスト内のいずれかの値に一致する行をフィルタリングします。複数の OR 条件の代替としてよく使われます。
 
-    「一意の行を返す」可能性はありますが（実際に返すことも多いです）、必ずしも主な目的ではありません。
+    *かもしれません* "ユニークな行" を返すこともあります（実際にそうなることが多いですが）、それが主目的というわけではありません。
 
-    インデックスは必須ではありませんが、`IN`をインデックス付きの列（特に`UNIQUE`インデックス）に使用するとパフォーマンスが向上するため、ベストプラクティスです。
+    インデックスは必須ではありませんが、インデックス付き列（できれば `UNIQUE` インデックス）で `IN` を使うのがベストプラクティスです。パフォーマンス向上につながります。
   </div>
   </slot>
 </Challenge>
@@ -248,26 +248,26 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={8}
-  group="SQL関数"
-  title="COALESCE関数の使用"
+  group="SQL 関数"
+  title="COALESCE 関数の使用"
   options={[
-    {text: 'NULL値をカウントする'},
-    {text: '最後のNULLでない引数を返す'},
-    {text: '最初のNULLでない引数を返す', isAnswer: true},
-    {text: 'IDENTITY列に限定される'},
-    {text: 'プリンターコアレーションから来た'},
+    {text: 'NULL 値をカウントする'},
+    {text: '最後の非 NULL 引数を返す'},
+    {text: '最初の非 NULL 引数を返す', isAnswer: true},
+    {text: 'IDENTITY 列に限定される'},
+    {text: '元は Printer Coalation から'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLにおける`COALESCE`関数は何をするか？
+    SQL で `COALESCE` 関数は何をしますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    COALESCE関数は指定されたリストで最初のNULLでない値を返し、NULLが見つかったときにデフォルト値を代入するのに便利です。
+    `COALESCE` 関数は指定されたリストの最初の非 NULL 値を返します。NULL に遭遇したときにデフォルト値を代入するのに便利です。
 
-    たとえば、`COALESCE(column_name, 0)`は、`column_name`が`NULL`の場合に`0`を返します。
+    例として、 `COALESCE(column_name, 0)` は `column_name` が `NULL` の場合 `0` を返します。
   </div>
   </slot>
 </Challenge>
@@ -275,24 +275,24 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={9}
-  group="SQL集計関数"
-  title="GROUP BYの用途"
+  group="SQL 集計関数"
+  title="GROUP BY の使い方"
   options={[
-    {text: '重複を非表示にする'},
-    {text: '結合時のみ使用される'},
-    {text: '行を昇順に並べ替える'},
-    {text: '指定された列で行をグループ化する', isAnswer: true},
-    {text: 'GROUP WITH/USINGの構文が正しい'},
+    {text: '重複を隠す'},
+    {text: '結合でのみ使用される'},
+    {text: '行を昇順にソートする'},
+    {text: '指定した列で行をグループ化する', isAnswer: true},
+    {text: '構文は GROUP WITH/USING であるべき'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLでGROUP BY句の目的は何ですか？
+    SQL の `GROUP BY` 句の目的は何ですか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    GROUP BY句は、指定された列に同じ値を持つ行をグループ化し、各グループに対して集計関数を適用できるようにします。
+    `GROUP BY` 句は、指定した列で同じ値を持つ行をグループ化し、各グループに集計関数を適用できるようにします。
   </div>
   </slot>
 </Challenge>
@@ -300,26 +300,26 @@ ORMを使うことでスキルがおざなりになっていませんか？
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={10}
-  group="SQL結合"
-  title="FULL OUTER JOINの基本"
+  group="SQL 結合"
+  title="FULL OUTER JOIN の基礎"
   options={[
     {text: '一致した行のみを返す'},
-    {text: 'NULLでない値の行のみを返す'},
-    {text: '左のテーブルから一致しない行のみを返す'},
-    {text: '右のテーブルから一致しない行のみを返す'},
-    {text: '両方のテーブルからすべての行を返し、一致しない行にはNULLを埋める', isAnswer: true},
+    {text: 'NULL でない値を持つ行のみを返す'},
+    {text: '左テーブルの一致しない行のみを返す'},
+    {text: '右テーブルの一致しない行のみを返す'},
+    {text: '両テーブルのすべての行を返し、一致しない行には NULL を入れる', isAnswer: true},
   ]}
 >
   <slot name="question">
   <div className="question">
-    SQLで`FULL OUTER JOIN`はどのような動作を行いますか？
+    SQL で `FULL OUTER JOIN` は何を行いますか？
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    SQLで`FULL OUTER JOIN`は、両方のテーブルからすべての行を返し、不足している値にはNULLを埋めます。
+    `FULL OUTER JOIN` は両テーブルのすべての行を返し、一致しない行には欠損値として NULL を入れます。
 
-    これは2つのテーブルを比較し、その違いを見つけるために役立ちます。
+    これは 2 つのテーブルを比較し、差分を見つけるのに便利です。
   </div>
   </slot>
 </Challenge>
