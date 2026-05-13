@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: are-promises-broken
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-10-06--are-promises-broken/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 4.26
+- Input tokens: 9705
+- Output tokens: 2917
+- Thinking tokens: unknown
+- Cached input tokens: 4352
+- Cache write tokens: 0
+- Estimated cost: $0.000904
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 約束が破られた？
@@ -225,4 +243,5 @@ log(result)
 
 1. 多くの人にとって可読性が低い  
 2. `git diff` で誰が何を変更したかがすぐに分からない  
-3. ネストされた関数の途中でデバッグやロギングがしにくい  
+3. ネストされた関数の途中でデバッグやロギングがしにくい
+````
