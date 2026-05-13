@@ -1,0 +1,146 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: hi
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/hi/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.11
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug handling-international-numbers-and-currency --locale hi --model qwen/qwen3.6-plus --chunk 6p --run-id 2026-05-13T18-15-57-947Z-61322 --run-lock-path /Users/dan/code/oss/dans-blog/.git/codex-i18n-translation-run.json --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: अंतर्राष्ट्रीय संख्याएँ और मुद्रा की समझ
+subTitle: समझिए स्थानीय मुद्रा!
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [मुद्रा: स्थानीयकरण (L10n) और अंतर्राष्ट्रीयकरण (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [महत्वपूर्ण अवधारणाएँ](#critical-concepts)
+  - [नंबर स्थानीय होते हैं 🏘️](#numbers-are-local-️)
+  - [मुद्रा वैश्विक होती है 🌎](#currency-is-global-️)
+  - [लोकेल कब मायने रखता है](#when-locale-matters)
+- [एक समाधान](#a-solution)
+- [अगले कदम](#next-steps)
+
+## मुद्रा: स्थानीयकरण (L10n) और अंतर्राष्ट्रीयकरण (i18n)
+
+ये सिर्फ Scrabble में दबदबा बनाने के लिए नहीं हैं — _स्थानीयकरण_ और _अंतर्राष्ट्रीयकरण_ का मतलब है किसी उत्पाद को **किसी दूसरे देश में घर जैसा महसूस कराना**।
+
+<p class="breakout quote">गलत स्थानीय फ़ॉर्मेट में मुद्रा दिखाना साफ़ संकेत है: आपने कोई मेहनत नहीं की है।<br/>अगर आप कीमत को फ़ॉर्मेट नहीं कर सकते, तो शिपिंग कैसे संभालेंगे?</p>
+
+अंतर्राष्ट्रीयकरण एक बड़ा विषय है, जिसमें टेक्स्ट अनुवाद से लेकर दिनांक फ़ॉर्मेटिंग तक सब कुछ शामिल है। इस पोस्ट में हम एक विशेष उप-विषय पर ध्यान केंद्रित करेंगे: **नंबर और मुद्रा को फ़ॉर्मेट करना**।
+
+आइए तीन यूरोज़ोन देशों, अमेरिका और भारत के बीच फ़ॉर्मेटिंग का पता लगाएँ:
+
+- `€1,234,567.89` आयरलैंड 🇮🇪
+- `1.234.567,89 €` जर्मनी 🇩🇪
+- `1 234 567,89 €` फ़्रांस 🇫🇷
+- `$1,234,567.89` अमेरिका 🇺🇸
+- `₹12,34,567.89` भारत 🇮🇳
+
+अराजकता! है ना? चिह्न, स्पेस और विराम चिह्न इधर-उधर बिखरे पड़े हैं! यह अद्भुत है कि यूरोपीय संघ किसी भी चीज़ पर सहमत हो सकता है! 😅
+
+## महत्वपूर्ण अवधारणाएँ
+
+समाधानों में गोता लगाने से पहले, "नंबर स्थानीय होते हैं" से हमारा क्या मतलब है?
+
+### नंबर स्थानीय होते हैं 🏘️
+
+प्रत्येक लोकेल ([देश प्रति ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)) नंबरों को फ़ॉर्मेट करने के नियम परिभाषित करता है।
+
+नंबर फ़ॉर्मेटिंग नियमों में शामिल हैं:
+
+- दशमलव: अल्पविराम, बिंदु।
+- हज़ारों: अल्पविराम, बिंदु, स्पेस।
+- मुद्रा चिह्न की स्थिति और स्पेसिंग।
+
+### मुद्रा वैश्विक है 🌎
+
+एक `currency` (मुद्रा) पैसे की एक विशिष्ट इकाई को संदर्भित करती है। (सूची के लिए [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) देखें।)
+
+- एक प्रतीक निर्दिष्ट करता है: `$`, `€`, `£`, `¥`। (अक्सर पुन: उपयोग किया जाता है।)
+- हमेशा एक 3-अक्षर का कोड होता है: `USD`, `EUR`, `GBP`, `JPY`।
+- किसी भी देश में उपयोग/विनिमय किया जा सकता है। सिद्धांततः।
+- मुद्राओं के बीच रूपांतरण के लिए विनिमय दर डेटा की आवश्यकता होती है।
+- मूल्य लोकेल के आधार पर नहीं बदलता।
+
+### लोकेल कब मायने रखता है
+
+अधिकांश ईकॉमर्स/भुगतान REST APIs `price` + `currencyCode` के साथ काम करते हैं। लोकेल क्यों नहीं?
+
+लोकेल (आमतौर पर) OS/डिवाइस स्तर पर सेट होते हैं, और ब्राउज़र इसे `navigator.language` के माध्यम से उपलब्ध कराते हैं। चूंकि आपके प्रत्येक उपयोगकर्ता का लोकेल अलग हो सकता है, इसलिए संख्याओं और मुद्रा को क्लाइंट साइड पर फ़ॉर्मेट करना ही समझदारी है।
+
+## एक समाधान
+
+ठीक है, अच्छी खबर! आधुनिक प्रोग्रामिंग भाषाओं में इसके लिए अंतर्निहित समर्थन है। जावास्क्रिप्ट में, हमारे पास [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) क्लास और `Intl.NumberFormat` है!
+
+आइए कुछ कोड देखें:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+यदि आपको अधिक उन्नत चीजें करने की आवश्यकता है, जैसे करों की गणना, छूट लागू करना, या मुद्राओं के बीच रूपांतरण, तो आप [dinero.js](https://v2.dinerojs.com/) जैसी लाइब्रेरी का उपयोग करना चाहेंगे।
+
+## अगले कदम
+
+आपकी विशिष्ट आवश्यकताओं के आधार पर, आप संबंधित अवधारणाओं का पता लगाना चाह सकते हैं:
+
+- उपयोगकर्ता लोकेल के साथ सर्वोत्तम अभ्यास। पता लगाएँ + ओवरराइड की अनुमति दें। (जैसे, एक देश ड्रॉप डाउन।)
+- पूर्णांकों को संग्रहीत करना (डॉलर नहीं, सेंट स्टोर करें।)
+- मनी मैथ। (जैसे, `20% off` कूपन लागू करना, `subTotal + taxes` की गणना करना, आदि।)
+- लाइव विनिमय दरें। (खुदरा खरीदारी, फॉरेक्स/मुद्रा विनिमय के लिए।)
+
+<p class="breakout quote">मुझे बताएं कि क्या आप इन विषयों पर भविष्य में कोई लेख देखना चाहेंगे!</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks:
+
+**जावास्क्रिप्ट / टाइपस्क्रिप्ट**
+
+- [dinero.js](https://v2.dinerojs.com/) मनी मैथ, विनिमय दरें, फ़ॉर्मेटिंग और पार्सिंग का समर्थन करता है!
+
+**रस्ट**
+
+- [rusty_money](https://crates.io/crates/rusty_money) मेरी पसंदीदा रस्ट लाइब्रेरी है।
+
+**गो**
+
+- [currency](https://github.com/bojanz/currency) मेरी वर्तमान गोलैंग पसंद है।
+````
