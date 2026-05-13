@@ -1,0 +1,34 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "Codicioso vs No codicioso",
+  "translation": {
+    "title": "Codicioso vs No codicioso",
+    "group": "Coincidencia básica",
+    "options": [],
+    "questionProse": [
+      "¿Qué coincidirá esto?"
+    ],
+    "explanationProse": [
+      "El patrón `/<div>.*?<\\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:\n    - Coincidir `<div>`\n    - Coincidir cualquier carácter (`.*`) pero el menor número posible (`?`)\n    - Hasta encontrar `</div>`\n    - La bandera `g` hace que coincida todas las ocurrencias\n\n    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una coincidencia grande. Con `?`, coincide cada par por separado.\n\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Codicioso vs No codicioso\",\n  \"group\": \"Coincidencia básica\",\n  \"options\": [],\n  \"questionProse\": [\n    \"¿Qué coincidirá esto?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"El patrón `/<div>.*?<\\\\/div>/g` usa coincidencia no codiciosa con `*?`, lo que significa:\\n    - Coincidir `<div>`\\n    - Coincidir cualquier carácter (`.*`) pero el menor número posible (`?`)\\n    - Hasta encontrar `</div>`\\n    - La bandera `g` hace que coincida todas las ocurrencias\\n\\n    Sin el `?`, el `.*` codicioso coincidiría todo desde el primer `<div>` hasta el último `</div>`, produciendo una coincidencia grande. Con `?`, coincide cada par por separado.\\n\\n    [Aprende más sobre coincidencia codiciosa vs perezosa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 856,
+    "outputTokens": 749,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 565,
+    "providerCostUsd": 0.00086135,
+    "providerUpstreamCostUsd": 0.00086135,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033384,
+    "outputUsd": 0.00013482,
+    "totalUsd": 0.00016820399999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

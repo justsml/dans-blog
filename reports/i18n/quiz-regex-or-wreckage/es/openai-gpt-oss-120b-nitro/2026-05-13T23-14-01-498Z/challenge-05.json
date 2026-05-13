@@ -1,0 +1,50 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "Look-ahead positivo",
+  "translation": {
+    "title": "Look-ahead positivo",
+    "group": "Look-ahead",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidirá esto?"
+    ],
+    "explanationProse": [
+      "Este patrón no coincidirá con nada porque la afirmación look-ahead está invertida! Si deseas dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\\$€])\\d+/g`.\n\n    Los look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:\n    - Uno o más dígitos (`\\d+`)\n    - Seguido de (`(?=...)`) ya sea $ o € (`[\\$€]`)\n\n    Como no hay números seguidos de símbolos de moneda (están precedidos por ellos), no obtenemos coincidencias.\n\n    [Aprende más sobre las afirmaciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Look-ahead positivo\",\n  \"group\": \"Look-ahead\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidirá esto?\"\n  ],\n  \"explanationProse\": [\n    \"Este patrón no coincidirá con nada porque la afirmación look-ahead está invertida! Si deseas dígitos precedidos por `$` o `€`, usa un look-behind: `/(?<=[\\\\$€])\\\\d+/g`.\\n\\n    Los look-aheads verifican lo que viene *después* de la posición actual. El patrón tal como está busca:\\n    - Uno o más dígitos (`\\\\d+`)\\n    - Seguido de (`(?=...)`) ya sea $ o € (`[\\\\$€]`)\\n\\n    Como no hay números seguidos de símbolos de moneda (están precedidos por ellos), no obtenemos coincidencias.\\n\\n    [Aprende más sobre las afirmaciones look-ahead](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 922,
+    "outputTokens": 870,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 927,
+    "providerCostUsd": 0.0009752,
+    "providerUpstreamCostUsd": 0.0009752,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000035958,
+    "outputUsd": 0.00015659999999999998,
+    "totalUsd": 0.00019255799999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

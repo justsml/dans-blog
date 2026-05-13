@@ -1,0 +1,47 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Word Boundaries",
+  "translatedTitle": "Límites de Palabra",
+  "translation": {
+    "title": "Límites de Palabra",
+    "group": "Coincidencia Básica",
+    "options": [
+      {
+        "text": "[\"cat\", \"cats\"]"
+      },
+      {
+        "text": "[\"cat\"]"
+      },
+      {
+        "text": "[\"cats\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "¿Qué coincidirá?"
+    ],
+    "explanationProse": [
+      "El `\\b` representa un límite de palabra, que coincide:\n    - Entre un carácter de palabra y un carácter que no es de palabra\n    - Al inicio/final de la cadena si hay un carácter de palabra\n\n    Así, `/\\bcat\\b/` coincide con \"cat\" solo cuando es una palabra completa, no parte de otra palabra.\n    - ✅ \"cat\" (rodeado de espacios)\n    - ❌ \"cats\" (no hay límite después de \"cat\")\n    - ❌ \"category\" (no hay límite después de \"cat\")\n\n    [Aprende más sobre los límites de palabra](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Límites de Palabra\",\n  \"group\": \"Coincidencia Básica\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"cat\\\", \\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cat\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"cats\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué coincidirá?\"\n  ],\n  \"explanationProse\": [\n    \"El `\\\\b` representa un límite de palabra, que coincide:\\n    - Entre un carácter de palabra y un carácter que no es de palabra\\n    - Al inicio/final de la cadena si hay un carácter de palabra\\n\\n    Así, `/\\\\bcat\\\\b/` coincide con \\\"cat\\\" solo cuando es una palabra completa, no parte de otra palabra.\\n    - ✅ \\\"cat\\\" (rodeado de espacios)\\n    - ❌ \\\"cats\\\" (no hay límite después de \\\"cat\\\")\\n    - ❌ \\\"category\\\" (no hay límite después de \\\"cat\\\")\\n\\n    [Aprende más sobre los límites de palabra](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions#other_assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 888,
+    "outputTokens": 796,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 941,
+    "providerCostUsd": 0.0009078,
+    "providerUpstreamCostUsd": 0.0009078,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034632,
+    "outputUsd": 0.00014328,
+    "totalUsd": 0.00017791200000000001,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

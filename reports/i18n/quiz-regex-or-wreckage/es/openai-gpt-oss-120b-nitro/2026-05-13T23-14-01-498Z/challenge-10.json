@@ -1,0 +1,53 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Negative Look-ahead",
+  "translatedTitle": "Anticipación negativa",
+  "translation": {
+    "title": "Anticipación negativa",
+    "group": "Anticipación",
+    "options": [
+      {
+        "text": "[\"password123\"]"
+      },
+      {
+        "text": "[\"abc123\"]"
+      },
+      {
+        "text": "[\"123aBc\"]"
+      },
+      {
+        "text": "[\"12\"]"
+      },
+      {
+        "text": "[\"abc\"]"
+      },
+      {
+        "text": "Error"
+      }
+    ],
+    "questionProse": [
+      "¿Cuál será el resultado de esto?"
+    ],
+    "explanationProse": [
+      "El look-ahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte \"3aBc\" tiene una letra minúscula después de los dígitos, su porción no coincide. Así que solo coincide el comienzo \"12\".\n\n    [Aprende más sobre la anticipación negativa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n \"title\": \"Anticipación negativa\",\n  \"group\": \"Anticipación\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"password123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123aBc\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"12\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"abc\\\"]\"\n    },\n    {\n      \"text\": \"Error\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Cuál será el resultado de esto?\"\n  ],\n  \"explanationProse\": [\n    \"El look-ahead negativo `(?![a-z])` asegura que no haya letras minúsculas después de los dígitos. Como la parte \\\"3aBc\\\" tiene una letra minúscula después de los dígitos, su porción no coincide. Así que solo coincide el comienzo \\\"12\\\".\\n\\n    [Aprende más sobre la anticipación negativa](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 857,
+    "outputTokens": 543,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 513,
+    "providerCostUsd": 0.0007072,
+    "providerUpstreamCostUsd": 0.0007072,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033422999999999995,
+    "outputUsd": 0.00009774,
+    "totalUsd": 0.000131163,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

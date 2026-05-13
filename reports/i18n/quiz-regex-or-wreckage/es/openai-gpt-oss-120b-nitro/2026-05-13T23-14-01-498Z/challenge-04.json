@@ -1,0 +1,47 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "The Dot Metacharacter",
+  "translatedTitle": "El Metacaracter Punto",
+  "translation": {
+    "title": "El Metacaracter Punto",
+    "group": "Errores Comunes",
+    "options": [
+      {
+        "text": "[\"hello\\nworld\"]"
+      },
+      {
+        "text": "[\"hello\", \"world\"]"
+      },
+      {
+        "text": "[\"hello\\n\", \"world\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "¿Qué devolverá esto?"
+    ],
+    "explanationProse": [
+      "El patrón `\\w+` coincide con uno o más caracteres de palabra. Aunque hay un salto de línea en la cadena, `\\w` coincide con:\n    - Letras (a-z, A-Z)\n    - Números (0-9)\n    - Guion bajo (_)\n\n    Por lo tanto, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).\n\n    [Aprende más sobre metacaracteres](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"El Metacaracter Punto\",\n  \"group\": \"Errores Comunes\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"hello\\\\nworld\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"hello\\\\n\\\", \\\"world\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué devolverá esto?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"js\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"El patrón `\\\\w+` coincide con uno o más caracteres de palabra. Aunque hay un salto de línea en la cadena, `\\\\w` coincide con:\\n    - Letras (a-z, A-Z)\\n    - Números (0-9)\\n    - Guion bajo (_)\\n\\n    Por lo tanto, el salto de línea actúa como un límite de palabra y obtenemos dos coincidencias. Si hubiéramos usado `.*`, no coincidiría con el salto de línea por defecto (necesitarías la bandera `s` para eso).\\n\\n    [Aprende más sobre metacaracteres](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Character_Classes#types)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 889,
+    "outputTokens": 425,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 909,
+    "providerCostUsd": 0.0006299,
+    "providerUpstreamCostUsd": 0.0006299,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000034671,
+    "outputUsd": 0.00007649999999999999,
+    "totalUsd": 0.000111171,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
