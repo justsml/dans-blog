@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/de/index.mdx
+- Validation: passed
+- Runtime seconds: 37.83
+- Input tokens: 16448
+- Output tokens: 17103
+- Thinking tokens: unknown
+- Cached input tokens: 3072
+- Cache write tokens: 0
+- Estimated cost: $0.005421
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Postgres Textsuche Leitfaden 2026
 subTitle: Die Suchwerkzeuge in Ihrer Datenbank und wann sich jedes einzelne lohnt.
@@ -477,3 +495,4 @@ Der Kandidatenpool mit 60 Dokumenten pro Verzweigung (`LIMIT 60`) ist ein gängi
 Die Textsuche in Postgres deckt viel ab, hat aber eine Grenze. Wenn Benutzer beschreiben, was sie wollen, anstatt es zu benennen — „etwas, das mir hilft, im Flugzeug zu schlafen“, „Artikel über Debugging-Vertrauen als neuer Ingenieur“ — scheitern sowohl lexikalische als auch Trigramm-Suchen.
 
 Dies ist das Gebiet von Vektor-Embeddings, semantischer Suche und hybriden Architekturen. Erfahren Sie mehr in [Semantische Vektor-Suche und hybride Strategien](../semantic-vector-search-landscape).
+````
