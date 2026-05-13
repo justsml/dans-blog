@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Positive Look-ahead",
+  "translatedTitle": "前方肯定的先読み",
+  "translation": {
+    "title": "前方肯定的先読み",
+    "group": "先読み",
+    "options": [
+      {
+        "text": "[\"$100\", \"€50\"]"
+      },
+      {
+        "text": "[\"100\", \"50\"]"
+      },
+      {
+        "text": "[\"$\", \"€\"]"
+      },
+      {
+        "text": "[]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "これは何にマッチしますか？"
+    ],
+    "explanationProse": [
+      "このパターンは何もマッチしません。先読みが逆向きだからです！`$` または `€` の前に数字が欲しいなら、先行参照を使ってください: `/(?<=[\\$€])\\d+/g`。\n\n先読みは現在位置の*後ろ*に何があるかをチェックします。現在のパターンは以下を探します:\n- 1つ以上の数字 (`\\d+`)\n- それに続く (`(?=...)`) `$` または `€` のいずれか (`[\\$€]`)\n\n通貨記号の後に数字がない（数字は記号の前にある）ので、マッチは得られません。\n\n[Look-ahead アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"前方肯定的先読み\",\n  \"group\": \"先読み\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"$100\\\", \\\"€50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"100\\\", \\\"50\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"$\\\", \\\"€\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"これは何にマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"このパターンは何もマッチしません。先読みが逆向きだからです！`$` または `€` の前に数字が欲しいなら、先行参照を使ってください: `/(?<=[\\\\$€])\\\\d+/g`。\\n\\n先読みは現在位置の*後ろ*に何があるかをチェックします。現在のパターンは以下を探します:\\n- 1つ以上の数字 (`\\\\d+`)\\n- それに続く (`(?=...)`) `$` または `€` のいずれか (`[\\\\$€]`)\\n\\n通貨記号の後に数字がない（数字は記号の前にある）ので、マッチは得られません。\\n\\n[Look-ahead アサーションについて詳しく読む](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Assertions)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 895,
+    "outputTokens": 856,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3156
+  },
+  "cost": {
+    "inputUsd": 0.000034905,
+    "outputUsd": 0.00015408,
+    "totalUsd": 0.000188985,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

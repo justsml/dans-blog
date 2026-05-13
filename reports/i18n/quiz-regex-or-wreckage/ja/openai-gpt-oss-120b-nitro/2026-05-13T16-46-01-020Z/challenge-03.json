@@ -1,0 +1,31 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Greedy vs Non-Greedy",
+  "translatedTitle": "貪欲 vs 非貪欲",
+  "translation": {
+    "title": "貪欲 vs 非貪欲",
+    "group": "基本マッチング",
+    "options": [],
+    "questionProse": [
+      "これは何にマッチしますか？"
+    ],
+    "explanationProse": [
+      "パターン `/<div>.*?<\\/div>/g` は `*?` による非貪欲マッチングを使用しています。意味は次の通りです:\n    - `<div>` にマッチ\n    - 任意の文字列 (`.*`) をできるだけ少なく (`?`) マッチ\n    - `</div>` が見つかるまで続ける\n    - `g` フラグで全ての出現箇所をマッチ\n\n    `?` が無ければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` まで全てをマッチさせ、1つの大きなマッチになります。`?` を付けると、各ペアを個別にマッチします。\n\n    [貪欲 vs ラジーマッチングの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"貪欲 vs 非貪欲\",\n  \"group\": \"基本マッチング\",\n  \"options\": [],\n  \"questionProse\": [\n    \"これは何にマッチしますか？\"\n  ],\n  \"explanationProse\": [\n    \"パターン `/<div>.*?<\\\\/div>/g` は `*?` による非貪欲マッチングを使用しています。意味は次の通りです:\\n    - `<div>` にマッチ\\n    - 任意の文字列 (`.*`) をできるだけ少なく (`?`) マッチ\\n    - `</div>` が見つかるまで続ける\\n    - `g` フラグで全ての出現箇所をマッチ\\n\\n    `?` が無ければ、貪欲な `.*` は最初の `<div>` から最後の `</div>` まで全てをマッチさせ、1つの大きなマッチになります。`?` を付けると、各ペアを個別にマッチします。\\n\\n    [貪欲 vs ラジーマッチングの詳細](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 829,
+    "outputTokens": 426,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2121
+  },
+  "cost": {
+    "inputUsd": 0.000032331,
+    "outputUsd": 0.00007667999999999999,
+    "totalUsd": 0.00010901099999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

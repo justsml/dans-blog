@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Negative Look-behind",
+  "translatedTitle": "否定的後方参照",
+  "translation": {
+    "title": "否定的後方参照",
+    "group": "後方参照",
+    "options": [
+      {
+        "text": "[\"123\"]"
+      },
+      {
+        "text": "[\"123\", \"456\"]"
+      },
+      {
+        "text": "[\"23\", \"456\"]"
+      },
+      {
+        "text": "[\"456\"]"
+      },
+      {
+        "text": "[]"
+      }
+    ],
+    "questionProse": [
+      "このパターンにマッチするのはどれですか？"
+    ],
+    "explanationProse": [
+      "否定的後方参照 `(?<!abc)` は、数字の前に \"abc\" がないことを保証します:\n    - ❌ \"123\" (前に \"abc\" がある)\n    - ✅ \"23\" (前に \"abc1\" がある)\n    - ✅ \"456\" (前に \"def\" がある)\n\n    JavaScript はモダンエンジンで後方参照アサーションをサポートしています。この例は固定長の後方参照を使用しています: `abc` は常に3文字です。可変長の後方参照はエンジン依存でやや難しいです。\n\n    注意: 後方参照のサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"否定的後方参照\",\n  \"group\": \"後方参照\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"123\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"123\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"23\\\", \\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"456\\\"]\"\n    },\n    {\n      \"text\": \"[]\"\n    }\n  ],\n  \"questionProse\": [\n    \"このパターンにマッチするのはどれですか？\"\n  ],\n  \"explanationProse\": [\n    \"否定的後方参照 `(?<!abc)` は、数字の前に \\\"abc\\\" がないことを保証します:\\n    - ❌ \\\"123\\\" (前に \\\"abc\\\" がある)\\n    - ✅ \\\"23\\\" (前に \\\"abc1\\\" がある)\\n    - ✅ \\\"456\\\" (前に \\\"def\\\" がある)\\n\\n    JavaScript はモダンエンジンで後方参照アサーションをサポートしています。この例は固定長の後方参照を使用しています: `abc` は常に3文字です。可変長の後方参照はエンジン依存でやや難しいです。\\n\\n    注意: 後方参照のサポートは JavaScript では比較的新しい機能です。古いブラウザをサポートする必要がある場合は、[ブラウザ互換性](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#browser_compatibility) を確認してください。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 884,
+    "outputTokens": 881,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3819
+  },
+  "cost": {
+    "inputUsd": 0.000034476,
+    "outputUsd": 0.00015858,
+    "totalUsd": 0.000193056,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

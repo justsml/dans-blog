@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "Capturing Groups",
+  "translatedTitle": "キャプチャグループ",
+  "translation": {
+    "title": "キャプチャグループ",
+    "group": "基本マッチング",
+    "options": [
+      {
+        "text": "[\"2029-12-31\"]"
+      },
+      {
+        "text": "[\"2029\", \"12\", \"31\"]"
+      },
+      {
+        "text": "[\"20\", \"29\", \"12\", \"31\"]"
+      },
+      {
+        "text": "null"
+      }
+    ],
+    "questionProse": [
+      "このコードは何を返しますか？"
+    ],
+    "explanationProse": [
+      "このパターンは3つのキャプチャグループを使用します:\n    1. `(\\d{4})` は年をキャプチャ\n    2. `(\\d{2})` は月をキャプチャ\n    3. `(\\d{2})` は日をキャプチャ\n\n    `g` フラグなしの `match()` は次を返します:\n    - インデックス0: 完全一致\n    - インデックス1以降: キャプチャグループ\n\n    `slice(1)` はキャプチャグループだけを取得する一般的なテクニックです。\n\n    [グループとキャプチャの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"キャプチャグループ\",\n  \"group\": \"基本マッチング\",\n  \"options\": [\n    {\n      \"text\": \"[\\\"2029-12-31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"2029\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"[\\\"20\\\", \\\"29\\\", \\\"12\\\", \\\"31\\\"]\"\n    },\n    {\n      \"text\": \"null\"\n    }\n  ],\n  \"questionProse\": [\n    \"このコードは何を返しますか？\"\n  ],\n  \"explanationProse\": [\n    \"このパターンは3つのキャプチャグループを使用します:\\n    1. `(\\\\d{4})` は年をキャプチャ\\n    2. `(\\\\d{2})` は月をキャプチャ\\n    3. `(\\\\d{2})` は日をキャプチャ\\n\\n    `g` フラグなしの `match()` は次を返します:\\n    - インデックス0: 完全一致\\n    - インデックス1以降: キャプチャグループ\\n\\n    `slice(1)` はキャプチャグループだけを取得する一般的なテクニックです。\\n\\n    [グループとキャプチャの詳細はこちら](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Groups_and_Backreferences)\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 857,
+    "outputTokens": 762,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3501
+  },
+  "cost": {
+    "inputUsd": 0.000033423,
+    "outputUsd": 0.00013716,
+    "totalUsd": 0.000170583,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
