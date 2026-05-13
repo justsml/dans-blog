@@ -1,0 +1,65 @@
+# Translation Candidate
+- Slug: security-notes-regex
+- Locale: hi
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2015-02-24--security-notes-regex/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 21.02
+- Input tokens: 1134
+- Output tokens: 4462
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001408
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+title: 'सुरक्षा नोट्स: RegEx'
+subTitle: क्या RegEx असुरक्षित हो सकता है?
+date: '2015-02-24'
+modified: '2018-07-30'
+category: Security
+subCategory: RegEx
+tags:
+  - security
+  - regex
+  - dos
+  - remote-exploit
+cover_credit: Photo by Markus Spiske on Unsplash
+cover: ../markus-spiske-666905-unsplash.webp
+cover_mobile: ../w300_markus-spiske-666905-unsplash.webp
+cover_icon: ../icon_markus-spiske-666905-unsplash.webp
+social_image: ../desktop-social.webp
+---
+## रेगुलर एक्सप्रेशन डिनायल-ऑफ़-सर्विस: ReDOS
+
+मेरे द्वारा पाई गई सबसे आश्चर्यजनक और फिर भी पहचानने में कठिन कमजोरियों में से एक रेगुलर एक्सप्रेशन से संबंधित है।
+या तो खराब तरीके से लिखा गया या खराब तरीके से लागू किया गया।
+
+बड़े या विशेष रूप से तैयार किए गए उपयोगकर्ता इनपुट से मेमोरी/सीपीयू समाप्त हो सकता है।
+
+> यह एक डिनायल-ऑफ़-सर्विस कमजोरी है, न कि केवल प्रदर्शन की बदबू। यदि शत्रुतापूर्ण इनपुट वास्तविक उपयोगकर्ताओं को भूखा रखने के लिए पर्याप्त समय तक CPU को रोक सकता है, तो यह आपके सुरक्षा खतरे के मॉडल में शामिल होना चाहिए।
+
+### चेतावनी के संकेत
+
+1. नेस्टेड क्वांटिफायर, दोहराए गए समूह, या ओवरलैपिंग विकल्प
+2. बिना टाइमआउट या इनपुट-लंबाई सीमा के बैकट्रैकिंग-भारी इंजन
+3. अभिव्यक्ति का उपयोग बिना जांचे उपयोगकर्ता इनपुट के साथ किया जाता है
+4. रेगेक्स सत्यापन एक हॉट रिक्वेस्ट पथ पर चलता है
+
+### शमन / समाधान
+
+1. रेगेक्स कठिन है।
+    1.  उदाहरण के लिए, [OWASP][owasp] के वास्तव में स्मार्ट लोग आईपी सत्यापन को कैसे संभालने की सलाह देते हैं: `^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`
+    2.  यह 4-बाइट आईपी पते के लिए (पुराने स्कूल) ट्वीट से भी लंबा है!!!
+2. रेगेक्स मूल्यांकन से पहले इनपुट लंबाई को सीमित करें।
+3. टाइमआउट, स्थैतिक विश्लेषण, या एक गैर-बैकट्रैकिंग इंजन जोड़ें जहां प्लेटफॉर्म इसका समर्थन करता है।
+4. यह लगभग हर भाषा और प्लेटफॉर्म .NET/Node/Python/PERL/Java को प्रभावित करता है।
+
+### संदर्भ
+
+- [OWASP ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)
+````
