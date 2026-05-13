@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: you-may-not-need-axios
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2018-11-15--you-may-not-need-axios/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.55
+- Input tokens: 13479
+- Output tokens: 3362
+- Thinking tokens: unknown
+- Cached input tokens: 4992
+- Cache write tokens: 0
+- Estimated cost: $0.001131
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: 'Возможно, вам не нужен Axios'
@@ -202,3 +220,4 @@ npm install node-fetch
 _После полифила + node-fetch: совместимость 99,99 %_ ✅
 
 > Пожалуйста, [напишите мне в Твиттере](https://x.com/justsml), если у вас есть другие _случаи использования_, которые хотелось бы увидеть. ❤️
+````
