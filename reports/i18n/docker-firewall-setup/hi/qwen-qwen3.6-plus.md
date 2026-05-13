@@ -1,0 +1,122 @@
+# Translation Candidate
+- Slug: docker-firewall-setup
+- Locale: hi
+- Model: qwen/qwen3.6-plus
+- Target: src/content/posts/2015-06-06--docker-firewall-setup/hi/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 240.01
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-firewall-setup --locale hi --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24
+## Raw Output
+
+````mdx
+---
+title: Docker फ़ायरवॉल सेटअप
+subTitle: Docker होस्ट का फ़ायरवॉल सेटअप करें
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## डॉकर होस्ट का फ़ायरवॉल सेटअप करें
+
+1. Debian/Ubuntu सर्वर मान लिया गया है
+1. डॉकर होस्ट सर्वर पर चलाने के लिए डिज़ाइन किया गया है
+
+### आवश्यकताएँ स्थापित करें
+
+~~~sh
+# Ultimate Firewall Needed
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### अपने आंतरिक और बाहरी IP पते प्राप्त करें
+
+~~~sh
+# Get your IP Addresses, simple output:
+hostname --all-ip-addresses
+
+# या ip टूल का उपयोग करें, उदाहरण:
+ip addr
+~~~
+
+### फ़ायरवॉल (UFW) सेटअप - उदाहरण कमांड्स
+
+~~~sh
+ufw logging on # on=low - medium might be better for diagnostics
+ufw logging medium
+# First, block all the things
+ufw default deny incoming
+
+# REQUIRED: CHOOSE *ONE* OF THE FOLLOWING DEFAULT OUTBOUND RULES:
+ufw default deny outgoing
+ufw default allow outgoing
+
+# Allow and log all new ssh connections,
+ufw allow log proto tcp from any to any port 22
+## Allow http traffic (w/o explicit logging)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Verbose: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Basic Rate limit 4 SSH brute force mitigation
+
+# अपना बाहरी IP सेट करें
+export EXTERNAL_IP=123.123.123.123
+# ज़रूरत पड़ने पर Docker IP अपडेट करें
+export DOCKER_IP=172.17.42.1
+# Dockerized ऐप के लिए tcp 8080 ट्रैफ़िक फ़ॉरवर्ड करें
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## फ़ायरवॉल सक्षम/शुरू करें
+
+> सावधानी: अपने SSH पोर्ट (sshd डिफ़ॉल्ट 22) को लॉक न करें
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+### अपने फ़ायरवॉल का परीक्षण करें
+
+> महत्वपूर्ण: किसी दूरस्थ IP पते/स्थान का उपयोग करें
+
+~~~sh
+# Verify dependency
+apt-get update && apt-get install -y nmap
+
+# Set scan target
+export TARGET_HOST=123.123.123.123
+
+# Example Scan Commands:
+# Fast open port check
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Thorough scan
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Svc Inspection
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> हो गया! अब आपको केवल वे पोर्ट दिखने चाहिए जो आपने कॉन्फ़िगर किए हैं!
+````
