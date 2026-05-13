@@ -1,0 +1,44 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Cross-Frame instanceof",
+  "translatedTitle": "instanceof между фреймами",
+  "translation": {
+    "title": "instanceof между фреймами",
+    "group": "Трюки проверки типов",
+    "options": [
+      {
+        "text": "Всегда true"
+      },
+      {
+        "text": "Всегда false"
+      },
+      {
+        "text": "Может быть false между фреймами"
+      },
+      {
+        "text": "Выбрасывает ошибку"
+      }
+    ],
+    "questionProse": [
+      "Что происходит с `instanceof Error` между iframe‑ами?"
+    ],
+    "explanationProse": [
+      "`instanceof` может возвращать `false` в разных контекстах выполнения (iframe‑ы, воркеры), потому что каждый контекст имеет собственный конструктор `Error`. Используйте `Object.prototype.toString.call(obj) === '[object Error]'` для надёжного определения ошибки в разных контекстах."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"instanceof между фреймами\",\n  \"group\": \"Трюки проверки типов\",\n  \"options\": [\n    {\n      \"text\": \"Всегда true\"\n    },\n    {\n      \"text\": \"Всегда false\"\n    },\n    {\n      \"text\": \"Может быть false между фреймами\"\n    },\n    {\n      \"text\": \"Выбрасывает ошибку\"\n    }\n  ],\n  \"questionProse\": [\n    \"Что происходит с `instanceof Error` между iframe‑ами?\"\n  ],\n  \"explanationProse\": [\n    \"`instanceof` может возвращать `false` в разных контекстах выполнения (iframe‑ы, воркеры), потому что каждый контекст имеет собственный конструктор `Error`. Используйте `Object.prototype.toString.call(obj) === '[object Error]'` для надёжного определения ошибки в разных контекстах.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 774,
+    "outputTokens": 477,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 834
+  },
+  "cost": {
+    "inputUsd": 0.000030186,
+    "outputUsd": 0.00008586,
+    "totalUsd": 0.00011604599999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

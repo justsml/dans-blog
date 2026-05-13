@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-advanced-js-error-mastery
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-11-04--quiz-advanced-js-error-mastery/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 10.92
+- Input tokens: 13134
+- Output tokens: 7440
+- Thinking tokens: unknown
+- Cached input tokens: 3584
+- Cache write tokens: 0
+- Estimated cost: $0.001851
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: 'Тест: Продвинутое владение ошибками JS'
 subTitle: Ваши исключения действительно исключительные?
@@ -493,3 +511,4 @@ import QuizUI from '../../../../../components/QuizUI/QuizUI';
 От подводных камней сериализации до сбоев instanceof в разных контекстах — эти продвинутые темы отделяют новичков от ~изношенных~ профессионалов.
 
 Готовы к новым задачам? Загляните в нашу [полную коллекцию викторин](/challenges/) для дополнительных головоломок по JavaScript, алгоритмам и не только!
+````
