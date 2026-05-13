@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: angularjs-v2-impending-schism
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-08-05--angularjs-v2-impending-schism/es/index.mdx
+- Validation: passed
+- Runtime seconds: 4.32
+- Input tokens: 1667
+- Output tokens: 1679
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000536
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -39,3 +57,4 @@ Bueno, lo añadiré a la lista de entrenamiento para principiantes: entre `Basic
 <div class="anigif top end">
   <img alt='todo va a estar bien' src="https://res.cloudinary.com/ddd/image/upload/v1442175801/system-maint-anon.gif" />
 </div>
+````
