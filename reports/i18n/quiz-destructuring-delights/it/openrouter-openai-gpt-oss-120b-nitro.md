@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-destructuring-delights
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-12--quiz-destructuring-delights/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.77
+- Input tokens: 11762
+- Output tokens: 8380
+- Thinking tokens: unknown
+- Cached input tokens: 4224
+- Cache write tokens: 0
+- Estimated cost: $0.001967
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Delizie della destrutturazione'
@@ -556,3 +574,4 @@ Tuffati subito nel riscaldamento – dimostra le tue capacità di Destructuring!
 </Challenge>
 
 </QuizUI>
+````
