@@ -1,0 +1,77 @@
+{
+  "selectedCommit": "d95f273576a23a8d4c6c59b9bad3e3ed860fdc96",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "des algorithmes ()",
+      "replacement": "des algorithmes",
+      "reason": "Empty parentheses left in the text from the English source."
+    },
+    {
+      "priority": "medium",
+      "match": "quel que soit la taille",
+      "replacement": "quelle que soit la taille",
+      "reason": "Grammar: 'quelle' must agree with the feminine noun 'taille'."
+    }
+  ],
+  "rationale": "The candidate provides a high-quality translation with correct French typography (non-breaking spaces) and accurate technical terminology. It correctly handles the subtitle and MDX structure. The suggested fixes address a minor grammatical error and a leftover artifact from the source text.",
+  "slug": "quiz-data-structures-algorithms",
+  "locale": "fr",
+  "candidateCommits": [
+    "d95f273576a23a8d4c6c59b9bad3e3ed860fdc96",
+    "50aa9024586c5f6fad76efceda142baa6a230ca1"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "des algorithmes ()",
+      "replacement": "des algorithmes",
+      "reason": "Empty parentheses left in the text from the English source.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "quel que soit la taille",
+      "replacement": "quelle que soit la taille",
+      "reason": "Grammar: 'quelle' must agree with the feminine noun 'taille'.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "des algorithmes (),",
+      "replacement": "des algorithmes,",
+      "reason": "Empty parentheses left in the text from the English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "quel que soit la taille",
+      "replacement": "quelle que soit la taille",
+      "reason": "Grammar: 'quelle' must agree with the feminine noun 'taille'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-data-structures-algorithms --locale fr --skip-global",
+    "output": ""
+  }
+}
