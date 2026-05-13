@@ -1,0 +1,47 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Date String Parsing",
+  "translatedTitle": "Análisis de cadenas de fecha",
+  "translation": {
+    "title": "Análisis de cadenas de fecha",
+    "group": "Manejo de fechas",
+    "options": [
+      {
+        "text": "2019 2020"
+      },
+      {
+        "text": "2020 2021"
+      },
+      {
+        "text": "2020 2020"
+      },
+      {
+        "text": "2020 2019"
+      }
+    ],
+    "questionProse": [
+      "¿Qué valor se imprimirá en la consola?"
+    ],
+    "explanationProse": [
+      "La cadena sin el valor de tiempo `T` podría parecer ser el 1 de enero de 2020, pero las cadenas solo de fecha se interpretan como UTC. Al ajustarla a nuestra zona horaria local (GMT-7), nos damos cuenta de que aún estamos en 2019.\n\nLas cadenas de fecha-hora sin una zona horaria explícita se interpretan en hora local.\n\nLa forma `T00:00` hace que el segundo valor se interprete como medianoche local.\n\nLa primera fecha se interpreta como `mar. 31 dic. 2019 17:00:00 GMT-0700 (hora estándar de montaña)`.\nLa segunda fecha se interpreta como `mié. 01 ene. 2020 00:00:00 GMT-0700 (hora estándar de montaña)`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Análisis de cadenas de fecha\",\n  \"group\": \"Manejo de fechas\",\n  \"options\": [\n    {\"text\": \"2019 2020\"},\n    {\"text\": \"2020 2021\"},\n    {\"text\": \"2020 2020\"},\n    {\"text\": \"2020 2019\"}\n  ],\n  \"questionProse\": [\n    \"¿Qué valor se imprimirá en la consola?\"\n  ],\n  \"explanationProse\": [\n    \"La cadena sin el valor de tiempo `T` podría parecer ser el 1 de enero de 2020, pero las cadenas solo de fecha se interpretan como UTC. Al ajustarla a nuestra zona horaria local (GMT-7), nos damos cuenta de que aún estamos en 2019.\\n\\nLas cadenas de fecha-hora sin una zona horaria explícita se interpretan en hora local.\\n\\nLa forma `T00:00` hace que el segundo valor se interprete como medianoche local.\\n\\nLa primera fecha se interpreta como `mar. 31 dic. 2019 17:00:00 GMT-0700 (hora estándar de montaña)`.\\nLa segunda fecha se interpreta como `mié. 01 ene. 2020 00:00:00 GMT-0700 (hora estándar de montaña)`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 887,
+    "outputTokens": 1204,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 13155,
+    "providerCostUsd": 0.00040808,
+    "providerUpstreamCostUsd": 0.00040808,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00007096,
+    "outputUsd": 0.00028896,
+    "totalUsd": 0.00035992,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
