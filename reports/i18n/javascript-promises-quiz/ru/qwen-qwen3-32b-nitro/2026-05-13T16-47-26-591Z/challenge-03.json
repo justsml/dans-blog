@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Chaining `.then` and `.catch`'s",
+  "translatedTitle": "Цепочка `.then` и `.catch`",
+  "translation": {
+    "title": "Цепочка `.then` и `.catch`",
+    "group": "Обработка ошибок",
+    "options": [
+      {
+        "text": "вывести ошибку и `undefined`"
+      },
+      {
+        "text": "вывести ошибку дважды"
+      },
+      {
+        "text": "UnhandledPromiseRejectionWarning"
+      },
+      {
+        "text": "undefined"
+      }
+    ],
+    "questionProse": [
+      "Каким будет вывод следующего кода?"
+    ],
+    "explanationProse": [
+      "При цепочке `.then` и `.catch` полезно думать о них как о ряде шагов. Каждый `.then` получает значение, возвращённое предыдущим `.then` (в виде аргумента). Однако, если \"шаг\" столкнулся с ошибкой, все последующие `.then` \"шаги\" будут пропущены до тех пор, пока не будет найдён `.catch`. Если вы хотите переопределить ошибку, просто верните неошибочное значение. Оно будет доступно через любой последующий `.then`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Цепочка `.then` и `.catch`\",\n  \"group\": \"Обработка ошибок\",\n  \"options\": [\n    {\n      \"text\": \"вывести ошибку и `undefined`\"\n    },\n    {\n      \"text\": \"вывести ошибку дважды\"\n    },\n    {\n      \"text\": \"UnhandledPromiseRejectionWarning\"\n    },\n    {\n      \"text\": \"undefined\"\n    }\n  ],\n  \"questionProse\": [\n    \"Каким будет вывод следующего кода?\"\n  ],\n  \"explanationProse\": [\n    \"При цепочке `.then` и `.catch` полезно думать о них как о ряде шагов. Каждый `.then` получает значение, возвращённое предыдущим `.then` (в виде аргумента). Однако, если \\\"шаг\\\" столкнулся с ошибкой, все последующие `.then` \\\"шаги\\\" будут пропущены до тех пор, пока не будет найдён `.catch`. Если вы хотите переопределить ошибку, просто верните неошибочное значение. Оно будет доступно через любой последующий `.then`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 763,
+    "outputTokens": 648,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 9682
+  },
+  "cost": {
+    "inputUsd": 0.00006104,
+    "outputUsd": 0.00015552,
+    "totalUsd": 0.00021656,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
