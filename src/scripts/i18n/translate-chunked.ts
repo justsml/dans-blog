@@ -50,7 +50,7 @@ import { LOCALE_LABELS } from "../../shared/i18n.ts";
 import { parseQuiz, assembleQuiz } from "./quiz-parser.ts";
 import { translateChallenge, generateQuizDescription } from "./quiz-translator.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
-import { cachedText, usageFromResult } from "./llm-telemetry.ts";
+import { OPENROUTER_USAGE_ACCOUNTING, cachedText, usageFromResult } from "./llm-telemetry.ts";
 import {
   assertNoOutOfCreditMarker,
   isOutOfCreditError,
@@ -139,6 +139,8 @@ interface Telemetry {
   totalOutputTokens: number;
   totalCacheReadTokens: number;
   totalCacheWriteTokens: number;
+  providerCostUsd?: number;
+  providerUpstreamCostUsd?: number;
   totalDurationMs: number;
   totalCostUsd: number;
   pricingSource: string;
@@ -149,6 +151,8 @@ interface Telemetry {
     outputTokens: number;
     cacheReadTokens: number;
     cacheWriteTokens: number;
+    providerCostUsd?: number;
+    providerUpstreamCostUsd?: number;
     durationMs: number;
     costUsd: number;
   }>;
@@ -260,17 +264,23 @@ function addTelemetry(
     outputTokens: number;
     cacheReadTokens?: number;
     cacheWriteTokens?: number;
+    providerCostUsd?: number;
+    providerUpstreamCostUsd?: number;
     durationMs: number;
   },
 ) {
   const cacheReadTokens = entry.cacheReadTokens ?? 0;
   const cacheWriteTokens = entry.cacheWriteTokens ?? 0;
-  const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens, cacheReadTokens);
+  const cost = estimateTokenCost(telemetry.model, entry.inputTokens, entry.outputTokens, cacheReadTokens, {
+    providerCostUsd: entry.providerCostUsd,
+  });
   telemetry.chunks.push({ ...entry, cacheReadTokens, cacheWriteTokens, costUsd: cost.totalUsd });
   telemetry.totalInputTokens += entry.inputTokens;
   telemetry.totalOutputTokens += entry.outputTokens;
   telemetry.totalCacheReadTokens += cacheReadTokens;
   telemetry.totalCacheWriteTokens += cacheWriteTokens;
+  telemetry.providerCostUsd = addOptionalNumber(telemetry.providerCostUsd, entry.providerCostUsd);
+  telemetry.providerUpstreamCostUsd = addOptionalNumber(telemetry.providerUpstreamCostUsd, entry.providerUpstreamCostUsd);
   telemetry.totalDurationMs += entry.durationMs;
   telemetry.totalCostUsd += cost.totalUsd;
   if (telemetry.pricingSource === "unknown" && cost.pricingSource !== "unknown") {
@@ -288,11 +298,17 @@ function createTelemetry(llmConfig: LlmConfig, chunkSize: string, totalChunks: n
     totalOutputTokens: 0,
     totalCacheReadTokens: 0,
     totalCacheWriteTokens: 0,
+    providerCostUsd: undefined,
+    providerUpstreamCostUsd: undefined,
     totalDurationMs: 0,
     totalCostUsd: 0,
     pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
     chunks: [],
   };
+}
+
+function addOptionalNumber(current: number | undefined, value: number | undefined) {
+  return value == null ? current : (current ?? 0) + value;
 }
 
 function createRunTimestamp() {
@@ -402,6 +418,8 @@ function writeCandidateRun({
     totalOutputTokens: telemetry.totalOutputTokens,
     totalCacheReadTokens: telemetry.totalCacheReadTokens,
     totalCacheWriteTokens: telemetry.totalCacheWriteTokens,
+    providerCostUsd: telemetry.providerCostUsd,
+    providerUpstreamCostUsd: telemetry.providerUpstreamCostUsd,
     totalDurationMs: telemetry.totalDurationMs,
     totalCostUsd: telemetry.totalCostUsd,
     pricingSource: telemetry.pricingSource,
@@ -534,7 +552,7 @@ async function translateChunk(
   const dynamicPrompt = buildDynamicChunkPrompt(chunk.text, locale, context, isQuiz);
 
   const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId);
+  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -563,7 +581,7 @@ async function translateChunk(
   });
 
   const durationMs = Math.round(performance.now() - start);
-  const usage = usageFromResult(result.usage, durationMs);
+  const usage = usageFromResult(result.usage, durationMs, result.providerMetadata);
 
   return {
     text: result.text,
@@ -578,7 +596,7 @@ async function generateSummary(
   isQuiz: boolean,
 ): Promise<string> {
   const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId);
+  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
   assertNoOutOfCreditMarker();
   const result = await generateText({
     model,
@@ -828,6 +846,8 @@ async function translateQuiz(
     totalOutputTokens: telemetry.totalOutputTokens,
     totalCacheReadTokens: telemetry.totalCacheReadTokens,
     totalCacheWriteTokens: telemetry.totalCacheWriteTokens,
+    providerCostUsd: telemetry.providerCostUsd,
+    providerUpstreamCostUsd: telemetry.providerUpstreamCostUsd,
     totalDurationMs: telemetry.totalDurationMs,
     totalCostUsd: telemetry.totalCostUsd,
     pricingSource: telemetry.pricingSource,
@@ -853,7 +873,7 @@ async function translateProse(
 }> {
   const start = performance.now();
   const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId);
+  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -892,7 +912,7 @@ async function translateProse(
     providerOptions: llmConfig.providerOptions,
   });
   const durationMs = Math.round(performance.now() - start);
-  const usage = usageFromResult(result.usage, durationMs);
+  const usage = usageFromResult(result.usage, durationMs, result.providerMetadata);
 
   return {
     text: result.text.trim(),
@@ -909,6 +929,8 @@ function createEmptyTelemetry(llmConfig: LlmConfig, chunkSize: string): Telemetr
     totalOutputTokens: 0,
     totalCacheReadTokens: 0,
     totalCacheWriteTokens: 0,
+    providerCostUsd: undefined,
+    providerUpstreamCostUsd: undefined,
     totalDurationMs: 0,
     totalCostUsd: 0,
     pricingSource: estimateTokenCost(llmConfig.modelId, 0, 0).pricingSource,
@@ -1188,7 +1210,7 @@ async function translateFrontmatter(
     if (typeof value !== "string" || !value.trim()) continue;
 
     const provider = createOpenRouter(llmConfig.providerSettings);
-    const model = provider.chat(llmConfig.modelId);
+    const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
     assertNoOutOfCreditMarker();
     const translation = await generateText({
       model,

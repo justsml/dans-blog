@@ -3,6 +3,7 @@ export interface TokenCostEstimate {
   outputUsd: number;
   totalUsd: number;
   pricingSource: string;
+  providerCostUsd?: number;
 }
 
 interface ModelPricing {
@@ -26,6 +27,37 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
   "qwen/qwen3.6-plus": {
     inputPerMillionUsd: 0.325,
     outputPerMillionUsd: 1.95,
+    source: "local-openrouter-estimate",
+  },
+  "qwen/qwen3.6-flash": {
+    inputPerMillionUsd: 0.25,
+    outputPerMillionUsd: 1.5,
+    source: "local-openrouter-estimate",
+  },
+  "qwen/qwen3.6-35b-a3b": {
+    inputPerMillionUsd: 0.15,
+    cachedInputPerMillionUsd: 0.05,
+    outputPerMillionUsd: 1,
+    source: "local-openrouter-estimate",
+  },
+  "qwen/qwen3.5-9b": {
+    inputPerMillionUsd: 0.04,
+    outputPerMillionUsd: 0.15,
+    source: "local-openrouter-estimate",
+  },
+  "google/gemma-4-26b-a4b-it": {
+    inputPerMillionUsd: 0,
+    outputPerMillionUsd: 0,
+    source: "local-openrouter-estimate",
+  },
+  "google/gemma-4-31b-it": {
+    inputPerMillionUsd: 0,
+    outputPerMillionUsd: 0,
+    source: "local-openrouter-estimate",
+  },
+  "deepseek/deepseek-v4-pro": {
+    inputPerMillionUsd: 0.2,
+    outputPerMillionUsd: 0.8,
     source: "local-openrouter-estimate",
   },
   "deepseek/deepseek-v4-flash": {
@@ -68,6 +100,27 @@ const MODEL_PRICING: Record<string, ModelPricing> = {
     outputPerMillionUsd: 1.2,
     source: "local-openrouter-estimate",
   },
+  "moonshotai/kimi-k2.6": {
+    inputPerMillionUsd: 0.75,
+    cachedInputPerMillionUsd: 0.15,
+    outputPerMillionUsd: 3.5,
+    source: "local-openrouter-estimate",
+  },
+  "openai/gpt-5-mini": {
+    inputPerMillionUsd: 0.25,
+    outputPerMillionUsd: 2,
+    source: "local-openrouter-estimate",
+  },
+  "openai/gpt-5.4-mini": {
+    inputPerMillionUsd: 0.75,
+    outputPerMillionUsd: 4.5,
+    source: "local-openrouter-estimate",
+  },
+  "openai/gpt-5.4": {
+    inputPerMillionUsd: 2,
+    outputPerMillionUsd: 10,
+    source: "local-openrouter-estimate",
+  },
 };
 
 export function normalizeOpenRouterModelId(modelId: string) {
@@ -83,10 +136,27 @@ export function estimateTokenCost(
   inputTokens: number,
   outputTokens: number,
   cacheReadTokens = 0,
+  options: { providerCostUsd?: number } = {},
 ): TokenCostEstimate {
   const pricing = MODEL_PRICING[normalizeOpenRouterModelId(modelId)];
+  const providerCostUsd = normalizeProviderCost(options.providerCostUsd);
+  const providerEstimate = providerCostUsd == null
+    ? undefined
+    : {
+      totalUsd: providerCostUsd,
+      pricingSource: "openrouter-usage-accounting",
+      providerCostUsd,
+    };
 
   if (!pricing) {
+    if (providerEstimate != null) {
+      return {
+        inputUsd: 0,
+        outputUsd: providerEstimate.totalUsd,
+        ...providerEstimate,
+      };
+    }
+
     return {
       inputUsd: 0,
       outputUsd: 0,
@@ -100,6 +170,17 @@ export function estimateTokenCost(
     (nonCachedInputTokens / 1_000_000) * pricing.inputPerMillionUsd
     + (cacheReadTokens / 1_000_000) * (pricing.cachedInputPerMillionUsd ?? pricing.inputPerMillionUsd);
   const outputUsd = (outputTokens / 1_000_000) * pricing.outputPerMillionUsd;
+  const localTotalUsd = inputUsd + outputUsd;
+
+  if (providerEstimate != null) {
+    const inputRatio = localTotalUsd > 0 ? inputUsd / localTotalUsd : 0;
+    const providerInputUsd = providerEstimate.totalUsd * inputRatio;
+    return {
+      inputUsd: providerInputUsd,
+      outputUsd: providerEstimate.totalUsd - providerInputUsd,
+      ...providerEstimate,
+    };
+  }
 
   return {
     inputUsd,
@@ -107,4 +188,8 @@ export function estimateTokenCost(
     totalUsd: inputUsd + outputUsd,
     pricingSource: pricing.source,
   };
+}
+
+function normalizeProviderCost(value: number | undefined) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0 ? value : undefined;
 }

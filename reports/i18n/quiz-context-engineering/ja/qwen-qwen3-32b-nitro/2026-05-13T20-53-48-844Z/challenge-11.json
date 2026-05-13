@@ -1,0 +1,44 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Temperature and Determinism",
+  "translatedTitle": "温度と決定性",
+  "translation": {
+    "title": "温度と決定性",
+    "group": "上級",
+    "options": [
+      {
+        "text": "temperature=0は同じ入力に対して常に同一の出力が生成される"
+      },
+      {
+        "text": "temperature=0は出力をより決定的だが、必ずしも同一ではない"
+      },
+      {
+        "text": "temperature=0はモデル\\を無効化する"
+      },
+      {
+        "text": "temperatureは応答の長さのみに影響を与える"
+      }
+    ],
+    "questionProse": [
+      "LLM呼び出しで`temperature=0`を設定すると:"
+    ],
+    "explanationProse": [
+      "`temperature=0`はモデルが各ステップで確率が最も高いトークンを選びます（貪欲デコード）。これにより**より一貫性のある**出力が生成されるが、必ずしも同一の出力は保証されません。\n\n    temperature=0での変動の原因:\n    - **浮動小数点数の非決定性**（特に異なるハードウェアやバッチサイズでのGPU演算）\n    - **サーバーサイドのインフラ変更**（モデル更新、サーブインフラ）\n    - **長めの出力**は小さな変動を蓄積する\n\n    テストスイートや評価で厳密な決定性が必要な場合は`temperature=0`が適切です。ただし、バイト単位で完全に同一の出力を期待しないでください。構造、重要な内容、動作を検証しましょう。"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"温度と決定性\",\n  \"group\": \"上級\",\n  \"options\": [\n    {\n      \"text\": \"temperature=0は同じ入力に対して常に同一の出力が生成される\"\n    },\n    {\n      \"text\": \"temperature=0は出力をより決定的だが、必ずしも同一ではない\"\n    },\n    {\n      \"text\": \"temperature=0はモデル\\\\を無効化する\"\n    },\n    {\n      \"text\": \"temperatureは応答の長さのみに影響を与える\"\n    }\n  ],\n  \"questionProse\": [\n    \"LLM呼び出しで`temperature=0`を設定すると:\"\n  ],\n  \"explanationProse\": [\n    \"`temperature=0`はモデルが各ステップで確率が最も高いトークンを選びます（貪欲デコード）。これにより**より一貫性のある**出力が生成されるが、必ずしも同一の出力は保証されません。\\n\\n    temperature=0での変動の原因:\\n    - **浮動小数点数の非決定性**（特に異なるハードウェアやバッチサイズでのGPU演算）\\n    - **サーバーサイドのインフラ変更**（モデル更新、サーブインフラ）\\n    - **長めの出力**は小さな変動を蓄積する\\n\\n    テストスイートや評価で厳密な決定性が必要な場合は`temperature=0`が適切です。ただし、バイト単位で完全に同一の出力を期待しないでください。構造、重要な内容、動作を検証しましょう。\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 845,
+    "outputTokens": 930,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 2327
+  },
+  "cost": {
+    "inputUsd": 0.0000676,
+    "outputUsd": 0.0002232,
+    "totalUsd": 0.0002908,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

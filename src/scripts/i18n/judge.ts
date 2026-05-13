@@ -11,6 +11,7 @@ import {
   writeTextFile,
 } from "./utils.ts";
 import { getRunTelemetry, renderTelemetryLines } from "./telemetry.ts";
+import { OPENROUTER_USAGE_ACCOUNTING } from "./llm-telemetry.ts";
 import { generateText } from "ai";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -777,6 +778,17 @@ function averageJudgeScore(scores: JudgeScoreMap) {
   return values.reduce((sum, score) => sum + score, 0) / values.length;
 }
 
+function getOpenRouterProviderCost(providerMetadata: unknown) {
+  const metadata = recordValue(providerMetadata);
+  const usage = recordValue(recordValue(metadata?.openrouter)?.usage);
+  const cost = usage?.cost;
+  return typeof cost === "number" && Number.isFinite(cost) ? cost : undefined;
+}
+
+function recordValue(value: unknown): Record<string, unknown> | undefined {
+  return value != null && typeof value === "object" ? value as Record<string, unknown> : undefined;
+}
+
 async function runJudgeCommand(
   model: string,
   judgePrompt: string,
@@ -789,7 +801,7 @@ async function runJudgeCommand(
   try {
     assertNoOutOfCreditMarker();
     const result = await generateText({
-      model: provider.chat(modelId),
+      model: provider.chat(modelId, OPENROUTER_USAGE_ACCOUNTING),
       system: [
         "You are a constrained translation judge.",
         "You cannot edit files or run shell commands.",
@@ -824,6 +836,7 @@ async function runJudgeCommand(
         outputTokens: usage?.outputTokens,
         cachedInputTokens: usage?.inputTokenDetails?.cacheReadTokens,
         cache_write_tokens: usage?.inputTokenDetails?.cacheWriteTokens,
+        cost: getOpenRouterProviderCost(result.providerMetadata),
       },
     });
 

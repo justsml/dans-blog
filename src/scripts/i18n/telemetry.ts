@@ -1,10 +1,5 @@
 import { spawnSync } from "node:child_process";
-
-export type ModelPrice = {
-  input: number;
-  output: number;
-  cachedInput?: number;
-};
+import { estimateTokenCost } from "./translation-costs.ts";
 
 export type RunTelemetry = {
   runtimeSeconds: string;
@@ -25,28 +20,6 @@ export type CommandResult = {
   output: string;
   errorMessage?: string;
 };
-
-const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
-  ["openrouter/openai/gpt-oss-120b:nitro", { input: 0.039, output: 0.18 }],
-  ["openrouter/qwen/qwen3-32b:nitro", { input: 0.08, output: 0.24 }],
-  ["openrouter/google/gemma-4-26b-a4b-it", { input: 0, output: 0 }],
-  ["openrouter/google/gemma-4-31b-it", { input: 0, output: 0 }],
-  ["openrouter/deepseek/deepseek-v4-pro", { input: 0.2, output: 0.8 }],
-  ["openrouter/deepseek/deepseek-v4-flash", { input: 0.14, output: 0.28, cachedInput: 0.0028 }],
-  ["openrouter/deepseek/deepseek-v3.2", { input: 0.252, output: 0.378, cachedInput: 0.0252 }],
-  ["openrouter/qwen/qwen3.6-plus", { input: 0.325, output: 1.95 }],
-  ["openrouter/qwen/qwen3.6-flash", { input: 0.25, output: 1.5 }],
-  ["openrouter/qwen/qwen3.6-35b-a3b", { input: 0.15, output: 1 }],
-  ["openrouter/z-ai/glm-5-turbo", { input: 1.2, output: 4, cachedInput: 0.24 }],
-  ["openrouter/z-ai/glm-4.7-flash", { input: 0.06, output: 0.4, cachedInput: 0.01 }],
-  ["openrouter/google/gemini-3-flash-preview", { input: 0.5, output: 3, cachedInput: 0.05 }],
-  ["openrouter/minimax/minimax-m2.7", { input: 0.299, output: 1.2 }],
-  ["openrouter/minimax/minimax-m2.5", { input: 0.15, output: 1.15 }],
-  ["openrouter/moonshotai/kimi-k2.6", { input: 0.75, output: 3.5, cachedInput: 0.15 }],
-  ["openrouter/openai/gpt-5-mini", { input: 0.25, output: 2 }],
-  ["openrouter/openai/gpt-5.4-mini", { input: 0.75, output: 4.5 }],
-  ["openrouter/openai/gpt-5.4", { input: 2, output: 10 }],
-]);
 
 export function runMeasuredCommand(command: string, args: string[], timeoutMs: number): CommandResult {
   const startTime = Date.now();
@@ -85,7 +58,7 @@ export function getRunTelemetry(model: string, result: CommandResult): RunTeleme
     runtimeSeconds: (result.runtimeMs / 1000).toFixed(2),
     tokens: usage.tokens,
     openRouterCostCredits: usage.cost,
-    estimatedCostUsd: estimateCost(model, usage.tokens),
+    estimatedCostUsd: estimateCost(model, usage.tokens, usage.cost),
   };
 }
 
@@ -187,21 +160,14 @@ function findTokenCount(output: string, labels: string[]) {
   return undefined;
 }
 
-function estimateCost(model: string, tokens: RunTelemetry["tokens"]) {
-  const price = MODEL_PRICES_PER_MILLION_TOKENS.get(model);
-  if (price == null) return undefined;
-
+function estimateCost(model: string, tokens: RunTelemetry["tokens"], providerCostUsd?: number) {
   const inputTokens = tokens.input ?? 0;
   const outputTokens = tokens.output ?? 0;
   const thinkingTokens = tokens.thinking ?? 0;
   const cachedTokens = tokens.cached ?? 0;
-  const uncachedInputTokens = Math.max(inputTokens - cachedTokens, 0);
+  const cost = estimateTokenCost(model, inputTokens, outputTokens + thinkingTokens, cachedTokens, { providerCostUsd });
 
-  return (
-    (uncachedInputTokens * price.input) +
-    (cachedTokens * (price.cachedInput ?? price.input)) +
-    ((outputTokens + thinkingTokens) * price.output)
-  ) / 1_000_000;
+  return cost.pricingSource === "unknown" ? undefined : cost.totalUsd;
 }
 
 function formatMetric(value: number | undefined) {

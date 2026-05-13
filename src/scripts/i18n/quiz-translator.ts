@@ -17,7 +17,7 @@ import type { QuizChallenge, ParsedQuiz } from "./quiz-parser.ts";
 import { normalizeMarkdownIndentation, slotToTranslatable, slotFromTranslatable } from "./quiz-parser.ts";
 import type { ActiveLocale } from "../../shared/i18n.ts";
 import { LOCALE_LABELS } from "../../shared/i18n.ts";
-import { cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
+import { OPENROUTER_USAGE_ACCOUNTING, cachedText, usageFromResult, type TranslationTelemetry } from "./llm-telemetry.ts";
 import { assertNoOutOfCreditMarker } from "./out-of-credit.ts";
 
 const TranslationSchema = z.object({
@@ -146,7 +146,7 @@ export async function translateChallenge(
   const start = performance.now();
 
   const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId);
+  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -196,7 +196,7 @@ export async function translateChallenge(
     challenge: merged,
     translation: translated,
     rawText: result.text,
-    telemetry: usageFromResult(result.usage, durationMs),
+    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata),
   };
 }
 
@@ -242,7 +242,7 @@ export async function generateQuizDescription(
   ].join("\n");
 
   const provider = createOpenRouter(llmConfig.providerSettings);
-  const model = provider.chat(llmConfig.modelId);
+  const model = provider.chat(llmConfig.modelId, OPENROUTER_USAGE_ACCOUNTING);
   assertNoOutOfCreditMarker();
 
   const result = await generateText({
@@ -308,7 +308,7 @@ export async function generateQuizDescription(
   return {
     description,
     rawText: result.text,
-    telemetry: usageFromResult(result.usage, durationMs),
+    telemetry: usageFromResult(result.usage, durationMs, result.providerMetadata),
   };
 }
 

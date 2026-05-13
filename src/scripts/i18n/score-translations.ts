@@ -15,7 +15,7 @@ import {
   parseList,
   relativeToRepo,
 } from "./utils.ts";
-import { usageFromResult } from "./llm-telemetry.ts";
+import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
 import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
 
 type ScoreKey =
@@ -77,6 +77,8 @@ type ScoredTranslationRecord = {
     outputTokens: number;
     cacheReadTokens: number;
     cacheWriteTokens: number;
+    providerCostUsd?: number;
+    providerUpstreamCostUsd?: number;
     durationMs: number;
     inputUsd: number;
     outputUsd: number;
@@ -193,8 +195,10 @@ async function processTask(task: TranslationTask) {
     translationStats,
   });
   const durationMs = Date.now() - startedAt;
-  const telemetry = usageFromResult(response.usage, durationMs);
-  const cost = estimateTokenCost(model, telemetry.inputTokens, telemetry.outputTokens, telemetry.cacheReadTokens);
+  const telemetry = usageFromResult(response.usage, durationMs, response.providerMetadata);
+  const cost = estimateTokenCost(model, telemetry.inputTokens, telemetry.outputTokens, telemetry.cacheReadTokens, {
+    providerCostUsd: telemetry.providerCostUsd,
+  });
   const generatedAt = new Date();
   const timestamp = generatedAt.toISOString().replace(/[:.]/g, "-");
   const record = {
@@ -228,6 +232,8 @@ async function processTask(task: TranslationTask) {
       outputTokens: telemetry.outputTokens,
       cacheReadTokens: telemetry.cacheReadTokens,
       cacheWriteTokens: telemetry.cacheWriteTokens,
+      providerCostUsd: telemetry.providerCostUsd,
+      providerUpstreamCostUsd: telemetry.providerUpstreamCostUsd,
       durationMs: telemetry.durationMs,
       inputUsd: roundMoney(cost.inputUsd),
       outputUsd: roundMoney(cost.outputUsd),
@@ -340,7 +346,7 @@ async function scoreTranslation({
 
   const startedAt = Date.now();
   const result = await generateText({
-    model: provider.chat(model.replace(/^openrouter\//, "")),
+    model: provider.chat(model.replace(/^openrouter\//, ""), OPENROUTER_USAGE_ACCOUNTING),
     system: [
       "You are a strict technical translation quality analyst.",
       "You understand MDX, code-heavy articles, technical quizzes, and localization quality.",
@@ -363,6 +369,7 @@ async function scoreTranslation({
     parsed: normalizeScoreResponse(parseScoreJson(result.text)),
     rawText: result.text,
     usage: result.usage,
+    providerMetadata: result.providerMetadata,
     durationMs: Date.now() - startedAt,
   };
 }
@@ -663,6 +670,8 @@ function toTranslationLogRecord(record: ScoredTranslationRecord) {
     outputTokens: record.costs.outputTokens,
     cacheReadTokens: record.costs.cacheReadTokens,
     cacheWriteTokens: record.costs.cacheWriteTokens,
+    providerCostUsd: record.costs.providerCostUsd,
+    providerUpstreamCostUsd: record.costs.providerUpstreamCostUsd,
     durationMs: record.costs.durationMs,
     totalUsd: record.costs.totalUsd,
     pricingSource: record.costs.pricingSource,
