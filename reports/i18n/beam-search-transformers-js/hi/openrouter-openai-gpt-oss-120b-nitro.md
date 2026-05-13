@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: beam-search-transformers-js
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--beam-search-transformers-js/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 12.90
+- Input tokens: 13002
+- Output tokens: 3773
+- Thinking tokens: unknown
+- Cached input tokens: 3712
+- Cache write tokens: 0
+- Estimated cost: $0.001186
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Transformers.js में बीम सर्च का कार्यान्वयन
 subTitle: 'हज़ार पंक्तियों, महीनों की प्रतीक्षा, और टेक्स्ट जनरेशन के गहराई में डुबकी।'
@@ -184,3 +202,4 @@ score = sum_logprobs / (length ^ length_penalty)
 ¹ हाँ, मुझे पता है `num_beams=1` सिर्फ ग्रेडी सर्च है। यह विकृत मामला स्पष्ट रूप से परिभाषित है।  
 
 ² एन्कोडर‑केवल मॉडल (BERT आदि) टोकन उत्पन्न नहीं करते, इसलिए यह सब उन पर लागू नहीं होता। वे बस “वाइब्स” हैं।
+````
