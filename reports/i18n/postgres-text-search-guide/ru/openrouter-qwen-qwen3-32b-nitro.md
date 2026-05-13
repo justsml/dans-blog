@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 31.74
+- Input tokens: 16618
+- Output tokens: 15916
+- Thinking tokens: unknown
+- Cached input tokens: 5120
+- Cache write tokens: 0
+- Estimated cost: $0.005149
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Руководство по текстовому поиску Postgres 2026
 subTitle: >-
@@ -477,3 +495,4 @@ LIMIT 10;
 Текстовый поиск в Postgres охватывает многое, но у него есть предел. Когда пользователи описывают, что хотят, вместо того чтобы называть это прямо — «что-то, чтобы помочь мне уснуть во время полета», «статьи о отладке уверенности как новичок-инженер» — лексический и триграммный поиск не справляются.
 
 Это территория векторных эмбеддингов, семантического поиска и гибридных архитектур. Рассмотрено в [Семантический векторный поиск и гибридные стратегии](/semantic-vector-search-landscape).
+````
