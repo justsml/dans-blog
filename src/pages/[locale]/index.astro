@@ -1,0 +1,15 @@
+---
+import HomePage from "../index.astro";
+import { ACTIVE_LOCALES, type ActiveLocale } from "../../shared/i18n";
+
+export function getStaticPaths() {
+  return ACTIVE_LOCALES.map((locale) => ({
+    params: { locale },
+    props: { locale },
+  }));
+}
+
+const locale = Astro.props.locale as ActiveLocale;
+---
+
+<HomePage locale={locale} />

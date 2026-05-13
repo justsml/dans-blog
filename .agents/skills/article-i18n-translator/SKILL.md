@@ -27,12 +27,16 @@ Current low-cost OpenRouter candidates:
 
 - `openrouter/qwen/qwen3.6-plus`
 - `openrouter/deepseek/deepseek-v4-flash`
+- `openrouter/openai/gpt-oss-120b:nitro`
+- `openrouter/qwen/qwen3-32b:nitro`
 - `openrouter/z-ai/glm-4.7-flash`
 - `openrouter/minimax/minimax-m2.5`
 - `openrouter/minimax/minimax-m2.7`
 - `openrouter/google/gemini-3-flash-preview`
 - `openrouter/deepseek/deepseek-v3.2`
 - `openrouter/z-ai/glm-5-turbo`
+
+OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both sit after the current primary Qwen and DeepSeek candidates in the cheap pool.
 
 GLM 5 Turbo is now a fallback, not an early default; OpenRouter pricing checked on 2026-05-10 showed Qwen 3.6 Plus cheaper than GLM 5 Turbo.
 
@@ -63,9 +67,35 @@ For higher-risk batches, add a second cheap judge explicitly with `--second-mode
 
    Candidate generation skips existing slug+locale+model reports by default. Use `--overwrite` only when you intentionally want to rerun that model and replace its target-file output.
 
-   OpenCode calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
+   OpenCode calls default to a 240 second timeout. Use `--timeout-seconds 240` explicitly for batch work. Thinking-capable models should stay cheap: Qwen, gpt-oss, and GLM run with `--variant low`, Gemini 3 Flash runs with `--variant minimal`.
 
    Each model report should include runtime seconds, input tokens, output tokens, thinking/reasoning tokens, cached input tokens, and estimated cost. Token counts are best-effort from OpenCode/provider output; write `unknown` rather than omitting unavailable fields.
+
+   OpenRouter usage metadata is read from `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost`, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
+
+   For quiz posts, run competing Nitro candidates through the normal candidate wrapper so the outputs are committed and judgeable:
+
+   ```sh
+   bun run i18n:translate:candidates -- \
+     --slug javascript-promises-quiz \
+     --locale ja \
+     --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
+     --chunk 1p \
+     --quiz-concurrency 18 \
+     --challenge-retries 2 \
+     --timeout-seconds 240
+   ```
+
+   Judge only the last two or three candidate commits with `--candidate-limit`:
+
+   ```sh
+   bun run i18n:judge -- \
+     --slug javascript-promises-quiz \
+     --locale ja \
+     --candidate-limit 2 \
+     --model openrouter/google/gemini-3-flash-preview \
+     --timeout-seconds 240
+   ```
 
 3. If a provider failed or left no target-file diff, make sure it is recorded as `i18n rejected(...)`, not a candidate.
 4. Judge only real candidate commits that changed the translated MDX:

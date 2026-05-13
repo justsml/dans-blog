@@ -5,6 +5,7 @@ import {
   FUTURE_LOCALES,
   getBaseSlugFromRouteSlug,
   getLocaleFromRouteSlug,
+  getLocalizedPagePath,
   getLocalizedPostPath,
   getLocalizedPostSlug,
   isActiveLocale,
@@ -51,6 +52,14 @@ describe("i18n post routing helpers", () => {
     expect(getLocalizedPostPath("postgres-text-search-guide", "de")).toBe(
       "/de/postgres-text-search-guide/",
     );
+  });
+
+  test("builds localized non-post page paths", () => {
+    expect(getLocalizedPagePath("/")).toBe("/");
+    expect(getLocalizedPagePath("/", "es")).toBe("/es/");
+    expect(getLocalizedPagePath("/about/")).toBe("/about/");
+    expect(getLocalizedPagePath("/about/", "es")).toBe("/es/about/");
+    expect(getLocalizedPagePath("contact", "ja")).toBe("/ja/contact/");
   });
 
   test("normalizes route paths without duplicating slashes", () => {

@@ -2,6 +2,8 @@
 import { slugify } from "@/shared/pathHelpers";
 import { getComputedDates } from "@/shared/dateUtils";
 import avatarImage from "@/assets/avatar-256.webp";
+import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "@/shared/i18n";
+import { getUiCopy } from "@/shared/uiTranslations";
 import "./StaticNavMenu.css";
 
 type NavPost = {
@@ -18,15 +20,18 @@ type Props = {
   categories: Array<[string, unknown]>;
   popularPosts: NavPost[];
   recentPosts: NavPost[];
+  locale?: Locale;
 };
 
-const { categories, popularPosts, recentPosts } = Astro.props;
+const { categories, popularPosts, recentPosts, locale = DEFAULT_LOCALE } = Astro.props;
+const copy = getUiCopy(locale);
+const pagePath = (path: string) => getLocalizedPagePath(path, locale);
 ---
 
-<nav class="NavigationMenuRoot static-nav" aria-label="Primary navigation">
+<nav class="NavigationMenuRoot static-nav" aria-label={copy.nav.primaryLabel}>
   <ul class="NavigationMenuList">
     <li class="searchToggle">
-      <button title="Toggle search panel" type="button" class="btnSearchToggle" aria-label="Search">
+      <button title={copy.nav.searchTitle} type="button" class="btnSearchToggle" aria-label={copy.nav.searchLabel}>
         <svg aria-hidden="true" viewBox="0 0 15 15" width="18" height="18">
           <path
             d="M10 6.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-.85 3.35a4.5 4.5 0 1 1 .7-.7l2.5 2.5a.5.5 0 0 1-.7.7l-2.5-2.5Z"
@@ -38,26 +43,26 @@ const { categories, popularPosts, recentPosts } = Astro.props;
     <li>
       <details class="static-nav-menu">
         <summary class="NavigationMenuTrigger">
-          Articles <span class="CaretDown" aria-hidden="true">⌄</span>
+          {copy.nav.articles} <span class="CaretDown" aria-hidden="true">⌄</span>
         </summary>
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List one">
             <li class="item-quizzes">
-              <a href="/challenges" class="Callout CalloutItem nav-tile-quiz">
-                <div class="CalloutHeading">Quizzes</div>
-                <p class="CalloutText">Try Dan's Challenges!</p>
+              <a href={pagePath("/challenges/")} class="Callout CalloutItem nav-tile-quiz">
+                <div class="CalloutHeading">{copy.nav.quizzes}</div>
+                <p class="CalloutText">{copy.nav.quizzesText}</p>
               </a>
             </li>
 
             <li class="item-categories">
               <div class="Callout neon-bg-3">
-                <div class="CalloutHeading">Categories</div>
+                <div class="CalloutHeading">{copy.nav.categories}</div>
                 <div class="CalloutText">
                   {
                     categories.slice(0, 6).map(([category, count]) => (
                       <a
                         title={category}
-                        href={`/category/${slugify(category)}/`}
+                        href={pagePath(`/category/${slugify(category)}/`)}
                         class="CalloutItem"
                       >
                         {category} <span class="ui-badge nav-count-badge">{count as number}</span>
@@ -70,7 +75,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
 
             <li class="item-popular">
               <div class="Callout neon-bg-2">
-                <div class="CalloutHeading">Popular</div>
+                <div class="CalloutHeading">{copy.nav.popular}</div>
                 <div class="CalloutText">
                   {
                     popularPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
@@ -89,7 +94,7 @@ const { categories, popularPosts, recentPosts } = Astro.props;
 
             <li class="item-recent">
               <div class="Callout neon-bg-4">
-                <div class="CalloutHeading">Recent</div>
+                <div class="CalloutHeading">{copy.nav.recent}</div>
                 <div class="CalloutText">
                   {
                     recentPosts.map(({ data: { title, subTitle, modified, date }, slug }) => {
@@ -113,17 +118,17 @@ const { categories, popularPosts, recentPosts } = Astro.props;
     <li>
       <details class="static-nav-menu">
         <summary class="NavigationMenuTrigger">
-          Projects <span class="CaretDown" aria-hidden="true">⌄</span>
+          {copy.nav.projects} <span class="CaretDown" aria-hidden="true">⌄</span>
         </summary>
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List two">
             <li class="panel-projects">
               <a class="Callout neon-bg-2" href="https://github.com/justsml" target="_blank">
-                <div class="CalloutHeading">Demos &amp; Examples</div>
-                <p class="CalloutText">A selection of my projects, experiments and assorted repos.</p>
+                <div class="CalloutHeading">{copy.nav.demosTitle}</div>
+                <p class="CalloutText">{copy.nav.demosText}</p>
               </a>
             </li>
-            <li><a class="ListItemLink" href="/open-source-journal"><div class="ListItemHeading">Open Source Journal</div><p class="ListItemText">A journal of my open source contributions, projects, and experiments.</p></a></li>
+            <li><a class="ListItemLink" href={pagePath("/open-source-journal/")}><div class="ListItemHeading">{copy.nav.openSourceJournal}</div><p class="ListItemText">{copy.nav.openSourceJournalText}</p></a></li>
             <li><a class="ListItemLink" href="https://dataanalyzer.app/"><div class="ListItemHeading">DataAnalyzer.app</div><p class="ListItemText">A code + schema generator for JSON or CSV input.</p></a></li>
             <li><a class="ListItemLink" href="https://fpromises.io/"><div class="ListItemHeading">Functional Promises</div><p class="ListItemText">A functional and fluent API built around native JavaScript promises.</p></a></li>
             <li><a class="ListItemLink" href="https://github.com/justsml/node-streaming-image-proxy"><div class="ListItemHeading">Node Streaming Image Proxy</div><p class="ListItemText">High performance image resizing and streaming proxy for Node.js.</p></a></li>
@@ -137,30 +142,30 @@ const { categories, popularPosts, recentPosts } = Astro.props;
     <li>
       <details class="static-nav-menu">
         <summary class="NavigationMenuTrigger">
-          About <span class="CaretDown" aria-hidden="true">⌄</span>
+          {copy.nav.about} <span class="CaretDown" aria-hidden="true">⌄</span>
         </summary>
         <div class="NavigationMenuContent static-nav-panel">
           <ul class="List two contact-info-list">
             <li class="row-span-2">
               <div class="Callout neon-bg-6 AboutCard">
-                <a href="/about">
+                <a href={pagePath("/about/")}>
                   <img src={avatarImage.src} alt="Dan Levy" width={avatarImage.width} height={avatarImage.height} loading="lazy" decoding="async" class="u-photo p" />
                 </a>
                 <div class="CalloutHeading">Dan Levy</div>
-                <p class="CalloutText">Coder | Leader<br />Thinker | Tinkerer</p>
+                <p class="CalloutText" set:html={copy.nav.aboutText} />
               </div>
             </li>
             <li>
               <div class="Callout ContactSubMenu">
-                <div class="CalloutHeading">Contact Me</div>
+                <div class="CalloutHeading">{copy.nav.contactMe}</div>
                 <div class="CalloutText">
                   <span class="SocialLinks">
-                    <a href="/contact"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M1 3.25A1.25 1.25 0 0 1 2.25 2h10.5A1.25 1.25 0 0 1 14 3.25v8.5A1.25 1.25 0 0 1 12.75 13H2.25A1.25 1.25 0 0 1 1 11.75v-8.5Zm1.25-.25a.25.25 0 0 0-.25.25v.2l5.5 3.44L13 3.45v-.2a.25.25 0 0 0-.25-.25H2.25ZM13 4.63 7.77 7.9a.5.5 0 0 1-.54 0L2 4.63v7.12c0 .14.11.25.25.25h10.5a.25.25 0 0 0 .25-.25V4.63Z"/></svg></span><label><code>&lt;form&gt;</code></label></a>
+                    <a href={pagePath("/contact/")}><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M1 3.25A1.25 1.25 0 0 1 2.25 2h10.5A1.25 1.25 0 0 1 14 3.25v8.5A1.25 1.25 0 0 1 12.75 13H2.25A1.25 1.25 0 0 1 1 11.75v-8.5Zm1.25-.25a.25.25 0 0 0-.25.25v.2l5.5 3.44L13 3.45v-.2a.25.25 0 0 0-.25-.25H2.25ZM13 4.63 7.77 7.9a.5.5 0 0 1-.54 0L2 4.63v7.12c0 .14.11.25.25.25h10.5a.25.25 0 0 0 .25-.25V4.63Z"/></svg></span><label><code>&lt;form&gt;</code></label></a>
                     <a rel="me" href="http://x.com/justsml" target="_blank"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M9.1 6.43 13.83 1h-1.12L8.6 5.71 5.32 1H1.54l4.96 7.12L1.54 14h1.12L7 8.84 10.47 14h3.78L9.1 6.43Zm-1.54 1.8-.5-.7-4-5.72h1.72l3.22 4.6.5.7 4.2 6.02h-1.72L7.56 8.23Z"/></svg></span><label>Twitter</label></a>
                     <a rel="me" href="https://github.com/justsml" target="_blank"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 .2a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.49-2.7-1.07-2.7-1.07-.37-.93-.9-1.18-.9-1.18-.72-.5.06-.49.06-.49.8.06 1.22.83 1.22.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82A7.5 7.5 0 0 1 8 4.58c.68 0 1.36.09 2 .27 1.52-1.04 2.19-.82 2.19-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.88 3.75-3.66 3.95.29.25.54.73.54 1.48v2.18c0 .21.15.46.55.38A8 8 0 0 0 8 .2Z"/></svg></span><label>GitHub</label></a>
                     <a rel="me" href="https://linkedin.com/in/realdaniellevy" target="_blank"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M3.1 4.9H.94V14H3.1V4.9ZM2.02 3.65A1.25 1.25 0 1 0 2.02 1.15a1.25 1.25 0 0 0 0 2.5ZM14 14h-2.16V9.57c0-1.06-.02-2.42-1.47-2.42-1.47 0-1.7 1.15-1.7 2.34V14H6.51V4.9h2.07v1.24h.03c.29-.55 1-1.13 2.05-1.13 2.19 0 3.34 1.44 3.34 3.8V14Z"/></svg></span><label>LinkedIn</label></a>
-                    <a rel="me" href="/open-source-journal"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M3.25 1.5A1.75 1.75 0 0 0 1.5 3.25v8.5c0 .97.78 1.75 1.75 1.75h8.5c.97 0 1.75-.78 1.75-1.75v-8.5c0-.97-.78-1.75-1.75-1.75h-8.5Zm0 1h8.5c.41 0 .75.34.75.75v8.5c0 .41-.34.75-.75.75h-8.5a.75.75 0 0 1-.75-.75v-8.5c0-.41.34-.75.75-.75Zm1.25 2v1h6v-1h-6Zm0 2.25v1h6v-1h-6Zm0 2.25v1h3.75v-1H4.5Z"/></svg></span><label>OSS Log</label></a>
-                    <a rel="me" href="/docs/resume.pdf" target="_blank"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M7.5.8 9.4 5.6l5.1.4-3.9 3.3 1.2 5-4.3-2.7-4.3 2.7 1.2-5L.5 6l5.1-.4L7.5.8Zm0 2.7-.98 2.48-.2.5-.54.04-2.64.21 2.02 1.7.42.36-.13.53-.62 2.57 2.23-1.4.44-.27.44.27 2.23 1.4-.62-2.57-.13-.53.42-.36 2.02-1.7-2.64-.21-.54-.04-.2-.5L7.5 3.5Z"/></svg></span><label>Resume</label></a>
+                    <a rel="me" href={pagePath("/open-source-journal/")}><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M3.25 1.5A1.75 1.75 0 0 0 1.5 3.25v8.5c0 .97.78 1.75 1.75 1.75h8.5c.97 0 1.75-.78 1.75-1.75v-8.5c0-.97-.78-1.75-1.75-1.75h-8.5Zm0 1h8.5c.41 0 .75.34.75.75v8.5c0 .41-.34.75-.75.75h-8.5a.75.75 0 0 1-.75-.75v-8.5c0-.41.34-.75.75-.75Zm1.25 2v1h6v-1h-6Zm0 2.25v1h6v-1h-6Zm0 2.25v1h3.75v-1H4.5Z"/></svg></span><label>{copy.nav.ossLog}</label></a>
+                    <a rel="me" href="/docs/resume.pdf" target="_blank"><span class="Icon" aria-hidden="true"><svg viewBox="0 0 15 15"><path d="M7.5.8 9.4 5.6l5.1.4-3.9 3.3 1.2 5-4.3-2.7-4.3 2.7 1.2-5L.5 6l5.1-.4L7.5.8Zm0 2.7-.98 2.48-.2.5-.54.04-2.64.21 2.02 1.7.42.36-.13.53-.62 2.57 2.23-1.4.44-.27.44.27 2.23 1.4-.62-2.57-.13-.53.42-.36 2.02-1.7-2.64-.21-.54-.04-.2-.5L7.5 3.5Z"/></svg></span><label>{copy.nav.resume}</label></a>
                   </span>
                 </div>
               </div>

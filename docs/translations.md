@@ -96,6 +96,8 @@ Every future candidate report includes run telemetry:
 
 Token fields are best-effort because provider and OpenCode output formats vary. Unknown token counts are still written explicitly so model reports keep a stable shape.
 
+OpenRouter usage metadata is read from the response `usage` object. As of the 2026-05-13 OpenRouter docs check, the useful fields are `usage.prompt_tokens`, `usage.completion_tokens`, `usage.total_tokens`, `usage.cost`, `usage.prompt_tokens_details.cached_tokens`, `usage.prompt_tokens_details.cache_write_tokens`, and `usage.completion_tokens_details.reasoning_tokens`.
+
 To run a subset:
 
 ```sh
@@ -119,8 +121,72 @@ bun run i18n:judge -- \
   --timeout-seconds 240
 ```
 
+For quiz posts, generate competing Nitro candidates through the normal candidate wrapper so each model output is committed and available to the judge:
+
+```sh
+bun run i18n:translate:candidates -- \
+  --slug javascript-promises-quiz \
+  --locale ja \
+  --models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
+  --chunk 4p \
+  --quiz-concurrency 18 \
+  --challenge-retries 2 \
+  --timeout-seconds 240
+```
+
+To keep the current Qwen/DeepSeek primary pair and add Nitro candidates after them:
+
+```sh
+bun run i18n:translate:candidates -- \
+  --slug javascript-promises-quiz \
+  --locale ja \
+  --models openrouter/qwen/qwen3.6-plus,openrouter/deepseek/deepseek-v4-flash,openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
+  --chunk 1p \
+  --quiz-concurrency 18 \
+  --challenge-retries 2 \
+  --timeout-seconds 240
+```
+
+Judge only the last two candidate commits, which is useful after running just the two Nitro models:
+
+```sh
+bun run i18n:judge -- \
+  --slug javascript-promises-quiz \
+  --locale ja \
+  --candidate-limit 2 \
+  --model openrouter/google/gemini-3-flash-preview \
+  --timeout-seconds 240
+```
+
+Judge the last three candidates with a second cheap judge and escalation only if the judges disagree:
+
+```sh
+bun run i18n:judge -- \
+  --slug javascript-promises-quiz \
+  --locale ja \
+  --candidate-limit 3 \
+  --model openrouter/google/gemini-3-flash-preview \
+  --second-model openrouter/deepseek/deepseek-v3.2 \
+  --escalate-model openrouter/anthropic/claude-sonnet-4.6 \
+  --timeout-seconds 240
+```
+
+If the repo has older history for the same slug and locale, combine the limit with explicit model filtering:
+
+```sh
+bun run i18n:judge -- \
+  --slug javascript-promises-quiz \
+  --locale ja \
+  --candidate-models openrouter/openai/gpt-oss-120b:nitro,openrouter/qwen/qwen3-32b:nitro \
+  --candidate-limit 2 \
+  --model openrouter/google/gemini-3-flash-preview \
+  --timeout-seconds 240
+```
+
 Thinking-capable models are run with cheap reasoning variants by default:
 
+- `openrouter/openai/gpt-oss-120b:nitro`: `--variant low`
+- `openrouter/qwen/qwen3-32b:nitro`: `--variant low`
 - `openrouter/qwen/qwen3.6-plus`: `--variant low`
 - `openrouter/google/gemini-3-flash-preview`: `--variant minimal`
 - `openrouter/z-ai/glm-5.1`: `--variant low`
@@ -138,6 +204,8 @@ Current low-cost OpenRouter set:
 ```text
 openrouter/qwen/qwen3.6-plus
 openrouter/deepseek/deepseek-v4-flash
+openrouter/openai/gpt-oss-120b:nitro
+openrouter/qwen/qwen3-32b:nitro
 openrouter/z-ai/glm-4.7-flash
 openrouter/minimax/minimax-m2.5
 openrouter/minimax/minimax-m2.7
@@ -145,6 +213,8 @@ openrouter/google/gemini-3-flash-preview
 openrouter/deepseek/deepseek-v3.2
 openrouter/z-ai/glm-5-turbo
 ```
+
+OpenRouter pricing checked on 2026-05-13 showed `openrouter/openai/gpt-oss-120b:nitro` at $0.039/M input and $0.18/M output tokens, and `openrouter/qwen/qwen3-32b:nitro` at $0.08/M input and $0.24/M output tokens. Both are kept after the current primary Qwen and DeepSeek candidates in the cheap pool.
 
 OpenRouter pricing checked on 2026-05-10 showed `openrouter/qwen/qwen3.6-plus` cheaper than `openrouter/z-ai/glm-5-turbo`, so GLM 5 Turbo is kept as a later fallback instead of an early default.
 

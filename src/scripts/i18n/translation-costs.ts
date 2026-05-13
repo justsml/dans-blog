@@ -13,6 +13,16 @@ interface ModelPricing {
 }
 
 const MODEL_PRICING: Record<string, ModelPricing> = {
+  "openai/gpt-oss-120b:nitro": {
+    inputPerMillionUsd: 0.039,
+    outputPerMillionUsd: 0.18,
+    source: "local-openrouter-estimate",
+  },
+  "qwen/qwen3-32b:nitro": {
+    inputPerMillionUsd: 0.08,
+    outputPerMillionUsd: 0.24,
+    source: "local-openrouter-estimate",
+  },
   "qwen/qwen3.6-plus": {
     inputPerMillionUsd: 0.325,
     outputPerMillionUsd: 1.95,

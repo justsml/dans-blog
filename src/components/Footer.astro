@@ -13,6 +13,7 @@ import { EditOnGitHubLink } from "./EditOnGitHubLink";
 import SocialLinks from "./SocialLinks.astro";
 import SubscribeForm from "./SubscribeForm.astro";
 import { DEFAULT_LOCALE, getLocalizedPostPath, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
 
 type Props = {
   showSubscribeForm?: boolean;
@@ -36,6 +37,7 @@ const {
   locale = DEFAULT_LOCALE,
   editSourcePath,
 } = Astro.props as Props;
+const copy = getUiCopy(locale);
 
 const today = new Date();
 
@@ -119,15 +121,15 @@ function getArticleHref(article: ArticlePost) {
 <footer class="content-grid site-footer" role="contentinfo" data-pagefind-ignore="all">
   <div class="site-footer__grid">
     <section class="footer-card footer-card--rss" aria-labelledby="footer-rss-title">
-      <p class="footer-kicker" id="footer-rss-title">Feeds</p>
+      <p class="footer-kicker" id="footer-rss-title">{copy.footer.feeds}</p>
       <a class="footer-feed-link" href="/rss.xml">
         <RssIcon size="1.2em" strokeWidth={1.8} />
-        <span>RSS feed</span>
+        <span>{copy.footer.rssFeed}</span>
         <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
       </a>
       <a class="footer-feed-link footer-feed-link--quiet" href="/rss.json">
         <CopyIcon size="1.05em" strokeWidth={1.8} />
-        <span>JSON feed</span>
+        <span>{copy.footer.jsonFeed}</span>
         <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
       </a>
     </section>
@@ -136,41 +138,41 @@ function getArticleHref(article: ArticlePost) {
       <div class="footer-card__marker" aria-hidden="true">
         <QuoteIcon size="1.15em" strokeWidth={1.7} />
       </div>
-      <p class="footer-kicker" id="footer-quote-title">Quotable</p>
+      <p class="footer-kicker" id="footer-quote-title">{copy.footer.quotable}</p>
       <blockquote>
-        <p>Wow! Dan, you're like an AI man!</p>
+        <p>{copy.footer.quote}</p>
         <cite>
           <a href="https://wesbos.com/" target="_blank" rel="noopener noreferrer">Wes Bos</a>
-          <span>from</span>
+          <span>{copy.footer.from}</span>
           <a href="https://syntax.fm/" target="_blank" rel="noopener noreferrer">Syntax.fm</a>
         </cite>
       </blockquote>
     </section>
 
     <section class="footer-card footer-card--connect" aria-labelledby="footer-connect-title">
-      <p class="footer-kicker" id="footer-connect-title">Elsewhere</p>
-      <h2>Follow me places...</h2>
+      <p class="footer-kicker" id="footer-connect-title">{copy.footer.elsewhere}</p>
+      <h2>{copy.footer.follow}</h2>
       <SocialLinks />
-      <button class="footer-action" type="button" data-footer-share>
+      <button class="footer-action" type="button" data-footer-share data-footer-share-copied={copy.footer.copied}>
         <Share2Icon size="1.05em" strokeWidth={1.8} />
-        <span data-footer-share-label>Share this page</span>
+        <span data-footer-share-label>{copy.footer.share}</span>
       </button>
     </section>
 
     <section class="footer-card footer-card--cta" aria-labelledby="footer-cta-title">
-      <p class="footer-kicker">Consulting</p>
-      <h2 id="footer-cta-title">Hard technical problem?</h2>
-      <p>AI systems, security reviews, TypeScript architecture, and production rescue work.</p>
+      <p class="footer-kicker">{copy.footer.consulting}</p>
+      <h2 id="footer-cta-title">{copy.footer.ctaTitle}</h2>
+      <p>{copy.footer.ctaText}</p>
       <a class="footer-cta-link" href={INTRO_CALL_LINK} target="_blank" rel="noopener">
-        <span>Book a call</span>
+        <span>{copy.footer.bookCall}</span>
         <ArrowUpRightIcon size="1em" strokeWidth={1.8} />
       </a>
     </section>
 
     <section class="footer-card footer-card--reading" aria-labelledby="footer-reading-title">
       <div class="footer-card__heading">
-        <p class="footer-kicker">Related articles</p>
-        <h2 id="footer-reading-title">Read More Shit by Dan Levy</h2>
+        <p class="footer-kicker">{copy.footer.related}</p>
+        <h2 id="footer-reading-title">{copy.footer.readMore}</h2>
       </div>
       <div class="footer-article-grid">
         {
@@ -180,7 +182,7 @@ function getArticleHref(article: ArticlePost) {
                 <span class="footer-article-card__media">
                   <img
                     src={getArticleImage(article)}
-                    alt={`${article.data.title} article cover`}
+                    alt={`${article.data.title} ${copy.footer.coverAltSuffix}`}
                     loading="lazy"
                     decoding="async"
                   />
@@ -197,13 +199,13 @@ function getArticleHref(article: ArticlePost) {
 
     {
       showSubscribeForm && (
-        <section class="footer-card footer-card--subscribe" aria-label="Subscribe">
+        <section class="footer-card footer-card--subscribe" aria-label={copy.footer.subscribe}>
           <SubscribeForm />
         </section>
       )
     }
 
-    <section class="footer-card footer-card--meta" aria-label="Site credits">
+    <section class="footer-card footer-card--meta" aria-label={copy.footer.credits}>
       {
         editSourcePath && (
           <EditOnGitHubLink
@@ -216,7 +218,7 @@ function getArticleHref(article: ArticlePost) {
         &copy; 2008-{today.getFullYear()}
         <a href="https://danlevy.net/">Dan Levy</a>
       </p>
-      <p>All rights rebased.<br />🇿🇦 🇮🇪 🇬🇧 🇺🇸.</p>
+      <p>{copy.footer.rights}<br />🇿🇦 🇮🇪 🇬🇧 🇺🇸.</p>
     </section>
   </div>
 </footer>
@@ -234,6 +236,7 @@ function getArticleHref(article: ArticlePost) {
       button.dataset.footerShareReady = "true";
       const label = button.querySelector("[data-footer-share-label]");
       const defaultText = label?.textContent || "Share this page";
+      const copiedText = button.dataset.footerShareCopied || "Copied link";
 
       button.addEventListener("click", async () => {
         const url = window.location.href;
@@ -244,7 +247,7 @@ function getArticleHref(article: ArticlePost) {
             await navigator.share({ title, url });
           } else {
             await navigator.clipboard.writeText(url);
-            if (label) label.textContent = "Copied link";
+            if (label) label.textContent = copiedText;
             window.setTimeout(() => {
               if (label) label.textContent = defaultText;
             }, 1_600);

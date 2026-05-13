@@ -62,6 +62,23 @@ export function getLocalizedPostPath(baseSlug: string, locale: Locale = DEFAULT_
   return normalizeRoutePath(getLocalizedPostSlug(baseSlug, locale));
 }
 
+export function getLocalizedPagePath(path: string, locale: Locale = DEFAULT_LOCALE) {
+  const normalizedPath = normalizeRoutePath(path);
+  if (locale === DEFAULT_LOCALE) return normalizedPath;
+  if (normalizedPath === "/") return `/${locale}/`;
+  return normalizeRoutePath(`${locale}/${normalizedPath}`);
+}
+
+export function getPageAlternates(path: string, locales: readonly Locale[] = [
+  DEFAULT_LOCALE,
+  ...ACTIVE_LOCALES,
+]) {
+  return locales.map((locale) => ({
+    locale,
+    href: getLocalizedPagePath(path, locale),
+  }));
+}
+
 export function getLocaleFromRouteSlug(slug: string): Locale {
   const [firstSegment] = stripLeadingSlash(slug).split("/");
   return isLocale(firstSegment) ? firstSegment : DEFAULT_LOCALE;

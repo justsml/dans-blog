@@ -6,6 +6,8 @@ import avatarImage from "@/assets/avatar-88.webp";
 import { PostCollections } from "@/shared/postsCache";
 import SearchBar from "@/components/SearchUI/SearchBar.astro";
 import type { ArticlePost } from "../types";
+import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
 
 import "./Header.css";
 
@@ -13,6 +15,7 @@ type Props = {
   className?: string;
   date?: string;
   modified?: string;
+  locale?: Locale;
   languageOptions?: Array<{
     locale: string;
     label: string;
@@ -22,7 +25,8 @@ type Props = {
   }>;
 };
 
-const { className, languageOptions = [] } = Astro.props as Props;
+const { className, languageOptions = [], locale = DEFAULT_LOCALE } = Astro.props as Props;
+const copy = getUiCopy(locale);
 const currentLanguage =
   languageOptions.find((option) => option.isCurrent) ?? languageOptions[0];
 const currentLanguageCode = currentLanguage?.locale.toUpperCase();
@@ -69,18 +73,19 @@ function getNavPostData(post: MyPost) {
         categories={categories}
         popularPosts={popularPosts}
         recentPosts={recentPosts}
+        locale={locale}
       />
       {
         languageOptions.length > 0 && currentLanguage && (
           <details class="header-language-menu">
             <summary
               class="header-language-trigger"
-              aria-label={`Article language: ${currentLanguage.label}`}
+              aria-label={`${copy.nav.languageLabel}: ${currentLanguage.label}`}
             >
               <span class="header-language-current">{currentLanguageCode}</span>
               <span class="CaretDown" aria-hidden="true">⌄</span>
             </summary>
-            <nav class="header-language-panel" aria-label="Article languages">
+            <nav class="header-language-panel" aria-label={copy.nav.languageLabel}>
               {languageOptions.map((option) => (
                 <a
                   href={option.href}
@@ -88,15 +93,15 @@ function getNavPostData(post: MyPost) {
                   data-missing={!option.isTranslated ? "true" : undefined}
                   title={
                     option.isTranslated
-                      ? `${option.label} version`
-                      : `${option.label} translation is not available yet`
+                      ? `${option.label} ${copy.nav.languageVersion}`
+                      : `${option.label} ${copy.nav.languageUnavailable}`
                   }
                 >
                   <span class="header-language-name">{option.label}</span>
                   <span class="header-language-code">{option.locale}</span>
                   {
                     !option.isTranslated && (
-                      <span class="header-language-status">Unavailable</span>
+                      <span class="header-language-status">{copy.nav.languageUnavailable}</span>
                     )
                   }
                 </a>

@@ -2,6 +2,8 @@
 import { ContactForm } from "../components/ContactForm";
 import { SITE_DESCRIPTION } from "../consts";
 import Layout from "../layouts/Page.astro";
+import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
 
 const reCaptchaSiteKey =
   import.meta.env.SITE_RECAPTCHA_KEY ||
@@ -11,6 +13,8 @@ const reCaptchaSiteKey =
   import.meta.env.VITE_RECAPTCHA_SITE_KEY ||
   import.meta.env.RECAPTCHA_SITE_KEY ||
   "";
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 ---
 
 <script is:inline src="https://www.google.com/recaptcha/api.js?render=explicit"
@@ -18,13 +22,14 @@ const reCaptchaSiteKey =
 
 <Layout
   frontmatter={{
-    title: "Contact Dan!",
-    subTitle: SITE_DESCRIPTION,
+    title: copy.contact.title,
+    subTitle: copy.site.description || SITE_DESCRIPTION,
   }}
+  locale={locale}
   className="article"
 >
-  <ContactForm reCaptchaSiteKey={reCaptchaSiteKey}>
-    <h1>Contact Dan!</h1>
+  <ContactForm reCaptchaSiteKey={reCaptchaSiteKey} locale={locale}>
+    <h1>{copy.contact.heading}</h1>
   </ContactForm>
 </Layout>
 

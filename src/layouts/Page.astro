@@ -6,6 +6,7 @@ import AnalyticsTag from "../components/AnalyticsTag.astro";
 import { default as defaultSocialBanner } from "../assets/social-banner.webp";
 import clsx from "clsx";
 import SiteLinkedData from "../components/Seo/SiteLinkedData.astro";
+import { DEFAULT_LOCALE, getHtmlLang, getPageAlternates, getLocalizedPagePath, type Locale } from "../shared/i18n";
 // import { moveInOutTransition } from "../components/TransitionAnimations.ts";
 
 const { title, subTitle } = Astro.props.frontmatter! || Astro.props;
@@ -19,25 +20,41 @@ type Props = {
   socialImage?: string | ImageMetadata;
   className?: string;
   pagefindBody?: boolean;
+  locale?: Locale;
+  canonicalPath?: string;
+  alternates?: Array<{ locale: string; href: string }>;
 };
 
 const socialBanner = Astro.props.socialImage || defaultSocialBanner;
 const pagefindBody = Astro.props.pagefindBody ?? false;
+const locale = Astro.props.locale ?? DEFAULT_LOCALE;
+const basePagePath =
+  locale === DEFAULT_LOCALE
+    ? Astro.url.pathname
+    : Astro.url.pathname.replace(new RegExp(`^/${locale}(?=/|$)`), "") || "/";
+const canonicalPath = Astro.props.canonicalPath ?? getLocalizedPagePath(basePagePath, locale);
+const alternates = Astro.props.alternates ?? getPageAlternates(basePagePath);
 ---
 
-<html lang="en">
+<html lang={getHtmlLang(locale)}>
   <head>
-    <BaseHead title={title} description={`${subTitle}`} image={socialBanner} />
+    <BaseHead
+      title={title}
+      description={`${subTitle}`}
+      image={socialBanner}
+      canonicalPath={canonicalPath}
+      alternates={alternates}
+    />
   </head>
   <body>
-    <Header className="content-grid" />
+    <Header className="content-grid" locale={locale} />
     <main
       class={clsx("content-grid", Astro.props.className)}
       data-pagefind-body={pagefindBody ? true : undefined}
     >
       <slot name="default" />
     </main>
-    <Footer />
+    <Footer locale={locale} />
     <AnalyticsTag />
     <SiteLinkedData />
   </body>

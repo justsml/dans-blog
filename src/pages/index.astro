@@ -16,7 +16,12 @@ import {
 import "@/styles/nav.css";
 import "@/styles/global.css";
 import { SITE_SEO_DESCRIPTION, SITE_TITLE } from "../consts.ts";
+import { DEFAULT_LOCALE, getLocalizedPagePath, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
 // import ArticleFilterLinks from "../components/ArticleFilterLinks.astro";
+
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 
 let posts = PostCollections.getPosts().map((p) =>
   omit(p as ArticlePost, [
@@ -39,10 +44,10 @@ const nextPageAttrs = defaultNextUrl
 // 
 posts = posts.slice(0, pageSize - 1);
 
-const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
+const defaultFullTitle = copy.home.title || `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
 ---
 
-<Page title={defaultFullTitle} subTitle={SITE_SEO_DESCRIPTION} className="home-page">
+<Page title={defaultFullTitle} subTitle={copy.site.seoDescription} className="home-page" locale={locale}>
   <!-- <div class="background-effect full-width" aria-hidden="true">
     <FloatingLines
       client:load
@@ -63,39 +68,39 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
     />
   </div> -->
   <section class="home-explainer" aria-labelledby="home-title">
-    <p class="eyebrow">Field notes</p>
-    <h1 id="home-title">Notes from where the docs run out.</h1>
+    <p class="eyebrow">{copy.home.eyebrow}</p>
+    <h1 id="home-title">{copy.home.heading}</h1>
     <p>
-      AI systems, JavaScript, security, databases, and bug fixes worth remembering.
+      {copy.home.intro}
     </p>
   </section>
 
   <section class="home-link-spotlight" aria-labelledby="home-link-spotlight-title">
     <div class="spotlight-copy">
-      <p class="eyebrow">Resources</p>
-      <h2 id="home-link-spotlight-title">Help me help you</h2>
+      <p class="eyebrow">{copy.home.resourcesEyebrow}</p>
+      <h2 id="home-link-spotlight-title">{copy.home.resourcesTitle}</h2>
       <p>
-        Consulting work and open source notes.
+        {copy.home.resourcesText}
       </p>
     </div>
     <div class="spotlight-actions" aria-label="Featured links">
-      <a class="spotlight-link consulting-link" href="/consulting/">
-        <span class="link-kicker">Hire Me</span>
-        <span class="link-title">Build better AI systems</span>
+      <a class="spotlight-link consulting-link" href={getLocalizedPagePath("/consulting/", locale)}>
+        <span class="link-kicker">{copy.home.hireKicker}</span>
+        <span class="link-title">{copy.home.hireTitle}</span>
       </a>
-      <a class="spotlight-link oss-link" href="/open-source-journal/">
-        <span class="link-kicker">Open Source Log</span>
-        <span class="link-title">Follow the commits</span>
+      <a class="spotlight-link oss-link" href={getLocalizedPagePath("/open-source-journal/", locale)}>
+        <span class="link-kicker">{copy.home.ossKicker}</span>
+        <span class="link-title">{copy.home.ossTitle}</span>
       </a>
     </div>
   </section>
 
   <section class="archive-intro" aria-labelledby="archive-title">
     <div>
-      <p class="eyebrow">Latest writing</p>
-      <h2 id="archive-title">Recent writing</h2>
+      <p class="eyebrow">{copy.home.latestEyebrow}</p>
+      <h2 id="archive-title">{copy.home.latestTitle}</h2>
       <p>
-        Read the latest here.
+        {copy.home.latestText}
       </p>
     </div>
   </section>
@@ -120,10 +125,11 @@ const defaultFullTitle = `${SITE_TITLE} | ${SITE_SEO_DESCRIPTION}`;
               <ArticleCard
                 article={props as ArticlePost}
                 width={200}
+                locale={locale}
                 {...nextPageAttrs}
               />
             ) : (
-              <ArticleCard article={props as ArticlePost} width={200} />
+              <ArticleCard article={props as ArticlePost} width={200} locale={locale} />
             )}
             {ctaOccurrence !== null && (
               <ArticleListConsultingCTA

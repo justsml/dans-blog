@@ -27,6 +27,7 @@ const escalationJudgeModel = optionalString(options, "escalate-model");
 validateJudgeModels({ judgeModel, secondJudgeModel, escalationJudgeModel });
 const selectedCommit = optionalString(options, "select");
 const candidateModels = parseList(optionalString(options, "candidate-models"), []);
+const candidateLimit = parseOptionalPositiveInteger(optionalString(options, "candidate-limit"), "candidate-limit");
 const shouldSkipCommit = options["no-commit"] === true;
 const timeoutSeconds = getTimeoutSeconds();
 const { targetPath, reportDir } = getPostPaths(slug, locale);
@@ -269,12 +270,14 @@ function parseSelectedCommit(output: string) {
 function getCandidateCommits() {
   const grep = `i18n candidate(${locale}): ${slug} via`;
   const output = run("git", ["log", "--format=%H", "--grep", grep]);
-  return output
+  const commits = output
     .split(/\r?\n/)
     .filter(Boolean)
     .filter((commit) => commitChangesTarget(commit))
     .filter((commit) => candidateModels.length === 0 || candidateModels.includes(getCandidateModel(commit)))
     .reverse();
+
+  return candidateLimit == null ? commits : commits.slice(-candidateLimit);
 }
 
 function getCandidateModel(commit: string) {
@@ -294,7 +297,7 @@ function commitChangesTarget(commit: string) {
 }
 
 function getVariantArgs(model: string) {
-  if (model.includes("gpt-5") || model.includes("qwen") || model.includes("glm")) {
+  if (model.includes("gpt-5") || model.includes("gpt-oss") || model.includes("qwen") || model.includes("glm")) {
     return ["--variant", "low"];
   }
 
@@ -309,9 +312,18 @@ function getTimeoutSeconds() {
   const rawValue = optionalString(options, "timeout-seconds");
   if (rawValue == null) return 240;
 
+  return parsePositiveInteger(rawValue, "timeout-seconds");
+}
+
+function parseOptionalPositiveInteger(rawValue: string | undefined, optionName: string) {
+  if (rawValue == null) return undefined;
+  return parsePositiveInteger(rawValue, optionName);
+}
+
+function parsePositiveInteger(rawValue: string, optionName: string) {
   const parsedValue = Number(rawValue);
   if (!Number.isInteger(parsedValue) || parsedValue <= 0) {
-    throw new Error(`--timeout-seconds must be a positive integer. Received "${rawValue}".`);
+    throw new Error(`--${optionName} must be a positive integer. Received "${rawValue}".`);
   }
 
   return parsedValue;

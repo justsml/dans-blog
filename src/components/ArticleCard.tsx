@@ -2,17 +2,20 @@ import { InfoLabel } from "../components/ui/infoLabel";
 import { slugify } from "../shared/pathHelpers";
 import { getComputedDates } from "../shared/dateUtils";
 import type { ArticlePost } from "../types";
+import { DEFAULT_LOCALE, getLocalizedPostPath, type Locale } from "../shared/i18n";
 import "./ArticleCard.css";
 
 export const ArticleCard = ({
   article,
   width,
+  locale = DEFAULT_LOCALE,
   className,
   ...htmxArgs
 }: {
   className?: string;
   article: ArticlePost;
   width?: number;
+  locale?: Locale;
   "hx-url"?: string;
   "hx-trigger"?: string;
   "hx-swap"?: string;
@@ -78,7 +81,7 @@ export const ArticleCard = ({
 
   return (
     <a
-      href={`/${slug}/`}
+      href={getLocalizedPostPath(article.baseSlug ?? slug, locale)}
       className={
         myClass +
         editorialClass +

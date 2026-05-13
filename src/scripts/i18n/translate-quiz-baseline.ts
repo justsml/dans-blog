@@ -9,6 +9,8 @@ import { safeModelPathName } from "./translation-costs.ts";
 const DEFAULT_MODELS = [
   "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/qwen/qwen3-32b:nitro",
 ];
 const DEFAULT_PARALLEL_CHALLENGE_CALLS = 18;
 const MAX_PARALLEL_CHALLENGE_CALLS = 18;

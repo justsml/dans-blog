@@ -17,6 +17,8 @@ import {
 const DEFAULT_CANDIDATE_MODELS = [
   "openrouter/qwen/qwen3.6-plus",
   "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/qwen/qwen3-32b:nitro",
   "openrouter/z-ai/glm-4.7-flash",
   "openrouter/minimax/minimax-m2.5",
   "openrouter/minimax/minimax-m2.7",
@@ -332,13 +334,13 @@ function safeModelName(model: string) {
 function validateCandidateModels(models: string[]) {
   const forbiddenModels = models.filter((model) =>
     model.includes("-fast") ||
-    model.startsWith("openrouter/openai/") ||
+    (model.startsWith("openrouter/openai/") && model !== "openrouter/openai/gpt-oss-120b:nitro") ||
     model.startsWith("openrouter/anthropic/"),
   );
 
   if (forbiddenModels.length > 0) {
     throw new Error([
-      "Translation candidates must use cheap non-GPT/non-Anthropic models and must not use -fast variants.",
+      "Translation candidates must use cheap non-GPT/non-Anthropic models, except gpt-oss-120b:nitro, and must not use -fast variants.",
       `Forbidden model(s): ${forbiddenModels.join(", ")}`,
     ].join(" "));
   }

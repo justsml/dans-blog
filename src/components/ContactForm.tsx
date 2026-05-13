@@ -16,27 +16,32 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { Textarea } from "./ui/textarea";
 import { RefreshCcwIcon } from "lucide-react";
-
-const FormSchema = z.object({
-  name: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  message: z.string().min(5, {
-    message: "Message must be at least 5 characters.",
-  }),
-  botField: z.string().optional(),
-});
+import { getUiCopy } from "@/shared/uiTranslations";
+import type { Locale } from "@/shared/i18n";
 
 export function ContactForm({
   reCaptchaSiteKey,
+  locale = "en",
   children,
 }: {
   reCaptchaSiteKey?: string;
+  locale?: Locale;
   children?: React.ReactNode;
 }) {
+  const copy = getUiCopy(locale).contact;
+  const FormSchema = z.object({
+    name: z.string().min(2, {
+      message: copy.validationName,
+    }),
+    email: z.string().email({
+      message: copy.validationEmail,
+    }),
+    message: z.string().min(5, {
+      message: copy.validationMessage,
+    }),
+    botField: z.string().optional(),
+  });
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -49,10 +54,10 @@ export function ContactForm({
 
   function onSubmit(_data: z.infer<typeof FormSchema>) {
     toast({
-      title: "Successfully submitted!",
+      title: copy.successTitle,
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">Sent!</code>
+          <code className="text-white">{copy.sent}</code>
         </pre>
       ),
     });
@@ -76,9 +81,9 @@ export function ContactForm({
           name="botField"
           render={({ field }) => (
             <FormItem className="columns-all form-item bot-food">
-              <FormLabel>Fellow Humans, leave this field blank</FormLabel>
+              <FormLabel>{copy.botLabel}</FormLabel>
               <FormControl>
-                <Input type="text" placeholder="For the robots..." {...field} />
+                <Input type="text" placeholder={copy.botPlaceholder} {...field} />
               </FormControl>
             </FormItem>
           )}
@@ -89,7 +94,7 @@ export function ContactForm({
           name="name"
           render={({ field }) => (
             <FormItem className="form-item name-field">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{copy.name}</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
@@ -102,7 +107,7 @@ export function ContactForm({
           name="email"
           render={({ field }) => (
             <FormItem className="form-item email-field">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{copy.email}</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} />
               </FormControl>
@@ -118,9 +123,9 @@ export function ContactForm({
             <FormItem
               className="form-item columns-all message-field"
             >
-              <FormLabel>Message</FormLabel>
+              <FormLabel>{copy.message}</FormLabel>
               <FormControl>
-                <Textarea placeholder="Type your message here." {...field} />
+                <Textarea placeholder={copy.messagePlaceholder} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -134,17 +139,14 @@ export function ContactForm({
         <div id="recaptcha" className="columns-all" data-recaptcha-site-key={reCaptchaSiteKey}></div>
 
         <aside className="success-message columns-all">
-          <p>Thanks for reaching out!</p>
+          <p>{copy.thanks}</p>
         </aside>
         <aside className="error-message columns-all">
-          <p>
-            There was an error sending your message. Please check the form and
-            try again.
-          </p>
+          <p>{copy.error}</p>
         </aside>
 
         <Button type="submit" variant="default">
-          Send Message
+          {copy.submit}
         </Button>
 
         <input type="hidden" name="g-recaptcha-response" />

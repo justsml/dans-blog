@@ -1,45 +1,37 @@
 ---
 import { SITE_DESCRIPTION } from "../consts";
 import Layout from "../layouts/Page.astro";
+import { DEFAULT_LOCALE, type Locale } from "../shared/i18n";
+import { getUiCopy } from "../shared/uiTranslations";
+
+const locale = (Astro.props.locale ?? DEFAULT_LOCALE) as Locale;
+const copy = getUiCopy(locale);
 ---
 
 <Layout
   frontmatter={{
-    title: "About Me",
-    subTitle: SITE_DESCRIPTION,
+    title: copy.about.title,
+    subTitle: copy.site.description || SITE_DESCRIPTION,
   }}
+  locale={locale}
   className="h-resume article"
 >
-  <h3>About</h3>
-  <h1 style={{ marginTop: 0 }}>Dan Levy</h1>
+  <h3>{copy.about.heading}</h3>
+  <h1 style={{ marginTop: 0 }}>{copy.about.name}</h1>
 
   <p class:list="p-summary">
-    Dan is an accomplished <span class="p-skill">programmer</span>, <span
-      class="p-skill">teacher</span
-    >, <span class="p-skill">mentor</span>, and <span class="p-skill"
-      >leader</span
-    >. He has over 20 years of extensive professional software development
-    experience. Including consulting, Agile team building, architectural
-    leadership, security audits, accessibility reviews and UI/UX analysis. At
-    both startups and big companies.
+    {copy.about.summary}
   </p>
   <p>
-    After years of dedication and research in software patterns and architecture, Dan
-    has become a highly sought-out subject matter expert, with a reputation for
-    delivering thought-provoking and motivating <span class="p-skill">speeches</span> from graduations to the board room.
+    {copy.about.reputation}
   </p>
   <p>
-    As an active <span class="p-skill">contributor to <a href="/open-source-journal/">numerous Open Source projects</a>,</span> Dan has
-    established himself as a dynamic problem solver, constantly seeking personal
-    growth and always learning. Dan pulls from his deep bench of experience to
-    gain a better understanding of any challenge. He closely follows changes
-    across a broad Technology landscape: learning new languages, methodologies,
-    patterns, and adapting to different code styles.
+    {copy.about.openSource}
   </p>
   <div class="text-center">
     <br />
     <a href={`${"/docs/resume.pdf"}`}>
-      <b>Download Dan&apos;s Resume</b>
+      <b>{copy.about.resume}</b>
     </a>
     <br />
   </div>

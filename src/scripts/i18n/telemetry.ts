@@ -14,7 +14,9 @@ export type RunTelemetry = {
     output?: number;
     thinking?: number;
     cached?: number;
+    cacheWrite?: number;
   };
+  actualCostUsd?: number;
   estimatedCostUsd?: number;
 };
 
@@ -30,6 +32,8 @@ const OPENCODE_COMMAND = existsSync("/Users/dan/.opencode/bin/opencode")
   : "opencode";
 
 const MODEL_PRICES_PER_MILLION_TOKENS = new Map<string, ModelPrice>([
+  ["openrouter/openai/gpt-oss-120b:nitro", { input: 0.039, output: 0.18 }],
+  ["openrouter/qwen/qwen3-32b:nitro", { input: 0.08, output: 0.24 }],
   ["openrouter/google/gemma-4-26b-a4b-it", { input: 0, output: 0 }],
   ["openrouter/google/gemma-4-31b-it", { input: 0, output: 0 }],
   ["openrouter/deepseek/deepseek-v4-pro", { input: 0.2, output: 0.8 }],
@@ -81,12 +85,13 @@ export function runMeasuredCommand(command: string, args: string[], timeoutMs: n
 }
 
 export function getRunTelemetry(model: string, result: CommandResult): RunTelemetry {
-  const tokens = parseTokenUsage(result.output);
+  const usage = parseUsage(result.output);
 
   return {
     runtimeSeconds: (result.runtimeMs / 1000).toFixed(2),
-    tokens,
-    estimatedCostUsd: estimateCost(model, tokens),
+    tokens: usage.tokens,
+    actualCostUsd: usage.cost,
+    estimatedCostUsd: estimateCost(model, usage.tokens),
   };
 }
 
@@ -97,23 +102,28 @@ export function renderTelemetryLines(telemetry: RunTelemetry) {
     `- Output tokens: ${formatMetric(telemetry.tokens.output)}`,
     `- Thinking tokens: ${formatMetric(telemetry.tokens.thinking)}`,
     `- Cached input tokens: ${formatMetric(telemetry.tokens.cached)}`,
+    `- Cache write tokens: ${formatMetric(telemetry.tokens.cacheWrite)}`,
+    `- Actual cost: ${telemetry.actualCostUsd == null ? "unknown" : `$${telemetry.actualCostUsd.toFixed(6)}`}`,
     `- Estimated cost: ${telemetry.estimatedCostUsd == null ? "unknown" : `$${telemetry.estimatedCostUsd.toFixed(6)}`}`,
   ];
 }
 
-function parseTokenUsage(output: string): RunTelemetry["tokens"] {
+function parseUsage(output: string): { tokens: RunTelemetry["tokens"]; cost?: number } {
   const jsonUsage = parseJsonUsage(output);
   if (jsonUsage != null) return jsonUsage;
 
   return {
-    input: findTokenCount(output, ["input tokens", "prompt tokens", "input", "prompt"]),
-    output: findTokenCount(output, ["output tokens", "completion tokens", "output", "completion"]),
-    thinking: findTokenCount(output, ["thinking tokens", "reasoning tokens", "reasoning", "thinking"]),
-    cached: findTokenCount(output, ["cached input tokens", "cache read tokens", "cached tokens", "cached"]),
+    tokens: {
+      input: findTokenCount(output, ["input tokens", "prompt tokens", "input", "prompt"]),
+      output: findTokenCount(output, ["output tokens", "completion tokens", "output", "completion"]),
+      thinking: findTokenCount(output, ["thinking tokens", "reasoning tokens", "reasoning", "thinking"]),
+      cached: findTokenCount(output, ["cached input tokens", "cache read tokens", "cached tokens", "cached"]),
+      cacheWrite: findTokenCount(output, ["cache write tokens", "cache written tokens", "cache_write_tokens"]),
+    },
   };
 }
 
-function parseJsonUsage(output: string): RunTelemetry["tokens"] | undefined {
+function parseJsonUsage(output: string): { tokens: RunTelemetry["tokens"]; cost?: number } | undefined {
   for (const line of output.split(/\r?\n/)) {
     const trimmedLine = line.trim();
     if (!trimmedLine.startsWith("{")) continue;
@@ -124,10 +134,17 @@ function parseJsonUsage(output: string): RunTelemetry["tokens"] | undefined {
       if (usage == null) continue;
 
       return {
-        input: firstNumber(usage, ["input", "inputTokens", "prompt_tokens", "promptTokens"]),
-        output: firstNumber(usage, ["output", "outputTokens", "completion_tokens", "completionTokens"]),
-        thinking: firstNumber(usage, ["thinking", "thinkingTokens", "reasoning_tokens", "reasoningTokens"]),
-        cached: firstNumber(usage, ["cached", "cachedInput", "cachedInputTokens", "cache_read_input_tokens"]),
+        tokens: {
+          input: firstNumber(usage, ["input", "inputTokens", "prompt_tokens", "promptTokens"]),
+          output: firstNumber(usage, ["output", "outputTokens", "completion_tokens", "completionTokens"]),
+          thinking: firstNumber(usage, ["thinking", "thinkingTokens", "reasoning_tokens", "reasoningTokens"])
+            ?? firstNumber(nestedRecord(usage, "completion_tokens_details"), ["reasoning_tokens", "reasoningTokens"]),
+          cached: firstNumber(usage, ["cached", "cachedInput", "cachedInputTokens", "cache_read_input_tokens"])
+            ?? firstNumber(nestedRecord(usage, "prompt_tokens_details"), ["cached_tokens", "cachedTokens"]),
+          cacheWrite: firstNumber(usage, ["cacheWrite", "cacheWriteTokens", "cache_write_tokens"])
+            ?? firstNumber(nestedRecord(usage, "prompt_tokens_details"), ["cache_write_tokens", "cacheWriteTokens"]),
+        },
+        cost: firstNumber(usage, ["cost", "total_cost", "totalCost"]),
       };
     } catch {
       // Ignore non-JSON formatted command output.
@@ -135,6 +152,11 @@ function parseJsonUsage(output: string): RunTelemetry["tokens"] | undefined {
   }
 
   return undefined;
+}
+
+function nestedRecord(record: Record<string, unknown>, key: string) {
+  const value = record[key];
+  return value != null && typeof value === "object" ? value as Record<string, unknown> : {};
 }
 
 function findUsageObject(value: unknown): Record<string, unknown> | undefined {
