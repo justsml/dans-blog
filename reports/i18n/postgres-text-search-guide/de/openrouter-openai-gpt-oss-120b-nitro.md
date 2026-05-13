@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: postgres-text-search-guide
+- Locale: de
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-02--postgres-text-search-guide/de/index.mdx
+- Validation: passed
+- Runtime seconds: 21.94
+- Input tokens: 16265
+- Output tokens: 7848
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.002047
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Postgres-Textsuche‑Leitfaden 2026
 subTitle: >-
@@ -479,3 +497,4 @@ Der Kandidaten‑Pool von 60 Dokumenten pro Zweig (`LIMIT 60`) ist ein gängiger
 PostgreSQL‑Textsuche deckt viel ab, stößt aber an ihre Grenzen. Wenn Nutzer beschreiben, was sie wollen, anstatt es zu benennen – „etwas, das mir im Flug beim Schlafen hilft“, „Artikel über das Debuggen von Selbstvertrauen als neuer Engineer“ – versagen sowohl lexikalische Suche als auch Trigram‑Suche.
 
 Das ist das Gebiet von Vektor‑Einbettungen, semantischer Suche und hybriden Architekturen. Weitere Informationen finden Sie in [Semantic Vector Search and Hybrid Strategies](/semantic-vector-search-landscape).
+````
