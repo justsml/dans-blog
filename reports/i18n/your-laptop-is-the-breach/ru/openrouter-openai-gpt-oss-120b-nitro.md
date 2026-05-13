@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: your-laptop-is-the-breach
+- Locale: ru
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-05-09--your-laptop-is-the-breach/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 14.36
+- Input tokens: 40844
+- Output tokens: 7789
+- Thinking tokens: unknown
+- Cached input tokens: 25600
+- Cache write tokens: 0
+- Estimated cost: $0.002995
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Вашноутбук — уязвимость
 subTitle: >-
@@ -331,3 +349,4 @@ MFA помогает. Аппаратные ключи помогают ещё с
 - [Little Snitch](https://obdev.at/products/littlesnitch/)
 - [Portmaster](https://safing.io/)
 - [Разрешения Claude Code](https://code.claude.com/docs/en/permissions)
+````
