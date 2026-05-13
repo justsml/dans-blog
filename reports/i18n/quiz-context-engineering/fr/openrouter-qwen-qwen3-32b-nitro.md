@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/fr/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 4.95
+- Runtime seconds: 4.27
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
