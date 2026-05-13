@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-regex-or-wreckage
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-15--quiz-regex-or-wreckage/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 29.66
+- Input tokens: 16166
+- Output tokens: 11594
+- Thinking tokens: unknown
+- Cached input tokens: 5888
+- Cache write tokens: 0
+- Estimated cost: $0.002717
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: Padronanza delle espressioni regolari'
@@ -596,3 +614,4 @@ Metti alla prova la tua conoscenza delle RegEx con domande che coprono pattern d
 Le espressioni regolari possono essere una bestia da domare, ma sono incredibilmente potenti una volta che le prendi in mano (e tutta la sintassi più recente). Continua a esercitarti, e diventerai un maestro di RegEx in men che non si dica! 🧙‍♂️
 
 <p class="inset">Cerchi una pausa dopo tutto quel RegEx?<br />Pftt, ricorda: pausa *dopo* le competenze! <br /><br />Vai al <a href="/challenges/">la mia palestra</a> per affrontare altre sfide! 💪</p>
+````

@@ -1,0 +1,31 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Lazy vs Greedy Quantifiers",
+  "translatedTitle": "Quantificatori lazy vs greedy",
+  "translation": {
+    "title": "Quantificatori lazy vs greedy",
+    "group": "Corrispondenza di base",
+    "options": [],
+    "questionProse": [
+      "Cosa viene abbinato?"
+    ],
+    "explanationProse": [
+      "Il pattern utilizza il matching lazy con `*?`:\n    - `<b>`: corrisponde al tag di apertura\n    - `(.*?)`: cattura qualsiasi carattere (lazy)\n    - `</b>`: corrisponde al tag di chiusura\n\n    Il `?` dopo `*` lo rende lazy, abbinando il minor numero possibile di caratteri.\n    Senza `?` sarebbe greedy e abbinerebbe il più possibile.\n\n    `slice(1)` restituisce solo il gruppo catturato.\n\n    [Scopri di più su greedy vs lazy matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Quantificatori lazy vs greedy\",\n  \"group\": \"Corrispondenza di base\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Cosa viene abbinato?\"\n  ],\n  \"explanationProse\": [\n    \"Il pattern utilizza il matching lazy con `*?`:\\n    - `<b>`: corrisponde al tag di apertura\\n    - `(.*?)`: cattura qualsiasi carattere (lazy)\\n    - `</b>`: corrisponde al tag di chiusura\\n\\n    Il `?` dopo `*` lo rende lazy, abbinando il minor numero possibile di caratteri.\\n    Senza `?` sarebbe greedy e abbinerebbe il più possibile.\\n\\n    `slice(1)` restituisce solo il gruppo catturato.\\n\\n    [Scopri di più su greedy vs lazy matching](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions/Quantifiers#greedy_versus_non-greedy_lazy_matching)\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 809,
+    "outputTokens": 669,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 2749
+  },
+  "cost": {
+    "inputUsd": 0.000031550999999999997,
+    "outputUsd": 0.00012041999999999999,
+    "totalUsd": 0.00015197099999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
