@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: hi
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 3.72
+- Input tokens: 6446
+- Output tokens: 2533
+- Thinking tokens: unknown
+- Cached input tokens: 2944
+- Cache write tokens: 0
+- Estimated cost: $0.000707
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: LLMs को गणित करने से रोकें
 subTitle: वे इसमें कमजोर हैं। इसे सुधारने का तरीका यहाँ है।
@@ -136,3 +154,4 @@ LaTeX समर्थन विशेष रूप से उपयोगी ह
 - [CortexJS कंप्यूट इंजन](https://cortexjs.io/compute-engine/)
 - [टूल कॉलिंग गाइड](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [AI SDK उदाहरण रिपॉजिटरी](https://github.com/vercel/ai/tree/main/examples)
+````
