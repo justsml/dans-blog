@@ -1,0 +1,83 @@
+{
+  "selectedCommit": "481c8f10491ea96e541f8df0a587b7e5f3c0ab08",
+  "selectedModel": "openrouter/openai/gpt-oss-120b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 8,
+    "coherence": 10,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 9
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "index={4}\n  group=\"Internes SQL\"\n  title=\"Éligibilité du Hash Join\"\n  options={[\n  ]}",
+      "replacement": "index={4}\n  group=\"Internes SQL\"\n  title=\"Éligibilité du Hash Join\"\n  options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
+      "reason": "The options for Challenge index 4 (Hash Join Eligibility) are missing in the translation. They must be restored for the quiz to be functional."
+    },
+    {
+      "priority": "high",
+      "match": "index={8}\n  group=\"Échantillonnage de données\"\n  title=\"Syntaxe TABLESAMPLE\"\n  options={[\n  ]}",
+      "replacement": "index={8}\n  group=\"Échantillonnage de données\"\n  title=\"Syntaxe TABLESAMPLE\"\n  options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
+      "reason": "The options for Challenge index 8 (Data Sampling) are missing in the translation. They must be restored for the quiz to be functional."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '\\\\'}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The third option in Challenge index 7 was corrupted during translation. It should be the single-quoted version of the identifier as per the English source."
+    }
+  ],
+  "rationale": "Candidate 481c8f10491ea96e541f8df0a587b7e5f3c0ab08 is the only one that correctly translated the frontmatter (title/subtitle). However, it accidentally stripped out the 'options' arrays for two challenges (index 4 and 8) and corrupted a string in index 7. These are high-priority fixes to make the quiz functional, but this candidate remains the best starting point due to its superior prose and metadata handling.",
+  "slug": "quiz-postgres-sql-mastery-pt2",
+  "locale": "fr",
+  "candidateCommits": [
+    "481c8f10491ea96e541f8df0a587b7e5f3c0ab08",
+    "3dabd4627ff07244b096f109123de18b9c1c95e9"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "{text: '\\'},",
+      "replacement": "{text: '\\\\\\\\'},",
+      "reason": "The backslash in the options for Challenge index 7 is broken/missing in the candidate, likely due to escaping issues. It should represent a backslash as a distractor or be fixed to match the intended UI.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: 'ON a.id = b.id', isAnswer: true},\n    {text: 'ON a.id > b.id'},\n    {text: 'ON a.id >= b.id'},\n    {text: 'HASH JOIN ON a.id = b.id ...'}\n  ]}",
+      "reason": "The options for Challenge index 4 (Hash Join Eligibility) are missing in the translation. They must be restored for the quiz to be functional.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "options={[\n  ]}",
+      "replacement": "options={[\n    {text: '...students SAMPLETABLE BERNOULLI (0.10)'},\n    {text: '...students TABLESAMPLE USER (10)'},\n    {text: '...students TABLESAMPLE RANDOM (10)'},\n    {text: '...students SAMPLE 10 PERCENT'},\n    {text: 'ROW_NUMBER() OVER (ORDER BY RAND())'},\n    {text: 'ORDER BY RANDOM() >= 10'},\n    {text: 'WHERE RANDOM() >= 0.1'},\n    {text: 'WHERE RANDOM() >= 0.9', isAnswer: true},\n  ]}",
+      "reason": "The options for Challenge index 8 (Data Sampling) are missing in the translation. They must be restored for the quiz to be functional.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "{text: '\\\\'}",
+      "replacement": "{text: '\\'first.name\\''}",
+      "reason": "The third option in Challenge index 7 was corrupted during translation. It should be the single-quoted version of the identifier as per the English source.",
+      "pass": 2,
+      "applied": false,
+      "note": "Exact match not found in selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug quiz-postgres-sql-mastery-pt2 --locale fr --skip-global",
+    "output": ""
+  }
+}
