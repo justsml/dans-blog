@@ -1,0 +1,47 @@
+{
+  "index": 12,
+  "attempt": 1,
+  "originalTitle": "Date Setters Part 4",
+  "translatedTitle": "Settaggi della Data Parte 4",
+  "translation": {
+    "title": "Settaggi della Data Parte 4",
+    "group": "Gestione delle Date",
+    "options": [
+      {
+        "text": "Jan 01 2020"
+      },
+      {
+        "text": "Feb 01 2020"
+      },
+      {
+        "text": "Jan 01 2021"
+      },
+      {
+        "text": "Feb 01 2021"
+      },
+      {
+        "text": "RangeError: Argomento non valido."
+      }
+    ],
+    "questionProse": [
+      "Cosa conterrà l'output?"
+    ],
+    "explanationProse": [
+      "Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data fornita.\n\nIl parametro month è indicizzato a zero, con un intervallo 0-11 (usando i calendari occidentali).\n\nQui vediamo che mese e anno vengono regolati a febbraio 2021, perché `setMonth(13)` è 2 in più rispetto a 11 (dicembre).\n\n<aside class=\"hint\">`setMonth` imposta il mese per indice, i 12 mesi sono indicizzati da 0 a 11. </aside>\n<aside class=\"hint\">\nI numeri fuori dall'intervallo 0-11 provocheranno un overflow o underflow dell'anno. Per esempio, `setMonth(13)` regolerà l'anno a 2021 (a febbraio perché 13 è 2 in più rispetto a 11).\n</aside>"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Settaggi della Data Parte 4\",\n  \"group\": \"Gestione delle Date\",\n  \"options\": [\n    {\n      \"text\": \"Jan 01 2020\"\n    },\n    {\n      \"text\": \"Feb 01 2020\"\n    },\n    {\n      \"text\": \"Jan 01 2021\"\n    },\n    {\n      \"text\": \"Feb 01 2021\"\n    },\n    {\n      \"text\": \"RangeError: Argomento non valido.\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cosa conterrà l'output?\"\n  ],\n  \"explanationProse\": [\n    \"Il metodo [`.setMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/setMonth) imposta il mese dell'istanza di data fornita.\\n\\nIl parametro month è indicizzato a zero, con un intervallo 0-11 (usando i calendari occidentali).\\n\\nQui vediamo che mese e anno vengono regolati a febbraio 2021, perché `setMonth(13)` è 2 in più rispetto a 11 (dicembre).\\n\\n<aside class=\\\"hint\\\">`setMonth` imposta il mese per indice, i 12 mesi sono indicizzati da 0 a 11. </aside>\\n<aside class=\\\"hint\\\">\\nI numeri fuori dall'intervallo 0-11 provocheranno un overflow o underflow dell'anno. Per esempio, `setMonth(13)` regolerà l'anno a 2021 (a febbraio perché 13 è 2 in più rispetto a 11).\\n</aside>\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 931,
+    "outputTokens": 952,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 587
+  },
+  "cost": {
+    "inputUsd": 0.000036309,
+    "outputUsd": 0.00017136,
+    "totalUsd": 0.000207669,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
