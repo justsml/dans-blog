@@ -1,6 +1,6 @@
 ---
 unlisted: false
-title: ''
+title: 'Тест: Мастерство ввода‑вывода NodeJS'
 subTitle: 'Проверьте свои знания о файлах, потоках и буферах'
 label: NodeJS
 social_image: ../desktop-social.webp
@@ -20,28 +20,26 @@ cover_full_width: ../data-streaming-wide.webp
 cover_mobile: ../data-streaming-square.webp
 cover_icon: ../data-streaming-square.webp
 ---
-```jsx
-import Challenge from '../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
 
-<p class="inset">Готовы погрузиться в мир NodeJS IO? 🌊</p>
+<p class="inset">Готовы погрузиться в мир NodeJS I/O? 🌊</p>
 
-Этот тест проверит ваше понимание операций ввода-вывода Node.js, от базовых операций с файловой системой до продвинутых концепций стриминга. Мы рассмотрим буферы, кодирование и лучшие практики для эффективной обработки данных.
+Этот тест проверит, насколько вы понимаете операции ввода‑вывода Node, от базовых действий с файловой системой до продвинутых концепций потоков. Мы разберём буферы, кодировки и лучшие практики эффективной обработки данных.
 
-Давайте посмотрим, насколько хорошо вы разбираетесь в стримах и буферах! 🚀
-```
+Посмотрим, насколько вы знакомы со своими потоками и буферами! 🚀
 
 <QuizUI>
 
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={0}
-  group="Разминка: Buffers"
-  title="Выделение памяти под Buffer"
+  group="Разминка: Буферы"
+  title="Выделение буфера"
   options={[
-    {text: 'Создаёт Buffer размером 5 с нулями', isAnswer: true},
-    {text: 'Создаёт Buffer размером 5 с случайными данными'},
-    {text: 'Вызывает ошибку'},
+    {text: 'Создаёт Buffer размером 5, заполненный нулями', isAnswer: true},
+    {text: 'Создаёт Buffer размером 5 со случайными данными'},
+    {text: 'Выбрасывает ошибку'},
     {text: 'Создаёт пустой Buffer'},
   ]}
 >
@@ -57,11 +55,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     `Buffer.alloc(size)` создаёт новый Buffer указанного размера, заполненный нулями.
-    Результат будет: `<Buffer 00 00 00 00 00>`
+    Вывод будет: `<Buffer 00 00 00 00 00>`
 
-    Для создания Buffer со случайными данными используйте `Buffer.allocUnsafe(5)`.
+    Если хотите создать Buffer со случайными данными, используйте `Buffer.allocUnsafe(5)`.
 
-    [Узнайте больше о выделении памяти под Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
+    [Узнайте больше о выделении Buffer](https://nodejs.org/api/buffer.html#static-method-bufferalloc)
   </div>
   </slot>
 </Challenge>
@@ -75,13 +73,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     {text: 'A', isAnswer: true},
     {text: '65'},
     {text: '[Object object]'},
-    {text: 'Undefined'},
-    {text: 'Binary data'},
+    {text: 'Неопределено'},
+    {text: 'Бинарные данные'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что будет напечатано?
+    Что будет выведено?
     ```js
         const buf = Buffer.from([65]);
         console.log(buf.toString());
@@ -90,13 +88,13 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Числа в массиве представляют коды ASCII:
+    Числа в массиве представляют ASCII‑коды:
 
     - 65: 'A'
 
-    Метод `toString()` преобразует эти байты в строковое представление, используя кодировку UTF-8 по умолчанию.
+    `toString()` преобразует эти байты в их строковое представление, используя кодировку UTF-8 по умолчанию.
 
-    [Узнайте больше о кодировке буфера](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    [Узнать больше о кодировке Buffer](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
@@ -107,10 +105,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   group="Разминка: Файловая система"
   title="Асинхронные файловые операции"
   options={[
-    {text: 'Выводит содержимое файла, затем \'Done\''},
-    {text: 'Выводит \'Done\', затем содержимое файла', isAnswer: true},
+    {text: 'Сначала выводит содержимое файла, затем "Done"'},
+    {text: 'Сначала выводит "Done", затем содержимое файла', isAnswer: true},
     {text: 'Выводит только содержимое файла'},
-    {text: 'Вызывает ошибку'},
+    {text: 'Выбрасывает ошибку'},
   ]}
 >
   <slot name="question">
@@ -127,10 +125,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Поскольку `readFile` является асинхронной, код продолжает выполнение, пока файл читается.
-    Поэтому "Done" будет напечатан до содержимого файла.
+    Поскольку `readFile` асинхронен, код продолжает выполняться, пока файл читается.
+    Поэтому "Done" будет выведено до содержимого файла.
 
-    Чтобы дождаться чтения файла, можно использовать Promise-версию:
+    Чтобы дождаться чтения файла, можно использовать версию на основе Promise:
     ```js
         import { promises as fs } from 'fs';
     
@@ -148,7 +146,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={3}
   group="Основы файловой системы"
-  title="Синхронное чтение файлов"
+  title="Чтение файлов синхронно"
   options={[
     {text: 'Возвращает Buffer', isAnswer: true},
     {text: 'Возвращает строку'},
@@ -167,11 +165,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `fs.readFileSync()` по умолчанию возвращает Buffer, если не указано кодирование. Если вам нужна строка, вы можете:
-    1. Указать кодирование: `fs.readFileSync('test.txt', 'utf8')`
+    `fs.readFileSync()` возвращает Buffer по умолчанию, если не указана кодировка. Если нужна строка, нужно либо:
+    1. Указать кодировку: `fs.readFileSync('test.txt', 'utf8')`
     2. Преобразовать Buffer: `content.toString()`
 
-    [Узнайте больше о fs.readFileSync в документации Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
+    [Узнать больше о fs.readFileSync в документации Node.js](https://nodejs.org/api/fs.html#fsreadfilesyncpath-options)
   </div>
   </slot>
 </Challenge>
@@ -180,7 +178,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={4}
   group="Потоки"
-  title="События потоков"
+  title="События потока"
   options={[
     {text: '\'data\', \'end\', \'error\', \'close\'', isAnswer: true},
     {text: '\'finish\', \'drain\', \'pipe\''},
@@ -190,22 +188,22 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой набор событий обычно используется с потоками Readable?
+    Какой набор событий обычно используется с Readable‑потоками?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Потоки Readable генерируют несколько важных событий:
+    Readable потоки генерируют несколько важных событий:
     - 'data': Когда данные доступны для чтения
     - 'end': Когда больше нет данных для чтения
-    - 'error': При возникновении ошибки
-    - 'close': Когда поток и подлежащие ресурсы закрыты
+    - 'error': Когда происходит ошибка
+    - 'close': Когда поток и подлежащий ресурс закрыты
     ```js
         const readable = fs.createReadStream('file.txt');
         readable.on('data', chunk => console.log(chunk));
         readable.on('end', () => console.log('Done!'));
     ```
-    Узнайте больше о событиях потоков (https://nodejs.org/api/stream.html#class-streamreadable)
+    [Узнать больше о событиях Stream](https://nodejs.org/api/stream.html#class-streamreadable)
   </div>
   </slot>
 </Challenge>
@@ -214,12 +212,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={5}
   group="Потоки"
-  title="Передача через потоки"
+  title="Потоковое конвейерирование"
   options={[
-    {text: 'Копирует файл с сжатием'},
+    {text: 'Копирует файл с компрессией'},
     {text: 'Копирует файл без буферизации в памяти', isAnswer: true},
     {text: 'Загружает весь файл в память'},
-    {text: 'Создает символическую ссылку'},
+    {text: 'Создаёт символическую ссылку'},
   ]}
 >
   <slot name="question">
@@ -235,11 +233,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    `pipe()` соединяет поток чтения с потоком записи, автоматически управляя обратным давлением и копируя данные в частях, не загружая весь файл в память.
+    `pipe()` соединяет читаемый поток с записывающим, автоматически управляя обратным давлением и копируя данные кусками без загрузки всего файла в память.
 
-    Это более эффективно по памяти для больших файлов по сравнению с `fs.readFile()` и последующим `fs.writeFile()`.
+    Это экономит память при работе с большими файлами по сравнению с `fs.readFile()` и последующим `fs.writeFile()`.
 
-    [Узнайте больше о pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
+    [Узнать больше о pipe()](https://nodejs.org/api/stream.html#readablepipedestination-options)
   </div>
   </slot>
 </Challenge>
@@ -248,17 +246,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={6}
   group="Файловая система"
-  title="Операции с директориями"
+  title="Операции с каталогами"
   options={[
-    {text: 'Создает вложенные директории при необходимости', isAnswer: true},
-    {text: 'Создает только последнюю директорию'},
-    {text: 'Вызывает ошибку'},
-    {text: 'Создает символические ссылки'},
+    {text: 'Создаёт вложенные каталоги при необходимости', isAnswer: true},
+    {text: 'Создаёт только последний каталог'},
+    {text: 'Выбрасывает ошибку'},
+    {text: 'Создаёт символические ссылки'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Что делает рекурсивный параметр?
+    Что делает опция recursive?
     ```js
         import fs from 'fs';
         fs.mkdirSync('./a/b/c', { recursive: true });
@@ -267,12 +265,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Опция `recursive: true` создает родительские директории, если они не существуют.
-    Без этой опции попытка создания './a/b/c' вызовет ошибку, если './a' или './a/b' не существуют.
+    `recursive: true` опция создаёт родительские каталоги, если их нет.
+    Без этой опции попытка создать './a/b/c' вызовет ошибку, если './a' или './a/b' не существуют.
 
-    Это аналогично команде shell `mkdir -p`.
+    Это аналогично shell‑команде `mkdir -p`.
 
-    [Узнайте больше о mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
+    [Узнать больше о mkdir](https://nodejs.org/api/fs.html#fsmkdirsyncpath-options)
   </div>
   </slot>
 </Challenge>
@@ -281,12 +279,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={7}
   group="Потоки"
-  title="Потоки преобразования"
+  title="Трансформирующие потоки"
   options={[
-    {text: 'hello world'},
-    {text: 'HELLO WORLD', isAnswer: true},
-    {text: 'Error'},
-    {text: 'undefined'},
+    {text: 'привет мир'},
+    {text: 'ПРИВЕТ МИР', isAnswer: true},
+    {text: 'Ошибка'},
+    {text: 'неопределено'},
   ]}
 >
   <slot name="question">
@@ -308,14 +306,14 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Потоки преобразования изменяют данные при их прохождении. Здесь каждый блок:
+    Трансформирующие потоки изменяют данные по мере их прохождения. Здесь каждый кусок данных:
     1. Преобразуется в строку
     2. Переводится в верхний регистр
     3. Передаётся в stdout
 
-    Это создаёт конвейер, который преобразует всю входную информацию в верхний регистр.
+    Это создаёт конвейер, который переводит весь ввод в верхний регистр.
 
-    [Узнайте больше о потоках преобразования](https://nodejs.org/api/stream.html#class-streamtransform)
+    [Узнать больше о трансформирующих потоках](https://nodejs.org/api/stream.html#class-streamtransform)
   </div>
   </slot>
 </Challenge>
@@ -324,17 +322,17 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={8}
   group="Файловая система"
-  title="Наблюдение за файлами"
+  title="Отслеживание файлов"
   options={[
-    {text: 'Один раз при каждом изменении файла'},
-    {text: 'Не гарантируется; может сработать несколько раз', isAnswer: true},
+    {text: 'Один раз за изменение файла'},
+    {text: 'Не гарантировано; может сработать несколько раз', isAnswer: true},
     {text: 'Никогда'},
     {text: 'Только при удалении файла'},
   ]}
 >
   <slot name="question">
   <div className="question">
-    Сколько раз гарантируется срабатывание `fs.watch()`, когда файл изменяется?
+    Сколько раз `fs.watch()` гарантировано сработает при изменении файла?
     ```js
         import fs from 'fs';
         fs.watch('test.txt', (eventType, filename) => {
@@ -346,16 +344,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Событие `fs.watch()` не гарантирует срабатывания ровно один раз при каждом логическом изменении файла. Оно часто срабатывает несколько раз, потому что многие текстовые редакторы:
+    `fs.watch()` не гарантирует срабатывание ровно один раз за логическое изменение файла. Часто он срабатывает несколько раз, потому что многие текстовые редакторы:
     1. Сохраняют в временный файл
     2. Переименовывают его в целевой файл
 
-    Для более надежного наблюдения используйте:
+    Для более надёжного отслеживания рассмотрите:
     - Пакет `chokidar`
     - Дебаунсинг колбэка
-    - `fs.watchFile()` (хотя он менее эффективен)
+    - Использование `fs.watchFile()` (хотя он менее эффективен)
 
-    [Узнайте больше о fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
+    [Узнать больше о fs.watch()](https://nodejs.org/api/fs.html#fswatchfilename-options-listener)
   </div>
   </slot>
 </Challenge>
@@ -374,7 +372,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой будет результат?
+    Какой будет вывод?
     ```js
         const buf1 = Buffer.from('Hello');
         const buf2 = Buffer.from('Hello');
@@ -384,15 +382,15 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Буферы сравниваются по ссылке, а не по значению. Даже при одинаковых данных они остаются разными объектами.
+    Буферы сравниваются по ссылке, а не по значению. Хотя они содержат одинаковые данные, они являются разными объектами.
 
-    Для сравнения содержимого буферов используйте:
+    Чтобы сравнить содержимое буферов, используйте:
     ```js
         buf1.equals(buf2)  // true
         // or
         Buffer.compare(buf1, buf2) === 0  // true
     ```
-    [Узнайте больше о сравнении буферов](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
+    [Узнать больше о сравнении буферов](https://nodejs.org/api/buffer.html#bufequalsotherbuffer)
   </div>
   </slot>
 </Challenge>
@@ -401,7 +399,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   client:visible={{rootMargin: "150px"}}
   index={10}
   group="Потоки"
-  title="Обратное давление потока"
+  title="Обратное давление в потоках"
   options={[
     {text: 'Предотвращает переполнение памяти', isAnswer: true},
     {text: 'Увеличивает скорость чтения'},
@@ -411,12 +409,12 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какова основная цель обратного давления потока?
+    Какова основная цель обратного давления в потоках?
   </div>
   </slot>
   <slot name='explanation'>
   <div className="explanation">
-    Обратное давление - это механизм, который предотвращает переполнение памяти, приостанавливая чтение, когда конец записи не успевает.
+    Обратное давление — это механизм, который предотвращает переполнение памяти, приостанавливая чтение, когда запись не успевает.
 
     Пример ручного обратного давления:
     ```js
@@ -428,9 +426,9 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           }
         });
     ```
-    `pipe()` автоматически обрабатывает это!
+    `pipe()` обрабатывает это автоматически!
 
-    [Узнайте больше об обратном давлении](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
+    [Узнать больше об обратном давлении](https://nodejs.org/en/learn/modules/backpressuring-in-streams#backpressuring-in-streams)
   </div>
   </slot>
 </Challenge>
@@ -460,16 +458,16 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     `symlinkSync` создаёт символическую ссылку (как ярлык) на целевой файл.
 
-    Основные отличия от жёстких ссылок:
-    - Может ссылаться на директории
-    - Может связывать файлы разных файловых систем
-    - Перестаёт работать, если целевой файл удалён
+    Ключевые отличия от жёстких ссылок:
+    - Может ссылаться на каталоги
+    - Может пересекать файловые системы
+    - Прерывается, если цель удалена
 
-    Для создания жёсткой ссылки:
+    Чтобы вместо этого создать жёсткую ссылку:
     ```js
         fs.linkSync('target.txt', 'hardlink.txt');
     ```
-    Узнайте больше о символических ссылках (https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
+    [Узнать больше о символических ссылках](https://nodejs.org/api/fs.html#fssymlinksync-target-path-type)
   </div>
   </slot>
 </Challenge>
@@ -481,7 +479,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   title="Режимы потоков"
   options={[
     {text: 'Только двоичный режим'},
-    {text: 'Только режим объектов'},
+    {text: 'Только объектный режим'},
     {text: 'Оба режима', isAnswer: true},
     {text: 'Ни один режим'},
     {text: 'Режимы ввода и вывода'},
@@ -496,10 +494,10 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     Потоки могут работать в:
-    1. Двоичном режиме (по умолчанию): для буферов и строк
-    2. Режиме объектов: для любого JavaScript-значения
+    1. Двоичный режим (по умолчанию): для буферов и строк
+    2. Объектный режим: для любого значения JavaScript
 
-    Пример режима объектов:
+    Пример объектного режима:
     ```js
         import { Transform } from 'stream';
         const objectStream = new Transform({
@@ -509,7 +507,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           }
         });
     ```
-    [Узнайте больше о режимах потоков](https://nodejs.org/api/stream.html#object-mode)
+    [Узнать больше о режимах потоков](https://nodejs.org/api/stream.html#object-mode)
   </div>
   </slot>
 </Challenge>
@@ -528,7 +526,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Какой тип у параметра `fd` в этом колбэке?
+    Какого типа параметр `fd` в этом колбэке?
     ```js
         import fs from 'fs';
         fs.open('test.txt', 'r', (err, fd) => {
@@ -541,7 +539,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <div className="explanation">
     Файловые дескрипторы — это числа, которые уникально идентифицируют открытые файлы в операционной системе.
 
-    Первые три дескриптора зарезервированы:
+    Первые три файловых дескриптора зарезервированы:
     - 0: stdin
     - 1: stdout
     - 2: stderr
@@ -552,7 +550,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
           if (err) throw err;
         });
     ```
-    [Узнайте больше о файловых дескрипторах](https://nodejs.org/api/fs.html#file-descriptors)
+    [Узнать больше о файловых дескрипторах](https://nodejs.org/api/fs.html#file-descriptors)
   </div>
   </slot>
 </Challenge>
@@ -560,8 +558,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 <Challenge
   client:visible={{rootMargin: "150px"}}
   index={14}
-  group="Кодирование"
-  title="Кодирование буфера"
+  group="Кодировка"
+  title="Кодировка буфера"
   options={[
     {text: '3'},
     {text: '4'},
@@ -572,7 +570,7 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
 >
   <slot name="question">
   <div className="question">
-    Сколько байтов будет занимать эта строка в UTF-8?
+    Сколько байт займет эта строка в UTF-8?
     ```js
         const str = "Hello 🌍";
         const buf = Buffer.from(str);
@@ -583,8 +581,8 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
   <slot name='explanation'>
   <div className="explanation">
     В UTF-8:
-    - ASCII-символы (например, 'Hello ') занимают по 1 байту
-    - Эмодзи 🌍 занимает 4 байта
+    - ASCII‑символы (например 'Hello ') занимают 1 байт каждый
+    - Эмодзи земли 🌍 занимает 4 байта
 
     Итого: 5 (Hello) + 1 (пробел) + 4 (🌍) = 10 байт
 
@@ -592,11 +590,11 @@ import QuizUI from '../../../../components/QuizUI/QuizUI';
     ```js
         console.log(buf);  // <Buffer 48 65 6c 6c 6f 20 f0 9f 8c 8d>
     ```
-    [Узнайте больше о кодировке UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
+    [Узнать больше о кодировке UTF-8](https://nodejs.org/api/buffer.html#buffers-and-character-encodings)
   </div>
   </slot>
 </Challenge>
 
 </QuizUI>
 
-Надеюсь, вам понравилось проверять свои знания в области ввода-вывода NodeJS! Хотите больше? Проверьте мою [Сборник тестов](/challenges/) для дополнительных заданий!
+Надеюсь, вам понравилось проверять свои знания по NodeJS IO! Хотите продолжить? Загляните в мою [Коллекцию викторин](/challenges/) для новых задач!
