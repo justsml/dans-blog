@@ -1,0 +1,57 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T22-15-34-499Z",
+  "slug": "promise-gotchas",
+  "locale": "ja",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T22:15:37.404Z",
+  "sourcePath": "src/content/posts/2018-09-26--promise-gotchas/index.md",
+  "targetPath": "src/content/posts/2018-09-26--promise-gotchas/ja/index.mdx",
+  "candidatePath": "reports/i18n/promise-gotchas/ja/openai-gpt-oss-120b-nitro/2026-05-13T22-15-34-499Z/candidate.mdx",
+  "sourceHash": "585ef3acb24711b5dc9644d20cfc4e64a997bcdd11408aaa68156dd3f28e5615",
+  "outputHash": "8c29e87036138042baf75360e1380ed3a719cf7706a160c9d35273236696e13c",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article “Promise Gotchas” argues that JavaScript promises behave fundamentally differently from ordinary values, and developers must treat them with care to avoid silent bugs. It explains that promises cannot be logged directly and must be accessed via `.then` (or `await`), and highlights a common pitfall: passing the result of calling `console.log()`—instead of the function itself—to `.then`. Because TC39 permits `null`/`undefined` handlers, the chain silently skips those steps, leading to confusing behavior; the correct usages are passing the function reference (`console.log`) or an explicit arrow function. The piece is a concise, tutorial‑style warning aimed at front‑end developers and JavaScript engineers who work with asynchronous code. It repeatedly frames the issue with “gotchas” metaphors, using side‑by‑side code examples to illustrate the subtle type differences that cause the bugs.",
+  "totalInputTokens": 2227,
+  "totalOutputTokens": 577,
+  "totalCacheReadTokens": 0,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 1582,
+  "totalCostUsd": 0.000190713,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "10p",
+    "totalChunks": 2,
+    "totalInputTokens": 2227,
+    "totalOutputTokens": 577,
+    "totalCacheReadTokens": 0,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 1582,
+    "totalCostUsd": 0.000190713,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 1091,
+        "outputTokens": 364,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 963,
+        "costUsd": 0.000108069
+      },
+      {
+        "index": 1,
+        "inputTokens": 1136,
+        "outputTokens": 213,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "durationMs": 619,
+        "costUsd": 0.00008264399999999999
+      }
+    ]
+  }
+}
