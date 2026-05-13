@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "Piège EXPLAIN ANALYZE",
+  "translation": {
+    "title": "Piège EXPLAIN ANALYZE",
+    "group": "Performance",
+    "options": [
+      {
+        "text": "Estimation de plan légère"
+      },
+      {
+        "text": "Ne fonctionne que sur SELECT"
+      },
+      {
+        "text": "Modifie les données et génère le plan"
+      },
+      {
+        "text": "Simule l'exécution pour obtenir un plan"
+      }
+    ],
+    "questionProse": [
+      "Que fait `EXPLAIN ANALYZE` pour les instructions `UPDATE` ?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` exécute réellement la requête ! Soyez prudent lors de l'analyse d'une opération d'écriture, en particulier les instructions `UPDATE`, `DELETE` et `INSERT`. Vous devrez peut‑être exécuter des opérations de nettoyage après chaque `EXPLAIN ANALYZE` pour obtenir des résultats reproductibles.\n\n    Bonnes pratiques :\n    - Utilisez `EXPLAIN` (sans ANALYZE) pour UPDATE/DELETE/INSERT\n    - Encapsulez les modifications dans des transactions :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Piège EXPLAIN ANALYZE\",\n  \"group\": \"Performance\",\n  \"options\": [\n    {\n      \"text\": \"Estimation de plan légère\"\n    },\n    {\n      \"text\": \"Ne fonctionne que sur SELECT\"\n    },\n    {\n      \"text\": \"Modifie les données et génère le plan\"\n    },\n    {\n      \"text\": \"Simule l'exécution pour obtenir un plan\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que fait `EXPLAIN ANALYZE` pour les instructions `UPDATE` ?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` exécute réellement la requête ! Soyez prudent lors de l'analyse d'une opération d'écriture, en particulier les instructions `UPDATE`, `DELETE` et `INSERT`. Vous devrez peut‑être exécuter des opérations de nettoyage après chaque `EXPLAIN ANALYZE` pour obtenir des résultats reproductibles.\\n\\n    Bonnes pratiques :\\n    - Utilisez `EXPLAIN` (sans ANALYZE) pour UPDATE/DELETE/INSERT\\n    - Encapsulez les modifications dans des transactions :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 853,
+    "outputTokens": 672,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 812
+  },
+  "cost": {
+    "inputUsd": 0.000033267000000000005,
+    "outputUsd": 0.00012096,
+    "totalUsd": 0.000154227,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

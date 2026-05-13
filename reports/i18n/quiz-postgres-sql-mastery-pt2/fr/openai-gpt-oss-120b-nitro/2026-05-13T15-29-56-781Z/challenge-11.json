@@ -1,0 +1,47 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "COUNT and NULL",
+  "translatedTitle": "COUNT et NULL",
+  "translation": {
+    "title": "COUNT et NULL",
+    "group": "Comportement de NULL",
+    "options": [
+      {
+        "text": "100"
+      },
+      {
+        "text": "90"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "1"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "questionProse": [
+      "Combien de *lignes* cela renverra-t-il ?"
+    ],
+    "explanationProse": [
+      "Ok, c'était un peu piégeux. Le truc, c'est que `x = NULL` ne correspondra jamais à aucune ligne, et il renverra TOUJOURS une ligne avec un count de `0`.\n\n    Comme `NULL` est une valeur inconnue, on ne peut la comparer à quoi que ce soit, même pas à elle-même.\n    \n    La bonne façon de vérifier les valeurs `NULL` est d'utiliser `IS NULL`.\n\n    Exemple :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"COUNT et NULL\",\n  \"group\": \"Comportement de NULL\",\n  \"options\": [\n    {\n      \"text\": \"100\"\n    },\n    {\n      \"text\": \"90\"\n    },\n    {\n      \"text\": \"10\"\n    },\n    {\n      \"text\": \"1\"\n    },\n    {\n      \"text\": \"0\"\n    }\n  ],\n  \"questionProse\": [\n    \"Combien de *lignes* cela renverra-t-il ?\"\n  ],\n  \"explanationProse\": [\n    \"Ok, c'était un peu piégeux. Le truc, c'est que `x = NULL` ne correspondra jamais à aucune ligne, et il renverra TOUJOURS une ligne avec un count de `0`.\\n\\n    Comme `NULL` est une valeur inconnue, on ne peut la comparer à quoi que ce soit, même pas à elle-même.\\n    \\n    La bonne façon de vérifier les valeurs `NULL` est d'utiliser `IS NULL`.\\n\\n    Exemple :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 835,
+    "outputTokens": 547,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 488
+  },
+  "cost": {
+    "inputUsd": 0.000032565,
+    "outputUsd": 0.00009845999999999999,
+    "totalUsd": 0.000131025,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

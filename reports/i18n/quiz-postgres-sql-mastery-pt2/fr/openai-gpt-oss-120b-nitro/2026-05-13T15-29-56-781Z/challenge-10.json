@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Index partiels",
+  "translation": {
+    "title": "Index partiels",
+    "group": "Indexation",
+    "options": [
+      {
+        "text": "Syntaxe invalide"
+      },
+      {
+        "text": "Crée des index dupliqués"
+      },
+      {
+        "text": "Indexe uniquement les étudiants actifs"
+      },
+      {
+        "text": "Indexe d'abord les étudiants actifs"
+      },
+      {
+        "text": "Fournit un indice au planificateur de requêtes"
+      }
+    ],
+    "questionProse": [
+      "Que fait cette incantation ?"
+    ],
+    "explanationProse": [
+      "Cette astuce s'appelle un `Partial Index`.\n\n    Elles sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsqu'un sous‑ensemble de lignes est généralement interrogé.\n\n    Postgres n'utilisera l'index que lorsque la condition `status = 'active'` est présente dans la requête.\n\n    **Rappel :** Postgres ne prend pas en charge les « hints de requête » comme d'autres SGBDR. Le planificateur de requêtes décidera quand utiliser les index appropriés."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Index partiels\",\n  \"group\": \"Indexation\",\n  \"options\": [\n    {\n      \"text\": \"Syntaxe invalide\"\n    },\n    {\n      \"text\": \"Crée des index dupliqués\"\n    },\n    {\n      \"text\": \"Indexe uniquement les étudiants actifs\"\n    },\n    {\n      \"text\": \"Indexe d'abord les étudiants actifs\"\n    },\n    {\n      \"text\": \"Fournit un indice au planificateur de requêtes\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que fait cette incantation ?\"\n  ],\n  \"explanationProse\": [\n    \"Cette astuce s'appelle un `Partial Index`.\\n\\n    Elles sont utiles pour réduire l'utilisation du disque et accélérer les requêtes lorsqu'un sous‑ensemble de lignes est généralement interrogé.\\n\\n    Postgres n'utilisera l'index que lorsque la condition `status = 'active'` est présente dans la requête.\\n\\n    **Rappel :** Postgres ne prend pas en charge les « hints de requête » comme d'autres SGBDR. Le planificateur de requêtes décidera quand utiliser les index appropriés.\"\n  ],\n  \"explanationCode\": []\n}",
+  "telemetry": {
+    "inputTokens": 828,
+    "outputTokens": 670,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 1754
+  },
+  "cost": {
+    "inputUsd": 0.000032292,
+    "outputUsd": 0.0001206,
+    "totalUsd": 0.000152892,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

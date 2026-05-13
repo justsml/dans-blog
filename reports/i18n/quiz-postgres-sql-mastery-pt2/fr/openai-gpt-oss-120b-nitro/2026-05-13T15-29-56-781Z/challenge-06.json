@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Ordre d'index multi-colonnes",
+  "translation": {
+    "title": "Ordre d'index multi-colonnes",
+    "group": "Indexation",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "Quel index est le meilleur pour cette requête ?"
+    ],
+    "explanationProse": [
+      "Pour moi, la chose surprenante ici est qu'un index multi‑colonnes peut être utilisé même lorsque l'ordre des colonnes dans le texte de la requête ne correspond pas à la définition de l'index.\n\n    **Note :** Avec les index B‑tree, la colonne principale compte. Puisque cette requête filtre sur `grade_level` et `last_name`, un index commençant par `grade_level` puis `last_name` convient parfaitement.\n\n    Plus SQL peut sélectionner le moins de lignes possible, meilleure est la performance.\n\n    Par exemple, si vous avez une table `task` et que vous savez que `status` est plus sélectif que `created_at`, vous pourriez choisir un index commençant par `status` pour une requête comme `status = 'done' AND created_at > '2024-01-01'`. Ce n'est pas l'ordre des conditions dans le texte du `WHERE` qui importe ; c'est l'ordre des colonnes de l'index et la forme des prédicats.\n\n    Un index B+Tree peut être utilisé pour :\n    - La colonne principale, ou un préfixe gauche des colonnes.\n    - Des opérateurs tels que `=`, `>`, `<`, `BETWEEN` et `IN`, selon la forme de la requête.\n    - La correspondance de préfixe, `LIKE 'prefix%'`.\n\n    Merci à [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) d'avoir signalé une erreur antérieure dans cette explication !"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Ordre d'index multi-colonnes\",\n  \"group\": \"Indexation\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel index est le meilleur pour cette requête ?\"\n  ],\n  \"explanationProse\": [\n    \"Pour moi, la chose surprenante ici est qu'un index multi‑colonnes peut être utilisé même lorsque l'ordre des colonnes dans le texte de la requête ne correspond pas à la définition de l'index.\\n\\n    **Note :** Avec les index B‑tree, la colonne principale compte. Puisque cette requête filtre sur `grade_level` et `last_name`, un index commençant par `grade_level` puis `last_name` convient parfaitement.\\n\\n    Plus SQL peut sélectionner le moins de lignes possible, meilleure est la performance.\\n\\n    Par exemple, si vous avez une table `task` et que vous savez que `status` est plus sélectif que `created_at`, vous pourriez choisir un index commençant par `status` pour une requête comme `status = 'done' AND created_at > '2024-01-01'`. Ce n'est pas l'ordre des conditions dans le texte du `WHERE` qui importe ; c'est l'ordre des colonnes de l'index et la forme des prédicats.\\n\\n    Un index B+Tree peut être utilisé pour :\\n    - La colonne principale, ou un préfixe gauche des colonnes.\\n    - Des opérateurs tels que `=`, `>`, `<`, `BETWEEN` et `IN`, selon la forme de la requête.\\n    - La correspondance de préfixe, `LIKE 'prefix%'`.\\n\\n    Merci à [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) d'avoir signalé une erreur antérieure dans cette explication !\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1075,
+    "outputTokens": 1361,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1016
+  },
+  "cost": {
+    "inputUsd": 0.000041925,
+    "outputUsd": 0.00024498,
+    "totalUsd": 0.000286905,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
