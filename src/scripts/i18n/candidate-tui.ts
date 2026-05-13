@@ -101,11 +101,24 @@ const POSTS_ROOT = join(process.cwd(), "src/content/posts");
 const DEFAULT_TUI_TASK_CONCURRENCY = "16";
 const DEFAULT_TUI_QUIZ_CONCURRENCY = "8";
 const DEFAULT_REFRESH_DEBOUNCE_MS = 750;
+const DEFAULT_CANDIDATE_MODELS = [
+  "openrouter/qwen/qwen3.6-plus",
+  "openrouter/deepseek/deepseek-v4-flash",
+  "openrouter/openai/gpt-oss-120b:nitro",
+  "openrouter/qwen/qwen3-32b:nitro",
+  "openrouter/z-ai/glm-4.7-flash",
+  "openrouter/minimax/minimax-m2.5",
+  "openrouter/minimax/minimax-m2.7",
+  "openrouter/google/gemini-3-flash-preview",
+  "openrouter/deepseek/deepseek-v3.2",
+  "openrouter/z-ai/glm-5-turbo",
+];
 const JUDGE_PROGRESS_PREFIX = "::i18n-judge-progress::";
 const OUT_OF_CREDIT_SETTLE_MS = 60_000;
 
 const options = parseArgs();
-const expectedCandidates = parsePositiveInteger(optionalString(options, "expected"), 2);
+const explicitExpectedCandidates = parseOptionalPositiveInteger(optionalString(options, "expected"));
+const fixedExpectedCandidates = explicitExpectedCandidates ?? 2;
 const selectedLocales = parseLocales();
 const selectedSlugs = new Set(parseList(optionalString(options, "slugs"), []));
 const shouldIncludeDrafts = options["include-drafts"] === true;
@@ -117,6 +130,11 @@ const refreshDebounceMs = parsePositiveInteger(optionalString(options, "refresh-
 const shouldUseTui = !shouldMarkdown && process.stdout.isTTY && process.stdin.isTTY;
 const shouldRunJudgeWorker = options.judge === true;
 const shouldRunWorker = (options.run === true || shouldRunJudgeWorker) && options["monitor-only"] !== true;
+const candidateModelCount = parseList(optionalString(options, "models"), DEFAULT_CANDIDATE_MODELS).length;
+const shouldUseDynamicExpectedCandidates = explicitExpectedCandidates == null
+  && !shouldRunJudgeWorker
+  && (options.run === true || optionalString(options, "models") != null);
+const expectedBaselineCounts = new Map<string, number>();
 const workerState: WorkerState = {
   enabled: shouldRunWorker,
   mode: shouldRunWorker ? (shouldRunJudgeWorker ? "judge" : "candidates") : undefined,
@@ -135,6 +153,10 @@ if (options["judge-worker"] === true) {
     process.exit(1);
   }
   process.exit(0);
+}
+
+if (shouldUseDynamicExpectedCandidates) {
+  captureExpectedBaselineCounts();
 }
 
 if (shouldRunWorker) {
@@ -362,7 +384,7 @@ function drawHeader(
     [
       `${visibleRows} article${visibleRows === 1 ? "" : "s"}`,
       `${selectedLocales.join(", ")}`,
-      `expected ${expectedCandidates}`,
+      `expected ${formatExpectedTarget()}`,
       `worker ${formatWorkerStatus()}`,
       `updated ${renderedAt.toLocaleTimeString()}`,
     ].join("  |  "),
@@ -400,12 +422,13 @@ function drawTable(term: any, rows: ArticleRow[], width: number, top: number) {
   rows.forEach((row, index) => {
     const y = top + 2 + index;
     const total = selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].count, 0);
+    const expectedTotal = selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].expected, 0);
     const values = [
       row.slug,
       row.category,
       row.date ?? "",
       ...selectedLocales.map((locale) => terminalCandidateCell(row.candidates[locale])),
-      `${total}/${selectedLocales.length * expectedCandidates}`,
+      `${total}/${expectedTotal}`,
       formatArticleState(row),
     ];
 
@@ -466,7 +489,7 @@ function drawSidePanel(
   writeAt(term, left + 2, localeTop, "Locales", width - 4, "bold");
   selectedLocales.forEach((locale, index) => {
     const summaries = rows.map((row) => row.candidates[locale]);
-    const complete = summaries.filter((summary) => summary.count >= expectedCandidates).length;
+    const complete = summaries.filter((summary) => summary.count >= summary.expected).length;
     const candidates = summaries.reduce((sum, summary) => sum + summary.count, 0);
     const y = localeTop + 2 + index;
     writeAt(term, left + 2, y, locale, 4, "bold");
@@ -501,7 +524,7 @@ function drawBottomPanel(term: any, totals: Totals, rows: ArticleRow[], left: nu
       ? `Judge ${formatWorkerProgressSummary(workerState.progress)} | ${formatActiveJudgeTasks(workerState.progress, 2)}`
       : `Locales ${selectedLocales.map((locale) => {
           const summaries = rows.map((row) => row.candidates[locale]);
-          return `${locale}:${summaries.filter((summary) => summary.count >= expectedCandidates).length}/${rows.length}`;
+          return `${locale}:${summaries.filter((summary) => summary.count >= summary.expected).length}/${rows.length}`;
         }).join(" ")}`,
     width - 4,
   );
@@ -628,15 +651,14 @@ function collectSourcePosts(): SourcePost[] {
 
 function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSummary {
   const reportDir = join(REPORT_ROOT, slug, locale);
-  const candidateRows = readCandidateRowsForLocale(slug, locale);
   const fallbackReports = countCandidateReportFiles(reportDir);
-  const rowsOrReports = candidateRows.length > 0 ? candidateRows.length : fallbackReports;
+  const rowsOrReports = readCandidateCount(slug, locale);
   const accounting = readAccountingTotals(reportDir);
 
   return {
     locale,
     count: rowsOrReports,
-    expected: expectedCandidates,
+    expected: getExpectedCandidateCount(slug, locale, rowsOrReports),
     reports: fallbackReports,
     isInProgress: isRunInProgress(reportDir),
     attemptedModels: accounting.attemptedModels,
@@ -651,6 +673,39 @@ function readCandidateSummary(slug: string, locale: ActiveLocale): CandidateSumm
     hasUnknownTokens: accounting.hasUnknownTokens,
     hasUnknownCost: accounting.hasUnknownCost,
   };
+}
+
+function readCandidateCount(slug: string, locale: ActiveLocale) {
+  const reportDir = join(REPORT_ROOT, slug, locale);
+  const candidateRows = readCandidateRowsForLocale(slug, locale);
+  const fallbackReports = countCandidateReportFiles(reportDir);
+  return candidateRows.length > 0 ? candidateRows.length : fallbackReports;
+}
+
+function captureExpectedBaselineCounts() {
+  for (const post of collectSourcePosts()) {
+    if (selectedSlugs.size > 0 && !selectedSlugs.has(post.slug)) continue;
+    for (const locale of selectedLocales) {
+      expectedBaselineCounts.set(expectedBaselineKey(post.slug, locale), readCandidateCount(post.slug, locale));
+    }
+  }
+}
+
+function getExpectedCandidateCount(slug: string, locale: ActiveLocale, currentCount: number) {
+  if (!shouldUseDynamicExpectedCandidates) return fixedExpectedCandidates;
+
+  const baseline = expectedBaselineCounts.get(expectedBaselineKey(slug, locale)) ?? currentCount;
+  return baseline + candidateModelCount;
+}
+
+function expectedBaselineKey(slug: string, locale: ActiveLocale) {
+  return `${slug}\0${locale}`;
+}
+
+function formatExpectedTarget() {
+  return shouldUseDynamicExpectedCandidates
+    ? `current+${candidateModelCount}`
+    : String(fixedExpectedCandidates);
 }
 
 function isRunInProgress(reportDir: string) {
@@ -851,7 +906,7 @@ function summarize(rows: ArticleRow[]): Totals {
   return {
     articles: rows.length,
     slots: summaries.length,
-    completeSlots: summaries.filter((summary) => summary.count >= expectedCandidates).length,
+    completeSlots: summaries.filter((summary) => summary.count >= summary.expected).length,
     completeArticles: rows.filter((row) => articleState(row) === "complete").length,
     inProgressSlots: summaries.filter((summary) => summary.isInProgress).length,
     inProgressArticles: rows.filter((row) => articleState(row) === "running").length,
@@ -885,7 +940,7 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
   return [
     `# I18n Candidate TUI`,
     "",
-    `Generated at \`${generatedAt}\`. Expected candidates per locale: \`${expectedCandidates}\`.`,
+    `Generated at \`${generatedAt}\`. Expected candidates per locale: \`${formatExpectedTarget()}\`.`,
     "",
     workerCopy,
     "",
@@ -905,7 +960,7 @@ function renderDashboard(rows: ArticleRow[], totals: Totals) {
         row.category,
         row.date ?? "",
         ...selectedLocales.map((locale) => formatCandidateCell(row.candidates[locale])),
-        `${selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].count, 0)}/${selectedLocales.length * expectedCandidates}`,
+        `${selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].count, 0)}/${selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].expected, 0)}`,
         formatArticleState(row),
       ]),
     ),
@@ -1002,7 +1057,7 @@ function renderLocalePanel(rows: ArticleRow[]) {
     markdownRow(["---", "---:", "---:", "---:", "---:", "---:", "---:"]),
     ...selectedLocales.map((locale) => {
       const summaries = rows.map((row) => row.candidates[locale]);
-      const complete = summaries.filter((summary) => summary.count >= expectedCandidates).length;
+      const complete = summaries.filter((summary) => summary.count >= summary.expected).length;
       const running = summaries.filter((summary) => summary.isInProgress).length;
       const candidates = summaries.reduce((sum, summary) => sum + summary.count, 0);
       const attempts = summaries.reduce((sum, summary) => sum + summary.attemptedModels, 0);
@@ -1032,8 +1087,11 @@ function formatCandidateCell(summary: CandidateSummary) {
 }
 
 function completionRatio(row: ArticleRow) {
-  const expected = selectedLocales.length * expectedCandidates;
-  const actual = selectedLocales.reduce((sum, locale) => sum + Math.min(row.candidates[locale].count, expectedCandidates), 0);
+  const expected = selectedLocales.reduce((sum, locale) => sum + row.candidates[locale].expected, 0);
+  const actual = selectedLocales.reduce((sum, locale) => {
+    const summary = row.candidates[locale];
+    return sum + Math.min(summary.count, summary.expected);
+  }, 0);
   return expected === 0 ? 1 : actual / expected;
 }
 
@@ -1279,7 +1337,7 @@ function buildJudgeWorkerArgs() {
   }
 
   args.push("--locales", selectedLocales.join(","));
-  args.push("--expected", String(expectedCandidates));
+  args.push("--expected", String(fixedExpectedCandidates));
 
   addGeneratorArgWithDefault(args, "task-concurrency", DEFAULT_TUI_TASK_CONCURRENCY);
   addOptionalGeneratorArg(args, "judge-model");
@@ -1363,7 +1421,7 @@ function collectJudgeTasks() {
     for (const locale of selectedLocales) {
       const summary = row.candidates[locale];
       if (summary.count <= 0) continue;
-      if (summary.count < expectedCandidates && options["allow-single-candidate"] !== true) continue;
+      if (summary.count < summary.expected && options["allow-single-candidate"] !== true) continue;
       if (!options.overwrite && hasJudgeOutput(row.slug, locale)) continue;
       tasks.push({ slug: row.slug, locale, count: summary.count });
     }

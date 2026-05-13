@@ -699,11 +699,13 @@ async function runJudgeOperation(
   const result = await runJudgeCommand(model, judgePrompt, contextItems);
   const parsed = result.ok ? parseJudgeOutput(result.output) : {};
   const selected = parsed.selectedCommit;
+  const translationModel = getSelectedTranslationModel(parsed, selected, contextItems);
   appendJudgement({
     event: kind,
     slug,
     locale,
-    model,
+    judgeModel: model,
+    translationModel,
     ok: result.ok,
     runtimeMs: result.runtimeMs,
     selected,
@@ -719,9 +721,9 @@ async function runJudgeOperation(
       operation: kind,
       slug,
       locale,
-      model,
+      judgeModel: model,
       selected,
-      selectedModel: parsed.selectedModel,
+      translationModel,
       scores,
       overallScore: averageJudgeScore(scores),
       rationale: typeof parsed.rationale === "string" ? parsed.rationale : undefined,
@@ -731,6 +733,26 @@ async function runJudgeOperation(
     });
   }
   return result;
+}
+
+function getSelectedTranslationModel(
+  parsed: Record<string, unknown>,
+  selected: unknown,
+  contextItems: Array<CandidateRef | string>,
+) {
+  const parsedModel = stringValue(parsed.selectedModel);
+  if (parsedModel != null) return parsedModel;
+  if (typeof selected !== "string") return undefined;
+
+  const selectedContext = contextItems.find((item): item is CandidateRef => (
+    typeof item !== "string"
+    && item.id === selected
+  ));
+  return selectedContext?.model;
+}
+
+function stringValue(value: unknown) {
+  return typeof value === "string" && value.trim() !== "" ? value.trim() : undefined;
 }
 
 function appendJudgement(data: Record<string, unknown>) {

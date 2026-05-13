@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { spawn } from "node:child_process";
 import "dotenv/config";
@@ -16,7 +16,7 @@ import {
   relativeToRepo,
 } from "./utils.ts";
 import { OPENROUTER_USAGE_ACCOUNTING, usageFromResult } from "./llm-telemetry.ts";
-import { estimateTokenCost, safeModelPathName } from "./translation-costs.ts";
+import { estimateTokenCost } from "./translation-costs.ts";
 
 type ScoreKey =
   | "readability"
@@ -51,10 +51,11 @@ type ScoredTranslationRecord = {
   at: string;
   slug: string;
   locale: ActiveLocale;
-  model: string;
+  judgeModel: string;
+  translationModel: string;
   sourcePath: string;
   targetPath: string;
-  reportPath: string;
+  reportPath?: string;
   hash: string;
   sourceHash: string;
   translationHash: string;
@@ -129,7 +130,7 @@ async function processTasks(tasks: TranslationTask[]) {
     for (const task of limitedTasks) {
       console.log(`- ${task.locale}/${task.slug}`);
     }
-    console.log(`\nModel: ${model}`);
+    console.log(`\nJudge model: ${model}`);
     console.log(`Concurrency: ${taskConcurrency}`);
     console.log(`Log: ${relativeToRepo(outputLogPath)}`);
     return;
@@ -169,7 +170,6 @@ async function processTask(task: TranslationTask) {
   }
 
   const reportDir = paths.reportDir;
-  const scoreDir = join(reportDir, "scores", safeModelPathName(model));
   const sourceText = readFileSync(paths.sourcePath, "utf8");
   const translationText = readFileSync(paths.targetPath, "utf8");
   const sourceHash = hashText(sourceText);
@@ -180,8 +180,6 @@ async function processTask(task: TranslationTask) {
     console.log(`Skipping current score for ${task.locale}/${task.slug}. Pass --overwrite to rescore.`);
     return;
   }
-
-  mkdirSync(scoreDir, { recursive: true });
 
   const sourceStats = collectStats(sourceText);
   const translationStats = collectStats(translationText);
@@ -200,14 +198,14 @@ async function processTask(task: TranslationTask) {
     providerCostUsd: telemetry.providerCostUsd,
   });
   const generatedAt = new Date();
-  const timestamp = generatedAt.toISOString().replace(/[:.]/g, "-");
-  const record = {
+  const record: ScoredTranslationRecord = {
     event: "translation_scored",
     isoDate: generatedAt.toISOString().slice(0, 10),
     at: generatedAt.toISOString(),
     slug: task.slug,
     locale: task.locale,
-    model,
+    judgeModel: model,
+    translationModel: findTranslationModel(reportDir, task, translationHash) ?? "unknown",
     sourcePath: relativeToRepo(paths.sourcePath),
     targetPath: relativeToRepo(paths.targetPath),
     hash: combinedHash,
@@ -242,36 +240,11 @@ async function processTask(task: TranslationTask) {
     },
   };
 
-  const archiveJsonPath = join(scoreDir, `${timestamp}.json`);
-  const archiveMarkdownPath = join(scoreDir, `${timestamp}.md`);
-  const recordWithReport = {
-    ...record,
-    reportPath: relativeToRepo(archiveMarkdownPath),
-  };
-  const json = JSON.stringify({
-    ...recordWithReport,
-    analysis: response.parsed.analysis,
-    strengths: response.parsed.strengths,
-    issues: response.parsed.issues,
-    rawText: response.rawText,
-  }, null, 2);
-  const markdown = renderMarkdownReport({
-    task,
-    record: recordWithReport,
-    analysis: response.parsed.analysis,
-    strengths: response.parsed.strengths,
-    issues: response.parsed.issues,
-    archiveJsonPath,
-  });
-
-  writeFileSync(archiveJsonPath, json, "utf8");
-  writeFileSync(archiveMarkdownPath, markdown, "utf8");
-  appendJsonl(outputLogPath, toTranslationLogRecord(recordWithReport));
-  appendJsonl(join(dirname(reportDir), "judgements.jsonl"), toJudgementScoreRecord(recordWithReport, response.parsed));
+  appendJsonl(outputLogPath, toTranslationLogRecord(record));
+  appendJsonl(join(dirname(reportDir), "judgements.jsonl"), toJudgementScoreRecord(record, response.parsed));
 
   console.log([
     `Scored ${task.locale}/${task.slug}: ${averageScore(response.parsed.scores).toFixed(1)}/100 (${response.parsed.recommendation})`,
-    `- Report: ${relativeToRepo(archiveMarkdownPath)}`,
     `- Log: ${relativeToRepo(outputLogPath)}`,
   ].join("\n"));
 }
@@ -435,7 +408,7 @@ function readExistingScore(
           return parsed.event === "translation_scored"
             && parsed.slug === task.slug
             && parsed.locale === task.locale
-            && parsed.model === scoringModel
+            && (parsed.judgeModel === scoringModel || parsed.model === scoringModel)
             && parsed.hash === hash;
         } catch {
           return false;
@@ -630,6 +603,68 @@ function getStatsRatios(
   };
 }
 
+function findTranslationModel(reportDir: string, task: TranslationTask, translationHash: string) {
+  const rows = [
+    ...readJsonlRows(join(dirname(reportDir), "candidates.jsonl")),
+    ...readJsonlRows(join(reportDir, "candidates.jsonl")),
+  ]
+    .filter((row) => row.locale === task.locale)
+    .reverse();
+
+  const match = rows.find((row) => (
+    row.outputHash === translationHash
+    || row.translationHash === translationHash
+  ));
+  const model = match == null
+    ? undefined
+    : stringValue(match.translationModel) ?? stringValue(match.model);
+  const selectedModel = model ?? readSelectedJudgeModel(reportDir);
+
+  return selectedModel == null ? undefined : normalizeModelId(selectedModel);
+}
+
+function readSelectedJudgeModel(reportDir: string) {
+  const judgePath = join(reportDir, "judge.json");
+  if (!existsSync(judgePath)) return undefined;
+
+  try {
+    const parsed = JSON.parse(readFileSync(judgePath, "utf8")) as Record<string, unknown>;
+    return stringValue(parsed.translationModel) ?? stringValue(parsed.selectedModel);
+  } catch {
+    return undefined;
+  }
+}
+
+function normalizeModelId(modelId: string) {
+  if (
+    modelId === "unknown"
+    || modelId === "manual"
+    || modelId.startsWith("openrouter/")
+    || modelId.startsWith("current/")
+  ) {
+    return modelId;
+  }
+
+  return modelId.includes("/")
+    ? `openrouter/${modelId}`
+    : modelId;
+}
+
+function readJsonlRows(path: string) {
+  if (!existsSync(path)) return [];
+  return readFileSync(path, "utf8")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .flatMap((line) => {
+      try {
+        return [JSON.parse(line) as Record<string, unknown>];
+      } catch {
+        return [];
+      }
+    });
+}
+
 function toTranslationLogRecord(record: ScoredTranslationRecord) {
   return {
     event: record.event,
@@ -637,7 +672,8 @@ function toTranslationLogRecord(record: ScoredTranslationRecord) {
     at: record.at,
     slug: record.slug,
     locale: record.locale,
-    model: record.model,
+    judgeModel: record.judgeModel,
+    translationModel: record.translationModel,
     sourcePath: record.sourcePath,
     targetPath: record.targetPath,
     reportPath: record.reportPath,
@@ -686,7 +722,8 @@ function toJudgementScoreRecord(record: ScoredTranslationRecord, response: Score
     at: record.at,
     slug: record.slug,
     locale: record.locale,
-    model: record.model,
+    judgeModel: record.judgeModel,
+    translationModel: record.translationModel,
     sourcePath: record.sourcePath,
     targetPath: record.targetPath,
     reportPath: record.reportPath,
@@ -702,74 +739,6 @@ function toJudgementScoreRecord(record: ScoredTranslationRecord, response: Score
     stats: record.stats,
     costs: record.costs,
   };
-}
-
-function renderMarkdownReport({
-  task,
-  record,
-  analysis,
-  strengths,
-  issues,
-  archiveJsonPath,
-}: {
-  task: TranslationTask;
-  record: Record<string, unknown> & {
-    model: string;
-    scores: ScoreMap;
-    overallScore: number;
-    recommendation: string;
-    costs: Record<string, unknown>;
-  };
-  analysis: string;
-  strengths: string[];
-  issues: ScoreResponse["issues"];
-  archiveJsonPath: string;
-}) {
-  return [
-    "# Translation Score",
-    "",
-    `- Slug: ${task.slug}`,
-    `- Locale: ${task.locale}`,
-    `- Model: ${record.model}`,
-    `- Overall score: ${record.overallScore.toFixed(1)}/100`,
-    `- Recommendation: ${record.recommendation}`,
-    `- Hash: ${record.hash}`,
-    `- JSON archive: ${relativeToRepo(archiveJsonPath)}`,
-    "",
-    "## Scores",
-    "",
-    markdownRow(["Metric", "Score"]),
-    markdownRow(["---", "---:"]),
-    ...Object.entries(record.scores).map(([key, value]) => markdownRow([key, value])),
-    "",
-    "## Analysis",
-    "",
-    analysis,
-    "",
-    "## Strengths",
-    "",
-    ...(strengths.length > 0 ? strengths.map((item) => `- ${item}`) : ["- none noted"]),
-    "",
-    "## Issues",
-    "",
-    ...(issues.length > 0
-      ? issues.map((issue) => `- ${issue.severity} / ${issue.category}: ${issue.note}${issue.excerpt ? ` (${issue.excerpt})` : ""}`)
-      : ["- none noted"]),
-    "",
-    "## Cost",
-    "",
-    markdownRow(["Input tokens", "Output tokens", "Cache read", "Cache write", "Duration ms", "Estimated cost"]),
-    markdownRow(["---:", "---:", "---:", "---:", "---:", "---:"]),
-    markdownRow([
-      numberField(record.costs.inputTokens),
-      numberField(record.costs.outputTokens),
-      numberField(record.costs.cacheReadTokens),
-      numberField(record.costs.cacheWriteTokens),
-      numberField(record.costs.durationMs),
-      `$${Number(record.costs.totalUsd ?? 0).toFixed(6)}`,
-    ]),
-    "",
-  ].join("\n");
 }
 
 function averageScore(scores: ScoreMap) {
@@ -844,12 +813,4 @@ function stringArray(value: unknown) {
 
 function roundMoney(value: number) {
   return Number(value.toFixed(8));
-}
-
-function markdownRow(values: Array<string | number>) {
-  return `| ${values.map((value) => String(value).replace(/\|/g, "\\|")).join(" | ")} |`;
-}
-
-function numberField(value: unknown) {
-  return typeof value === "number" && Number.isFinite(value) ? value : 0;
 }
