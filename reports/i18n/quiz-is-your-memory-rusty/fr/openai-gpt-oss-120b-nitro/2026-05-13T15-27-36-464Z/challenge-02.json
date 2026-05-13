@@ -1,0 +1,50 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Move Semantics with Functions",
+  "translatedTitle": "Sémantique de déplacement avec les fonctions",
+  "translation": {
+    "title": "Sémantique de déplacement avec les fonctions",
+    "group": "Propriété",
+    "options": [
+      {
+        "text": "Affiche les deux lignes",
+        "hint": "Considérez ce qui arrive à 'wisdom' après qu'il soit passé à la fonction"
+      },
+      {
+        "text": "Affiche uniquement la première ligne",
+        "hint": "Le code ne compilera même pas pour atteindre l'exécution"
+      },
+      {
+        "text": "Erreur de compilation"
+      },
+      {
+        "text": "Erreur d'exécution",
+        "hint": "Les règles de propriété de Rust sont appliquées à la compilation"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsque vous exécutez ce code ? Pensez au transfert de propriété :"
+    ],
+    "explanationProse": [
+      "Le code ne compile pas parce que la propriété de `wisdom` a été déplacée vers `take_knowledge` et ne peut donc plus être utilisée ensuite.\n\n      Voici trois façons de résoudre ce problème :\n\n      1. Passer par référence (emprunter la valeur) :",
+      "2. Cloner la valeur (créer une nouvelle copie) :",
+      "3. Retourner la propriété depuis la fonction :",
+      "Chaque approche a des cas d'utilisation différents :\n      - Références : les plus efficaces, mais nécessitent une gestion des durées de vie\n      - Clonage : simple mais potentiellement coûteux\n      - Retour de propriété : utile pour transformer des valeurs\n\n      Bonne pratique : utilisez les références sauf si vous avez besoin d'un transfert de propriété."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sémantique de déplacement avec les fonctions\",\n  \"group\": \"Propriété\",\n  \"options\": [\n    {\n      \"text\": \"Affiche les deux lignes\",\n      \"hint\": \"Considérez ce qui arrive à 'wisdom' après qu'il soit passé à la fonction\"\n    },\n    {\n      \"text\": \"Affiche uniquement la première ligne\",\n      \"hint\": \"Le code ne compilera même pas pour atteindre l'exécution\"\n    },\n    {\n      \"text\": \"Erreur de compilation\"\n    },\n    {\n      \"text\": \"Erreur d'exécution\",\n      \"hint\": \"Les règles de propriété de Rust sont appliquées à la compilation\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsque vous exécutez ce code ? Pensez au transfert de propriété :\"\n  ],\n  \"explanationProse\": [\n    \"Le code ne compile pas parce que la propriété de `wisdom` a été déplacée vers `take_knowledge` et ne peut donc plus être utilisée ensuite.\\n\\n      Voici trois façons de résoudre ce problème :\\n\\n      1. Passer par référence (emprunter la valeur) :\",\n    \"2. Cloner la valeur (créer une nouvelle copie) :\",\n    \"3. Retourner la propriété depuis la fonction :\",\n    \"Chaque approche a des cas d'utilisation différents :\\n      - Références : les plus efficaces, mais nécessitent une gestion des durées de vie\\n      - Clonage : simple mais potentiellement coûteux\\n      - Retour de propriété : utile pour transformer des valeurs\\n\\n      Bonne pratique : utilisez les références sauf si vous avez besoin d'un transfert de propriété.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 971,
+    "outputTokens": 998,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 973
+  },
+  "cost": {
+    "inputUsd": 0.000037869,
+    "outputUsd": 0.00017963999999999998,
+    "totalUsd": 0.00021750899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

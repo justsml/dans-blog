@@ -1,0 +1,48 @@
+{
+  "index": 16,
+  "attempt": 1,
+  "originalTitle": "Memory Optimization",
+  "translatedTitle": "Optimisation de la mémoire",
+  "translation": {
+    "title": "Optimisation de la mémoire",
+    "group": "Bonnes pratiques",
+    "options": [
+      {
+        "text": "16 octets",
+        "hint": "Considérez les exigences d'alignement"
+      },
+      {
+        "text": "24 octets"
+      },
+      {
+        "text": "32 octets",
+        "hint": "String est plus grand qu'un simple pointeur."
+      },
+      {
+        "text": "Dépend de la plateforme",
+        "hint": "Nous avons spécifié un système 64 bits"
+      }
+    ],
+    "questionProse": [
+      "Sur une cible Rust 64 bits typique actuelle, quelle est la taille de cette structure ?"
+    ],
+    "explanationProse": [
+      "Décomposons la disposition mémoire de la struct et son optimisation :",
+      "Considérations de disposition mémoire :\n      1. Exigences d'alignement :\n         - u32 : alignement de 4 octets\n         - String : alignement de 8 octets et taille de 24 octets sur les cibles 64 bits courantes\n         - bool : alignement de 1 octet\n\n      2. Stratégies d'ordre des champs :\n         - Regrouper les champs de taille similaire\n         - Placer les alignements les plus grands en premier\n         - Envisager l'optimisation des lignes de cache\n\n      Bonnes pratiques :\n      1. Pour le FFI ou des hypothèses de mise en page stable, utilisez un `repr(...)` approprié\n      2. Utilisez des tailles d'entiers appropriées\n      3. Envisagez d'utiliser `Option` pour les champs optionnels\n      4. Mesurez les structs critiques en taille avec `std::mem::size_of`\n      5. Utilisez `#[repr(packed)]` avec prudence – cela peut affecter les performances"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Optimisation de la mémoire\",\n  \"group\": \"Bonnes pratiques\",\n  \"options\": [\n    {\n      \"text\": \"16 octets\",\n      \"hint\": \"Considérez les exigences d'alignement\"\n    },\n    {\n      \"text\": \"24 octets\"\n    },\n    {\n      \"text\": \"32 octets\",\n      \"hint\": \"String est plus grand qu'un simple pointeur.\"\n    },\n    {\n      \"text\": \"Dépend de la plateforme\",\n      \"hint\": \"Nous avons spécifié un système 64 bits\"\n    }\n  ],\n  \"questionProse\": [\n    \"Sur une cible Rust 64 bits typique actuelle, quelle est la taille de cette structure ?\"\n  ],\n  \"explanationProse\": [\n    \"Décomposons la disposition mémoire de la struct et son optimisation :\",\n    \"Considérations de disposition mémoire :\\n      1. Exigences d'alignement :\\n         - u32 : alignement de 4 octets\\n         - String : alignement de 8 octets et taille de 24 octets sur les cibles 64 bits courantes\\n         - bool : alignement de 1 octet\\n\\n      2. Stratégies d'ordre des champs :\\n         - Regrouper les champs de taille similaire\\n         - Placer les alignements les plus grands en premier\\n         - Envisager l'optimisation des lignes de cache\\n\\n      Bonnes pratiques :\\n      1. Pour le FFI ou des hypothèses de mise en page stable, utilisez un `repr(...)` approprié\\n      2. Utilisez des tailles d'entiers appropriées\\n      3. Envisagez d'utiliser `Option` pour les champs optionnels\\n      4. Mesurez les structs critiques en taille avec `std::mem::size_of`\\n      5. Utilisez `#[repr(packed)]` avec prudence – cela peut affecter les performances\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 949,
+    "outputTokens": 1145,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 1904
+  },
+  "cost": {
+    "inputUsd": 0.000037011,
+    "outputUsd": 0.0002061,
+    "totalUsd": 0.000243111,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 6,
+  "attempt": 1,
+  "originalTitle": "Struct Lifetimes",
+  "translatedTitle": "Durées de vie des structures",
+  "translation": {
+    "title": "Durées de vie des structures",
+    "group": "Durées de vie",
+    "options": [
+      {
+        "text": "Compile avec succès",
+        "hint": "Les structs contenant des références nécessitent des annotations de durée de vie"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant"
+      },
+      {
+        "text": "Erreur : incohérence de durée de vie",
+        "hint": "Nous n'avons encore spécifié aucune durée de vie"
+      },
+      {
+        "text": "Erreur : référence invalide",
+        "hint": "Les références sont valides, mais il manque autre chose"
+      }
+    ],
+    "questionProse": [
+      "Cette définition de struct compilera-t-elle ? Pourquoi ou pourquoi pas ?"
+    ],
+    "explanationProse": [
+      "Le code échoue parce que les structs contenant des références doivent spécifier des durées de vie. Voici comment le corriger :",
+      "Modèles courants :",
+      "Bonnes pratiques:\n      1. Utilisez des types possédés (String) lorsque vous devez stocker des données indéfiniment\n      2. Utilisez des références lorsque la durée de vie du struct est clairement plus courte que les données\n      3. Envisagez plusieurs paramètres de durée de vie lorsque les références peuvent avoir des durées différentes\n      4. Documentez les relations de durée de vie dans les structures complexes"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Durées de vie des structures\",\n  \"group\": \"Durées de vie\",\n  \"options\": [\n    {\n      \"text\": \"Compile avec succès\",\n      \"hint\": \"Les structs contenant des références nécessitent des annotations de durée de vie\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\"\n    },\n    {\n      \"text\": \"Erreur : incohérence de durée de vie\",\n      \"hint\": \"Nous n'avons encore spécifié aucune durée de vie\"\n    },\n    {\n      \"text\": \"Erreur : référence invalide\",\n      \"hint\": \"Les références sont valides, mais il manque autre chose\"\n    }\n  ],\n  \"questionProse\": [\n    \"Cette définition de struct compilera-t-elle ? Pourquoi ou pourquoi pas ?\"\n  ],\n  \"explanationProse\": [\n    \"Le code échoue parce que les structs contenant des références doivent spécifier des durées de vie. Voici comment le corriger :\",\n    \"Modèles courants :\",\n    \"Bonnes pratiques:\\n      1. Utilisez des types possédés (String) lorsque vous devez stocker des données indéfiniment\\n      2. Utilisez des références lorsque la durée de vie du struct est clairement plus courte que les données\\n      3. Envisagez plusieurs paramètres de durée de vie lorsque les références peuvent avoir des durées différentes\\n      4. Documentez les relations de durée de vie dans les structures complexes\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 901,
+    "outputTokens": 833,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 3054
+  },
+  "cost": {
+    "inputUsd": 0.000035139,
+    "outputUsd": 0.00014994,
+    "totalUsd": 0.000185079,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

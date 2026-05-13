@@ -1,0 +1,52 @@
+{
+  "index": 10,
+  "attempt": 1,
+  "originalTitle": "Understanding Rc",
+  "translatedTitle": "Comprendre Rc",
+  "translation": {
+    "title": "Comprendre Rc",
+    "group": "Comptage de références",
+    "options": [
+      {
+        "text": "Rc est utilisé pour les environnements à un seul thread"
+      },
+      {
+        "text": "Rc est utilisé pour les environnements multithread",
+        "hint": "Pensez à la sécurité des threads - Rc n'a aucune synchronisation"
+      },
+      {
+        "text": "Rc n'est utilisé que pour les données immutables",
+        "hint": "Rc peut être combiné avec la mutabilité intérieure"
+      },
+      {
+        "text": "Rc n'est utilisé que pour les données mutables",
+        "hint": "Rc fonctionne avec les données mutables et immutables"
+      },
+      {
+        "text": "Rc est pour la télécommande",
+        "hint": "Aussi astucieux que cela soit, ce n'est pas un concept de programmation !"
+      }
+    ],
+    "questionProse": [
+      "Quand devez‑vous utiliser Rc (Comptage de références) en Rust ?\n\n      Considérez cet exemple :"
+    ],
+    "explanationProse": [
+      "Rc (Comptage de références) est conçu pour les scénarios monothread où vous avez besoin d'une propriété partagée.\n\n      Cas d'utilisation courants :",
+      "Points clés:\n      1. Utilisez Rc lorsque :\n         - Plusieurs parties de votre code ont besoin de posséder la donnée\n         - Vous savez que le partage est monothread\n         - La durée de vie ne peut pas être déterminée statiquement\n\n      2. Utilisez Arc à la place lorsque :\n         - Vous avez besoin d'un partage sûr pour les threads\n         - Plusieurs threads ont besoin de posséder la donnée\n\n      3. Limitations de Rc :\n         - Pas sûr pour les threads\n         - Légère surcharge à l'exécution\n         - Ne peut pas rompre automatiquement les cycles de références\n\n      Bonnes pratiques :\n      1. Privilégiez la propriété unique quand c'est possible\n      2. Utilisez Rc pour un partage monothread\n      3. Utilisez Arc pour les scénarios multithread\n      4. Combinez avec Weak pour éviter les cycles de références"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Comprendre Rc\",\n \"group\": \"Comptage de références\",\n  \"options\": [\n    {\n      \"text\": \"Rc est utilisé pour les environnements à un seul thread\"\n    },\n    {\n      \"text\": \"Rc est utilisé pour les environnements multithread\",\n      \"hint\": \"Pensez à la sécurité des threads - Rc n'a aucune synchronisation\"\n    },\n    {\n      \"text\": \"Rc n'est utilisé que pour les données immutables\",\n      \"hint\": \"Rc peut être combiné avec la mutabilité intérieure\"\n    },\n    {\n      \"text\": \"Rc n'est utilisé que pour les données mutables\",\n      \"hint\": \"Rc fonctionne avec les données mutables et immutables\"\n    },\n    {\n      \"text\": \"Rc est pour la télécommande\",\n      \"hint\": \"Aussi astucieux que cela soit, ce n'est pas un concept de programmation !\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quand devez‑vous utiliser Rc (Comptage de références) en Rust ?\\n\\n      Considérez cet exemple :\"\n  ],\n  \"explanationProse\": [\n    \"Rc (Comptage de références) est conçu pour les scénarios monothread où vous avez besoin d'une propriété partagée.\\n\\n      Cas d'utilisation courants :\",\n    \"Points clés:\\n      1. Utilisez Rc lorsque :\\n         - Plusieurs parties de votre code ont besoin de posséder la donnée\\n         - Vous savez que le partage est monothread\\n         - La durée de vie ne peut pas être déterminée statiquement\\n\\n      2. Utilisez Arc à la place lorsque :\\n         - Vous avez besoin d'un partage sûr pour les threads\\n         - Plusieurs threads ont besoin de posséder la donnée\\n\\n      3. Limitations de Rc :\\n         - Pas sûr pour les threads\\n         - Légère surcharge à l'exécution\\n         - Ne peut pas rompre automatiquement les cycles de références\\n\\n      Bonnes pratiques :\\n      1. Privilégiez la propriété unique quand c'est possible\\n      2. Utilisez Rc pour un partage monothread\\n      3. Utilisez Arc pour les scénarios multithread\\n      4. Combinez avec Weak pour éviter les cycles de références\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1013,
+    "outputTokens": 1358,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1026
+  },
+  "cost": {
+    "inputUsd": 0.000039507,
+    "outputUsd": 0.00024444,
+    "totalUsd": 0.000283947,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

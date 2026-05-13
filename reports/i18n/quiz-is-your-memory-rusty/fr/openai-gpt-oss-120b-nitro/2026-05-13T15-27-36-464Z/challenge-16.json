@@ -1,0 +1,48 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "Copie vs Clone",
+  "translation": {
+    "title": "Copie vs Clone",
+    "group": "Patrons de conception",
+    "options": [
+      {
+        "text": "Erreur de compilation",
+        "hint": "L'attribut derive est correctement utilisé"
+      },
+      {
+        "text": "Copie profonde créée"
+      },
+      {
+        "text": "Copie superficielle créée",
+        "hint": "Clone crée une copie profonde des champs String"
+      },
+      {
+        "text": "Sémantique de déplacement appliquée",
+        "hint": "Clone crée explicitement une nouvelle copie"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsqu’on clone cette structure Philosophy ?"
+    ],
+    "explanationProse": [
+      "Comprenons en détail Copy vs Clone :",
+      "Principales différences:\n      1. Copy:\n         - Implicite, copie bit à bit\n         - Doit être sûr pour Copy (pas d’allocation sur le tas)\n         - Typiquement pour les petits types uniquement sur la pile\n         \n      2. Clone:\n         - Explicite, potentiellement une copie profonde\n         - Peut gérer les allocations sur le tas\n         - Plus flexible mais potentiellement coûteux\n\n      Bonnes pratiques :\n      1. Implémentez Copy pour les petits types uniquement sur la pile\n      2. Utilisez Clone pour les types avec des ressources possédées\n      3. Documentez les implications de performance de Clone\n      4. Envisagez des implémentations personnalisées de Clone pour l’optimisation\n      5. Soyez prudent avec la dérivation automatique"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Copie vs Clone\",\n  \"group\": \"Patrons de conception\",\n  \"options\": [\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"L'attribut derive est correctement utilisé\"\n    },\n    {\n      \"text\": \"Copie profonde créée\"\n    },\n    {\n      \"text\": \"Copie superficielle créée\",\n      \"hint\": \"Clone crée une copie profonde des champs String\"\n    },\n    {\n      \"text\": \"Sémantique de déplacement appliquée\",\n      \"hint\": \"Clone crée explicitement une nouvelle copie\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsqu’on clone cette structure Philosophy ?\"\n  ],\n  \"explanationProse\": [\n    \"Comprenons en détail Copy vs Clone :\",\n    \"Principales différences:\\n      1. Copy:\\n         - Implicite, copie bit à bit\\n         - Doit être sûr pour Copy (pas d’allocation sur le tas)\\n         - Typiquement pour les petits types uniquement sur la pile\\n         \\n      2. Clone:\\n         - Explicite, potentiellement une copie profonde\\n         - Peut gérer les allocations sur le tas\\n         - Plus flexible mais potentiellement coûteux\\n\\n      Bonnes pratiques :\\n      1. Implémentez Copy pour les petits types uniquement sur la pile\\n      2. Utilisez Clone pour les types avec des ressources possédées\\n      3. Documentez les implications de performance de Clone\\n      4. Envisagez des implémentations personnalisées de Clone pour l’optimisation\\n      5. Soyez prudent avec la dérivation automatique\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 921,
+    "outputTokens": 1063,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3756
+  },
+  "cost": {
+    "inputUsd": 0.000035919,
+    "outputUsd": 0.00019133999999999997,
+    "totalUsd": 0.00022725899999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Pointeur intelligent Rc",
+  "translation": {
+    "title": "Pointeur intelligent Rc",
+    "group": "Comptage de références",
+    "options": [],
+    "questionProse": [
+      "Que affichera ce code ? Comptez attentivement !"
+    ],
+    "explanationProse": [
+      "Décomposons le fonctionnement de Rc :\n\n      1. Création initiale avec `Rc::new()`: compteur = 1\n      2. Premier clone pour `marcus`: compteur = 2\n      3. Second clone pour `aurelius`: compteur = 3\n\n      Caractéristiques importantes de Rc :",
+      "Points clés :\n      - `Rc::clone()` est peu coûteux – il ne fait qu’incrémenter un compteur\n      - Rc n’est destiné qu’aux scénarios mono‑thread\n      - Lorsque la dernière référence est libérée, les données sont nettoyées\n      - Utilisez les références `Weak` pour éviter les cycles de références\n\n      Bonnes pratiques :\n      - Utilisez Rc quand vous avez besoin d’une possession partagée\n      - Envisagez `Arc` pour les scénarios thread‑safe\n      - Évitez de créer des cycles de références"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Pointeur intelligent Rc\",\n  \"group\": \"Comptage de références\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Que affichera ce code ? Comptez attentivement !\"\n  ],\n  \"explanationProse\": [\n    \"Décomposons le fonctionnement de Rc :\\n\\n      1. Création initiale avec `Rc::new()`: compteur = 1\\n      2. Premier clone pour `marcus`: compteur = 2\\n      3. Second clone pour `aurelius`: compteur = 3\\n\\n      Caractéristiques importantes de Rc :\",\n    \"Points clés :\\n      - `Rc::clone()` est peu coûteux – il ne fait qu’incrémenter un compteur\\n      - Rc n’est destiné qu’aux scénarios mono‑thread\\n      - Lorsque la dernière référence est libérée, les données sont nettoyées\\n      - Utilisez les références `Weak` pour éviter les cycles de références\\n\\n      Bonnes pratiques :\\n      - Utilisez Rc quand vous avez besoin d’une possession partagée\\n      - Envisagez `Arc` pour les scénarios thread‑safe\\n      - Évitez de créer des cycles de références\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 836,
+    "outputTokens": 748,
+    "cacheReadTokens": 384,
+    "cacheWriteTokens": 0,
+    "durationMs": 455
+  },
+  "cost": {
+    "inputUsd": 0.000032604,
+    "outputUsd": 0.00013464,
+    "totalUsd": 0.00016724399999999999,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

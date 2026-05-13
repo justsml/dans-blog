@@ -1,0 +1,50 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "Mutable References",
+  "translatedTitle": "Références mutables",
+  "translation": {
+    "title": "Références mutables",
+    "group": "Emprunt",
+    "options": [
+      {
+        "text": "Compile avec succès",
+        "hint": "Peut-on avoir plusieurs références mutables en même temps ?"
+      },
+      {
+        "text": "Erreur : impossible d'emprunter `wisdom` comme mutable plus d'une fois"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant",
+        "hint": "Le problème n'est pas lié aux durées de vie ici"
+      },
+      {
+        "text": "Panique d'exécution",
+        "hint": "Rust détecte ces problèmes à la compilation"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec plusieurs références mutables ?",
+      "Réfléchissez aux règles de Rust concernant les références mutables."
+    ],
+    "explanationProse": [
+      "Ce code viole les règles fondamentales d'emprunt de Rust :\n      - Une SEULE référence mutable à une valeur à la fois\n      - OU n'importe quel nombre de références immuables\n      - Les références ne peuvent pas survivre à leur référent\n\n      Voici comment corriger le code :\n\n      1. Utiliser un scoping séquentiel :",
+      "2. Ou modifier la chaîne dans un emprunt unique :",
+      "Ces règles empêchent les courses de données à la compilation, rendant Rust sûr pour le multithreading par défaut.\n\n      Piège fréquent : essayer d'utiliser plusieurs références mutables pour éviter le clonage ou\n      pour modifier différentes parties de la même valeur simultanément."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Références mutables\",\n  \"group\": \"Emprunt\",\n  \"options\": [\n    {\n      \"text\": \"Compile avec succès\",\n      \"hint\": \"Peut-on avoir plusieurs références mutables en même temps ?\"\n    },\n    {\n      \"text\": \"Erreur : impossible d'emprunter `wisdom` comme mutable plus d'une fois\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\",\n      \"hint\": \"Le problème n'est pas lié aux durées de vie ici\"\n    },\n    {\n      \"text\": \"Panique d'exécution\",\n      \"hint\": \"Rust détecte ces problèmes à la compilation\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec plusieurs références mutables ?\",\n    \"Réfléchissez aux règles de Rust concernant les références mutables.\"\n  ],\n  \"explanationProse\": [\n    \"Ce code viole les règles fondamentales d'emprunt de Rust :\\n      - Une SEULE référence mutable à une valeur à la fois\\n      - OU n'importe quel nombre de références immuables\\n      - Les références ne peuvent pas survivre à leur référent\\n\\n      Voici comment corriger le code :\\n\\n      1. Utiliser un scoping séquentiel :\",\n    \"2. Ou modifier la chaîne dans un emprunt unique :\",\n    \"Ces règles empêchent les courses de données à la compilation, rendant Rust sûr pour le multithreading par défaut.\\n\\n      Piège fréquent : essayer d'utiliser plusieurs références mutables pour éviter le clonage ou\\n      pour modifier différentes parties de la même valeur simultanément.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 943,
+    "outputTokens": 970,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 612
+  },
+  "cost": {
+    "inputUsd": 0.000036777000000000004,
+    "outputUsd": 0.00017460000000000002,
+    "totalUsd": 0.000211377,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

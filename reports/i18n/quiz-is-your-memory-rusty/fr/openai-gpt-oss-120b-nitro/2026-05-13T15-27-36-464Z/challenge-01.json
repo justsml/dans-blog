@@ -1,0 +1,58 @@
+{
+  "index": 0,
+  "attempt": 1,
+  "originalTitle": "Basic Move Semantics",
+  "translatedTitle": "Sémantique de déplacement de base",
+  "translation": {
+    "title": "Sémantique de déplacement de base",
+    "group": "Propriété",
+    "options": [
+      {
+        "text": "Bonjour, !",
+        "hint": "Réfléchissez à ce qui arrive à 'philosopher' après son déplacement"
+      },
+      {
+        "text": "Bonjour, Zénon de Citium !",
+        "hint": "Une fois qu'une valeur est déplacée, peut‑on encore l'utiliser ?"
+      },
+      {
+        "text": "Bonjour, Zénon d'Elea !",
+        "hint": "La chaîne contient 'Citium', pas 'Elea'"
+      },
+      {
+        "text": "Bonjour, Marcus Aurelius",
+        "hint": "Vérifiez si cela correspond au contenu de la chaîne"
+      },
+      {
+        "text": "Erreur de compilation : valeur empruntée après déplacement"
+      },
+      {
+        "text": "Erreur d'exécution : exception de pointeur nul",
+        "hint": "Rust détecte ces problèmes à la compilation"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsque vous exécutez ce code ? Essayez de prédire la sortie ou l'erreur :"
+    ],
+    "explanationProse": [
+      "Ce code ne compile pas à cause des règles de propriété de Rust. Lorsque nous assignons `philosopher` à `greeting`, la propriété du `String` est déplacée vers `greeting`. Après ce déplacement, `philosopher` n'est plus valide.\n\n      Voici trois façons de corriger cela :\n\n      1. Cloner la chaîne (crée une nouvelle copie) :",
+      "2. Utiliser une référence (emprunte la valeur) :",
+      "3. Utiliser une tranche de chaîne (emprunte une partie de la chaîne) :",
+      "Chaque solution a des cas d'utilisation et des implications de performance différents. Le clonage est plus coûteux mais vous donne la propriété, tandis que les références sont moins chères mais soumises à des contraintes de durée de vie."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Sémantique de déplacement de base\",\n  \"group\": \"Propriété\",\n  \"options\": [\n    {\n      \"text\": \"Bonjour, !\",\n      \"hint\": \"Réfléchissez à ce qui arrive à 'philosopher' après son déplacement\"\n    },\n    {\n      \"text\": \"Bonjour, Zénon de Citium !\",\n      \"hint\": \"Une fois qu'une valeur est déplacée, peut‑on encore l'utiliser ?\"\n    },\n    {\n      \"text\": \"Bonjour, Zénon d'Elea !\",\n      \"hint\": \"La chaîne contient 'Citium', pas 'Elea'\"\n    },\n    {\n      \"text\": \"Bonjour, Marcus Aurelius\",\n      \"hint\": \"Vérifiez si cela correspond au contenu de la chaîne\"\n    },\n    {\n      \"text\": \"Erreur de compilation : valeur empruntée après déplacement\"\n    },\n    {\n      \"text\": \"Erreur d'exécution : exception de pointeur nul\",\n      \"hint\": \"Rust détecte ces problèmes à la compilation\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsque vous exécutez ce code ? Essayez de prédire la sortie ou l'erreur :\"\n  ],\n  \"explanationProse\": [\n    \"Ce code ne compile pas à cause des règles de propriété de Rust. Lorsque nous assignons `philosopher` à `greeting`, la propriété du `String` est déplacée vers `greeting`. Après ce déplacement, `philosopher` n'est plus valide.\\n\\n      Voici trois façons de corriger cela :\\n\\n      1. Cloner la chaîne (crée une nouvelle copie) :\",\n    \"2. Utiliser une référence (emprunte la valeur) :\",\n    \"3. Utiliser une tranche de chaîne (emprunte une partie de la chaîne) :\",\n    \"Chaque solution a des cas d'utilisation et des implications de performance différents. Le clonage est plus coûteux mais vous donne la propriété, tandis que les références sont moins chères mais soumises à des contraintes de durée de vie.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1054,
+    "outputTokens": 1261,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 567
+  },
+  "cost": {
+    "inputUsd": 0.000041106,
+    "outputUsd": 0.00022698,
+    "totalUsd": 0.000268086,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

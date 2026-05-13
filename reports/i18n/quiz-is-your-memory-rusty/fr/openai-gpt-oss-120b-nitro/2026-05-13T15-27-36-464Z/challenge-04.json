@@ -1,0 +1,49 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Durées de vie implicites",
+  "translation": {
+    "title": "Durées de vie implicites",
+    "group": "Élision des durées de vie",
+    "options": [
+      {
+        "text": "Compile avec succès"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant",
+        "hint": "Rappelez‑vous les règles d’élision des durées de vie – elles sont là pour vous aider !"
+      },
+      {
+        "text": "Erreur : durée de vie explicite requise",
+        "hint": "Le compilateur peut le déterminer automatiquement"
+      },
+      {
+        "text": "Erreur : incohérence de durée de vie",
+        "hint": "Les durées de vie s’alignent parfaitement ici"
+      }
+    ],
+    "questionProse": [
+      "Ce code compile‑t‑il ? Si oui, pourquoi ? Sinon, qu’est‑ce qui ne va pas ?"
+    ],
+    "explanationProse": [
+      "Ce code compile avec succès grâce aux règles d’élision des durées de vie de Rust.\n      Ces règles permettent au compilateur d’inférer automatiquement les durées de vie dans les motifs courants.\n\n      Les trois règles d’élision sont :\n      1. Chaque paramètre reçoit son propre paramètre de durée de vie\n      2. S’il n’y a qu’un seul paramètre d’entrée, cette durée de vie est attribuée à tous les paramètres de sortie\n      3. S’il y a plusieurs paramètres d’entrée, mais que l’un d’eux est &self ou &mut self, la durée de vie de self est attribuée à tous les paramètres de sortie\n\n      Cette fonction est équivalente à :",
+      "Motifs courants où l’élision fonctionne :",
+      "Bonne pratique : laissez l’élision faire son travail quand c’est possible, mais comprenez quand des durées de vie explicites sont nécessaires."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Durées de vie implicites\",\n  \"group\": \"Élision des durées de vie\",\n  \"options\": [\n    {\n      \"text\": \"Compile avec succès\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\",\n      \"hint\": \"Rappelez‑vous les règles d’élision des durées de vie – elles sont là pour vous aider !\"\n    },\n    {\n      \"text\": \"Erreur : durée de vie explicite requise\",\n      \"hint\": \"Le compilateur peut le déterminer automatiquement\"\n    },\n    {\n      \"text\": \"Erreur : incohérence de durée de vie\",\n      \"hint\": \"Les durées de vie s’alignent parfaitement ici\"\n    }\n  ],\n  \"questionProse\": [\n    \"Ce code compile‑t‑il ? Si oui, pourquoi ? Sinon, qu’est‑ce qui ne va pas ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce code compile avec succès grâce aux règles d’élision des durées de vie de Rust.\\n      Ces règles permettent au compilateur d’inférer automatiquement les durées de vie dans les motifs courants.\\n\\n      Les trois règles d’élision sont :\\n      1. Chaque paramètre reçoit son propre paramètre de durée de vie\\n      2. S’il n’y a qu’un seul paramètre d’entrée, cette durée de vie est attribuée à tous les paramètres de sortie\\n      3. S’il y a plusieurs paramètres d’entrée, mais que l’un d’eux est &self ou &mut self, la durée de vie de self est attribuée à tous les paramètres de sortie\\n\\n      Cette fonction est équivalente à :\",\n    \"Motifs courants où l’élision fonctionne :\",\n    \"Bonne pratique : laissez l’élision faire son travail quand c’est possible, mais comprenez quand des durées de vie explicites sont nécessaires.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 969,
+    "outputTokens": 1103,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4218
+  },
+  "cost": {
+    "inputUsd": 0.000037791,
+    "outputUsd": 0.00019854,
+    "totalUsd": 0.000236331,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Lifetime Annotations",
+  "translatedTitle": "Annotations de durée de vie",
+  "translation": {
+    "title": "Annotations de durée de vie",
+    "group": "Durées de vie",
+    "options": [
+      {
+        "text": "Résultat : Sénèque le Jeune",
+        "hint": "Le code ne compile pas, il ne produira aucune sortie"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant"
+      },
+      {
+        "text": "Erreur : impossible de retourner une référence à une variable locale",
+        "hint": "La référence pointe vers un paramètre d'entrée, pas une variable locale"
+      },
+      {
+        "text": "Erreur : incohérence de durée de vie",
+        "hint": "Nous n'avons pas encore spécifié de durées de vie, ce qui crée une incohérence"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il avec cette fonction qui renvoie le plus long des deux tranches de chaîne ?"
+    ],
+    "explanationProse": [
+      "Ce code échoue parce que le compilateur ne peut pas déterminer la relation entre les durées de vie d'entrée et de sortie. Voici pourquoi et comment le corriger :",
+      "Pourquoi des durées de vie sont nécessaires ici :\n      1. Plusieurs références d'entrée peuvent avoir des durées de vie différentes\n      2. La valeur de retour doit vivre aussi longtemps que les deux entrées\n      3. Le compilateur doit vérifier ces relations\n\n      Modèles courants :",
+      "Bonnes pratiques :\n      1. Laisser l'élision des durées de vie fonctionner quand c'est possible\n      2. Utiliser des durées de vie explicites lorsque les relations doivent être claires\n      3. Envisager de retourner des types possédés pour éviter la complexité des durées de vie\n      4. Documenter les relations de durée de vie complexes"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Annotations de durée de vie\",\n  \"group\": \"Durées de vie\",\n  \"options\": [\n    {\n      \"text\": \"Résultat : Sénèque le Jeune\",\n      \"hint\": \"Le code ne compile pas, il ne produira aucune sortie\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\"\n    },\n    {\n      \"text\": \"Erreur : impossible de retourner une référence à une variable locale\",\n      \"hint\": \"La référence pointe vers un paramètre d'entrée, pas une variable locale\"\n    },\n    {\n      \"text\": \"Erreur : incohérence de durée de vie\",\n      \"hint\": \"Nous n'avons pas encore spécifié de durées de vie, ce qui crée une incohérence\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il avec cette fonction qui renvoie le plus long des deux tranches de chaîne ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce code échoue parce que le compilateur ne peut pas déterminer la relation entre les durées de vie d'entrée et de sortie. Voici pourquoi et comment le corriger :\",\n    \"Pourquoi des durées de vie sont nécessaires ici :\\n      1. Plusieurs références d'entrée peuvent avoir des durées de vie différentes\\n      2. La valeur de retour doit vivre aussi longtemps que les deux entrées\\n      3. Le compilateur doit vérifier ces relations\\n\\n      Modèles courants :\",\n    \"Bonnes pratiques :\\n      1. Laisser l'élision des durées de vie fonctionner quand c'est possible\\n      2. Utiliser des durées de vie explicites lorsque les relations doivent être claires\\n      3. Envisager de retourner des types possédés pour éviter la complexité des durées de vie\\n      4. Documenter les relations de durée de vie complexes\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 961,
+    "outputTokens": 1081,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3896
+  },
+  "cost": {
+    "inputUsd": 0.000037479000000000005,
+    "outputUsd": 0.00019457999999999997,
+    "totalUsd": 0.00023205899999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

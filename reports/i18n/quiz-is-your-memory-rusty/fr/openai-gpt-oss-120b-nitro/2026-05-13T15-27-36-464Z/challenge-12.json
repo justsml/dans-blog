@@ -1,0 +1,52 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "RefCells and Threading",
+  "translatedTitle": "RefCells et Threading",
+  "translation": {
+    "title": "RefCells et Threading",
+    "group": "RefCell",
+    "options": [
+      {
+        "text": "RefCell est utilisé pour les emprunts mutables, Rw pour les immutables",
+        "hint": "Les deux types supportent les emprunts mutables et immutables"
+      },
+      {
+        "text": "Rw est utilisé pour les emprunts mutables, RefCell pour les immutables",
+        "hint": "Les deux supportent les deux types d'emprunts"
+      },
+      {
+        "text": "RefCell et Rw sont utilisés pour le même but",
+        "hint": "Pensez à la sécurité des threads"
+      },
+      {
+        "text": "RefCell n'est utilisé que dans des environnements monothread"
+      },
+      {
+        "text": "Rw n'est utilisé que dans des environnements multithread",
+        "hint": "Bien qu'il soit généralement utilisé pour les threads, ce n'est pas la différence clé"
+      }
+    ],
+    "questionProse": [
+      "Quelle est la différence clé entre RefCell et RwLock en Rust?\n\n      Considérez ces exemples :"
+    ],
+    "explanationProse": [
+      "RefCell et RwLock servent des buts similaires mais dans des contextes différents :",
+      "Différences clés :\n      1. RefCell:\n         - uniquement monothread\n         - aucun surcoût de synchronisation\n         - panique en cas de violation d'emprunt\n         \n      2. RwLock:\n         - sûr pour les threads\n         - comporte un surcoût de synchronisation\n         - peut bloquer les threads au lieu de paniquer\n\n      Bonnes pratiques :\n      1. Utilisez RefCell pour la mutabilité intérieure monothread\n      2. Utilisez RwLock lorsque la sécurité des threads est requise\n      3. Envisagez Mutex pour une mutabilité thread‑safe plus simple\n      4. Documentez clairement les exigences de sécurité des threads"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"RefCells et Threading\",\n  \"group\": \"RefCell\",\n  \"options\": [\n    {\n      \"text\": \"RefCell est utilisé pour les emprunts mutables, Rw pour les immutables\",\n      \"hint\": \"Les deux types supportent les emprunts mutables et immutables\"\n    },\n    {\n      \"text\": \"Rw est utilisé pour les emprunts mutables, RefCell pour les immutables\",\n      \"hint\": \"Les deux supportent les deux types d'emprunts\"\n    },\n    {\n      \"text\": \"RefCell et Rw sont utilisés pour le même but\",\n      \"hint\": \"Pensez à la sécurité des threads\"\n    },\n    {\n      \"text\": \"RefCell n'est utilisé que dans des environnements monothread\"\n    },\n    {\n      \"text\": \"Rw n'est utilisé que dans des environnements multithread\",\n      \"hint\": \"Bien qu'il soit généralement utilisé pour les threads, ce n'est pas la différence clé\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quelle est la différence clé entre RefCell et RwLock en Rust?\\n\\n      Considérez ces exemples :\"\n  ],\n  \"explanationProse\": [\n    \"RefCell et RwLock servent des buts similaires mais dans des contextes différents :\",\n    \"Différences clés :\\n      1. RefCell:\\n         - uniquement monothread\\n         - aucun surcoût de synchronisation\\n         - panique en cas de violation d'emprunt\\n         \\n      2. RwLock:\\n         - sûr pour les threads\\n         - comporte un surcoût de synchronisation\\n         - peut bloquer les threads au lieu de paniquer\\n\\n      Bonnes pratiques :\\n      1. Utilisez RefCell pour la mutabilité intérieure monothread\\n      2. Utilisez RwLock lorsque la sécurité des threads est requise\\n      3. Envisagez Mutex pour une mutabilité thread‑safe plus simple\\n      4. Documentez clairement les exigences de sécurité des threads\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 996,
+    "outputTokens": 1323,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4153
+  },
+  "cost": {
+    "inputUsd": 0.000038843999999999996,
+    "outputUsd": 0.00023814,
+    "totalUsd": 0.000276984,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
