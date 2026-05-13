@@ -1,0 +1,44 @@
+{
+  "index": 1,
+  "attempt": 1,
+  "originalTitle": "Separate Closures",
+  "translatedTitle": "Fermures Indépendantes",
+  "translation": {
+    "title": "Fermures Indépendantes",
+    "group": "Échauffement",
+    "options": [
+      {
+        "text": "1, 1"
+      },
+      {
+        "text": "1, 2"
+      },
+      {
+        "text": "2, 2"
+      },
+      {
+        "text": "0, 0"
+      }
+    ],
+    "questionProse": [
+      "Qu'affiche-t-on ici ?"
+    ],
+    "explanationProse": [
+      "Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec sa propre variable `count` fraîchement initialisée. `a` et `b` font référence à des liaisons `count` *distinctes*. Elles ne partagent pas d'état.\n\n    Résultat : `1, 1`\n\n    C'est pourquoi les fermures sont utilisées pour créer un état privé — chaque \"instance\" est indépendante."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fermures Indépendantes\",\n  \"group\": \"Échauffement\",\n  \"options\": [\n    { \"text\": \"1, 1\" },\n    { \"text\": \"1, 2\" },\n    { \"text\": \"2, 2\" },\n    { \"text\": \"0, 0\" }\n  ],\n  \"questionProse\": [\n    \"Qu'affiche-t-on ici ?\"\n  ],\n  \"explanationProse\": [\n    \"Chaque appel à `makeCounter()` crée un **nouveau contexte d'exécution** avec sa propre variable `count` fraîchement initialisée. `a` et `b` font référence à des liaisons `count` *distinctes*. Elles ne partagent pas d'état.\\n\\n    Résultat : `1, 1`\\n\\n    C'est pourquoi les fermures sont utilisées pour créer un état privé — chaque \\\"instance\\\" est indépendante.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 730,
+    "outputTokens": 585,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 3933
+  },
+  "cost": {
+    "inputUsd": 0.000058399999999999997,
+    "outputUsd": 0.0001404,
+    "totalUsd": 0.0001988,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

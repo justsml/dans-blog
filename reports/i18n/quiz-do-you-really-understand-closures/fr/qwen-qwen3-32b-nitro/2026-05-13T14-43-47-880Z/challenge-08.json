@@ -1,0 +1,45 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Closure Memory Leak",
+  "translatedTitle": "Fuite de mémoire avec les fermetures",
+  "translation": {
+    "title": "Fuite de mémoire avec les fermetures",
+    "group": "Expert",
+    "options": [
+      {
+        "text": "Il affiche la longueur du tableau data"
+      },
+      {
+        "text": "Il crée une fuite de mémoire"
+      },
+      {
+        "text": "Il lance une erreur RangeError"
+      },
+      {
+        "text": "Rien d'anormal — c'est normal"
+      }
+    ],
+    "questionProse": [
+      "Quel est le problème avec ce code ?"
+    ],
+    "explanationProse": [
+      "L'écouteur d'événement ferme sur `data`, donc le tableau reste accessible tant que l'écouteur est accessible. Si `element` est longévif et que l'écouteur n'est jamais supprimé, ce grand tableau est aussi conservé.\n\n    `element` est dans le DOM. L'écouteur détient `data`. Le ramasse-miettes ne peut pas le collecter.\n\n    Solution : ne pas capturer de grandes données dans des écouteurs longévifs si ce n'est pas nécessaire, et supprimer les écouteurs quand l'interface associée est détruite :",
+      "V8 moderne gère mieux cela qu'auparavant. Mais dans les SPAs longévifs avec de nombreux écouteurs d'événements, ce schéma continue de poser problème."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Fuite de mémoire avec les fermetures\",\n  \"group\": \"Expert\",\n  \"options\": [\n    {\n      \"text\": \"Il affiche la longueur du tableau data\"\n    },\n    {\n      \"text\": \"Il crée une fuite de mémoire\"\n    },\n    {\n      \"text\": \"Il lance une erreur RangeError\"\n    },\n    {\n      \"text\": \"Rien d'anormal — c'est normal\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le problème avec ce code ?\"\n  ],\n  \"explanationProse\": [\n    \"L'écouteur d'événement ferme sur `data`, donc le tableau reste accessible tant que l'écouteur est accessible. Si `element` est longévif et que l'écouteur n'est jamais supprimé, ce grand tableau est aussi conservé.\\n\\n    `element` est dans le DOM. L'écouteur détient `data`. Le ramasse-miettes ne peut pas le collecter.\\n\\n    Solution : ne pas capturer de grandes données dans des écouteurs longévifs si ce n'est pas nécessaire, et supprimer les écouteurs quand l'interface associée est détruite :\",\n    \"V8 moderne gère mieux cela qu'auparavant. Mais dans les SPAs longévifs avec de nombreux écouteurs d'événements, ce schéma continue de poser problème.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 818,
+    "outputTokens": 730,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1912
+  },
+  "cost": {
+    "inputUsd": 0.00006544000000000001,
+    "outputUsd": 0.00017519999999999998,
+    "totalUsd": 0.00024063999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

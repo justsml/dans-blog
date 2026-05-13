@@ -1,0 +1,44 @@
+{
+  "index": 2,
+  "attempt": 1,
+  "originalTitle": "var in a Loop",
+  "translatedTitle": "var dans une boucle",
+  "translation": {
+    "title": "var dans une boucle",
+    "group": "Le piège classique",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "1, 2, 3, 4, 5"
+      },
+      {
+        "text": "indéfini x5"
+      }
+    ],
+    "questionProse": [
+      "Quel est le résultat affiché après 100ms ?"
+    ],
+    "explanationProse": [
+      "`var` est à portée de fonction. Il n'y a qu'un seul `i` — les cinq rappels ferment sur le même lien. D'ici le temps que les temporisateurs se déclenchent, la boucle est terminée et `i` vaut `5`.\n\n    Cinq rappels. Un seul `i`. Valeur : `5`. Affiché cinq fois.\n\n    La solution est d'utiliser `let` (à portée de bloc, nouveau lien à chaque itération) ou d'encapsuler dans une IIFE pour capturer la valeur actuelle :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"var dans une boucle\",\n  \"group\": \"Le piège classique\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"1, 2, 3, 4, 5\"\n    },\n    {\n      \"text\": \"indéfini x5\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel est le résultat affiché après 100ms ?\"\n  ],\n  \"explanationProse\": [\n    \"`var` est à portée de fonction. Il n'y a qu'un seul `i` — les cinq rappels ferment sur le même lien. D'ici le temps que les temporisateurs se déclenchent, la boucle est terminée et `i` vaut `5`.\\n\\n    Cinq rappels. Un seul `i`. Valeur : `5`. Affiché cinq fois.\\n\\n    La solution est d'utiliser `let` (à portée de bloc, nouveau lien à chaque itération) ou d'encapsuler dans une IIFE pour capturer la valeur actuelle :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 808,
+    "outputTokens": 783,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2193
+  },
+  "cost": {
+    "inputUsd": 0.00006464,
+    "outputUsd": 0.00018791999999999998,
+    "totalUsd": 0.00025256,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

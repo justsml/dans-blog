@@ -1,0 +1,44 @@
+{
+  "index": 4,
+  "attempt": 1,
+  "originalTitle": "Object Mutation",
+  "translatedTitle": "Mutation d'objet",
+  "translation": {
+    "title": "Mutation d'objet",
+    "group": "Fermures & Objets",
+    "options": [
+      {
+        "text": "{ x: 1 }, { x: 1 }"
+      },
+      {
+        "text": "{ x: 1 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 99 }"
+      },
+      {
+        "text": "{ x: 99 }, { x: 1 }"
+      }
+    ],
+    "questionProse": [
+      "Qu'affiche-t-on ici ?"
+    ],
+    "explanationProse": [
+      "La fermeture capture la **liaison** `obj`, pas une copie de l'objet. L'objet est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels retournent l'objet muté : `{ x: 99 }`.\n\nCela piège ceux qui pensent que les fermetures \"gèlent\" les valeurs. Elles ne le font pas. Elles captent des **références**."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mutation d'objet\",\n  \"group\": \"Fermures & Objets\",\n  \"options\": [\n    {\n      \"text\": \"{ x: 1 }, { x: 1 }\"\n    },\n    {\n      \"text\": \"{ x: 1 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 99 }\"\n    },\n    {\n      \"text\": \"{ x: 99 }, { x: 1 }\"\n    }\n  ],\n  \"questionProse\": [\n    \"Qu'affiche-t-on ici ?\"\n  ],\n  \"explanationProse\": [\n    \"La fermeture capture la **liaison** `obj`, pas une copie de l'objet. L'objet est muté après la création de la fermeture — mais `obj` pointe toujours vers la même référence. Les deux appels retournent l'objet muté : `{ x: 99 }`.\\n\\nCela piège ceux qui pensent que les fermetures \\\"gèlent\\\" les valeurs. Elles ne le font pas. Elles captent des **références**.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 766,
+    "outputTokens": 606,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1571
+  },
+  "cost": {
+    "inputUsd": 0.00006128,
+    "outputUsd": 0.00014544,
+    "totalUsd": 0.00020671999999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

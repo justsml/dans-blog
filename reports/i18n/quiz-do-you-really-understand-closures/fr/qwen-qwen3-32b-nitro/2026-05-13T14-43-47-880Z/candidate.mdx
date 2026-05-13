@@ -24,8 +24,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">Les fermetures (closures) sont l'une de ces notions que chaque développeur JavaScript *pense* comprendre — jusqu'au moment où il ne comprend plus. Ce quiz mettra à jour les limites de vos connaissances réelles.</p>
 
@@ -51,12 +51,12 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Qu'est-ce que cela affiche-t-il ?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const tick = makeCounter();
-    console.log(tick(), tick(), tick());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const tick = makeCounter();
+        console.log(tick(), tick(), tick());
     ```
   </div>
   </slot>
@@ -85,13 +85,13 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Qu'affiche-t-on ici ?
     ```javascript
-    function makeCounter() {
-      let count = 0;
-      return () => ++count;
-    }
-    const a = makeCounter();
-    const b = makeCounter();
-    console.log(a(), b());
+        function makeCounter() {
+          let count = 0;
+          return () => ++count;
+        }
+        const a = makeCounter();
+        const b = makeCounter();
+        console.log(a(), b());
     ```
   </div>
   </slot>
@@ -122,9 +122,9 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Quel est le résultat affiché après 100ms ?
     ```javascript
-    for (var i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (var i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -136,9 +136,9 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
 
     La solution est d'utiliser `let` (à portée de bloc, nouveau lien à chaque itération) ou d'encapsuler dans une IIFE pour capturer la valeur actuelle :
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100); // 0, 1, 2, 3, 4 ✓
+        }
     ```
   </div>
   </slot>
@@ -160,9 +160,9 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Même boucle, mot-clé différent. Quel est le résultat ?
     ```javascript
-    for (let i = 0; i < 5; i++) {
-      setTimeout(() => console.log(i), 100);
-    }
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => console.log(i), 100);
+        }
     ```
   </div>
   </slot>
@@ -170,9 +170,9 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="explanation">
     Le `let` dans une boucle `for` est spécial. La spécification dit : chaque itération obtient son propre **nouvel emplacement** de `i`. C'est comme si la boucle faisait secrètement cela :
     ```javascript
-    { let i = 0; setTimeout(() => console.log(i), 100) }
-    { let i = 1; setTimeout(() => console.log(i), 100) }
-    // ...
+        { let i = 0; setTimeout(() => console.log(i), 100) }
+        { let i = 1; setTimeout(() => console.log(i), 100) }
+        // ...
     ```
     Ainsi, les cinq rappels ferment sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.
   </div>
@@ -195,14 +195,14 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Qu'affiche-t-on ici ?
     ```javascript
-    function wrap() {
-      const obj = { x: 1 };
-      const getObj = () => obj;
-      obj.x = 99;
-      return getObj;
-    }
-    const get = wrap();
-    console.log(get(), get());
+        function wrap() {
+          const obj = { x: 1 };
+          const getObj = () => obj;
+          obj.x = 99;
+          return getObj;
+        }
+        const get = wrap();
+        console.log(get(), get());
     ```
   </div>
   </slot>
@@ -231,20 +231,20 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Quel comportement ce composant React affiche-t-il lorsqu'on clique plusieurs fois sur le bouton ?
     ```jsx
-    function Counter() {
-      const [count, setCount] = useState(0);
+        function Counter() {
+          const [count, setCount] = useState(0);
 
-      useEffect(() => {
-        const id = setInterval(() => {
-          console.log('count is', count);
-        }, 1000);
-        return () => clearInterval(id);
-      }, []); // empty deps
+          useEffect(() => {
+            const id = setInterval(() => {
+              console.log('count is', count);
+            }, 1000);
+            return () => clearInterval(id);
+          }, []); // empty deps
 
-      return <button onClick={() => setCount(c => c + 1)}>
-        Click ({count})
-      </button>;
-    }
+          return <button onClick={() => setCount(c => c + 1)}>
+            Click ({count})
+          </button>;
+        }
     ```
   </div>
   </slot>
@@ -256,9 +256,9 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
 
     Pour le corriger, ajoutez `count` au tableau des dépendances (re-créer l'intervalle) ou utilisez une ref :
     ```jsx
-    const countRef = useRef(count);
-    useEffect(() => { countRef.current = count; }, [count]);
-    // then use countRef.current inside the interval
+        const countRef = useRef(count);
+        useEffect(() => { countRef.current = count; }, [count]);
+        // then use countRef.current inside the interval
     ```
   </div>
   </slot>
@@ -280,18 +280,18 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Attention — lisez attentivement. Quel est le résultat exact ?
     ```javascript
-    const bank = (() => {
-      let balance = 0;
-      return {
-        deposit: (n) => (balance += n),
-        withdraw: (n) => (balance -= n),
-        getBalance: () => balance,
-      };
-    })();
+        const bank = (() => {
+          let balance = 0;
+          return {
+            deposit: (n) => (balance += n),
+            withdraw: (n) => (balance -= n),
+            getBalance: () => balance,
+          };
+        })();
 
-    bank.deposit(100);
-    bank.withdraw(40);
-    console.log(bank.getBalance());
+        bank.deposit(100);
+        bank.withdraw(40);
+        console.log(bank.getBalance());
     ```
   </div>
   </slot>
@@ -301,7 +301,7 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
 
     Il s'agit du **Modèle de module** — une IIFE qui retourne un objet de fermetures. Les trois méthodes ferment sur la même variable `balance`. Celle-ci est vraiment privée : vous ne pouvez pas y accéder depuis l'extérieur.
     ```javascript
-    console.log(bank.balance); // undefined
+        console.log(bank.balance); // undefined
     ```
     Avant l'arrivée des classes, c'était *la* méthode pour encapsuler l'état en JavaScript. Vous en verrez encore dans les bases de code héritées et les bibliothèques utilitaires.
   </div>
@@ -324,12 +324,12 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Quel est le problème avec ce code ?
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      element.addEventListener('click', () => {
-        console.log('clicked!', data.length);
-      });
-    }
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          element.addEventListener('click', () => {
+            console.log('clicked!', data.length);
+          });
+        }
     ```
   </div>
   </slot>
@@ -341,17 +341,17 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
 
     Solution : ne pas capturer de grandes données dans des écouteurs longévifs si ce n'est pas nécessaire, et supprimer les écouteurs quand l'interface associée est détruite :
     ```javascript
-    function attachHandler(element) {
-      const data = new Array(100_000).fill('🔥');
-      // do something with data...
+        function attachHandler(element) {
+          const data = new Array(100_000).fill('🔥');
+          // do something with data...
 
-      const onClick = () => {
-        console.log('clicked!');
-      };
+          const onClick = () => {
+            console.log('clicked!');
+          };
 
-      element.addEventListener('click', onClick);
-      return () => element.removeEventListener('click', onClick);
-    }
+          element.addEventListener('click', onClick);
+          return () => element.removeEventListener('click', onClick);
+        }
     ```
     V8 moderne gère mieux cela qu'auparavant. Mais dans les SPAs longévifs avec de nombreux écouteurs d'événements, ce schéma continue de poser problème.
   </div>
@@ -374,18 +374,18 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Qu'affiche-t-on ici ?
     ```javascript
-    const user = {
-      name: 'Dan',
-      greetArrow: () => console.log(this?.name),
-      greetRegular() {
-        const inner = () => console.log(this?.name);
-        inner();
-      },
-    };
+        const user = {
+          name: 'Dan',
+          greetArrow: () => console.log(this?.name),
+          greetRegular() {
+            const inner = () => console.log(this?.name);
+            inner();
+          },
+        };
 
-    user.greetArrow();
-    const fn = user.greetRegular;
-    fn();
+        user.greetArrow();
+        const fn = user.greetRegular;
+        fn();
     ```
   </div>
   </slot>
@@ -420,24 +420,24 @@ Les questions commencent par des exercices raisonnables puis enlèvent les planc
   <div className="question">
     Combien de fois la fonction `expensive()` est-elle réellement appelée ?
     ```javascript
-    function memoize(fn) {
-      const cache = new Map();
-      return (arg) => {
-        if (cache.has(arg)) return cache.get(arg);
-        const result = fn(arg);
-        cache.set(arg, result);
-        return result;
-      };
-    }
+        function memoize(fn) {
+          const cache = new Map();
+          return (arg) => {
+            if (cache.has(arg)) return cache.get(arg);
+            const result = fn(arg);
+            cache.set(arg, result);
+            return result;
+          };
+        }
 
-    let calls = 0;
-    const expensive = (n) => { calls++; return n * 2; };
-    const fast = memoize(expensive);
+        let calls = 0;
+        const expensive = (n) => { calls++; return n * 2; };
+        const fast = memoize(expensive);
 
-    fast(5);
-    fast(5);
-    fast(5);
-    console.log(calls);
+        fast(5);
+        fast(5);
+        fast(5);
+        console.log(calls);
     ```
   </div>
   </slot>

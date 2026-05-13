@@ -1,0 +1,44 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Memoization via Closure",
+  "translatedTitle": "Mémorisation via fermeture",
+  "translation": {
+    "title": "Mémorisation via fermeture",
+    "group": "Bonus",
+    "options": [
+      {
+        "text": "Appelle expensive() 3 fois"
+      },
+      {
+        "text": "Appelle expensive() 1 fois"
+      },
+      {
+        "text": "Appelle expensive() 2 fois"
+      },
+      {
+        "text": "Lève une erreur : Maximum call stack exceeded"
+      }
+    ],
+    "questionProse": [
+      "Combien de fois la fonction `expensive()` est-elle réellement appelée ?"
+    ],
+    "explanationProse": [
+      "La fonction mémorisée ferme sur `cache`. L'appel initial (`fast(5)`) manque le cache, appelle `expensive` et stocke le résultat. Les deuxièmes et troisièmes appels trouvent le cache et retournent immédiatement.\n\n    `calls` vaut `1`.\n\n    C'est un exemple concret d'utilisation des fermetures. `cache` est privé (pas accessible en dehors de `memoize`), persistant (existe tant que `fast` existe) et partagé entre toutes les appels à `fast`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mémorisation via fermeture\",\n  \"group\": \"Bonus\",\n  \"options\": [\n    {\n      \"text\": \"Appelle expensive() 3 fois\"\n    },\n    {\n      \"text\": \"Appelle expensive() 1 fois\"\n    },\n    {\n      \"text\": \"Appelle expensive() 2 fois\"\n    },\n    {\n      \"text\": \"Lève une erreur : Maximum call stack exceeded\"\n    }\n  ],\n  \"questionProse\": [\n    \"Combien de fois la fonction `expensive()` est-elle réellement appelée ?\"\n  ],\n  \"explanationProse\": [\n    \"La fonction mémorisée ferme sur `cache`. L'appel initial (`fast(5)`) manque le cache, appelle `expensive` et stocke le résultat. Les deuxièmes et troisièmes appels trouvent le cache et retournent immédiatement.\\n\\n    `calls` vaut `1`.\\n\\n    C'est un exemple concret d'utilisation des fermetures. `cache` est privé (pas accessible en dehors de `memoize`), persistant (existe tant que `fast` existe) et partagé entre toutes les appels à `fast`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 771,
+    "outputTokens": 737,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1831
+  },
+  "cost": {
+    "inputUsd": 0.00006168,
+    "outputUsd": 0.00017688,
+    "totalUsd": 0.00023856000000000002,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

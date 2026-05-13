@@ -1,0 +1,46 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "let Fixes It (Or Does It?)",
+  "translatedTitle": "let Répare-T-il (Ou Pas ?)",
+  "translation": {
+    "title": "let Répare-T-il (Ou Pas ?)",
+    "group": "Le Piège Classique",
+    "options": [
+      {
+        "text": "0, 1, 2, 3, 4"
+      },
+      {
+        "text": "5, 5, 5, 5, 5"
+      },
+      {
+        "text": "4, 4, 4, 4, 4"
+      },
+      {
+        "text": "ReferenceError: i is not defined",
+        "hint": "Vérifiez la déclaration de la boucle"
+      }
+    ],
+    "questionProse": [
+      "Même boucle, mot-clé différent. Quel est le résultat ?"
+    ],
+    "explanationProse": [
+      "Le `let` dans une boucle `for` est spécial. La spécification dit : chaque itération obtient son propre **nouvel emplacement** de `i`. C'est comme si la boucle faisait secrètement cela :",
+      "Ainsi, les cinq rappels ferment sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"let Répare-T-il (Ou Pas ?)\",\n  \"group\": \"Le Piège Classique\",\n  \"options\": [\n    {\n      \"text\": \"0, 1, 2, 3, 4\"\n    },\n    {\n      \"text\": \"5, 5, 5, 5, 5\"\n    },\n    {\n      \"text\": \"4, 4, 4, 4, 4\"\n    },\n    {\n      \"text\": \"ReferenceError: i is not defined\",\n      \"hint\": \"Vérifiez la déclaration de la boucle\"\n    }\n  ],\n  \"questionProse\": [\n    \"Même boucle, mot-clé différent. Quel est le résultat ?\"\n  ],\n  \"explanationProse\": [\n    \"Le `let` dans une boucle `for` est spécial. La spécification dit : chaque itération obtient son propre **nouvel emplacement** de `i`. C'est comme si la boucle faisait secrètement cela :\",\n    \"Ainsi, les cinq rappels ferment sur cinq variables distinctes. Résultat : `0, 1, 2, 3, 4`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 787,
+    "outputTokens": 762,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1865
+  },
+  "cost": {
+    "inputUsd": 0.00006296000000000001,
+    "outputUsd": 0.00018287999999999998,
+    "totalUsd": 0.00024584,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Stale Closure in React",
+  "translatedTitle": "Clôture périmée dans React",
+  "translation": {
+    "title": "Clôture périmée dans React",
+    "group": "Avancé",
+    "options": [
+      {
+        "text": "Affiche le compteur actuel à chaque clic"
+      },
+      {
+        "text": "Affiche toujours 0"
+      },
+      {
+        "text": "Affiche NaN"
+      },
+      {
+        "text": "Ce code ne compilera pas"
+      }
+    ],
+    "questionProse": [
+      "Quel comportement ce composant React affiche-t-il lorsqu'on clique plusieurs fois sur le bouton ?"
+    ],
+    "explanationProse": [
+      "Clôture périmée classique. `useEffect` s'exécute une seule fois (tableau de dépendances vide) et crée une intervalle qui ferme sur `count` tel qu'il était au montage : `0`. Quel que soit le nombre de clics, l'intervalle ne voit jamais la valeur mise à jour.\n\n    L'étiquette du bouton s'actualise correctement — c'est un nouveau rendu. Mais `console.log` reste bloqué à `0`.\n\n    Pour le corriger, ajoutez `count` au tableau des dépendances (re-créer l'intervalle) ou utilisez une ref :"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Clôture périmée dans React\",\n  \"group\": \"Avancé\",\n  \"options\": [\n    {\n      \"text\": \"Affiche le compteur actuel à chaque clic\"\n    },\n    {\n      \"text\": \"Affiche toujours 0\"\n    },\n    {\n      \"text\": \"Affiche NaN\"\n    },\n    {\n      \"text\": \"Ce code ne compilera pas\"\n    }\n  ],\n  \"questionProse\": [\n    \"Quel comportement ce composant React affiche-t-il lorsqu'on clique plusieurs fois sur le bouton ?\"\n  ],\n  \"explanationProse\": [\n    \"Clôture périmée classique. `useEffect` s'exécute une seule fois (tableau de dépendances vide) et crée une intervalle qui ferme sur `count` tel qu'il était au montage : `0`. Quel que soit le nombre de clics, l'intervalle ne voit jamais la valeur mise à jour.\\n\\n    L'étiquette du bouton s'actualise correctement — c'est un nouveau rendu. Mais `console.log` reste bloqué à `0`.\\n\\n    Pour le corriger, ajoutez `count` au tableau des dépendances (re-créer l'intervalle) ou utilisez une ref :\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 798,
+    "outputTokens": 693,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 1783
+  },
+  "cost": {
+    "inputUsd": 0.00006384,
+    "outputUsd": 0.00016632,
+    "totalUsd": 0.00023015999999999998,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

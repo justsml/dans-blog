@@ -1,0 +1,44 @@
+{
+  "index": 8,
+  "attempt": 1,
+  "originalTitle": "The this Trap",
+  "translatedTitle": "Le piège de this",
+  "translation": {
+    "title": "Le piège de this",
+    "group": "Expert",
+    "options": [
+      {
+        "text": "Dan, Dan"
+      },
+      {
+        "text": "Dan, undefined"
+      },
+      {
+        "text": "undefined, Dan"
+      },
+      {
+        "text": "undefined, undefined"
+      }
+    ],
+    "questionProse": [
+      "Qu'affiche-t-on ici ?"
+    ],
+    "explanationProse": [
+      "Deux pièges subtils :\n\n    **`greetArrow`** : Les fonctions fléchées n'ont pas leur propre `this`. Elles capturent `this` depuis la portée lexicale englobante — ici, la portée du module/global, pas `user`. Donc `this?.name` est `undefined`.\n\n    **`fn()`** : `greetRegular` est appelé sans récepteur (`fn()` et non `user.greetRegular()`). En mode strict, `this` est `undefined`. En mode lâche, c'est l'objet global. Dans les deux cas, `this?.name` est `undefined`.\n\n    Si vous aviez appelé `user.greetRegular()` directement, vous auriez obtenu `'Dan'` — car `this` serait lié à `user`.\n\n    Résultat : `undefined, undefined`."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Le piège de this\",\n  \"group\": \"Expert\",\n  \"options\": [\n    { \"text\": \"Dan, Dan\" },\n    { \"text\": \"Dan, undefined\" },\n    { \"text\": \"undefined, Dan\" },\n    { \"text\": \"undefined, undefined\" }\n  ],\n  \"questionProse\": [\n    \"Qu'affiche-t-on ici ?\"\n  ],\n  \"explanationProse\": [\n    \"Deux pièges subtils :\\n\\n    **`greetArrow`** : Les fonctions fléchées n'ont pas leur propre `this`. Elles capturent `this` depuis la portée lexicale englobante — ici, la portée du module/global, pas `user`. Donc `this?.name` est `undefined`.\\n\\n    **`fn()`** : `greetRegular` est appelé sans récepteur (`fn()` et non `user.greetRegular()`). En mode strict, `this` est `undefined`. En mode lâche, c'est l'objet global. Dans les deux cas, `this?.name` est `undefined`.\\n\\n    Si vous aviez appelé `user.greetRegular()` directement, vous auriez obtenu `'Dan'` — car `this` serait lié à `user`.\\n\\n    Résultat : `undefined, undefined`.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 815,
+    "outputTokens": 753,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 2601
+  },
+  "cost": {
+    "inputUsd": 0.0000652,
+    "outputUsd": 0.00018072,
+    "totalUsd": 0.00024592,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
