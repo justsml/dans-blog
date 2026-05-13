@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 84.30
+- Input tokens: 6217
+- Output tokens: 6500
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002057
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Волна инноваций в базах данных 2025 года
 subTitle: Вы можете поблагодарить ИИ.
@@ -247,3 +265,4 @@ const results = await collection.query({
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
 ```
+````
