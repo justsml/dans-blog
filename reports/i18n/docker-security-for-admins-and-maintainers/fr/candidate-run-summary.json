@@ -4,16 +4,16 @@
   "slug": "docker-security-for-admins-and-maintainers",
   "locale": "fr",
   "startedAt": "2026-05-13T17:11:06.032Z",
-  "updatedAt": "2026-05-13T17:14:28.100Z",
+  "updatedAt": "2026-05-13T17:18:28.249Z",
   "modelsRequested": [
     "openrouter/openai/gpt-oss-120b:nitro",
     "openrouter/qwen/qwen3-32b:nitro",
     "deepseek/deepseek-v4-flash",
     "qwen/qwen3.6-plus"
   ],
-  "attemptedModels": 2,
+  "attemptedModels": 3,
   "skippedModels": 1,
-  "rejectedModels": 0,
+  "rejectedModels": 1,
   "candidateModels": 2,
   "totals": {
     "inputTokens": 20419,
@@ -22,13 +22,13 @@
     "cachedInputTokens": 5120,
     "cacheWriteTokens": 0,
     "estimatedCostUsd": 0.004891,
-    "hasUnknownInputTokens": false,
-    "hasUnknownOutputTokens": false,
+    "hasUnknownInputTokens": true,
+    "hasUnknownOutputTokens": true,
     "hasUnknownThinkingTokens": true,
-    "hasUnknownCachedInputTokens": false,
-    "hasUnknownCacheWriteTokens": false,
-    "hasUnknownEstimatedCost": false,
-    "runtimeSeconds": "191.88"
+    "hasUnknownCachedInputTokens": true,
+    "hasUnknownCacheWriteTokens": true,
+    "hasUnknownEstimatedCost": true,
+    "runtimeSeconds": "431.89"
   },
   "attempts": [
     {
@@ -71,6 +71,17 @@
         },
         "estimatedCostUsd": 0.0038295152000000004,
         "pricingSource": "local-openrouter-estimate"
+      }
+    },
+    {
+      "model": "qwen/qwen3.6-plus",
+      "status": "rejected",
+      "validationStatus": "rejected: direct AI SDK translation failed",
+      "reportPath": "reports/i18n/docker-security-for-admins-and-maintainers/fr/qwen-qwen3.6-plus.md",
+      "note": "Command failed after 240000ms: bun run i18n:translate:chunked -- --slug docker-security-for-admins-and-maintainers --locale fr --model qwen/qwen3.6-plus --chunk 6p --quiz-concurrency 24",
+      "telemetry": {
+        "runtimeSeconds": "240.01",
+        "tokens": {}
       }
     }
   ]
