@@ -1,0 +1,111 @@
+{
+  "runId": "openai-gpt-oss-120b-nitro@2026-05-13T14-49-14-227Z",
+  "slug": "lancedb-wasm-browser-client",
+  "locale": "es",
+  "model": "openai/gpt-oss-120b:nitro",
+  "modelPath": "openai-gpt-oss-120b-nitro",
+  "createdAt": "2026-05-13T14:49:27.194Z",
+  "sourcePath": "src/content/posts/2026-04-16--lancedb-wasm-browser-client/index.mdx",
+  "targetPath": "src/content/posts/2026-04-16--lancedb-wasm-browser-client/es/index.mdx",
+  "candidatePath": "reports/i18n/lancedb-wasm-browser-client/es/openai-gpt-oss-120b-nitro/2026-05-13T14-49-14-227Z/candidate.mdx",
+  "sourceHash": "ad7b42f8eccdbc71773708d5c94633585b0379f8093dbd1fcae9841e1bd03510",
+  "outputHash": "3d70419fcccd07e54981890c8864222e6d543b0797ae51444edcaa895dfcbea0",
+  "reasoningEffort": "low",
+  "temperature": 0.3,
+  "maxTokens": 16000,
+  "timeoutMs": 200000,
+  "articleSummary": "**Summary**  \nThe article presents a solution for making LanceDB vector tables searchable directly from a web browser, eliminating the need for a server‑side proxy. It describes a three‑layer architecture: (1) a Rust “publish” step that generates browser‑safe side‑car files (`_web.json`, `_snapshot.json`, manifest/version pointers) and flags incomplete datasets; (2) the `lancedb-wasm` crate, which implements an HTTP‑range‑based object store, a WASM‑compiled search engine (vector NN, full‑text, hybrid RRF), and strict capability checks; and (3) the `@lancedb/lancedb-web` TypeScript wrapper that exposes a tiny async API (`searchTable`) and optionally runs query‑embedding transformers in a Web Worker.  \n\nKey technical challenges highlighted are the performance quirks of ranged `fetch` requests in browsers and the design decision around automatic versus explicit side‑car generation. The tone is a pragmatic tutorial‑style walkthrough aimed at developers and maintainers of LanceDB who want to enable client‑side, read‑only vector search, with recurring framing around “browser‑safe” contracts and “fail‑closed” behavior.",
+  "totalInputTokens": 9164,
+  "totalOutputTokens": 2535,
+  "totalCacheReadTokens": 2048,
+  "totalCacheWriteTokens": 0,
+  "totalDurationMs": 11293,
+  "totalCostUsd": 0.0008136959999999998,
+  "pricingSource": "local-openrouter-estimate",
+  "telemetry": {
+    "model": "openai/gpt-oss-120b:nitro",
+    "chunkSize": "6p",
+    "totalChunks": 8,
+    "totalInputTokens": 9164,
+    "totalOutputTokens": 2535,
+    "totalCacheReadTokens": 2048,
+    "totalCacheWriteTokens": 0,
+    "totalDurationMs": 11293,
+    "totalCostUsd": 0.0008136959999999998,
+    "pricingSource": "local-openrouter-estimate",
+    "chunks": [
+      {
+        "index": 0,
+        "inputTokens": 936,
+        "outputTokens": 215,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 2401,
+        "costUsd": 0.000075204
+      },
+      {
+        "index": 1,
+        "inputTokens": 1142,
+        "outputTokens": 349,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 2276,
+        "costUsd": 0.000107358
+      },
+      {
+        "index": 2,
+        "inputTokens": 1168,
+        "outputTokens": 357,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1099,
+        "costUsd": 0.000109812
+      },
+      {
+        "index": 3,
+        "inputTokens": 1206,
+        "outputTokens": 337,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 996,
+        "costUsd": 0.000107694
+      },
+      {
+        "index": 4,
+        "inputTokens": 1179,
+        "outputTokens": 343,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1232,
+        "costUsd": 0.000107721
+      },
+      {
+        "index": 5,
+        "inputTokens": 1169,
+        "outputTokens": 285,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 868,
+        "costUsd": 0.00009689099999999999
+      },
+      {
+        "index": 6,
+        "inputTokens": 1209,
+        "outputTokens": 301,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 1457,
+        "costUsd": 0.000101331
+      },
+      {
+        "index": 7,
+        "inputTokens": 1155,
+        "outputTokens": 348,
+        "cacheReadTokens": 256,
+        "cacheWriteTokens": 0,
+        "durationMs": 964,
+        "costUsd": 0.000107685
+      }
+    ]
+  }
+}

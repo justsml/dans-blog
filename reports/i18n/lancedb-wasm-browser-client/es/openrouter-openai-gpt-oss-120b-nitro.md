@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/es/index.mdx
+- Validation: passed
+- Runtime seconds: 11.29
+- Input tokens: 9164
+- Output tokens: 2535
+- Thinking tokens: unknown
+- Cached input tokens: 2048
+- Cache write tokens: 0
+- Estimated cost: $0.000814
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Búsqueda Vectorial Serverless
 subTitle: >-
@@ -131,3 +149,4 @@ Lo que hizo que este proyecto fuera manejable es que la arquitectura interna de 
 Los límites de abstracción adecuados no solo facilitan razonar sobre el código interno, sino que permiten que alguien como yo aparezca desde fuera del proyecto y conecte un nuevo entorno de ejecución sin tocar el núcleo. Esa es una verdadera virtud de diseño, y hizo que las 14 000 líneas se sintieran más como rellenar una forma que como luchar contra la base de código.
 
 El PR está [aquí](https://github.com/lancedb/lancedb/pull/3247) si quieres ver los detalles. Todavía estoy a la espera de la revisión. Los mantenedores han sido amables y soy cautelosamente optimista.
+````
