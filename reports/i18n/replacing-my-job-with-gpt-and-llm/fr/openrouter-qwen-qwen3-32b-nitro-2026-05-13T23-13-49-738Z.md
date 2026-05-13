@@ -3,7 +3,7 @@
 - Locale: fr
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2024-12-05--replacing-my-job-with-gpt-and-llm/fr/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 14.09
 - Input tokens: 5555
 - Output tokens: 5581
@@ -12,107 +12,106 @@
 - Cache write tokens: 0
 - Estimated cost: $0.001784
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(fr): replacing-my-job-with-gpt-and-llm via openrouter/qwen/qwen3-32b:nitro -- reports/i18n/replacing-my-job-with-gpt-and-llm/fr reports/i18n/replacing-my-job-with-gpt-and-llm/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-unlisted: false
-title: Se faire remplacer par l'IA
-subTitle: Comment j'ai appris à arrêter de m'inquiéter et à aimer le GPT.
-label: AI
-social_image: ../mobile.webp
+title: "Me remplacer par l'IA"
+subTitle: "Comment j'ai appris à arrêter de m'inquiéter et à aimer le GPT."
+label: "AI"
+social_image: mobile.webp
 category: AI
 subCategory: Machine Learning
-date: '2024-12-04'
-modified: '2024-12-08'
-tags:
-  - ai
-  - gpt
-  - llm
-  - machine-learning
-  - nlp
-  - automation
+date: 2024-12-04
+modified: 2024-12-08
+tags: [ai, gpt, llm, machine-learning, nlp, automation]
 cover_full_width: ../robot-dude-wide.webp
 cover_mobile: ../robot-dude-square-200-75.webp
 cover_icon: ../robot-dude-square-200-75.webp
 ---
-J'ai su que le brouillon d'IA était faux quand j'étais d'accord avec chaque phrase sans en croire aucune.  
 
-Il avait la bonne forme : une introduction confiante, un workflow propre, une conclusion optimiste. Il utilisait tous les mots respectables. Productivité. Créativité. Collaboration. Pipeline. Cela ressemblait à ce que quelqu'un aurait fait en remplaçant mon expérience réelle par un catalogue de mon expérience réelle.  
+J'ai su que le brouillon IA avait déraillé quand j'ai été d'accord avec chaque phrase sans en croire aucune.
 
-Ce qui était gênant, c'est que c'était exactement le problème.  
+Il avait la bonne forme : intro confiante, flux de travail soigné, conclusion optimiste. Il utilisait tous les mots respectables. Productivité. Créativité. Collaboration. Pipeline. On aurait dit que quelqu'un avait remplacé mon expérience réelle par une brochure sur mon expérience réelle.
 
-<p class="inset">Le danger de l'écriture assistée par l'IA n'est pas qu'elle soit toujours mauvaise. Le danger est qu'elle puisse sembler plausible et fluide avant d'avoir mérité une opinion.</p>  
+Ce qui, malheureusement, était exactement le problème.
 
-Cet article est un artefact de cette phase. J'utilisais GPT pour les plans de cours, les concepts d'affiches, les questions de quiz, les réécritures, les résumés et les expériences de traduction. Certaines de ces utilisations fonctionnaient. Certaines m'ont fait gagner des heures. D'autres produisaient le genre de pâte professionnelle fade qui fait que chaque personne dans un paragraphe ressemble à un stakeholder.  
+<p class="inset">Le danger de l'écriture par IA n'est pas qu'elle soit toujours mauvaise. Le danger est qu'elle peut être plausiblement fluide avant d'avoir mérité un point de vue.</p>
 
-Je n'avais pas besoin de moins d'IA. J'avais besoin de plus de frottement.  
+Cet article est un artefact de cette phase. J'utilisais GPT pour des plans de leçons, des concepts de bannières, des invites de quiz, des réécritures, des résumés et des expériences de traduction. Une partie fonctionnait. Une partie faisait gagner des heures. Une partie produisait ce genre de pâte professionnelle fade qui donne à chaque personne dans un paragraphe l'air d'un décideur corporatif.
 
-### La Première Cicatrice  
+Je n'avais pas besoin de moins d'IA. J'avais besoin de plus de friction.
 
-La première erreur réelle a été de considérer que « paraît terminé » était une preuve de réflexion.  
+### La première cicatrice
 
-Je demandais un plan de cours et obtenais quelque chose de cohérent en dix secondes. Cette cohérence était enivrante. Une mauvaise page blanche rend son vide évident. Un brouillon d'IA correct cache les décisions manquantes sous une bonne grammaire.  
+La première vraie erreur a été de traiter « ça a l'air fini » comme preuve de réflexion.
 
-Puis je le relisais et découvrais les problèmes habituels :
+Je demandais un plan de leçon et j'obtenais quelque chose de cohérent en dix secondes. Cette cohérence était enivrante. Une mauvaise page blanche rend son vide évident. Un brouillon IA correct cache les décisions manquantes sous une bonne grammaire.
 
-Rien n'était catastrophiquement faux. C'était la partie plus inquiétante. Tout était un peu trop fin.  
+Ensuite, je le relisais et je trouvais les problèmes habituels :
 
-### Ce que l'IA est devenue bonne  
+- les exemples étaient techniquement corrects mais oubliables
+- les questions de quiz testaient le vocabulaire au lieu du jugement
+- les explications évitaient la distinction difficile dont l'apprenant avait besoin
+- le ton avait dérivé vers un style corporatif aseptisé
 
-Une fois que j'ai arrêté d'accepter les premiers brouillons comme des artefacts, l'IA est devenue beaucoup plus utile.  
+Rien n'était catastrophiquement faux. C'était la partie la plus effrayante. Tout était un peu trop bien.
 
-J'en fais mon outil de pression :  
+### Ce pour quoi l'IA est devenue bonne
 
-- **Trouver la partie vague** : « Quelles affirmations dans cette leçon sont non étayées ? »  
-- **Générer les mauvaises réponses** : « Qu'aurait un débutant intelligent choisi pour la mauvaise raison ? »  
-- **Changer l'audience** : « Explique cela à un développeur React qui n'a jamais utilisé Postgres. »  
-- **Créer du contraste** : « Donne-moi trois exemples où ce conseil échoue. »  
-- **Compresser le désordre** : « Transforme ces notes en un plan sans ajouter de nouvelles affirmations. »  
+Une fois que j'ai arrêté d'accepter les premiers brouillons comme des artefacts, l'IA est devenue beaucoup plus utile.
 
-Ces invites ne remplacent pas le jugement. Elles facilitent son application. Le modèle est très bon pour produire des surfaces. Mon travail est de décider quelles surfaces méritent de devenir structure.  
+Je l'utilise surtout comme un outil de pression :
 
-### Le pipeline, avec des garde-fous  
+- **Trouver la partie vague** : « Quelles affirmations dans cette leçon ne sont pas soutenues ? »
+- **Générer les mauvaises réponses** : « Que choisirait un débutant intelligent pour la mauvaise raison ? »
+- **Changer l'audience** : « Explique ça à un développeur React qui n'a jamais utilisé Postgres. »
+- **Créer du contraste** : « Donne-moi trois exemples où ce conseil échoue. »
+- **Compresser le bazar** : « Transforme ces notes en plan sans ajouter de nouvelles affirmations. »
 
-Le workflow qui a survécu est moins glamour que l'ancienne version :  
+Ces invites ne remplacent pas le jugement. Ils rendent le jugement plus facile à appliquer. Le modèle est très bon pour produire des surfaces. Mon travail est de décider quelles surfaces méritent de devenir de la structure.
 
-1. **Collecter le matériel brut**  
-   Je commence avec des notes, du code, des liens, des captures d'écran et la confusion spécifique des apprenants que j'essaie d'aborder.
+### Le pipeline, avec des garde-fous
 
-2. **Demander à l'IA d'organiser, pas de décider**  
-   Elle peut regrouper des idées, révéler des étapes manquantes et suggérer des sections. Je ne lui laisse pas choisir la thèse sans résistance.  
+Le flux de travail qui a survécu est moins glamour que l'ancienne version :
 
-3. **Rédiger les parties clés moi-même**  
-   L'introduction, la règle de décision, les exemples et la conclusion nécessitent un goût humain. Ce sont ces éléments-là qui donnent confiance à l'article.  
+1. **Collecter le matériau brut**
+   Je commence avec des notes, du code, des liens, des captures d'écran, et la confusion spécifique de l'apprenant que j'essaie de résoudre.
 
-4. **Utiliser l'IA pour interroger le brouillon**  
-   Je lui demande ce qui sonne générique, ce qui suppose trop, ce qu'un lecteur sceptique contesterait et où les exemples échouent.  
+2. **Demander à l'IA d'organiser, pas de décider**
+   Elle peut grouper les idées, révéler les étapes manquantes, et suggérer des sections. Je ne la laisse pas choisir la thèse sans un combat.
 
-5. **Garder l'œuvre honnête**  
-   Si un paragraphe pourrait vivre sur n'importe quel blog SaaS, il est réécrit ou supprimé.  
+3. **Écrire les parties tranchantes moi-même**
+   L'ouverture, la règle de décision, les exemples et la fin ont besoin de goût humain. C'est là que l'article gagne sa confiance.
 
-Cette dernière règle fait beaucoup de travail.  
+4. **Utiliser l'IA pour interroger le brouillon**
+   Je demande ce qui sonne générique, ce qui suppose trop, ce qu'un lecteur sceptique objecterait, et où les exemples échouent.
 
-### Les quiz ont changé mon avis  
+5. **Garder l'artefact honnête**
+   Si un paragraphe pourrait vivre sur n'importe quel blog SaaS, il est réécrit ou supprimé.
 
-La rédaction de quiz est l'endroit où l'IA est devenue vraiment utile pour moi.  
+Cette dernière règle fait beaucoup de travail.
 
-Pas parce qu'elle peut écrire des questions parfaites. Elle ne peut pas. Elle adore les distracteurs évidents, l'ambiguïté accidentelle et les explications qui glissent sur la mécompréhension.  
+### Les quiz ont changé mon avis
 
-Mais elle peut générer rapidement un éventail de mauvaises réponses possibles. Puis je regarde la liste et je me demande : laquelle de ces réponses représente une erreur réelle d'un apprenant ?  
+L'écriture de quiz est là où l'IA est devenue véritablement utile pour moi.
 
-C'est cette collaboration utile. Le modèle produit de l'argile. Je décide si c'est un bol, une brique ou une décharge.
+Pas parce qu'elle peut écrire des questions parfaites. Elle ne peut pas. Elle adore les distracteurs évidents, l'ambiguïté accidentelle, et les explications qui glissent à côté du malentendu.
 
-### Remplacer moi-même était le mauvais cadre
+Mais elle peut générer un champ de mauvaises réponses possibles rapidement. Ensuite, je peux regarder la liste et me demander : lesquelles de ces réponses représentent une vraie erreur d'apprenant ?
 
-Le titre est une blague, mais le cadre est faux.
+C'est la collaboration utile. Le modèle produit de l'argile. Je décide si c'est un bol, une brique, ou une décharge.
 
-Je ne me remplace pas par l'IA. Je remplace les parties de mon processus qui étaient déjà mécaniques : regroupement en première passe, reformulations alternatives, structures de traduction, options d'quiz, concepts d'images, passes de résumé.
+### Me remplacer était le mauvais angle
 
-Les parties que je ne peux pas remplacer sont celles que les lecteurs remarquent vraiment lorsqu'elles manquent : le goût, les cicatrices, la priorité, le scepticisme, et la volonté de dire « cela sonnait bien, mais c'était faux ».
+Le titre est une blague, mais l'angle est faux.
 
-L'IA m'a rendu plus rapide. Plus important encore, elle a rendu certains de mes points faibles plus visibles. Le coût est que je dois maintenant être plus délibéré quant à ne pas publier des textes qui ne se comportent que comme des textes.
+Je ne me remplace pas par l'IA. Je remplace les parties de mon processus qui étaient déjà mécaniques : regroupement initial, formulations alternatives, échafaudages de traduction, options de brouillon de quiz, concepts d'image, passes de résumé.
 
-C'est le compromis auquel je peux souscrire.
+Les parties que je ne peux pas remplacer sont celles que les lecteurs remarquent vraiment quand elles manquent : le goût, les cicatrices, la priorité, le scepticisme, et la volonté de dire « ça sonnait bien, mais c'était faux. »
+
+L'IA m'a rendu plus rapide. Plus important, elle a rendu certains de mes points faibles plus faciles à voir. Le coût est que je dois maintenant être plus délibéré sur le fait de ne pas publier de prose qui se comporte simplement comme de la prose.
+
+C'est le compromis avec lequel je peux vivre.
 ````

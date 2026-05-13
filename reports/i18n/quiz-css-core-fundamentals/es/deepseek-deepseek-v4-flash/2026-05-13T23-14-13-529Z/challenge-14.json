@@ -1,0 +1,47 @@
+{
+  "index": 13,
+  "attempt": 1,
+  "originalTitle": "Zero-Specificity Selectors",
+  "translatedTitle": "Selectores de Especificidad Cero",
+  "translation": {
+    "title": "Selectores de Especificidad Cero",
+    "group": "Selector: Especificidad",
+    "options": [
+      {
+        "text": ":where(.card) .title"
+      },
+      {
+        "text": ".card .title"
+      },
+      {
+        "text": ":is(.card) .title"
+      },
+      {
+        "text": "#card .title"
+      }
+    ],
+    "questionProse": [
+      "¿Qué selector tiene la especificidad más baja?"
+    ],
+    "explanationProse": [
+      "`:where(.card) .title` tiene la especificidad más baja. La pseudo-clase `:where()` y todo lo que contiene contribuye `0-0-0`, por lo que solo `.title` cuenta. `:is(.card) .title` mantiene la especificidad de `.card`, `.card .title` tiene dos clases, y `#card .title` incluye un ID."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Selectores de Especificidad Cero\",\n  \"group\": \"Selector: Especificidad\",\n  \"options\": [\n    {\n      \"text\": \":where(.card) .title\"\n    },\n    {\n      \"text\": \".card .title\"\n    },\n    {\n      \"text\": \":is(.card) .title\"\n    },\n    {\n      \"text\": \"#card .title\"\n    }\n  ],\n  \"questionProse\": [\n    \"¿Qué selector tiene la especificidad más baja?\"\n  ],\n  \"explanationProse\": [\n    \"`:where(.card) .title` tiene la especificidad más baja. La pseudo-clase `:where()` y todo lo que contiene contribuye `0-0-0`, por lo que solo `.title` cuenta. `:is(.card) .title` mantiene la especificidad de `.card`, `.card .title` tiene dos clases, y `#card .title` incluye un ID.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 726,
+    "outputTokens": 817,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 5663,
+    "providerCostUsd": 0.000472,
+    "providerUpstreamCostUsd": 0.000472,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.00010164000000000001,
+    "outputUsd": 0.00022876000000000003,
+    "totalUsd": 0.0003304,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
