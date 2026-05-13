@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-makes-everything-better
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-03-12--docker-makes-everything-better/hi/index.mdx
+- Validation: passed
+- Runtime seconds: 6.38
+- Input tokens: 2079
+- Output tokens: 2840
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.000848
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -62,3 +80,4 @@ sudo docker run --name nodejs01 -d -p 3300:3300 -p 4433:4433 nodejs:latest
 > _पूरे_ SDLC में डॉकर आपके जीवन को आसान बना देगा।  
 
 > - काफी करीब
+````
