@@ -1,0 +1,83 @@
+{
+  "selectedCommit": "bdf59d8e8adc048dbdc3c5b7c9b4fa8c8484b494",
+  "selectedModel": "openrouter/qwen/qwen3-32b:nitro",
+  "scores": {
+    "readability": 9,
+    "technicalAccuracy": 9,
+    "coherence": 9,
+    "relevance": 10,
+    "translationQuality": 9,
+    "mdxPreservation": 10
+  },
+  "suggestions": [
+    {
+      "priority": "high",
+      "match": "आकृति-विहीन कला",
+      "replacement": "तराशी हुई कला",
+      "reason": "The English 'sculpted work of art' was translated as 'आकृति-विहीन' (shapeless/formless), which is the opposite of the intended meaning. 'तराशी हुई' correctly conveys 'sculpted'."
+    },
+    {
+      "priority": "medium",
+      "match": "अपनाहीन PR टिप्पणियाँ",
+      "replacement": "orphan PR टिप्पणियाँ",
+      "reason": "The term 'अपनाहीन' is not a standard Hindi word for 'orphan'. 'orphan' (transliterated) is better understood in a technical context."
+    },
+    {
+      "priority": "medium",
+      "match": "अवनत होगा",
+      "replacement": "नुकसानदेह होगा",
+      "reason": "'अवनत' (degraded/declined) is too formal and slightly awkward here. 'नुकसानदेह' (disadvantageous) fits the context of comparing strategies better."
+    }
+  ],
+  "rationale": "The selected candidate provides a complete translation while maintaining the MDX structure and technical commands. It captures Dan's direct style well. The suggestions address a few mistranslations where the meaning was inverted (sculpted vs shapeless) or terms were overly literal/invented.",
+  "slug": "deathmatch-git-rebase-vs-merge",
+  "locale": "hi",
+  "candidateCommits": [
+    "3225034e4b62d3c4680a09f8acc394b729c71e41",
+    "bdf59d8e8adc048dbdc3c5b7c9b4fa8c8484b494"
+  ],
+  "suggestionLog": [
+    {
+      "priority": "high",
+      "match": "एसक्वेश मर्ज",
+      "replacement": "स्क्वैश मर्ज",
+      "reason": "Consistency: 'Squash' is translated as 'स्क्वैश' elsewhere in the document; 'एसक्वेश' is a phonetic misspelling.",
+      "pass": 1,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "high",
+      "match": "आकृति-विहीन कला",
+      "replacement": "तराशी हुई कला",
+      "reason": "The English 'sculpted work of art' was translated as 'आकृति-विहीन' (shapeless/formless), which is the opposite of the intended meaning. 'तराशी हुई' correctly conveys 'sculpted'.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "अपनाहीन PR टिप्पणियाँ",
+      "replacement": "orphan PR टिप्पणियाँ",
+      "reason": "The term 'अपनाहीन' is not a standard Hindi word for 'orphan'. 'अनाथ' or 'orphan' (transliterated) is better understood in a technical context.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    },
+    {
+      "priority": "medium",
+      "match": "अवनत होगा",
+      "replacement": "नुकसानदेह होगा",
+      "reason": "'अवनत' (degraded/declined) is too formal and slightly awkward here. 'नुकसानदेह' (disadvantageous) fits the context of comparing strategies better.",
+      "pass": 2,
+      "applied": true,
+      "note": "Applied exact replacement to selected MDX."
+    }
+  ],
+  "validation": {
+    "ok": true,
+    "scope": "local",
+    "command": "bun run i18n:validate --slug deathmatch-git-rebase-vs-merge --locale hi --skip-global",
+    "output": ""
+  }
+}
