@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: deathmatch-git-rebase-vs-merge
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2023-08-28--deathmatch-git-rebase-vs-merge/es/index.mdx
+- Validation: passed
+- Runtime seconds: 20.49
+- Input tokens: 8139
+- Output tokens: 7858
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.002537
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -132,3 +150,4 @@ Al final, **el rebase significa que ocasionalmente te encontrarás reexperimenta
 - Puedes usar el separador especial `--` con `git checkout` para permanecer en la rama actual mientras copias los archivos especificados:  
 - `git checkout feature/half-a-feature **--** <folder or file path>`  
 - Asegúrate de haber comprometido cualquier cambio que desees conservar primero, ya que esto sobrescribirá cualquier cambio local.
+````
