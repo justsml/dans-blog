@@ -1,0 +1,146 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ja/index.mdx
+- Validation: passed
+- Runtime seconds: 3.37
+- Input tokens: 6694
+- Output tokens: 1999
+- Thinking tokens: unknown
+- Cached input tokens: 3328
+- Cache write tokens: 0
+- Estimated cost: $0.000621
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: 国際的な数値と通貨の理解
+subTitle: ローカライズされた通貨を解説！
+draft: false
+date: '2024-08-28'
+modified: '2024-09-03'
+tags:
+  - engineering
+  - internationalization
+  - localization
+  - currency
+  - numbers
+category: HowTo
+subCategory: Internationalization
+cover_full_width: ../currency-banner-wide.webp
+cover_mobile: ../currency-banner-pic__w200.webp
+cover_icon: ../currency-banner-pic__w200.webp
+---
+- [Money: Localization (L10n) and Internationalization (i18n)](#money-localization-l10n-and-internationalization-i18n)
+- [Critical Concepts](#critical-concepts)
+  - [Numbers are Local 🏘️](#numbers-are-local-️)
+  - [Currency is Global 🌎](#currency-is-global-️)
+  - [When Locale Matters](#when-locale-matters)
+- [A Solution](#a-solution)
+- [Next Steps](#next-steps)
+
+## Money: Localization (L10n) and Internationalization (i18n)
+
+単にスクラブルで勝つための手段ではありません。_ローカリゼーション_ と _インターナショナリゼーション_ は、製品を **別の国で自然に使えるようにする** プロセスを指します。
+
+<p class="breakout quote">通貨を誤ったローカル形式で表示するのは、明らかな失敗です。努力が全く見られません。<br/>価格をフォーマットできないなら、配送情報はどう扱いますか？</p>
+
+インターナショナリゼーションは広範なテーマで、テキスト翻訳から日付フォーマットまで網羅します。本稿では、特に **数値と通貨のフォーマット** に焦点を当てます。
+
+3つのユーロ圏諸国、米国、インド間でのフォーマットを見てみましょう。
+
+- `€1,234,567.89` Ireland 🇮🇪
+- `1.234.567,89 €` Germany 🇩🇪
+- `1 234 567,89 €` France 🇫🇷
+- `$1,234,567.89` USA 🇺🇸
+- `₹12,34,567.89` India 🇮🇳
+
+混沌です！そうでしょう？ 記号や空白、句読点が至る所に飛び交っています。EU が何かに合意できるのは驚きです！ 😅
+
+## Critical Concepts
+
+解決策に入る前に、**「Numbers are Local」** とは何を指すのか確認しましょう。
+
+### Numbers are Local 🏘️
+
+各ロケール（[ISO 3166 に基づく国一覧](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)）は、数値のフォーマット規則を定義します。
+
+数値フォーマットの規則には、次が含まれます。
+
+- 小数点: カンマ、ピリオド。
+- 桁区切り: カンマ、ピリオド、スペース。
+- 通貨記号の位置と間隔。
+
+### Currency is Global 🌎
+
+`currency` は特定の金銭単位を指します。（一覧は [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217#Active_codes_(list_one)) を参照）
+
+- 記号を指定します: `$`, `€`, `£`, `¥`（しばしば再利用されます）。
+- 常に 3 文字コードを持ちます: `USD`, `EUR`, `GBP`, `JPY`。
+- 理論上は「どの」国でも使用・交換可能です。
+- 通貨間の変換には為替レートデータが必要です。
+- 値はロケールに依存して変わりません。
+
+### When Locale Matters
+
+ほとんどの e コマース/決済 REST API は `price` と `currencyCode` だけを扱います。ロケールがないのはなぜでしょうか？
+
+ロケールは（通常）OS/デバイスレベルで設定され、ブラウザは `navigator.language` でそれを取得できます。ユーザーごとにロケールが異なる可能性があるため、数値や通貨のフォーマットはクライアント側で行うのが合理的です。
+
+## 解決策
+
+よし、朗報です！最新のプログラミング言語はこの機能を標準で備えています。JavaScript では [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) クラスと `Intl.NumberFormat` が利用可能です。
+
+コードを見てみましょう:
+
+```javascript
+const number = 1_234_567.89;
+
+/**
+ * Format a number in local currency.
+ * @param {number} amount - The amount to format.
+ * @param {string} currency - The 3-letter currency code.
+ * @param {string} [locale] - The users locale string.
+ */
+const formatMoney = (amount, currency, locale = navigator.language) =>
+  new Intl.NumberFormat(locale, { currency, style: 'currency' })
+    .format(amount);
+
+console.log('🇩🇪 ' + formatMoney(number, 'EUR', 'de-DE'));
+console.log('🇮🇪 ' + formatMoney(number, 'EUR', 'ga-IE'));
+console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
+```
+
+税金計算や割引適用、通貨間の変換など、より高度な処理が必要な場合は [dinero.js](https://v2.dinerojs.com/) のようなライブラリを利用すると良いでしょう。
+
+## NextSteps
+
+必要に応じて、以下の関連概念を検討してください。
+
+- ユーザーのロケールに関するベストプラクティス。検出と上書きの許可（例: 国選択ドロップダウン）。
+- 整数全体を永続化する。ドルではなくセント単位で保存。
+- 金額計算。（例: `20% off` クーポンの適用、`subTotal + taxes` の算出など）
+- リアルタイム為替レート。（小売購入や外貨取引向け）
+
+<p class="breakout quote">これらのトピックに関する今後の記事が欲しい場合はお知らせください！</p>
+
+{/* ## Recommendations
+
+Some libraries can help with these tasks: */}
+
+**JavaScript / TypeScript**
+
+- [dinero.js](https://v2.dinerojs.com/) は金額計算、為替レート、フォーマット、パースをサポートします！
+
+**Rust**
+
+- [rusty_money](https://crates.io/crates/rusty_money) は私が好む Rust ライブラリです。
+
+**Go**
+
+- [currency](https://github.com/bojanz/currency) は現在私が使っている Golang の選択肢です。
+````
