@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: serverless-database-magic
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-09-15--serverless-database-magic/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 9.77
+- Input tokens: 6153
+- Output tokens: 3297
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.000833
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: L’ondata di innovazione dei database 2025
 subTitle: Puoi ringraziare l'IA.
@@ -241,3 +259,4 @@ Anche AWS sta andando in questa direzione con il lavoro di ricerca vettoriale ad
 > **Disclaimer:** Uso Pagefind da anni e sono diventato un collaboratore nel 2025. Ho sperimentato Orama e Chroma per progetti più piccoli e sto esplorando LanceDB per applicazioni AI più grandi. Nessun legame finanziario con questi progetti—solo un forte interesse per il panorama in evoluzione dei database.
 
 [1]: https://danlevy.net/you-might-not-need-algolia/
+````
