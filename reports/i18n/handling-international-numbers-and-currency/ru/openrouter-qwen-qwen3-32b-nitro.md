@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: handling-international-numbers-and-currency
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-08-29--handling-international-numbers-and-currency/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 16.03
+- Input tokens: 5876
+- Output tokens: 5200
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001718
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Разбор международных чисел и валюты
@@ -125,3 +143,4 @@ console.log('🇫🇷 ' + formatMoney(number, 'EUR', 'fr-FR'));
 **Go**
 
 - [`currency`](https://github.com/bojanz/currency) — мой текущий выбор на Golang.
+````
