@@ -1,0 +1,546 @@
+# Translation Candidate
+- Slug: quiz-data-structures-algorithms
+- Locale: it
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2024-10-31--quiz-data-structures-algorithms/it/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 3.90
+- Input tokens: unknown
+- Output tokens: unknown
+- Thinking tokens: unknown
+- Cached input tokens: unknown
+- Cache write tokens: unknown
+- Estimated cost: unknown
+- Pricing source: unknown
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-data-structures-algorithms --locale it --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
+## Raw Output
+
+````mdx
+---
+title: 'Quiz: Strutture Dati e Algoritmi'
+subTitle: Puoi fare il BS su un albero binario?
+label: Algorithms & DS
+unlisted: true
+date: '2024-10-31'
+modified: '2024-11-08'
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: Data Structures
+tags:
+  - quiz
+  - data-structures
+  - algorithms
+  - intermediate
+  - advanced
+cover: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_full_width: ../redcharlie-mugDbuNnbd0-unsplash-wide.webp
+cover_mobile: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+cover_icon: ../redcharlie-mugDbuNnbd0-unsplash-square.webp
+---
+import Challenge from '../../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../../components/QuizUI/QuizUI';
+
+<section class="inset">
+  Benvenuto al mio quiz su Strutture Dati e Algoritmi!
+</section>
+
+Questo quiz valuterà la tua conoscenza di strutture dati (Stack, Liste, Alberi, ecc.), e algoritmi (), e complessità temporale.
+
+### 20 Domande... Inizia!
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Strutture Dati"
+  title="Stack vs Code"
+  options={[
+    {text: 'Entrambi'},
+    {text: 'Code'},
+    {text: 'Stack', isAnswer: true},
+    {text: 'Nessuno'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale struttura dati è più adatta a un modello di accesso LIFO (Last In, First Out)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Gli stack sono i più adatti ai modelli di accesso LIFO. Le code sono i più adatti ai modelli di accesso FIFO (First In, First Out).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Algoritmi"
+  title="Notazione Big O"
+  options={[
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale di un algoritmo che impiega sempre la stessa quantità di tempo per l'esecuzione, indipendentemente dalla dimensione dell'input?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    O(1) rappresenta la complessità temporale costante. Significa che l'algoritmo impiega sempre la stessa quantità di tempo per l'esecuzione, indipendentemente dalla dimensione dell'input.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Strutture dati"
+  title="Calcolo della lunghezza della lista collegata"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n)', isAnswer: true},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale per calcolare la lunghezza di una lista collegata singola?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Per calcolare la lunghezza di una lista collegata singola, devi attraversare ogni nodo dalla testa alla coda, risultando in una complessità temporale O(n).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Strutture Dati"
+  title="Ricerca in Albero Binario di Ricerca"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale media per cercare un elemento in un albero binario di ricerca bilanciato?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In un BST bilanciato, la complessità temporale media per la ricerca è O(log n) perché ogni livello dimezza lo spazio di ricerca.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Algoritmi di Ordinamento"
+  title="Complessità di Merge Sort"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(log n)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale dell'algoritmo Merge Sort nel caso peggiore?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Merge Sort opera sempre con una complessità nel caso peggiore di O(n log n) poiché divide ripetutamente l'array a metà e unisce i sottoarray ordinati.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Grafi"
+  title="DFS vs BFS"
+  options={[
+    {text: 'Coda', isAnswer: true},
+    {text: 'Pila'},
+    {text: 'Coda Prioritaria'},
+    {text: 'Mappa Hash'},
+    {text: 'Insieme'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la struttura dati tipicamente usata per implementare la ricerca in ampiezza (BFS)?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    BFS utilizza una Coda per esplorare i nodi livello per livello, elaborando i nodi in ordine di ampiezza (per "riga").
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Grafi"
+  title="Rilevamento dei cicli nei grafi"
+  options={[
+    {text: 'Quick Sort'},
+    {text: 'Ricerca in ampiezza'},
+    {text: 'Merge Sort'},
+    {text: 'Ricerca in profondità', isAnswer: true},
+    {text: 'Bubble Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale algoritmo è comunemente usato per rilevare cicli in un grafo diretto?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La ricerca in profondità (DFS) è tipicamente usata per rilevare cicli in un grafo mantenendo uno stack di ricorsione per tenere traccia dei nodi visitati.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Algoritmi di Ordinamento"
+  title="Complessità di Heap Sort"
+  options={[
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale di Heap Sort nel caso peggiore?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Heap Sort mantiene una complessità temporale nel caso peggiore di O(n log n), poiché costruisce un heap ed estrae ripetutamente l'elemento massimo.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Strutture Dati"
+  title="Complessità Temporale della Tabella Hash"
+  options={[
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(1)', isAnswer: true},
+    {text: 'O(n^2)'},
+    {text: 'O(n log n)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale media per accedere a un elemento in una tabella hash?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le tabelle hash hanno una complessità temporale media di O(1) per l'accesso agli elementi, assumendo una buona funzione hash che minimizza le collisioni.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Strutture Dati"
+  title="Operazioni di Stack"
+  options={[
+    {text: 'Push, Pop, Peek', isAnswer: true},
+    {text: 'Enqueue, Dequeue, Peek'},
+    {text: 'Insert, Search, Delete'},
+    {text: 'Traverse, Visit, Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale insieme contiene le operazioni tipiche eseguite su uno stack?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le operazioni principali di uno stack sono Push (aggiungi elemento), Pop (rimuovi elemento) e Peek (visualizza l'elemento in cima senza rimuoverlo).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Algoritmi sui grafi"
+  title="Algoritmo del percorso più breve"
+  options={[
+    {text: 'Algoritmo di Kruskal'},
+    {text: 'Algoritmo di Prim'},
+    {text: 'Algoritmo di Bellman-Ford'},
+    {text: 'Algoritmo di Dijkstra', isAnswer: true},
+    {text: 'Algoritmo di Floyd-Warshall'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale algoritmo è comunemente usato per trovare il percorso più breve in un grafo pesato con archi non negativi?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'Algoritmo di Dijkstra è spesso usato per trovare il percorso più breve nei grafi con pesi degli archi non negativi. Utilizza una coda di priorità per determinare la distanza minima in modo efficiente.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={11}
+  group="Strutture Dati ad Alberi"
+  title="Alberi di Ricerca Autobilancianti"
+  options={[
+    {text: 'Albero di Ricerca Binario e Min Heap'},
+    {text: 'Albero AVL e Albero Rosso-Nero', isAnswer: true},
+    {text: 'Min Heap e Max Heap'},
+    {text: 'Stack e Coda'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale gruppo contiene esempi di alberi di ricerca binari autobilancianti?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Gli alberi AVL e gli alberi Rosso-Nero sono tipi di alberi autobilancianti, che garantiscono che l'albero rimanga bilanciato dopo ogni inserimento o cancellazione.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={12}
+  group="Ricorsione"
+  title="Caso Base della Ricorsione"
+  options={[
+    {text: 'Ciclo Infinito'},
+    {text: 'Overflow dello Stack'},
+    {text: 'Caso Base', isAnswer: true},
+    {text: 'Variabile Globale'},
+    {text: 'Limitazione di Scope'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa deve essere definito in una funzione ricorsiva per evitare la ricorsione infinita?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Un caso base è necessario in una funzione ricorsiva per fermare le chiamate ricorsive quando viene soddisfatta una condizione specifica, evitando la ricorsione infinita.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={13}
+  group="Strutture Dati"
+  title="Operazioni della Coda"
+  options={[
+    {text: 'Enqueue e Dequeue', isAnswer: true},
+    {text: 'Push e Pop'},
+    {text: 'Peek e Top'},
+    {text: 'Traverse e Sort'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quali sono le due operazioni principali di una coda?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le due operazioni principali in una coda sono Enqueue (aggiungi un elemento alla fine) e Dequeue (rimuovi un elemento dall'inizio).
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={14}
+  group="Algoritmi sui Grafi"
+  title="Ordinamento Topologico"
+  options={[
+    {text: 'Il grafo deve contenere cicli'},
+    {text: 'Il grafo deve essere pesato e connesso'},
+    {text: 'Il grafo deve essere non orientato e aciclico'},
+    {text: 'Il grafo deve essere orientato e aciclico', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quali sono le condizioni per eseguire l'ordinamento topologico su un grafo?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'ordinamento topologico può essere eseguito su un grafo se è orientato e aciclico (DAG). Questo tipo di ordinamento è utile nei problemi di pianificazione delle attività.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={15}
+  group="Programmazione Dinamica"
+  title="Complessità della Ricorsione di Fibonacci"
+  options={[
+    {text: 'O(1)'},
+    {text: 'O(2^n)', isAnswer: true},
+    {text: 'O(n)'},
+    {text: 'O(log n)'},
+    {text: 'O(n^2)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la complessità temporale di un'implementazione ricorsiva ingenua della serie di Fibonacci?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'implementazione ricorsiva ingenua della serie di Fibonacci ha una complessità temporale di O(2^n) a causa dei numerosi calcoli ripetuti per ogni numero di Fibonacci.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={16}
+  group="Strutture Dati"
+  title="Implementazione di Coda Prioritaria"
+  options={[
+    {text: 'Array'},
+    {text: 'Pila'},
+    {text: 'Heap', isAnswer: true},
+    {text: 'Coda'},
+    {text: 'Lista Collegata'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale struttura dati è comunemente usata per implementare una coda prioritaria?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Una coda prioritaria è più spesso implementata usando un heap perché permette un'estrazione efficiente dell'elemento con priorità più alta o più bassa.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={17}
+  group="Strutture Dati"
+  title="Attraversamenti di Alberi Binari"
+  options={[
+    {text: 'In-order, Pre-order, Post-order', isAnswer: true},
+    {text: 'Breadth-First, Depth-First, Heapify'},
+    {text: 'Sort, Search, Rotate'},
+    {text: 'Push, Pop, Peek'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale insieme elenca gli ordini di attraversamento depth‑first più comuni per un albero binario?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In-order, Pre-order e Post-order sono i tre ordini di attraversamento depth‑first più comuni per gli alberi binari, ognuno con un ordine diverso di visita dei nodi. Anche l'attraversamento breadth‑first è comune, ma appartiene a una categoria di attraversamento diversa.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={18}
+  group="Strutture Dati ad Alberi"
+  title="Proprietà dell'Heap"
+  options={[
+    {text: 'Tutti i nodi sono ordinati da sinistra a destra'},
+    {text: 'La radice è sempre l\'elemento più grande'},
+    {text: 'Tutte le foglie sono allo stesso livello'},
+    {text: 'La radice è l\'elemento più piccolo e l\'altezza è O(log n)', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quali delle seguenti proprietà sono vere per un min-heap?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    In un min-heap, la radice è sempre l'elemento più piccolo e l'altezza dell'albero è O(log n), rendendo l'inserimento e l'estrazione efficienti.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={19}
+  group="Algoritmi di Ordinamento"
+  title="Stabilità di Bubble Sort"
+  options={[
+    {text: 'Instabile'},
+    {text: 'Stabile', isAnswer: true},
+    {text: 'Dipende dall\'implementazione'},
+    {text: 'Nessuno'},
+    {text: 'La complessità determina la stabilità'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    L'algoritmo Bubble Sort è stabile?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Bubble Sort è un algoritmo di ordinamento stabile perché preserva l'ordine relativo degli elementi uguali durante l'ordinamento.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
