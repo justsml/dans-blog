@@ -3,7 +3,7 @@
 - Locale: de
 - Model: qwen/qwen3.6-35b-a3b
 - Target: src/content/posts/2026-05-06--llm-evals-are-broken/de/index.mdx
-- Validation: deferred
+- Validation: rejected: direct AI SDK translation failed
 - Runtime seconds: 127.66
 - Input tokens: 8090
 - Output tokens: 26747
@@ -12,23 +12,16 @@
 - Cache write tokens: 0
 - Estimated cost: $0.027960
 - Pricing source: local-openrouter-estimate
-- Note: Generated through the direct AI SDK chunked translator.
+- Note: Command failed: git commit --only -m i18n candidate(de): llm-evals-are-broken via qwen/qwen3.6-35b-a3b -- reports/i18n/llm-evals-are-broken/de reports/i18n/llm-evals-are-broken/candidates.jsonl
 ## Raw Output
 
 ````mdx
 ---
-title: Kämpfe gegen schlechte Ergebnisse mit Evals!
-subTitle: Benchmarks messen Benchmarks. Ihr System braucht eigene Metriken.
-date: '2026-05-01'
-modified: '2026-05-06'
-tags:
-  - ai
-  - llm
-  - evals
-  - testing
-  - production
-  - quality
-  - observability
+title: "Bekämpfe Übel mit Evals!"
+subTitle: "Benchmarks messen Benchmarks. Dein System braucht eigene Messwerte."
+date: 2026-05-01
+modified: 2026-05-06
+tags: [ai, llm, evals, testing, production, quality, observability]
 category: AI
 subCategory: Engineering
 popularity: 0.85
@@ -37,76 +30,77 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-Jedes neue Modell kommt im Smoking der Benchmarks daher.
 
-MMLU: 92.4%. HumanEval: 87.2%. LLeMU: 88.7%. MATH: 73.6%. AGI: 127%!
+Jedes neue Modell kommt im Smoking aus Benchmarks daher.
 
-Doch für 99 % der Unternehmen, die Prozesse und Produkte mit KI aufbauen, **zählt das alles nichts.**
+MMLU: 92,4 %. HumanEval: 87,2 %. LLeMU: 88,7 %. MATH: 73,6 %. AGI: 127 %!
 
-Was zählt stattdessen? Wie schneiden IHRE Workloads ab? Werden sie besser oder schlechter? Der einzige rationale Weg, das zu wissen, ist das Schreiben von Evals (Tests für LLMs), die die spezifischen Aufgaben, Daten und Fehlermuster Ihres Systems widerspiegeln.
+Für 99 % der Unternehmen, die Prozesse und Produkte mit KI bauen, **ist das alles irrelevant.**
+
+Was wirklich zählt? Wie schlagen sich DEINE Workloads? Werden sie besser oder schlechter? Der einzige vernünftige Weg, das herauszufinden, ist das Schreiben von Evals (Tests für LLMs), die die spezifischen Aufgaben, Daten und Fehlermodi deines Systems abbilden.
 
 <blockquote class="breakout">
-  <p>Die Benchmarks lügen nicht. Sie beantworten nur die Frage eines anderen.</p>
+  <p>Die Benchmarks lügen nicht. Sie beantworten nur die Frage von jemand anderem.</p>
 </blockquote>
 
 ---
 
-## Was „Vibes-Based Evaluation" tatsächlich kostet
+## Was „Vibes-basierte Evaluation" tatsächlich kostet
 
-Der Standardansatz: Ein Model-Update deployen, die Beschwerdekanäle beobachten, zurückrollen, wenn es laut wird.
+Der Standardansatz: Eine Modelländerung ausliefern, die Beschwerdekanäle beobachten, zurückrollen, wenn der Raum laut wird.
 
-Das verpasst fast alles Interessante:
+Dabei verpasst man fast alles, was interessant ist:
 
-**Sie fangen nur laute Ausfälle ab.** Nutzer, die eine selbstsicher falsche Antwort erhalten und es nicht merken? Stumm. Nutzer, die eine schlechtere Antwort bekommen und die Funktion nicht mehr nutzen? Stumm. Support-Tickets und Fehlerquoten decken nur einen Bruchteil der Qualitätsregression ab.
+**Man fängt nur laute Fehler ein.** Nutzer, die eine selbstbewusst falsche Antwort bekommen und es nicht merken? Still. Nutzer, die eine schlechtere Antwort bekommen und das Feature verlassen? Still. Support-Tickets und Fehlerraten erfassen nur einen Bruchteil der Qualitätsrückgänge.
 
-**Sie können Regressionen nicht von Verbesserungen unterscheiden.** Wenn das neue Modell bei Aufgabe A besser und bei Aufgabe B schlechter abschneidet, sehen Beschwerden über B identisch aus wie generisches Feedback „die KI wurde schlechter“. Sie wissen nicht, was Sie beheben sollen.
+**Man kann Regressionen nicht von Verbesserungen unterscheiden.** Wenn das neue Modell bei Aufgabe A besser und bei Aufgabe B schlechter ist, sehen Beschwerden über B identisch aus mit generellem „die KI ist schlechter geworden"-Feedback. Du weißt nicht, was du reparieren sollst.
 
-**Sie nutzen Ihre Nutzer als Testinfrastruktur.** Dafür haben sie sich nicht freiwillig gemeldet.
+**Du benutzt deine Nutzer als Testinfrastruktur.** Dafür haben sie sich nicht angemeldet.
 
 ---
 
-## Das Eval-Spektrum (und wo die meisten Teams falsch liegen)
+## Das Eval-Spektrum (und wo die meisten Teams es falsch machen)
 
-Evaluierungsansätze liegen auf einem Spektrum von „schnell, aber fragil“ bis „teuer, aber valide“.
+Evaluierungsansätze bewegen sich auf einem Spektrum von „schnell aber fadenscheinig" bis „teuer aber valide".
 
 <figure class="breakout">
 
-![Ein Spektrumsdiagramm, das deterministische Checks, LLM-as-judge und menschliche Evaluation nach Geschwindigkeit, Kosten und Validität vergleicht.](../eval-spectrum.svg)
+![Ein Spektrum-Diagramm, das deterministische Prüfungen, LLM-as-Judge und menschliche Bewertung nach Geschwindigkeit, Kosten und Validität vergleicht.](../eval-spectrum.svg)
 
-<figcaption>Nutzen Sie die günstigste Evaluierungsmethode, die den Fehler ehrlich erfassen kann.</figcaption>
+<figcaption>Nutze die günstigste Evaluierungsmethode, die den Fehler ehrlich erkennen kann.</figcaption>
 </figure>
 
-**LLM-as-judge** ist der aktuelle Favorit: Ein leistungsstarkes Modell wird gebeten, die Ausgaben eines anderen Modells zu bewerten. Schnell, skalierbar, günstig. Das Problem: Es integriert die Bias des Bewertungsmodells, lässt sich ausnutzen und erzeugt eine zirkuläre Abhängigkeit. Wenn Sie GPT-5 nutzen, um die Ausgaben von GPT-5 zu bewerten, messen Sie so etwas wie „wie stark stimmt GPT-5 mit sich selbst überein“. Das ist nicht nichts, aber es ist nicht das, was Sie glauben.
+**LLM-as-Judge** ist der aktuelle Liebling: Bitte ein mächtiges Modell, die Ausgaben eines anderen Modells zu bewerten. Schnell, skalierbar, günstig. Das Problem: Es zementiert die Vorurteile des Bewertungsmodells, kann manipuliert werden und schafft eine zirkuläre Abhängigkeit. Wenn du GPT-5 nutzt, um die Ausgaben von GPT-5 zu bewerten, misst du so etwas wie „Wie sehr stimmt GPT-5 mit GPT-5 überein?" Das ist nicht nichts, aber es ist nicht das, was du denkst.
 
-**Menschliche Evaluation** ist der Goldstandard, den jeder überspringen will. Die manuelle Bewertung durch Menschen ist teuer, langsam, zwischen den Bewertern inkonsistent und terminlich aufwendig. Aber es ist das Einzige, das validiert, ob Ihr System für echte Menschen nützlich ist.
+**Menschliche Bewertung** ist der Goldstandard, den alle zu umgehen versuchen. Menschen Ausgaben bewerten zu lassen ist teuer, langsam, inkonsistent zwischen Bewertern und lästig zu planen. Aber es ist das Einzige, das validiert, ob dein System für echte Menschen nützlich ist.
 
-**Aufgabenspezifische automatische Checks** sind der Bereich, in dem die meisten Teams mehr Zeit investieren sollten. Sie sind nicht glamourös, aber sie sind schnell, deterministisch und an das geknüpft, was in Ihrem System wirklich zählt.
+**Aufgabenspezifische automatisierte Prüfungen** sind der Bereich, in dem die meisten Teams mehr Zeit investieren sollten. Sie sind nicht glamourös, aber sie sind schnell, deterministisch und an das gekoppelt, was in deinem System zählt.
 
 ---
 
 ## Was tatsächlich funktioniert
 
-### 1. Definieren Sie den Fehlerfall vor dem Release
+### 1. Definiere Fehler, bevor du auslieferst
 
-Bevor Sie ein Modell oder einen Prompt ändern, notieren Sie sich konkret, wie ein Fehlerfall aussieht.
+Bevor du ein Modell oder Prompt änderst, schreib auf, was schlecht aussieht. Konkret.
 
-Nicht „Die Ausgabe sollte korrekt sein.“ Das ist kein Test. Eher so:
+Nicht „die Ausgabe sollte akkurat sein". Das ist kein Test. Sondern eher:
 
-- Strukturierte JSON-Ausgaben müssen fehlerfrei parsen
-- Alle Zitate in der Antwort müssen wörtlich im abgerufenen Kontext vorkommen
-- Antworten dürfen keine Produktnamen von Wettbewerbern enthalten
+- Strukturierte JSON-Ausgabe muss ohne Fehler parsen
+- Alle Zitate in der Antwort müssen wortwörtlich im abgerufenen Kontext erscheinen
+- Antworten dürfen keine Wettbewerber-Produktnamen erwähnen
 - SQL-Abfragen müssen syntaktisch gültig sein und nur Tabellen referenzieren, die im Schema existieren
-- Die Sentiment-Klassifizierung darf im bestehenden Testset nicht mehr als 3 % der Fälle von positiv zu negativ umschlagen
+- Die Sentiment-Klassifizierung darf auf dem bestehenden Testset nicht öfter als 3 % von positiv zu negativ kippen
 
-Das lässt sich programmatisch prüfen. Kein Judge-Modell nötig.
+Das kannst du programmatisch prüfen. Kein Judge-Modell erforderlich.
 
-**Eval-Harness: deterministische Checks**
+**Eval-Harness: Deterministische Prüfungen**
 
 ```typescript
 type EvalResult = { passed: boolean; reason?: string };
 
 const evals: Record<string, (output: string, context: EvalContext) => EvalResult> = {
-  // JSON must parse
+  // JSON muss parsen
   validJson: (output) => {
     try {
       JSON.parse(output);
@@ -116,7 +110,7 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
     }
   },
 
-  // No hallucinated citations — every claim must appear in context
+  // Keine halluzinierten Zitate — jeder Anspruch muss im Kontext erscheinen
   groundedCitations: (output, { retrievedChunks }) => {
     const claims = extractCitations(output);
     const ungrounded = claims.filter(
@@ -127,7 +121,7 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
       : { passed: false, reason: `Ungrounded claims: ${ungrounded.join(', ')}` };
   },
 
-  // Response length sanity check — catch truncation or runaway generation
+  // Antwort-Längen-Check — Trunkierung oder durchgehende Generierung erkennen
   reasonableLength: (output) => {
     const words = output.split(/\s+/).length;
     return words >= 10 && words <= 2000
@@ -137,22 +131,22 @@ const evals: Record<string, (output: string, context: EvalContext) => EvalResult
 };
 ```
 
-### 2. Erstellen Sie einen Golden Set aus Ihren problematischsten Tagen
+### 2. Baue einen Goldenen Satz aus deinen schlimmsten Tagen
 
-Ihre besten Evaluierungsdaten sind die peinlichen Fälle: Ausgaben, die jemanden dazu brachten, ein Ticket zu erstellen, eine Halluzination zu screenshoten oder die Funktion stillschweigend nicht mehr zu nutzen.
+Deine besten Evaluierungsdaten sind die peinlichen Sachen: die Ausgaben, die jemand veranlasst haben, ein Ticket zu erstellen, eine Halluzination zu screenshot-en oder das Feature leise nicht mehr zu nutzen.
 
-Jedes Mal, wenn ein Nutzer eine schlechte Ausgabe meldet, eine Halluzination markiert oder Sie einen Fehler manuell bemerken, fügen Sie ihn Ihrem Golden Set hinzu: die Eingabe, der Kontext und das korrekte Verhalten. Halten Sie 50 bis 100 Fälle vor und führen Sie sie bei jeder Modelländerung durch.
+Jedes Mal, wenn ein Nutzer eine schlechte Ausgabe meldet, eine Halluzination markiert oder du manuell einen Fehler bemerkst, füge ihn deinem goldenen Satz hinzu: die Eingabe, den Kontext und das korrekte Verhalten. Halte 50–100 Fälle bereit und führe sie bei jeder Modelländerung aus.
 
-Das wirkt zunächst manuell. Nach sechs Monaten verfügen Sie über eine Testsuite, die kein öffentlicher Benchmark umgehen kann, weil jeder Fall aus Ihrer eigenen Fehlerhistorie stammt.
+Das fühlt sich anfangs manuell an. Nach sechs Monaten hast du eine Testsuite, die kein öffentlicher Benchmark manipulieren kann, weil jeder Fall aus deiner eigenen Fehlerhistorie stammt.
 
 <figure class="breakout">
 
-![Ein Workflow-Diagramm, das zeigt, wie fehlerhafte Produktionsvorfälle zu Golden-Cases werden, dann CI-Eval-Läufe auslösen und schließlich zu blockierten Regressionen oder freigegebenen Releases führen.](../golden-set-lifecycle.svg)
+![Ein Workflow-Diagramm, das zeigt, wie schlechte Produktionsvorfälle zu Golden Cases werden, dann CI-Eval-Läufe, dann blockierte Regressionen oder freigegebene Releases.](../golden-set-lifecycle.svg)
 
-<figcaption>Ein Golden Set verwandelt die peinlichen Vorfälle in eine Regressionssuite.</figcaption>
+<figcaption>Ein goldener Satz verwandelt die peinlichen Sachen in eine Regressionssuite.</figcaption>
 </figure>
 
-**Aufbau eines Golden Cases**
+**Form eines Golden Case**
 
 ```typescript
 interface GoldenCase {
@@ -163,22 +157,22 @@ interface GoldenCase {
     mustContain?: string[];
     mustNotContain?: string[];
     structureCheck?: (output: string) => boolean;
-    minSimilarityToReference?: number; // cosine similarity to a reference answer
+    minSimilarityToReference?: number; // Kosinus-Ähnlichkeit zu einer Referenzantwort
   };
-  sourceIncident?: string; // link back to the bug report or ticket
+  sourceIncident?: string; // Link zurück zum Bug-Report oder Ticket
 }
 ```
 
 ### 3. Regressionstests, nicht nur Akzeptanztests
 
-Die meisten Teams führen Evals nur bei der Prüfung von Modelländerungen durch. Das ist Akzeptanztesting: „Ist diese neue Variante gut genug?"
+Die meisten Teams führen Evals nur durch, wenn sie eine Modelländerung in Betracht ziehen. Das ist Akzeptanztest: „Ist das Neue gut genug?"
 
-Sie benötigen zudem Regressionstests: „Hat dies etwas kaputtgemacht, das vorher funktioniert hat?"
+Du brauchst auch Regressionstests: „Hat das etwas kaputt gemacht, das vorher funktionierte?"
 
-Führen Sie Ihr Golden Set bei jeder Prompt-Änderung aus, nicht nur bei Modelländerungen. Ein Prompt, der bisher einwandfrei lief, kann sich stillschweigend verschlechtern, wenn Sie ein neues Tool hinzufügen, die RAG-Abfragestrategie ändern oder Ihre Kontextvorlage aktualisieren. Ohne eine Basislinie erfahren Sie das nicht. Tools wie [Langfuse](https://langfuse.com/) verknüpfen Eval-Scores mit Produktions-Traces, sodass Regressionen in Dashboards sichtbar werden und nicht nur in Incident-Berichten.
+Führe deinen goldenen Satz bei jeder Prompt-Änderung aus, nicht nur bei Modelländerungen. Ein Prompt, der gut funktionierte, kann sich still verschlechtern, wenn du ein neues Tool hinzufügst, eine RAG-Abrufstrategie änderst oder dein Kontext-Template aktualisierst. Ohne eine Basislinie wirst du es nicht merken. Tools wie [Langfuse](https://langfuse.com/) hängen Eval-Scores an Produktions-Traces an, sodass Regression in Dashboards erscheint, nicht nur in Incident-Reports.
 
 <details>
-<summary>Eval-Harness: Vergleich von Basislinie und Kandidat</summary>
+<summary>Eval-Harness: Basislinie vs. Kandidaten-Vergleich</summary>
 
 ```typescript
 async function compareModelVersions(
@@ -197,8 +191,8 @@ async function compareModelVersions(
         id: tc.id,
         baselinePassed: runEvals(baseline, tc.expectedBehavior),
         candidatePassed: runEvals(candidate, tc.expectedBehavior),
-        regression: /* baseline passed */ && /* candidate failed */,
-        improvement: /* baseline failed */ && /* candidate passed */,
+        regression: /* Basislinie bestanden */ && /* Kandidat fehlgeschlagen */,
+        improvement: /* Basislinie fehlgeschlagen */ && /* Kandidat bestanden */,
       };
     })
   );
@@ -206,11 +200,11 @@ async function compareModelVersions(
   const regressions = results.filter((r) => r.regression);
   const improvements = results.filter((r) => r.improvement);
 
-  console.log(`Regressions: ${regressions.length} / ${goldenCases.length}`);
-  console.log(`Improvements: ${improvements.length} / ${goldenCases.length}`);
+  console.log(`Regressionen: ${regressions.length} / ${goldenCases.length}`);
+  console.log(`Verbesserungen: ${improvements.length} / ${goldenCases.length}`);
 
   if (regressions.length > 0) {
-    console.error('Blocking regressions found:');
+    console.error('Blockierende Regressionen gefunden:');
     regressions.forEach((r) => console.error(` - ${r.id}`));
   }
 
@@ -220,15 +214,15 @@ async function compareModelVersions(
 
 </details>
 
-Wenn ein Kandidat bei bekannten Fehlern regressiert, wird die Upgrade-Diskussion auf wunderbare Weise konkret: Welche Fälle haben sich verbessert, welche sind kaputtgegangen, und ob sich der Kompromiss lohnt.
+Wenn ein Kandidat bei bekannten Fehlern Rückschritte macht, wird die Upgrade-Diskussion wunderbar spezifisch: Welche Fälle haben sich verbessert, welche sind kaputt gegangen, und ob der Tausch es wert ist.
 
-### 4. LLM-as-Judge für genau eine Sache nutzen
+### 4. Nutze LLM-as-Judge für genau eine Sache
 
-LLM-as-Judge eignet sich für offene Ausgaben, bei denen es keine deterministisch korrekte Antwort gibt: „Ist diese Antwort hilfreich?“, „Behält diese Zusammenfassung die Kernpunkte bei?“, „Ist diese Erklärung für Anfänger richtig?“
+LLM-as-Judge ist nützlich für offene Ausgaben, bei denen es keine deterministisch richtige Antwort gibt: „Ist diese Antwort hilfreich?", „Bewahrt diese Zusammenfassung die Kernpunkte?", „Ist diese Erklärung für einen Anfänger geeignet?"
 
-Nutzt es genau dafür. Nicht für deterministische Antworten. Wenn ihr es doch nutzt, macht die Bewertungsrubrik explizit:
+Nutze es dort. Nutze es nicht für deterministische Antworten. Wenn du es einsetzt, mach die Bewertungsrubrik explizit:
 
-**Eval-Harness: Rubrik-basierter Richter**
+**Eval-Harness: Rubrik-basierter Judge**
 
 ```typescript
 async function judgeHelpfulness(
@@ -256,35 +250,35 @@ Respond with JSON: {"score": <number>, "reasoning": "<one sentence>"}
 }
 ```
 
-Eine explizite Rubrik reduziert die Varianz der Bewerter, liefert interpretierbare Ausgaben und erleichtert das Auditing, wenn der Richter danebenliegt. Bibliotheken wie [Autoevals](https://github.com/braintrustdata/autoevals) und [Braintrust](https://www.braintrust.dev/) liefern vorgefertigte Rubriken für gängige Aufgaben — das spart Arbeit, bevor man eigene Kriterien von Grund auf schreibt.
+Eine explizite Rubrik reduziert die Varianz des Bewerters, liefert interpretierbare Ausgaben und erleichtert die Prüfung, wenn der Judge falsch liegt. Bibliotheken wie [Autoevals](https://github.com/braintrustdata/autoevals) und [Braintrust](https://www.braintrust.dev/) liefern vorgefertigte Rubriken für häufige Aufgaben mit — einen Blick wert, bevor du eigene von Grund auf schreibst.
 
 ---
 
-## Tools, die man kennen sollte
+## Tools, die es wert sind, gekannt zu werden
 
-Ihr müsst nicht alles selbst bauen. Mehrere Tools haben bei der Eval-Infrastruktur ernsthaft Fortschritte gemacht:
+Du musst nicht alles von Grund auf selbst bauen. Mehrere Tools haben beim Eval-Infrastruktur-Problem ernsthafte Fortschritte gemacht:
 
-**[Braintrust](https://www.braintrust.dev/)** — Vollständige Eval-Plattform mit Experiment-Tracking, Datenverwaltung und Scoring-Funktionen. Ordnet Eval-Läufe nach Prompt, Modell und Deployment, sodass ihr die Qualität über die Zeit hinweg diffen könnt, nicht nur zwischen Releases. Passt gut zur Open-Source-Bibliothek **[Autoevals](https://github.com/braintrustdata/autoevals)**, die vorgefertigte, modellbasierte Scoring-Funktionen für gängige Aufgaben liefert (faktische Genauigkeit, Hilfsbereitschaft, Toxizität, semantische Ähnlichkeit).
+**[Braintrust](https://www.braintrust.dev/)** — Komplette Eval-Plattform mit Experiment-Tracking, Datensatz-Management und Scoring-Funktionen. Organisiert Eval-Läufe nach Prompt, Modell und Deployment, sodass du Qualität über die Zeit vergleichen kannst, nicht nur zwischen Releases. Passt gut zu ihrer Open-Source-Bibliothek **[Autoevals](https://github.com/braintrustdata/autoevals)**, die vorgefertigte modell-bewertete Scoring-Funktionen für häufige Aufgaben liefert (faktische Genauigkeit, Hilfreichkeit, Toxizität, semantische Ähnlichkeit).
 
-**[Langfuse](https://langfuse.com/)** — Open-Source-LLM-Observability, das zwischen eurer App und den Modellen sitzt. Trace-protokolliert jeden Aufruf, hängt Eval-Scores (manuell oder automatisiert) an einzelne Spans und macht Qualitätstrends im Produktionsverkehr sichtbar. Gute Wahl, wenn ihr Observability und Evals im selben Tool wollt, statt einer separaten Eval-Harness.
+**[Langfuse](https://langfuse.com/)** — Open-Source-LLM-Observability, die sich zwischen deine App und deine Modelle setzt. Traced jeden Aufruf, hängt Eval-Scores (menschlich oder automatisiert) an einzelne Spans an und zeigt Qualitätstrends im Produktionsverkehr auf. Gute Wahl, wenn du Observability und Evals im selben Tool willst statt in einem separaten Eval-Harness.
 
-**[Evalite](https://www.evalite.dev/)** — TypeScript-natives Eval-Framework von Matt Pocock. Wenig Overhead: Aufgabe definieren, Scorer definieren, im bestehenden Test-Setup ausführen. Richtet sich an Teams, die Evals wie Unit-Tests handhaben wollen, statt einer separaten ML-Experimentplattform.
+**[Evalite](https://www.evalite.dev/)** — TypeScript-natives Eval-Framework von Matt Pocock. Wenig Zeremonie: Definiere eine Aufgabe, definiere einen Scorer, führe es in deinem bestehenden Test-Setup aus. Zielt auf Teams, die Evals wollen, die sich wie Unit-Tests anfühlen statt wie eine separate ML-Experiment-Plattform.
 
-**[promptfoo](https://www.promptfoo.dev/)** — CLI-first Eval-Runner, spezialisiert auf Prompt-Vergleiche und Red-Teaming. Einfach per YAML konfigurierbar, integriert sich mit den meisten Model-Providern und bietet eingebaute Unterstützung zur Erkennung von Prompt-Injection sowie anderen adversariellen Eingaben.
+**[promptfoo](https://www.promptfoo.dev/)** — CLI-first-Eval-Runner, fokussiert auf Prompt-Vergleich und Red-Teaming. Einfach per YAML zu konfigurieren, integriert sich mit den meisten Modellanbietern und hat eingebaute Unterstützung zum Erkennen von Prompt-Injection und anderen adversariellen Eingaben.
 
-**[deepeval](https://docs.confident-ai.com/)** — Python-Eval-Framework mit umfangreichen eingebauten Metriken (G-Eval, RAG-Faithfulness, Answer-Relevancy, Halluzinationserkennung). Sinnvoll für RAG-Pipelines, wenn ihr spezifisches Scoring für die Retrieval-Qualität benötigt, nicht nur für die Generierungsqualität.
+**[deepeval](https://docs.confident-ai.com/)** — Python-Eval-Framework mit einer großen Bibliothek eingebauter Metriken (G-Eval, RAG-Gläubigkeit, Antwort-Relevanz, Halluzinations-Erkennung). Nützlich für RAG-Pipelines, bei denen du spezifische Bewertung der Abrufqualität willst, nicht nur der Generierungsqualität.
 
-Das passende Tool hängt von eurem Tech-Stack und eurem aktuellen Stand ab. Wichtiger als die Framework-Wahl ist die Disziplin, Evals überhaupt durchzuführen — konsistent, bei jeder signifikanten Änderung.
+Das richtige Tool hängt von deinem Stack und deinem Ausgangspunkt ab. Was mehr zählt als die Wahl des Frameworks ist die Disziplin, Evals überhaupt durchzuführen — konsistent, bei jeder signifikanten Änderung.
 
 ---
 
 ## Der unbequeme Teil
 
-Die meisten Teams überspringen diesen Schritt, weil er früh eine nervige Frage aufwirft: Wie sieht „gut“ in diesem Kontext überhaupt aus?
+Die meisten Teams lassen das weg, weil es eine ärgerliche Frage früh stellt: Was würde hier „gut" aussehen?
 
-Das ist für eine neue KI-Funktion tatsächlich schwer zu definieren. Es ist aber auch keine Option, wenn ihr auf Zuverlässigkeit pocht. Teams, die vertrauenswürdige KI ausliefern, verfahren exakt wie bei jedem kritischen Code-Pfad: erwartetes Verhalten definieren, testen und diese Tests kontinuierlich laufen lassen.
+Das ist bei einem neuen KI-Feature genuinely schwer. Es ist auch nicht optional, wenn dir Zuverlässigkeit wichtig ist. Teams, die vertrauenswürdige KI ausliefern, tun dasselbe wie bei jedem kritischen Code-Pfad: Erwartetes Verhalten definieren, testen und diese Tests kontinuierlich ausführen.
 
-Die Benchmarks lügen nicht. Sie beantworten nur die Fragen anderer. Hört auf, sie als Produkt-Roadmaps zu lesen, und fangt an, Tests zu schreiben, die zu eurem System passen.
+Die Benchmarks lügen nicht. Sie beantworten die Frage von jemand anderem. Hör auf, sie als Produkt-Roadmaps zu lesen, und fang an, Tests zu schreiben, die zu deinem System passen.
 
-Eure Nutzer werden es merken, lange bevor eure Dashboards es anzeigen. Baut zuerst die Testsuite.
+Deine Nutzer werden es merken, bevor deine Dashboards es tun. Bau zuerst die Testsuite.
 ````
