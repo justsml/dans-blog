@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: ru
+- Model: deepseek/deepseek-v4-flash
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 61.20
+- Input tokens: 9782
+- Output tokens: 8735
+- Thinking tokens: unknown
+- Cached input tokens: 1152
+- Cache write tokens: 0
+- Estimated cost: $0.003657
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: true
 draft: true
@@ -327,3 +345,4 @@ nmap -A -p1-65535 --open --reason $target_host
    - Факт: Они блокируют только то, что вы настроили.
 3. **Частные IP-адреса безопасны.**
    - Факт: Эксплойты вроде обхода NAT всё ещё могут затронуть вашу сеть.
+````
