@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: lancedb-wasm-browser-client
+- Locale: es
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-04-16--lancedb-wasm-browser-client/es/index.mdx
+- Validation: passed
+- Runtime seconds: 20.29
+- Input tokens: 8042
+- Output tokens: 8178
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.002606
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: ''
 subTitle: ''
@@ -129,3 +147,4 @@ Lo que hizo que este proyecto fuera manejable es que la arquitectura interna de 
 Las buenas fronteras de abstracción no solo hacen que el código interno sea más fácil de razonar — permiten que alguien como yo pueda llegar desde fuera del proyecto y conectar un nuevo entorno de ejecución sin tocar el núcleo. Esa es una virtud de diseño real, y hizo que las 14,000 líneas se sintieran más como rellenar una forma que como luchar contra el código.  
 
 El PR está [aquí](https://github.com/lancedb/lancedb/pull/3247) si quieres ver los detalles. Todavía se espera la revisión. Los mantenedores han sido amables y soy optimista con cautela.
+````
