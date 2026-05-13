@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: securely-using-environment-variables-in-nodejs
+- Locale: fr
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2018-11-14--securely-using-environment-variables-in-nodejs/fr/index.mdx
+- Validation: passed
+- Runtime seconds: 9.38
+- Input tokens: 4718
+- Output tokens: 3686
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001262
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: ''
@@ -142,3 +160,4 @@ Si ce n'est pas possible, prenez de nombreuses précautions lors de la partage d
 #### ⚠️ Important : si nécessaire, utilisez toujours un service de messagerie sécurisé (préférez ceux avec support de messages expirants.)
 
 Bonne chance et n'hésitez pas à me faire savoir si vous avez des questions ! 🎉
+````
