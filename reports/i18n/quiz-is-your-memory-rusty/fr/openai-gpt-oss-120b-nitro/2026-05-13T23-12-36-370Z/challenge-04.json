@@ -1,0 +1,52 @@
+{
+  "index": 3,
+  "attempt": 1,
+  "originalTitle": "Implicit Lifetimes",
+  "translatedTitle": "Durées de vie implicites",
+  "translation": {
+    "title": "Durées de vie implicites",
+    "group": "Élision des durées de vie",
+    "options": [
+      {
+        "text": "Se compile avec succès"
+      },
+      {
+        "text": "Erreur : spécificateur de durée de vie manquant",
+        "hint": "Rappelez‑vous les règles d’élision des durées de vie – elles sont là pour vous aider !"
+      },
+      {
+        "text": "Erreur : durée de vie explicite requise",
+        "hint": "Le compilateur peut le déterminer automatiquement"
+      },
+      {
+        "text": "Erreur : incohérence de durée de vie",
+        "hint": "Les durées de vie s’alignent parfaitement ici"
+      }
+    ],
+    "questionProse": [
+      "Ce code va‑t‑il se compiler ? Si oui, pourquoi ? Sinon, qu’est‑ce qui ne va pas ?"
+    ],
+    "explanationProse": [
+      "Ce code se compile avec succès grâce aux règles d’élision des durées de vie de Rust. \n      Ces règles permettent au compilateur d’inférer automatiquement les durées de vie dans les motifs courants.\n\n      Les trois règles d’élision des durées de vie sont :\n      1. Chaque paramètre reçoit son propre paramètre de durée de vie\n      2. S’il y a exactement un paramètre de durée de vie en entrée, cette durée de vie est assignée à tous les paramètres de durée de vie en sortie\n      3. S’il y a plusieurs paramètres de durée de vie en entrée, mais que l’un d’eux est &self ou &mut self, la durée de vie de self est assignée à tous les paramètres de durée de vie en sortie\n\n      Cette fonction est équivalente à :",
+      "Motifs courants où l’élision fonctionne :",
+      "Bonne pratique : laissez l’élision faire le travail quand c’est possible, mais comprenez quand des durées de vie explicites sont nécessaires."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Durées de vie implicites\",\n  \"group\": \"Élision des durées de vie\",\n  \"options\": [\n    {\n      \"text\": \"Se compile avec succès\"\n    },\n    {\n      \"text\": \"Erreur : spécificateur de durée de vie manquant\",\n      \"hint\": \"Rappelez‑vous les règles d’élision des durées de vie – elles sont là pour vous aider !\"\n    },\n    {\n      \"text\": \"Erreur : durée de vie explicite requise\",\n      \"hint\": \"Le compilateur peut le déterminer automatiquement\"\n    },\n    {\n      \"text\": \"Erreur : incohérence de durée de vie\",\n      \"hint\": \"Les durées de vie s’alignent parfaitement ici\"\n    }\n  ],\n  \"questionProse\": [\n    \"Ce code va‑t‑il se compiler ? Si oui, pourquoi ? Sinon, qu’est‑ce qui ne va pas ?\"\n  ],\n  \"explanationProse\": [\n    \"Ce code se compile avec succès grâce aux règles d’élision des durées de vie de Rust. \\n      Ces règles permettent au compilateur d’inférer automatiquement les durées de vie dans les motifs courants.\\n\\n      Les trois règles d’élision des durées de vie sont :\\n      1. Chaque paramètre reçoit son propre paramètre de durée de vie\\n      2. S’il y a exactement un paramètre de durée de vie en entrée, cette durée de vie est assignée à tous les paramètres de durée de vie en sortie\\n      3. S’il y a plusieurs paramètres de durée de vie en entrée, mais que l’un d’eux est &self ou &mut self, la durée de vie de self est assignée à tous les paramètres de durée de vie en sortie\\n\\n      Cette fonction est équivalente à :\",\n    \"Motifs courants où l’élision fonctionne :\",\n    \"Bonne pratique : laissez l’élision faire le travail quand c’est possible, mais comprenez quand des durées de vie explicites sont nécessaires.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 995,
+    "outputTokens": 1223,
+    "cacheReadTokens": 0,
+    "cacheWriteTokens": 0,
+    "durationMs": 676,
+    "providerCostUsd": 0.0012655,
+    "providerUpstreamCostUsd": 0.0012655,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000038805,
+    "outputUsd": 0.00022013999999999996,
+    "totalUsd": 0.00025894499999999995,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "index": 15,
+  "attempt": 1,
+  "originalTitle": "Copy vs Clone",
+  "translatedTitle": "Copy vs Clone",
+  "translation": {
+    "title": "Copy vs Clone",
+    "group": "Patrons de conception",
+    "options": [
+      {
+        "text": "Erreur de compilation",
+        "hint": "L'attribut derive est correctement utilisé"
+      },
+      {
+        "text": "Copie profonde créée"
+      },
+      {
+        "text": "Copie superficielle créée",
+        "hint": "Clone crée une copie profonde des champs String"
+      },
+      {
+        "text": "Sémantique de déplacement appliquée",
+        "hint": "Clone crée explicitement une nouvelle copie"
+      }
+    ],
+    "questionProse": [
+      "Que se passe-t-il lorsque nous clonons cette struct Philosophy ?"
+    ],
+    "explanationProse": [
+      "Comprenons en détail Copy vs Clone :",
+      "Principales différences:\n      1. Copy:\n         - Copie implicite, bit à bit\n         - Doit être sûr pour Copy (pas d’allocation sur le tas)\n         - Typiquement pour les petits types uniquement sur la pile\n         \n      2. Clone:\n         - Explicite, potentiellement une copie profonde\n         - Peut gérer les allocations sur le tas\n         - Plus flexible mais potentiellement coûteux\n\n      Bonnes pratiques:\n      1. Implémentez Copy pour les petits types uniquement sur la pile\n      2. Utilisez Clone pour les types possédant des ressources propriétaires\n      3. Documentez les implications de performance de Clone\n      4. Envisagez des implémentations personnalisées de Clone pour l’optimisation\n      5. Soyez prudent avec la dérivation automatique"
+    ]
+  },
+  "rawText": "{\n  \"title\":\"Copy vs Clone\",\n  \"group\": \"Patrons de conception\",\n  \"options\": [\n    {\n      \"text\": \"Erreur de compilation\",\n      \"hint\": \"L'attribut derive est correctement utilisé\"\n    },\n    {\n      \"text\": \"Copie profonde créée\"\n    },\n    {\n      \"text\": \"Copie superficielle créée\",\n      \"hint\": \"Clone crée une copie profonde des champs String\"\n    },\n    {\n      \"text\": \"Sémantique de déplacement appliquée\",\n      \"hint\": \"Clone crée explicitement une nouvelle copie\"\n    }\n  ],\n  \"questionProse\": [\n    \"Que se passe-t-il lorsque nous clonons cette struct Philosophy ?\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Comprenons en détail Copy vs Clone :\",\n    \"Principales différences:\\n      1. Copy:\\n         - Copie implicite, bit à bit\\n         - Doit être sûr pour Copy (pas d’allocation sur le tas)\\n         - Typiquement pour les petits types uniquement sur la pile\\n         \\n      2. Clone:\\n         - Explicite, potentiellement une copie profonde\\n         - Peut gérer les allocations sur le tas\\n         - Plus flexible mais potentiellement coûteux\\n\\n      Bonnes pratiques:\\n      1. Implémentez Copy pour les petits types uniquement sur la pile\\n      2. Utilisez Clone pour les types possédant des ressources propriétaires\\n      3. Documentez les implications de performance de Clone\\n      4. Envisagez des implémentations personnalisées de Clone pour l’optimisation\\n      5. Soyez prudent avec la dérivation automatique\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 947,
+    "outputTokens": 1285,
+    "cacheReadTokens": 512,
+    "cacheWriteTokens": 0,
+    "durationMs": 784,
+    "providerCostUsd": 0.0012952,
+    "providerUpstreamCostUsd": 0.0012952,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000036933,
+    "outputUsd": 0.00023129999999999998,
+    "totalUsd": 0.000268233,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

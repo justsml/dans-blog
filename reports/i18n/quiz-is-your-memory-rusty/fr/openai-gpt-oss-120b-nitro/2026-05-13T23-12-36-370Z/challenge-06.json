@@ -1,0 +1,35 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Rc Smart Pointer",
+  "translatedTitle": "Pointeur intelligent Rc",
+  "translation": {
+    "title": "Pointeur intelligent Rc",
+    "group": "Comptage de références",
+    "options": [],
+    "questionProse": [
+      "Que va afficher ce code ? Comptez attentivement !"
+    ],
+    "explanationProse": [
+      "Décomposons le fonctionnement de Rc :\n\n      1. Création initiale avec `Rc::new()`: compteur = 1\n      2. Première duplication pour `marcus`: compteur = 2\n      3. Deuxième duplication pour `aurelius`: compteur = 3\n\n      Caractéristiques importantes de Rc :",
+      "Points clés:\n      - Rc::clone() est peu coûteux – il ne fait qu’incrémenter un compteur\n      - Rc est uniquement pour les scénarios mono‑thread\n      - Lorsque la dernière référence est libérée, les données sont nettoyées\n      - Utilisez les références Weak pour éviter les cycles de références\n\n      Bonnes pratiques:\n      - Utilisez Rc lorsque vous avez besoin d’une possession partagée\n      - Envisagez Arc pour les scénarios thread‑safe\n      - Évitez de créer des cycles de références"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Pointeur intelligent Rc\",\n  \"group\": \"Comptage de références\",\n  \"options\": [],\n  \"questionProse\": [\n    \"Que va afficher ce code ? Comptez attentivement !\"\n  ],\n  \"questionCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ],\n  \"explanationProse\": [\n    \"Décomposons le fonctionnement de Rc :\\n\\n      1. Création initiale avec `Rc::new()`: compteur = 1\\n      2. Première duplication pour `marcus`: compteur = 2\\n      3. Deuxième duplication pour `aurelius`: compteur = 3\\n\\n      Caractéristiques importantes de Rc :\",\n    \"Points clés:\\n      - Rc::clone() est peu coûteux – il ne fait qu’incrémenter un compteur\\n      - Rc est uniquement pour les scénarios mono‑thread\\n      - Lorsque la dernière référence est libérée, les données sont nettoyées\\n      - Utilisez les références Weak pour éviter les cycles de références\\n\\n      Bonnes pratiques:\\n      - Utilisez Rc lorsque vous avez besoin d’une possession partagée\\n      - Envisagez Arc pour les scénarios thread‑safe\\n      - Évitez de créer des cycles de références\"\n  ],\n  \"explanationCode\": [\n    {\n      \"language\": \"rust\",\n      \"code\": \"[PRESERVED — do not translate]\"\n    }\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 862,
+    "outputTokens": 784,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 736,
+    "providerCostUsd": 0.0008897,
+    "providerUpstreamCostUsd": 0.0008897,
+    "pricingSource": "openrouter-usage-accounting"
+  },
+  "cost": {
+    "inputUsd": 0.000033618,
+    "outputUsd": 0.00014111999999999998,
+    "totalUsd": 0.00017473799999999997,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
