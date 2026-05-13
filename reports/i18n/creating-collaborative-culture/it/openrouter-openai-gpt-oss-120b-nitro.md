@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: creating-collaborative-culture
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2021-03-03--creating-collaborative-culture/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 1.85
+- Input tokens: 2795
+- Output tokens: 676
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000231
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 social_image: ../desktop-social.webp
 title: Creare una cultura collaborativa
@@ -55,3 +73,4 @@ Più in modo personale:
 
 > Restate sintonizzati!  
 > Il mio prossimo articolo parlerà dei processi e delle abitudini che alimentano una *Collaborative Culture* nella vostra organizzazione!
+````
