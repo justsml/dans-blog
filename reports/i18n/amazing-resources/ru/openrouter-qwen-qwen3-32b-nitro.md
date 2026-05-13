@@ -1,0 +1,210 @@
+# Translation Candidate
+- Slug: amazing-resources
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2015-02-26--amazing-resources/ru/index.mdx
+- Validation: passed
+- Runtime seconds: 46.38
+- Input tokens: 9344
+- Output tokens: 9797
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.003099
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+social_image: ../desktop-social.webp
+title: ''
+subTitle: >-
+  Отобранный список 2026: UI-наборы, Tailwind блоки, иконы, шрифты, иллюстрации,
+  анимации и инструменты для
+date: '2015-02-26'
+modified: '2026-04-29'
+category: Code
+subCategory: design
+tags:
+  - development
+  - design
+  - resources
+  - ui
+  - tailwind
+  - icons
+  - patterns
+cover_full_width: ../carl-heyerdahl-181868-unsplash.webp
+cover_mobile: ../w300_carl-heyerdahl-181868-unsplash.webp
+cover_icon: ../icon_carl-heyerdahl-181868-unsplash.webp
+---
+Если вы разрабатываете веб-сайты или приложения и хотите, чтобы они выглядели профессионально, не тратя дни на повторное создание распространённых шаблонов, это краткое руководство я бы вам предложил.
+
+Оно посвящено бесплатным ресурсам дизайна интерфейсов для разработчиков: библиотекам компонентов, блокам Tailwind, иконкам, иллюстрациям, инструментам для работы с цветом, источникам шрифтов, библиотекам анимации и практическим утилитам, которые помогут быстрее запускать проекты.
+
+Большинство ссылок здесь бесплатны, имеют открытый исходный код или предлагают действительно полезный бесплатный тариф.
+
+> Последнее обновление: 2026-04-29
+
+## Содержание
+
+1. [Начните с этого](#start-here)
+2. [Компоненты, блоки и шаблоны интерфейса](#ui-components-blocks-and-templates)
+3. [Инструменты для дизайна и редактирования изображений](#design-and-image-editing-tools)
+4. [Шрифты и инструменты для работы с цветом](#fonts-and-color-tools)
+5. [Анимация и взаимодействие](#animation-and-interaction)
+6. [Иконки и иллюстрации](#icons-and-illustrations)
+7. [Фотографии и хостинг сайтов](#photos-and-website-hosting)
+8. [Полезные ресурсы CSS, UX и рабочих процессов](#helpful-css-ux-and-workflow-resources)
+9. [Советы по лицензированию и использованию](#licensing-and-usage-tips)
+
+## Начните здесь
+
+Если вам нужны лишь несколько надежных вариантов, начните с этих:
+
+- Для готовых блоков UI на React или Tailwind: [Aceternity UI](https://ui.aceternity.com/components), [Shadcnblocks](https://www.shadcnblocks.com/blocks) и [Tailark](https://tailark.com/blocks?licences=free).
+- Для интерфейсов продуктов AI и шаблонов чатов: [Assistant UI](https://www.assistant-ui.com/) и [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought).
+- Для иконок: [Lucide](https://lucide.dev/), [Iconoir](https://iconoir.com) и [Simple Icons](https://simpleicons.org/).
+- Для иллюстраций: [ManyPixels](https://www.manypixels.co/gallery/), [DrawKit Free](https://www.drawkit.io/free) и [Humaaans](https://www.humaaans.com/).
+- Для шрифтов: [Fontsource](https://fontsource.org) и [Google Fonts](https://fonts.google.com/).
+- Для цвета и доступности: [Coolors](https://coolors.co/), [Adobe Color](https://color.adobe.com/create/color-wheel/) и [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/).
+
+## UI-компоненты, блоки и шаблоны
+
+Этот раздел действительно интересует большинство: шаблоны веб-сайтов, секции-геро, оболочки приложений, блоки Tailwind и UI-компоненты, которые можно адаптировать вместо проектирования с пустого холста.
+
+### Интерфейсы AI и чатов
+
+- [Assistant UI](https://www.assistant-ui.com/) — Открытые компоненты интерфейса чата для AI для приложений на React.  
+- [AI SDK Elements: Chain of Thought](https://elements.ai-sdk.dev/components/chain-of-thought) — Чистый стиль рассуждений для чат-интерфейсов в продуктах AI.  
+
+### Блоки, разделы и компоненты  
+
+- [Aceternity UI](https://ui.aceternity.com/components) — Высококачественные компоненты React и Tailwind с сильной визуальной индивидуальностью.  
+- [reui Collapsible](https://reui.io/components/collapsible) — Чистые схемы сворачиваемых и аккордеонных интерфейсов для React.  
+- [Shadcnblocks](https://www.shadcnblocks.com/blocks) — Готовые разделы и блоки, построенные вокруг экосистемы shadcn.  
+- [Tailark](https://tailark.com/blocks?licences=free) — Бесплатные блоки Tailwind для маркетинговых сайтов и страниц продуктов.  
+- [Tool UI](https://www.tool-ui.com/) — Современные блоки и компоненты для приложений и лендингов.  
+- [CSS Layout](https://csslayout.io/patterns) — Готовые схемы макетов для распространённых структур сайтов.  
+
+### Полные шаблоны и вдохновение  
+
+- [HTML5 UP](https://html5up.net) — Красивые, адаптивные HTML-шаблоны.  
+- [Creative Tim Free React Templates](https://www.creative-tim.com/templates/react-free) — Бесплатные шаблоны React-демонстраций, наборы компонентов и административные интерфейсы.  
+- [Awesome Landing Page](https://github.com/nordicgiant2/awesome-landing-page) — Куратированные шаблоны и примеры лендингов.  
+
+## Инструменты для дизайна и редактирования изображений
+
+Для макетов, графики, снимков экрана, редактирования изображений с минимальными требованиями или быстрой работы с дизайном в браузере.  
+
+- [Photopea](https://www.photopea.com/) — Редактирование вроде Photoshop напрямую в браузере.  
+- [Penpot](https://penpot.app/) — Открытый исходный код для дизайна и прототипирования.  
+- [Corel Vector / Gravit Designer](https://designer.gravit.io/) — Векторный дизайн в браузере с бесплатной версией.  
+- [Boxy SVG](https://boxy-svg.com/) — Редактор SVG для браузеров на основе Chromium и WebKit.  
+- [VectorInk](https://vectorink.io/app/) — Векторное рисование и иллюстрации в браузере.  
+- [SVGOMG](https://jakearchibald.github.io/svgomg/) — Оптимизируйте и очищайте SVG-файлы перед выпуском.  
+- [Pixlr X](https://pixlr.com/x/) — Быстрое онлайн-редактирование изображений, когда не нужен полноценный дизайн-инструмент.  
+
+## Шрифты и инструменты для цвета  
+
+Решения по типографике и цвету оказывают значительное влияние на ощущение того, насколько интерфейс выглядит продуманным или шаблонным.  
+
+### Шрифты  
+
+- [Fontsource](https://fontsource.org) — Самохости открытые шрифты с установкой через пакеты.  
+- [Google Fonts](https://fonts.google.com/) — Классический каталог шрифтов.  
+- [Fontpair](https://fontpair.co/fonts/) — Вдохновение для подбора пар шрифтов, когда нужно ускорить процесс.  
+- [The Stocks](http://thestocks.im/) — Агрегирует шрифты, иконки, фотографии и другие ресурсы для дизайна.
+
+### Цвет и контраст
+
+- [Adobe Color](https://color.adobe.com/create/color-wheel/) — Классическое цветовое колесо и инструменты гармонии.  
+- [Coolors](https://coolors.co/) — Быстро генерируйте, фиксируйте и настраивайте палитры.  
+- [Color Hunt](https://colorhunt.co/) — Кураторские идеи для палитр.  
+- [Paletton](https://paletton.com/) — Генератор цветовых схем с предпросмотром.  
+- [WebAIM Contrast Checker](https://webaim.org/resources/contrastchecker/) — Проверка соотношений контрастности WCAG.  
+- [Contrast Ratio](https://contrast-ratio.com/) — Быстрая проверка контраста с более чистым интерфейсом.  
+
+## Анимация и взаимодействие  
+
+Используйте их, когда статические макеты кажутся плоскими, а вам нужны улучшенные движения, состояния наведения или более живая навигация.  
+
+- [GSAP](https://greensock.com/gsap) — Промышленный лидер для сложной анимации интерфейсов.  
+- [Anime.js](https://animejs.com/) — Мощный движок JavaScript-анимации с более дружелюбным изучением.  
+- [Animate.css](https://animate.style/) — Быстрые предустановленные анимации для простых входов и обратной связи.  
+- [Hover.css](https://ianlunn.github.io/Hover/) — Готовые взаимодействия наведения и микроеффекты.  
+- [Magic Animations](https://www.minimamente.com/project/magic/) — Предустановленные CSS-анимации.  
+- [Bounce.js](https://bouncejs.com/) — Генерация ключевых кадров, как пружина. Архивировано, но всё ещё полезно для вдохновения.  
+- [Hamburgers](https://github.com/jonsuh/hamburgers) — Доступные анимации меню-гамбургера.  
+- [Best Snip SVG Animator](https://bestsnip.com/svg_animation/) — Простой веб-инструмент для анимации SVG.  
+- [KokonutUI: Flow Field](https://kokonutui.com/docs/backgrounds/flow-field) — Рецепт анимированного фона с сильным визуальным эффектом.  
+- [KokonutUI: Smooth Tab](https://kokonutui.com/docs/navigation/smooth-tab) — Паттерн плавной навигации по вкладкам, который можно адаптировать для интерфейса приложения.  
+
+## Иконки и иллюстрации
+
+Это самые простые ресурсы для неправильного переиспользования. Предпочтите согласованную визуальную семью, смешиванию пяти стилей в одном интерфейсе.
+
+### Иконки
+
+- [Lucide](https://lucide.dev/) — Чистые, открытые иконки и отличный выбор по умолчанию.
+- [Iconoir](https://iconoir.com) — Большой бесплатный набор SVG-иконок с более мягким стилем.
+- [Simple Icons](https://simpleicons.org/) — Иконки брендов для продуктов и социальных ссылок.
+- [Phosphor Icons](https://phosphoricons.com/) — Гибкая семья иконок для интерфейсов и приложений.
+- [IcoMoon App](https://icomoon.io/app/#/select) — Создавайте пользовательский набор иконок и экспортируйте пакеты SVG или PNG.
+- [Font Awesome Free Search](https://fontawesome.com/v6/search?o=r&m=free) — Полезно, когда вам нужна широта, а не индивидуальность.
+- [The Noun Project](https://thenounproject.com) — Гигантская библиотека иконок с множеством нишевых объектов и концепций.
+- [SVG Repo](https://www.svgrepo.com/) — Гигантская сообщественная библиотека SVG. Качество разное, поэтому отбирайте тщательно.
+
+### Иллюстрации и персонажи
+
+- [Humaaans](https://www.humaaans.com/) — Модульные иллюстрации людей для продуктовых и маркетинговых страниц.
+- [ManyPixels](https://www.manypixels.co/gallery/) — Часто обновляемая библиотека иллюстраций.
+- [DrawKit Free](https://www.drawkit.io/free) — Высококачественные бесплатные пакеты иллюстраций.
+- [Open Doodles Generator](https://generator.opendoodles.com/) — Генеративные наброски с игривым ручным стилем.
+- [Illlustrations](https://illlustrations.co/) — Ручной стиль иллюстраций с неформальным ощущением.
+- [Icons8 Illustrations](https://icons8.com/illustrations) — Бесплатные пакеты иллюстраций в различных стилях.
+- [Isometric](https://isometric.online/) — Изометрические иллюстрации и ресурсы.
+- [React Kawaii](https://react-kawaii.vercel.app/#/Components) — Милые SVG-компоненты персонажей.
+
+## Фото и хостинг веб-сайтов
+
+Это меньше связано с системами интерфейсов и больше с завершением проекта.
+
+### Фотографии
+
+- [Unsplash](https://unsplash.com/) — Высококачественные стоковые фотографии с либеральным лицензированием.
+- [Pexels](https://www.pexels.com/) — Бесплатные стоковые фотографии и видео.
+- [Women of Color in Tech](https://www.flickr.com/photos/wocintechchat/) — Более реалистичные изображения рабочих мест и технологий.
+- [The Stocks](http://thestocks.im/) — По-прежнему удобный агрегатор, когда нужны варианты быстро.
+
+### Хостинг веб-сайтов
+
+- [Netlify](https://www.netlify.com/) — Отличный опыт разработки для статических сайтов и проектов с фронтенд-ориентацией.
+- [Vercel](https://vercel.com/) — Удобный выбор по умолчанию для фронтенд-приложений, предварительных просмотров и функций на краю сети.
+- [GitHub Pages](https://pages.github.com/) — Простой бесплатный хостинг для статических сайтов.
+- [Render](https://render.com/) — Полезно, когда нужен хостинг статических сайтов плюс сервисы или cron-задачи.
+- [Surge](https://surge.sh/) — Экстремально простой хостинг статических сайтов через CLI.
+
+## Полезные ресурсы для CSS, UX и рабочих процессов
+
+Маленькие, но практичные инструменты, решающие конкретные фронтенд-проблемы быстро.
+
+- [Shadow Designer](https://brumm.af/shadows) — Генерация слоистых теней, которые выглядят лучше, чем стандартный подход «размытие и молитва».
+- [Clippy](https://bennettfeely.com/clippy/) — Генератор CSS `clip-path`.
+- [Словарь UX-дизайна](https://www.qualtrics.com/blog/ux-design-glossary/) — Полезно, когда нужно точнее формулировать дизайн-решения.
+- [Ресурсы Coding Heroes](http://codingheroes.io/resources/) — Более широкий обзор творческих ресурсов.
+
+## Советы по лицензированию и использованию
+
+- Не предполагайте, что «бесплатно» означает «без указания авторства». Проверяйте лицензию каждого ресурса перед сдачей клиентской работы.
+- Следите за ограничениями на товарные знаки при использовании логотипов, брендинговых марок или иконок в шаблонах.
+- Экспортируйте SVG, если это возможно, чтобы иконки и иллюстрации оставались резкими и проще поддавались темизации.
+- Сохраняйте согласованность семейств иконок. Чистая иконка Lucide рядом с анимационной SVG-иконкой магазина обычно выглядит случайно.
+- Всегда проверяйте контраст текста. Многие «красивые» палитры теряют эффективность на реальных строках основного текста.
+- Рассматривайте stock-иллюстрации как сырой материал. Минимальное редактирование значительно помогает избежать ощущения «сделано из шаблона».
+
+---
+
+Список изменений: 2026-04 — Переорганизовали страницу для пользователей и SEO, улучшили заголовки и описания, добавили Assistant UI, AI SDK Elements, Aceternity UI, Shadcnblocks, Tailark, KokonutUI и паттерны Tool UI.
+Список изменений: 2025-09 — Обновили ссылки, обновили старые ресурсы, добавили современные иконки, инструменты для контраста и дизайна.
+````
