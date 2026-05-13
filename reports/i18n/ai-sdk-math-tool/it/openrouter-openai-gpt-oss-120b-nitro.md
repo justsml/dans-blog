@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: ai-sdk-math-tool
+- Locale: it
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2026-01-06--ai-sdk-math-tool/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.37
+- Input tokens: 6465
+- Output tokens: 2373
+- Thinking tokens: unknown
+- Cached input tokens: 1536
+- Cache write tokens: 0
+- Estimated cost: $0.000679
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Smetti di far fare matematica ai LLM
 subTitle: Non ci riescono. Ecco come risolvere.
@@ -137,3 +155,4 @@ Lo strumento matematico è solo un esempio. Lo stesso principio vale per la mani
 - [Motore di calcolo CortexJS](https://cortexjs.io/compute-engine/)
 - [Guida alla chiamata di strumenti](https://sdk.vercel.ai/docs/ai-sdk-core/tools-and-tool-calling)
 - [Repository di esempi AI SDK](https://github.com/vercel/ai/tree/main/examples)
+````
