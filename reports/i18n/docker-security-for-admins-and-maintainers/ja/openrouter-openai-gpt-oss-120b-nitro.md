@@ -1,0 +1,350 @@
+# Translation Candidate
+- Slug: docker-security-for-admins-and-maintainers
+- Locale: ja
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2025-01-04--docker-security-for-admins-and-maintainers/ja/index.mdx
+- Validation: rejected: direct AI SDK translation failed
+- Runtime seconds: 10.76
+- Input tokens: 10467
+- Output tokens: 3376
+- Thinking tokens: unknown
+- Cached input tokens: 1024
+- Cache write tokens: 0
+- Estimated cost: $0.001016
+- Pricing source: local-openrouter-estimate
+- Note: Command failed: bun run i18n:validate --slug docker-security-for-admins-and-maintainers --locale ja
+## Raw Output
+
+````mdx
+---
+unlisted: true
+draft: true
+hidden: true
+title: Docker セキュリティ：開発者の失われたガイド
+subTitle: ネットワークを脅威や危険な設定から守る方法
+date: '2025-01-04'
+modified: '2025-01-13'
+tags:
+  - local development
+  - security
+  - devops
+  - best-practices
+category: Security
+cover_full_width: ../flame-whale-wide.webp
+cover_mobile: ../flame-whale-head-square-200.webp
+cover_icon: ../flame-whale-head-square-200.webp
+cover_credit: ©️ 2025 Dan Levy
+---
+import {CodeTabs} from '../../../../../components/CodeTabs';
+
+## 作業中
+
+**目次**
+
+1. [⚠️ ローカルネットワークのリスク](#-local-networks-at-risk)
+2. [🛡️ ファイアウォール設定](#-firewall-configuration)
+3. [🔐 ローカル開発向けシークレット管理](#-secrets-management-for-local-development)
+4. [🕵️‍ Credential Leaks and Side-Channel Attacks](#-credential-leaks-and-side-channel-attacks)
+5. [🔍 監視とカナリアトークン](#-monitoring--canary-tokens)
+6. [❌ よくある誤解](#-common-misconceptions)
+
+<p class="inset"></p>
+
+## ⚠️ ローカルネットワークのリスク
+
+正直に言いましょう。誰もがやったことがあります。ランダムなカフェの Wi‑Fi に接続したり、何の疑問も抱かずに自宅ネットワークを他人に貸したり。スマート冷蔵庫がネットワークを危険にさらさないと信じているかもしれません。実際には、こうした軽い判断がローカル開発環境を不必要なリスクにさらすのです。攻撃者は本番システムだけを狙うわけではありません。ローカル環境はしばしば柔らかい標的となり、機密プロジェクトへの入り口を提供します。
+
+### 攻撃シナリオ
+
+1. **トラフィックの傍受:** 暗号化されていない通信は簡単に捕捉・閲覧されます。  
+2. **保護されていないサービス:** `0.0.0.0` で公開されているローカルデータベースや API。  
+3. **ネットワークスプーフィング:** 攻撃者のデバイスへトラフィックをリダイレクト。
+
+### 即効対策
+
+- ネットワーク露出を抑えるため、ファイアウォールよりプライベート Docker ネットワークを優先。  
+- 公衆 Wi‑Fi は避け、可能なら携帯電話のホットスポットを使用。  
+- `arp-scan` や `nmap` といったツールで未知のデバイスを監視。
+
+## 🛡️ Firewall Configuration
+
+### UFW with Docker (Ubuntu)
+
+> ⚠️ **Warning:** By default Docker on Ubuntu/Debian will bypass UFW/iptables rules, potentially exposing your system to attacks.  
+> It doesn't matter if you bind ports to local IP addresses (e.g. `-p 127.0.0.1:8080:80`.)
+
+この挙動には毎回驚かされます！ Docker はデフォルトで UFW ルールをバイパスし、コンテナがホストや他コンテナと制限なく通信できるようにします。([Docker bypasses UFW rules by default](https://github.com/moby/moby/issues/4737))
+
+### Best Practice
+
+1. 🥇 **Use Docker Networks** to isolate and control what can connect to each container or network.
+
+###
+2. 🥉 **Update iptables** if you must use a `host` network, or cannot use custom networks, you can mitigate the risk by configuring iptables. Not for the faint‑hearted, [check out utility below.](#uf)
+
+#### Docker Network Isolation
+
+```bash
+# Create a new Docker network
+docker network create my-network
+
+# Run your container with the new network
+docker run --network my-network my-container
+```
+
+#### UFW Configuration (for `host` networks)
+
+この件に関しては誤った助言が氾濫しています。UFW を Docker と連携させるには、期待通りに設定すればよいです。
+
+私は `ufw-docker` を使って自前の環境を構築しましたが、問題なく動作しています。
+
+```bash title="install-ufw-docker.sh"
+# Install binary as root (needs root permissions anyway)
+sudo wget -O /usr/local/bin/ufw-docker \
+   https://github.com/chaifeng/ufw-docker/raw/master/ufw-docker
+sudo chmod +x /usr/local/bin/ufw-docker
+# Install and modify the `after.rules` file of `ufw`
+ufw-docker install
+
+ufw-docker help
+```
+
+このコマンドは以下を実行します。
+
+- `/etc/ufw/after.rules` ファイルをバックアップします。
+- Docker 用のルールをファイル末尾に追加し、UFW と正しく統合します。
+
+**Source:** [ufw-docker GitHub](https://github.com/chaifeng/ufw-docker/tree/master#install)
+
+**使用例:**
+
+```bash
+
+# Docker コンテナをポート 8080 で許可
+ufw-docker allow <container_name> 8080/tcp
+
+# UFW 設定と並行して安全にルールを管理
+ufw-docker status
+
+```
+
+**注意:** Docker と UFW の衝突を解消する「修正」の多くは手動で iptables ルールを記述する必要があり、更新時にエラーが起きやすく脆弱です。
+
+### macOS ファイアウォール
+
+1. **システム環境設定 > セキュリティとプライバシー > ファイアウォール** を開く。  
+2. ファイアウォールを有効化し、「ファイアウォールオプション」をクリック。  
+3. 必要なサービス以外のすべての受信接続をブロックする。
+
+**注意:** 使用しているスマートデバイス（例: Google Cast、AirPlay など）を許可するために、ファイアウォール設定を個別に確認する必要があります。
+
+### 上級者向けコマンド（macOS と Linux）
+
+#### macOS:
+
+```bash
+
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setblockall on  # すべてブロック
+sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /path/to/app  # 特定アプリを許可
+
+```
+
+#### Linux (ufw):
+
+```bash
+
+ufw default deny incoming  # すべての受信をブロック
+ufw allow ssh            # SSH を許可
+# Web トラフィック用に 443 と 80 を許可
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw enable               # ファイアウォールを有効化
+
+```
+
+**プロ・ティップ:** macOS では [Little Snitch](https://www.obdev.at/products/littlesnitch/index.html)、Linux では [ufw](https://help.ubuntu.com/community/UFW) などのツールを使うと、設定がより分かりやすくなります。
+
+## 🔐 ローカル開発向けシークレット管理
+
+### 事前プレースホルダー検証
+
+<p>💡 アプリ実行前にシークレットが実際の値で設定されていることを確認します。</p>
+
+シークレットに `__WARNING_REPLACE_ME__` などのプレースホルダーを残したままにすると、誰かが気付くかもしれません。念のため、実行時に安全性を確保する簡易検証を追加しておくとよいでしょう。
+
+攻撃者がシークレットを推測できれば、JWT トークンを完全に改ざん（再署名）できるのがどれほど簡単か、想像できないでしょう。
+
+<CodeTabs client:load tabs={["JavaScript", "Rust", "Go"]}>
+
+```javascript
+// validateSecrets.js
+const validateSecrets = () => {
+  const unsafePlaceholder = /__WARNING_REPLACE_ME__/;
+  const missingSecrets = Object.entries(process.env).filter(
+    ([key, value]) => unsafePlaceholder.test(value)
+  );
+
+  if (missingSecrets.length) {
+    console.error("Unsafe secrets detected:", missingSecrets);
+    process.exit(1);
+  }
+};
+
+validateSecrets();
+```
+
+```rust
+// validate_secrets.rs
+use std::env;
+
+fn validate_secrets() {
+    let unsafe_placeholder = "__WARNING_REPLACE_ME__";
+    for (key, value) in env::vars() {
+        if value.contains(unsafe_placeholder) {
+            panic!("Unsafe secret in {}", key);
+        }
+    }
+}
+
+fn main() {
+    validate_secrets();
+}
+```
+
+```go
+// validate_secrets.go
+package main
+
+import (
+	"fmt"
+	"os"
+	"strings"
+)
+
+func validateSecrets() {
+	placeholder := "__WARNING_REPLACE_ME__"
+	for _, env := range os.Environ() {
+		pair := strings.SplitN(env, "=", 2)
+		if len(pair) == 2 && strings.Contains(pair[1], placeholder) {
+			panic(fmt.Sprintf("Unsafe secret in %s", pair[0]))
+		}
+	}
+}
+
+func main() {
+	validateSecrets()
+}
+```
+
+</CodeTabs>
+
+### シークレットの生成と保管
+
+<p class="inset">シークレットをコードベースにハードコーディングしないこと。環境変数や安全なボールトを利用する。</p>
+
+
+`.env.example` の代わりに `.env.generate.sh` を用意して、ユーザーが安全な「デフォルト」から `.env` ファイルを簡単に作成できるようにする。
+
+#### 例 `.env.generate.sh`
+
+```bash title=".env.generate.sh" frame="code"
+#!/bin/bash
+# ローカル開発用に安全な .env ファイルを生成する
+
+generate_secret() {
+    local length=${1:-30}
+    # パディング分 4 バイト追加
+    local generate_length=$((length + 4))
+    openssl rand -base64 "$generate_length" | tr -d '+=/\n' | cut -c1-"$length"
+}
+# .env がすでに存在する場合は中止
+[ -f .env ] && { echo ".env file already exists!"; exit 1; }
+
+cat <<EOL > .env
+# データベース設定とシークレット
+DB_USER=app_user
+DB_PASSWORD=$(generate_secret 30)
+REDIS_PASSWORD=$(generate_secret 20)
+# セッションシークレット
+SESSION_KEY=$(generate_secret 32)
+JWT_SECRET=$(generate_secret 64)
+EOL
+
+echo "New .env file generated!"
+```
+
+{/*
+
+```zig
+// validate_secrets.zig
+const std = @import("std");
+
+pub fn main() void {
+    var env = std.os.getenv_map();
+    const placeholder = "__WARNING_REPLACE_ME__";
+
+    for (env.items()) |entry| {
+        if (std.mem.contains(u8, entry.value, placeholder)) {
+            std.debug.panic("Unsafe secret in {}", .{entry.key});
+        }
+    }
+}
+``` */}
+
+## 🕵️‍ Monitoring & Double-checking
+
+### `nmap` の例
+
+#### ネットワーク内部でのテスト
+
+```bash
+
+# ローカルホストのすべての開いているポートをスキャン
+nmap -sT localhost
+
+# マシンのプライベート IP に対してサービスをスキャン
+nmap -sV 192.168.1.10
+
+# ネットワーク上のデバイスを検出
+nmap -sn 192.168.0.0/24
+nmap -sn 10.0.0.0/24
+```
+
+```
+
+#### ネットワーク外からのテスト
+
+現在の（パブリック）IP は `ifconfig.me` などのサービスで簡単に取得できます: `curl https://ifconfig.me`.
+
+外部ネットワークまたはリモートサーバーから自分のパブリック IP をテストします:
+
+```bash
+
+print_current_ip() {
+  curl https://ifconfig.me
+}
+
+print_current_ip
+# --> 123.456.789.012
+
+# target_host を自分のパブリック IP かホスト名に置き換えてください
+# 高度な手法でホストをチェック
+nmap -A --open --reason $target_host
+nmap -A -F --open --reason $target_host
+nmap -A -p1-65535 --open --reason $target_host
+
+```
+
+**なぜ両方テストするのか？**  
+内部からのテストは自分の環境がどこまで外部に露出しているかを示し、外部からのテストは攻撃者が実際にアクセス可能なサービスを特定します。
+
+## 🛡️ よくある誤解
+
+
+1. **ローカル環境は標的にならない。**  
+   - 事実: 攻撃者はあなたのマシンからプロダクション環境へピボットできる。  
+2. **ファイアウォールはすべてをブロックする。**  
+   - 事実: ファイアウォールは設定したものだけをブロックする。  
+3. **プライベート IP は安全だ。**  
+   - 事実: NAT バイパスなどのエクスプロイトは依然としてネットワークに影響を及ぼす可能性がある。
+````
