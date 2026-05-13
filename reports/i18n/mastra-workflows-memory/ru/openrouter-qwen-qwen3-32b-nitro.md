@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: mastra-workflows-memory
+- Locale: ru
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2026-01-05--mastra-workflows-memory/ru/index.mdx
+- Validation: deferred
+- Runtime seconds: 158.38
+- Input tokens: 8382
+- Output tokens: 7734
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.002527
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: >-
   Перестаньте создавать нестабильные агенты: используйте рабочие процессы и
@@ -183,3 +201,4 @@ export const coordinatorAgent = new Agent({
 2. [Безопасность и защитные меры](../mastra-security-guardrails)  
 3. [MCP и Интеграции с инструментами](../mastra-mcp-tool-integrations)  
 4. **Работы и память** (Эта статья)
+````
