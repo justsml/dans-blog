@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-last-to-think
+- Locale: hi
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-05-31--the-last-to-think/hi/index.mdx
+- Validation: deferred
+- Runtime seconds: 8.04
+- Input tokens: 2123
+- Output tokens: 3742
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.001068
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 language: English
 title: ''
@@ -33,3 +51,4 @@ AI निश्चित रूप से इस पैटर्न का अ�
 <p> </p>  
 
 \* _मान लें कि हम पर्यावरणीय प्रभाव को सुधार सकते हैं और एक दुष्टप्रवृत्त अपर्याप्त नरक से बचा सकते हैं। लेकिन यह एक अन्य दिन की चर्चा है।_
+````
