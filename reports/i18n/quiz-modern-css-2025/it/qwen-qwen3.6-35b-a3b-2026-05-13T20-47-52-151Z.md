@@ -1,0 +1,429 @@
+# Translation Candidate
+- Slug: quiz-modern-css-2025
+- Locale: it
+- Model: qwen/qwen3.6-35b-a3b
+- Target: src/content/posts/2024-11-07--quiz-modern-css-2025/it/index.mdx
+- Validation: deferred
+- Runtime seconds: 202.82
+- Input tokens: 10819
+- Output tokens: 35618
+- Thinking tokens: unknown
+- Cached input tokens: 0
+- Cache write tokens: 0
+- Estimated cost: $0.000000
+- Pricing source: unknown
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
+---
+unlisted: false
+title: 'Quiz: Conosci il CSS moderno? (per il 2025)'
+subTitle: Sei abbastanza front-end?
+label: Advanced CSS
+social_image: ../desktop-social.webp
+category: Quiz
+subCategory: CSS
+minReleaseDate: '2024-10-31'
+date: '2024-10-31'
+modified: '2024-11-09'
+tags:
+  - quiz
+  - css
+  - advanced
+  - intermediate
+cover_full_width: ../dan-levy-downtown-denver-at-night-wide.webp
+cover_mobile: ../dan-levy-downtown-denver-at-night-square-200.webp
+cover_icon: ../dan-levy-downtown-denver-at-night-square-200.webp
+---
+---
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
+
+
+## Quiz: Conosci CSS?
+
+* CSS moderno?  🤔
+* **CSS appartiene al _tuo_ curriculum???** 🚀
+* Domande a risposta multipla. 🤖 ... _Quanto può essere difficile, eh?_
+---
+
+<QuizUI>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={0}
+  group="Riscaldamento"
+  title="Utilizzo delle variabili CSS"
+  options={[
+    {text: 'background-color: blue;'},
+    {text: 'background-color: --main-color;'},
+    {text: 'background-color: var(--main-color);', isAnswer: true},
+    {text: 'background-color: $main-color;'},
+    {text: 'background-color: @main-color;'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è il modo corretto per utilizzare una variabile CSS chiamata `--main-color` per impostare il colore di sfondo di un elemento?
+    ```css
+        :root {
+          --main-color: blue;
+        }
+        div {
+          /* How do we use --main-color here? */
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le variabili CSS si utilizzano con la funzione `var`, quindi la risposta corretta è `background-color: var(--main-color);`. Questa sintassi recupera il valore di `--main-color` e lo applica.
+
+    Le altre opzioni potrebbero sembrarti familiari se provieni da altri linguaggi o da sintassi di preprocessor, come Sass o Less.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={1}
+  group="Funzioni CSS"
+  title="Funzione min() di CSS"
+  options={[
+    {text: 'width: 50%;'},
+    {text: 'width: 200px;', isAnswer: true},
+    {text: 'width: 250px;'},
+    {text: 'width: 500px;'},
+    {text: 'width: max(50%, 200px);'},
+    {text: 'Sintassi non valida'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Se il container è largo 400px, qual è la larghezza calcolata di questo elemento?
+    ```css
+        div {
+          width: min(250px, 50%);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `min()` seleziona il valore più piccolo tra 250px e il 50% della larghezza del genitore.
+
+    Per calcolarlo, convertiamo le unità relative in pixel:
+
+    - `50%` di `400px` fa `200px`
+    - `250px` è già in pixel
+    ```css
+        /* This gets computed to */
+        width: min(250px, 200px);
+        /* -> 200px wins */
+    ```
+    La funzione `min()` è particolarmente utile nel design responsive, perché ti permette di assicurarti che un componente (o una dimensione del font) non superi mai un certo limite.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={2}
+  group="Funzioni CSS"
+  title="Funzione CSS max()"
+  options={[
+    {text: 'width: 6em;'},
+    {text: 'width: 10%;'},
+    {text: 'width: 10px;'},
+    {text: 'width: 50px;'},
+    {text: 'width: 96px;', isAnswer: true},
+    {text: 'Sintassi non valida'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Hai un contenitore largo 200px. Qual è la larghezza calcolata del `<div>`?
+    ```css
+        div {
+          width: max(50px, 10%, 6rem);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `max()` accetta 2 o più valori e utilizza automaticamente quello più grande. Assumendo che la dimensione del font radice sia il default del browser `16px`, la larghezza risulta essere `96px`.
+
+    Per capire il valore calcolato, dobbiamo convertire le unità relative in pixel:
+
+    - `50px` è già in pixel
+    - `10%` di `200px` fa `20px`
+    - `6rem` corrisponde a `6 * 16px` (la dimensione del font di default), ovvero `96px`
+    ```css
+        /* This gets computed to */
+        width: max(50px, 20px, 96px);
+        /* -> 96px wins */
+    ```
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={3}
+  group="Funzioni CSS Grid"
+  title="Funzione minmax() di CSS"
+  options={[
+    {text: 'Tutte le larghezze delle colonne tra 100px e 200px'},
+    {text: 'Imposta le colonne a 100px e le righe a 200px'},
+    {text: 'La prima colonna sarà compresa tra 100px e 200px', isAnswer: true},
+    {text: 'Applica l\'intervallo in modo ricorsivo, incluse le sottogriglie'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è l'effetto pratico di `minmax(100px, 200px)` su una traccia di una griglia CSS?
+    ```css
+        grid-template-columns: minmax(100px, 200px);
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    L'uso di `minmax(100px, 200px)` permette alla traccia della griglia di ridimensionarsi tra `100px` e `200px`, adattandosi allo spazio disponibile senza mai scendere sotto `100px` o superare `200px`.
+
+    Puoi creare layout che si adattano automaticamente, dove contenitore e figli contribuiscono entrambi al calcolo delle dimensioni. Questa funzione è particolarmente potente se combinata con `repeat()` e `auto-fill` o `auto-fit`, poiché genererà il maggior numero possibile di tracce rispettando i vincoli impostati.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={4}
+  group="Variabili CSS"
+  title="Fallback per Variabili CSS"
+  options={[
+    {text: 'blu'},
+    {text: 'rosso'},
+    {text: 'predefinito di sistema'},
+    {text: '#6b8e23', isAnswer: true},
+    {text: 'var(--secondary-color)'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Di che colore sarà lo sfondo per il seguente CSS?
+    ```css
+        div {
+          background: var(--primary, olivedrab);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `var()` ti permette di impostare un valore di fallback se la variabile non è definita. In questo caso, lo sfondo sarà `olivedrab` (`#6b8e23`) perché `--primary` non è definito.
+
+    È un ottimo metodo per assicurarti che i tuoi stili non si rompano se una variabile manca o non è supportata.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={5}
+  group="Funzioni CSS"
+  title="Utilizzo di clamp() per il design responsive"
+  options={[
+    {text: 'Fallback per unità eventualmente non supportate'},
+    {text: 'Assicura che le unità `vw` siano comprese tra 20px e 50px'},
+    {text: 'Scala lineare tra 200px e 500px', isAnswer: true},
+    {text: 'Scala Log₂ tra 200px e 500px'},
+    {text: 'Fallito! Nessun supporto per IE 11'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Cosa fa `clamp()`?
+    ```css
+        .card {
+          width: clamp(200px, 50vw, 500px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `clamp()` fa scalare la larghezza in base a `50vw`, ma la blocca entro un range da 200px a 500px.
+
+    In pratica: se `50vw` è inferiore a 200px, la larghezza resta a 200px; se supera i 500px, si ferma a 500px; tra i due valori, scala linearmente.
+
+    Ti permette di essere responsive in modo quasi magico! La cosa fondamentale da sapere su `clamp` è che combina **unità fisse** con **unità responsive o calcolate.**
+
+    Di solito non useresti le unità viewport per i font, ma con `clamp()` possiamo garantire che la dimensione del testo non diventi troppo piccola o troppo grande.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={6}
+  group="Nidificazione CSS"
+  title="Nidificazione CSS nativa"
+  options={[
+    {text: 'Solo con SCSS'},
+    {text: 'Tecnicamente con PostCSS'},
+    {text: 'Sì', isAnswer: true},
+    {text: 'No'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Il CSS supporta la nidificazione in modo nativo?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Sì! Finalmente abbiamo la nidificazione CSS nativa! Il CSS ha introdotto la sintassi ufficiale per la nidificazione negli ultimi anni (2023), consentendo di applicare stili gerarchici direttamente nel foglio di stile.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={7}
+  group="Nidificazione CSS"
+  title="Nidificazione CSS"
+  options={[
+    {text: 'Il nome del file deve terminare con .scss'},
+    {text: '`.title` deve precedere proprietà come `color`'},
+    {text: 'Solo con PostCSS'},
+    {text: 'Perfetto. Nessun appunto.', isAnswer: true},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    È un uso corretto della nidificazione CSS nativa?
+    ```css
+        .container {
+          color: black;
+          .title {
+            color: white;
+            background: black;
+          }
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La classe `.title` è nidificata all'interno della classe `.container`, e le proprietà vengono applicate come previsto.
+
+    Questo è un ottimo modo per mantenere gli stili correlati raggruppati ed evitare selettori troppo lunghi.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={8}
+  group="Nesting CSS"
+  title="Selettore di figlio diretto con nesting"
+  options={[
+    {text: 'background-color: red'},
+    {text: 'background-color: white', isAnswer: true},
+    {text: 'background-color: blue'},
+    {text: 'Sintassi non valida'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Quale colore di sfondo verrà applicato ai `div` figli diretti di `.container`?
+    ```css
+        .container {
+          background-color: red;
+          > div {
+            background-color: white;
+          }
+          background-color: blue !important;
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Il selettore `>` nella regola annidata applica `background-color: white` solo agli elementi `div` figli diretti all'interno di `.container`.
+
+    L'ultima regola, `background-color: blue !important;`, è una piccola distrazione. Si trova **fuori dalla regola annidata** e verrà applicata a tutti gli elementi `.container`.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={9}
+  group="Variabili CSS"
+  title="Modifica di una variabile CSS a runtime"
+  options={[
+    {text: 'Le variabili CSS sono immutabili'},
+    {text: 'Utilizzando JavaScript', isAnswer: true},
+    {text: 'Solo con SCSS'},
+    {text: 'Solo con stili inline'},
+    {text: 'Utilizzando unità responsive'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Come puoi modificare il valore di una variabile CSS a runtime?
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    Le variabili CSS possono essere impostate tramite classi e JavaScript. Possono essere definite persino 'dopo' il loro utilizzo effettivo.
+    ```js
+        document.documentElement.style.setProperty('--main-color', 'blue');
+    ```
+    Questo cambierà il valore di `--main-color` in `blue` per l'intero documento.
+
+    Le variabili CSS sono mutabili e possono essere modificate a runtime tramite JavaScript.
+
+    Possono essere modificate anche aggiungendo o rimuovendo classi, un pattern comune per la gestione dei temi.
+  </div>
+  </slot>
+</Challenge>
+
+<Challenge
+  client:visible={{rootMargin: "150px"}}
+  index={10}
+  group="Variabili CSS"
+  title="Utilizzo di calc() con le variabili CSS"
+  options={[
+    {text: 'Larghezza: 50px'},
+    {text: 'Larghezza: 100px'},
+    {text: 'Larghezza: 110px', isAnswer: true},
+    {text: 'Larghezza: 120px'},
+  ]}
+>
+  <slot name="question">
+  <div className="question">
+    Qual è la larghezza calcolata dell'elemento?
+    ```css
+        :root {
+          --base-width: 100px;
+        }
+        div {
+          width: calc(var(--base-width) + 10px);
+        }
+    ```
+  </div>
+  </slot>
+  <slot name='explanation'>
+  <div className="explanation">
+    La funzione `calc()` somma il valore di `--base-width` (100px) a 10px aggiuntivi, ottenendo una larghezza finale di 110px.
+  </div>
+  </slot>
+</Challenge>
+
+</QuizUI>
+````
