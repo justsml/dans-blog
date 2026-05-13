@@ -4,7 +4,7 @@
 - Model: openrouter/qwen/qwen3-32b:nitro
 - Target: src/content/posts/2026-05-09--quiz-context-engineering/it/index.mdx
 - Validation: rejected: direct AI SDK translation failed
-- Runtime seconds: 5.53
+- Runtime seconds: 4.59
 - Input tokens: unknown
 - Output tokens: unknown
 - Thinking tokens: unknown
@@ -12,7 +12,7 @@
 - Cache write tokens: unknown
 - Estimated cost: unknown
 - Pricing source: unknown
-- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale it --model openrouter/qwen/qwen3-32b:nitro --chunk 3p --quiz-concurrency 18 --challenge-retries 2
+- Note: Command failed: bun run i18n:translate:chunked -- --slug quiz-context-engineering --locale it --model openrouter/qwen/qwen3-32b:nitro --chunk 6p --quiz-concurrency 20
 ## Raw Output
 
 ````mdx
@@ -44,8 +44,8 @@ cover_full_width: ../wide.webp
 cover_mobile: ../square.webp
 cover_icon: ../square.webp
 ---
-import Challenge from '../../../../../components/QuizUI/Challenge';
-import QuizUI from '../../../../../components/QuizUI/QuizUI';
+import Challenge from '../../../../components/QuizUI/Challenge';
+import QuizUI from '../../../../components/QuizUI/QuizUI';
 
 <p class="inset">L’ingegneria dei prompt prende gli slogan. L’ingegneria del contesto prende il cercapersone. Quanto conosci la parte di un sistema AI che realmente viene rilasciata?</p>
 
@@ -174,9 +174,9 @@ Porta le prove.
   title="Strategia di chunking"
   options={[
     {text: 'Usa la dimensione di chunk più grande consentita dalla tua finestra di contesto'},
-    {text: 'Usa sempre 512 token — è'},
+    {text: 'Usa sempre 512 token: è lo standard'},
     {text: 'Usa chunk sovrapposti dimensionati per corrispondere alla struttura del tuo contenuto', isAnswer: true},
-    {text: 'La dimensione del chunk non'},
+    {text: 'La dimensione del chunk non importa se il modello di embedding è buono'},
   ]}
 >
   <slot name="question">
@@ -354,7 +354,7 @@ Porta le prove.
   options={[
     {text: 'temperature=0 produce sempre output identici per lo stesso input'},
     {text: 'temperature=0 rende gli output più deterministici ma non garantisce identici', isAnswer: true},
-    {text: 'temperature=0 disabilita il modello\'},
+    {text: 'temperature=0 disabilita la capacità del modello di rifiutare richieste'},
     {text: 'temperature influisce solo sulla lunghezza della risposta'},
   ]}
 >
@@ -431,8 +431,8 @@ Porta le prove.
 
     Ciò che funziona davvero: **grounding**. Fornisci al modello le informazioni di cui ha bisogno per rispondere correttamente e vincolalo a quelle informazioni:
     ```
-        Answer only using the provided documents.
-        If the answer isn't in the documents, say: "I don't have enough information to answer that."
+    Answer only using the provided documents.
+    If the answer isn't in the documents, say: "I don't have enough information to answer that."
     ```
     Poi valida l'output: verifica che le affermazioni nella risposta compaiano nel contesto recuperato. Questo è il controllo di grounding con citazione — vedi la discussione RAG eval per l'implementazione.
 
