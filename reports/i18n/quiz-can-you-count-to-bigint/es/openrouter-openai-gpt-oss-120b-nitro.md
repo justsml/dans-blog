@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: quiz-can-you-count-to-bigint
+- Locale: es
+- Model: openrouter/openai/gpt-oss-120b:nitro
+- Target: src/content/posts/2024-11-06--quiz-can-you-count-to-bigint/es/index.mdx
+- Validation: passed
+- Runtime seconds: 30.07
+- Input tokens: 13323
+- Output tokens: 7548
+- Thinking tokens: unknown
+- Cached input tokens: 4032
+- Cache write tokens: 0
+- Estimated cost: $0.001878
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 unlisted: false
 title: 'Quiz: ¿Puedes contar con JavaScript?'
@@ -419,3 +437,4 @@ import QuizUI from '../../../../../../components/QuizUI/QuizUI';
 {/* <h4>¿Estás bien?</h4> */}
 
 <p class="inset">¿Necesitas un descanso después de tanto binario?<br />Pftt, recuerda: ¡rompe *después* de las habilidades! <br /><br />¡Entra en [mi gimnasio]("../challenges/") para aplastar más retos! 💪</p>
+````
