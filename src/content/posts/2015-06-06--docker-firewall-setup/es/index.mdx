@@ -1,0 +1,107 @@
+---
+title: Configuración del Firewall de Docker
+subTitle: Configurar el firewall del host de Docker
+draft: true
+date: '2015-06-06'
+modified: '2016-07-30'
+category: DevOps
+subCategory: docker
+tags:
+  - docker
+  - security
+  - devops
+cover: ../charles-deluvio-456501-unsplash.webp
+cover_mobile: ../w300_charles-deluvio-456501-unsplash.webp
+cover_icon: ../icon_charles-deluvio-456501-unsplash.webp
+---
+## Configurar el firewall del host de Docker
+
+1. Se asume Debian/Ubuntu Server
+1. Diseñado para ejecutarse en el servidor host de Docker
+
+### Instalar requisitos
+
+~~~sh
+# Se necesita el firewall definitivo
+apt-get update && apt-get install -y ufw nmap curl
+~~~
+
+### Obtener tus direcciones IP interna y externa
+
+~~~sh
+# Obtén tus direcciones IP, salida simple:
+hostname --all-ip-addresses
+~~~
+
+# O usa la herramienta ip, ejemplo:
+ip addr
+~~~
+
+### Configuración del Firewall (UFW) - Comandos de ejemplo
+
+~~~sh
+ufw logging on # on=low - medium might be better for diagnostics
+ufw logging medium
+# Primero, bloquea todo
+ufw default deny incoming
+
+# OBLIGATORIO: ELIGE *UNO* DE LOS SIGUIENTES REGLAS DE SALIDA POR DEFECTO:
+ufw default deny outgoing
+ufw default allow outgoing
+
+# Permitir y registrar todas las nuevas conexiones SSH,
+ufw allow log proto tcp from any to any port 22
+## Permitir tráfico HTTP (sin registro explícito)
+ufw allow out on docker0 53/udp to 172.17.0.1/16
+ufw allow out on eth0 to any port 53
+ufw allow out on eth0 from 0.0.0.0/0 to any port 80 proto tcp
+ufw allow out on eth0 from 0.0.0.0/0 to any port 443 proto tcp
+
+# Detallado: ufw allow proto tcp from any to any port 80
+ufw allow 80/tcp
+ufw allow 443/tcp
+ufw allow log 22/tcp
+ufw limit ssh # Límite de velocidad para 4 intentos de fuerza bruta en SSH
+~~~
+
+# Establece tu IP externa
+export EXTERNAL_IP=123.123.123.123
+# Actualiza la IP de Docker si es necesario
+export DOCKER_IP=172.17.42.1
+# Redirige el tráfico TCP 8080 hacia la aplicación Dockerizada
+ufw allow proto tcp from $EXTERNAL_IP port 8080 to $DOCKER_IP port 3000
+~~~
+
+## Activar / Iniciar el Firewall
+
+> Ten cuidado, no te bloques el puerto SSH (sshd por defecto es 22)
+
+~~~sh
+ufw --force enable
+
+ufw reset
+~~~
+
+-----------------
+
+### Prueba tu firewall
+
+> Importante: USA UNA DIRECCIÓN IP REMOTA/UBICACIÓN
+
+~~~sh
+# Verificar dependencia
+apt-get update && apt-get install -y nmap
+
+# Establecer objetivo del escaneo
+export TARGET_HOST=123.123.123.123
+
+# Comandos de ejemplo:
+# Verificación rápida de puertos abiertos
+nmap -p 1-10240,27017 -T5 $TARGET_HOST
+# Escaneo detallado
+nmap -p 1-10240,27017 --open -v -APN $TARGET_HOST
+# Inspección de servicios
+nmap -p 1-10240,27017 -O --osscan-guess $TARGET_HOST
+~~~
+
+> ¡HECHO! Ahora deberías ver SOLO los puertos que configuraste.
