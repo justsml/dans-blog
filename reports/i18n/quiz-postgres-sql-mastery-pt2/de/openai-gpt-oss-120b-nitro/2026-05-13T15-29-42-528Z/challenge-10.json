@@ -1,0 +1,47 @@
+{
+  "index": 9,
+  "attempt": 1,
+  "originalTitle": "Partial Indexes",
+  "translatedTitle": "Partielle Indizes",
+  "translation": {
+    "title": "Partielle Indizes",
+    "group": "Indizierung",
+    "options": [
+      {
+        "text": "Ungültige Syntax"
+      },
+      {
+        "text": "Erstellt doppelte Indizes"
+      },
+      {
+        "text": "Indiziert nur aktive Studenten"
+      },
+      {
+        "text": "Indiziert aktive Studenten zuerst"
+      },
+      {
+        "text": "Gibt einen Hinweis an den Abfrageplaner"
+      }
+    ],
+    "questionProse": [
+      "Was bewirkt diese Beschwörung?"
+    ],
+    "explanationProse": [
+      "Dieser Trick heißt `Partial Index`.\n\n    Sie sind nützlich, um Speicherplatz zu sparen und Abfragen zu beschleunigen, wenn typischerweise nur ein Teil der Zeilen abgefragt wird.\n\n    Postgres verwendet den Index nur, wenn die Bedingung `status = 'active'` im Query vorkommt.\n\n    **Erinnerung:** Postgres unterstützt keine „query hints“ wie andere RDBMSs. Der Abfrageplaner entscheidet, wann ein passender Index verwendet wird."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Partielle Indizes\",\n  \"group\": \"Indizierung\",\n  \"options\": [\n    {\n      \"text\": \"Ungültige Syntax\"\n    },\n    {\n      \"text\": \"Erstellt doppelte Indizes\"\n    },\n    {\n      \"text\": \"Indiziert nur aktive Studenten\"\n    },\n    {\n      \"text\": \"Indiziert aktive Studenten zuerst\"\n    },\n    {\n      \"text\": \"Gibt einen Hinweis an den Abfrageplaner\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was bewirkt diese Beschwörung?\"\n  ],\n  \"explanationProse\": [\n    \"Dieser Trick heißt `Partial Index`.\\n\\n    Sie sind nützlich, um Speicherplatz zu sparen und Abfragen zu beschleunigen, wenn typischerweise nur ein Teil der Zeilen abgefragt wird.\\n\\n    Postgres verwendet den Index nur, wenn die Bedingung `status = 'active'` im Query vorkommt.\\n\\n    **Erinnerung:** Postgres unterstützt keine „query hints“ wie andere RDBMSs. Der Abfrageplaner entscheidet, wann ein passender Index verwendet wird.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 817,
+    "outputTokens": 684,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 749
+  },
+  "cost": {
+    "inputUsd": 0.000031862999999999996,
+    "outputUsd": 0.00012312,
+    "totalUsd": 0.000154983,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "index": 5,
+  "attempt": 1,
+  "originalTitle": "Multi-Column Index Order",
+  "translatedTitle": "Mehrspaltiger Index Reihenfolge",
+  "translation": {
+    "title": "Mehrspaltiger Index Reihenfolge",
+    "group": "Indexierung",
+    "options": [
+      {
+        "text": "CREATE INDEX ON students(grade_level, last_name);"
+      },
+      {
+        "text": "CREATE INDEX ON students(grade_level);"
+      },
+      {
+        "text": "CREATE INDEX ON students(last_name, age);"
+      },
+      {
+        "text": "CREATE INDEX ON students(first_name, last_name, grade_level);"
+      }
+    ],
+    "questionProse": [
+      "Welcher Index ist für diese Abfrage besser geeignet?"
+    ],
+    "explanationProse": [
+      "Für mich ist das Überraschende, dass ein mehrspaltiger Index sogar dann verwendet werden kann, wenn die Spaltenreihenfolge im Abfrage‑Text nicht mit der Indexdefinition übereinstimmt.\n\n**Note:** Bei B‑Tree‑Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, passt ein Index, der mit `grade_level` beginnt und danach `last_name` enthält, gut.\n\nJe schneller SQL die wenigsten Zeilen auswählen kann, desto besser ist die Performance.\n\nZum Beispiel, wenn Sie eine Tabelle `task` haben und wissen, dass `status` selektiver ist als `created_at`, könnten Sie einen Index wählen, der mit `status` beginnt, für eine Abfrage wie `status = 'done' AND created_at > '2024-01-01'`. Die Reihenfolge der Bedingungen im Text der `WHERE`‑Klausel ist nicht entscheidend; wichtig sind die Spaltenreihenfolge des Index und die Form der Prädikate.\n\nEin B+Tree‑Index kann verwendet werden für:\n- Die führende Spalte oder ein linksseitiges Präfix der Spalten.\n- Operatoren wie `=`, `>`, `<`, `BETWEEN` und `IN`, je nach Abfrageform.\n- Präfix‑Abgleich, `LIKE 'prefix%'`.\n\nDanke an [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) für den Hinweis auf einen früheren Fehler in dieser Erklärung!"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Mehrspaltiger Index Reihenfolge\",\n  \"group\": \"Indexierung\",\n  \"options\": [\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level, last_name);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(grade_level);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(last_name, age);\"\n    },\n    {\n      \"text\": \"CREATE INDEX ON students(first_name, last_name, grade_level);\"\n    }\n  ],\n  \"questionProse\": [\n    \"Welcher Index ist für diese Abfrage besser geeignet?\"\n  ],\n  \"explanationProse\": [\n    \"Für mich ist das Überraschende, dass ein mehrspaltiger Index sogar dann verwendet werden kann, wenn die Spaltenreihenfolge im Abfrage‑Text nicht mit der Indexdefinition übereinstimmt.\\n\\n**Note:** Bei B‑Tree‑Indizes ist die führende Spalte entscheidend. Da diese Abfrage nach `grade_level` und `last_name` filtert, passt ein Index, der mit `grade_level` beginnt und danach `last_name` enthält, gut.\\n\\nJe schneller SQL die wenigsten Zeilen auswählen kann, desto besser ist die Performance.\\n\\nZum Beispiel, wenn Sie eine Tabelle `task` haben und wissen, dass `status` selektiver ist als `created_at`, könnten Sie einen Index wählen, der mit `status` beginnt, für eine Abfrage wie `status = 'done' AND created_at > '2024-01-01'`. Die Reihenfolge der Bedingungen im Text der `WHERE`‑Klausel ist nicht entscheidend; wichtig sind die Spaltenreihenfolge des Index und die Form der Prädikate.\\n\\nEin B+Tree‑Index kann verwendet werden für:\\n- Die führende Spalte oder ein linksseitiges Präfix der Spalten.\\n- Operatoren wie `=`, `>`, `<`, `BETWEEN` und `IN`, je nach Abfrageform.\\n- Präfix‑Abgleich, `LIKE 'prefix%'`.\\n\\nDanke an [u/mwdb2](https://www.reddit.com/r/PostgreSQL/comments/1h6kw87/comment/m0fovn0/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) für den Hinweis auf einen früheren Fehler in dieser Erklärung!\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 1064,
+    "outputTokens": 1344,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 4805
+  },
+  "cost": {
+    "inputUsd": 0.000041496,
+    "outputUsd": 0.00024192,
+    "totalUsd": 0.000283416,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

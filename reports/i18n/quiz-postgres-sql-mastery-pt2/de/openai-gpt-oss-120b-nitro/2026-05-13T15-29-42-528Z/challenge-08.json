@@ -1,0 +1,47 @@
+{
+  "index": 7,
+  "attempt": 1,
+  "originalTitle": "Column Name Quoting",
+  "translatedTitle": "Spaltennamen-Quotierung",
+  "translation": {
+    "title": "Spaltennamen-Quotierung",
+    "group": "Quotierung 2",
+    "options": [
+      {
+        "text": "first.name"
+      },
+      {
+        "text": "\"first.name\""
+      },
+      {
+        "text": "\\"
+      },
+      {
+        "text": "[first.name]"
+      },
+      {
+        "text": "[first].[name]"
+      }
+    ],
+    "questionProse": [
+      "Wie geben Sie einen **Spaltennamen mit einem Punkt** an?"
+    ],
+    "explanationProse": [
+      "PostgreSQL verwendet doppelte Anführungszeichen für das Quotieren von Bezeichnern:\n    - Doppelte Anführungszeichen `\"...\"` für Bezeichner (Spaltennamen, Tabellennamen)\n    - Einzelne Anführungszeichen `'...'` für Zeichenkettenliterale\n    - Die Form `first.name` wird als `table_name.column_name` interpretiert\n\n    Ohne Anführungszeichen würde ein Punkt im Spaltennamen als Trennzeichen für Schema/Tabellen angesehen! Außerdem werden alle nicht quotierten Bezeichner standardmäßig in Kleinbuchstaben umgewandelt.\n\n    Um Überraschungen zu vermeiden, sollte man `snake_case` verwenden und Sonderzeichen meiden."
+    ]
+  },
+  "rawText": "{\n  \"title\": \"Spaltennamen-Quotierung\",\n  \"group\": \"Quotierung 2\",\n  \"options\": [\n    {\n      \"text\": \"first.name\"\n    },\n    {\n      \"text\": \"\\\"first.name\\\"\"\n    },\n    {\n      \"text\": \"\\\\\"\n    },\n    {\n      \"text\": \"[first.name]\"\n    },\n    {\n      \"text\": \"[first].[name]\"\n    }\n  ],\n  \"questionProse\": [\n    \"Wie geben Sie einen **Spaltennamen mit einem Punkt** an?\"\n  ],\n  \"explanationProse\": [\n    \"PostgreSQL verwendet doppelte Anführungszeichen für das Quotieren von Bezeichnern:\\n    - Doppelte Anführungszeichen `\\\"...\\\"` für Bezeichner (Spaltennamen, Tabellennamen)\\n    - Einzelne Anführungszeichen `'...'` für Zeichenkettenliterale\\n    - Die Form `first.name` wird als `table_name.column_name` interpretiert\\n\\n    Ohne Anführungszeichen würde ein Punkt im Spaltennamen als Trennzeichen für Schema/Tabellen angesehen! Außerdem werden alle nicht quotierten Bezeichner standardmäßig in Kleinbuchstaben umgewandelt.\\n\\n    Um Überraschungen zu vermeiden, sollte man `snake_case` verwenden und Sonderzeichen meiden.\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 837,
+    "outputTokens": 708,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 551
+  },
+  "cost": {
+    "inputUsd": 0.000032643,
+    "outputUsd": 0.00012743999999999999,
+    "totalUsd": 0.000160083,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}

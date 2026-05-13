@@ -1,0 +1,44 @@
+{
+  "index": 11,
+  "attempt": 1,
+  "originalTitle": "EXPLAIN ANALYZE Gotcha",
+  "translatedTitle": "EXPLAIN ANALYZE Fallstrick",
+  "translation": {
+    "title": "EXPLAIN ANALYZE Fallstrick",
+    "group": "Leistung",
+    "options": [
+      {
+        "text": "Leichte Plan-Schätzung"
+      },
+      {
+        "text": "Funktioniert nur bei SELECT"
+      },
+      {
+        "text": "Ändert Daten & gibt Plan aus"
+      },
+      {
+        "text": "Simuliert die Ausführung, um einen Plan zu erhalten"
+      }
+    ],
+    "questionProse": [
+      "Was macht `EXPLAIN ANALYZE` bei `UPDATE`‑Anweisungen?"
+    ],
+    "explanationProse": [
+      "`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seien Sie vorsichtig beim Analysieren einer Schreiboperation, insbesondere bei `UPDATE`, `DELETE`‑ und `INSERT`‑Anweisungen. Möglicherweise müssen Sie nach jedem `EXPLAIN ANALYZE` Aufräumarbeiten durchführen, um reproduzierbare Ergebnisse zu erhalten.\n\n    Best Practices:\n    - Verwenden Sie `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\n    - Packen Sie Änderungen in Transaktionen:"
+    ]
+  },
+  "rawText": "{\n  \"title\": \"EXPLAIN ANALYZE Fallstrick\",\n  \"group\": \"Leistung\",\n  \"options\": [\n    {\n      \"text\": \"Leichte Plan-Schätzung\"\n    },\n    {\n      \"text\": \"Funktioniert nur bei SELECT\"\n    },\n    {\n      \"text\": \"Ändert Daten & gibt Plan aus\"\n    },\n    {\n      \"text\": \"Simuliert die Ausführung, um einen Plan zu erhalten\"\n    }\n  ],\n  \"questionProse\": [\n    \"Was macht `EXPLAIN ANALYZE` bei `UPDATE`‑Anweisungen?\"\n  ],\n  \"explanationProse\": [\n    \"`EXPLAIN ANALYZE` führt die Abfrage tatsächlich aus! Seien Sie vorsichtig beim Analysieren einer Schreiboperation, insbesondere bei `UPDATE`, `DELETE`‑ und `INSERT`‑Anweisungen. Möglicherweise müssen Sie nach jedem `EXPLAIN ANALYZE` Aufräumarbeiten durchführen, um reproduzierbare Ergebnisse zu erhalten.\\n\\n    Best Practices:\\n    - Verwenden Sie `EXPLAIN` (ohne ANALYZE) für UPDATE/DELETE/INSERT\\n    - Packen Sie Änderungen in Transaktionen:\"\n  ]\n}",
+  "telemetry": {
+    "inputTokens": 842,
+    "outputTokens": 706,
+    "cacheReadTokens": 256,
+    "cacheWriteTokens": 0,
+    "durationMs": 480
+  },
+  "cost": {
+    "inputUsd": 0.000032838,
+    "outputUsd": 0.00012708,
+    "totalUsd": 0.000159918,
+    "pricingSource": "local-openrouter-estimate"
+  }
+}
