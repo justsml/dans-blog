@@ -1,3 +1,21 @@
+# Translation Candidate
+- Slug: the-unassuming-power-of-multiple-choice-questions
+- Locale: de
+- Model: openrouter/qwen/qwen3-32b:nitro
+- Target: src/content/posts/2025-01-01--the-unassuming-power-of-multiple-choice-questions/de/index.mdx
+- Validation: passed
+- Runtime seconds: 12.20
+- Input tokens: 5410
+- Output tokens: 4994
+- Thinking tokens: unknown
+- Cached input tokens: 512
+- Cache write tokens: 0
+- Estimated cost: $0.001631
+- Pricing source: local-openrouter-estimate
+- Note: Generated through the direct AI SDK chunked translator.
+## Raw Output
+
+````mdx
 ---
 title: Die unvermutete Kraft von Multiple-Choice-Fragen
 subTitle: >-
@@ -89,3 +107,4 @@ Der Autor muss die wahrscheinlichen Fehler des Lernenden modellieren. Das bedeut
 Deswegen verwende ich MCQs weiterhin auf dieser Seite. Nicht, weil sie effizient sind, obwohl sie es sind. Weil sie eine Art didaktische Ehrlichkeit erzwingen, die reine Prosa umgehen kann.
 
 Beim nächsten Mal, wenn Sie eine erstellen, fangen Sie nicht mit der richtigen Antwort an. Fangen Sie mit den Fehlvorstellungen an. Die richtige Antwort hat dann einen viel besseren Platz, um zu stehen.
+````
